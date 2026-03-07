@@ -124,23 +124,30 @@ public class AdminCurrencyView extends APaginatedView<AdminCurrencyView.Detected
     ) {
         render.layoutSlot('X', this.createDecorationItem(player));
 
-        final Object jexAdapter = this.resolveServiceProvider(JEX_ADAPTER_CLASS);
+        final Object jexAdapter = this.resolveJExAdapterProvider();
         final boolean hasJExEconomy = jexAdapter != null;
         final boolean hasDefaultCurrency = hasJExEconomy && this.hasCurrency(jexAdapter, DEFAULT_CURRENCY_IDENTIFIER);
+        final boolean hasVaultEconomy = this.resolveServiceProvider(VAULT_ECONOMY_CLASS) != null;
+        final List<DetectedCurrency> detectedCurrencies = this.detectCurrencies();
+        final boolean hasDetectedJExCurrencies = this.hasProviderEntries(detectedCurrencies, PROVIDER_JEX);
 
         render.layoutSlot('C', this.createDefaultCurrencyButton(player, hasJExEconomy, hasDefaultCurrency))
             .onClick(this::handleCreateDefaultCurrencyClick);
 
+        if (hasJExEconomy && !hasDetectedJExCurrencies) {
+            render.slot(31, this.createJExDetectedNoCurrencyItem(player));
+        }
+
         final Pagination pagination = this.getPagination(render);
-        if (pagination.source() == null || pagination.source().isEmpty()) {
-            render.slot(22, this.createEmptyStateItem(player));
+        if (pagination.source() != null && pagination.source().isEmpty()) {
+            render.slot(22, this.createEmptyStateItem(player, hasJExEconomy, hasVaultEconomy));
         }
     }
 
     private @NotNull List<DetectedCurrency> detectCurrencies() {
         final List<DetectedCurrency> detectedCurrencies = new ArrayList<>();
 
-        final Object jexAdapter = this.resolveServiceProvider(JEX_ADAPTER_CLASS);
+        final Object jexAdapter = this.resolveJExAdapterProvider();
         if (jexAdapter != null) {
             this.collectJExCurrencies(jexAdapter, detectedCurrencies);
         }
@@ -169,8 +176,11 @@ public class AdminCurrencyView extends APaginatedView<AdminCurrencyView.Detected
         final @NotNull List<DetectedCurrency> detectedCurrencies
     ) {
         try {
-            final Method getAllCurrenciesMethod = jexAdapter.getClass().getMethod("getAllCurrencies");
-            final Object result = getAllCurrenciesMethod.invoke(jexAdapter);
+            final Method currencyLookupMethod = this.resolveCurrencyLookupMethod(jexAdapter.getClass());
+            if (currencyLookupMethod == null) {
+                return;
+            }
+            final Object result = currencyLookupMethod.invoke(jexAdapter);
 
             if (!(result instanceof Map<?, ?> currenciesMap)) {
                 return;
@@ -224,7 +234,7 @@ public class AdminCurrencyView extends APaginatedView<AdminCurrencyView.Detected
 
     private void handleCreateDefaultCurrencyClick(final @NotNull SlotClickContext clickContext) {
         final Player player = clickContext.getPlayer();
-        final Object jexAdapter = this.resolveServiceProvider(JEX_ADAPTER_CLASS);
+        final Object jexAdapter = this.resolveJExAdapterProvider();
 
         if (jexAdapter == null) {
             this.i18n("default_currency.messages.jexeconomy_required", player)
@@ -319,7 +329,12 @@ public class AdminCurrencyView extends APaginatedView<AdminCurrencyView.Detected
         final @NotNull String currencyIdentifier
     ) {
         try {
-            final Method hasGivenCurrencyMethod = jexAdapter.getClass().getMethod("hasGivenCurrency", String.class);
+            Method hasGivenCurrencyMethod;
+            try {
+                hasGivenCurrencyMethod = jexAdapter.getClass().getMethod("hasGivenCurrency", String.class);
+            } catch (final NoSuchMethodException ignored) {
+                hasGivenCurrencyMethod = jexAdapter.getClass().getMethod("hasCurrency", String.class);
+            }
             final Object future = hasGivenCurrencyMethod.invoke(jexAdapter, currencyIdentifier);
             return Boolean.TRUE.equals(this.asBooleanFuture(future).join());
         } catch (final Exception exception) {
@@ -339,12 +354,86 @@ public class AdminCurrencyView extends APaginatedView<AdminCurrencyView.Detected
         try {
             final Class<?> serviceClass = Class.forName(serviceClassName);
             final RegisteredServiceProvider<?> registration = Bukkit.getServicesManager().getRegistration(serviceClass);
-            return registration != null ? registration.getProvider() : null;
+            if (registration != null) {
+                return registration.getProvider();
+            }
+            return this.resolveServiceProviderFromKnownServices(serviceClassName);
         } catch (final ClassNotFoundException ignored) {
-            return null;
+            return this.resolveServiceProviderFromKnownServices(serviceClassName);
         } catch (final Exception exception) {
             LOGGER.log(Level.FINE, "Failed to resolve service provider: " + serviceClassName, exception);
             return null;
+        }
+    }
+
+    private @Nullable Object resolveServiceProviderFromKnownServices(final @NotNull String serviceClassName) {
+        for (final Class<?> knownServiceClass : Bukkit.getServicesManager().getKnownServices()) {
+            if (!serviceClassName.equals(knownServiceClass.getName())) {
+                continue;
+            }
+
+            final RegisteredServiceProvider<?> registration = Bukkit.getServicesManager().getRegistration(knownServiceClass);
+            if (registration != null) {
+                return registration.getProvider();
+            }
+        }
+        return null;
+    }
+
+    private @Nullable Object resolveJExAdapterProvider() {
+        final Object directProvider = this.resolveServiceProvider(JEX_ADAPTER_CLASS);
+        if (directProvider != null) {
+            return directProvider;
+        }
+
+        for (final Class<?> knownServiceClass : Bukkit.getServicesManager().getKnownServices()) {
+            final String simpleName = knownServiceClass.getSimpleName();
+            if (!"CurrencyAdapter".equals(simpleName) && !"ICurrencyAdapter".equals(simpleName)) {
+                continue;
+            }
+
+            final RegisteredServiceProvider<?> registration = Bukkit.getServicesManager().getRegistration(knownServiceClass);
+            if (registration == null) {
+                continue;
+            }
+
+            final Object provider = registration.getProvider();
+            if (provider != null && this.isJExAdapterCandidate(provider)) {
+                return provider;
+            }
+        }
+
+        return null;
+    }
+
+    private boolean isJExAdapterCandidate(final @NotNull Object provider) {
+        final Class<?> providerClass = provider.getClass();
+        return this.hasMethod(providerClass, "hasGivenCurrency", String.class)
+            || this.hasMethod(providerClass, "hasCurrency", String.class);
+    }
+
+    private boolean hasMethod(
+        final @NotNull Class<?> targetClass,
+        final @NotNull String methodName,
+        final @NotNull Class<?>... parameterTypes
+    ) {
+        try {
+            targetClass.getMethod(methodName, parameterTypes);
+            return true;
+        } catch (final NoSuchMethodException ignored) {
+            return false;
+        }
+    }
+
+    private @Nullable Method resolveCurrencyLookupMethod(final @NotNull Class<?> adapterClass) {
+        try {
+            return adapterClass.getMethod("getAllCurrencies");
+        } catch (final NoSuchMethodException ignored) {
+            try {
+                return adapterClass.getMethod("getCurrencies");
+            } catch (final NoSuchMethodException ignoredFallback) {
+                return null;
+            }
         }
     }
 
@@ -371,6 +460,13 @@ public class AdminCurrencyView extends APaginatedView<AdminCurrencyView.Detected
 
     private @NotNull String normalizeDisplayValue(final @Nullable String value) {
         return value == null || value.isBlank() ? FALLBACK_VALUE : value;
+    }
+
+    private boolean hasProviderEntries(
+        final @NotNull List<DetectedCurrency> detectedCurrencies,
+        final @NotNull String provider
+    ) {
+        return detectedCurrencies.stream().anyMatch(detectedCurrency -> provider.equals(detectedCurrency.provider()));
     }
 
     private @NotNull ItemStack createDefaultCurrencyButton(
@@ -416,7 +512,39 @@ public class AdminCurrencyView extends APaginatedView<AdminCurrencyView.Detected
             .build();
     }
 
-    private @NotNull ItemStack createEmptyStateItem(final @NotNull Player player) {
+    private @NotNull ItemStack createJExDetectedNoCurrencyItem(final @NotNull Player player) {
+        return UnifiedBuilderFactory.item(Material.BOOK)
+            .setName(this.i18n("empty.jex_detected.name", player).build().component())
+            .setLore(this.i18n("empty.jex_detected.lore", player)
+                .withPlaceholder("currency_id", DEFAULT_CURRENCY_IDENTIFIER)
+                .build().children())
+            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+            .build();
+    }
+
+    private @NotNull ItemStack createEmptyStateItem(
+        final @NotNull Player player,
+        final boolean hasJExEconomy,
+        final boolean hasVaultEconomy
+    ) {
+        if (hasJExEconomy) {
+            return UnifiedBuilderFactory.item(Material.BOOK)
+                .setName(this.i18n("empty.jex_detected.name", player).build().component())
+                .setLore(this.i18n("empty.jex_detected.lore", player)
+                    .withPlaceholder("currency_id", DEFAULT_CURRENCY_IDENTIFIER)
+                    .build().children())
+                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                .build();
+        }
+
+        if (hasVaultEconomy) {
+            return UnifiedBuilderFactory.item(Material.PAPER)
+                .setName(this.i18n("empty.vault_detected.name", player).build().component())
+                .setLore(this.i18n("empty.vault_detected.lore", player).build().children())
+                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                .build();
+        }
+
         return UnifiedBuilderFactory.item(Material.PAPER)
             .setName(this.i18n("empty.name", player).build().component())
             .setLore(this.i18n("empty.lore", player).build().children())

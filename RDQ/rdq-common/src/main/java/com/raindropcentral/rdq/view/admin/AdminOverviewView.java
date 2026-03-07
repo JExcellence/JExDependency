@@ -5,8 +5,10 @@ import com.raindropcentral.rplatform.api.luckperms.IRank;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import com.raindropcentral.rplatform.view.BaseView;
+import de.jexcellence.jextranslate.i18n.I18n;
 import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.state.State;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
@@ -133,21 +135,25 @@ public class AdminOverviewView extends BaseView {
 				       
 				       Map<String, List<IRank>> groups = new HashMap<>();
 				       
-				       rdq.get(clickContext).getRankSystemFactory().getRanks().forEach((key, value) ->
-					                                                                            value.forEach((rankPathIdentifier, rank) -> {
-						                                                                            if (!groups.containsKey(rank.getAssignedLuckPermsGroup())) {
+					       rdq.get(clickContext).getRankSystemFactory().getRanks().forEach((key, value) ->
+						                                                                       value.forEach((rankPathIdentifier, rank) -> {
+																								   if (!groups.containsKey(rank.getAssignedLuckPermsGroup())) {
 							                                                                            groups.put(rank.getAssignedLuckPermsGroup(), new ArrayList<>());
-						                                                                            }
+																								   }
+						                                                                            
+						                                                                            String rankDisplayName = PlainTextComponentSerializer.plainText().serialize(
+							                                                                            new I18n.Builder(rank.getDisplayNameKey(), player).build().component()
+						                                                                            );
 						                                                                            
 						                                                                            groups.get(rank.getAssignedLuckPermsGroup()).add(
 							                                                                            new IRRank(
-								                                                                            rank.getIdentifier(),
 								                                                                            rank.getAssignedLuckPermsGroup(),
-								                                                                            rank.getWeight()
+								                                                                            rank.getWeight(),
+								                                                                            rankDisplayName
 							                                                                            )
 						                                                                            );
-					                                                                            })
-				       );
+																							   })
+					       );
 				       
 				       if (groups.isEmpty()) {
 					       i18n("create_ranks.no_ranks_found", player)

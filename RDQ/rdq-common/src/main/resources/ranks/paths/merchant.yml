@@ -1,7 +1,7 @@
 # Merchant Rank Tree
 # The path of trade and wealth
 
-displayOrder: 5
+displayOrder: 3
 isEnabled: true
 isFinalRankTree: false
 requiresAllRankTreesToBeDone: false
@@ -117,7 +117,7 @@ ranks:
     icon:
       type: "GOLD_INGOT"
     previousRanks: ["trader"]
-    nextRanks: ["magnate"]
+    nextRanks: ["magnate_wealth", "magnate_market", "magnate_trade"]
     rewards:
       broker_reward:
         type: "CURRENCY"
@@ -174,28 +174,28 @@ ranks:
           useTotalPlaytime: true
           requiredPlaytimeSeconds: 21600
 
-  magnate:
+  magnate_wealth:
     tier: 4
     weight: 400
-    luckPermsGroup: "merchant_magnate"
-    prefixKey: "&8[&bMagnate&8]"
+    luckPermsGroup: "merchant_magnate_wealth"
+    prefixKey: "&8[&bMagnate of Wealth&8]"
     suffixKey: ""
     isEnabled: true
     icon:
       type: "DIAMOND"
     previousRanks: ["broker"]
-    nextRanks: ["tycoon"]
+    nextRanks: ["tycoon_wealth"]
     rewards:
-      magnate_reward:
+      magnate_wealth_reward:
         type: "CURRENCY"
         icon:
           type: "EMERALD"
         amount: 750
         currencyId: "raindrops"
-      magnate_fortune:
+      magnate_wealth_cache:
         type: "COMPOSITE"
         icon:
-          type: "EMERALD_BLOCK"
+          type: "DIAMOND_BLOCK"
         rewards:
           - type: "ITEM"
             item:
@@ -205,14 +205,14 @@ ranks:
             item:
               material: "DIAMOND_BLOCK"
               amount: 4
-      magnate_experience:
+      magnate_wealth_experience:
         type: "EXPERIENCE"
         icon:
           type: "EXPERIENCE_BOTTLE"
         experienceAmount: 1500
         experienceType: "POINTS"
     requirements:
-      magnate_fortune:
+      wealth_manifest:
         icon:
           type: "DIAMOND_BLOCK"
         itemRequirement:
@@ -234,32 +234,154 @@ ranks:
           consumeOnComplete: true
           requiredType: "LEVEL"
           requiredLevel: 30
-      playtime_req:
-        icon:
-          type: "CLOCK"
-        playtimeRequirement:
-          useTotalPlaytime: true
-          requiredPlaytimeSeconds: 43200
 
-  tycoon:
+  magnate_market:
+    tier: 4
+    weight: 400
+    luckPermsGroup: "merchant_magnate_market"
+    prefixKey: "&8[&2Magnate of Markets&8]"
+    suffixKey: ""
+    isEnabled: true
+    icon:
+      type: "ENDER_CHEST"
+    previousRanks: ["broker"]
+    nextRanks: ["tycoon_market"]
+    rewards:
+      magnate_market_reward:
+        type: "CURRENCY"
+        icon:
+          type: "EMERALD"
+        amount: 750
+        currencyId: "raindrops"
+      magnate_market_stock:
+        type: "COMPOSITE"
+        icon:
+          type: "ENDER_CHEST"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "ENDER_CHEST"
+              amount: 1
+          - type: "ITEM"
+            item:
+              material: "SHULKER_BOX"
+              amount: 1
+      magnate_market_experience:
+        type: "EXPERIENCE"
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceAmount: 1500
+        experienceType: "POINTS"
+    requirements:
+      market_manifest:
+        icon:
+          type: "ENDER_CHEST"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "ENDER_CHEST"
+              amount: 2
+            item2:
+              type: "SHULKER_BOX"
+              amount: 2
+            item3:
+              type: "GOLD_BLOCK"
+              amount: 12
+            item4:
+              type: "EMERALD_BLOCK"
+              amount: 12
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 30
+
+  magnate_trade:
+    tier: 4
+    weight: 400
+    luckPermsGroup: "merchant_magnate_trade"
+    prefixKey: "&8[&6Magnate of Trade&8]"
+    suffixKey: ""
+    isEnabled: true
+    icon:
+      type: "SHULKER_BOX"
+    previousRanks: ["broker"]
+    nextRanks: ["tycoon_trade"]
+    rewards:
+      magnate_trade_reward:
+        type: "CURRENCY"
+        icon:
+          type: "EMERALD"
+        amount: 750
+        currencyId: "raindrops"
+      magnate_trade_cargo:
+        type: "COMPOSITE"
+        icon:
+          type: "SHULKER_BOX"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "SHULKER_BOX"
+              amount: 2
+          - type: "ITEM"
+            item:
+              material: "NETHERITE_INGOT"
+              amount: 2
+      magnate_trade_experience:
+        type: "EXPERIENCE"
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceAmount: 1500
+        experienceType: "POINTS"
+    requirements:
+      trade_manifest:
+        icon:
+          type: "SHULKER_BOX"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "SHULKER_BOX"
+              amount: 2
+            item2:
+              type: "NETHERITE_INGOT"
+              amount: 4
+            item3:
+              type: "EMERALD_BLOCK"
+              amount: 8
+            item4:
+              type: "ANCIENT_DEBRIS"
+              amount: 4
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 30
+
+  tycoon_wealth:
     tier: 5
     weight: 500
-    luckPermsGroup: "merchant_tycoon"
-    prefixKey: "&8[&5Tycoon&8]"
+    luckPermsGroup: "merchant_tycoon_wealth"
+    prefixKey: "&8[&5Tycoon of Wealth&8]"
     suffixKey: ""
     isEnabled: true
     isFinalRank: true
     icon:
       type: "NETHERITE_INGOT"
-    previousRanks: ["magnate"]
+    previousRanks: ["magnate_wealth"]
     rewards:
-      tycoon_reward:
+      tycoon_wealth_reward:
         type: "CURRENCY"
         icon:
           type: "EMERALD_BLOCK"
-        amount: 2000
+        amount: 1000
         currencyId: "raindrops"
-      ultimate_wealth:
+      sovereign_wealth:
         type: "COMPOSITE"
         icon:
           type: "BEACON"
@@ -274,20 +396,16 @@ ranks:
               amount: 2
           - type: "ITEM"
             item:
-              material: "DIAMOND_BLOCK"
-              amount: 8
-          - type: "ITEM"
-            item:
               material: "EMERALD_BLOCK"
               amount: 16
-      tycoon_experience:
+      tycoon_wealth_experience:
         type: "EXPERIENCE"
         icon:
           type: "EXPERIENCE_BOTTLE"
         experienceAmount: 3000
         experienceType: "POINTS"
     requirements:
-      ultimate_wealth:
+      ultimate_tycoon_wealth:
         icon:
           type: "BEACON"
         itemRequirement:
@@ -298,13 +416,13 @@ ranks:
               amount: 1
             item2:
               type: "NETHERITE_BLOCK"
-              amount: 4
+              amount: 3
             item3:
               type: "DIAMOND_BLOCK"
               amount: 16
             item4:
               type: "EMERALD_BLOCK"
-              amount: 32
+              amount: 24
       experience_req:
         icon:
           type: "EXPERIENCE_BOTTLE"
@@ -312,9 +430,139 @@ ranks:
           consumeOnComplete: true
           requiredType: "LEVEL"
           requiredLevel: 45
-      playtime_req:
+
+  tycoon_market:
+    tier: 5
+    weight: 500
+    luckPermsGroup: "merchant_tycoon_market"
+    prefixKey: "&8[&2Tycoon of Markets&8]"
+    suffixKey: ""
+    isEnabled: true
+    isFinalRank: true
+    icon:
+      type: "ENDER_CHEST"
+    previousRanks: ["magnate_market"]
+    rewards:
+      tycoon_market_reward:
+        type: "CURRENCY"
         icon:
-          type: "CLOCK"
-        playtimeRequirement:
-          useTotalPlaytime: true
-          requiredPlaytimeSeconds: 162000
+          type: "EMERALD_BLOCK"
+        amount: 1000
+        currencyId: "raindrops"
+      auction_mastery:
+        type: "COMPOSITE"
+        icon:
+          type: "ENDER_CHEST"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "ENDER_CHEST"
+              amount: 2
+          - type: "ITEM"
+            item:
+              material: "SHULKER_BOX"
+              amount: 2
+          - type: "ITEM"
+            item:
+              material: "EMERALD_BLOCK"
+              amount: 12
+      tycoon_market_experience:
+        type: "EXPERIENCE"
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceAmount: 3000
+        experienceType: "POINTS"
+    requirements:
+      ultimate_tycoon_market:
+        icon:
+          type: "ENDER_CHEST"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "ENDER_CHEST"
+              amount: 4
+            item2:
+              type: "SHULKER_BOX"
+              amount: 4
+            item3:
+              type: "GOLD_BLOCK"
+              amount: 24
+            item4:
+              type: "EMERALD_BLOCK"
+              amount: 24
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 45
+
+  tycoon_trade:
+    tier: 5
+    weight: 500
+    luckPermsGroup: "merchant_tycoon_trade"
+    prefixKey: "&8[&6Tycoon of Trade&8]"
+    suffixKey: ""
+    isEnabled: true
+    isFinalRank: true
+    icon:
+      type: "SHULKER_BOX"
+    previousRanks: ["magnate_trade"]
+    rewards:
+      tycoon_trade_reward:
+        type: "CURRENCY"
+        icon:
+          type: "EMERALD_BLOCK"
+        amount: 1000
+        currencyId: "raindrops"
+      caravan_empire:
+        type: "COMPOSITE"
+        icon:
+          type: "SHULKER_BOX"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "SHULKER_BOX"
+              amount: 4
+          - type: "ITEM"
+            item:
+              material: "NETHERITE_INGOT"
+              amount: 4
+          - type: "ITEM"
+            item:
+              material: "GOLD_BLOCK"
+              amount: 16
+      tycoon_trade_experience:
+        type: "EXPERIENCE"
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceAmount: 3000
+        experienceType: "POINTS"
+    requirements:
+      ultimate_tycoon_trade:
+        icon:
+          type: "SHULKER_BOX"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "SHULKER_BOX"
+              amount: 6
+            item2:
+              type: "NETHERITE_INGOT"
+              amount: 8
+            item3:
+              type: "EMERALD_BLOCK"
+              amount: 16
+            item4:
+              type: "ANCIENT_DEBRIS"
+              amount: 8
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 45

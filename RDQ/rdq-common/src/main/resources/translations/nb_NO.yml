@@ -82,236 +82,281 @@ rank:
         - "<gradient:#6b7280:#9ca3af>Ingen rangering er valgt</gradient>"
   # Ranger Tree Ranger
   ranger:
+    scout:
+      name: <gradient:#22c55e:#86efac>🏹 Scout of Trails</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Leser hovavtrykk og vindskift.</gradient>
+        - <gradient:#10b981:#34d399>➤ Tier I • Nature Initiate</gradient>
     hunter:
-      name: "<gradient:#7c3aed:#a78bfa>🏹 Jeger</gradient>"
+      name: <gradient:#16a34a:#4ade80>🏹 Hunter of the Wilds</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>En nybegynner som lærer naturens veier</gradient>"
-    archer:
-      name: "<gradient:#10b981:#34d399>🎯 Bueskytter</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Dyktig med buen, dødelig på avstand</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Forfølger byttedyr med tålmodig presisjon.</gradient>
+        - <gradient:#10b981:#34d399>➤ Tier II • Wild Pursuit</gradient>
     tracker:
-      name: "<gradient:#3b82f6:#60a5fa>🔍 Tracker</gradient>"
+      name: <gradient:#0ea5e9:#38bdf8>🏹 Spor av tegn</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Ekspert på å finne og følge byttedyr</gradient>"
-    marksman:
-      name: "<gradient:#f59e0b:#fbbf24>🎯 Skytter</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Følger stier ingen storm kan slette.</gradient>
+        - <gradient:#3b82f6:#60a5fa>➤ Nivå III • Veivalg fremover</gradient>
+    warden_primal:
+      name: <gradient:#14b8a6:#2dd4bf>🛡 Dyrenes vaktmester</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Presisjonsskytespill med dødelig nøyaktighet</gradient>"
-    pathfinder:
-      name: "<gradient:#a855f7:#c084fc>🗺 Stifinner</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Binding med apex-skapninger i riket.</gradient>
+        - <gradient:#14b8a6:#2dd4bf>➤ Tier IV • Primal Branch</gradient>
+    warden_storm:
+      name: <gradient:#2563eb:#60a5fa>⚡ Warden of Storms</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Mesterforsker av ukjente land</gradient>"
-    sniper:
-      name: "<gradient:#ef4444:#f87171>🎯 Snikskytter</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Fyrer sanne gjennom torden og regn.</gradient>
+        - <gradient:#2563eb:#60a5fa>➤ Tier IV • Storm Branch</gradient>
+    warden_wild:
+      name: <gradient:#16a34a:#84cc16>🌿 Warden of the Wild</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Eliteskytter, ett skudd ett drap</gradient>"
-    forest_lord:
-      name: "<gradient:#10b981:#34d399>🌲 Skogsherre</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Bevokter hellige grenser og skjulte lysninger.</gradient>
+        - <gradient:#16a34a:#84cc16>➤ Tier IV • Wild Branch</gradient>
+    beastmaster_primal:
+      name: <gradient:#7c3aed:#c084fc>👑 Beastmaster Primal</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Villmarkens mester, ett med naturen</gradient>"
-  # Krigertre rangerer
+        - <gradient:#6b7280:#9ca3af>✦ Befaler legendariske beist uten frykt.</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ Nivå V • Endelig rangering</gradient>
+    beastmaster_storm:
+      name: <gradient:#1d4ed8:#3b82f6>👑 Beastmaster Storm</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Hver bolt styrer din nådeløse volley.</gradient>
+        - <gradient:#1d4ed8:#3b82f6>➤ Nivå V • Endelig rangering</gradient>
+    beastmaster_wild:
+      name: <gradient:#15803d:#22c55e>👑 Beastmaster Wild</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Naturen selv reiser seg for å svare på anropet ditt.</gradient>
+        - <gradient:#15803d:#22c55e>➤ Nivå V • Endelig rangering</gradient>
   warrior:
     recruit:
-      name: "<gradient:#6b7280:#9ca3af>Rekruttere</gradient>"
+      name: <gradient:#6b7280:#9ca3af>⚔ Rekruttere</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>En ny kriger begynner sin reise</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Lær det grunnleggende om kamp</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Et friskt blad med uprøvd besluttsomhet.</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ Nivå I • Treningsbaner</gradient>
     soldier:
-      name: "<gradient:#3b82f6:#60a5fa>Soldat</gradient>"
+      name: <gradient:#3b82f6:#60a5fa>⚔ Soldat</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Opplært i kampkunsten</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Klar for kamp</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Herdet av bor og frontlinjetjeneste.</gradient>
+        - <gradient:#3b82f6:#60a5fa>➤ Nivå II • Feltdisiplin</gradient>
     veteran:
-      name: "<gradient:#f59e0b:#fbbf24>Veteran</gradient>"
+      name: <gradient:#f59e0b:#fbbf24>⚔ Veteran</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Kampherdet kriger</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Velg din spesialiseringsvei</gradient>"
-    # Spesialisering gren 1: Berserker (offensiv)
+        - <gradient:#6b7280:#9ca3af>✦ Kamparr markerer din opptjente visdom.</gradient>
+        - <gradient:#f59e0b:#fbbf24>➤ Nivå III • Velg din vei</gradient>
     berserker:
-      name: "<gradient:#ef4444:#f87171>Berserker</gradient>"
+      name: <gradient:#ef4444:#f87171>🔥 Berserker</gradient>
       lore:
-        - "<gradient:#ef4444:#f87171>Path of Fury</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Slipp løs ødeleggende angrep</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Ofre forsvar for rå kraft</gradient>"
-    # Spesialisering gren 2: Guardian (defensiv)
+        - <gradient:#6b7280:#9ca3af>✦ Bytter forsvar for ødeleggende krenkelser.</gradient>
+        - <gradient:#ef4444:#f87171>➤ Nivå IV • Fury Branch</gradient>
     guardian:
-      name: "<gradient:#3b82f6:#60a5fa>Verge</gradient>"
+      name: <gradient:#2563eb:#60a5fa>🛡 Verge</gradient>
       lore:
-        - "<gradient:#3b82f6:#60a5fa>Veien til beskyttelse</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Bli et uknuselig skjold</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Beskytt dine allierte for enhver pris</gradient>"
-    # Spesialisering gren 3: Gladiator (balansert)
+        - <gradient:#6b7280:#9ca3af>✦ Står stødig der andre ville knekke.</gradient>
+        - <gradient:#2563eb:#60a5fa>➤ Tier IV • Skjoldgren</gradient>
     gladiator:
-      name: "<gradient:#a855f7:#c084fc>Gladiator</gradient>"
+      name: <gradient:#a855f7:#c084fc>🏟 Gladiator</gradient>
       lore:
-        - "<gradient:#a855f7:#c084fc>Path of Glory</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Mester i arenakamp</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Balanser angrep og forsvar</gradient>"
-    # Endelige rangeringer
+        - <gradient:#6b7280:#9ca3af>✦ Mestrer balansert arenakrigføring.</gradient>
+        - <gradient:#a855f7:#c084fc>➤ Tier IV • Arena-avdelingen</gradient>
     warlord_fury:
-      name: "<gradient:#ef4444:#f87171>Warlord of Fury</gradient>"
+      name: <gradient:#dc2626:#fb7185>👑 Warlord of Fury</gradient>
       lore:
-        - "<gradient:#ef4444:#f87171>Ultimate Berserker</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Ustoppelig ødeleggelseskraft</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Frykt inkarnerer på slagmarken</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ En ustoppelig ødeleggelsesmotor.</gradient>
+        - <gradient:#dc2626:#fb7185>➤ Nivå V • Endelig rangering</gradient>
     warlord_shield:
-      name: "<gradient:#3b82f6:#60a5fa>skjoldets krigsherre</gradient>"
+      name: <gradient:#1d4ed8:#60a5fa>👑 Warlord of the Shield</gradient>
       lore:
-        - "<gradient:#3b82f6:#60a5fa>Ultimate Guardian</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Ubevegelig gjenstand, evig beskytter</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Ingen skal passere mens du står</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Den siste veggen mellom liv og ruin.</gradient>
+        - <gradient:#1d4ed8:#60a5fa>➤ Nivå V • Endelig rangering</gradient>
     warlord_arena:
-      name: "<gradient:#a855f7:#c084fc>Arenaens krigsherre</gradient>"
+      name: <gradient:#7c3aed:#c084fc>👑 Warlord of the Arena</gradient>
       lore:
-        - "<gradient:#a855f7:#c084fc>Ultimate Gladiator</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Mesternes mester</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Legenden om arenaen</gradient>"
-    # Eldre rangeringer (for bakoverkompatibilitet)
-    knight:
-      name: "<gradient:#f59e0b:#fbbf24>Ridder</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Ærede kriger av riket</gradient>"
-    champion:
-      name: "<gradient:#a855f7:#c084fc>Champion</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Legendarisk jagerfly, fryktet av alle</gradient>"
-    warlord:
-      name: "<gradient:#ef4444:#f87171>Krigsherre</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Krigsmester, hærfører</gradient>"
-  # Mage Tree rangerer
+        - <gradient:#6b7280:#9ca3af>✦ Kronet mester for hvert Colosseum.</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ Nivå V • Endelig rangering</gradient>
   mage:
     apprentice:
-      name: "<gradient:#a855f7:#c084fc>✨ Lærling</gradient>"
+      name: <gradient:#a855f7:#d8b4fe>✨ Lærling</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Lære det grunnleggende om magi</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Gnister av mystisk kraft våkner.</gradient>
+        - <gradient:#a855f7:#d8b4fe>➤ Tier I • Arcane Foundations</gradient>
     adept:
-      name: "<gradient:#3b82f6:#60a5fa>✨ Adept</gradient>"
+      name: <gradient:#3b82f6:#93c5fd>✨ Adept</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Vokser i magisk kraft</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Vever kontrollerte og fokuserte trollformler.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Tier II • Arcane Practice</gradient>
     wizard:
-      name: "<gradient:#f59e0b:#fbbf24>✨ Veiviser</gradient>"
+      name: <gradient:#f59e0b:#fde68a>✨ Veiviser</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Mester i mystiske kunster</gradient>"
-    archmage:
-      name: "<gradient:#ef4444:#f87171>✨ Erkemageri</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Styrer komplekse mønstre av magi.</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ Nivå III • Velg din doktrine</gradient>
+    sorcerer_arcane:
+      name: <gradient:#8b5cf6:#c4b5fd>🔮 Sorcerer of Arcana</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Den øverste mester over all magi</gradient>"
-  # Rogue Tree rangerer
+        - <gradient:#6b7280:#9ca3af>✦ Foredler rå kraft til elegant kraft.</gradient>
+        - <gradient:#8b5cf6:#c4b5fd>➤ Tier IV • Arcane Branch</gradient>
+    sorcerer_spell:
+      name: <gradient:#d946ef:#f0abfc>📜 Trollmannen</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Utvider grimoirekontroll og presisjon.</gradient>
+        - <gradient:#d946ef:#f0abfc>➤ Nivå IV • Stave gren</gradient>
+    sorcerer_void:
+      name: <gradient:#1d4ed8:#60a5fa>🌌 Sorcerer of the Void</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Bøyer avgrunnsenergier til din vilje.</gradient>
+        - <gradient:#1d4ed8:#60a5fa>➤ Tier IV • Void Branch</gradient>
+    archmage_arcane:
+      name: <gradient:#7c3aed:#c084fc>👑 Archmage of Arcana</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Supreme arkitekt av ren mystisk makt.</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ Nivå V • Endelig rangering</gradient>
+    archmage_spell:
+      name: <gradient:#d946ef:#f5d0fe>👑 Archmage of Spells</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Hver besvergelse svarer umiddelbart.</gradient>
+        - <gradient:#d946ef:#f5d0fe>➤ Nivå V • Endelig rangering</gradient>
+    archmage_void:
+      name: <gradient:#1e3a8a:#60a5fa>👑 Archmage of the Void</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Styrer kantene mellom verdener.</gradient>
+        - <gradient:#1e3a8a:#60a5fa>➤ Nivå V • Endelig rangering</gradient>
   rogue:
     pickpocket:
-      name: "<gradient:#6b7280:#9ca3af>🗡 Lommetyv</gradient>"
+      name: <gradient:#6b7280:#9ca3af>🗡 Lommetyv</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Raske fingre, raskere flukt</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Lærer timing, feilretning og hastighet.</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ Nivå I • Streetcraft</gradient>
     thief:
-      name: "<gradient:#3b82f6:#60a5fa>🗡 Tyv</gradient>"
+      name: <gradient:#3b82f6:#93c5fd>🗡 Tyv</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Mester av sniking og tyveri</gradient>"
-    scout:
-      name: "<gradient:#10b981:#34d399>🗡 Speider</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Øyne og ører av skyggene</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Sklir gjennom låser og utkikkslinjer.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Tier II • Stille inngang</gradient>
     assassin:
-      name: "<gradient:#ef4444:#f87171>🗡 Assassin</gradient>"
+      name: <gradient:#ef4444:#f87171>🗡 Snikmorder</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Stille morder, død fra skygger</gradient>"
-    infiltrator:
-      name: "<gradient:#a855f7:#c084fc>🗡 Infiltrator</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Slår en gang og forsvinner sporløst.</gradient>
+        - <gradient:#ef4444:#f87171>➤ Nivå III • Velg din metode</gradient>
+    shadow_stealth:
+      name: <gradient:#0ea5e9:#67e8f9>🌒 Shadow of Stealth</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Ekspert på å komme seg inn og ut uoppdaget</gradient>"
-    shadowblade:
-      name: "<gradient:#6b7280:#9ca3af>🗡 Shadowblade</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Mestrer bevegelse ingen øye kan følge.</gradient>
+        - <gradient:#0ea5e9:#67e8f9>➤ Tier IV • Stealth Branch</gradient>
+    shadow_night:
+      name: <gradient:#7c3aed:#c4b5fd>🌘 Shadow of Night</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Nattens dødelige kriger</gradient>"
-    spymaster:
-      name: "<gradient:#3b82f6:#60a5fa>🗡 Spymaster</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Gjør mørke til dødelig fordel.</gradient>
+        - <gradient:#7c3aed:#c4b5fd>➤ Nivå IV • Nattgren</gradient>
+    shadow_sabotage:
+      name: <gradient:#f97316:#fb923c>💣 Shadow of Sabotage</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Kontrollør av informasjonsnettverk</gradient>"
-    shadow_master:
-      name: "<gradient:#1f2937:#374151>🗡 Skyggemester</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Demonterer planer før fiender reagerer.</gradient>
+        - <gradient:#f97316:#fb923c>➤ Nivå IV • Sabotasjegren</gradient>
+    phantom_stealth:
+      name: <gradient:#14b8a6:#5eead4>👑 Phantom of Stealth</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Ett med selve mørket</gradient>"
-    shadowmaster:
-      name: "<gradient:#1f2937:#374151>🗡 Shadowmaster</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Blir en urørlig urban myte.</gradient>
+        - <gradient:#14b8a6:#5eead4>➤ Nivå V • Endelig rangering</gradient>
+    phantom_night:
+      name: <gradient:#9333ea:#e9d5ff>👑 Phantom of Night</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Øverste hersker over alle skygger</gradient>"
-  # Geistlige tre rangerer
+        - <gradient:#6b7280:#9ca3af>✦ Eier midnattstimen fullstendig.</gradient>
+        - <gradient:#9333ea:#e9d5ff>➤ Nivå V • Endelig rangering</gradient>
+    phantom_sabotage:
+      name: <gradient:#ea580c:#fdba74>👑 Phantom of Sabotage</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Avslutter kamper før de begynner.</gradient>
+        - <gradient:#ea580c:#fdba74>➤ Nivå V • Endelig rangering</gradient>
   cleric:
     acolyte:
-      name: "<gradient:#f59e0b:#fbbf24>✝ Acolyte</gradient>"
+      name: <gradient:#f59e0b:#fde68a>✝ Acolyte</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Hengiven tjener av det guddommelige</gradient>"
-    devotee:
-      name: "<gradient:#f59e0b:#fbbf24>✝ Hengiven</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Trofast tilhenger av den guddommelige vei</gradient>"
-    priest:
-      name: "<gradient:#10b981:#34d399>✝ Prest</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Healer og beskytter av de troende</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Begynner tjenestens hellige vei.</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ Nivå I • Andakt</gradient>
     healer:
-      name: "<gradient:#10b981:#34d399>✝ Healer</gradient>"
+      name: <gradient:#10b981:#6ee7b7>✝ Healer</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Master i restorative arts</gradient>"
-    bishop:
-      name: "<gradient:#a855f7:#c084fc>✝ Biskop</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Gjenoppretter allierte under hardt press.</gradient>
+        - <gradient:#10b981:#6ee7b7>➤ Tier II • Restaurering</gradient>
+    priest:
+      name: <gradient:#3b82f6:#93c5fd>✝ Prest</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Leder for de troende</gradient>"
-    oracle:
-      name: "<gradient:#3b82f6:#60a5fa>✝ Oracle</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Veileder fester med hellig disiplin.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Nivå III • Velg ditt anrop</gradient>
+    bishop_divine:
+      name: <gradient:#8b5cf6:#c4b5fd>⛪ Guddommelighetens biskop</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Seer av guddommelige visjoner</gradient>"
-    high_priest:
-      name: "<gradient:#ef4444:#f87171>✝ Yppersteprest</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Kanaler direkte strålende autoritet.</gradient>
+        - <gradient:#8b5cf6:#c4b5fd>➤ Nivå IV • Divine Branch</gradient>
+    bishop_light:
+      name: <gradient:#f59e0b:#fef08a>☀ Lysets biskop</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Det guddommeliges høyeste stemme</gradient>"
-  # Handelstre rangerer
+        - <gradient:#6b7280:#9ca3af>✦ Blindrer korrupsjon med hellig glans.</gradient>
+        - <gradient:#f59e0b:#fef08a>➤ Tier IV • Light Branch</gradient>
+    bishop_soul:
+      name: <gradient:#06b6d4:#67e8f9>🕊 Biskop av sjeler</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Vokter terskelen til liv og død.</gradient>
+        - <gradient:#06b6d4:#67e8f9>➤ Nivå IV • Soul Branch</gradient>
+    high_priest_divine:
+      name: <gradient:#7c3aed:#ddd6fe>👑 Guddommelighetens yppersteprest</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Erklærer mirakler i hjertet av kaos.</gradient>
+        - <gradient:#7c3aed:#ddd6fe>➤ Nivå V • Endelig rangering</gradient>
+    high_priest_light:
+      name: <gradient:#f59e0b:#fef3c7>👑 Lysets yppersteprest</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Bader allierte i urokkelig daggry.</gradient>
+        - <gradient:#f59e0b:#fef3c7>➤ Nivå V • Endelig rangering</gradient>
+    high_priest_soul:
+      name: <gradient:#0891b2:#a5f3fc>👑 sjelenes yppersteprest</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Hyrder ånder utover dødelig frykt.</gradient>
+        - <gradient:#0891b2:#a5f3fc>➤ Nivå V • Endelig rangering</gradient>
   merchant:
     peddler:
-      name: "<gradient:#6b7280:#9ca3af>💰 Kjøpmann</gradient>"
+      name: <gradient:#6b7280:#9ca3af>💰 Kjøpmann</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Selger varer på gaten</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Starter med grus, sjarm og små bytter.</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ Nivå I • Gatehandel</gradient>
     trader:
-      name: "<gradient:#3b82f6:#60a5fa>💰 Trader</gradient>"
+      name: <gradient:#3b82f6:#93c5fd>💰 Trader</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Etablert kjøpmann med forbindelser</gradient>"
-    vendor:
-      name: "<gradient:#10b981:#34d399>💰 Leverandør</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Utvider ruter og pålitelige kontakter.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Tier II • Markeds tilstedeværelse</gradient>
+    broker:
+      name: <gradient:#f59e0b:#fde68a>💰 Megler</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Dyktig selger av varer</gradient>"
-    artificer:
-      name: "<gradient:#f59e0b:#fbbf24>💰 Kunstner</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Lukker avtaler med høy verdi med presisjon.</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ Nivå III • Velg ditt imperium</gradient>
+    magnate_wealth:
+      name: <gradient:#10b981:#6ee7b7>📈 Magnat of Wealth</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Håndverker av fine varer</gradient>"
-    alchemist:
-      name: "<gradient:#a855f7:#c084fc>💰 Alkymist</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Bygger ren kapital i et uovertruffent tempo.</gradient>
+        - <gradient:#10b981:#6ee7b7>➤ Nivå IV • Formuesgren</gradient>
+    magnate_market:
+      name: <gradient:#06b6d4:#67e8f9>🏛 Magnate of Markets</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Mester av eliksirer og eliksirer</gradient>"
-    merchant:
-      name: "<gradient:#f59e0b:#fbbf24>💰 Kjøpmann</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Organiserer tilbuds- og etterspørselssykluser.</gradient>
+        - <gradient:#06b6d4:#67e8f9>➤ Tier IV • Markedsgren</gradient>
+    magnate_trade:
+      name: <gradient:#f97316:#fdba74>🚚 Magnat of Trade</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Vellykket bedriftseier</gradient>"
-    master_crafter:
-      name: "<gradient:#ef4444:#f87171>💰 Master Crafter</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Dominerer campingvognbaner og logistikk.</gradient>
+        - <gradient:#f97316:#fdba74>➤ Nivå IV • Handelsgren</gradient>
+    tycoon_wealth:
+      name: <gradient:#22c55e:#bbf7d0>👑 Tycoon of Wealth</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Rikets øverste håndverker</gradient>"
-    merchant_prince:
-      name: "<gradient:#a855f7:#c084fc>💰 Handelsprins</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Snu økonomier med en enkelt beslutning.</gradient>
+        - <gradient:#22c55e:#bbf7d0>➤ Nivå V • Endelig rangering</gradient>
+    tycoon_market:
+      name: <gradient:#0891b2:#a5f3fc>👑 Tycoon of Markets</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Handelskongelighet</gradient>"
-    tycoon:
-      name: "<gradient:#a855f7:#c084fc>💰 Tycoon</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Fastsetter priser hver guild må respektere.</gradient>
+        - <gradient:#0891b2:#a5f3fc>➤ Nivå V • Endelig rangering</gradient>
+    tycoon_trade:
+      name: <gradient:#ea580c:#fed7aa>👑 Tycoon of Trade</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Master i handel og handel</gradient>"
-    guild_master:
-      name: "<gradient:#ef4444:#f87171>💰 Gildemester</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Leder av handelslauget</gradient>"
-
-# ============================================
-# BOUNTY-LYTTERMELDINGER
-# ============================================
+        - <gradient:#6b7280:#9ca3af>✦ Eier veiene, havnene og fortjenesten.</gradient>
+        - <gradient:#ea580c:#fed7aa>➤ Nivå V • Endelig rangering</gradient>
 bounty_listener:
   bounty_active:
     warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>Du har en aktiv dusør på hodet ditt!</gradient>"
@@ -557,81 +602,281 @@ rank_path_overview_ui:
     tier: "<gradient:#6b7280:#9ca3af>Nivå:</gradient> <gradient:#f59e0b:#fbbf24>%tier%</gradient>"
     weight: "<gradient:#6b7280:#9ca3af>Vekt:</gradient> <gradient:#f59e0b:#fbbf24>%weight%</gradient>"
     ranger:
+      scout:
+        name: <gradient:#22c55e:#86efac>🏹 Scout of Trails</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Leser hovavtrykk og vindskift.</gradient>
+          - <gradient:#10b981:#34d399>➤ Tier I • Nature Initiate</gradient>
       hunter:
-        name: "<gradient:#7c3aed:#a78bfa>🏹 Jeger</gradient>"
+        name: <gradient:#16a34a:#4ade80>🏹 Hunter of the Wilds</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>En nybegynner som lærer naturens veier</gradient>"
-      archer:
-        name: "<gradient:#10b981:#34d399>🎯 Bueskytter</gradient>"
-        lore:
-          - "<gradient:#6b7280:#9ca3af>Dyktig med buen, dødelig på avstand</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Forfølger byttedyr med tålmodig presisjon.</gradient>
+          - <gradient:#10b981:#34d399>➤ Tier II • Wild Pursuit</gradient>
       tracker:
-        name: "<gradient:#3b82f6:#60a5fa>🔍 Tracker</gradient>"
+        name: <gradient:#0ea5e9:#38bdf8>🏹 Spor av tegn</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Ekspert på å finne og følge byttedyr</gradient>"
-      marksman:
-        name: "<gradient:#f59e0b:#fbbf24>🎯 Skytter</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Følger stier ingen storm kan slette.</gradient>
+          - <gradient:#3b82f6:#60a5fa>➤ Nivå III • Veivalg fremover</gradient>
+      warden_primal:
+        name: <gradient:#14b8a6:#2dd4bf>🛡 Dyrenes vaktmester</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Presisjonsskytespill med dødelig nøyaktighet</gradient>"
-      pathfinder:
-        name: "<gradient:#a855f7:#c084fc>🗺 Stifinner</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Binding med apex-skapninger i riket.</gradient>
+          - <gradient:#14b8a6:#2dd4bf>➤ Tier IV • Primal Branch</gradient>
+      warden_storm:
+        name: <gradient:#2563eb:#60a5fa>⚡ Warden of Storms</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Mesterforsker av ukjente land</gradient>"
-      sniper:
-        name: "<gradient:#ef4444:#f87171>🎯 Snikskytter</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Fyrer sanne gjennom torden og regn.</gradient>
+          - <gradient:#2563eb:#60a5fa>➤ Tier IV • Storm Branch</gradient>
+      warden_wild:
+        name: <gradient:#16a34a:#84cc16>🌿 Warden of the Wild</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Eliteskytter, ett skudd ett drap</gradient>"
-      forest_lord:
-        name: "<gradient:#10b981:#34d399>🌲 Skogsherre</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Bevokter hellige grenser og skjulte lysninger.</gradient>
+          - <gradient:#16a34a:#84cc16>➤ Tier IV • Wild Branch</gradient>
+      beastmaster_primal:
+        name: <gradient:#7c3aed:#c084fc>👑 Beastmaster Primal</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Villmarkens mester, ett med naturen</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Befaler legendariske beist uten frykt.</gradient>
+          - <gradient:#7c3aed:#c084fc>➤ Nivå V • Endelig rangering</gradient>
+      beastmaster_storm:
+        name: <gradient:#1d4ed8:#3b82f6>👑 Beastmaster Storm</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Hver bolt styrer din nådeløse volley.</gradient>
+          - <gradient:#1d4ed8:#3b82f6>➤ Nivå V • Endelig rangering</gradient>
+      beastmaster_wild:
+        name: <gradient:#15803d:#22c55e>👑 Beastmaster Wild</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Naturen selv reiser seg for å svare på anropet ditt.</gradient>
+          - <gradient:#15803d:#22c55e>➤ Nivå V • Endelig rangering</gradient>
     warrior:
       recruit:
-        name: "<gradient:#6b7280:#9ca3af>⚔ Rekruttere</gradient>"
+        name: <gradient:#6b7280:#9ca3af>⚔ Rekruttere</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>En ny kriger begynner sin reise</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Et friskt blad med uprøvd besluttsomhet.</gradient>
+          - <gradient:#94a3b8:#cbd5e1>➤ Nivå I • Treningsbaner</gradient>
       soldier:
-        name: "<gradient:#3b82f6:#60a5fa>⚔ Soldat</gradient>"
+        name: <gradient:#3b82f6:#60a5fa>⚔ Soldat</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Opplært i kampkunsten</gradient>"
-      knight:
-        name: "<gradient:#f59e0b:#fbbf24>⚔ Ridder</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Herdet av bor og frontlinjetjeneste.</gradient>
+          - <gradient:#3b82f6:#60a5fa>➤ Nivå II • Feltdisiplin</gradient>
+      veteran:
+        name: <gradient:#f59e0b:#fbbf24>⚔ Veteran</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Ærede kriger av riket</gradient>"
-      champion:
-        name: "<gradient:#a855f7:#c084fc>⚔ Mester</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Kamparr markerer din opptjente visdom.</gradient>
+          - <gradient:#f59e0b:#fbbf24>➤ Nivå III • Velg din vei</gradient>
+      berserker:
+        name: <gradient:#ef4444:#f87171>🔥 Berserker</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Legendarisk jagerfly, fryktet av alle</gradient>"
-      warlord:
-        name: "<gradient:#ef4444:#f87171>⚔ Krigsherre</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Bytter forsvar for ødeleggende krenkelser.</gradient>
+          - <gradient:#ef4444:#f87171>➤ Nivå IV • Fury Branch</gradient>
+      guardian:
+        name: <gradient:#2563eb:#60a5fa>🛡 Verge</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Krigsmester, hærfører</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Står stødig der andre ville knekke.</gradient>
+          - <gradient:#2563eb:#60a5fa>➤ Tier IV • Skjoldgren</gradient>
+      gladiator:
+        name: <gradient:#a855f7:#c084fc>🏟 Gladiator</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Mestrer balansert arenakrigføring.</gradient>
+          - <gradient:#a855f7:#c084fc>➤ Tier IV • Arena-avdelingen</gradient>
+      warlord_fury:
+        name: <gradient:#dc2626:#fb7185>👑 Warlord of Fury</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ En ustoppelig ødeleggelsesmotor.</gradient>
+          - <gradient:#dc2626:#fb7185>➤ Nivå V • Endelig rangering</gradient>
+      warlord_shield:
+        name: <gradient:#1d4ed8:#60a5fa>👑 Warlord of the Shield</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Den siste veggen mellom liv og ruin.</gradient>
+          - <gradient:#1d4ed8:#60a5fa>➤ Nivå V • Endelig rangering</gradient>
+      warlord_arena:
+        name: <gradient:#7c3aed:#c084fc>👑 Warlord of the Arena</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Kronet mester for hvert Colosseum.</gradient>
+          - <gradient:#7c3aed:#c084fc>➤ Nivå V • Endelig rangering</gradient>
     mage:
       apprentice:
-        name: "<gradient:#a855f7:#c084fc>✨ Lærling</gradient>"
+        name: <gradient:#a855f7:#d8b4fe>✨ Lærling</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Lære det grunnleggende om magi</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Gnister av mystisk kraft våkner.</gradient>
+          - <gradient:#a855f7:#d8b4fe>➤ Tier I • Arcane Foundations</gradient>
       adept:
-        name: "<gradient:#3b82f6:#60a5fa>✨ Adept</gradient>"
+        name: <gradient:#3b82f6:#93c5fd>✨ Adept</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Vokser i magisk kraft</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Vever kontrollerte og fokuserte trollformler.</gradient>
+          - <gradient:#3b82f6:#93c5fd>➤ Tier II • Arcane Practice</gradient>
       wizard:
-        name: "<gradient:#f59e0b:#fbbf24>✨ Veiviser</gradient>"
+        name: <gradient:#f59e0b:#fde68a>✨ Veiviser</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Mester i mystiske kunster</gradient>"
-      archmage:
-        name: "<gradient:#ef4444:#f87171>✨ Erkemageri</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Styrer komplekse mønstre av magi.</gradient>
+          - <gradient:#f59e0b:#fde68a>➤ Nivå III • Velg din doktrine</gradient>
+      sorcerer_arcane:
+        name: <gradient:#8b5cf6:#c4b5fd>🔮 Sorcerer of Arcana</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Den øverste mester over all magi</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Foredler rå kraft til elegant kraft.</gradient>
+          - <gradient:#8b5cf6:#c4b5fd>➤ Tier IV • Arcane Branch</gradient>
+      sorcerer_spell:
+        name: <gradient:#d946ef:#f0abfc>📜 Trollmannen</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Utvider grimoirekontroll og presisjon.</gradient>
+          - <gradient:#d946ef:#f0abfc>➤ Nivå IV • Stave gren</gradient>
+      sorcerer_void:
+        name: <gradient:#1d4ed8:#60a5fa>🌌 Sorcerer of the Void</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Bøyer avgrunnsenergier til din vilje.</gradient>
+          - <gradient:#1d4ed8:#60a5fa>➤ Tier IV • Void Branch</gradient>
+      archmage_arcane:
+        name: <gradient:#7c3aed:#c084fc>👑 Archmage of Arcana</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Supreme arkitekt av ren mystisk makt.</gradient>
+          - <gradient:#7c3aed:#c084fc>➤ Nivå V • Endelig rangering</gradient>
+      archmage_spell:
+        name: <gradient:#d946ef:#f5d0fe>👑 Archmage of Spells</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Hver besvergelse svarer umiddelbart.</gradient>
+          - <gradient:#d946ef:#f5d0fe>➤ Nivå V • Endelig rangering</gradient>
+      archmage_void:
+        name: <gradient:#1e3a8a:#60a5fa>👑 Archmage of the Void</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Styrer kantene mellom verdener.</gradient>
+          - <gradient:#1e3a8a:#60a5fa>➤ Nivå V • Endelig rangering</gradient>
     rogue:
       pickpocket:
-        name: "<gradient:#6b7280:#9ca3af>🗡 Lommetyv</gradient>"
+        name: <gradient:#6b7280:#9ca3af>🗡 Lommetyv</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Raske fingre, raskere flukt</gradient>"
-
-# ============================================
-# KRAVOVERSETTELSER
-# ============================================
+          - <gradient:#6b7280:#9ca3af>✦ Lærer timing, feilretning og hastighet.</gradient>
+          - <gradient:#94a3b8:#cbd5e1>➤ Nivå I • Streetcraft</gradient>
+      thief:
+        name: <gradient:#3b82f6:#93c5fd>🗡 Tyv</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Sklir gjennom låser og utkikkslinjer.</gradient>
+          - <gradient:#3b82f6:#93c5fd>➤ Tier II • Stille inngang</gradient>
+      assassin:
+        name: <gradient:#ef4444:#f87171>🗡 Snikmorder</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Slår en gang og forsvinner sporløst.</gradient>
+          - <gradient:#ef4444:#f87171>➤ Nivå III • Velg din metode</gradient>
+      shadow_stealth:
+        name: <gradient:#0ea5e9:#67e8f9>🌒 Shadow of Stealth</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Mestrer bevegelse ingen øye kan følge.</gradient>
+          - <gradient:#0ea5e9:#67e8f9>➤ Tier IV • Stealth Branch</gradient>
+      shadow_night:
+        name: <gradient:#7c3aed:#c4b5fd>🌘 Shadow of Night</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Gjør mørke til dødelig fordel.</gradient>
+          - <gradient:#7c3aed:#c4b5fd>➤ Nivå IV • Nattgren</gradient>
+      shadow_sabotage:
+        name: <gradient:#f97316:#fb923c>💣 Shadow of Sabotage</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Demonterer planer før fiender reagerer.</gradient>
+          - <gradient:#f97316:#fb923c>➤ Nivå IV • Sabotasjegren</gradient>
+      phantom_stealth:
+        name: <gradient:#14b8a6:#5eead4>👑 Phantom of Stealth</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Blir en urørlig urban myte.</gradient>
+          - <gradient:#14b8a6:#5eead4>➤ Nivå V • Endelig rangering</gradient>
+      phantom_night:
+        name: <gradient:#9333ea:#e9d5ff>👑 Phantom of Night</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Eier midnattstimen fullstendig.</gradient>
+          - <gradient:#9333ea:#e9d5ff>➤ Nivå V • Endelig rangering</gradient>
+      phantom_sabotage:
+        name: <gradient:#ea580c:#fdba74>👑 Phantom of Sabotage</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Avslutter kamper før de begynner.</gradient>
+          - <gradient:#ea580c:#fdba74>➤ Nivå V • Endelig rangering</gradient>
+    cleric:
+      acolyte:
+        name: <gradient:#f59e0b:#fde68a>✝ Acolyte</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Begynner tjenestens hellige vei.</gradient>
+          - <gradient:#f59e0b:#fde68a>➤ Nivå I • Andakt</gradient>
+      healer:
+        name: <gradient:#10b981:#6ee7b7>✝ Healer</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Gjenoppretter allierte under hardt press.</gradient>
+          - <gradient:#10b981:#6ee7b7>➤ Tier II • Restaurering</gradient>
+      priest:
+        name: <gradient:#3b82f6:#93c5fd>✝ Prest</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Veileder fester med hellig disiplin.</gradient>
+          - <gradient:#3b82f6:#93c5fd>➤ Nivå III • Velg ditt anrop</gradient>
+      bishop_divine:
+        name: <gradient:#8b5cf6:#c4b5fd>⛪ Guddommelighetens biskop</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Kanaler direkte strålende autoritet.</gradient>
+          - <gradient:#8b5cf6:#c4b5fd>➤ Nivå IV • Divine Branch</gradient>
+      bishop_light:
+        name: <gradient:#f59e0b:#fef08a>☀ Lysets biskop</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Blindrer korrupsjon med hellig glans.</gradient>
+          - <gradient:#f59e0b:#fef08a>➤ Tier IV • Light Branch</gradient>
+      bishop_soul:
+        name: <gradient:#06b6d4:#67e8f9>🕊 Biskop av sjeler</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Vokter terskelen til liv og død.</gradient>
+          - <gradient:#06b6d4:#67e8f9>➤ Nivå IV • Soul Branch</gradient>
+      high_priest_divine:
+        name: <gradient:#7c3aed:#ddd6fe>👑 Guddommelighetens yppersteprest</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Erklærer mirakler i hjertet av kaos.</gradient>
+          - <gradient:#7c3aed:#ddd6fe>➤ Nivå V • Endelig rangering</gradient>
+      high_priest_light:
+        name: <gradient:#f59e0b:#fef3c7>👑 Lysets yppersteprest</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Bader allierte i urokkelig daggry.</gradient>
+          - <gradient:#f59e0b:#fef3c7>➤ Nivå V • Endelig rangering</gradient>
+      high_priest_soul:
+        name: <gradient:#0891b2:#a5f3fc>👑 sjelenes yppersteprest</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Hyrder ånder utover dødelig frykt.</gradient>
+          - <gradient:#0891b2:#a5f3fc>➤ Nivå V • Endelig rangering</gradient>
+    merchant:
+      peddler:
+        name: <gradient:#6b7280:#9ca3af>💰 Kjøpmann</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Starter med grus, sjarm og små bytter.</gradient>
+          - <gradient:#94a3b8:#cbd5e1>➤ Nivå I • Gatehandel</gradient>
+      trader:
+        name: <gradient:#3b82f6:#93c5fd>💰 Trader</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Utvider ruter og pålitelige kontakter.</gradient>
+          - <gradient:#3b82f6:#93c5fd>➤ Tier II • Markeds tilstedeværelse</gradient>
+      broker:
+        name: <gradient:#f59e0b:#fde68a>💰 Megler</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Lukker avtaler med høy verdi med presisjon.</gradient>
+          - <gradient:#f59e0b:#fde68a>➤ Nivå III • Velg ditt imperium</gradient>
+      magnate_wealth:
+        name: <gradient:#10b981:#6ee7b7>📈 Magnat of Wealth</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Bygger ren kapital i et uovertruffent tempo.</gradient>
+          - <gradient:#10b981:#6ee7b7>➤ Nivå IV • Formuesgren</gradient>
+      magnate_market:
+        name: <gradient:#06b6d4:#67e8f9>🏛 Magnate of Markets</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Organiserer tilbuds- og etterspørselssykluser.</gradient>
+          - <gradient:#06b6d4:#67e8f9>➤ Tier IV • Markedsgren</gradient>
+      magnate_trade:
+        name: <gradient:#f97316:#fdba74>🚚 Magnat of Trade</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Dominerer campingvognbaner og logistikk.</gradient>
+          - <gradient:#f97316:#fdba74>➤ Nivå IV • Handelsgren</gradient>
+      tycoon_wealth:
+        name: <gradient:#22c55e:#bbf7d0>👑 Tycoon of Wealth</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Snu økonomier med en enkelt beslutning.</gradient>
+          - <gradient:#22c55e:#bbf7d0>➤ Nivå V • Endelig rangering</gradient>
+      tycoon_market:
+        name: <gradient:#0891b2:#a5f3fc>👑 Tycoon of Markets</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Fastsetter priser hver guild må respektere.</gradient>
+          - <gradient:#0891b2:#a5f3fc>➤ Nivå V • Endelig rangering</gradient>
+      tycoon_trade:
+        name: <gradient:#ea580c:#fed7aa>👑 Tycoon of Trade</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Eier veiene, havnene og fortjenesten.</gradient>
+          - <gradient:#ea580c:#fed7aa>➤ Nivå V • Endelig rangering</gradient>
 requirement:
 
   # ============================================
@@ -670,7 +915,7 @@ requirement:
     money: "Penger"
     dollars: "dollar"
     credits: "Studiepoeng"
-  
+
   # Forhåndsvisningsmaler for oppgave
   task:
     entry: "<gradient:#6b7280:#9ca3af>%prefix% %task_name%</gradient>"
@@ -1287,6 +1532,7 @@ admin_skills_ui:
       missing: "<gradient:#ef4444:#f87171>Savnet</gradient>"
     detected:
       name: "<gradient:#22c55e:#86efac>✅ %plugin_name%</gradient>"
+      click_action: "<gradient:#3b82f6:#60a5fa>[>] Click to inject themed skill requirements</gradient>"
     missing:
       name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
     lore:
@@ -1301,6 +1547,11 @@ admin_skills_ui:
 # ============================================
 # ADMIN JOBS INTEGRATION UI
 # ============================================
+  messages:
+    inject_success: "<gradient:#22c55e:#86efac>[+] Injected %perk_count% perk and %rank_count% rank skill requirements for %plugin_name%.</gradient>"
+    inject_no_changes: "<gradient:#3b82f6:#60a5fa>[i] No skill requirement changes were needed for %plugin_name%.</gradient>"
+    plugin_missing: "<gradient:#ef4444:#f87171>[!] %plugin_name% is not detected, so no requirements were injected.</gradient>"
+    inject_failed: "<gradient:#ef4444:#f87171>[x] Failed to inject skill requirements for %plugin_name%.</gradient>"
 admin_jobs_ui:
   title: "<gradient:#f59e0b:#fbbf24>⛏ Jobbintegrasjoner</gradient>"
   summary:
@@ -1315,6 +1566,7 @@ admin_jobs_ui:
       missing: "<gradient:#ef4444:#f87171>Savnet</gradient>"
     detected:
       name: "<gradient:#22c55e:#86efac>✅ %plugin_name%</gradient>"
+      click_action: "<gradient:#3b82f6:#60a5fa>[>] Klikk for å injisere tematiserte jobbkrav</gradient>"
     missing:
       name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
     lore:
@@ -1329,6 +1581,11 @@ admin_jobs_ui:
 # ============================================
 # ADMIN CURRENCY OVERVIEW UI
 # ============================================
+  messages:
+    inject_success: "<gradient:#22c55e:#86efac>[+] Injisert %perk_count% fordel og %rank_count% ranger jobbkrav for %plugin_name%.</gradient>"
+    inject_no_changes: "<gradient:#3b82f6:#60a5fa>[i] Ingen endringer i jobbkrav var nødvendig for %plugin_name%.</gradient>"
+    plugin_missing: "<gradient:#ef4444:#f87171>[!] %plugin_name% er ikke oppdaget, så ingen krav ble injisert.</gradient>"
+    inject_failed: "<gradient:#ef4444:#f87171>[x] Kunne ikke injisere jobbkrav for %plugin_name%.</gradient>"
 admin_currency_ui:
   title: "<gradient:#10b981:#34d399>💱 Valutaforvalter</gradient>"
   currency_entry:
@@ -1364,6 +1621,16 @@ admin_currency_ui:
     lore:
       - "<gradient:#6b7280:#9ca3af>RDQ kunne ikke oppdage Vault eller JExEconomy valutaer</gradient>"
       - "<gradient:#6b7280:#9ca3af>Installer eller aktiver en økonomileverandør først</gradient>"
+    jex_detected:
+      name: "<gradient:#3b82f6:#60a5fa>[i] JExEconomy Detected</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>RDQ detected JExEconomy but no currencies exist yet</gradient>"
+        - "<gradient:#10b981:#34d399>Use the top button to create %currency_id%</gradient>"
+    vault_detected:
+      name: "<gradient:#3b82f6:#60a5fa>[i] Vault Detected</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Vault is available but no currency entries were listed</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Check your economy provider configuration</gradient>"
   decoration:
     border:
       name: " "
@@ -1683,7 +1950,7 @@ rank_requirements_journey_ui:
         - "<gradient:#6b7280:#9ca3af>Denne rangeringen har ingen belønninger konfigurert</gradient>"
       type_label: "<gray>Type:</gray> <yellow>%type%</yellow>"
       value_label: "<gray>Verdi:</gray> <gold>%value%</gold>"
-    
+
     # Beskrivelser av belønningstype
     currency:
       description: "<gradient:#fbbf24:#fcd34d>Motta valutabelønninger</gradient>"
@@ -1705,7 +1972,6 @@ rank_requirements_journey_ui:
       description: "<gradient:#f97316:#fb923c>Lås opp partikkeleffekter</gradient>"
     vanishing_chest:
       description: "<gradient:#14b8a6:#2dd4bf>Motta en forsvinnende kiste</gradient>"
-    
     more: "<gradient:#fbbf24:#fcd34d>+%count% flere belønninger...</gradient>"
 
   rewards:
@@ -1734,10 +2000,9 @@ reward:
       - "<gradient:#6b7280:#9ca3af>Denne rangeringen har ingen belønninger konfigurert</gradient>"
     type_label: "<gray>Type:</gray> <yellow>%type%</yellow>"
     value_label: "<gray>Verdi:</gray> <gold>%value%</gold>"
-  
   perk:
     unlocked: "<gradient:#10b981:#34d399>✦</gradient> <gradient:#6b7280:#9ca3af>Du låste opp fordelen:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
-  
+
   # Beskrivelser av belønningstype
   currency:
     description: "<gradient:#fbbf24:#fcd34d>Motta valutabelønninger</gradient>"
@@ -1759,7 +2024,6 @@ reward:
     description: "<gradient:#f97316:#fb923c>Lås opp partikkeleffekter</gradient>"
   vanishing_chest:
     description: "<gradient:#14b8a6:#2dd4bf>Motta en forsvinnende kiste</gradient>"
-  
   more: "<gradient:#fbbf24:#fcd34d>+%count% flere belønninger...</gradient>"
 
 rewards:
@@ -1815,7 +2079,7 @@ perk:
   fish_xp:
     name: "<gradient:#10b981:#34d399>Fiske XP Boost</gradient>"
     description: "<gradient:#6b7280:#9ca3af>Få bonus XP når du fanger fisk</gradient>"
-  
+
   # Potion Perks
   potion_enhance:
     name: "<gradient:#a855f7:#c084fc>Potion forsterker</gradient>"
@@ -1826,7 +2090,7 @@ perk:
   potion_save:
     name: "<gradient:#10b981:#34d399>Refusjon av potion</gradient>"
     description: "<gradient:#6b7280:#9ca3af>Muligheten til å få drikkedrikken tilbake etter å ha drukket den</gradient>"
-  
+
   # Fordel meldinger
   messages:
     # Lås opp/Enable/Disable
@@ -1843,36 +2107,33 @@ perk:
     disable:
       success: "<gradient:#f59e0b:#fbbf24>Deaktivert fordel:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
       failed: "<gradient:#ef4444:#f87171>Kunne ikke deaktivere fordelen:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
-    
+
     # Nedkjøling
     cooldown:
       active: "<gradient:#ef4444:#f87171>Denne fordelen er på nedkjøling for</gradient> <gradient:#f59e0b:#fbbf24>%time%</gradient>"
       ready: "<gradient:#10b981:#34d399>Perk er klar til bruk!</gradient>"
-    
+
     # Effektutløsere
     potion_enhanced: "<gradient:#a855f7:#c084fc>✨ Potion Enhanced!</gradient> <gradient:#6b7280:#9ca3af>Effekter forsterket</gradient>"
     potion_extended: "<gradient:#f59e0b:#fbbf24>⏱ Drikkvarighet forlenget!</gradient> <gradient:#6b7280:#9ca3af>Holder lenger</gradient>"
     potion_saved: "<gradient:#10b981:#34d399>💾 Potion reddet!</gradient> <gradient:#6b7280:#9ca3af>Tilbake til inventar</gradient>"
     fishing_active: "<gradient:#3b82f6:#60a5fa>🎣 Raskere fiske aktivt!</gradient>"
     fishing_xp: "<gradient:#10b981:#34d399>+%xp% Fiske XP!</gradient>"
-  
+
   # UI-elementer
   ui:
     header:
       type_label: "<gray>Type: <white>%type%</white></gray>"
       category_label: "<gray>Kategori: <white>%category%</white></gray>"
-    
     requirements:
       no_requirements: "<green>Ingen krav</green>"
       no_requirements_lore: "<gray>Denne fordelen har ingen opplåsingskrav</gray>"
-    
     rewards:
       title: "<gold>Lås opp belønning</gold>"
       no_rewards: "<gray>Ingen opplåsingsbelønninger</gray>"
       no_rewards_lore: "<gray>Denne fordelen har ingen opplåsingsbelønninger</gray>"
       type_label: "<gray>Type: <white>%type%</white></gray>"
       value_label: "<gray>Verdi: <gold>%value%</gold></gray>"
-    
     status:
       title: "<white>Fordel Status</white>"
       locked: "<red>✖ Låst</red>"
@@ -1883,7 +2144,6 @@ perk:
       enabled_count: "<gray>Aktiverte fordeler: <white>%count%/%max%</white></gray>"
       cooldown_label: "<gray>Nedkjøling: <gold>%time%</gold></gray>"
       activations_label: "<gray>Aktiveringer: <white>%count%</white></gray>"
-    
     buttons:
       unlock:
         title: "<white>Lås opp Perk</white>"
@@ -1895,7 +2155,7 @@ perk:
       disable:
         title: "<white>Deaktiver Perk</white>"
         hint: "<yellow>Klikk for å deaktivere denne fordelen</yellow>"
-  
+
   # Eksisterende fordeler (for referanse - legg til hvis mangler)
   fly:
     name: "<gradient:#3b82f6:#60a5fa>Flyvning</gradient>"

@@ -193,10 +193,14 @@ public class AdminPermissionsView extends BaseView {
 			List<String> permissions = permissionsMap.get(selectedPlugin);
 			
 			if (permissions != null && !permissions.isEmpty()) {
+				final String configuredDefaultGroup = this.rdq.get(clickContext).getPermissionsService().getDefaultGroup();
+				final String permissionGroup = configuredDefaultGroup == null || configuredDefaultGroup.isBlank() ?
+				                               "default" :
+				                               configuredDefaultGroup;
 				if (!this.rdq.get(clickContext).getPermissionsService().addPermissionSet(
 					clickContext.getPlayer(),
 					selectedPlugin,
-					selectedPlugin.toLowerCase(),
+					permissionGroup,
 					permissions,
 					true
 				)) {
@@ -674,10 +678,14 @@ public class AdminPermissionsView extends BaseView {
 			List<String> permissions = permissionsMap.get(pluginName);
 			
 			if (permissions != null && !permissions.isEmpty()) {
+				final String configuredDefaultGroup = this.rdq.get(clickContext).getPermissionsService().getDefaultGroup();
+				final String permissionGroup = configuredDefaultGroup == null || configuredDefaultGroup.isBlank() ?
+				                               "default" :
+				                               configuredDefaultGroup;
 				boolean success = this.rdq.get(clickContext).getPermissionsService().addPermissionSet(
 					clickContext.getPlayer(),
 					pluginName,
-					pluginName.toLowerCase(),
+					permissionGroup,
 					permissions,
 					true
 				);
@@ -687,7 +695,7 @@ public class AdminPermissionsView extends BaseView {
 					return;
 				}
 				
-				clickContext.getPlayer().sendMessage("§a[RDQ] §7Assigned §e" + permissions.size() + " §7permissions to group §e" + pluginName.toLowerCase());
+				clickContext.getPlayer().sendMessage("§a[RDQ] §7Assigned §e" + permissions.size() + " §7permissions to group §e" + permissionGroup);
 			} else {
 				clickContext.getPlayer().sendMessage("§c[RDQ] §7No permissions found for plugin §e" + pluginName);
 			}
@@ -700,11 +708,15 @@ public class AdminPermissionsView extends BaseView {
 		final @NotNull String permission
 	) {
 		LOGGER.info("handlePermissionClick called - plugin: " + pluginName + ", permission: " + permission);
+		final String configuredDefaultGroup = this.rdq.get(clickContext).getPermissionsService().getDefaultGroup();
+		final String permissionGroup = configuredDefaultGroup == null || configuredDefaultGroup.isBlank() ?
+		                               "default" :
+		                               configuredDefaultGroup;
 		
 		boolean success = this.rdq.get(clickContext).getPermissionsService().addPermissionSet(
 			clickContext.getPlayer(),
 			pluginName,
-			pluginName.toLowerCase(),
+			permissionGroup,
 			List.of(permission),
 			true
 		);
@@ -718,7 +730,7 @@ public class AdminPermissionsView extends BaseView {
 		
 		// Send feedback message to player
 		LOGGER.info("Sending feedback message to player: " + clickContext.getPlayer().getName());
-		clickContext.getPlayer().sendMessage("§a[RDQ] §7Assigned permission §e" + permission + " §7to group §e" + pluginName.toLowerCase());
+		clickContext.getPlayer().sendMessage("§a[RDQ] §7Assigned permission §e" + permission + " §7to group §e" + permissionGroup);
 	}
 	
 	private void handleClearSelection(final @NotNull SlotClickContext clickContext) {
@@ -738,10 +750,14 @@ public class AdminPermissionsView extends BaseView {
 			List<String> permissions = permissionsMap.get(selected);
 			
 			if (permissions != null && !permissions.isEmpty()) {
+				final String configuredDefaultGroup = this.rdq.get(clickContext).getPermissionsService().getDefaultGroup();
+				final String permissionGroup = configuredDefaultGroup == null || configuredDefaultGroup.isBlank() ?
+				                               "default" :
+				                               configuredDefaultGroup;
 				if (!this.rdq.get(clickContext).getPermissionsService().addPermissionSet(
 					clickContext.getPlayer(),
 					selected,
-					selected.toLowerCase(),
+					permissionGroup,
 					permissions,
 					true
 				)) {

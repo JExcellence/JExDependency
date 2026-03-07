@@ -2,7 +2,7 @@
 # The path of strength and combat
 # This tree branches at Veteran into 3 specializations: Berserker, Guardian, or Gladiator
 
-displayOrder: 1
+displayOrder: 6
 isEnabled: true
 isFinalRankTree: false
 requiresAllRankTreesToBeDone: false

@@ -82,236 +82,281 @@ rank:
         - "<gradient:#6b7280:#9ca3af>Nenhuma classificação selecionada</gradient>"
   # Classificações da Árvore Ranger
   ranger:
+    scout:
+      name: <gradient:#22c55e:#86efac>🏹 Escoteiro de Trilhas</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Lê pegadas e mudanças de vento.</gradient>
+        - <gradient:#10b981:#34d399>➤ Nível I • Iniciado na Natureza</gradient>
     hunter:
-      name: "<gradient:#7c3aed:#a78bfa>🏹 Caçador</gradient>"
+      name: <gradient:#16a34a:#4ade80>🏹 Caçador da Natureza</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Um rastreador novato aprendendo os costumes da natureza</gradient>"
-    archer:
-      name: "<gradient:#10b981:#34d399>🎯 Arqueiro</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Hábil com o arco, mortal à distância</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Persegue a presa com precisão paciente.</gradient>
+        - <gradient:#10b981:#34d399>➤ Nível II • Perseguição Selvagem</gradient>
     tracker:
-      name: "<gradient:#3b82f6:#60a5fa>🔍 Rastreador</gradient>"
+      name: <gradient:#0ea5e9:#38bdf8>🏹 Rastreador de Sinais</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Especialista em encontrar e seguir presas</gradient>"
-    marksman:
-      name: "<gradient:#f59e0b:#fbbf24>🎯 Atirador</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Segue trilhas que nenhuma tempestade pode apagar.</gradient>
+        - <gradient:#3b82f6:#60a5fa>➤ Nível III • Escolha do caminho a seguir</gradient>
+    warden_primal:
+      name: <gradient:#14b8a6:#2dd4bf>🛡 Guardião das Feras</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Atirador de precisão com precisão mortal</gradient>"
-    pathfinder:
-      name: "<gradient:#a855f7:#c084fc>🗺 Desbravador</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Laços com criaturas de ponta do reino.</gradient>
+        - <gradient:#14b8a6:#2dd4bf>➤ Nível IV • Ramo Primordial</gradient>
+    warden_storm:
+      name: <gradient:#2563eb:#60a5fa>⚡ Guardião das Tempestades</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Mestre explorador de terras desconhecidas</gradient>"
-    sniper:
-      name: "<gradient:#ef4444:#f87171>🎯 Atirador</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Disparos certeiros através de trovões e chuva.</gradient>
+        - <gradient:#2563eb:#60a5fa>➤ Nível IV • Ramo Tempestade</gradient>
+    warden_wild:
+      name: <gradient:#16a34a:#84cc16>🌿 Guardião da Natureza</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Atirador de elite, um tiro, uma morte</gradient>"
-    forest_lord:
-      name: "<gradient:#10b981:#34d399>🌲 Senhor da Floresta</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Guarda fronteiras sagradas e clareiras escondidas.</gradient>
+        - <gradient:#16a34a:#84cc16>➤ Nível IV • Ramo Selvagem</gradient>
+    beastmaster_primal:
+      name: <gradient:#7c3aed:#c084fc>👑 Mestre das Feras Primordial</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Mestre da natureza selvagem, um com a natureza</gradient>"
-  # Classificações da Árvore Guerreira
+        - <gradient:#6b7280:#9ca3af>✦ Comanda feras lendárias sem medo.</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ Nível V • Classificação Final</gradient>
+    beastmaster_storm:
+      name: <gradient:#1d4ed8:#3b82f6>👑 Tempestade Mestre das Feras</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Cada raio guia seu voleio implacável.</gradient>
+        - <gradient:#1d4ed8:#3b82f6>➤ Nível V • Classificação Final</gradient>
+    beastmaster_wild:
+      name: <gradient:#15803d:#22c55e>👑 Mestre das Feras Selvagem</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ A própria natureza surge para atender ao seu chamado.</gradient>
+        - <gradient:#15803d:#22c55e>➤ Nível V • Classificação Final</gradient>
   warrior:
     recruit:
-      name: "<gradient:#6b7280:#9ca3af>Recrutar</gradient>"
+      name: <gradient:#6b7280:#9ca3af>⚔ Recrutar</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Um novo guerreiro iniciando sua jornada</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Aprenda o básico do combate</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Uma lâmina nova com determinação não testada.</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ Nível I • Campos de Treinamento</gradient>
     soldier:
-      name: "<gradient:#3b82f6:#60a5fa>Soldado</gradient>"
+      name: <gradient:#3b82f6:#60a5fa>⚔ Soldado</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Treinado na arte do combate</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Pronto para a batalha</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Endurecido por exercícios e serviço na linha de frente.</gradient>
+        - <gradient:#3b82f6:#60a5fa>➤ Nível II • Disciplina de Campo</gradient>
     veteran:
-      name: "<gradient:#f59e0b:#fbbf24>Veterano</gradient>"
+      name: <gradient:#f59e0b:#fbbf24>⚔ Veterano</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Guerreiro endurecido pela batalha</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Escolha seu caminho de especialização</gradient>"
-    # Ramo de Especialização 1: Berserker (Ofensiva)
+        - <gradient:#6b7280:#9ca3af>✦ Cicatrizes de batalha marcam sua sabedoria conquistada.</gradient>
+        - <gradient:#f59e0b:#fbbf24>➤ Nível III • Escolha seu caminho</gradient>
     berserker:
-      name: "<gradient:#ef4444:#f87171>Berserker</gradient>"
+      name: <gradient:#ef4444:#f87171>🔥 Berserker</gradient>
       lore:
-        - "<gradient:#ef4444:#f87171>Caminho da Fúria</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Desencadeie ataques devastadores</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Sacrifique a defesa pelo poder bruto</gradient>"
-    # Ramo de Especialização 2: Guardião (Defensivo)
+        - <gradient:#6b7280:#9ca3af>✦ Troca defesa por ataque devastador.</gradient>
+        - <gradient:#ef4444:#f87171>➤ Nível IV • Ramo Fúria</gradient>
     guardian:
-      name: "<gradient:#3b82f6:#60a5fa>Guardião</gradient>"
+      name: <gradient:#2563eb:#60a5fa>🛡 Guardião</gradient>
       lore:
-        - "<gradient:#3b82f6:#60a5fa>Caminho da Proteção</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Torne-se um escudo inquebrável</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Proteja seus aliados a todo custo</gradient>"
-    # Ramo de Especialização 3: Gladiador (Balanceado)
+        - <gradient:#6b7280:#9ca3af>✦ Permanece firme onde outros quebrariam.</gradient>
+        - <gradient:#2563eb:#60a5fa>➤ Nível IV • Filial de Escudo</gradient>
     gladiator:
-      name: "<gradient:#a855f7:#c084fc>Gladiador</gradient>"
+      name: <gradient:#a855f7:#c084fc>🏟 Gladiador</gradient>
       lore:
-        - "<gradient:#a855f7:#c084fc>Caminho da Glória</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Mestre do combate de arena</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Equilibre ataque e defesa</gradient>"
-    # Classificações finais
+        - <gradient:#6b7280:#9ca3af>✦ Domine a guerra de arena equilibrada.</gradient>
+        - <gradient:#a855f7:#c084fc>➤ Nível IV • Filial da Arena</gradient>
     warlord_fury:
-      name: "<gradient:#ef4444:#f87171>Senhor da Guerra da Fúria</gradient>"
+      name: <gradient:#dc2626:#fb7185>👑 Senhor da Guerra da Fúria</gradient>
       lore:
-        - "<gradient:#ef4444:#f87171>Berserker Supremo</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Força imparável de destruição</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Medo encarnado no campo de batalha</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Um motor de destruição imparável.</gradient>
+        - <gradient:#dc2626:#fb7185>➤ Nível V • Classificação Final</gradient>
     warlord_shield:
-      name: "<gradient:#3b82f6:#60a5fa>Senhor da Guerra do Escudo</gradient>"
+      name: <gradient:#1d4ed8:#60a5fa>👑 Senhor da Guerra do Escudo</gradient>
       lore:
-        - "<gradient:#3b82f6:#60a5fa>Guardião Supremo</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Objeto imóvel, protetor eterno</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Ninguém passará enquanto você estiver</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ O último muro entre a vida e a ruína.</gradient>
+        - <gradient:#1d4ed8:#60a5fa>➤ Nível V • Classificação Final</gradient>
     warlord_arena:
-      name: "<gradient:#a855f7:#c084fc>Senhor da Guerra da Arena</gradient>"
+      name: <gradient:#7c3aed:#c084fc>👑 Senhor da Guerra da Arena</gradient>
       lore:
-        - "<gradient:#a855f7:#c084fc>Gladiador Supremo</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Campeão dos campeões</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Lenda da arena</gradient>"
-    # Classificações legadas (para compatibilidade com versões anteriores)
-    knight:
-      name: "<gradient:#f59e0b:#fbbf24>Cavaleiro</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Honorável guerreiro do reino</gradient>"
-    champion:
-      name: "<gradient:#a855f7:#c084fc>Campeão</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Lutador lendário, temido por todos</gradient>"
-    warlord:
-      name: "<gradient:#ef4444:#f87171>Caudilho</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Mestre da guerra, comandante dos exércitos</gradient>"
-  # Classificações da Árvore Mágica
+        - <gradient:#6b7280:#9ca3af>✦ Campeão coroado de todos os coliseu.</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ Nível V • Classificação Final</gradient>
   mage:
     apprentice:
-      name: "<gradient:#a855f7:#c084fc>✨ Aprendiz</gradient>"
+      name: <gradient:#a855f7:#d8b4fe>✨ Aprendiz</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Aprendendo o básico da magia</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Despertam faíscas de poder arcano.</gradient>
+        - <gradient:#a855f7:#d8b4fe>➤ Nível I • Fundações Arcanas</gradient>
     adept:
-      name: "<gradient:#3b82f6:#60a5fa>✨ Adepto</gradient>"
+      name: <gradient:#3b82f6:#93c5fd>✨ Adepto</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Crescendo em poder mágico</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Cria feitiços controlados e focados.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Nível II • Prática Arcana</gradient>
     wizard:
-      name: "<gradient:#f59e0b:#fbbf24>✨ Feiticeiro</gradient>"
+      name: <gradient:#f59e0b:#fde68a>✨ Assistente</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Mestre das artes arcanas</gradient>"
-    archmage:
-      name: "<gradient:#ef4444:#f87171>✨ Arquimago</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Comanda padrões complexos de magia.</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ Nível III • Escolha sua doutrina</gradient>
+    sorcerer_arcane:
+      name: <gradient:#8b5cf6:#c4b5fd>🔮 Feiticeiro dos Arcanos</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Mestre supremo de toda magia</gradient>"
-  # Classificações de árvores desonestas
+        - <gradient:#6b7280:#9ca3af>✦ Refina a potência bruta em uma força elegante.</gradient>
+        - <gradient:#8b5cf6:#c4b5fd>➤ Nível IV • Ramo Arcano</gradient>
+    sorcerer_spell:
+      name: <gradient:#d946ef:#f0abfc>📜 Feiticeiro de Feitiços</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Expande o controle e a precisão do grimório.</gradient>
+        - <gradient:#d946ef:#f0abfc>➤ Nível IV • Ramo de Feitiço</gradient>
+    sorcerer_void:
+      name: <gradient:#1d4ed8:#60a5fa>🌌 Feiticeiro do Vazio</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Dobra as energias abissais à sua vontade.</gradient>
+        - <gradient:#1d4ed8:#60a5fa>➤ Nível IV • Filial Anulada</gradient>
+    archmage_arcane:
+      name: <gradient:#7c3aed:#c084fc>👑 Arquimago dos Arcanos</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Arquiteto supremo de puro poder arcano.</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ Nível V • Classificação Final</gradient>
+    archmage_spell:
+      name: <gradient:#d946ef:#f5d0fe>👑 Arquimago dos Feitiços</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Cada encantamento responde instantaneamente.</gradient>
+        - <gradient:#d946ef:#f5d0fe>➤ Nível V • Classificação Final</gradient>
+    archmage_void:
+      name: <gradient:#1e3a8a:#60a5fa>👑 Arquimago do Vazio</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Governa as fronteiras entre os mundos.</gradient>
+        - <gradient:#1e3a8a:#60a5fa>➤ Nível V • Classificação Final</gradient>
   rogue:
     pickpocket:
-      name: "<gradient:#6b7280:#9ca3af>🗡 Batedor de carteiras</gradient>"
+      name: <gradient:#6b7280:#9ca3af>🗡 Batedor de carteiras</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Dedos rápidos, fuga mais rápida</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Aprende tempo, desorientação e velocidade.</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ Nível I • Artesanato de rua</gradient>
     thief:
-      name: "<gradient:#3b82f6:#60a5fa>🗡 Ladrão</gradient>"
+      name: <gradient:#3b82f6:#93c5fd>🗡 Ladrão</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Mestre da furtividade e do roubo</gradient>"
-    scout:
-      name: "<gradient:#10b981:#34d399>🗡 Escoteiro</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Olhos e ouvidos das sombras</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Desliza através de fechaduras e linhas de vigia.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Nível II • Entrada Silenciosa</gradient>
     assassin:
-      name: "<gradient:#ef4444:#f87171>🗡 Assassino</gradient>"
+      name: <gradient:#ef4444:#f87171>🗡 Assassino</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Assassino silencioso, morte nas sombras</gradient>"
-    infiltrator:
-      name: "<gradient:#a855f7:#c084fc>🗡 Infiltrador</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Ataca uma vez e desaparece sem deixar rastros.</gradient>
+        - <gradient:#ef4444:#f87171>➤ Nível III • Escolha seu método</gradient>
+    shadow_stealth:
+      name: <gradient:#0ea5e9:#67e8f9>🌒 Sombra da Furtividade</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Especialista em entrar e sair sem ser detectado</gradient>"
-    shadowblade:
-      name: "<gradient:#6b7280:#9ca3af>🗡 Lâmina Sombria</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Domina o movimento que nenhum olho pode acompanhar.</gradient>
+        - <gradient:#0ea5e9:#67e8f9>➤ Nível IV • Ramo Furtivo</gradient>
+    shadow_night:
+      name: <gradient:#7c3aed:#c4b5fd>🌘 Sombra da Noite</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Guerreiro mortal da noite</gradient>"
-    spymaster:
-      name: "<gradient:#3b82f6:#60a5fa>🗡 Espião Mestre</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Transforma a escuridão em vantagem letal.</gradient>
+        - <gradient:#7c3aed:#c4b5fd>➤ Nível IV • Filial Noturna</gradient>
+    shadow_sabotage:
+      name: <gradient:#f97316:#fb923c>💣 Sombra da Sabotagem</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Controlador de redes de informação</gradient>"
-    shadow_master:
-      name: "<gradient:#1f2937:#374151>🗡 Mestre das Sombras</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Desmonta planos antes que os inimigos reajam.</gradient>
+        - <gradient:#f97316:#fb923c>➤ Nível IV • Ramo de Sabotagem</gradient>
+    phantom_stealth:
+      name: <gradient:#14b8a6:#5eead4>👑 Fantasma da Furtividade</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Um com a própria escuridão</gradient>"
-    shadowmaster:
-      name: "<gradient:#1f2937:#374151>🗡 Mestre das Sombras</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Torna-se um mito urbano intocável.</gradient>
+        - <gradient:#14b8a6:#5eead4>➤ Nível V • Classificação Final</gradient>
+    phantom_night:
+      name: <gradient:#9333ea:#e9d5ff>👑 Fantasma da Noite</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Governante supremo de todas as sombras</gradient>"
-  # Classificações da árvore do clérigo
+        - <gradient:#6b7280:#9ca3af>✦ Possui completamente a meia-noite.</gradient>
+        - <gradient:#9333ea:#e9d5ff>➤ Nível V • Classificação Final</gradient>
+    phantom_sabotage:
+      name: <gradient:#ea580c:#fdba74>👑 Fantasma da Sabotagem</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Termina as batalhas antes mesmo de começarem.</gradient>
+        - <gradient:#ea580c:#fdba74>➤ Nível V • Classificação Final</gradient>
   cleric:
     acolyte:
-      name: "<gradient:#f59e0b:#fbbf24>✝ Acólito</gradient>"
+      name: <gradient:#f59e0b:#fde68a>✝ Acólito</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Servo devotado do divino</gradient>"
-    devotee:
-      name: "<gradient:#f59e0b:#fbbf24>✝ Devoto</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Fiel seguidor do caminho divino</gradient>"
-    priest:
-      name: "<gradient:#10b981:#34d399>✝ Sacerdote</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Curador e protetor dos fiéis</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Inicia o caminho sagrado do serviço.</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ Nível I • Devoção</gradient>
     healer:
-      name: "<gradient:#10b981:#34d399>✝ Curador</gradient>"
+      name: <gradient:#10b981:#6ee7b7>✝ Curador</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Mestre em artes restaurativas</gradient>"
-    bishop:
-      name: "<gradient:#a855f7:#c084fc>✝ Bispo</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Restaura aliados sob forte pressão.</gradient>
+        - <gradient:#10b981:#6ee7b7>➤ Nível II • Restauração</gradient>
+    priest:
+      name: <gradient:#3b82f6:#93c5fd>✝ Sacerdote</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Líder dos fiéis</gradient>"
-    oracle:
-      name: "<gradient:#3b82f6:#60a5fa>✝ Oráculo</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Guia os grupos com disciplina sagrada.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Nível III • Escolha sua vocação</gradient>
+    bishop_divine:
+      name: <gradient:#8b5cf6:#c4b5fd>⛪ Bispo da Divindade</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Vidente de visões divinas</gradient>"
-    high_priest:
-      name: "<gradient:#ef4444:#f87171>✝ Sumo Sacerdote</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Canaliza autoridade radiante direta.</gradient>
+        - <gradient:#8b5cf6:#c4b5fd>➤ Nível IV • Ramo Divino</gradient>
+    bishop_light:
+      name: <gradient:#f59e0b:#fef08a>☀ Bispo da Luz</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Voz suprema do divino</gradient>"
-  # Classificações da Árvore Mercante
+        - <gradient:#6b7280:#9ca3af>✦ Cega a corrupção com brilho sagrado.</gradient>
+        - <gradient:#f59e0b:#fef08a>➤ Nível IV • Filial Leve</gradient>
+    bishop_soul:
+      name: <gradient:#06b6d4:#67e8f9>🕊 Bispo das Almas</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Guarda o limiar da vida e da morte.</gradient>
+        - <gradient:#06b6d4:#67e8f9>➤ Nível IV • Ramo da Alma</gradient>
+    high_priest_divine:
+      name: <gradient:#7c3aed:#ddd6fe>👑 Sumo Sacerdote da Divindade</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Declara milagres no coração do caos.</gradient>
+        - <gradient:#7c3aed:#ddd6fe>➤ Nível V • Classificação Final</gradient>
+    high_priest_light:
+      name: <gradient:#f59e0b:#fef3c7>👑 Sumo Sacerdote da Luz</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Banha aliados em um amanhecer inabalável.</gradient>
+        - <gradient:#f59e0b:#fef3c7>➤ Nível V • Classificação Final</gradient>
+    high_priest_soul:
+      name: <gradient:#0891b2:#a5f3fc>👑 Sumo Sacerdote das Almas</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Pastoreia os espíritos além do medo mortal.</gradient>
+        - <gradient:#0891b2:#a5f3fc>➤ Nível V • Classificação Final</gradient>
   merchant:
     peddler:
-      name: "<gradient:#6b7280:#9ca3af>💰 Mascate</gradient>"
+      name: <gradient:#6b7280:#9ca3af>💰 Mascate</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Vendendo mercadorias na rua</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Começa com coragem, charme e pequenos negócios.</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ Nível I • Comércio Ambulante</gradient>
     trader:
-      name: "<gradient:#3b82f6:#60a5fa>💰 Comerciante</gradient>"
+      name: <gradient:#3b82f6:#93c5fd>💰 Comerciante</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Comerciante estabelecido com conexões</gradient>"
-    vendor:
-      name: "<gradient:#10b981:#34d399>💰 Fornecedor</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Amplia rotas e contatos confiáveis.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Nível II • Presença no Mercado</gradient>
+    broker:
+      name: <gradient:#f59e0b:#fde68a>💰 Corretor</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Vendedor qualificado de mercadorias</gradient>"
-    artificer:
-      name: "<gradient:#f59e0b:#fbbf24>💰 Artífice</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Fecha negócios de alto valor com precisão.</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ Nível III • Escolha seu império</gradient>
+    magnate_wealth:
+      name: <gradient:#10b981:#6ee7b7>📈 Magnata da Riqueza</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Artesão de mercadorias finas</gradient>"
-    alchemist:
-      name: "<gradient:#a855f7:#c084fc>💰 Alquimista</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Constrói capital puro em ritmo incomparável.</gradient>
+        - <gradient:#10b981:#6ee7b7>➤ Nível IV • Ramo de Riqueza</gradient>
+    magnate_market:
+      name: <gradient:#06b6d4:#67e8f9>🏛 Magnata dos Mercados</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Mestre de poções e elixires</gradient>"
-    merchant:
-      name: "<gradient:#f59e0b:#fbbf24>💰 Comerciante</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Orquestra os ciclos de oferta e demanda.</gradient>
+        - <gradient:#06b6d4:#67e8f9>➤ Nível IV • Filial de Mercado</gradient>
+    magnate_trade:
+      name: <gradient:#f97316:#fdba74>🚚 Magnata do Comércio</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Empresário de sucesso</gradient>"
-    master_crafter:
-      name: "<gradient:#ef4444:#f87171>💰 Mestre Artesão</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Domina rotas de caravanas e logística.</gradient>
+        - <gradient:#f97316:#fdba74>➤ Nível IV • Filial Comercial</gradient>
+    tycoon_wealth:
+      name: <gradient:#22c55e:#bbf7d0>👑 Magnata da Riqueza</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Supremo artesão do reino</gradient>"
-    merchant_prince:
-      name: "<gradient:#a855f7:#c084fc>💰 Príncipe Mercador</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Transforma economias com uma única decisão.</gradient>
+        - <gradient:#22c55e:#bbf7d0>➤ Nível V • Classificação Final</gradient>
+    tycoon_market:
+      name: <gradient:#0891b2:#a5f3fc>👑 Magnata dos Mercados</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Realeza do comércio</gradient>"
-    tycoon:
-      name: "<gradient:#a855f7:#c084fc>💰 Magnata</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Define preços que toda guilda deve respeitar.</gradient>
+        - <gradient:#0891b2:#a5f3fc>➤ Nível V • Classificação Final</gradient>
+    tycoon_trade:
+      name: <gradient:#ea580c:#fed7aa>👑 Magnata do Comércio</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Mestre em comércio e comércio</gradient>"
-    guild_master:
-      name: "<gradient:#ef4444:#f87171>💰 Mestre da Guilda</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Líder da guilda mercantil</gradient>"
-
-# ============================================
-# MENSAGENS DO OUVINTE DE RECOMPENSAS
-# ============================================
+        - <gradient:#6b7280:#9ca3af>✦ Possui estradas, portos e lucros.</gradient>
+        - <gradient:#ea580c:#fed7aa>➤ Nível V • Classificação Final</gradient>
 bounty_listener:
   bounty_active:
     warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>Você tem uma recompensa ativa na sua cabeça!</gradient>"
@@ -557,81 +602,281 @@ rank_path_overview_ui:
     tier: "<gradient:#6b7280:#9ca3af>Nível:</gradient> <gradient:#f59e0b:#fbbf24>%tier%</gradient>"
     weight: "<gradient:#6b7280:#9ca3af>Peso:</gradient> <gradient:#f59e0b:#fbbf24>%weight%</gradient>"
     ranger:
+      scout:
+        name: <gradient:#22c55e:#86efac>🏹 Escoteiro de Trilhas</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Lê pegadas e mudanças de vento.</gradient>
+          - <gradient:#10b981:#34d399>➤ Nível I • Iniciado na Natureza</gradient>
       hunter:
-        name: "<gradient:#7c3aed:#a78bfa>🏹 Caçador</gradient>"
+        name: <gradient:#16a34a:#4ade80>🏹 Caçador da Natureza</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Um rastreador novato aprendendo os costumes da natureza</gradient>"
-      archer:
-        name: "<gradient:#10b981:#34d399>🎯 Arqueiro</gradient>"
-        lore:
-          - "<gradient:#6b7280:#9ca3af>Hábil com o arco, mortal à distância</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Persegue a presa com precisão paciente.</gradient>
+          - <gradient:#10b981:#34d399>➤ Nível II • Perseguição Selvagem</gradient>
       tracker:
-        name: "<gradient:#3b82f6:#60a5fa>🔍 Rastreador</gradient>"
+        name: <gradient:#0ea5e9:#38bdf8>🏹 Rastreador de Sinais</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Especialista em encontrar e seguir presas</gradient>"
-      marksman:
-        name: "<gradient:#f59e0b:#fbbf24>🎯 Atirador</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Segue trilhas que nenhuma tempestade pode apagar.</gradient>
+          - <gradient:#3b82f6:#60a5fa>➤ Nível III • Escolha do caminho a seguir</gradient>
+      warden_primal:
+        name: <gradient:#14b8a6:#2dd4bf>🛡 Guardião das Feras</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Atirador de precisão com precisão mortal</gradient>"
-      pathfinder:
-        name: "<gradient:#a855f7:#c084fc>🗺 Desbravador</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Laços com criaturas de ponta do reino.</gradient>
+          - <gradient:#14b8a6:#2dd4bf>➤ Nível IV • Ramo Primordial</gradient>
+      warden_storm:
+        name: <gradient:#2563eb:#60a5fa>⚡ Guardião das Tempestades</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Mestre explorador de terras desconhecidas</gradient>"
-      sniper:
-        name: "<gradient:#ef4444:#f87171>🎯 Atirador</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Disparos certeiros através de trovões e chuva.</gradient>
+          - <gradient:#2563eb:#60a5fa>➤ Nível IV • Ramo Tempestade</gradient>
+      warden_wild:
+        name: <gradient:#16a34a:#84cc16>🌿 Guardião da Natureza</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Atirador de elite, um tiro, uma morte</gradient>"
-      forest_lord:
-        name: "<gradient:#10b981:#34d399>🌲 Senhor da Floresta</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Guarda fronteiras sagradas e clareiras escondidas.</gradient>
+          - <gradient:#16a34a:#84cc16>➤ Nível IV • Ramo Selvagem</gradient>
+      beastmaster_primal:
+        name: <gradient:#7c3aed:#c084fc>👑 Mestre das Feras Primordial</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Mestre da natureza selvagem, um com a natureza</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Comanda feras lendárias sem medo.</gradient>
+          - <gradient:#7c3aed:#c084fc>➤ Nível V • Classificação Final</gradient>
+      beastmaster_storm:
+        name: <gradient:#1d4ed8:#3b82f6>👑 Tempestade Mestre das Feras</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Cada raio guia seu voleio implacável.</gradient>
+          - <gradient:#1d4ed8:#3b82f6>➤ Nível V • Classificação Final</gradient>
+      beastmaster_wild:
+        name: <gradient:#15803d:#22c55e>👑 Mestre das Feras Selvagem</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ A própria natureza surge para atender ao seu chamado.</gradient>
+          - <gradient:#15803d:#22c55e>➤ Nível V • Classificação Final</gradient>
     warrior:
       recruit:
-        name: "<gradient:#6b7280:#9ca3af>⚔ Recrutar</gradient>"
+        name: <gradient:#6b7280:#9ca3af>⚔ Recrutar</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Um novo guerreiro iniciando sua jornada</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Uma lâmina nova com determinação não testada.</gradient>
+          - <gradient:#94a3b8:#cbd5e1>➤ Nível I • Campos de Treinamento</gradient>
       soldier:
-        name: "<gradient:#3b82f6:#60a5fa>⚔ Soldado</gradient>"
+        name: <gradient:#3b82f6:#60a5fa>⚔ Soldado</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Treinado na arte do combate</gradient>"
-      knight:
-        name: "<gradient:#f59e0b:#fbbf24>⚔ Cavaleiro</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Endurecido por exercícios e serviço na linha de frente.</gradient>
+          - <gradient:#3b82f6:#60a5fa>➤ Nível II • Disciplina de Campo</gradient>
+      veteran:
+        name: <gradient:#f59e0b:#fbbf24>⚔ Veterano</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Honorável guerreiro do reino</gradient>"
-      champion:
-        name: "<gradient:#a855f7:#c084fc>⚔ Campeão</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Cicatrizes de batalha marcam sua sabedoria conquistada.</gradient>
+          - <gradient:#f59e0b:#fbbf24>➤ Nível III • Escolha seu caminho</gradient>
+      berserker:
+        name: <gradient:#ef4444:#f87171>🔥 Berserker</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Lutador lendário, temido por todos</gradient>"
-      warlord:
-        name: "<gradient:#ef4444:#f87171>⚔ Senhor da guerra</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Troca defesa por ataque devastador.</gradient>
+          - <gradient:#ef4444:#f87171>➤ Nível IV • Ramo Fúria</gradient>
+      guardian:
+        name: <gradient:#2563eb:#60a5fa>🛡 Guardião</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Mestre da guerra, comandante dos exércitos</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Permanece firme onde outros quebrariam.</gradient>
+          - <gradient:#2563eb:#60a5fa>➤ Nível IV • Filial de Escudo</gradient>
+      gladiator:
+        name: <gradient:#a855f7:#c084fc>🏟 Gladiador</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Domine a guerra de arena equilibrada.</gradient>
+          - <gradient:#a855f7:#c084fc>➤ Nível IV • Filial da Arena</gradient>
+      warlord_fury:
+        name: <gradient:#dc2626:#fb7185>👑 Senhor da Guerra da Fúria</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Um motor de destruição imparável.</gradient>
+          - <gradient:#dc2626:#fb7185>➤ Nível V • Classificação Final</gradient>
+      warlord_shield:
+        name: <gradient:#1d4ed8:#60a5fa>👑 Senhor da Guerra do Escudo</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ O último muro entre a vida e a ruína.</gradient>
+          - <gradient:#1d4ed8:#60a5fa>➤ Nível V • Classificação Final</gradient>
+      warlord_arena:
+        name: <gradient:#7c3aed:#c084fc>👑 Senhor da Guerra da Arena</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Campeão coroado de todos os coliseu.</gradient>
+          - <gradient:#7c3aed:#c084fc>➤ Nível V • Classificação Final</gradient>
     mage:
       apprentice:
-        name: "<gradient:#a855f7:#c084fc>✨ Aprendiz</gradient>"
+        name: <gradient:#a855f7:#d8b4fe>✨ Aprendiz</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Aprendendo o básico da magia</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Despertam faíscas de poder arcano.</gradient>
+          - <gradient:#a855f7:#d8b4fe>➤ Nível I • Fundações Arcanas</gradient>
       adept:
-        name: "<gradient:#3b82f6:#60a5fa>✨ Adepto</gradient>"
+        name: <gradient:#3b82f6:#93c5fd>✨ Adepto</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Crescendo em poder mágico</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Cria feitiços controlados e focados.</gradient>
+          - <gradient:#3b82f6:#93c5fd>➤ Nível II • Prática Arcana</gradient>
       wizard:
-        name: "<gradient:#f59e0b:#fbbf24>✨ Feiticeiro</gradient>"
+        name: <gradient:#f59e0b:#fde68a>✨ Assistente</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Mestre das artes arcanas</gradient>"
-      archmage:
-        name: "<gradient:#ef4444:#f87171>✨ Arquimago</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Comanda padrões complexos de magia.</gradient>
+          - <gradient:#f59e0b:#fde68a>➤ Nível III • Escolha sua doutrina</gradient>
+      sorcerer_arcane:
+        name: <gradient:#8b5cf6:#c4b5fd>🔮 Feiticeiro dos Arcanos</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Mestre supremo de toda magia</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Refina a potência bruta em uma força elegante.</gradient>
+          - <gradient:#8b5cf6:#c4b5fd>➤ Nível IV • Ramo Arcano</gradient>
+      sorcerer_spell:
+        name: <gradient:#d946ef:#f0abfc>📜 Feiticeiro de Feitiços</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Expande o controle e a precisão do grimório.</gradient>
+          - <gradient:#d946ef:#f0abfc>➤ Nível IV • Ramo de Feitiço</gradient>
+      sorcerer_void:
+        name: <gradient:#1d4ed8:#60a5fa>🌌 Feiticeiro do Vazio</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Dobra as energias abissais à sua vontade.</gradient>
+          - <gradient:#1d4ed8:#60a5fa>➤ Nível IV • Filial Anulada</gradient>
+      archmage_arcane:
+        name: <gradient:#7c3aed:#c084fc>👑 Arquimago dos Arcanos</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Arquiteto supremo de puro poder arcano.</gradient>
+          - <gradient:#7c3aed:#c084fc>➤ Nível V • Classificação Final</gradient>
+      archmage_spell:
+        name: <gradient:#d946ef:#f5d0fe>👑 Arquimago dos Feitiços</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Cada encantamento responde instantaneamente.</gradient>
+          - <gradient:#d946ef:#f5d0fe>➤ Nível V • Classificação Final</gradient>
+      archmage_void:
+        name: <gradient:#1e3a8a:#60a5fa>👑 Arquimago do Vazio</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Governa as fronteiras entre os mundos.</gradient>
+          - <gradient:#1e3a8a:#60a5fa>➤ Nível V • Classificação Final</gradient>
     rogue:
       pickpocket:
-        name: "<gradient:#6b7280:#9ca3af>🗡 Batedor de carteiras</gradient>"
+        name: <gradient:#6b7280:#9ca3af>🗡 Batedor de carteiras</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Dedos rápidos, fuga mais rápida</gradient>"
-
-# ============================================
-# TRADUÇÕES DE REQUISITOS
-# ============================================
+          - <gradient:#6b7280:#9ca3af>✦ Aprende tempo, desorientação e velocidade.</gradient>
+          - <gradient:#94a3b8:#cbd5e1>➤ Nível I • Artesanato de rua</gradient>
+      thief:
+        name: <gradient:#3b82f6:#93c5fd>🗡 Ladrão</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Desliza através de fechaduras e linhas de vigia.</gradient>
+          - <gradient:#3b82f6:#93c5fd>➤ Nível II • Entrada Silenciosa</gradient>
+      assassin:
+        name: <gradient:#ef4444:#f87171>🗡 Assassino</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Ataca uma vez e desaparece sem deixar rastros.</gradient>
+          - <gradient:#ef4444:#f87171>➤ Nível III • Escolha seu método</gradient>
+      shadow_stealth:
+        name: <gradient:#0ea5e9:#67e8f9>🌒 Sombra da Furtividade</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Domina o movimento que nenhum olho pode acompanhar.</gradient>
+          - <gradient:#0ea5e9:#67e8f9>➤ Nível IV • Ramo Furtivo</gradient>
+      shadow_night:
+        name: <gradient:#7c3aed:#c4b5fd>🌘 Sombra da Noite</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Transforma a escuridão em vantagem letal.</gradient>
+          - <gradient:#7c3aed:#c4b5fd>➤ Nível IV • Filial Noturna</gradient>
+      shadow_sabotage:
+        name: <gradient:#f97316:#fb923c>💣 Sombra da Sabotagem</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Desmonta planos antes que os inimigos reajam.</gradient>
+          - <gradient:#f97316:#fb923c>➤ Nível IV • Ramo de Sabotagem</gradient>
+      phantom_stealth:
+        name: <gradient:#14b8a6:#5eead4>👑 Fantasma da Furtividade</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Torna-se um mito urbano intocável.</gradient>
+          - <gradient:#14b8a6:#5eead4>➤ Nível V • Classificação Final</gradient>
+      phantom_night:
+        name: <gradient:#9333ea:#e9d5ff>👑 Fantasma da Noite</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Possui completamente a meia-noite.</gradient>
+          - <gradient:#9333ea:#e9d5ff>➤ Nível V • Classificação Final</gradient>
+      phantom_sabotage:
+        name: <gradient:#ea580c:#fdba74>👑 Fantasma da Sabotagem</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Termina as batalhas antes mesmo de começarem.</gradient>
+          - <gradient:#ea580c:#fdba74>➤ Nível V • Classificação Final</gradient>
+    cleric:
+      acolyte:
+        name: <gradient:#f59e0b:#fde68a>✝ Acólito</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Inicia o caminho sagrado do serviço.</gradient>
+          - <gradient:#f59e0b:#fde68a>➤ Nível I • Devoção</gradient>
+      healer:
+        name: <gradient:#10b981:#6ee7b7>✝ Curador</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Restaura aliados sob forte pressão.</gradient>
+          - <gradient:#10b981:#6ee7b7>➤ Nível II • Restauração</gradient>
+      priest:
+        name: <gradient:#3b82f6:#93c5fd>✝ Sacerdote</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Guia os grupos com disciplina sagrada.</gradient>
+          - <gradient:#3b82f6:#93c5fd>➤ Nível III • Escolha sua vocação</gradient>
+      bishop_divine:
+        name: <gradient:#8b5cf6:#c4b5fd>⛪ Bispo da Divindade</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Canaliza autoridade radiante direta.</gradient>
+          - <gradient:#8b5cf6:#c4b5fd>➤ Nível IV • Ramo Divino</gradient>
+      bishop_light:
+        name: <gradient:#f59e0b:#fef08a>☀ Bispo da Luz</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Cega a corrupção com brilho sagrado.</gradient>
+          - <gradient:#f59e0b:#fef08a>➤ Nível IV • Filial Leve</gradient>
+      bishop_soul:
+        name: <gradient:#06b6d4:#67e8f9>🕊 Bispo das Almas</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Guarda o limiar da vida e da morte.</gradient>
+          - <gradient:#06b6d4:#67e8f9>➤ Nível IV • Ramo da Alma</gradient>
+      high_priest_divine:
+        name: <gradient:#7c3aed:#ddd6fe>👑 Sumo Sacerdote da Divindade</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Declara milagres no coração do caos.</gradient>
+          - <gradient:#7c3aed:#ddd6fe>➤ Nível V • Classificação Final</gradient>
+      high_priest_light:
+        name: <gradient:#f59e0b:#fef3c7>👑 Sumo Sacerdote da Luz</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Banha aliados em um amanhecer inabalável.</gradient>
+          - <gradient:#f59e0b:#fef3c7>➤ Nível V • Classificação Final</gradient>
+      high_priest_soul:
+        name: <gradient:#0891b2:#a5f3fc>👑 Sumo Sacerdote das Almas</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Pastoreia os espíritos além do medo mortal.</gradient>
+          - <gradient:#0891b2:#a5f3fc>➤ Nível V • Classificação Final</gradient>
+    merchant:
+      peddler:
+        name: <gradient:#6b7280:#9ca3af>💰 Mascate</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Começa com coragem, charme e pequenos negócios.</gradient>
+          - <gradient:#94a3b8:#cbd5e1>➤ Nível I • Comércio Ambulante</gradient>
+      trader:
+        name: <gradient:#3b82f6:#93c5fd>💰 Comerciante</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Amplia rotas e contatos confiáveis.</gradient>
+          - <gradient:#3b82f6:#93c5fd>➤ Nível II • Presença no Mercado</gradient>
+      broker:
+        name: <gradient:#f59e0b:#fde68a>💰 Corretor</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Fecha negócios de alto valor com precisão.</gradient>
+          - <gradient:#f59e0b:#fde68a>➤ Nível III • Escolha seu império</gradient>
+      magnate_wealth:
+        name: <gradient:#10b981:#6ee7b7>📈 Magnata da Riqueza</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Constrói capital puro em ritmo incomparável.</gradient>
+          - <gradient:#10b981:#6ee7b7>➤ Nível IV • Ramo de Riqueza</gradient>
+      magnate_market:
+        name: <gradient:#06b6d4:#67e8f9>🏛 Magnata dos Mercados</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Orquestra os ciclos de oferta e demanda.</gradient>
+          - <gradient:#06b6d4:#67e8f9>➤ Nível IV • Filial de Mercado</gradient>
+      magnate_trade:
+        name: <gradient:#f97316:#fdba74>🚚 Magnata do Comércio</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Domina rotas de caravanas e logística.</gradient>
+          - <gradient:#f97316:#fdba74>➤ Nível IV • Filial Comercial</gradient>
+      tycoon_wealth:
+        name: <gradient:#22c55e:#bbf7d0>👑 Magnata da Riqueza</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Transforma economias com uma única decisão.</gradient>
+          - <gradient:#22c55e:#bbf7d0>➤ Nível V • Classificação Final</gradient>
+      tycoon_market:
+        name: <gradient:#0891b2:#a5f3fc>👑 Magnata dos Mercados</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Define preços que toda guilda deve respeitar.</gradient>
+          - <gradient:#0891b2:#a5f3fc>➤ Nível V • Classificação Final</gradient>
+      tycoon_trade:
+        name: <gradient:#ea580c:#fed7aa>👑 Magnata do Comércio</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Possui estradas, portos e lucros.</gradient>
+          - <gradient:#ea580c:#fed7aa>➤ Nível V • Classificação Final</gradient>
 requirement:
 
   # ============================================
@@ -670,7 +915,7 @@ requirement:
     money: "Dinheiro"
     dollars: "Dólares"
     credits: "Créditos"
-  
+
   # Modelos de visualização de tarefas
   task:
     entry: "<gradient:#6b7280:#9ca3af>%prefix% %task_name%</gradient>"
@@ -1287,6 +1532,7 @@ admin_skills_ui:
       missing: "<gradient:#ef4444:#f87171>Missing</gradient>"
     detected:
       name: "<gradient:#22c55e:#86efac>✅ %plugin_name%</gradient>"
+      click_action: "<gradient:#3b82f6:#60a5fa>[>] Click to inject themed skill requirements</gradient>"
     missing:
       name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
     lore:
@@ -1301,6 +1547,11 @@ admin_skills_ui:
 # ============================================
 # ADMIN JOBS INTEGRATION UI
 # ============================================
+  messages:
+    inject_success: "<gradient:#22c55e:#86efac>[+] Injected %perk_count% perk and %rank_count% rank skill requirements for %plugin_name%.</gradient>"
+    inject_no_changes: "<gradient:#3b82f6:#60a5fa>[i] No skill requirement changes were needed for %plugin_name%.</gradient>"
+    plugin_missing: "<gradient:#ef4444:#f87171>[!] %plugin_name% is not detected, so no requirements were injected.</gradient>"
+    inject_failed: "<gradient:#ef4444:#f87171>[x] Failed to inject skill requirements for %plugin_name%.</gradient>"
 admin_jobs_ui:
   title: "<gradient:#f59e0b:#fbbf24>⛏ Integrações de trabalho</gradient>"
   summary:
@@ -1315,6 +1566,7 @@ admin_jobs_ui:
       missing: "<gradient:#ef4444:#f87171>Missing</gradient>"
     detected:
       name: "<gradient:#22c55e:#86efac>✅ %plugin_name%</gradient>"
+      click_action: "<gradient:#3b82f6:#60a5fa>[>] Clique para injetar requisitos de trabalho temáticos</gradient>"
     missing:
       name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
     lore:
@@ -1329,6 +1581,11 @@ admin_jobs_ui:
 # ============================================
 # ADMIN CURRENCY OVERVIEW UI
 # ============================================
+  messages:
+    inject_success: "<gradient:#22c55e:#86efac>[+] Injetados o benefício %perk_count% e os requisitos de trabalho de classificação %rank_count% para %plugin_name%.</gradient>"
+    inject_no_changes: "<gradient:#3b82f6:#60a5fa>[i] Nenhuma alteração nos requisitos de trabalho foi necessária para %plugin_name%.</gradient>"
+    plugin_missing: "<gradient:#ef4444:#f87171>[!] %plugin_name% não foi detectado, portanto nenhum requisito foi injetado.</gradient>"
+    inject_failed: "<gradient:#ef4444:#f87171>[x] Falha ao injetar requisitos de trabalho para %plugin_name%.</gradient>"
 admin_currency_ui:
   title: "<gradient:#10b981:#34d399>💱 Gerenciador de moeda</gradient>"
   currency_entry:
@@ -1364,6 +1621,16 @@ admin_currency_ui:
     lore:
       - "<gradient:#6b7280:#9ca3af>RDQ não conseguiu detectar moedas Vault ou JExEconomy</gradient>"
       - "<gradient:#6b7280:#9ca3af>Instale ou habilite um provedor econômico primeiro</gradient>"
+    jex_detected:
+      name: "<gradient:#3b82f6:#60a5fa>[i] JExEconomy Detected</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>RDQ detected JExEconomy but no currencies exist yet</gradient>"
+        - "<gradient:#10b981:#34d399>Use the top button to create %currency_id%</gradient>"
+    vault_detected:
+      name: "<gradient:#3b82f6:#60a5fa>[i] Vault Detected</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Vault is available but no currency entries were listed</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Check your economy provider configuration</gradient>"
   decoration:
     border:
       name: " "
@@ -1683,7 +1950,7 @@ rank_requirements_journey_ui:
         - "<gradient:#6b7280:#9ca3af>Esta classificação não tem recompensas configuradas</gradient>"
       type_label: "<gray>Tipo:</gray> <yellow>%type%</yellow>"
       value_label: "<gray>Valor:</gray> <gold>%value%</gold>"
-    
+
     # Descrições dos tipos de recompensa
     currency:
       description: "<gradient:#fbbf24:#fcd34d>Receba recompensas em moeda</gradient>"
@@ -1705,7 +1972,6 @@ rank_requirements_journey_ui:
       description: "<gradient:#f97316:#fb923c>Desbloquear efeitos de partículas</gradient>"
     vanishing_chest:
       description: "<gradient:#14b8a6:#2dd4bf>Receba um baú que desaparece</gradient>"
-    
     more: "<gradient:#fbbf24:#fcd34d>+%count% mais recompensas...</gradient>"
 
   rewards:
@@ -1734,10 +2000,9 @@ reward:
       - "<gradient:#6b7280:#9ca3af>Esta classificação não tem recompensas configuradas</gradient>"
     type_label: "<gray>Tipo:</gray> <yellow>%type%</yellow>"
     value_label: "<gray>Valor:</gray> <gold>%value%</gold>"
-  
   perk:
     unlocked: "<gradient:#10b981:#34d399>✦</gradient> <gradient:#6b7280:#9ca3af>Você desbloqueou o benefício:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
-  
+
   # Descrições dos tipos de recompensa
   currency:
     description: "<gradient:#fbbf24:#fcd34d>Receba recompensas em moeda</gradient>"
@@ -1759,7 +2024,6 @@ reward:
     description: "<gradient:#f97316:#fb923c>Desbloquear efeitos de partículas</gradient>"
   vanishing_chest:
     description: "<gradient:#14b8a6:#2dd4bf>Receba um baú que desaparece</gradient>"
-  
   more: "<gradient:#fbbf24:#fcd34d>+%count% mais recompensas...</gradient>"
 
 rewards:
@@ -1815,7 +2079,7 @@ perk:
   fish_xp:
     name: "<gradient:#10b981:#34d399>Aumento de XP de Pesca</gradient>"
     description: "<gradient:#6b7280:#9ca3af>Ganhe bônus de XP ao pescar</gradient>"
-  
+
   # Vantagens de poções
   potion_enhance:
     name: "<gradient:#a855f7:#c084fc>Amplificador de Poção</gradient>"
@@ -1826,7 +2090,7 @@ perk:
   potion_save:
     name: "<gradient:#10b981:#34d399>Reembolso de Poção</gradient>"
     description: "<gradient:#6b7280:#9ca3af>Chance de recuperar sua poção depois de bebê-la</gradient>"
-  
+
   # Mensagens de vantagens
   messages:
     # Desbloquear/Enable/Disable
@@ -1843,36 +2107,33 @@ perk:
     disable:
       success: "<gradient:#f59e0b:#fbbf24>Benefício para deficientes:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
       failed: "<gradient:#ef4444:#f87171>Falha ao desativar o benefício:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
-    
+
     # Esfriar
     cooldown:
       active: "<gradient:#ef4444:#f87171>Este benefício está em espera por</gradient> <gradient:#f59e0b:#fbbf24>%time%</gradient>"
       ready: "<gradient:#10b981:#34d399>O benefício está pronto para uso!</gradient>"
-    
+
     # Gatilhos de efeitos
     potion_enhanced: "<gradient:#a855f7:#c084fc>✨ Poção Aprimorada!</gradient> <gradient:#6b7280:#9ca3af>Efeitos amplificados</gradient>"
     potion_extended: "<gradient:#f59e0b:#fbbf24>⏱ Duração da poção estendida!</gradient> <gradient:#6b7280:#9ca3af>Dura mais</gradient>"
     potion_saved: "<gradient:#10b981:#34d399>💾 Poção salva!</gradient> <gradient:#6b7280:#9ca3af>Devolvido ao inventário</gradient>"
     fishing_active: "<gradient:#3b82f6:#60a5fa>🎣 Pesca mais rápida e ativa!</gradient>"
     fishing_xp: "<gradient:#10b981:#34d399>+%xp% XP de pesca!</gradient>"
-  
+
   # Elementos da IU
   ui:
     header:
       type_label: "<gray>Tipo: <white>%type%</white></gray>"
       category_label: "<gray>Categoria: <white>%category%</white></gray>"
-    
     requirements:
       no_requirements: "<green>Sem requisitos</green>"
       no_requirements_lore: "<gray>Este benefício não tem requisitos de desbloqueio</gray>"
-    
     rewards:
       title: "<gold>Desbloquear recompensa</gold>"
       no_rewards: "<gray>Sem recompensas de desbloqueio</gray>"
       no_rewards_lore: "<gray>Este benefício não tem recompensas de desbloqueio</gray>"
       type_label: "<gray>Tipo: <white>%type%</white></gray>"
       value_label: "<gray>Valor: <gold>%value%</gold></gray>"
-    
     status:
       title: "<white>Status do benefício</white>"
       locked: "<red>✖ Bloqueado</red>"
@@ -1883,7 +2144,6 @@ perk:
       enabled_count: "<gray>Vantagens habilitadas: <white>%count%/%max%</white></gray>"
       cooldown_label: "<gray>Esfriar: <gold>%time%</gold></gray>"
       activations_label: "<gray>Ativações: <white>%count%</white></gray>"
-    
     buttons:
       unlock:
         title: "<white>Desbloquear vantagem</white>"
@@ -1895,7 +2155,7 @@ perk:
       disable:
         title: "<white>Desativar benefício</white>"
         hint: "<yellow>Clique para desativar este benefício</yellow>"
-  
+
   # Benefícios existentes (para referência - adicione se estiver faltando)
   fly:
     name: "<gradient:#3b82f6:#60a5fa>Voo</gradient>"

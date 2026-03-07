@@ -82,236 +82,281 @@ rank:
         - "<gradient:#6b7280:#9ca3af>Δεν έχει επιλεγεί κατάταξη</gradient>"
   # Βαθμίδες Δέντρου Δασοφύλακα
   ranger:
+    scout:
+      name: <gradient:#22c55e:#86efac>🏹 Scout of Trails</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Διαβάζει αποτυπώματα οπλών και μετατοπίσεις ανέμου.</gradient>
+        - <gradient:#10b981:#34d399>➤ Βαθμίδα I • Nature Initiate</gradient>
     hunter:
-      name: "<gradient:#7c3aed:#a78bfa>🏹 Κυνηγός</gradient>"
+      name: <gradient:#16a34a:#4ade80>🏹 Hunter of the Wilds</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Ένας αρχάριος ιχνηλάτης που μαθαίνει τους τρόπους της άγριας φύσης</gradient>"
-    archer:
-      name: "<gradient:#10b981:#34d399>🎯 Τοξότης</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Επιδέξιος στο τόξο, θανατηφόρος σε απόσταση</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Τα κοτσάνια θηράματα με υπομονετική ακρίβεια.</gradient>
+        - <gradient:#10b981:#34d399>➤ Tier II • Wild Pursuit</gradient>
     tracker:
-      name: "<gradient:#3b82f6:#60a5fa>🔍 Ιχνηλάτης</gradient>"
+      name: <gradient:#0ea5e9:#38bdf8>🏹 Ιχνηλάτης Σημείων</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Ειδικός στην εύρεση και παρακολούθηση θηράματος</gradient>"
-    marksman:
-      name: "<gradient:#f59e0b:#fbbf24>🎯 Σκοπευτής</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Ακολουθεί μονοπάτια που καμία καταιγίδα δεν μπορεί να διαγράψει.</gradient>
+        - <gradient:#3b82f6:#60a5fa>➤ Βαθμίδα III • Επιλογή διαδρομής μπροστά</gradient>
+    warden_primal:
+      name: <gradient:#14b8a6:#2dd4bf>🛡 Warden of Beasts</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Σκοπευτής ακριβείας με θανατηφόρα ακρίβεια</gradient>"
-    pathfinder:
-      name: "<gradient:#a855f7:#c084fc>🗺 Ανιχνευτής</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Δεσμεύει με κορυφαία πλάσματα του βασιλείου.</gradient>
+        - <gradient:#14b8a6:#2dd4bf>➤ Βαθμίδα IV • Πρωτογενής Κλάδος</gradient>
+    warden_storm:
+      name: <gradient:#2563eb:#60a5fa>⚡ Warden of Storms</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Κύριος εξερευνητής αχαρτογράφητων εδαφών</gradient>"
-    sniper:
-      name: "<gradient:#ef4444:#f87171>🎯 Ελεύθερος Σκοπευτής</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Πυρκαγιές αληθινές μέσα από βροντές και βροχές.</gradient>
+        - <gradient:#2563eb:#60a5fa>➤ Βαθμίδα IV • Κλάδος Καταιγίδας</gradient>
+    warden_wild:
+      name: <gradient:#16a34a:#84cc16>🌿 Warden of the Wild</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Επίλεκτος σκοπευτής, ένας πυροβολισμός ένας σκοτωμένος</gradient>"
-    forest_lord:
-      name: "<gradient:#10b981:#34d399>🌲 Άρχοντας του Δάσους</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Φρουρεί τα ιερά σύνορα και τα κρυμμένα ξέφωτα.</gradient>
+        - <gradient:#16a34a:#84cc16>➤ Βαθμίδα IV • Άγριος κλάδος</gradient>
+    beastmaster_primal:
+      name: <gradient:#7c3aed:#c084fc>👑 Beastmaster Primal</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Κύριος της ερημιάς, ένα με τη φύση</gradient>"
-  # Βαθμίδες Δέντρου Πολεμιστή
+        - <gradient:#6b7280:#9ca3af>✦ Διοικεί θρυλικά θηρία χωρίς φόβο.</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ Βαθμίδα V • Τελική κατάταξη</gradient>
+    beastmaster_storm:
+      name: <gradient:#1d4ed8:#3b82f6>👑 Beastmaster Storm</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Κάθε μπουλόνι καθοδηγεί το ανελέητο βόλεϊ σας.</gradient>
+        - <gradient:#1d4ed8:#3b82f6>➤ Βαθμίδα V • Τελική κατάταξη</gradient>
+    beastmaster_wild:
+      name: <gradient:#15803d:#22c55e>👑 Beastmaster Wild</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Η ίδια η φύση υψώνεται για να απαντήσει στο κάλεσμά σας.</gradient>
+        - <gradient:#15803d:#22c55e>➤ Βαθμίδα V • Τελική κατάταξη</gradient>
   warrior:
     recruit:
-      name: "<gradient:#6b7280:#9ca3af>Νεοσύλλεκτος</gradient>"
+      name: <gradient:#6b7280:#9ca3af>⚔ Πρόσληψη</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Ένας νέος πολεμιστής ξεκινά το ταξίδι του</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Μάθετε τα βασικά της μάχης</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Μια φρέσκια λεπίδα με μη δοκιμασμένη αποφασιστικότητα.</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ Βαθμίδα I • Γήπεδα προπόνησης</gradient>
     soldier:
-      name: "<gradient:#3b82f6:#60a5fa>Στρατιώτης</gradient>"
+      name: <gradient:#3b82f6:#60a5fa>⚔ Στρατιώτης</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Εκπαιδευμένος στην τέχνη της μάχης</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Έτοιμοι για μάχη</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Σκληρυμένο από ασκήσεις και καθήκοντα πρώτης γραμμής.</gradient>
+        - <gradient:#3b82f6:#60a5fa>➤ Βαθμίδα II • Πειθαρχία πεδίου</gradient>
     veteran:
-      name: "<gradient:#f59e0b:#fbbf24>Βετεράνος</gradient>"
+      name: <gradient:#f59e0b:#fbbf24>⚔ Βετεράνος</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>σκληραγωγημένος στη μάχη πολεμιστής</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Επιλέξτε το μονοπάτι της εξειδίκευσής σας</gradient>"
-    # Κλάδος Εξειδίκευσης 1: Μαινόμενος (Επιθετικός)
+        - <gradient:#6b7280:#9ca3af>✦ Τα σημάδια της μάχης σηματοδοτούν τη σοφία σας.</gradient>
+        - <gradient:#f59e0b:#fbbf24>➤ Βαθμίδα III • Επιλέξτε τη διαδρομή σας</gradient>
     berserker:
-      name: "<gradient:#ef4444:#f87171>Μαινόμενος</gradient>"
+      name: <gradient:#ef4444:#f87171>🔥 Berserker</gradient>
       lore:
-        - "<gradient:#ef4444:#f87171>Διαδρομή της Οργής</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Εξαπολύστε καταστροφικές επιθέσεις</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Θυσία άμυνας για ακατέργαστη δύναμη</gradient>"
-    # Κλάδος Εξειδίκευσης 2: Φύλακας (Αμυντικός)
+        - <gradient:#6b7280:#9ca3af>✦ Ανταλλάσσει την άμυνα με καταστροφική επίθεση.</gradient>
+        - <gradient:#ef4444:#f87171>➤ Tier IV • Fury Branch</gradient>
     guardian:
-      name: "<gradient:#3b82f6:#60a5fa>Φύλακας</gradient>"
+      name: <gradient:#2563eb:#60a5fa>🛡 Φύλακας</gradient>
       lore:
-        - "<gradient:#3b82f6:#60a5fa>Διαδρομή Προστασίας</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Γίνε άθραυστη ασπίδα</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Προστατέψτε τους συμμάχους σας με κάθε κόστος</gradient>"
-    # Κλάδος Εξειδίκευσης 3: Μονομάχος (Ισορροπημένος)
+        - <gradient:#6b7280:#9ca3af>✦ Στέκεται σταθερά εκεί που άλλοι θα έσπαγαν.</gradient>
+        - <gradient:#2563eb:#60a5fa>➤ Βαθμίδα IV • Κλάδος Ασπίδας</gradient>
     gladiator:
-      name: "<gradient:#a855f7:#c084fc>Μονομάχος</gradient>"
+      name: <gradient:#a855f7:#c084fc>🏟 Μονομάχος</gradient>
       lore:
-        - "<gradient:#a855f7:#c084fc>Διαδρομή της Δόξας</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Δάσκαλος της μάχης στην αρένα</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Ισορροπεί επίθεση και άμυνα</gradient>"
-    # Τελικές Βαθμίδες
+        - <gradient:#6b7280:#9ca3af>✦ Κατακτήστε τον ισορροπημένο πόλεμο αρένα.</gradient>
+        - <gradient:#a855f7:#c084fc>➤ Tier IV • Κλάδος Arena</gradient>
     warlord_fury:
-      name: "<gradient:#ef4444:#f87171>Πολέμαρχος της Οργής</gradient>"
+      name: <gradient:#dc2626:#fb7185>👑 Warlord of Fury</gradient>
       lore:
-        - "<gradient:#ef4444:#f87171>Απόλυτος Μαινόμενος</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Ασταμάτητη δύναμη καταστροφής</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Ο φόβος ενσαρκώνεται στο πεδίο της μάχης</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Μια ασταμάτητη μηχανή καταστροφής.</gradient>
+        - <gradient:#dc2626:#fb7185>➤ Βαθμίδα V • Τελική κατάταξη</gradient>
     warlord_shield:
-      name: "<gradient:#3b82f6:#60a5fa>Πολέμαρχος της Ασπίδας</gradient>"
+      name: <gradient:#1d4ed8:#60a5fa>👑 Warlord of the Shield</gradient>
       lore:
-        - "<gradient:#3b82f6:#60a5fa>Απόλυτος Φύλακας</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Ακίνητο αντικείμενο, αιώνιος προστάτης</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Κανένας δεν θα περάσει όσο στέκεσαι</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Το τελικό τείχος μεταξύ ζωής και καταστροφής.</gradient>
+        - <gradient:#1d4ed8:#60a5fa>➤ Βαθμίδα V • Τελική κατάταξη</gradient>
     warlord_arena:
-      name: "<gradient:#a855f7:#c084fc>Πολέμαρχος της Αρένας</gradient>"
+      name: <gradient:#7c3aed:#c084fc>👑 Πολέμαρχος της Αρένας</gradient>
       lore:
-        - "<gradient:#a855f7:#c084fc>Απόλυτος Μονομάχος</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Πρωταθλητής πρωταθλητών</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Θρύλος της αρένας</gradient>"
-    # Παλιές βαθμίδες (για συμβατότητα προς τα πίσω)
-    knight:
-      name: "<gradient:#f59e0b:#fbbf24>Ιππότης</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Αξιότιμος πολεμιστής του βασιλείου</gradient>"
-    champion:
-      name: "<gradient:#a855f7:#c084fc>Πρωταθλητής</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Θρυλικός μαχητής, που όλοι φοβούνται</gradient>"
-    warlord:
-      name: "<gradient:#ef4444:#f87171>Πολέμαρχος</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Αρχηγός πολέμου, αρχηγός στρατευμάτων</gradient>"
-  # Βαθμίδες Δέντρου Μάγου
+        - <gradient:#6b7280:#9ca3af>✦ Στέφθηκε πρωταθλητής κάθε Κολοσσαίο.</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ Βαθμίδα V • Τελική κατάταξη</gradient>
   mage:
     apprentice:
-      name: "<gradient:#a855f7:#c084fc>✨ Μαθητευόμενος</gradient>"
+      name: <gradient:#a855f7:#d8b4fe>✨ Μαθητευόμενος</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Μαθαίνοντας τα βασικά της μαγείας</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Ξυπνούν σπίθες απόκρυφης δύναμης.</gradient>
+        - <gradient:#a855f7:#d8b4fe>➤ Tier I • Απόκρυφα θεμέλια</gradient>
     adept:
-      name: "<gradient:#3b82f6:#60a5fa>✨ Μυημένος</gradient>"
+      name: <gradient:#3b82f6:#93c5fd>✨ Αριστ</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Μεγαλώνοντας σε μαγική δύναμη</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Υφαίνει ελεγχόμενα και εστιασμένα ξόρκια.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Βαθμίδα ΙΙ • Μυστική Πρακτική</gradient>
     wizard:
-      name: "<gradient:#f59e0b:#fbbf24>✨ Μάγος</gradient>"
+      name: <gradient:#f59e0b:#fde68a>✨ Μάγος</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Μάστερ των μυστηριωδών τεχνών</gradient>"
-    archmage:
-      name: "<gradient:#ef4444:#f87171>✨ Αρχιμάγος</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Διοικεί πολύπλοκα μοτίβα μαγείας.</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ Βαθμίδα III • Επιλέξτε το Δόγμα σας</gradient>
+    sorcerer_arcane:
+      name: <gradient:#8b5cf6:#c4b5fd>🔮 Μάγος της Αρκάνα</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Υπέρτατος κύριος κάθε μαγείας</gradient>"
-  # Βαθμίδες Δέντρου Απατεώνα
+        - <gradient:#6b7280:#9ca3af>✦ Βελτιώνει την ακατέργαστη δύναμη σε κομψή δύναμη.</gradient>
+        - <gradient:#8b5cf6:#c4b5fd>➤ Βαθμίδα IV • Κλάδος Arcane</gradient>
+    sorcerer_spell:
+      name: <gradient:#d946ef:#f0abfc>📜 Μάγος των Ξόρκων</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Επεκτείνει τον έλεγχο και την ακρίβεια του grimoire.</gradient>
+        - <gradient:#d946ef:#f0abfc>➤ Βαθμίδα IV • Κλάδος ορθογραφίας</gradient>
+    sorcerer_void:
+      name: <gradient:#1d4ed8:#60a5fa>🌌 Μάγος του Κενού</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Κάμπτει τις αβυσσαλέες ενέργειες στη θέλησή σας.</gradient>
+        - <gradient:#1d4ed8:#60a5fa>➤ Βαθμίδα IV • Κλάδος κενό</gradient>
+    archmage_arcane:
+      name: <gradient:#7c3aed:#c084fc>👑 Αρχιμάγος της Αρκάνας</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Ανώτατος αρχιτέκτονας της καθαρής απόκρυφης δύναμης.</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ Βαθμίδα V • Τελική κατάταξη</gradient>
+    archmage_spell:
+      name: <gradient:#d946ef:#f5d0fe>👑 Archmage of Spells</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Κάθε ξόρκι απαντά αμέσως.</gradient>
+        - <gradient:#d946ef:#f5d0fe>➤ Βαθμίδα V • Τελική κατάταξη</gradient>
+    archmage_void:
+      name: <gradient:#1e3a8a:#60a5fa>👑 Archmage of the Void</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Κυβερνά τις άκρες μεταξύ των κόσμων.</gradient>
+        - <gradient:#1e3a8a:#60a5fa>➤ Βαθμίδα V • Τελική κατάταξη</gradient>
   rogue:
     pickpocket:
-      name: "<gradient:#6b7280:#9ca3af>🗡 Πορτοφολάς</gradient>"
+      name: <gradient:#6b7280:#9ca3af>🗡 Πορτοφολέας</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Γρήγορα δάχτυλα, πιο γρήγορη απόδραση</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Μαθαίνει το χρόνο, την εσφαλμένη κατεύθυνση και την ταχύτητα.</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ Βαθμίδα I • Streetcraft</gradient>
     thief:
-      name: "<gradient:#3b82f6:#60a5fa>🗡 Κλέφτης</gradient>"
+      name: <gradient:#3b82f6:#93c5fd>🗡 Κλέφτης</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Δάσκαλος της κρυψίνοιας και της κλοπής</gradient>"
-    scout:
-      name: "<gradient:#10b981:#34d399>🗡 Ανιχνευτής</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Μάτια και αυτιά των σκιών</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Γλιστράει μέσα από τις κλειδαριές και τις γραμμές επιφυλακής.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Βαθμίδα II • Σιωπηλή είσοδος</gradient>
     assassin:
-      name: "<gradient:#ef4444:#f87171>🗡 Δολοφόνος</gradient>"
+      name: <gradient:#ef4444:#f87171>🗡 Δολοφόνος</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Σιωπηλός δολοφόνος, θάνατος από σκιές</gradient>"
-    infiltrator:
-      name: "<gradient:#a855f7:#c084fc>🗡 Διεισδυτής</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Χτυπά μια φορά και εξαφανίζεται χωρίς ίχνος.</gradient>
+        - <gradient:#ef4444:#f87171>➤ Βαθμίδα III • Επιλέξτε τη μέθοδο σας</gradient>
+    shadow_stealth:
+      name: <gradient:#0ea5e9:#67e8f9>🌒 Shadow of Stealth</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Ειδικός στο να μπαίνει και να βγαίνει απαρατήρητος</gradient>"
-    shadowblade:
-      name: "<gradient:#6b7280:#9ca3af>🗡 Σκιόσπαθο</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Κυριαρχεί την κίνηση που κανένα μάτι δεν μπορεί να ακολουθήσει.</gradient>
+        - <gradient:#0ea5e9:#67e8f9>➤ Βαθμίδα IV • Κλάδος Stealth</gradient>
+    shadow_night:
+      name: <gradient:#7c3aed:#c4b5fd>🌘 Σκιά της Νύχτας</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Θανάσιμος πολεμιστής της νύχτας</gradient>"
-    spymaster:
-      name: "<gradient:#3b82f6:#60a5fa>🗡 Αρχικατάσκοπος</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Μετατρέπει το σκοτάδι σε θανατηφόρο πλεονέκτημα.</gradient>
+        - <gradient:#7c3aed:#c4b5fd>➤ Βαθμίδα IV • Νυχτερινός κλάδος</gradient>
+    shadow_sabotage:
+      name: <gradient:#f97316:#fb923c>💣 Σκιά του Σαμποτάζ</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Ελεγκτής δικτύων πληροφοριών</gradient>"
-    shadow_master:
-      name: "<gradient:#1f2937:#374151>🗡 Άρχοντας των Σκιών</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Καταρρίπτει τα σχέδια πριν αντιδράσουν οι εχθροί.</gradient>
+        - <gradient:#f97316:#fb923c>➤ Βαθμίδα IV • Κλάδος Σαμποτάζ</gradient>
+    phantom_stealth:
+      name: <gradient:#14b8a6:#5eead4>👑 Phantom of Stealth</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Ένα με το ίδιο το σκοτάδι</gradient>"
-    shadowmaster:
-      name: "<gradient:#1f2937:#374151>🗡 Άρχοντας των Σκιών</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Γίνεται ένας άθικτος αστικός μύθος.</gradient>
+        - <gradient:#14b8a6:#5eead4>➤ Βαθμίδα V • Τελική κατάταξη</gradient>
+    phantom_night:
+      name: <gradient:#9333ea:#e9d5ff>👑 Φάντασμα της νύχτας</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Ανώτατος κυρίαρχος όλων των σκιών</gradient>"
-  # Βαθμίδες Δέντρου Κληρικού
+        - <gradient:#6b7280:#9ca3af>✦ Κατέχει πλήρως τη μεταμεσονύκτια ώρα.</gradient>
+        - <gradient:#9333ea:#e9d5ff>➤ Βαθμίδα V • Τελική κατάταξη</gradient>
+    phantom_sabotage:
+      name: <gradient:#ea580c:#fdba74>👑 Φάντασμα του Σαμποτάζ</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Τερματίζει τις μάχες πριν καν αρχίσουν.</gradient>
+        - <gradient:#ea580c:#fdba74>➤ Βαθμίδα V • Τελική κατάταξη</gradient>
   cleric:
     acolyte:
-      name: "<gradient:#f59e0b:#fbbf24>✝ Ακόλουθος</gradient>"
+      name: <gradient:#f59e0b:#fde68a>✝ Acolyte</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Αφοσιωμένος υπηρέτης του θείου</gradient>"
-    devotee:
-      name: "<gradient:#f59e0b:#fbbf24>✝ Αφοσιωμένος</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Πιστός συνεχιστής του θείου μονοπατιού</gradient>"
-    priest:
-      name: "<gradient:#10b981:#34d399>✝ Ιερέας</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Θεραπευτής και προστάτης των πιστών</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Ξεκινά το ιερό μονοπάτι της υπηρεσίας.</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ Βαθμίδα I • Αφοσίωση</gradient>
     healer:
-      name: "<gradient:#10b981:#34d399>✝ Θεραπευτής</gradient>"
+      name: <gradient:#10b981:#6ee7b7>✝ Θεραπευτής</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Δάσκαλος των θεραπευτικών τεχνών</gradient>"
-    bishop:
-      name: "<gradient:#a855f7:#c084fc>✝ Επίσκοπος</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Αποκαθιστά τους συμμάχους υπό μεγάλη πίεση.</gradient>
+        - <gradient:#10b981:#6ee7b7>➤ Βαθμίδα II • Αποκατάσταση</gradient>
+    priest:
+      name: <gradient:#3b82f6:#93c5fd>✝ Ιερέας</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Αρχηγός των πιστών</gradient>"
-    oracle:
-      name: "<gradient:#3b82f6:#60a5fa>✝ Μάντης</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Καθοδηγεί πάρτι με ιερή πειθαρχία.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Βαθμίδα III • Επιλέξτε την κλήση σας</gradient>
+    bishop_divine:
+      name: <gradient:#8b5cf6:#c4b5fd>⛪ Επίσκοπος της Θεότητας</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Βλέπης θείων οραμάτων</gradient>"
-    high_priest:
-      name: "<gradient:#ef4444:#f87171>✝ Αρχιερέας</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Κανάλια κατευθύνουν την ακτινοβολούμενη αρχή.</gradient>
+        - <gradient:#8b5cf6:#c4b5fd>➤ Βαθμίδα IV • Θεϊκός Κλάδος</gradient>
+    bishop_light:
+      name: <gradient:#f59e0b:#fef08a>☀ Επίσκοπος Φωτός</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Υπέρτατη φωνή του θείου</gradient>"
-  # Βαθμίδες Δέντρου Εμπόρου
+        - <gradient:#6b7280:#9ca3af>✦ Τυφλώνει τη διαφθορά με ιερή λαμπρότητα.</gradient>
+        - <gradient:#f59e0b:#fef08a>➤ Βαθμίδα IV • Ελαφρύς κλάδος</gradient>
+    bishop_soul:
+      name: <gradient:#06b6d4:#67e8f9>🕊 Επίσκοπος Ψυχών</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Φρουρεί το κατώφλι της ζωής και του θανάτου.</gradient>
+        - <gradient:#06b6d4:#67e8f9>➤ Βαθμίδα IV • Κλάδος Ψυχής</gradient>
+    high_priest_divine:
+      name: <gradient:#7c3aed:#ddd6fe>👑 Αρχιερέας της Θεότητας</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Δηλώνει θαύματα στην καρδιά του χάους.</gradient>
+        - <gradient:#7c3aed:#ddd6fe>➤ Βαθμίδα V • Τελική κατάταξη</gradient>
+    high_priest_light:
+      name: <gradient:#f59e0b:#fef3c7>👑 Αρχιερέας του Φωτός</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Λούζει συμμάχους στην αταλάντευτη αυγή.</gradient>
+        - <gradient:#f59e0b:#fef3c7>➤ Βαθμίδα V • Τελική κατάταξη</gradient>
+    high_priest_soul:
+      name: <gradient:#0891b2:#a5f3fc>👑 Αρχιερέας των Ψυχών</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Ποιμένας πνεύματα πέρα ​​από το θανάσιμο φόβο.</gradient>
+        - <gradient:#0891b2:#a5f3fc>➤ Βαθμίδα V • Τελική κατάταξη</gradient>
   merchant:
     peddler:
-      name: "<gradient:#6b7280:#9ca3af>💰 Πλανόδιος</gradient>"
+      name: <gradient:#6b7280:#9ca3af>💰 Πωλητής</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Πώληση εμπορευμάτων στο δρόμο</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Ξεκινά με κότσι, γοητεία και μικρές συναλλαγές.</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ Βαθμίδα I • Street Commerce</gradient>
     trader:
-      name: "<gradient:#3b82f6:#60a5fa>💰 Έμπορος</gradient>"
+      name: <gradient:#3b82f6:#93c5fd>💰 Έμπορος</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Καθιερωμένος έμπορος με συνδέσεις</gradient>"
-    vendor:
-      name: "<gradient:#10b981:#34d399>💰 Πωλητής</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Επεκτείνει τις διαδρομές και τις αξιόπιστες επαφές.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Βαθμίδα II • Παρουσία στην αγορά</gradient>
+    broker:
+      name: <gradient:#f59e0b:#fde68a>💰 Μεσίτης</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Ειδικευμένος πωλητής αγαθών</gradient>"
-    artificer:
-      name: "<gradient:#f59e0b:#fbbf24>💰 Τεχνίτης</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Κλείνει συμφωνίες υψηλής αξίας με ακρίβεια.</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ Βαθμίδα III • Επιλέξτε την Αυτοκρατορία σας</gradient>
+    magnate_wealth:
+      name: <gradient:#10b981:#6ee7b7>📈 Μεγιστάνας του Πλούτου</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Κατασκευαστής εκλεκτών ειδών</gradient>"
-    alchemist:
-      name: "<gradient:#a855f7:#c084fc>💰 Αλχημιστής</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Χτίζει καθαρό κεφάλαιο με απαράμιλλο ρυθμό.</gradient>
+        - <gradient:#10b981:#6ee7b7>➤ Βαθμίδα IV • Κλάδος Πλούτου</gradient>
+    magnate_market:
+      name: <gradient:#06b6d4:#67e8f9>🏛 Magnate of Markets</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Δάσκαλος των φίλτρων και των ελιξιρίων</gradient>"
-    merchant:
-      name: "<gradient:#f59e0b:#fbbf24>💰 Έμπορος</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Ενορχηστρώνει τους κύκλους προσφοράς και ζήτησης.</gradient>
+        - <gradient:#06b6d4:#67e8f9>➤ Βαθμίδα IV • Υποκατάστημα Αγοράς</gradient>
+    magnate_trade:
+      name: <gradient:#f97316:#fdba74>🚚 Μεγιστάνας του Εμπορίου</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Επιτυχημένος ιδιοκτήτης επιχείρησης</gradient>"
-    master_crafter:
-      name: "<gradient:#ef4444:#f87171>💰 Αρχιτεχνίτης</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Κυριαρχεί στις λωρίδες τροχόσπιτων και στην επιμελητεία.</gradient>
+        - <gradient:#f97316:#fdba74>➤ Βαθμίδα IV • Κλάδος Εμπορίου</gradient>
+    tycoon_wealth:
+      name: <gradient:#22c55e:#bbf7d0>👑 Μεγιστάνας του Πλούτου</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Ανώτατος τεχνίτης του βασιλείου</gradient>"
-    merchant_prince:
-      name: "<gradient:#a855f7:#c084fc>💰 Πρίγκιπας του Εμπορίου</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Γυρίζει τις οικονομίες με μία μόνο απόφαση.</gradient>
+        - <gradient:#22c55e:#bbf7d0>➤ Βαθμίδα V • Τελική κατάταξη</gradient>
+    tycoon_market:
+      name: <gradient:#0891b2:#a5f3fc>👑 Μεγιστάνας των Αγορών</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Τα δικαιώματα του εμπορίου</gradient>"
-    tycoon:
-      name: "<gradient:#a855f7:#c084fc>💰 Μεγιστάνας</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Καθορίζει τιμές που κάθε συντεχνία πρέπει να σέβεται.</gradient>
+        - <gradient:#0891b2:#a5f3fc>➤ Βαθμίδα V • Τελική κατάταξη</gradient>
+    tycoon_trade:
+      name: <gradient:#ea580c:#fed7aa>👑 Μεγιστάνας του Εμπορίου</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Δάσκαλος του εμπορίου και των συναλλαγών</gradient>"
-    guild_master:
-      name: "<gradient:#ef4444:#f87171>💰 Αρχηγός Συντεχνίας</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Αρχηγός της συντεχνίας των εμπόρων</gradient>"
-
-# ============================================
-# ΜΗΝΥΜΑΤΑ ΑΚΡΟΑΤΗ ΕΠΙΚΗΡΥΞΕΩΝ
-# ============================================
+        - <gradient:#6b7280:#9ca3af>✦ Κατέχει τους δρόμους, τα λιμάνια και τα κέρδη.</gradient>
+        - <gradient:#ea580c:#fed7aa>➤ Βαθμίδα V • Τελική κατάταξη</gradient>
 bounty_listener:
   bounty_active:
     warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>Έχετε ένα ενεργό μπόνους στο κεφάλι σας!</gradient>"
@@ -557,81 +602,281 @@ rank_path_overview_ui:
     tier: "<gradient:#6b7280:#9ca3af>Επίπεδο:</gradient> <gradient:#f59e0b:#fbbf24>%tier%</gradient>"
     weight: "<gradient:#6b7280:#9ca3af>Βάρος:</gradient> <gradient:#f59e0b:#fbbf24>%weight%</gradient>"
     ranger:
+      scout:
+        name: <gradient:#22c55e:#86efac>🏹 Scout of Trails</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Διαβάζει αποτυπώματα οπλών και μετατοπίσεις ανέμου.</gradient>
+          - <gradient:#10b981:#34d399>➤ Βαθμίδα I • Nature Initiate</gradient>
       hunter:
-        name: "<gradient:#7c3aed:#a78bfa>🏹 Κυνηγός</gradient>"
+        name: <gradient:#16a34a:#4ade80>🏹 Hunter of the Wilds</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Ένας αρχάριος ιχνηλάτης που μαθαίνει τους τρόπους της άγριας φύσης</gradient>"
-      archer:
-        name: "<gradient:#10b981:#34d399>🎯 Τοξότης</gradient>"
-        lore:
-          - "<gradient:#6b7280:#9ca3af>Επιδέξιος στο τόξο, θανατηφόρος σε απόσταση</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Τα κοτσάνια θηράματα με υπομονετική ακρίβεια.</gradient>
+          - <gradient:#10b981:#34d399>➤ Tier II • Wild Pursuit</gradient>
       tracker:
-        name: "<gradient:#3b82f6:#60a5fa>🔍 Ιχνηλάτης</gradient>"
+        name: <gradient:#0ea5e9:#38bdf8>🏹 Ιχνηλάτης Σημείων</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Ειδικός στην εύρεση και παρακολούθηση θηράματος</gradient>"
-      marksman:
-        name: "<gradient:#f59e0b:#fbbf24>🎯 Σκοπευτής</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Ακολουθεί μονοπάτια που καμία καταιγίδα δεν μπορεί να διαγράψει.</gradient>
+          - <gradient:#3b82f6:#60a5fa>➤ Βαθμίδα III • Επιλογή διαδρομής μπροστά</gradient>
+      warden_primal:
+        name: <gradient:#14b8a6:#2dd4bf>🛡 Warden of Beasts</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Σκοπευτής ακριβείας με θανατηφόρα ακρίβεια</gradient>"
-      pathfinder:
-        name: "<gradient:#a855f7:#c084fc>🗺 Ανιχνευτής</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Δεσμεύει με κορυφαία πλάσματα του βασιλείου.</gradient>
+          - <gradient:#14b8a6:#2dd4bf>➤ Βαθμίδα IV • Πρωτογενής Κλάδος</gradient>
+      warden_storm:
+        name: <gradient:#2563eb:#60a5fa>⚡ Warden of Storms</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Κύριος εξερευνητής αχαρτογράφητων εδαφών</gradient>"
-      sniper:
-        name: "<gradient:#ef4444:#f87171>🎯 Ελεύθερος Σκοπευτής</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Πυρκαγιές αληθινές μέσα από βροντές και βροχές.</gradient>
+          - <gradient:#2563eb:#60a5fa>➤ Βαθμίδα IV • Κλάδος Καταιγίδας</gradient>
+      warden_wild:
+        name: <gradient:#16a34a:#84cc16>🌿 Warden of the Wild</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Επίλεκτος σκοπευτής, ένας πυροβολισμός ένας σκοτωμένος</gradient>"
-      forest_lord:
-        name: "<gradient:#10b981:#34d399>🌲 Άρχοντας του Δάσους</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Φρουρεί τα ιερά σύνορα και τα κρυμμένα ξέφωτα.</gradient>
+          - <gradient:#16a34a:#84cc16>➤ Βαθμίδα IV • Άγριος κλάδος</gradient>
+      beastmaster_primal:
+        name: <gradient:#7c3aed:#c084fc>👑 Beastmaster Primal</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Κύριος της ερημιάς, ένα με τη φύση</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Διοικεί θρυλικά θηρία χωρίς φόβο.</gradient>
+          - <gradient:#7c3aed:#c084fc>➤ Βαθμίδα V • Τελική κατάταξη</gradient>
+      beastmaster_storm:
+        name: <gradient:#1d4ed8:#3b82f6>👑 Beastmaster Storm</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Κάθε μπουλόνι καθοδηγεί το ανελέητο βόλεϊ σας.</gradient>
+          - <gradient:#1d4ed8:#3b82f6>➤ Βαθμίδα V • Τελική κατάταξη</gradient>
+      beastmaster_wild:
+        name: <gradient:#15803d:#22c55e>👑 Beastmaster Wild</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Η ίδια η φύση υψώνεται για να απαντήσει στο κάλεσμά σας.</gradient>
+          - <gradient:#15803d:#22c55e>➤ Βαθμίδα V • Τελική κατάταξη</gradient>
     warrior:
       recruit:
-        name: "<gradient:#6b7280:#9ca3af>⚔ Νεοσύλλεκτος</gradient>"
+        name: <gradient:#6b7280:#9ca3af>⚔ Πρόσληψη</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Ένας νέος πολεμιστής ξεκινά το ταξίδι του</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Μια φρέσκια λεπίδα με μη δοκιμασμένη αποφασιστικότητα.</gradient>
+          - <gradient:#94a3b8:#cbd5e1>➤ Βαθμίδα I • Γήπεδα προπόνησης</gradient>
       soldier:
-        name: "<gradient:#3b82f6:#60a5fa>⚔ Στρατιώτης</gradient>"
+        name: <gradient:#3b82f6:#60a5fa>⚔ Στρατιώτης</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Εκπαιδευμένος στην τέχνη της μάχης</gradient>"
-      knight:
-        name: "<gradient:#f59e0b:#fbbf24>⚔ Ιππότης</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Σκληρυμένο από ασκήσεις και καθήκοντα πρώτης γραμμής.</gradient>
+          - <gradient:#3b82f6:#60a5fa>➤ Βαθμίδα II • Πειθαρχία πεδίου</gradient>
+      veteran:
+        name: <gradient:#f59e0b:#fbbf24>⚔ Βετεράνος</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Αξιότιμος πολεμιστής του βασιλείου</gradient>"
-      champion:
-        name: "<gradient:#a855f7:#c084fc>⚔ Πρωταθλητής</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Τα σημάδια της μάχης σηματοδοτούν τη σοφία σας.</gradient>
+          - <gradient:#f59e0b:#fbbf24>➤ Βαθμίδα III • Επιλέξτε τη διαδρομή σας</gradient>
+      berserker:
+        name: <gradient:#ef4444:#f87171>🔥 Berserker</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Θρυλικός μαχητής, που όλοι φοβούνται</gradient>"
-      warlord:
-        name: "<gradient:#ef4444:#f87171>⚔ Πολέμαρχος</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Ανταλλάσσει την άμυνα με καταστροφική επίθεση.</gradient>
+          - <gradient:#ef4444:#f87171>➤ Tier IV • Fury Branch</gradient>
+      guardian:
+        name: <gradient:#2563eb:#60a5fa>🛡 Φύλακας</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Αρχηγός πολέμου, αρχηγός στρατευμάτων</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Στέκεται σταθερά εκεί που άλλοι θα έσπαγαν.</gradient>
+          - <gradient:#2563eb:#60a5fa>➤ Βαθμίδα IV • Κλάδος Ασπίδας</gradient>
+      gladiator:
+        name: <gradient:#a855f7:#c084fc>🏟 Μονομάχος</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Κατακτήστε τον ισορροπημένο πόλεμο αρένα.</gradient>
+          - <gradient:#a855f7:#c084fc>➤ Tier IV • Κλάδος Arena</gradient>
+      warlord_fury:
+        name: <gradient:#dc2626:#fb7185>👑 Warlord of Fury</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Μια ασταμάτητη μηχανή καταστροφής.</gradient>
+          - <gradient:#dc2626:#fb7185>➤ Βαθμίδα V • Τελική κατάταξη</gradient>
+      warlord_shield:
+        name: <gradient:#1d4ed8:#60a5fa>👑 Warlord of the Shield</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Το τελικό τείχος μεταξύ ζωής και καταστροφής.</gradient>
+          - <gradient:#1d4ed8:#60a5fa>➤ Βαθμίδα V • Τελική κατάταξη</gradient>
+      warlord_arena:
+        name: <gradient:#7c3aed:#c084fc>👑 Πολέμαρχος της Αρένας</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Στέφθηκε πρωταθλητής κάθε Κολοσσαίο.</gradient>
+          - <gradient:#7c3aed:#c084fc>➤ Βαθμίδα V • Τελική κατάταξη</gradient>
     mage:
       apprentice:
-        name: "<gradient:#a855f7:#c084fc>✨ Μαθητευόμενος</gradient>"
+        name: <gradient:#a855f7:#d8b4fe>✨ Μαθητευόμενος</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Μαθαίνοντας τα βασικά της μαγείας</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Ξυπνούν σπίθες απόκρυφης δύναμης.</gradient>
+          - <gradient:#a855f7:#d8b4fe>➤ Tier I • Απόκρυφα θεμέλια</gradient>
       adept:
-        name: "<gradient:#3b82f6:#60a5fa>✨ Μυημένος</gradient>"
+        name: <gradient:#3b82f6:#93c5fd>✨ Αριστ</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Μεγαλώνοντας σε μαγική δύναμη</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Υφαίνει ελεγχόμενα και εστιασμένα ξόρκια.</gradient>
+          - <gradient:#3b82f6:#93c5fd>➤ Βαθμίδα ΙΙ • Μυστική Πρακτική</gradient>
       wizard:
-        name: "<gradient:#f59e0b:#fbbf24>✨ Μάγος</gradient>"
+        name: <gradient:#f59e0b:#fde68a>✨ Μάγος</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Μάστερ των μυστηριωδών τεχνών</gradient>"
-      archmage:
-        name: "<gradient:#ef4444:#f87171>✨ Αρχιμάγος</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Διοικεί πολύπλοκα μοτίβα μαγείας.</gradient>
+          - <gradient:#f59e0b:#fde68a>➤ Βαθμίδα III • Επιλέξτε το Δόγμα σας</gradient>
+      sorcerer_arcane:
+        name: <gradient:#8b5cf6:#c4b5fd>🔮 Μάγος της Αρκάνα</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Υπέρτατος κύριος κάθε μαγείας</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Βελτιώνει την ακατέργαστη δύναμη σε κομψή δύναμη.</gradient>
+          - <gradient:#8b5cf6:#c4b5fd>➤ Βαθμίδα IV • Κλάδος Arcane</gradient>
+      sorcerer_spell:
+        name: <gradient:#d946ef:#f0abfc>📜 Μάγος των Ξόρκων</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Επεκτείνει τον έλεγχο και την ακρίβεια του grimoire.</gradient>
+          - <gradient:#d946ef:#f0abfc>➤ Βαθμίδα IV • Κλάδος ορθογραφίας</gradient>
+      sorcerer_void:
+        name: <gradient:#1d4ed8:#60a5fa>🌌 Μάγος του Κενού</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Κάμπτει τις αβυσσαλέες ενέργειες στη θέλησή σας.</gradient>
+          - <gradient:#1d4ed8:#60a5fa>➤ Βαθμίδα IV • Κλάδος κενό</gradient>
+      archmage_arcane:
+        name: <gradient:#7c3aed:#c084fc>👑 Αρχιμάγος της Αρκάνας</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Ανώτατος αρχιτέκτονας της καθαρής απόκρυφης δύναμης.</gradient>
+          - <gradient:#7c3aed:#c084fc>➤ Βαθμίδα V • Τελική κατάταξη</gradient>
+      archmage_spell:
+        name: <gradient:#d946ef:#f5d0fe>👑 Archmage of Spells</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Κάθε ξόρκι απαντά αμέσως.</gradient>
+          - <gradient:#d946ef:#f5d0fe>➤ Βαθμίδα V • Τελική κατάταξη</gradient>
+      archmage_void:
+        name: <gradient:#1e3a8a:#60a5fa>👑 Archmage of the Void</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Κυβερνά τις άκρες μεταξύ των κόσμων.</gradient>
+          - <gradient:#1e3a8a:#60a5fa>➤ Βαθμίδα V • Τελική κατάταξη</gradient>
     rogue:
       pickpocket:
-        name: "<gradient:#6b7280:#9ca3af>🗡 Πορτοφολάς</gradient>"
+        name: <gradient:#6b7280:#9ca3af>🗡 Πορτοφολέας</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Γρήγορα δάχτυλα, πιο γρήγορη απόδραση</gradient>"
-
-# ============================================
-# ΜΕΤΑΦΡΑΣΕΙΣ ΑΠΑΙΤΗΣΕΩΝ
-# ============================================
+          - <gradient:#6b7280:#9ca3af>✦ Μαθαίνει το χρόνο, την εσφαλμένη κατεύθυνση και την ταχύτητα.</gradient>
+          - <gradient:#94a3b8:#cbd5e1>➤ Βαθμίδα I • Streetcraft</gradient>
+      thief:
+        name: <gradient:#3b82f6:#93c5fd>🗡 Κλέφτης</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Γλιστράει μέσα από τις κλειδαριές και τις γραμμές επιφυλακής.</gradient>
+          - <gradient:#3b82f6:#93c5fd>➤ Βαθμίδα II • Σιωπηλή είσοδος</gradient>
+      assassin:
+        name: <gradient:#ef4444:#f87171>🗡 Δολοφόνος</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Χτυπά μια φορά και εξαφανίζεται χωρίς ίχνος.</gradient>
+          - <gradient:#ef4444:#f87171>➤ Βαθμίδα III • Επιλέξτε τη μέθοδο σας</gradient>
+      shadow_stealth:
+        name: <gradient:#0ea5e9:#67e8f9>🌒 Shadow of Stealth</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Κυριαρχεί την κίνηση που κανένα μάτι δεν μπορεί να ακολουθήσει.</gradient>
+          - <gradient:#0ea5e9:#67e8f9>➤ Βαθμίδα IV • Κλάδος Stealth</gradient>
+      shadow_night:
+        name: <gradient:#7c3aed:#c4b5fd>🌘 Σκιά της Νύχτας</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Μετατρέπει το σκοτάδι σε θανατηφόρο πλεονέκτημα.</gradient>
+          - <gradient:#7c3aed:#c4b5fd>➤ Βαθμίδα IV • Νυχτερινός κλάδος</gradient>
+      shadow_sabotage:
+        name: <gradient:#f97316:#fb923c>💣 Σκιά του Σαμποτάζ</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Καταρρίπτει τα σχέδια πριν αντιδράσουν οι εχθροί.</gradient>
+          - <gradient:#f97316:#fb923c>➤ Βαθμίδα IV • Κλάδος Σαμποτάζ</gradient>
+      phantom_stealth:
+        name: <gradient:#14b8a6:#5eead4>👑 Phantom of Stealth</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Γίνεται ένας άθικτος αστικός μύθος.</gradient>
+          - <gradient:#14b8a6:#5eead4>➤ Βαθμίδα V • Τελική κατάταξη</gradient>
+      phantom_night:
+        name: <gradient:#9333ea:#e9d5ff>👑 Φάντασμα της νύχτας</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Κατέχει πλήρως τη μεταμεσονύκτια ώρα.</gradient>
+          - <gradient:#9333ea:#e9d5ff>➤ Βαθμίδα V • Τελική κατάταξη</gradient>
+      phantom_sabotage:
+        name: <gradient:#ea580c:#fdba74>👑 Φάντασμα του Σαμποτάζ</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Τερματίζει τις μάχες πριν καν αρχίσουν.</gradient>
+          - <gradient:#ea580c:#fdba74>➤ Βαθμίδα V • Τελική κατάταξη</gradient>
+    cleric:
+      acolyte:
+        name: <gradient:#f59e0b:#fde68a>✝ Acolyte</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Ξεκινά το ιερό μονοπάτι της υπηρεσίας.</gradient>
+          - <gradient:#f59e0b:#fde68a>➤ Βαθμίδα I • Αφοσίωση</gradient>
+      healer:
+        name: <gradient:#10b981:#6ee7b7>✝ Θεραπευτής</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Αποκαθιστά τους συμμάχους υπό μεγάλη πίεση.</gradient>
+          - <gradient:#10b981:#6ee7b7>➤ Βαθμίδα II • Αποκατάσταση</gradient>
+      priest:
+        name: <gradient:#3b82f6:#93c5fd>✝ Ιερέας</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Καθοδηγεί πάρτι με ιερή πειθαρχία.</gradient>
+          - <gradient:#3b82f6:#93c5fd>➤ Βαθμίδα III • Επιλέξτε την κλήση σας</gradient>
+      bishop_divine:
+        name: <gradient:#8b5cf6:#c4b5fd>⛪ Επίσκοπος της Θεότητας</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Κανάλια κατευθύνουν την ακτινοβολούμενη αρχή.</gradient>
+          - <gradient:#8b5cf6:#c4b5fd>➤ Βαθμίδα IV • Θεϊκός Κλάδος</gradient>
+      bishop_light:
+        name: <gradient:#f59e0b:#fef08a>☀ Επίσκοπος Φωτός</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Τυφλώνει τη διαφθορά με ιερή λαμπρότητα.</gradient>
+          - <gradient:#f59e0b:#fef08a>➤ Βαθμίδα IV • Ελαφρύς κλάδος</gradient>
+      bishop_soul:
+        name: <gradient:#06b6d4:#67e8f9>🕊 Επίσκοπος Ψυχών</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Φρουρεί το κατώφλι της ζωής και του θανάτου.</gradient>
+          - <gradient:#06b6d4:#67e8f9>➤ Βαθμίδα IV • Κλάδος Ψυχής</gradient>
+      high_priest_divine:
+        name: <gradient:#7c3aed:#ddd6fe>👑 Αρχιερέας της Θεότητας</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Δηλώνει θαύματα στην καρδιά του χάους.</gradient>
+          - <gradient:#7c3aed:#ddd6fe>➤ Βαθμίδα V • Τελική κατάταξη</gradient>
+      high_priest_light:
+        name: <gradient:#f59e0b:#fef3c7>👑 Αρχιερέας του Φωτός</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Λούζει συμμάχους στην αταλάντευτη αυγή.</gradient>
+          - <gradient:#f59e0b:#fef3c7>➤ Βαθμίδα V • Τελική κατάταξη</gradient>
+      high_priest_soul:
+        name: <gradient:#0891b2:#a5f3fc>👑 Αρχιερέας των Ψυχών</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Ποιμένας πνεύματα πέρα ​​από το θανάσιμο φόβο.</gradient>
+          - <gradient:#0891b2:#a5f3fc>➤ Βαθμίδα V • Τελική κατάταξη</gradient>
+    merchant:
+      peddler:
+        name: <gradient:#6b7280:#9ca3af>💰 Πωλητής</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Ξεκινά με κότσι, γοητεία και μικρές συναλλαγές.</gradient>
+          - <gradient:#94a3b8:#cbd5e1>➤ Βαθμίδα I • Street Commerce</gradient>
+      trader:
+        name: <gradient:#3b82f6:#93c5fd>💰 Έμπορος</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Επεκτείνει τις διαδρομές και τις αξιόπιστες επαφές.</gradient>
+          - <gradient:#3b82f6:#93c5fd>➤ Βαθμίδα II • Παρουσία στην αγορά</gradient>
+      broker:
+        name: <gradient:#f59e0b:#fde68a>💰 Μεσίτης</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Κλείνει συμφωνίες υψηλής αξίας με ακρίβεια.</gradient>
+          - <gradient:#f59e0b:#fde68a>➤ Βαθμίδα III • Επιλέξτε την Αυτοκρατορία σας</gradient>
+      magnate_wealth:
+        name: <gradient:#10b981:#6ee7b7>📈 Μεγιστάνας του Πλούτου</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Χτίζει καθαρό κεφάλαιο με απαράμιλλο ρυθμό.</gradient>
+          - <gradient:#10b981:#6ee7b7>➤ Βαθμίδα IV • Κλάδος Πλούτου</gradient>
+      magnate_market:
+        name: <gradient:#06b6d4:#67e8f9>🏛 Magnate of Markets</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Ενορχηστρώνει τους κύκλους προσφοράς και ζήτησης.</gradient>
+          - <gradient:#06b6d4:#67e8f9>➤ Βαθμίδα IV • Υποκατάστημα Αγοράς</gradient>
+      magnate_trade:
+        name: <gradient:#f97316:#fdba74>🚚 Μεγιστάνας του Εμπορίου</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Κυριαρχεί στις λωρίδες τροχόσπιτων και στην επιμελητεία.</gradient>
+          - <gradient:#f97316:#fdba74>➤ Βαθμίδα IV • Κλάδος Εμπορίου</gradient>
+      tycoon_wealth:
+        name: <gradient:#22c55e:#bbf7d0>👑 Μεγιστάνας του Πλούτου</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Γυρίζει τις οικονομίες με μία μόνο απόφαση.</gradient>
+          - <gradient:#22c55e:#bbf7d0>➤ Βαθμίδα V • Τελική κατάταξη</gradient>
+      tycoon_market:
+        name: <gradient:#0891b2:#a5f3fc>👑 Μεγιστάνας των Αγορών</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Καθορίζει τιμές που κάθε συντεχνία πρέπει να σέβεται.</gradient>
+          - <gradient:#0891b2:#a5f3fc>➤ Βαθμίδα V • Τελική κατάταξη</gradient>
+      tycoon_trade:
+        name: <gradient:#ea580c:#fed7aa>👑 Μεγιστάνας του Εμπορίου</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Κατέχει τους δρόμους, τα λιμάνια και τα κέρδη.</gradient>
+          - <gradient:#ea580c:#fed7aa>➤ Βαθμίδα V • Τελική κατάταξη</gradient>
 requirement:
 
   # ============================================
@@ -670,7 +915,7 @@ requirement:
     money: "Χρήματα"
     dollars: "Δολάρια"
     credits: "Πιστώσεις"
-  
+
   # Πρότυπα προεπισκόπησης εργασιών
   task:
     entry: "<gradient:#6b7280:#9ca3af>%prefix% %task_name%</gradient>"
@@ -1287,6 +1532,7 @@ admin_skills_ui:
       missing: "<gradient:#ef4444:#f87171>Απών</gradient>"
     detected:
       name: "<gradient:#22c55e:#86efac>✅ %plugin_name%</gradient>"
+      click_action: "<gradient:#3b82f6:#60a5fa>[>] Click to inject themed skill requirements</gradient>"
     missing:
       name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
     lore:
@@ -1301,6 +1547,11 @@ admin_skills_ui:
 # ============================================
 # ADMIN JOBS INTEGRATION UI
 # ============================================
+  messages:
+    inject_success: "<gradient:#22c55e:#86efac>[+] Injected %perk_count% perk and %rank_count% rank skill requirements for %plugin_name%.</gradient>"
+    inject_no_changes: "<gradient:#3b82f6:#60a5fa>[i] No skill requirement changes were needed for %plugin_name%.</gradient>"
+    plugin_missing: "<gradient:#ef4444:#f87171>[!] %plugin_name% is not detected, so no requirements were injected.</gradient>"
+    inject_failed: "<gradient:#ef4444:#f87171>[x] Failed to inject skill requirements for %plugin_name%.</gradient>"
 admin_jobs_ui:
   title: "<gradient:#f59e0b:#fbbf24>⛏ Ενσωματώσεις εργασίας</gradient>"
   summary:
@@ -1315,6 +1566,7 @@ admin_jobs_ui:
       missing: "<gradient:#ef4444:#f87171>Απών</gradient>"
     detected:
       name: "<gradient:#22c55e:#86efac>✅ %plugin_name%</gradient>"
+      click_action: "<gradient:#3b82f6:#60a5fa>[>] Κάντε κλικ για να εισάγετε θεματικές απαιτήσεις εργασίας</gradient>"
     missing:
       name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
     lore:
@@ -1329,6 +1581,11 @@ admin_jobs_ui:
 # ============================================
 # ADMIN CURRENCY OVERVIEW UI
 # ============================================
+  messages:
+    inject_success: "<gradient:#22c55e:#86efac>[+] Ένεση %perk_count% προνόμιο και %rank_count% κατάταξη των απαιτήσεων εργασίας για %plugin_name%.</gradient>"
+    inject_no_changes: "<gradient:#3b82f6:#60a5fa>[i] Δεν χρειάστηκαν αλλαγές στις απαιτήσεις εργασίας για το %plugin_name%.</gradient>"
+    plugin_missing: "<gradient:#ef4444:#f87171>Το [!] %plugin_name% δεν ανιχνεύεται, επομένως δεν εισήχθησαν απαιτήσεις.</gradient>"
+    inject_failed: "<gradient:#ef4444:#f87171>[x] Αποτυχία εισαγωγής απαιτήσεων εργασίας για %plugin_name%.</gradient>"
 admin_currency_ui:
   title: "<gradient:#10b981:#34d399>💱 Υπεύθυνος νομισμάτων</gradient>"
   currency_entry:
@@ -1364,6 +1621,16 @@ admin_currency_ui:
     lore:
       - "<gradient:#6b7280:#9ca3af>Το RDQ δεν μπόρεσε να εντοπίσει νομίσματα Vault ή JExEconomy</gradient>"
       - "<gradient:#6b7280:#9ca3af>Εγκαταστήστε ή ενεργοποιήστε πρώτα έναν οικονομικό πάροχο</gradient>"
+    jex_detected:
+      name: "<gradient:#3b82f6:#60a5fa>[i] JExEconomy Detected</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>RDQ detected JExEconomy but no currencies exist yet</gradient>"
+        - "<gradient:#10b981:#34d399>Use the top button to create %currency_id%</gradient>"
+    vault_detected:
+      name: "<gradient:#3b82f6:#60a5fa>[i] Vault Detected</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Vault is available but no currency entries were listed</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Check your economy provider configuration</gradient>"
   decoration:
     border:
       name: " "
@@ -1683,7 +1950,7 @@ rank_requirements_journey_ui:
         - "<gradient:#6b7280:#9ca3af>Αυτή η κατάταξη δεν έχει διαμορφώσει ανταμοιβές</gradient>"
       type_label: "<gray>Τύπος:</gray> <yellow>%type%</yellow>"
       value_label: "<gray>Αξία:</gray> <gold>%value%</gold>"
-    
+
     # Περιγραφές τύπων ανταμοιβής
     currency:
       description: "<gradient:#fbbf24:#fcd34d>Λάβετε νομισματικές ανταμοιβές</gradient>"
@@ -1705,7 +1972,6 @@ rank_requirements_journey_ui:
       description: "<gradient:#f97316:#fb923c>Ξεκλειδώστε εφέ σωματιδίων</gradient>"
     vanishing_chest:
       description: "<gradient:#14b8a6:#2dd4bf>Λάβετε ένα εξαφανιζόμενο σεντούκι</gradient>"
-    
     more: "<gradient:#fbbf24:#fcd34d>+%count% περισσότερες ανταμοιβές...</gradient>"
 
   rewards:
@@ -1734,10 +2000,9 @@ reward:
       - "<gradient:#6b7280:#9ca3af>Αυτή η κατάταξη δεν έχει διαμορφώσει ανταμοιβές</gradient>"
     type_label: "<gray>Τύπος:</gray> <yellow>%type%</yellow>"
     value_label: "<gray>Αξία:</gray> <gold>%value%</gold>"
-  
   perk:
     unlocked: "<gradient:#10b981:#34d399>✦</gradient> <gradient:#6b7280:#9ca3af>Ξεκλειδώσατε το προνόμιο:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
-  
+
   # Περιγραφές τύπων ανταμοιβής
   currency:
     description: "<gradient:#fbbf24:#fcd34d>Λάβετε νομισματικές ανταμοιβές</gradient>"
@@ -1759,7 +2024,6 @@ reward:
     description: "<gradient:#f97316:#fb923c>Ξεκλειδώστε εφέ σωματιδίων</gradient>"
   vanishing_chest:
     description: "<gradient:#14b8a6:#2dd4bf>Λάβετε ένα εξαφανιζόμενο σεντούκι</gradient>"
-  
   more: "<gradient:#fbbf24:#fcd34d>+%count% περισσότερες ανταμοιβές...</gradient>"
 
 rewards:
@@ -1815,7 +2079,7 @@ perk:
   fish_xp:
     name: "<gradient:#10b981:#34d399>Ενίσχυση Εμπειρίας Ψαρέματος</gradient>"
     description: "<gradient:#6b7280:#9ca3af>Κερδίστε μπόνους XP όταν πιάνετε ψάρια</gradient>"
-  
+
   # Προνόμια Φίλτρων
   potion_enhance:
     name: "<gradient:#a855f7:#c084fc>Ενίσχυση Φίλτρων</gradient>"
@@ -1826,7 +2090,7 @@ perk:
   potion_save:
     name: "<gradient:#10b981:#34d399>Επιστροφή Φίλτρου</gradient>"
     description: "<gradient:#6b7280:#9ca3af>Ευκαιρία να πάρετε πίσω το φίλτρο σας αφού το πιείτε</gradient>"
-  
+
   # Μηνύματα Προνομίων
   messages:
     # Ξεκλείδωμα/Ενεργοποίηση/Απενεργοποίηση
@@ -1843,36 +2107,33 @@ perk:
     disable:
       success: "<gradient:#f59e0b:#fbbf24>Το προνόμιο απενεργοποιήθηκε:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
       failed: "<gradient:#ef4444:#f87171>Αποτυχία απενεργοποίησης προνομίου:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
-    
+
     # Χρόνος Επαναφόρτισης
     cooldown:
       active: "<gradient:#ef4444:#f87171>Αυτό το προνόμιο βρίσκεται σε χρόνο επαναφόρτισης για</gradient> <gradient:#f59e0b:#fbbf24>%time%</gradient>"
       ready: "<gradient:#10b981:#34d399>Το προνόμιο είναι έτοιμο για χρήση!</gradient>"
-    
+
     # Ενεργοποιήσεις Εφέ
     potion_enhanced: "<gradient:#a855f7:#c084fc>✨ Ενισχυμένο φίλτρο!</gradient> <gradient:#6b7280:#9ca3af>Τα εφέ ενισχύθηκαν</gradient>"
     potion_extended: "<gradient:#f59e0b:#fbbf24>⏱ Η διάρκεια του φίλτρου παρατάθηκε!</gradient> <gradient:#6b7280:#9ca3af>Διαρκεί περισσότερο</gradient>"
     potion_saved: "<gradient:#10b981:#34d399>💾 Το φίλτρο αποθηκεύτηκε!</gradient> <gradient:#6b7280:#9ca3af>Επιστράφηκε στο απόθεμα</gradient>"
     fishing_active: "<gradient:#3b82f6:#60a5fa>🎣 Το Ταχύτερο Ψάρεμα είναι ενεργό!</gradient>"
     fishing_xp: "<gradient:#10b981:#34d399>+%xp% Εμπειρία Ψαρέματος!</gradient>"
-  
+
   # Στοιχεία Διεπαφής
   ui:
     header:
       type_label: "<gray>Τύπος: <white>%type%</white></gray>"
       category_label: "<gray>Κατηγορία: <white>%category%</white></gray>"
-    
     requirements:
       no_requirements: "<green>Χωρίς Απαιτήσεις</green>"
       no_requirements_lore: "<gray>Αυτό το προνόμιο δεν έχει απαιτήσεις ξεκλειδώματος</gray>"
-    
     rewards:
       title: "<gold>Ξεκλείδωμα Ανταμοιβής</gold>"
       no_rewards: "<gray>Χωρίς ανταμοιβές ξεκλειδώματος</gray>"
       no_rewards_lore: "<gray>Αυτό το προνόμιο δεν έχει ανταμοιβές ξεκλειδώματος</gray>"
       type_label: "<gray>Τύπος: <white>%type%</white></gray>"
       value_label: "<gray>Αξία: <gold>%value%</gold></gray>"
-    
     status:
       title: "<white>Κατάσταση Προνομίου</white>"
       locked: "<red>✖ Κλειδωμένο</red>"
@@ -1883,7 +2144,6 @@ perk:
       enabled_count: "<gray>Ενεργοποιημένα προνόμια: <white>%count%/%max%</white></gray>"
       cooldown_label: "<gray>Επαναφόρτιση: <gold>%time%</gold></gray>"
       activations_label: "<gray>Ενεργοποιήσεις: <white>%count%</white></gray>"
-    
     buttons:
       unlock:
         title: "<white>Ξεκλειδώστε το Προνόμιο</white>"
@@ -1895,7 +2155,7 @@ perk:
       disable:
         title: "<white>Απενεργοποιήστε το Προνόμιο</white>"
         hint: "<yellow>Κάντε κλικ για να απενεργοποιήσετε αυτό το προνόμιο</yellow>"
-  
+
   # Υπάρχοντα προνόμια (για αναφορά - προσθέστε αν λείπουν)
   fly:
     name: "<gradient:#3b82f6:#60a5fa>Πτήση</gradient>"

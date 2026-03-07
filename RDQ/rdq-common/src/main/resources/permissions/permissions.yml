@@ -1,104 +1,189 @@
 # Permissions Configuration for Admin View
 # Format: defaultGroupPermissions contains plugin names as keys with their permissions as lists
-
 defaultGroup: "default"
 
 defaultGroupPermissions:
+  # ============================================
+  # RaindropCentral Permissions
+  # ============================================
   RDQ:
-    - rdq.use
-    - rdq.help
-    - rdq.rank.use
-    - rdq.rank.view
-    - rdq.rank.progress
-    - rdq.rank.trees
-    - rdq.rank.unlock
-    - rdq.rank.switch
-    - rdq.rank.bypass.cooldown
-    - rdq.rank.bypass.requirements
-    - rdq.rank.admin.grant
-    - rdq.rank.admin.revoke
-    - rdq.rank.admin.reload
-    - rdq.rank.admin.reset
-    - rdq.bounty.use
-    - rdq.bounty.create
-    - rdq.bounty.list
-    - rdq.bounty.cancel
-    - rdq.bounty.leaderboard
-    - rdq.bounty.my
-    - rdq.bounty.bypass.cooldown
-    - rdq.bounty.bypass.limit
-    - rdq.bounty.bypass.selftarget
-    - rdq.bounty.admin.remove
-    - rdq.bounty.admin.reload
-    - rdq.bounty.admin.clear
-    - rdq.perk.use
-    - rdq.perk.list
-    - rdq.perk.info
-    - rdq.perk.activate
-    - rdq.perk.deactivate
-    - rdq.perk.bypass.cooldown
-    - rdq.perk.bypass.requirements
-    - rdq.perk.fly
-    - rdq.perk.prevent_death
-    - rdq.perk.double_experience
-    - rdq.perk.vampire
-    - rdq.perk.treasure_hunter
-    - rdq.perk.admin.grant
-    - rdq.perk.admin.revoke
-    - rdq.perk.admin.reload
-    - rdq.perk.admin.reset
-    - rdq.admin.reload
-    - rdq.admin.debug
-    - rdq.admin.database
-    - rdq.gui.rank
-    - rdq.gui.bounty
-    - rdq.gui.perk
-    - rdq.notify.rank
-    - rdq.notify.bounty
-    - rdq.notify.broadcast
-    - rdq.command
-    - rdq.command.admin
-    - rdq.command.bounty
-    - rdq.command.main
-    - rdq.command.quests
-    - rdq.command.ranks
-    - rdq.command.perks
-  
-  RCore:
-    - rcore.use
-    - rcore.admin
-    - rcore.statistics.view
-    - rcore.statistics.modify
-    - rcore.player.view
-    - rcore.player.modify
+    - rainrdopquests.player
+
+  RDR:
+    - raindroprserve.player
+
+  RDS:
+    - raindropshops.player
   
   JExEconomy:
     - jexeconomy.use
     - jexeconomy.balance
     - jexeconomy.pay
-    - jexeconomy.admin
-    - jexeconomy.admin.give
-    - jexeconomy.admin.take
-    - jexeconomy.admin.set
-    - jexeconomy.admin.reset
-  
-  LuckPerms:
-    - luckperms.user.info
-    - luckperms.user.permission.info
-    - luckperms.user.permission.set
-    - luckperms.user.permission.unset
-    - luckperms.user.parent.info
-    - luckperms.user.parent.set
-    - luckperms.user.parent.add
-    - luckperms.user.parent.remove
-    - luckperms.group.info
-    - luckperms.group.permission.info
-    - luckperms.group.permission.set
-    - luckperms.group.permission.unset
-  
-  Vault:
-    - vault.admin
-  
-  PlaceholderAPI:
-    - placeholderapi.admin
-    - placeholderapi.reload
+
+  # ============================================
+  # Supported Plugin Permissions
+  # ============================================
+  AuraSkills:
+    - auraskills.skill.farming
+    - auraskills.skill.foraging
+    - auraskills.skill.mining
+    - auraskills.skill.fishing
+    - auraskills.skill.excavation
+    - auraskills.skill.archery
+    - auraskills.skill.defense
+    - auraskills.skill.fighting
+    - auraskills.skill.agility
+    - auraskills.skill.enchanting
+    - auraskills.skill.alchemy
+    - auraskills.command.skills
+    - auraskills.command.stats
+    - auraskills.command.sources
+    - auraskills.command.help
+    - auraskills.command.mana
+    - auraskills.command.top
+    - auraskills.command.rank
+    - auraskills.command.lang
+    - auraskills.command.abtoggle
+    - auraskills.command.claimitems
+
+  ChestSort:
+    - chestsort.use
+    - chestsort.use.inventory
+
+  CMI:
+    - cmi.command.back
+    - cmi.command.balance
+    - cmi.command.baltop
+    - cmi.command.chat
+    - cmi.command.checkxp
+    - cmi.command.dback
+    - cmi.command.info
+    - cmi.command.money.give
+    - cmi.command.msg
+    - cmi.command.mute
+    - cmi.command.pay
+    - cmi.command.suicide
+    - cmi.command.tphere
+    - cmi.command.tpdeny
+    - cmi.command.tpahere
+    - cmi.command.tpaccept
+    - cmi.command.tpa
+    - cmi.command.tp
+    - cmi.bedhome
+    - cmi.command.playtime
+    - cmi.command.ptime
+    - cmi.command.recipe
+    - cmi.command.sethome
+    - cmi.command.rt
+    - cmi.command.home
+    - cmi.command.hat
+
+  DiscordSRV:
+    - discordsrv.chat
+    - discordsrv.player
+    - discordsrv.link
+    - discordsrv.unlink
+
+  EcoJobs:
+    - ecojobs.command.jobs
+    - ecojobs.command.join
+    - ecojobs.command.leave
+
+  Essentials:
+    - essentials.afk
+    - essentials.back
+    - essentials.balance
+    - essentials.balancetop
+    - essentials.compass
+    - essentials.condense
+    - essentials.eco
+    - essentials.enderchest
+    - essentials.exp
+    - essentials.exp.give
+    - essentials.hat
+    - essentials.help
+    - essentials.home.bed
+    - essentials.ignore
+    - essentials.msg
+    - essentials.msg.magic
+    - essentials.msg.format
+    - essentials.mute
+    - essentials.pay
+    - essentials.msg
+    - essentials.rules
+    - essentials.sethome
+    - essentials.sethome.bed
+    - essentials.delhome
+    - essentials.setwarp
+    - essentials.suicide
+    - essentials.top
+    - essentials.tp
+    - essentials.tp.others
+    - essentials.tpa
+    - essentials.tpacancel
+    - essentials.tpahere
+    - essentials.tpdeny
+    - essentials.tphere
+    - essentials.warp
+    - essentials.warp.list
+    - essentials.warpinfo
+    - essentials.warps.*
+    - essentials.link
+    - essentials.unlink
+    - essentials.spawn
+    - essentials.setspawn
+    - essentials.chat.color
+    - essentials.chat.format
+    - essentials.chat.local
+    - essentials.discord
+
+  HuskTowns:
+    - husktowns.command.town.*
+
+  JobsReborn:
+    - jobs.use
+    - jobs.world.world
+    - jobs.command.browse
+    - jobs.command.top
+    - jobs.command.join
+    - jobs.command.leave
+    - jobs.command.leaveall
+    - jobs.command.info
+
+  mcMMO:
+    - mcmmo.defaults
+
+  Towny:
+    - towny.claimed.owntown.build.*
+    - towny.claimed.owntown.destroy.*
+    - towny.command.plot.claim
+    - towny.command.plot.unclaim
+    - towny.command.plot.perm
+    - towny.command.plot.toggle.*
+    - towny.command.plot.set.*
+    - towny.command.plot.clear
+    - towny.command.resident.*
+    - towny.command.town.here
+    - towny.command.town.list
+    - towny.command.town.new
+    - towny.command.town.leave
+    - towny.command.town.withdraw
+    - towny.command.town.deposit
+    - towny.command.town.rank.*
+    - towny.command.town.reslist
+    - towny.command.town.claim.*
+    - towny.command.town.unclaim
+    - towny.command.town.online
+    - towny.command.nation.list
+    - towny.command.nation.new
+    - towny.command.nation.leave
+    - towny.command.nation.withdraw
+    - towny.command.nation.deposit
+    - towny.command.nation.rank.*
+    - towny.wild.build.*
+    - towny.wild.destroy.*
+    - towny.wild.switch.*
+    - towny.wild.item_use.*
+    - towny.chat.general
+    - towny.chat.town
+    - towny.chat.nation

@@ -82,236 +82,281 @@ rank:
         - "<gradient:#6b7280:#9ca3af>Nie wybrano rangi</gradient>"
   # Rangi Drzewa Strażników
   ranger:
+    scout:
+      name: <gradient:#22c55e:#86efac>🏹 Zwiadowca szlaków</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Odczytuje ślady kopyt i zmiany wiatru.</gradient>
+        - <gradient:#10b981:#34d399>➤ Poziom I • Wtajemniczony w Naturę</gradient>
     hunter:
-      name: "<gradient:#7c3aed:#a78bfa>🏹 Łowca</gradient>"
+      name: <gradient:#16a34a:#4ade80>🏹 Łowca dziczy</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Początkujący tropiciel poznający zwyczaje dzikiej przyrody</gradient>"
-    archer:
-      name: "<gradient:#10b981:#34d399>🎯 Łucznik</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Biegły w posługiwaniu się łukiem, zabójczy na dystansie</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Prześladuje ofiarę z cierpliwą precyzją.</gradient>
+        - <gradient:#10b981:#34d399>➤ Poziom II • Dziki pościg</gradient>
     tracker:
-      name: "<gradient:#3b82f6:#60a5fa>🔍 Śledzenie</gradient>"
+      name: <gradient:#0ea5e9:#38bdf8>🏹 Śledzenie znaków</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Ekspert w znajdowaniu i podążaniu za zdobyczą</gradient>"
-    marksman:
-      name: "<gradient:#f59e0b:#fbbf24>🎯 Strzelec wyborowy</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Podąża śladami, których nie może zatrzeć żadna burza.</gradient>
+        - <gradient:#3b82f6:#60a5fa>➤ Poziom III • Przed nami wybór ścieżki</gradient>
+    warden_primal:
+      name: <gradient:#14b8a6:#2dd4bf>🛡 Strażnik Bestii</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Precyzyjny strzelec z zabójczą celnością</gradient>"
-    pathfinder:
-      name: "<gradient:#a855f7:#c084fc>🗺 Pionier</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Łączy się z najwyższymi stworzeniami z królestwa.</gradient>
+        - <gradient:#14b8a6:#2dd4bf>➤ Poziom IV • Oddział Pierwotny</gradient>
+    warden_storm:
+      name: <gradient:#2563eb:#60a5fa>⚡ Strażnik Burz</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Mistrz eksploracji niezbadanych krain</gradient>"
-    sniper:
-      name: "<gradient:#ef4444:#f87171>🎯 Snajper</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Strzela prawdziwie poprzez grzmoty i deszcz.</gradient>
+        - <gradient:#2563eb:#60a5fa>➤ Poziom IV • Oddział Burzy</gradient>
+    warden_wild:
+      name: <gradient:#16a34a:#84cc16>🌿 Strażnik dziczy</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Elitarny strzelec wyborowy, jeden strzał, jedno zabójstwo</gradient>"
-    forest_lord:
-      name: "<gradient:#10b981:#34d399>🌲 Władca Lasu</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Strzeże świętych granic i ukrytych polan.</gradient>
+        - <gradient:#16a34a:#84cc16>➤ Poziom IV • Dzika gałąź</gradient>
+    beastmaster_primal:
+      name: <gradient:#7c3aed:#c084fc>👑 Pierwotny Władca Bestii</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Władca dziczy, zjednoczony z naturą</gradient>"
-  # Rangi Drzewa Wojowników
+        - <gradient:#6b7280:#9ca3af>✦ Bez strachu dowodzi legendarnymi bestiami.</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ Poziom V • Stopień końcowy</gradient>
+    beastmaster_storm:
+      name: <gradient:#1d4ed8:#3b82f6>👑 Burza Władcy Bestii</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Każdy piorun kieruje twoją nieustanną salwą.</gradient>
+        - <gradient:#1d4ed8:#3b82f6>➤ Poziom V • Stopień końcowy</gradient>
+    beastmaster_wild:
+      name: <gradient:#15803d:#22c55e>👑 Dziki Władca Bestii</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Sama natura powstaje, aby odpowiedzieć na Twoje wołanie.</gradient>
+        - <gradient:#15803d:#22c55e>➤ Poziom V • Stopień końcowy</gradient>
   warrior:
     recruit:
-      name: "<gradient:#6b7280:#9ca3af>Rekrut</gradient>"
+      name: <gradient:#6b7280:#9ca3af>⚔ Rekrutuj</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Nowy wojownik rozpoczynający swoją podróż</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Naucz się podstaw walki</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Świeże ostrze z niesprawdzoną determinacją.</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ Poziom I • Poligony szkoleniowe</gradient>
     soldier:
-      name: "<gradient:#3b82f6:#60a5fa>Żołnierz</gradient>"
+      name: <gradient:#3b82f6:#60a5fa>⚔ Żołnierz</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Wyszkolony w sztuce walki</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Gotowy do bitwy</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Utwardzeni ćwiczeniami i służbą na linii frontu.</gradient>
+        - <gradient:#3b82f6:#60a5fa>➤ Poziom II • Dyscyplina terenowa</gradient>
     veteran:
-      name: "<gradient:#f59e0b:#fbbf24>Weteran</gradient>"
+      name: <gradient:#f59e0b:#fbbf24>⚔ Weteran</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Zaprawiony w boju wojownik</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Wybierz swoją ścieżkę specjalizacji</gradient>"
-    # Gałąź specjalizacji 1: Berserker (ofensywa)
+        - <gradient:#6b7280:#9ca3af>✦ Blizny bojowe oznaczają zdobytą mądrość.</gradient>
+        - <gradient:#f59e0b:#fbbf24>➤ Poziom III • Wybierz swoją ścieżkę</gradient>
     berserker:
-      name: "<gradient:#ef4444:#f87171>Berserker</gradient>"
+      name: <gradient:#ef4444:#f87171>🔥Berserker</gradient>
       lore:
-        - "<gradient:#ef4444:#f87171>Ścieżka Furii</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Uwolnij niszczycielskie ataki</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Poświęć obronę na rzecz czystej mocy</gradient>"
-    # Gałąź specjalizacji 2: Strażnik (Defensywa)
+        - <gradient:#6b7280:#9ca3af>✦ Zamienia obronę na niszczycielski atak.</gradient>
+        - <gradient:#ef4444:#f87171>➤ Poziom IV • Oddział Furii</gradient>
     guardian:
-      name: "<gradient:#3b82f6:#60a5fa>Opiekun</gradient>"
+      name: <gradient:#2563eb:#60a5fa>🛡 Strażnik</gradient>
       lore:
-        - "<gradient:#3b82f6:#60a5fa>Ścieżka Ochrony</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Stań się niezniszczalną tarczą</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Chroń swoich sojuszników za wszelką cenę</gradient>"
-    # Gałąź specjalizacji 3: Gladiator (zrównoważona)
+        - <gradient:#6b7280:#9ca3af>✦ Stoi niewzruszenie tam, gdzie inni by się złamali.</gradient>
+        - <gradient:#2563eb:#60a5fa>➤ Poziom IV • Oddział Tarczy</gradient>
     gladiator:
-      name: "<gradient:#a855f7:#c084fc>Gladiator</gradient>"
+      name: <gradient:#a855f7:#c084fc>🏟 Gladiator</gradient>
       lore:
-        - "<gradient:#a855f7:#c084fc>Ścieżka Chwały</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Mistrz walki na arenie</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Zrównoważyć atak i obronę</gradient>"
-    # Końcowe stopnie
+        - <gradient:#6b7280:#9ca3af>✦ Mistrz zrównoważonej walki na arenie.</gradient>
+        - <gradient:#a855f7:#c084fc>➤ Poziom IV • Oddział Arena</gradient>
     warlord_fury:
-      name: "<gradient:#ef4444:#f87171>Władca Furii</gradient>"
+      name: <gradient:#dc2626:#fb7185>👑 Władca Furii</gradient>
       lore:
-        - "<gradient:#ef4444:#f87171>Ostateczny Berserker</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Niepowstrzymana siła zniszczenia</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Strach wcielony na polu bitwy</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Niepowstrzymana machina zniszczenia.</gradient>
+        - <gradient:#dc2626:#fb7185>➤ Poziom V • Stopień końcowy</gradient>
     warlord_shield:
-      name: "<gradient:#3b82f6:#60a5fa>Władca Tarczy</gradient>"
+      name: <gradient:#1d4ed8:#60a5fa>👑 Władca Tarczy</gradient>
       lore:
-        - "<gradient:#3b82f6:#60a5fa>Ostateczny Strażnik</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Obiekt nieruchomy, wieczny obrońca</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Nikt nie przejdzie, gdy będziesz stać</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Ostatni mur między życiem a ruiną.</gradient>
+        - <gradient:#1d4ed8:#60a5fa>➤ Poziom V • Stopień końcowy</gradient>
     warlord_arena:
-      name: "<gradient:#a855f7:#c084fc>Władca Areny</gradient>"
+      name: <gradient:#7c3aed:#c084fc>👑 Władca Areny</gradient>
       lore:
-        - "<gradient:#a855f7:#c084fc>Ostateczny Gladiator</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Mistrz mistrzów</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Legenda areny</gradient>"
-    # Starsze rangi (dla kompatybilności wstecznej)
-    knight:
-      name: "<gradient:#f59e0b:#fbbf24>Rycerz</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Honorowy wojownik królestwa</gradient>"
-    champion:
-      name: "<gradient:#a855f7:#c084fc>Mistrz</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Legendarny wojownik, którego wszyscy się boją</gradient>"
-    warlord:
-      name: "<gradient:#ef4444:#f87171>Dygnitarz wojskowy</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Mistrz wojny, dowódca armii</gradient>"
-  # Rangi Drzewa Magów
+        - <gradient:#6b7280:#9ca3af>✦ Koronowany mistrz każdego koloseum.</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ Poziom V • Stopień końcowy</gradient>
   mage:
     apprentice:
-      name: "<gradient:#a855f7:#c084fc>✨ Praktykant</gradient>"
+      name: <gradient:#a855f7:#d8b4fe>✨ Praktykant</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Nauka podstaw magii</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Budzą się iskry tajemnej mocy.</gradient>
+        - <gradient:#a855f7:#d8b4fe>➤ Poziom I • Tajemne podstawy</gradient>
     adept:
-      name: "<gradient:#3b82f6:#60a5fa>✨ Adept</gradient>"
+      name: <gradient:#3b82f6:#93c5fd>✨ Adept</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Rośnie w magiczną moc</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Tka kontrolowane i skupione zaklęcia.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Poziom II • Praktyka tajemna</gradient>
     wizard:
-      name: "<gradient:#f59e0b:#fbbf24>✨ Czarodziej</gradient>"
+      name: <gradient:#f59e0b:#fde68a>✨ Czarodziej</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Mistrz sztuk tajemnych</gradient>"
-    archmage:
-      name: "<gradient:#ef4444:#f87171>✨ Arcymag</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Włada złożonymi wzorami magii.</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ Poziom III • Wybierz swoją doktrynę</gradient>
+    sorcerer_arcane:
+      name: <gradient:#8b5cf6:#c4b5fd>🔮 Czarnoksiężnik Arkanów</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Najwyższy mistrz wszelkiej magii</gradient>"
-  # Rangi Zbuntowanego Drzewa
+        - <gradient:#6b7280:#9ca3af>✦ Przekształca surową moc w elegancką siłę.</gradient>
+        - <gradient:#8b5cf6:#c4b5fd>➤ Poziom IV • Oddział Tajemny</gradient>
+    sorcerer_spell:
+      name: <gradient:#d946ef:#f0abfc>📜 Czarownik Zaklęć</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Zwiększa kontrolę i precyzję grymuaru.</gradient>
+        - <gradient:#d946ef:#f0abfc>➤ Poziom IV • Oddział zaklęć</gradient>
+    sorcerer_void:
+      name: <gradient:#1d4ed8:#60a5fa>🌌 Czarnoksiężnik Pustki</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Nagina otchłanne energie do twojej woli.</gradient>
+        - <gradient:#1d4ed8:#60a5fa>➤ Poziom IV • Oddział Pustki</gradient>
+    archmage_arcane:
+      name: <gradient:#7c3aed:#c084fc>👑 Arcymag Arkanów</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Najwyższy architekt czystej tajemnej mocy.</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ Poziom V • Stopień końcowy</gradient>
+    archmage_spell:
+      name: <gradient:#d946ef:#f5d0fe>👑 Arcymag Zaklęć</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Każde zaklęcie odpowiada natychmiast.</gradient>
+        - <gradient:#d946ef:#f5d0fe>➤ Poziom V • Stopień końcowy</gradient>
+    archmage_void:
+      name: <gradient:#1e3a8a:#60a5fa>👑 Arcymag Pustki</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Rządzi krawędziami między światami.</gradient>
+        - <gradient:#1e3a8a:#60a5fa>➤ Poziom V • Stopień końcowy</gradient>
   rogue:
     pickpocket:
-      name: "<gradient:#6b7280:#9ca3af>🗡Kieszonkowiec</gradient>"
+      name: <gradient:#6b7280:#9ca3af>🗡Kieszonkowiec</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Szybkie palce, szybsza ucieczka</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Uczy się wyczucia czasu, błędnego kierunku i szybkości.</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ Poziom I • Streetcraft</gradient>
     thief:
-      name: "<gradient:#3b82f6:#60a5fa>🗡 Złodziej</gradient>"
+      name: <gradient:#3b82f6:#93c5fd>🗡 Złodziej</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Mistrz skradania się i kradzieży</gradient>"
-    scout:
-      name: "<gradient:#10b981:#34d399>🗡Skaut</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Oczy i uszy cieni</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Przemyka przez śluzy i linie obserwacyjne.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Poziom II • Ciche wejście</gradient>
     assassin:
-      name: "<gradient:#ef4444:#f87171>🗡 Zabójca</gradient>"
+      name: <gradient:#ef4444:#f87171>🗡 Zabójca</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Cichy zabójca, śmierć z cienia</gradient>"
-    infiltrator:
-      name: "<gradient:#a855f7:#c084fc>🗡 Infiltrator</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Uderza raz i znika bez śladu.</gradient>
+        - <gradient:#ef4444:#f87171>➤ Poziom III • Wybierz swoją metodę</gradient>
+    shadow_stealth:
+      name: <gradient:#0ea5e9:#67e8f9>🌒 Cień ukrycia</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Ekspert we wchodzeniu i wychodzeniu niezauważonym</gradient>"
-    shadowblade:
-      name: "<gradient:#6b7280:#9ca3af>🗡 Ostrze Cienia</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Ruch mistrza, którego nie może śledzić żadne oko.</gradient>
+        - <gradient:#0ea5e9:#67e8f9>➤ Poziom IV • Oddział Stealth</gradient>
+    shadow_night:
+      name: <gradient:#7c3aed:#c4b5fd>🌘 Cień nocy</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Zabójczy wojownik nocy</gradient>"
-    spymaster:
-      name: "<gradient:#3b82f6:#60a5fa>🗡 Mistrz szpiegów</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Zamienia ciemność w zabójczą przewagę.</gradient>
+        - <gradient:#7c3aed:#c4b5fd>➤ Poziom IV • Oddział Nocny</gradient>
+    shadow_sabotage:
+      name: <gradient:#f97316:#fb923c>💣 Cień Sabotażu</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Kontroler sieci informatycznych</gradient>"
-    shadow_master:
-      name: "<gradient:#1f2937:#374151>🗡 Mistrz Cieni</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Niszczy plany, zanim wrogowie zareagują.</gradient>
+        - <gradient:#f97316:#fb923c>➤ Poziom IV • Oddział Sabotażowy</gradient>
+    phantom_stealth:
+      name: <gradient:#14b8a6:#5eead4>👑 Upiór Stealth</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Jedność z samą ciemnością</gradient>"
-    shadowmaster:
-      name: "<gradient:#1f2937:#374151>🗡 Władca Cieni</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Staje się nietykalnym mitem miejskim.</gradient>
+        - <gradient:#14b8a6:#5eead4>➤ Poziom V • Stopień końcowy</gradient>
+    phantom_night:
+      name: <gradient:#9333ea:#e9d5ff>👑 Upiór Nocy</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Najwyższy władca wszystkich cieni</gradient>"
-  # Rangi drzewa kleryków
+        - <gradient:#6b7280:#9ca3af>✦ Jest całkowicie właścicielem godziny północnej.</gradient>
+        - <gradient:#9333ea:#e9d5ff>➤ Poziom V • Stopień końcowy</gradient>
+    phantom_sabotage:
+      name: <gradient:#ea580c:#fdba74>👑 Upiór Sabotażu</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Kończy bitwy, zanim w ogóle się rozpoczną.</gradient>
+        - <gradient:#ea580c:#fdba74>➤ Poziom V • Stopień końcowy</gradient>
   cleric:
     acolyte:
-      name: "<gradient:#f59e0b:#fbbf24>✝ Akolita</gradient>"
+      name: <gradient:#f59e0b:#fde68a>✝ Akolita</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Oddany sługa boskości</gradient>"
-    devotee:
-      name: "<gradient:#f59e0b:#fbbf24>✝ Wielbiciel</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Wierny naśladowca boskiej ścieżki</gradient>"
-    priest:
-      name: "<gradient:#10b981:#34d399>✝ Ksiądz</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Uzdrowiciel i obrońca wiernych</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Rozpoczyna świętą ścieżkę służby.</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ Poziom I • Oddanie</gradient>
     healer:
-      name: "<gradient:#10b981:#34d399>✝ Uzdrowiciel</gradient>"
+      name: <gradient:#10b981:#6ee7b7>✝ Uzdrowiciel</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Mistrz sztuki restauratorskiej</gradient>"
-    bishop:
-      name: "<gradient:#a855f7:#c084fc>✝ Biskup</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Przywraca sojusznikom pod dużą presją.</gradient>
+        - <gradient:#10b981:#6ee7b7>➤ Poziom II • Przywrócenie</gradient>
+    priest:
+      name: <gradient:#3b82f6:#93c5fd>✝ Ksiądz</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Przywódca wiernych</gradient>"
-    oracle:
-      name: "<gradient:#3b82f6:#60a5fa>✝ Wyrocznia</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Prowadzi grupy ze świętą dyscypliną.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Poziom III • Wybierz swoje powołanie</gradient>
+    bishop_divine:
+      name: <gradient:#8b5cf6:#c4b5fd>⛪ Biskup Boskości</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Widzący boskie wizje</gradient>"
-    high_priest:
-      name: "<gradient:#ef4444:#f87171>✝ Najwyższy Kapłan</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Kanały mają bezpośredni autorytet promieniujący.</gradient>
+        - <gradient:#8b5cf6:#c4b5fd>➤ Poziom IV • Boski Oddział</gradient>
+    bishop_light:
+      name: <gradient:#f59e0b:#fef08a>☀ Biskup Światła</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Najwyższy głos boskości</gradient>"
-  # Rangi Drzewa Kupieckiego
+        - <gradient:#6b7280:#9ca3af>✦ Oślepia zepsucie świętym blaskiem.</gradient>
+        - <gradient:#f59e0b:#fef08a>➤ Poziom IV • Oddział Lekki</gradient>
+    bishop_soul:
+      name: <gradient:#06b6d4:#67e8f9>🕊Biskup Dusz</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Strzeże progu życia i śmierci.</gradient>
+        - <gradient:#06b6d4:#67e8f9>➤ Poziom IV • Oddział Duszy</gradient>
+    high_priest_divine:
+      name: <gradient:#7c3aed:#ddd6fe>👑 Najwyższy Kapłan Boskości</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Deklaruje cuda w sercu chaosu.</gradient>
+        - <gradient:#7c3aed:#ddd6fe>➤ Poziom V • Stopień końcowy</gradient>
+    high_priest_light:
+      name: <gradient:#f59e0b:#fef3c7>👑 Najwyższy Kapłan Światła</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Otacza sojuszników niezmiennym świtem.</gradient>
+        - <gradient:#f59e0b:#fef3c7>➤ Poziom V • Stopień końcowy</gradient>
+    high_priest_soul:
+      name: <gradient:#0891b2:#a5f3fc>👑 Najwyższy Kapłan Dusz</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Pasterz duchów poza śmiertelny strach.</gradient>
+        - <gradient:#0891b2:#a5f3fc>➤ Poziom V • Stopień końcowy</gradient>
   merchant:
     peddler:
-      name: "<gradient:#6b7280:#9ca3af>💰 Domokrążca</gradient>"
+      name: <gradient:#6b7280:#9ca3af>💰 Domokrążca</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Sprzedaż towarów na ulicy</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Zaczyna się od hartu, uroku i drobnych transakcji.</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ Poziom I • Handel uliczny</gradient>
     trader:
-      name: "<gradient:#3b82f6:#60a5fa>💰 Handlarz</gradient>"
+      name: <gradient:#3b82f6:#93c5fd>💰 Handlarz</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Uznany kupiec z kontaktami</gradient>"
-    vendor:
-      name: "<gradient:#10b981:#34d399>💰 Sprzedawca</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Rozszerza trasy i niezawodne kontakty.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Poziom II • Obecność na rynku</gradient>
+    broker:
+      name: <gradient:#f59e0b:#fde68a>💰 Pośrednik</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Kompetentny sprzedawca towaru</gradient>"
-    artificer:
-      name: "<gradient:#f59e0b:#fbbf24>💰 Rzemieślnik</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Precyzyjnie zamyka transakcje o wysokiej wartości.</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ Poziom III • Wybierz swoje imperium</gradient>
+    magnate_wealth:
+      name: <gradient:#10b981:#6ee7b7>📈 Magnat Bogactwa</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Twórca pięknych wyrobów</gradient>"
-    alchemist:
-      name: "<gradient:#a855f7:#c084fc>💰 Alchemik</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Buduje czysty kapitał w niezrównanym tempie.</gradient>
+        - <gradient:#10b981:#6ee7b7>➤ Poziom IV • Oddział Bogactwa</gradient>
+    magnate_market:
+      name: <gradient:#06b6d4:#67e8f9>🏛 Magnat Rynków</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Mistrz mikstur i eliksirów</gradient>"
-    merchant:
-      name: "<gradient:#f59e0b:#fbbf24>💰 Kupiec</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Organizuje cykle podaży i popytu.</gradient>
+        - <gradient:#06b6d4:#67e8f9>➤ Poziom IV • Oddział Targowy</gradient>
+    magnate_trade:
+      name: <gradient:#f97316:#fdba74>🚚 Magnat Handlu</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Odnoszący sukcesy właściciel firmy</gradient>"
-    master_crafter:
-      name: "<gradient:#ef4444:#f87171>💰 Mistrz rzemiosła</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Dominuje na pasach dla przyczep kempingowych i logistyce.</gradient>
+        - <gradient:#f97316:#fdba74>➤ Poziom IV • Oddział Handlowy</gradient>
+    tycoon_wealth:
+      name: <gradient:#22c55e:#bbf7d0>👑 Potentat bogactwa</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Najwyższy rzemieślnik królestwa</gradient>"
-    merchant_prince:
-      name: "<gradient:#a855f7:#c084fc>💰 Książę Kupiec</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Zmienia gospodarkę za pomocą jednej decyzji.</gradient>
+        - <gradient:#22c55e:#bbf7d0>➤ Poziom V • Stopień końcowy</gradient>
+    tycoon_market:
+      name: <gradient:#0891b2:#a5f3fc>👑 Potentat rynków</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Prawa autorskie handlu</gradient>"
-    tycoon:
-      name: "<gradient:#a855f7:#c084fc>💰 Potentat</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Ustala ceny, które musi przestrzegać każda gildia.</gradient>
+        - <gradient:#0891b2:#a5f3fc>➤ Poziom V • Stopień końcowy</gradient>
+    tycoon_trade:
+      name: <gradient:#ea580c:#fed7aa>👑 Potentat handlu</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Mistrz handlu i handlu</gradient>"
-    guild_master:
-      name: "<gradient:#ef4444:#f87171>💰 Mistrz Gildii</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Przywódca gildii kupieckiej</gradient>"
-
-# ============================================
-# WIADOMOŚCI DLA SŁUCHACZY BOUNTY
-# ============================================
+        - <gradient:#6b7280:#9ca3af>✦ Jest właścicielem dróg, portów i zysków.</gradient>
+        - <gradient:#ea580c:#fed7aa>➤ Poziom V • Stopień końcowy</gradient>
 bounty_listener:
   bounty_active:
     warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>Masz aktywną nagrodę na głowę!</gradient>"
@@ -557,81 +602,281 @@ rank_path_overview_ui:
     tier: "<gradient:#6b7280:#9ca3af>Szczebel:</gradient> <gradient:#f59e0b:#fbbf24>%tier%</gradient>"
     weight: "<gradient:#6b7280:#9ca3af>Waga:</gradient> <gradient:#f59e0b:#fbbf24>%weight%</gradient>"
     ranger:
+      scout:
+        name: <gradient:#22c55e:#86efac>🏹 Zwiadowca szlaków</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Odczytuje ślady kopyt i zmiany wiatru.</gradient>
+          - <gradient:#10b981:#34d399>➤ Poziom I • Wtajemniczony w Naturę</gradient>
       hunter:
-        name: "<gradient:#7c3aed:#a78bfa>🏹 Łowca</gradient>"
+        name: <gradient:#16a34a:#4ade80>🏹 Łowca dziczy</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Początkujący tropiciel poznający zwyczaje dzikiej przyrody</gradient>"
-      archer:
-        name: "<gradient:#10b981:#34d399>🎯 Łucznik</gradient>"
-        lore:
-          - "<gradient:#6b7280:#9ca3af>Biegły w posługiwaniu się łukiem, zabójczy na dystansie</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Prześladuje ofiarę z cierpliwą precyzją.</gradient>
+          - <gradient:#10b981:#34d399>➤ Poziom II • Dziki pościg</gradient>
       tracker:
-        name: "<gradient:#3b82f6:#60a5fa>🔍 Śledzenie</gradient>"
+        name: <gradient:#0ea5e9:#38bdf8>🏹 Śledzenie znaków</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Ekspert w znajdowaniu i podążaniu za zdobyczą</gradient>"
-      marksman:
-        name: "<gradient:#f59e0b:#fbbf24>🎯 Strzelec wyborowy</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Podąża śladami, których nie może zatrzeć żadna burza.</gradient>
+          - <gradient:#3b82f6:#60a5fa>➤ Poziom III • Przed nami wybór ścieżki</gradient>
+      warden_primal:
+        name: <gradient:#14b8a6:#2dd4bf>🛡 Strażnik Bestii</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Precyzyjny strzelec z zabójczą celnością</gradient>"
-      pathfinder:
-        name: "<gradient:#a855f7:#c084fc>🗺 Pionier</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Łączy się z najwyższymi stworzeniami z królestwa.</gradient>
+          - <gradient:#14b8a6:#2dd4bf>➤ Poziom IV • Oddział Pierwotny</gradient>
+      warden_storm:
+        name: <gradient:#2563eb:#60a5fa>⚡ Strażnik Burz</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Mistrz eksploracji niezbadanych krain</gradient>"
-      sniper:
-        name: "<gradient:#ef4444:#f87171>🎯 Snajper</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Strzela prawdziwie poprzez grzmoty i deszcz.</gradient>
+          - <gradient:#2563eb:#60a5fa>➤ Poziom IV • Oddział Burzy</gradient>
+      warden_wild:
+        name: <gradient:#16a34a:#84cc16>🌿 Strażnik dziczy</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Elitarny strzelec wyborowy, jeden strzał, jedno zabójstwo</gradient>"
-      forest_lord:
-        name: "<gradient:#10b981:#34d399>🌲 Władca Lasu</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Strzeże świętych granic i ukrytych polan.</gradient>
+          - <gradient:#16a34a:#84cc16>➤ Poziom IV • Dzika gałąź</gradient>
+      beastmaster_primal:
+        name: <gradient:#7c3aed:#c084fc>👑 Pierwotny Władca Bestii</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Władca dziczy, zjednoczony z naturą</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Bez strachu dowodzi legendarnymi bestiami.</gradient>
+          - <gradient:#7c3aed:#c084fc>➤ Poziom V • Stopień końcowy</gradient>
+      beastmaster_storm:
+        name: <gradient:#1d4ed8:#3b82f6>👑 Burza Władcy Bestii</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Każdy piorun kieruje twoją nieustanną salwą.</gradient>
+          - <gradient:#1d4ed8:#3b82f6>➤ Poziom V • Stopień końcowy</gradient>
+      beastmaster_wild:
+        name: <gradient:#15803d:#22c55e>👑 Dziki Władca Bestii</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Sama natura powstaje, aby odpowiedzieć na Twoje wołanie.</gradient>
+          - <gradient:#15803d:#22c55e>➤ Poziom V • Stopień końcowy</gradient>
     warrior:
       recruit:
-        name: "<gradient:#6b7280:#9ca3af>⚔ Rekrutuj</gradient>"
+        name: <gradient:#6b7280:#9ca3af>⚔ Rekrutuj</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Nowy wojownik rozpoczynający swoją podróż</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Świeże ostrze z niesprawdzoną determinacją.</gradient>
+          - <gradient:#94a3b8:#cbd5e1>➤ Poziom I • Poligony szkoleniowe</gradient>
       soldier:
-        name: "<gradient:#3b82f6:#60a5fa>⚔ Żołnierz</gradient>"
+        name: <gradient:#3b82f6:#60a5fa>⚔ Żołnierz</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Wyszkolony w sztuce walki</gradient>"
-      knight:
-        name: "<gradient:#f59e0b:#fbbf24>⚔ Rycerz</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Utwardzeni ćwiczeniami i służbą na linii frontu.</gradient>
+          - <gradient:#3b82f6:#60a5fa>➤ Poziom II • Dyscyplina terenowa</gradient>
+      veteran:
+        name: <gradient:#f59e0b:#fbbf24>⚔ Weteran</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Honorowy wojownik królestwa</gradient>"
-      champion:
-        name: "<gradient:#a855f7:#c084fc>⚔ Mistrz</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Blizny bojowe oznaczają zdobytą mądrość.</gradient>
+          - <gradient:#f59e0b:#fbbf24>➤ Poziom III • Wybierz swoją ścieżkę</gradient>
+      berserker:
+        name: <gradient:#ef4444:#f87171>🔥Berserker</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Legendarny wojownik, którego wszyscy się boją</gradient>"
-      warlord:
-        name: "<gradient:#ef4444:#f87171>⚔ Watażka</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Zamienia obronę na niszczycielski atak.</gradient>
+          - <gradient:#ef4444:#f87171>➤ Poziom IV • Oddział Furii</gradient>
+      guardian:
+        name: <gradient:#2563eb:#60a5fa>🛡 Strażnik</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Mistrz wojny, dowódca armii</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Stoi niewzruszenie tam, gdzie inni by się złamali.</gradient>
+          - <gradient:#2563eb:#60a5fa>➤ Poziom IV • Oddział Tarczy</gradient>
+      gladiator:
+        name: <gradient:#a855f7:#c084fc>🏟 Gladiator</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Mistrz zrównoważonej walki na arenie.</gradient>
+          - <gradient:#a855f7:#c084fc>➤ Poziom IV • Oddział Arena</gradient>
+      warlord_fury:
+        name: <gradient:#dc2626:#fb7185>👑 Władca Furii</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Niepowstrzymana machina zniszczenia.</gradient>
+          - <gradient:#dc2626:#fb7185>➤ Poziom V • Stopień końcowy</gradient>
+      warlord_shield:
+        name: <gradient:#1d4ed8:#60a5fa>👑 Władca Tarczy</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Ostatni mur między życiem a ruiną.</gradient>
+          - <gradient:#1d4ed8:#60a5fa>➤ Poziom V • Stopień końcowy</gradient>
+      warlord_arena:
+        name: <gradient:#7c3aed:#c084fc>👑 Władca Areny</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Koronowany mistrz każdego koloseum.</gradient>
+          - <gradient:#7c3aed:#c084fc>➤ Poziom V • Stopień końcowy</gradient>
     mage:
       apprentice:
-        name: "<gradient:#a855f7:#c084fc>✨ Praktykant</gradient>"
+        name: <gradient:#a855f7:#d8b4fe>✨ Praktykant</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Nauka podstaw magii</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Budzą się iskry tajemnej mocy.</gradient>
+          - <gradient:#a855f7:#d8b4fe>➤ Poziom I • Tajemne podstawy</gradient>
       adept:
-        name: "<gradient:#3b82f6:#60a5fa>✨ Adept</gradient>"
+        name: <gradient:#3b82f6:#93c5fd>✨ Adept</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Rośnie w magiczną moc</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Tka kontrolowane i skupione zaklęcia.</gradient>
+          - <gradient:#3b82f6:#93c5fd>➤ Poziom II • Praktyka tajemna</gradient>
       wizard:
-        name: "<gradient:#f59e0b:#fbbf24>✨ Czarodziej</gradient>"
+        name: <gradient:#f59e0b:#fde68a>✨ Czarodziej</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Mistrz sztuk tajemnych</gradient>"
-      archmage:
-        name: "<gradient:#ef4444:#f87171>✨ Arcymag</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Włada złożonymi wzorami magii.</gradient>
+          - <gradient:#f59e0b:#fde68a>➤ Poziom III • Wybierz swoją doktrynę</gradient>
+      sorcerer_arcane:
+        name: <gradient:#8b5cf6:#c4b5fd>🔮 Czarnoksiężnik Arkanów</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Najwyższy mistrz wszelkiej magii</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Przekształca surową moc w elegancką siłę.</gradient>
+          - <gradient:#8b5cf6:#c4b5fd>➤ Poziom IV • Oddział Tajemny</gradient>
+      sorcerer_spell:
+        name: <gradient:#d946ef:#f0abfc>📜 Czarownik Zaklęć</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Zwiększa kontrolę i precyzję grymuaru.</gradient>
+          - <gradient:#d946ef:#f0abfc>➤ Poziom IV • Oddział zaklęć</gradient>
+      sorcerer_void:
+        name: <gradient:#1d4ed8:#60a5fa>🌌 Czarnoksiężnik Pustki</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Nagina otchłanne energie do twojej woli.</gradient>
+          - <gradient:#1d4ed8:#60a5fa>➤ Poziom IV • Oddział Pustki</gradient>
+      archmage_arcane:
+        name: <gradient:#7c3aed:#c084fc>👑 Arcymag Arkanów</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Najwyższy architekt czystej tajemnej mocy.</gradient>
+          - <gradient:#7c3aed:#c084fc>➤ Poziom V • Stopień końcowy</gradient>
+      archmage_spell:
+        name: <gradient:#d946ef:#f5d0fe>👑 Arcymag Zaklęć</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Każde zaklęcie odpowiada natychmiast.</gradient>
+          - <gradient:#d946ef:#f5d0fe>➤ Poziom V • Stopień końcowy</gradient>
+      archmage_void:
+        name: <gradient:#1e3a8a:#60a5fa>👑 Arcymag Pustki</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Rządzi krawędziami między światami.</gradient>
+          - <gradient:#1e3a8a:#60a5fa>➤ Poziom V • Stopień końcowy</gradient>
     rogue:
       pickpocket:
-        name: "<gradient:#6b7280:#9ca3af>🗡Kieszonkowiec</gradient>"
+        name: <gradient:#6b7280:#9ca3af>🗡Kieszonkowiec</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Szybkie palce, szybsza ucieczka</gradient>"
-
-# ============================================
-# TŁUMACZENIA WYMAGAŃ
-# ============================================
+          - <gradient:#6b7280:#9ca3af>✦ Uczy się wyczucia czasu, błędnego kierunku i szybkości.</gradient>
+          - <gradient:#94a3b8:#cbd5e1>➤ Poziom I • Streetcraft</gradient>
+      thief:
+        name: <gradient:#3b82f6:#93c5fd>🗡 Złodziej</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Przemyka przez śluzy i linie obserwacyjne.</gradient>
+          - <gradient:#3b82f6:#93c5fd>➤ Poziom II • Ciche wejście</gradient>
+      assassin:
+        name: <gradient:#ef4444:#f87171>🗡 Zabójca</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Uderza raz i znika bez śladu.</gradient>
+          - <gradient:#ef4444:#f87171>➤ Poziom III • Wybierz swoją metodę</gradient>
+      shadow_stealth:
+        name: <gradient:#0ea5e9:#67e8f9>🌒 Cień ukrycia</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Ruch mistrza, którego nie może śledzić żadne oko.</gradient>
+          - <gradient:#0ea5e9:#67e8f9>➤ Poziom IV • Oddział Stealth</gradient>
+      shadow_night:
+        name: <gradient:#7c3aed:#c4b5fd>🌘 Cień nocy</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Zamienia ciemność w zabójczą przewagę.</gradient>
+          - <gradient:#7c3aed:#c4b5fd>➤ Poziom IV • Oddział Nocny</gradient>
+      shadow_sabotage:
+        name: <gradient:#f97316:#fb923c>💣 Cień Sabotażu</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Niszczy plany, zanim wrogowie zareagują.</gradient>
+          - <gradient:#f97316:#fb923c>➤ Poziom IV • Oddział Sabotażowy</gradient>
+      phantom_stealth:
+        name: <gradient:#14b8a6:#5eead4>👑 Upiór Stealth</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Staje się nietykalnym mitem miejskim.</gradient>
+          - <gradient:#14b8a6:#5eead4>➤ Poziom V • Stopień końcowy</gradient>
+      phantom_night:
+        name: <gradient:#9333ea:#e9d5ff>👑 Upiór Nocy</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Jest całkowicie właścicielem godziny północnej.</gradient>
+          - <gradient:#9333ea:#e9d5ff>➤ Poziom V • Stopień końcowy</gradient>
+      phantom_sabotage:
+        name: <gradient:#ea580c:#fdba74>👑 Upiór Sabotażu</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Kończy bitwy, zanim w ogóle się rozpoczną.</gradient>
+          - <gradient:#ea580c:#fdba74>➤ Poziom V • Stopień końcowy</gradient>
+    cleric:
+      acolyte:
+        name: <gradient:#f59e0b:#fde68a>✝ Akolita</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Rozpoczyna świętą ścieżkę służby.</gradient>
+          - <gradient:#f59e0b:#fde68a>➤ Poziom I • Oddanie</gradient>
+      healer:
+        name: <gradient:#10b981:#6ee7b7>✝ Uzdrowiciel</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Przywraca sojusznikom pod dużą presją.</gradient>
+          - <gradient:#10b981:#6ee7b7>➤ Poziom II • Przywrócenie</gradient>
+      priest:
+        name: <gradient:#3b82f6:#93c5fd>✝ Ksiądz</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Prowadzi grupy ze świętą dyscypliną.</gradient>
+          - <gradient:#3b82f6:#93c5fd>➤ Poziom III • Wybierz swoje powołanie</gradient>
+      bishop_divine:
+        name: <gradient:#8b5cf6:#c4b5fd>⛪ Biskup Boskości</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Kanały mają bezpośredni autorytet promieniujący.</gradient>
+          - <gradient:#8b5cf6:#c4b5fd>➤ Poziom IV • Boski Oddział</gradient>
+      bishop_light:
+        name: <gradient:#f59e0b:#fef08a>☀ Biskup Światła</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Oślepia zepsucie świętym blaskiem.</gradient>
+          - <gradient:#f59e0b:#fef08a>➤ Poziom IV • Oddział Lekki</gradient>
+      bishop_soul:
+        name: <gradient:#06b6d4:#67e8f9>🕊Biskup Dusz</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Strzeże progu życia i śmierci.</gradient>
+          - <gradient:#06b6d4:#67e8f9>➤ Poziom IV • Oddział Duszy</gradient>
+      high_priest_divine:
+        name: <gradient:#7c3aed:#ddd6fe>👑 Najwyższy Kapłan Boskości</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Deklaruje cuda w sercu chaosu.</gradient>
+          - <gradient:#7c3aed:#ddd6fe>➤ Poziom V • Stopień końcowy</gradient>
+      high_priest_light:
+        name: <gradient:#f59e0b:#fef3c7>👑 Najwyższy Kapłan Światła</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Otacza sojuszników niezmiennym świtem.</gradient>
+          - <gradient:#f59e0b:#fef3c7>➤ Poziom V • Stopień końcowy</gradient>
+      high_priest_soul:
+        name: <gradient:#0891b2:#a5f3fc>👑 Najwyższy Kapłan Dusz</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Pasterz duchów poza śmiertelny strach.</gradient>
+          - <gradient:#0891b2:#a5f3fc>➤ Poziom V • Stopień końcowy</gradient>
+    merchant:
+      peddler:
+        name: <gradient:#6b7280:#9ca3af>💰 Domokrążca</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Zaczyna się od hartu, uroku i drobnych transakcji.</gradient>
+          - <gradient:#94a3b8:#cbd5e1>➤ Poziom I • Handel uliczny</gradient>
+      trader:
+        name: <gradient:#3b82f6:#93c5fd>💰 Handlarz</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Rozszerza trasy i niezawodne kontakty.</gradient>
+          - <gradient:#3b82f6:#93c5fd>➤ Poziom II • Obecność na rynku</gradient>
+      broker:
+        name: <gradient:#f59e0b:#fde68a>💰 Pośrednik</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Precyzyjnie zamyka transakcje o wysokiej wartości.</gradient>
+          - <gradient:#f59e0b:#fde68a>➤ Poziom III • Wybierz swoje imperium</gradient>
+      magnate_wealth:
+        name: <gradient:#10b981:#6ee7b7>📈 Magnat Bogactwa</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Buduje czysty kapitał w niezrównanym tempie.</gradient>
+          - <gradient:#10b981:#6ee7b7>➤ Poziom IV • Oddział Bogactwa</gradient>
+      magnate_market:
+        name: <gradient:#06b6d4:#67e8f9>🏛 Magnat Rynków</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Organizuje cykle podaży i popytu.</gradient>
+          - <gradient:#06b6d4:#67e8f9>➤ Poziom IV • Oddział Targowy</gradient>
+      magnate_trade:
+        name: <gradient:#f97316:#fdba74>🚚 Magnat Handlu</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Dominuje na pasach dla przyczep kempingowych i logistyce.</gradient>
+          - <gradient:#f97316:#fdba74>➤ Poziom IV • Oddział Handlowy</gradient>
+      tycoon_wealth:
+        name: <gradient:#22c55e:#bbf7d0>👑 Potentat bogactwa</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Zmienia gospodarkę za pomocą jednej decyzji.</gradient>
+          - <gradient:#22c55e:#bbf7d0>➤ Poziom V • Stopień końcowy</gradient>
+      tycoon_market:
+        name: <gradient:#0891b2:#a5f3fc>👑 Potentat rynków</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Ustala ceny, które musi przestrzegać każda gildia.</gradient>
+          - <gradient:#0891b2:#a5f3fc>➤ Poziom V • Stopień końcowy</gradient>
+      tycoon_trade:
+        name: <gradient:#ea580c:#fed7aa>👑 Potentat handlu</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Jest właścicielem dróg, portów i zysków.</gradient>
+          - <gradient:#ea580c:#fed7aa>➤ Poziom V • Stopień końcowy</gradient>
 requirement:
 
   # ============================================
@@ -670,7 +915,7 @@ requirement:
     money: "Pieniądze"
     dollars: "Dolary"
     credits: "Kredyty"
-  
+
   # Szablony podglądu zadań
   task:
     entry: "<gradient:#6b7280:#9ca3af>%prefix% %task_name%</gradient>"
@@ -1287,6 +1532,7 @@ admin_skills_ui:
       missing: "<gradient:#ef4444:#f87171>Brak</gradient>"
     detected:
       name: "<gradient:#22c55e:#86efac>✅ %plugin_name%</gradient>"
+      click_action: "<gradient:#3b82f6:#60a5fa>[>] Click to inject themed skill requirements</gradient>"
     missing:
       name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
     lore:
@@ -1301,6 +1547,11 @@ admin_skills_ui:
 # ============================================
 # ADMIN JOBS INTEGRATION UI
 # ============================================
+  messages:
+    inject_success: "<gradient:#22c55e:#86efac>[+] Injected %perk_count% perk and %rank_count% rank skill requirements for %plugin_name%.</gradient>"
+    inject_no_changes: "<gradient:#3b82f6:#60a5fa>[i] No skill requirement changes were needed for %plugin_name%.</gradient>"
+    plugin_missing: "<gradient:#ef4444:#f87171>[!] %plugin_name% is not detected, so no requirements were injected.</gradient>"
+    inject_failed: "<gradient:#ef4444:#f87171>[x] Failed to inject skill requirements for %plugin_name%.</gradient>"
 admin_jobs_ui:
   title: "<gradient:#f59e0b:#fbbf24>⛏ Integracje stanowisk</gradient>"
   summary:
@@ -1315,6 +1566,7 @@ admin_jobs_ui:
       missing: "<gradient:#ef4444:#f87171>Brak</gradient>"
     detected:
       name: "<gradient:#22c55e:#86efac>✅ %plugin_name%</gradient>"
+      click_action: "<gradient:#3b82f6:#60a5fa>[>] Kliknij, aby wprowadzić tematyczne wymagania dotyczące stanowiska</gradient>"
     missing:
       name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
     lore:
@@ -1329,6 +1581,11 @@ admin_jobs_ui:
 # ============================================
 # ADMIN CURRENCY OVERVIEW UI
 # ============================================
+  messages:
+    inject_success: "<gradient:#22c55e:#86efac>[+] Wstrzyknięto wymagania dotyczące atutu %perk_count% i %rank_count% wymagania dotyczące stanowiska dla %plugin_name%.</gradient>"
+    inject_no_changes: "<gradient:#3b82f6:#60a5fa>[i] Dla %plugin_name% nie były potrzebne żadne zmiany wymagań stanowiskowych.</gradient>"
+    plugin_missing: "<gradient:#ef4444:#f87171>[!] %plugin_name% nie został wykryty, więc nie wprowadzono żadnych wymagań.</gradient>"
+    inject_failed: "<gradient:#ef4444:#f87171>[x] Nie udało się wprowadzić wymagań dotyczących zadania dla %plugin_name%.</gradient>"
 admin_currency_ui:
   title: "<gradient:#10b981:#34d399>💱 Menedżer walutowy</gradient>"
   currency_entry:
@@ -1364,6 +1621,16 @@ admin_currency_ui:
     lore:
       - "<gradient:#6b7280:#9ca3af>RDQ nie mógł wykryć walut Vault lub JExEconomy</gradient>"
       - "<gradient:#6b7280:#9ca3af>Najpierw zainstaluj lub włącz dostawcę ekonomicznego</gradient>"
+    jex_detected:
+      name: "<gradient:#3b82f6:#60a5fa>[i] JExEconomy Detected</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>RDQ detected JExEconomy but no currencies exist yet</gradient>"
+        - "<gradient:#10b981:#34d399>Use the top button to create %currency_id%</gradient>"
+    vault_detected:
+      name: "<gradient:#3b82f6:#60a5fa>[i] Vault Detected</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Vault is available but no currency entries were listed</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Check your economy provider configuration</gradient>"
   decoration:
     border:
       name: " "
@@ -1683,7 +1950,7 @@ rank_requirements_journey_ui:
         - "<gradient:#6b7280:#9ca3af>Dla tej rangi nie skonfigurowano żadnych nagród</gradient>"
       type_label: "<gray>Typ:</gray> <yellow>%type%</yellow>"
       value_label: "<gray>Wartość:</gray> <gold>%value%</gold>"
-    
+
     # Opisy typów nagród
     currency:
       description: "<gradient:#fbbf24:#fcd34d>Otrzymuj nagrody walutowe</gradient>"
@@ -1705,7 +1972,6 @@ rank_requirements_journey_ui:
       description: "<gradient:#f97316:#fb923c>Odblokuj efekty cząsteczkowe</gradient>"
     vanishing_chest:
       description: "<gradient:#14b8a6:#2dd4bf>Zdobądź znikającą skrzynię</gradient>"
-    
     more: "<gradient:#fbbf24:#fcd34d>+%count% więcej nagród...</gradient>"
 
   rewards:
@@ -1734,10 +2000,9 @@ reward:
       - "<gradient:#6b7280:#9ca3af>Dla tej rangi nie skonfigurowano żadnych nagród</gradient>"
     type_label: "<gray>Typ:</gray> <yellow>%type%</yellow>"
     value_label: "<gray>Wartość:</gray> <gold>%value%</gold>"
-  
   perk:
     unlocked: "<gradient:#10b981:#34d399>✦</gradient> <gradient:#6b7280:#9ca3af>Odblokowałeś cechę:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
-  
+
   # Opisy typów nagród
   currency:
     description: "<gradient:#fbbf24:#fcd34d>Otrzymuj nagrody walutowe</gradient>"
@@ -1759,7 +2024,6 @@ reward:
     description: "<gradient:#f97316:#fb923c>Odblokuj efekty cząsteczkowe</gradient>"
   vanishing_chest:
     description: "<gradient:#14b8a6:#2dd4bf>Zdobądź znikającą skrzynię</gradient>"
-  
   more: "<gradient:#fbbf24:#fcd34d>+%count% więcej nagród...</gradient>"
 
 rewards:
@@ -1815,7 +2079,7 @@ perk:
   fish_xp:
     name: "<gradient:#10b981:#34d399>Zwiększenie PD wędkarstwa</gradient>"
     description: "<gradient:#6b7280:#9ca3af>Zdobądź dodatkowe PD podczas łowienia ryb</gradient>"
-  
+
   # Korzyści z eliksirów
   potion_enhance:
     name: "<gradient:#a855f7:#c084fc>Wzmacniacz eliksirów</gradient>"
@@ -1826,7 +2090,7 @@ perk:
   potion_save:
     name: "<gradient:#10b981:#34d399>Zwrot eliksirów</gradient>"
     description: "<gradient:#6b7280:#9ca3af>Szansa na odzyskanie eliksiru po jego wypiciu</gradient>"
-  
+
   # Wiadomości o korzyściach
   messages:
     # Odblokuj/Enable/Disable
@@ -1843,36 +2107,33 @@ perk:
     disable:
       success: "<gradient:#f59e0b:#fbbf24>Wyłączony atut:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
       failed: "<gradient:#ef4444:#f87171>Nie udało się wyłączyć bonusu:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
-    
+
     # Czas odnowienia
     cooldown:
       active: "<gradient:#ef4444:#f87171>Ten atut ma czas odnowienia</gradient> <gradient:#f59e0b:#fbbf24>%time%</gradient>"
       ready: "<gradient:#10b981:#34d399>Perk jest gotowy do użycia!</gradient>"
-    
+
     # Wyzwalacze efektów
     potion_enhanced: "<gradient:#a855f7:#c084fc>✨ Ulepszona mikstura!</gradient> <gradient:#6b7280:#9ca3af>Efekty wzmocnione</gradient>"
     potion_extended: "<gradient:#f59e0b:#fbbf24>⏱ Wydłużony czas trwania mikstury!</gradient> <gradient:#6b7280:#9ca3af>Trwa dłużej</gradient>"
     potion_saved: "<gradient:#10b981:#34d399>💾 Eliksir zapisany!</gradient> <gradient:#6b7280:#9ca3af>Wrócił do inwentarza</gradient>"
     fishing_active: "<gradient:#3b82f6:#60a5fa>🎣 Szybsze wędkowanie aktywne!</gradient>"
     fishing_xp: "<gradient:#10b981:#34d399>+%xp% Wędkarstwo XP!</gradient>"
-  
+
   # Elementy interfejsu użytkownika
   ui:
     header:
       type_label: "<gray>Typ: <white>%type%</white></gray>"
       category_label: "<gray>Kategoria: <white>%category%</white></gray>"
-    
     requirements:
       no_requirements: "<green>Brak wymagań</green>"
       no_requirements_lore: "<gray>Ten atut nie wymaga odblokowania</gray>"
-    
     rewards:
       title: "<gold>Odblokuj nagrodę</gold>"
       no_rewards: "<gray>Brak nagród za odblokowanie</gray>"
       no_rewards_lore: "<gray>Ten atut nie umożliwia odblokowania nagród</gray>"
       type_label: "<gray>Typ: <white>%type%</white></gray>"
       value_label: "<gray>Wartość: <gold>%value%</gold></gray>"
-    
     status:
       title: "<white>Stan korzyści</white>"
       locked: "<red>✖ Zablokowane</red>"
@@ -1883,7 +2144,6 @@ perk:
       enabled_count: "<gray>Włączone korzyści: <white>%count%/%max%</white></gray>"
       cooldown_label: "<gray>Czas odnowienia: <gold>%time%</gold></gray>"
       activations_label: "<gray>Aktywacje: <white>%count%</white></gray>"
-    
     buttons:
       unlock:
         title: "<white>Odblokuj korzyść</white>"
@@ -1895,7 +2155,7 @@ perk:
       disable:
         title: "<white>Wyłącz korzyść</white>"
         hint: "<yellow>Kliknij, aby wyłączyć tę zaletę</yellow>"
-  
+
   # Istniejące korzyści (w celach informacyjnych – dodaj, jeśli ich brakuje)
   fly:
     name: "<gradient:#3b82f6:#60a5fa>Lot</gradient>"

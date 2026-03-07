@@ -82,236 +82,281 @@ rank:
         - "<gradient:#6b7280:#9ca3af>ランクが選択されていません</gradient>"
   # レンジャーツリーのランク
   ranger:
+    scout:
+      name: <gradient:#22c55e:#86efac>🏹 トレイルのスカウト</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ 蹄跡と風の変化を読み取​​ります。</gradient>
+        - <gradient:#10b981:#34d399>➤ Tier I • ネイチャー・イニシエイト</gradient>
     hunter:
-      name: "<gradient:#7c3aed:#a78bfa>🏹ハンター</gradient>"
+      name: <gradient:#16a34a:#4ade80>🏹 荒野の狩人</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>野生のやり方を学ぶ初心者トラッカー</gradient>"
-    archer:
-      name: "<gradient:#10b981:#34d399>🎯 アーチャー</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>弓の扱いに優れ、遠距離では致命的</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ 忍耐強く正確に獲物を捕らえます。</gradient>
+        - <gradient:#10b981:#34d399>➤ Tier II • ワイルド・パースート</gradient>
     tracker:
-      name: "<gradient:#3b82f6:#60a5fa>🔍 トラッカー</gradient>"
+      name: <gradient:#0ea5e9:#38bdf8>🏹 兆候の追跡者</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>獲物を見つけて追いかける専門家</gradient>"
-    marksman:
-      name: "<gradient:#f59e0b:#fbbf24>🎯 射手</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ 嵐が消し去ることのできない道をたどります。</gradient>
+        - <gradient:#3b82f6:#60a5fa>➤ Tier III • 今後の道の選択</gradient>
+    warden_primal:
+      name: <gradient:#14b8a6:#2dd4bf>🛡 獣の番人</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>致命的な精度を備えた精密射撃者</gradient>"
-    pathfinder:
-      name: "<gradient:#a855f7:#c084fc>🗺 パスファインダー</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ 王国の頂点に立つ生き物との絆。</gradient>
+        - <gradient:#14b8a6:#2dd4bf>➤ Tier IV • プライマルブランチ</gradient>
+    warden_storm:
+      name: <gradient:#2563eb:#60a5fa>⚡ 嵐の番人</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>未知の土地のマスター探検家</gradient>"
-    sniper:
-      name: "<gradient:#ef4444:#f87171>🎯 スナイパー</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ 雷や雨でも確実に発火します。</gradient>
+        - <gradient:#2563eb:#60a5fa>➤ Tier IV • ストームブランチ</gradient>
+    warden_wild:
+      name: <gradient:#16a34a:#84cc16>🌿 野生の監視者</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>エリート射手、一撃一殺</gradient>"
-    forest_lord:
-      name: "<gradient:#10b981:#34d399>🌲 森の主</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ 神聖な辺境と隠れた空き地を守ります。</gradient>
+        - <gradient:#16a34a:#84cc16>➤ Tier IV • 野生の枝</gradient>
+    beastmaster_primal:
+      name: <gradient:#7c3aed:#c084fc>👑 ビーストマスタープライマル</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>自然と一体となる荒野の主</gradient>"
-  # 戦士のツリーランク
+        - <gradient:#6b7280:#9ca3af>✦ 恐れることなく伝説の獣を指揮します。</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ Tier V • 最終ランク</gradient>
+    beastmaster_storm:
+      name: <gradient:#1d4ed8:#3b82f6>👑 ビーストマスター・ストーム</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ あらゆるボルトがあなたの容赦ないボレーを導きます。</gradient>
+        - <gradient:#1d4ed8:#3b82f6>➤ Tier V • 最終ランク</gradient>
+    beastmaster_wild:
+      name: <gradient:#15803d:#22c55e>👑 ビーストマスターワイルド</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ 自然そのものがあなたの呼びかけに応えようと立ち上がります。</gradient>
+        - <gradient:#15803d:#22c55e>➤ Tier V • 最終ランク</gradient>
   warrior:
     recruit:
-      name: "<gradient:#6b7280:#9ca3af>リクルート</gradient>"
+      name: <gradient:#6b7280:#9ca3af>⚔ 採用する</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>旅を始める新たな戦士</gradient>"
-        - "<gradient:#6b7280:#9ca3af>戦闘の基本を学ぶ</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ 試されていない決意を持った新鮮な刃。</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ Tier I • 訓練場</gradient>
     soldier:
-      name: "<gradient:#3b82f6:#60a5fa>兵士</gradient>"
+      name: <gradient:#3b82f6:#60a5fa>⚔ 兵士</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>戦闘術の訓練を受けた</gradient>"
-        - "<gradient:#6b7280:#9ca3af>戦闘準備完了</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ 訓練と前線での任務によって鍛えられる。</gradient>
+        - <gradient:#3b82f6:#60a5fa>➤ Tier II • 現場規律</gradient>
     veteran:
-      name: "<gradient:#f59e0b:#fbbf24>ベテラン</gradient>"
+      name: <gradient:#f59e0b:#fbbf24>⚔ ベテラン</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>百戦錬磨の戦士</gradient>"
-        - "<gradient:#6b7280:#9ca3af>専門分野のパスを選択してください</gradient>"
-    # 専門分野 1: バーサーカー (攻撃的)
+        - <gradient:#6b7280:#9ca3af>✦ 戦いの傷跡は、あなたが獲得した知恵を示すものです。</gradient>
+        - <gradient:#f59e0b:#fbbf24>➤ レベル III • パスを選択してください</gradient>
     berserker:
-      name: "<gradient:#ef4444:#f87171>バーサーカー</gradient>"
+      name: <gradient:#ef4444:#f87171>🔥 バーサーカー</gradient>
       lore:
-        - "<gradient:#ef4444:#f87171>怒りの道</gradient>"
-        - "<gradient:#6b7280:#9ca3af>破壊的な攻撃を繰り出す</gradient>"
-        - "<gradient:#6b7280:#9ca3af>防御を犠牲にして生の力を得る</gradient>"
-    # 専門分野 2: ガーディアン (防御)
+        - <gradient:#6b7280:#9ca3af>✦ 防御を破壊的な攻撃と交換します。</gradient>
+        - <gradient:#ef4444:#f87171>➤ Tier IV • フューリーブランチ</gradient>
     guardian:
-      name: "<gradient:#3b82f6:#60a5fa>ガーディアン</gradient>"
+      name: <gradient:#2563eb:#60a5fa>🛡 ガーディアン</gradient>
       lore:
-        - "<gradient:#3b82f6:#60a5fa>保護の道</gradient>"
-        - "<gradient:#6b7280:#9ca3af>砕けない盾となれ</gradient>"
-        - "<gradient:#6b7280:#9ca3af>いかなる犠牲を払ってでも味方を守る</gradient>"
-    # 専門分野 3: グラディエーター (バランス型)
+        - <gradient:#6b7280:#9ca3af>✦ 他の人が折れそうな場所でもしっかりと立ちます。</gradient>
+        - <gradient:#2563eb:#60a5fa>➤ Tier IV • シールド支部</gradient>
     gladiator:
-      name: "<gradient:#a855f7:#c084fc>剣闘士</gradient>"
+      name: <gradient:#a855f7:#c084fc>🏟 剣闘士</gradient>
       lore:
-        - "<gradient:#a855f7:#c084fc>栄光の道</gradient>"
-        - "<gradient:#6b7280:#9ca3af>アリーナ戦闘の達人</gradient>"
-        - "<gradient:#6b7280:#9ca3af>攻守のバランスを整える</gradient>"
-    # 最終順位
+        - <gradient:#6b7280:#9ca3af>✦ バランスのとれたアリーナ戦争をマスターします。</gradient>
+        - <gradient:#a855f7:#c084fc>➤ Tier IV • アリーナブランチ</gradient>
     warlord_fury:
-      name: "<gradient:#ef4444:#f87171>怒りの将軍</gradient>"
+      name: <gradient:#dc2626:#fb7185>👑 怒りのウォーロード</gradient>
       lore:
-        - "<gradient:#ef4444:#f87171>究極のバーサーカー</gradient>"
-        - "<gradient:#6b7280:#9ca3af>止まらない破壊力</gradient>"
-        - "<gradient:#6b7280:#9ca3af>戦場で具現化する恐怖</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ 止まらない破壊エンジン。</gradient>
+        - <gradient:#dc2626:#fb7185>➤ Tier V • 最終ランク</gradient>
     warlord_shield:
-      name: "<gradient:#3b82f6:#60a5fa>盾の戦士</gradient>"
+      name: <gradient:#1d4ed8:#60a5fa>👑 盾の将軍</gradient>
       lore:
-        - "<gradient:#3b82f6:#60a5fa>アルティメットガーディアン</gradient>"
-        - "<gradient:#6b7280:#9ca3af>不動の物、永遠の守護者</gradient>"
-        - "<gradient:#6b7280:#9ca3af>あなたが立っている間は誰も通りません</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ 人生と破滅の間の最後の壁。</gradient>
+        - <gradient:#1d4ed8:#60a5fa>➤ Tier V • 最終ランク</gradient>
     warlord_arena:
-      name: "<gradient:#a855f7:#c084fc>アリーナの将軍</gradient>"
+      name: <gradient:#7c3aed:#c084fc>👑 アリーナの将軍</gradient>
       lore:
-        - "<gradient:#a855f7:#c084fc>究極の剣闘士</gradient>"
-        - "<gradient:#6b7280:#9ca3af>チャンピオンの中のチャンピオン</gradient>"
-        - "<gradient:#6b7280:#9ca3af>闘技場の伝説</gradient>"
-    # レガシー ランク (下位互換性のため)
-    knight:
-      name: "<gradient:#f59e0b:#fbbf24>騎士</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>王国の名誉ある戦士</gradient>"
-    champion:
-      name: "<gradient:#a855f7:#c084fc>チャンピオン</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>誰もが恐れる伝説の戦士</gradient>"
-    warlord:
-      name: "<gradient:#ef4444:#f87171>将軍</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>戦争の達人、軍隊の指揮官</gradient>"
-  # メイジツリーのランク
+        - <gradient:#6b7280:#9ca3af>✦ 各コロシアムのチャンピオンに輝いた。</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ Tier V • 最終ランク</gradient>
   mage:
     apprentice:
-      name: "<gradient:#a855f7:#c084fc>✨見習い</gradient>"
+      name: <gradient:#a855f7:#d8b4fe>✨見習い</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>魔法の基礎を学ぶ</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ 神秘的な力の火花が目覚めます。</gradient>
+        - <gradient:#a855f7:#d8b4fe>➤ Tier I • 秘術の基礎</gradient>
     adept:
-      name: "<gradient:#3b82f6:#60a5fa>✨達人</gradient>"
+      name: <gradient:#3b82f6:#93c5fd>✨達人</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>魔力の成長</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ 制御され、集中した呪文を織り交ぜます。</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Tier II • 難解な実践</gradient>
     wizard:
-      name: "<gradient:#f59e0b:#fbbf24>✨ウィザード</gradient>"
+      name: <gradient:#f59e0b:#fde68a>✨ウィザード</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>秘術の達人</gradient>"
-    archmage:
-      name: "<gradient:#ef4444:#f87171>✨アークメイジ</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ 複雑な魔法のパターンを制御します。</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ Tier III • ドクトリンを選択してください</gradient>
+    sorcerer_arcane:
+      name: <gradient:#8b5cf6:#c4b5fd>🔮 アルカナの魔術師</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>あらゆる魔法の至高の達人</gradient>"
-  # ローグツリーのランク
+        - <gradient:#6b7280:#9ca3af>✦ 生の力をエレガントな力に磨きます。</gradient>
+        - <gradient:#8b5cf6:#c4b5fd>➤ Tier IV • 秘術の枝</gradient>
+    sorcerer_spell:
+      name: <gradient:#d946ef:#f0abfc>📜 呪文の魔術師</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ グリモアの制御と精度を拡張します。</gradient>
+        - <gradient:#d946ef:#f0abfc>➤ Tier IV • スペルブランチ</gradient>
+    sorcerer_void:
+      name: <gradient:#1d4ed8:#60a5fa>🌌 虚空の魔術師</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ 深淵のエネルギーをあなたの意志に曲げます。</gradient>
+        - <gradient:#1d4ed8:#60a5fa>➤ Tier IV • ボイドブランチ</gradient>
+    archmage_arcane:
+      name: <gradient:#7c3aed:#c084fc>👑 アルカナの大魔道士</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ 純粋な不可解な力の最高の建築家。</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ Tier V • 最終ランク</gradient>
+    archmage_spell:
+      name: <gradient:#d946ef:#f5d0fe>👑 呪文の大魔道士</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ すべての呪文は即座に答えられます。</gradient>
+        - <gradient:#d946ef:#f5d0fe>➤ Tier V • 最終ランク</gradient>
+    archmage_void:
+      name: <gradient:#1e3a8a:#60a5fa>👑 ヴォイドの大魔道士</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ 世界間の境界を支配します。</gradient>
+        - <gradient:#1e3a8a:#60a5fa>➤ Tier V • 最終ランク</gradient>
   rogue:
     pickpocket:
-      name: "<gradient:#6b7280:#9ca3af>🗡 スリ</gradient>"
+      name: <gradient:#6b7280:#9ca3af>🗡 スリ</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>素早い指で素早く脱出</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ タイミング、方向ミス、スピードを学びます。</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ Tier I • ストリートクラフト</gradient>
     thief:
-      name: "<gradient:#3b82f6:#60a5fa>🗡泥棒</gradient>"
+      name: <gradient:#3b82f6:#93c5fd>🗡泥棒</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>ステルスと窃盗の達人</gradient>"
-    scout:
-      name: "<gradient:#10b981:#34d399>🗡 スカウト</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>影の目と耳</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ 水門や監視線をすり抜けます。</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Tier II • サイレントエントリー</gradient>
     assassin:
-      name: "<gradient:#ef4444:#f87171>🗡暗殺者</gradient>"
+      name: <gradient:#ef4444:#f87171>🗡暗殺者</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>サイレントキラー、影からの死</gradient>"
-    infiltrator:
-      name: "<gradient:#a855f7:#c084fc>🗡 侵入者</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ 一度攻撃すると跡形もなく消えます。</gradient>
+        - <gradient:#ef4444:#f87171>➤ レベル III • 方法を選択してください</gradient>
+    shadow_stealth:
+      name: <gradient:#0ea5e9:#67e8f9>🌒 ステルスの影</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>気づかれずに出入りする専門家</gradient>"
-    shadowblade:
-      name: "<gradient:#6b7280:#9ca3af>🗡 シャドウブレード</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ マスターの動きは誰も追うことができません。</gradient>
+        - <gradient:#0ea5e9:#67e8f9>➤ Tier IV • ステルスブランチ</gradient>
+    shadow_night:
+      name: <gradient:#7c3aed:#c4b5fd>🌘 夜の影</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>夜の致命的な戦士</gradient>"
-    spymaster:
-      name: "<gradient:#3b82f6:#60a5fa>🗡 スパイマスター</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ 暗闇を致命的な利点に変えます。</gradient>
+        - <gradient:#7c3aed:#c4b5fd>➤ Tier IV • 夜間ブランチ</gradient>
+    shadow_sabotage:
+      name: <gradient:#f97316:#fb923c>💣 妨害行為の影</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>情報ネットワークのコントローラー</gradient>"
-    shadow_master:
-      name: "<gradient:#1f2937:#374151>🗡 シャドウマスター</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ 敵が反応する前に計画を破棄します。</gradient>
+        - <gradient:#f97316:#fb923c>➤ Tier IV • 妨害ブランチ</gradient>
+    phantom_stealth:
+      name: <gradient:#14b8a6:#5eead4>👑 ステルスのファントム</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>闇そのものと一つになる</gradient>"
-    shadowmaster:
-      name: "<gradient:#1f2937:#374151>🗡 シャドウマスター</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ 触れられない都市伝説となる。</gradient>
+        - <gradient:#14b8a6:#5eead4>➤ Tier V • 最終ランク</gradient>
+    phantom_night:
+      name: <gradient:#9333ea:#e9d5ff>👑 ファントム・オブ・ナイト</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>全ての影の至高の支配者</gradient>"
-  # クレリックのツリーランク
+        - <gradient:#6b7280:#9ca3af>✦ 真夜中の時間を完全に所有します。</gradient>
+        - <gradient:#9333ea:#e9d5ff>➤ Tier V • 最終ランク</gradient>
+    phantom_sabotage:
+      name: <gradient:#ea580c:#fdba74>👑 サボタージュの怪人</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ 戦闘が始まる前に終了します。</gradient>
+        - <gradient:#ea580c:#fdba74>➤ Tier V • 最終ランク</gradient>
   cleric:
     acolyte:
-      name: "<gradient:#f59e0b:#fbbf24>✝ アコライト</gradient>"
+      name: <gradient:#f59e0b:#fde68a>✝ アコライト</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>神の献身的な僕</gradient>"
-    devotee:
-      name: "<gradient:#f59e0b:#fbbf24>✝ 信者</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>神の道の忠実な信者</gradient>"
-    priest:
-      name: "<gradient:#10b981:#34d399>✝ 司祭</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>信者の治癒者および保護者</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ 神聖な奉仕の道を歩み始めます。</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ Tier I • 献身</gradient>
     healer:
-      name: "<gradient:#10b981:#34d399>✝ ヒーラー</gradient>"
+      name: <gradient:#10b981:#6ee7b7>✝ ヒーラー</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>修復芸術のマスター</gradient>"
-    bishop:
-      name: "<gradient:#a855f7:#c084fc>✝ビショップ</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ 重圧下で味方を回復します。</gradient>
+        - <gradient:#10b981:#6ee7b7>➤ Tier II • 修復</gradient>
+    priest:
+      name: <gradient:#3b82f6:#93c5fd>✝ 司祭</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>信者のリーダー</gradient>"
-    oracle:
-      name: "<gradient:#3b82f6:#60a5fa>✝オラクル</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ 神聖な規律をもってパーティーを導きます。</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Tier III • 自分の使命を選択してください</gradient>
+    bishop_divine:
+      name: <gradient:#8b5cf6:#c4b5fd>⛪ 神性司教</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>神聖なビジョンの先見者</gradient>"
-    high_priest:
-      name: "<gradient:#ef4444:#f87171>✝大祭司</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ 輝く権威を直接伝えるチャネル。</gradient>
+        - <gradient:#8b5cf6:#c4b5fd>➤ Tier IV • 神の枝</gradient>
+    bishop_light:
+      name: <gradient:#f59e0b:#fef08a>☀ 光の司教</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>至高の神の声</gradient>"
-  # マーチャントツリーのランク
+        - <gradient:#6b7280:#9ca3af>✦ 神聖な輝きで腐敗を盲目にします。</gradient>
+        - <gradient:#f59e0b:#fef08a>➤ Tier IV • ライトブランチ</gradient>
+    bishop_soul:
+      name: <gradient:#06b6d4:#67e8f9>🕊 魂の司教</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ 生と死の境界を守ります。</gradient>
+        - <gradient:#06b6d4:#67e8f9>➤ Tier IV • ソウルブランチ</gradient>
+    high_priest_divine:
+      name: <gradient:#7c3aed:#ddd6fe>👑 神性の大祭司</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ 混沌の中心で奇跡を宣言します。</gradient>
+        - <gradient:#7c3aed:#ddd6fe>➤ Tier V • 最終ランク</gradient>
+    high_priest_light:
+      name: <gradient:#f59e0b:#fef3c7>👑 光の大司祭</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ 揺るぎない夜明けを味方に浴びせます。</gradient>
+        - <gradient:#f59e0b:#fef3c7>➤ Tier V • 最終ランク</gradient>
+    high_priest_soul:
+      name: <gradient:#0891b2:#a5f3fc>👑 魂の大祭司</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ 死の恐怖を超えて霊を羊飼いにします。</gradient>
+        - <gradient:#0891b2:#a5f3fc>➤ Tier V • 最終ランク</gradient>
   merchant:
     peddler:
-      name: "<gradient:#6b7280:#9ca3af>💰行商人</gradient>"
+      name: <gradient:#6b7280:#9ca3af>💰行商人</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>路上で商品を販売する</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ 根性、魅力、そして小さな取引から始まります。</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ Tier I • ストリートコマース</gradient>
     trader:
-      name: "<gradient:#3b82f6:#60a5fa>💰 トレーダー</gradient>"
+      name: <gradient:#3b82f6:#93c5fd>💰 トレーダー</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>コネクションのある老舗商人</gradient>"
-    vendor:
-      name: "<gradient:#10b981:#34d399>💰 ベンダー</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ ルートと信頼できる連絡先を拡大します。</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Tier II • 市場での存在感</gradient>
+    broker:
+      name: <gradient:#f59e0b:#fde68a>💰 ブローカー</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>熟練した商品販売者</gradient>"
-    artificer:
-      name: "<gradient:#f59e0b:#fbbf24>💰 工匠</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ 高額な取引を正確に成立させます。</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ Tier III • 帝国を選択してください</gradient>
+    magnate_wealth:
+      name: <gradient:#10b981:#6ee7b7>📈 富豪</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>高級品の製作者</gradient>"
-    alchemist:
-      name: "<gradient:#a855f7:#c084fc>💰錬金術師</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ 比類のないペースで純粋な資本を構築します。</gradient>
+        - <gradient:#10b981:#6ee7b7>➤ Tier IV • ウェルスブランチ</gradient>
+    magnate_market:
+      name: <gradient:#06b6d4:#67e8f9>🏛 市場の大御所</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>ポーションとエリクサーの達人</gradient>"
-    merchant:
-      name: "<gradient:#f59e0b:#fbbf24>💰 販売者</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ 需要と供給のサイクルを調整します。</gradient>
+        - <gradient:#06b6d4:#67e8f9>➤ Tier IV • マーケットブランチ</gradient>
+    magnate_trade:
+      name: <gradient:#f97316:#fdba74>🚚 貿易王</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>成功したビジネスオーナー</gradient>"
-    master_crafter:
-      name: "<gradient:#ef4444:#f87171>💰 マスタークラフター</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ キャラバンレーンと物流を支配します。</gradient>
+        - <gradient:#f97316:#fdba74>➤ Tier IV • 貿易部門</gradient>
+    tycoon_wealth:
+      name: <gradient:#22c55e:#bbf7d0>👑 富豪</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>王国の最高の職人</gradient>"
-    merchant_prince:
-      name: "<gradient:#a855f7:#c084fc>💰 商人の王子</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ たった一度の決断で経済を変える。</gradient>
+        - <gradient:#22c55e:#bbf7d0>➤ Tier V • 最終ランク</gradient>
+    tycoon_market:
+      name: <gradient:#0891b2:#a5f3fc>👑 市場の大物</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>商業ロイヤルティ</gradient>"
-    tycoon:
-      name: "<gradient:#a855f7:#c084fc>💰 タイクーン</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ すべてのギルドが尊重しなければならない価格を設定します。</gradient>
+        - <gradient:#0891b2:#a5f3fc>➤ Tier V • 最終ランク</gradient>
+    tycoon_trade:
+      name: <gradient:#ea580c:#fed7aa>👑 貿易王</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>商業および貿易のマスター</gradient>"
-    guild_master:
-      name: "<gradient:#ef4444:#f87171>💰 ギルドマスター</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>商人ギルドのリーダー</gradient>"
-
-# ============================================
-# 報奨金リスナーのメッセージ
-# ============================================
+        - <gradient:#6b7280:#9ca3af>✦ 道路、港、利益を所有します。</gradient>
+        - <gradient:#ea580c:#fed7aa>➤ Tier V • 最終ランク</gradient>
 bounty_listener:
   bounty_active:
     warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>あなたにはアクティブな賞金がかかっています!</gradient>"
@@ -557,81 +602,281 @@ rank_path_overview_ui:
     tier: "<gradient:#6b7280:#9ca3af>階層:</gradient> <gradient:#f59e0b:#fbbf24>%tier%</gradient>"
     weight: "<gradient:#6b7280:#9ca3af>重さ：</gradient> <gradient:#f59e0b:#fbbf24>%weight%</gradient>"
     ranger:
+      scout:
+        name: <gradient:#22c55e:#86efac>🏹 トレイルのスカウト</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ 蹄跡と風の変化を読み取​​ります。</gradient>
+          - <gradient:#10b981:#34d399>➤ Tier I • ネイチャー・イニシエイト</gradient>
       hunter:
-        name: "<gradient:#7c3aed:#a78bfa>🏹ハンター</gradient>"
+        name: <gradient:#16a34a:#4ade80>🏹 荒野の狩人</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>野生のやり方を学ぶ初心者トラッカー</gradient>"
-      archer:
-        name: "<gradient:#10b981:#34d399>🎯 アーチャー</gradient>"
-        lore:
-          - "<gradient:#6b7280:#9ca3af>弓の扱いに優れ、遠距離では致命的</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ 忍耐強く正確に獲物を捕らえます。</gradient>
+          - <gradient:#10b981:#34d399>➤ Tier II • ワイルド・パースート</gradient>
       tracker:
-        name: "<gradient:#3b82f6:#60a5fa>🔍 トラッカー</gradient>"
+        name: <gradient:#0ea5e9:#38bdf8>🏹 兆候の追跡者</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>獲物を見つけて追いかける専門家</gradient>"
-      marksman:
-        name: "<gradient:#f59e0b:#fbbf24>🎯 射手</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ 嵐が消し去ることのできない道をたどります。</gradient>
+          - <gradient:#3b82f6:#60a5fa>➤ Tier III • 今後の道の選択</gradient>
+      warden_primal:
+        name: <gradient:#14b8a6:#2dd4bf>🛡 獣の番人</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>致命的な精度を備えた精密射撃者</gradient>"
-      pathfinder:
-        name: "<gradient:#a855f7:#c084fc>🗺 パスファインダー</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ 王国の頂点に立つ生き物との絆。</gradient>
+          - <gradient:#14b8a6:#2dd4bf>➤ Tier IV • プライマルブランチ</gradient>
+      warden_storm:
+        name: <gradient:#2563eb:#60a5fa>⚡ 嵐の番人</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>未知の土地のマスター探検家</gradient>"
-      sniper:
-        name: "<gradient:#ef4444:#f87171>🎯 スナイパー</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ 雷や雨でも確実に発火します。</gradient>
+          - <gradient:#2563eb:#60a5fa>➤ Tier IV • ストームブランチ</gradient>
+      warden_wild:
+        name: <gradient:#16a34a:#84cc16>🌿 野生の監視者</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>エリート射手、一撃一殺</gradient>"
-      forest_lord:
-        name: "<gradient:#10b981:#34d399>🌲 森の主</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ 神聖な辺境と隠れた空き地を守ります。</gradient>
+          - <gradient:#16a34a:#84cc16>➤ Tier IV • 野生の枝</gradient>
+      beastmaster_primal:
+        name: <gradient:#7c3aed:#c084fc>👑 ビーストマスタープライマル</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>自然と一体となる荒野の主</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ 恐れることなく伝説の獣を指揮します。</gradient>
+          - <gradient:#7c3aed:#c084fc>➤ Tier V • 最終ランク</gradient>
+      beastmaster_storm:
+        name: <gradient:#1d4ed8:#3b82f6>👑 ビーストマスター・ストーム</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ あらゆるボルトがあなたの容赦ないボレーを導きます。</gradient>
+          - <gradient:#1d4ed8:#3b82f6>➤ Tier V • 最終ランク</gradient>
+      beastmaster_wild:
+        name: <gradient:#15803d:#22c55e>👑 ビーストマスターワイルド</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ 自然そのものがあなたの呼びかけに応えようと立ち上がります。</gradient>
+          - <gradient:#15803d:#22c55e>➤ Tier V • 最終ランク</gradient>
     warrior:
       recruit:
-        name: "<gradient:#6b7280:#9ca3af>⚔ 採用する</gradient>"
+        name: <gradient:#6b7280:#9ca3af>⚔ 採用する</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>旅を始める新たな戦士</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ 試されていない決意を持った新鮮な刃。</gradient>
+          - <gradient:#94a3b8:#cbd5e1>➤ Tier I • 訓練場</gradient>
       soldier:
-        name: "<gradient:#3b82f6:#60a5fa>⚔ 兵士</gradient>"
+        name: <gradient:#3b82f6:#60a5fa>⚔ 兵士</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>戦闘術の訓練を受けた</gradient>"
-      knight:
-        name: "<gradient:#f59e0b:#fbbf24>⚔ ナイト</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ 訓練と前線での任務によって鍛えられる。</gradient>
+          - <gradient:#3b82f6:#60a5fa>➤ Tier II • 現場規律</gradient>
+      veteran:
+        name: <gradient:#f59e0b:#fbbf24>⚔ ベテラン</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>王国の名誉ある戦士</gradient>"
-      champion:
-        name: "<gradient:#a855f7:#c084fc>⚔ チャンピオン</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ 戦いの傷跡は、あなたが獲得した知恵を示すものです。</gradient>
+          - <gradient:#f59e0b:#fbbf24>➤ レベル III • パスを選択してください</gradient>
+      berserker:
+        name: <gradient:#ef4444:#f87171>🔥 バーサーカー</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>誰もが恐れる伝説の戦士</gradient>"
-      warlord:
-        name: "<gradient:#ef4444:#f87171>⚔ ウォーロード</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ 防御を破壊的な攻撃と交換します。</gradient>
+          - <gradient:#ef4444:#f87171>➤ Tier IV • フューリーブランチ</gradient>
+      guardian:
+        name: <gradient:#2563eb:#60a5fa>🛡 ガーディアン</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>戦争の達人、軍隊の指揮官</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ 他の人が折れそうな場所でもしっかりと立ちます。</gradient>
+          - <gradient:#2563eb:#60a5fa>➤ Tier IV • シールド支部</gradient>
+      gladiator:
+        name: <gradient:#a855f7:#c084fc>🏟 剣闘士</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ バランスのとれたアリーナ戦争をマスターします。</gradient>
+          - <gradient:#a855f7:#c084fc>➤ Tier IV • アリーナブランチ</gradient>
+      warlord_fury:
+        name: <gradient:#dc2626:#fb7185>👑 怒りのウォーロード</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ 止まらない破壊エンジン。</gradient>
+          - <gradient:#dc2626:#fb7185>➤ Tier V • 最終ランク</gradient>
+      warlord_shield:
+        name: <gradient:#1d4ed8:#60a5fa>👑 盾の将軍</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ 人生と破滅の間の最後の壁。</gradient>
+          - <gradient:#1d4ed8:#60a5fa>➤ Tier V • 最終ランク</gradient>
+      warlord_arena:
+        name: <gradient:#7c3aed:#c084fc>👑 アリーナの将軍</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ 各コロシアムのチャンピオンに輝いた。</gradient>
+          - <gradient:#7c3aed:#c084fc>➤ Tier V • 最終ランク</gradient>
     mage:
       apprentice:
-        name: "<gradient:#a855f7:#c084fc>✨見習い</gradient>"
+        name: <gradient:#a855f7:#d8b4fe>✨見習い</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>魔法の基礎を学ぶ</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ 神秘的な力の火花が目覚めます。</gradient>
+          - <gradient:#a855f7:#d8b4fe>➤ Tier I • 秘術の基礎</gradient>
       adept:
-        name: "<gradient:#3b82f6:#60a5fa>✨達人</gradient>"
+        name: <gradient:#3b82f6:#93c5fd>✨達人</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>魔力の成長</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ 制御され、集中した呪文を織り交ぜます。</gradient>
+          - <gradient:#3b82f6:#93c5fd>➤ Tier II • 難解な実践</gradient>
       wizard:
-        name: "<gradient:#f59e0b:#fbbf24>✨ウィザード</gradient>"
+        name: <gradient:#f59e0b:#fde68a>✨ウィザード</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>秘術の達人</gradient>"
-      archmage:
-        name: "<gradient:#ef4444:#f87171>✨アークメイジ</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ 複雑な魔法のパターンを制御します。</gradient>
+          - <gradient:#f59e0b:#fde68a>➤ Tier III • ドクトリンを選択してください</gradient>
+      sorcerer_arcane:
+        name: <gradient:#8b5cf6:#c4b5fd>🔮 アルカナの魔術師</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>あらゆる魔法の至高の達人</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ 生の力をエレガントな力に磨きます。</gradient>
+          - <gradient:#8b5cf6:#c4b5fd>➤ Tier IV • 秘術の枝</gradient>
+      sorcerer_spell:
+        name: <gradient:#d946ef:#f0abfc>📜 呪文の魔術師</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ グリモアの制御と精度を拡張します。</gradient>
+          - <gradient:#d946ef:#f0abfc>➤ Tier IV • スペルブランチ</gradient>
+      sorcerer_void:
+        name: <gradient:#1d4ed8:#60a5fa>🌌 虚空の魔術師</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ 深淵のエネルギーをあなたの意志に曲げます。</gradient>
+          - <gradient:#1d4ed8:#60a5fa>➤ Tier IV • ボイドブランチ</gradient>
+      archmage_arcane:
+        name: <gradient:#7c3aed:#c084fc>👑 アルカナの大魔道士</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ 純粋な不可解な力の最高の建築家。</gradient>
+          - <gradient:#7c3aed:#c084fc>➤ Tier V • 最終ランク</gradient>
+      archmage_spell:
+        name: <gradient:#d946ef:#f5d0fe>👑 呪文の大魔道士</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ すべての呪文は即座に答えられます。</gradient>
+          - <gradient:#d946ef:#f5d0fe>➤ Tier V • 最終ランク</gradient>
+      archmage_void:
+        name: <gradient:#1e3a8a:#60a5fa>👑 ヴォイドの大魔道士</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ 世界間の境界を支配します。</gradient>
+          - <gradient:#1e3a8a:#60a5fa>➤ Tier V • 最終ランク</gradient>
     rogue:
       pickpocket:
-        name: "<gradient:#6b7280:#9ca3af>🗡 スリ</gradient>"
+        name: <gradient:#6b7280:#9ca3af>🗡 スリ</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>素早い指で素早く脱出</gradient>"
-
-# ============================================
-# 要件の翻訳
-# ============================================
+          - <gradient:#6b7280:#9ca3af>✦ タイミング、方向ミス、スピードを学びます。</gradient>
+          - <gradient:#94a3b8:#cbd5e1>➤ Tier I • ストリートクラフト</gradient>
+      thief:
+        name: <gradient:#3b82f6:#93c5fd>🗡泥棒</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ 水門や監視線をすり抜けます。</gradient>
+          - <gradient:#3b82f6:#93c5fd>➤ Tier II • サイレントエントリー</gradient>
+      assassin:
+        name: <gradient:#ef4444:#f87171>🗡暗殺者</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ 一度攻撃すると跡形もなく消えます。</gradient>
+          - <gradient:#ef4444:#f87171>➤ レベル III • 方法を選択してください</gradient>
+      shadow_stealth:
+        name: <gradient:#0ea5e9:#67e8f9>🌒 ステルスの影</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ マスターの動きは誰も追うことができません。</gradient>
+          - <gradient:#0ea5e9:#67e8f9>➤ Tier IV • ステルスブランチ</gradient>
+      shadow_night:
+        name: <gradient:#7c3aed:#c4b5fd>🌘 夜の影</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ 暗闇を致命的な利点に変えます。</gradient>
+          - <gradient:#7c3aed:#c4b5fd>➤ Tier IV • 夜間ブランチ</gradient>
+      shadow_sabotage:
+        name: <gradient:#f97316:#fb923c>💣 妨害行為の影</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ 敵が反応する前に計画を破棄します。</gradient>
+          - <gradient:#f97316:#fb923c>➤ Tier IV • 妨害ブランチ</gradient>
+      phantom_stealth:
+        name: <gradient:#14b8a6:#5eead4>👑 ステルスのファントム</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ 触れられない都市伝説となる。</gradient>
+          - <gradient:#14b8a6:#5eead4>➤ Tier V • 最終ランク</gradient>
+      phantom_night:
+        name: <gradient:#9333ea:#e9d5ff>👑 ファントム・オブ・ナイト</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ 真夜中の時間を完全に所有します。</gradient>
+          - <gradient:#9333ea:#e9d5ff>➤ Tier V • 最終ランク</gradient>
+      phantom_sabotage:
+        name: <gradient:#ea580c:#fdba74>👑 サボタージュの怪人</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ 戦闘が始まる前に終了します。</gradient>
+          - <gradient:#ea580c:#fdba74>➤ Tier V • 最終ランク</gradient>
+    cleric:
+      acolyte:
+        name: <gradient:#f59e0b:#fde68a>✝ アコライト</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ 神聖な奉仕の道を歩み始めます。</gradient>
+          - <gradient:#f59e0b:#fde68a>➤ Tier I • 献身</gradient>
+      healer:
+        name: <gradient:#10b981:#6ee7b7>✝ ヒーラー</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ 重圧下で味方を回復します。</gradient>
+          - <gradient:#10b981:#6ee7b7>➤ Tier II • 修復</gradient>
+      priest:
+        name: <gradient:#3b82f6:#93c5fd>✝ 司祭</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ 神聖な規律をもってパーティーを導きます。</gradient>
+          - <gradient:#3b82f6:#93c5fd>➤ Tier III • 自分の使命を選択してください</gradient>
+      bishop_divine:
+        name: <gradient:#8b5cf6:#c4b5fd>⛪ 神性司教</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ 輝く権威を直接伝えるチャネル。</gradient>
+          - <gradient:#8b5cf6:#c4b5fd>➤ Tier IV • 神の枝</gradient>
+      bishop_light:
+        name: <gradient:#f59e0b:#fef08a>☀ 光の司教</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ 神聖な輝きで腐敗を盲目にします。</gradient>
+          - <gradient:#f59e0b:#fef08a>➤ Tier IV • ライトブランチ</gradient>
+      bishop_soul:
+        name: <gradient:#06b6d4:#67e8f9>🕊 魂の司教</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ 生と死の境界を守ります。</gradient>
+          - <gradient:#06b6d4:#67e8f9>➤ Tier IV • ソウルブランチ</gradient>
+      high_priest_divine:
+        name: <gradient:#7c3aed:#ddd6fe>👑 神性の大祭司</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ 混沌の中心で奇跡を宣言します。</gradient>
+          - <gradient:#7c3aed:#ddd6fe>➤ Tier V • 最終ランク</gradient>
+      high_priest_light:
+        name: <gradient:#f59e0b:#fef3c7>👑 光の大司祭</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ 揺るぎない夜明けを味方に浴びせます。</gradient>
+          - <gradient:#f59e0b:#fef3c7>➤ Tier V • 最終ランク</gradient>
+      high_priest_soul:
+        name: <gradient:#0891b2:#a5f3fc>👑 魂の大祭司</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ 死の恐怖を超えて霊を羊飼いにします。</gradient>
+          - <gradient:#0891b2:#a5f3fc>➤ Tier V • 最終ランク</gradient>
+    merchant:
+      peddler:
+        name: <gradient:#6b7280:#9ca3af>💰行商人</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ 根性、魅力、そして小さな取引から始まります。</gradient>
+          - <gradient:#94a3b8:#cbd5e1>➤ Tier I • ストリートコマース</gradient>
+      trader:
+        name: <gradient:#3b82f6:#93c5fd>💰 トレーダー</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ ルートと信頼できる連絡先を拡大します。</gradient>
+          - <gradient:#3b82f6:#93c5fd>➤ Tier II • 市場での存在感</gradient>
+      broker:
+        name: <gradient:#f59e0b:#fde68a>💰 ブローカー</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ 高額な取引を正確に成立させます。</gradient>
+          - <gradient:#f59e0b:#fde68a>➤ Tier III • 帝国を選択してください</gradient>
+      magnate_wealth:
+        name: <gradient:#10b981:#6ee7b7>📈 富豪</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ 比類のないペースで純粋な資本を構築します。</gradient>
+          - <gradient:#10b981:#6ee7b7>➤ Tier IV • ウェルスブランチ</gradient>
+      magnate_market:
+        name: <gradient:#06b6d4:#67e8f9>🏛 市場の大御所</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ 需要と供給のサイクルを調整します。</gradient>
+          - <gradient:#06b6d4:#67e8f9>➤ Tier IV • マーケットブランチ</gradient>
+      magnate_trade:
+        name: <gradient:#f97316:#fdba74>🚚 貿易王</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ キャラバンレーンと物流を支配します。</gradient>
+          - <gradient:#f97316:#fdba74>➤ Tier IV • 貿易部門</gradient>
+      tycoon_wealth:
+        name: <gradient:#22c55e:#bbf7d0>👑 富豪</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ たった一度の決断で経済を変える。</gradient>
+          - <gradient:#22c55e:#bbf7d0>➤ Tier V • 最終ランク</gradient>
+      tycoon_market:
+        name: <gradient:#0891b2:#a5f3fc>👑 市場の大物</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ すべてのギルドが尊重しなければならない価格を設定します。</gradient>
+          - <gradient:#0891b2:#a5f3fc>➤ Tier V • 最終ランク</gradient>
+      tycoon_trade:
+        name: <gradient:#ea580c:#fed7aa>👑 貿易王</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ 道路、港、利益を所有します。</gradient>
+          - <gradient:#ea580c:#fed7aa>➤ Tier V • 最終ランク</gradient>
 requirement:
 
   # ============================================
@@ -670,7 +915,7 @@ requirement:
     money: "お金"
     dollars: "ドル"
     credits: "クレジット"
-  
+
   # タスクプレビューテンプレート
   task:
     entry: "<gradient:#6b7280:#9ca3af>%prefix% %task_name%</gradient>"
@@ -1287,6 +1532,7 @@ admin_skills_ui:
       missing: "<gradient:#ef4444:#f87171>ない</gradient>"
     detected:
       name: "<gradient:#22c55e:#86efac>✅ %plugin_name%</gradient>"
+      click_action: "<gradient:#3b82f6:#60a5fa>[>] Click to inject themed skill requirements</gradient>"
     missing:
       name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
     lore:
@@ -1301,6 +1547,11 @@ admin_skills_ui:
 # ============================================
 # ADMIN JOBS INTEGRATION UI
 # ============================================
+  messages:
+    inject_success: "<gradient:#22c55e:#86efac>[+] Injected %perk_count% perk and %rank_count% rank skill requirements for %plugin_name%.</gradient>"
+    inject_no_changes: "<gradient:#3b82f6:#60a5fa>[i] No skill requirement changes were needed for %plugin_name%.</gradient>"
+    plugin_missing: "<gradient:#ef4444:#f87171>[!] %plugin_name% is not detected, so no requirements were injected.</gradient>"
+    inject_failed: "<gradient:#ef4444:#f87171>[x] Failed to inject skill requirements for %plugin_name%.</gradient>"
 admin_jobs_ui:
   title: "<gradient:#f59e0b:#fbbf24>⛏ ジョブの統合</gradient>"
   summary:
@@ -1315,6 +1566,7 @@ admin_jobs_ui:
       missing: "<gradient:#ef4444:#f87171>ない</gradient>"
     detected:
       name: "<gradient:#22c55e:#86efac>✅ %plugin_name%</gradient>"
+      click_action: "<gradient:#3b82f6:#60a5fa>[>] クリックしてテーマ別の職務要件を挿入します</gradient>"
     missing:
       name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
     lore:
@@ -1329,6 +1581,11 @@ admin_jobs_ui:
 # ============================================
 # ADMIN CURRENCY OVERVIEW UI
 # ============================================
+  messages:
+    inject_success: "<gradient:#22c55e:#86efac>[+] %plugin_name% の %perk_count% 特典と %rank_count% ランクのジョブ要件を追加しました。</gradient>"
+    inject_no_changes: "<gradient:#3b82f6:#60a5fa>[i] %plugin_name% のジョブ要件の変更は必要ありません。</gradient>"
+    plugin_missing: "<gradient:#ef4444:#f87171>[!] %plugin_name% は検出されないため、要件は挿入されませんでした。</gradient>"
+    inject_failed: "<gradient:#ef4444:#f87171>[x] %plugin_name% のジョブ要件を挿入できませんでした。</gradient>"
 admin_currency_ui:
   title: "<gradient:#10b981:#34d399>💱 通貨マネージャー</gradient>"
   currency_entry:
@@ -1364,6 +1621,16 @@ admin_currency_ui:
     lore:
       - "<gradient:#6b7280:#9ca3af>RDQ は Vault または JExEconomy 通貨を検出できませんでした</gradient>"
       - "<gradient:#6b7280:#9ca3af>最初にエコノミープロバイダーをインストールまたは有効化します</gradient>"
+    jex_detected:
+      name: "<gradient:#3b82f6:#60a5fa>[i] JExEconomy Detected</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>RDQ detected JExEconomy but no currencies exist yet</gradient>"
+        - "<gradient:#10b981:#34d399>Use the top button to create %currency_id%</gradient>"
+    vault_detected:
+      name: "<gradient:#3b82f6:#60a5fa>[i] Vault Detected</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Vault is available but no currency entries were listed</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Check your economy provider configuration</gradient>"
   decoration:
     border:
       name: " "
@@ -1683,7 +1950,7 @@ rank_requirements_journey_ui:
         - "<gradient:#6b7280:#9ca3af>このランクには報酬が設定されていません</gradient>"
       type_label: "<gray>タイプ：</gray> <yellow>%type%</yellow>"
       value_label: "<gray>価値：</gray> <gold>%value%</gold>"
-    
+
     # 報酬タイプの説明
     currency:
       description: "<gradient:#fbbf24:#fcd34d>通貨特典を受け取る</gradient>"
@@ -1705,7 +1972,6 @@ rank_requirements_journey_ui:
       description: "<gradient:#f97316:#fb923c>パーティクルエフェクトのロックを解除する</gradient>"
     vanishing_chest:
       description: "<gradient:#14b8a6:#2dd4bf>消えた宝箱を受け取る</gradient>"
-    
     more: "<gradient:#fbbf24:#fcd34d>+%count% さらに多くの報酬...</gradient>"
 
   rewards:
@@ -1734,10 +2000,9 @@ reward:
       - "<gradient:#6b7280:#9ca3af>このランクには報酬が設定されていません</gradient>"
     type_label: "<gray>タイプ：</gray> <yellow>%type%</yellow>"
     value_label: "<gray>価値：</gray> <gold>%value%</gold>"
-  
   perk:
     unlocked: "<gradient:#10b981:#34d399>✦</gradient> <gradient:#6b7280:#9ca3af>特典のロックを解除しました:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
-  
+
   # 報酬タイプの説明
   currency:
     description: "<gradient:#fbbf24:#fcd34d>通貨特典を受け取る</gradient>"
@@ -1759,7 +2024,6 @@ reward:
     description: "<gradient:#f97316:#fb923c>パーティクルエフェクトのロックを解除する</gradient>"
   vanishing_chest:
     description: "<gradient:#14b8a6:#2dd4bf>消えた宝箱を受け取る</gradient>"
-  
   more: "<gradient:#fbbf24:#fcd34d>+%count% さらに多くの報酬...</gradient>"
 
 rewards:
@@ -1815,7 +2079,7 @@ perk:
   fish_xp:
     name: "<gradient:#10b981:#34d399>釣りXPブースト</gradient>"
     description: "<gradient:#6b7280:#9ca3af>魚を釣るとボーナス XP を獲得</gradient>"
-  
+
   # ポーションの特典
   potion_enhance:
     name: "<gradient:#a855f7:#c084fc>ポーションアンプリファイアー</gradient>"
@@ -1826,7 +2090,7 @@ perk:
   potion_save:
     name: "<gradient:#10b981:#34d399>ポーションの払い戻し</gradient>"
     description: "<gradient:#6b7280:#9ca3af>ポーションを飲んだ後にポーションを取り戻すチャンス</gradient>"
-  
+
   # 特典メッセージ
   messages:
     # /Enable/Disable のロックを解除する
@@ -1843,36 +2107,33 @@ perk:
     disable:
       success: "<gradient:#f59e0b:#fbbf24>無効化特典:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
       failed: "<gradient:#ef4444:#f87171>特典を無効にできませんでした:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
-    
+
     # クールダウン
     cooldown:
       active: "<gradient:#ef4444:#f87171>この特典はクールダウン中です</gradient> <gradient:#f59e0b:#fbbf24>%time%</gradient>"
       ready: "<gradient:#10b981:#34d399>特典を使用する準備ができました。</gradient>"
-    
+
     # エフェクトトリガー
     potion_enhanced: "<gradient:#a855f7:#c084fc>✨ポーション強化！</gradient> <gradient:#6b7280:#9ca3af>増幅された効果</gradient>"
     potion_extended: "<gradient:#f59e0b:#fbbf24>⏱ ポーションの持続時間が延長されました!</gradient> <gradient:#6b7280:#9ca3af>長持ちする</gradient>"
     potion_saved: "<gradient:#10b981:#34d399>💾 ポーションを保存しました!</gradient> <gradient:#6b7280:#9ca3af>在庫に戻りました</gradient>"
     fishing_active: "<gradient:#3b82f6:#60a5fa>🎣 より速く釣りをアクティブに！</gradient>"
     fishing_xp: "<gradient:#10b981:#34d399>+%xp% 釣りXP！</gradient>"
-  
+
   # UI要素
   ui:
     header:
       type_label: "<gray>タイプ： <white>%type%</white></gray>"
       category_label: "<gray>カテゴリ： <white>%category%</white></gray>"
-    
     requirements:
       no_requirements: "<green>要件なし</green>"
       no_requirements_lore: "<gray>この特典にはロック解除要件はありません</gray>"
-    
     rewards:
       title: "<gold>報酬のロックを解除する</gold>"
       no_rewards: "<gray>ロック解除報酬なし</gray>"
       no_rewards_lore: "<gray>この特典にはロック解除報酬はありません</gray>"
       type_label: "<gray>タイプ： <white>%type%</white></gray>"
       value_label: "<gray>価値： <gold>%value%</gold></gray>"
-    
     status:
       title: "<white>パークステータス</white>"
       locked: "<red>✖ ロック済み</red>"
@@ -1883,7 +2144,6 @@ perk:
       enabled_count: "<gray>有効な特典: <white>%count%/%max%</white></gray>"
       cooldown_label: "<gray>クールダウン： <gold>%time%</gold></gray>"
       activations_label: "<gray>アクティベーション: <white>%count%</white></gray>"
-    
     buttons:
       unlock:
         title: "<white>パークのロックを解除する</white>"
@@ -1895,7 +2155,7 @@ perk:
       disable:
         title: "<white>パークを無効にする</white>"
         hint: "<yellow>クリックしてこの特典を無効にします</yellow>"
-  
+
   # 既存の特典 (参考用 - 不足している場合は追加)
   fly:
     name: "<gradient:#3b82f6:#60a5fa>フライト</gradient>"

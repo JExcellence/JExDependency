@@ -4,8 +4,8 @@ import com.raindropcentral.rplatform.api.luckperms.IRank;
 
 public record IRRank(
 	String id,
-	String displayName,
-	int weight
+	int weight,
+	String displayName
 ) implements IRank {
 
 }

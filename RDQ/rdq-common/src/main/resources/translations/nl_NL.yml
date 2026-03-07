@@ -82,236 +82,281 @@ rank:
         - "<gradient:#6b7280:#9ca3af>Geen rang geselecteerd</gradient>"
   # Ranger Tree-rangen
   ranger:
+    scout:
+      name: <gradient:#22c55e:#86efac>🏹 Verkenner van paden</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Leest hoefafdrukken en windverschuivingen.</gradient>
+        - <gradient:#10b981:#34d399>➤ Niveau I • Natuurinitiatief</gradient>
     hunter:
-      name: "<gradient:#7c3aed:#a78bfa>🏹Jager</gradient>"
+      name: <gradient:#16a34a:#4ade80>🏹 Jager van de wildernis</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Een beginnende tracker die de wegen van het wild leert</gradient>"
-    archer:
-      name: "<gradient:#10b981:#34d399>🎯 Boogschutter</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Vaardig met de boog, dodelijk op afstand</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Besluipt prooien met geduldige precisie.</gradient>
+        - <gradient:#10b981:#34d399>➤ Niveau II • Wilde achtervolging</gradient>
     tracker:
-      name: "<gradient:#3b82f6:#60a5fa>🔍Tracker</gradient>"
+      name: <gradient:#0ea5e9:#38bdf8>🏹 Tracker van tekens</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Expert in het vinden en volgen van prooien</gradient>"
-    marksman:
-      name: "<gradient:#f59e0b:#fbbf24>🎯Schutter</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Volgt sporen die geen enkele storm kan uitwissen.</gradient>
+        - <gradient:#3b82f6:#60a5fa>➤ Niveau III • Padkeuze vooruit</gradient>
+    warden_primal:
+      name: <gradient:#14b8a6:#2dd4bf>🛡 Bewaker van de dieren</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Precisieschieter met dodelijke nauwkeurigheid</gradient>"
-    pathfinder:
-      name: "<gradient:#a855f7:#c084fc>🗺 Pathfinder</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Banden met topwezens van het rijk.</gradient>
+        - <gradient:#14b8a6:#2dd4bf>➤ Niveau IV • Primaire tak</gradient>
+    warden_storm:
+      name: <gradient:#2563eb:#60a5fa>⚡ Bewaker van Stormen</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Meesterverkenner van onbekende landen</gradient>"
-    sniper:
-      name: "<gradient:#ef4444:#f87171>🎯Sluipschutter</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Branden door onweer en regen.</gradient>
+        - <gradient:#2563eb:#60a5fa>➤ Niveau IV • Stormtak</gradient>
+    warden_wild:
+      name: <gradient:#16a34a:#84cc16>🌿 Bewaker van het Wild</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Elite scherpschutter, één schot één moord</gradient>"
-    forest_lord:
-      name: "<gradient:#10b981:#34d399>🌲 Bosheer</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Bewaakt heilige grenzen en verborgen open plekken.</gradient>
+        - <gradient:#16a34a:#84cc16>➤ Niveau IV • Wilde tak</gradient>
+    beastmaster_primal:
+      name: <gradient:#7c3aed:#c084fc>👑 Beestmeester Primal</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Meester van de wildernis, één met de natuur</gradient>"
-  # Krijgersboomrangen
+        - <gradient:#6b7280:#9ca3af>✦ Voer het bevel over legendarische beesten zonder angst.</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ Niveau V • Eindrang</gradient>
+    beastmaster_storm:
+      name: <gradient:#1d4ed8:#3b82f6>👑 Beestmeester Storm</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Elke pijl begeleidt je meedogenloze salvo.</gradient>
+        - <gradient:#1d4ed8:#3b82f6>➤ Niveau V • Eindrang</gradient>
+    beastmaster_wild:
+      name: <gradient:#15803d:#22c55e>👑 Beestmeester Wild</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ De natuur zelf staat op om jouw oproep te beantwoorden.</gradient>
+        - <gradient:#15803d:#22c55e>➤ Niveau V • Eindrang</gradient>
   warrior:
     recruit:
-      name: "<gradient:#6b7280:#9ca3af>Werven</gradient>"
+      name: <gradient:#6b7280:#9ca3af>⚔ Rekruteer</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Een nieuwe krijger die aan hun reis begint</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Leer de basisprincipes van vechten</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Een fris mes met ongeteste vastberadenheid.</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ Niveau I • Oefenterreinen</gradient>
     soldier:
-      name: "<gradient:#3b82f6:#60a5fa>Soldaat</gradient>"
+      name: <gradient:#3b82f6:#60a5fa>⚔ Soldaat</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Getraind in de kunst van het vechten</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Klaar voor de strijd</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Gehard door boren en eerstelijnswerk.</gradient>
+        - <gradient:#3b82f6:#60a5fa>➤ Niveau II • Velddiscipline</gradient>
     veteran:
-      name: "<gradient:#f59e0b:#fbbf24>Veteraan</gradient>"
+      name: <gradient:#f59e0b:#fbbf24>⚔ Veteraan</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Door de strijd geharde krijger</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Kies uw specialisatiepad</gradient>"
-    # Specialisatie Tak 1: Berserker (offensief)
+        - <gradient:#6b7280:#9ca3af>✦ Gevechtslittekens markeren je verdiende wijsheid.</gradient>
+        - <gradient:#f59e0b:#fbbf24>➤ Niveau III • Kies je pad</gradient>
     berserker:
-      name: "<gradient:#ef4444:#f87171>Berserker</gradient>"
+      name: <gradient:#ef4444:#f87171>🔥Berserker</gradient>
       lore:
-        - "<gradient:#ef4444:#f87171>Pad van woede</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Voer verwoestende aanvallen uit</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Offer verdediging op voor brute kracht</gradient>"
-    # Specialisatie Tak 2: Guardian (Defensief)
+        - <gradient:#6b7280:#9ca3af>✦ Ruilt verdediging in voor verwoestende aanval.</gradient>
+        - <gradient:#ef4444:#f87171>➤ Niveau IV • Furytak</gradient>
     guardian:
-      name: "<gradient:#3b82f6:#60a5fa>Voogd</gradient>"
+      name: <gradient:#2563eb:#60a5fa>🛡 Bewaker</gradient>
       lore:
-        - "<gradient:#3b82f6:#60a5fa>Pad van bescherming</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Word een onbreekbaar schild</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Bescherm je bondgenoten ten koste van alles</gradient>"
-    # Specialisatie Tak 3: Gladiator (Evenwichtig)
+        - <gradient:#6b7280:#9ca3af>✦ Staat standvastig waar anderen zouden breken.</gradient>
+        - <gradient:#2563eb:#60a5fa>➤ Niveau IV • Schildtak</gradient>
     gladiator:
-      name: "<gradient:#a855f7:#c084fc>Gladiator</gradient>"
+      name: <gradient:#a855f7:#c084fc>🏟 Gladiator</gradient>
       lore:
-        - "<gradient:#a855f7:#c084fc>Pad van glorie</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Meester van arenagevechten</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Breng aanval en verdediging in balans</gradient>"
-    # Laatste rangen
+        - <gradient:#6b7280:#9ca3af>✦ Beheerst evenwichtige arenaoorlogvoering.</gradient>
+        - <gradient:#a855f7:#c084fc>➤ Niveau IV • Arenafiliaal</gradient>
     warlord_fury:
-      name: "<gradient:#ef4444:#f87171>Krijgsheer van woede</gradient>"
+      name: <gradient:#dc2626:#fb7185>👑 Krijgsheer van woede</gradient>
       lore:
-        - "<gradient:#ef4444:#f87171>Ultieme Berserker</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Onstuitbare kracht van vernietiging</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Angst incarneert op het slagveld</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Een niet te stoppen motor van vernietiging.</gradient>
+        - <gradient:#dc2626:#fb7185>➤ Niveau V • Eindrang</gradient>
     warlord_shield:
-      name: "<gradient:#3b82f6:#60a5fa>Krijgsheer van het Schild</gradient>"
+      name: <gradient:#1d4ed8:#60a5fa>👑 Krijgsheer van het Schild</gradient>
       lore:
-        - "<gradient:#3b82f6:#60a5fa>Ultieme bewaker</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Onroerend voorwerp, eeuwige beschermer</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Niemand zal voorbijgaan terwijl je staat</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ De laatste muur tussen leven en ondergang.</gradient>
+        - <gradient:#1d4ed8:#60a5fa>➤ Niveau V • Eindrang</gradient>
     warlord_arena:
-      name: "<gradient:#a855f7:#c084fc>Krijgsheer van de Arena</gradient>"
+      name: <gradient:#7c3aed:#c084fc>👑 Krijgsheer van de Arena</gradient>
       lore:
-        - "<gradient:#a855f7:#c084fc>Ultieme gladiator</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Kampioen der kampioenen</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Legende van de arena</gradient>"
-    # Legacy-rangen (voor achterwaartse compatibiliteit)
-    knight:
-      name: "<gradient:#f59e0b:#fbbf24>Ridder</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Eervolle krijger van het rijk</gradient>"
-    champion:
-      name: "<gradient:#a855f7:#c084fc>Kampioen</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Legendarische vechter, gevreesd door iedereen</gradient>"
-    warlord:
-      name: "<gradient:#ef4444:#f87171>Krijgsheer</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Oorlogsmeester, bevelhebber van legers</gradient>"
-  # Mage Tree-rangen
+        - <gradient:#6b7280:#9ca3af>✦ Gekroond tot kampioen van elk Colosseum.</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ Niveau V • Eindrang</gradient>
   mage:
     apprentice:
-      name: "<gradient:#a855f7:#c084fc>✨ Leerling</gradient>"
+      name: <gradient:#a855f7:#d8b4fe>✨ Leerling</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Het leren van de basisprincipes van magie</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Vonken van mysterieuze kracht ontwaken.</gradient>
+        - <gradient:#a855f7:#d8b4fe>➤ Niveau I • Arcane Foundations</gradient>
     adept:
-      name: "<gradient:#3b82f6:#60a5fa>✨ Adept</gradient>"
+      name: <gradient:#3b82f6:#93c5fd>✨ Adept</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Groeien in magische kracht</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Weeft gecontroleerde en gerichte spreuken.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Niveau II • Arcane praktijk</gradient>
     wizard:
-      name: "<gradient:#f59e0b:#fbbf24>✨ Tovenaar</gradient>"
+      name: <gradient:#f59e0b:#fde68a>✨ Tovenaar</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Meester van geheimzinnige kunsten</gradient>"
-    archmage:
-      name: "<gradient:#ef4444:#f87171>✨Archmagiër</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Bestuurt complexe magische patronen.</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ Niveau III • Kies uw leerstelling</gradient>
+    sorcerer_arcane:
+      name: <gradient:#8b5cf6:#c4b5fd>🔮 Tovenaar van Arcana</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Oppermeester van alle magie</gradient>"
-  # Rogue Tree-rangen
+        - <gradient:#6b7280:#9ca3af>✦ Verfijnt brute kracht tot elegante kracht.</gradient>
+        - <gradient:#8b5cf6:#c4b5fd>➤ Niveau IV • Arcane tak</gradient>
+    sorcerer_spell:
+      name: <gradient:#d946ef:#f0abfc>📜 Tovenaar van spreuken</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Vergroot de grimoire-controle en precisie.</gradient>
+        - <gradient:#d946ef:#f0abfc>➤ Niveau IV • Spreukentak</gradient>
+    sorcerer_void:
+      name: <gradient:#1d4ed8:#60a5fa>🌌 Tovenaar van de Leegte</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Buigt energieën uit de afgrond naar jouw wil.</gradient>
+        - <gradient:#1d4ed8:#60a5fa>➤ Niveau IV • Ongeldige tak</gradient>
+    archmage_arcane:
+      name: <gradient:#7c3aed:#c084fc>👑 Aartsmagiër van Arcana</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Opperste architect van pure geheimzinnige macht.</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ Niveau V • Eindrang</gradient>
+    archmage_spell:
+      name: <gradient:#d946ef:#f5d0fe>👑 Aartsmagiër van spreuken</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Elke bezwering antwoordt onmiddellijk.</gradient>
+        - <gradient:#d946ef:#f5d0fe>➤ Niveau V • Eindrang</gradient>
+    archmage_void:
+      name: <gradient:#1e3a8a:#60a5fa>👑 Aartsmagiër van de Leegte</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Heerst over de grenzen tussen werelden.</gradient>
+        - <gradient:#1e3a8a:#60a5fa>➤ Niveau V • Eindrang</gradient>
   rogue:
     pickpocket:
-      name: "<gradient:#6b7280:#9ca3af>🗡 Zakkenroller</gradient>"
+      name: <gradient:#6b7280:#9ca3af>🗡 Zakkenroller</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Snelle vingers, snellere ontsnapping</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Leert timing, misleiding en snelheid.</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ Niveau I • Straatkunst</gradient>
     thief:
-      name: "<gradient:#3b82f6:#60a5fa>🗡 Dief</gradient>"
+      name: <gradient:#3b82f6:#93c5fd>🗡 Dief</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Meester van stealth en diefstal</gradient>"
-    scout:
-      name: "<gradient:#10b981:#34d399>🗡 Verkenner</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Ogen en oren van de schaduwen</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Glipt door sluizen en uitkijklijnen.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Niveau II • Stille toegang</gradient>
     assassin:
-      name: "<gradient:#ef4444:#f87171>🗡 Moordenaar</gradient>"
+      name: <gradient:#ef4444:#f87171>🗡 Moordenaar</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Stille moordenaar, dood door schaduwen</gradient>"
-    infiltrator:
-      name: "<gradient:#a855f7:#c084fc>🗡Infiltrant</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ slaat één keer toe en verdwijnt spoorloos.</gradient>
+        - <gradient:#ef4444:#f87171>➤ Niveau III • Kies uw methode</gradient>
+    shadow_stealth:
+      name: <gradient:#0ea5e9:#67e8f9>🌒 Schaduw van stealth</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Expert in het ongemerkt in- en uitstappen</gradient>"
-    shadowblade:
-      name: "<gradient:#6b7280:#9ca3af>🗡 Schaduwblad</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Beheers bewegingen die geen enkel oog kan volgen.</gradient>
+        - <gradient:#0ea5e9:#67e8f9>➤ Niveau IV • Stealth-filiaal</gradient>
+    shadow_night:
+      name: <gradient:#7c3aed:#c4b5fd>🌘 Schaduw van de nacht</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Dodelijke krijger van de nacht</gradient>"
-    spymaster:
-      name: "<gradient:#3b82f6:#60a5fa>🗡 Spymaster</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Verandert duisternis in dodelijk voordeel.</gradient>
+        - <gradient:#7c3aed:#c4b5fd>➤ Niveau IV • Nachttak</gradient>
+    shadow_sabotage:
+      name: <gradient:#f97316:#fb923c>💣 Schaduw van sabotage</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Beheerder van informatienetwerken</gradient>"
-    shadow_master:
-      name: "<gradient:#1f2937:#374151>🗡 Schaduwmeester</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Ontmantelt plannen voordat vijanden reageren.</gradient>
+        - <gradient:#f97316:#fb923c>➤ Niveau IV • Sabotagefiliaal</gradient>
+    phantom_stealth:
+      name: <gradient:#14b8a6:#5eead4>👑 Spook van Stealth</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Eén met de duisternis zelf</gradient>"
-    shadowmaster:
-      name: "<gradient:#1f2937:#374151>🗡 Schaduwmeester</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Wordt een onaantastbare stedelijke mythe.</gradient>
+        - <gradient:#14b8a6:#5eead4>➤ Niveau V • Eindrang</gradient>
+    phantom_night:
+      name: <gradient:#9333ea:#e9d5ff>👑 Spook van de Nacht</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Opperheerser van alle schaduwen</gradient>"
-  # Cleric Tree-rangen
+        - <gradient:#6b7280:#9ca3af>✦ Is volledig eigenaar van het middernachtuur.</gradient>
+        - <gradient:#9333ea:#e9d5ff>➤ Niveau V • Eindrang</gradient>
+    phantom_sabotage:
+      name: <gradient:#ea580c:#fdba74>👑 Spook van Sabotage</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Beëindigt gevechten voordat ze zelfs maar beginnen.</gradient>
+        - <gradient:#ea580c:#fdba74>➤ Niveau V • Eindrang</gradient>
   cleric:
     acolyte:
-      name: "<gradient:#f59e0b:#fbbf24>✝ Acoliet</gradient>"
+      name: <gradient:#f59e0b:#fde68a>✝ Acoliet</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Toegewijde dienaar van het goddelijke</gradient>"
-    devotee:
-      name: "<gradient:#f59e0b:#fbbf24>✝ Liefhebber</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Trouwe volger van het goddelijke pad</gradient>"
-    priest:
-      name: "<gradient:#10b981:#34d399>✝ Priester</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Genezer en beschermer van de gelovigen</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Begint het heilige pad van dienstbaarheid.</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ Niveau I • Toewijding</gradient>
     healer:
-      name: "<gradient:#10b981:#34d399>✝ Genezer</gradient>"
+      name: <gradient:#10b981:#6ee7b7>✝ Genezer</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Meester van restauratieve kunsten</gradient>"
-    bishop:
-      name: "<gradient:#a855f7:#c084fc>✝ Bisschop</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Herstelt bondgenoten onder zware druk.</gradient>
+        - <gradient:#10b981:#6ee7b7>➤ Niveau II • Restauratie</gradient>
+    priest:
+      name: <gradient:#3b82f6:#93c5fd>✝ Priester</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Leider van de gelovigen</gradient>"
-    oracle:
-      name: "<gradient:#3b82f6:#60a5fa>✝ Orakel</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Begeleidt partijen met heilige discipline.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Niveau III • Kies uw oproep</gradient>
+    bishop_divine:
+      name: <gradient:#8b5cf6:#c4b5fd>⛪ Bisschop van Goddelijkheid</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Ziener van goddelijke visioenen</gradient>"
-    high_priest:
-      name: "<gradient:#ef4444:#f87171>✝ Hogepriester</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Kanalen sturen stralende autoriteit.</gradient>
+        - <gradient:#8b5cf6:#c4b5fd>➤ Niveau IV • Goddelijke tak</gradient>
+    bishop_light:
+      name: <gradient:#f59e0b:#fef08a>☀ Bisschop van het Licht</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Allerhoogste stem van het goddelijke</gradient>"
-  # Handelaarsboomrangen
+        - <gradient:#6b7280:#9ca3af>✦ Verblindt corruptie met heilige schittering.</gradient>
+        - <gradient:#f59e0b:#fef08a>➤ Niveau IV • Lichte tak</gradient>
+    bishop_soul:
+      name: <gradient:#06b6d4:#67e8f9>🕊 Bisschop van Zielen</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Bewaakt de drempel van leven en dood.</gradient>
+        - <gradient:#06b6d4:#67e8f9>➤ Niveau IV • Zieltak</gradient>
+    high_priest_divine:
+      name: <gradient:#7c3aed:#ddd6fe>👑 Hogepriester van de goddelijkheid</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Verklaart wonderen in het hart van de chaos.</gradient>
+        - <gradient:#7c3aed:#ddd6fe>➤ Niveau V • Eindrang</gradient>
+    high_priest_light:
+      name: <gradient:#f59e0b:#fef3c7>👑Hogepriester van het Licht</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Baadt bondgenoten in een onwrikbare dageraad.</gradient>
+        - <gradient:#f59e0b:#fef3c7>➤ Niveau V • Eindrang</gradient>
+    high_priest_soul:
+      name: <gradient:#0891b2:#a5f3fc>👑 Hogepriester van de Zielen</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Herdersgeesten die de doodsangst te boven gaan.</gradient>
+        - <gradient:#0891b2:#a5f3fc>➤ Niveau V • Eindrang</gradient>
   merchant:
     peddler:
-      name: "<gradient:#6b7280:#9ca3af>💰 Venter</gradient>"
+      name: <gradient:#6b7280:#9ca3af>💰 Venter</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Verkoop van waren op straat</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Begint met lef, charme en kleine transacties.</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ Niveau I • Straathandel</gradient>
     trader:
-      name: "<gradient:#3b82f6:#60a5fa>💰Handelaar</gradient>"
+      name: <gradient:#3b82f6:#93c5fd>💰Handelaar</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Gevestigde handelaar met connecties</gradient>"
-    vendor:
-      name: "<gradient:#10b981:#34d399>💰Verkoper</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Breidt routes en betrouwbare contacten uit.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Niveau II • Aanwezigheid op de markt</gradient>
+    broker:
+      name: <gradient:#f59e0b:#fde68a>💰 Makelaar</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Ervaren verkoper van goederen</gradient>"
-    artificer:
-      name: "<gradient:#f59e0b:#fbbf24>💰 Kunstmaker</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Sluit waardevolle deals met precisie.</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ Niveau III • Kies je rijk</gradient>
+    magnate_wealth:
+      name: <gradient:#10b981:#6ee7b7>📈 Magnaat van rijkdom</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Ambachtsman van fijne waren</gradient>"
-    alchemist:
-      name: "<gradient:#a855f7:#c084fc>💰Alchemist</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Bouwt puur kapitaal op in een ongeëvenaard tempo.</gradient>
+        - <gradient:#10b981:#6ee7b7>➤ Niveau IV • Vermogenstak</gradient>
+    magnate_market:
+      name: <gradient:#06b6d4:#67e8f9>🏛 Magnaat van markten</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Meester van drankjes en elixers</gradient>"
-    merchant:
-      name: "<gradient:#f59e0b:#fbbf24>💰Handelaar</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Organiseert vraag- en aanbodcycli.</gradient>
+        - <gradient:#06b6d4:#67e8f9>➤ Niveau IV • Markttak</gradient>
+    magnate_trade:
+      name: <gradient:#f97316:#fdba74>🚚 Handelsmagnaat</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Succesvolle ondernemer</gradient>"
-    master_crafter:
-      name: "<gradient:#ef4444:#f87171>💰 Meesterknutselaar</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Domineert karavaanbanen en logistiek.</gradient>
+        - <gradient:#f97316:#fdba74>➤ Niveau IV • Handelstak</gradient>
+    tycoon_wealth:
+      name: <gradient:#22c55e:#bbf7d0>👑 Tycoon van rijkdom</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>De hoogste ambachtsman van het rijk</gradient>"
-    merchant_prince:
-      name: "<gradient:#a855f7:#c084fc>💰 Koopman Prins</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Bezuinigingen met één enkele beslissing.</gradient>
+        - <gradient:#22c55e:#bbf7d0>➤ Niveau V • Eindrang</gradient>
+    tycoon_market:
+      name: <gradient:#0891b2:#a5f3fc>👑 Tycoon van markten</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Royalty van handel</gradient>"
-    tycoon:
-      name: "<gradient:#a855f7:#c084fc>💰 Tycoon</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Stelt prijzen vast die elk gilde moet respecteren.</gradient>
+        - <gradient:#0891b2:#a5f3fc>➤ Niveau V • Eindrang</gradient>
+    tycoon_trade:
+      name: <gradient:#ea580c:#fed7aa>👑 Handelstycoon</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Meester van handel en handel</gradient>"
-    guild_master:
-      name: "<gradient:#ef4444:#f87171>💰 Gildemeester</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Leider van het koopmansgilde</gradient>"
-
-# ============================================
-# BOUNTY LUISTERBERICHTEN
-# ============================================
+        - <gradient:#6b7280:#9ca3af>✦ Eigenaar van de wegen, havens en winsten.</gradient>
+        - <gradient:#ea580c:#fed7aa>➤ Niveau V • Eindrang</gradient>
 bounty_listener:
   bounty_active:
     warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>Er staat een premie op je hoofd!</gradient>"
@@ -557,81 +602,281 @@ rank_path_overview_ui:
     tier: "<gradient:#6b7280:#9ca3af>Niveau:</gradient> <gradient:#f59e0b:#fbbf24>%tier%</gradient>"
     weight: "<gradient:#6b7280:#9ca3af>Gewicht:</gradient> <gradient:#f59e0b:#fbbf24>%weight%</gradient>"
     ranger:
+      scout:
+        name: <gradient:#22c55e:#86efac>🏹 Verkenner van paden</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Leest hoefafdrukken en windverschuivingen.</gradient>
+          - <gradient:#10b981:#34d399>➤ Niveau I • Natuurinitiatief</gradient>
       hunter:
-        name: "<gradient:#7c3aed:#a78bfa>🏹Jager</gradient>"
+        name: <gradient:#16a34a:#4ade80>🏹 Jager van de wildernis</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Een beginnende tracker die de wegen van het wild leert</gradient>"
-      archer:
-        name: "<gradient:#10b981:#34d399>🎯 Boogschutter</gradient>"
-        lore:
-          - "<gradient:#6b7280:#9ca3af>Vaardig met de boog, dodelijk op afstand</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Besluipt prooien met geduldige precisie.</gradient>
+          - <gradient:#10b981:#34d399>➤ Niveau II • Wilde achtervolging</gradient>
       tracker:
-        name: "<gradient:#3b82f6:#60a5fa>🔍Tracker</gradient>"
+        name: <gradient:#0ea5e9:#38bdf8>🏹 Tracker van tekens</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Expert in het vinden en volgen van prooien</gradient>"
-      marksman:
-        name: "<gradient:#f59e0b:#fbbf24>🎯Schutter</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Volgt sporen die geen enkele storm kan uitwissen.</gradient>
+          - <gradient:#3b82f6:#60a5fa>➤ Niveau III • Padkeuze vooruit</gradient>
+      warden_primal:
+        name: <gradient:#14b8a6:#2dd4bf>🛡 Bewaker van de dieren</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Precisieschieter met dodelijke nauwkeurigheid</gradient>"
-      pathfinder:
-        name: "<gradient:#a855f7:#c084fc>🗺 Pathfinder</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Banden met topwezens van het rijk.</gradient>
+          - <gradient:#14b8a6:#2dd4bf>➤ Niveau IV • Primaire tak</gradient>
+      warden_storm:
+        name: <gradient:#2563eb:#60a5fa>⚡ Bewaker van Stormen</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Meesterverkenner van onbekende landen</gradient>"
-      sniper:
-        name: "<gradient:#ef4444:#f87171>🎯Sluipschutter</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Branden door onweer en regen.</gradient>
+          - <gradient:#2563eb:#60a5fa>➤ Niveau IV • Stormtak</gradient>
+      warden_wild:
+        name: <gradient:#16a34a:#84cc16>🌿 Bewaker van het Wild</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Elite scherpschutter, één schot één moord</gradient>"
-      forest_lord:
-        name: "<gradient:#10b981:#34d399>🌲 Bosheer</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Bewaakt heilige grenzen en verborgen open plekken.</gradient>
+          - <gradient:#16a34a:#84cc16>➤ Niveau IV • Wilde tak</gradient>
+      beastmaster_primal:
+        name: <gradient:#7c3aed:#c084fc>👑 Beestmeester Primal</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Meester van de wildernis, één met de natuur</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Voer het bevel over legendarische beesten zonder angst.</gradient>
+          - <gradient:#7c3aed:#c084fc>➤ Niveau V • Eindrang</gradient>
+      beastmaster_storm:
+        name: <gradient:#1d4ed8:#3b82f6>👑 Beestmeester Storm</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Elke pijl begeleidt je meedogenloze salvo.</gradient>
+          - <gradient:#1d4ed8:#3b82f6>➤ Niveau V • Eindrang</gradient>
+      beastmaster_wild:
+        name: <gradient:#15803d:#22c55e>👑 Beestmeester Wild</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ De natuur zelf staat op om jouw oproep te beantwoorden.</gradient>
+          - <gradient:#15803d:#22c55e>➤ Niveau V • Eindrang</gradient>
     warrior:
       recruit:
-        name: "<gradient:#6b7280:#9ca3af>⚔ Rekruteer</gradient>"
+        name: <gradient:#6b7280:#9ca3af>⚔ Rekruteer</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Een nieuwe krijger die aan hun reis begint</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Een fris mes met ongeteste vastberadenheid.</gradient>
+          - <gradient:#94a3b8:#cbd5e1>➤ Niveau I • Oefenterreinen</gradient>
       soldier:
-        name: "<gradient:#3b82f6:#60a5fa>⚔ Soldaat</gradient>"
+        name: <gradient:#3b82f6:#60a5fa>⚔ Soldaat</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Getraind in de kunst van het vechten</gradient>"
-      knight:
-        name: "<gradient:#f59e0b:#fbbf24>⚔ Ridder</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Gehard door boren en eerstelijnswerk.</gradient>
+          - <gradient:#3b82f6:#60a5fa>➤ Niveau II • Velddiscipline</gradient>
+      veteran:
+        name: <gradient:#f59e0b:#fbbf24>⚔ Veteraan</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Eervolle krijger van het rijk</gradient>"
-      champion:
-        name: "<gradient:#a855f7:#c084fc>⚔ Kampioen</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Gevechtslittekens markeren je verdiende wijsheid.</gradient>
+          - <gradient:#f59e0b:#fbbf24>➤ Niveau III • Kies je pad</gradient>
+      berserker:
+        name: <gradient:#ef4444:#f87171>🔥Berserker</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Legendarische vechter, gevreesd door iedereen</gradient>"
-      warlord:
-        name: "<gradient:#ef4444:#f87171>⚔ Krijgsheer</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Ruilt verdediging in voor verwoestende aanval.</gradient>
+          - <gradient:#ef4444:#f87171>➤ Niveau IV • Furytak</gradient>
+      guardian:
+        name: <gradient:#2563eb:#60a5fa>🛡 Bewaker</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Oorlogsmeester, bevelhebber van legers</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Staat standvastig waar anderen zouden breken.</gradient>
+          - <gradient:#2563eb:#60a5fa>➤ Niveau IV • Schildtak</gradient>
+      gladiator:
+        name: <gradient:#a855f7:#c084fc>🏟 Gladiator</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Beheerst evenwichtige arenaoorlogvoering.</gradient>
+          - <gradient:#a855f7:#c084fc>➤ Niveau IV • Arenafiliaal</gradient>
+      warlord_fury:
+        name: <gradient:#dc2626:#fb7185>👑 Krijgsheer van woede</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Een niet te stoppen motor van vernietiging.</gradient>
+          - <gradient:#dc2626:#fb7185>➤ Niveau V • Eindrang</gradient>
+      warlord_shield:
+        name: <gradient:#1d4ed8:#60a5fa>👑 Krijgsheer van het Schild</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ De laatste muur tussen leven en ondergang.</gradient>
+          - <gradient:#1d4ed8:#60a5fa>➤ Niveau V • Eindrang</gradient>
+      warlord_arena:
+        name: <gradient:#7c3aed:#c084fc>👑 Krijgsheer van de Arena</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Gekroond tot kampioen van elk Colosseum.</gradient>
+          - <gradient:#7c3aed:#c084fc>➤ Niveau V • Eindrang</gradient>
     mage:
       apprentice:
-        name: "<gradient:#a855f7:#c084fc>✨ Leerling</gradient>"
+        name: <gradient:#a855f7:#d8b4fe>✨ Leerling</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Het leren van de basisprincipes van magie</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Vonken van mysterieuze kracht ontwaken.</gradient>
+          - <gradient:#a855f7:#d8b4fe>➤ Niveau I • Arcane Foundations</gradient>
       adept:
-        name: "<gradient:#3b82f6:#60a5fa>✨ Adept</gradient>"
+        name: <gradient:#3b82f6:#93c5fd>✨ Adept</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Groeien in magische kracht</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Weeft gecontroleerde en gerichte spreuken.</gradient>
+          - <gradient:#3b82f6:#93c5fd>➤ Niveau II • Arcane praktijk</gradient>
       wizard:
-        name: "<gradient:#f59e0b:#fbbf24>✨ Tovenaar</gradient>"
+        name: <gradient:#f59e0b:#fde68a>✨ Tovenaar</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Meester van geheimzinnige kunsten</gradient>"
-      archmage:
-        name: "<gradient:#ef4444:#f87171>✨Archmagiër</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Bestuurt complexe magische patronen.</gradient>
+          - <gradient:#f59e0b:#fde68a>➤ Niveau III • Kies uw leerstelling</gradient>
+      sorcerer_arcane:
+        name: <gradient:#8b5cf6:#c4b5fd>🔮 Tovenaar van Arcana</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Oppermeester van alle magie</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Verfijnt brute kracht tot elegante kracht.</gradient>
+          - <gradient:#8b5cf6:#c4b5fd>➤ Niveau IV • Arcane tak</gradient>
+      sorcerer_spell:
+        name: <gradient:#d946ef:#f0abfc>📜 Tovenaar van spreuken</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Vergroot de grimoire-controle en precisie.</gradient>
+          - <gradient:#d946ef:#f0abfc>➤ Niveau IV • Spreukentak</gradient>
+      sorcerer_void:
+        name: <gradient:#1d4ed8:#60a5fa>🌌 Tovenaar van de Leegte</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Buigt energieën uit de afgrond naar jouw wil.</gradient>
+          - <gradient:#1d4ed8:#60a5fa>➤ Niveau IV • Ongeldige tak</gradient>
+      archmage_arcane:
+        name: <gradient:#7c3aed:#c084fc>👑 Aartsmagiër van Arcana</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Opperste architect van pure geheimzinnige macht.</gradient>
+          - <gradient:#7c3aed:#c084fc>➤ Niveau V • Eindrang</gradient>
+      archmage_spell:
+        name: <gradient:#d946ef:#f5d0fe>👑 Aartsmagiër van spreuken</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Elke bezwering antwoordt onmiddellijk.</gradient>
+          - <gradient:#d946ef:#f5d0fe>➤ Niveau V • Eindrang</gradient>
+      archmage_void:
+        name: <gradient:#1e3a8a:#60a5fa>👑 Aartsmagiër van de Leegte</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Heerst over de grenzen tussen werelden.</gradient>
+          - <gradient:#1e3a8a:#60a5fa>➤ Niveau V • Eindrang</gradient>
     rogue:
       pickpocket:
-        name: "<gradient:#6b7280:#9ca3af>🗡 Zakkenroller</gradient>"
+        name: <gradient:#6b7280:#9ca3af>🗡 Zakkenroller</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Snelle vingers, snellere ontsnapping</gradient>"
-
-# ============================================
-# VERPLICHT VERTALINGEN
-# ============================================
+          - <gradient:#6b7280:#9ca3af>✦ Leert timing, misleiding en snelheid.</gradient>
+          - <gradient:#94a3b8:#cbd5e1>➤ Niveau I • Straatkunst</gradient>
+      thief:
+        name: <gradient:#3b82f6:#93c5fd>🗡 Dief</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Glipt door sluizen en uitkijklijnen.</gradient>
+          - <gradient:#3b82f6:#93c5fd>➤ Niveau II • Stille toegang</gradient>
+      assassin:
+        name: <gradient:#ef4444:#f87171>🗡 Moordenaar</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ slaat één keer toe en verdwijnt spoorloos.</gradient>
+          - <gradient:#ef4444:#f87171>➤ Niveau III • Kies uw methode</gradient>
+      shadow_stealth:
+        name: <gradient:#0ea5e9:#67e8f9>🌒 Schaduw van stealth</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Beheers bewegingen die geen enkel oog kan volgen.</gradient>
+          - <gradient:#0ea5e9:#67e8f9>➤ Niveau IV • Stealth-filiaal</gradient>
+      shadow_night:
+        name: <gradient:#7c3aed:#c4b5fd>🌘 Schaduw van de nacht</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Verandert duisternis in dodelijk voordeel.</gradient>
+          - <gradient:#7c3aed:#c4b5fd>➤ Niveau IV • Nachttak</gradient>
+      shadow_sabotage:
+        name: <gradient:#f97316:#fb923c>💣 Schaduw van sabotage</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Ontmantelt plannen voordat vijanden reageren.</gradient>
+          - <gradient:#f97316:#fb923c>➤ Niveau IV • Sabotagefiliaal</gradient>
+      phantom_stealth:
+        name: <gradient:#14b8a6:#5eead4>👑 Spook van Stealth</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Wordt een onaantastbare stedelijke mythe.</gradient>
+          - <gradient:#14b8a6:#5eead4>➤ Niveau V • Eindrang</gradient>
+      phantom_night:
+        name: <gradient:#9333ea:#e9d5ff>👑 Spook van de Nacht</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Is volledig eigenaar van het middernachtuur.</gradient>
+          - <gradient:#9333ea:#e9d5ff>➤ Niveau V • Eindrang</gradient>
+      phantom_sabotage:
+        name: <gradient:#ea580c:#fdba74>👑 Spook van Sabotage</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Beëindigt gevechten voordat ze zelfs maar beginnen.</gradient>
+          - <gradient:#ea580c:#fdba74>➤ Niveau V • Eindrang</gradient>
+    cleric:
+      acolyte:
+        name: <gradient:#f59e0b:#fde68a>✝ Acoliet</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Begint het heilige pad van dienstbaarheid.</gradient>
+          - <gradient:#f59e0b:#fde68a>➤ Niveau I • Toewijding</gradient>
+      healer:
+        name: <gradient:#10b981:#6ee7b7>✝ Genezer</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Herstelt bondgenoten onder zware druk.</gradient>
+          - <gradient:#10b981:#6ee7b7>➤ Niveau II • Restauratie</gradient>
+      priest:
+        name: <gradient:#3b82f6:#93c5fd>✝ Priester</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Begeleidt partijen met heilige discipline.</gradient>
+          - <gradient:#3b82f6:#93c5fd>➤ Niveau III • Kies uw oproep</gradient>
+      bishop_divine:
+        name: <gradient:#8b5cf6:#c4b5fd>⛪ Bisschop van Goddelijkheid</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Kanalen sturen stralende autoriteit.</gradient>
+          - <gradient:#8b5cf6:#c4b5fd>➤ Niveau IV • Goddelijke tak</gradient>
+      bishop_light:
+        name: <gradient:#f59e0b:#fef08a>☀ Bisschop van het Licht</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Verblindt corruptie met heilige schittering.</gradient>
+          - <gradient:#f59e0b:#fef08a>➤ Niveau IV • Lichte tak</gradient>
+      bishop_soul:
+        name: <gradient:#06b6d4:#67e8f9>🕊 Bisschop van Zielen</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Bewaakt de drempel van leven en dood.</gradient>
+          - <gradient:#06b6d4:#67e8f9>➤ Niveau IV • Zieltak</gradient>
+      high_priest_divine:
+        name: <gradient:#7c3aed:#ddd6fe>👑 Hogepriester van de goddelijkheid</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Verklaart wonderen in het hart van de chaos.</gradient>
+          - <gradient:#7c3aed:#ddd6fe>➤ Niveau V • Eindrang</gradient>
+      high_priest_light:
+        name: <gradient:#f59e0b:#fef3c7>👑Hogepriester van het Licht</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Baadt bondgenoten in een onwrikbare dageraad.</gradient>
+          - <gradient:#f59e0b:#fef3c7>➤ Niveau V • Eindrang</gradient>
+      high_priest_soul:
+        name: <gradient:#0891b2:#a5f3fc>👑 Hogepriester van de Zielen</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Herdersgeesten die de doodsangst te boven gaan.</gradient>
+          - <gradient:#0891b2:#a5f3fc>➤ Niveau V • Eindrang</gradient>
+    merchant:
+      peddler:
+        name: <gradient:#6b7280:#9ca3af>💰 Venter</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Begint met lef, charme en kleine transacties.</gradient>
+          - <gradient:#94a3b8:#cbd5e1>➤ Niveau I • Straathandel</gradient>
+      trader:
+        name: <gradient:#3b82f6:#93c5fd>💰Handelaar</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Breidt routes en betrouwbare contacten uit.</gradient>
+          - <gradient:#3b82f6:#93c5fd>➤ Niveau II • Aanwezigheid op de markt</gradient>
+      broker:
+        name: <gradient:#f59e0b:#fde68a>💰 Makelaar</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Sluit waardevolle deals met precisie.</gradient>
+          - <gradient:#f59e0b:#fde68a>➤ Niveau III • Kies je rijk</gradient>
+      magnate_wealth:
+        name: <gradient:#10b981:#6ee7b7>📈 Magnaat van rijkdom</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Bouwt puur kapitaal op in een ongeëvenaard tempo.</gradient>
+          - <gradient:#10b981:#6ee7b7>➤ Niveau IV • Vermogenstak</gradient>
+      magnate_market:
+        name: <gradient:#06b6d4:#67e8f9>🏛 Magnaat van markten</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Organiseert vraag- en aanbodcycli.</gradient>
+          - <gradient:#06b6d4:#67e8f9>➤ Niveau IV • Markttak</gradient>
+      magnate_trade:
+        name: <gradient:#f97316:#fdba74>🚚 Handelsmagnaat</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Domineert karavaanbanen en logistiek.</gradient>
+          - <gradient:#f97316:#fdba74>➤ Niveau IV • Handelstak</gradient>
+      tycoon_wealth:
+        name: <gradient:#22c55e:#bbf7d0>👑 Tycoon van rijkdom</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Bezuinigingen met één enkele beslissing.</gradient>
+          - <gradient:#22c55e:#bbf7d0>➤ Niveau V • Eindrang</gradient>
+      tycoon_market:
+        name: <gradient:#0891b2:#a5f3fc>👑 Tycoon van markten</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Stelt prijzen vast die elk gilde moet respecteren.</gradient>
+          - <gradient:#0891b2:#a5f3fc>➤ Niveau V • Eindrang</gradient>
+      tycoon_trade:
+        name: <gradient:#ea580c:#fed7aa>👑 Handelstycoon</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Eigenaar van de wegen, havens en winsten.</gradient>
+          - <gradient:#ea580c:#fed7aa>➤ Niveau V • Eindrang</gradient>
 requirement:
 
   # ============================================
@@ -670,7 +915,7 @@ requirement:
     money: "Geld"
     dollars: "Dollars"
     credits: "Kredieten"
-  
+
   # Sjablonen voor taakvoorbeelden
   task:
     entry: "<gradient:#6b7280:#9ca3af>%prefix% %task_name%</gradient>"
@@ -1287,6 +1532,7 @@ admin_skills_ui:
       missing: "<gradient:#ef4444:#f87171>Ontbrekend</gradient>"
     detected:
       name: "<gradient:#22c55e:#86efac>✅ %plugin_name%</gradient>"
+      click_action: "<gradient:#3b82f6:#60a5fa>[>] Click to inject themed skill requirements</gradient>"
     missing:
       name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
     lore:
@@ -1301,6 +1547,11 @@ admin_skills_ui:
 # ============================================
 # ADMIN JOBS INTEGRATION UI
 # ============================================
+  messages:
+    inject_success: "<gradient:#22c55e:#86efac>[+] Injected %perk_count% perk and %rank_count% rank skill requirements for %plugin_name%.</gradient>"
+    inject_no_changes: "<gradient:#3b82f6:#60a5fa>[i] No skill requirement changes were needed for %plugin_name%.</gradient>"
+    plugin_missing: "<gradient:#ef4444:#f87171>[!] %plugin_name% is not detected, so no requirements were injected.</gradient>"
+    inject_failed: "<gradient:#ef4444:#f87171>[x] Failed to inject skill requirements for %plugin_name%.</gradient>"
 admin_jobs_ui:
   title: "<gradient:#f59e0b:#fbbf24>⛏ Taakintegraties</gradient>"
   summary:
@@ -1315,6 +1566,7 @@ admin_jobs_ui:
       missing: "<gradient:#ef4444:#f87171>Ontbrekend</gradient>"
     detected:
       name: "<gradient:#22c55e:#86efac>✅ %plugin_name%</gradient>"
+      click_action: "<gradient:#3b82f6:#60a5fa>[>] Klik om thematische functievereisten in te voegen</gradient>"
     missing:
       name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
     lore:
@@ -1329,6 +1581,11 @@ admin_jobs_ui:
 # ============================================
 # ADMIN CURRENCY OVERVIEW UI
 # ============================================
+  messages:
+    inject_success: "<gradient:#22c55e:#86efac>[+] Geïnjecteerd %perk_count% voordeel en %rank_count% rangschikken functievereisten voor %plugin_name%.</gradient>"
+    inject_no_changes: "<gradient:#3b82f6:#60a5fa>[i] Er waren geen wijzigingen in de functievereisten nodig voor %plugin_name%.</gradient>"
+    plugin_missing: "<gradient:#ef4444:#f87171>[!] %plugin_name% wordt niet gedetecteerd, dus er zijn geen vereisten geïnjecteerd.</gradient>"
+    inject_failed: "<gradient:#ef4444:#f87171>[x] Het is niet gelukt om taakvereisten voor %plugin_name% in te voeren.</gradient>"
 admin_currency_ui:
   title: "<gradient:#10b981:#34d399>💱 Valutabeheerder</gradient>"
   currency_entry:
@@ -1364,6 +1621,16 @@ admin_currency_ui:
     lore:
       - "<gradient:#6b7280:#9ca3af>RDQ kan de valuta's Vault of JExEconomy niet detecteren</gradient>"
       - "<gradient:#6b7280:#9ca3af>Installeer of schakel eerst een economy-provider in</gradient>"
+    jex_detected:
+      name: "<gradient:#3b82f6:#60a5fa>[i] JExEconomy Detected</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>RDQ detected JExEconomy but no currencies exist yet</gradient>"
+        - "<gradient:#10b981:#34d399>Use the top button to create %currency_id%</gradient>"
+    vault_detected:
+      name: "<gradient:#3b82f6:#60a5fa>[i] Vault Detected</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Vault is available but no currency entries were listed</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Check your economy provider configuration</gradient>"
   decoration:
     border:
       name: " "
@@ -1683,7 +1950,7 @@ rank_requirements_journey_ui:
         - "<gradient:#6b7280:#9ca3af>Voor deze rang zijn geen beloningen geconfigureerd</gradient>"
       type_label: "<gray>Type:</gray> <yellow>%type%</yellow>"
       value_label: "<gray>Waarde:</gray> <gold>%value%</gold>"
-    
+
     # Beschrijvingen van beloningstypen
     currency:
       description: "<gradient:#fbbf24:#fcd34d>Ontvang valutabeloningen</gradient>"
@@ -1705,7 +1972,6 @@ rank_requirements_journey_ui:
       description: "<gradient:#f97316:#fb923c>Ontgrendel deeltjeseffecten</gradient>"
     vanishing_chest:
       description: "<gradient:#14b8a6:#2dd4bf>Ontvang een verdwijnende kist</gradient>"
-    
     more: "<gradient:#fbbf24:#fcd34d>+%count% meer beloningen...</gradient>"
 
   rewards:
@@ -1734,10 +2000,9 @@ reward:
       - "<gradient:#6b7280:#9ca3af>Voor deze rang zijn geen beloningen geconfigureerd</gradient>"
     type_label: "<gray>Type:</gray> <yellow>%type%</yellow>"
     value_label: "<gray>Waarde:</gray> <gold>%value%</gold>"
-  
   perk:
     unlocked: "<gradient:#10b981:#34d399>✦</gradient> <gradient:#6b7280:#9ca3af>Je hebt het voordeel ontgrendeld:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
-  
+
   # Beschrijvingen van beloningstypen
   currency:
     description: "<gradient:#fbbf24:#fcd34d>Ontvang valutabeloningen</gradient>"
@@ -1759,7 +2024,6 @@ reward:
     description: "<gradient:#f97316:#fb923c>Ontgrendel deeltjeseffecten</gradient>"
   vanishing_chest:
     description: "<gradient:#14b8a6:#2dd4bf>Ontvang een verdwijnende kist</gradient>"
-  
   more: "<gradient:#fbbf24:#fcd34d>+%count% meer beloningen...</gradient>"
 
 rewards:
@@ -1815,7 +2079,7 @@ perk:
   fish_xp:
     name: "<gradient:#10b981:#34d399>XP-boost voor vissen</gradient>"
     description: "<gradient:#6b7280:#9ca3af>Verdien bonus-XP bij het vangen van vis</gradient>"
-  
+
   # Drankvoordelen
   potion_enhance:
     name: "<gradient:#a855f7:#c084fc>Drankversterker</gradient>"
@@ -1826,7 +2090,7 @@ perk:
   potion_save:
     name: "<gradient:#10b981:#34d399>Terugbetaling van drankjes</gradient>"
     description: "<gradient:#6b7280:#9ca3af>Kans om je drankje terug te krijgen nadat je het hebt gedronken</gradient>"
-  
+
   # Perk-berichten
   messages:
     # Ontgrendelen/Enable/Disable
@@ -1843,36 +2107,33 @@ perk:
     disable:
       success: "<gradient:#f59e0b:#fbbf24>Voordeel voor gehandicapten:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
       failed: "<gradient:#ef4444:#f87171>Kan voordeel niet uitschakelen:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
-    
+
     # Afkoelen
     cooldown:
       active: "<gradient:#ef4444:#f87171>Dit voordeel heeft een cooldown-periode</gradient> <gradient:#f59e0b:#fbbf24>%time%</gradient>"
       ready: "<gradient:#10b981:#34d399>Perk is klaar voor gebruik!</gradient>"
-    
+
     # Effecttriggers
     potion_enhanced: "<gradient:#a855f7:#c084fc>✨ Drankje verbeterd!</gradient> <gradient:#6b7280:#9ca3af>Effecten versterkt</gradient>"
     potion_extended: "<gradient:#f59e0b:#fbbf24>⏱ Duur van de toverdrank verlengd!</gradient> <gradient:#6b7280:#9ca3af>Gaat langer mee</gradient>"
     potion_saved: "<gradient:#10b981:#34d399>💾 Drankje opgeslagen!</gradient> <gradient:#6b7280:#9ca3af>Terug naar de inventaris</gradient>"
     fishing_active: "<gradient:#3b82f6:#60a5fa>🎣 Sneller vissen actief!</gradient>"
     fishing_xp: "<gradient:#10b981:#34d399>+%xp% Vissen XP!</gradient>"
-  
+
   # UI-elementen
   ui:
     header:
       type_label: "<gray>Type: <white>%type%</white></gray>"
       category_label: "<gray>Categorie: <white>%category%</white></gray>"
-    
     requirements:
       no_requirements: "<green>Geen vereisten</green>"
       no_requirements_lore: "<gray>Voor dit voordeel gelden geen ontgrendelingsvereisten</gray>"
-    
     rewards:
       title: "<gold>Ontgrendel beloning</gold>"
       no_rewards: "<gray>Geen ontgrendelbeloningen</gray>"
       no_rewards_lore: "<gray>Dit voordeel heeft geen ontgrendelingsbeloningen</gray>"
       type_label: "<gray>Type: <white>%type%</white></gray>"
       value_label: "<gray>Waarde: <gold>%value%</gold></gray>"
-    
     status:
       title: "<white>Perk-status</white>"
       locked: "<red>✖ Vergrendeld</red>"
@@ -1883,7 +2144,6 @@ perk:
       enabled_count: "<gray>Ingeschakelde voordelen: <white>%count%/%max%</white></gray>"
       cooldown_label: "<gray>Afkoeling: <gold>%time%</gold></gray>"
       activations_label: "<gray>Activeringen: <white>%count%</white></gray>"
-    
     buttons:
       unlock:
         title: "<white>Ontgrendel Perk</white>"
@@ -1895,7 +2155,7 @@ perk:
       disable:
         title: "<white>Schakel voordeel uit</white>"
         hint: "<yellow>Klik om dit voordeel uit te schakelen</yellow>"
-  
+
   # Bestaande voordelen (ter referentie - voeg toe als deze ontbreken)
   fly:
     name: "<gradient:#3b82f6:#60a5fa>Vlucht</gradient>"

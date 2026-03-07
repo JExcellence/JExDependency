@@ -82,236 +82,281 @@ rank:
         - "<gradient:#6b7280:#9ca3af>No rank selected</gradient>"
   # Ranger Tree Ranks
   ranger:
+    scout:
+      name: "<gradient:#22c55e:#86efac>🏹 Scout of Trails</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Reads hoofprints and wind shifts.</gradient>"
+        - "<gradient:#10b981:#34d399>➤ Tier I • Nature Initiate</gradient>"
     hunter:
-      name: "<gradient:#7c3aed:#a78bfa>🏹 Hunter</gradient>"
+      name: "<gradient:#16a34a:#4ade80>🏹 Hunter of the Wilds</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>A novice tracker learning the ways of the wild</gradient>"
-    archer:
-      name: "<gradient:#10b981:#34d399>🎯 Archer</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Skilled with the bow, deadly at range</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Stalks prey with patient precision.</gradient>"
+        - "<gradient:#10b981:#34d399>➤ Tier II • Wild Pursuit</gradient>"
     tracker:
-      name: "<gradient:#3b82f6:#60a5fa>🔍 Tracker</gradient>"
+      name: "<gradient:#0ea5e9:#38bdf8>🏹 Tracker of Signs</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Expert at finding and following prey</gradient>"
-    marksman:
-      name: "<gradient:#f59e0b:#fbbf24>🎯 Marksman</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Follows trails no storm can erase.</gradient>"
+        - "<gradient:#3b82f6:#60a5fa>➤ Tier III • Path Choice Ahead</gradient>"
+    warden_primal:
+      name: "<gradient:#14b8a6:#2dd4bf>🛡 Warden of Beasts</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Precision shooter with deadly accuracy</gradient>"
-    pathfinder:
-      name: "<gradient:#a855f7:#c084fc>🗺 Pathfinder</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Bonds with apex creatures of the realm.</gradient>"
+        - "<gradient:#14b8a6:#2dd4bf>➤ Tier IV • Primal Branch</gradient>"
+    warden_storm:
+      name: "<gradient:#2563eb:#60a5fa>⚡ Warden of Storms</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Master explorer of uncharted lands</gradient>"
-    sniper:
-      name: "<gradient:#ef4444:#f87171>🎯 Sniper</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Fires true through thunder and rain.</gradient>"
+        - "<gradient:#2563eb:#60a5fa>➤ Tier IV • Storm Branch</gradient>"
+    warden_wild:
+      name: "<gradient:#16a34a:#84cc16>🌿 Warden of the Wild</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Elite marksman, one shot one kill</gradient>"
-    forest_lord:
-      name: "<gradient:#10b981:#34d399>🌲 Forest Lord</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Guards sacred frontiers and hidden glades.</gradient>"
+        - "<gradient:#16a34a:#84cc16>➤ Tier IV • Wild Branch</gradient>"
+    beastmaster_primal:
+      name: "<gradient:#7c3aed:#c084fc>👑 Beastmaster Primal</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Master of the wilderness, one with nature</gradient>"
-  # Warrior Tree Ranks
+        - "<gradient:#6b7280:#9ca3af>✦ Commands legendary beasts without fear.</gradient>"
+        - "<gradient:#7c3aed:#c084fc>➤ Tier V • Final Rank</gradient>"
+    beastmaster_storm:
+      name: "<gradient:#1d4ed8:#3b82f6>👑 Beastmaster Storm</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Every bolt guides your relentless volley.</gradient>"
+        - "<gradient:#1d4ed8:#3b82f6>➤ Tier V • Final Rank</gradient>"
+    beastmaster_wild:
+      name: "<gradient:#15803d:#22c55e>👑 Beastmaster Wild</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Nature itself rises to answer your call.</gradient>"
+        - "<gradient:#15803d:#22c55e>➤ Tier V • Final Rank</gradient>"
   warrior:
     recruit:
-      name: "<gradient:#6b7280:#9ca3af>Recruit</gradient>"
+      name: "<gradient:#6b7280:#9ca3af>⚔ Recruit</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>A new warrior beginning their journey</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Learn the basics of combat</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ A fresh blade with untested resolve.</gradient>"
+        - "<gradient:#94a3b8:#cbd5e1>➤ Tier I • Training Grounds</gradient>"
     soldier:
-      name: "<gradient:#3b82f6:#60a5fa>Soldier</gradient>"
+      name: "<gradient:#3b82f6:#60a5fa>⚔ Soldier</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Trained in the art of combat</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Ready for battle</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Hardened by drills and front-line duty.</gradient>"
+        - "<gradient:#3b82f6:#60a5fa>➤ Tier II • Field Discipline</gradient>"
     veteran:
-      name: "<gradient:#f59e0b:#fbbf24>Veteran</gradient>"
+      name: "<gradient:#f59e0b:#fbbf24>⚔ Veteran</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Battle-hardened warrior</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Choose your specialization path</gradient>"
-    # Specialization Branch 1: Berserker (Offensive)
+        - "<gradient:#6b7280:#9ca3af>✦ Battle scars mark your earned wisdom.</gradient>"
+        - "<gradient:#f59e0b:#fbbf24>➤ Tier III • Choose Your Path</gradient>"
     berserker:
-      name: "<gradient:#ef4444:#f87171>Berserker</gradient>"
+      name: "<gradient:#ef4444:#f87171>🔥 Berserker</gradient>"
       lore:
-        - "<gradient:#ef4444:#f87171>Path of Fury</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Unleash devastating attacks</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Sacrifice defence for raw power</gradient>"
-    # Specialization Branch 2: Guardian (Defensive)
+        - "<gradient:#6b7280:#9ca3af>✦ Trades defense for devastating offense.</gradient>"
+        - "<gradient:#ef4444:#f87171>➤ Tier IV • Fury Branch</gradient>"
     guardian:
-      name: "<gradient:#3b82f6:#60a5fa>Guardian</gradient>"
+      name: "<gradient:#2563eb:#60a5fa>🛡 Guardian</gradient>"
       lore:
-        - "<gradient:#3b82f6:#60a5fa>Path of Protection</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Become an unbreakable shield</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Protect your allies at all costs</gradient>"
-    # Specialization Branch 3: Gladiator (Balanced)
+        - "<gradient:#6b7280:#9ca3af>✦ Stands firm where others would break.</gradient>"
+        - "<gradient:#2563eb:#60a5fa>➤ Tier IV • Shield Branch</gradient>"
     gladiator:
-      name: "<gradient:#a855f7:#c084fc>Gladiator</gradient>"
+      name: "<gradient:#a855f7:#c084fc>🏟 Gladiator</gradient>"
       lore:
-        - "<gradient:#a855f7:#c084fc>Path of Glory</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Master of arena combat</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Balance offence and defence</gradient>"
-    # Final Ranks
+        - "<gradient:#6b7280:#9ca3af>✦ Masters balanced arena warfare.</gradient>"
+        - "<gradient:#a855f7:#c084fc>➤ Tier IV • Arena Branch</gradient>"
     warlord_fury:
-      name: "<gradient:#ef4444:#f87171>Warlord of Fury</gradient>"
+      name: "<gradient:#dc2626:#fb7185>👑 Warlord of Fury</gradient>"
       lore:
-        - "<gradient:#ef4444:#f87171>Ultimate Berserker</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Unstoppable force of destruction</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Fear incarnate on the battlefield</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ An unstoppable engine of destruction.</gradient>"
+        - "<gradient:#dc2626:#fb7185>➤ Tier V • Final Rank</gradient>"
     warlord_shield:
-      name: "<gradient:#3b82f6:#60a5fa>Warlord of the Shield</gradient>"
+      name: "<gradient:#1d4ed8:#60a5fa>👑 Warlord of the Shield</gradient>"
       lore:
-        - "<gradient:#3b82f6:#60a5fa>Ultimate Guardian</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Immovable object, eternal protector</gradient>"
-        - "<gradient:#6b7280:#9ca3af>None shall pass while you stand</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ The final wall between life and ruin.</gradient>"
+        - "<gradient:#1d4ed8:#60a5fa>➤ Tier V • Final Rank</gradient>"
     warlord_arena:
-      name: "<gradient:#a855f7:#c084fc>Warlord of the Arena</gradient>"
+      name: "<gradient:#7c3aed:#c084fc>👑 Warlord of the Arena</gradient>"
       lore:
-        - "<gradient:#a855f7:#c084fc>Ultimate Gladiator</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Champion of champions</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Legend of the arena</gradient>"
-    # Legacy ranks (for backwards compatibility)
-    knight:
-      name: "<gradient:#f59e0b:#fbbf24>Knight</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Honorable warrior of the realm</gradient>"
-    champion:
-      name: "<gradient:#a855f7:#c084fc>Champion</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Legendary fighter, feared by all</gradient>"
-    warlord:
-      name: "<gradient:#ef4444:#f87171>Warlord</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Master of war, commander of armies</gradient>"
-  # Mage Tree Ranks
+        - "<gradient:#6b7280:#9ca3af>✦ Crowned champion of every coliseum.</gradient>"
+        - "<gradient:#7c3aed:#c084fc>➤ Tier V • Final Rank</gradient>"
   mage:
     apprentice:
-      name: "<gradient:#a855f7:#c084fc>✨ Apprentice</gradient>"
+      name: "<gradient:#a855f7:#d8b4fe>✨ Apprentice</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Learning the basics of magic</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Sparks of arcane power awaken.</gradient>"
+        - "<gradient:#a855f7:#d8b4fe>➤ Tier I • Arcane Foundations</gradient>"
     adept:
-      name: "<gradient:#3b82f6:#60a5fa>✨ Adept</gradient>"
+      name: "<gradient:#3b82f6:#93c5fd>✨ Adept</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Growing in magical power</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Weaves controlled and focused spells.</gradient>"
+        - "<gradient:#3b82f6:#93c5fd>➤ Tier II • Arcane Practice</gradient>"
     wizard:
-      name: "<gradient:#f59e0b:#fbbf24>✨ Wizard</gradient>"
+      name: "<gradient:#f59e0b:#fde68a>✨ Wizard</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Master of arcane arts</gradient>"
-    archmage:
-      name: "<gradient:#ef4444:#f87171>✨ Archmage</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Commands complex patterns of magic.</gradient>"
+        - "<gradient:#f59e0b:#fde68a>➤ Tier III • Choose Your Doctrine</gradient>"
+    sorcerer_arcane:
+      name: "<gradient:#8b5cf6:#c4b5fd>🔮 Sorcerer of Arcana</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Supreme master of all magic</gradient>"
-  # Rogue Tree Ranks
+        - "<gradient:#6b7280:#9ca3af>✦ Refines raw power into elegant force.</gradient>"
+        - "<gradient:#8b5cf6:#c4b5fd>➤ Tier IV • Arcane Branch</gradient>"
+    sorcerer_spell:
+      name: "<gradient:#d946ef:#f0abfc>📜 Sorcerer of Spells</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Expands grimoire control and precision.</gradient>"
+        - "<gradient:#d946ef:#f0abfc>➤ Tier IV • Spell Branch</gradient>"
+    sorcerer_void:
+      name: "<gradient:#1d4ed8:#60a5fa>🌌 Sorcerer of the Void</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Bends abyssal energies to your will.</gradient>"
+        - "<gradient:#1d4ed8:#60a5fa>➤ Tier IV • Void Branch</gradient>"
+    archmage_arcane:
+      name: "<gradient:#7c3aed:#c084fc>👑 Archmage of Arcana</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Supreme architect of pure arcane might.</gradient>"
+        - "<gradient:#7c3aed:#c084fc>➤ Tier V • Final Rank</gradient>"
+    archmage_spell:
+      name: "<gradient:#d946ef:#f5d0fe>👑 Archmage of Spells</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Every incantation answers instantly.</gradient>"
+        - "<gradient:#d946ef:#f5d0fe>➤ Tier V • Final Rank</gradient>"
+    archmage_void:
+      name: "<gradient:#1e3a8a:#60a5fa>👑 Archmage of the Void</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Rules the edges between worlds.</gradient>"
+        - "<gradient:#1e3a8a:#60a5fa>➤ Tier V • Final Rank</gradient>"
   rogue:
     pickpocket:
       name: "<gradient:#6b7280:#9ca3af>🗡 Pickpocket</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Quick fingers, quicker escape</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Learns timing, misdirection, and speed.</gradient>"
+        - "<gradient:#94a3b8:#cbd5e1>➤ Tier I • Streetcraft</gradient>"
     thief:
-      name: "<gradient:#3b82f6:#60a5fa>🗡 Thief</gradient>"
+      name: "<gradient:#3b82f6:#93c5fd>🗡 Thief</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Master of stealth and theft</gradient>"
-    scout:
-      name: "<gradient:#10b981:#34d399>🗡 Scout</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Eyes and ears of the shadows</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Slips through locks and lookout lines.</gradient>"
+        - "<gradient:#3b82f6:#93c5fd>➤ Tier II • Silent Entry</gradient>"
     assassin:
       name: "<gradient:#ef4444:#f87171>🗡 Assassin</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Silent killer, death from shadows</gradient>"
-    infiltrator:
-      name: "<gradient:#a855f7:#c084fc>🗡 Infiltrator</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Strikes once and vanishes without trace.</gradient>"
+        - "<gradient:#ef4444:#f87171>➤ Tier III • Choose Your Method</gradient>"
+    shadow_stealth:
+      name: "<gradient:#0ea5e9:#67e8f9>🌒 Shadow of Stealth</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Expert at getting in and out undetected</gradient>"
-    shadowblade:
-      name: "<gradient:#6b7280:#9ca3af>🗡 Shadowblade</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Masters movement no eye can follow.</gradient>"
+        - "<gradient:#0ea5e9:#67e8f9>➤ Tier IV • Stealth Branch</gradient>"
+    shadow_night:
+      name: "<gradient:#7c3aed:#c4b5fd>🌘 Shadow of Night</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Deadly warrior of the night</gradient>"
-    spymaster:
-      name: "<gradient:#3b82f6:#60a5fa>🗡 Spymaster</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Turns darkness into lethal advantage.</gradient>"
+        - "<gradient:#7c3aed:#c4b5fd>➤ Tier IV • Night Branch</gradient>"
+    shadow_sabotage:
+      name: "<gradient:#f97316:#fb923c>💣 Shadow of Sabotage</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Controller of information networks</gradient>"
-    shadow_master:
-      name: "<gradient:#1f2937:#374151>🗡 Shadow Master</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Dismantles plans before foes react.</gradient>"
+        - "<gradient:#f97316:#fb923c>➤ Tier IV • Sabotage Branch</gradient>"
+    phantom_stealth:
+      name: "<gradient:#14b8a6:#5eead4>👑 Phantom of Stealth</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>One with the darkness itself</gradient>"
-    shadowmaster:
-      name: "<gradient:#1f2937:#374151>🗡 Shadowmaster</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Becomes an untouchable urban myth.</gradient>"
+        - "<gradient:#14b8a6:#5eead4>➤ Tier V • Final Rank</gradient>"
+    phantom_night:
+      name: "<gradient:#9333ea:#e9d5ff>👑 Phantom of Night</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Supreme ruler of all shadows</gradient>"
-  # Cleric Tree Ranks
+        - "<gradient:#6b7280:#9ca3af>✦ Owns the midnight hour completely.</gradient>"
+        - "<gradient:#9333ea:#e9d5ff>➤ Tier V • Final Rank</gradient>"
+    phantom_sabotage:
+      name: "<gradient:#ea580c:#fdba74>👑 Phantom of Sabotage</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Ends battles before they even begin.</gradient>"
+        - "<gradient:#ea580c:#fdba74>➤ Tier V • Final Rank</gradient>"
   cleric:
     acolyte:
-      name: "<gradient:#f59e0b:#fbbf24>✝ Acolyte</gradient>"
+      name: "<gradient:#f59e0b:#fde68a>✝ Acolyte</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Devoted servant of the divine</gradient>"
-    devotee:
-      name: "<gradient:#f59e0b:#fbbf24>✝ Devotee</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Faithful follower of the divine path</gradient>"
-    priest:
-      name: "<gradient:#10b981:#34d399>✝ Priest</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Healer and protector of the faithful</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Begins the sacred path of service.</gradient>"
+        - "<gradient:#f59e0b:#fde68a>➤ Tier I • Devotion</gradient>"
     healer:
-      name: "<gradient:#10b981:#34d399>✝ Healer</gradient>"
+      name: "<gradient:#10b981:#6ee7b7>✝ Healer</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Master of restorative arts</gradient>"
-    bishop:
-      name: "<gradient:#a855f7:#c084fc>✝ Bishop</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Restores allies under heavy pressure.</gradient>"
+        - "<gradient:#10b981:#6ee7b7>➤ Tier II • Restoration</gradient>"
+    priest:
+      name: "<gradient:#3b82f6:#93c5fd>✝ Priest</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Leader of the faithful</gradient>"
-    oracle:
-      name: "<gradient:#3b82f6:#60a5fa>✝ Oracle</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Guides parties with holy discipline.</gradient>"
+        - "<gradient:#3b82f6:#93c5fd>➤ Tier III • Choose Your Calling</gradient>"
+    bishop_divine:
+      name: "<gradient:#8b5cf6:#c4b5fd>⛪ Bishop of Divinity</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Seer of divine visions</gradient>"
-    high_priest:
-      name: "<gradient:#ef4444:#f87171>✝ High Priest</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Channels direct radiant authority.</gradient>"
+        - "<gradient:#8b5cf6:#c4b5fd>➤ Tier IV • Divine Branch</gradient>"
+    bishop_light:
+      name: "<gradient:#f59e0b:#fef08a>☀ Bishop of Light</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Supreme voice of the divine</gradient>"
-  # Merchant Tree Ranks
+        - "<gradient:#6b7280:#9ca3af>✦ Blinds corruption with sacred brilliance.</gradient>"
+        - "<gradient:#f59e0b:#fef08a>➤ Tier IV • Light Branch</gradient>"
+    bishop_soul:
+      name: "<gradient:#06b6d4:#67e8f9>🕊 Bishop of Souls</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Guards the threshold of life and death.</gradient>"
+        - "<gradient:#06b6d4:#67e8f9>➤ Tier IV • Soul Branch</gradient>"
+    high_priest_divine:
+      name: "<gradient:#7c3aed:#ddd6fe>👑 High Priest of Divinity</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Declares miracles in the heart of chaos.</gradient>"
+        - "<gradient:#7c3aed:#ddd6fe>➤ Tier V • Final Rank</gradient>"
+    high_priest_light:
+      name: "<gradient:#f59e0b:#fef3c7>👑 High Priest of Light</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Bathes allies in unwavering dawn.</gradient>"
+        - "<gradient:#f59e0b:#fef3c7>➤ Tier V • Final Rank</gradient>"
+    high_priest_soul:
+      name: "<gradient:#0891b2:#a5f3fc>👑 High Priest of Souls</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Shepherds spirits beyond mortal fear.</gradient>"
+        - "<gradient:#0891b2:#a5f3fc>➤ Tier V • Final Rank</gradient>"
   merchant:
     peddler:
       name: "<gradient:#6b7280:#9ca3af>💰 Peddler</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Selling wares on the street</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Starts with grit, charm, and small trades.</gradient>"
+        - "<gradient:#94a3b8:#cbd5e1>➤ Tier I • Street Commerce</gradient>"
     trader:
-      name: "<gradient:#3b82f6:#60a5fa>💰 Trader</gradient>"
+      name: "<gradient:#3b82f6:#93c5fd>💰 Trader</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Established merchant with connections</gradient>"
-    vendor:
-      name: "<gradient:#10b981:#34d399>💰 Vendor</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Expands routes and reliable contacts.</gradient>"
+        - "<gradient:#3b82f6:#93c5fd>➤ Tier II • Market Presence</gradient>"
+    broker:
+      name: "<gradient:#f59e0b:#fde68a>💰 Broker</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Skilled seller of goods</gradient>"
-    artificer:
-      name: "<gradient:#f59e0b:#fbbf24>💰 Artificer</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Closes high-value deals with precision.</gradient>"
+        - "<gradient:#f59e0b:#fde68a>➤ Tier III • Choose Your Empire</gradient>"
+    magnate_wealth:
+      name: "<gradient:#10b981:#6ee7b7>📈 Magnate of Wealth</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Crafter of fine wares</gradient>"
-    alchemist:
-      name: "<gradient:#a855f7:#c084fc>💰 Alchemist</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Builds pure capital at unmatched pace.</gradient>"
+        - "<gradient:#10b981:#6ee7b7>➤ Tier IV • Wealth Branch</gradient>"
+    magnate_market:
+      name: "<gradient:#06b6d4:#67e8f9>🏛 Magnate of Markets</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Master of potions and elixirs</gradient>"
-    merchant:
-      name: "<gradient:#f59e0b:#fbbf24>💰 Merchant</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Orchestrates supply and demand cycles.</gradient>"
+        - "<gradient:#06b6d4:#67e8f9>➤ Tier IV • Market Branch</gradient>"
+    magnate_trade:
+      name: "<gradient:#f97316:#fdba74>🚚 Magnate of Trade</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Successful business owner</gradient>"
-    master_crafter:
-      name: "<gradient:#ef4444:#f87171>💰 Master Crafter</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Dominates caravan lanes and logistics.</gradient>"
+        - "<gradient:#f97316:#fdba74>➤ Tier IV • Trade Branch</gradient>"
+    tycoon_wealth:
+      name: "<gradient:#22c55e:#bbf7d0>👑 Tycoon of Wealth</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Supreme artisan of the realm</gradient>"
-    merchant_prince:
-      name: "<gradient:#a855f7:#c084fc>💰 Merchant Prince</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Turns economies with a single decision.</gradient>"
+        - "<gradient:#22c55e:#bbf7d0>➤ Tier V • Final Rank</gradient>"
+    tycoon_market:
+      name: "<gradient:#0891b2:#a5f3fc>👑 Tycoon of Markets</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Royalty of commerce</gradient>"
-    tycoon:
-      name: "<gradient:#a855f7:#c084fc>💰 Tycoon</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Sets prices every guild must respect.</gradient>"
+        - "<gradient:#0891b2:#a5f3fc>➤ Tier V • Final Rank</gradient>"
+    tycoon_trade:
+      name: "<gradient:#ea580c:#fed7aa>👑 Tycoon of Trade</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Master of commerce and trade</gradient>"
-    guild_master:
-      name: "<gradient:#ef4444:#f87171>💰 Guild Master</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Leader of the merchant guild</gradient>"
-
-# ============================================
-# BOUNTY LISTENER MESSAGES
-# ============================================
+        - "<gradient:#6b7280:#9ca3af>✦ Owns the roads, ports, and profits.</gradient>"
+        - "<gradient:#ea580c:#fed7aa>➤ Tier V • Final Rank</gradient>"
 bounty_listener:
   bounty_active:
     warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>You have an active bounty on your head!</gradient>"
@@ -557,81 +602,281 @@ rank_path_overview_ui:
     tier: "<gradient:#6b7280:#9ca3af>Tier:</gradient> <gradient:#f59e0b:#fbbf24>%tier%</gradient>"
     weight: "<gradient:#6b7280:#9ca3af>Weight:</gradient> <gradient:#f59e0b:#fbbf24>%weight%</gradient>"
     ranger:
+      scout:
+        name: "<gradient:#22c55e:#86efac>🏹 Scout of Trails</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>✦ Reads hoofprints and wind shifts.</gradient>"
+          - "<gradient:#10b981:#34d399>➤ Tier I • Nature Initiate</gradient>"
       hunter:
-        name: "<gradient:#7c3aed:#a78bfa>🏹 Hunter</gradient>"
+        name: "<gradient:#16a34a:#4ade80>🏹 Hunter of the Wilds</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>A novice tracker learning the ways of the wild</gradient>"
-      archer:
-        name: "<gradient:#10b981:#34d399>🎯 Archer</gradient>"
-        lore:
-          - "<gradient:#6b7280:#9ca3af>Skilled with the bow, deadly at range</gradient>"
+          - "<gradient:#6b7280:#9ca3af>✦ Stalks prey with patient precision.</gradient>"
+          - "<gradient:#10b981:#34d399>➤ Tier II • Wild Pursuit</gradient>"
       tracker:
-        name: "<gradient:#3b82f6:#60a5fa>🔍 Tracker</gradient>"
+        name: "<gradient:#0ea5e9:#38bdf8>🏹 Tracker of Signs</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Expert at finding and following prey</gradient>"
-      marksman:
-        name: "<gradient:#f59e0b:#fbbf24>🎯 Marksman</gradient>"
+          - "<gradient:#6b7280:#9ca3af>✦ Follows trails no storm can erase.</gradient>"
+          - "<gradient:#3b82f6:#60a5fa>➤ Tier III • Path Choice Ahead</gradient>"
+      warden_primal:
+        name: "<gradient:#14b8a6:#2dd4bf>🛡 Warden of Beasts</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Precision shooter with deadly accuracy</gradient>"
-      pathfinder:
-        name: "<gradient:#a855f7:#c084fc>🗺 Pathfinder</gradient>"
+          - "<gradient:#6b7280:#9ca3af>✦ Bonds with apex creatures of the realm.</gradient>"
+          - "<gradient:#14b8a6:#2dd4bf>➤ Tier IV • Primal Branch</gradient>"
+      warden_storm:
+        name: "<gradient:#2563eb:#60a5fa>⚡ Warden of Storms</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Master explorer of uncharted lands</gradient>"
-      sniper:
-        name: "<gradient:#ef4444:#f87171>🎯 Sniper</gradient>"
+          - "<gradient:#6b7280:#9ca3af>✦ Fires true through thunder and rain.</gradient>"
+          - "<gradient:#2563eb:#60a5fa>➤ Tier IV • Storm Branch</gradient>"
+      warden_wild:
+        name: "<gradient:#16a34a:#84cc16>🌿 Warden of the Wild</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Elite marksman, one shot one kill</gradient>"
-      forest_lord:
-        name: "<gradient:#10b981:#34d399>🌲 Forest Lord</gradient>"
+          - "<gradient:#6b7280:#9ca3af>✦ Guards sacred frontiers and hidden glades.</gradient>"
+          - "<gradient:#16a34a:#84cc16>➤ Tier IV • Wild Branch</gradient>"
+      beastmaster_primal:
+        name: "<gradient:#7c3aed:#c084fc>👑 Beastmaster Primal</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Master of the wilderness, one with nature</gradient>"
+          - "<gradient:#6b7280:#9ca3af>✦ Commands legendary beasts without fear.</gradient>"
+          - "<gradient:#7c3aed:#c084fc>➤ Tier V • Final Rank</gradient>"
+      beastmaster_storm:
+        name: "<gradient:#1d4ed8:#3b82f6>👑 Beastmaster Storm</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>✦ Every bolt guides your relentless volley.</gradient>"
+          - "<gradient:#1d4ed8:#3b82f6>➤ Tier V • Final Rank</gradient>"
+      beastmaster_wild:
+        name: "<gradient:#15803d:#22c55e>👑 Beastmaster Wild</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>✦ Nature itself rises to answer your call.</gradient>"
+          - "<gradient:#15803d:#22c55e>➤ Tier V • Final Rank</gradient>"
     warrior:
       recruit:
         name: "<gradient:#6b7280:#9ca3af>⚔ Recruit</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>A new warrior beginning their journey</gradient>"
+          - "<gradient:#6b7280:#9ca3af>✦ A fresh blade with untested resolve.</gradient>"
+          - "<gradient:#94a3b8:#cbd5e1>➤ Tier I • Training Grounds</gradient>"
       soldier:
         name: "<gradient:#3b82f6:#60a5fa>⚔ Soldier</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Trained in the art of combat</gradient>"
-      knight:
-        name: "<gradient:#f59e0b:#fbbf24>⚔ Knight</gradient>"
+          - "<gradient:#6b7280:#9ca3af>✦ Hardened by drills and front-line duty.</gradient>"
+          - "<gradient:#3b82f6:#60a5fa>➤ Tier II • Field Discipline</gradient>"
+      veteran:
+        name: "<gradient:#f59e0b:#fbbf24>⚔ Veteran</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Honorable warrior of the realm</gradient>"
-      champion:
-        name: "<gradient:#a855f7:#c084fc>⚔ Champion</gradient>"
+          - "<gradient:#6b7280:#9ca3af>✦ Battle scars mark your earned wisdom.</gradient>"
+          - "<gradient:#f59e0b:#fbbf24>➤ Tier III • Choose Your Path</gradient>"
+      berserker:
+        name: "<gradient:#ef4444:#f87171>🔥 Berserker</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Legendary fighter, feared by all</gradient>"
-      warlord:
-        name: "<gradient:#ef4444:#f87171>⚔ Warlord</gradient>"
+          - "<gradient:#6b7280:#9ca3af>✦ Trades defense for devastating offense.</gradient>"
+          - "<gradient:#ef4444:#f87171>➤ Tier IV • Fury Branch</gradient>"
+      guardian:
+        name: "<gradient:#2563eb:#60a5fa>🛡 Guardian</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Master of war, commander of armies</gradient>"
+          - "<gradient:#6b7280:#9ca3af>✦ Stands firm where others would break.</gradient>"
+          - "<gradient:#2563eb:#60a5fa>➤ Tier IV • Shield Branch</gradient>"
+      gladiator:
+        name: "<gradient:#a855f7:#c084fc>🏟 Gladiator</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>✦ Masters balanced arena warfare.</gradient>"
+          - "<gradient:#a855f7:#c084fc>➤ Tier IV • Arena Branch</gradient>"
+      warlord_fury:
+        name: "<gradient:#dc2626:#fb7185>👑 Warlord of Fury</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>✦ An unstoppable engine of destruction.</gradient>"
+          - "<gradient:#dc2626:#fb7185>➤ Tier V • Final Rank</gradient>"
+      warlord_shield:
+        name: "<gradient:#1d4ed8:#60a5fa>👑 Warlord of the Shield</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>✦ The final wall between life and ruin.</gradient>"
+          - "<gradient:#1d4ed8:#60a5fa>➤ Tier V • Final Rank</gradient>"
+      warlord_arena:
+        name: "<gradient:#7c3aed:#c084fc>👑 Warlord of the Arena</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>✦ Crowned champion of every coliseum.</gradient>"
+          - "<gradient:#7c3aed:#c084fc>➤ Tier V • Final Rank</gradient>"
     mage:
       apprentice:
-        name: "<gradient:#a855f7:#c084fc>✨ Apprentice</gradient>"
+        name: "<gradient:#a855f7:#d8b4fe>✨ Apprentice</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Learning the basics of magic</gradient>"
+          - "<gradient:#6b7280:#9ca3af>✦ Sparks of arcane power awaken.</gradient>"
+          - "<gradient:#a855f7:#d8b4fe>➤ Tier I • Arcane Foundations</gradient>"
       adept:
-        name: "<gradient:#3b82f6:#60a5fa>✨ Adept</gradient>"
+        name: "<gradient:#3b82f6:#93c5fd>✨ Adept</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Growing in magical power</gradient>"
+          - "<gradient:#6b7280:#9ca3af>✦ Weaves controlled and focused spells.</gradient>"
+          - "<gradient:#3b82f6:#93c5fd>➤ Tier II • Arcane Practice</gradient>"
       wizard:
-        name: "<gradient:#f59e0b:#fbbf24>✨ Wizard</gradient>"
+        name: "<gradient:#f59e0b:#fde68a>✨ Wizard</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Master of arcane arts</gradient>"
-      archmage:
-        name: "<gradient:#ef4444:#f87171>✨ Archmage</gradient>"
+          - "<gradient:#6b7280:#9ca3af>✦ Commands complex patterns of magic.</gradient>"
+          - "<gradient:#f59e0b:#fde68a>➤ Tier III • Choose Your Doctrine</gradient>"
+      sorcerer_arcane:
+        name: "<gradient:#8b5cf6:#c4b5fd>🔮 Sorcerer of Arcana</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Supreme master of all magic</gradient>"
+          - "<gradient:#6b7280:#9ca3af>✦ Refines raw power into elegant force.</gradient>"
+          - "<gradient:#8b5cf6:#c4b5fd>➤ Tier IV • Arcane Branch</gradient>"
+      sorcerer_spell:
+        name: "<gradient:#d946ef:#f0abfc>📜 Sorcerer of Spells</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>✦ Expands grimoire control and precision.</gradient>"
+          - "<gradient:#d946ef:#f0abfc>➤ Tier IV • Spell Branch</gradient>"
+      sorcerer_void:
+        name: "<gradient:#1d4ed8:#60a5fa>🌌 Sorcerer of the Void</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>✦ Bends abyssal energies to your will.</gradient>"
+          - "<gradient:#1d4ed8:#60a5fa>➤ Tier IV • Void Branch</gradient>"
+      archmage_arcane:
+        name: "<gradient:#7c3aed:#c084fc>👑 Archmage of Arcana</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>✦ Supreme architect of pure arcane might.</gradient>"
+          - "<gradient:#7c3aed:#c084fc>➤ Tier V • Final Rank</gradient>"
+      archmage_spell:
+        name: "<gradient:#d946ef:#f5d0fe>👑 Archmage of Spells</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>✦ Every incantation answers instantly.</gradient>"
+          - "<gradient:#d946ef:#f5d0fe>➤ Tier V • Final Rank</gradient>"
+      archmage_void:
+        name: "<gradient:#1e3a8a:#60a5fa>👑 Archmage of the Void</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>✦ Rules the edges between worlds.</gradient>"
+          - "<gradient:#1e3a8a:#60a5fa>➤ Tier V • Final Rank</gradient>"
     rogue:
       pickpocket:
         name: "<gradient:#6b7280:#9ca3af>🗡 Pickpocket</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Quick fingers, quicker escape</gradient>"
-
-# ============================================
-# REQUIREMENT TRANSLATIONS
-# ============================================
+          - "<gradient:#6b7280:#9ca3af>✦ Learns timing, misdirection, and speed.</gradient>"
+          - "<gradient:#94a3b8:#cbd5e1>➤ Tier I • Streetcraft</gradient>"
+      thief:
+        name: "<gradient:#3b82f6:#93c5fd>🗡 Thief</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>✦ Slips through locks and lookout lines.</gradient>"
+          - "<gradient:#3b82f6:#93c5fd>➤ Tier II • Silent Entry</gradient>"
+      assassin:
+        name: "<gradient:#ef4444:#f87171>🗡 Assassin</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>✦ Strikes once and vanishes without trace.</gradient>"
+          - "<gradient:#ef4444:#f87171>➤ Tier III • Choose Your Method</gradient>"
+      shadow_stealth:
+        name: "<gradient:#0ea5e9:#67e8f9>🌒 Shadow of Stealth</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>✦ Masters movement no eye can follow.</gradient>"
+          - "<gradient:#0ea5e9:#67e8f9>➤ Tier IV • Stealth Branch</gradient>"
+      shadow_night:
+        name: "<gradient:#7c3aed:#c4b5fd>🌘 Shadow of Night</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>✦ Turns darkness into lethal advantage.</gradient>"
+          - "<gradient:#7c3aed:#c4b5fd>➤ Tier IV • Night Branch</gradient>"
+      shadow_sabotage:
+        name: "<gradient:#f97316:#fb923c>💣 Shadow of Sabotage</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>✦ Dismantles plans before foes react.</gradient>"
+          - "<gradient:#f97316:#fb923c>➤ Tier IV • Sabotage Branch</gradient>"
+      phantom_stealth:
+        name: "<gradient:#14b8a6:#5eead4>👑 Phantom of Stealth</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>✦ Becomes an untouchable urban myth.</gradient>"
+          - "<gradient:#14b8a6:#5eead4>➤ Tier V • Final Rank</gradient>"
+      phantom_night:
+        name: "<gradient:#9333ea:#e9d5ff>👑 Phantom of Night</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>✦ Owns the midnight hour completely.</gradient>"
+          - "<gradient:#9333ea:#e9d5ff>➤ Tier V • Final Rank</gradient>"
+      phantom_sabotage:
+        name: "<gradient:#ea580c:#fdba74>👑 Phantom of Sabotage</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>✦ Ends battles before they even begin.</gradient>"
+          - "<gradient:#ea580c:#fdba74>➤ Tier V • Final Rank</gradient>"
+    cleric:
+      acolyte:
+        name: "<gradient:#f59e0b:#fde68a>✝ Acolyte</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>✦ Begins the sacred path of service.</gradient>"
+          - "<gradient:#f59e0b:#fde68a>➤ Tier I • Devotion</gradient>"
+      healer:
+        name: "<gradient:#10b981:#6ee7b7>✝ Healer</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>✦ Restores allies under heavy pressure.</gradient>"
+          - "<gradient:#10b981:#6ee7b7>➤ Tier II • Restoration</gradient>"
+      priest:
+        name: "<gradient:#3b82f6:#93c5fd>✝ Priest</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>✦ Guides parties with holy discipline.</gradient>"
+          - "<gradient:#3b82f6:#93c5fd>➤ Tier III • Choose Your Calling</gradient>"
+      bishop_divine:
+        name: "<gradient:#8b5cf6:#c4b5fd>⛪ Bishop of Divinity</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>✦ Channels direct radiant authority.</gradient>"
+          - "<gradient:#8b5cf6:#c4b5fd>➤ Tier IV • Divine Branch</gradient>"
+      bishop_light:
+        name: "<gradient:#f59e0b:#fef08a>☀ Bishop of Light</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>✦ Blinds corruption with sacred brilliance.</gradient>"
+          - "<gradient:#f59e0b:#fef08a>➤ Tier IV • Light Branch</gradient>"
+      bishop_soul:
+        name: "<gradient:#06b6d4:#67e8f9>🕊 Bishop of Souls</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>✦ Guards the threshold of life and death.</gradient>"
+          - "<gradient:#06b6d4:#67e8f9>➤ Tier IV • Soul Branch</gradient>"
+      high_priest_divine:
+        name: "<gradient:#7c3aed:#ddd6fe>👑 High Priest of Divinity</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>✦ Declares miracles in the heart of chaos.</gradient>"
+          - "<gradient:#7c3aed:#ddd6fe>➤ Tier V • Final Rank</gradient>"
+      high_priest_light:
+        name: "<gradient:#f59e0b:#fef3c7>👑 High Priest of Light</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>✦ Bathes allies in unwavering dawn.</gradient>"
+          - "<gradient:#f59e0b:#fef3c7>➤ Tier V • Final Rank</gradient>"
+      high_priest_soul:
+        name: "<gradient:#0891b2:#a5f3fc>👑 High Priest of Souls</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>✦ Shepherds spirits beyond mortal fear.</gradient>"
+          - "<gradient:#0891b2:#a5f3fc>➤ Tier V • Final Rank</gradient>"
+    merchant:
+      peddler:
+        name: "<gradient:#6b7280:#9ca3af>💰 Peddler</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>✦ Starts with grit, charm, and small trades.</gradient>"
+          - "<gradient:#94a3b8:#cbd5e1>➤ Tier I • Street Commerce</gradient>"
+      trader:
+        name: "<gradient:#3b82f6:#93c5fd>💰 Trader</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>✦ Expands routes and reliable contacts.</gradient>"
+          - "<gradient:#3b82f6:#93c5fd>➤ Tier II • Market Presence</gradient>"
+      broker:
+        name: "<gradient:#f59e0b:#fde68a>💰 Broker</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>✦ Closes high-value deals with precision.</gradient>"
+          - "<gradient:#f59e0b:#fde68a>➤ Tier III • Choose Your Empire</gradient>"
+      magnate_wealth:
+        name: "<gradient:#10b981:#6ee7b7>📈 Magnate of Wealth</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>✦ Builds pure capital at unmatched pace.</gradient>"
+          - "<gradient:#10b981:#6ee7b7>➤ Tier IV • Wealth Branch</gradient>"
+      magnate_market:
+        name: "<gradient:#06b6d4:#67e8f9>🏛 Magnate of Markets</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>✦ Orchestrates supply and demand cycles.</gradient>"
+          - "<gradient:#06b6d4:#67e8f9>➤ Tier IV • Market Branch</gradient>"
+      magnate_trade:
+        name: "<gradient:#f97316:#fdba74>🚚 Magnate of Trade</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>✦ Dominates caravan lanes and logistics.</gradient>"
+          - "<gradient:#f97316:#fdba74>➤ Tier IV • Trade Branch</gradient>"
+      tycoon_wealth:
+        name: "<gradient:#22c55e:#bbf7d0>👑 Tycoon of Wealth</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>✦ Turns economies with a single decision.</gradient>"
+          - "<gradient:#22c55e:#bbf7d0>➤ Tier V • Final Rank</gradient>"
+      tycoon_market:
+        name: "<gradient:#0891b2:#a5f3fc>👑 Tycoon of Markets</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>✦ Sets prices every guild must respect.</gradient>"
+          - "<gradient:#0891b2:#a5f3fc>➤ Tier V • Final Rank</gradient>"
+      tycoon_trade:
+        name: "<gradient:#ea580c:#fed7aa>👑 Tycoon of Trade</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>✦ Owns the roads, ports, and profits.</gradient>"
+          - "<gradient:#ea580c:#fed7aa>➤ Tier V • Final Rank</gradient>"
 requirement:
 
   # ============================================
@@ -670,7 +915,7 @@ requirement:
     money: "Money"
     dollars: "Dollars"
     credits: "Credits"
-  
+
   # Task preview templates
   task:
     entry: "<gradient:#6b7280:#9ca3af>%prefix% %task_name%</gradient>"
@@ -1287,6 +1532,7 @@ admin_skills_ui:
       missing: "<gradient:#ef4444:#f87171>Missing</gradient>"
     detected:
       name: "<gradient:#22c55e:#86efac>✅ %plugin_name%</gradient>"
+      click_action: "<gradient:#3b82f6:#60a5fa>[>] Click to inject themed skill requirements</gradient>"
     missing:
       name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
     lore:
@@ -1301,6 +1547,11 @@ admin_skills_ui:
 # ============================================
 # ADMIN JOBS INTEGRATION UI
 # ============================================
+  messages:
+    inject_success: "<gradient:#22c55e:#86efac>[+] Injected %perk_count% perk and %rank_count% rank skill requirements for %plugin_name%.</gradient>"
+    inject_no_changes: "<gradient:#3b82f6:#60a5fa>[i] No skill requirement changes were needed for %plugin_name%.</gradient>"
+    plugin_missing: "<gradient:#ef4444:#f87171>[!] %plugin_name% is not detected, so no requirements were injected.</gradient>"
+    inject_failed: "<gradient:#ef4444:#f87171>[x] Failed to inject skill requirements for %plugin_name%.</gradient>"
 admin_jobs_ui:
   title: "<gradient:#f59e0b:#fbbf24>⛏ Job Integrations</gradient>"
   summary:
@@ -1315,6 +1566,7 @@ admin_jobs_ui:
       missing: "<gradient:#ef4444:#f87171>Missing</gradient>"
     detected:
       name: "<gradient:#22c55e:#86efac>✅ %plugin_name%</gradient>"
+      click_action: "<gradient:#3b82f6:#60a5fa>[>] Click to inject themed job requirements</gradient>"
     missing:
       name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
     lore:
@@ -1329,6 +1581,11 @@ admin_jobs_ui:
 # ============================================
 # ADMIN CURRENCY OVERVIEW UI
 # ============================================
+  messages:
+    inject_success: "<gradient:#22c55e:#86efac>[+] Injected %perk_count% perk and %rank_count% rank job requirements for %plugin_name%.</gradient>"
+    inject_no_changes: "<gradient:#3b82f6:#60a5fa>[i] No job requirement changes were needed for %plugin_name%.</gradient>"
+    plugin_missing: "<gradient:#ef4444:#f87171>[!] %plugin_name% is not detected, so no requirements were injected.</gradient>"
+    inject_failed: "<gradient:#ef4444:#f87171>[x] Failed to inject job requirements for %plugin_name%.</gradient>"
 admin_currency_ui:
   title: "<gradient:#10b981:#34d399>💱 Currency Manager</gradient>"
   currency_entry:
@@ -1364,6 +1621,16 @@ admin_currency_ui:
     lore:
       - "<gradient:#6b7280:#9ca3af>RDQ could not detect Vault or JExEconomy currencies</gradient>"
       - "<gradient:#6b7280:#9ca3af>Install or enable an economy provider first</gradient>"
+    jex_detected:
+      name: "<gradient:#3b82f6:#60a5fa>[i] JExEconomy Detected</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>RDQ detected JExEconomy but no currencies exist yet</gradient>"
+        - "<gradient:#10b981:#34d399>Use the top button to create %currency_id%</gradient>"
+    vault_detected:
+      name: "<gradient:#3b82f6:#60a5fa>[i] Vault Detected</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Vault is available but no currency entries were listed</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Check your economy provider configuration</gradient>"
   decoration:
     border:
       name: " "
@@ -1683,7 +1950,7 @@ rank_requirements_journey_ui:
         - "<gradient:#6b7280:#9ca3af>This rank has no rewards configured</gradient>"
       type_label: "<gray>Type:</gray> <yellow>%type%</yellow>"
       value_label: "<gray>Value:</gray> <gold>%value%</gold>"
-    
+
     # Reward type descriptions
     currency:
       description: "<gradient:#fbbf24:#fcd34d>Receive currency rewards</gradient>"
@@ -1705,7 +1972,6 @@ rank_requirements_journey_ui:
       description: "<gradient:#f97316:#fb923c>Unlock particle effects</gradient>"
     vanishing_chest:
       description: "<gradient:#14b8a6:#2dd4bf>Receive a vanishing chest</gradient>"
-    
     more: "<gradient:#fbbf24:#fcd34d>+%count% more rewards...</gradient>"
 
   rewards:
@@ -1734,10 +2000,9 @@ reward:
       - "<gradient:#6b7280:#9ca3af>This rank has no rewards configured</gradient>"
     type_label: "<gray>Type:</gray> <yellow>%type%</yellow>"
     value_label: "<gray>Value:</gray> <gold>%value%</gold>"
-  
   perk:
     unlocked: "<gradient:#10b981:#34d399>✦</gradient> <gradient:#6b7280:#9ca3af>You unlocked the perk:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
-  
+
   # Reward type descriptions
   currency:
     description: "<gradient:#fbbf24:#fcd34d>Receive currency rewards</gradient>"
@@ -1759,7 +2024,6 @@ reward:
     description: "<gradient:#f97316:#fb923c>Unlock particle effects</gradient>"
   vanishing_chest:
     description: "<gradient:#14b8a6:#2dd4bf>Receive a vanishing chest</gradient>"
-  
   more: "<gradient:#fbbf24:#fcd34d>+%count% more rewards...</gradient>"
 
 rewards:
@@ -1815,7 +2079,7 @@ perk:
   fish_xp:
     name: "<gradient:#10b981:#34d399>Fishing XP Boost</gradient>"
     description: "<gradient:#6b7280:#9ca3af>Gain bonus XP when catching fish</gradient>"
-  
+
   # Potion Perks
   potion_enhance:
     name: "<gradient:#a855f7:#c084fc>Potion Amplifier</gradient>"
@@ -1826,7 +2090,7 @@ perk:
   potion_save:
     name: "<gradient:#10b981:#34d399>Potion Refund</gradient>"
     description: "<gradient:#6b7280:#9ca3af>Chance to get your potion back after drinking it</gradient>"
-  
+
   # Perk Messages
   messages:
     # Unlock/Enable/Disable
@@ -1843,36 +2107,33 @@ perk:
     disable:
       success: "<gradient:#f59e0b:#fbbf24>Disabled perk:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
       failed: "<gradient:#ef4444:#f87171>Failed to disable perk:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
-    
+
     # Cooldown
     cooldown:
       active: "<gradient:#ef4444:#f87171>This perk is on cooldown for</gradient> <gradient:#f59e0b:#fbbf24>%time%</gradient>"
       ready: "<gradient:#10b981:#34d399>Perk is ready to use!</gradient>"
-    
+
     # Effect Triggers
     potion_enhanced: "<gradient:#a855f7:#c084fc>✨ Potion Enhanced!</gradient> <gradient:#6b7280:#9ca3af>Effects amplified</gradient>"
     potion_extended: "<gradient:#f59e0b:#fbbf24>⏱ Potion Duration Extended!</gradient> <gradient:#6b7280:#9ca3af>Lasts longer</gradient>"
     potion_saved: "<gradient:#10b981:#34d399>💾 Potion Saved!</gradient> <gradient:#6b7280:#9ca3af>Returned to inventory</gradient>"
     fishing_active: "<gradient:#3b82f6:#60a5fa>🎣 Faster Fishing Active!</gradient>"
     fishing_xp: "<gradient:#10b981:#34d399>+%xp% Fishing XP!</gradient>"
-  
+
   # UI Elements
   ui:
     header:
       type_label: "<gray>Type: <white>%type%</white></gray>"
       category_label: "<gray>Category: <white>%category%</white></gray>"
-    
     requirements:
       no_requirements: "<green>No Requirements</green>"
       no_requirements_lore: "<gray>This perk has no unlock requirements</gray>"
-    
     rewards:
       title: "<gold>Unlock Reward</gold>"
       no_rewards: "<gray>No Unlock Rewards</gray>"
       no_rewards_lore: "<gray>This perk has no unlock rewards</gray>"
       type_label: "<gray>Type: <white>%type%</white></gray>"
       value_label: "<gray>Value: <gold>%value%</gold></gray>"
-    
     status:
       title: "<white>Perk Status</white>"
       locked: "<red>✖ Locked</red>"
@@ -1883,7 +2144,6 @@ perk:
       enabled_count: "<gray>Enabled Perks: <white>%count%/%max%</white></gray>"
       cooldown_label: "<gray>Cooldown: <gold>%time%</gold></gray>"
       activations_label: "<gray>Activations: <white>%count%</white></gray>"
-    
     buttons:
       unlock:
         title: "<white>Unlock Perk</white>"
@@ -1895,7 +2155,7 @@ perk:
       disable:
         title: "<white>Disable Perk</white>"
         hint: "<yellow>Click to disable this perk</yellow>"
-  
+
   # Existing Perks (for reference - add if missing)
   fly:
     name: "<gradient:#3b82f6:#60a5fa>Flight</gradient>"

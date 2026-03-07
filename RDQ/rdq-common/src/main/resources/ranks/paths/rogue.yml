@@ -1,7 +1,7 @@
 # Rogue Rank Tree
 # The path of stealth and agility
 
-displayOrder: 4
+displayOrder: 5
 isEnabled: true
 isFinalRankTree: false
 requiresAllRankTreesToBeDone: false
@@ -113,7 +113,7 @@ ranks:
     icon:
       type: "IRON_BOOTS"
     previousRanks: ["thief"]
-    nextRanks: ["shadow"]
+    nextRanks: ["shadow_stealth", "shadow_night", "shadow_sabotage"]
     rewards:
       assassin_reward:
         type: "CURRENCY"
@@ -167,23 +167,23 @@ ranks:
           useTotalPlaytime: true
           requiredPlaytimeSeconds: 21600
 
-  shadow:
+  shadow_stealth:
     tier: 4
     weight: 400
-    luckPermsGroup: "rogue_shadow"
-    prefixKey: "&8[&bShadow&8]"
+    luckPermsGroup: "rogue_shadow_stealth"
+    prefixKey: "&8[&bShadow of Stealth&8]"
     suffixKey: ""
     isEnabled: true
     icon:
       type: "DIAMOND_BOOTS"
     previousRanks: ["assassin"]
-    nextRanks: ["phantom"]
+    nextRanks: ["phantom_stealth"]
     rewards:
-      shadow_reward:
+      shadow_stealth_reward:
         type: "CURRENCY"
         amount: 500
         currencyId: "raindrops"
-      shadow_equipment:
+      shadow_stealth_gear:
         type: "COMPOSITE"
         rewards:
           - type: "ITEM"
@@ -194,16 +194,12 @@ ranks:
             item:
               material: "DIAMOND_SWORD"
               amount: 1
-          - type: "ITEM"
-            item:
-              material: "ENDER_PEARL"
-              amount: 8
-      shadow_experience:
+      shadow_stealth_experience:
         type: "EXPERIENCE"
         experienceAmount: 1500
         experienceType: "POINTS"
     requirements:
-      shadow_gear:
+      shadow_stealth_gear:
         icon:
           type: "DIAMOND_BOOTS"
         itemRequirement:
@@ -219,7 +215,7 @@ ranks:
               type: "ENDER_PEARL"
               amount: 16
             item4:
-              type: "INVISIBILITY_POTION"
+              type: "DIAMOND"
               amount: 8
       experience_req:
         icon:
@@ -228,31 +224,145 @@ ranks:
           consumeOnComplete: true
           requiredType: "LEVEL"
           requiredLevel: 30
-      playtime_req:
-        icon:
-          type: "CLOCK"
-        playtimeRequirement:
-          useTotalPlaytime: true
-          requiredPlaytimeSeconds: 43200
 
-  phantom:
+  shadow_night:
+    tier: 4
+    weight: 400
+    luckPermsGroup: "rogue_shadow_night"
+    prefixKey: "&8[&4Shadow of Night&8]"
+    suffixKey: ""
+    isEnabled: true
+    icon:
+      type: "DIAMOND_SWORD"
+    previousRanks: ["assassin"]
+    nextRanks: ["phantom_night"]
+    rewards:
+      shadow_night_reward:
+        type: "CURRENCY"
+        amount: 500
+        currencyId: "raindrops"
+      shadow_night_gear:
+        type: "COMPOSITE"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "DIAMOND_SWORD"
+              amount: 1
+          - type: "ITEM"
+            item:
+              material: "DIAMOND"
+              amount: 6
+      shadow_night_experience:
+        type: "EXPERIENCE"
+        experienceAmount: 1500
+        experienceType: "POINTS"
+    requirements:
+      shadow_night_gear:
+        icon:
+          type: "DIAMOND_SWORD"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "DIAMOND_SWORD"
+              amount: 1
+            item2:
+              type: "ENDER_PEARL"
+              amount: 24
+            item3:
+              type: "PHANTOM_MEMBRANE"
+              amount: 12
+            item4:
+              type: "DIAMOND"
+              amount: 10
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 30
+
+  shadow_sabotage:
+    tier: 4
+    weight: 400
+    luckPermsGroup: "rogue_shadow_sabotage"
+    prefixKey: "&8[&cShadow of Sabotage&8]"
+    suffixKey: ""
+    isEnabled: true
+    icon:
+      type: "TNT_MINECART"
+    previousRanks: ["assassin"]
+    nextRanks: ["phantom_sabotage"]
+    rewards:
+      shadow_sabotage_reward:
+        type: "CURRENCY"
+        amount: 500
+        currencyId: "raindrops"
+      shadow_sabotage_gear:
+        type: "COMPOSITE"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "TNT_MINECART"
+              amount: 8
+          - type: "ITEM"
+            item:
+              material: "CROSSBOW"
+              amount: 1
+      shadow_sabotage_experience:
+        type: "EXPERIENCE"
+        experienceAmount: 1500
+        experienceType: "POINTS"
+    requirements:
+      shadow_sabotage_gear:
+        icon:
+          type: "TNT_MINECART"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "TNT_MINECART"
+              amount: 16
+            item2:
+              type: "CROSSBOW"
+              amount: 1
+            item3:
+              type: "FIREWORK_ROCKET"
+              amount: 64
+            item4:
+              type: "REDSTONE_BLOCK"
+              amount: 4
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 30
+
+  phantom_stealth:
     tier: 5
     weight: 500
-    luckPermsGroup: "rogue_phantom"
-    prefixKey: "&8[&5Phantom&8]"
+    luckPermsGroup: "rogue_phantom_stealth"
+    prefixKey: "&8[&5Phantom of Stealth&8]"
     suffixKey: ""
     isEnabled: true
     isFinalRank: true
     icon:
       type: "NETHERITE_BOOTS"
-    previousRanks: ["shadow"]
+    previousRanks: ["shadow_stealth"]
     rewards:
-      phantom_reward:
+      phantom_stealth_reward:
         type: "CURRENCY"
+        icon:
+          type: "EMERALD_BLOCK"
         amount: 1000
         currencyId: "raindrops"
       ultimate_stealth:
         type: "COMPOSITE"
+        icon:
+          type: "NETHERITE_BOOTS"
         rewards:
           - type: "ITEM"
             item:
@@ -266,12 +376,14 @@ ranks:
             item:
               material: "ELYTRA"
               amount: 1
-      phantom_experience:
+      phantom_stealth_experience:
         type: "EXPERIENCE"
+        icon:
+          type: "EXPERIENCE_BOTTLE"
         experienceAmount: 3000
         experienceType: "POINTS"
     requirements:
-      ultimate_rogue:
+      ultimate_phantom_stealth:
         icon:
           type: "NETHERITE_BOOTS"
         itemRequirement:
@@ -296,9 +408,139 @@ ranks:
           consumeOnComplete: true
           requiredType: "LEVEL"
           requiredLevel: 45
-      playtime_req:
+
+  phantom_night:
+    tier: 5
+    weight: 500
+    luckPermsGroup: "rogue_phantom_night"
+    prefixKey: "&8[&4Phantom of Night&8]"
+    suffixKey: ""
+    isEnabled: true
+    isFinalRank: true
+    icon:
+      type: "NETHERITE_SWORD"
+    previousRanks: ["shadow_night"]
+    rewards:
+      phantom_night_reward:
+        type: "CURRENCY"
         icon:
-          type: "CLOCK"
-        playtimeRequirement:
-          useTotalPlaytime: true
-          requiredPlaytimeSeconds: 162000
+          type: "EMERALD_BLOCK"
+        amount: 1000
+        currencyId: "raindrops"
+      shadowsteel_arsenal:
+        type: "COMPOSITE"
+        icon:
+          type: "NETHERITE_SWORD"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "NETHERITE_SWORD"
+              amount: 1
+          - type: "ITEM"
+            item:
+              material: "DIAMOND"
+              amount: 8
+          - type: "ITEM"
+            item:
+              material: "ENDER_PEARL"
+              amount: 16
+      phantom_night_experience:
+        type: "EXPERIENCE"
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceAmount: 3000
+        experienceType: "POINTS"
+    requirements:
+      ultimate_phantom_night:
+        icon:
+          type: "NETHERITE_SWORD"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "NETHERITE_SWORD"
+              amount: 1
+            item2:
+              type: "DIAMOND"
+              amount: 16
+            item3:
+              type: "ENDER_PEARL"
+              amount: 32
+            item4:
+              type: "PHANTOM_MEMBRANE"
+              amount: 16
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 45
+
+  phantom_sabotage:
+    tier: 5
+    weight: 500
+    luckPermsGroup: "rogue_phantom_sabotage"
+    prefixKey: "&8[&cPhantom of Sabotage&8]"
+    suffixKey: ""
+    isEnabled: true
+    isFinalRank: true
+    icon:
+      type: "TNT_MINECART"
+    previousRanks: ["shadow_sabotage"]
+    rewards:
+      phantom_sabotage_reward:
+        type: "CURRENCY"
+        icon:
+          type: "EMERALD_BLOCK"
+        amount: 1000
+        currencyId: "raindrops"
+      demolition_cache:
+        type: "COMPOSITE"
+        icon:
+          type: "TNT_MINECART"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "TNT_MINECART"
+              amount: 16
+          - type: "ITEM"
+            item:
+              material: "FIREWORK_ROCKET"
+              amount: 64
+          - type: "ITEM"
+            item:
+              material: "CROSSBOW"
+              amount: 1
+      phantom_sabotage_experience:
+        type: "EXPERIENCE"
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceAmount: 3000
+        experienceType: "POINTS"
+    requirements:
+      ultimate_phantom_sabotage:
+        icon:
+          type: "TNT_MINECART"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "TNT_MINECART"
+              amount: 32
+            item2:
+              type: "CROSSBOW"
+              amount: 1
+            item3:
+              type: "FIREWORK_ROCKET"
+              amount: 64
+            item4:
+              type: "REDSTONE_BLOCK"
+              amount: 8
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 45

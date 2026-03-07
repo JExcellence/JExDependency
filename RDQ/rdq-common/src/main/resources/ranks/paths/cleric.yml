@@ -1,7 +1,7 @@
 # Cleric Rank Tree
 # The path of healing and support
 
-displayOrder: 2
+displayOrder: 1
 isEnabled: true
 isFinalRankTree: false
 requiresAllRankTreesToBeDone: false
@@ -110,7 +110,7 @@ ranks:
     icon:
       type: "ENCHANTED_GOLDEN_APPLE"
     previousRanks: ["healer"]
-    nextRanks: ["bishop"]
+    nextRanks: ["bishop_divine", "bishop_light", "bishop_soul"]
     rewards:
       priest_reward:
         type: "CURRENCY"
@@ -161,53 +161,53 @@ ranks:
           useTotalPlaytime: true
           requiredPlaytimeSeconds: 21600
 
-  bishop:
+  bishop_divine:
     tier: 4
     weight: 400
-    luckPermsGroup: "cleric_bishop"
-    prefixKey: "&8[&bBishop&8]"
+    luckPermsGroup: "cleric_bishop_divine"
+    prefixKey: "&8[&bBishop of Divinity&8]"
     suffixKey: ""
     isEnabled: true
     icon:
-      type: "TOTEM_OF_UNDYING"
+      type: "BEACON"
     previousRanks: ["priest"]
-    nextRanks: ["high_priest"]
+    nextRanks: ["high_priest_divine"]
     rewards:
-      bishop_reward:
+      bishop_divine_reward:
         type: "CURRENCY"
         amount: 500
         currencyId: "raindrops"
-      bishop_protection:
+      bishop_divine_blessing:
         type: "COMPOSITE"
         rewards:
           - type: "ITEM"
             item:
-              material: "TOTEM_OF_UNDYING"
+              material: "BEACON"
               amount: 1
           - type: "ITEM"
             item:
-              material: "ENCHANTED_GOLDEN_APPLE"
-              amount: 5
-      bishop_experience:
+              material: "TOTEM_OF_UNDYING"
+              amount: 1
+      bishop_divine_experience:
         type: "EXPERIENCE"
         experienceAmount: 1500
         experienceType: "POINTS"
     requirements:
-      bishop_supplies:
+      bishop_divine_supplies:
         icon:
-          type: "TOTEM_OF_UNDYING"
+          type: "BEACON"
         itemRequirement:
           consumeOnComplete: true
           requiredItems:
             item1:
-              type: "ENCHANTED_GOLDEN_APPLE"
-              amount: 8
+              type: "BEACON"
+              amount: 1
             item2:
               type: "TOTEM_OF_UNDYING"
               amount: 2
             item3:
-              type: "BLAZE_ROD"
-              amount: 16
+              type: "ENCHANTED_GOLDEN_APPLE"
+              amount: 8
       experience_req:
         icon:
           type: "EXPERIENCE_BOTTLE"
@@ -215,31 +215,139 @@ ranks:
           consumeOnComplete: true
           requiredType: "LEVEL"
           requiredLevel: 30
-      playtime_req:
-        icon:
-          type: "CLOCK"
-        playtimeRequirement:
-          useTotalPlaytime: true
-          requiredPlaytimeSeconds: 43200
 
-  high_priest:
+  bishop_light:
+    tier: 4
+    weight: 400
+    luckPermsGroup: "cleric_bishop_light"
+    prefixKey: "&8[&6Bishop of Light&8]"
+    suffixKey: ""
+    isEnabled: true
+    icon:
+      type: "ENCHANTED_GOLDEN_APPLE"
+    previousRanks: ["priest"]
+    nextRanks: ["high_priest_light"]
+    rewards:
+      bishop_light_reward:
+        type: "CURRENCY"
+        amount: 500
+        currencyId: "raindrops"
+      bishop_light_blessing:
+        type: "COMPOSITE"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "ENCHANTED_GOLDEN_APPLE"
+              amount: 4
+          - type: "ITEM"
+            item:
+              material: "GOLDEN_APPLE"
+              amount: 16
+      bishop_light_experience:
+        type: "EXPERIENCE"
+        experienceAmount: 1500
+        experienceType: "POINTS"
+    requirements:
+      bishop_light_supplies:
+        icon:
+          type: "ENCHANTED_GOLDEN_APPLE"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "ENCHANTED_GOLDEN_APPLE"
+              amount: 8
+            item2:
+              type: "GOLDEN_APPLE"
+              amount: 32
+            item3:
+              type: "GLOWSTONE"
+              amount: 64
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 30
+
+  bishop_soul:
+    tier: 4
+    weight: 400
+    luckPermsGroup: "cleric_bishop_soul"
+    prefixKey: "&8[&3Bishop of Souls&8]"
+    suffixKey: ""
+    isEnabled: true
+    icon:
+      type: "TOTEM_OF_UNDYING"
+    previousRanks: ["priest"]
+    nextRanks: ["high_priest_soul"]
+    rewards:
+      bishop_soul_reward:
+        type: "CURRENCY"
+        amount: 500
+        currencyId: "raindrops"
+      bishop_soul_blessing:
+        type: "COMPOSITE"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "TOTEM_OF_UNDYING"
+              amount: 2
+          - type: "ITEM"
+            item:
+              material: "GHAST_TEAR"
+              amount: 12
+      bishop_soul_experience:
+        type: "EXPERIENCE"
+        experienceAmount: 1500
+        experienceType: "POINTS"
+    requirements:
+      bishop_soul_supplies:
+        icon:
+          type: "TOTEM_OF_UNDYING"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "TOTEM_OF_UNDYING"
+              amount: 3
+            item2:
+              type: "GHAST_TEAR"
+              amount: 20
+            item3:
+              type: "NETHER_STAR"
+              amount: 1
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 30
+
+  high_priest_divine:
     tier: 5
     weight: 500
-    luckPermsGroup: "cleric_high_priest"
-    prefixKey: "&8[&5High Priest&8]"
+    luckPermsGroup: "cleric_high_priest_divine"
+    prefixKey: "&8[&5High Priest of Divinity&8]"
     suffixKey: ""
     isEnabled: true
     isFinalRank: true
     icon:
       type: "BEACON"
-    previousRanks: ["bishop"]
+    previousRanks: ["bishop_divine"]
     rewards:
-      high_priest_reward:
+      high_priest_divine_reward:
         type: "CURRENCY"
+        icon:
+          type: "EMERALD_BLOCK"
         amount: 1000
         currencyId: "raindrops"
       divine_blessing:
         type: "COMPOSITE"
+        icon:
+          type: "BEACON"
         rewards:
           - type: "ITEM"
             item:
@@ -253,12 +361,14 @@ ranks:
             item:
               material: "ENCHANTED_GOLDEN_APPLE"
               amount: 10
-      high_priest_experience:
+      high_priest_divine_experience:
         type: "EXPERIENCE"
+        icon:
+          type: "EXPERIENCE_BOTTLE"
         experienceAmount: 3000
         experienceType: "POINTS"
     requirements:
-      ultimate_healer:
+      ultimate_high_priest_divine:
         icon:
           type: "BEACON"
         itemRequirement:
@@ -283,9 +393,139 @@ ranks:
           consumeOnComplete: true
           requiredType: "LEVEL"
           requiredLevel: 45
-      playtime_req:
+
+  high_priest_light:
+    tier: 5
+    weight: 500
+    luckPermsGroup: "cleric_high_priest_light"
+    prefixKey: "&8[&6High Priest of Light&8]"
+    suffixKey: ""
+    isEnabled: true
+    isFinalRank: true
+    icon:
+      type: "ENCHANTED_GOLDEN_APPLE"
+    previousRanks: ["bishop_light"]
+    rewards:
+      high_priest_light_reward:
+        type: "CURRENCY"
         icon:
-          type: "CLOCK"
-        playtimeRequirement:
-          useTotalPlaytime: true
-          requiredPlaytimeSeconds: 162000
+          type: "EMERALD_BLOCK"
+        amount: 100
+        currencyId: "raindrops"
+      sacred_feast:
+        type: "COMPOSITE"
+        icon:
+          type: "ENCHANTED_GOLDEN_APPLE"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "ENCHANTED_GOLDEN_APPLE"
+              amount: 12
+          - type: "ITEM"
+            item:
+              material: "GOLDEN_APPLE"
+              amount: 32
+          - type: "ITEM"
+            item:
+              material: "GLOWSTONE"
+              amount: 64
+      high_priest_light_experience:
+        type: "EXPERIENCE"
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceAmount: 3000
+        experienceType: "POINTS"
+    requirements:
+      ultimate_high_priest_light:
+        icon:
+          type: "ENCHANTED_GOLDEN_APPLE"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "ENCHANTED_GOLDEN_APPLE"
+              amount: 16
+            item2:
+              type: "GOLDEN_APPLE"
+              amount: 64
+            item3:
+              type: "GLOWSTONE"
+              amount: 64
+            item5:
+              type: "BEACON"
+              amount: 1
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 45
+
+  high_priest_soul:
+    tier: 5
+    weight: 500
+    luckPermsGroup: "cleric_high_priest_soul"
+    prefixKey: "&8[&3High Priest of Souls&8]"
+    suffixKey: ""
+    isEnabled: true
+    isFinalRank: true
+    icon:
+      type: "TOTEM_OF_UNDYING"
+    previousRanks: ["bishop_soul"]
+    rewards:
+      high_priest_soul_reward:
+        type: "CURRENCY"
+        icon:
+          type: "EMERALD_BLOCK"
+        amount: 100
+        currencyId: "raindrops"
+      eternal_guard:
+        type: "COMPOSITE"
+        icon:
+          type: "TOTEM_OF_UNDYING"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "TOTEM_OF_UNDYING"
+              amount: 5
+          - type: "ITEM"
+            item:
+              material: "NETHER_STAR"
+              amount: 1
+          - type: "ITEM"
+            item:
+              material: "HEART_OF_THE_SEA"
+              amount: 1
+      high_priest_soul_experience:
+        type: "EXPERIENCE"
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceAmount: 3000
+        experienceType: "POINTS"
+    requirements:
+      ultimate_high_priest_soul:
+        icon:
+          type: "TOTEM_OF_UNDYING"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "TOTEM_OF_UNDYING"
+              amount: 8
+            item2:
+              type: "NETHER_STAR"
+              amount: 1
+            item3:
+              type: "HEART_OF_THE_SEA"
+              amount: 1
+            item4:
+              type: "GHAST_TEAR"
+              amount: 32
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 45

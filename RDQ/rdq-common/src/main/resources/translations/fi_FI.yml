@@ -82,236 +82,281 @@ rank:
         - "<gradient:#6b7280:#9ca3af>Arvoa ei ole valittu</gradient>"
   # Eränkävijä-puun arvot
   ranger:
+    scout:
+      name: <gradient:#22c55e:#86efac>🏹 Scout of Trails</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Lukee sorkkajäljet ​​ja tuulenvaihdot.</gradient>
+        - <gradient:#10b981:#34d399>➤ Taso I • Nature Initiate</gradient>
     hunter:
-      name: "<gradient:#7c3aed:#a78bfa>🏹 Metsästäjä</gradient>"
+      name: <gradient:#16a34a:#4ade80>🏹 Wilds metsästäjä</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Aloitteleva jäljittäjä, joka oppii villin tapoja</gradient>"
-    archer:
-      name: "<gradient:#10b981:#34d399>🎯 Jousiampuja</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Taitava jousen kanssa, tappava etäältä</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Varret saalistavat potilaan tarkasti.</gradient>
+        - <gradient:#10b981:#34d399>➤ Taso II • Villi takaa-ajo</gradient>
     tracker:
-      name: "<gradient:#3b82f6:#60a5fa>🔍 Jäljittäjä</gradient>"
+      name: <gradient:#0ea5e9:#38bdf8>🏹 Merkkien jäljittäjä</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Asiantuntija saaliin löytämisessä ja seuraamisessa</gradient>"
-    marksman:
-      name: "<gradient:#f59e0b:#fbbf24>🎯 Tarkka-ampuja</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Seuraa jälkiä, joita mikään myrsky ei voi pyyhkiä.</gradient>
+        - <gradient:#3b82f6:#60a5fa>➤ Taso III • Polun valinta edessä</gradient>
+    warden_primal:
+      name: <gradient:#14b8a6:#2dd4bf>🛡 Petojen vartija</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Tarkka ampuja tappavalla osumatarkkuudella</gradient>"
-    pathfinder:
-      name: "<gradient:#a855f7:#c084fc>🗺 Polunetsijä</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Sitoutuu valtakunnan huippuolentoihin.</gradient>
+        - <gradient:#14b8a6:#2dd4bf>➤ Taso IV • Primal Branch</gradient>
+    warden_storm:
+      name: <gradient:#2563eb:#60a5fa>⚡ Myrskyjen vartija</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Kartoitamattomien maiden mestaritutkija</gradient>"
-    sniper:
-      name: "<gradient:#ef4444:#f87171>🎯 Tarkkuusampuja</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Syttyy tosi ukkosen ja sateen läpi.</gradient>
+        - <gradient:#2563eb:#60a5fa>➤ Taso IV • Storm Branch</gradient>
+    warden_wild:
+      name: <gradient:#16a34a:#84cc16>🌿 Luonnonvartija</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Eliittitarkka-ampuja, yksi laukaus yksi tappo</gradient>"
-    forest_lord:
-      name: "<gradient:#10b981:#34d399>🌲 Metsänherra</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Vartioi pyhiä rajoja ja piilotettuja aukkoja.</gradient>
+        - <gradient:#16a34a:#84cc16>➤ Taso IV • Wild Branch</gradient>
+    beastmaster_primal:
+      name: <gradient:#7c3aed:#c084fc>👑 Beastmaster Primal</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Erämaan mestari, yhtä luonnon kanssa</gradient>"
-  # Soturi-puun arvot
+        - <gradient:#6b7280:#9ca3af>✦ Komensee legendaarisia petoja ilman pelkoa.</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ Taso V • Lopullinen sijoitus</gradient>
+    beastmaster_storm:
+      name: <gradient:#1d4ed8:#3b82f6>👑 Beastmaster Storm</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Jokainen pultti ohjaa säälimätöntä volleytasi.</gradient>
+        - <gradient:#1d4ed8:#3b82f6>➤ Taso V • Lopullinen sijoitus</gradient>
+    beastmaster_wild:
+      name: <gradient:#15803d:#22c55e>👑 Beastmaster Wild</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Luonto itse nousee vastaamaan puheluusi.</gradient>
+        - <gradient:#15803d:#22c55e>➤ Taso V • Lopullinen sijoitus</gradient>
   warrior:
     recruit:
-      name: "<gradient:#6b7280:#9ca3af>Alokas</gradient>"
+      name: <gradient:#6b7280:#9ca3af>⚔ Rekrytoi</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Uusi soturi aloittaa matkansa</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Opi taistelun perusteet</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Uusi terä, jolla on testaamaton ratkaisu.</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ Taso I • Harjoittelualueet</gradient>
     soldier:
-      name: "<gradient:#3b82f6:#60a5fa>Sotilas</gradient>"
+      name: <gradient:#3b82f6:#60a5fa>⚔ Sotilas</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Koulutettu taistelutaitoon</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Valmiina taisteluun</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Karkaissut porat ja etulinjatyöt.</gradient>
+        - <gradient:#3b82f6:#60a5fa>➤ Taso II • Kenttäkuri</gradient>
     veteran:
-      name: "<gradient:#f59e0b:#fbbf24>Veteraani</gradient>"
+      name: <gradient:#f59e0b:#fbbf24>⚔ Veteraani</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Taistelukarkaistu soturi</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Valitse erikoistumispolkusi</gradient>"
-    # Erikoistumishaara 1: Berserkki (Hyökkäävä)
+        - <gradient:#6b7280:#9ca3af>✦ Taisteluarvet merkitsevät ansaitsemaasi viisautta.</gradient>
+        - <gradient:#f59e0b:#fbbf24>➤ Taso III • Valitse polkusi</gradient>
     berserker:
-      name: "<gradient:#ef4444:#f87171>Berserkki</gradient>"
+      name: <gradient:#ef4444:#f87171>🔥 Berserker</gradient>
       lore:
-        - "<gradient:#ef4444:#f87171>Raivon polku</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Päästä valloilleen tuhoisat hyökkäykset</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Uhraa puolustus raakavoiman vuoksi</gradient>"
-    # Erikoistumishaara 2: Suojelija (Puolustava)
+        - <gradient:#6b7280:#9ca3af>✦ Vaihtaa puolustuksen tuhoisaan hyökkäykseen.</gradient>
+        - <gradient:#ef4444:#f87171>➤ Taso IV • Fury Branch</gradient>
     guardian:
-      name: "<gradient:#3b82f6:#60a5fa>Suojelija</gradient>"
+      name: <gradient:#2563eb:#60a5fa>🛡 Vartija</gradient>
       lore:
-        - "<gradient:#3b82f6:#60a5fa>Suojelun polku</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Ryhdy murtumattomaksi suojaksi</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Suojaa liittolaisiasi hinnalla millä hyvänsä</gradient>"
-    # Erikoistumishaara 3: Gladiaattori (Tasapainoinen)
+        - <gradient:#6b7280:#9ca3af>✦ Seisoo lujasti siellä, missä muut rikkoutuisivat.</gradient>
+        - <gradient:#2563eb:#60a5fa>➤ Taso IV • Shield Branch</gradient>
     gladiator:
-      name: "<gradient:#a855f7:#c084fc>Gladiaattori</gradient>"
+      name: <gradient:#a855f7:#c084fc>🏟 Gladiaattori</gradient>
       lore:
-        - "<gradient:#a855f7:#c084fc>Kunnian polku</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Areenataistelun mestari</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Tasapainota hyökkäys ja puolustus</gradient>"
-    # Lopulliset arvot
+        - <gradient:#6b7280:#9ca3af>✦ Hallitsee tasapainoisen areenasodan.</gradient>
+        - <gradient:#a855f7:#c084fc>➤ Taso IV • Arena Branch</gradient>
     warlord_fury:
-      name: "<gradient:#ef4444:#f87171>Raivon sotapäällikkö</gradient>"
+      name: <gradient:#dc2626:#fb7185>👑 Furyn sotalordi</gradient>
       lore:
-        - "<gradient:#ef4444:#f87171>Äärimmäinen berserkki</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Pysäyttämätön tuhon voima</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Pelko ruumiillistuu taistelukentällä</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Pysäyttämätön tuhon moottori.</gradient>
+        - <gradient:#dc2626:#fb7185>➤ Taso V • Lopullinen sijoitus</gradient>
     warlord_shield:
-      name: "<gradient:#3b82f6:#60a5fa>Kilven sotapäällikkö</gradient>"
+      name: <gradient:#1d4ed8:#60a5fa>👑 Kilven sotapäällikkö</gradient>
       lore:
-        - "<gradient:#3b82f6:#60a5fa>Äärimmäinen suojelija</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Liikkumaton voima, ikuinen suojelija</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Kukaan ei pääse ohi sinun seisoessasi</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Viimeinen muuri elämän ja tuhon välillä.</gradient>
+        - <gradient:#1d4ed8:#60a5fa>➤ Taso V • Lopullinen sijoitus</gradient>
     warlord_arena:
-      name: "<gradient:#a855f7:#c084fc>Areenan sotapäällikkö</gradient>"
+      name: <gradient:#7c3aed:#c084fc>👑 Areenan sotapäällikkö</gradient>
       lore:
-        - "<gradient:#a855f7:#c084fc>Äärimmäinen gladiaattori</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Mestarien mestari</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Areenan legenda</gradient>"
-    # Vanhat arvot (taaksepäin yhteensopivuuden vuoksi)
-    knight:
-      name: "<gradient:#f59e0b:#fbbf24>Ritari</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Valtakunnan kunniallinen soturi</gradient>"
-    champion:
-      name: "<gradient:#a855f7:#c084fc>Mestari</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Legendaarinen taistelija, jota kaikki pelkäävät</gradient>"
-    warlord:
-      name: "<gradient:#ef4444:#f87171>Sotapäällikkö</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Sodan mestari, armeijoiden komentaja</gradient>"
-  # Maagi-puun arvot
+        - <gradient:#6b7280:#9ca3af>✦ Jokaisen coliseumin kruunattu mestari.</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ Taso V • Lopullinen sijoitus</gradient>
   mage:
     apprentice:
-      name: "<gradient:#a855f7:#c084fc>✨ Oppipoika</gradient>"
+      name: <gradient:#a855f7:#d8b4fe>✨ Oppipoika</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Taikuuden perusteiden oppiminen</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Arkaanisen voiman kipinät heräävät.</gradient>
+        - <gradient:#a855f7:#d8b4fe>➤ Taso I • Arcane Foundations</gradient>
     adept:
-      name: "<gradient:#3b82f6:#60a5fa>✨ Taitaja</gradient>"
+      name: <gradient:#3b82f6:#93c5fd>✨ Taitava</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Kasvava maagisessa voimassa</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Kutoa hallittuja ja keskittyneitä loitsuja.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Taso II • Arcane Practice</gradient>
     wizard:
-      name: "<gradient:#f59e0b:#fbbf24>✨ Velho</gradient>"
+      name: <gradient:#f59e0b:#fde68a>✨ Velho</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Salaperäisten taiteiden mestari</gradient>"
-    archmage:
-      name: "<gradient:#ef4444:#f87171>✨ Ylimaagi</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Komensee monimutkaisia ​​taikuuden kuvioita.</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ Taso III • Valitse oppisi</gradient>
+    sorcerer_arcane:
+      name: <gradient:#8b5cf6:#c4b5fd>🔮 Arcanan velho</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Kaiken taikuuden ylin mestari</gradient>"
-  # Roisto-puun arvot
+        - <gradient:#6b7280:#9ca3af>✦ Jalostaa raakaa voimaa tyylikkääksi voimaksi.</gradient>
+        - <gradient:#8b5cf6:#c4b5fd>➤ Taso IV • Arcane Branch</gradient>
+    sorcerer_spell:
+      name: <gradient:#d946ef:#f0abfc>📜 Loitsujen velho</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Laajentaa grimoire-hallintaa ja tarkkuutta.</gradient>
+        - <gradient:#d946ef:#f0abfc>➤ Taso IV • Spell Branch</gradient>
+    sorcerer_void:
+      name: <gradient:#1d4ed8:#60a5fa>🌌 Tyhjyyden velho</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Taivuttaa syvyysenergiat tahtosi mukaan.</gradient>
+        - <gradient:#1d4ed8:#60a5fa>➤ Taso IV • Void Branch</gradient>
+    archmage_arcane:
+      name: <gradient:#7c3aed:#c084fc>👑 Arcanan arkkimies</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Ylivoimainen arkkitehti.</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ Taso V • Lopullinen sijoitus</gradient>
+    archmage_spell:
+      name: <gradient:#d946ef:#f5d0fe>👑 Loitsujen arkkimies</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Jokainen loitsu vastaa välittömästi.</gradient>
+        - <gradient:#d946ef:#f5d0fe>➤ Taso V • Lopullinen sijoitus</gradient>
+    archmage_void:
+      name: <gradient:#1e3a8a:#60a5fa>👑 Tyhjyyden arkkimaage</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Hallitsee maailmojen välisiä reunoja.</gradient>
+        - <gradient:#1e3a8a:#60a5fa>➤ Taso V • Lopullinen sijoitus</gradient>
   rogue:
     pickpocket:
-      name: "<gradient:#6b7280:#9ca3af>🗡 Taskuvaras</gradient>"
+      name: <gradient:#6b7280:#9ca3af>🗡 Taskuvaras</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Nopeat sormet, nopeampi pako</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Oppii ajoituksen, väärän suunnan ja nopeuden.</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ Taso I • Streetcraft</gradient>
     thief:
-      name: "<gradient:#3b82f6:#60a5fa>🗡 Varas</gradient>"
+      name: <gradient:#3b82f6:#93c5fd>🗡 Varas</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Hiivinnän ja varkauden mestari</gradient>"
-    scout:
-      name: "<gradient:#10b981:#34d399>🗡 Tiedustelija</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Varjojen silmät ja korvat</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Liikkuu lukkojen ja näkölinjojen läpi.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Taso II • Hiljainen sisäänkäynti</gradient>
     assassin:
-      name: "<gradient:#ef4444:#f87171>🗡 Salamurhaaja</gradient>"
+      name: <gradient:#ef4444:#f87171>🗡 Salamurhaaja</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Hiljainen tappaja, kuolema varjoista</gradient>"
-    infiltrator:
-      name: "<gradient:#a855f7:#c084fc>🗡 Soluttautuja</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Iskee kerran ja katoaa jälkiä jättämättä.</gradient>
+        - <gradient:#ef4444:#f87171>➤ Taso III • Valitse menetelmäsi</gradient>
+    shadow_stealth:
+      name: <gradient:#0ea5e9:#67e8f9>🌒 Shadow of Stealth</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Asiantuntija sisään- ja ulospääsyssä huomaamatta</gradient>"
-    shadowblade:
-      name: "<gradient:#6b7280:#9ca3af>🗡 Varjoterä</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Hallitsee liikettä, jota silmä ei voi seurata.</gradient>
+        - <gradient:#0ea5e9:#67e8f9>➤ Taso IV • Stealth Branch</gradient>
+    shadow_night:
+      name: <gradient:#7c3aed:#c4b5fd>🌘 Yön varjo</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Yön tappava soturi</gradient>"
-    spymaster:
-      name: "<gradient:#3b82f6:#60a5fa>🗡 Vakoojien mestari</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Muuttaa pimeyden tappavaksi eduksi.</gradient>
+        - <gradient:#7c3aed:#c4b5fd>➤ Taso IV • Night Branch</gradient>
+    shadow_sabotage:
+      name: <gradient:#f97316:#fb923c>💣 Shadow of Sabotage</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Tietoverkostojen hallitsija</gradient>"
-    shadow_master:
-      name: "<gradient:#1f2937:#374151>🗡 Varjojen mestari</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Purkaa suunnitelmat ennen kuin viholliset reagoivat.</gradient>
+        - <gradient:#f97316:#fb923c>➤ Taso IV • Sabotage Branch</gradient>
+    phantom_stealth:
+      name: <gradient:#14b8a6:#5eead4>👑 Phantom of Stealth</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Yhtä itse pimeyden kanssa</gradient>"
-    shadowmaster:
-      name: "<gradient:#1f2937:#374151>🗡 Varjojen mestari</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Siitä tulee koskematon kaupunkimyytti.</gradient>
+        - <gradient:#14b8a6:#5eead4>➤ Taso V • Lopullinen sijoitus</gradient>
+    phantom_night:
+      name: <gradient:#9333ea:#e9d5ff>👑 Yön haamu</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Kaikkien varjojen korkein hallitsija</gradient>"
-  # Klerikki-puun arvot
+        - <gradient:#6b7280:#9ca3af>✦ Omistaa keskiyön tunnin kokonaan.</gradient>
+        - <gradient:#9333ea:#e9d5ff>➤ Taso V • Lopullinen sijoitus</gradient>
+    phantom_sabotage:
+      name: <gradient:#ea580c:#fdba74>👑 Phantom of Sabotage</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Päättää taistelut ennen kuin ne edes alkavat.</gradient>
+        - <gradient:#ea580c:#fdba74>➤ Taso V • Lopullinen sijoitus</gradient>
   cleric:
     acolyte:
-      name: "<gradient:#f59e0b:#fbbf24>✝ Akolyytti</gradient>"
+      name: <gradient:#f59e0b:#fde68a>✝ Akolyytti</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Omistautunut jumalan palvelija</gradient>"
-    devotee:
-      name: "<gradient:#f59e0b:#fbbf24>✝ Harras seuraaja</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Uskollinen jumalallisen polun seuraaja</gradient>"
-    priest:
-      name: "<gradient:#10b981:#34d399>✝ Pappi</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Uskovien parantaja ja suojelija</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Aloittaa pyhän palvelupolun.</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ Taso I • Omistautuminen</gradient>
     healer:
-      name: "<gradient:#10b981:#34d399>✝ Parantaja</gradient>"
+      name: <gradient:#10b981:#6ee7b7>✝ parantaja</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Parantavien taitojen mestari</gradient>"
-    bishop:
-      name: "<gradient:#a855f7:#c084fc>✝ Piispa</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Palauttaa liittolaiset raskaan paineen alla.</gradient>
+        - <gradient:#10b981:#6ee7b7>➤ Taso II • Restaurointi</gradient>
+    priest:
+      name: <gradient:#3b82f6:#93c5fd>✝ Pappi</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Uskovien johtaja</gradient>"
-    oracle:
-      name: "<gradient:#3b82f6:#60a5fa>✝ Oraakkeli</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Ohjaa juhlia pyhällä kurilla.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Taso III • Valitse kutsumuksesi</gradient>
+    bishop_divine:
+      name: <gradient:#8b5cf6:#c4b5fd>⛪ Jumaluuden piispa</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Jumalallisten näkyjen näkijä</gradient>"
-    high_priest:
-      name: "<gradient:#ef4444:#f87171>✝ Ylipappi</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Kanavat suorat säteilevät auktoriteetit.</gradient>
+        - <gradient:#8b5cf6:#c4b5fd>➤ Taso IV • Jumalallinen haara</gradient>
+    bishop_light:
+      name: <gradient:#f59e0b:#fef08a>☀ Valon piispa</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Jumalan ylin ääni</gradient>"
-  # Kauppias-puun arvot
+        - <gradient:#6b7280:#9ca3af>✦ Sokeuttaa korruption pyhällä loistolla.</gradient>
+        - <gradient:#f59e0b:#fef08a>➤ Taso IV • Kevyt haara</gradient>
+    bishop_soul:
+      name: <gradient:#06b6d4:#67e8f9>🕊 Sielun piispa</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Vartioi elämän ja kuoleman kynnystä.</gradient>
+        - <gradient:#06b6d4:#67e8f9>➤ Taso IV • Soul Branch</gradient>
+    high_priest_divine:
+      name: <gradient:#7c3aed:#ddd6fe>👑 Jumaluuden ylipappi</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Julistaa ihmeitä kaaoksen sydämessä.</gradient>
+        - <gradient:#7c3aed:#ddd6fe>➤ Taso V • Lopullinen sijoitus</gradient>
+    high_priest_light:
+      name: <gradient:#f59e0b:#fef3c7>👑 Valon ylipappi</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Kylpee liittolaisia ​​horjumattomassa aamunkoitteessa.</gradient>
+        - <gradient:#f59e0b:#fef3c7>➤ Taso V • Lopullinen sijoitus</gradient>
+    high_priest_soul:
+      name: <gradient:#0891b2:#a5f3fc>👑 sielujen ylipappi</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ Paimen henkiä yli kuolevaisen pelon.</gradient>
+        - <gradient:#0891b2:#a5f3fc>➤ Taso V • Lopullinen sijoitus</gradient>
   merchant:
     peddler:
-      name: "<gradient:#6b7280:#9ca3af>💰 Kiertokauppias</gradient>"
+      name: <gradient:#6b7280:#9ca3af>💰 Kauppias</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Tavaroiden myynti kadulla</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Alkaa karkeudella, viehätysvoimalla ja pienillä kaupoilla.</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ Taso I • Street Commerce</gradient>
     trader:
-      name: "<gradient:#3b82f6:#60a5fa>💰 Kauppias</gradient>"
+      name: <gradient:#3b82f6:#93c5fd>💰 Kauppias</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Vakiintunut kauppias, jolla on yhteyksiä</gradient>"
-    vendor:
-      name: "<gradient:#10b981:#34d399>💰 Myyjä</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Laajentaa reittejä ja luotettavia kontakteja.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Taso II • Läsnäolo markkinoilla</gradient>
+    broker:
+      name: <gradient:#f59e0b:#fde68a>💰 Välittäjä</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Osaava tavaroiden myyjä</gradient>"
-    artificer:
-      name: "<gradient:#f59e0b:#fbbf24>💰 Seppä</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Sulkee arvokkaat kaupat tarkasti.</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ Taso III • Valitse imperiumisi</gradient>
+    magnate_wealth:
+      name: <gradient:#10b981:#6ee7b7>📈 Rikkauden magnaatti</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Hienojen tavaroiden valmistaja</gradient>"
-    alchemist:
-      name: "<gradient:#a855f7:#c084fc>💰 Alkemisti</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Rakentaa puhdasta pääomaa vertaansa vailla olevaan tahtiin.</gradient>
+        - <gradient:#10b981:#6ee7b7>➤ Taso IV • Varallisuushaara</gradient>
+    magnate_market:
+      name: <gradient:#06b6d4:#67e8f9>🏛 Markkinoiden Magnate</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Juomien ja eliksiirien mestari</gradient>"
-    merchant:
-      name: "<gradient:#f59e0b:#fbbf24>💰 Kauppias</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Orkesteroi kysynnän ja tarjonnan syklit.</gradient>
+        - <gradient:#06b6d4:#67e8f9>➤ Taso IV • Market Branch</gradient>
+    magnate_trade:
+      name: <gradient:#f97316:#fdba74>🚚 Kaupan magnaatti</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Menestyvä yrittäjä</gradient>"
-    master_crafter:
-      name: "<gradient:#ef4444:#f87171>💰 Mestarikäsityöläinen</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Hallitsee matkailuvaunukaistaa ja logistiikkaa.</gradient>
+        - <gradient:#f97316:#fdba74>➤ Taso IV • Kaupan haara</gradient>
+    tycoon_wealth:
+      name: <gradient:#22c55e:#bbf7d0>👑 Rikkauden Tycoon</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Valtakunnan ylin käsityöläinen</gradient>"
-    merchant_prince:
-      name: "<gradient:#a855f7:#c084fc>💰 Kauppiassäätyläinen</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Kääntää talouksia yhdellä päätöksellä.</gradient>
+        - <gradient:#22c55e:#bbf7d0>➤ Taso V • Lopullinen sijoitus</gradient>
+    tycoon_market:
+      name: <gradient:#0891b2:#a5f3fc>👑 Markkinoiden Tycoon</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Kaupan aatelia</gradient>"
-    tycoon:
-      name: "<gradient:#a855f7:#c084fc>💰 Liikemiesmahti</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ Asettaa hinnat, joita jokaisen killan tulee kunnioittaa.</gradient>
+        - <gradient:#0891b2:#a5f3fc>➤ Taso V • Lopullinen sijoitus</gradient>
+    tycoon_trade:
+      name: <gradient:#ea580c:#fed7aa>👑 Kaupan tycoon</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>Kaupan ja kaupankäynnin mestari</gradient>"
-    guild_master:
-      name: "<gradient:#ef4444:#f87171>💰 Killan mestari</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Kauppiaskillan johtaja</gradient>"
-
-# ============================================
-# PALKKIOKUULIJAN VIESTIT
-# ============================================
+        - <gradient:#6b7280:#9ca3af>✦ Omistaa tiet, satamat ja voitot.</gradient>
+        - <gradient:#ea580c:#fed7aa>➤ Taso V • Lopullinen sijoitus</gradient>
 bounty_listener:
   bounty_active:
     warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>Sinun päällesi on asetettu aktiivinen palkkio!</gradient>"
@@ -557,81 +602,281 @@ rank_path_overview_ui:
     tier: "<gradient:#6b7280:#9ca3af>Taso:</gradient> <gradient:#f59e0b:#fbbf24>%tier%</gradient>"
     weight: "<gradient:#6b7280:#9ca3af>Paino:</gradient> <gradient:#f59e0b:#fbbf24>%weight%</gradient>"
     ranger:
+      scout:
+        name: <gradient:#22c55e:#86efac>🏹 Scout of Trails</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Lukee sorkkajäljet ​​ja tuulenvaihdot.</gradient>
+          - <gradient:#10b981:#34d399>➤ Taso I • Nature Initiate</gradient>
       hunter:
-        name: "<gradient:#7c3aed:#a78bfa>🏹 Metsästäjä</gradient>"
+        name: <gradient:#16a34a:#4ade80>🏹 Wilds metsästäjä</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Aloitteleva jäljittäjä, joka oppii villin tapoja</gradient>"
-      archer:
-        name: "<gradient:#10b981:#34d399>🎯 Jousiampuja</gradient>"
-        lore:
-          - "<gradient:#6b7280:#9ca3af>Taitava jousen kanssa, tappava etäältä</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Varret saalistavat potilaan tarkasti.</gradient>
+          - <gradient:#10b981:#34d399>➤ Taso II • Villi takaa-ajo</gradient>
       tracker:
-        name: "<gradient:#3b82f6:#60a5fa>🔍 Jäljittäjä</gradient>"
+        name: <gradient:#0ea5e9:#38bdf8>🏹 Merkkien jäljittäjä</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Asiantuntija saaliin löytämisessä ja seuraamisessa</gradient>"
-      marksman:
-        name: "<gradient:#f59e0b:#fbbf24>🎯 Tarkka-ampuja</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Seuraa jälkiä, joita mikään myrsky ei voi pyyhkiä.</gradient>
+          - <gradient:#3b82f6:#60a5fa>➤ Taso III • Polun valinta edessä</gradient>
+      warden_primal:
+        name: <gradient:#14b8a6:#2dd4bf>🛡 Petojen vartija</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Tarkka ampuja tappavalla osumatarkkuudella</gradient>"
-      pathfinder:
-        name: "<gradient:#a855f7:#c084fc>🗺 Polunetsijä</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Sitoutuu valtakunnan huippuolentoihin.</gradient>
+          - <gradient:#14b8a6:#2dd4bf>➤ Taso IV • Primal Branch</gradient>
+      warden_storm:
+        name: <gradient:#2563eb:#60a5fa>⚡ Myrskyjen vartija</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Kartoitamattomien maiden mestaritutkija</gradient>"
-      sniper:
-        name: "<gradient:#ef4444:#f87171>🎯 Tarkkuusampuja</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Syttyy tosi ukkosen ja sateen läpi.</gradient>
+          - <gradient:#2563eb:#60a5fa>➤ Taso IV • Storm Branch</gradient>
+      warden_wild:
+        name: <gradient:#16a34a:#84cc16>🌿 Luonnonvartija</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Eliittitarkka-ampuja, yksi laukaus yksi tappo</gradient>"
-      forest_lord:
-        name: "<gradient:#10b981:#34d399>🌲 Metsänherra</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Vartioi pyhiä rajoja ja piilotettuja aukkoja.</gradient>
+          - <gradient:#16a34a:#84cc16>➤ Taso IV • Wild Branch</gradient>
+      beastmaster_primal:
+        name: <gradient:#7c3aed:#c084fc>👑 Beastmaster Primal</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Erämaan mestari, yhtä luonnon kanssa</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Komensee legendaarisia petoja ilman pelkoa.</gradient>
+          - <gradient:#7c3aed:#c084fc>➤ Taso V • Lopullinen sijoitus</gradient>
+      beastmaster_storm:
+        name: <gradient:#1d4ed8:#3b82f6>👑 Beastmaster Storm</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Jokainen pultti ohjaa säälimätöntä volleytasi.</gradient>
+          - <gradient:#1d4ed8:#3b82f6>➤ Taso V • Lopullinen sijoitus</gradient>
+      beastmaster_wild:
+        name: <gradient:#15803d:#22c55e>👑 Beastmaster Wild</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Luonto itse nousee vastaamaan puheluusi.</gradient>
+          - <gradient:#15803d:#22c55e>➤ Taso V • Lopullinen sijoitus</gradient>
     warrior:
       recruit:
-        name: "<gradient:#6b7280:#9ca3af>⚔ Alokas</gradient>"
+        name: <gradient:#6b7280:#9ca3af>⚔ Rekrytoi</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Uusi soturi aloittaa matkansa</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Uusi terä, jolla on testaamaton ratkaisu.</gradient>
+          - <gradient:#94a3b8:#cbd5e1>➤ Taso I • Harjoittelualueet</gradient>
       soldier:
-        name: "<gradient:#3b82f6:#60a5fa>⚔ Sotilas</gradient>"
+        name: <gradient:#3b82f6:#60a5fa>⚔ Sotilas</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Koulutettu taistelutaitoon</gradient>"
-      knight:
-        name: "<gradient:#f59e0b:#fbbf24>⚔ Ritari</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Karkaissut porat ja etulinjatyöt.</gradient>
+          - <gradient:#3b82f6:#60a5fa>➤ Taso II • Kenttäkuri</gradient>
+      veteran:
+        name: <gradient:#f59e0b:#fbbf24>⚔ Veteraani</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Valtakunnan kunniallinen soturi</gradient>"
-      champion:
-        name: "<gradient:#a855f7:#c084fc>⚔ Mestari</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Taisteluarvet merkitsevät ansaitsemaasi viisautta.</gradient>
+          - <gradient:#f59e0b:#fbbf24>➤ Taso III • Valitse polkusi</gradient>
+      berserker:
+        name: <gradient:#ef4444:#f87171>🔥 Berserker</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Legendaarinen taistelija, jota kaikki pelkäävät</gradient>"
-      warlord:
-        name: "<gradient:#ef4444:#f87171>⚔ Sotapäällikkö</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Vaihtaa puolustuksen tuhoisaan hyökkäykseen.</gradient>
+          - <gradient:#ef4444:#f87171>➤ Taso IV • Fury Branch</gradient>
+      guardian:
+        name: <gradient:#2563eb:#60a5fa>🛡 Vartija</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Sodan mestari, armeijoiden komentaja</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Seisoo lujasti siellä, missä muut rikkoutuisivat.</gradient>
+          - <gradient:#2563eb:#60a5fa>➤ Taso IV • Shield Branch</gradient>
+      gladiator:
+        name: <gradient:#a855f7:#c084fc>🏟 Gladiaattori</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Hallitsee tasapainoisen areenasodan.</gradient>
+          - <gradient:#a855f7:#c084fc>➤ Taso IV • Arena Branch</gradient>
+      warlord_fury:
+        name: <gradient:#dc2626:#fb7185>👑 Furyn sotalordi</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Pysäyttämätön tuhon moottori.</gradient>
+          - <gradient:#dc2626:#fb7185>➤ Taso V • Lopullinen sijoitus</gradient>
+      warlord_shield:
+        name: <gradient:#1d4ed8:#60a5fa>👑 Kilven sotapäällikkö</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Viimeinen muuri elämän ja tuhon välillä.</gradient>
+          - <gradient:#1d4ed8:#60a5fa>➤ Taso V • Lopullinen sijoitus</gradient>
+      warlord_arena:
+        name: <gradient:#7c3aed:#c084fc>👑 Areenan sotapäällikkö</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Jokaisen coliseumin kruunattu mestari.</gradient>
+          - <gradient:#7c3aed:#c084fc>➤ Taso V • Lopullinen sijoitus</gradient>
     mage:
       apprentice:
-        name: "<gradient:#a855f7:#c084fc>✨ Oppipoika</gradient>"
+        name: <gradient:#a855f7:#d8b4fe>✨ Oppipoika</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Taikuuden perusteiden oppiminen</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Arkaanisen voiman kipinät heräävät.</gradient>
+          - <gradient:#a855f7:#d8b4fe>➤ Taso I • Arcane Foundations</gradient>
       adept:
-        name: "<gradient:#3b82f6:#60a5fa>✨ Taitaja</gradient>"
+        name: <gradient:#3b82f6:#93c5fd>✨ Taitava</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Kasvava maagisessa voimassa</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Kutoa hallittuja ja keskittyneitä loitsuja.</gradient>
+          - <gradient:#3b82f6:#93c5fd>➤ Taso II • Arcane Practice</gradient>
       wizard:
-        name: "<gradient:#f59e0b:#fbbf24>✨ Velho</gradient>"
+        name: <gradient:#f59e0b:#fde68a>✨ Velho</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Salaperäisten taiteiden mestari</gradient>"
-      archmage:
-        name: "<gradient:#ef4444:#f87171>✨ Ylimaagi</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Komensee monimutkaisia ​​taikuuden kuvioita.</gradient>
+          - <gradient:#f59e0b:#fde68a>➤ Taso III • Valitse oppisi</gradient>
+      sorcerer_arcane:
+        name: <gradient:#8b5cf6:#c4b5fd>🔮 Arcanan velho</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Kaiken taikuuden ylin mestari</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ Jalostaa raakaa voimaa tyylikkääksi voimaksi.</gradient>
+          - <gradient:#8b5cf6:#c4b5fd>➤ Taso IV • Arcane Branch</gradient>
+      sorcerer_spell:
+        name: <gradient:#d946ef:#f0abfc>📜 Loitsujen velho</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Laajentaa grimoire-hallintaa ja tarkkuutta.</gradient>
+          - <gradient:#d946ef:#f0abfc>➤ Taso IV • Spell Branch</gradient>
+      sorcerer_void:
+        name: <gradient:#1d4ed8:#60a5fa>🌌 Tyhjyyden velho</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Taivuttaa syvyysenergiat tahtosi mukaan.</gradient>
+          - <gradient:#1d4ed8:#60a5fa>➤ Taso IV • Void Branch</gradient>
+      archmage_arcane:
+        name: <gradient:#7c3aed:#c084fc>👑 Arcanan arkkimies</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Ylivoimainen arkkitehti.</gradient>
+          - <gradient:#7c3aed:#c084fc>➤ Taso V • Lopullinen sijoitus</gradient>
+      archmage_spell:
+        name: <gradient:#d946ef:#f5d0fe>👑 Loitsujen arkkimies</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Jokainen loitsu vastaa välittömästi.</gradient>
+          - <gradient:#d946ef:#f5d0fe>➤ Taso V • Lopullinen sijoitus</gradient>
+      archmage_void:
+        name: <gradient:#1e3a8a:#60a5fa>👑 Tyhjyyden arkkimaage</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Hallitsee maailmojen välisiä reunoja.</gradient>
+          - <gradient:#1e3a8a:#60a5fa>➤ Taso V • Lopullinen sijoitus</gradient>
     rogue:
       pickpocket:
-        name: "<gradient:#6b7280:#9ca3af>🗡 Taskuvaras</gradient>"
+        name: <gradient:#6b7280:#9ca3af>🗡 Taskuvaras</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>Nopeat sormet, nopeampi pako</gradient>"
-
-# ============================================
-# VAATIMUSTEN KÄÄNNÖKSET
-# ============================================
+          - <gradient:#6b7280:#9ca3af>✦ Oppii ajoituksen, väärän suunnan ja nopeuden.</gradient>
+          - <gradient:#94a3b8:#cbd5e1>➤ Taso I • Streetcraft</gradient>
+      thief:
+        name: <gradient:#3b82f6:#93c5fd>🗡 Varas</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Liikkuu lukkojen ja näkölinjojen läpi.</gradient>
+          - <gradient:#3b82f6:#93c5fd>➤ Taso II • Hiljainen sisäänkäynti</gradient>
+      assassin:
+        name: <gradient:#ef4444:#f87171>🗡 Salamurhaaja</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Iskee kerran ja katoaa jälkiä jättämättä.</gradient>
+          - <gradient:#ef4444:#f87171>➤ Taso III • Valitse menetelmäsi</gradient>
+      shadow_stealth:
+        name: <gradient:#0ea5e9:#67e8f9>🌒 Shadow of Stealth</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Hallitsee liikettä, jota silmä ei voi seurata.</gradient>
+          - <gradient:#0ea5e9:#67e8f9>➤ Taso IV • Stealth Branch</gradient>
+      shadow_night:
+        name: <gradient:#7c3aed:#c4b5fd>🌘 Yön varjo</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Muuttaa pimeyden tappavaksi eduksi.</gradient>
+          - <gradient:#7c3aed:#c4b5fd>➤ Taso IV • Night Branch</gradient>
+      shadow_sabotage:
+        name: <gradient:#f97316:#fb923c>💣 Shadow of Sabotage</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Purkaa suunnitelmat ennen kuin viholliset reagoivat.</gradient>
+          - <gradient:#f97316:#fb923c>➤ Taso IV • Sabotage Branch</gradient>
+      phantom_stealth:
+        name: <gradient:#14b8a6:#5eead4>👑 Phantom of Stealth</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Siitä tulee koskematon kaupunkimyytti.</gradient>
+          - <gradient:#14b8a6:#5eead4>➤ Taso V • Lopullinen sijoitus</gradient>
+      phantom_night:
+        name: <gradient:#9333ea:#e9d5ff>👑 Yön haamu</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Omistaa keskiyön tunnin kokonaan.</gradient>
+          - <gradient:#9333ea:#e9d5ff>➤ Taso V • Lopullinen sijoitus</gradient>
+      phantom_sabotage:
+        name: <gradient:#ea580c:#fdba74>👑 Phantom of Sabotage</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Päättää taistelut ennen kuin ne edes alkavat.</gradient>
+          - <gradient:#ea580c:#fdba74>➤ Taso V • Lopullinen sijoitus</gradient>
+    cleric:
+      acolyte:
+        name: <gradient:#f59e0b:#fde68a>✝ Akolyytti</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Aloittaa pyhän palvelupolun.</gradient>
+          - <gradient:#f59e0b:#fde68a>➤ Taso I • Omistautuminen</gradient>
+      healer:
+        name: <gradient:#10b981:#6ee7b7>✝ parantaja</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Palauttaa liittolaiset raskaan paineen alla.</gradient>
+          - <gradient:#10b981:#6ee7b7>➤ Taso II • Restaurointi</gradient>
+      priest:
+        name: <gradient:#3b82f6:#93c5fd>✝ Pappi</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Ohjaa juhlia pyhällä kurilla.</gradient>
+          - <gradient:#3b82f6:#93c5fd>➤ Taso III • Valitse kutsumuksesi</gradient>
+      bishop_divine:
+        name: <gradient:#8b5cf6:#c4b5fd>⛪ Jumaluuden piispa</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Kanavat suorat säteilevät auktoriteetit.</gradient>
+          - <gradient:#8b5cf6:#c4b5fd>➤ Taso IV • Jumalallinen haara</gradient>
+      bishop_light:
+        name: <gradient:#f59e0b:#fef08a>☀ Valon piispa</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Sokeuttaa korruption pyhällä loistolla.</gradient>
+          - <gradient:#f59e0b:#fef08a>➤ Taso IV • Kevyt haara</gradient>
+      bishop_soul:
+        name: <gradient:#06b6d4:#67e8f9>🕊 Sielun piispa</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Vartioi elämän ja kuoleman kynnystä.</gradient>
+          - <gradient:#06b6d4:#67e8f9>➤ Taso IV • Soul Branch</gradient>
+      high_priest_divine:
+        name: <gradient:#7c3aed:#ddd6fe>👑 Jumaluuden ylipappi</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Julistaa ihmeitä kaaoksen sydämessä.</gradient>
+          - <gradient:#7c3aed:#ddd6fe>➤ Taso V • Lopullinen sijoitus</gradient>
+      high_priest_light:
+        name: <gradient:#f59e0b:#fef3c7>👑 Valon ylipappi</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Kylpee liittolaisia ​​horjumattomassa aamunkoitteessa.</gradient>
+          - <gradient:#f59e0b:#fef3c7>➤ Taso V • Lopullinen sijoitus</gradient>
+      high_priest_soul:
+        name: <gradient:#0891b2:#a5f3fc>👑 sielujen ylipappi</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Paimen henkiä yli kuolevaisen pelon.</gradient>
+          - <gradient:#0891b2:#a5f3fc>➤ Taso V • Lopullinen sijoitus</gradient>
+    merchant:
+      peddler:
+        name: <gradient:#6b7280:#9ca3af>💰 Kauppias</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Alkaa karkeudella, viehätysvoimalla ja pienillä kaupoilla.</gradient>
+          - <gradient:#94a3b8:#cbd5e1>➤ Taso I • Street Commerce</gradient>
+      trader:
+        name: <gradient:#3b82f6:#93c5fd>💰 Kauppias</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Laajentaa reittejä ja luotettavia kontakteja.</gradient>
+          - <gradient:#3b82f6:#93c5fd>➤ Taso II • Läsnäolo markkinoilla</gradient>
+      broker:
+        name: <gradient:#f59e0b:#fde68a>💰 Välittäjä</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Sulkee arvokkaat kaupat tarkasti.</gradient>
+          - <gradient:#f59e0b:#fde68a>➤ Taso III • Valitse imperiumisi</gradient>
+      magnate_wealth:
+        name: <gradient:#10b981:#6ee7b7>📈 Rikkauden magnaatti</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Rakentaa puhdasta pääomaa vertaansa vailla olevaan tahtiin.</gradient>
+          - <gradient:#10b981:#6ee7b7>➤ Taso IV • Varallisuushaara</gradient>
+      magnate_market:
+        name: <gradient:#06b6d4:#67e8f9>🏛 Markkinoiden Magnate</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Orkesteroi kysynnän ja tarjonnan syklit.</gradient>
+          - <gradient:#06b6d4:#67e8f9>➤ Taso IV • Market Branch</gradient>
+      magnate_trade:
+        name: <gradient:#f97316:#fdba74>🚚 Kaupan magnaatti</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Hallitsee matkailuvaunukaistaa ja logistiikkaa.</gradient>
+          - <gradient:#f97316:#fdba74>➤ Taso IV • Kaupan haara</gradient>
+      tycoon_wealth:
+        name: <gradient:#22c55e:#bbf7d0>👑 Rikkauden Tycoon</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Kääntää talouksia yhdellä päätöksellä.</gradient>
+          - <gradient:#22c55e:#bbf7d0>➤ Taso V • Lopullinen sijoitus</gradient>
+      tycoon_market:
+        name: <gradient:#0891b2:#a5f3fc>👑 Markkinoiden Tycoon</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Asettaa hinnat, joita jokaisen killan tulee kunnioittaa.</gradient>
+          - <gradient:#0891b2:#a5f3fc>➤ Taso V • Lopullinen sijoitus</gradient>
+      tycoon_trade:
+        name: <gradient:#ea580c:#fed7aa>👑 Kaupan tycoon</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ Omistaa tiet, satamat ja voitot.</gradient>
+          - <gradient:#ea580c:#fed7aa>➤ Taso V • Lopullinen sijoitus</gradient>
 requirement:
 
   # ============================================
@@ -670,7 +915,7 @@ requirement:
     money: "Raha"
     dollars: "Dollaria"
     credits: "Krediitit"
-  
+
   # Tehtävän esikatselumallit
   task:
     entry: "<gradient:#6b7280:#9ca3af>%prefix% %task_name%</gradient>"
@@ -1287,6 +1532,7 @@ admin_skills_ui:
       missing: "<gradient:#ef4444:#f87171>Puuttuu</gradient>"
     detected:
       name: "<gradient:#22c55e:#86efac>✅ %plugin_name%</gradient>"
+      click_action: "<gradient:#3b82f6:#60a5fa>[>] Click to inject themed skill requirements</gradient>"
     missing:
       name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
     lore:
@@ -1301,6 +1547,11 @@ admin_skills_ui:
 # ============================================
 # ADMIN JOBS INTEGRATION UI
 # ============================================
+  messages:
+    inject_success: "<gradient:#22c55e:#86efac>[+] Injected %perk_count% perk and %rank_count% rank skill requirements for %plugin_name%.</gradient>"
+    inject_no_changes: "<gradient:#3b82f6:#60a5fa>[i] No skill requirement changes were needed for %plugin_name%.</gradient>"
+    plugin_missing: "<gradient:#ef4444:#f87171>[!] %plugin_name% is not detected, so no requirements were injected.</gradient>"
+    inject_failed: "<gradient:#ef4444:#f87171>[x] Failed to inject skill requirements for %plugin_name%.</gradient>"
 admin_jobs_ui:
   title: "<gradient:#f59e0b:#fbbf24>⛏ Työintegraatiot</gradient>"
   summary:
@@ -1315,6 +1566,7 @@ admin_jobs_ui:
       missing: "<gradient:#ef4444:#f87171>Puuttuu</gradient>"
     detected:
       name: "<gradient:#22c55e:#86efac>✅ %plugin_name%</gradient>"
+      click_action: "<gradient:#3b82f6:#60a5fa>[>] Napsauta lisätäksesi teemalliset työvaatimukset</gradient>"
     missing:
       name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
     lore:
@@ -1329,6 +1581,11 @@ admin_jobs_ui:
 # ============================================
 # ADMIN CURRENCY OVERVIEW UI
 # ============================================
+  messages:
+    inject_success: "<gradient:#22c55e:#86efac>[+] Lisätty %perk_count%-etu ja %rank_count%-tason työvaatimukset %plugin_name%.</gradient>"
+    inject_no_changes: "<gradient:#3b82f6:#60a5fa>[i] %plugin_name% ei tarvinnut muutoksia työvaatimuksiin.</gradient>"
+    plugin_missing: "<gradient:#ef4444:#f87171>[!] %plugin_name% ei havaittu, joten vaatimuksia ei lisätty.</gradient>"
+    inject_failed: "<gradient:#ef4444:#f87171>[x] Työvaatimusten lisääminen %plugin_name% epäonnistui.</gradient>"
 admin_currency_ui:
   title: "<gradient:#10b981:#34d399>💱 Valuuttapäällikkö</gradient>"
   currency_entry:
@@ -1364,6 +1621,16 @@ admin_currency_ui:
     lore:
       - "<gradient:#6b7280:#9ca3af>RDQ ei voinut havaita Vault tai JExEconomy valuuttoja</gradient>"
       - "<gradient:#6b7280:#9ca3af>Asenna tai ota käyttöön taloudellinen palveluntarjoaja ensin</gradient>"
+    jex_detected:
+      name: "<gradient:#3b82f6:#60a5fa>[i] JExEconomy Detected</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>RDQ detected JExEconomy but no currencies exist yet</gradient>"
+        - "<gradient:#10b981:#34d399>Use the top button to create %currency_id%</gradient>"
+    vault_detected:
+      name: "<gradient:#3b82f6:#60a5fa>[i] Vault Detected</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Vault is available but no currency entries were listed</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Check your economy provider configuration</gradient>"
   decoration:
     border:
       name: " "
@@ -1683,7 +1950,7 @@ rank_requirements_journey_ui:
         - "<gradient:#6b7280:#9ca3af>Tälle sijalle ei ole määritetty palkintoja</gradient>"
       type_label: "<gray>Tyyppi:</gray> <yellow>%type%</yellow>"
       value_label: "<gray>Arvo:</gray> <gold>%value%</gold>"
-    
+
     # Palkkiotyyppien kuvaukset
     currency:
       description: "<gradient:#fbbf24:#fcd34d>Saat valuuttapalkintoja</gradient>"
@@ -1705,7 +1972,6 @@ rank_requirements_journey_ui:
       description: "<gradient:#f97316:#fb923c>Avaa hiukkastehosteet</gradient>"
     vanishing_chest:
       description: "<gradient:#14b8a6:#2dd4bf>Saat katoavan arkun</gradient>"
-    
     more: "<gradient:#fbbf24:#fcd34d>+%count% lisää palkintoja...</gradient>"
 
   rewards:
@@ -1734,10 +2000,9 @@ reward:
       - "<gradient:#6b7280:#9ca3af>Tälle sijalle ei ole määritetty palkintoja</gradient>"
     type_label: "<gray>Tyyppi:</gray> <yellow>%type%</yellow>"
     value_label: "<gray>Arvo:</gray> <gold>%value%</gold>"
-  
   perk:
     unlocked: "<gradient:#10b981:#34d399>✦</gradient> <gradient:#6b7280:#9ca3af>Avasit edun:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
-  
+
   # Palkkiotyyppien kuvaukset
   currency:
     description: "<gradient:#fbbf24:#fcd34d>Saat valuuttapalkintoja</gradient>"
@@ -1759,7 +2024,6 @@ reward:
     description: "<gradient:#f97316:#fb923c>Avaa hiukkastehosteet</gradient>"
   vanishing_chest:
     description: "<gradient:#14b8a6:#2dd4bf>Saat katoavan arkun</gradient>"
-  
   more: "<gradient:#fbbf24:#fcd34d>+%count% lisää palkintoja...</gradient>"
 
 rewards:
@@ -1815,7 +2079,7 @@ perk:
   fish_xp:
     name: "<gradient:#10b981:#34d399>Kalastuksen XP-tehoste</gradient>"
     description: "<gradient:#6b7280:#9ca3af>Ansaitse bonus XP, kun pyydät kalaa</gradient>"
-  
+
   # Juomaedut
   potion_enhance:
     name: "<gradient:#a855f7:#c084fc>Juomavahvistin</gradient>"
@@ -1826,7 +2090,7 @@ perk:
   potion_save:
     name: "<gradient:#10b981:#34d399>Juoman palautus</gradient>"
     description: "<gradient:#6b7280:#9ca3af>Mahdollisuus saada juomasi takaisin juomisen jälkeen</gradient>"
-  
+
   # Etuviestit
   messages:
     # Avaa/Ota käyttöön/Poista käytöstä
@@ -1843,36 +2107,33 @@ perk:
     disable:
       success: "<gradient:#f59e0b:#fbbf24>Etu poistettu käytöstä:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
       failed: "<gradient:#ef4444:#f87171>Edun poistaminen käytöstä epäonnistui:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
-    
+
     # Palautumisaika
     cooldown:
       active: "<gradient:#ef4444:#f87171>Tämä etu on palautumisajalla vielä</gradient> <gradient:#f59e0b:#fbbf24>%time%</gradient>"
       ready: "<gradient:#10b981:#34d399>Etu on käyttövalmis!</gradient>"
-    
+
     # Tehosteen laukaisimet
     potion_enhanced: "<gradient:#a855f7:#c084fc>✨ Juomaa vahvistettu!</gradient> <gradient:#6b7280:#9ca3af>Tehosteita vahvistettiin</gradient>"
     potion_extended: "<gradient:#f59e0b:#fbbf24>⏱ Juoman kestoa pidennetty!</gradient> <gradient:#6b7280:#9ca3af>Kestää pidempään</gradient>"
     potion_saved: "<gradient:#10b981:#34d399>💾 Juoma säästetty!</gradient> <gradient:#6b7280:#9ca3af>Palautettu inventaarioon</gradient>"
     fishing_active: "<gradient:#3b82f6:#60a5fa>🎣 Nopeampi kalastus aktiivinen!</gradient>"
     fishing_xp: "<gradient:#10b981:#34d399>+%xp% kalastus-XP!</gradient>"
-  
+
   # Käyttöliittymäelementit
   ui:
     header:
       type_label: "<gray>Tyyppi: <white>%type%</white></gray>"
       category_label: "<gray>Luokka: <white>%category%</white></gray>"
-    
     requirements:
       no_requirements: "<green>Ei vaatimuksia</green>"
       no_requirements_lore: "<gray>Tällä edulla ei ole avausvaatimuksia</gray>"
-    
     rewards:
       title: "<gold>Avaa palkinto</gold>"
       no_rewards: "<gray>Ei avauspalkintoja</gray>"
       no_rewards_lore: "<gray>Tämä etu ei sisällä avauspalkintoja</gray>"
       type_label: "<gray>Tyyppi: <white>%type%</white></gray>"
       value_label: "<gray>Arvo: <gold>%value%</gold></gray>"
-    
     status:
       title: "<white>Edun tila</white>"
       locked: "<red>✖ Lukittu</red>"
@@ -1883,7 +2144,6 @@ perk:
       enabled_count: "<gray>Käytössä olevat edut: <white>%count%/%max%</white></gray>"
       cooldown_label: "<gray>Palautumisaika: <gold>%time%</gold></gray>"
       activations_label: "<gray>Aktivoinnit: <white>%count%</white></gray>"
-    
     buttons:
       unlock:
         title: "<white>Avaa etu</white>"
@@ -1895,7 +2155,7 @@ perk:
       disable:
         title: "<white>Poista etu käytöstä</white>"
         hint: "<yellow>Napsauta poistaaksesi tämän edun käytöstä</yellow>"
-  
+
   # Olemassa olevat edut (viitteeksi - lisää jos puuttuu)
   fly:
     name: "<gradient:#3b82f6:#60a5fa>Lento</gradient>"

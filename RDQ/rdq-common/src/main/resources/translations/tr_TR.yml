@@ -13,14 +13,14 @@ prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "
 pseudo:
   name: "<gradient:#6b7280:#9ca3af>📦 Ödül Yok</gradient>"
   lore:
-    - "<gradient:#6b7280:#9ca3af>Ödül oluşturmak için öğe ekleyin</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Ödül oluşturmak için öğe ekleyin</gradient>"
 
 input_slot:
   name: "<gradient:#10b981:#34d399>➕ Öğe Ekle</gradient>"
   lore:
-    - "<gradient:#6b7280:#9ca3af>Ödül olarak öğeleri buraya yerleştirin</gradient>"
-    - "<gradient:#6b7280:#9ca3af>Öğeyi yerleştirmek için sol tıklayın</gradient>"
-    - "<gradient:#6b7280:#9ca3af>Öğeyi kaldırmak için sağ tıklayın</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Ödül olarak öğeleri buraya yerleştirin</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Öğeyi yerleştirmek için sol tıklayın</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Öğeyi kaldırmak için sağ tıklayın</gradient>"
 
 # ============================================
 # SIRALAMA AĞACI GÖRÜNTÜLENEN İSİMLER VE AÇIKLAMALAR
@@ -29,33 +29,33 @@ tree:
   ranger:
     name: "<gradient:#10b981:#34d399>🏹 Korucu</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Okçuluk ve iz sürme sanatında ustalaşın</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Doğayla bir olun</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Okçuluk ve iz sürme sanatında ustalaşın</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Doğayla bir olun</gradient>"
   warrior:
     name: "<gradient:#ef4444:#f87171>⚔ Savaşçı</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Savaş sanatında ustalaşın</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Efsanevi bir savaşçı ol</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Savaş sanatında ustalaşın</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Efsanevi bir savaşçı ol</gradient>"
   mage:
     name: "<gradient:#a855f7:#c084fc>✨ Büyücü</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Büyünün gücünü kullanın</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Büyünün ustası olun</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Büyünün gücünü kullanın</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Büyünün ustası olun</gradient>"
   rogue:
     name: "<gradient:#6b7280:#9ca3af>🗡 Haydut</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Gizlilik ve kurnazlıkta ustalaşın</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Gölgelerden saldırın</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Gizlilik ve kurnazlıkta ustalaşın</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Gölgelerden saldırın</gradient>"
   cleric:
     name: "<gradient:#f59e0b:#fbbf24>✝ Rahip</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>İlahi gücü kanalize edin</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Müttefiklerinizi iyileştirin ve koruyun</gradient>"
+    - "<gradient:#6b7280:#9ca3af>İlahi gücü kanalize edin</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Müttefiklerinizi iyileştirin ve koruyun</gradient>"
   merchant:
     name: "<gradient:#10b981:#34d399>💰 Tüccar</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Ticaret sanatında ustalaşın</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Servetini inşa et</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Ticaret sanatında ustalaşın</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Servetini inşa et</gradient>"
 
 # ============================================
 # SIRALAMA GÖRÜNEN İSİMLER VE AÇIKLAMALAR
@@ -72,245 +72,298 @@ rank:
   default:
     name: "<gradient:#6b7280:#9ca3af>Sıralanmamış</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Başlamak için bir sıralama yolu seçin</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Başlamak için bir sıralama yolu seçin</gradient>"
     unselected:
       name: "<gradient:#6b7280:#9ca3af>Sıralanmamış</gradient>"
   icon:
     default:
       name: "<gradient:#6b7280:#9ca3af>Varsayılan Sıralama</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Sıralama seçilmedi</gradient>"
-  # Korucu Ağacı Rütbeleri
+      - "<gradient:#6b7280:#9ca3af>Sıralama seçilmedi</gradient>"
+  # Ranger Tree Ranks
   ranger:
+    scout:
+      name: "<gradient:#22c55e:#86efac>🏹 Yol İzcisi</gradient>"
+      lore:
+      - "<gradient:#6b7280:#9ca3af>✦ Toynak izlerini ve rüzgar değişimlerini okur.</gradient>"
+      - "<gradient:#10b981:#34d399>➤ Aşama I • Doğa Girişimi</gradient>"
     hunter:
-      name: "<gradient:#7c3aed:#a78bfa>🏹 Avcı</gradient>"
+      name: "<gradient:#16a34a:#4ade80>🏹 Vahşi Doğanın Avcısı</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Vahşi doğanın yollarını öğrenen acemi bir izci</gradient>"
-    archer:
-      name: "<gradient:#10b981:#34d399>🎯 Okçu</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Yay konusunda yetenekli, uzak mesafede ölümcül</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Avını sabırlı bir hassasiyetle takip eder.</gradient>"
+      - "<gradient:#10b981:#34d399>➤ Seviye II • Vahşi Takip</gradient>"
     tracker:
-      name: "<gradient:#3b82f6:#60a5fa>🔍 Takipçi</gradient>"
+      name: "<gradient:#0ea5e9:#38bdf8>🏹 İşaretlerin Takipçisi</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Av bulma ve takip etme konusunda uzman</gradient>"
-    marksman:
-      name: "<gradient:#f59e0b:#fbbf24>🎯 Nişancı</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Hiçbir fırtınanın silemeyeceği izleri takip eder.</gradient>"
+      - "<gradient:#3b82f6:#60a5fa>➤ Seviye III • İlerideki Yol Seçimi</gradient>"
+    warden_primal:
+      name: "<gradient:#14b8a6:#2dd4bf>🛡 Canavarların Muhafızı</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Ölümcül isabetliliğe sahip hassas nişancı</gradient>"
-    pathfinder:
-      name: "<gradient:#a855f7:#c084fc>🗺 Yol Bulucu</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Diyarın en üstün yaratıklarıyla bağ kurar.</gradient>"
+      - "<gradient:#14b8a6:#2dd4bf>➤ Seviye IV • Birincil Dal</gradient>"
+    warden_storm:
+      name: "<gradient:#2563eb:#60a5fa>⚡ Fırtınaların Bekçisi</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Keşfedilmemiş toprakların usta kaşifi</gradient>"
-    sniper:
-      name: "<gradient:#ef4444:#f87171>🎯 Keskin Nişancı</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Gök gürültüsü ve yağmur yoluyla gerçek yangınlar.</gradient>"
+      - "<gradient:#2563eb:#60a5fa>➤ Seviye IV • Fırtına Dalı</gradient>"
+    warden_wild:
+      name: "<gradient:#16a34a:#84cc16>🌿 Vahşi Doğanın Muhafızı</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Elit nişancı, tek atış tek öldürme</gradient>"
-    forest_lord:
-      name: "<gradient:#10b981:#34d399>🌲 Orman Lordu</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Kutsal sınırları ve gizli açıklıkları korur.</gradient>"
+      - "<gradient:#16a34a:#84cc16>➤ Seviye IV • Vahşi Dal</gradient>"
+    beastmaster_primal:
+      name: "<gradient:#7c3aed:#c084fc>👑 Canavar Ustası Primal</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Vahşi doğanın efendisi, doğayla iç içe</gradient>"
-  # Savaşçı Ağacı Rütbeleri
+      - "<gradient:#6b7280:#9ca3af>✦ Efsanevi canavarlara korkmadan komuta eder.</gradient>"
+      - "<gradient:#7c3aed:#c084fc>➤ Seviye V • Son Sıralama</gradient>"
+    beastmaster_storm:
+      name: "<gradient:#1d4ed8:#3b82f6>👑 Canavar Ustası Fırtınası</gradient>"
+      lore:
+      - "<gradient:#6b7280:#9ca3af>✦ Her cıvata amansız voleybolunuza rehberlik eder.</gradient>"
+      - "<gradient:#1d4ed8:#3b82f6>➤ Seviye V • Son Sıralama</gradient>"
+    beastmaster_wild:
+      name: "<gradient:#15803d:#22c55e>👑 Canavar Ustası Vahşi</gradient>"
+      lore:
+      - "<gradient:#6b7280:#9ca3af>✦ Doğanın kendisi çağrınıza cevap vermek için yükselir.</gradient>"
+      - "<gradient:#15803d:#22c55e>➤ Seviye V • Son Sıralama</gradient>"
+  # Warrior Tree Ranks
   warrior:
     recruit:
-      name: "<gradient:#6b7280:#9ca3af>İyileştirmek</gradient>"
+      name: "<gradient:#6b7280:#9ca3af>⚔ İşe Al</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Yeni bir savaşçı yolculuğuna başlıyor</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Savaşın temellerini öğrenin</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Test edilmemiş kararlılığa sahip yeni bir bıçak.</gradient>"
+      - "<gradient:#94a3b8:#cbd5e1>➤ Seviye I • Eğitim Alanları</gradient>"
     soldier:
-      name: "<gradient:#3b82f6:#60a5fa>Asker</gradient>"
+      name: "<gradient:#3b82f6:#60a5fa>⚔ Asker</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Dövüş sanatı eğitimi aldı</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Savaşa hazır</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Matkaplar ve ön saflardaki görevlerle güçlendirilmiştir.</gradient>"
+      - "<gradient:#3b82f6:#60a5fa>➤ Tier II • Saha Disiplini</gradient>"
     veteran:
-      name: "<gradient:#f59e0b:#fbbf24>Kıdemli</gradient>"
+      name: "<gradient:#f59e0b:#fbbf24>⚔ Kıdemli</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Savaşta sertleşmiş savaşçı</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Uzmanlık yolunuzu seçin</gradient>"
-    # Uzmanlık Şubesi 1: Vahşi (Saldırı)
+      - "<gradient:#6b7280:#9ca3af>✦ Savaş yaraları kazandığınız bilgeliğinizi gösterir.</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>➤ Seviye III • Yolunuzu Seçin</gradient>"
     berserker:
-      name: "<gradient:#ef4444:#f87171>Vahşi</gradient>"
+      name: "<gradient:#ef4444:#f87171>🔥 Vahşi</gradient>"
       lore:
-        - "<gradient:#ef4444:#f87171>Öfke Yolu</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Yıkıcı saldırıları serbest bırakın</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Ham güç için savunmayı feda edin</gradient>"
-    # Uzmanlık Şubesi 2: Muhafız (Savunma)
+      - "<gradient:#6b7280:#9ca3af>✦ Yıkıcı saldırı için savunmayı değiştirir.</gradient>"
+      - "<gradient:#ef4444:#f87171>➤ Seviye IV • Hiddet Şubesi</gradient>"
     guardian:
-      name: "<gradient:#3b82f6:#60a5fa>Gardiyan</gradient>"
+      name: "<gradient:#2563eb:#60a5fa>🛡 koruyucu</gradient>"
       lore:
-        - "<gradient:#3b82f6:#60a5fa>Koruma Yolu</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Kırılmaz bir kalkan ol</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Müttefiklerinizi ne pahasına olursa olsun koruyun</gradient>"
-    # Uzmanlık Alanı 3: Gladyatör (Dengeli)
+      - "<gradient:#6b7280:#9ca3af>✦ Başkalarının kırılacağı yerde sağlam durur.</gradient>"
+      - "<gradient:#2563eb:#60a5fa>➤ Seviye IV • Kalkan Dalı</gradient>"
     gladiator:
-      name: "<gradient:#a855f7:#c084fc>Gladyatör</gradient>"
+      name: "<gradient:#a855f7:#c084fc>🏟 Gladyatör</gradient>"
       lore:
-        - "<gradient:#a855f7:#c084fc>Zafer Yolu</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Arena dövüşünün ustası</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Hücum ve savunmayı dengeleyin</gradient>"
-    # Son Sıralamalar
+      - "<gradient:#6b7280:#9ca3af>✦ Dengeli arena savaşında ustalaşır.</gradient>"
+      - "<gradient:#a855f7:#c084fc>➤ Seviye IV • Arena Şubesi</gradient>"
     warlord_fury:
-      name: "<gradient:#ef4444:#f87171>Öfke Savaş Lordu</gradient>"
+      name: "<gradient:#dc2626:#fb7185>👑 Öfkenin Savaş Lordu</gradient>"
       lore:
-        - "<gradient:#ef4444:#f87171>Nihai Vahşi</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Durdurulamaz yıkım gücü</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Korku savaş alanında vücut buluyor</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Durdurulamaz bir yıkım motoru.</gradient>"
+      - "<gradient:#dc2626:#fb7185>➤ Seviye V • Son Sıralama</gradient>"
     warlord_shield:
-      name: "<gradient:#3b82f6:#60a5fa>Kalkanın Savaş Lordu</gradient>"
+      name: "<gradient:#1d4ed8:#60a5fa>👑 Kalkanın Savaş Lordu</gradient>"
       lore:
-        - "<gradient:#3b82f6:#60a5fa>Nihai Muhafız</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Taşınmaz nesne, ebedi koruyucu</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Sen dururken kimse geçmeyecek</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Yaşamla yıkım arasındaki son duvar.</gradient>"
+      - "<gradient:#1d4ed8:#60a5fa>➤ Seviye V • Son Sıralama</gradient>"
     warlord_arena:
-      name: "<gradient:#a855f7:#c084fc>Arena Savaş Lordu</gradient>"
+      name: "<gradient:#7c3aed:#c084fc>👑 Arenanın Savaş Lordu</gradient>"
       lore:
-        - "<gradient:#a855f7:#c084fc>Nihai Gladyatör</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Şampiyonların şampiyonu</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Arena efsanesi</gradient>"
-    # Eski dereceler (geriye dönük uyumluluk için)
-    knight:
-      name: "<gradient:#f59e0b:#fbbf24>Şövalye</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Diyarın onurlu savaşçısı</gradient>"
-    champion:
-      name: "<gradient:#a855f7:#c084fc>Şampiyon</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Herkesin korktuğu efsanevi savaşçı</gradient>"
-    warlord:
-      name: "<gradient:#ef4444:#f87171>Savaş ağası</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Savaş ustası, orduların komutanı</gradient>"
-  # Büyü Ağacı Rütbeleri
+      - "<gradient:#6b7280:#9ca3af>✦ Her stadyumun taçlandırılmış şampiyonu.</gradient>"
+      - "<gradient:#7c3aed:#c084fc>➤ Seviye V • Son Sıralama</gradient>"
+  # Mage Tree Ranks
   mage:
     apprentice:
-      name: "<gradient:#a855f7:#c084fc>✨ Çırak</gradient>"
+      name: "<gradient:#a855f7:#d8b4fe>✨ Çırak</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Büyünün temellerini öğrenmek</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Büyülü gücün kıvılcımları uyanır.</gradient>"
+      - "<gradient:#a855f7:#d8b4fe>➤ Kademe I • Gizemli Temeller</gradient>"
     adept:
-      name: "<gradient:#3b82f6:#60a5fa>✨ Usta</gradient>"
+      name: "<gradient:#3b82f6:#93c5fd>✨ Usta</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Büyülü güçle büyüyoruz</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Kontrollü ve odaklanmış büyüler örer.</gradient>"
+      - "<gradient:#3b82f6:#93c5fd>➤ Seviye II • Gizemli Uygulama</gradient>"
     wizard:
-      name: "<gradient:#f59e0b:#fbbf24>✨ Sihirbaz</gradient>"
+      name: "<gradient:#f59e0b:#fde68a>✨ Sihirbaz</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Gizli sanatların ustası</gradient>"
-    archmage:
-      name: "<gradient:#ef4444:#f87171>✨ Başbüyücü</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Karmaşık büyü kalıplarını yönetir.</gradient>"
+      - "<gradient:#f59e0b:#fde68a>➤ Seviye III • Doktrininizi Seçin</gradient>"
+    sorcerer_arcane:
+      name: "<gradient:#8b5cf6:#c4b5fd>🔮 Arcana Büyücüsü</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Tüm büyülerin yüce ustası</gradient>"
-  # Rogue Tree Rütbeleri
+      - "<gradient:#6b7280:#9ca3af>✦ Ham gücü zarif bir güce dönüştürür.</gradient>"
+      - "<gradient:#8b5cf6:#c4b5fd>➤ Seviye IV • Gizemli Şube</gradient>"
+    sorcerer_spell:
+      name: "<gradient:#d946ef:#f0abfc>📜 Büyü Büyücüsü</gradient>"
+      lore:
+      - "<gradient:#6b7280:#9ca3af>✦ Büyü kitabı kontrolünü ve hassasiyetini genişletir.</gradient>"
+      - "<gradient:#d946ef:#f0abfc>➤ Seviye IV • Büyü Dalı</gradient>"
+    sorcerer_void:
+      name: "<gradient:#1d4ed8:#60a5fa>🌌 Hiçliğin Büyücüsü</gradient>"
+      lore:
+      - "<gradient:#6b7280:#9ca3af>✦ Dipsiz enerjileri isteğinize göre büker.</gradient>"
+      - "<gradient:#1d4ed8:#60a5fa>➤ Seviye IV • Geçersiz Dal</gradient>"
+    archmage_arcane:
+      name: "<gradient:#7c3aed:#c084fc>👑 Arcana'nın Baş Büyücüsü</gradient>"
+      lore:
+      - "<gradient:#6b7280:#9ca3af>✦ Saf gizemli gücün yüce mimarı.</gradient>"
+      - "<gradient:#7c3aed:#c084fc>➤ Seviye V • Son Sıralama</gradient>"
+    archmage_spell:
+      name: "<gradient:#d946ef:#f5d0fe>👑 Büyülerin Baş Büyücüsü</gradient>"
+      lore:
+      - "<gradient:#6b7280:#9ca3af>✦ Her büyü anında yanıt verir.</gradient>"
+      - "<gradient:#d946ef:#f5d0fe>➤ Seviye V • Son Sıralama</gradient>"
+    archmage_void:
+      name: "<gradient:#1e3a8a:#60a5fa>👑 Hiçliğin Baş Büyücüsü</gradient>"
+      lore:
+      - "<gradient:#6b7280:#9ca3af>✦ Dünyalar arasındaki sınırları yönetir.</gradient>"
+      - "<gradient:#1e3a8a:#60a5fa>➤ Seviye V • Son Sıralama</gradient>"
+  # Rogue Tree Ranks
   rogue:
     pickpocket:
       name: "<gradient:#6b7280:#9ca3af>🗡 Yankesici</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Hızlı parmaklar, daha hızlı kaçış</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Zamanlamayı, yanlış yönlendirmeyi ve hızı öğrenir.</gradient>"
+      - "<gradient:#94a3b8:#cbd5e1>➤ Seviye I • Streetcraft</gradient>"
     thief:
-      name: "<gradient:#3b82f6:#60a5fa>🗡 Hırsız</gradient>"
+      name: "<gradient:#3b82f6:#93c5fd>🗡 Hırsız</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Gizlilik ve hırsızlık ustası</gradient>"
-    scout:
-      name: "<gradient:#10b981:#34d399>🗡 İzci</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Gölgelerin gözleri ve kulakları</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Kilitlerden ve gözetleme hatlarından kayar.</gradient>"
+      - "<gradient:#3b82f6:#93c5fd>➤ Tier II • Sessiz Giriş</gradient>"
     assassin:
       name: "<gradient:#ef4444:#f87171>🗡 Suikastçı</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Sessiz katil, gölgelerden gelen ölüm</gradient>"
-    infiltrator:
-      name: "<gradient:#a855f7:#c084fc>🗡 Casus</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Bir kez vurur ve iz bırakmadan kaybolur.</gradient>"
+      - "<gradient:#ef4444:#f87171>➤ Seviye III • Yönteminizi Seçin</gradient>"
+    shadow_stealth:
+      name: "<gradient:#0ea5e9:#67e8f9>🌒 Gizliliğin Gölgesi</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Fark edilmeden içeri girip çıkma konusunda uzman</gradient>"
-    shadowblade:
-      name: "<gradient:#6b7280:#9ca3af>🗡 Gölge Kılıcı</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Hiçbir gözün takip edemeyeceği ustalıktaki hareket.</gradient>"
+      - "<gradient:#0ea5e9:#67e8f9>➤ Seviye IV • Gizli Şube</gradient>"
+    shadow_night:
+      name: "<gradient:#7c3aed:#c4b5fd>🌘 Gecenin Gölgesi</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Gecenin ölümcül savaşçısı</gradient>"
-    spymaster:
-      name: "<gradient:#3b82f6:#60a5fa>🗡 Casus ustası</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Karanlığı öldürücü avantaja dönüştürür.</gradient>"
+      - "<gradient:#7c3aed:#c4b5fd>➤ Tier IV • Gece Şubesi</gradient>"
+    shadow_sabotage:
+      name: "<gradient:#f97316:#fb923c>💣 Sabotajın Gölgesi</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Bilgi ağlarının denetleyicisi</gradient>"
-    shadow_master:
-      name: "<gradient:#1f2937:#374151>🗡 Gölge Ustası</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Düşmanlar tepki vermeden önce planları yerle bir eder.</gradient>"
+      - "<gradient:#f97316:#fb923c>➤ Seviye IV • Sabotaj Şubesi</gradient>"
+    phantom_stealth:
+      name: "<gradient:#14b8a6:#5eead4>👑 Gizliliğin Hayaleti</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Karanlığın kendisiyle bir</gradient>"
-    shadowmaster:
-      name: "<gradient:#1f2937:#374151>🗡 Gölge Ustası</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Dokunulmaz bir şehir efsanesine dönüşür.</gradient>"
+      - "<gradient:#14b8a6:#5eead4>➤ Seviye V • Son Sıralama</gradient>"
+    phantom_night:
+      name: "<gradient:#9333ea:#e9d5ff>👑 Gecenin Hayaleti</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Tüm gölgelerin yüce hükümdarı</gradient>"
-  # Rahip Ağacı Rütbeleri
+      - "<gradient:#6b7280:#9ca3af>✦ Gece yarısı saatine tamamen sahiptir.</gradient>"
+      - "<gradient:#9333ea:#e9d5ff>➤ Seviye V • Son Sıralama</gradient>"
+    phantom_sabotage:
+      name: "<gradient:#ea580c:#fdba74>👑 Sabotaj Hayaleti</gradient>"
+      lore:
+      - "<gradient:#6b7280:#9ca3af>✦ Savaşları daha başlamadan bitirir.</gradient>"
+      - "<gradient:#ea580c:#fdba74>➤ Seviye V • Son Sıralama</gradient>"
+  # Cleric Tree Ranks
   cleric:
     acolyte:
-      name: "<gradient:#f59e0b:#fbbf24>✝ Rahibe Yardımcısı</gradient>"
+      name: "<gradient:#f59e0b:#fde68a>✝ Rahibe Yardımcısı</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>İlahiyatın sadık hizmetkarı</gradient>"
-    devotee:
-      name: "<gradient:#f59e0b:#fbbf24>✝ Adanmış</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>İlahi yolun sadık takipçisi</gradient>"
-    priest:
-      name: "<gradient:#10b981:#34d399>✝ Rahip</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Müminlerin şifacısı ve koruyucusu</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Kutsal hizmet yolunu başlatır.</gradient>"
+      - "<gradient:#f59e0b:#fde68a>➤ Aşama I • Adanmışlık</gradient>"
     healer:
-      name: "<gradient:#10b981:#34d399>✝ Şifacı</gradient>"
+      name: "<gradient:#10b981:#6ee7b7>✝ Şifacı</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Restoratif sanatlar ustası</gradient>"
-    bishop:
-      name: "<gradient:#a855f7:#c084fc>✝ Piskopos</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Ağır baskı altındaki müttefikleri yeniler.</gradient>"
+      - "<gradient:#10b981:#6ee7b7>➤ Seviye II • Restorasyon</gradient>"
+    priest:
+      name: "<gradient:#3b82f6:#93c5fd>✝ Rahip</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>İnançlıların lideri</gradient>"
-    oracle:
-      name: "<gradient:#3b82f6:#60a5fa>✝ Kahin</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Partileri kutsal disiplinle yönlendirir.</gradient>"
+      - "<gradient:#3b82f6:#93c5fd>➤ Seviye III • Görevinizi Seçin</gradient>"
+    bishop_divine:
+      name: "<gradient:#8b5cf6:#c4b5fd>⛪ İlahiyat Piskoposu</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>İlahi vizyonları gören</gradient>"
-    high_priest:
-      name: "<gradient:#ef4444:#f87171>✝ Yüksek Rahip</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Kanallar doğrudan ışınım yetkisini sağlar.</gradient>"
+      - "<gradient:#8b5cf6:#c4b5fd>➤ Seviye IV • İlahi Dal</gradient>"
+    bishop_light:
+      name: "<gradient:#f59e0b:#fef08a>☀ Işık Piskoposu</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>İlahi olanın yüce sesi</gradient>"
-  # Tüccar Ağacı Rütbeleri
+      - "<gradient:#6b7280:#9ca3af>✦ Yolsuzluğu kutsal parlaklıkla kör eder.</gradient>"
+      - "<gradient:#f59e0b:#fef08a>➤ Seviye IV • Hafif Şube</gradient>"
+    bishop_soul:
+      name: "<gradient:#06b6d4:#67e8f9>🕊 Ruhların Piskoposu</gradient>"
+      lore:
+      - "<gradient:#6b7280:#9ca3af>✦ Yaşam ve ölümün eşiğini korur.</gradient>"
+      - "<gradient:#06b6d4:#67e8f9>➤ Seviye IV • Ruh Dalı</gradient>"
+    high_priest_divine:
+      name: "<gradient:#7c3aed:#ddd6fe>👑 İlahiyatın Yüksek Rahibi</gradient>"
+      lore:
+      - "<gradient:#6b7280:#9ca3af>✦ Kaosun kalbinde mucizeler ilan eder.</gradient>"
+      - "<gradient:#7c3aed:#ddd6fe>➤ Seviye V • Son Sıralama</gradient>"
+    high_priest_light:
+      name: "<gradient:#f59e0b:#fef3c7>👑 Işığın Yüce Rahibi</gradient>"
+      lore:
+      - "<gradient:#6b7280:#9ca3af>✦ Müttefikleri sarsılmaz şafakta yıkar.</gradient>"
+      - "<gradient:#f59e0b:#fef3c7>➤ Seviye V • Son Sıralama</gradient>"
+    high_priest_soul:
+      name: "<gradient:#0891b2:#a5f3fc>👑 Ruhların Yüce Rahibi</gradient>"
+      lore:
+      - "<gradient:#6b7280:#9ca3af>✦ Ölümlü korkunun ötesinde ruhlara çobanlık eder.</gradient>"
+      - "<gradient:#0891b2:#a5f3fc>➤ Seviye V • Son Sıralama</gradient>"
+  # Merchant Tree Ranks
   merchant:
     peddler:
       name: "<gradient:#6b7280:#9ca3af>💰 Seyyar satıcı</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Sokakta eşya satmak</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Cesaret, çekicilik ve küçük esnafla başlar.</gradient>"
+      - "<gradient:#94a3b8:#cbd5e1>➤ Seviye I • Sokak Ticareti</gradient>"
     trader:
-      name: "<gradient:#3b82f6:#60a5fa>💰 Tüccar</gradient>"
+      name: "<gradient:#3b82f6:#93c5fd>💰 Tüccar</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Bağlantıları olan yerleşik tüccar</gradient>"
-    vendor:
-      name: "<gradient:#10b981:#34d399>💰 Satıcı</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Rotaları ve güvenilir bağlantıları genişletir.</gradient>"
+      - "<gradient:#3b82f6:#93c5fd>➤ Tier II • Pazar Varlığı</gradient>"
+    broker:
+      name: "<gradient:#f59e0b:#fde68a>💰 Komisyoncu</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Nitelikli mal satıcısı</gradient>"
-    artificer:
-      name: "<gradient:#f59e0b:#fbbf24>💰 Zanaatkar</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Yüksek değerli anlaşmaları hassasiyetle kapatır.</gradient>"
+      - "<gradient:#f59e0b:#fde68a>➤ Seviye III • İmparatorluğunuzu Seçin</gradient>"
+    magnate_wealth:
+      name: "<gradient:#10b981:#6ee7b7>📈 Zenginlik Patronu</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Kaliteli eşya ustası</gradient>"
-    alchemist:
-      name: "<gradient:#a855f7:#c084fc>💰 Simyacı</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Eşsiz bir hızda saf sermaye oluşturur.</gradient>"
+      - "<gradient:#10b981:#6ee7b7>➤ Tier IV • Varlık Şubesi</gradient>"
+    magnate_market:
+      name: "<gradient:#06b6d4:#67e8f9>🏛 Piyasaların Patronu</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>İksir ve iksir ustası</gradient>"
-    merchant:
-      name: "<gradient:#f59e0b:#fbbf24>💰 Tüccar</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Arz ve talep döngülerini düzenler.</gradient>"
+      - "<gradient:#06b6d4:#67e8f9>➤ Tier IV • Market Şubesi</gradient>"
+    magnate_trade:
+      name: "<gradient:#f97316:#fdba74>🚚 Ticaretin Patronu</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Başarılı işletme sahibi</gradient>"
-    master_crafter:
-      name: "<gradient:#ef4444:#f87171>💰 Usta Zanaatkar</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Karavan yollarına ve lojistiğe hakimdir.</gradient>"
+      - "<gradient:#f97316:#fdba74>➤ Tier IV • Ticaret Şubesi</gradient>"
+    tycoon_wealth:
+      name: "<gradient:#22c55e:#bbf7d0>👑 Zenginlik Kralı</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Diyarın yüce zanaatkarı</gradient>"
-    merchant_prince:
-      name: "<gradient:#a855f7:#c084fc>💰 Tüccar Prens</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Tek kararla ekonomileri döndürür.</gradient>"
+      - "<gradient:#22c55e:#bbf7d0>➤ Seviye V • Son Sıralama</gradient>"
+    tycoon_market:
+      name: "<gradient:#0891b2:#a5f3fc>👑 Piyasaların Kralı</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Ticaret telifi</gradient>"
-    tycoon:
-      name: "<gradient:#a855f7:#c084fc>💰 İş adamı</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Her loncanın saygı duyması gereken fiyatları belirler.</gradient>"
+      - "<gradient:#0891b2:#a5f3fc>➤ Seviye V • Son Sıralama</gradient>"
+    tycoon_trade:
+      name: "<gradient:#ea580c:#fed7aa>👑 Ticaret Kralı</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Ticaret ve ticaret ustası</gradient>"
-    guild_master:
-      name: "<gradient:#ef4444:#f87171>💰 Lonca Ustası</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Tüccar loncasının lideri</gradient>"
-
+      - "<gradient:#6b7280:#9ca3af>✦ Yolların, limanların ve kârların sahibidir.</gradient>"
+      - "<gradient:#ea580c:#fed7aa>➤ Seviye V • Son Sıralama</gradient>"
 # ============================================
-# BOUNTY DİNLEYİCİ MESAJLARI
+# BOUNTY LISTENER MESSAGES
 # ============================================
 bounty_listener:
   bounty_active:
@@ -381,28 +434,28 @@ main_overview_ui:
   admin_overview:
     name: "<gradient:#ef4444:#f87171>⚙ Yönetici Paneli</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Yönetim araçlarına erişin</gradient>"
-      - "<gradient:#6b7280:#9ca3af>ve yapılandırma seçenekleri</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Yönetim araçlarına erişin</gradient>"
+    - "<gradient:#6b7280:#9ca3af>ve yapılandırma seçenekleri</gradient>"
   bounty_overview:
     name: "<gradient:#f59e0b:#fbbf24>🎯 Ödüller</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Ödülleri görüntüle ve yönet</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Ödüller için oyuncuları avlayın!</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Ödülleri görüntüle ve yönet</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Ödüller için oyuncuları avlayın!</gradient>"
   perk_overview:
     name: "<gradient:#10b981:#34d399>✨ Avantajlar</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Mevcut avantajları görüntüle</gradient>"
-      - "<gradient:#6b7280:#9ca3af>ve özel yetenekler</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Mevcut avantajları görüntüle</gradient>"
+    - "<gradient:#6b7280:#9ca3af>ve özel yetenekler</gradient>"
   quest_overview:
     name: "<gradient:#3b82f6:#60a5fa>📜 Görevler</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Mevcut görevleri görüntüle</gradient>"
-      - "<gradient:#6b7280:#9ca3af>ve ilerlemenizi takip edin</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Mevcut görevleri görüntüle</gradient>"
+    - "<gradient:#6b7280:#9ca3af>ve ilerlemenizi takip edin</gradient>"
   rank_overview:
     name: "<gradient:#a855f7:#c084fc>⚔ Rütbeler</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Rütbe ilerlemesini görüntüle</gradient>"
-      - "<gradient:#6b7280:#9ca3af>ve yeni yeteneklerin kilidini açın</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Rütbe ilerlemesini görüntüle</gradient>"
+    - "<gradient:#6b7280:#9ca3af>ve yeni yeteneklerin kilidini açın</gradient>"
 
 # ============================================
 # SIRALAMA ANA UI
@@ -412,8 +465,8 @@ rank_main_ui:
   rank_tree:
     name: "<gradient:#f59e0b:#fbbf24>🌳 Rütbe Ağaçları</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Mevcut rütbe ağaçlarına göz atın</gradient>"
-      - "<gradient:#6b7280:#9ca3af>ve yolunuzu seçin</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Mevcut rütbe ağaçlarına göz atın</gradient>"
+    - "<gradient:#6b7280:#9ca3af>ve yolunuzu seçin</gradient>"
 
 
 # ============================================
@@ -425,40 +478,40 @@ rank_tree_overview_ui:
     ranger:
       name: "<gradient:#10b981:#34d399>🏹 Korucu</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Okçuluk ve takip sanatında ustalaşın</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Doğayla bir olun</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Okçuluk ve takip sanatında ustalaşın</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Doğayla bir olun</gradient>"
     warrior:
       name: "<gradient:#ef4444:#f87171>⚔ Savaşçı</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Dövüş sanatında ustalaşın</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Efsanevi bir savaşçı ol</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Dövüş sanatında ustalaşın</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Efsanevi bir savaşçı ol</gradient>"
     mage:
       name: "<gradient:#a855f7:#c084fc>✨ Büyücü</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Büyünün gücünden yararlanın</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Büyünün ustası olun</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Büyünün gücünden yararlanın</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Büyünün ustası olun</gradient>"
     rogue:
       name: "<gradient:#6b7280:#9ca3af>🗡 Düzenbaz</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Gizlilik ve kurnazlıkta ustalaşın</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Gölgelerden saldırın</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Gizlilik ve kurnazlıkta ustalaşın</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Gölgelerden saldırın</gradient>"
     cleric:
       name: "<gradient:#f59e0b:#fbbf24>✝ Rahip</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Kanal ilahi gücü</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Müttefiklerinizi iyileştirin ve koruyun</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Kanal ilahi gücü</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Müttefiklerinizi iyileştirin ve koruyun</gradient>"
     merchant:
       name: "<gradient:#10b981:#34d399>💰 Tüccar</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Ticaret sanatında ustalaşın</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Servetini inşa et</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Ticaret sanatında ustalaşın</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Servetini inşa et</gradient>"
   click:
     preview_rank_path:
-      - "<gradient:#3b82f6:#60a5fa>Önizlemek için sol tıklayın</gradient>"
-      - "<gradient:#10b981:#34d399>Seçmek için sağ tıklayın</gradient>"
+    - "<gradient:#3b82f6:#60a5fa>Önizlemek için sol tıklayın</gradient>"
+    - "<gradient:#10b981:#34d399>Seçmek için sağ tıklayın</gradient>"
     locked: "<gradient:#ef4444:#f87171>🔒 Bu sıralama ağacı kilitli</gradient>"
     locked.required:
-      - "<gradient:#6b7280:#9ca3af>Tamamlamak %minimum_rank_paths_to_be_absolved_needed% ağaçları ilk sıraya koy</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Tamamlamak %minimum_rank_paths_to_be_absolved_needed% ağaçları ilk sıraya koy</gradient>"
     pre_requisites: "<gradient:#f59e0b:#fbbf24>Önkoşullar:</gradient>"
     rank_path_locked: "<gradient:#ef4444:#f87171>🔒 Bu sıralama yolu kilitli!</gradient>"
   currently_active: "<gradient:#10b981:#34d399>✅ Şu anda Aktif</gradient>"
@@ -470,8 +523,8 @@ rank_tree_overview_ui:
   create_rank_tree:
     name: "<gradient:#10b981:#34d399>➕ Sıralama Ağacı Oluştur</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Yeni bir sıralama ağacı oluştur</gradient>"
-      - "<gradient:#6b7280:#9ca3af>(Yalnızca yönetici)</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Yeni bir sıralama ağacı oluştur</gradient>"
+    - "<gradient:#6b7280:#9ca3af>(Yalnızca yönetici)</gradient>"
   select:
     rank_path_starting_rank_not_found: "<gradient:#ef4444:#f87171>❌ Bu yol için başlangıç ​​sıralaması bulunamadı!</gradient>"
     rank_path_selected: "<gradient:#10b981:#34d399>✅ Seçilen sıralama yolu:</gradient> <gradient:#f59e0b:#fbbf24>%rank_path%</gradient> <gradient:#6b7280:#9ca3af>(Başlangıç ​​sıralaması: %rank%)</gradient>"
@@ -481,10 +534,10 @@ rank_tree_overview_ui:
     rank_tree_creation_coming_soon: "<gradient:#f59e0b:#fbbf24>⏳ Sıralama ağacı oluşturma çok yakında!</gradient>"
   free_version_preview_only: "<gradient:#f59e0b:#fbbf24>⭐ Ücretsiz Sürüm - Yalnızca Önizleme</gradient>"
   free_version_preview_only_lore:
-    - "<gradient:#6b7280:#9ca3af>Bu sıralama ağacı yalnızca önizleme için mevcuttur.</gradient>"
-    - "<gradient:#6b7280:#9ca3af>Kilidi açmak için Premium'a yükseltin!</gradient>"
-    - ""
-    - "<gradient:#3b82f6:#60a5fa>Önizlemek için sol tıklayın</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Bu sıralama ağacı yalnızca önizleme için mevcuttur.</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Kilidi açmak için Premium'a yükseltin!</gradient>"
+  - ""
+  - "<gradient:#3b82f6:#60a5fa>Önizlemek için sol tıklayın</gradient>"
   free_version_upgrade_required: "<gradient:#f59e0b:#fbbf24>⭐ Prim Gerekli:</gradient> <gradient:#6b7280:#9ca3af>Ek sıralama ağaçları seçmek için Premium'a yükseltin!</gradient>"
 
 # ============================================
@@ -502,17 +555,17 @@ rank_path_overview_ui:
     fallback: "<gradient:#6b7280:#9ca3af>Gezin %direction%</gradient>"
   back:
     lore:
-      - "<gradient:#6b7280:#9ca3af>Geri dönmek için tıklayın</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Geri dönmek için tıklayın</gradient>"
   center_view:
     name: "<gradient:#3b82f6:#60a5fa>🎯 Merkez Görünümü</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Görünümü ortalamak için tıklayın</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Görünümü ortalamak için tıklayın</gradient>"
     fallback: "<gradient:#6b7280:#9ca3af>Merkez Görünümü</gradient>"
   preview_mode:
     name: "<gradient:#3b82f6:#60a5fa>👁 Önizleme Modu</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Önizleme modunda görüntülüyorsunuz</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Değişiklikler kaydedilmeyecek</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Önizleme modunda görüntülüyorsunuz</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Değişiklikler kaydedilmeyecek</gradient>"
     fallback: "<gradient:#6b7280:#9ca3af>Önizleme Modu</gradient>"
   background:
     name: " "
@@ -520,12 +573,12 @@ rank_path_overview_ui:
     render_rank: "<gradient:#ef4444:#f87171>❌ Sıralama oluşturulurken hata oluştu</gradient>"
     no_rank_tree: "<gradient:#ef4444:#f87171>❌ Sıralama Ağacı Yok</gradient>"
     no_rank_tree_lore:
-      - "<gradient:#6b7280:#9ca3af>Sıralama ağacı yüklenemiyor</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Sıralama ağacı yüklenemiyor</gradient>"
     critical: "<gradient:#ef4444:#f87171>❌ Kritik Hata</gradient>"
     critical_lore:
-      - "<gradient:#6b7280:#9ca3af>Oluşturma sırasında bir hata oluştu</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Oluşturma sırasında bir hata oluştu</gradient>"
     critical.lore:
-      - "<gradient:#6b7280:#9ca3af>Oluşturma sırasında bir hata oluştu</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Oluşturma sırasında bir hata oluştu</gradient>"
     requirements_view_failed: "<gradient:#ef4444:#f87171>❌ Gereksinimler açılamadı</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
     general: "<gradient:#ef4444:#f87171>❌ Bir hata oluştu. Lütfen tekrar deneyin.</gradient>"
   status:
@@ -556,81 +609,290 @@ rank_path_overview_ui:
     fallback_description: "<gradient:#6b7280:#9ca3af>için açıklama mevcut değil %rank_id%</gradient>"
     tier: "<gradient:#6b7280:#9ca3af>Aşama:</gradient> <gradient:#f59e0b:#fbbf24>%tier%</gradient>"
     weight: "<gradient:#6b7280:#9ca3af>Ağırlık:</gradient> <gradient:#f59e0b:#fbbf24>%weight%</gradient>"
+    # Ranger Tree Ranks
     ranger:
+      scout:
+        name: "<gradient:#22c55e:#86efac>🏹 Yol İzcisi</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Toynak izlerini ve rüzgar değişimlerini okur.</gradient>"
+        - "<gradient:#10b981:#34d399>➤ Aşama I • Doğa Girişimi</gradient>"
       hunter:
-        name: "<gradient:#7c3aed:#a78bfa>🏹 Avcı</gradient>"
+        name: "<gradient:#16a34a:#4ade80>🏹 Vahşi Doğanın Avcısı</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Vahşi doğanın yollarını öğrenen acemi bir izci</gradient>"
-      archer:
-        name: "<gradient:#10b981:#34d399>🎯 Okçu</gradient>"
-        lore:
-          - "<gradient:#6b7280:#9ca3af>Yay konusunda yetenekli, uzak mesafede ölümcül</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Avını sabırlı bir hassasiyetle takip eder.</gradient>"
+        - "<gradient:#10b981:#34d399>➤ Seviye II • Vahşi Takip</gradient>"
       tracker:
-        name: "<gradient:#3b82f6:#60a5fa>🔍 Takipçi</gradient>"
+        name: "<gradient:#0ea5e9:#38bdf8>🏹 İşaretlerin Takipçisi</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Av bulma ve takip etme konusunda uzman</gradient>"
-      marksman:
-        name: "<gradient:#f59e0b:#fbbf24>🎯 Nişancı</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Hiçbir fırtınanın silemeyeceği izleri takip eder.</gradient>"
+        - "<gradient:#3b82f6:#60a5fa>➤ Seviye III • İlerideki Yol Seçimi</gradient>"
+      warden_primal:
+        name: "<gradient:#14b8a6:#2dd4bf>🛡 Canavarların Muhafızı</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Ölümcül isabetliliğe sahip hassas nişancı</gradient>"
-      pathfinder:
-        name: "<gradient:#a855f7:#c084fc>🗺 Yol Bulucu</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Diyarın en üstün yaratıklarıyla bağ kurar.</gradient>"
+        - "<gradient:#14b8a6:#2dd4bf>➤ Seviye IV • Birincil Dal</gradient>"
+      warden_storm:
+        name: "<gradient:#2563eb:#60a5fa>⚡ Fırtınaların Bekçisi</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Keşfedilmemiş toprakların usta kaşifi</gradient>"
-      sniper:
-        name: "<gradient:#ef4444:#f87171>🎯 Keskin Nişancı</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Gök gürültüsü ve yağmur yoluyla gerçek yangınlar.</gradient>"
+        - "<gradient:#2563eb:#60a5fa>➤ Seviye IV • Fırtına Dalı</gradient>"
+      warden_wild:
+        name: "<gradient:#16a34a:#84cc16>🌿 Vahşi Doğanın Muhafızı</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Elit nişancı, tek atış tek öldürme</gradient>"
-      forest_lord:
-        name: "<gradient:#10b981:#34d399>🌲 Orman Lordu</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Kutsal sınırları ve gizli açıklıkları korur.</gradient>"
+        - "<gradient:#16a34a:#84cc16>➤ Seviye IV • Vahşi Dal</gradient>"
+      beastmaster_primal:
+        name: "<gradient:#7c3aed:#c084fc>👑 Canavar Ustası Primal</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Vahşi doğanın efendisi, doğayla iç içe</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Efsanevi canavarlara korkmadan komuta eder.</gradient>"
+        - "<gradient:#7c3aed:#c084fc>➤ Seviye V • Son Sıralama</gradient>"
+      beastmaster_storm:
+        name: "<gradient:#1d4ed8:#3b82f6>👑 Canavar Ustası Fırtınası</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Her cıvata amansız voleybolunuza rehberlik eder.</gradient>"
+        - "<gradient:#1d4ed8:#3b82f6>➤ Seviye V • Son Sıralama</gradient>"
+      beastmaster_wild:
+        name: "<gradient:#15803d:#22c55e>👑 Canavar Ustası Vahşi</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Doğanın kendisi çağrınıza cevap vermek için yükselir.</gradient>"
+        - "<gradient:#15803d:#22c55e>➤ Seviye V • Son Sıralama</gradient>"
+    # Warrior Tree Ranks
     warrior:
       recruit:
         name: "<gradient:#6b7280:#9ca3af>⚔ İşe Al</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Yeni bir savaşçı yolculuğuna başlıyor</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Test edilmemiş kararlılığa sahip yeni bir bıçak.</gradient>"
+        - "<gradient:#94a3b8:#cbd5e1>➤ Seviye I • Eğitim Alanları</gradient>"
       soldier:
         name: "<gradient:#3b82f6:#60a5fa>⚔ Asker</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Dövüş sanatı eğitimi aldı</gradient>"
-      knight:
-        name: "<gradient:#f59e0b:#fbbf24>⚔ Şövalye</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Matkaplar ve ön saflardaki görevlerle güçlendirilmiştir.</gradient>"
+        - "<gradient:#3b82f6:#60a5fa>➤ Tier II • Saha Disiplini</gradient>"
+      veteran:
+        name: "<gradient:#f59e0b:#fbbf24>⚔ Kıdemli</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Diyarın onurlu savaşçısı</gradient>"
-      champion:
-        name: "<gradient:#a855f7:#c084fc>⚔ Şampiyon</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Savaş yaraları kazandığınız bilgeliğinizi gösterir.</gradient>"
+        - "<gradient:#f59e0b:#fbbf24>➤ Seviye III • Yolunuzu Seçin</gradient>"
+      berserker:
+        name: "<gradient:#ef4444:#f87171>🔥 Vahşi</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Herkesin korktuğu efsanevi savaşçı</gradient>"
-      warlord:
-        name: "<gradient:#ef4444:#f87171>⚔ Savaş Lordu</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Yıkıcı saldırı için savunmayı değiştirir.</gradient>"
+        - "<gradient:#ef4444:#f87171>➤ Seviye IV • Hiddet Şubesi</gradient>"
+      guardian:
+        name: "<gradient:#2563eb:#60a5fa>🛡 koruyucu</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Savaş ustası, orduların komutanı</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Başkalarının kırılacağı yerde sağlam durur.</gradient>"
+        - "<gradient:#2563eb:#60a5fa>➤ Seviye IV • Kalkan Dalı</gradient>"
+      gladiator:
+        name: "<gradient:#a855f7:#c084fc>🏟 Gladyatör</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Dengeli arena savaşında ustalaşır.</gradient>"
+        - "<gradient:#a855f7:#c084fc>➤ Seviye IV • Arena Şubesi</gradient>"
+      warlord_fury:
+        name: "<gradient:#dc2626:#fb7185>👑 Öfkenin Savaş Lordu</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Durdurulamaz bir yıkım motoru.</gradient>"
+        - "<gradient:#dc2626:#fb7185>➤ Seviye V • Son Sıralama</gradient>"
+      warlord_shield:
+        name: "<gradient:#1d4ed8:#60a5fa>👑 Kalkanın Savaş Lordu</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Yaşamla yıkım arasındaki son duvar.</gradient>"
+        - "<gradient:#1d4ed8:#60a5fa>➤ Seviye V • Son Sıralama</gradient>"
+      warlord_arena:
+        name: "<gradient:#7c3aed:#c084fc>👑 Arenanın Savaş Lordu</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Her stadyumun taçlandırılmış şampiyonu.</gradient>"
+        - "<gradient:#7c3aed:#c084fc>➤ Seviye V • Son Sıralama</gradient>"
+    # Mage Tree Ranks
     mage:
       apprentice:
-        name: "<gradient:#a855f7:#c084fc>✨ Çırak</gradient>"
+        name: "<gradient:#a855f7:#d8b4fe>✨ Çırak</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Büyünün temellerini öğrenmek</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Büyülü gücün kıvılcımları uyanır.</gradient>"
+        - "<gradient:#a855f7:#d8b4fe>➤ Kademe I • Gizemli Temeller</gradient>"
       adept:
-        name: "<gradient:#3b82f6:#60a5fa>✨ Usta</gradient>"
+        name: "<gradient:#3b82f6:#93c5fd>✨ Usta</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Büyülü güçle büyüyoruz</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Kontrollü ve odaklanmış büyüler örer.</gradient>"
+        - "<gradient:#3b82f6:#93c5fd>➤ Seviye II • Gizemli Uygulama</gradient>"
       wizard:
-        name: "<gradient:#f59e0b:#fbbf24>✨ Sihirbaz</gradient>"
+        name: "<gradient:#f59e0b:#fde68a>✨ Sihirbaz</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Gizli sanatların ustası</gradient>"
-      archmage:
-        name: "<gradient:#ef4444:#f87171>✨ Başbüyücü</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Karmaşık büyü kalıplarını yönetir.</gradient>"
+        - "<gradient:#f59e0b:#fde68a>➤ Seviye III • Doktrininizi Seçin</gradient>"
+      sorcerer_arcane:
+        name: "<gradient:#8b5cf6:#c4b5fd>🔮 Arcana Büyücüsü</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Tüm büyülerin yüce ustası</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Ham gücü zarif bir güce dönüştürür.</gradient>"
+        - "<gradient:#8b5cf6:#c4b5fd>➤ Seviye IV • Gizemli Şube</gradient>"
+      sorcerer_spell:
+        name: "<gradient:#d946ef:#f0abfc>📜 Büyü Büyücüsü</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Büyü kitabı kontrolünü ve hassasiyetini genişletir.</gradient>"
+        - "<gradient:#d946ef:#f0abfc>➤ Seviye IV • Büyü Dalı</gradient>"
+      sorcerer_void:
+        name: "<gradient:#1d4ed8:#60a5fa>🌌 Hiçliğin Büyücüsü</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Dipsiz enerjileri isteğinize göre büker.</gradient>"
+        - "<gradient:#1d4ed8:#60a5fa>➤ Seviye IV • Geçersiz Dal</gradient>"
+      archmage_arcane:
+        name: "<gradient:#7c3aed:#c084fc>👑 Arcana'nın Baş Büyücüsü</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Saf gizemli gücün yüce mimarı.</gradient>"
+        - "<gradient:#7c3aed:#c084fc>➤ Seviye V • Son Sıralama</gradient>"
+      archmage_spell:
+        name: "<gradient:#d946ef:#f5d0fe>👑 Büyülerin Baş Büyücüsü</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Her büyü anında yanıt verir.</gradient>"
+        - "<gradient:#d946ef:#f5d0fe>➤ Seviye V • Son Sıralama</gradient>"
+      archmage_void:
+        name: "<gradient:#1e3a8a:#60a5fa>👑 Hiçliğin Baş Büyücüsü</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Dünyalar arasındaki sınırları yönetir.</gradient>"
+        - "<gradient:#1e3a8a:#60a5fa>➤ Seviye V • Son Sıralama</gradient>"
+    # Rogue Tree Ranks
     rogue:
       pickpocket:
         name: "<gradient:#6b7280:#9ca3af>🗡 Yankesici</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Hızlı parmaklar, daha hızlı kaçış</gradient>"
-
+        - "<gradient:#6b7280:#9ca3af>✦ Zamanlamayı, yanlış yönlendirmeyi ve hızı öğrenir.</gradient>"
+        - "<gradient:#94a3b8:#cbd5e1>➤ Seviye I • Streetcraft</gradient>"
+      thief:
+        name: "<gradient:#3b82f6:#93c5fd>🗡 Hırsız</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Kilitlerden ve gözetleme hatlarından kayar.</gradient>"
+        - "<gradient:#3b82f6:#93c5fd>➤ Tier II • Sessiz Giriş</gradient>"
+      assassin:
+        name: "<gradient:#ef4444:#f87171>🗡 Suikastçı</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Bir kez vurur ve iz bırakmadan kaybolur.</gradient>"
+        - "<gradient:#ef4444:#f87171>➤ Seviye III • Yönteminizi Seçin</gradient>"
+      shadow_stealth:
+        name: "<gradient:#0ea5e9:#67e8f9>🌒 Gizliliğin Gölgesi</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Hiçbir gözün takip edemeyeceği ustalıktaki hareket.</gradient>"
+        - "<gradient:#0ea5e9:#67e8f9>➤ Seviye IV • Gizli Şube</gradient>"
+      shadow_night:
+        name: "<gradient:#7c3aed:#c4b5fd>🌘 Gecenin Gölgesi</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Karanlığı öldürücü avantaja dönüştürür.</gradient>"
+        - "<gradient:#7c3aed:#c4b5fd>➤ Tier IV • Gece Şubesi</gradient>"
+      shadow_sabotage:
+        name: "<gradient:#f97316:#fb923c>💣 Sabotajın Gölgesi</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Düşmanlar tepki vermeden önce planları yerle bir eder.</gradient>"
+        - "<gradient:#f97316:#fb923c>➤ Seviye IV • Sabotaj Şubesi</gradient>"
+      phantom_stealth:
+        name: "<gradient:#14b8a6:#5eead4>👑 Gizliliğin Hayaleti</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Dokunulmaz bir şehir efsanesine dönüşür.</gradient>"
+        - "<gradient:#14b8a6:#5eead4>➤ Seviye V • Son Sıralama</gradient>"
+      phantom_night:
+        name: "<gradient:#9333ea:#e9d5ff>👑 Gecenin Hayaleti</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Gece yarısı saatine tamamen sahiptir.</gradient>"
+        - "<gradient:#9333ea:#e9d5ff>➤ Seviye V • Son Sıralama</gradient>"
+      phantom_sabotage:
+        name: "<gradient:#ea580c:#fdba74>👑 Sabotaj Hayaleti</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Savaşları daha başlamadan bitirir.</gradient>"
+        - "<gradient:#ea580c:#fdba74>➤ Seviye V • Son Sıralama</gradient>"
+    # Cleric Tree Ranks
+    cleric:
+      acolyte:
+        name: "<gradient:#f59e0b:#fde68a>✝ Rahibe Yardımcısı</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Kutsal hizmet yolunu başlatır.</gradient>"
+        - "<gradient:#f59e0b:#fde68a>➤ Aşama I • Adanmışlık</gradient>"
+      healer:
+        name: "<gradient:#10b981:#6ee7b7>✝ Şifacı</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Ağır baskı altındaki müttefikleri yeniler.</gradient>"
+        - "<gradient:#10b981:#6ee7b7>➤ Seviye II • Restorasyon</gradient>"
+      priest:
+        name: "<gradient:#3b82f6:#93c5fd>✝ Rahip</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Partileri kutsal disiplinle yönlendirir.</gradient>"
+        - "<gradient:#3b82f6:#93c5fd>➤ Seviye III • Görevinizi Seçin</gradient>"
+      bishop_divine:
+        name: "<gradient:#8b5cf6:#c4b5fd>⛪ İlahiyat Piskoposu</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Kanallar doğrudan ışınım yetkisini sağlar.</gradient>"
+        - "<gradient:#8b5cf6:#c4b5fd>➤ Seviye IV • İlahi Dal</gradient>"
+      bishop_light:
+        name: "<gradient:#f59e0b:#fef08a>☀ Işık Piskoposu</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Yolsuzluğu kutsal parlaklıkla kör eder.</gradient>"
+        - "<gradient:#f59e0b:#fef08a>➤ Seviye IV • Hafif Şube</gradient>"
+      bishop_soul:
+        name: "<gradient:#06b6d4:#67e8f9>🕊 Ruhların Piskoposu</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Yaşam ve ölümün eşiğini korur.</gradient>"
+        - "<gradient:#06b6d4:#67e8f9>➤ Seviye IV • Ruh Dalı</gradient>"
+      high_priest_divine:
+        name: "<gradient:#7c3aed:#ddd6fe>👑 İlahiyatın Yüksek Rahibi</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Kaosun kalbinde mucizeler ilan eder.</gradient>"
+        - "<gradient:#7c3aed:#ddd6fe>➤ Seviye V • Son Sıralama</gradient>"
+      high_priest_light:
+        name: "<gradient:#f59e0b:#fef3c7>👑 Işığın Yüce Rahibi</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Müttefikleri sarsılmaz şafakta yıkar.</gradient>"
+        - "<gradient:#f59e0b:#fef3c7>➤ Seviye V • Son Sıralama</gradient>"
+      high_priest_soul:
+        name: "<gradient:#0891b2:#a5f3fc>👑 Ruhların Yüce Rahibi</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Ölümlü korkunun ötesinde ruhlara çobanlık eder.</gradient>"
+        - "<gradient:#0891b2:#a5f3fc>➤ Seviye V • Son Sıralama</gradient>"
+    # Merchant Tree Ranks
+    merchant:
+      peddler:
+        name: "<gradient:#6b7280:#9ca3af>💰 Seyyar satıcı</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Cesaret, çekicilik ve küçük esnafla başlar.</gradient>"
+        - "<gradient:#94a3b8:#cbd5e1>➤ Seviye I • Sokak Ticareti</gradient>"
+      trader:
+        name: "<gradient:#3b82f6:#93c5fd>💰 Tüccar</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Rotaları ve güvenilir bağlantıları genişletir.</gradient>"
+        - "<gradient:#3b82f6:#93c5fd>➤ Tier II • Pazar Varlığı</gradient>"
+      broker:
+        name: "<gradient:#f59e0b:#fde68a>💰 Komisyoncu</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Yüksek değerli anlaşmaları hassasiyetle kapatır.</gradient>"
+        - "<gradient:#f59e0b:#fde68a>➤ Seviye III • İmparatorluğunuzu Seçin</gradient>"
+      magnate_wealth:
+        name: "<gradient:#10b981:#6ee7b7>📈 Zenginlik Patronu</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Eşsiz bir hızda saf sermaye oluşturur.</gradient>"
+        - "<gradient:#10b981:#6ee7b7>➤ Tier IV • Varlık Şubesi</gradient>"
+      magnate_market:
+        name: "<gradient:#06b6d4:#67e8f9>🏛 Piyasaların Patronu</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Arz ve talep döngülerini düzenler.</gradient>"
+        - "<gradient:#06b6d4:#67e8f9>➤ Tier IV • Market Şubesi</gradient>"
+      magnate_trade:
+        name: "<gradient:#f97316:#fdba74>🚚 Ticaretin Patronu</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Karavan yollarına ve lojistiğe hakimdir.</gradient>"
+        - "<gradient:#f97316:#fdba74>➤ Tier IV • Ticaret Şubesi</gradient>"
+      tycoon_wealth:
+        name: "<gradient:#22c55e:#bbf7d0>👑 Zenginlik Kralı</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Tek kararla ekonomileri döndürür.</gradient>"
+        - "<gradient:#22c55e:#bbf7d0>➤ Seviye V • Son Sıralama</gradient>"
+      tycoon_market:
+        name: "<gradient:#0891b2:#a5f3fc>👑 Piyasaların Kralı</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Her loncanın saygı duyması gereken fiyatları belirler.</gradient>"
+        - "<gradient:#0891b2:#a5f3fc>➤ Seviye V • Son Sıralama</gradient>"
+      tycoon_trade:
+        name: "<gradient:#ea580c:#fed7aa>👑 Ticaret Kralı</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Yolların, limanların ve kârların sahibidir.</gradient>"
+        - "<gradient:#ea580c:#fed7aa>➤ Seviye V • Son Sıralama</gradient>"
 # ============================================
-# GEREKSİNİM TERCÜMELERİ
+# REQUIREMENT TRANSLATIONS
 # ============================================
 requirement:
 
@@ -670,7 +932,7 @@ requirement:
     money: "Para"
     dollars: "Dolar"
     credits: "Kredi"
-  
+
   # Görev önizleme şablonları
   task:
     entry: "<gradient:#6b7280:#9ca3af>%prefix% %task_name%</gradient>"
@@ -691,126 +953,126 @@ requirement:
       thief:
         name: "<gradient:#3b82f6:#60a5fa>🗡 Hırsız</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Gizlilik ve hırsızlık ustası</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Gizlilik ve hırsızlık ustası</gradient>"
       assassin:
         name: "<gradient:#ef4444:#f87171>🗡 Suikastçı</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Sessiz katil, gölgelerden gelen ölüm</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Sessiz katil, gölgelerden gelen ölüm</gradient>"
       infiltrator:
         name: "<gradient:#a855f7:#c084fc>🗡 Casus</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Fark edilmeden içeri girip çıkma konusunda uzman</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Fark edilmeden içeri girip çıkma konusunda uzman</gradient>"
       shadow_master:
         name: "<gradient:#1f2937:#374151>🗡 Gölge Ustası</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Karanlığın kendisiyle bir</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Karanlığın kendisiyle bir</gradient>"
     cleric:
       acolyte:
         name: "<gradient:#f59e0b:#fbbf24>✝ Rahibe Yardımcısı</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>İlahiyatın sadık hizmetkarı</gradient>"
+        - "<gradient:#6b7280:#9ca3af>İlahiyatın sadık hizmetkarı</gradient>"
       devotee:
         name: "<gradient:#f59e0b:#fbbf24>✝ Adanmış</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>İlahi yolun sadık takipçisi</gradient>"
+        - "<gradient:#6b7280:#9ca3af>İlahi yolun sadık takipçisi</gradient>"
       priest:
         name: "<gradient:#10b981:#34d399>✝ Rahip</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Müminlerin şifacısı ve koruyucusu</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Müminlerin şifacısı ve koruyucusu</gradient>"
       healer:
         name: "<gradient:#10b981:#34d399>✝ Şifacı</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Restoratif sanatlar ustası</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Restoratif sanatlar ustası</gradient>"
       bishop:
         name: "<gradient:#a855f7:#c084fc>✝ Piskopos</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>İnançlıların lideri</gradient>"
+        - "<gradient:#6b7280:#9ca3af>İnançlıların lideri</gradient>"
       oracle:
         name: "<gradient:#3b82f6:#60a5fa>✝ Kahin</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>İlahi vizyonları gören</gradient>"
+        - "<gradient:#6b7280:#9ca3af>İlahi vizyonları gören</gradient>"
       high_priest:
         name: "<gradient:#ef4444:#f87171>✝ Yüksek Rahip</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>İlahi olanın yüce sesi</gradient>"
+        - "<gradient:#6b7280:#9ca3af>İlahi olanın yüce sesi</gradient>"
     rogue:
       pickpocket:
         name: "<gradient:#6b7280:#9ca3af>TP Yankesici</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Hızlı parmaklar, daha hızlı kaçış</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Hızlı parmaklar, daha hızlı kaçış</gradient>"
       thief:
         name: "<gradient:#3b82f6:#60a5fa>🗡 Hırsız</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Gizlilik ve hırsızlık ustası</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Gizlilik ve hırsızlık ustası</gradient>"
       scout:
         name: "<gradient:#10b981:#34d399>🗡 İzci</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Gölgelerin gözleri ve kulakları</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Gölgelerin gözleri ve kulakları</gradient>"
       assassin:
         name: "<gradient:#ef4444:#f87171>🗡 Suikastçı</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Sessiz katil, gölgelerden gelen ölüm</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Sessiz katil, gölgelerden gelen ölüm</gradient>"
       infiltrator:
         name: "<gradient:#a855f7:#c084fc>🗡 Casus</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Fark edilmeden içeri girip çıkma konusunda uzman</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Fark edilmeden içeri girip çıkma konusunda uzman</gradient>"
       shadowblade:
         name: "<gradient:#6b7280:#9ca3af>🗡 Gölge Kılıcı</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Gecenin ölümcül savaşçısı</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Gecenin ölümcül savaşçısı</gradient>"
       spymaster:
         name: "<gradient:#3b82f6:#60a5fa>🗡 Casus ustası</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Bilgi ağlarının denetleyicisi</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Bilgi ağlarının denetleyicisi</gradient>"
       shadow_master:
         name: "<gradient:#1f2937:#374151>🗡 Gölge Ustası</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Karanlığın kendisiyle bir</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Karanlığın kendisiyle bir</gradient>"
       shadowmaster:
         name: "<gradient:#1f2937:#374151>🗡 Gölge Ustası</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Tüm gölgelerin yüce hükümdarı</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Tüm gölgelerin yüce hükümdarı</gradient>"
     merchant:
       peddler:
         name: "<gradient:#6b7280:#9ca3af>💰 Seyyar satıcı</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Sokakta eşya satmak</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Sokakta eşya satmak</gradient>"
       trader:
         name: "<gradient:#3b82f6:#60a5fa>💰 Tüccar</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Bağlantıları olan yerleşik tüccar</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Bağlantıları olan yerleşik tüccar</gradient>"
       vendor:
         name: "<gradient:#10b981:#34d399>💰 Satıcı</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Nitelikli mal satıcısı</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Nitelikli mal satıcısı</gradient>"
       artificer:
         name: "<gradient:#f59e0b:#fbbf24>💰 Zanaatkar</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Kaliteli eşya ustası</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Kaliteli eşya ustası</gradient>"
       alchemist:
         name: "<gradient:#a855f7:#c084fc>💰 Simyacı</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>İksir ve iksir ustası</gradient>"
+        - "<gradient:#6b7280:#9ca3af>İksir ve iksir ustası</gradient>"
       merchant:
         name: "<gradient:#f59e0b:#fbbf24>💰 Tüccar</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Başarılı işletme sahibi</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Başarılı işletme sahibi</gradient>"
       master_crafter:
         name: "<gradient:#ef4444:#f87171>💰 Usta Zanaatkar</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Diyarın yüce zanaatkarı</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Diyarın yüce zanaatkarı</gradient>"
       merchant_prince:
         name: "<gradient:#a855f7:#c084fc>💰 Tüccar Prens</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Ticaret telifi</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Ticaret telifi</gradient>"
       tycoon:
         name: "<gradient:#a855f7:#c084fc>💰 İş adamı</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Ticaret ve ticaret ustası</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Ticaret ve ticaret ustası</gradient>"
       guild_master:
         name: "<gradient:#ef4444:#f87171>💰 Lonca Ustası</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Tüccar loncasının lideri</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Tüccar loncasının lideri</gradient>"
   messages:
     preview_rank_click: "<gradient:#3b82f6:#60a5fa>👁 Önizleme:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
     preview_rank_click_fallback: "<gradient:#3b82f6:#60a5fa>👁 Önizleme:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
@@ -847,7 +1109,7 @@ rank_requirements_overview_ui:
   requirement:
     fallback: "<gradient:#6b7280:#9ca3af>Gereklilik #%index%</gradient>"
     fallback_lore:
-      - "<gradient:#6b7280:#9ca3af>Gereksinim ayrıntıları yüklenemiyor</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Gereksinim ayrıntıları yüklenemiyor</gradient>"
     type: "<gradient:#6b7280:#9ca3af>Tip:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
     lore: "<gradient:#6b7280:#9ca3af>%description%</gradient>"
     item_count: "<gradient:#6b7280:#9ca3af>Öğeler:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
@@ -891,12 +1153,12 @@ rank_requirements_overview_ui:
     name: " "
   back:
     lore:
-      - "<gradient:#6b7280:#9ca3af>Geri dönmek için tıklayın</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Geri dönmek için tıklayın</gradient>"
   requirement_entry:
     name: "<gradient:#a855f7:#c084fc>📋 %requirement_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Tip:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>İlerlemek:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Tip:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>İlerlemek:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient>"
     click_to_view: "<gradient:#3b82f6:#60a5fa>Ayrıntıları görüntülemek için tıklayın</gradient>"
 
 # ============================================
@@ -906,7 +1168,7 @@ rank_requirement_detail_ui:
   title: "<gradient:#a855f7:#c084fc>📋 Gereksinim Detayları</gradient>"
   back:
     lore:
-      - "<gradient:#6b7280:#9ca3af>Geri dönmek için tıkla</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Geri dönmek için tıkla</gradient>"
   submit:
     missing_items: "<gradient:#ef4444:#f87171>❌ Gerekli tüm eşyalara sahip değilsin!</gradient>"
     success: "<gradient:#10b981:#34d399>✅ Eşyalar başarıyla gönderildi!</gradient>"
@@ -919,18 +1181,18 @@ rank_requirement_detail_ui:
     levels_needed: "<gradient:#ef4444:#f87171>Eksik Seviye:</gradient> <gradient:#f59e0b:#fbbf24>%needed%</gradient>"
     completed: "<gradient:#10b981:#34d399>✅ Seviye gereksinimi karşılandı!</gradient>"
     tip:
-      - "<gradient:#f59e0b:#fbbf24>💡 İpucu:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Madencilik yaparak, çeteleri öldürerek XP kazanın,</gradient>"
-      - "<gradient:#6b7280:#9ca3af>eritme maddeleri ve daha fazlası!</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 İpucu:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Madencilik yaparak, çeteleri öldürerek XP kazanın,</gradient>"
+    - "<gradient:#6b7280:#9ca3af>eritme maddeleri ve daha fazlası!</gradient>"
   playtime:
     current: "<gradient:#6b7280:#9ca3af>Oyun Süreniz:</gradient> <gradient:#10b981:#34d399>%hours%s %minutes%d</gradient>"
     required: "<gradient:#6b7280:#9ca3af>Gereken Oyun Süresi:</gradient> <gradient:#f59e0b:#fbbf24>%hours%s %minutes%d</gradient>"
     remaining: "<gradient:#ef4444:#f87171>Kalan Süre:</gradient> <gradient:#f59e0b:#fbbf24>%hours%s %minutes%d</gradient>"
     completed: "<gradient:#10b981:#34d399>✅ Oyun süresi gereksinimi karşılandı!</gradient>"
     tip:
-      - "<gradient:#f59e0b:#fbbf24>💡 İpucu:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Sunucuda oynamaya devam edin</gradient>"
-      - "<gradient:#6b7280:#9ca3af>oyun süresini biriktirmek için!</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 İpucu:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Sunucuda oynamaya devam edin</gradient>"
+    - "<gradient:#6b7280:#9ca3af>oyun süresini biriktirmek için!</gradient>"
   progress_text: "<gradient:#3b82f6:#60a5fa>İlerlemek</gradient>"
   current_progress: "<gradient:#6b7280:#9ca3af>Akım:</gradient> <gradient:#10b981:#34d399>%current_amount%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#f59e0b:#fbbf24>%required_amount%</gradient>"
   current_progress_percentage: "<gradient:#3b82f6:#60a5fa>Tamamlanma:</gradient> <gradient:#10b981:#34d399>%progress_percentage%</gradient>"
@@ -942,13 +1204,13 @@ rank_requirement_detail_ui:
   action_button:
     completed_name: "<gradient:#10b981:#34d399>✅ Tamamlandı</gradient>"
     completed_lore:
-      - "<gradient:#6b7280:#9ca3af>Bu gereksinim zaten tamamlandı</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Bu gereksinim zaten tamamlandı</gradient>"
     complete_name: "<gradient:#10b981:#34d399>✅ Gereksinimi Tamamlayın</gradient>"
     complete_lore:
-      - "<gradient:#6b7280:#9ca3af>Bu gereksinimi tamamlamak için tıklayın</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Bu gereksinimi tamamlamak için tıklayın</gradient>"
     refresh_name: "<gradient:#3b82f6:#60a5fa>🔄 İlerlemeyi Yenile</gradient>"
     refresh_lore:
-      - "<gradient:#6b7280:#9ca3af>İlerlemenizi yenilemek için tıklayın</gradient>"
+    - "<gradient:#6b7280:#9ca3af>İlerlemenizi yenilemek için tıklayın</gradient>"
   summary:
     items_completed: "<gradient:#10b981:#34d399>Tamamlanan Öğeler:</gradient> <gradient:#f59e0b:#fbbf24>%completed_item_amount%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#3b82f6:#60a5fa>%total_item_amount%</gradient>"
     requirement_type: "<gradient:#6b7280:#9ca3af>Tür:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
@@ -962,22 +1224,22 @@ rank_requirement_detail_ui:
   current_progress_status: "<gradient:#6b7280:#9ca3af>Durum:</gradient> <gradient:#f59e0b:#fbbf24>%progress_status%</gradient>"
   item_requirement:
     tip:
-      - "<gradient:#f59e0b:#fbbf24>💡 İpucu:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Gerekli öğeleri toplayın</gradient>"
-      - "<gradient:#6b7280:#9ca3af>ve tamamlamak için buraya dönün</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 İpucu:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Gerekli öğeleri toplayın</gradient>"
+    - "<gradient:#6b7280:#9ca3af>ve tamamlamak için buraya dönün</gradient>"
   requirement_tip:
     currency:
-      - "<gradient:#f59e0b:#fbbf24>💡 İpucu:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Gereken parayı kazan</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 İpucu:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Gereken parayı kazan</gradient>"
     experience_level:
-      - "<gradient:#f59e0b:#fbbf24>💡 İpucu:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Deneyim seviyeleri kazan</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 İpucu:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Deneyim seviyeleri kazan</gradient>"
     playtime:
-      - "<gradient:#f59e0b:#fbbf24>💡 İpucu:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Sunucuda oyna</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 İpucu:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Sunucuda oyna</gradient>"
     other:
-      - "<gradient:#f59e0b:#fbbf24>💡 İpucu:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Gereksinimi tamamla</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 İpucu:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Gereksinimi tamamla</gradient>"
   summary_clicked: "<gradient:#3b82f6:#60a5fa>📊 Özet görüntüleniyor...</gradient>"
   tips_clicked: "<gradient:#f59e0b:#fbbf24>💡 İpuçları görüntüleniyor...</gradient>"
   item_detail:
@@ -996,16 +1258,16 @@ rank_requirement_detail_ui:
     name: "<gradient:#a855f7:#c084fc>%requirement_name%</gradient>"
   requirement:
     completed:
-      - "<gradient:#10b981:#34d399>✅ Tamamlandı!</gradient>"
+    - "<gradient:#10b981:#34d399>✅ Tamamlandı!</gradient>"
     ready_to_complete:
-      - "<gradient:#10b981:#34d399>✅ Tamamlanmaya hazır!</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Bitirmek için tıklayın</gradient>"
+    - "<gradient:#10b981:#34d399>✅ Tamamlanmaya hazır!</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Bitirmek için tıklayın</gradient>"
     in_progress:
-      - "<gradient:#f59e0b:#fbbf24>⏳ Devam Ediyor</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>⏳ Devam Ediyor</gradient>"
     not_started:
-      - "<gradient:#6b7280:#9ca3af>Başlatılmadı</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Başlatılmadı</gradient>"
     error:
-      - "<gradient:#ef4444:#f87171>❌ Hata</gradient>"
+    - "<gradient:#ef4444:#f87171>❌ Hata</gradient>"
     status_name: "<gradient:#a855f7:#c084fc>Durum: %requirement_status%</gradient>"
   progress_item: "<gradient:#3b82f6:#60a5fa>İlerlemek</gradient>"
   progress_item_completion: "<gradient:#10b981:#34d399>%progress_item_percentage%%</gradient>"
@@ -1015,11 +1277,11 @@ rank_requirement_detail_ui:
   fallback:
     name: "<gradient:#6b7280:#9ca3af>Bilinmeyen Gereksinim</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Ayrıntılar yüklenemiyor</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Ayrıntılar yüklenemiyor</gradient>"
   error:
     name: "<gradient:#ef4444:#f87171>❌ Hata</gradient>"
     lore:
-      - "<gradient:#ef4444:#f87171>Gereksinim yüklenemedi</gradient>"
+    - "<gradient:#ef4444:#f87171>Gereksinim yüklenemedi</gradient>"
   progress_info: "<gradient:#3b82f6:#60a5fa>📊 İlerleme:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient> <gradient:#6b7280:#9ca3af>(%formatted_progress%)</gradient>"
   status_update: "<gradient:#3b82f6:#60a5fa>📊 Durum:</gradient> <gradient:#f59e0b:#fbbf24>%status%</gradient> <gradient:#6b7280:#9ca3af>(%progress%%)</gradient>"
   already_completed: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient> <gradient:#10b981:#34d399>zaten tamamlandı!</gradient>"
@@ -1039,28 +1301,28 @@ bounty_overview_ui:
   create_bounty:
     name: "<gradient:#10b981:#34d399>📝 Ödül Oluştur</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Yeni bir ödül oluşturmak için tıklayın</gradient>"
-      - "<gradient:#6b7280:#9ca3af>başka bir oyuncuda</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Yeni bir ödül oluşturmak için tıklayın</gradient>"
+    - "<gradient:#6b7280:#9ca3af>başka bir oyuncuda</gradient>"
   view_bounties:
     name: "<gradient:#3b82f6:#60a5fa>👁 Ödülleri Görüntüle</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Tüm aktif ödülleri görüntüle</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Tüm aktif ödülleri görüntüle</gradient>"
   my_bounties:
     name: "<gradient:#f59e0b:#fbbf24>📋 Ödüllerim</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Oluşturduğunuz ödülleri görüntüleyin</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Oluşturduğunuz ödülleri görüntüleyin</gradient>"
   leaderboard:
     name: "<gradient:#ef4444:#f87171>🏆 Skor Tablosu</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>En iyi ödül avcıları</gradient>"
+    - "<gradient:#6b7280:#9ca3af>En iyi ödül avcıları</gradient>"
   bounty:
     name: "<gradient:#a855f7:#c084fc>🎯 Ödül açık</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Hedef:</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Komiser:</gradient> <gradient:#3b82f6:#60a5fa>%commissioner_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Oluşturuldu:</gradient> <gradient:#10b981:#34d399>%created_at%</gradient>"
-      - ""
-      - "<gradient:#a855f7:#c084fc>Ayrıntıları görüntülemek için tıklayın</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Hedef:</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Komiser:</gradient> <gradient:#3b82f6:#60a5fa>%commissioner_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Oluşturuldu:</gradient> <gradient:#10b981:#34d399>%created_at%</gradient>"
+    - ""
+    - "<gradient:#a855f7:#c084fc>Ayrıntıları görüntülemek için tıklayın</gradient>"
 
 # ============================================
 # ÖDÜL OLUŞTURMA UI
@@ -1071,35 +1333,35 @@ bounty_creation_ui:
     title: "<gradient:#a855f7:#c084fc>🎯 Hedef Seç</gradient>"
     name: "<gradient:#f59e0b:#fbbf24>🎯 Hedef: %target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Oyuncu seçmek için tıklayın</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Akım: %target_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Oyuncu seçmek için tıklayın</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Akım: %target_name%</gradient>"
   create_bounty:
     name: "<gradient:#10b981:#34d399>📝 Ödül Oluştur</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Yeni bir ödül oluşturmak için tıklayın</gradient>"
-      - "<gradient:#6b7280:#9ca3af>başka bir oyuncuda</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Yeni bir ödül oluşturmak için tıklayın</gradient>"
+    - "<gradient:#6b7280:#9ca3af>başka bir oyuncuda</gradient>"
   add_items:
     name: "<gradient:#10b981:#34d399>💰 Öğe Ödülleri Ekle</gradient>"
     name_disabled: "<gradient:#6b7280:#9ca3af>💰 Öğe Ödülleri Ekle</gradient>"
     description:
-      - "<gradient:#6b7280:#9ca3af>Öğe ödülleri eklemek için tıklayın</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Mevcut öğeler:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Öğe ödülleri eklemek için tıklayın</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Mevcut öğeler:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
     description_disabled:
-      - "<gradient:#ef4444:#f87171>❌Önce bir hedef seçin!</gradient>"
+    - "<gradient:#ef4444:#f87171>❌Önce bir hedef seçin!</gradient>"
     disabled: "<gradient:#ef4444:#f87171>❌Önce bir hedef seçin!</gradient>"
   add_currency:
     name: "<gradient:#f59e0b:#fbbf24>💎 Para Birimi Ödülleri Ekle</gradient>"
     name_disabled: "<gradient:#6b7280:#9ca3af>💎 Para Birimi Ödülleri Ekle</gradient>"
     description:
-      - "<gradient:#6b7280:#9ca3af>Para birimi ödülleri eklemek için tıklayın</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Mevcut para birimleri:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Para birimi ödülleri eklemek için tıklayın</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Mevcut para birimleri:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
     description_disabled:
-      - "<gradient:#ef4444:#f87171>❌Önce bir hedef seçin!</gradient>"
+    - "<gradient:#ef4444:#f87171>❌Önce bir hedef seçin!</gradient>"
   confirm_bounty:
     name: "<gradient:#10b981:#34d399>✅ Ödül Oluştur</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Ödül oluşturmak için tıklayın</gradient>"
-      - "<gradient:#6b7280:#9ca3af>seçilen ödüllerle</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Ödül oluşturmak için tıklayın</gradient>"
+    - "<gradient:#6b7280:#9ca3af>seçilen ödüllerle</gradient>"
   confirm:
     no_player_selected: "<gradient:#ef4444:#f87171>❌ Oyuncu seçilmedi!</gradient> <gradient:#6b7280:#9ca3af>Lütfen önce bir hedef seçin.</gradient>"
     no_rewards_selected: "<gradient:#ef4444:#f87171>❌Ödül eklenmedi!</gradient> <gradient:#6b7280:#9ca3af>Lütfen önce bazı ödüller ekleyin.</gradient>"
@@ -1122,21 +1384,21 @@ bounty_reward_ui:
   pseudo:
     name: "<gradient:#6b7280:#9ca3af>📦 Ödül Yok</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Ödül oluşturmak için öğeler ekleyin</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Ödül oluşturmak için öğeler ekleyin</gradient>"
   input_slot:
     name: "<gradient:#10b981:#34d399>➕ Öğe Ekle</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Ödül olarak eklemek için öğeleri buraya yerleştirin</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Ödül olarak eklemek için öğeleri buraya yerleştirin</gradient>"
   target:
     name: "<gradient:#f59e0b:#fbbf24>🎯 Hedef: %target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Bu ödül üzerine yerleştirildi</gradient>"
-      - "<gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Bu ödül üzerine yerleştirildi</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
   reward_item:
     lore:
-      - "<gradient:#a855f7:#c084fc>💰 Ödül Ödülü</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Bu öğe şu kişiye verilecektir:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>ödülü kim talep ederse</gradient>"
+    - "<gradient:#a855f7:#c084fc>💰 Ödül Ödülü</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Bu öğe şu kişiye verilecektir:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>ödülü kim talep ederse</gradient>"
   no_new_items_inserted: "<gradient:#ef4444:#f87171>❌ Yeni öğe eklenmedi!</gradient>"
   left_overs: "<gradient:#f59e0b:#fbbf24>⚠ Envanteriniz dolduğu için bazı eşyalar düştü!</gradient>"
 
@@ -1148,18 +1410,18 @@ bounty_player_info_ui:
   target:
     name: "<gradient:#f59e0b:#fbbf24>🎯 %target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Bu ödülün hedefi</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Bu ödülün hedefi</gradient>"
     coming_soon: "<gradient:#f59e0b:#fbbf24>⏳ Daha fazla bilgi çok yakında...</gradient>"
   rewards:
     name: "<gradient:#10b981:#34d399>💰 Ödülleri Görüntüle</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Tüm ödülleri görmek için tıklayın</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Toplam ödüller:</gradient> <gradient:#f59e0b:#fbbf24>%reward_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Tüm ödülleri görmek için tıklayın</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Toplam ödüller:</gradient> <gradient:#f59e0b:#fbbf24>%reward_count%</gradient>"
   delete:
     name: "<gradient:#ef4444:#f87171>🗑 Ödül Sil</gradient>"
     lore:
-      - "<gradient:#ef4444:#f87171>⚠ Uyarı: Geri alınamaz!</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Bu ödülü silmek için tıklayın</gradient>"
+    - "<gradient:#ef4444:#f87171>⚠ Uyarı: Geri alınamaz!</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Bu ödülü silmek için tıklayın</gradient>"
   deleted_bounty_successfully: "<gradient:#10b981:#34d399>✅ Ödül açık</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#10b981:#34d399>silindi!</gradient>"
   confirm:
     message: "<gradient:#f59e0b:#fbbf24>Bu ödülü silmek istediğinizden emin misiniz?</gradient>"
@@ -1172,20 +1434,20 @@ admin_overview_ui:
   view_permissions:
     name: "<gradient:#3b82f6:#60a5fa>🔑 İzin Yöneticisi</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Eklenti izinlerini yönetin</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Toplam eklentiler:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Toplam izinler:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Eklenti izinlerini yönetin</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Toplam eklentiler:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Toplam izinler:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ İzin yöneticisi açılamadı!</gradient>"
   view_integrations:
     name: "<gradient:#10b981:#34d399>🔌 Eklenti Entegrasyonları</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Yönetici eklenti entegrasyonlarını tek bir yerden yönetin</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Para birimi, beceriler ve iş algılama görünümlerini içerir</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Yönetici eklenti entegrasyonlarını tek bir yerden yönetin</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Para birimi, beceriler ve iş algılama görünümlerini içerir</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ Eklenti entegrasyonları açılamadı!</gradient>"
   create_ranks:
     name: "<gradient:#a855f7:#c084fc>⚔ LuckPerms Grupları oluşturun</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Sıralardan LuckPerms grupları oluşturun</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Sıralardan LuckPerms grupları oluşturun</gradient>"
     no_luckperms: "<gradient:#ef4444:#f87171>❌ LuckPerms kurulu değil!</gradient>"
     no_ranks_found: "<gradient:#f59e0b:#fbbf24>⚠ Grup oluşturulacak rütbe bulunamadı!</gradient>"
     created: "<gradient:#10b981:#34d399>✅Oluşturuldu</gradient> <gradient:#f59e0b:#fbbf24>%groups_created%</gradient> <gradient:#10b981:#34d399>LuckPerms grupları!</gradient>"
@@ -1200,32 +1462,32 @@ plugin_integration_management_ui:
   summary:
     name: "<gradient:#f59e0b:#fbbf24>🧭 Entegrasyon Merkezi</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>RDQ eklenti entegrasyon kontrol panellerini açın</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Para birimi, beceriler/iş algılama ve PlaceholderAPI araçları mevcuttur burada</gradient>"
+    - "<gradient:#6b7280:#9ca3af>RDQ eklenti entegrasyon kontrol panellerini açın</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Para birimi, beceriler/iş algılama ve PlaceholderAPI araçları mevcuttur burada</gradient>"
   actions:
     currency:
       name: "<gradient:#22c55e:#86efac>💱 Para Birimi Entegrasyonları</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Para birimi sağlayıcı yönetimini açın</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Algılanan Vault ve JExEconomy para birimlerini inceleyin</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Para birimi sağlayıcı yönetimini açın</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Algılanan Vault ve JExEconomy para birimlerini inceleyin</gradient>"
       error: "<gradient:#ef4444:#f87171>❌ Para birimi entegrasyonları açılamadı!</gradient>"
     skills:
       name: "<gradient:#38bdf8:#60a5fa>📘 Beceri Entegrasyonları</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>mcMMO, Aura ve Aura için destek durumunu görüntüleyin EcoSkills</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Şu anda etkin olan beceri eklentilerini algıla</gradient>"
+      - "<gradient:#6b7280:#9ca3af>mcMMO, Aura ve Aura için destek durumunu görüntüleyin EcoSkills</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Şu anda etkin olan beceri eklentilerini algıla</gradient>"
       error: "<gradient:#ef4444:#f87171>❌ Beceri entegrasyonları açılamadı!</gradient>"
     jobs:
       name: "<gradient:#f59e0b:#fbbf24>⛏ İş Entegrasyonları</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>EcoJobs ve JobsReborn için destek durumunu görüntüle</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Şu anda etkin olan iş eklentilerini algıla</gradient>"
+      - "<gradient:#6b7280:#9ca3af>EcoJobs ve JobsReborn için destek durumunu görüntüle</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Şu anda etkin olan iş eklentilerini algıla</gradient>"
       error: "<gradient:#ef4444:#f87171>❌ İş entegrasyonları açılamadı!</gradient>"
     placeholder_api:
       name: "<gradient:#38bdf8:#60a5fa>🏷 PlaceholderAPI</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>PlaceholderAPI desteğini tespit edin ve genişletmeleri yönetin</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Player genişletmesini yükleyin ve PlaceholderAPI'i yeniden yükleyin</gradient>"
+      - "<gradient:#6b7280:#9ca3af>PlaceholderAPI desteğini tespit edin ve genişletmeleri yönetin</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Player genişletmesini yükleyin ve PlaceholderAPI'i yeniden yükleyin</gradient>"
       error: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI araçları açılamadı!</gradient>"
 
 # ============================================
@@ -1236,34 +1498,34 @@ placeholder_api_ui:
   summary:
     name: "<gradient:#f59e0b:#fbbf24>📘 PlaceholderAPI Entegrasyonu</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>PlaceholderAPI desteklenir:</gradient> <gradient:#10b981:#34d399>%supported%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Hedef genişletme:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Doğrudan bu panelden yükleyin ve yeniden yükleyin</gradient>"
+    - "<gradient:#6b7280:#9ca3af>PlaceholderAPI desteklenir:</gradient> <gradient:#10b981:#34d399>%supported%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Hedef genişletme:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Doğrudan bu panelden yükleyin ve yeniden yükleyin</gradient>"
   detection:
     supported:
       name: "<gradient:#22c55e:#86efac>✅ PlaceholderAPI Algılandı</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>PlaceholderAPI yüklendi ve etkinleştirildi</gradient>"
+      - "<gradient:#6b7280:#9ca3af>PlaceholderAPI yüklendi ve etkinleştirildi</gradient>"
     missing:
       name: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI Eksik</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Yükle ve etkinleştir Bu eylemi kullanmak için PlaceholderAPI</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Yükle ve etkinleştir Bu eylemi kullanmak için PlaceholderAPI</gradient>"
   action:
     install:
       name: "<gradient:#22c55e:#86efac>📥 %expansion_name% Genişletmesini Yükle</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Çalıştırır:</gradient> <gradient:#f59e0b:#fbbf24>papi ecloud download %expansion_name%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Sonra çalışır:</gradient> <gradient:#f59e0b:#fbbf24>papi reload</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Her iki PlaceholderAPI komutunu yürütmek için tıklayın</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Çalıştırır:</gradient> <gradient:#f59e0b:#fbbf24>papi ecloud download %expansion_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Sonra çalışır:</gradient> <gradient:#f59e0b:#fbbf24>papi reload</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Her iki PlaceholderAPI komutunu yürütmek için tıklayın</gradient>"
     unavailable:
       name: "<gradient:#ef4444:#f87171>🚫 PlaceholderAPI Gerekli</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Bu eylem, PlaceholderAPI yüklenene kadar kullanılamaz</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Bu eylem, PlaceholderAPI yüklenene kadar kullanılamaz</gradient>"
   feedback:
     locked:
       name: "<gradient:#ef4444:#f87171>❌ Yönetici Erişim Gerekli</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>PlaceholderAPI yönetici araçlarını kullanma izniniz yok</gradient>"
+      - "<gradient:#6b7280:#9ca3af>PlaceholderAPI yönetici araçlarını kullanma izniniz yok</gradient>"
     locked_message: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI entegrasyonlarını yönetme izniniz yok.</gradient>"
     unsupported_message: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI bu sunucuda mevcut değil.</gradient>"
     download_failed: "<gradient:#ef4444:#f87171>❌ Genişletme indirilemedi:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
@@ -1278,82 +1540,94 @@ admin_skills_ui:
   summary:
     name: "<gradient:#f59e0b:#fbbf24>📊 Beceri Eklentisi Durumu</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Desteklenen beceri entegrasyonları:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Şu anda algılandı:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>mcMMO, Aura ve EcoSkills'i kontrol ediyor destek</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Desteklenen beceri entegrasyonları:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Şu anda algılandı:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>mcMMO, Aura ve EcoSkills'i kontrol ediyor destek</gradient>"
   plugin_entry:
     status:
       detected: "<gradient:#22c55e:#86efac>Algılandı</gradient>"
       missing: "<gradient:#ef4444:#f87171>Eksik</gradient>"
     detected:
       name: "<gradient:#22c55e:#86efac>✅ %plugin_name%</gradient>"
+      click_action: <gradient:#3b82f6:#60a5fa>[>] Temalı beceri gereksinimlerini eklemek için tıklayın</gradient>
     missing:
       name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Eklenti:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Entegrasyon kimliği:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Durum:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Eklenti:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Entegrasyon kimliği:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Durum:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
   empty:
     name: "<gradient:#ef4444:#f87171>❌ Yapılandırılmış Beceri Entegrasyonu Yok</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Şu anda yapılandırılmış beceri eklentisi entegrasyonu yok</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Şu anda yapılandırılmış beceri eklentisi entegrasyonu yok</gradient>"
 
 # ============================================
 # ADMIN JOBS INTEGRATION UI
 # ============================================
+  messages:
+    inject_success: "<gradient:#22c55e:#86efac>[+] Enjekte edildi %perk_count% avantaj ve %rank_count% için sıralama beceri gereksinimleri %plugin_name%.</gradient>"
+    inject_no_changes: "<gradient:#3b82f6:#60a5fa>[i] için herhangi bir beceri gereksinimi değişikliğine ihtiyaç duyulmadı %plugin_name%.</gradient>"
+    plugin_missing: "<gradient:#ef4444:#f87171>[!] %plugin_name% algılanmadığından herhangi bir gereksinim eklenmedi.</gradient>"
+    inject_failed: "<gradient:#ef4444:#f87171>[x] için beceri gereksinimleri eklenemedi %plugin_name%.</gradient>"
 admin_jobs_ui:
   title: "<gradient:#f59e0b:#fbbf24>⛏ İş Entegrasyonları</gradient>"
   summary:
     name: "<gradient:#38bdf8:#60a5fa>📊 İş Eklentisi Durumu</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Desteklenen iş entegrasyonları:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Şu anda algılandı:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>EcoJobs ve JobsReborn desteğini kontrol ediyor</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Desteklenen iş entegrasyonları:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Şu anda algılandı:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>EcoJobs ve JobsReborn desteğini kontrol ediyor</gradient>"
   plugin_entry:
     status:
       detected: "<gradient:#22c55e:#86efac>Algılandı</gradient>"
       missing: "<gradient:#ef4444:#f87171>Eksik</gradient>"
     detected:
       name: "<gradient:#22c55e:#86efac>✅ %plugin_name%</gradient>"
+      click_action: <gradient:#3b82f6:#60a5fa>[>] Temalı iş gereksinimlerini enjekte etmek için tıklayın</gradient>
     missing:
       name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Eklenti:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Entegrasyon kimliği:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Durum:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Eklenti:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Entegrasyon kimliği:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Durum:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
   empty:
     name: "<gradient:#ef4444:#f87171>❌ İş Yok Yapılandırılan Entegrasyonlar</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Şu anda hiçbir iş eklentisi entegrasyonu yapılandırılmadı</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Şu anda hiçbir iş eklentisi entegrasyonu yapılandırılmadı</gradient>"
 
 # ============================================
 # ADMIN CURRENCY OVERVIEW UI
 # ============================================
+  messages:
+    inject_success: "<gradient:#22c55e:#86efac>[+] Enjekte edildi %perk_count% avantaj ve %rank_count% için iş gerekliliklerini sıralayın %plugin_name%.</gradient>"
+    inject_no_changes: "<gradient:#3b82f6:#60a5fa>[i] Şunun için herhangi bir iş gereksinimi değişikliğine ihtiyaç duyulmadı: %plugin_name%.</gradient>"
+    plugin_missing: "<gradient:#ef4444:#f87171>[!] %plugin_name% algılanmadığından herhangi bir gereksinim eklenmedi.</gradient>"
+    inject_failed: "<gradient:#ef4444:#f87171>[x] Şunun için iş gereksinimleri eklenemedi: %plugin_name%.</gradient>"
 admin_currency_ui:
   title: "<gradient:#10b981:#34d399>💱 Döviz Yöneticisi</gradient>"
   currency_entry:
     name: "<gradient:#f59e0b:#fbbf24>💧 %currency_id%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Sağlayıcı:</gradient> <gradient:#a855f7:#c084fc>%provider%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Sembol:</gradient> <gradient:#3b82f6:#60a5fa>%symbol%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Önek:</gradient> <gradient:#10b981:#34d399>%prefix%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Sonek:</gradient> <gradient:#10b981:#34d399>%suffix%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Sağlayıcı:</gradient> <gradient:#a855f7:#c084fc>%provider%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Sembol:</gradient> <gradient:#3b82f6:#60a5fa>%symbol%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Önek:</gradient> <gradient:#10b981:#34d399>%prefix%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Sonek:</gradient> <gradient:#10b981:#34d399>%suffix%</gradient>"
   default_currency:
     create:
       name: "<gradient:#10b981:#34d399>✨ %currency_id% oluşturun</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>RDQ için varsayılan para birimini oluşturun</gradient>"
-        - "<gradient:#f59e0b:#fbbf24>%currency_id% oluşturmak için tıklayın</gradient>"
+      - "<gradient:#6b7280:#9ca3af>RDQ için varsayılan para birimini oluşturun</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>%currency_id% oluşturmak için tıklayın</gradient>"
     unavailable:
       name: "<gradient:#ef4444:#f87171>❌ JExEconomy Gerekli</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Bu işlem JExEconomy gerektirir</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Varsayılanları oluşturmadan önce yükleyin</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Bu işlem JExEconomy gerektirir</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Varsayılanları oluşturmadan önce yükleyin</gradient>"
     already_exists:
       name: "<gradient:#10b981:#34d399>✅ %currency_id% Hazır</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Varsayılan para birimi zaten mevcut</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Başka kuruluma gerek yok</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Varsayılan para birimi zaten mevcut</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Başka kuruluma gerek yok</gradient>"
     messages:
       created: "<gradient:#10b981:#34d399>✅ Varsayılan para birimi oluşturuldu:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
       failed: "<gradient:#ef4444:#f87171>❌ Para birimi oluşturulamadı:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
@@ -1362,8 +1636,18 @@ admin_currency_ui:
   empty:
     name: "<gradient:#f59e0b:#fbbf24>⚠ Hiçbir Para Birimi Algılanmadı</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>RDQ, Vault veya JExEconomy para birimlerini tespit edemedi</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Önce bir ekonomi sağlayıcısı yükleyin veya etkinleştirin</gradient>"
+    - "<gradient:#6b7280:#9ca3af>RDQ, Vault veya JExEconomy para birimlerini tespit edemedi</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Önce bir ekonomi sağlayıcısı yükleyin veya etkinleştirin</gradient>"
+    jex_detected:
+      name: "<gradient:#3b82f6:#60a5fa>[i] JExEkonomi Algılandı</gradient>"
+      lore:
+      - "<gradient:#6b7280:#9ca3af>RDQ, JExEconomy'yi tespit etti ancak henüz para birimi mevcut değil</gradient>"
+      - "<gradient:#10b981:#34d399>Oluşturmak için üst düğmeyi kullanın %currency_id%</gradient>"
+    vault_detected:
+      name: "<gradient:#3b82f6:#60a5fa>[i] Kasa Algılandı</gradient>"
+      lore:
+      - "<gradient:#6b7280:#9ca3af>Kasa mevcut ancak hiçbir para birimi girişi listelenmemiş</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Ekonomi sağlayıcınızın yapılandırmasını kontrol edin</gradient>"
   decoration:
     border:
       name: " "
@@ -1384,12 +1668,12 @@ admin_permissions_overview_ui:
     entry:
       name: "<gradient:#a855f7:#c084fc>📦 %plugin_name%</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Eklenti:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>İzinler:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Durum:</gradient> <gradient:#3b82f6:#60a5fa>%status%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Eklenti:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>İzinler:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Durum:</gradient> <gradient:#3b82f6:#60a5fa>%status%</gradient>"
       click_instructions:
-        - "<gradient:#3b82f6:#60a5fa>Seçmek için sol tıklayın</gradient>"
-        - "<gradient:#10b981:#34d399>Tümünü atamak için sağ tıklayın</gradient>"
+      - "<gradient:#3b82f6:#60a5fa>Seçmek için sol tıklayın</gradient>"
+      - "<gradient:#10b981:#34d399>Tümünü atamak için sağ tıklayın</gradient>"
     empty_slot:
       name: "<gradient:#6b7280:#9ca3af>Boş</gradient>"
   permissions:
@@ -1401,40 +1685,40 @@ admin_permissions_overview_ui:
       plugin: "<gradient:#6b7280:#9ca3af>Eklenti:</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
       node: "<gradient:#6b7280:#9ca3af>Düğüm:</gradient> <gradient:#f59e0b:#fbbf24>%permission%</gradient>"
       click_instructions:
-        - "<gradient:#10b981:#34d399>Bu izni atamak için tıklayın</gradient>"
+      - "<gradient:#10b981:#34d399>Bu izni atamak için tıklayın</gradient>"
     no_selection:
       name: "<gradient:#6b7280:#9ca3af>Hiçbir Eklenti Seçilmedi</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Yukarıdan bir eklenti seçin</gradient>"
-        - "<gradient:#6b7280:#9ca3af>izinlerini görüntülemek için</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Yukarıdan bir eklenti seçin</gradient>"
+      - "<gradient:#6b7280:#9ca3af>izinlerini görüntülemek için</gradient>"
     empty_slot:
       name: "<gradient:#6b7280:#9ca3af>Boş</gradient>"
   actions:
     assign_selected:
       name: "<gradient:#10b981:#34d399>✅ Ata %plugin_name% İzinler</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Şuradaki tüm izinleri ata:</gradient>"
-        - "<gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>(%permission_count% izinler)</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Şuradaki tüm izinleri ata:</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>(%permission_count% izinler)</gradient>"
     no_selection:
       name: "<gradient:#6b7280:#9ca3af>Seçim Yok</gradient>"
   status:
     selected_plugin:
       name: "<gradient:#a855f7:#c084fc>📊 Seçilenler: %plugin_name%</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Eklenti:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>İzinler:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Toplam eklentiler:</gradient> <gradient:#3b82f6:#60a5fa>%total_plugins%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Eklenti:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>İzinler:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Toplam eklentiler:</gradient> <gradient:#3b82f6:#60a5fa>%total_plugins%</gradient>"
     overview:
       name: "<gradient:#a855f7:#c084fc>📊 Genel Bakış</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Toplam eklentiler:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>İzinleri görüntülemek için bir eklenti seçin</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Toplam eklentiler:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>İzinleri görüntülemek için bir eklenti seçin</gradient>"
   controls:
     refresh:
       name: "<gradient:#10b981:#34d399>🔄 Verileri Yenile</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>İzin verilerini yenilemek için tıklayın</gradient>"
+      - "<gradient:#6b7280:#9ca3af>İzin verilerini yenilemek için tıklayın</gradient>"
   decoration:
     header:
       name: " "
@@ -1443,16 +1727,16 @@ admin_permissions_overview_ui:
   clear_selection:
     name: "<gradient:#ef4444:#f87171>❌ Seçimi Temizle</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Eklentinin seçimini kaldırmak için tıklayın</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Eklentinin seçimini kaldırmak için tıklayın</gradient>"
   assign_selected_plugin_permissions:
     name: "<gradient:#10b981:#34d399>✅ Ata %plugin_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Seçilen eklentiden tüm izinleri atayın</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Seçilen eklentiden tüm izinleri atayın</gradient>"
   assign_all_permissions:
     name: "<gradient:#10b981:#34d399>✅ Tüm İzinleri Ata</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Herkesten izin atayın</gradient>"
-      - "<gradient:#f59e0b:#fbbf24>%total_plugins%</gradient> <gradient:#6b7280:#9ca3af>eklentiler</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Herkesten izin atayın</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>%total_plugins%</gradient> <gradient:#6b7280:#9ca3af>eklentiler</gradient>"
   feedback:
     data_refreshed: "<gradient:#10b981:#34d399>✅ Veriler yenilendi!</gradient>"
     permissions_assigned:
@@ -1469,8 +1753,8 @@ admin_permissions_overview_ui:
 page:
   name: "<gradient:#6b7280:#9ca3af>📄 Sayfa %current_page%</gradient>"
   lore:
-    - "<gradient:#6b7280:#9ca3af>Mevcut sayfa:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
-    - "<gradient:#6b7280:#9ca3af>Toplam sayfa:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Mevcut sayfa:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Toplam sayfa:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
   fallback: "<gradient:#6b7280:#9ca3af>📄 Sayfa %direction%</gradient>"
 
 # ============================================
@@ -1480,31 +1764,31 @@ head:
   return:
     name: "<gradient:#f59e0b:#fbbf24>🔙 Geri</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Geri dönmek için tıklayın</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Geri dönmek için tıklayın</gradient>"
   proceed:
     name: "<gradient:#10b981:#34d399>➡️ Devam Et</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Devam etmek için tıklayın</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Devam etmek için tıklayın</gradient>"
   previous:
     name: "<gradient:#3b82f6:#60a5fa>⬅️ Önceki</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Önceki sayfa</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Önceki sayfa</gradient>"
   next:
     name: "<gradient:#3b82f6:#60a5fa>➡️ Sonraki</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Sonraki sayfa</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Sonraki sayfa</gradient>"
   up:
     name: "<gradient:#a855f7:#c084fc>⬆️ Yukarı</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Yukarı git</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Yukarı git</gradient>"
   down:
     name: "<gradient:#a855f7:#c084fc>⬇️ Aşağı</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Aşağı git</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Aşağı git</gradient>"
   cancel:
     name: "<gradient:#ef4444:#f87171>❌ İptal</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>İşlemi iptal et</gradient>"
+    - "<gradient:#6b7280:#9ca3af>İşlemi iptal et</gradient>"
 
 
 
@@ -1531,8 +1815,8 @@ abstract_anvil_ui:
   input:
     name: "<gradient:#f59e0b:#fbbf24>✏️ Değer Girin</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Yukarıya yazın</gradient>"
-      - "<gradient:#6b7280:#9ca3af>ve onaylamak için tıklayın</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Yukarıya yazın</gradient>"
+    - "<gradient:#6b7280:#9ca3af>ve onaylamak için tıklayın</gradient>"
   error:
     processing_failed: "<gradient:#ef4444:#f87171>❌ Giriş işlenemedi:</gradient> <gradient:#6b7280:#9ca3af>%input%</gradient>"
 
@@ -1544,11 +1828,11 @@ confirmation_ui:
   confirm:
     name: "<gradient:#10b981:#34d399>✅ Onayla</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Onaylamak için tıklayın</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Onaylamak için tıklayın</gradient>"
   cancel:
     name: "<gradient:#ef4444:#f87171>❌ İptal</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>İptal etmek için tıklayın</gradient>"
+    - "<gradient:#6b7280:#9ca3af>İptal etmek için tıklayın</gradient>"
 
 # ============================================
 # ÜCRETSİZ SÜRÜM KISITLAMALARI
@@ -1563,13 +1847,13 @@ free:
   indicator:
     name: "<gradient:#f59e0b:#fbbf24>⭐ Ücretsiz Sürüm</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Ücretsiz sürümü kullanıyorsunuz</gradient>"
-      - "<gradient:#6b7280:#9ca3af>sınırlı özelliklere sahip.</gradient>"
-      - ""
-      - "<gradient:#10b981:#34d399>Şunlar için Premium'a yükseltin:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>• Sınırsız sıralama ağaçları</gradient>"
-      - "<gradient:#6b7280:#9ca3af>• Ağaç başına sınırsız sıralama</gradient>"
-      - "<gradient:#6b7280:#9ca3af>• Çoklu etkin yollar</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Ücretsiz sürümü kullanıyorsunuz</gradient>"
+    - "<gradient:#6b7280:#9ca3af>sınırlı özelliklere sahip.</gradient>"
+    - ""
+    - "<gradient:#10b981:#34d399>Şunlar için Premium'a yükseltin:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>• Sınırsız sıralama ağaçları</gradient>"
+    - "<gradient:#6b7280:#9ca3af>• Ağaç başına sınırsız sıralama</gradient>"
+    - "<gradient:#6b7280:#9ca3af>• Çoklu etkin yollar</gradient>"
 
 # ============================================
 # PREMIUM VERSİYON MESAJLARI
@@ -1579,7 +1863,7 @@ premium:
   indicator:
     name: "<gradient:#a855f7:#c084fc>⭐ Premium Sürüm</gradient>"
     lore:
-      - "<gradient:#10b981:#34d399>Tüm özelliklerin kilidi açıldı!</gradient>"
+    - "<gradient:#10b981:#34d399>Tüm özelliklerin kilidi açıldı!</gradient>"
 
 # ============================================
 # GEREKSİNİM ÖĞE DETAYLI GÖRÜNÜMÜ (Basitleştirilmiş)
@@ -1594,21 +1878,21 @@ rank_requirement_item_detail_ui:
     enabled:
       name: "<gradient:#10b981:#34d399>📥 Öğeleri Gönder</gradient>"
       lore:
-        - ""
-        - "<gradient:#10b981:#34d399>Tüm eşyalar hazır!</gradient>"
-        - ""
-        - "<gradient:#f59e0b:#fbbf24>▶ Göndermek için tıklayın</gradient>"
+      - ""
+      - "<gradient:#10b981:#34d399>Tüm eşyalar hazır!</gradient>"
+      - ""
+      - "<gradient:#f59e0b:#fbbf24>▶ Göndermek için tıklayın</gradient>"
     disabled:
       name: "<gradient:#6b7280:#9ca3af>📥 Öğeleri Gönder</gradient>"
       lore:
-        - ""
-        - "<gradient:#ef4444:#f87171>Gerekli öğeler eksik</gradient>"
-        - ""
-        - "<gradient:#6b7280:#9ca3af>Önce tüm eşyaları topla</gradient>"
+      - ""
+      - "<gradient:#ef4444:#f87171>Gerekli öğeler eksik</gradient>"
+      - ""
+      - "<gradient:#6b7280:#9ca3af>Önce tüm eşyaları topla</gradient>"
   back:
     name: "<gradient:#ef4444:#f87171>← Geri</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Gereksinimlere dön</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Gereksinimlere dön</gradient>"
 
 
 # ============================================
@@ -1627,35 +1911,35 @@ rank_requirements_journey_ui:
   overall_progress:
     name: "<gradient:#a855f7:#c084fc>📊 Genel ilerleme</gradient>"
     lore:
-      - ""
-      - "<gradient:#6b7280:#9ca3af>Tamamlama:</gradient> <gradient:#f59e0b:#fbbf24>%percentage%%</gradient>"
-      - ""
-      - "<gradient:#6b7280:#9ca3af>Gereksinimler:</gradient> <gradient:#10b981:#34d399>%completed%</gradient><gradient:#6b7280:#9ca3af>/</gradient><gradient:#f59e0b:#fbbf24>%total%</gradient>"
+    - ""
+    - "<gradient:#6b7280:#9ca3af>Tamamlama:</gradient> <gradient:#f59e0b:#fbbf24>%percentage%%</gradient>"
+    - ""
+    - "<gradient:#6b7280:#9ca3af>Gereksinimler:</gradient> <gradient:#10b981:#34d399>%completed%</gradient><gradient:#6b7280:#9ca3af>/</gradient><gradient:#f59e0b:#fbbf24>%total%</gradient>"
   rank_info:
     name: "<gradient:#a855f7:#c084fc>⚔ %rank_name%</gradient>"
     lore:
-      - ""
-      - "<gradient:#6b7280:#9ca3af>Tüm gereksinimleri tamamla</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Bu rütbenin kilidini açmak için!</gradient>"
+    - ""
+    - "<gradient:#6b7280:#9ca3af>Tüm gereksinimleri tamamla</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Bu rütbenin kilidini açmak için!</gradient>"
   claim_button:
     name: "<gradient:#10b981:#34d399>✅ Rütbeyi Al</gradient>"
     lore:
-      - ""
-      - "<gradient:#10b981:#34d399>Tüm gereksinimler tamamlandı!</gradient>"
-      - ""
-      - "<gradient:#f59e0b:#fbbf24>▶ Sıralamanızı talep etmek için tıklayın</gradient>"
+    - ""
+    - "<gradient:#10b981:#34d399>Tüm gereksinimler tamamlandı!</gradient>"
+    - ""
+    - "<gradient:#f59e0b:#fbbf24>▶ Sıralamanızı talep etmek için tıklayın</gradient>"
     hidden:
       name: "<gradient:#6b7280:#9ca3af>🔒 Sıra Kilitli</gradient>"
       lore:
-        - ""
-        - "<gradient:#6b7280:#9ca3af>Tüm gereksinimleri tamamlayın</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Bu rütbenin kilidini açmak için.</gradient>"
+      - ""
+      - "<gradient:#6b7280:#9ca3af>Tüm gereksinimleri tamamlayın</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Bu rütbenin kilidini açmak için.</gradient>"
     locked:
       name: "<gradient:#ef4444:#f87171>🔒 Kilitli</gradient>"
       lore:
-        - ""
-        - "<gradient:#6b7280:#9ca3af>Tüm gereksinimleri tamamla</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Bu rütbenin kilidini açmak için.</gradient>"
+      - ""
+      - "<gradient:#6b7280:#9ca3af>Tüm gereksinimleri tamamla</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Bu rütbenin kilidini açmak için.</gradient>"
   requirement_card:
     name: "<gradient:#f59e0b:#fbbf24>%name%</gradient>"
     progress_bar: "%bar% <gradient:#6b7280:#9ca3af>%percentage%%</gradient>"
@@ -1665,7 +1949,7 @@ rank_requirements_journey_ui:
   back:
     name: "<gradient:#ef4444:#f87171>← Geri</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Sıralamaya genel bakışa dön</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Sıralamaya genel bakışa dön</gradient>"
   messages:
     requirement_completed: "<gradient:#10b981:#34d399>✅ Gereksinim tamamlandı!</gradient>"
     all_completed: "<gradient:#10b981:#34d399>🎉 Tüm gereksinimler tamamlandı! Artık rütbeyi alabilirsin!</gradient>"
@@ -1680,10 +1964,10 @@ rank_requirements_journey_ui:
       compact_name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
       no_rewards: "<gradient:#6b7280:#9ca3af>Ödül Yok</gradient>"
       no_rewards_lore:
-        - "<gradient:#6b7280:#9ca3af>Bu rütbede yapılandırılmış ödül yok</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Bu rütbede yapılandırılmış ödül yok</gradient>"
       type_label: "<gray>Tip:</gray> <yellow>%type%</yellow>"
       value_label: "<gray>Değer:</gray> <gold>%value%</gold>"
-    
+
     # Ödül türü açıklamaları
     currency:
       description: "<gradient:#fbbf24:#fcd34d>Para birimi ödülleri alın</gradient>"
@@ -1705,25 +1989,24 @@ rank_requirements_journey_ui:
       description: "<gradient:#f97316:#fb923c>Parçacık efektlerinin kilidini aç</gradient>"
     vanishing_chest:
       description: "<gradient:#14b8a6:#2dd4bf>Kaybolan bir sandık alın</gradient>"
-    
     more: "<gradient:#fbbf24:#fcd34d>+%count% daha fazla ödül...</gradient>"
 
   rewards:
     view_all:
       name: "<gradient:#a855f7:#c084fc>📋 Tüm Ödülleri Görüntüle</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Tümünü görmek için tıklayın %count% ödüller</gradient>"
-        - "<gradient:#6b7280:#9ca3af>ayrıntılı olarak bu sıralama için</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Tümünü görmek için tıklayın %count% ödüller</gradient>"
+      - "<gradient:#6b7280:#9ca3af>ayrıntılı olarak bu sıralama için</gradient>"
       coming_soon: "<gradient:#fbbf24:#fcd34d>Ayrıntılı ödül görünümü çok yakında!</gradient>"
       empty:
         name: "<gradient:#6b7280:#9ca3af>📋 Ödül Yok</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Bu rütbenin ödülü yok</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Bu rütbenin ödülü yok</gradient>"
         message: "<gradient:#6b7280:#9ca3af>Bu rütbede yapılandırılmış ödül yok.</gradient>"
     label: "<gradient:#fbbf24:#fcd34d>🎁 Sıralama Ödülleri</gradient>"
     label_lore:
-      - "<gradient:#6b7280:#9ca3af>Alacaksın %count% ödüller</gradient>"
-      - "<gradient:#6b7280:#9ca3af>bu rütbeyi talep ettiğinizde</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Alacaksın %count% ödüller</gradient>"
+    - "<gradient:#6b7280:#9ca3af>bu rütbeyi talep ettiğinizde</gradient>"
 
 reward:
   card:
@@ -1731,13 +2014,12 @@ reward:
     compact_name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
     no_rewards: "<gradient:#6b7280:#9ca3af>Ödül Yok</gradient>"
     no_rewards_lore:
-      - "<gradient:#6b7280:#9ca3af>Bu rütbede yapılandırılmış ödül yok</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Bu rütbede yapılandırılmış ödül yok</gradient>"
     type_label: "<gray>Tip:</gray> <yellow>%type%</yellow>"
     value_label: "<gray>Değer:</gray> <gold>%value%</gold>"
-  
   perk:
     unlocked: "<gradient:#10b981:#34d399>✦</gradient> <gradient:#6b7280:#9ca3af>Ayrıcalığın kilidini açtınız:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
-  
+
   # Ödül türü açıklamaları
   currency:
     description: "<gradient:#fbbf24:#fcd34d>Para birimi ödülleri alın</gradient>"
@@ -1759,25 +2041,24 @@ reward:
     description: "<gradient:#f97316:#fb923c>Parçacık efektlerinin kilidini aç</gradient>"
   vanishing_chest:
     description: "<gradient:#14b8a6:#2dd4bf>Kaybolan bir sandık alın</gradient>"
-  
   more: "<gradient:#fbbf24:#fcd34d>+%count% daha fazla ödül...</gradient>"
 
 rewards:
   view_all:
     name: "<gradient:#a855f7:#c084fc>📋 Tüm Ödülleri Görüntüle</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Tümünü görmek için tıklayın %count% ödüller</gradient>"
-      - "<gradient:#6b7280:#9ca3af>ayrıntılı olarak bu sıralama için</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Tümünü görmek için tıklayın %count% ödüller</gradient>"
+    - "<gradient:#6b7280:#9ca3af>ayrıntılı olarak bu sıralama için</gradient>"
     coming_soon: "<gradient:#fbbf24:#fcd34d>Ayrıntılı ödül görünümü çok yakında!</gradient>"
     empty:
       name: "<gradient:#6b7280:#9ca3af>📋 Ödül Yok</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Bu rütbenin ödülü yok</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Bu rütbenin ödülü yok</gradient>"
       message: "<gradient:#6b7280:#9ca3af>Bu rütbede yapılandırılmış ödül yok.</gradient>"
   label: "<gradient:#fbbf24:#fcd34d>🎁 Sıralama Ödülleri</gradient>"
   label_lore:
-    - "<gradient:#6b7280:#9ca3af>Alacaksın %count% ödüller</gradient>"
-    - "<gradient:#6b7280:#9ca3af>bu rütbeyi talep ettiğinizde</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Alacaksın %count% ödüller</gradient>"
+  - "<gradient:#6b7280:#9ca3af>bu rütbeyi talep ettiğinizde</gradient>"
 
 
 # ============================================
@@ -1788,8 +2069,8 @@ rank_rewards_detail_ui:
   rank_info:
     name: "<gradient:#fbbf24:#fcd34d>%rank_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Bu rütbe var %count% ödüller</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Ayrıntılar için herhangi bir ödüle tıklayın</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Bu rütbe var %count% ödüller</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Ayrıntılar için herhangi bir ödüle tıklayın</gradient>"
 
 # ============================================
 # PERK'E GENEL BAKIŞ UI
@@ -1815,7 +2096,7 @@ perk:
   fish_xp:
     name: "<gradient:#10b981:#34d399>Balıkçılık XP Artışı</gradient>"
     description: "<gradient:#6b7280:#9ca3af>Balık yakalarken bonus XP kazanın</gradient>"
-  
+
   # İksir Avantajları
   potion_enhance:
     name: "<gradient:#a855f7:#c084fc>İksir Yükseltici</gradient>"
@@ -1826,7 +2107,7 @@ perk:
   potion_save:
     name: "<gradient:#10b981:#34d399>İksir İadesi</gradient>"
     description: "<gradient:#6b7280:#9ca3af>İksiri içtikten sonra geri alma şansı</gradient>"
-  
+
   # Ayrıcalık Mesajları
   messages:
     # Kilidini aç/Enable/Disable
@@ -1843,36 +2124,33 @@ perk:
     disable:
       success: "<gradient:#f59e0b:#fbbf24>Engelli avantajı:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
       failed: "<gradient:#ef4444:#f87171>Ayrıcalık devre dışı bırakılamadı:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
-    
+
     # Sakin ol
     cooldown:
       active: "<gradient:#ef4444:#f87171>Bu avantaj şu süre için beklemede:</gradient> <gradient:#f59e0b:#fbbf24>%time%</gradient>"
       ready: "<gradient:#10b981:#34d399>Perk kullanıma hazır!</gradient>"
-    
+
     # Efekt Tetikleyicileri
     potion_enhanced: "<gradient:#a855f7:#c084fc>✨ İksir Geliştirildi!</gradient> <gradient:#6b7280:#9ca3af>Etkiler güçlendirilmiş</gradient>"
     potion_extended: "<gradient:#f59e0b:#fbbf24>⏱ İksir Süresi Uzatıldı!</gradient> <gradient:#6b7280:#9ca3af>Daha uzun sürer</gradient>"
     potion_saved: "<gradient:#10b981:#34d399>💾 İksir Kaydedildi!</gradient> <gradient:#6b7280:#9ca3af>Envantere geri döndü</gradient>"
     fishing_active: "<gradient:#3b82f6:#60a5fa>🎣 Daha Hızlı Balık Tutma Aktif!</gradient>"
     fishing_xp: "<gradient:#10b981:#34d399>+%xp% Balıkçılık XP'si!</gradient>"
-  
+
   # Kullanıcı Arayüzü Öğeleri
   ui:
     header:
       type_label: "<gray>Tip: <white>%type%</white></gray>"
       category_label: "<gray>Kategori: <white>%category%</white></gray>"
-    
     requirements:
       no_requirements: "<green>Gereksinim Yok</green>"
       no_requirements_lore: "<gray>Bu ayrıcalığın kilit açma zorunluluğu yoktur</gray>"
-    
     rewards:
       title: "<gold>Ödülün Kilidini Aç</gold>"
       no_rewards: "<gray>Kilit Açma Ödülü Yok</gray>"
       no_rewards_lore: "<gray>Bu ayrıcalığın kilit açma ödülü yok</gray>"
       type_label: "<gray>Tip: <white>%type%</white></gray>"
       value_label: "<gray>Değer: <gold>%value%</gold></gray>"
-    
     status:
       title: "<white>Ayrıcalık Durumu</white>"
       locked: "<red>✖ Kilitli</red>"
@@ -1883,7 +2161,6 @@ perk:
       enabled_count: "<gray>Etkinleştirilen Avantajlar: <white>%count%/%max%</white></gray>"
       cooldown_label: "<gray>Sakin ol: <gold>%time%</gold></gray>"
       activations_label: "<gray>Aktivasyonlar: <white>%count%</white></gray>"
-    
     buttons:
       unlock:
         title: "<white>Avantajın Kilidini Aç</white>"
@@ -1895,7 +2172,7 @@ perk:
       disable:
         title: "<white>Avantajı Devre Dışı Bırak</white>"
         hint: "<yellow>Bu ayrıcalığı devre dışı bırakmak için tıklayın</yellow>"
-  
+
   # Mevcut Avantajlar (referans için - eksikse ekleyin)
   fly:
     name: "<gradient:#3b82f6:#60a5fa>Uçuş</gradient>"

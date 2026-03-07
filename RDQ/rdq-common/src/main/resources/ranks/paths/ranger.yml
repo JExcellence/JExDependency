@@ -1,7 +1,7 @@
 # Ranger Rank Tree
 # The path of nature and archery
 
-displayOrder: 6
+displayOrder: 4
 isEnabled: true
 isFinalRankTree: false
 requiresAllRankTreesToBeDone: false
@@ -123,7 +123,7 @@ ranks:
     icon:
       type: "SPECTRAL_ARROW"
     previousRanks: ["hunter"]
-    nextRanks: ["warden"]
+    nextRanks: ["warden_primal", "warden_storm", "warden_wild"]
     rewards:
       tracker_reward:
         type: "CURRENCY"
@@ -177,23 +177,23 @@ ranks:
           useTotalPlaytime: true
           requiredPlaytimeSeconds: 21600
 
-  warden:
+  warden_primal:
     tier: 4
     weight: 400
-    luckPermsGroup: "ranger_warden"
-    prefixKey: "&8[&bWarden&8]"
+    luckPermsGroup: "ranger_warden_primal"
+    prefixKey: "&8[&bWarden of Beasts&8]"
     suffixKey: ""
     isEnabled: true
     icon:
       type: "TRIDENT"
     previousRanks: ["tracker"]
-    nextRanks: ["beastmaster"]
+    nextRanks: ["beastmaster_primal"]
     rewards:
-      warden_reward:
+      warden_primal_reward:
         type: "CURRENCY"
         amount: 500
         currencyId: "raindrops"
-      warden_equipment:
+      warden_primal_gear:
         type: "COMPOSITE"
         rewards:
           - type: "ITEM"
@@ -204,12 +204,12 @@ ranks:
             item:
               material: "TURTLE_HELMET"
               amount: 1
-      warden_experience:
+      warden_primal_experience:
         type: "EXPERIENCE"
         experienceAmount: 1500
         experienceType: "POINTS"
     requirements:
-      warden_gear:
+      warden_primal_gear:
         icon:
           type: "TRIDENT"
         itemRequirement:
@@ -222,8 +222,8 @@ ranks:
               type: "TURTLE_HELMET"
               amount: 1
             item3:
-              type: "PRISMARINE_SHARD"
-              amount: 32
+              type: "HEART_OF_THE_SEA"
+              amount: 1
             item4:
               type: "NAUTILUS_SHELL"
               amount: 8
@@ -234,31 +234,145 @@ ranks:
           consumeOnComplete: true
           requiredType: "LEVEL"
           requiredLevel: 30
-      playtime_req:
-        icon:
-          type: "CLOCK"
-        playtimeRequirement:
-          useTotalPlaytime: true
-          requiredPlaytimeSeconds: 43200
 
-  beastmaster:
+  warden_storm:
+    tier: 4
+    weight: 400
+    luckPermsGroup: "ranger_warden_storm"
+    prefixKey: "&8[&1Warden of Storms&8]"
+    suffixKey: ""
+    isEnabled: true
+    icon:
+      type: "CROSSBOW"
+    previousRanks: ["tracker"]
+    nextRanks: ["beastmaster_storm"]
+    rewards:
+      warden_storm_reward:
+        type: "CURRENCY"
+        amount: 500
+        currencyId: "raindrops"
+      warden_storm_gear:
+        type: "COMPOSITE"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "CROSSBOW"
+              amount: 1
+          - type: "ITEM"
+            item:
+              material: "TIPPED_ARROW"
+              amount: 64
+      warden_storm_experience:
+        type: "EXPERIENCE"
+        experienceAmount: 1500
+        experienceType: "POINTS"
+    requirements:
+      warden_storm_gear:
+        icon:
+          type: "CROSSBOW"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "CROSSBOW"
+              amount: 1
+            item2:
+              type: "TIPPED_ARROW"
+              amount: 96
+            item3:
+              type: "LIGHTNING_ROD"
+              amount: 4
+            item4:
+              type: "TRIDENT"
+              amount: 1
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 30
+
+  warden_wild:
+    tier: 4
+    weight: 400
+    luckPermsGroup: "ranger_warden_wild"
+    prefixKey: "&8[&2Warden of the Wild&8]"
+    suffixKey: ""
+    isEnabled: true
+    icon:
+      type: "SPYGLASS"
+    previousRanks: ["tracker"]
+    nextRanks: ["beastmaster_wild"]
+    rewards:
+      warden_wild_reward:
+        type: "CURRENCY"
+        amount: 500
+        currencyId: "raindrops"
+      warden_wild_gear:
+        type: "COMPOSITE"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "SPYGLASS"
+              amount: 1
+          - type: "ITEM"
+            item:
+              material: "TRIDENT"
+              amount: 1
+      warden_wild_experience:
+        type: "EXPERIENCE"
+        experienceAmount: 1500
+        experienceType: "POINTS"
+    requirements:
+      warden_wild_gear:
+        icon:
+          type: "SPYGLASS"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "SPYGLASS"
+              amount: 1
+            item2:
+              type: "TRIDENT"
+              amount: 1
+            item3:
+              type: "TURTLE_HELMET"
+              amount: 1
+            item4:
+              type: "NAUTILUS_SHELL"
+              amount: 8
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 30
+
+  beastmaster_primal:
     tier: 5
     weight: 500
-    luckPermsGroup: "ranger_beastmaster"
-    prefixKey: "&8[&5Beastmaster&8]"
+    luckPermsGroup: "ranger_beastmaster_primal"
+    prefixKey: "&8[&5Beastmaster of Beasts&8]"
     suffixKey: ""
     isEnabled: true
     isFinalRank: true
     icon:
       type: "DRAGON_HEAD"
-    previousRanks: ["warden"]
+    previousRanks: ["warden_primal"]
     rewards:
-      beastmaster_reward:
+      beastmaster_primal_reward:
         type: "CURRENCY"
+        icon:
+          type: "EMERALD_BLOCK"
         amount: 1000
         currencyId: "raindrops"
-      ultimate_ranger:
+      primal_bond:
         type: "COMPOSITE"
+        icon:
+          type: "DRAGON_HEAD"
         rewards:
           - type: "ITEM"
             item:
@@ -272,12 +386,14 @@ ranks:
             item:
               material: "HEART_OF_THE_SEA"
               amount: 1
-      beastmaster_experience:
+      beastmaster_primal_experience:
         type: "EXPERIENCE"
+        icon:
+          type: "EXPERIENCE_BOTTLE"
         experienceAmount: 3000
         experienceType: "POINTS"
     requirements:
-      ultimate_ranger:
+      ultimate_beastmaster_primal:
         icon:
           type: "DRAGON_HEAD"
         itemRequirement:
@@ -302,9 +418,139 @@ ranks:
           consumeOnComplete: true
           requiredType: "LEVEL"
           requiredLevel: 45
-      playtime_req:
+
+  beastmaster_storm:
+    tier: 5
+    weight: 500
+    luckPermsGroup: "ranger_beastmaster_storm"
+    prefixKey: "&8[&1Beastmaster of Storms&8]"
+    suffixKey: ""
+    isEnabled: true
+    isFinalRank: true
+    icon:
+      type: "CROSSBOW"
+    previousRanks: ["warden_storm"]
+    rewards:
+      beastmaster_storm_reward:
+        type: "CURRENCY"
         icon:
-          type: "CLOCK"
-        playtimeRequirement:
-          useTotalPlaytime: true
-          requiredPlaytimeSeconds: 162000
+          type: "EMERALD_BLOCK"
+        amount: 1000
+        currencyId: "raindrops"
+      tempest_quiver:
+        type: "COMPOSITE"
+        icon:
+          type: "CROSSBOW"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "CROSSBOW"
+              amount: 1
+          - type: "ITEM"
+            item:
+              material: "TIPPED_ARROW"
+              amount: 64
+          - type: "ITEM"
+            item:
+              material: "LIGHTNING_ROD"
+              amount: 4
+      beastmaster_storm_experience:
+        type: "EXPERIENCE"
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceAmount: 3000
+        experienceType: "POINTS"
+    requirements:
+      ultimate_beastmaster_storm:
+        icon:
+          type: "CROSSBOW"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "CROSSBOW"
+              amount: 1
+            item2:
+              type: "TIPPED_ARROW"
+              amount: 64
+            item3:
+              type: "LIGHTNING_ROD"
+              amount: 8
+            item4:
+              type: "TRIDENT"
+              amount: 1
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 45
+
+  beastmaster_wild:
+    tier: 5
+    weight: 500
+    luckPermsGroup: "ranger_beastmaster_wild"
+    prefixKey: "&8[&2Beastmaster of the Wild&8]"
+    suffixKey: ""
+    isEnabled: true
+    isFinalRank: true
+    icon:
+      type: "SPYGLASS"
+    previousRanks: ["warden_wild"]
+    rewards:
+      beastmaster_wild_reward:
+        type: "CURRENCY"
+        icon:
+          type: "EMERALD_BLOCK"
+        amount: 1000
+        currencyId: "raindrops"
+      untamed_guard:
+        type: "COMPOSITE"
+        icon:
+          type: "SPYGLASS"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "SPYGLASS"
+              amount: 1
+          - type: "ITEM"
+            item:
+              material: "TRIDENT"
+              amount: 1
+          - type: "ITEM"
+            item:
+              material: "TURTLE_HELMET"
+              amount: 1
+      beastmaster_wild_experience:
+        type: "EXPERIENCE"
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceAmount: 3000
+        experienceType: "POINTS"
+    requirements:
+      ultimate_beastmaster_wild:
+        icon:
+          type: "SPYGLASS"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "SPYGLASS"
+              amount: 1
+            item2:
+              type: "TRIDENT"
+              amount: 1
+            item3:
+              type: "TURTLE_HELMET"
+              amount: 1
+            item4:
+              type: "NAUTILUS_SHELL"
+              amount: 16
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 45

@@ -82,236 +82,281 @@ rank:
         - "<gradient:#6b7280:#9ca3af>مافيش رتبة متحددة</gradient>"
   # صفوف شجرة الحارس
   ranger:
+    scout:
+      name: <gradient:#22c55e:#86efac>🏹 كشاف الدروب</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ يقرأ بصمات الحوافر وتحولات الرياح.</gradient>
+        - <gradient:#10b981:#34d399>➤ المستوى الأول • مبادرة الطبيعة</gradient>
     hunter:
-      name: "<gradient:#7c3aed:#a78bfa>🏹 صياد</gradient>"
+      name: <gradient:#16a34a:#4ade80>🏹 صياد البراري</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>متتبع مبتدئ بيتعلم طرق البرية</gradient>"
-    archer:
-      name: "<gradient:#10b981:#34d399>🎯 رامي سهام</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>ماهر بالقوس وقاتل من بعيد</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ سيقان الفريسة بدقة المريض.</gradient>
+        - <gradient:#10b981:#34d399>➤ المستوى الثاني • المطاردة البرية</gradient>
     tracker:
-      name: "<gradient:#3b82f6:#60a5fa>🔍 المتتبع</gradient>"
+      name: <gradient:#0ea5e9:#38bdf8>🏹 تعقب العلامات</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>خبير في إيجاد الفريسة وتتبعها</gradient>"
-    marksman:
-      name: "<gradient:#f59e0b:#fbbf24>🎯 رامي محترف</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ يتبع المسارات التي لا يمكن لعاصفة أن تمحوها.</gradient>
+        - <gradient:#3b82f6:#60a5fa>➤ المستوى الثالث • اختيار المسار للأمام</gradient>
+    warden_primal:
+      name: <gradient:#14b8a6:#2dd4bf>🛡 حارس الوحوش</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>رامي دقيق بإصابة قاتلة</gradient>"
-    pathfinder:
-      name: "<gradient:#a855f7:#c084fc>🗺 مستكشف الدروب</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ الروابط مع المخلوقات العليا في العالم.</gradient>
+        - <gradient:#14b8a6:#2dd4bf>➤ المستوى الرابع • الفرع البدائي</gradient>
+    warden_storm:
+      name: <gradient:#2563eb:#60a5fa>⚡ آمر العواصف</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>مستكشف بارع للأراضي المجهولة</gradient>"
-    sniper:
-      name: "<gradient:#ef4444:#f87171>🎯 قناص</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ الحرائق الحقيقية من خلال الرعد والمطر.</gradient>
+        - <gradient:#2563eb:#60a5fa>➤ المستوى الرابع • فرع العاصفة</gradient>
+    warden_wild:
+      name: <gradient:#16a34a:#84cc16>🌿حارس البرية</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>قناص النخبة، طلقة واحدة تقتل</gradient>"
-    forest_lord:
-      name: "<gradient:#10b981:#34d399>🌲 سيد الغابة</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ يحرس الحدود المقدسة والمساحات المخفية.</gradient>
+        - <gradient:#16a34a:#84cc16>➤ المستوى الرابع • الفرع البري</gradient>
+    beastmaster_primal:
+      name: <gradient:#7c3aed:#c084fc>👑 سيد الوحوش البدائي</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>سيد البرية وواحد مع الطبيعة</gradient>"
-  # صفوف شجرة المحارب
+        - <gradient:#6b7280:#9ca3af>✦ يأمر الوحوش الأسطورية دون خوف.</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ المستوى الخامس • الترتيب النهائي</gradient>
+    beastmaster_storm:
+      name: <gradient:#1d4ed8:#3b82f6>👑عاصفة سيد الوحوش</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ كل مسمار يوجه تسديدتك المتواصلة.</gradient>
+        - <gradient:#1d4ed8:#3b82f6>➤ المستوى الخامس • الترتيب النهائي</gradient>
+    beastmaster_wild:
+      name: <gradient:#15803d:#22c55e>👑 بيست ماستر وايلد</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ الطبيعة نفسها تنهض لتستجيب لندائك.</gradient>
+        - <gradient:#15803d:#22c55e>➤ المستوى الخامس • الترتيب النهائي</gradient>
   warrior:
     recruit:
-      name: "<gradient:#6b7280:#9ca3af>مجند</gradient>"
+      name: <gradient:#6b7280:#9ca3af>⚔ تجنيد</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>محارب جديد لسه بادئ رحلته</gradient>"
-        - "<gradient:#6b7280:#9ca3af>اتعلم أساسيات القتال</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ شفرة جديدة ذات عزم غير مجرب.</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ المستوى الأول • ملاعب التدريب</gradient>
     soldier:
-      name: "<gradient:#3b82f6:#60a5fa>جندي</gradient>"
+      name: <gradient:#3b82f6:#60a5fa>⚔ جندي</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>تدرب على فن القتال</gradient>"
-        - "<gradient:#6b7280:#9ca3af>جاهز للمعركة</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ تم تقويته بالتدريبات وواجبات الخطوط الأمامية.</gradient>
+        - <gradient:#3b82f6:#60a5fa>➤ المستوى الثاني • الانضباط الميداني</gradient>
     veteran:
-      name: "<gradient:#f59e0b:#fbbf24>محارب مخضرم</gradient>"
+      name: <gradient:#f59e0b:#fbbf24>⚔ المخضرم</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>محارب مخضرم من المعارك</gradient>"
-        - "<gradient:#6b7280:#9ca3af>اختار مسار تخصصك</gradient>"
-    # فرع التخصص 1: الهائج (الهجوم)
+        - <gradient:#6b7280:#9ca3af>✦ ندوب المعركة تشير إلى حكمتك المكتسبة.</gradient>
+        - <gradient:#f59e0b:#fbbf24>➤ المستوى الثالث • اختر المسار الخاص بك</gradient>
     berserker:
-      name: "<gradient:#ef4444:#f87171>هائج</gradient>"
+      name: <gradient:#ef4444:#f87171>🔥هائج</gradient>
       lore:
-        - "<gradient:#ef4444:#f87171>طريق الغضب</gradient>"
-        - "<gradient:#6b7280:#9ca3af>طلّع هجمات مدمرة</gradient>"
-        - "<gradient:#6b7280:#9ca3af>ضحّي بالدفاع علشان قوة خام</gradient>"
-    # فرع التخصص 2: الحارس (الدفاعي)
+        - <gradient:#6b7280:#9ca3af>✦ يتاجر بالدفاع عن الهجوم المدمر.</gradient>
+        - <gradient:#ef4444:#f87171>➤ المستوى الرابع • فرع الغضب</gradient>
     guardian:
-      name: "<gradient:#3b82f6:#60a5fa>حارس</gradient>"
+      name: <gradient:#2563eb:#60a5fa>🛡حارس</gradient>
       lore:
-        - "<gradient:#3b82f6:#60a5fa>طريق الحماية</gradient>"
-        - "<gradient:#6b7280:#9ca3af>ابقى درع مايتكسرش</gradient>"
-        - "<gradient:#6b7280:#9ca3af>احمِ حلفاءك مهما كان الثمن</gradient>"
-    # فرع التخصص 3: المصارع (متوازن)
+        - <gradient:#6b7280:#9ca3af>✦ يقف بثبات حيث ينكسر الآخرون.</gradient>
+        - <gradient:#2563eb:#60a5fa>➤ المستوى الرابع • فرع الدرع</gradient>
     gladiator:
-      name: "<gradient:#a855f7:#c084fc>مصارع</gradient>"
+      name: <gradient:#a855f7:#c084fc>🏟 المصارع</gradient>
       lore:
-        - "<gradient:#a855f7:#c084fc>طريق المجد</gradient>"
-        - "<gradient:#6b7280:#9ca3af>سيد قتال الحلبة</gradient>"
-        - "<gradient:#6b7280:#9ca3af>وازن بين الهجوم والدفاع</gradient>"
-    # الرتب النهائية
+        - <gradient:#6b7280:#9ca3af>✦ أسياد حرب الساحة المتوازنة.</gradient>
+        - <gradient:#a855f7:#c084fc>➤ المستوى الرابع • فرع الساحة</gradient>
     warlord_fury:
-      name: "<gradient:#ef4444:#f87171>سيد حرب الغضب</gradient>"
+      name: <gradient:#dc2626:#fb7185>👑 أمير الحرب الغضب</gradient>
       lore:
-        - "<gradient:#ef4444:#f87171>الهائج النهائي</gradient>"
-        - "<gradient:#6b7280:#9ca3af>قوة تدمير مالهاش إيقاف</gradient>"
-        - "<gradient:#6b7280:#9ca3af>تجسيد الخوف في ساحة القتال</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ محرك الدمار الذي لا يمكن إيقافه.</gradient>
+        - <gradient:#dc2626:#fb7185>➤ المستوى الخامس • الترتيب النهائي</gradient>
     warlord_shield:
-      name: "<gradient:#3b82f6:#60a5fa>سيد حرب الدرع</gradient>"
+      name: <gradient:#1d4ed8:#60a5fa>👑 أمير الحرب الدرع</gradient>
       lore:
-        - "<gradient:#3b82f6:#60a5fa>الحارس النهائي</gradient>"
-        - "<gradient:#6b7280:#9ca3af>حصن ثابت وحامٍ أبدي</gradient>"
-        - "<gradient:#6b7280:#9ca3af>محدش هيعدّي طول ما إنت واقف</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ الجدار الأخير بين الحياة والخراب.</gradient>
+        - <gradient:#1d4ed8:#60a5fa>➤ المستوى الخامس • الترتيب النهائي</gradient>
     warlord_arena:
-      name: "<gradient:#a855f7:#c084fc>سيد حرب الحلبة</gradient>"
+      name: <gradient:#7c3aed:#c084fc>👑 أمير الحرب في الساحة</gradient>
       lore:
-        - "<gradient:#a855f7:#c084fc>المصارع النهائي</gradient>"
-        - "<gradient:#6b7280:#9ca3af>بطل الأبطال</gradient>"
-        - "<gradient:#6b7280:#9ca3af>أسطورة الحلبة</gradient>"
-    # الرتب القديمة (للتوافق مع الإصدارات السابقة)
-    knight:
-      name: "<gradient:#f59e0b:#fbbf24>فارس</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>محارب شريف من المملكة</gradient>"
-    champion:
-      name: "<gradient:#a855f7:#c084fc>بطل</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>مقاتل أسطوري الكل بيخاف منه</gradient>"
-    warlord:
-      name: "<gradient:#ef4444:#f87171>سيد حرب</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>سيد الحرب وقائد الجيوش</gradient>"
-  # رتب شجرة الساحر
+        - <gradient:#6b7280:#9ca3af>✦ توج بطلاً لكل مدرج.</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ المستوى الخامس • الترتيب النهائي</gradient>
   mage:
     apprentice:
-      name: "<gradient:#a855f7:#c084fc>✨ متدرب</gradient>"
+      name: <gradient:#a855f7:#d8b4fe>✨المتدرب</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>تعلم أساسيات السحر</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ استيقظت شرارات القوة الغامضة.</gradient>
+        - <gradient:#a855f7:#d8b4fe>➤ المستوى الأول • أسس غامضة</gradient>
     adept:
-      name: "<gradient:#3b82f6:#60a5fa>✨ ماهر</gradient>"
+      name: <gradient:#3b82f6:#93c5fd>✨ ماهر</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>تنمو في القوة السحرية</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ ينسج التعويذات المسيطر عليها والمركزة.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ المستوى الثاني • ممارسة غامضة</gradient>
     wizard:
-      name: "<gradient:#f59e0b:#fbbf24>✨ ساحر</gradient>"
+      name: <gradient:#f59e0b:#fde68a>✨ ساحر</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>ماجستير في الفنون الغامضة</gradient>"
-    archmage:
-      name: "<gradient:#ef4444:#f87171>✨ كبير السحرة</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ يأمر بأنماط معقدة من السحر.</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ المستوى الثالث • اختر مذهبك</gradient>
+    sorcerer_arcane:
+      name: <gradient:#8b5cf6:#c4b5fd>🔮 ساحر أركانا</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>السيد الأعلى لكل السحر</gradient>"
-  # رتب شجرة المارق
+        - <gradient:#6b7280:#9ca3af>✦ ينقي القوة الخام إلى قوة أنيقة.</gradient>
+        - <gradient:#8b5cf6:#c4b5fd>➤ المستوى الرابع • فرع غامض</gradient>
+    sorcerer_spell:
+      name: <gradient:#d946ef:#f0abfc>📜ساحر الرقى</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ يوسع التحكم في السحر والدقة.</gradient>
+        - <gradient:#d946ef:#f0abfc>➤ المستوى الرابع • فرع الإملائي</gradient>
+    sorcerer_void:
+      name: <gradient:#1d4ed8:#60a5fa>🌌ساحر الفراغ</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ يحني الطاقات السحيقة لإرادتك.</gradient>
+        - <gradient:#1d4ed8:#60a5fa>➤ المستوى الرابع • فرع باطل</gradient>
+    archmage_arcane:
+      name: <gradient:#7c3aed:#c084fc>👑 ساحر أركانا</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ المهندس الأعلى للقوة الغامضة النقية.</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ المستوى الخامس • الترتيب النهائي</gradient>
+    archmage_spell:
+      name: <gradient:#d946ef:#f5d0fe>👑 ساحر التعاويذ</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ كل تعويذة تجيب على الفور.</gradient>
+        - <gradient:#d946ef:#f5d0fe>➤ المستوى الخامس • الترتيب النهائي</gradient>
+    archmage_void:
+      name: <gradient:#1e3a8a:#60a5fa>👑 ساحر الفراغ</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ قواعد الحواف بين العوالم.</gradient>
+        - <gradient:#1e3a8a:#60a5fa>➤ المستوى الخامس • الترتيب النهائي</gradient>
   rogue:
     pickpocket:
-      name: "<gradient:#6b7280:#9ca3af>🗡 النشال</gradient>"
+      name: <gradient:#6b7280:#9ca3af>🗡 النشال</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>أصابع سريعة، هروب أسرع</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ يتعلم التوقيت والتوجيه الخاطئ والسرعة.</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ المستوى الأول • Streetcraft</gradient>
     thief:
-      name: "<gradient:#3b82f6:#60a5fa>🗡 لص</gradient>"
+      name: <gradient:#3b82f6:#93c5fd>🗡 لص</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>سيد التخفي والسرقة</gradient>"
-    scout:
-      name: "<gradient:#10b981:#34d399>🗡 كشّاف</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>عيون وآذان الظلال</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ ينزلق عبر الأقفال وخطوط المراقبة.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ المستوى الثاني • الدخول الصامت</gradient>
     assassin:
-      name: "<gradient:#ef4444:#f87171>🗡 قاتل مأجور</gradient>"
+      name: <gradient:#ef4444:#f87171>🗡 قاتل</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>القاتل الصامت، الموت من الظلال</gradient>"
-    infiltrator:
-      name: "<gradient:#a855f7:#c084fc>🗡 متسلل</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ يضرب مرة واحدة ويختفي دون أن يترك أثرا.</gradient>
+        - <gradient:#ef4444:#f87171>➤ المستوى الثالث • اختر طريقتك</gradient>
+    shadow_stealth:
+      name: <gradient:#0ea5e9:#67e8f9>🌒ظل الشبح</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>خبير في الدخول والخروج دون أن يتم اكتشافها</gradient>"
-    shadowblade:
-      name: "<gradient:#6b7280:#9ca3af>🗡 نصل الظل</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ حركة رئيسية لا يمكن للعين أن تتبعها.</gradient>
+        - <gradient:#0ea5e9:#67e8f9>➤ المستوى الرابع • فرع التخفي</gradient>
+    shadow_night:
+      name: <gradient:#7c3aed:#c4b5fd>🌘 ظل الليل</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>محارب الليل القاتل</gradient>"
-    spymaster:
-      name: "<gradient:#3b82f6:#60a5fa>🗡 سيد الجواسيس</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ يحول الظلام إلى ميزة فتاكة.</gradient>
+        - <gradient:#7c3aed:#c4b5fd>➤ المستوى الرابع • الفرع الليلي</gradient>
+    shadow_sabotage:
+      name: <gradient:#f97316:#fb923c>💣ظل التخريب</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>مراقب شبكات المعلومات</gradient>"
-    shadow_master:
-      name: "<gradient:#1f2937:#374151>🗡 سيد الظل</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ يفكك الخطط قبل رد فعل الأعداء.</gradient>
+        - <gradient:#f97316:#fb923c>➤ المستوى الرابع • فرع التخريب</gradient>
+    phantom_stealth:
+      name: <gradient:#14b8a6:#5eead4>👑 شبح التخفي</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>واحد مع الظلام نفسه</gradient>"
-    shadowmaster:
-      name: "<gradient:#1f2937:#374151>🗡 سيد الظلال</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ تصبح أسطورة حضرية لا يمكن المساس بها.</gradient>
+        - <gradient:#14b8a6:#5eead4>➤ المستوى الخامس • الترتيب النهائي</gradient>
+    phantom_night:
+      name: <gradient:#9333ea:#e9d5ff>👑 شبح الليل</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>الحاكم الأعلى لجميع الظلال</gradient>"
-  # رتب شجرة رجل الدين
+        - <gradient:#6b7280:#9ca3af>✦ يمتلك ساعة منتصف الليل تماماً.</gradient>
+        - <gradient:#9333ea:#e9d5ff>➤ المستوى الخامس • الترتيب النهائي</gradient>
+    phantom_sabotage:
+      name: <gradient:#ea580c:#fdba74>👑 شبح التخريب</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ ينهي المعارك قبل أن تبدأ.</gradient>
+        - <gradient:#ea580c:#fdba74>➤ المستوى الخامس • الترتيب النهائي</gradient>
   cleric:
     acolyte:
-      name: "<gradient:#f59e0b:#fbbf24>✝ مساعد</gradient>"
+      name: <gradient:#f59e0b:#fde68a>✝ مساعد</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>خادم مخلص للإله</gradient>"
-    devotee:
-      name: "<gradient:#f59e0b:#fbbf24>✝ المحب</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>المتبع المخلص للطريق الإلهي</gradient>"
-    priest:
-      name: "<gradient:#10b981:#34d399>✝ كاهن</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>شافي وحامي المؤمنين</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ يبدأ طريق الخدمة المقدسة.</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ المستوى الأول • الإخلاص</gradient>
     healer:
-      name: "<gradient:#10b981:#34d399>✝ معالج</gradient>"
+      name: <gradient:#10b981:#6ee7b7>✝ معالج</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>خبير في فنون التعافي</gradient>"
-    bishop:
-      name: "<gradient:#a855f7:#c084fc>✝ الأسقف</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ يستعيد الحلفاء تحت ضغط شديد.</gradient>
+        - <gradient:#10b981:#6ee7b7>➤ المستوى الثاني • الترميم</gradient>
+    priest:
+      name: <gradient:#3b82f6:#93c5fd>✝ كاهن</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>زعيم المؤمنين</gradient>"
-    oracle:
-      name: "<gradient:#3b82f6:#60a5fa>✝ أوراكل</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ يرشد الأحزاب بالانضباط المقدس.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ المستوى الثالث • اختر مكالمتك</gradient>
+    bishop_divine:
+      name: <gradient:#8b5cf6:#c4b5fd>⛪ أسقف اللاهوت</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>عراف الرؤى الإلهية</gradient>"
-    high_priest:
-      name: "<gradient:#ef4444:#f87171>✝ رئيس الكهنة</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ قنوات السلطة الإشعاعية المباشرة.</gradient>
+        - <gradient:#8b5cf6:#c4b5fd>➤ المستوى الرابع • الفرع الإلهي</gradient>
+    bishop_light:
+      name: <gradient:#f59e0b:#fef08a>☀ أسقف النور</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>الصوت الإلهي الأعلى</gradient>"
-  # صفوف شجرة التاجر
+        - <gradient:#6b7280:#9ca3af>✦ يعمي الفساد بالتألق المقدس.</gradient>
+        - <gradient:#f59e0b:#fef08a>➤ المستوى الرابع • الفرع الخفيف</gradient>
+    bishop_soul:
+      name: <gradient:#06b6d4:#67e8f9>🕊 أسقف النفوس</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ يحرس عتبة الحياة والموت.</gradient>
+        - <gradient:#06b6d4:#67e8f9>➤ المستوى الرابع • فرع الروح</gradient>
+    high_priest_divine:
+      name: <gradient:#7c3aed:#ddd6fe>👑 رئيس كهنة اللاهوت</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ يعلن المعجزات في قلب الفوضى.</gradient>
+        - <gradient:#7c3aed:#ddd6fe>➤ المستوى الخامس • الترتيب النهائي</gradient>
+    high_priest_light:
+      name: <gradient:#f59e0b:#fef3c7>👑 رئيس كهنة النور</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ يستحم الحلفاء في فجر لا يتزعزع.</gradient>
+        - <gradient:#f59e0b:#fef3c7>➤ المستوى الخامس • الترتيب النهائي</gradient>
+    high_priest_soul:
+      name: <gradient:#0891b2:#a5f3fc>👑 كاهن النفوس الأعظم</gradient>
+      lore:
+        - <gradient:#6b7280:#9ca3af>✦ أرواح الرعاة تتجاوز الخوف المميت.</gradient>
+        - <gradient:#0891b2:#a5f3fc>➤ المستوى الخامس • الترتيب النهائي</gradient>
   merchant:
     peddler:
-      name: "<gradient:#6b7280:#9ca3af>💰 بائع متجول</gradient>"
+      name: <gradient:#6b7280:#9ca3af>💰 بائع متجول</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>بيع السلع في الشارع</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ يبدأ بالمثابرة والسحر والصفقات الصغيرة.</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ المستوى الأول • التجارة في الشوارع</gradient>
     trader:
-      name: "<gradient:#3b82f6:#60a5fa>💰 تاجر</gradient>"
+      name: <gradient:#3b82f6:#93c5fd>💰 تاجر</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>تاجر مؤسس وله اتصالات</gradient>"
-    vendor:
-      name: "<gradient:#10b981:#34d399>💰 بائع</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ يوسع الطرق والاتصالات الموثوقة.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ المستوى الثاني • التواجد في السوق</gradient>
+    broker:
+      name: <gradient:#f59e0b:#fde68a>💰 وسيط</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>بائع ماهر للبضائع</gradient>"
-    artificer:
-      name: "<gradient:#f59e0b:#fbbf24>💰 صانع</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ إغلاق الصفقات ذات القيمة العالية بدقة.</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ المستوى الثالث • اختر إمبراطوريتك</gradient>
+    magnate_wealth:
+      name: <gradient:#10b981:#6ee7b7>📈 قطب الثروة</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>صانع الأواني الجميلة</gradient>"
-    alchemist:
-      name: "<gradient:#a855f7:#c084fc>💰 الخيميائي</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ يبني رأس مال خالص بوتيرة لا مثيل لها.</gradient>
+        - <gradient:#10b981:#6ee7b7>➤ المستوى الرابع • فرع الثروة</gradient>
+    magnate_market:
+      name: <gradient:#06b6d4:#67e8f9>🏛 قطب الأسواق</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>سيد الجرعات والإكسير</gradient>"
-    merchant:
-      name: "<gradient:#f59e0b:#fbbf24>💰 تاجر</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ ينظم دورات العرض والطلب.</gradient>
+        - <gradient:#06b6d4:#67e8f9>➤ المستوى الرابع • فرع السوق</gradient>
+    magnate_trade:
+      name: <gradient:#f97316:#fdba74>🚚 قطب التجارة</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>صاحب عمل ناجح</gradient>"
-    master_crafter:
-      name: "<gradient:#ef4444:#f87171>💰 حرفي ماهر</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ يهيمن على ممرات القوافل والخدمات اللوجستية.</gradient>
+        - <gradient:#f97316:#fdba74>➤ المستوى الرابع • فرع التجارة</gradient>
+    tycoon_wealth:
+      name: <gradient:#22c55e:#bbf7d0>👑 قطب الثروة</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>الحرفي الأعلى للمملكة</gradient>"
-    merchant_prince:
-      name: "<gradient:#a855f7:#c084fc>💰 أمير التجار</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ يقلب الاقتصادات بقرار واحد.</gradient>
+        - <gradient:#22c55e:#bbf7d0>➤ المستوى الخامس • الترتيب النهائي</gradient>
+    tycoon_market:
+      name: <gradient:#0891b2:#a5f3fc>👑 قطب الأسواق</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>ملوكية التجارة</gradient>"
-    tycoon:
-      name: "<gradient:#a855f7:#c084fc>💰 قطب</gradient>"
+        - <gradient:#6b7280:#9ca3af>✦ تحديد الأسعار التي يجب على كل نقابة احترامها.</gradient>
+        - <gradient:#0891b2:#a5f3fc>➤ المستوى الخامس • الترتيب النهائي</gradient>
+    tycoon_trade:
+      name: <gradient:#ea580c:#fed7aa>👑 قطب التجارة</gradient>
       lore:
-        - "<gradient:#6b7280:#9ca3af>سيد التجارة والأعمال</gradient>"
-    guild_master:
-      name: "<gradient:#ef4444:#f87171>💰 سيد النقابة</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>زعيم نقابة التجار</gradient>"
-
-# ============================================
-# رسائل مستمعي المكافآت
-# ============================================
+        - <gradient:#6b7280:#9ca3af>✦ تمتلك الطرق والموانئ والأرباح.</gradient>
+        - <gradient:#ea580c:#fed7aa>➤ المستوى الخامس • الترتيب النهائي</gradient>
 bounty_listener:
   bounty_active:
     warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>لديك مكافأة نشطة على رأسك!</gradient>"
@@ -557,81 +602,281 @@ rank_path_overview_ui:
     tier: "<gradient:#6b7280:#9ca3af>الطبقة:</gradient> <gradient:#f59e0b:#fbbf24>%tier%</gradient>"
     weight: "<gradient:#6b7280:#9ca3af>وزن:</gradient> <gradient:#f59e0b:#fbbf24>%weight%</gradient>"
     ranger:
+      scout:
+        name: <gradient:#22c55e:#86efac>🏹 كشاف الدروب</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ يقرأ بصمات الحوافر وتحولات الرياح.</gradient>
+          - <gradient:#10b981:#34d399>➤ المستوى الأول • مبادرة الطبيعة</gradient>
       hunter:
-        name: "<gradient:#7c3aed:#a78bfa>🏹 صياد</gradient>"
+        name: <gradient:#16a34a:#4ade80>🏹 صياد البراري</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>متتبع مبتدئ بيتعلم طرق البرية</gradient>"
-      archer:
-        name: "<gradient:#10b981:#34d399>🎯 رامي سهام</gradient>"
-        lore:
-          - "<gradient:#6b7280:#9ca3af>ماهر بالقوس وقاتل من بعيد</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ سيقان الفريسة بدقة المريض.</gradient>
+          - <gradient:#10b981:#34d399>➤ المستوى الثاني • المطاردة البرية</gradient>
       tracker:
-        name: "<gradient:#3b82f6:#60a5fa>🔍 المتتبع</gradient>"
+        name: <gradient:#0ea5e9:#38bdf8>🏹 تعقب العلامات</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>خبير في إيجاد الفريسة وتتبعها</gradient>"
-      marksman:
-        name: "<gradient:#f59e0b:#fbbf24>🎯 رامي محترف</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ يتبع المسارات التي لا يمكن لعاصفة أن تمحوها.</gradient>
+          - <gradient:#3b82f6:#60a5fa>➤ المستوى الثالث • اختيار المسار للأمام</gradient>
+      warden_primal:
+        name: <gradient:#14b8a6:#2dd4bf>🛡 حارس الوحوش</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>رامي دقيق بإصابة قاتلة</gradient>"
-      pathfinder:
-        name: "<gradient:#a855f7:#c084fc>🗺 مستكشف الدروب</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ الروابط مع المخلوقات العليا في العالم.</gradient>
+          - <gradient:#14b8a6:#2dd4bf>➤ المستوى الرابع • الفرع البدائي</gradient>
+      warden_storm:
+        name: <gradient:#2563eb:#60a5fa>⚡ آمر العواصف</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>مستكشف بارع للأراضي المجهولة</gradient>"
-      sniper:
-        name: "<gradient:#ef4444:#f87171>🎯 قناص</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ الحرائق الحقيقية من خلال الرعد والمطر.</gradient>
+          - <gradient:#2563eb:#60a5fa>➤ المستوى الرابع • فرع العاصفة</gradient>
+      warden_wild:
+        name: <gradient:#16a34a:#84cc16>🌿حارس البرية</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>قناص النخبة، طلقة واحدة تقتل</gradient>"
-      forest_lord:
-        name: "<gradient:#10b981:#34d399>🌲 سيد الغابة</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ يحرس الحدود المقدسة والمساحات المخفية.</gradient>
+          - <gradient:#16a34a:#84cc16>➤ المستوى الرابع • الفرع البري</gradient>
+      beastmaster_primal:
+        name: <gradient:#7c3aed:#c084fc>👑 سيد الوحوش البدائي</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>سيد البرية وواحد مع الطبيعة</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ يأمر الوحوش الأسطورية دون خوف.</gradient>
+          - <gradient:#7c3aed:#c084fc>➤ المستوى الخامس • الترتيب النهائي</gradient>
+      beastmaster_storm:
+        name: <gradient:#1d4ed8:#3b82f6>👑عاصفة سيد الوحوش</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ كل مسمار يوجه تسديدتك المتواصلة.</gradient>
+          - <gradient:#1d4ed8:#3b82f6>➤ المستوى الخامس • الترتيب النهائي</gradient>
+      beastmaster_wild:
+        name: <gradient:#15803d:#22c55e>👑 بيست ماستر وايلد</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ الطبيعة نفسها تنهض لتستجيب لندائك.</gradient>
+          - <gradient:#15803d:#22c55e>➤ المستوى الخامس • الترتيب النهائي</gradient>
     warrior:
       recruit:
-        name: "<gradient:#6b7280:#9ca3af>⚔ تجنيد</gradient>"
+        name: <gradient:#6b7280:#9ca3af>⚔ تجنيد</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>محارب جديد لسه بادئ رحلته</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ شفرة جديدة ذات عزم غير مجرب.</gradient>
+          - <gradient:#94a3b8:#cbd5e1>➤ المستوى الأول • ملاعب التدريب</gradient>
       soldier:
-        name: "<gradient:#3b82f6:#60a5fa>⚔ جندي</gradient>"
+        name: <gradient:#3b82f6:#60a5fa>⚔ جندي</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>تدرب على فن القتال</gradient>"
-      knight:
-        name: "<gradient:#f59e0b:#fbbf24>⚔ فارس</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ تم تقويته بالتدريبات وواجبات الخطوط الأمامية.</gradient>
+          - <gradient:#3b82f6:#60a5fa>➤ المستوى الثاني • الانضباط الميداني</gradient>
+      veteran:
+        name: <gradient:#f59e0b:#fbbf24>⚔ المخضرم</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>محارب شريف من المملكة</gradient>"
-      champion:
-        name: "<gradient:#a855f7:#c084fc>⚔ بطل</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ ندوب المعركة تشير إلى حكمتك المكتسبة.</gradient>
+          - <gradient:#f59e0b:#fbbf24>➤ المستوى الثالث • اختر المسار الخاص بك</gradient>
+      berserker:
+        name: <gradient:#ef4444:#f87171>🔥هائج</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>مقاتل أسطوري الكل بيخاف منه</gradient>"
-      warlord:
-        name: "<gradient:#ef4444:#f87171>⚔ أمير الحرب</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ يتاجر بالدفاع عن الهجوم المدمر.</gradient>
+          - <gradient:#ef4444:#f87171>➤ المستوى الرابع • فرع الغضب</gradient>
+      guardian:
+        name: <gradient:#2563eb:#60a5fa>🛡حارس</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>سيد الحرب وقائد الجيوش</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ يقف بثبات حيث ينكسر الآخرون.</gradient>
+          - <gradient:#2563eb:#60a5fa>➤ المستوى الرابع • فرع الدرع</gradient>
+      gladiator:
+        name: <gradient:#a855f7:#c084fc>🏟 المصارع</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ أسياد حرب الساحة المتوازنة.</gradient>
+          - <gradient:#a855f7:#c084fc>➤ المستوى الرابع • فرع الساحة</gradient>
+      warlord_fury:
+        name: <gradient:#dc2626:#fb7185>👑 أمير الحرب الغضب</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ محرك الدمار الذي لا يمكن إيقافه.</gradient>
+          - <gradient:#dc2626:#fb7185>➤ المستوى الخامس • الترتيب النهائي</gradient>
+      warlord_shield:
+        name: <gradient:#1d4ed8:#60a5fa>👑 أمير الحرب الدرع</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ الجدار الأخير بين الحياة والخراب.</gradient>
+          - <gradient:#1d4ed8:#60a5fa>➤ المستوى الخامس • الترتيب النهائي</gradient>
+      warlord_arena:
+        name: <gradient:#7c3aed:#c084fc>👑 أمير الحرب في الساحة</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ توج بطلاً لكل مدرج.</gradient>
+          - <gradient:#7c3aed:#c084fc>➤ المستوى الخامس • الترتيب النهائي</gradient>
     mage:
       apprentice:
-        name: "<gradient:#a855f7:#c084fc>✨ متدرب</gradient>"
+        name: <gradient:#a855f7:#d8b4fe>✨المتدرب</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>تعلم أساسيات السحر</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ استيقظت شرارات القوة الغامضة.</gradient>
+          - <gradient:#a855f7:#d8b4fe>➤ المستوى الأول • أسس غامضة</gradient>
       adept:
-        name: "<gradient:#3b82f6:#60a5fa>✨ ماهر</gradient>"
+        name: <gradient:#3b82f6:#93c5fd>✨ ماهر</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>تنمو في القوة السحرية</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ ينسج التعويذات المسيطر عليها والمركزة.</gradient>
+          - <gradient:#3b82f6:#93c5fd>➤ المستوى الثاني • ممارسة غامضة</gradient>
       wizard:
-        name: "<gradient:#f59e0b:#fbbf24>✨ ساحر</gradient>"
+        name: <gradient:#f59e0b:#fde68a>✨ ساحر</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>ماجستير في الفنون الغامضة</gradient>"
-      archmage:
-        name: "<gradient:#ef4444:#f87171>✨ كبير السحرة</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ يأمر بأنماط معقدة من السحر.</gradient>
+          - <gradient:#f59e0b:#fde68a>➤ المستوى الثالث • اختر مذهبك</gradient>
+      sorcerer_arcane:
+        name: <gradient:#8b5cf6:#c4b5fd>🔮 ساحر أركانا</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>السيد الأعلى لكل السحر</gradient>"
+          - <gradient:#6b7280:#9ca3af>✦ ينقي القوة الخام إلى قوة أنيقة.</gradient>
+          - <gradient:#8b5cf6:#c4b5fd>➤ المستوى الرابع • فرع غامض</gradient>
+      sorcerer_spell:
+        name: <gradient:#d946ef:#f0abfc>📜ساحر الرقى</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ يوسع التحكم في السحر والدقة.</gradient>
+          - <gradient:#d946ef:#f0abfc>➤ المستوى الرابع • فرع الإملائي</gradient>
+      sorcerer_void:
+        name: <gradient:#1d4ed8:#60a5fa>🌌ساحر الفراغ</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ يحني الطاقات السحيقة لإرادتك.</gradient>
+          - <gradient:#1d4ed8:#60a5fa>➤ المستوى الرابع • فرع باطل</gradient>
+      archmage_arcane:
+        name: <gradient:#7c3aed:#c084fc>👑 ساحر أركانا</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ المهندس الأعلى للقوة الغامضة النقية.</gradient>
+          - <gradient:#7c3aed:#c084fc>➤ المستوى الخامس • الترتيب النهائي</gradient>
+      archmage_spell:
+        name: <gradient:#d946ef:#f5d0fe>👑 ساحر التعاويذ</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ كل تعويذة تجيب على الفور.</gradient>
+          - <gradient:#d946ef:#f5d0fe>➤ المستوى الخامس • الترتيب النهائي</gradient>
+      archmage_void:
+        name: <gradient:#1e3a8a:#60a5fa>👑 ساحر الفراغ</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ قواعد الحواف بين العوالم.</gradient>
+          - <gradient:#1e3a8a:#60a5fa>➤ المستوى الخامس • الترتيب النهائي</gradient>
     rogue:
       pickpocket:
-        name: "<gradient:#6b7280:#9ca3af>🗡 النشال</gradient>"
+        name: <gradient:#6b7280:#9ca3af>🗡 النشال</gradient>
         lore:
-          - "<gradient:#6b7280:#9ca3af>أصابع سريعة، هروب أسرع</gradient>"
-
-# ============================================
-# الترجمات المطلوبة
-# ============================================
+          - <gradient:#6b7280:#9ca3af>✦ يتعلم التوقيت والتوجيه الخاطئ والسرعة.</gradient>
+          - <gradient:#94a3b8:#cbd5e1>➤ المستوى الأول • Streetcraft</gradient>
+      thief:
+        name: <gradient:#3b82f6:#93c5fd>🗡 لص</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ ينزلق عبر الأقفال وخطوط المراقبة.</gradient>
+          - <gradient:#3b82f6:#93c5fd>➤ المستوى الثاني • الدخول الصامت</gradient>
+      assassin:
+        name: <gradient:#ef4444:#f87171>🗡 قاتل</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ يضرب مرة واحدة ويختفي دون أن يترك أثرا.</gradient>
+          - <gradient:#ef4444:#f87171>➤ المستوى الثالث • اختر طريقتك</gradient>
+      shadow_stealth:
+        name: <gradient:#0ea5e9:#67e8f9>🌒ظل الشبح</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ حركة رئيسية لا يمكن للعين أن تتبعها.</gradient>
+          - <gradient:#0ea5e9:#67e8f9>➤ المستوى الرابع • فرع التخفي</gradient>
+      shadow_night:
+        name: <gradient:#7c3aed:#c4b5fd>🌘 ظل الليل</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ يحول الظلام إلى ميزة فتاكة.</gradient>
+          - <gradient:#7c3aed:#c4b5fd>➤ المستوى الرابع • الفرع الليلي</gradient>
+      shadow_sabotage:
+        name: <gradient:#f97316:#fb923c>💣ظل التخريب</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ يفكك الخطط قبل رد فعل الأعداء.</gradient>
+          - <gradient:#f97316:#fb923c>➤ المستوى الرابع • فرع التخريب</gradient>
+      phantom_stealth:
+        name: <gradient:#14b8a6:#5eead4>👑 شبح التخفي</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ تصبح أسطورة حضرية لا يمكن المساس بها.</gradient>
+          - <gradient:#14b8a6:#5eead4>➤ المستوى الخامس • الترتيب النهائي</gradient>
+      phantom_night:
+        name: <gradient:#9333ea:#e9d5ff>👑 شبح الليل</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ يمتلك ساعة منتصف الليل تماماً.</gradient>
+          - <gradient:#9333ea:#e9d5ff>➤ المستوى الخامس • الترتيب النهائي</gradient>
+      phantom_sabotage:
+        name: <gradient:#ea580c:#fdba74>👑 شبح التخريب</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ ينهي المعارك قبل أن تبدأ.</gradient>
+          - <gradient:#ea580c:#fdba74>➤ المستوى الخامس • الترتيب النهائي</gradient>
+    cleric:
+      acolyte:
+        name: <gradient:#f59e0b:#fde68a>✝ مساعد</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ يبدأ طريق الخدمة المقدسة.</gradient>
+          - <gradient:#f59e0b:#fde68a>➤ المستوى الأول • الإخلاص</gradient>
+      healer:
+        name: <gradient:#10b981:#6ee7b7>✝ معالج</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ يستعيد الحلفاء تحت ضغط شديد.</gradient>
+          - <gradient:#10b981:#6ee7b7>➤ المستوى الثاني • الترميم</gradient>
+      priest:
+        name: <gradient:#3b82f6:#93c5fd>✝ كاهن</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ يرشد الأحزاب بالانضباط المقدس.</gradient>
+          - <gradient:#3b82f6:#93c5fd>➤ المستوى الثالث • اختر مكالمتك</gradient>
+      bishop_divine:
+        name: <gradient:#8b5cf6:#c4b5fd>⛪ أسقف اللاهوت</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ قنوات السلطة الإشعاعية المباشرة.</gradient>
+          - <gradient:#8b5cf6:#c4b5fd>➤ المستوى الرابع • الفرع الإلهي</gradient>
+      bishop_light:
+        name: <gradient:#f59e0b:#fef08a>☀ أسقف النور</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ يعمي الفساد بالتألق المقدس.</gradient>
+          - <gradient:#f59e0b:#fef08a>➤ المستوى الرابع • الفرع الخفيف</gradient>
+      bishop_soul:
+        name: <gradient:#06b6d4:#67e8f9>🕊 أسقف النفوس</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ يحرس عتبة الحياة والموت.</gradient>
+          - <gradient:#06b6d4:#67e8f9>➤ المستوى الرابع • فرع الروح</gradient>
+      high_priest_divine:
+        name: <gradient:#7c3aed:#ddd6fe>👑 رئيس كهنة اللاهوت</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ يعلن المعجزات في قلب الفوضى.</gradient>
+          - <gradient:#7c3aed:#ddd6fe>➤ المستوى الخامس • الترتيب النهائي</gradient>
+      high_priest_light:
+        name: <gradient:#f59e0b:#fef3c7>👑 رئيس كهنة النور</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ يستحم الحلفاء في فجر لا يتزعزع.</gradient>
+          - <gradient:#f59e0b:#fef3c7>➤ المستوى الخامس • الترتيب النهائي</gradient>
+      high_priest_soul:
+        name: <gradient:#0891b2:#a5f3fc>👑 كاهن النفوس الأعظم</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ أرواح الرعاة تتجاوز الخوف المميت.</gradient>
+          - <gradient:#0891b2:#a5f3fc>➤ المستوى الخامس • الترتيب النهائي</gradient>
+    merchant:
+      peddler:
+        name: <gradient:#6b7280:#9ca3af>💰 بائع متجول</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ يبدأ بالمثابرة والسحر والصفقات الصغيرة.</gradient>
+          - <gradient:#94a3b8:#cbd5e1>➤ المستوى الأول • التجارة في الشوارع</gradient>
+      trader:
+        name: <gradient:#3b82f6:#93c5fd>💰 تاجر</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ يوسع الطرق والاتصالات الموثوقة.</gradient>
+          - <gradient:#3b82f6:#93c5fd>➤ المستوى الثاني • التواجد في السوق</gradient>
+      broker:
+        name: <gradient:#f59e0b:#fde68a>💰 وسيط</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ إغلاق الصفقات ذات القيمة العالية بدقة.</gradient>
+          - <gradient:#f59e0b:#fde68a>➤ المستوى الثالث • اختر إمبراطوريتك</gradient>
+      magnate_wealth:
+        name: <gradient:#10b981:#6ee7b7>📈 قطب الثروة</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ يبني رأس مال خالص بوتيرة لا مثيل لها.</gradient>
+          - <gradient:#10b981:#6ee7b7>➤ المستوى الرابع • فرع الثروة</gradient>
+      magnate_market:
+        name: <gradient:#06b6d4:#67e8f9>🏛 قطب الأسواق</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ ينظم دورات العرض والطلب.</gradient>
+          - <gradient:#06b6d4:#67e8f9>➤ المستوى الرابع • فرع السوق</gradient>
+      magnate_trade:
+        name: <gradient:#f97316:#fdba74>🚚 قطب التجارة</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ يهيمن على ممرات القوافل والخدمات اللوجستية.</gradient>
+          - <gradient:#f97316:#fdba74>➤ المستوى الرابع • فرع التجارة</gradient>
+      tycoon_wealth:
+        name: <gradient:#22c55e:#bbf7d0>👑 قطب الثروة</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ يقلب الاقتصادات بقرار واحد.</gradient>
+          - <gradient:#22c55e:#bbf7d0>➤ المستوى الخامس • الترتيب النهائي</gradient>
+      tycoon_market:
+        name: <gradient:#0891b2:#a5f3fc>👑 قطب الأسواق</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ تحديد الأسعار التي يجب على كل نقابة احترامها.</gradient>
+          - <gradient:#0891b2:#a5f3fc>➤ المستوى الخامس • الترتيب النهائي</gradient>
+      tycoon_trade:
+        name: <gradient:#ea580c:#fed7aa>👑 قطب التجارة</gradient>
+        lore:
+          - <gradient:#6b7280:#9ca3af>✦ تمتلك الطرق والموانئ والأرباح.</gradient>
+          - <gradient:#ea580c:#fed7aa>➤ المستوى الخامس • الترتيب النهائي</gradient>
 requirement:
 
   # ============================================
@@ -670,7 +915,7 @@ requirement:
     money: "مال"
     dollars: "دولار"
     credits: "الاعتمادات"
-  
+
   # قوالب معاينة المهام
   task:
     entry: "<gradient:#6b7280:#9ca3af>%prefix% %task_name%</gradient>"
@@ -1287,6 +1532,7 @@ admin_skills_ui:
       missing: "<gradient:#ef4444:#f87171>مفتقد</gradient>"
     detected:
       name: "<gradient:#22c55e:#86efac>✅ %plugin_name%</gradient>"
+      click_action: "<gradient:#3b82f6:#60a5fa>[>] Click to inject themed skill requirements</gradient>"
     missing:
       name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
     lore:
@@ -1301,6 +1547,11 @@ admin_skills_ui:
 # ============================================
 # ADMIN JOBS INTEGRATION UI
 # ============================================
+  messages:
+    inject_success: "<gradient:#22c55e:#86efac>[+] Injected %perk_count% perk and %rank_count% rank skill requirements for %plugin_name%.</gradient>"
+    inject_no_changes: "<gradient:#3b82f6:#60a5fa>[i] No skill requirement changes were needed for %plugin_name%.</gradient>"
+    plugin_missing: "<gradient:#ef4444:#f87171>[!] %plugin_name% is not detected, so no requirements were injected.</gradient>"
+    inject_failed: "<gradient:#ef4444:#f87171>[x] Failed to inject skill requirements for %plugin_name%.</gradient>"
 admin_jobs_ui:
   title: "<gradient:#f59e0b:#fbbf24>⛏ التكامل الوظيفي</gradient>"
   summary:
@@ -1315,6 +1566,7 @@ admin_jobs_ui:
       missing: "<gradient:#ef4444:#f87171>مفتقد</gradient>"
     detected:
       name: "<gradient:#22c55e:#86efac>✅ %plugin_name%</gradient>"
+      click_action: "<gradient:#3b82f6:#60a5fa>[>] انقر لإدخال متطلبات الوظيفة الموضوعية</gradient>"
     missing:
       name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
     lore:
@@ -1329,6 +1581,11 @@ admin_jobs_ui:
 # ============================================
 # ADMIN CURRENCY OVERVIEW UI
 # ============================================
+  messages:
+    inject_success: "<gradient:#22c55e:#86efac>[+] تم حقن %perk_count% الميزة و%rank_count% متطلبات الوظيفة لـ %plugin_name%.</gradient>"
+    inject_no_changes: "<gradient:#3b82f6:#60a5fa>[i] لم تكن هناك حاجة إلى تغييرات في متطلبات الوظيفة لـ %plugin_name%.</gradient>"
+    plugin_missing: "<gradient:#ef4444:#f87171>لم يتم الكشف عن [!] %plugin_name%، لذلك لم يتم إدخال أي متطلبات.</gradient>"
+    inject_failed: "<gradient:#ef4444:#f87171>[x] فشل في إدخال متطلبات الوظيفة لـ %plugin_name%.</gradient>"
 admin_currency_ui:
   title: "<gradient:#10b981:#34d399>💱 مدير العملة</gradient>"
   currency_entry:
@@ -1364,6 +1621,16 @@ admin_currency_ui:
     lore:
       - "<gradient:#6b7280:#9ca3af>تعذر على RDQ اكتشاف عملات Vault أو JExEconomy</gradient>"
       - "<gradient:#6b7280:#9ca3af>قم بتثبيت أو تمكين موفر الاقتصاد أولاً</gradient>"
+    jex_detected:
+      name: "<gradient:#3b82f6:#60a5fa>[i] JExEconomy Detected</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>RDQ detected JExEconomy but no currencies exist yet</gradient>"
+        - "<gradient:#10b981:#34d399>Use the top button to create %currency_id%</gradient>"
+    vault_detected:
+      name: "<gradient:#3b82f6:#60a5fa>[i] Vault Detected</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Vault is available but no currency entries were listed</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Check your economy provider configuration</gradient>"
   decoration:
     border:
       name: " "
@@ -1683,7 +1950,7 @@ rank_requirements_journey_ui:
         - "<gradient:#6b7280:#9ca3af>لم يتم تكوين هذه الرتبة</gradient>"
       type_label: "<gray>النوع:</gray> <yellow>%type%</yellow>"
       value_label: "<gray>قيمة:</gray> <gold>%value%</gold>"
-    
+
     # أوصاف نوع المكافأة
     currency:
       description: "<gradient:#fbbf24:#fcd34d>احصل على مكافآت العملة</gradient>"
@@ -1705,7 +1972,6 @@ rank_requirements_journey_ui:
       description: "<gradient:#f97316:#fb923c>فتح تأثيرات الجسيمات</gradient>"
     vanishing_chest:
       description: "<gradient:#14b8a6:#2dd4bf>احصل على صندوق يختفي</gradient>"
-    
     more: "<gradient:#fbbf24:#fcd34d>+%count% المزيد من المكافآت...</gradient>"
 
   rewards:
@@ -1734,10 +2000,9 @@ reward:
       - "<gradient:#6b7280:#9ca3af>لم يتم تكوين هذه الرتبة</gradient>"
     type_label: "<gray>النوع:</gray> <yellow>%type%</yellow>"
     value_label: "<gray>قيمة:</gray> <gold>%value%</gold>"
-  
   perk:
     unlocked: "<gradient:#10b981:#34d399>✦</gradient> <gradient:#6b7280:#9ca3af>لقد فتحت الميزة:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
-  
+
   # أوصاف نوع المكافأة
   currency:
     description: "<gradient:#fbbf24:#fcd34d>احصل على مكافآت العملة</gradient>"
@@ -1759,7 +2024,6 @@ reward:
     description: "<gradient:#f97316:#fb923c>فتح تأثيرات الجسيمات</gradient>"
   vanishing_chest:
     description: "<gradient:#14b8a6:#2dd4bf>احصل على صندوق يختفي</gradient>"
-  
   more: "<gradient:#fbbf24:#fcd34d>+%count% المزيد من المكافآت...</gradient>"
 
 rewards:
@@ -1815,7 +2079,7 @@ perk:
   fish_xp:
     name: "<gradient:#10b981:#34d399>تعزيز XP للصيد</gradient>"
     description: "<gradient:#6b7280:#9ca3af>احصل على مكافأة XP عند صيد الأسماك</gradient>"
-  
+
   # امتيازات الجرعة
   potion_enhance:
     name: "<gradient:#a855f7:#c084fc>مضخم الجرعات</gradient>"
@@ -1826,7 +2090,7 @@ perk:
   potion_save:
     name: "<gradient:#10b981:#34d399>استرداد جرعة</gradient>"
     description: "<gradient:#6b7280:#9ca3af>فرصة لاستعادة جرعتك بعد شربها</gradient>"
-  
+
   # رسائل الامتياز
   messages:
     # فتح/تمكين/تعطيل
@@ -1843,36 +2107,33 @@ perk:
     disable:
       success: "<gradient:#f59e0b:#fbbf24>تم تعطيل الميزة:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
       failed: "<gradient:#ef4444:#f87171>فشل في تعطيل الميزة:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
-    
+
     # التهدئة
     cooldown:
       active: "<gradient:#ef4444:#f87171>هذه الميزة في فترة التهدئة</gradient> <gradient:#f59e0b:#fbbf24>%time%</gradient>"
       ready: "<gradient:#10b981:#34d399>الميزة جاهزة للاستخدام!</gradient>"
-    
+
     # مشغلات التأثير
     potion_enhanced: "<gradient:#a855f7:#c084fc>✨ جرعة محسنة!</gradient> <gradient:#6b7280:#9ca3af>تضخمت التأثيرات</gradient>"
     potion_extended: "<gradient:#f59e0b:#fbbf24>⏱ تم تمديد مدة الجرعة!</gradient> <gradient:#6b7280:#9ca3af>يدوم لفترة أطول</gradient>"
     potion_saved: "<gradient:#10b981:#34d399>💾 تم حفظ الجرعة!</gradient> <gradient:#6b7280:#9ca3af>عاد إلى المخزون</gradient>"
     fishing_active: "<gradient:#3b82f6:#60a5fa>🎣 صيد أسرع نشط!</gradient>"
     fishing_xp: "<gradient:#10b981:#34d399>+%xp% صيد السمك XP!</gradient>"
-  
+
   # عناصر واجهة المستخدم
   ui:
     header:
       type_label: "<gray>النوع: <white>%type%</white></gray>"
       category_label: "<gray>الفئة: <white>%category%</white></gray>"
-    
     requirements:
       no_requirements: "<green>لا متطلبات</green>"
       no_requirements_lore: "<gray>هذه الميزة ليس لها متطلبات فتح</gray>"
-    
     rewards:
       title: "<gold>مكافأة الفتح</gold>"
       no_rewards: "<gray>مافيش مكافآت فتح</gray>"
       no_rewards_lore: "<gray>لا تحتوي هذه الميزة على مكافآت مفتوحة</gray>"
       type_label: "<gray>النوع: <white>%type%</white></gray>"
       value_label: "<gray>قيمة: <gold>%value%</gold></gray>"
-    
     status:
       title: "<white>حالة الميزة</white>"
       locked: "<red>✖ مغلق</red>"
@@ -1883,7 +2144,6 @@ perk:
       enabled_count: "<gray>الامتيازات الممكّنة: <white>%count%/%max%</white></gray>"
       cooldown_label: "<gray>التهدئة: <gold>%time%</gold></gray>"
       activations_label: "<gray>التنشيط: <white>%count%</white></gray>"
-    
     buttons:
       unlock:
         title: "<white>فتح الميزة</white>"
@@ -1895,7 +2155,7 @@ perk:
       disable:
         title: "<white>تعطيل الميزة</white>"
         hint: "<yellow>اضغط لتعطيل هذه الميزة</yellow>"
-  
+
   # الامتيازات الحالية (كمرجع - أضف إذا كانت مفقودة)
   fly:
     name: "<gradient:#3b82f6:#60a5fa>رحلة جوية</gradient>"

@@ -13,14 +13,14 @@ prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "
 pseudo:
   name: "<gradient:#6b7280:#9ca3af>📦 Нет Наград</gradient>"
   lore:
-    - "<gradient:#6b7280:#9ca3af>Добавьте предметы для создания наград</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Добавьте предметы для создания наград</gradient>"
 
 input_slot:
   name: "<gradient:#10b981:#34d399>➕ Добавить Предмет</gradient>"
   lore:
-    - "<gradient:#6b7280:#9ca3af>Поместите предметы сюда для добавления как награды</gradient>"
-    - "<gradient:#6b7280:#9ca3af>Щелкните левой кнопкой мыши, чтобы разместить предмет</gradient>"
-    - "<gradient:#6b7280:#9ca3af>Щелкните правой кнопкой мыши, чтобы удалить элемент</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Поместите предметы сюда для добавления как награды</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Щелкните левой кнопкой мыши, чтобы разместить предмет</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Щелкните правой кнопкой мыши, чтобы удалить элемент</gradient>"
 
 # ============================================
 # ДЕРЕВО РАНГОВ ОТОБРАЖАЕМЫЕ НАЗВАНИЯ И ОПИСАНИЯ
@@ -29,33 +29,33 @@ tree:
   ranger:
     name: "<gradient:#10b981:#34d399>🏹 Рейнджер</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Освойте искусство стрельбы из лука и выслеживания</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Стать единым целым с природой</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Освойте искусство стрельбы из лука и выслеживания</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Стать единым целым с природой</gradient>"
   warrior:
     name: "<gradient:#ef4444:#f87171>⚔ Воин</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Освойте искусство боя</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Станьте легендарным бойцом</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Освойте искусство боя</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Станьте легендарным бойцом</gradient>"
   mage:
     name: "<gradient:#a855f7:#c084fc>✨ Маг</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Овладейте силой магии</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Станьте мастером тайной магии</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Овладейте силой магии</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Станьте мастером тайной магии</gradient>"
   rogue:
     name: "<gradient:#6b7280:#9ca3af>🗡 Разбойник</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Освойте скрытность и хитрость</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Удар из тени</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Освойте скрытность и хитрость</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Удар из тени</gradient>"
   cleric:
     name: "<gradient:#f59e0b:#fbbf24>✝ Жрец</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Направьте божественную силу</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Исцеляйте и защищайте своих союзников</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Направьте божественную силу</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Исцеляйте и защищайте своих союзников</gradient>"
   merchant:
     name: "<gradient:#10b981:#34d399>💰 Торговец</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Освойте искусство торговли</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Построй свое состояние</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Освойте искусство торговли</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Построй свое состояние</gradient>"
 
 # ============================================
 # РАНГ ОТОБРАЖАЕМЫЕ НАЗВАНИЯ И ОПИСАНИЯ
@@ -72,245 +72,298 @@ rank:
   default:
     name: "<gradient:#6b7280:#9ca3af>Без рейтинга</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Выберите путь ранга, чтобы начать</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Выберите путь ранга, чтобы начать</gradient>"
     unselected:
       name: "<gradient:#6b7280:#9ca3af>Без рейтинга</gradient>"
   icon:
     default:
       name: "<gradient:#6b7280:#9ca3af>Ранг по умолчанию</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Ранг не выбран</gradient>"
-  # Ранги дерева рейнджеров
+      - "<gradient:#6b7280:#9ca3af>Ранг не выбран</gradient>"
+  # Ranger Tree Ranks
   ranger:
+    scout:
+      name: "<gradient:#22c55e:#86efac>🏹 Разведчик троп</gradient>"
+      lore:
+      - "<gradient:#6b7280:#9ca3af>✦ Читает отпечатки копыт и изменения ветра.</gradient>"
+      - "<gradient:#10b981:#34d399>➤ Уровень I • Природный посвященный</gradient>"
     hunter:
-      name: "<gradient:#7c3aed:#a78bfa>🏹 Охотник</gradient>"
+      name: "<gradient:#16a34a:#4ade80>🏹 Охотник дикой природы</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Начинающий следопыт, изучающий жизнь в дикой природе.</gradient>"
-    archer:
-      name: "<gradient:#10b981:#34d399>🎯 Лучник</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Умелое обращение с луком, смертельное на расстоянии</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Выслеживает добычу с терпеливой точностью.</gradient>"
+      - "<gradient:#10b981:#34d399>➤ Уровень II • Дикая погоня</gradient>"
     tracker:
-      name: "<gradient:#3b82f6:#60a5fa>🔍 Трекер</gradient>"
+      name: "<gradient:#0ea5e9:#38bdf8>🏹 Трекер знаков</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Эксперт по поиску и преследованию добычи</gradient>"
-    marksman:
-      name: "<gradient:#f59e0b:#fbbf24>🎯 Стрелок</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Идет по тропам, которые не сможет стереть ни одна буря.</gradient>"
+      - "<gradient:#3b82f6:#60a5fa>➤ Уровень III • Предстоящий выбор пути</gradient>"
+    warden_primal:
+      name: "<gradient:#14b8a6:#2dd4bf>🛡 Страж Зверей</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Точный стрелок со смертельной точностью</gradient>"
-    pathfinder:
-      name: "<gradient:#a855f7:#c084fc>🗺 Следопыт</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Связь с высшими существами королевства.</gradient>"
+      - "<gradient:#14b8a6:#2dd4bf>➤ Уровень IV • Первичная ветвь</gradient>"
+    warden_storm:
+      name: "<gradient:#2563eb:#60a5fa>⚡ Хранитель Штормов</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Мастер-исследователь неизведанных земель</gradient>"
-    sniper:
-      name: "<gradient:#ef4444:#f87171>🎯 Снайпер</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Срабатывает сквозь грозу и дождь.</gradient>"
+      - "<gradient:#2563eb:#60a5fa>➤ Уровень IV • Ветка Шторма</gradient>"
+    warden_wild:
+      name: "<gradient:#16a34a:#84cc16>🌿 Хранитель дикой природы</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Элитный стрелок, один выстрел – одно убийство</gradient>"
-    forest_lord:
-      name: "<gradient:#10b981:#34d399>🌲Лесной Лорд</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Охраняет священные границы и тайные поляны.</gradient>"
+      - "<gradient:#16a34a:#84cc16>➤ Уровень IV • Дикая ветвь</gradient>"
+    beastmaster_primal:
+      name: "<gradient:#7c3aed:#c084fc>👑 Повелитель зверей Первобытный</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Хозяин дикой природы, единый с природой</gradient>"
-  # Ранги дерева воинов
+      - "<gradient:#6b7280:#9ca3af>✦ Без страха командует легендарными зверями.</gradient>"
+      - "<gradient:#7c3aed:#c084fc>➤ Уровень V • Итоговый ранг</gradient>"
+    beastmaster_storm:
+      name: "<gradient:#1d4ed8:#3b82f6>👑 Повелитель зверей Шторм</gradient>"
+      lore:
+      - "<gradient:#6b7280:#9ca3af>✦ Каждый выстрел направляет ваш беспощадный залп.</gradient>"
+      - "<gradient:#1d4ed8:#3b82f6>➤ Уровень V • Итоговый ранг</gradient>"
+    beastmaster_wild:
+      name: "<gradient:#15803d:#22c55e>👑 Повелитель зверей Дикий</gradient>"
+      lore:
+      - "<gradient:#6b7280:#9ca3af>✦ Сама природа восстает, чтобы ответить на ваш зов.</gradient>"
+      - "<gradient:#15803d:#22c55e>➤ Уровень V • Итоговый ранг</gradient>"
+  # Warrior Tree Ranks
   warrior:
     recruit:
-      name: "<gradient:#6b7280:#9ca3af>Набирать</gradient>"
+      name: "<gradient:#6b7280:#9ca3af>⚔ Рекрут</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Новый воин начинает свой путь</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Изучите основы боя</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Свежий клинок с непроверенной решимостью.</gradient>"
+      - "<gradient:#94a3b8:#cbd5e1>➤ Уровень I • Тренировочные площадки</gradient>"
     soldier:
-      name: "<gradient:#3b82f6:#60a5fa>Солдат</gradient>"
+      name: "<gradient:#3b82f6:#60a5fa>⚔ Солдат</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Обученный искусству боя</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Готов к бою</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Закалены тренировками и работой на передовой.</gradient>"
+      - "<gradient:#3b82f6:#60a5fa>➤ Уровень II • Полевая дисциплина</gradient>"
     veteran:
-      name: "<gradient:#f59e0b:#fbbf24>Ветеран</gradient>"
+      name: "<gradient:#f59e0b:#fbbf24>⚔ Ветеран</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Закаленный в боях воин</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Выберите путь специализации</gradient>"
-    # Ветка специализации 1: Берсерк (Наступление)
+      - "<gradient:#6b7280:#9ca3af>✦ Боевые шрамы отмечают вашу заработанную мудрость.</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>➤ Уровень III • Выберите свой путь</gradient>"
     berserker:
-      name: "<gradient:#ef4444:#f87171>Берсеркер</gradient>"
+      name: "<gradient:#ef4444:#f87171>🔥 Берсерк</gradient>"
       lore:
-        - "<gradient:#ef4444:#f87171>Путь ярости</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Наносите сокрушительные удары</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Пожертвовать защитой ради грубой силы</gradient>"
-    # Ветка специализации 2: Страж (Защита)
+      - "<gradient:#6b7280:#9ca3af>✦ Меняет защиту на разрушительное нападение.</gradient>"
+      - "<gradient:#ef4444:#f87171>➤ Уровень IV • Ветка ярости</gradient>"
     guardian:
-      name: "<gradient:#3b82f6:#60a5fa>Хранитель</gradient>"
+      name: "<gradient:#2563eb:#60a5fa>🛡 Хранитель</gradient>"
       lore:
-        - "<gradient:#3b82f6:#60a5fa>Путь защиты</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Станьте нерушимым щитом</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Защитите своих союзников любой ценой</gradient>"
-    # Ветка специализации 3: Гладиатор (сбалансированный)
+      - "<gradient:#6b7280:#9ca3af>✦ Твердо стоит там, где другие могут сломаться.</gradient>"
+      - "<gradient:#2563eb:#60a5fa>➤ Уровень IV • Ветка щита</gradient>"
     gladiator:
-      name: "<gradient:#a855f7:#c084fc>Гладиатор</gradient>"
+      name: "<gradient:#a855f7:#c084fc>🏟 Гладиатор</gradient>"
       lore:
-        - "<gradient:#a855f7:#c084fc>Путь славы</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Мастер боя на арене</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Баланс нападения и защиты</gradient>"
-    # Итоговые ранги
+      - "<gradient:#6b7280:#9ca3af>✦ Мастера сбалансированной арены.</gradient>"
+      - "<gradient:#a855f7:#c084fc>➤ Уровень IV • Ветка арены</gradient>"
     warlord_fury:
-      name: "<gradient:#ef4444:#f87171>Военачальник Ярости</gradient>"
+      name: "<gradient:#dc2626:#fb7185>👑 Военачальник Ярости</gradient>"
       lore:
-        - "<gradient:#ef4444:#f87171>Абсолютный Берсеркер</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Непреодолимая сила разрушения</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Страх, воплощенный на поле битвы</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Неостановимый двигатель разрушения.</gradient>"
+      - "<gradient:#dc2626:#fb7185>➤ Уровень V • Итоговый ранг</gradient>"
     warlord_shield:
-      name: "<gradient:#3b82f6:#60a5fa>Военачальник Щита</gradient>"
+      name: "<gradient:#1d4ed8:#60a5fa>👑 Воин Щита</gradient>"
       lore:
-        - "<gradient:#3b82f6:#60a5fa>Абсолютный страж</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Недвижимый объект, вечный защитник</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Никто не пройдет, пока ты стоишь</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Последняя стена между жизнью и разрушением.</gradient>"
+      - "<gradient:#1d4ed8:#60a5fa>➤ Уровень V • Итоговый ранг</gradient>"
     warlord_arena:
-      name: "<gradient:#a855f7:#c084fc>Военачальник Арены</gradient>"
+      name: "<gradient:#7c3aed:#c084fc>👑 Военачальник Арены</gradient>"
       lore:
-        - "<gradient:#a855f7:#c084fc>Абсолютный гладиатор</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Чемпион чемпионов</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Легенда арены</gradient>"
-    # Устаревшие ранги (для обратной совместимости)
-    knight:
-      name: "<gradient:#f59e0b:#fbbf24>Рыцарь</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Почетный воин королевства</gradient>"
-    champion:
-      name: "<gradient:#a855f7:#c084fc>Чемпион</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Легендарный боец, которого все боятся</gradient>"
-    warlord:
-      name: "<gradient:#ef4444:#f87171>военачальник</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Мастер войны, командующий армиями</gradient>"
-  # Ранги дерева магов
+      - "<gradient:#6b7280:#9ca3af>✦ Коронованный чемпион всех Колизеев.</gradient>"
+      - "<gradient:#7c3aed:#c084fc>➤ Уровень V • Итоговый ранг</gradient>"
+  # Mage Tree Ranks
   mage:
     apprentice:
-      name: "<gradient:#a855f7:#c084fc>✨ Ученик</gradient>"
+      name: "<gradient:#a855f7:#d8b4fe>✨ Ученик</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Изучение основ магии.</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Пробуждаются искры тайной силы.</gradient>"
+      - "<gradient:#a855f7:#d8b4fe>➤ Уровень I • Чародейские основы</gradient>"
     adept:
-      name: "<gradient:#3b82f6:#60a5fa>✨ Адепт</gradient>"
+      name: "<gradient:#3b82f6:#93c5fd>✨ Адепт</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Рост магической силы</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Создает контролируемые и целенаправленные заклинания.</gradient>"
+      - "<gradient:#3b82f6:#93c5fd>➤ Уровень II • Тайная практика</gradient>"
     wizard:
-      name: "<gradient:#f59e0b:#fbbf24>✨ Волшебник</gradient>"
+      name: "<gradient:#f59e0b:#fde68a>✨ Волшебник</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Мастер тайных искусств</gradient>"
-    archmage:
-      name: "<gradient:#ef4444:#f87171>✨ Архимаг</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Управляет сложными моделями магии.</gradient>"
+      - "<gradient:#f59e0b:#fde68a>➤ Уровень III • Выберите свою доктрину</gradient>"
+    sorcerer_arcane:
+      name: "<gradient:#8b5cf6:#c4b5fd>🔮 Колдун Арканов</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Верховный мастер всей магии</gradient>"
-  # Ранги разбойного дерева
+      - "<gradient:#6b7280:#9ca3af>✦ Превращает грубую мощь в элегантную силу.</gradient>"
+      - "<gradient:#8b5cf6:#c4b5fd>➤ Уровень IV • Чародейская ветвь</gradient>"
+    sorcerer_spell:
+      name: "<gradient:#d946ef:#f0abfc>📜 Колдун заклинаний</gradient>"
+      lore:
+      - "<gradient:#6b7280:#9ca3af>✦ Расширяет контроль и точность гримуара.</gradient>"
+      - "<gradient:#d946ef:#f0abfc>➤ Уровень IV • Ветка заклинаний</gradient>"
+    sorcerer_void:
+      name: "<gradient:#1d4ed8:#60a5fa>🌌 Колдун Пустоты</gradient>"
+      lore:
+      - "<gradient:#6b7280:#9ca3af>✦ Подчиняет энергии бездны вашей воле.</gradient>"
+      - "<gradient:#1d4ed8:#60a5fa>➤ Уровень IV • Ветка Бездны</gradient>"
+    archmage_arcane:
+      name: "<gradient:#7c3aed:#c084fc>👑 Архимаг Арканов</gradient>"
+      lore:
+      - "<gradient:#6b7280:#9ca3af>✦ Верховный архитектор чистой тайной мощи.</gradient>"
+      - "<gradient:#7c3aed:#c084fc>➤ Уровень V • Итоговый ранг</gradient>"
+    archmage_spell:
+      name: "<gradient:#d946ef:#f5d0fe>👑 Архимаг заклинаний</gradient>"
+      lore:
+      - "<gradient:#6b7280:#9ca3af>✦ Каждое заклинание отвечает мгновенно.</gradient>"
+      - "<gradient:#d946ef:#f5d0fe>➤ Уровень V • Итоговый ранг</gradient>"
+    archmage_void:
+      name: "<gradient:#1e3a8a:#60a5fa>👑 Архимаг Пустоты</gradient>"
+      lore:
+      - "<gradient:#6b7280:#9ca3af>✦ Управляет границами между мирами.</gradient>"
+      - "<gradient:#1e3a8a:#60a5fa>➤ Уровень V • Итоговый ранг</gradient>"
+  # Rogue Tree Ranks
   rogue:
     pickpocket:
       name: "<gradient:#6b7280:#9ca3af>🗡 Карманник</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Быстрые пальцы, быстрый побег</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Изучает время, неправильное направление и скорость.</gradient>"
+      - "<gradient:#94a3b8:#cbd5e1>➤ Уровень I • Стриткрафт</gradient>"
     thief:
-      name: "<gradient:#3b82f6:#60a5fa>🗡 Вор</gradient>"
+      name: "<gradient:#3b82f6:#93c5fd>🗡 Вор</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Мастер скрытности и воровства</gradient>"
-    scout:
-      name: "<gradient:#10b981:#34d399>🗡 Скаут</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Глаза и уши теней</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Проскальзывает через шлюзы и смотровые площадки.</gradient>"
+      - "<gradient:#3b82f6:#93c5fd>➤ Уровень II • Бесшумный вход</gradient>"
     assassin:
       name: "<gradient:#ef4444:#f87171>🗡 Убийца</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Тихий убийца, смерть из теней</gradient>"
-    infiltrator:
-      name: "<gradient:#a855f7:#c084fc>🗡 Инфильтратор</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Ударяет один раз и исчезает бесследно.</gradient>"
+      - "<gradient:#ef4444:#f87171>➤ Уровень III • Выберите свой метод</gradient>"
+    shadow_stealth:
+      name: "<gradient:#0ea5e9:#67e8f9>🌒 Тень скрытности</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Эксперт по входу и выходу незамеченным</gradient>"
-    shadowblade:
-      name: "<gradient:#6b7280:#9ca3af>🗡 Теневой клинок</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ За движениями Мастера никто не может уследить.</gradient>"
+      - "<gradient:#0ea5e9:#67e8f9>➤ Уровень IV • Стелс-ветвь</gradient>"
+    shadow_night:
+      name: "<gradient:#7c3aed:#c4b5fd>🌘 Тень ночи</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Смертоносный воин ночи</gradient>"
-    spymaster:
-      name: "<gradient:#3b82f6:#60a5fa>🗡 Мастер шпионов</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Превращает тьму в смертельное преимущество.</gradient>"
+      - "<gradient:#7c3aed:#c4b5fd>➤ Уровень IV • Ночная ветвь</gradient>"
+    shadow_sabotage:
+      name: "<gradient:#f97316:#fb923c>💣 Тень Саботажа</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Контроллер информационных сетей</gradient>"
-    shadow_master:
-      name: "<gradient:#1f2937:#374151>🗡 Мастер теней</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Разрушает планы до того, как враги отреагируют.</gradient>"
+      - "<gradient:#f97316:#fb923c>➤ IV уровень • Диверсионная ветка</gradient>"
+    phantom_stealth:
+      name: "<gradient:#14b8a6:#5eead4>👑 Призрак скрытности</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Один с самой тьмой</gradient>"
-    shadowmaster:
-      name: "<gradient:#1f2937:#374151>🗡Мастер теней</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Становится неприкасаемым городским мифом.</gradient>"
+      - "<gradient:#14b8a6:#5eead4>➤ Уровень V • Итоговый ранг</gradient>"
+    phantom_night:
+      name: "<gradient:#9333ea:#e9d5ff>👑 Призрак ночи</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Верховный правитель всех теней</gradient>"
-  # Древо рангов клириков
+      - "<gradient:#6b7280:#9ca3af>✦ Полностью владеет полуночным часом.</gradient>"
+      - "<gradient:#9333ea:#e9d5ff>➤ Уровень V • Итоговый ранг</gradient>"
+    phantom_sabotage:
+      name: "<gradient:#ea580c:#fdba74>👑 Призрак Саботажа</gradient>"
+      lore:
+      - "<gradient:#6b7280:#9ca3af>✦ Завершает сражения еще до их начала.</gradient>"
+      - "<gradient:#ea580c:#fdba74>➤ Уровень V • Итоговый ранг</gradient>"
+  # Cleric Tree Ranks
   cleric:
     acolyte:
-      name: "<gradient:#f59e0b:#fbbf24>✝ Послушник</gradient>"
+      name: "<gradient:#f59e0b:#fde68a>✝ Послушник</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Преданный слуга божественного</gradient>"
-    devotee:
-      name: "<gradient:#f59e0b:#fbbf24>✝ Преданный</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Верный последователь божественного пути</gradient>"
-    priest:
-      name: "<gradient:#10b981:#34d399>✝ Священник</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Целитель и защитник верующих</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Начинает священный путь служения.</gradient>"
+      - "<gradient:#f59e0b:#fde68a>➤ Уровень I • Преданность</gradient>"
     healer:
-      name: "<gradient:#10b981:#34d399>✝ Целитель</gradient>"
+      name: "<gradient:#10b981:#6ee7b7>✝ Целитель</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Мастер восстановительного искусства</gradient>"
-    bishop:
-      name: "<gradient:#a855f7:#c084fc>✝ Епископ</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Восстанавливает союзников под сильным давлением.</gradient>"
+      - "<gradient:#10b981:#6ee7b7>➤ Уровень II • Восстановление</gradient>"
+    priest:
+      name: "<gradient:#3b82f6:#93c5fd>✝ Священник</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Лидер верующих</gradient>"
-    oracle:
-      name: "<gradient:#3b82f6:#60a5fa>✝ Оракул</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Направляет группы со святой дисциплиной.</gradient>"
+      - "<gradient:#3b82f6:#93c5fd>➤ Уровень III • Выберите свое призвание</gradient>"
+    bishop_divine:
+      name: "<gradient:#8b5cf6:#c4b5fd>⛪ Епископ Божественный</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Провидец божественных видений</gradient>"
-    high_priest:
-      name: "<gradient:#ef4444:#f87171>✝ Первосвященник</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Каналы направляют сияющую власть.</gradient>"
+      - "<gradient:#8b5cf6:#c4b5fd>➤ Уровень IV • Божественная ветвь</gradient>"
+    bishop_light:
+      name: "<gradient:#f59e0b:#fef08a>☀ Епископ Света</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Высший голос божественного</gradient>"
-  # Ранги дерева торговцев
+      - "<gradient:#6b7280:#9ca3af>✦ Ослепляет порчу священным блеском.</gradient>"
+      - "<gradient:#f59e0b:#fef08a>➤ Уровень IV • Легкая ветвь</gradient>"
+    bishop_soul:
+      name: "<gradient:#06b6d4:#67e8f9>🕊 Епископ душ</gradient>"
+      lore:
+      - "<gradient:#6b7280:#9ca3af>✦ Охраняет порог жизни и смерти.</gradient>"
+      - "<gradient:#06b6d4:#67e8f9>➤ Уровень IV • Ветка душ</gradient>"
+    high_priest_divine:
+      name: "<gradient:#7c3aed:#ddd6fe>👑 Первосвященник Божественности</gradient>"
+      lore:
+      - "<gradient:#6b7280:#9ca3af>✦ Провозглашает чудеса в самом сердце хаоса.</gradient>"
+      - "<gradient:#7c3aed:#ddd6fe>➤ Уровень V • Итоговый ранг</gradient>"
+    high_priest_light:
+      name: "<gradient:#f59e0b:#fef3c7>👑 Верховный Жрец Света</gradient>"
+      lore:
+      - "<gradient:#6b7280:#9ca3af>✦ Окуляет союзников в непоколебимый рассвет.</gradient>"
+      - "<gradient:#f59e0b:#fef3c7>➤ Уровень V • Итоговый ранг</gradient>"
+    high_priest_soul:
+      name: "<gradient:#0891b2:#a5f3fc>👑 Верховный жрец душ</gradient>"
+      lore:
+      - "<gradient:#6b7280:#9ca3af>✦ Духи-пастухи вне смертельного страха.</gradient>"
+      - "<gradient:#0891b2:#a5f3fc>➤ Уровень V • Итоговый ранг</gradient>"
+  # Merchant Tree Ranks
   merchant:
     peddler:
       name: "<gradient:#6b7280:#9ca3af>💰 Коробейник</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Продажа товаров на улице</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Начинается с упорства, обаяния и мелких сделок.</gradient>"
+      - "<gradient:#94a3b8:#cbd5e1>➤ Уровень I • Уличная торговля</gradient>"
     trader:
-      name: "<gradient:#3b82f6:#60a5fa>💰 Трейдер</gradient>"
+      name: "<gradient:#3b82f6:#93c5fd>💰 Трейдер</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Стабильный продавец со связями</gradient>"
-    vendor:
-      name: "<gradient:#10b981:#34d399>💰 Продавец</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Расширяет маршруты и надежные контакты.</gradient>"
+      - "<gradient:#3b82f6:#93c5fd>➤ Уровень II • Присутствие на рынке</gradient>"
+    broker:
+      name: "<gradient:#f59e0b:#fde68a>💰 Брокер</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Квалифицированный продавец товара</gradient>"
-    artificer:
-      name: "<gradient:#f59e0b:#fbbf24>💰 Ремесленник</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Точно заключает крупные сделки.</gradient>"
+      - "<gradient:#f59e0b:#fde68a>➤ Уровень III • Выберите свою империю</gradient>"
+    magnate_wealth:
+      name: "<gradient:#10b981:#6ee7b7>📈 Магнат богатства</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Мастер изысканных изделий</gradient>"
-    alchemist:
-      name: "<gradient:#a855f7:#c084fc>💰 Алхимик</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Создает чистый капитал беспрецедентными темпами.</gradient>"
+      - "<gradient:#10b981:#6ee7b7>➤ Уровень IV • Ветка богатства</gradient>"
+    magnate_market:
+      name: "<gradient:#06b6d4:#67e8f9>🏛 Магнат рынков</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Мастер зелий и эликсиров</gradient>"
-    merchant:
-      name: "<gradient:#f59e0b:#fbbf24>💰 Торговец</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Организует циклы спроса и предложения.</gradient>"
+      - "<gradient:#06b6d4:#67e8f9>➤ Уровень IV • Ветка рынка</gradient>"
+    magnate_trade:
+      name: "<gradient:#f97316:#fdba74>🚚 Магнат торговли</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Успешный владелец бизнеса</gradient>"
-    master_crafter:
-      name: "<gradient:#ef4444:#f87171>💰 Мастер-ремесленник</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Доминирует над караванными путями и логистикой.</gradient>"
+      - "<gradient:#f97316:#fdba74>➤ Уровень IV • Торговая ветка</gradient>"
+    tycoon_wealth:
+      name: "<gradient:#22c55e:#bbf7d0>👑 Магнат богатства</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Верховный мастер королевства</gradient>"
-    merchant_prince:
-      name: "<gradient:#a855f7:#c084fc>💰 Торговый принц</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Переворачивает экономику одним решением.</gradient>"
+      - "<gradient:#22c55e:#bbf7d0>➤ Уровень V • Итоговый ранг</gradient>"
+    tycoon_market:
+      name: "<gradient:#0891b2:#a5f3fc>👑 Магнат рынков</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Роялти в торговле</gradient>"
-    tycoon:
-      name: "<gradient:#a855f7:#c084fc>💰 Магнат</gradient>"
+      - "<gradient:#6b7280:#9ca3af>✦ Устанавливает цены, которые должна соблюдать каждая гильдия.</gradient>"
+      - "<gradient:#0891b2:#a5f3fc>➤ Уровень V • Итоговый ранг</gradient>"
+    tycoon_trade:
+      name: "<gradient:#ea580c:#fed7aa>👑 Магнат торговли</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Магистр коммерции и торговли</gradient>"
-    guild_master:
-      name: "<gradient:#ef4444:#f87171>💰 Мастер гильдии</gradient>"
-      lore:
-        - "<gradient:#6b7280:#9ca3af>Лидер торговой гильдии</gradient>"
-
+      - "<gradient:#6b7280:#9ca3af>✦ Владеет дорогами, портами и прибылями.</gradient>"
+      - "<gradient:#ea580c:#fed7aa>➤ Уровень V • Итоговый ранг</gradient>"
 # ============================================
-# СООБЩЕНИЯ БОНТИ-СЛУШАТЕЛЯ
+# BOUNTY LISTENER MESSAGES
 # ============================================
 bounty_listener:
   bounty_active:
@@ -381,28 +434,28 @@ main_overview_ui:
   admin_overview:
     name: "<gradient:#ef4444:#f87171>⚙ Панель Админа</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Доступ к административным инструментам</gradient>"
-      - "<gradient:#6b7280:#9ca3af>и варианты конфигурации</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Доступ к административным инструментам</gradient>"
+    - "<gradient:#6b7280:#9ca3af>и варианты конфигурации</gradient>"
   bounty_overview:
     name: "<gradient:#f59e0b:#fbbf24>🎯 Награды</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Просмотр и управление наградами</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Охотьтесь за игроками и получайте награды!</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Просмотр и управление наградами</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Охотьтесь за игроками и получайте награды!</gradient>"
   perk_overview:
     name: "<gradient:#10b981:#34d399>✨ Бонусы</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Просмотр доступных бонусов</gradient>"
-      - "<gradient:#6b7280:#9ca3af>и особые способности</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Просмотр доступных бонусов</gradient>"
+    - "<gradient:#6b7280:#9ca3af>и особые способности</gradient>"
   quest_overview:
     name: "<gradient:#3b82f6:#60a5fa>📜 Квесты</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Просмотр доступных квестов</gradient>"
-      - "<gradient:#6b7280:#9ca3af>и отслеживать свой прогресс</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Просмотр доступных квестов</gradient>"
+    - "<gradient:#6b7280:#9ca3af>и отслеживать свой прогресс</gradient>"
   rank_overview:
     name: "<gradient:#a855f7:#c084fc>⚔ Ранги</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Просмотр прогресса рангов</gradient>"
-      - "<gradient:#6b7280:#9ca3af>и разблокировать новые способности</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Просмотр прогресса рангов</gradient>"
+    - "<gradient:#6b7280:#9ca3af>и разблокировать новые способности</gradient>"
 
 # ============================================
 # РАНГ ГЛАВНЫЙ ИНТЕРФЕЙС
@@ -412,8 +465,8 @@ rank_main_ui:
   rank_tree:
     name: "<gradient:#f59e0b:#fbbf24>🌳 Деревья Рангов</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Просмотр доступных деревьев рангов</gradient>"
-      - "<gradient:#6b7280:#9ca3af>и выбери свой путь</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Просмотр доступных деревьев рангов</gradient>"
+    - "<gradient:#6b7280:#9ca3af>и выбери свой путь</gradient>"
 
 
 # ============================================
@@ -425,40 +478,40 @@ rank_tree_overview_ui:
     ranger:
       name: "<gradient:#10b981:#34d399>🏹 Рейнджер</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Освойте искусство стрельбы из лука</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Стать единым целым с природой</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Освойте искусство стрельбы из лука</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Стать единым целым с природой</gradient>"
     warrior:
       name: "<gradient:#ef4444:#f87171>⚔ Воин</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Освойте искусство боя</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Станьте легендарным бойцом</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Освойте искусство боя</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Станьте легендарным бойцом</gradient>"
     mage:
       name: "<gradient:#a855f7:#c084fc>✨ Маг</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Овладейте силой магии</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Станьте мастером тайной магии</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Овладейте силой магии</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Станьте мастером тайной магии</gradient>"
     rogue:
       name: "<gradient:#6b7280:#9ca3af>🗡 Разбойник</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Освойте скрытность и хитрость</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Удар из тени</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Освойте скрытность и хитрость</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Удар из тени</gradient>"
     cleric:
       name: "<gradient:#f59e0b:#fbbf24>✝ Жрец</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Направьте божественную силу</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Исцеляйте и защищайте своих союзников</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Направьте божественную силу</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Исцеляйте и защищайте своих союзников</gradient>"
     merchant:
       name: "<gradient:#10b981:#34d399>💰 Торговец</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Освойте искусство торговли</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Построй свое состояние</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Освойте искусство торговли</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Построй свое состояние</gradient>"
   click:
     preview_rank_path:
-      - "<gradient:#3b82f6:#60a5fa>ЛКМ для предпросмотра</gradient>"
-      - "<gradient:#10b981:#34d399>ПКМ для выбора</gradient>"
+    - "<gradient:#3b82f6:#60a5fa>ЛКМ для предпросмотра</gradient>"
+    - "<gradient:#10b981:#34d399>ПКМ для выбора</gradient>"
     locked: "<gradient:#ef4444:#f87171>🔒 Это дерево рангов заблокировано</gradient>"
     locked.required:
-      - "<gradient:#6b7280:#9ca3af>Сначала завершите %minimum_rank_paths_to_be_absolved_needed% деревьев рангов</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Сначала завершите %minimum_rank_paths_to_be_absolved_needed% деревьев рангов</gradient>"
     pre_requisites: "<gradient:#f59e0b:#fbbf24>Предварительные требования:</gradient>"
     rank_path_locked: "<gradient:#ef4444:#f87171>🔒 Этот путь ранга заблокирован!</gradient>"
   currently_active: "<gradient:#10b981:#34d399>✅ Сейчас Активен</gradient>"
@@ -470,8 +523,8 @@ rank_tree_overview_ui:
   create_rank_tree:
     name: "<gradient:#10b981:#34d399>➕ Создать Дерево Рангов</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Создать новое дерево рангов</gradient>"
-      - "<gradient:#6b7280:#9ca3af>(Только для админов)</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Создать новое дерево рангов</gradient>"
+    - "<gradient:#6b7280:#9ca3af>(Только для админов)</gradient>"
   select:
     rank_path_starting_rank_not_found: "<gradient:#ef4444:#f87171>❌ Начальный ранг не найден для этого пути!</gradient>"
     rank_path_selected: "<gradient:#10b981:#34d399>✅ Путь ранга выбран:</gradient> <gradient:#f59e0b:#fbbf24>%rank_path%</gradient> <gradient:#6b7280:#9ca3af>(Начальный ранг: %rank%)</gradient>"
@@ -481,10 +534,10 @@ rank_tree_overview_ui:
     rank_tree_creation_coming_soon: "<gradient:#f59e0b:#fbbf24>⏳ Создание дерева рангов скоро!</gradient>"
   free_version_preview_only: "<gradient:#f59e0b:#fbbf24>⭐ Бесплатная версия — только предварительный просмотр</gradient>"
   free_version_preview_only_lore:
-    - "<gradient:#6b7280:#9ca3af>Это дерево рангов доступно только для предварительного просмотра.</gradient>"
-    - "<gradient:#6b7280:#9ca3af>Обновите до Премиум, чтобы разблокировать!</gradient>"
-    - ""
-    - "<gradient:#3b82f6:#60a5fa>Щелкните левой кнопкой мыши, чтобы просмотреть</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Это дерево рангов доступно только для предварительного просмотра.</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Обновите до Премиум, чтобы разблокировать!</gradient>"
+  - ""
+  - "<gradient:#3b82f6:#60a5fa>Щелкните левой кнопкой мыши, чтобы просмотреть</gradient>"
   free_version_upgrade_required: "<gradient:#f59e0b:#fbbf24>⭐ Требуется премиум:</gradient> <gradient:#6b7280:#9ca3af>Перейдите на Премиум, чтобы выбрать дополнительные деревья рангов!</gradient>"
 
 # ============================================
@@ -502,17 +555,17 @@ rank_path_overview_ui:
     fallback: "<gradient:#6b7280:#9ca3af>Навигация %direction%</gradient>"
   back:
     lore:
-      - "<gradient:#6b7280:#9ca3af>Нажмите для возврата</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Нажмите для возврата</gradient>"
   center_view:
     name: "<gradient:#3b82f6:#60a5fa>🎯 Центрировать Вид</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Нажмите для центрирования вида</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Нажмите для центрирования вида</gradient>"
     fallback: "<gradient:#6b7280:#9ca3af>Центрировать Вид</gradient>"
   preview_mode:
     name: "<gradient:#3b82f6:#60a5fa>👁 Режим Предпросмотра</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Вы просматриваете в режиме предпросмотра</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Изменения не будут сохранены</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Вы просматриваете в режиме предпросмотра</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Изменения не будут сохранены</gradient>"
     fallback: "<gradient:#6b7280:#9ca3af>Режим Предпросмотра</gradient>"
   background:
     name: " "
@@ -520,12 +573,12 @@ rank_path_overview_ui:
     render_rank: "<gradient:#ef4444:#f87171>❌ Ошибка отображения ранга</gradient>"
     no_rank_tree: "<gradient:#ef4444:#f87171>❌ Нет Дерева Рангов</gradient>"
     no_rank_tree_lore:
-      - "<gradient:#6b7280:#9ca3af>Не удалось загрузить дерево рангов</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Не удалось загрузить дерево рангов</gradient>"
     critical: "<gradient:#ef4444:#f87171>❌ Критическая Ошибка</gradient>"
     critical_lore:
-      - "<gradient:#6b7280:#9ca3af>Произошла ошибка при отображении</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Произошла ошибка при отображении</gradient>"
     critical.lore:
-      - "<gradient:#6b7280:#9ca3af>Произошла ошибка при отображении</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Произошла ошибка при отображении</gradient>"
     requirements_view_failed: "<gradient:#ef4444:#f87171>❌ Не удалось открыть требования для</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
     general: "<gradient:#ef4444:#f87171>❌ Произошла ошибка. Пожалуйста, попробуйте еще раз.</gradient>"
   status:
@@ -546,91 +599,300 @@ rank_path_overview_ui:
     in_progress: "<gradient:#f59e0b:#fbbf24>⏳ Соединение В Процессе</gradient>"
     locked: "<gradient:#ef4444:#f87171>🔒 Соединение Заблокировано</gradient>"
   rank:
-    owned: "<gradient:#10b981:#34d399>✅ Получен</gradient>"
-    in_progress: "<gradient:#f59e0b:#fbbf24>⏳ В Процессе</gradient>"
-    available: "<gradient:#3b82f6:#60a5fa>🔓 Доступен</gradient>"
-    locked: "<gradient:#ef4444:#f87171>🔒 Заблокирован</gradient>"
-    click_to_view: "<gradient:#6b7280:#9ca3af>Нажмите для просмотра требований</gradient>"
-    click_to_progress: "<gradient:#10b981:#34d399>Нажмите для прогресса</gradient>"
+    owned: "<gradient:#10b981:#34d399>✅ В собственности</gradient>"
+    in_progress: "<gradient:#f59e0b:#fbbf24>⏳ В процессе</gradient>"
+    available: "<gradient:#3b82f6:#60a5fa>🔓 В наличии</gradient>"
+    locked: "<gradient:#ef4444:#f87171>🔒 Заблокировано</gradient>"
+    click_to_view: "<gradient:#6b7280:#9ca3af>Нажмите, чтобы просмотреть требования</gradient>"
+    click_to_progress: "<gradient:#10b981:#34d399>Нажмите, чтобы продолжить</gradient>"
     fallback_name: "<gradient:#6b7280:#9ca3af>%rank_id%</gradient>"
-    fallback_description: "<gradient:#6b7280:#9ca3af>Описание недоступно для %rank_id%</gradient>"
+    fallback_description: "<gradient:#6b7280:#9ca3af>Нет описания для %rank_id%</gradient>"
     tier: "<gradient:#6b7280:#9ca3af>Уровень:</gradient> <gradient:#f59e0b:#fbbf24>%tier%</gradient>"
-    weight: "<gradient:#6b7280:#9ca3af>Вес:</gradient> <gradient:#f59e0b:#fbbf24>%weight%</gradient>"
+    weight: "<gradient:#6b7280:#9ca3af>Масса:</gradient> <gradient:#f59e0b:#fbbf24>%weight%</gradient>"
+    # Ranger Tree Ranks
     ranger:
+      scout:
+        name: "<gradient:#22c55e:#86efac>🏹 Разведчик троп</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Читает отпечатки копыт и изменения ветра.</gradient>"
+        - "<gradient:#10b981:#34d399>➤ Уровень I • Природный посвященный</gradient>"
       hunter:
-        name: "<gradient:#7c3aed:#a78bfa>🏹 Охотник</gradient>"
+        name: "<gradient:#16a34a:#4ade80>🏹 Охотник дикой природы</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Начинающий следопыт, изучающий жизнь в дикой природе.</gradient>"
-      archer:
-        name: "<gradient:#10b981:#34d399>🎯 Лучник</gradient>"
-        lore:
-          - "<gradient:#6b7280:#9ca3af>Умелое обращение с луком, смертельное на расстоянии</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Выслеживает добычу с терпеливой точностью.</gradient>"
+        - "<gradient:#10b981:#34d399>➤ Уровень II • Дикая погоня</gradient>"
       tracker:
-        name: "<gradient:#3b82f6:#60a5fa>🔍 Трекер</gradient>"
+        name: "<gradient:#0ea5e9:#38bdf8>🏹 Трекер знаков</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Эксперт по поиску и преследованию добычи</gradient>"
-      marksman:
-        name: "<gradient:#f59e0b:#fbbf24>🎯 Стрелок</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Идет по тропам, которые не сможет стереть ни одна буря.</gradient>"
+        - "<gradient:#3b82f6:#60a5fa>➤ Уровень III • Предстоящий выбор пути</gradient>"
+      warden_primal:
+        name: "<gradient:#14b8a6:#2dd4bf>🛡 Страж Зверей</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Точный стрелок со смертельной точностью</gradient>"
-      pathfinder:
-        name: "<gradient:#a855f7:#c084fc>🗺 Следопыт</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Связь с высшими существами королевства.</gradient>"
+        - "<gradient:#14b8a6:#2dd4bf>➤ Уровень IV • Первичная ветвь</gradient>"
+      warden_storm:
+        name: "<gradient:#2563eb:#60a5fa>⚡ Хранитель Штормов</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Мастер-исследователь неизведанных земель</gradient>"
-      sniper:
-        name: "<gradient:#ef4444:#f87171>🎯 Снайпер</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Срабатывает сквозь грозу и дождь.</gradient>"
+        - "<gradient:#2563eb:#60a5fa>➤ Уровень IV • Ветка Шторма</gradient>"
+      warden_wild:
+        name: "<gradient:#16a34a:#84cc16>🌿 Хранитель дикой природы</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Элитный стрелок, один выстрел – одно убийство</gradient>"
-      forest_lord:
-        name: "<gradient:#10b981:#34d399>🌲Лесной Лорд</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Охраняет священные границы и тайные поляны.</gradient>"
+        - "<gradient:#16a34a:#84cc16>➤ Уровень IV • Дикая ветвь</gradient>"
+      beastmaster_primal:
+        name: "<gradient:#7c3aed:#c084fc>👑 Повелитель зверей Первобытный</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Хозяин дикой природы, единый с природой</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Без страха командует легендарными зверями.</gradient>"
+        - "<gradient:#7c3aed:#c084fc>➤ Уровень V • Итоговый ранг</gradient>"
+      beastmaster_storm:
+        name: "<gradient:#1d4ed8:#3b82f6>👑 Повелитель зверей Шторм</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Каждый выстрел направляет ваш беспощадный залп.</gradient>"
+        - "<gradient:#1d4ed8:#3b82f6>➤ Уровень V • Итоговый ранг</gradient>"
+      beastmaster_wild:
+        name: "<gradient:#15803d:#22c55e>👑 Повелитель зверей Дикий</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Сама природа восстает, чтобы ответить на ваш зов.</gradient>"
+        - "<gradient:#15803d:#22c55e>➤ Уровень V • Итоговый ранг</gradient>"
+    # Warrior Tree Ranks
     warrior:
       recruit:
         name: "<gradient:#6b7280:#9ca3af>⚔ Рекрут</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Новый воин начинает свой путь</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Свежий клинок с непроверенной решимостью.</gradient>"
+        - "<gradient:#94a3b8:#cbd5e1>➤ Уровень I • Тренировочные площадки</gradient>"
       soldier:
         name: "<gradient:#3b82f6:#60a5fa>⚔ Солдат</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Обученный искусству боя</gradient>"
-      knight:
-        name: "<gradient:#f59e0b:#fbbf24>⚔ Рыцарь</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Закалены тренировками и работой на передовой.</gradient>"
+        - "<gradient:#3b82f6:#60a5fa>➤ Уровень II • Полевая дисциплина</gradient>"
+      veteran:
+        name: "<gradient:#f59e0b:#fbbf24>⚔ Ветеран</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Почетный воин королевства</gradient>"
-      champion:
-        name: "<gradient:#a855f7:#c084fc>⚔ Чемпион</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Боевые шрамы отмечают вашу заработанную мудрость.</gradient>"
+        - "<gradient:#f59e0b:#fbbf24>➤ Уровень III • Выберите свой путь</gradient>"
+      berserker:
+        name: "<gradient:#ef4444:#f87171>🔥 Берсерк</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Легендарный боец, которого все боятся</gradient>"
-      warlord:
-        name: "<gradient:#ef4444:#f87171>⚔ Военачальник</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Меняет защиту на разрушительное нападение.</gradient>"
+        - "<gradient:#ef4444:#f87171>➤ Уровень IV • Ветка ярости</gradient>"
+      guardian:
+        name: "<gradient:#2563eb:#60a5fa>🛡 Хранитель</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Мастер войны, командующий армиями</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Твердо стоит там, где другие могут сломаться.</gradient>"
+        - "<gradient:#2563eb:#60a5fa>➤ Уровень IV • Ветка щита</gradient>"
+      gladiator:
+        name: "<gradient:#a855f7:#c084fc>🏟 Гладиатор</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Мастера сбалансированной арены.</gradient>"
+        - "<gradient:#a855f7:#c084fc>➤ Уровень IV • Ветка арены</gradient>"
+      warlord_fury:
+        name: "<gradient:#dc2626:#fb7185>👑 Военачальник Ярости</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Неостановимый двигатель разрушения.</gradient>"
+        - "<gradient:#dc2626:#fb7185>➤ Уровень V • Итоговый ранг</gradient>"
+      warlord_shield:
+        name: "<gradient:#1d4ed8:#60a5fa>👑 Воин Щита</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Последняя стена между жизнью и разрушением.</gradient>"
+        - "<gradient:#1d4ed8:#60a5fa>➤ Уровень V • Итоговый ранг</gradient>"
+      warlord_arena:
+        name: "<gradient:#7c3aed:#c084fc>👑 Военачальник Арены</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Коронованный чемпион всех Колизеев.</gradient>"
+        - "<gradient:#7c3aed:#c084fc>➤ Уровень V • Итоговый ранг</gradient>"
+    # Mage Tree Ranks
     mage:
       apprentice:
-        name: "<gradient:#a855f7:#c084fc>✨ Ученик</gradient>"
+        name: "<gradient:#a855f7:#d8b4fe>✨ Ученик</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Изучение основ магии.</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Пробуждаются искры тайной силы.</gradient>"
+        - "<gradient:#a855f7:#d8b4fe>➤ Уровень I • Чародейские основы</gradient>"
       adept:
-        name: "<gradient:#3b82f6:#60a5fa>✨ Адепт</gradient>"
+        name: "<gradient:#3b82f6:#93c5fd>✨ Адепт</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Рост магической силы</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Создает контролируемые и целенаправленные заклинания.</gradient>"
+        - "<gradient:#3b82f6:#93c5fd>➤ Уровень II • Тайная практика</gradient>"
       wizard:
-        name: "<gradient:#f59e0b:#fbbf24>✨ Волшебник</gradient>"
+        name: "<gradient:#f59e0b:#fde68a>✨ Волшебник</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Мастер тайных искусств</gradient>"
-      archmage:
-        name: "<gradient:#ef4444:#f87171>✨ Архимаг</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Управляет сложными моделями магии.</gradient>"
+        - "<gradient:#f59e0b:#fde68a>➤ Уровень III • Выберите свою доктрину</gradient>"
+      sorcerer_arcane:
+        name: "<gradient:#8b5cf6:#c4b5fd>🔮 Колдун Арканов</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Верховный мастер всей магии</gradient>"
+        - "<gradient:#6b7280:#9ca3af>✦ Превращает грубую мощь в элегантную силу.</gradient>"
+        - "<gradient:#8b5cf6:#c4b5fd>➤ Уровень IV • Чародейская ветвь</gradient>"
+      sorcerer_spell:
+        name: "<gradient:#d946ef:#f0abfc>📜 Колдун заклинаний</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Расширяет контроль и точность гримуара.</gradient>"
+        - "<gradient:#d946ef:#f0abfc>➤ Уровень IV • Ветка заклинаний</gradient>"
+      sorcerer_void:
+        name: "<gradient:#1d4ed8:#60a5fa>🌌 Колдун Пустоты</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Подчиняет энергии бездны вашей воле.</gradient>"
+        - "<gradient:#1d4ed8:#60a5fa>➤ Уровень IV • Ветка Бездны</gradient>"
+      archmage_arcane:
+        name: "<gradient:#7c3aed:#c084fc>👑 Архимаг Арканов</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Верховный архитектор чистой тайной мощи.</gradient>"
+        - "<gradient:#7c3aed:#c084fc>➤ Уровень V • Итоговый ранг</gradient>"
+      archmage_spell:
+        name: "<gradient:#d946ef:#f5d0fe>👑 Архимаг заклинаний</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Каждое заклинание отвечает мгновенно.</gradient>"
+        - "<gradient:#d946ef:#f5d0fe>➤ Уровень V • Итоговый ранг</gradient>"
+      archmage_void:
+        name: "<gradient:#1e3a8a:#60a5fa>👑 Архимаг Пустоты</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Управляет границами между мирами.</gradient>"
+        - "<gradient:#1e3a8a:#60a5fa>➤ Уровень V • Итоговый ранг</gradient>"
+    # Rogue Tree Ranks
     rogue:
       pickpocket:
         name: "<gradient:#6b7280:#9ca3af>🗡 Карманник</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Быстрые пальцы, быстрый побег</gradient>"
-
+        - "<gradient:#6b7280:#9ca3af>✦ Изучает время, неправильное направление и скорость.</gradient>"
+        - "<gradient:#94a3b8:#cbd5e1>➤ Уровень I • Стриткрафт</gradient>"
+      thief:
+        name: "<gradient:#3b82f6:#93c5fd>🗡 Вор</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Проскальзывает через шлюзы и смотровые площадки.</gradient>"
+        - "<gradient:#3b82f6:#93c5fd>➤ Уровень II • Бесшумный вход</gradient>"
+      assassin:
+        name: "<gradient:#ef4444:#f87171>🗡 Убийца</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Ударяет один раз и исчезает бесследно.</gradient>"
+        - "<gradient:#ef4444:#f87171>➤ Уровень III • Выберите свой метод</gradient>"
+      shadow_stealth:
+        name: "<gradient:#0ea5e9:#67e8f9>🌒 Тень скрытности</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ За движениями Мастера никто не может уследить.</gradient>"
+        - "<gradient:#0ea5e9:#67e8f9>➤ Уровень IV • Стелс-ветвь</gradient>"
+      shadow_night:
+        name: "<gradient:#7c3aed:#c4b5fd>🌘 Тень ночи</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Превращает тьму в смертельное преимущество.</gradient>"
+        - "<gradient:#7c3aed:#c4b5fd>➤ Уровень IV • Ночная ветвь</gradient>"
+      shadow_sabotage:
+        name: "<gradient:#f97316:#fb923c>💣 Тень Саботажа</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Разрушает планы до того, как враги отреагируют.</gradient>"
+        - "<gradient:#f97316:#fb923c>➤ IV уровень • Диверсионная ветка</gradient>"
+      phantom_stealth:
+        name: "<gradient:#14b8a6:#5eead4>👑 Призрак скрытности</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Становится неприкасаемым городским мифом.</gradient>"
+        - "<gradient:#14b8a6:#5eead4>➤ Уровень V • Итоговый ранг</gradient>"
+      phantom_night:
+        name: "<gradient:#9333ea:#e9d5ff>👑 Призрак ночи</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Полностью владеет полуночным часом.</gradient>"
+        - "<gradient:#9333ea:#e9d5ff>➤ Уровень V • Итоговый ранг</gradient>"
+      phantom_sabotage:
+        name: "<gradient:#ea580c:#fdba74>👑 Призрак Саботажа</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Завершает сражения еще до их начала.</gradient>"
+        - "<gradient:#ea580c:#fdba74>➤ Уровень V • Итоговый ранг</gradient>"
+    # Cleric Tree Ranks
+    cleric:
+      acolyte:
+        name: "<gradient:#f59e0b:#fde68a>✝ Послушник</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Начинает священный путь служения.</gradient>"
+        - "<gradient:#f59e0b:#fde68a>➤ Уровень I • Преданность</gradient>"
+      healer:
+        name: "<gradient:#10b981:#6ee7b7>✝ Целитель</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Восстанавливает союзников под сильным давлением.</gradient>"
+        - "<gradient:#10b981:#6ee7b7>➤ Уровень II • Восстановление</gradient>"
+      priest:
+        name: "<gradient:#3b82f6:#93c5fd>✝ Священник</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Направляет группы со святой дисциплиной.</gradient>"
+        - "<gradient:#3b82f6:#93c5fd>➤ Уровень III • Выберите свое призвание</gradient>"
+      bishop_divine:
+        name: "<gradient:#8b5cf6:#c4b5fd>⛪ Епископ Божественный</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Каналы направляют сияющую власть.</gradient>"
+        - "<gradient:#8b5cf6:#c4b5fd>➤ Уровень IV • Божественная ветвь</gradient>"
+      bishop_light:
+        name: "<gradient:#f59e0b:#fef08a>☀ Епископ Света</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Ослепляет порчу священным блеском.</gradient>"
+        - "<gradient:#f59e0b:#fef08a>➤ Уровень IV • Легкая ветвь</gradient>"
+      bishop_soul:
+        name: "<gradient:#06b6d4:#67e8f9>🕊 Епископ душ</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Охраняет порог жизни и смерти.</gradient>"
+        - "<gradient:#06b6d4:#67e8f9>➤ Уровень IV • Ветка душ</gradient>"
+      high_priest_divine:
+        name: "<gradient:#7c3aed:#ddd6fe>👑 Первосвященник Божественности</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Провозглашает чудеса в самом сердце хаоса.</gradient>"
+        - "<gradient:#7c3aed:#ddd6fe>➤ Уровень V • Итоговый ранг</gradient>"
+      high_priest_light:
+        name: "<gradient:#f59e0b:#fef3c7>👑 Верховный Жрец Света</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Окуляет союзников в непоколебимый рассвет.</gradient>"
+        - "<gradient:#f59e0b:#fef3c7>➤ Уровень V • Итоговый ранг</gradient>"
+      high_priest_soul:
+        name: "<gradient:#0891b2:#a5f3fc>👑 Верховный жрец душ</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Духи-пастухи вне смертельного страха.</gradient>"
+        - "<gradient:#0891b2:#a5f3fc>➤ Уровень V • Итоговый ранг</gradient>"
+    # Merchant Tree Ranks
+    merchant:
+      peddler:
+        name: "<gradient:#6b7280:#9ca3af>💰 Коробейник</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Начинается с упорства, обаяния и мелких сделок.</gradient>"
+        - "<gradient:#94a3b8:#cbd5e1>➤ Уровень I • Уличная торговля</gradient>"
+      trader:
+        name: "<gradient:#3b82f6:#93c5fd>💰 Трейдер</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Расширяет маршруты и надежные контакты.</gradient>"
+        - "<gradient:#3b82f6:#93c5fd>➤ Уровень II • Присутствие на рынке</gradient>"
+      broker:
+        name: "<gradient:#f59e0b:#fde68a>💰 Брокер</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Точно заключает крупные сделки.</gradient>"
+        - "<gradient:#f59e0b:#fde68a>➤ Уровень III • Выберите свою империю</gradient>"
+      magnate_wealth:
+        name: "<gradient:#10b981:#6ee7b7>📈 Магнат богатства</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Создает чистый капитал беспрецедентными темпами.</gradient>"
+        - "<gradient:#10b981:#6ee7b7>➤ Уровень IV • Ветка богатства</gradient>"
+      magnate_market:
+        name: "<gradient:#06b6d4:#67e8f9>🏛 Магнат рынков</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Организует циклы спроса и предложения.</gradient>"
+        - "<gradient:#06b6d4:#67e8f9>➤ Уровень IV • Ветка рынка</gradient>"
+      magnate_trade:
+        name: "<gradient:#f97316:#fdba74>🚚 Магнат торговли</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Доминирует над караванными путями и логистикой.</gradient>"
+        - "<gradient:#f97316:#fdba74>➤ Уровень IV • Торговая ветка</gradient>"
+      tycoon_wealth:
+        name: "<gradient:#22c55e:#bbf7d0>👑 Магнат богатства</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Переворачивает экономику одним решением.</gradient>"
+        - "<gradient:#22c55e:#bbf7d0>➤ Уровень V • Итоговый ранг</gradient>"
+      tycoon_market:
+        name: "<gradient:#0891b2:#a5f3fc>👑 Магнат рынков</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Устанавливает цены, которые должна соблюдать каждая гильдия.</gradient>"
+        - "<gradient:#0891b2:#a5f3fc>➤ Уровень V • Итоговый ранг</gradient>"
+      tycoon_trade:
+        name: "<gradient:#ea580c:#fed7aa>👑 Магнат торговли</gradient>"
+        lore:
+        - "<gradient:#6b7280:#9ca3af>✦ Владеет дорогами, портами и прибылями.</gradient>"
+        - "<gradient:#ea580c:#fed7aa>➤ Уровень V • Итоговый ранг</gradient>"
 # ============================================
-# ТРЕБОВАНИЯ К ПЕРЕВОДАМ
+# REQUIREMENT TRANSLATIONS
 # ============================================
 requirement:
 
@@ -670,7 +932,7 @@ requirement:
     money: "Деньги"
     dollars: "Доллары"
     credits: "Кредиты"
-  
+
   # Шаблоны предварительного просмотра задач
   task:
     entry: "<gradient:#6b7280:#9ca3af>%prefix% %task_name%</gradient>"
@@ -691,126 +953,126 @@ requirement:
       thief:
         name: "<gradient:#3b82f6:#60a5fa>🗡 Вор</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Мастер скрытности и воровства</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Мастер скрытности и воровства</gradient>"
       assassin:
         name: "<gradient:#ef4444:#f87171>🗡 Убийца</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Тихий убийца, смерть из теней</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Тихий убийца, смерть из теней</gradient>"
       infiltrator:
         name: "<gradient:#a855f7:#c084fc>🗡 Инфильтратор</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Эксперт по входу и выходу незамеченным</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Эксперт по входу и выходу незамеченным</gradient>"
       shadow_master:
         name: "<gradient:#1f2937:#374151>🗡 Мастер теней</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Один с самой тьмой</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Один с самой тьмой</gradient>"
     cleric:
       acolyte:
         name: "<gradient:#f59e0b:#fbbf24>✝ Послушник</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Преданный слуга божественного</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Преданный слуга божественного</gradient>"
       devotee:
         name: "<gradient:#f59e0b:#fbbf24>✝ Преданный</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Верный последователь божественного пути</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Верный последователь божественного пути</gradient>"
       priest:
         name: "<gradient:#10b981:#34d399>✝ Священник</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Целитель и защитник верующих</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Целитель и защитник верующих</gradient>"
       healer:
         name: "<gradient:#10b981:#34d399>✝ Целитель</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Мастер восстановительного искусства</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Мастер восстановительного искусства</gradient>"
       bishop:
         name: "<gradient:#a855f7:#c084fc>✝ Епископ</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Лидер верующих</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Лидер верующих</gradient>"
       oracle:
         name: "<gradient:#3b82f6:#60a5fa>✝ Оракул</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Провидец божественных видений</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Провидец божественных видений</gradient>"
       high_priest:
         name: "<gradient:#ef4444:#f87171>✝ Первосвященник</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Высший голос божественного</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Высший голос божественного</gradient>"
     rogue:
       pickpocket:
         name: "<gradient:#6b7280:#9ca3af>� TPickpocket</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Быстрые пальцы, быстрый побег</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Быстрые пальцы, быстрый побег</gradient>"
       thief:
         name: "<gradient:#3b82f6:#60a5fa>🗡 Вор</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Мастер скрытности и воровства</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Мастер скрытности и воровства</gradient>"
       scout:
         name: "<gradient:#10b981:#34d399>🗡 Скаут</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Глаза и уши теней</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Глаза и уши теней</gradient>"
       assassin:
         name: "<gradient:#ef4444:#f87171>🗡 Убийца</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Тихий убийца, смерть из теней</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Тихий убийца, смерть из теней</gradient>"
       infiltrator:
         name: "<gradient:#a855f7:#c084fc>🗡 Инфильтратор</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Эксперт по входу и выходу незамеченным</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Эксперт по входу и выходу незамеченным</gradient>"
       shadowblade:
         name: "<gradient:#6b7280:#9ca3af>🗡 Теневой клинок</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Смертоносный воин ночи</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Смертоносный воин ночи</gradient>"
       spymaster:
         name: "<gradient:#3b82f6:#60a5fa>🗡 Мастер шпионов</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Контроллер информационных сетей</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Контроллер информационных сетей</gradient>"
       shadow_master:
         name: "<gradient:#1f2937:#374151>🗡 Мастер теней</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Один с самой тьмой</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Один с самой тьмой</gradient>"
       shadowmaster:
         name: "<gradient:#1f2937:#374151>🗡Мастер теней</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Верховный правитель всех теней</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Верховный правитель всех теней</gradient>"
     merchant:
       peddler:
         name: "<gradient:#6b7280:#9ca3af>💰 Коробейник</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Продажа товаров на улице</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Продажа товаров на улице</gradient>"
       trader:
         name: "<gradient:#3b82f6:#60a5fa>💰 Трейдер</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Стабильный продавец со связями</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Стабильный продавец со связями</gradient>"
       vendor:
         name: "<gradient:#10b981:#34d399>💰 Продавец</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Квалифицированный продавец товара</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Квалифицированный продавец товара</gradient>"
       artificer:
         name: "<gradient:#f59e0b:#fbbf24>💰 Ремесленник</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Мастер изысканных изделий</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Мастер изысканных изделий</gradient>"
       alchemist:
         name: "<gradient:#a855f7:#c084fc>💰 Алхимик</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Мастер зелий и эликсиров</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Мастер зелий и эликсиров</gradient>"
       merchant:
         name: "<gradient:#f59e0b:#fbbf24>💰 Торговец</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Успешный владелец бизнеса</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Успешный владелец бизнеса</gradient>"
       master_crafter:
         name: "<gradient:#ef4444:#f87171>💰 Мастер-ремесленник</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Верховный мастер королевства</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Верховный мастер королевства</gradient>"
       merchant_prince:
         name: "<gradient:#a855f7:#c084fc>💰 Торговый принц</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Роялти в торговле</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Роялти в торговле</gradient>"
       tycoon:
         name: "<gradient:#a855f7:#c084fc>💰 Магнат</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Магистр коммерции и торговли</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Магистр коммерции и торговли</gradient>"
       guild_master:
         name: "<gradient:#ef4444:#f87171>💰 Мастер гильдии</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Лидер торговой гильдии</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Лидер торговой гильдии</gradient>"
   messages:
     preview_rank_click: "<gradient:#3b82f6:#60a5fa>👁 Предварительный просмотр:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
     preview_rank_click_fallback: "<gradient:#3b82f6:#60a5fa>👁 Предварительный просмотр:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
@@ -847,7 +1109,7 @@ rank_requirements_overview_ui:
   requirement:
     fallback: "<gradient:#6b7280:#9ca3af>Требование #%index%</gradient>"
     fallback_lore:
-      - "<gradient:#6b7280:#9ca3af>Не удалось загрузить детали требования</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Не удалось загрузить детали требования</gradient>"
     type: "<gradient:#6b7280:#9ca3af>Тип:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
     lore: "<gradient:#6b7280:#9ca3af>%description%</gradient>"
     item_count: "<gradient:#6b7280:#9ca3af>Предметы:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
@@ -891,12 +1153,12 @@ rank_requirements_overview_ui:
     name: " "
   back:
     lore:
-      - "<gradient:#6b7280:#9ca3af>Нажмите для возврата</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Нажмите для возврата</gradient>"
   requirement_entry:
     name: "<gradient:#a855f7:#c084fc>📋 %requirement_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Тип:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Прогресс:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Тип:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Прогресс:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient>"
     click_to_view: "<gradient:#3b82f6:#60a5fa>Нажмите для просмотра деталей</gradient>"
 
 # ============================================
@@ -906,7 +1168,7 @@ rank_requirement_detail_ui:
   title: "<gradient:#a855f7:#c084fc>📋 Детали Требования</gradient>"
   back:
     lore:
-      - "<gradient:#6b7280:#9ca3af>Нажмите для возврата</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Нажмите для возврата</gradient>"
   submit:
     missing_items: "<gradient:#ef4444:#f87171>❌ У вас нет всех необходимых предметов!</gradient>"
     success: "<gradient:#10b981:#34d399>✅ Предметы успешно отправлены!</gradient>"
@@ -919,18 +1181,18 @@ rank_requirement_detail_ui:
     levels_needed: "<gradient:#ef4444:#f87171>Недостающие Уровни:</gradient> <gradient:#f59e0b:#fbbf24>%needed%</gradient>"
     completed: "<gradient:#10b981:#34d399>✅ Требование уровня выполнено!</gradient>"
     tip:
-      - "<gradient:#f59e0b:#fbbf24>💡Совет:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Получайте XP за добычу полезных ископаемых, убийство мобов,</gradient>"
-      - "<gradient:#6b7280:#9ca3af>плавка предметов и многое другое!</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡Совет:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Получайте XP за добычу полезных ископаемых, убийство мобов,</gradient>"
+    - "<gradient:#6b7280:#9ca3af>плавка предметов и многое другое!</gradient>"
   playtime:
     current: "<gradient:#6b7280:#9ca3af>Ваше Время Игры:</gradient> <gradient:#10b981:#34d399>%hours%ч %minutes%м</gradient>"
     required: "<gradient:#6b7280:#9ca3af>Требуемое Время Игры:</gradient> <gradient:#f59e0b:#fbbf24>%hours%ч %minutes%м</gradient>"
     remaining: "<gradient:#ef4444:#f87171>Оставшееся Время:</gradient> <gradient:#f59e0b:#fbbf24>%hours%ч %minutes%м</gradient>"
     completed: "<gradient:#10b981:#34d399>✅ Требование времени игры выполнено!</gradient>"
     tip:
-      - "<gradient:#f59e0b:#fbbf24>💡Совет:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Продолжайте играть на сервере</gradient>"
-      - "<gradient:#6b7280:#9ca3af>чтобы накопить игровое время!</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡Совет:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Продолжайте играть на сервере</gradient>"
+    - "<gradient:#6b7280:#9ca3af>чтобы накопить игровое время!</gradient>"
   progress_text: "<gradient:#3b82f6:#60a5fa>Прогресс</gradient>"
   current_progress: "<gradient:#6b7280:#9ca3af>Текущий:</gradient> <gradient:#10b981:#34d399>%current_amount%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#f59e0b:#fbbf24>%required_amount%</gradient>"
   current_progress_percentage: "<gradient:#3b82f6:#60a5fa>Завершение:</gradient> <gradient:#10b981:#34d399>%progress_percentage%</gradient>"
@@ -942,13 +1204,13 @@ rank_requirement_detail_ui:
   action_button:
     completed_name: "<gradient:#10b981:#34d399>✅ Выполнено</gradient>"
     completed_lore:
-      - "<gradient:#6b7280:#9ca3af>Это требование уже выполнено</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Это требование уже выполнено</gradient>"
     complete_name: "<gradient:#10b981:#34d399>✅ Выполнить Требование</gradient>"
     complete_lore:
-      - "<gradient:#6b7280:#9ca3af>Нажмите для выполнения этого требования</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Нажмите для выполнения этого требования</gradient>"
     refresh_name: "<gradient:#3b82f6:#60a5fa>🔄 Обновить Прогресс</gradient>"
     refresh_lore:
-      - "<gradient:#6b7280:#9ca3af>Нажмите для обновления вашего прогресса</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Нажмите для обновления вашего прогресса</gradient>"
   summary:
     items_completed: "<gradient:#10b981:#34d399>Предметов Выполнено:</gradient> <gradient:#f59e0b:#fbbf24>%completed_item_amount%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#3b82f6:#60a5fa>%total_item_amount%</gradient>"
     requirement_type: "<gradient:#6b7280:#9ca3af>Тип:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
@@ -962,22 +1224,22 @@ rank_requirement_detail_ui:
   current_progress_status: "<gradient:#6b7280:#9ca3af>Статус:</gradient> <gradient:#f59e0b:#fbbf24>%progress_status%</gradient>"
   item_requirement:
     tip:
-      - "<gradient:#f59e0b:#fbbf24>💡 Совет:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Соберите необходимые предметы</gradient>"
-      - "<gradient:#6b7280:#9ca3af>и вернитесь сюда для завершения</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 Совет:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Соберите необходимые предметы</gradient>"
+    - "<gradient:#6b7280:#9ca3af>и вернитесь сюда для завершения</gradient>"
   requirement_tip:
     currency:
-      - "<gradient:#f59e0b:#fbbf24>💡 Совет:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Заработайте необходимую валюту</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 Совет:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Заработайте необходимую валюту</gradient>"
     experience_level:
-      - "<gradient:#f59e0b:#fbbf24>💡 Совет:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Получите уровни опыта</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 Совет:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Получите уровни опыта</gradient>"
     playtime:
-      - "<gradient:#f59e0b:#fbbf24>💡 Совет:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Играйте на сервере</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 Совет:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Играйте на сервере</gradient>"
     other:
-      - "<gradient:#f59e0b:#fbbf24>💡 Совет:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Выполните требование</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 Совет:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Выполните требование</gradient>"
   summary_clicked: "<gradient:#3b82f6:#60a5fa>📊 Просмотр сводки...</gradient>"
   tips_clicked: "<gradient:#f59e0b:#fbbf24>💡 Просмотр советов...</gradient>"
   item_detail:
@@ -996,16 +1258,16 @@ rank_requirement_detail_ui:
     name: "<gradient:#a855f7:#c084fc>%requirement_name%</gradient>"
   requirement:
     completed:
-      - "<gradient:#10b981:#34d399>✅ Выполнено!</gradient>"
+    - "<gradient:#10b981:#34d399>✅ Выполнено!</gradient>"
     ready_to_complete:
-      - "<gradient:#10b981:#34d399>✅ Готово к выполнению!</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Нажмите для завершения</gradient>"
+    - "<gradient:#10b981:#34d399>✅ Готово к выполнению!</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Нажмите для завершения</gradient>"
     in_progress:
-      - "<gradient:#f59e0b:#fbbf24>⏳ В Процессе</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>⏳ В Процессе</gradient>"
     not_started:
-      - "<gradient:#6b7280:#9ca3af>Не Начато</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Не Начато</gradient>"
     error:
-      - "<gradient:#ef4444:#f87171>❌ Ошибка</gradient>"
+    - "<gradient:#ef4444:#f87171>❌ Ошибка</gradient>"
     status_name: "<gradient:#a855f7:#c084fc>Статус: %requirement_status%</gradient>"
   progress_item: "<gradient:#3b82f6:#60a5fa>Прогресс</gradient>"
   progress_item_completion: "<gradient:#10b981:#34d399>%progress_item_percentage%%</gradient>"
@@ -1015,11 +1277,11 @@ rank_requirement_detail_ui:
   fallback:
     name: "<gradient:#6b7280:#9ca3af>Неизвестное Требование</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Не удалось загрузить детали</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Не удалось загрузить детали</gradient>"
   error:
     name: "<gradient:#ef4444:#f87171>❌ Ошибка</gradient>"
     lore:
-      - "<gradient:#ef4444:#f87171>Ошибка загрузки требования</gradient>"
+    - "<gradient:#ef4444:#f87171>Ошибка загрузки требования</gradient>"
   progress_info: "<gradient:#3b82f6:#60a5fa>📊 Прогресс:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient> <gradient:#6b7280:#9ca3af>(%formatted_progress%)</gradient>"
   status_update: "<gradient:#3b82f6:#60a5fa>📊 Статус:</gradient> <gradient:#f59e0b:#fbbf24>%status%</gradient> <gradient:#6b7280:#9ca3af>(%progress%%)</gradient>"
   already_completed: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient> <gradient:#10b981:#34d399>уже выполнено!</gradient>"
@@ -1039,28 +1301,28 @@ bounty_overview_ui:
   create_bounty:
     name: "<gradient:#10b981:#34d399>📝 Создать Награду</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Нажмите для создания новой награды</gradient>"
-      - "<gradient:#6b7280:#9ca3af>на другого игрока</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Нажмите для создания новой награды</gradient>"
+    - "<gradient:#6b7280:#9ca3af>на другого игрока</gradient>"
   view_bounties:
     name: "<gradient:#3b82f6:#60a5fa>👁 Просмотр Наград</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Просмотр всех активных наград</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Просмотр всех активных наград</gradient>"
   my_bounties:
     name: "<gradient:#f59e0b:#fbbf24>📋 Мои Награды</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Просмотр созданных вами наград</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Просмотр созданных вами наград</gradient>"
   leaderboard:
     name: "<gradient:#ef4444:#f87171>🏆 Таблица Лидеров</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Лучшие охотники за наградами</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Лучшие охотники за наградами</gradient>"
   bounty:
     name: "<gradient:#a855f7:#c084fc>🎯 Награда за</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Цель:</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Заказчик:</gradient> <gradient:#3b82f6:#60a5fa>%commissioner_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Создано:</gradient> <gradient:#10b981:#34d399>%created_at%</gradient>"
-      - ""
-      - "<gradient:#a855f7:#c084fc>Нажмите для просмотра деталей</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Цель:</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Заказчик:</gradient> <gradient:#3b82f6:#60a5fa>%commissioner_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Создано:</gradient> <gradient:#10b981:#34d399>%created_at%</gradient>"
+    - ""
+    - "<gradient:#a855f7:#c084fc>Нажмите для просмотра деталей</gradient>"
 
 # ============================================
 # Пользовательский интерфейс создания наград
@@ -1071,35 +1333,35 @@ bounty_creation_ui:
     title: "<gradient:#a855f7:#c084fc>🎯 Выбрать Цель</gradient>"
     name: "<gradient:#f59e0b:#fbbf24>🎯 Цель: %target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Нажмите для выбора игрока</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Текущий: %target_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Нажмите для выбора игрока</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Текущий: %target_name%</gradient>"
   create_bounty:
     name: "<gradient:#10b981:#34d399>📝 Создать Награду</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Нажмите для создания новой награды</gradient>"
-      - "<gradient:#6b7280:#9ca3af>на другом игроке</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Нажмите для создания новой награды</gradient>"
+    - "<gradient:#6b7280:#9ca3af>на другом игроке</gradient>"
   add_items:
     name: "<gradient:#10b981:#34d399>💰 Добавить Предметные Награды</gradient>"
     name_disabled: "<gradient:#6b7280:#9ca3af>💰 Добавить Предметные Награды</gradient>"
     description:
-      - "<gradient:#6b7280:#9ca3af>Нажмите для добавления предметных наград</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Текущие предметы:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Нажмите для добавления предметных наград</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Текущие предметы:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
     description_disabled:
-      - "<gradient:#ef4444:#f87171>❌ Сначала выберите цель!</gradient>"
+    - "<gradient:#ef4444:#f87171>❌ Сначала выберите цель!</gradient>"
     disabled: "<gradient:#ef4444:#f87171>❌ Сначала выберите цель!</gradient>"
   add_currency:
     name: "<gradient:#f59e0b:#fbbf24>💎 Добавить Валютные Награды</gradient>"
     name_disabled: "<gradient:#6b7280:#9ca3af>💎 Добавить Валютные Награды</gradient>"
     description:
-      - "<gradient:#6b7280:#9ca3af>Нажмите для добавления валютных наград</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Текущие валюты:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Нажмите для добавления валютных наград</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Текущие валюты:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
     description_disabled:
-      - "<gradient:#ef4444:#f87171>❌ Сначала выберите цель!</gradient>"
+    - "<gradient:#ef4444:#f87171>❌ Сначала выберите цель!</gradient>"
   confirm_bounty:
     name: "<gradient:#10b981:#34d399>✅ Создать Награду</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Нажмите для создания награды</gradient>"
-      - "<gradient:#6b7280:#9ca3af>с выбранными наградами</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Нажмите для создания награды</gradient>"
+    - "<gradient:#6b7280:#9ca3af>с выбранными наградами</gradient>"
   confirm:
     no_player_selected: "<gradient:#ef4444:#f87171>❌ Игрок не выбран!</gradient> <gradient:#6b7280:#9ca3af>Пожалуйста, сначала выберите цель.</gradient>"
     no_rewards_selected: "<gradient:#ef4444:#f87171>❌ Награды не добавлены!</gradient> <gradient:#6b7280:#9ca3af>Пожалуйста, сначала добавьте награды.</gradient>"
@@ -1122,21 +1384,21 @@ bounty_reward_ui:
   pseudo:
     name: "<gradient:#6b7280:#9ca3af>📦 Нет Наград</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Добавьте предметы для создания наград</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Добавьте предметы для создания наград</gradient>"
   input_slot:
     name: "<gradient:#10b981:#34d399>➕ Добавить Предмет</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Поместите предметы сюда для добавления как награды</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Поместите предметы сюда для добавления как награды</gradient>"
   target:
     name: "<gradient:#f59e0b:#fbbf24>🎯 Цель: %target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Эта награда назначена на</gradient>"
-      - "<gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Эта награда назначена на</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
   reward_item:
     lore:
-      - "<gradient:#a855f7:#c084fc>💰 Награда</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Этот предмет будет отдан</gradient>"
-      - "<gradient:#6b7280:#9ca3af>тому, кто получит награду</gradient>"
+    - "<gradient:#a855f7:#c084fc>💰 Награда</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Этот предмет будет отдан</gradient>"
+    - "<gradient:#6b7280:#9ca3af>тому, кто получит награду</gradient>"
   no_new_items_inserted: "<gradient:#ef4444:#f87171>❌ Новые предметы не добавлены!</gradient>"
   left_overs: "<gradient:#f59e0b:#fbbf24>⚠ Некоторые предметы были выброшены, так как ваш инвентарь был полон!</gradient>"
 
@@ -1148,18 +1410,18 @@ bounty_player_info_ui:
   target:
     name: "<gradient:#f59e0b:#fbbf24>🎯 %target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Цель этой награды</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Цель этой награды</gradient>"
     coming_soon: "<gradient:#f59e0b:#fbbf24>⏳ Подробная информация скоро появится...</gradient>"
   rewards:
     name: "<gradient:#10b981:#34d399>💰 Просмотр Наград</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Нажмите для просмотра всех наград</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Всего наград:</gradient> <gradient:#f59e0b:#fbbf24>%reward_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Нажмите для просмотра всех наград</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Всего наград:</gradient> <gradient:#f59e0b:#fbbf24>%reward_count%</gradient>"
   delete:
     name: "<gradient:#ef4444:#f87171>🗑 Удалить Награду</gradient>"
     lore:
-      - "<gradient:#ef4444:#f87171>⚠ Внимание: Нельзя отменить!</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Нажмите для удаления этой награды</gradient>"
+    - "<gradient:#ef4444:#f87171>⚠ Внимание: Нельзя отменить!</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Нажмите для удаления этой награды</gradient>"
   deleted_bounty_successfully: "<gradient:#10b981:#34d399>✅ Награда за</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#10b981:#34d399>была удалена!</gradient>"
   confirm:
     message: "<gradient:#f59e0b:#fbbf24>Вы уверены, что хотите удалить эту награду?</gradient>"
@@ -1172,20 +1434,20 @@ admin_overview_ui:
   view_permissions:
     name: "<gradient:#3b82f6:#60a5fa>🔑 Менеджер Разрешений</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Управление разрешениями плагинов</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Всего плагинов:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Всего разрешений:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Управление разрешениями плагинов</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Всего плагинов:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Всего разрешений:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ Ошибка открытия менеджера разрешений!</gradient>"
   view_integrations:
     name: "<gradient:#10b981:#34d399>🔌 Интеграция плагинов</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Управление интеграцией плагинов администратора в одном месте</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Включает представления определения валюты, навыков и вакансий</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Управление интеграцией плагинов администратора в одном месте</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Включает представления определения валюты, навыков и вакансий</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ Не удалось открыть интеграцию плагинов!</gradient>"
   create_ranks:
     name: "<gradient:#a855f7:#c084fc>⚔ Создать Группы LuckPerms</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Создать группы LuckPerms из рангов</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Создать группы LuckPerms из рангов</gradient>"
     no_luckperms: "<gradient:#ef4444:#f87171>❌ LuckPerms не установлен!</gradient>"
     no_ranks_found: "<gradient:#f59e0b:#fbbf24>⚠ Ранги не найдены для создания групп!</gradient>"
     created: "<gradient:#10b981:#34d399>✅ Создано</gradient> <gradient:#f59e0b:#fbbf24>%groups_created%</gradient> <gradient:#10b981:#34d399>групп LuckPerms!</gradient>"
@@ -1200,32 +1462,32 @@ plugin_integration_management_ui:
   summary:
     name: "<gradient:#f59e0b:#fbbf24>🧭 Центр интеграции</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Откройте панели интеграции плагинов RDQ</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Обнаружение валюты, навыков/вакансий и инструменты PlaceholderAPI доступны здесь</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Откройте панели интеграции плагинов RDQ</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Обнаружение валюты, навыков/вакансий и инструменты PlaceholderAPI доступны здесь</gradient>"
   actions:
     currency:
       name: "<gradient:#22c55e:#86efac>💱 Интеграция валют</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Открыть управление поставщиками валют</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Просмотреть обнаруженные валюты Vault и JExEconomy</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Открыть управление поставщиками валют</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Просмотреть обнаруженные валюты Vault и JExEconomy</gradient>"
       error: "<gradient:#ef4444:#f87171>❌ Не удалось открыть интеграцию валют!</gradient>"
     skills:
       name: "<gradient:#38bdf8:#60a5fa>📘 Интеграции навыков</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Просмотреть статус поддержки для mcMMO, Aura и EcoSkills</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Определить активные плагины навыков</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Просмотреть статус поддержки для mcMMO, Aura и EcoSkills</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Определить активные плагины навыков</gradient>"
       error: "<gradient:#ef4444:#f87171>❌ Не удалось открыть интеграцию навыков!</gradient>"
     jobs:
       name: "<gradient:#f59e0b:#fbbf24>⛏ Интеграции вакансий</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Просмотреть статус поддержки для EcoJobs и JobsReborn</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Определить включенные в данный момент плагины вакансий</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Просмотреть статус поддержки для EcoJobs и JobsReborn</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Определить включенные в данный момент плагины вакансий</gradient>"
       error: "<gradient:#ef4444:#f87171>❌ Не удалось открыть интеграцию вакансий!</gradient>"
     placeholder_api:
       name: "<gradient:#38bdf8:#60a5fa>🏷 PlaceholderAPI</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Определить поддержку PlaceholderAPI и управлять расширениями</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Установить Player расширение и перезагрузка PlaceholderAPI</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Определить поддержку PlaceholderAPI и управлять расширениями</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Установить Player расширение и перезагрузка PlaceholderAPI</gradient>"
       error: "<gradient:#ef4444:#f87171>❌ Не удалось открыть инструменты PlaceholderAPI!</gradient>"
 
 # ============================================
@@ -1236,34 +1498,34 @@ placeholder_api_ui:
   summary:
     name: "<gradient:#f59e0b:#fbbf24>📘 Интеграция PlaceholderAPI</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>PlaceholderAPI поддерживается:</gradient> <gradient:#10b981:#34d399>%supported%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Целевое расширение:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Установить и перезагрузить непосредственно с этой панели</gradient>"
+    - "<gradient:#6b7280:#9ca3af>PlaceholderAPI поддерживается:</gradient> <gradient:#10b981:#34d399>%supported%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Целевое расширение:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Установить и перезагрузить непосредственно с этой панели</gradient>"
   detection:
     supported:
       name: "<gradient:#22c55e:#86efac>✅ PlaceholderAPI Обнаружено</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>PlaceholderAPI установлен и включен</gradient>"
+      - "<gradient:#6b7280:#9ca3af>PlaceholderAPI установлен и включен</gradient>"
     missing:
       name: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI отсутствует</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Установите и включите PlaceholderAPI, чтобы использовать это действие</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Установите и включите PlaceholderAPI, чтобы использовать это действие</gradient>"
   action:
     install:
       name: "<gradient:#22c55e:#86efac>📥 Установить расширение %expansion_name%</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Запускается:</gradient> <gradient:#f59e0b:#fbbf24>papi ecloud download %expansion_name%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Затем запускается:</gradient> <gradient:#f59e0b:#fbbf24>papi reload</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Нажмите, чтобы выполнить обе команды PlaceholderAPI</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Запускается:</gradient> <gradient:#f59e0b:#fbbf24>papi ecloud download %expansion_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Затем запускается:</gradient> <gradient:#f59e0b:#fbbf24>papi reload</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Нажмите, чтобы выполнить обе команды PlaceholderAPI</gradient>"
     unavailable:
       name: "<gradient:#ef4444:#f87171>🚫 Требуется PlaceholderAPI</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Это действие недоступно, пока не установлен PlaceholderAPI</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Это действие недоступно, пока не установлен PlaceholderAPI</gradient>"
   feedback:
     locked:
       name: "<gradient:#ef4444:#f87171>❌ Требуется доступ администратора</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>У вас нет разрешения на использование инструментов администратора PlaceholderAPI</gradient>"
+      - "<gradient:#6b7280:#9ca3af>У вас нет разрешения на использование инструментов администратора PlaceholderAPI</gradient>"
     locked_message: "<gradient:#ef4444:#f87171>❌ У вас нет разрешения на управление интеграциями PlaceholderAPI.</gradient>"
     unsupported_message: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI недоступен для этого server.</gradient>"
     download_failed: "<gradient:#ef4444:#f87171>❌ Не удалось загрузить расширение:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
@@ -1278,82 +1540,94 @@ admin_skills_ui:
   summary:
     name: "<gradient:#f59e0b:#fbbf24>📊 Статус плагина навыков</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Поддерживаемые интеграции навыков:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Обнаружено прямо сейчас:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Проверяет mcMMO, Поддержка Aura и EcoSkills</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Поддерживаемые интеграции навыков:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Обнаружено прямо сейчас:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Проверяет mcMMO, Поддержка Aura и EcoSkills</gradient>"
   plugin_entry:
     status:
       detected: "<gradient:#22c55e:#86efac>Обнаружено</gradient>"
       missing: "<gradient:#ef4444:#f87171>Отсутствует</gradient>"
     detected:
       name: "<gradient:#22c55e:#86efac>✅ %plugin_name%</gradient>"
+      click_action: "<gradient:#3b82f6:#60a5fa>[>] Click to inject themed skill requirements</gradient>"
     missing:
       name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Плагин:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Идентификатор интеграции:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Состояние:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Плагин:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Идентификатор интеграции:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Состояние:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
   empty:
     name: "<gradient:#ef4444:#f87171>❌ Интеграции навыков не настроены</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Интеграции плагинов навыков в настоящее время не настроены</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Интеграции плагинов навыков в настоящее время не настроены</gradient>"
 
 # ============================================
 # ADMIN JOBS INTEGRATION UI
 # ============================================
+  messages:
+    inject_success: "<gradient:#22c55e:#86efac>[+] Injected %perk_count% perk and %rank_count% rank skill requirements for %plugin_name%.</gradient>"
+    inject_no_changes: "<gradient:#3b82f6:#60a5fa>[i] No skill requirement changes were needed for %plugin_name%.</gradient>"
+    plugin_missing: "<gradient:#ef4444:#f87171>[!] %plugin_name% is not detected, so no requirements were injected.</gradient>"
+    inject_failed: "<gradient:#ef4444:#f87171>[x] Failed to inject skill requirements for %plugin_name%.</gradient>"
 admin_jobs_ui:
   title: "<gradient:#f59e0b:#fbbf24>⛏ Интеграции вакансий</gradient>"
   summary:
     name: "<gradient:#38bdf8:#60a5fa>📊 Статус плагина заданий</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Поддерживаемые интеграции заданий:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Обнаружено прямо сейчас:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Проверяет EcoJobs и Поддержка JobsReborn</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Поддерживаемые интеграции заданий:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Обнаружено прямо сейчас:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Проверяет EcoJobs и Поддержка JobsReborn</gradient>"
   plugin_entry:
     status:
       detected: "<gradient:#22c55e:#86efac>Обнаружено</gradient>"
       missing: "<gradient:#ef4444:#f87171>Отсутствует</gradient>"
     detected:
       name: "<gradient:#22c55e:#86efac>✅ %plugin_name%</gradient>"
+      click_action: "<gradient:#3b82f6:#60a5fa>[>] Нажмите, чтобы добавить тематические требования к вакансии</gradient>"
     missing:
       name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Плагин:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Идентификатор интеграции:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Состояние:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Плагин:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Идентификатор интеграции:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Состояние:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
   empty:
     name: "<gradient:#ef4444:#f87171>❌ Интеграции заданий не настроены</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Интеграции плагинов заданий в настоящее время не настроены</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Интеграции плагинов заданий в настоящее время не настроены</gradient>"
 
 # ============================================
 # ADMIN CURRENCY OVERVIEW UI
 # ============================================
+  messages:
+    inject_success: "<gradient:#22c55e:#86efac>[+] Введенный %perk_count% перк и %rank_count% ранжировать требования к должностям %plugin_name%.</gradient>"
+    inject_no_changes: "<gradient:#3b82f6:#60a5fa>[i] Никаких изменений требований к должностям не потребовалось для %plugin_name%.</gradient>"
+    plugin_missing: "<gradient:#ef4444:#f87171>[!] %plugin_name% не обнаружен, поэтому никакие требования не вводились.</gradient>"
+    inject_failed: "<gradient:#ef4444:#f87171>[x] Не удалось внедрить требования к вакансии для %plugin_name%.</gradient>"
 admin_currency_ui:
   title: "<gradient:#10b981:#34d399>💱 Валютный менеджер</gradient>"
   currency_entry:
     name: "<gradient:#f59e0b:#fbbf24>💧 %currency_id%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Провайдер:</gradient> <gradient:#a855f7:#c084fc>%provider%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Символ:</gradient> <gradient:#3b82f6:#60a5fa>%symbol%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Префикс:</gradient> <gradient:#10b981:#34d399>%prefix%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Суффикс:</gradient> <gradient:#10b981:#34d399>%suffix%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Провайдер:</gradient> <gradient:#a855f7:#c084fc>%provider%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Символ:</gradient> <gradient:#3b82f6:#60a5fa>%symbol%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Префикс:</gradient> <gradient:#10b981:#34d399>%prefix%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Суффикс:</gradient> <gradient:#10b981:#34d399>%suffix%</gradient>"
   default_currency:
     create:
       name: "<gradient:#10b981:#34d399>✨ Создать %currency_id%</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Создайте валюту по умолчанию для RDQ.</gradient>"
-        - "<gradient:#f59e0b:#fbbf24>Нажмите, чтобы создать %currency_id%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Создайте валюту по умолчанию для RDQ.</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>Нажмите, чтобы создать %currency_id%</gradient>"
     unavailable:
       name: "<gradient:#ef4444:#f87171>❌ JExEconomy Обязательно</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Для этого действия требуется JExEconomy.</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Установите его перед созданием настроек по умолчанию</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Для этого действия требуется JExEconomy.</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Установите его перед созданием настроек по умолчанию</gradient>"
     already_exists:
       name: "<gradient:#10b981:#34d399>✅ %currency_id% Готово</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Валюта по умолчанию уже существует</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Дальнейшая настройка не требуется</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Валюта по умолчанию уже существует</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Дальнейшая настройка не требуется</gradient>"
     messages:
       created: "<gradient:#10b981:#34d399>✅ Созданная валюта по умолчанию:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
       failed: "<gradient:#ef4444:#f87171>❌ Не удалось создать валюту:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
@@ -1362,8 +1636,18 @@ admin_currency_ui:
   empty:
     name: "<gradient:#f59e0b:#fbbf24>⚠ Валюты не обнаружены</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>RDQ не удалось обнаружить валюты Vault или JExEconomy.</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Сначала установите или включите поставщика экономики.</gradient>"
+    - "<gradient:#6b7280:#9ca3af>RDQ не удалось обнаружить валюты Vault или JExEconomy.</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Сначала установите или включите поставщика экономики.</gradient>"
+    jex_detected:
+      name: "<gradient:#3b82f6:#60a5fa>[i] JExEconomy Detected</gradient>"
+      lore:
+      - "<gradient:#6b7280:#9ca3af>RDQ detected JExEconomy but no currencies exist yet</gradient>"
+      - "<gradient:#10b981:#34d399>Use the top button to create %currency_id%</gradient>"
+    vault_detected:
+      name: "<gradient:#3b82f6:#60a5fa>[i] Vault Detected</gradient>"
+      lore:
+      - "<gradient:#6b7280:#9ca3af>Vault is available but no currency entries were listed</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Check your economy provider configuration</gradient>"
   decoration:
     border:
       name: " "
@@ -1384,12 +1668,12 @@ admin_permissions_overview_ui:
     entry:
       name: "<gradient:#a855f7:#c084fc>📦 %plugin_name%</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Плагин:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Разрешения:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Статус:</gradient> <gradient:#3b82f6:#60a5fa>%status%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Плагин:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Разрешения:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Статус:</gradient> <gradient:#3b82f6:#60a5fa>%status%</gradient>"
       click_instructions:
-        - "<gradient:#3b82f6:#60a5fa>ЛКМ для выбора</gradient>"
-        - "<gradient:#10b981:#34d399>ПКМ для назначения всех</gradient>"
+      - "<gradient:#3b82f6:#60a5fa>ЛКМ для выбора</gradient>"
+      - "<gradient:#10b981:#34d399>ПКМ для назначения всех</gradient>"
     empty_slot:
       name: "<gradient:#6b7280:#9ca3af>Пусто</gradient>"
   permissions:
@@ -1401,40 +1685,40 @@ admin_permissions_overview_ui:
       plugin: "<gradient:#6b7280:#9ca3af>Плагин:</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
       node: "<gradient:#6b7280:#9ca3af>Узел:</gradient> <gradient:#f59e0b:#fbbf24>%permission%</gradient>"
       click_instructions:
-        - "<gradient:#10b981:#34d399>Нажмите для назначения этого разрешения</gradient>"
+      - "<gradient:#10b981:#34d399>Нажмите для назначения этого разрешения</gradient>"
     no_selection:
       name: "<gradient:#6b7280:#9ca3af>Плагин Не Выбран</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Выберите плагин выше</gradient>"
-        - "<gradient:#6b7280:#9ca3af>для просмотра его разрешений</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Выберите плагин выше</gradient>"
+      - "<gradient:#6b7280:#9ca3af>для просмотра его разрешений</gradient>"
     empty_slot:
       name: "<gradient:#6b7280:#9ca3af>Пусто</gradient>"
   actions:
     assign_selected:
       name: "<gradient:#10b981:#34d399>✅ Назначить Разрешения %plugin_name%</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Назначить все разрешения от</gradient>"
-        - "<gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>(%permission_count% разрешений)</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Назначить все разрешения от</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>(%permission_count% разрешений)</gradient>"
     no_selection:
       name: "<gradient:#6b7280:#9ca3af>Нет Выбора</gradient>"
   status:
     selected_plugin:
       name: "<gradient:#a855f7:#c084fc>📊 Выбрано: %plugin_name%</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Плагин:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Разрешения:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Всего плагинов:</gradient> <gradient:#3b82f6:#60a5fa>%total_plugins%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Плагин:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Разрешения:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Всего плагинов:</gradient> <gradient:#3b82f6:#60a5fa>%total_plugins%</gradient>"
     overview:
       name: "<gradient:#a855f7:#c084fc>📊 Обзор</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Всего плагинов:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Выберите плагин для просмотра разрешений</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Всего плагинов:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Выберите плагин для просмотра разрешений</gradient>"
   controls:
     refresh:
       name: "<gradient:#10b981:#34d399>🔄 Обновить Данные</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Нажмите для обновления данных разрешений</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Нажмите для обновления данных разрешений</gradient>"
   decoration:
     header:
       name: " "
@@ -1443,16 +1727,16 @@ admin_permissions_overview_ui:
   clear_selection:
     name: "<gradient:#ef4444:#f87171>❌ Очистить выбор</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Нажмите, чтобы отменить выбор плагина</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Нажмите, чтобы отменить выбор плагина</gradient>"
   assign_selected_plugin_permissions:
     name: "<gradient:#10b981:#34d399>✅ Назначить %plugin_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Назначить все разрешения выбранного плагина</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Назначить все разрешения выбранного плагина</gradient>"
   assign_all_permissions:
     name: "<gradient:#10b981:#34d399>✅ Назначить все разрешения</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Назначьте разрешения всем</gradient>"
-      - "<gradient:#f59e0b:#fbbf24>%total_plugins%</gradient> <gradient:#6b7280:#9ca3af>плагины</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Назначьте разрешения всем</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>%total_plugins%</gradient> <gradient:#6b7280:#9ca3af>плагины</gradient>"
   feedback:
     data_refreshed: "<gradient:#10b981:#34d399>✅ Данные обновлены!</gradient>"
     permissions_assigned:
@@ -1469,8 +1753,8 @@ admin_permissions_overview_ui:
 page:
   name: "<gradient:#6b7280:#9ca3af>📄 Страница %current_page%</gradient>"
   lore:
-    - "<gradient:#6b7280:#9ca3af>Текущая страница:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
-    - "<gradient:#6b7280:#9ca3af>Всего страниц:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Текущая страница:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Всего страниц:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
   fallback: "<gradient:#6b7280:#9ca3af>📄 Страница %direction%</gradient>"
 
 # ============================================
@@ -1480,31 +1764,31 @@ head:
   return:
     name: "<gradient:#f59e0b:#fbbf24>🔙 Возврат</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Нажмите, чтобы вернуться назад</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Нажмите, чтобы вернуться назад</gradient>"
   proceed:
     name: "<gradient:#10b981:#34d399>➡️ Продолжить</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Нажмите, чтобы продолжить</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Нажмите, чтобы продолжить</gradient>"
   previous:
     name: "<gradient:#3b82f6:#60a5fa>⬅️ Предыдущий</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Предыдущая страница</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Предыдущая страница</gradient>"
   next:
     name: "<gradient:#3b82f6:#60a5fa>➡️ Дальше</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Следующая страница</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Следующая страница</gradient>"
   up:
     name: "<gradient:#a855f7:#c084fc>⬆️ Вверх</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Поднимись</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Поднимись</gradient>"
   down:
     name: "<gradient:#a855f7:#c084fc>⬇️ Вниз</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Спуститься</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Спуститься</gradient>"
   cancel:
     name: "<gradient:#ef4444:#f87171>❌ Отмена</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Отменить действие</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Отменить действие</gradient>"
 
 
 
@@ -1531,8 +1815,8 @@ abstract_anvil_ui:
   input:
     name: "<gradient:#f59e0b:#fbbf24>✏️ Введите значение</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Введите данные выше</gradient>"
-      - "<gradient:#6b7280:#9ca3af>и нажмите, чтобы подтвердить</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Введите данные выше</gradient>"
+    - "<gradient:#6b7280:#9ca3af>и нажмите, чтобы подтвердить</gradient>"
   error:
     processing_failed: "<gradient:#ef4444:#f87171>❌ Не удалось обработать ввод:</gradient> <gradient:#6b7280:#9ca3af>%input%</gradient>"
 
@@ -1544,11 +1828,11 @@ confirmation_ui:
   confirm:
     name: "<gradient:#10b981:#34d399>✅ Подтвердить</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Нажмите, чтобы подтвердить</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Нажмите, чтобы подтвердить</gradient>"
   cancel:
     name: "<gradient:#ef4444:#f87171>❌ Отмена</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Нажмите, чтобы отменить</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Нажмите, чтобы отменить</gradient>"
 
 # ============================================
 # ОГРАНИЧЕНИЯ БЕСПЛАТНОЙ ВЕРСИИ
@@ -1563,13 +1847,13 @@ free:
   indicator:
     name: "<gradient:#f59e0b:#fbbf24>⭐ Бесплатная версия</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Вы используете бесплатную версию</gradient>"
-      - "<gradient:#6b7280:#9ca3af>с ограниченными возможностями.</gradient>"
-      - ""
-      - "<gradient:#10b981:#34d399>Перейдите на Премиум, чтобы:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>• Неограниченное количество деревьев рангов</gradient>"
-      - "<gradient:#6b7280:#9ca3af>• Неограниченное количество рангов на дереве.</gradient>"
-      - "<gradient:#6b7280:#9ca3af>• Несколько активных путей</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Вы используете бесплатную версию</gradient>"
+    - "<gradient:#6b7280:#9ca3af>с ограниченными возможностями.</gradient>"
+    - ""
+    - "<gradient:#10b981:#34d399>Перейдите на Премиум, чтобы:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>• Неограниченное количество деревьев рангов</gradient>"
+    - "<gradient:#6b7280:#9ca3af>• Неограниченное количество рангов на дереве.</gradient>"
+    - "<gradient:#6b7280:#9ca3af>• Несколько активных путей</gradient>"
 
 # ============================================
 # ПРЕМИУМ ВЕРСИЯ СООБЩЕНИЯ
@@ -1579,7 +1863,7 @@ premium:
   indicator:
     name: "<gradient:#a855f7:#c084fc>⭐ Премиум-версия</gradient>"
     lore:
-      - "<gradient:#10b981:#34d399>Все функции разблокированы!</gradient>"
+    - "<gradient:#10b981:#34d399>Все функции разблокированы!</gradient>"
 
 # ============================================
 # ПОДРОБНОЕ ИЗОБРАЖЕНИЕ ПОЗИЦИИ ТРЕБОВАНИЙ (упрощенное)
@@ -1594,21 +1878,21 @@ rank_requirement_item_detail_ui:
     enabled:
       name: "<gradient:#10b981:#34d399>📥 Отправить товары</gradient>"
       lore:
-        - ""
-        - "<gradient:#10b981:#34d399>Все предметы готовы!</gradient>"
-        - ""
-        - "<gradient:#f59e0b:#fbbf24>▶ Нажмите, чтобы отправить</gradient>"
+      - ""
+      - "<gradient:#10b981:#34d399>Все предметы готовы!</gradient>"
+      - ""
+      - "<gradient:#f59e0b:#fbbf24>▶ Нажмите, чтобы отправить</gradient>"
     disabled:
       name: "<gradient:#6b7280:#9ca3af>📥 Отправить товары</gradient>"
       lore:
-        - ""
-        - "<gradient:#ef4444:#f87171>Отсутствуют необходимые элементы</gradient>"
-        - ""
-        - "<gradient:#6b7280:#9ca3af>Сначала соберите все предметы</gradient>"
+      - ""
+      - "<gradient:#ef4444:#f87171>Отсутствуют необходимые элементы</gradient>"
+      - ""
+      - "<gradient:#6b7280:#9ca3af>Сначала соберите все предметы</gradient>"
   back:
     name: "<gradient:#ef4444:#f87171>← Назад</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Вернуться к требованиям</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Вернуться к требованиям</gradient>"
 
 
 # ============================================
@@ -1627,35 +1911,35 @@ rank_requirements_journey_ui:
   overall_progress:
     name: "<gradient:#a855f7:#c084fc>📊 Общий прогресс</gradient>"
     lore:
-      - ""
-      - "<gradient:#6b7280:#9ca3af>Завершение:</gradient> <gradient:#f59e0b:#fbbf24>%percentage%%</gradient>"
-      - ""
-      - "<gradient:#6b7280:#9ca3af>Требования:</gradient> <gradient:#10b981:#34d399>%completed%</gradient><gradient:#6b7280:#9ca3af>/</gradient><gradient:#f59e0b:#fbbf24>%total%</gradient>"
+    - ""
+    - "<gradient:#6b7280:#9ca3af>Завершение:</gradient> <gradient:#f59e0b:#fbbf24>%percentage%%</gradient>"
+    - ""
+    - "<gradient:#6b7280:#9ca3af>Требования:</gradient> <gradient:#10b981:#34d399>%completed%</gradient><gradient:#6b7280:#9ca3af>/</gradient><gradient:#f59e0b:#fbbf24>%total%</gradient>"
   rank_info:
     name: "<gradient:#a855f7:#c084fc>⚔ %rank_name%</gradient>"
     lore:
-      - ""
-      - "<gradient:#6b7280:#9ca3af>Выполните все требования</gradient>"
-      - "<gradient:#6b7280:#9ca3af>чтобы разблокировать этот ранг!</gradient>"
+    - ""
+    - "<gradient:#6b7280:#9ca3af>Выполните все требования</gradient>"
+    - "<gradient:#6b7280:#9ca3af>чтобы разблокировать этот ранг!</gradient>"
   claim_button:
     name: "<gradient:#10b981:#34d399>✅ Получить Ранг</gradient>"
     lore:
-      - ""
-      - "<gradient:#10b981:#34d399>Все требования выполнены!</gradient>"
-      - ""
-      - "<gradient:#f59e0b:#fbbf24>▶ Нажмите, чтобы подтвердить свое звание</gradient>"
+    - ""
+    - "<gradient:#10b981:#34d399>Все требования выполнены!</gradient>"
+    - ""
+    - "<gradient:#f59e0b:#fbbf24>▶ Нажмите, чтобы подтвердить свое звание</gradient>"
     hidden:
       name: "<gradient:#6b7280:#9ca3af>🔒 Ранг заблокирован</gradient>"
       lore:
-        - ""
-        - "<gradient:#6b7280:#9ca3af>Выполните все требования</gradient>"
-        - "<gradient:#6b7280:#9ca3af>чтобы разблокировать этот ранг.</gradient>"
+      - ""
+      - "<gradient:#6b7280:#9ca3af>Выполните все требования</gradient>"
+      - "<gradient:#6b7280:#9ca3af>чтобы разблокировать этот ранг.</gradient>"
     locked:
       name: "<gradient:#ef4444:#f87171>🔒 Заблокировано</gradient>"
       lore:
-        - ""
-        - "<gradient:#6b7280:#9ca3af>Выполните все требования</gradient>"
-        - "<gradient:#6b7280:#9ca3af>чтобы разблокировать этот ранг.</gradient>"
+      - ""
+      - "<gradient:#6b7280:#9ca3af>Выполните все требования</gradient>"
+      - "<gradient:#6b7280:#9ca3af>чтобы разблокировать этот ранг.</gradient>"
   requirement_card:
     name: "<gradient:#f59e0b:#fbbf24>%name%</gradient>"
     progress_bar: "%bar% <gradient:#6b7280:#9ca3af>%percentage%%</gradient>"
@@ -1665,7 +1949,7 @@ rank_requirements_journey_ui:
   back:
     name: "<gradient:#ef4444:#f87171>← Назад</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Вернуться к обзору рейтингов</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Вернуться к обзору рейтингов</gradient>"
   messages:
     requirement_completed: "<gradient:#10b981:#34d399>✅ Требование выполнено!</gradient>"
     all_completed: "<gradient:#10b981:#34d399>🎉 Все требования выполнены! Теперь вы можете получить ранг!</gradient>"
@@ -1680,10 +1964,10 @@ rank_requirements_journey_ui:
       compact_name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
       no_rewards: "<gradient:#6b7280:#9ca3af>Нет наград</gradient>"
       no_rewards_lore:
-        - "<gradient:#6b7280:#9ca3af>Для этого ранга не настроены награды</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Для этого ранга не настроены награды</gradient>"
       type_label: "<gray>Тип:</gray> <yellow>%type%</yellow>"
       value_label: "<gray>Ценить:</gray> <gold>%value%</gold>"
-    
+
     # Описание типов вознаграждений
     currency:
       description: "<gradient:#fbbf24:#fcd34d>Получайте валютные вознаграждения</gradient>"
@@ -1705,25 +1989,24 @@ rank_requirements_journey_ui:
       description: "<gradient:#f97316:#fb923c>Разблокируйте эффекты частиц</gradient>"
     vanishing_chest:
       description: "<gradient:#14b8a6:#2dd4bf>Получите исчезающий сундук</gradient>"
-    
     more: "<gradient:#fbbf24:#fcd34d>+%count% больше наград...</gradient>"
 
   rewards:
     view_all:
       name: "<gradient:#a855f7:#c084fc>📋 Посмотреть все награды</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Нажмите, чтобы увидеть все %count% награды</gradient>"
-        - "<gradient:#6b7280:#9ca3af>для этого звания подробно</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Нажмите, чтобы увидеть все %count% награды</gradient>"
+      - "<gradient:#6b7280:#9ca3af>для этого звания подробно</gradient>"
       coming_soon: "<gradient:#fbbf24:#fcd34d>Подробный обзор наград появится в ближайшее время!</gradient>"
       empty:
         name: "<gradient:#6b7280:#9ca3af>📋 Нет наград</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>В этом звании нет наград</gradient>"
+        - "<gradient:#6b7280:#9ca3af>В этом звании нет наград</gradient>"
         message: "<gradient:#6b7280:#9ca3af>Для этого ранга не настроены награды.</gradient>"
     label: "<gradient:#fbbf24:#fcd34d>🎁 Награды за ранги</gradient>"
     label_lore:
-      - "<gradient:#6b7280:#9ca3af>Вы получите %count% награды</gradient>"
-      - "<gradient:#6b7280:#9ca3af>когда ты претендуешь на этот ранг</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Вы получите %count% награды</gradient>"
+    - "<gradient:#6b7280:#9ca3af>когда ты претендуешь на этот ранг</gradient>"
 
 reward:
   card:
@@ -1731,13 +2014,12 @@ reward:
     compact_name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
     no_rewards: "<gradient:#6b7280:#9ca3af>Нет наград</gradient>"
     no_rewards_lore:
-      - "<gradient:#6b7280:#9ca3af>Для этого ранга не настроены награды</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Для этого ранга не настроены награды</gradient>"
     type_label: "<gray>Тип:</gray> <yellow>%type%</yellow>"
     value_label: "<gray>Ценить:</gray> <gold>%value%</gold>"
-  
   perk:
     unlocked: "<gradient:#10b981:#34d399>✦</gradient> <gradient:#6b7280:#9ca3af>Вы разблокировали перк:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
-  
+
   # Описание типов вознаграждений
   currency:
     description: "<gradient:#fbbf24:#fcd34d>Получайте валютные вознаграждения</gradient>"
@@ -1759,25 +2041,24 @@ reward:
     description: "<gradient:#f97316:#fb923c>Разблокируйте эффекты частиц</gradient>"
   vanishing_chest:
     description: "<gradient:#14b8a6:#2dd4bf>Получите исчезающий сундук</gradient>"
-  
   more: "<gradient:#fbbf24:#fcd34d>+%count% больше наград...</gradient>"
 
 rewards:
   view_all:
     name: "<gradient:#a855f7:#c084fc>📋 Посмотреть все награды</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Нажмите, чтобы увидеть все %count% награды</gradient>"
-      - "<gradient:#6b7280:#9ca3af>для этого звания подробно</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Нажмите, чтобы увидеть все %count% награды</gradient>"
+    - "<gradient:#6b7280:#9ca3af>для этого звания подробно</gradient>"
     coming_soon: "<gradient:#fbbf24:#fcd34d>Подробный обзор наград появится в ближайшее время!</gradient>"
     empty:
       name: "<gradient:#6b7280:#9ca3af>📋 Нет наград</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>В этом звании нет наград</gradient>"
+      - "<gradient:#6b7280:#9ca3af>В этом звании нет наград</gradient>"
       message: "<gradient:#6b7280:#9ca3af>Для этого ранга не настроены награды.</gradient>"
   label: "<gradient:#fbbf24:#fcd34d>🎁 Награды за ранги</gradient>"
   label_lore:
-    - "<gradient:#6b7280:#9ca3af>Вы получите %count% награды</gradient>"
-    - "<gradient:#6b7280:#9ca3af>когда ты претендуешь на этот ранг</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Вы получите %count% награды</gradient>"
+  - "<gradient:#6b7280:#9ca3af>когда ты претендуешь на этот ранг</gradient>"
 
 
 # ============================================
@@ -1788,8 +2069,8 @@ rank_rewards_detail_ui:
   rank_info:
     name: "<gradient:#fbbf24:#fcd34d>%rank_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Это звание имеет %count% награды</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Нажмите на любую награду, чтобы узнать подробности.</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Это звание имеет %count% награды</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Нажмите на любую награду, чтобы узнать подробности.</gradient>"
 
 # ============================================
 # ОБЗОР ПЕРКА Пользовательский интерфейс
@@ -1815,7 +2096,7 @@ perk:
   fish_xp:
     name: "<gradient:#10b981:#34d399>Увеличение опыта рыбалки</gradient>"
     description: "<gradient:#6b7280:#9ca3af>Получите бонусный опыт при ловле рыбы.</gradient>"
-  
+
   # Зелья-перки
   potion_enhance:
     name: "<gradient:#a855f7:#c084fc>Усилитель зелий</gradient>"
@@ -1826,7 +2107,7 @@ perk:
   potion_save:
     name: "<gradient:#10b981:#34d399>Возврат зелья</gradient>"
     description: "<gradient:#6b7280:#9ca3af>Шанс вернуть зелье после того, как вы его выпили.</gradient>"
-  
+
   # Сообщения о перках
   messages:
     # Разблокировать/Enable/Disable
@@ -1843,36 +2124,33 @@ perk:
     disable:
       success: "<gradient:#f59e0b:#fbbf24>Отключенный перк:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
       failed: "<gradient:#ef4444:#f87171>Не удалось отключить перк:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
-    
+
     # Остывать
     cooldown:
       active: "<gradient:#ef4444:#f87171>Этот перк находится на перезарядке в течение</gradient> <gradient:#f59e0b:#fbbf24>%time%</gradient>"
       ready: "<gradient:#10b981:#34d399>Перк готов к использованию!</gradient>"
-    
+
     # Триггеры эффектов
     potion_enhanced: "<gradient:#a855f7:#c084fc>✨ Улучшенное зелье!</gradient> <gradient:#6b7280:#9ca3af>Эффекты усилены</gradient>"
     potion_extended: "<gradient:#f59e0b:#fbbf24>⏱ Срок действия зелий увеличен!</gradient> <gradient:#6b7280:#9ca3af>Длится дольше</gradient>"
     potion_saved: "<gradient:#10b981:#34d399>💾 Зелье сохранено!</gradient> <gradient:#6b7280:#9ca3af>Вернулся в инвентарь</gradient>"
     fishing_active: "<gradient:#3b82f6:#60a5fa>🎣 Активная быстрая рыбалка!</gradient>"
     fishing_xp: "<gradient:#10b981:#34d399>+%xp% Рыбалка XP!</gradient>"
-  
+
   # Элементы пользовательского интерфейса
   ui:
     header:
       type_label: "<gray>Тип: <white>%type%</white></gray>"
       category_label: "<gray>Категория: <white>%category%</white></gray>"
-    
     requirements:
       no_requirements: "<green>Нет требований</green>"
       no_requirements_lore: "<gray>Этот перк не требует разблокировки.</gray>"
-    
     rewards:
       title: "<gold>Разблокировать награду</gold>"
       no_rewards: "<gray>Нет наград за разблокировку</gray>"
       no_rewards_lore: "<gray>У этого перка нет наград за разблокировку.</gray>"
       type_label: "<gray>Тип: <white>%type%</white></gray>"
       value_label: "<gray>Ценить: <gold>%value%</gold></gray>"
-    
     status:
       title: "<white>Статус перка</white>"
       locked: "<red>✖ Заблокировано</red>"
@@ -1883,7 +2161,6 @@ perk:
       enabled_count: "<gray>Включенные льготы: <white>%count%/%max%</white></gray>"
       cooldown_label: "<gray>Остывать: <gold>%time%</gold></gray>"
       activations_label: "<gray>Активации: <white>%count%</white></gray>"
-    
     buttons:
       unlock:
         title: "<white>Разблокировать перк</white>"
@@ -1895,7 +2172,7 @@ perk:
       disable:
         title: "<white>Отключить перк</white>"
         hint: "<yellow>Нажмите, чтобы отключить этот бонус</yellow>"
-  
+
   # Существующие льготы (для справки — добавьте, если отсутствуют)
   fly:
     name: "<gradient:#3b82f6:#60a5fa>Полет</gradient>"

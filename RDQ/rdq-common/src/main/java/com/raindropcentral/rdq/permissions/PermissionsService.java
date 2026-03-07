@@ -54,6 +54,16 @@ public class PermissionsService {
      */
 	@Getter
     private Map<String, List<String>> permissions;
+
+	/**
+	 * Default permissions group loaded from configuration.
+	 * -- GETTER --
+	 * Returns the configured default group name.
+	 *
+	 * @return the configured default group, or {@code "default"} when unspecified
+	 */
+	@Getter
+	private String defaultGroup = "default";
 	
 	private final RDQ rdq;
 	
@@ -69,7 +79,9 @@ public class PermissionsService {
 		try {
 			var cfgManager = new ConfigManager(rdq.getPlugin(), FOLDER_PATH);
 			var cfgKeeper = new ConfigKeeper<>(cfgManager, FILE_NAME, PermissionsSection.class);
-			permissions = cfgKeeper.rootSection.getPermissions();
+			var rootSection = cfgKeeper.rootSection;
+			permissions = rootSection.getPermissions();
+			defaultGroup = rootSection.getDefaultGroup();
 		} catch (
 			  final Exception exception
 		) {

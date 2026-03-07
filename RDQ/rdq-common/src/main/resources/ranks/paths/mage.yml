@@ -1,7 +1,7 @@
 # Mage Rank Tree
 # The path of magic and wisdom
 
-displayOrder: 3
+displayOrder: 2
 isEnabled: true
 isFinalRankTree: false
 requiresAllRankTreesToBeDone: false
@@ -120,7 +120,7 @@ ranks:
     icon:
       type: "END_ROD"
     previousRanks: ["adept"]
-    nextRanks: ["sorcerer"]
+    nextRanks: ["sorcerer_arcane", "sorcerer_spell", "sorcerer_void"]
     rewards:
       wizard_reward:
         type: "CURRENCY"
@@ -171,23 +171,23 @@ ranks:
           useTotalPlaytime: true
           requiredPlaytimeSeconds: 21600
 
-  sorcerer:
+  sorcerer_arcane:
     tier: 4
     weight: 400
-    luckPermsGroup: "mage_sorcerer"
-    prefixKey: "&8[&bSorcerer&8]"
+    luckPermsGroup: "mage_sorcerer_arcane"
+    prefixKey: "&8[&bSorcerer of Arcana&8]"
     suffixKey: ""
     isEnabled: true
     icon:
       type: "ENDER_EYE"
     previousRanks: ["wizard"]
-    nextRanks: ["archmage"]
+    nextRanks: ["archmage_arcane"]
     rewards:
-      sorcerer_reward:
+      sorcerer_arcane_reward:
         type: "CURRENCY"
         amount: 500
         currencyId: "raindrops"
-      sorcerer_mastery:
+      sorcerer_arcane_mastery:
         type: "COMPOSITE"
         rewards:
           - type: "ITEM"
@@ -197,13 +197,13 @@ ranks:
           - type: "ITEM"
             item:
               material: "ENCHANTED_BOOK"
-              amount: 15
-      sorcerer_experience:
+              amount: 12
+      sorcerer_arcane_experience:
         type: "EXPERIENCE"
         experienceAmount: 1750
         experienceType: "POINTS"
     requirements:
-      sorcerer_supplies:
+      sorcerer_arcane_supplies:
         icon:
           type: "ENDER_EYE"
         itemRequirement:
@@ -214,10 +214,10 @@ ranks:
               amount: 12
             item2:
               type: "ENCHANTED_BOOK"
-              amount: 25
+              amount: 24
             item3:
               type: "DRAGON_BREATH"
-              amount: 8
+              amount: 6
       experience_req:
         icon:
           type: "EXPERIENCE_BOTTLE"
@@ -225,31 +225,139 @@ ranks:
           consumeOnComplete: true
           requiredType: "LEVEL"
           requiredLevel: 35
-      playtime_req:
-        icon:
-          type: "CLOCK"
-        playtimeRequirement:
-          useTotalPlaytime: true
-          requiredPlaytimeSeconds: 43200
 
-  archmage:
+  sorcerer_spell:
+    tier: 4
+    weight: 400
+    luckPermsGroup: "mage_sorcerer_spell"
+    prefixKey: "&8[&dSorcerer of Spells&8]"
+    suffixKey: ""
+    isEnabled: true
+    icon:
+      type: "ENCHANTED_BOOK"
+    previousRanks: ["wizard"]
+    nextRanks: ["archmage_spell"]
+    rewards:
+      sorcerer_spell_reward:
+        type: "CURRENCY"
+        amount: 500
+        currencyId: "raindrops"
+      sorcerer_spell_mastery:
+        type: "COMPOSITE"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "ENCHANTED_BOOK"
+              amount: 18
+          - type: "ITEM"
+            item:
+              material: "LAPIS_LAZULI"
+              amount: 48
+      sorcerer_spell_experience:
+        type: "EXPERIENCE"
+        experienceAmount: 1750
+        experienceType: "POINTS"
+    requirements:
+      sorcerer_spell_supplies:
+        icon:
+          type: "ENCHANTED_BOOK"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "ENCHANTED_BOOK"
+              amount: 32
+            item2:
+              type: "LAPIS_LAZULI"
+              amount: 96
+            item3:
+              type: "BLAZE_ROD"
+              amount: 12
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 35
+
+  sorcerer_void:
+    tier: 4
+    weight: 400
+    luckPermsGroup: "mage_sorcerer_void"
+    prefixKey: "&8[&1Sorcerer of the Void&8]"
+    suffixKey: ""
+    isEnabled: true
+    icon:
+      type: "END_CRYSTAL"
+    previousRanks: ["wizard"]
+    nextRanks: ["archmage_void"]
+    rewards:
+      sorcerer_void_reward:
+        type: "CURRENCY"
+        amount: 500
+        currencyId: "raindrops"
+      sorcerer_void_mastery:
+        type: "COMPOSITE"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "END_CRYSTAL"
+              amount: 2
+          - type: "ITEM"
+            item:
+              material: "DRAGON_BREATH"
+              amount: 8
+      sorcerer_void_experience:
+        type: "EXPERIENCE"
+        experienceAmount: 1750
+        experienceType: "POINTS"
+    requirements:
+      sorcerer_void_supplies:
+        icon:
+          type: "END_CRYSTAL"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "END_CRYSTAL"
+              amount: 4
+            item2:
+              type: "DRAGON_BREATH"
+              amount: 12
+            item3:
+              type: "ENDER_EYE"
+              amount: 20
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 35
+
+  archmage_arcane:
     tier: 5
     weight: 500
-    luckPermsGroup: "mage_archmage"
-    prefixKey: "&8[&5Archmage&8]"
+    luckPermsGroup: "mage_archmage_arcane"
+    prefixKey: "&8[&5Archmage of Arcana&8]"
     suffixKey: ""
     isEnabled: true
     isFinalRank: true
     icon:
       type: "NETHER_STAR"
-    previousRanks: ["sorcerer"]
+    previousRanks: ["sorcerer_arcane"]
     rewards:
-      archmage_reward:
+      archmage_arcane_reward:
         type: "CURRENCY"
+        icon:
+          type: "EMERALD_BLOCK"
         amount: 1000
         currencyId: "raindrops"
-      ultimate_magic:
+      arcane_supremacy:
         type: "COMPOSITE"
+        icon:
+          type: "NETHER_STAR"
         rewards:
           - type: "ITEM"
             item:
@@ -263,12 +371,14 @@ ranks:
             item:
               material: "END_CRYSTAL"
               amount: 2
-      archmage_experience:
+      archmage_arcane_experience:
         type: "EXPERIENCE"
-        experienceAmount: 5000
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceAmount: 3000
         experienceType: "POINTS"
     requirements:
-      ultimate_mage:
+      ultimate_archmage_arcane:
         icon:
           type: "NETHER_STAR"
         itemRequirement:
@@ -282,7 +392,7 @@ ranks:
               amount: 1
             item3:
               type: "ENCHANTED_BOOK"
-              amount: 50
+              amount: 40
             item4:
               type: "END_CRYSTAL"
               amount: 4
@@ -292,10 +402,140 @@ ranks:
         experienceRequirement:
           consumeOnComplete: true
           requiredType: "LEVEL"
-          requiredLevel: 50
-      playtime_req:
+          requiredLevel: 45
+
+  archmage_spell:
+    tier: 5
+    weight: 500
+    luckPermsGroup: "mage_archmage_spell"
+    prefixKey: "&8[&dArchmage of Spells&8]"
+    suffixKey: ""
+    isEnabled: true
+    isFinalRank: true
+    icon:
+      type: "ENCHANTED_BOOK"
+    previousRanks: ["sorcerer_spell"]
+    rewards:
+      archmage_spell_reward:
+        type: "CURRENCY"
         icon:
-          type: "CLOCK"
-        playtimeRequirement:
-          useTotalPlaytime: true
-          requiredPlaytimeSeconds: 162000
+          type: "EMERALD_BLOCK"
+        amount: 1000
+        currencyId: "raindrops"
+      woven_grimoire:
+        type: "COMPOSITE"
+        icon:
+          type: "ENCHANTED_BOOK"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "ENCHANTED_BOOK"
+              amount: 32
+          - type: "ITEM"
+            item:
+              material: "LAPIS_LAZULI"
+              amount: 64
+          - type: "ITEM"
+            item:
+              material: "BLAZE_ROD"
+              amount: 16
+      archmage_spell_experience:
+        type: "EXPERIENCE"
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceAmount: 3000
+        experienceType: "POINTS"
+    requirements:
+      ultimate_archmage_spell:
+        icon:
+          type: "ENCHANTED_BOOK"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "ENCHANTED_BOOK"
+              amount: 48
+            item2:
+              type: "LAPIS_LAZULI"
+              amount: 64
+            item3:
+              type: "BLAZE_ROD"
+              amount: 24
+            item4:
+              type: "BOOKSHELF"
+              amount: 16
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 45
+
+  archmage_void:
+    tier: 5
+    weight: 500
+    luckPermsGroup: "mage_archmage_void"
+    prefixKey: "&8[&1Archmage of the Void&8]"
+    suffixKey: ""
+    isEnabled: true
+    isFinalRank: true
+    icon:
+      type: "END_CRYSTAL"
+    previousRanks: ["sorcerer_void"]
+    rewards:
+      archmage_void_reward:
+        type: "CURRENCY"
+        icon:
+          type: "EMERALD_BLOCK"
+        amount: 1000
+        currencyId: "raindrops"
+      void_convergence:
+        type: "COMPOSITE"
+        icon:
+          type: "END_CRYSTAL"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "END_CRYSTAL"
+              amount: 4
+          - type: "ITEM"
+            item:
+              material: "DRAGON_BREATH"
+              amount: 16
+          - type: "ITEM"
+            item:
+              material: "ENDER_EYE"
+              amount: 24
+      archmage_void_experience:
+        type: "EXPERIENCE"
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceAmount: 3000
+        experienceType: "POINTS"
+    requirements:
+      ultimate_archmage_void:
+        icon:
+          type: "END_CRYSTAL"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "END_CRYSTAL"
+              amount: 8
+            item2:
+              type: "DRAGON_BREATH"
+              amount: 24
+            item3:
+              type: "ENDER_EYE"
+              amount: 32
+            item4:
+              type: "CHORUS_FRUIT"
+              amount: 64
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 45
