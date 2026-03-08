@@ -795,6 +795,7 @@ shop_item_edit_ui:
         - "<gray> に設定します可用性モード:</gray> <white>{availability_mode}</white>"
         - "<gray>現在利用可能:</gray> <white>{availability_state}</white>"
         - "<gray>回転ウィンドウ:</gray> <white>{rotation_minutes} 分 (秒)</white>"
+        - "<gray>購入上限:</gray> <white>{purchase_limit}</white>"
         - "<yellow>このアイテムを編集するには、下のボタンを使用します。</yellow>"
     admin_unlimited:
       lore:
@@ -806,6 +807,7 @@ shop_item_edit_ui:
         - "<gray> に設定します可用性モード:</gray> <white>{availability_mode}</white>"
         - "<gray>現在利用可能:</gray> <white>{availability_state}</white>"
         - "<gray>回転ウィンドウ:</gray> <white>{rotation_minutes} 分 (秒)</white>"
+        - "<gray>購入上限:</gray> <white>{purchase_limit}</white>"
         - "<yellow>この管理アイテムを編集するには、下のボタンを使用します。</yellow>"
     admin_limited:
       lore:
@@ -818,6 +820,7 @@ shop_item_edit_ui:
         - "<gray> に設定します可用性モード:</gray> <white>{availability_mode}</white>"
         - "<gray>現在利用可能:</gray> <white>{availability_state}</white>"
         - "<gray>回転ウィンドウ:</gray> <white>{rotation_minutes} 分 (秒)</white>"
+        - "<gray>購入上限:</gray> <white>{purchase_limit}</white>"
         - "<yellow>この管理アイテムを編集するには、下のボタンを使用します。</yellow>"
   currency_type:
     name: "<green>通貨タイプ</green>"
@@ -830,6 +833,16 @@ shop_item_edit_ui:
       - "<gray>現在のタイプ:</gray> <white>{currency_type}</white>"
       - "<gray>現在の値:</gray> <white>{value}</white>"
       - "<yellow>クリックして数値を編集します。</yellow>"
+  dynamic_pricing:
+    name: "<gradient:#22d3ee:#38bdf8>[Dyn] 動的価格設定</gradient>"
+    enabled: "<gradient:#22c55e:#86efac>[有効]</gradient>"
+    disabled: "<gradient:#6b7280:#9ca3af>[無効]</gradient>"
+    global_enabled: "<gradient:#22c55e:#86efac>[全体オン]</gradient>"
+    global_disabled: "<gradient:#ef4444:#f87171>[全体オフ]</gradient>"
+    lore:
+      - "<gray>アイテムの動的価格設定:</gray> <white>{dynamic_pricing}</white>"
+      - "<gray>全体の動的価格設定:</gray> <white>{global_dynamic_pricing}</white>"
+      - "<yellow>このアイテムの動的価格設定を切り替えるにはクリックしてください。</yellow>"
   availability_mode:
     name: "<gradient:#22c55e:#86efac>[モード]アイテムの入手可能性</gradient>"
     always: "<gradient:#22c55e:#86efac>[常に]</gradient>"
@@ -850,6 +863,23 @@ shop_item_edit_ui:
       - "<gray>現在のモード:</gray> <white>{availability_mode}</white>"
       - "<gray>回転モード ラベル:</gray> <white>{rotate_mode}</white>"
       - "<yellow>クリックして金床の回転時間を設定します。</yellow>"
+  purchase_limit:
+    unlimited: "<gradient:#6b7280:#9ca3af>[無制限]</gradient>"
+    format: "<gradient:#22c55e:#86efac>{limit_amount} 個 / {window_minutes} 分</gradient>"
+  purchase_limit_amount:
+    name: "<gradient:#22d3ee:#38bdf8>[Cap] 上限数</gradient>"
+    lore:
+      - "<gray>現在の上限:</gray> <white>{purchase_limit}</white>"
+      - "<gray>数量値:</gray> <white>{limit_amount}</white>"
+      - "<yellow>プレイヤーごとの数量を設定するにはクリックしてください。</yellow>"
+      - "<gray><white>-1</white> を使用して購入上限を無効にします。</gray>"
+  purchase_limit_window:
+    name: "<gradient:#38bdf8:#60a5fa>[Timer] 上限分数</gradient>"
+    lore:
+      - "<gray>現在の上限:</gray> <white>{purchase_limit}</white>"
+      - "<gray>ウィンドウ値:</gray> <white>{window_minutes}</white> 分"
+      - "<yellow>ウィンドウを分単位で設定するにはクリックしてください。</yellow>"
+      - "<gray>現在無制限の場合、数量は <white>{limit_amount}</white> が既定になります。</gray>"
   command_executor:
     name: "<gradient:#38bdf8:#60a5fa>[Exec] コマンド実行者</gradient>"
     server: "<gradient:#f59e0b:#fbbf24>[サーバ]</gradient>"
@@ -900,6 +930,7 @@ shop_item_edit_ui:
     item_missing: "<red>そのショップ アイテムが見つかりませんでした。</red>"
     saved: "<green>品目の価格を{value} {currency_type}.</green>"
     availability_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>可用性モードを <white>{availability_mode}</white><gray>.</gray>"
+    dynamic_pricing_updated: "<gradient:#22d3ee:#38bdf8>[Dyn]</gradient> <gray>このアイテムの動的価格設定は現在 <white>{dynamic_pricing}</white><gray> です。</gray>"
     command_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>新しいコマンド実行モードが <white>{command_mode}</white><gray>.</gray>"
     command_removed: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>最新のコマンドを削除しました。残りのコマンド:</gray> <white>{command_count}</white>"
     commands_cleared: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>すべての管理者購入コマンドをクリアしました。</gray>"
@@ -1012,6 +1043,35 @@ shop_item_admin_stock_limit_anvil_ui:
     invalid_number: "<red>-1 または 0 より大きい整数を入力してください。入力: {input}</red>"
 
 # 管理者在庫補充/リセット タイマー ティックを構成するための Anvil プロンプト。
+# Anvil prompt for configuring per-player purchase limit amount.
+shop_item_purchase_limit_anvil_ui:
+  title: "購入上限数: {current_limit}"
+  input:
+    current: "<gradient:#22c55e:#86efac>{limit_amount} 個 / {window_minutes} 分</gradient>"
+    disabled: "<gradient:#6b7280:#9ca3af>[無制限]</gradient>"
+    lore:
+      - "<gray>上限数には整数を入力してください。</gray>"
+      - "<gray>現在:</gray> <white>{current_limit}</white>"
+      - "<gray>現在のウィンドウ:</gray> <white>{window_minutes}</white> 分"
+      - "<gray>無制限の場合、ウィンドウの既定値は <white>{default_window_minutes}</white> 分です。</gray>"
+      - "<gray><white>-1</white> を使用して上限を無効にします。</gray>"
+  error:
+    invalid_number: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>数量には <white>-1</white> または 0 より大きい整数を入力してください。入力:</gray> <white>{input}</white>"
+
+# Anvil prompt for configuring per-player purchase limit window in minutes.
+shop_item_purchase_limit_minutes_anvil_ui:
+  title: "購入上限分数: {window_minutes}"
+  input:
+    current: "<gradient:#22c55e:#86efac>{limit_amount} 個 / {window_minutes} 分</gradient>"
+    disabled: "<gradient:#6b7280:#9ca3af>[無制限]</gradient>"
+    lore:
+      - "<gray>0 より大きい分の整数を入力してください。</gray>"
+      - "<gray>現在:</gray> <white>{current_limit}</white>"
+      - "<gray>現在の数量:</gray> <white>{limit_amount}</white>"
+      - "<gray>無制限の場合、数量の既定値は <white>{default_limit_amount}</white> です。</gray>"
+  error:
+    invalid_number: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>分には 0 より大きい整数を入力してください。入力:</gray> <white>{input}</white>"
+
 shop_item_admin_reset_timer_anvil_ui:
   title: "リセット タイマー: {reset_timer_ticks}"
   input:
@@ -1206,6 +1266,7 @@ shop_customer_ui:
         - "<gray>在庫:</gray> <white>{amount}</white>"
         - "<gray>アイテムの種類:</gray> <white>{item_type}</white>"
         - "<gray>それぞれの価格:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>購入上限:</gray> <white>{purchase_limit}</white>"
         - "<gray>在庫の合計値:</gray> <white>{total_price} {currency_name}</white>"
         - "<gray>通貨ID:</gray> <white>{currency_type}</white>"
         - "<yellow>左クリックして購入します。</yellow>"
@@ -1215,6 +1276,7 @@ shop_customer_ui:
         - "<gray>在庫:</gray> <white>無限</white>"
         - "<gray>アイテムの種類:</gray> <white>{item_type}</white>"
         - "<gray>それぞれの価格:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>購入上限:</gray> <white>{purchase_limit}</white>"
         - "<gray>通貨ID:</gray> <white>{currency_type}</white>"
         - "<gray>ショップtype:</gray> <white>管理ショップ</white>"
         - "<yellow>左クリックして購入します。</yellow>"
@@ -1224,11 +1286,14 @@ shop_customer_ui:
         - "<gray>在庫:</gray> <white>{amount}/{stock_limit}</white>"
         - "<gray>アイテムの種類:</gray> <white>{item_type}</white>"
         - "<gray>それぞれの価格:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>購入上限:</gray> <white>{purchase_limit}</white>"
         - "<gray>通貨ID:</gray> <white>{currency_type}</white>"
         - "<gray>再ストック モード:</gray> <white>{restock_mode}</white>"
         - "<gray>再入荷スケジュール:</gray> <white>{restock_schedule}</white>"
         - "<yellow>左クリックして購入します。</yellow>"
         - "<yellow>右クリックして数量を選択します。</yellow>"
+    purchase_limit_unlimited: "<gradient:#6b7280:#9ca3af>[無制限]</gradient>"
+    purchase_limit_format: "<gradient:#22c55e:#86efac>{limit_amount} 個 / {window_minutes} 分</gradient>"
     admin_mode:
       gradual: "段階的"
       full: "完全なリセット"
@@ -1240,6 +1305,7 @@ shop_customer_ui:
     purchased_admin: "<green>購入 {amount}x {item_type} の{total_price} {currency_name}。この管理ショップには無限の在庫があります。</green>"
     purchased_admin_limited: "<green>購入 {amount}x {item_type} の{total_price} {currency_name}。残りの管理在庫: {remaining_amount}.</green>"
     unavailable: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>{item_type} は現在購入できません。</gray>"
+    purchase_limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{window_minutes}</white> 分ごとに購入できるのは最大 <white>{limit_amount}x {item_type}</white> です。購入済み:</gray> <white>{purchased_amount}</white><gray>、要求:</gray> <white>{requested_amount}</white><gray>、現在の残り:</gray> <white>{remaining_amount}</white><gray>。</gray>"
     insufficient_stock: "<red>このショップには {available_amount}x {item_type} のみが利用可能です。</red>"
     insufficient_funds: "<red> が必要です。{total_price} {currency_name} へ、{amount}x {item_type}.</red>"
     currency_unavailable: "<red>通貨 {currency_name} は現在購入できません。</red>"

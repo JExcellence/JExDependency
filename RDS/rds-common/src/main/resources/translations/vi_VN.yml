@@ -795,6 +795,7 @@ shop_item_edit_ui:
         - "<gray>Chế độ khả dụng:</gray> <white>{availability_mode}</white>"
         - "<gray>Hiện có sẵn:</gray> <white>{availability_state}</white>"
         - "<gray>Xoay cửa sổ:</gray> <white>{rotation_minutes} phút</white>"
+        - "<gray>Giới hạn mua:</gray> <white>{purchase_limit}</white>"
         - "<yellow>Sử dụng các nút bên dưới để chỉnh sửa mặt hàng này.</yellow>"
     admin_unlimited:
       lore:
@@ -806,6 +807,7 @@ shop_item_edit_ui:
         - "<gray>Chế độ khả dụng:</gray> <white>{availability_mode}</white>"
         - "<gray>Hiện có sẵn:</gray> <white>{availability_state}</white>"
         - "<gray>Xoay cửa sổ:</gray> <white>{rotation_minutes} phút</white>"
+        - "<gray>Giới hạn mua:</gray> <white>{purchase_limit}</white>"
         - "<yellow>Sử dụng các nút bên dưới để chỉnh sửa mặt hàng quản trị này.</yellow>"
     admin_limited:
       lore:
@@ -818,6 +820,7 @@ shop_item_edit_ui:
         - "<gray>Chế độ khả dụng:</gray> <white>{availability_mode}</white>"
         - "<gray>Hiện có sẵn:</gray> <white>{availability_state}</white>"
         - "<gray>Xoay cửa sổ:</gray> <white>{rotation_minutes} phút</white>"
+        - "<gray>Giới hạn mua:</gray> <white>{purchase_limit}</white>"
         - "<yellow>Sử dụng các nút bên dưới để chỉnh sửa mặt hàng quản trị này.</yellow>"
   currency_type:
     name: "<green>Tiền tệ Loại</green>"
@@ -830,6 +833,16 @@ shop_item_edit_ui:
       - "<gray>Hiện tại loại:</gray> <white>{currency_type}</white>"
       - "<gray>Giá trị hiện tại:</gray> <white>{value}</white>"
       - "<yellow>Nhấp để chỉnh sửa giá trị số.</yellow>"
+  dynamic_pricing:
+    name: "<gradient:#22d3ee:#38bdf8>[Dyn] Giá động</gradient>"
+    enabled: "<gradient:#22c55e:#86efac>[Bật]</gradient>"
+    disabled: "<gradient:#6b7280:#9ca3af>[Tắt]</gradient>"
+    global_enabled: "<gradient:#22c55e:#86efac>[Toàn cục bật]</gradient>"
+    global_disabled: "<gradient:#ef4444:#f87171>[Toàn cục tắt]</gradient>"
+    lore:
+      - "<gray>Giá động của vật phẩm:</gray> <white>{dynamic_pricing}</white>"
+      - "<gray>Giá động toàn cục:</gray> <white>{global_dynamic_pricing}</white>"
+      - "<yellow>Nhấp để bật/tắt giá động cho vật phẩm này.</yellow>"
   availability_mode:
     name: "<gradient:#22c55e:#86efac>[Chế độ] Tính sẵn có của mặt hàng</gradient>"
     always: "<gradient:#22c55e:#86efac>[Luôn luôn]</gradient>"
@@ -850,6 +863,23 @@ shop_item_edit_ui:
       - "<gray>Chế độ hiện tại:</gray> <white>{availability_mode}</white>"
       - "<gray>Nhãn chế độ xoay:</gray> <white>{rotate_mode}</white>"
       - "<yellow>Nhấp để đặt số phút xoay trong một cái đe.</yellow>"
+  purchase_limit:
+    unlimited: "<gradient:#6b7280:#9ca3af>[Không giới hạn]</gradient>"
+    format: "<gradient:#22c55e:#86efac>{limit_amount} vật phẩm / {window_minutes} phút</gradient>"
+  purchase_limit_amount:
+    name: "<gradient:#22d3ee:#38bdf8>[Cap] Số lượng giới hạn</gradient>"
+    lore:
+      - "<gray>Giới hạn hiện tại:</gray> <white>{purchase_limit}</white>"
+      - "<gray>Giá trị số lượng:</gray> <white>{limit_amount}</white>"
+      - "<yellow>Nhấp để đặt số lượng cho mỗi người chơi.</yellow>"
+      - "<gray>Dùng <white>-1</white> để tắt giới hạn mua.</gray>"
+  purchase_limit_window:
+    name: "<gradient:#38bdf8:#60a5fa>[Timer] Phút giới hạn</gradient>"
+    lore:
+      - "<gray>Giới hạn hiện tại:</gray> <white>{purchase_limit}</white>"
+      - "<gray>Giá trị cửa sổ:</gray> <white>{window_minutes}</white> phút"
+      - "<yellow>Nhấp để đặt cửa sổ theo phút.</yellow>"
+      - "<gray>Nếu đang không giới hạn, số lượng mặc định là <white>{limit_amount}</white>.</gray>"
   command_executor:
     name: "<gradient:#38bdf8:#60a5fa>[Exec] Người thực thi lệnh</gradient>"
     server: "<gradient:#f59e0b:#fbbf24>[Máy chủ]</gradient>"
@@ -900,6 +930,7 @@ shop_item_edit_ui:
     item_missing: "<red>Không thể tìm thấy mặt hàng đó trong cửa hàng.</red>"
     saved: "<green>Giá mặt hàng đã lưu dưới dạng {value} {currency_type}.</green>"
     availability_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Chế độ khả dụng được đặt thành <white>{availability_mode}</white><gray>.</gray>"
+    dynamic_pricing_updated: "<gradient:#22d3ee:#38bdf8>[Dyn]</gradient> <gray>Giá động hiện là <white>{dynamic_pricing}</white><gray> cho vật phẩm này.</gray>"
     command_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Chế độ thực thi lệnh mới được đặt thành <white>{command_mode}</white><gray>.</gray>"
     command_removed: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>Đã xóa lệnh mới nhất. Các lệnh còn lại:</gray> <white>{command_count}</white>"
     commands_cleared: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Đã xóa tất cả các lệnh mua của quản trị viên.</gray>"
@@ -1012,6 +1043,35 @@ shop_item_admin_stock_limit_anvil_ui:
     invalid_number: "<red>Enter -1 hoặc một số nguyên lớn hơn 0. Nhập: {input}</red>"
 
 # Lời nhắc về việc định cấu hình dấu kiểm thời gian khôi phục/đặt lại của quản trị viên.
+# Anvil prompt for configuring per-player purchase limit amount.
+shop_item_purchase_limit_anvil_ui:
+  title: "Số lượng giới hạn mua: {current_limit}"
+  input:
+    current: "<gradient:#22c55e:#86efac>{limit_amount} vật phẩm / {window_minutes} phút</gradient>"
+    disabled: "<gradient:#6b7280:#9ca3af>[Không giới hạn]</gradient>"
+    lore:
+      - "<gray>Nhập số nguyên cho số lượng giới hạn.</gray>"
+      - "<gray>Hiện tại:</gray> <white>{current_limit}</white>"
+      - "<gray>Cửa sổ hiện tại:</gray> <white>{window_minutes}</white> phút"
+      - "<gray>Khi không giới hạn, cửa sổ mặc định là <white>{default_window_minutes}</white> phút.</gray>"
+      - "<gray>Dùng <white>-1</white> để tắt các giới hạn.</gray>"
+  error:
+    invalid_number: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Dùng <white>-1</white> hoặc số nguyên lớn hơn 0 cho số lượng. Đầu vào:</gray> <white>{input}</white>"
+
+# Anvil prompt for configuring per-player purchase limit window in minutes.
+shop_item_purchase_limit_minutes_anvil_ui:
+  title: "Phút giới hạn mua: {window_minutes}"
+  input:
+    current: "<gradient:#22c55e:#86efac>{limit_amount} vật phẩm / {window_minutes} phút</gradient>"
+    disabled: "<gradient:#6b7280:#9ca3af>[Không giới hạn]</gradient>"
+    lore:
+      - "<gray>Nhập số phút nguyên lớn hơn 0.</gray>"
+      - "<gray>Hiện tại:</gray> <white>{current_limit}</white>"
+      - "<gray>Số lượng hiện tại:</gray> <white>{limit_amount}</white>"
+      - "<gray>Khi không giới hạn, số lượng mặc định là <white>{default_limit_amount}</white>.</gray>"
+  error:
+    invalid_number: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Dùng số nguyên lớn hơn 0 cho phút. Đầu vào:</gray> <white>{input}</white>"
+
 shop_item_admin_reset_timer_anvil_ui:
   title: "Đặt lại bộ hẹn giờ: {reset_timer_ticks}"
   input:
@@ -1206,6 +1266,7 @@ shop_customer_ui:
         - "<gray>Trạng thái:</gray> <white>{amount}</white>"
         - "<gray>Loại mặt hàng:</gray> <white>{item_type}</white>"
         - "<gray>Giá mỗi:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Giới hạn mua:</gray> <white>{purchase_limit}</white>"
         - "<gray>Tổng giá trị cổ phiếu:</gray> <white>{total_price} {currency_name}</white>"
         - "<gray>Id tiền tệ:</gray> <white>{currency_type}</white>"
         - "<yellow>Nhấp chuột trái để mua một mặt hàng.</yellow>"
@@ -1215,6 +1276,7 @@ shop_customer_ui:
         - "<gray>Hàng tồn kho:</gray> <white>Infinite</white>"
         - "<gray>Loại mặt hàng:</gray> <white>{item_type}</white>"
         - "<gray>Giá mỗi:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Giới hạn mua:</gray> <white>{purchase_limit}</white>"
         - "<gray>Id tiền tệ:</gray> <white>{currency_type}</white>"
         - "<gray>Loại cửa hàng:</gray> <white>Cửa hàng quản trị</white>"
         - "<yellow>Nhấp chuột trái để mua một mặt hàng.</yellow>"
@@ -1224,11 +1286,14 @@ shop_customer_ui:
         - "<gray>Trạng thái:</gray> <white>{amount}/{stock_limit}</white>"
         - "<gray>Loại mặt hàng:</gray> <white>{item_type}</white>"
         - "<gray>Giá mỗi:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Giới hạn mua:</gray> <white>{purchase_limit}</white>"
         - "<gray>Id tiền tệ:</gray> <white>{currency_type}</white>"
         - "<gray>Chế độ khôi phục lại:</gray> <white>{restock_mode}</white>"
         - "<gray>Lịch trình bổ sung lại:</gray> <white>{restock_schedule}</white>"
         - "<yellow>Nhấp chuột trái để mua một mặt hàng.</yellow>"
         - "<yellow>Nhấp chuột phải để chọn số tiền.</yellow>"
+    purchase_limit_unlimited: "<gradient:#6b7280:#9ca3af>[Không giới hạn]</gradient>"
+    purchase_limit_format: "<gradient:#22c55e:#86efac>{limit_amount} vật phẩm / {window_minutes} phút</gradient>"
     admin_mode:
       gradual: "Gradual"
       full: "Đặt lại toàn bộ"
@@ -1240,6 +1305,7 @@ shop_customer_ui:
     purchased_admin: "<green>Đã mua {amount}x {item_type} cho {total_price} {currency_name}. Cửa hàng quản trị này có kho hàng vô hạn.</green>"
     purchased_admin_limited: "<green>Đã mua {amount}x {item_type} cho {total_price} {currency_name}. Kho quản trị còn lại: {remaining_amount}.</green>"
     unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>{item_type} hiện không có sẵn để mua.</gray>"
+    purchase_limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Bạn chỉ có thể mua tối đa <white>{limit_amount}x {item_type}</white> mỗi <white>{window_minutes}</white> phút. Đã mua:</gray> <white>{purchased_amount}</white><gray>, yêu cầu:</gray> <white>{requested_amount}</white><gray>, còn lại hiện tại:</gray> <white>{remaining_amount}</white><gray>.</gray>"
     insufficient_stock: "<red>Cửa hàng này chỉ có {available_amount}x {item_type}.</red>"
     insufficient_funds: "<red>Bạn cần {total_price} {currency_name} để mua {amount}x {item_type}.</red>"
     currency_unavailable: "<red>Tiền tệ {currency_name} hiện không có sẵn.</red>"

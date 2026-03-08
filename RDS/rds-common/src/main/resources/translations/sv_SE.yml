@@ -795,6 +795,7 @@ shop_item_edit_ui:
         - "<gray>Tillgänglighetsläge:</gray> <white>{availability_mode}</white>"
         - "<gray>Tillgänglighet nu:</gray> <white>{availability_state}</white>"
         - "<gray>Rotate window:</gray> <white>{rotation_minutes}minuter)</white>"
+        - "<gray>Köpgräns:</gray> <white>{purchase_limit}</white>"
         - "<yellow>Använd knapparna nedan för att redigera detta objekt.</yellow>"
     admin_unlimited:
       lore:
@@ -806,6 +807,7 @@ shop_item_edit_ui:
         - "<gray>Tillgänglighetsläge:</gray> <white>{availability_mode}</white>"
         - "<gray>Tillgänglighet nu:</gray> <white>{availability_state}</white>"
         - "<gray>Rotate window:</gray> <white>{rotation_minutes}minuter)</white>"
+        - "<gray>Köpgräns:</gray> <white>{purchase_limit}</white>"
         - "<yellow>Använd knapparna nedan för att redigera detta adminobjekt.</yellow>"
     admin_limited:
       lore:
@@ -818,6 +820,7 @@ shop_item_edit_ui:
         - "<gray>Tillgänglighetsläge:</gray> <white>{availability_mode}</white>"
         - "<gray>Tillgänglighet nu:</gray> <white>{availability_state}</white>"
         - "<gray>Rotate window:</gray> <white>{rotation_minutes}minuter)</white>"
+        - "<gray>Köpgräns:</gray> <white>{purchase_limit}</white>"
         - "<yellow>Använd knapparna nedan för att redigera detta adminobjekt.</yellow>"
   currency_type:
     name: "<green>Valutatyp</green>"
@@ -830,6 +833,16 @@ shop_item_edit_ui:
       - "<gray>Aktuell typ:</gray> <white>{currency_type}</white>"
       - "<gray>Aktuellt värde:</gray> <white>{value}</white>"
       - "<yellow>Klicka för att redigera det numeriska värdet.</yellow>"
+  dynamic_pricing:
+    name: "<gradient:#22d3ee:#38bdf8>[Dyn] Dynamisk prissättning</gradient>"
+    enabled: "<gradient:#22c55e:#86efac>[Aktiverad]</gradient>"
+    disabled: "<gradient:#6b7280:#9ca3af>[Inaktiverad]</gradient>"
+    global_enabled: "<gradient:#22c55e:#86efac>[Global på]</gradient>"
+    global_disabled: "<gradient:#ef4444:#f87171>[Global av]</gradient>"
+    lore:
+      - "<gray>Dynamisk prissättning för föremål:</gray> <white>{dynamic_pricing}</white>"
+      - "<gray>Global dynamisk prissättning:</gray> <white>{global_dynamic_pricing}</white>"
+      - "<yellow>Klicka för att växla dynamisk prissättning för detta föremål.</yellow>"
   availability_mode:
     name: "<gradient:#22c55e:#86efac>[Läge] Tillgänglighet för objekt</gradient>"
     always: "<gradient:#22c55e:#86efac>[Alltid]</gradient>"
@@ -850,6 +863,23 @@ shop_item_edit_ui:
       - "<gray>Aktuellt läge:</gray> <white>{availability_mode}</white>"
       - "<gray>Rotate mode label:</gray> <white>{rotate_mode}</white>"
       - "<yellow>Klicka för att ställa in rotationsminuter i ett städ.</yellow>"
+  purchase_limit:
+    unlimited: "<gradient:#6b7280:#9ca3af>[Obegränsat]</gradient>"
+    format: "<gradient:#22c55e:#86efac>{limit_amount} föremål / {window_minutes} minut(er)</gradient>"
+  purchase_limit_amount:
+    name: "<gradient:#22d3ee:#38bdf8>[Cap] Gränsmängd</gradient>"
+    lore:
+      - "<gray>Nuvarande gräns:</gray> <white>{purchase_limit}</white>"
+      - "<gray>Mängdvärde:</gray> <white>{limit_amount}</white>"
+      - "<yellow>Klicka för att ställa in mängd per spelare.</yellow>"
+      - "<gray>Använd <white>-1</white> för att inaktivera köpgränser.</gray>"
+  purchase_limit_window:
+    name: "<gradient:#38bdf8:#60a5fa>[Timer] Gränsminuter</gradient>"
+    lore:
+      - "<gray>Nuvarande gräns:</gray> <white>{purchase_limit}</white>"
+      - "<gray>Fönstervärde:</gray> <white>{window_minutes}</white> minut(er)"
+      - "<yellow>Klicka för att ställa in fönstret i minuter.</yellow>"
+      - "<gray>Om det är obegränsat nu blir standardmängden <white>{limit_amount}</white>.</gray>"
   command_executor:
     name: "<gradient:#38bdf8:#60a5fa>[Exec] Kommandoexekutor</gradient>"
     server: "<gradient:#f59e0b:#fbbf24>[Server]</gradient>"
@@ -900,6 +930,7 @@ shop_item_edit_ui:
     item_missing: "<red>Den butiksvaran kunde inte hittas.</red>"
     saved: "<green>Saved item pricing as {value} {currency_type}.</green>"
     availability_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Tillgänglighetsläge inställt på<white>{availability_mode}</white><gray>.</gray>"
+    dynamic_pricing_updated: "<gradient:#22d3ee:#38bdf8>[Dyn]</gradient> <gray>Dynamisk prissättning är nu <white>{dynamic_pricing}</white><gray> för detta föremål.</gray>"
     command_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Nytt kommandoexekveringsläge inställt på<white>{command_mode}</white><gray>.</gray>"
     command_removed: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>Tog bort det senaste kommandot. Återstående kommandon:</gray> <white>{command_count}</white>"
     commands_cleared: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Rensade alla administratörsköpkommandon.</gray>"
@@ -1012,6 +1043,35 @@ shop_item_admin_stock_limit_anvil_ui:
     invalid_number: "<red>Ange -1 eller ett heltal större än 0. Inmatning:{input}</red>"
 
 # Städprompt för att konfigurera administratörspåfyllning/återställning av timertickar.
+# Anvil prompt for configuring per-player purchase limit amount.
+shop_item_purchase_limit_anvil_ui:
+  title: "Köpgränsmängd: {current_limit}"
+  input:
+    current: "<gradient:#22c55e:#86efac>{limit_amount} föremål / {window_minutes} minut(er)</gradient>"
+    disabled: "<gradient:#6b7280:#9ca3af>[Obegränsat]</gradient>"
+    lore:
+      - "<gray>Ange ett heltal för gränsmängden.</gray>"
+      - "<gray>Nuvarande:</gray> <white>{current_limit}</white>"
+      - "<gray>Nuvarande fönster:</gray> <white>{window_minutes}</white> minut(er)"
+      - "<gray>När obegränsat är standardfönstret <white>{default_window_minutes}</white> minut(er).</gray>"
+      - "<gray>Använd <white>-1</white> för att inaktivera gränser.</gray>"
+  error:
+    invalid_number: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Använd <white>-1</white> eller ett heltal större än 0 för mängd. Inmatning:</gray> <white>{input}</white>"
+
+# Anvil prompt for configuring per-player purchase limit window in minutes.
+shop_item_purchase_limit_minutes_anvil_ui:
+  title: "Köpgränsminuter: {window_minutes}"
+  input:
+    current: "<gradient:#22c55e:#86efac>{limit_amount} föremål / {window_minutes} minut(er)</gradient>"
+    disabled: "<gradient:#6b7280:#9ca3af>[Obegränsat]</gradient>"
+    lore:
+      - "<gray>Ange ett helt antal minuter större än 0.</gray>"
+      - "<gray>Nuvarande:</gray> <white>{current_limit}</white>"
+      - "<gray>Nuvarande mängd:</gray> <white>{limit_amount}</white>"
+      - "<gray>När obegränsat är standardmängden <white>{default_limit_amount}</white>.</gray>"
+  error:
+    invalid_number: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Använd ett heltal större än 0 för minuter. Inmatning:</gray> <white>{input}</white>"
+
 shop_item_admin_reset_timer_anvil_ui:
   title: "Återställ timer:{reset_timer_ticks}"
   input:
@@ -1206,6 +1266,7 @@ shop_customer_ui:
         - "<gray>Stock:</gray> <white>{amount}</white>"
         - "<gray>Artikeltyp:</gray> <white>{item_type}</white>"
         - "<gray>Pris vardera:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Köpgräns:</gray> <white>{purchase_limit}</white>"
         - "<gray>Totalt lagervärde:</gray> <white>{total_price} {currency_name}</white>"
         - "<gray>Valuta-id:</gray> <white>{currency_type}</white>"
         - "<yellow>Vänsterklicka för att köpa en.</yellow>"
@@ -1215,6 +1276,7 @@ shop_customer_ui:
         - "<gray>Lager:</gray> <white>Oändlig</white>"
         - "<gray>Artikeltyp:</gray> <white>{item_type}</white>"
         - "<gray>Pris vardera:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Köpgräns:</gray> <white>{purchase_limit}</white>"
         - "<gray>Valuta-id:</gray> <white>{currency_type}</white>"
         - "<gray>Butikstyp:</gray> <white>Admin butik</white>"
         - "<yellow>Vänsterklicka för att köpa en.</yellow>"
@@ -1224,11 +1286,14 @@ shop_customer_ui:
         - "<gray>Stock:</gray> <white>{amount}/{stock_limit}</white>"
         - "<gray>Artikeltyp:</gray> <white>{item_type}</white>"
         - "<gray>Pris vardera:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Köpgräns:</gray> <white>{purchase_limit}</white>"
         - "<gray>Valuta-id:</gray> <white>{currency_type}</white>"
         - "<gray>Påfyllningsläge:</gray> <white>{restock_mode}</white>"
         - "<gray>Restock schedule:</gray> <white>{restock_schedule}</white>"
         - "<yellow>Vänsterklicka för att köpa en.</yellow>"
         - "<yellow>Right click to choose an amount.</yellow>"
+    purchase_limit_unlimited: "<gradient:#6b7280:#9ca3af>[Obegränsat]</gradient>"
+    purchase_limit_format: "<gradient:#22c55e:#86efac>{limit_amount} föremål / {window_minutes} minut(er)</gradient>"
     admin_mode:
       gradual: "Gradvis"
       full: "Fullständig återställning"
@@ -1240,6 +1305,7 @@ shop_customer_ui:
     purchased_admin: "<green>Köpt{amount}x{item_type}för{total_price} {currency_name}. Den här administratörsbutiken har ett oändligt lager.</green>"
     purchased_admin_limited: "<green>Köpt{amount}x{item_type}för{total_price} {currency_name}. Återstående administratörslager:{remaining_amount}.</green>"
     unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>{item_type}finns för närvarande inte att köpa.</gray>"
+    purchase_limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du kan köpa högst <white>{limit_amount}x {item_type}</white> var <white>{window_minutes}</white> minut(er). Redan köpt:</gray> <white>{purchased_amount}</white><gray>, begärt:</gray> <white>{requested_amount}</white><gray>, kvar nu:</gray> <white>{remaining_amount}</white><gray>.</gray>"
     insufficient_stock: "<red>Denna butik har bara{available_amount}x{item_type}tillgänglig.</red>"
     insufficient_funds: "<red>Du behöver{total_price} {currency_name}att köpa{amount}x{item_type}.</red>"
     currency_unavailable: "<red>Valuta{currency_name}är inte tillgänglig just nu.</red>"

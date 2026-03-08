@@ -795,6 +795,7 @@ shop_item_edit_ui:
         - "<gray>Beschikbaarheidsmodus:</gray> <white>{availability_mode}</white>"
         - "<gray>Nu beschikbaar:</gray> <white>{availability_state}</white>"
         - "<gray>Roteer venster:</gray> <white>{rotation_minutes} minuut(en)</white>"
+        - "<gray>Kooplimiet:</gray> <white>{purchase_limit}</white>"
         - "<yellow>Gebruik de onderstaande knoppen om dit item te bewerken.</yellow>"
     admin_unlimited:
       lore:
@@ -806,6 +807,7 @@ shop_item_edit_ui:
         - "<gray>Beschikbaarheidsmodus:</gray> <white>{availability_mode}</white>"
         - "<gray>Nu beschikbaar:</gray> <white>{availability_state}</white>"
         - "<gray>Roteer venster:</gray> <white>{rotation_minutes} minuut(en)</white>"
+        - "<gray>Kooplimiet:</gray> <white>{purchase_limit}</white>"
         - "<yellow>Gebruik de onderstaande knoppen om dit admin-item te bewerken.</yellow>"
     admin_limited:
       lore:
@@ -818,6 +820,7 @@ shop_item_edit_ui:
         - "<gray>Beschikbaarheidsmodus:</gray> <white>{availability_mode}</white>"
         - "<gray>Nu beschikbaar:</gray> <white>{availability_state}</white>"
         - "<gray>Roteer venster:</gray> <white>{rotation_minutes} minuut(en)</white>"
+        - "<gray>Kooplimiet:</gray> <white>{purchase_limit}</white>"
         - "<yellow>Gebruik de onderstaande knoppen om dit admin-item te bewerken.</yellow>"
   currency_type:
     name: "<green>Valutatype</green>"
@@ -830,6 +833,16 @@ shop_item_edit_ui:
       - "<gray>Huidig type:</gray> <white>{currency_type}</white>"
       - "<gray>Huidige waarde:</gray> <white>{value}</white>"
       - "<yellow>Klik om de numerieke waarde te bewerken.</yellow>"
+  dynamic_pricing:
+    name: "<gradient:#22d3ee:#38bdf8>[Dyn] Dynamische prijzen</gradient>"
+    enabled: "<gradient:#22c55e:#86efac>[Ingeschakeld]</gradient>"
+    disabled: "<gradient:#6b7280:#9ca3af>[Uitgeschakeld]</gradient>"
+    global_enabled: "<gradient:#22c55e:#86efac>[Globaal aan]</gradient>"
+    global_disabled: "<gradient:#ef4444:#f87171>[Globaal uit]</gradient>"
+    lore:
+      - "<gray>Dynamische prijzen van item:</gray> <white>{dynamic_pricing}</white>"
+      - "<gray>Globale dynamische prijzen:</gray> <white>{global_dynamic_pricing}</white>"
+      - "<yellow>Klik om dynamische prijzen voor dit item te wisselen.</yellow>"
   availability_mode:
     name: "<gradient:#22c55e:#86efac>[Modus] Beschikbaarheid van artikelen</gradient>"
     always: "<gradient:#22c55e:#86efac>[Altijd]</gradient>"
@@ -850,6 +863,23 @@ shop_item_edit_ui:
       - "<gray>Huidige modus:</gray> <white>{availability_mode}</white>"
       - "<gray>Roteer moduslabel:</gray> <white>{rotate_mode}</white>"
       - "<yellow>Klik om de rotatieminuten in een aambeeld in te stellen.</yellow>"
+  purchase_limit:
+    unlimited: "<gradient:#6b7280:#9ca3af>[Onbeperkt]</gradient>"
+    format: "<gradient:#22c55e:#86efac>{limit_amount} item(s) / {window_minutes} minuut(en)</gradient>"
+  purchase_limit_amount:
+    name: "<gradient:#22d3ee:#38bdf8>[Cap] Limiethoeveelheid</gradient>"
+    lore:
+      - "<gray>Huidige limiet:</gray> <white>{purchase_limit}</white>"
+      - "<gray>Hoeveelheidswaarde:</gray> <white>{limit_amount}</white>"
+      - "<yellow>Klik om de hoeveelheid per speler in te stellen.</yellow>"
+      - "<gray>Gebruik <white>-1</white> om kooplimieten uit te schakelen.</gray>"
+  purchase_limit_window:
+    name: "<gradient:#38bdf8:#60a5fa>[Timer] Limietminuten</gradient>"
+    lore:
+      - "<gray>Huidige limiet:</gray> <white>{purchase_limit}</white>"
+      - "<gray>Vensterwaarde:</gray> <white>{window_minutes}</white> minuut(en)"
+      - "<yellow>Klik om het venster in minuten in te stellen.</yellow>"
+      - "<gray>Als het nu onbeperkt is, wordt de hoeveelheid standaard <white>{limit_amount}</white>.</gray>"
   command_executor:
     name: "<gradient:#38bdf8:#60a5fa>[Exec] Commando-uitvoerder</gradient>"
     server: "<gradient:#f59e0b:#fbbf24>[Server]</gradient>"
@@ -900,6 +930,7 @@ shop_item_edit_ui:
     item_missing: "<red>Dat winkelitem kan niet worden gevonden.</red>"
     saved: "<green>Opgeslagen itemprijzen als {value} {currency_type}.</green>"
     availability_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Beschikbaarheidsmodus ingesteld op <white>{availability_mode}</white><gray>.</gray>"
+    dynamic_pricing_updated: "<gradient:#22d3ee:#38bdf8>[Dyn]</gradient> <gray>Dynamische prijzen zijn nu <white>{dynamic_pricing}</white><gray> voor dit item.</gray>"
     command_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Nieuwe uitvoeringsmodus voor opdrachten ingesteld op <white>{command_mode}</white><gray>.</gray>"
     command_removed: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>De laatste opdracht verwijderd. Resterende opdrachten:</gray> <white>{command_count}</white>"
     commands_cleared: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Alle beheerdersaankoopopdrachten gewist.</gray>"
@@ -1012,6 +1043,35 @@ shop_item_admin_stock_limit_anvil_ui:
     invalid_number: "<red>Ingeschakeld -1 of een geheel getal groter dan 0. Invoer: {input}</red>"
 
 # Aambeeldprompt voor het configureren van beheerdersbevoorradings-/resettimer-tikken.
+# Anvil prompt for configuring per-player purchase limit amount.
+shop_item_purchase_limit_anvil_ui:
+  title: "Kooplimiet hoeveelheid: {current_limit}"
+  input:
+    current: "<gradient:#22c55e:#86efac>{limit_amount} item(s) / {window_minutes} minuut(en)</gradient>"
+    disabled: "<gradient:#6b7280:#9ca3af>[Onbeperkt]</gradient>"
+    lore:
+      - "<gray>Voer een geheel getal in voor de limiethoeveelheid.</gray>"
+      - "<gray>Huidig:</gray> <white>{current_limit}</white>"
+      - "<gray>Huidig venster:</gray> <white>{window_minutes}</white> minuut(en)"
+      - "<gray>Wanneer onbeperkt, is het venster standaard <white>{default_window_minutes}</white> minuut(en).</gray>"
+      - "<gray>Gebruik <white>-1</white> om limieten uit te schakelen.</gray>"
+  error:
+    invalid_number: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Gebruik <white>-1</white> of een geheel getal groter dan 0 voor hoeveelheid. Invoer:</gray> <white>{input}</white>"
+
+# Anvil prompt for configuring per-player purchase limit window in minutes.
+shop_item_purchase_limit_minutes_anvil_ui:
+  title: "Kooplimiet minuten: {window_minutes}"
+  input:
+    current: "<gradient:#22c55e:#86efac>{limit_amount} item(s) / {window_minutes} minuut(en)</gradient>"
+    disabled: "<gradient:#6b7280:#9ca3af>[Onbeperkt]</gradient>"
+    lore:
+      - "<gray>Voer een geheel aantal minuten groter dan 0 in.</gray>"
+      - "<gray>Huidig:</gray> <white>{current_limit}</white>"
+      - "<gray>Huidige hoeveelheid:</gray> <white>{limit_amount}</white>"
+      - "<gray>Wanneer onbeperkt, is de hoeveelheid standaard <white>{default_limit_amount}</white>.</gray>"
+  error:
+    invalid_number: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Gebruik een geheel getal groter dan 0 voor minuten. Invoer:</gray> <white>{input}</white>"
+
 shop_item_admin_reset_timer_anvil_ui:
   title: "Reset Timer: {reset_timer_ticks}"
   input:
@@ -1206,6 +1266,7 @@ shop_customer_ui:
         - "<gray>Voorraad:</gray> <white>{amount}</white>"
         - "<gray>Itemtype:</gray> <white>{item_type}</white>"
         - "<gray>Prijs per stuk:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Kooplimiet:</gray> <white>{purchase_limit}</white>"
         - "<gray>Totaal voorraadwaarde:</gray> <white>{total_price} {currency_name}</white>"
         - "<gray>Valuta-id:</gray> <white>{currency_type}</white>"
         - "<yellow>Klik met de linkermuisknop om er een te kopen.</yellow>"
@@ -1215,6 +1276,7 @@ shop_customer_ui:
         - "<gray>Voorraad:</gray> <white>Oneindig</white>"
         - "<gray>Itemtype:</gray> <white>{item_type}</white>"
         - "<gray>Prijs per stuk:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Kooplimiet:</gray> <white>{purchase_limit}</white>"
         - "<gray>Valuta-id:</gray> <white>{currency_type}</white>"
         - "<gray>Winkel type:</gray> <white>Admin Shop</white>"
         - "<yellow>Klik met de linkermuisknop om er een te kopen.</yellow>"
@@ -1224,11 +1286,14 @@ shop_customer_ui:
         - "<gray>Voorraad:</gray> <white>{amount}/{stock_limit}</white>"
         - "<gray>Itemtype:</gray> <white>{item_type}</white>"
         - "<gray>Prijs per stuk:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Kooplimiet:</gray> <white>{purchase_limit}</white>"
         - "<gray>Valuta-id:</gray> <white>{currency_type}</white>"
         - "<gray>Restock-modus:</gray> <white>{restock_mode}</white>"
         - "<gray>Herbevoorradingsschema:</gray> <white>{restock_schedule}</white>"
         - "<yellow>Klik met de linkermuisknop om er een te kopen.</yellow>"
         - "<yellow>Klik met de rechtermuisknop om een bedrag te kiezen.</yellow>"
+    purchase_limit_unlimited: "<gradient:#6b7280:#9ca3af>[Onbeperkt]</gradient>"
+    purchase_limit_format: "<gradient:#22c55e:#86efac>{limit_amount} item(s) / {window_minutes} minuut(en)</gradient>"
     admin_mode:
       gradual: "Geleidelijk"
       full: "Volledige reset"
@@ -1240,6 +1305,7 @@ shop_customer_ui:
     purchased_admin: "<green>Gekocht {amount}x {item_type} voor {total_price} {currency_name}. Deze beheerderswinkel heeft een oneindige voorraad.</green>"
     purchased_admin_limited: "<green>Gekocht {amount}x {item_type} voor {total_price} {currency_name}. Resterende beheerdersvoorraad: {remaining_amount}.</green>"
     unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>{item_type} is momenteel niet beschikbaar voor aankoop.</gray>"
+    purchase_limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Je kunt maximaal <white>{limit_amount}x {item_type}</white> kopen per <white>{window_minutes}</white> minuut(en). Al gekocht:</gray> <white>{purchased_amount}</white><gray>, gevraagd:</gray> <white>{requested_amount}</white><gray>, nu over:</gray> <white>{remaining_amount}</white><gray>.</gray>"
     insufficient_stock: "<red>Deze winkel heeft slechts {available_amount}x {item_type} beschikbaar.</red>"
     insufficient_funds: "<red> bereiktJe hebt {total_price} {currency_name} om {amount}x {item_type}.</red>"
     currency_unavailable: "<red>Valuta {currency_name} is momenteel niet beschikbaar.</red>"

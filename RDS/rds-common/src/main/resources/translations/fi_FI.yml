@@ -795,6 +795,7 @@ shop_item_edit_ui:
         - "<gray>Saatavuustila:</gray> <white>{availability_mode}</white>"
         - "<gray>Saatavuus nyt:</gray> <white>{availability_state}</white>"
         - "<gray>Kierrä ikkunaa:</gray> <white>{rotation_minutes}minuutti(t)</white>"
+        - "<gray>Ostoraja:</gray> <white>{purchase_limit}</white>"
         - "<yellow>Käytä alla olevia painikkeita muokataksesi tätä kohdetta.</yellow>"
     admin_unlimited:
       lore:
@@ -806,6 +807,7 @@ shop_item_edit_ui:
         - "<gray>Saatavuustila:</gray> <white>{availability_mode}</white>"
         - "<gray>Saatavuus nyt:</gray> <white>{availability_state}</white>"
         - "<gray>Kierrä ikkunaa:</gray> <white>{rotation_minutes}minuutti(t)</white>"
+        - "<gray>Ostoraja:</gray> <white>{purchase_limit}</white>"
         - "<yellow>Käytä alla olevia painikkeita muokataksesi tätä järjestelmänvalvojan kohdetta.</yellow>"
     admin_limited:
       lore:
@@ -818,6 +820,7 @@ shop_item_edit_ui:
         - "<gray>Saatavuustila:</gray> <white>{availability_mode}</white>"
         - "<gray>Saatavuus nyt:</gray> <white>{availability_state}</white>"
         - "<gray>Kierrä ikkunaa:</gray> <white>{rotation_minutes}minuutti(t)</white>"
+        - "<gray>Ostoraja:</gray> <white>{purchase_limit}</white>"
         - "<yellow>Käytä alla olevia painikkeita muokataksesi tätä järjestelmänvalvojan kohdetta.</yellow>"
   currency_type:
     name: "<green>Valuuttatyyppi</green>"
@@ -830,6 +833,16 @@ shop_item_edit_ui:
       - "<gray>Nykyinen tyyppi:</gray> <white>{currency_type}</white>"
       - "<gray>Nykyinen arvo:</gray> <white>{value}</white>"
       - "<yellow>Napsauta muokataksesi numeerista arvoa.</yellow>"
+  dynamic_pricing:
+    name: "<gradient:#22d3ee:#38bdf8>[Dyn] Dynaaminen hinnoittelu</gradient>"
+    enabled: "<gradient:#22c55e:#86efac>[Käytössä]</gradient>"
+    disabled: "<gradient:#6b7280:#9ca3af>[Poissa käytöstä]</gradient>"
+    global_enabled: "<gradient:#22c55e:#86efac>[Globaali päällä]</gradient>"
+    global_disabled: "<gradient:#ef4444:#f87171>[Globaali pois]</gradient>"
+    lore:
+      - "<gray>Tuotteen dynaaminen hinnoittelu:</gray> <white>{dynamic_pricing}</white>"
+      - "<gray>Globaali dynaaminen hinnoittelu:</gray> <white>{global_dynamic_pricing}</white>"
+      - "<yellow>Klikkaa vaihtaaksesi tämän tuotteen dynaamisen hinnoittelun.</yellow>"
   availability_mode:
     name: "<gradient:#22c55e:#86efac>[Mode] Tuotteen saatavuus</gradient>"
     always: "<gradient:#22c55e:#86efac>[Aina]</gradient>"
@@ -850,6 +863,23 @@ shop_item_edit_ui:
       - "<gray>Nykyinen tila:</gray> <white>{availability_mode}</white>"
       - "<gray>Kiertotilan otsikko:</gray> <white>{rotate_mode}</white>"
       - "<yellow>Napsauta asettaaksesi kiertominuutit alasimessa.</yellow>"
+  purchase_limit:
+    unlimited: "<gradient:#6b7280:#9ca3af>[Rajoittamaton]</gradient>"
+    format: "<gradient:#22c55e:#86efac>{limit_amount} kpl / {window_minutes} min</gradient>"
+  purchase_limit_amount:
+    name: "<gradient:#22d3ee:#38bdf8>[Cap] Rajan määrä</gradient>"
+    lore:
+      - "<gray>Nykyinen raja:</gray> <white>{purchase_limit}</white>"
+      - "<gray>Määrän arvo:</gray> <white>{limit_amount}</white>"
+      - "<yellow>Klikkaa asettaaksesi määrän per pelaaja.</yellow>"
+      - "<gray>Käytä <white>-1</white> poistaaksesi ostorajat.</gray>"
+  purchase_limit_window:
+    name: "<gradient:#38bdf8:#60a5fa>[Timer] Rajan minuutit</gradient>"
+    lore:
+      - "<gray>Nykyinen raja:</gray> <white>{purchase_limit}</white>"
+      - "<gray>Ikkunan arvo:</gray> <white>{window_minutes}</white> min"
+      - "<yellow>Klikkaa asettaaksesi ikkunan minuutteina.</yellow>"
+      - "<gray>Jos on nyt rajoittamaton, määrä oletuksena on <white>{limit_amount}</white>.</gray>"
   command_executor:
     name: "<gradient:#38bdf8:#60a5fa>[Exec] Command Executor</gradient>"
     server: "<gradient:#f59e0b:#fbbf24>[Palvelin]</gradient>"
@@ -900,6 +930,7 @@ shop_item_edit_ui:
     item_missing: "<red>Tätä kaupan tuotetta ei löytynyt.</red>"
     saved: "<green>Tallennetun tuotteen hinnoittelu muodossa{value} {currency_type}.</green>"
     availability_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Saatavuustila asetettu kohtaan<white>{availability_mode}</white><gray>.</gray>"
+    dynamic_pricing_updated: "<gradient:#22d3ee:#38bdf8>[Dyn]</gradient> <gray>Dynaaminen hinnoittelu on nyt <white>{dynamic_pricing}</white><gray> tälle tuotteelle.</gray>"
     command_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Uusi komennon suoritustila on asetettu<white>{command_mode}</white><gray>.</gray>"
     command_removed: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>Uusin komento poistettu. Jäljellä olevat komennot:</gray> <white>{command_count}</white>"
     commands_cleared: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Tyhjennettiin kaikki järjestelmänvalvojan ostokomennot.</gray>"
@@ -1012,6 +1043,35 @@ shop_item_admin_stock_limit_anvil_ui:
     invalid_number: "<red>Syötä -1 tai kokonaisluku, joka on suurempi kuin 0. Syötä:{input}</red>"
 
 # Alasin kehote järjestelmänvalvojan varaston palauttamisen/nollauksen ajastimen määrittämiseen.
+# Anvil prompt for configuring per-player purchase limit amount.
+shop_item_purchase_limit_anvil_ui:
+  title: "Ostorajan määrä: {current_limit}"
+  input:
+    current: "<gradient:#22c55e:#86efac>{limit_amount} kpl / {window_minutes} min</gradient>"
+    disabled: "<gradient:#6b7280:#9ca3af>[Rajoittamaton]</gradient>"
+    lore:
+      - "<gray>Syötä kokonaisluku rajan määrälle.</gray>"
+      - "<gray>Nykyinen:</gray> <white>{current_limit}</white>"
+      - "<gray>Nykyinen ikkuna:</gray> <white>{window_minutes}</white> min"
+      - "<gray>Kun rajoittamaton, ikkunan oletus on <white>{default_window_minutes}</white> min.</gray>"
+      - "<gray>Käytä <white>-1</white> poistaaksesi rajat.</gray>"
+  error:
+    invalid_number: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Käytä <white>-1</white> tai kokonaislukua yli 0 määrälle. Syöte:</gray> <white>{input}</white>"
+
+# Anvil prompt for configuring per-player purchase limit window in minutes.
+shop_item_purchase_limit_minutes_anvil_ui:
+  title: "Ostorajan minuutit: {window_minutes}"
+  input:
+    current: "<gradient:#22c55e:#86efac>{limit_amount} kpl / {window_minutes} min</gradient>"
+    disabled: "<gradient:#6b7280:#9ca3af>[Rajoittamaton]</gradient>"
+    lore:
+      - "<gray>Syötä kokonaislukuminuutit, jotka ovat yli 0.</gray>"
+      - "<gray>Nykyinen:</gray> <white>{current_limit}</white>"
+      - "<gray>Nykyinen määrä:</gray> <white>{limit_amount}</white>"
+      - "<gray>Kun rajoittamaton, määrän oletus on <white>{default_limit_amount}</white>.</gray>"
+  error:
+    invalid_number: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Käytä kokonaislukua yli 0 minuuteille. Syöte:</gray> <white>{input}</white>"
+
 shop_item_admin_reset_timer_anvil_ui:
   title: "Nollaa ajastin:{reset_timer_ticks}"
   input:
@@ -1206,6 +1266,7 @@ shop_customer_ui:
         - "<gray>Varasto:</gray> <white>{amount}</white>"
         - "<gray>Tuotetyyppi:</gray> <white>{item_type}</white>"
         - "<gray>Hinta kpl:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Ostoraja:</gray> <white>{purchase_limit}</white>"
         - "<gray>Varaston kokonaisarvo:</gray> <white>{total_price} {currency_name}</white>"
         - "<gray>Valuuttatunnus:</gray> <white>{currency_type}</white>"
         - "<yellow>Napsauta hiiren vasemmalla ostaaksesi sellaisen.</yellow>"
@@ -1215,6 +1276,7 @@ shop_customer_ui:
         - "<gray>Varasto:</gray> <white>Ääretön</white>"
         - "<gray>Tuotetyyppi:</gray> <white>{item_type}</white>"
         - "<gray>Hinta kpl:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Ostoraja:</gray> <white>{purchase_limit}</white>"
         - "<gray>Valuuttatunnus:</gray> <white>{currency_type}</white>"
         - "<gray>Kaupan tyyppi:</gray> <white>Admin kauppa</white>"
         - "<yellow>Napsauta hiiren vasemmalla ostaaksesi sellaisen.</yellow>"
@@ -1224,11 +1286,14 @@ shop_customer_ui:
         - "<gray>Varasto:</gray> <white>{amount}/{stock_limit}</white>"
         - "<gray>Tuotetyyppi:</gray> <white>{item_type}</white>"
         - "<gray>Hinta kpl:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Ostoraja:</gray> <white>{purchase_limit}</white>"
         - "<gray>Valuuttatunnus:</gray> <white>{currency_type}</white>"
         - "<gray>Varastotila:</gray> <white>{restock_mode}</white>"
         - "<gray>Varaston täydennysaikataulu:</gray> <white>{restock_schedule}</white>"
         - "<yellow>Napsauta hiiren vasemmalla ostaaksesi sellaisen.</yellow>"
         - "<yellow>Napsauta hiiren kakkospainikkeella valitaksesi summa.</yellow>"
+    purchase_limit_unlimited: "<gradient:#6b7280:#9ca3af>[Rajoittamaton]</gradient>"
+    purchase_limit_format: "<gradient:#22c55e:#86efac>{limit_amount} kpl / {window_minutes} min</gradient>"
     admin_mode:
       gradual: "Asteittainen"
       full: "Täysi nollaus"
@@ -1240,6 +1305,7 @@ shop_customer_ui:
     purchased_admin: "<green>Ostettu{amount}x{item_type}varten{total_price} {currency_name}. Tällä järjestelmänvalvojakaupalla on loputon valikoima.</green>"
     purchased_admin_limited: "<green>Ostettu{amount}x{item_type}varten{total_price} {currency_name}. Jäljellä oleva järjestelmänvalvojavarasto:{remaining_amount}.</green>"
     unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>{item_type}ei ole tällä hetkellä ostettavissa.</gray>"
+    purchase_limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Voit ostaa enintään <white>{limit_amount}x {item_type}</white> joka <white>{window_minutes}</white> min. Jo ostettu:</gray> <white>{purchased_amount}</white><gray>, pyydetty:</gray> <white>{requested_amount}</white><gray>, jäljellä nyt:</gray> <white>{remaining_amount}</white><gray>.</gray>"
     insufficient_stock: "<red>Tässä kaupassa on vain{available_amount}x{item_type}saatavilla.</red>"
     insufficient_funds: "<red>Tarvitset{total_price} {currency_name}ostaa{amount}x{item_type}.</red>"
     currency_unavailable: "<red>Valuutta{currency_name}ei ole saatavilla juuri nyt.</red>"

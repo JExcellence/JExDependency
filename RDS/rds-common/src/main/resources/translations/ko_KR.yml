@@ -795,6 +795,7 @@ shop_item_edit_ui:
         - "<gray>로 설정되었습니다.가용성 모드:</gray> <white>{availability_mode}</white>"
         - "<gray>현재 사용 가능 여부:</gray> <white>{availability_state}</white>"
         - "<gray>창 회전:</gray> <white>{rotation_minutes}분</white>"
+        - "<gray>구매 제한:</gray> <white>{purchase_limit}</white>"
         - "<yellow>이 항목을 편집하려면 아래 버튼을 사용하세요.</yellow>"
     admin_unlimited:
       lore:
@@ -806,6 +807,7 @@ shop_item_edit_ui:
         - "<gray>로 설정되었습니다.가용성 모드:</gray> <white>{availability_mode}</white>"
         - "<gray>현재 사용 가능 여부:</gray> <white>{availability_state}</white>"
         - "<gray>창 회전:</gray> <white>{rotation_minutes}분</white>"
+        - "<gray>구매 제한:</gray> <white>{purchase_limit}</white>"
         - "<yellow>이 관리 항목을 편집하려면 아래 버튼을 사용하세요.</yellow>"
     admin_limited:
       lore:
@@ -818,6 +820,7 @@ shop_item_edit_ui:
         - "<gray>로 설정되었습니다.가용성 모드:</gray> <white>{availability_mode}</white>"
         - "<gray>현재 사용 가능 여부:</gray> <white>{availability_state}</white>"
         - "<gray>창 회전:</gray> <white>{rotation_minutes}분</white>"
+        - "<gray>구매 제한:</gray> <white>{purchase_limit}</white>"
         - "<yellow>이 관리 항목을 편집하려면 아래 버튼을 사용하세요.</yellow>"
   currency_type:
     name: "<green>통화 유형</green>"
@@ -830,6 +833,16 @@ shop_item_edit_ui:
       - "<gray>현재 유형:</gray> <white>{currency_type}</white>"
       - "<gray>현재 가치:</gray> <white>{value}</white>"
       - "<yellow>숫자 값을 편집하려면 클릭하세요.</yellow>"
+  dynamic_pricing:
+    name: "<gradient:#22d3ee:#38bdf8>[Dyn] 동적 가격</gradient>"
+    enabled: "<gradient:#22c55e:#86efac>[활성화]</gradient>"
+    disabled: "<gradient:#6b7280:#9ca3af>[비활성화]</gradient>"
+    global_enabled: "<gradient:#22c55e:#86efac>[전체 켜짐]</gradient>"
+    global_disabled: "<gradient:#ef4444:#f87171>[전체 꺼짐]</gradient>"
+    lore:
+      - "<gray>아이템 동적 가격:</gray> <white>{dynamic_pricing}</white>"
+      - "<gray>전역 동적 가격:</gray> <white>{global_dynamic_pricing}</white>"
+      - "<yellow>이 아이템의 동적 가격을 전환하려면 클릭하세요.</yellow>"
   availability_mode:
     name: "<gradient:#22c55e:#86efac>[모드] 아이템 가용성</gradient>"
     always: "<gradient:#22c55e:#86efac>[Always]</gradient>"
@@ -850,6 +863,23 @@ shop_item_edit_ui:
       - "<gray>현재 모드:</gray> <white>{availability_mode}</white>"
       - "<gray>회전 모드 레이블:</gray> <white>{rotate_mode}</white>"
       - "<yellow>모루에서 회전 분을 설정하려면 클릭하십시오.</yellow>"
+  purchase_limit:
+    unlimited: "<gradient:#6b7280:#9ca3af>[무제한]</gradient>"
+    format: "<gradient:#22c55e:#86efac>{limit_amount}개 / {window_minutes}분</gradient>"
+  purchase_limit_amount:
+    name: "<gradient:#22d3ee:#38bdf8>[Cap] 제한 수량</gradient>"
+    lore:
+      - "<gray>현재 제한:</gray> <white>{purchase_limit}</white>"
+      - "<gray>수량 값:</gray> <white>{limit_amount}</white>"
+      - "<yellow>플레이어당 수량을 설정하려면 클릭하세요.</yellow>"
+      - "<gray>구매 제한을 비활성화하려면 <white>-1</white> 을 사용하세요.</gray>"
+  purchase_limit_window:
+    name: "<gradient:#38bdf8:#60a5fa>[Timer] 제한 분</gradient>"
+    lore:
+      - "<gray>현재 제한:</gray> <white>{purchase_limit}</white>"
+      - "<gray>창 값:</gray> <white>{window_minutes}</white> 분"
+      - "<yellow>분 단위 창을 설정하려면 클릭하세요.</yellow>"
+      - "<gray>현재 무제한이면 수량 기본값은 <white>{limit_amount}</white> 입니다.</gray>"
   command_executor:
     name: "<gradient:#38bdf8:#60a5fa>[실행] 명령 실행자</gradient>"
     server: "<gradient:#f59e0b:#fbbf24>[섬기는 사람]</gradient>"
@@ -900,6 +930,7 @@ shop_item_edit_ui:
     item_missing: "<red>해당 상점 항목을 찾을 수 없습니다.</red>"
     saved: "<green>항목 가격을 {value} {currency_type}.</green>"
     availability_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>가용성 모드가 <white>{availability_mode}</white><gray>.</gray>"
+    dynamic_pricing_updated: "<gradient:#22d3ee:#38bdf8>[Dyn]</gradient> <gray>이 아이템의 동적 가격이 이제 <white>{dynamic_pricing}</white><gray> 입니다.</gray>"
     command_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray><white>{command_mode}</white><gray>.</gray>"
     command_removed: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>최신 명령을 제거했습니다. 나머지 명령:</gray> <white>{command_count}</white>"
     commands_cleared: "<gradient:#ef4444:#f87171>[엑스]</gradient> <gray>모든 관리자 구매 명령을 지웠습니다.</gray>"
@@ -1012,6 +1043,35 @@ shop_item_admin_stock_limit_anvil_ui:
     invalid_number: "<red>활성화됨 -1 또는 0보다 큰 정수를 입력하십시오. 입력: {input}</red>"
 
 # 관리자 재입고/타이머 틱 재설정을 위한 앤빌 프롬프트.
+# Anvil prompt for configuring per-player purchase limit amount.
+shop_item_purchase_limit_anvil_ui:
+  title: "구매 제한 수량: {current_limit}"
+  input:
+    current: "<gradient:#22c55e:#86efac>{limit_amount}개 / {window_minutes}분</gradient>"
+    disabled: "<gradient:#6b7280:#9ca3af>[무제한]</gradient>"
+    lore:
+      - "<gray>제한 수량에 정수를 입력하세요.</gray>"
+      - "<gray>현재:</gray> <white>{current_limit}</white>"
+      - "<gray>현재 창:</gray> <white>{window_minutes}</white> 분"
+      - "<gray>무제한일 때 창 기본값은 <white>{default_window_minutes}</white>분입니다.</gray>"
+      - "<gray>제한을 비활성화하려면 <white>-1</white> 을 사용하세요.</gray>"
+  error:
+    invalid_number: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>수량에는 <white>-1</white> 또는 0보다 큰 정수를 사용하세요. 입력:</gray> <white>{input}</white>"
+
+# Anvil prompt for configuring per-player purchase limit window in minutes.
+shop_item_purchase_limit_minutes_anvil_ui:
+  title: "구매 제한 분: {window_minutes}"
+  input:
+    current: "<gradient:#22c55e:#86efac>{limit_amount}개 / {window_minutes}분</gradient>"
+    disabled: "<gradient:#6b7280:#9ca3af>[무제한]</gradient>"
+    lore:
+      - "<gray>0보다 큰 분 정수를 입력하세요.</gray>"
+      - "<gray>현재:</gray> <white>{current_limit}</white>"
+      - "<gray>현재 수량:</gray> <white>{limit_amount}</white>"
+      - "<gray>무제한일 때 수량 기본값은 <white>{default_limit_amount}</white> 입니다.</gray>"
+  error:
+    invalid_number: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>분에는 0보다 큰 정수를 사용하세요. 입력:</gray> <white>{input}</white>"
+
 shop_item_admin_reset_timer_anvil_ui:
   title: "타이머 재설정: {reset_timer_ticks}"
   input:
@@ -1206,6 +1266,7 @@ shop_customer_ui:
         - "<gray>재고:</gray> <white>{amount}</white>"
         - "<gray>항목 유형:</gray> <white>{item_type}</white>"
         - "<gray>각 가격:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>구매 제한:</gray> <white>{purchase_limit}</white>"
         - "<gray>총계 주식 가치:</gray> <white>{total_price} {currency_name}</white>"
         - "<gray>통화 ID:</gray> <white>{currency_type}</white>"
         - "<yellow>하나를 구입하려면 왼쪽 클릭하십시오.</yellow>"
@@ -1215,6 +1276,7 @@ shop_customer_ui:
         - "<gray>재고:</gray> <white>무한</white>"
         - "<gray>항목 유형:</gray> <white>{item_type}</white>"
         - "<gray>각 가격:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>구매 제한:</gray> <white>{purchase_limit}</white>"
         - "<gray>통화 ID:</gray> <white>{currency_type}</white>"
         - "<gray>Shop 유형:</gray> <white>Admin Shop</white>"
         - "<yellow>하나를 구입하려면 왼쪽 클릭하십시오.</yellow>"
@@ -1224,11 +1286,14 @@ shop_customer_ui:
         - "<gray>재고:</gray> <white>{amount}/{stock_limit}</white>"
         - "<gray>항목 유형:</gray> <white>{item_type}</white>"
         - "<gray>각 가격:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>구매 제한:</gray> <white>{purchase_limit}</white>"
         - "<gray>통화 ID:</gray> <white>{currency_type}</white>"
         - "<gray>재입고 모드:</gray> <white>{restock_mode}</white>"
         - "<gray>재입고 일정:</gray> <white>{restock_schedule}</white>"
         - "<yellow>하나를 구입하려면 왼쪽 클릭하십시오.</yellow>"
         - "<yellow>금액을 선택하려면 마우스 오른쪽 버튼을 클릭하십시오.</yellow>"
+    purchase_limit_unlimited: "<gradient:#6b7280:#9ca3af>[무제한]</gradient>"
+    purchase_limit_format: "<gradient:#22c55e:#86efac>{limit_amount}개 / {window_minutes}분</gradient>"
     admin_mode:
       gradual: "Gradual"
       full: "전체 재설정"
@@ -1240,6 +1305,7 @@ shop_customer_ui:
     purchased_admin: "<green>구매됨 {amount}x {item_type}에 대한{total_price} {currency_name}. 이 관리 상점에는 무한한 재고가 있습니다.</green>"
     purchased_admin_limited: "<green>구매됨 {amount}x {item_type}에 대한{total_price} {currency_name}. 남은 관리 재고: {remaining_amount}.</green>"
     unavailable: "<gradient:#ef4444:#f87171>[엑스]</gradient> <gray>{item_type}는 현재 구매할 수 없습니다.</gray>"
+    purchase_limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{window_minutes}</white>분마다 최대 <white>{limit_amount}x {item_type}</white> 까지만 구매할 수 있습니다. 이미 구매:</gray> <white>{purchased_amount}</white><gray>, 요청:</gray> <white>{requested_amount}</white><gray>, 현재 남음:</gray> <white>{remaining_amount}</white><gray>.</gray>"
     insufficient_stock: "<red>이 상점에는 {available_amount}x {item_type}만 사용할 수 있습니다.</red>"
     insufficient_funds: "<red>에 도달했습니다. {total_price} {currency_name} 구매 {amount}x {item_type}.</red>"
     currency_unavailable: "<red>통화 {currency_name}는 현재 구매할 수 없습니다.</red>"

@@ -795,6 +795,7 @@ shop_item_edit_ui:
         - "<gray>Tilgængelighedstilstand:</gray> <white>{availability_mode}</white>"
         - "<gray>Tilgængelighed nu:</gray> <white>{availability_state}</white>"
         - "<gray>Roter vindue:</gray> <white>{rotation_minutes}minut(er)</white>"
+        - "<gray>Købsgrænse:</gray> <white>{purchase_limit}</white>"
         - "<yellow>Brug knapperne nedenfor til at redigere dette element.</yellow>"
     admin_unlimited:
       lore:
@@ -806,6 +807,7 @@ shop_item_edit_ui:
         - "<gray>Tilgængelighedstilstand:</gray> <white>{availability_mode}</white>"
         - "<gray>Tilgængelighed nu:</gray> <white>{availability_state}</white>"
         - "<gray>Roter vindue:</gray> <white>{rotation_minutes}minut(er)</white>"
+        - "<gray>Købsgrænse:</gray> <white>{purchase_limit}</white>"
         - "<yellow>Brug knapperne nedenfor til at redigere dette administratorelement.</yellow>"
     admin_limited:
       lore:
@@ -818,6 +820,7 @@ shop_item_edit_ui:
         - "<gray>Tilgængelighedstilstand:</gray> <white>{availability_mode}</white>"
         - "<gray>Tilgængelighed nu:</gray> <white>{availability_state}</white>"
         - "<gray>Roter vindue:</gray> <white>{rotation_minutes}minut(er)</white>"
+        - "<gray>Købsgrænse:</gray> <white>{purchase_limit}</white>"
         - "<yellow>Brug knapperne nedenfor til at redigere dette administratorelement.</yellow>"
   currency_type:
     name: "<green>Valutatype</green>"
@@ -830,6 +833,16 @@ shop_item_edit_ui:
       - "<gray>Nuværende type:</gray> <white>{currency_type}</white>"
       - "<gray>Nuværende værdi:</gray> <white>{value}</white>"
       - "<yellow>Klik for at redigere den numeriske værdi.</yellow>"
+  dynamic_pricing:
+    name: "<gradient:#22d3ee:#38bdf8>[Dyn] Dynamisk prissætning</gradient>"
+    enabled: "<gradient:#22c55e:#86efac>[Aktiveret]</gradient>"
+    disabled: "<gradient:#6b7280:#9ca3af>[Deaktiveret]</gradient>"
+    global_enabled: "<gradient:#22c55e:#86efac>[Global til]</gradient>"
+    global_disabled: "<gradient:#ef4444:#f87171>[Global fra]</gradient>"
+    lore:
+      - "<gray>Dynamisk prissætning for vare:</gray> <white>{dynamic_pricing}</white>"
+      - "<gray>Global dynamisk prissætning:</gray> <white>{global_dynamic_pricing}</white>"
+      - "<yellow>Klik for at slå dynamisk prissætning til/fra for denne vare.</yellow>"
   availability_mode:
     name: "<gradient:#22c55e:#86efac>[Tilstand] Elementtilgængelighed</gradient>"
     always: "<gradient:#22c55e:#86efac>[Altid]</gradient>"
@@ -850,6 +863,23 @@ shop_item_edit_ui:
       - "<gray>Aktuel tilstand:</gray> <white>{availability_mode}</white>"
       - "<gray>Roter tilstand etiket:</gray> <white>{rotate_mode}</white>"
       - "<yellow>Klik for at indstille roterende minutter i en ambolt.</yellow>"
+  purchase_limit:
+    unlimited: "<gradient:#6b7280:#9ca3af>[Ubegrænset]</gradient>"
+    format: "<gradient:#22c55e:#86efac>{limit_amount} vare(r) / {window_minutes} minut(ter)</gradient>"
+  purchase_limit_amount:
+    name: "<gradient:#22d3ee:#38bdf8>[Cap] Grænsemængde</gradient>"
+    lore:
+      - "<gray>Nuværende grænse:</gray> <white>{purchase_limit}</white>"
+      - "<gray>Mængdeværdi:</gray> <white>{limit_amount}</white>"
+      - "<yellow>Klik for at sætte mængden pr. spiller.</yellow>"
+      - "<gray>Brug <white>-1</white> for at deaktivere købsgrænser.</gray>"
+  purchase_limit_window:
+    name: "<gradient:#38bdf8:#60a5fa>[Timer] Grænseminutter</gradient>"
+    lore:
+      - "<gray>Nuværende grænse:</gray> <white>{purchase_limit}</white>"
+      - "<gray>Vinduesværdi:</gray> <white>{window_minutes}</white> minut(ter)"
+      - "<yellow>Klik for at sætte vinduet i minutter.</yellow>"
+      - "<gray>Hvis den er ubegrænset nu, sættes mængden til <white>{limit_amount}</white>.</gray>"
   command_executor:
     name: "<gradient:#38bdf8:#60a5fa>[Exec] Command Executor</gradient>"
     server: "<gradient:#f59e0b:#fbbf24>[Server]</gradient>"
@@ -900,6 +930,7 @@ shop_item_edit_ui:
     item_missing: "<red>Denne butiksvare kunne ikke findes.</red>"
     saved: "<green>Gemt vareprissætning som{value} {currency_type}.</green>"
     availability_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Tilgængelighedstilstand indstillet til<white>{availability_mode}</white><gray>.</gray>"
+    dynamic_pricing_updated: "<gradient:#22d3ee:#38bdf8>[Dyn]</gradient> <gray>Dynamisk prissætning er nu <white>{dynamic_pricing}</white><gray> for denne vare.</gray>"
     command_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Ny kommandoudførelsestilstand indstillet til<white>{command_mode}</white><gray>.</gray>"
     command_removed: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>Fjernede den seneste kommando. Resterende kommandoer:</gray> <white>{command_count}</white>"
     commands_cleared: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Ryddede alle administratorkøbskommandoer.</gray>"
@@ -1012,6 +1043,35 @@ shop_item_admin_stock_limit_anvil_ui:
     invalid_number: "<red>Indtast -1 eller et helt tal større end 0. Indtast:{input}</red>"
 
 # Ambolt prompt for at konfigurere admin restock/reset timer ticks.
+# Anvil prompt for configuring per-player purchase limit amount.
+shop_item_purchase_limit_anvil_ui:
+  title: "Købsgrænsemængde: {current_limit}"
+  input:
+    current: "<gradient:#22c55e:#86efac>{limit_amount} vare(r) / {window_minutes} minut(ter)</gradient>"
+    disabled: "<gradient:#6b7280:#9ca3af>[Ubegrænset]</gradient>"
+    lore:
+      - "<gray>Indtast et helt tal for grænsemængden.</gray>"
+      - "<gray>Nuværende:</gray> <white>{current_limit}</white>"
+      - "<gray>Nuværende vindue:</gray> <white>{window_minutes}</white> minut(ter)"
+      - "<gray>Når ubegrænset, er standardvinduet <white>{default_window_minutes}</white> minut(ter).</gray>"
+      - "<gray>Brug <white>-1</white> for at deaktivere grænser.</gray>"
+  error:
+    invalid_number: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Brug <white>-1</white> eller et helt tal større end 0 for mængde. Input:</gray> <white>{input}</white>"
+
+# Anvil prompt for configuring per-player purchase limit window in minutes.
+shop_item_purchase_limit_minutes_anvil_ui:
+  title: "Købsgrænseminutter: {window_minutes}"
+  input:
+    current: "<gradient:#22c55e:#86efac>{limit_amount} vare(r) / {window_minutes} minut(ter)</gradient>"
+    disabled: "<gradient:#6b7280:#9ca3af>[Ubegrænset]</gradient>"
+    lore:
+      - "<gray>Indtast et helt antal minutter større end 0.</gray>"
+      - "<gray>Nuværende:</gray> <white>{current_limit}</white>"
+      - "<gray>Nuværende mængde:</gray> <white>{limit_amount}</white>"
+      - "<gray>Når ubegrænset, er standardmængden <white>{default_limit_amount}</white>.</gray>"
+  error:
+    invalid_number: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Brug et helt tal større end 0 for minutter. Input:</gray> <white>{input}</white>"
+
 shop_item_admin_reset_timer_anvil_ui:
   title: "Nulstil timer:{reset_timer_ticks}"
   input:
@@ -1206,6 +1266,7 @@ shop_customer_ui:
         - "<gray>Lager:</gray> <white>{amount}</white>"
         - "<gray>Varetype:</gray> <white>{item_type}</white>"
         - "<gray>Pris hver:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Købsgrænse:</gray> <white>{purchase_limit}</white>"
         - "<gray>Samlet lagerværdi:</gray> <white>{total_price} {currency_name}</white>"
         - "<gray>Valuta-id:</gray> <white>{currency_type}</white>"
         - "<yellow>Venstre klik for at købe en.</yellow>"
@@ -1215,6 +1276,7 @@ shop_customer_ui:
         - "<gray>Beholdning:</gray> <white>Uendelig</white>"
         - "<gray>Varetype:</gray> <white>{item_type}</white>"
         - "<gray>Pris hver:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Købsgrænse:</gray> <white>{purchase_limit}</white>"
         - "<gray>Valuta-id:</gray> <white>{currency_type}</white>"
         - "<gray>Butikstype:</gray> <white>Admin butik</white>"
         - "<yellow>Venstre klik for at købe en.</yellow>"
@@ -1224,11 +1286,14 @@ shop_customer_ui:
         - "<gray>Lager:</gray> <white>{amount}/{stock_limit}</white>"
         - "<gray>Varetype:</gray> <white>{item_type}</white>"
         - "<gray>Pris hver:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Købsgrænse:</gray> <white>{purchase_limit}</white>"
         - "<gray>Valuta-id:</gray> <white>{currency_type}</white>"
         - "<gray>Genopfyldningstilstand:</gray> <white>{restock_mode}</white>"
         - "<gray>Genopbevaringsplan:</gray> <white>{restock_schedule}</white>"
         - "<yellow>Venstre klik for at købe en.</yellow>"
         - "<yellow>Højreklik for at vælge et beløb.</yellow>"
+    purchase_limit_unlimited: "<gradient:#6b7280:#9ca3af>[Ubegrænset]</gradient>"
+    purchase_limit_format: "<gradient:#22c55e:#86efac>{limit_amount} vare(r) / {window_minutes} minut(ter)</gradient>"
     admin_mode:
       gradual: "Gradvis"
       full: "Fuld nulstilling"
@@ -1240,6 +1305,7 @@ shop_customer_ui:
     purchased_admin: "<green>Købt{amount}x{item_type}for{total_price} {currency_name}. Denne adminbutik har uendelig inventar.</green>"
     purchased_admin_limited: "<green>Købt{amount}x{item_type}for{total_price} {currency_name}. Resterende administratorlager:{remaining_amount}.</green>"
     unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>{item_type}er i øjeblikket ikke tilgængelig for køb.</gray>"
+    purchase_limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du kan højst købe <white>{limit_amount}x {item_type}</white> hver <white>{window_minutes}</white> minut(ter). Allerede købt:</gray> <white>{purchased_amount}</white><gray>, anmodet:</gray> <white>{requested_amount}</white><gray>, tilbage nu:</gray> <white>{remaining_amount}</white><gray>.</gray>"
     insufficient_stock: "<red>Denne butik har kun{available_amount}x{item_type}tilgængelig.</red>"
     insufficient_funds: "<red>Du har brug for{total_price} {currency_name}at købe{amount}x{item_type}.</red>"
     currency_unavailable: "<red>Valuta{currency_name}er ikke tilgængelig lige nu.</red>"

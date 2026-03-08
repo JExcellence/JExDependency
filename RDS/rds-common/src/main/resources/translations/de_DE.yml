@@ -795,6 +795,7 @@ shop_item_edit_ui:
         - "<gray>Verfügbarkeitsmodus gesetzt:</gray> <white>{availability_mode}</white>"
         - "<gray>Jetzt verfügbar:</gray> <white>{availability_state}</white>"
         - "<gray>Rotationsfenster:</gray> <white>{rotation_minutes} Minute(n)</white>"
+        - "<gray>Kauflimit:</gray> <white>{purchase_limit}</white>"
         - "<yellow>Verwenden Sie die Schaltflächen unten, um diesen Artikel zu bearbeiten.</yellow>"
     admin_unlimited:
       lore:
@@ -806,6 +807,7 @@ shop_item_edit_ui:
         - "<gray>Verfügbarkeitsmodus gesetzt:</gray> <white>{availability_mode}</white>"
         - "<gray>Jetzt verfügbar:</gray> <white>{availability_state}</white>"
         - "<gray>Rotationsfenster:</gray> <white>{rotation_minutes} Minute(n)</white>"
+        - "<gray>Kauflimit:</gray> <white>{purchase_limit}</white>"
         - "<yellow>Verwenden Sie die Schaltflächen unten, um diesen Admin-Artikel zu bearbeiten.</yellow>"
     admin_limited:
       lore:
@@ -818,6 +820,7 @@ shop_item_edit_ui:
         - "<gray>Verfügbarkeitsmodus gesetzt:</gray> <white>{availability_mode}</white>"
         - "<gray>Jetzt verfügbar:</gray> <white>{availability_state}</white>"
         - "<gray>Rotationsfenster:</gray> <white>{rotation_minutes} Minute(n)</white>"
+        - "<gray>Kauflimit:</gray> <white>{purchase_limit}</white>"
         - "<yellow>Verwenden Sie die Schaltflächen unten, um diesen Admin-Artikel zu bearbeiten.</yellow>"
   currency_type:
     name: "<green>Währung Typ</green>"
@@ -830,6 +833,16 @@ shop_item_edit_ui:
       - "<gray>Aktueller Typ:</gray> <white>{currency_type}</white>"
       - "<gray>Aktueller Wert:</gray> <white>{value}</white>"
       - "<yellow>Klicken Sie, um den numerischen Wert zu bearbeiten.</yellow>"
+  dynamic_pricing:
+    name: "<gradient:#22d3ee:#38bdf8>[Dyn] Dynamische Preise</gradient>"
+    enabled: "<gradient:#22c55e:#86efac>[Aktiviert]</gradient>"
+    disabled: "<gradient:#6b7280:#9ca3af>[Deaktiviert]</gradient>"
+    global_enabled: "<gradient:#22c55e:#86efac>[Global an]</gradient>"
+    global_disabled: "<gradient:#ef4444:#f87171>[Global aus]</gradient>"
+    lore:
+      - "<gray>Dynamische Preise des Artikels:</gray> <white>{dynamic_pricing}</white>"
+      - "<gray>Globale dynamische Preise:</gray> <white>{global_dynamic_pricing}</white>"
+      - "<yellow>Klicken Sie, um dynamische Preise für diesen Artikel umzuschalten.</yellow>"
   availability_mode:
     name: "<gradient:#22c55e:#86efac>[Modus] Element Verfügbarkeit</gradient>"
     always: "<gradient:#22c55e:#86efac>[Immer]</gradient>"
@@ -850,6 +863,23 @@ shop_item_edit_ui:
       - "<gray>Aktueller Modus:</gray> <white>{availability_mode}</white>"
       - "<gray>Rotationsmodusbezeichnung:</gray> <white>{rotate_mode}</white>"
       - "<yellow>Klicken Sie hier, um die Rotationsminuten in einem Amboss festzulegen.</yellow>"
+  purchase_limit:
+    unlimited: "<gradient:#6b7280:#9ca3af>[Unbegrenzt]</gradient>"
+    format: "<gradient:#22c55e:#86efac>{limit_amount} Artikel / {window_minutes} Minute(n)</gradient>"
+  purchase_limit_amount:
+    name: "<gradient:#22d3ee:#38bdf8>[Cap] Limitmenge</gradient>"
+    lore:
+      - "<gray>Aktuelles Limit:</gray> <white>{purchase_limit}</white>"
+      - "<gray>Mengenwert:</gray> <white>{limit_amount}</white>"
+      - "<yellow>Klicken Sie, um die Menge pro Spieler festzulegen.</yellow>"
+      - "<gray>Verwenden Sie <white>-1</white>, um Kauflimits zu deaktivieren.</gray>"
+  purchase_limit_window:
+    name: "<gradient:#38bdf8:#60a5fa>[Timer] Limit-Minuten</gradient>"
+    lore:
+      - "<gray>Aktuelles Limit:</gray> <white>{purchase_limit}</white>"
+      - "<gray>Fensterwert:</gray> <white>{window_minutes}</white> Minute(n)"
+      - "<yellow>Klicken Sie, um das Zeitfenster in Minuten festzulegen.</yellow>"
+      - "<gray>Wenn derzeit unbegrenzt, wird die Menge auf <white>{limit_amount}</white> gesetzt.</gray>"
   command_executor:
     name: "<gradient:#38bdf8:#60a5fa>[Exec] Befehlsausführer</gradient>"
     server: "<gradient:#f59e0b:#fbbf24>[Server]</gradient>"
@@ -900,6 +930,7 @@ shop_item_edit_ui:
     item_missing: "<red>Dieser Shop-Artikel konnte nicht gefunden werden.</red>"
     saved: "<green>Artikelpreis gespeichert unter {value} {currency_type}.</green>"
     availability_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Verfügbarkeitsmodus auf <white>{availability_mode}</white><gray>.</gray>"
+    dynamic_pricing_updated: "<gradient:#22d3ee:#38bdf8>[Dyn]</gradient> <gray>Dynamische Preise sind für diesen Artikel jetzt <white>{dynamic_pricing}</white><gray>.</gray>"
     command_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Neuer Befehlsausführungsmodus auf <white>{command_mode}</white><gray>.</gray>"
     command_removed: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>Der neueste Befehl wurde entfernt. Verbleibende Befehle: </gray> <white>{command_count}</white>"
     commands_cleared: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Alle Administratorkaufbefehle gelöscht.</gray>"
@@ -1012,6 +1043,35 @@ shop_item_admin_stock_limit_anvil_ui:
     invalid_number: "<red>Geben Sie -1 oder eine ganze Zahl größer als 0 ein. Eingabe: {input}</red>"
 
 # Anvil-Eingabeaufforderung zum Konfigurieren von Admin-Timer-Ticks zum Auffüllen/Zurücksetzen.
+# Anvil prompt for configuring per-player purchase limit amount.
+shop_item_purchase_limit_anvil_ui:
+  title: "Kauflimit-Menge: {current_limit}"
+  input:
+    current: "<gradient:#22c55e:#86efac>{limit_amount} Artikel / {window_minutes} Minute(n)</gradient>"
+    disabled: "<gradient:#6b7280:#9ca3af>[Unbegrenzt]</gradient>"
+    lore:
+      - "<gray>Geben Sie eine ganze Zahl für die Limit-Menge ein.</gray>"
+      - "<gray>Aktuell:</gray> <white>{current_limit}</white>"
+      - "<gray>Aktuelles Fenster:</gray> <white>{window_minutes}</white> Minute(n)"
+      - "<gray>Wenn unbegrenzt, ist das Standardfenster <white>{default_window_minutes}</white> Minute(n).</gray>"
+      - "<gray>Verwenden Sie <white>-1</white>, um Limits zu deaktivieren.</gray>"
+  error:
+    invalid_number: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Verwenden Sie <white>-1</white> oder eine ganze Zahl größer als 0 für die Menge. Eingabe:</gray> <white>{input}</white>"
+
+# Anvil prompt for configuring per-player purchase limit window in minutes.
+shop_item_purchase_limit_minutes_anvil_ui:
+  title: "Kauflimit-Minuten: {window_minutes}"
+  input:
+    current: "<gradient:#22c55e:#86efac>{limit_amount} Artikel / {window_minutes} Minute(n)</gradient>"
+    disabled: "<gradient:#6b7280:#9ca3af>[Unbegrenzt]</gradient>"
+    lore:
+      - "<gray>Geben Sie eine ganze Zahl von Minuten größer als 0 ein.</gray>"
+      - "<gray>Aktuell:</gray> <white>{current_limit}</white>"
+      - "<gray>Aktuelle Menge:</gray> <white>{limit_amount}</white>"
+      - "<gray>Wenn unbegrenzt, ist die Standardmenge <white>{default_limit_amount}</white>.</gray>"
+  error:
+    invalid_number: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Verwenden Sie eine ganze Zahl größer als 0 für Minuten. Eingabe:</gray> <white>{input}</white>"
+
 shop_item_admin_reset_timer_anvil_ui:
   title: "Reset-Timer: {reset_timer_ticks}"
   input:
@@ -1206,6 +1266,7 @@ shop_customer_ui:
         - "<gray>Lagerbestand:</gray> <white>{amount}</white>"
         - "<gray>Elementtyp:</gray> <white>{item_type}</white>"
         - "<gray>Preis pro Stück:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Kauflimit:</gray> <white>{purchase_limit}</white>"
         - "<gray>Gesamtbestand Wert:</gray> <white>{total_price} {currency_name}</white>"
         - "<gray>Währungs-ID:</gray> <white>{currency_type}</white>"
         - "<yellow>Linksklick, um einen zu kaufen.</yellow>"
@@ -1215,6 +1276,7 @@ shop_customer_ui:
         - "<gray>Bestand:</gray> <white>Unendlich</white>"
         - "<gray>Elementtyp:</gray> <white>{item_type}</white>"
         - "<gray>Preis pro Stück:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Kauflimit:</gray> <white>{purchase_limit}</white>"
         - "<gray>Währungs-ID:</gray> <white>{currency_type}</white>"
         - "<gray>Shop-Typ:</gray> <white>Admin-Shop</white>"
         - "<yellow>Linksklick, um einen zu kaufen.</yellow>"
@@ -1224,11 +1286,14 @@ shop_customer_ui:
         - "<gray>Lagerbestand:</gray> <white>{amount}/{stock_limit}</white>"
         - "<gray>Elementtyp:</gray> <white>{item_type}</white>"
         - "<gray>Preis pro Stück:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Kauflimit:</gray> <white>{purchase_limit}</white>"
         - "<gray>Währungs-ID:</gray> <white>{currency_type}</white>"
         - "<gray>Restock-Modus:</gray> <white>{restock_mode}</white>"
         - "<gray>Auffüllungsplan:</gray> <white>{restock_schedule}</white>"
         - "<yellow>Linksklick, um einen zu kaufen.</yellow>"
         - "<yellow>Rechtsklick, um einen Betrag auszuwählen.</yellow>"
+    purchase_limit_unlimited: "<gradient:#6b7280:#9ca3af>[Unbegrenzt]</gradient>"
+    purchase_limit_format: "<gradient:#22c55e:#86efac>{limit_amount} Artikel / {window_minutes} Minute(n)</gradient>"
     admin_mode:
       gradual: "Gradual"
       full: "Vollständiges Zurücksetzen"
@@ -1240,6 +1305,7 @@ shop_customer_ui:
     purchased_admin: "<green>Gekauft {amount}x {item_type} für {total_price} {currency_name}. Dieser Admin-Shop verfügt über unbegrenzten Bestand.</green>"
     purchased_admin_limited: "<green>Gekauft {amount}x {item_type} für {total_price} {currency_name}. Verbleibender Admin-Bestand: {remaining_amount}.</green>"
     unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>{item_type} ist derzeit nicht zum Kauf verfügbar.</gray>"
+    purchase_limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Sie können höchstens <white>{limit_amount}x {item_type}</white> alle <white>{window_minutes}</white> Minute(n) kaufen. Bereits gekauft:</gray> <white>{purchased_amount}</white><gray>, angefordert:</gray> <white>{requested_amount}</white><gray>, jetzt verbleibend:</gray> <white>{remaining_amount}</white><gray>.</gray>"
     insufficient_stock: "<red>Dieser Shop hat nur {available_amount}x {item_type} verfügbar. </red>"
     insufficient_funds: "<red>Sie benötigen {total_price} {currency_name} zum Kauf von {amount}x {item_type}.</red>"
     currency_unavailable: "<red>Währung {currency_name} ist derzeit nicht verfügbar.</red>"

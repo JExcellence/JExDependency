@@ -795,6 +795,7 @@ shop_item_edit_ui:
         - "<gray>Kullanılabilirlik modu:</gray> <white>{availability_mode}</white>"
         - "<gray>Şu anda kullanılabilirlik:</gray> <white>{availability_state}</white>"
         - "<gray>Pencereyi döndür:</gray> <white>{rotation_minutes}dakika(lar)</white>"
+        - "<gray>Satın alma limiti:</gray> <white>{purchase_limit}</white>"
         - "<yellow>Bu öğeyi düzenlemek için aşağıdaki düğmeleri kullanın.</yellow>"
     admin_unlimited:
       lore:
@@ -806,6 +807,7 @@ shop_item_edit_ui:
         - "<gray>Kullanılabilirlik modu:</gray> <white>{availability_mode}</white>"
         - "<gray>Şu anda kullanılabilirlik:</gray> <white>{availability_state}</white>"
         - "<gray>Pencereyi döndür:</gray> <white>{rotation_minutes}dakika(lar)</white>"
+        - "<gray>Satın alma limiti:</gray> <white>{purchase_limit}</white>"
         - "<yellow>Bu yönetici öğesini düzenlemek için aşağıdaki düğmeleri kullanın.</yellow>"
     admin_limited:
       lore:
@@ -818,6 +820,7 @@ shop_item_edit_ui:
         - "<gray>Kullanılabilirlik modu:</gray> <white>{availability_mode}</white>"
         - "<gray>Şu anda kullanılabilirlik:</gray> <white>{availability_state}</white>"
         - "<gray>Pencereyi döndür:</gray> <white>{rotation_minutes}dakika(lar)</white>"
+        - "<gray>Satın alma limiti:</gray> <white>{purchase_limit}</white>"
         - "<yellow>Bu yönetici öğesini düzenlemek için aşağıdaki düğmeleri kullanın.</yellow>"
   currency_type:
     name: "<green>Para Birimi Türü</green>"
@@ -830,6 +833,16 @@ shop_item_edit_ui:
       - "<gray>Mevcut tür:</gray> <white>{currency_type}</white>"
       - "<gray>Mevcut değer:</gray> <white>{value}</white>"
       - "<yellow>Sayısal değeri düzenlemek için tıklayın.</yellow>"
+  dynamic_pricing:
+    name: "<gradient:#22d3ee:#38bdf8>[Dyn] Dinamik fiyatlandırma</gradient>"
+    enabled: "<gradient:#22c55e:#86efac>[Etkin]</gradient>"
+    disabled: "<gradient:#6b7280:#9ca3af>[Devre dışı]</gradient>"
+    global_enabled: "<gradient:#22c55e:#86efac>[Genel açık]</gradient>"
+    global_disabled: "<gradient:#ef4444:#f87171>[Genel kapalı]</gradient>"
+    lore:
+      - "<gray>Öğe dinamik fiyatlandırması:</gray> <white>{dynamic_pricing}</white>"
+      - "<gray>Genel dinamik fiyatlandırma:</gray> <white>{global_dynamic_pricing}</white>"
+      - "<yellow>Bu öğe için dinamik fiyatlandırmayı değiştirmek için tıkla.</yellow>"
   availability_mode:
     name: "<gradient:#22c55e:#86efac>[Mod] Öğe Kullanılabilirliği</gradient>"
     always: "<gradient:#22c55e:#86efac>[Always]</gradient>"
@@ -850,6 +863,23 @@ shop_item_edit_ui:
       - "<gray>Mevcut mod:</gray> <white>{availability_mode}</white>"
       - "<gray>Döndürme modu etiketi:</gray> <white>{rotate_mode}</white>"
       - "<yellow>Bir örsteki döndürme dakikalarını ayarlamak için tıklayın.</yellow>"
+  purchase_limit:
+    unlimited: "<gradient:#6b7280:#9ca3af>[Sınırsız]</gradient>"
+    format: "<gradient:#22c55e:#86efac>{limit_amount} öğe / {window_minutes} dakika</gradient>"
+  purchase_limit_amount:
+    name: "<gradient:#22d3ee:#38bdf8>[Cap] Limit miktarı</gradient>"
+    lore:
+      - "<gray>Mevcut limit:</gray> <white>{purchase_limit}</white>"
+      - "<gray>Miktar değeri:</gray> <white>{limit_amount}</white>"
+      - "<yellow>Oyuncu başına miktarı ayarlamak için tıkla.</yellow>"
+      - "<gray>Satın alma limitlerini devre dışı bırakmak için <white>-1</white> kullan.</gray>"
+  purchase_limit_window:
+    name: "<gradient:#38bdf8:#60a5fa>[Timer] Limit dakikaları</gradient>"
+    lore:
+      - "<gray>Mevcut limit:</gray> <white>{purchase_limit}</white>"
+      - "<gray>Pencere değeri:</gray> <white>{window_minutes}</white> dakika"
+      - "<yellow>Pencereyi dakika olarak ayarlamak için tıkla.</yellow>"
+      - "<gray>Şu anda sınırsızsa varsayılan miktar <white>{limit_amount}</white> olur.</gray>"
   command_executor:
     name: "<gradient:#38bdf8:#60a5fa>[Yürütme] Komut Yürütücüsü</gradient>"
     server: "<gradient:#f59e0b:#fbbf24>[Sunucu]</gradient>"
@@ -900,6 +930,7 @@ shop_item_edit_ui:
     item_missing: "<red>Bu mağaza öğesi bulunamadı.</red>"
     saved: "<green>{value} {currency_type}.</green>"
     availability_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Kullanılabilirlik modu şu şekilde ayarlandı: <white>{availability_mode}</white><gray>.</gray>"
+    dynamic_pricing_updated: "<gradient:#22d3ee:#38bdf8>[Dyn]</gradient> <gray>Dinamik fiyatlandırma bu öğe için artık <white>{dynamic_pricing}</white><gray>.</gray>"
     command_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Yeni komut yürütme modu <white>{command_mode}</white><gray>.</gray>"
     command_removed: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>En son komut kaldırıldı. Kalan komutlar:</gray> <white>{command_count}</white>"
     commands_cleared: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Tüm yönetici satın alma komutları temizlendi.</gray>"
@@ -1012,6 +1043,35 @@ shop_item_admin_stock_limit_anvil_ui:
     invalid_number: "<red> etkinleştirildi -1 veya 0'dan büyük bir tam sayı girin. Giriş: {input}</red>"
 
 # Yönetici stok yenileme/sıfırlama zamanlayıcı tıklamalarını yapılandırmak için örs istemi.
+# Anvil prompt for configuring per-player purchase limit amount.
+shop_item_purchase_limit_anvil_ui:
+  title: "Satın alma limit miktarı: {current_limit}"
+  input:
+    current: "<gradient:#22c55e:#86efac>{limit_amount} öğe / {window_minutes} dakika</gradient>"
+    disabled: "<gradient:#6b7280:#9ca3af>[Sınırsız]</gradient>"
+    lore:
+      - "<gray>Limit miktarı için tam sayı girin.</gray>"
+      - "<gray>Mevcut:</gray> <white>{current_limit}</white>"
+      - "<gray>Mevcut pencere:</gray> <white>{window_minutes}</white> dakika"
+      - "<gray>Sınırsız olduğunda varsayılan pencere <white>{default_window_minutes}</white> dakika olur.</gray>"
+      - "<gray>Limitleri devre dışı bırakmak için <white>-1</white> kullan.</gray>"
+  error:
+    invalid_number: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Miktar için <white>-1</white> veya 0'dan büyük bir tam sayı kullan. Girdi:</gray> <white>{input}</white>"
+
+# Anvil prompt for configuring per-player purchase limit window in minutes.
+shop_item_purchase_limit_minutes_anvil_ui:
+  title: "Satın alma limit dakikaları: {window_minutes}"
+  input:
+    current: "<gradient:#22c55e:#86efac>{limit_amount} öğe / {window_minutes} dakika</gradient>"
+    disabled: "<gradient:#6b7280:#9ca3af>[Sınırsız]</gradient>"
+    lore:
+      - "<gray>0'dan büyük tam dakika girin.</gray>"
+      - "<gray>Mevcut:</gray> <white>{current_limit}</white>"
+      - "<gray>Mevcut miktar:</gray> <white>{limit_amount}</white>"
+      - "<gray>Sınırsız olduğunda varsayılan miktar <white>{default_limit_amount}</white> olur.</gray>"
+  error:
+    invalid_number: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Dakika için 0'dan büyük bir tam sayı kullan. Girdi:</gray> <white>{input}</white>"
+
 shop_item_admin_reset_timer_anvil_ui:
   title: "Zamanlayıcıyı Sıfırla: {reset_timer_ticks}"
   input:
@@ -1206,6 +1266,7 @@ shop_customer_ui:
         - "<gray>Stok:</gray> <white>{amount}</white>"
         - "<gray>Öğe türü:</gray> <white>{item_type}</white>"
         - "<gray>Fiyat her:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Satın alma limiti:</gray> <white>{purchase_limit}</white>"
         - "<gray>Toplam stok değeri:</gray> <white>{total_price} {currency_name}</white>"
         - "<gray>Para birimi kimliği:</gray> <white>{currency_type}</white>"
         - "<yellow>Bir tane satın almak için sol tıklayın.</yellow>"
@@ -1215,6 +1276,7 @@ shop_customer_ui:
         - "<gray>Envanter:</gray> <white>Infinite</white>"
         - "<gray>Öğe türü:</gray> <white>{item_type}</white>"
         - "<gray>Fiyat her:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Satın alma limiti:</gray> <white>{purchase_limit}</white>"
         - "<gray>Para birimi kimliği:</gray> <white>{currency_type}</white>"
         - "<gray>Alışveriş tür:</gray> <white>Yönetici Mağazası</white>"
         - "<yellow>Bir tane satın almak için sol tıklayın.</yellow>"
@@ -1224,11 +1286,14 @@ shop_customer_ui:
         - "<gray>Stok:</gray> <white>{amount}/{stock_limit}</white>"
         - "<gray>Öğe türü:</gray> <white>{item_type}</white>"
         - "<gray>Fiyat her:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Satın alma limiti:</gray> <white>{purchase_limit}</white>"
         - "<gray>Para birimi kimliği:</gray> <white>{currency_type}</white>"
         - "<gray>Yeniden Stok modu:</gray> <white>{restock_mode}</white>"
         - "<gray>Stok yenileme planı:</gray> <white>{restock_schedule}</white>"
         - "<yellow>Bir tane satın almak için sol tıklayın.</yellow>"
         - "<yellow>Bir miktar seçmek için sağ tıklayın.</yellow>"
+    purchase_limit_unlimited: "<gradient:#6b7280:#9ca3af>[Sınırsız]</gradient>"
+    purchase_limit_format: "<gradient:#22c55e:#86efac>{limit_amount} öğe / {window_minutes} dakika</gradient>"
     admin_mode:
       gradual: "Kademeli"
       full: "Tam Sıfırlama"
@@ -1240,6 +1305,7 @@ shop_customer_ui:
     purchased_admin: "<green>Satın Alındı {amount}x {item_type}için{total_price} {currency_name}. Bu yönetici dükkanının sonsuz envanteri var.</green>"
     purchased_admin_limited: "<green>Satın Alındı {amount}x {item_type}için{total_price} {currency_name}. Kalan yönetici stoku:{remaining_amount}.</green>"
     unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>{item_type}şu anda satın alınamıyor.</gray>"
+    purchase_limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Her <white>{window_minutes}</white> dakikada en fazla <white>{limit_amount}x {item_type}</white> satın alabilirsin. Zaten alındı:</gray> <white>{purchased_amount}</white><gray>, istendi:</gray> <white>{requested_amount}</white><gray>, şimdi kalan:</gray> <white>{remaining_amount}</white><gray>.</gray>"
     insufficient_stock: "<red>Bu mağazada yalnızca {available_amount}x {item_type}mevcut.</red>"
     insufficient_funds: "<red> mağaza sınırına ulaştınız {total_price} {currency_name}satın almak{amount}x {item_type}.</red>"
     currency_unavailable: "<red>Currency {currency_name}şu anda mevcut değil.</red>"

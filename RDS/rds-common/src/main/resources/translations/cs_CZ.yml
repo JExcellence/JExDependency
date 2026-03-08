@@ -795,6 +795,7 @@ shop_item_edit_ui:
         - "<gray>Režim dostupnosti:</gray> <white>{availability_mode}</white>"
         - "<gray>Dostupnost nyní:</gray> <white>{availability_state}</white>"
         - "<gray>Otočit okno:</gray> <white>{rotation_minutes}zápis)</white>"
+        - "<gray>Limit nákupu:</gray> <white>{purchase_limit}</white>"
         - "<yellow>Pro úpravu této položky použijte tlačítka níže.</yellow>"
     admin_unlimited:
       lore:
@@ -806,6 +807,7 @@ shop_item_edit_ui:
         - "<gray>Režim dostupnosti:</gray> <white>{availability_mode}</white>"
         - "<gray>Dostupnost nyní:</gray> <white>{availability_state}</white>"
         - "<gray>Otočit okno:</gray> <white>{rotation_minutes}zápis)</white>"
+        - "<gray>Limit nákupu:</gray> <white>{purchase_limit}</white>"
         - "<yellow>K úpravě této položky správce použijte tlačítka níže.</yellow>"
     admin_limited:
       lore:
@@ -818,6 +820,7 @@ shop_item_edit_ui:
         - "<gray>Režim dostupnosti:</gray> <white>{availability_mode}</white>"
         - "<gray>Dostupnost nyní:</gray> <white>{availability_state}</white>"
         - "<gray>Otočit okno:</gray> <white>{rotation_minutes}zápis)</white>"
+        - "<gray>Limit nákupu:</gray> <white>{purchase_limit}</white>"
         - "<yellow>K úpravě této položky správce použijte tlačítka níže.</yellow>"
   currency_type:
     name: "<green>Typ měny</green>"
@@ -830,6 +833,16 @@ shop_item_edit_ui:
       - "<gray>Aktuální typ:</gray> <white>{currency_type}</white>"
       - "<gray>Aktuální hodnota:</gray> <white>{value}</white>"
       - "<yellow>Klepnutím upravte číselnou hodnotu.</yellow>"
+  dynamic_pricing:
+    name: "<gradient:#22d3ee:#38bdf8>[Dyn] Dynamické ceny</gradient>"
+    enabled: "<gradient:#22c55e:#86efac>[Zapnuto]</gradient>"
+    disabled: "<gradient:#6b7280:#9ca3af>[Vypnuto]</gradient>"
+    global_enabled: "<gradient:#22c55e:#86efac>[Globálně zapnuto]</gradient>"
+    global_disabled: "<gradient:#ef4444:#f87171>[Globálně vypnuto]</gradient>"
+    lore:
+      - "<gray>Dynamické ceny položky:</gray> <white>{dynamic_pricing}</white>"
+      - "<gray>Globální dynamické ceny:</gray> <white>{global_dynamic_pricing}</white>"
+      - "<yellow>Kliknutím přepnete dynamické ceny pro tuto položku.</yellow>"
   availability_mode:
     name: "<gradient:#22c55e:#86efac>[Režim] Dostupnost položky</gradient>"
     always: "<gradient:#22c55e:#86efac>[Vždy]</gradient>"
@@ -850,6 +863,23 @@ shop_item_edit_ui:
       - "<gray>Aktuální režim:</gray> <white>{availability_mode}</white>"
       - "<gray>Štítek režimu otáčení:</gray> <white>{rotate_mode}</white>"
       - "<yellow>Kliknutím nastavíte minuty otáčení v kovadlině.</yellow>"
+  purchase_limit:
+    unlimited: "<gradient:#6b7280:#9ca3af>[Bez limitu]</gradient>"
+    format: "<gradient:#22c55e:#86efac>{limit_amount} ks / {window_minutes} min</gradient>"
+  purchase_limit_amount:
+    name: "<gradient:#22d3ee:#38bdf8>[Cap] Limit množství</gradient>"
+    lore:
+      - "<gray>Aktuální limit:</gray> <white>{purchase_limit}</white>"
+      - "<gray>Hodnota množství:</gray> <white>{limit_amount}</white>"
+      - "<yellow>Kliknutím nastavíte množství na hráče.</yellow>"
+      - "<gray>Použijte <white>-1</white> pro vypnutí limitů nákupu.</gray>"
+  purchase_limit_window:
+    name: "<gradient:#38bdf8:#60a5fa>[Timer] Minuty limitu</gradient>"
+    lore:
+      - "<gray>Aktuální limit:</gray> <white>{purchase_limit}</white>"
+      - "<gray>Hodnota okna:</gray> <white>{window_minutes}</white> min"
+      - "<yellow>Kliknutím nastavíte okno v minutách.</yellow>"
+      - "<gray>Pokud je nyní bez limitu, množství se nastaví na <white>{limit_amount}</white>.</gray>"
   command_executor:
     name: "<gradient:#38bdf8:#60a5fa>[Exec] Vykonavatel příkazů</gradient>"
     server: "<gradient:#f59e0b:#fbbf24>[Server]</gradient>"
@@ -900,6 +930,7 @@ shop_item_edit_ui:
     item_missing: "<red>Položku z obchodu se nepodařilo najít.</red>"
     saved: "<green>Uložená cena položky jako{value} {currency_type}.</green>"
     availability_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Režim dostupnosti nastaven na<white>{availability_mode}</white><gray>.</gray>"
+    dynamic_pricing_updated: "<gradient:#22d3ee:#38bdf8>[Dyn]</gradient> <gray>Dynamické ceny jsou nyní <white>{dynamic_pricing}</white><gray> pro tuto položku.</gray>"
     command_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Nový režim provádění příkazů nastaven na<white>{command_mode}</white><gray>.</gray>"
     command_removed: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>Odebrán nejnovější příkaz. Zbývající příkazy:</gray> <white>{command_count}</white>"
     commands_cleared: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Vymazány všechny příkazy správce k nákupu.</gray>"
@@ -1012,6 +1043,35 @@ shop_item_admin_stock_limit_anvil_ui:
     invalid_number: "<red>Zadejte -1 nebo celé číslo větší než 0. Zadejte:{input}</red>"
 
 # Výzva na kovadlinu pro konfiguraci admin restock/reset timer ticks.
+# Anvil prompt for configuring per-player purchase limit amount.
+shop_item_purchase_limit_anvil_ui:
+  title: "Množství limitu nákupu: {current_limit}"
+  input:
+    current: "<gradient:#22c55e:#86efac>{limit_amount} ks / {window_minutes} min</gradient>"
+    disabled: "<gradient:#6b7280:#9ca3af>[Bez limitu]</gradient>"
+    lore:
+      - "<gray>Zadejte celé číslo pro limit množství.</gray>"
+      - "<gray>Aktuální:</gray> <white>{current_limit}</white>"
+      - "<gray>Aktuální okno:</gray> <white>{window_minutes}</white> min"
+      - "<gray>Když je bez limitu, okno je výchozí <white>{default_window_minutes}</white> min.</gray>"
+      - "<gray>Použijte <white>-1</white> pro vypnutí limitů.</gray>"
+  error:
+    invalid_number: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Použijte <white>-1</white> nebo celé číslo větší než 0 pro množství. Vstup:</gray> <white>{input}</white>"
+
+# Anvil prompt for configuring per-player purchase limit window in minutes.
+shop_item_purchase_limit_minutes_anvil_ui:
+  title: "Minuty limitu nákupu: {window_minutes}"
+  input:
+    current: "<gradient:#22c55e:#86efac>{limit_amount} ks / {window_minutes} min</gradient>"
+    disabled: "<gradient:#6b7280:#9ca3af>[Bez limitu]</gradient>"
+    lore:
+      - "<gray>Zadejte celé číslo minut větší než 0.</gray>"
+      - "<gray>Aktuální:</gray> <white>{current_limit}</white>"
+      - "<gray>Aktuální množství:</gray> <white>{limit_amount}</white>"
+      - "<gray>Když je bez limitu, množství je výchozí <white>{default_limit_amount}</white>.</gray>"
+  error:
+    invalid_number: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Použijte celé číslo větší než 0 pro minuty. Vstup:</gray> <white>{input}</white>"
+
 shop_item_admin_reset_timer_anvil_ui:
   title: "Resetovat časovač:{reset_timer_ticks}"
   input:
@@ -1206,6 +1266,7 @@ shop_customer_ui:
         - "<gray>Sklad:</gray> <white>{amount}</white>"
         - "<gray>Typ položky:</gray> <white>{item_type}</white>"
         - "<gray>Cena za každý:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Limit nákupu:</gray> <white>{purchase_limit}</white>"
         - "<gray>Celková hodnota akcií:</gray> <white>{total_price} {currency_name}</white>"
         - "<gray>ID měny:</gray> <white>{currency_type}</white>"
         - "<yellow>Kliknutím levým tlačítkem si jednu koupíte.</yellow>"
@@ -1215,6 +1276,7 @@ shop_customer_ui:
         - "<gray>Inventář:</gray> <white>Nekonečný</white>"
         - "<gray>Typ položky:</gray> <white>{item_type}</white>"
         - "<gray>Cena za každý:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Limit nákupu:</gray> <white>{purchase_limit}</white>"
         - "<gray>ID měny:</gray> <white>{currency_type}</white>"
         - "<gray>Typ obchodu:</gray> <white>Admin Shop</white>"
         - "<yellow>Kliknutím levým tlačítkem si jednu koupíte.</yellow>"
@@ -1224,11 +1286,14 @@ shop_customer_ui:
         - "<gray>Sklad:</gray> <white>{amount}/{stock_limit}</white>"
         - "<gray>Typ položky:</gray> <white>{item_type}</white>"
         - "<gray>Cena za každý:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Limit nákupu:</gray> <white>{purchase_limit}</white>"
         - "<gray>ID měny:</gray> <white>{currency_type}</white>"
         - "<gray>Režim doplnění zásob:</gray> <white>{restock_mode}</white>"
         - "<gray>Harmonogram zásob:</gray> <white>{restock_schedule}</white>"
         - "<yellow>Kliknutím levým tlačítkem si jednu koupíte.</yellow>"
         - "<yellow>Kliknutím pravým tlačítkem vyberte částku.</yellow>"
+    purchase_limit_unlimited: "<gradient:#6b7280:#9ca3af>[Bez limitu]</gradient>"
+    purchase_limit_format: "<gradient:#22c55e:#86efac>{limit_amount} ks / {window_minutes} min</gradient>"
     admin_mode:
       gradual: "Postupný"
       full: "Úplný reset"
@@ -1240,6 +1305,7 @@ shop_customer_ui:
     purchased_admin: "<green>Zakoupeno{amount}x {item_type}pro{total_price} {currency_name}. Tento administrátorský obchod má nekonečný inventář.</green>"
     purchased_admin_limited: "<green>Zakoupeno{amount}x {item_type}pro{total_price} {currency_name}. Zbývající zásoby správce:{remaining_amount}.</green>"
     unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>{item_type}momentálně není možné zakoupit.</gray>"
+    purchase_limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Můžete koupit maximálně <white>{limit_amount}x {item_type}</white> každých <white>{window_minutes}</white> min. Již koupeno:</gray> <white>{purchased_amount}</white><gray>, požadováno:</gray> <white>{requested_amount}</white><gray>, nyní zbývá:</gray> <white>{remaining_amount}</white><gray>.</gray>"
     insufficient_stock: "<red>Tento obchod má pouze{available_amount}x {item_type}k dispozici.</red>"
     insufficient_funds: "<red>potřebuješ{total_price} {currency_name}koupit{amount}x {item_type}.</red>"
     currency_unavailable: "<red>Měna{currency_name}není momentálně k dispozici.</red>"

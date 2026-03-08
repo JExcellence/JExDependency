@@ -795,6 +795,7 @@ shop_item_edit_ui:
         - "<gray>可用性模式：</gray> <white>{availability_mode}</white>"
         - "<gray>現在可用：</gray> <white>{availability_state}</white>"
         - "<gray>旋轉視窗：</gray> <white>{rotation_minutes}分鐘）</white>"
+        - "<gray>購買上限：</gray> <white>{purchase_limit}</white>"
         - "<yellow>使用下面的按鈕編輯此項目。 </yellow>"
     admin_unlimited:
       lore:
@@ -806,6 +807,7 @@ shop_item_edit_ui:
         - "<gray>可用性模式：</gray> <white>{availability_mode}</white>"
         - "<gray>現在可用：</gray> <white>{availability_state}</white>"
         - "<gray>旋轉視窗：</gray> <white>{rotation_minutes}分鐘）</white>"
+        - "<gray>購買上限：</gray> <white>{purchase_limit}</white>"
         - "<yellow>使用下面的按鈕編輯此管理項目。 </yellow>"
     admin_limited:
       lore:
@@ -818,6 +820,7 @@ shop_item_edit_ui:
         - "<gray>可用性模式：</gray> <white>{availability_mode}</white>"
         - "<gray>現在可用：</gray> <white>{availability_state}</white>"
         - "<gray>旋轉視窗：</gray> <white>{rotation_minutes}分鐘）</white>"
+        - "<gray>購買上限：</gray> <white>{purchase_limit}</white>"
         - "<yellow>使用下面的按鈕編輯此管理項目。 </yellow>"
   currency_type:
     name: "<green>貨幣類型</green>"
@@ -830,6 +833,16 @@ shop_item_edit_ui:
       - "<gray>目前類型：</gray> <white>{currency_type}</white>"
       - "<gray>目前值：</gray> <white>{value}</white>"
       - "<yellow>點擊以編輯數值。 </yellow>"
+  dynamic_pricing:
+    name: "<gradient:#22d3ee:#38bdf8>[Dyn] 動態定價</gradient>"
+    enabled: "<gradient:#22c55e:#86efac>[已啟用]</gradient>"
+    disabled: "<gradient:#6b7280:#9ca3af>[已停用]</gradient>"
+    global_enabled: "<gradient:#22c55e:#86efac>[全域開啟]</gradient>"
+    global_disabled: "<gradient:#ef4444:#f87171>[全域關閉]</gradient>"
+    lore:
+      - "<gray>物品動態定價：</gray> <white>{dynamic_pricing}</white>"
+      - "<gray>全域動態定價：</gray> <white>{global_dynamic_pricing}</white>"
+      - "<yellow>點擊切換此物品的動態定價。</yellow>"
   availability_mode:
     name: "<gradient:#22c55e:#86efac>[模式] 物品可用性</gradient>"
     always: "<gradient:#22c55e:#86efac>[總是]</gradient>"
@@ -850,6 +863,23 @@ shop_item_edit_ui:
       - "<gray>當前模式：</gray> <white>{availability_mode}</white>"
       - "<gray>旋轉模式標籤：</gray> <white>{rotate_mode}</white>"
       - "<yellow>點選可設定砧座旋轉分鐘數。 </yellow>"
+  purchase_limit:
+    unlimited: "<gradient:#6b7280:#9ca3af>[無限制]</gradient>"
+    format: "<gradient:#22c55e:#86efac>{limit_amount} 個物品 / {window_minutes} 分鐘</gradient>"
+  purchase_limit_amount:
+    name: "<gradient:#22d3ee:#38bdf8>[Cap] 上限數量</gradient>"
+    lore:
+      - "<gray>目前上限：</gray> <white>{purchase_limit}</white>"
+      - "<gray>數量值：</gray> <white>{limit_amount}</white>"
+      - "<yellow>點擊設定每位玩家的數量。</yellow>"
+      - "<gray>使用 <white>-1</white> 可停用購買上限。</gray>"
+  purchase_limit_window:
+    name: "<gradient:#38bdf8:#60a5fa>[Timer] 上限分鐘</gradient>"
+    lore:
+      - "<gray>目前上限：</gray> <white>{purchase_limit}</white>"
+      - "<gray>視窗值：</gray> <white>{window_minutes}</white> 分鐘"
+      - "<yellow>點擊以分鐘設定視窗。</yellow>"
+      - "<gray>若目前為無限制，數量預設為 <white>{limit_amount}</white>。</gray>"
   command_executor:
     name: "<gradient:#38bdf8:#60a5fa>[Exec] 命令執行器</gradient>"
     server: "<gradient:#f59e0b:#fbbf24>[伺服器]</gradient>"
@@ -900,6 +930,7 @@ shop_item_edit_ui:
     item_missing: "<red>找不到該商店商品。 </red>"
     saved: "<green>將商品定價保存為{value} {currency_type}.</green>"
     availability_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>可用性模式設定為<white>{availability_mode}</white><gray>.</gray>"
+    dynamic_pricing_updated: "<gradient:#22d3ee:#38bdf8>[Dyn]</gradient> <gray>此物品的動態定價現在為 <white>{dynamic_pricing}</white><gray>。</gray>"
     command_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>新指令執行模式設定為<white>{command_mode}</white><gray>.</gray>"
     command_removed: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>刪除了最新的命令。剩餘命令：</gray> <white>{command_count}</white>"
     commands_cleared: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>清除所有管理員購買指令。 </gray>"
@@ -1012,6 +1043,35 @@ shop_item_admin_stock_limit_anvil_ui:
     invalid_number: "<red>輸入-1或大於0的整數。輸入：{input}</red>"
 
 # 用於配置管理員補貨/重設計時器刻度的鐵砧提示。 
+# Anvil prompt for configuring per-player purchase limit amount.
+shop_item_purchase_limit_anvil_ui:
+  title: "購買上限數量：{current_limit}"
+  input:
+    current: "<gradient:#22c55e:#86efac>{limit_amount} 個物品 / {window_minutes} 分鐘</gradient>"
+    disabled: "<gradient:#6b7280:#9ca3af>[無限制]</gradient>"
+    lore:
+      - "<gray>請輸入上限數量的整數。</gray>"
+      - "<gray>目前：</gray> <white>{current_limit}</white>"
+      - "<gray>目前視窗：</gray> <white>{window_minutes}</white> 分鐘"
+      - "<gray>無限制時，視窗預設為 <white>{default_window_minutes}</white> 分鐘。</gray>"
+      - "<gray>使用 <white>-1</white> 可停用限制。</gray>"
+  error:
+    invalid_number: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>數量請使用 <white>-1</white> 或大於 0 的整數。輸入：</gray> <white>{input}</white>"
+
+# Anvil prompt for configuring per-player purchase limit window in minutes.
+shop_item_purchase_limit_minutes_anvil_ui:
+  title: "購買上限分鐘：{window_minutes}"
+  input:
+    current: "<gradient:#22c55e:#86efac>{limit_amount} 個物品 / {window_minutes} 分鐘</gradient>"
+    disabled: "<gradient:#6b7280:#9ca3af>[無限制]</gradient>"
+    lore:
+      - "<gray>請輸入大於 0 的整數分鐘。</gray>"
+      - "<gray>目前：</gray> <white>{current_limit}</white>"
+      - "<gray>目前數量：</gray> <white>{limit_amount}</white>"
+      - "<gray>無限制時，數量預設為 <white>{default_limit_amount}</white>。</gray>"
+  error:
+    invalid_number: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>分鐘請使用大於 0 的整數。輸入：</gray> <white>{input}</white>"
+
 shop_item_admin_reset_timer_anvil_ui:
   title: "重置定時器：{reset_timer_ticks}"
   input:
@@ -1206,6 +1266,7 @@ shop_customer_ui:
         - "<gray>庫存：</gray> <white>{amount}</white>"
         - "<gray>物品類型：</gray> <white>{item_type}</white>"
         - "<gray>每件價格：</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>購買上限：</gray> <white>{purchase_limit}</white>"
         - "<gray>股票總價值：</gray> <white>{total_price} {currency_name}</white>"
         - "<gray>貨幣編號：</gray> <white>{currency_type}</white>"
         - "<yellow>左鍵點擊購買一個。</yellow>"
@@ -1215,6 +1276,7 @@ shop_customer_ui:
         - "<gray>存貨：</gray> <white>無限</white>"
         - "<gray>物品類型：</gray> <white>{item_type}</white>"
         - "<gray>每件價格：</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>購買上限：</gray> <white>{purchase_limit}</white>"
         - "<gray>貨幣編號：</gray> <white>{currency_type}</white>"
         - "<gray>店鋪類型：</gray> <white>管理商店</white>"
         - "<yellow>左鍵點擊購買一個。</yellow>"
@@ -1224,11 +1286,14 @@ shop_customer_ui:
         - "<gray>庫存：</gray> <white>{amount}/{stock_limit}</white>"
         - "<gray>物品類型：</gray> <white>{item_type}</white>"
         - "<gray>每件價格：</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>購買上限：</gray> <white>{purchase_limit}</white>"
         - "<gray>貨幣編號：</gray> <white>{currency_type}</white>"
         - "<gray>補貨模式：</gray> <white>{restock_mode}</white>"
         - "<gray>補貨時間表：</gray> <white>{restock_schedule}</white>"
         - "<yellow>左鍵點擊購買一個。</yellow>"
         - "<yellow>右鍵單擊選擇金額。</yellow>"
+    purchase_limit_unlimited: "<gradient:#6b7280:#9ca3af>[無限制]</gradient>"
+    purchase_limit_format: "<gradient:#22c55e:#86efac>{limit_amount} 個物品 / {window_minutes} 分鐘</gradient>"
     admin_mode:
       gradual: "循序漸進"
       full: "完全重置"
@@ -1240,6 +1305,7 @@ shop_customer_ui:
     purchased_admin: "<green>已購買{amount}x{item_type}為了{total_price} {currency_name}。這個管理商店有無限的庫存。</green>"
     purchased_admin_limited: "<green>已購買{amount}x{item_type}為了{total_price} {currency_name}。剩餘管理庫存：{remaining_amount}.</green>"
     unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>{item_type}目前無法購買。</gray>"
+    purchase_limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>你每 <white>{window_minutes}</white> 分鐘最多可購買 <white>{limit_amount}x {item_type}</white>。已購買：</gray> <white>{purchased_amount}</white><gray>，要求：</gray> <white>{requested_amount}</white><gray>，目前剩餘：</gray> <white>{remaining_amount}</white><gray>。</gray>"
     insufficient_stock: "<red>這家店只有{available_amount}x{item_type}可用的。</red>"
     insufficient_funds: "<red>你需要{total_price} {currency_name}買{amount}x{item_type}.</red>"
     currency_unavailable: "<red>貨幣{currency_name}現在不可用。</red>"
