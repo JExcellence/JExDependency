@@ -128,6 +128,15 @@ Primary command handler: `PRS` (`PlayerCommand`), so all subcommands are player-
 | `raindropshops.admin.shops` | Required in `ShopOverviewView` to toggle a shop between player/admin mode. |
 | `raindropshops.admin.bypass.town` | Allows ShopBlock placement outside the player's own town even when `protection.only_player_shops` is enabled. |
 
+## PlaceholderAPI Placeholders
+
+| Placeholder | Description |
+|---|---|
+| `%rds_shops_owned%` | Number of shops owned by the player (non-admin shops). |
+| `%rds_shops_admin%` | Number of admin shops in the database. |
+| `%rds_shops_items%` | Number of items the player is selling across owned shops. |
+| `%rds_shops_tax%` | Comma-separated list of tax debt by currency for the player's owned shops. |
+
 ## Configuration hotspots
 
 Main config: `rds-common/src/main/resources/config/config.yml`

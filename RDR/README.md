@@ -125,6 +125,15 @@ Additional permission behavior:
 - Several admin views also treat `op` status as admin access in addition to `raindroprdr.command.admin`.
 - Store requirements can include dynamic permission requirements via configured RPlatform requirement definitions.
 
+## PlaceholderAPI Placeholders
+
+| Placeholder | Description |
+|---|---|
+| `%rdr_storages_max%` | Maximum storages allowed. |
+| `%rdr_storages_players%` | Number of storages unlocked by the player. |
+| `%rdr_storages_items%` | Number of items currently stored across the player's storages. |
+| `%rdr_storages_tax%` | Comma-separated list of tax debt by currency. |
+
 ## Configuration hotspots
 
 Main config: `rdr-common/src/main/resources/config/config.yml`

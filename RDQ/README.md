@@ -183,6 +183,31 @@ requirements:
 | `/perk list` | View available perks | `rdq.perk.list` |
 | `/perk activate <perk>` | Activate a perk | `rdq.perk.activate` |
 
+## Permissions
+
+RDQ command routing currently uses `raindropquests.command.*` nodes.
+
+| Node | Purpose                                      |
+|---|----------------------------------------------|
+| `raindropquests.player` | Parent perm providing all player permissions |
+| `raindropquests.command` | Root command node                            |
+| `raindropquests.command.admin` | Access admin route                           |
+| `raindropquests.command.bounty` | Access bounty route                          |
+| `raindropquests.command.main` | Access main route                            |
+| `raindropquests.command.perks` | Access perks route                           |
+| `raindropquests.command.quests` | Access quests route                          |
+| `raindropquests.command.ranks` | Access ranks route                           |
+| `raindropquests.command.scoreboard` | Access scoreboard route                      |
+
+## PlaceholderAPI Placeholders
+
+| Placeholder | Description |
+|---|---|
+| `%rdq_bounty_active%` | `true`/`false` depending on whether the player currently has an active bounty. |
+| `%rdq_perks_active%` | Number of the player's active perks. |
+| `%rdq_perks_unlocked%` | Number of perks the player has unlocked. |
+| `%rdq_ranks_total%` | Total number of ranks configured/loaded. |
+
 ## Developer Guidelines
 
 ### Code Style

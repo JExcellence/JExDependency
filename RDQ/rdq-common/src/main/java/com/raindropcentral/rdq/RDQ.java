@@ -19,6 +19,7 @@ import com.raindropcentral.rdq.database.entity.rank.*;
 import com.raindropcentral.rdq.database.entity.requirement.BaseRequirement;
 import com.raindropcentral.rdq.database.entity.reward.BaseReward;
 import com.raindropcentral.rdq.database.repository.*;
+import com.raindropcentral.rdq.placeholders.RDQPlaceholderExpansion;
 import com.raindropcentral.rdq.perk.PerkActivationService;
 import com.raindropcentral.rdq.perk.PerkManagementService;
 import com.raindropcentral.rdq.perk.PerkRequirementService;
@@ -44,6 +45,7 @@ import com.raindropcentral.rplatform.RPlatform;
 import com.raindropcentral.rplatform.api.PlatformType;
 import com.raindropcentral.rplatform.api.luckperms.LuckPermsService;
 import com.raindropcentral.rplatform.metrics.BStatsMetrics;
+import com.raindropcentral.rplatform.placeholder.PlaceholderRegistry;
 
 import com.raindropcentral.rplatform.service.ServiceRegistry;
 import com.raindropcentral.rplatform.view.ConfirmationView;
@@ -56,6 +58,7 @@ import me.devnatan.inventoryframework.AnvilInputFeature;
 import me.devnatan.inventoryframework.ViewFrame;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.time.Duration;
 import java.util.concurrent.CompletableFuture;
@@ -149,6 +152,7 @@ public abstract class RDQ {
 	private com.raindropcentral.rdq.perk.cache.SimplePerkCache playerPerkCache;
     private PerkSidebarScoreboardService perkSidebarScoreboardService;
 	private BStatsMetrics metrics;
+	private @Nullable PlaceholderRegistry placeholderRegistry;
 
 	// Quest system components
 	private com.raindropcentral.rdq.quest.QuestSystemFactory questSystemFactory;
@@ -205,6 +209,7 @@ public abstract class RDQ {
 					initializeQuestSystem();
 
 					initializeComponents();
+					initializePlaceholderExpansion();
 
 					visualIndicatorManager = new VisualIndicatorManager(this);
 
@@ -425,11 +430,27 @@ public abstract class RDQ {
 	}
 
 	/**
+	 * Registers RDQ internal PlaceholderAPI placeholders when PlaceholderAPI is available.
+	 */
+	private void initializePlaceholderExpansion() {
+		this.placeholderRegistry = new PlaceholderRegistry(
+				this.plugin,
+				new RDQPlaceholderExpansion(this)
+		);
+		this.placeholderRegistry.register();
+	}
+
+	/**
 	 * Called when the plugin is being disabled.
 	 * Shuts down the visual indicator manager and other resources.
 	 */
 	public void onDisable() {
 		disabling = true;
+
+		if (placeholderRegistry != null) {
+			placeholderRegistry.unregister();
+			placeholderRegistry = null;
+		}
 
 		if (questCacheManager != null) {
 			try {

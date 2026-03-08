@@ -20,6 +20,7 @@ import com.raindropcentral.rdr.database.entity.RDRPlayer;
 import com.raindropcentral.rdr.database.repository.RRDRPlayer;
 import com.raindropcentral.rdr.database.repository.RRStorage;
 import com.raindropcentral.rdr.database.repository.RRTownStorageBank;
+import com.raindropcentral.rdr.placeholders.RDRPlaceholderExpansion;
 import com.raindropcentral.rdr.requirement.RDRRequirementSetup;
 import com.raindropcentral.rdr.service.StorageAdminPlayerSettingsService;
 import com.raindropcentral.rdr.service.StorageFilledTaxScheduler;
@@ -55,6 +56,7 @@ import com.raindropcentral.rplatform.api.PlatformAPIFactory;
 import com.raindropcentral.rplatform.api.PlatformType;
 import com.raindropcentral.rplatform.api.luckperms.LuckPermsService;
 import com.raindropcentral.rplatform.metrics.BStatsMetrics;
+import com.raindropcentral.rplatform.placeholder.PlaceholderRegistry;
 import com.raindropcentral.rplatform.scheduler.ISchedulerAdapter;
 import com.raindropcentral.rplatform.service.ServiceRegistry;
 import de.jexcellence.hibernate.JEHibernate;
@@ -105,6 +107,7 @@ public class RDR {
     private StorageFilledTaxScheduler storageFilledTaxScheduler;
     private StorageAdminPlayerSettingsService storageAdminPlayerSettingsService;
     private BStatsMetrics metrics;
+    private PlaceholderRegistry placeholderRegistry;
 
     private RRDRPlayer playerRepository;
     private RRStorage storageRepository;
@@ -168,6 +171,7 @@ public class RDR {
         this.initializeViews();
         this.initializeStorageSidebarScoreboards();
         this.initializeStorageFilledTaxScheduler();
+        this.initializePlaceholderExpansion();
         this.getLogger().info("RDR (" + this.edition + ") Edition enabled successfully");
     }
 
@@ -194,6 +198,10 @@ public class RDR {
         }
         if (this.storageFilledTaxScheduler != null) {
             this.storageFilledTaxScheduler.shutdown();
+        }
+        if (this.placeholderRegistry != null) {
+            this.placeholderRegistry.unregister();
+            this.placeholderRegistry = null;
         }
 
         if (this.entityManagerFactory != null) {
@@ -813,6 +821,17 @@ public class RDR {
     private void initializeStorageFilledTaxScheduler() {
         this.storageFilledTaxScheduler = new StorageFilledTaxScheduler(this);
         this.storageFilledTaxScheduler.start();
+    }
+
+    /**
+     * Registers the internal PlaceholderAPI expansion.
+     */
+    private void initializePlaceholderExpansion() {
+        this.placeholderRegistry = new PlaceholderRegistry(
+            this.plugin,
+            new RDRPlaceholderExpansion(this)
+        );
+        this.placeholderRegistry.register();
     }
 
     private @NotNull UUID loadOrCreateServerUuid() {

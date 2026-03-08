@@ -11,6 +11,7 @@ import com.raindropcentral.rds.database.repository.RShop;
 import com.raindropcentral.rds.database.repository.RRTownShopBank;
 import com.raindropcentral.rds.database.repository.RShopAdminGroupSetting;
 import com.raindropcentral.rds.database.repository.RShopAdminPlayerSetting;
+import com.raindropcentral.rds.placeholders.RDSPlaceholderExpansion;
 import com.raindropcentral.rds.service.ShopService;
 import com.raindropcentral.rds.service.scoreboard.ShopSidebarScoreboardService;
 import com.raindropcentral.rds.service.bank.AdminShopServerBankScheduler;
@@ -67,6 +68,7 @@ import com.raindropcentral.rplatform.api.PlatformType;
 import com.raindropcentral.rplatform.api.luckperms.LuckPermsService;
 import com.raindropcentral.rplatform.economy.JExEconomyBridge;
 import com.raindropcentral.rplatform.metrics.BStatsMetrics;
+import com.raindropcentral.rplatform.placeholder.PlaceholderRegistry;
 import com.raindropcentral.rplatform.scheduler.ISchedulerAdapter;
 import com.raindropcentral.rplatform.service.ServiceRegistry;
 import de.jexcellence.hibernate.JEHibernate;
@@ -136,6 +138,7 @@ public class RDS {
     private ShopAdminPlayerSettingsService shopAdminPlayerSettingsService;
     private DynamicPricingService dynamicPricingService;
     private BStatsMetrics metrics;
+    private PlaceholderRegistry placeholderRegistry;
     private RRDSPlayer playerRepository;
     private RShop shopRepository;
     private RServerBank serverBankRepository;
@@ -205,6 +208,7 @@ public class RDS {
         this.initializeAdminShopServerBankTransfers();
         this.initializeShopBossBar();
         this.initializeShopSidebarScoreboards();
+        this.initializePlaceholderExpansion();
 
         if (!this.hasValidEconomyAndCurrency()) {
             this.getLogger().warning(
@@ -242,6 +246,10 @@ public class RDS {
 
         if (this.dynamicPricingService != null) {
             this.dynamicPricingService.shutdown();
+        }
+        if (this.placeholderRegistry != null) {
+            this.placeholderRegistry.unregister();
+            this.placeholderRegistry = null;
         }
 
         if (this.entityManagerFactory != null) {
@@ -728,6 +736,17 @@ public class RDS {
     private void initializeShopSidebarScoreboards() {
         this.shopSidebarScoreboardService = new ShopSidebarScoreboardService(this);
         this.shopSidebarScoreboardService.start();
+    }
+
+    /**
+     * Registers the internal PlaceholderAPI expansion.
+     */
+    private void initializePlaceholderExpansion() {
+        this.placeholderRegistry = new PlaceholderRegistry(
+            this.plugin,
+            new RDSPlaceholderExpansion(this)
+        );
+        this.placeholderRegistry.register();
     }
 
     private void initializeAdminShopRestocking() {

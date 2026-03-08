@@ -124,6 +124,15 @@ Notes:
 - Several admin views also accept operator status (`op`) as admin access.
 - Requirement-based purchases can include dynamic permission checks from configured requirement tiers.
 
+## PlaceholderAPI Placeholders
+
+| Placeholder | Description |
+|---|---|
+| `%rdr_storages_max%` | Maximum storages allowed. |
+| `%rdr_storages_players%` | Number of storages unlocked by the player. |
+| `%rdr_storages_items%` | Number of items currently stored across the player's storages. |
+| `%rdr_storages_tax%` | Comma-separated list of tax debt by currency. |
+
 ## SEO Summary
 
 RDR targets these high-intent server-owner searches:
