@@ -1,26 +1,38 @@
 package com.raindropcentral.rplatform.view;
 
-import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.utility.heads.view.Return;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import com.raindropcentral.rplatform.version.ServerEnvironment;
 import de.jexcellence.jextranslate.i18n.I18n;
 import me.devnatan.inventoryframework.View;
 import me.devnatan.inventoryframework.ViewConfigBuilder;
+import me.devnatan.inventoryframework.component.BukkitItemComponentBuilder;
+import me.devnatan.inventoryframework.component.ComponentFactory;
 import me.devnatan.inventoryframework.context.Context;
 import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
+import me.devnatan.inventoryframework.context.SlotRenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
+import me.devnatan.inventoryframework.internal.LayoutSlot;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.function.BiFunction;
+import java.util.function.Consumer;
+import java.util.function.IntFunction;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,6 +45,14 @@ import java.util.logging.Logger;
  * @version 1.0.1
  */
 public abstract class BaseView extends View {
+
+        private static final String PROMOTION_URL = "https://raindropcentral.com";
+        private static final String INITIAL_DATA_PLUGIN_KEY = "plugin";
+        private static final String RDS_PACKAGE_PREFIX = "com.raindropcentral.rds.";
+        private static final String RDR_PACKAGE_PREFIX = "com.raindropcentral.rdr.";
+        private static final String RDQ_PACKAGE_PREFIX = "com.raindropcentral.rdq.";
+        private static final @Nullable Field ITEM_BUILDER_ITEM_FIELD = resolveItemBuilderField("item");
+        private static final @Nullable Field ITEM_BUILDER_RENDER_HANDLER_FIELD = resolveItemBuilderField("renderHandler");
 
         /**
          * State reference to the parent view used for automatic back navigation
@@ -372,6 +392,8 @@ public abstract class BaseView extends View {
 		) {
 			this.autoFillEmptySlots(render, player);
 		}
+
+		this.decorateFreeEditionButtons(render);
 	}
 
     @Override
@@ -411,6 +433,233 @@ public abstract class BaseView extends View {
 			Level.FINE,
 			"Auto-filled " + totalSlots + " slots with " + getFillMaterial().name() + " for view: " + this.getClass().getSimpleName()
 		);
+	}
+
+	private void decorateFreeEditionButtons(
+		final @NotNull RenderContext render
+	) {
+		if (!this.shouldAppendPromotionForFreeEdition(render)) {
+			return;
+		}
+
+		for (final ComponentFactory componentFactory : render.getComponentFactories()) {
+			this.decorateComponentFactory(componentFactory);
+		}
+
+		this.decorateLayoutSlotFactories(render);
+		this.decorateAvailableSlotFactories(render);
+	}
+
+	private void decorateComponentFactory(
+		final @Nullable ComponentFactory componentFactory
+	) {
+		if (componentFactory instanceof BukkitItemComponentBuilder itemBuilder) {
+			this.decorateItemBuilder(itemBuilder);
+		}
+	}
+
+	private void decorateLayoutSlotFactories(
+		final @NotNull RenderContext render
+	) {
+		final List<LayoutSlot> layoutSlots = render.getLayoutSlots();
+		for (int index = 0; index < layoutSlots.size(); index++) {
+			final LayoutSlot layoutSlot = layoutSlots.get(index);
+			final IntFunction<ComponentFactory> slotFactory = layoutSlot.getFactory();
+			if (slotFactory == null) {
+				continue;
+			}
+
+			layoutSlots.set(index, layoutSlot.withFactory(position -> {
+				final ComponentFactory componentFactory = slotFactory.apply(position);
+				this.decorateComponentFactory(componentFactory);
+				return componentFactory;
+			}));
+		}
+	}
+
+	private void decorateAvailableSlotFactories(
+		final @NotNull RenderContext render
+	) {
+		final List<BiFunction<Integer, Integer, ComponentFactory>> availableSlotFactories = render.getAvailableSlotFactories();
+		for (int index = 0; index < availableSlotFactories.size(); index++) {
+			final BiFunction<Integer, Integer, ComponentFactory> availableFactory = availableSlotFactories.get(index);
+			availableSlotFactories.set(index, (row, column) -> {
+				final ComponentFactory componentFactory = availableFactory.apply(row, column);
+				this.decorateComponentFactory(componentFactory);
+				return componentFactory;
+			});
+		}
+	}
+
+	private static @Nullable Field resolveItemBuilderField(
+		final @NotNull String fieldName
+	) {
+		try {
+			final Field field = BukkitItemComponentBuilder.class.getDeclaredField(fieldName);
+			field.setAccessible(true);
+			return field;
+		} catch (final NoSuchFieldException ignored) {
+			return null;
+		}
+	}
+
+	protected final void decorateItemBuilder(
+		final @NotNull BukkitItemComponentBuilder itemBuilder
+	) {
+		if (ITEM_BUILDER_RENDER_HANDLER_FIELD != null) {
+			try {
+				@SuppressWarnings("unchecked")
+				final Consumer<SlotRenderContext> existingRenderHandler =
+					(Consumer<SlotRenderContext>) ITEM_BUILDER_RENDER_HANDLER_FIELD.get(itemBuilder);
+				if (existingRenderHandler != null) {
+					itemBuilder.onRender(renderContext -> {
+						existingRenderHandler.accept(renderContext);
+						final ItemStack updatedItem = this.appendPromotionToItem(renderContext.getItem());
+						if (updatedItem != null) {
+							renderContext.setItem(updatedItem);
+						}
+					});
+					return;
+				}
+			} catch (final IllegalAccessException ignored) {
+			}
+		}
+
+		if (ITEM_BUILDER_ITEM_FIELD != null) {
+			try {
+				final Object fallbackItem = ITEM_BUILDER_ITEM_FIELD.get(itemBuilder);
+				if (fallbackItem instanceof ItemStack itemStack) {
+					final ItemStack updatedItem = this.appendPromotionToItem(itemStack);
+					if (updatedItem != null) {
+						itemBuilder.withItem(updatedItem);
+					}
+				}
+			} catch (final IllegalAccessException ignored) {
+			}
+		}
+	}
+
+	protected final boolean shouldAppendPromotionForFreeEdition(
+		final @NotNull Context context
+	) {
+		final Object initialData;
+		try {
+			initialData = context.getInitialData();
+		} catch (final Exception ignored) {
+			return false;
+		}
+
+		if (!(initialData instanceof Map<?, ?> initialDataMap)) {
+			return false;
+		}
+
+		final Object pluginRuntime = initialDataMap.get(INITIAL_DATA_PLUGIN_KEY);
+		if (pluginRuntime == null) {
+			return false;
+		}
+
+		if (!this.isTargetModuleRuntime(pluginRuntime.getClass().getName())) {
+			return false;
+		}
+
+		final String edition = this.resolveRuntimeEdition(pluginRuntime);
+		return edition != null && "free".equalsIgnoreCase(edition.trim());
+	}
+
+	private boolean isTargetModuleRuntime(
+		final @NotNull String className
+	) {
+		return className.startsWith(RDS_PACKAGE_PREFIX)
+			|| className.startsWith(RDR_PACKAGE_PREFIX)
+			|| className.startsWith(RDQ_PACKAGE_PREFIX);
+	}
+
+	private @Nullable String resolveRuntimeEdition(
+		final @NotNull Object pluginRuntime
+	) {
+		try {
+			final Method editionMethod = pluginRuntime.getClass().getMethod("getEdition");
+			final Object editionValue = editionMethod.invoke(pluginRuntime);
+			if (editionValue instanceof String edition) {
+				return edition;
+			}
+		} catch (final ReflectiveOperationException ignored) {
+		}
+
+		final Boolean premiumState = this.resolvePremiumState(pluginRuntime);
+		if (premiumState != null) {
+			return premiumState ? "Premium" : "Free";
+		}
+
+		return null;
+	}
+
+	private @Nullable Boolean resolvePremiumState(
+		final @NotNull Object pluginRuntime
+	) {
+		for (final String serviceGetter : List.of(
+			"getShopService",
+			"getStorageService",
+			"getRankSystemService",
+			"getBountyService"
+		)) {
+			try {
+				final Method getter = pluginRuntime.getClass().getMethod(serviceGetter);
+				final Object service = getter.invoke(pluginRuntime);
+				if (service == null) {
+					continue;
+				}
+
+				final Method isPremiumMethod = service.getClass().getMethod("isPremium");
+				final Object premiumValue = isPremiumMethod.invoke(service);
+				if (premiumValue instanceof Boolean premium) {
+					return premium;
+				}
+			} catch (final ReflectiveOperationException ignored) {
+			}
+		}
+
+		return null;
+	}
+
+	private @Nullable ItemStack appendPromotionToItem(
+		final @Nullable ItemStack item
+	) {
+		if (item == null || item.getType().isAir()) {
+			return null;
+		}
+
+		final ItemStack updatedItem = item.clone();
+		final ItemMeta itemMeta = updatedItem.getItemMeta();
+		if (itemMeta == null) {
+			return null;
+		}
+
+		final List<Component> currentLore = itemMeta.lore();
+		if (currentLore != null && this.containsPromotionLine(currentLore)) {
+			return null;
+		}
+
+		final List<Component> updatedLore = currentLore == null
+			? new ArrayList<>()
+			: new ArrayList<>(currentLore);
+		updatedLore.add(Component.text(PROMOTION_URL, NamedTextColor.AQUA));
+		itemMeta.lore(updatedLore);
+		updatedItem.setItemMeta(itemMeta);
+		return updatedItem;
+	}
+
+	private boolean containsPromotionLine(
+		final @NotNull List<Component> lore
+	) {
+		for (final Component line : lore) {
+			final String plainLine = PlainTextComponentSerializer.plainText().serialize(line);
+			if (plainLine.contains(PROMOTION_URL)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 	
         /**

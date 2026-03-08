@@ -48,7 +48,7 @@ public abstract class APaginatedView<T> extends BaseView {
          */
         private final State<Pagination> pagination = this.buildLazyAsyncPaginationState(this::getAsyncPaginationSource)
 			.layoutTarget('O')
-			.elementFactory(this::renderEntry)
+			.elementFactory(this::renderEntryWithPromotion)
 			.build();
 	
 	public APaginatedView(
@@ -88,6 +88,18 @@ public abstract class APaginatedView<T> extends BaseView {
 		final int index,
 		final @NotNull T entry
 	);
+
+	private void renderEntryWithPromotion(
+		final @NotNull Context context,
+		final @NotNull BukkitItemComponentBuilder builder,
+		final int index,
+		final @NotNull T entry
+	) {
+		this.renderEntry(context, builder, index, entry);
+		if (this.shouldAppendPromotionForFreeEdition(context)) {
+			this.decorateItemBuilder(builder);
+		}
+	}
 	
         /**
          * Declares the default pagination layout, mapping navigation heads and entry placeholders to
