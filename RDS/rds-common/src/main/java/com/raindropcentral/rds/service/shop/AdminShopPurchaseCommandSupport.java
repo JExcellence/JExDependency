@@ -36,6 +36,7 @@ public final class AdminShopPurchaseCommandSupport {
      * @param shop source shop
      * @param item purchased shop item
      * @param purchasedAmount purchased amount
+     * @param unitPrice resolved unit price before discount
      * @param totalPrice total purchase price
      */
     public static void executePurchaseCommands(
@@ -44,6 +45,7 @@ public final class AdminShopPurchaseCommandSupport {
             final @NotNull Shop shop,
             final @NotNull ShopItem item,
             final int purchasedAmount,
+            final double unitPrice,
             final double totalPrice
     ) {
         if (!shop.isAdminShop() || !item.hasAdminPurchaseCommands()) {
@@ -58,6 +60,7 @@ public final class AdminShopPurchaseCommandSupport {
                     item,
                     action,
                     purchasedAmount,
+                    unitPrice,
                     totalPrice
             );
             if (action.delayTicks() > 0L) {
@@ -75,6 +78,7 @@ public final class AdminShopPurchaseCommandSupport {
             final @NotNull ShopItem item,
             final @NotNull ShopItem.AdminPurchaseCommand action,
             final int purchasedAmount,
+            final double unitPrice,
             final double totalPrice
     ) {
         final String resolvedCommand = resolveCommandText(
@@ -84,6 +88,7 @@ public final class AdminShopPurchaseCommandSupport {
                 item,
                 action.command(),
                 purchasedAmount,
+                unitPrice,
                 totalPrice
         );
         final String runnableCommand = stripLeadingSlash(resolvedCommand);
@@ -110,9 +115,17 @@ public final class AdminShopPurchaseCommandSupport {
             final @NotNull ShopItem item,
             final @NotNull String rawCommand,
             final int purchasedAmount,
+            final double unitPrice,
             final double totalPrice
     ) {
-        final Map<String, String> placeholders = collectBasicPlaceholders(shop, customer, item, purchasedAmount, totalPrice);
+        final Map<String, String> placeholders = collectBasicPlaceholders(
+                shop,
+                customer,
+                item,
+                purchasedAmount,
+                unitPrice,
+                totalPrice
+        );
         String resolved = rawCommand;
         for (final Map.Entry<String, String> entry : placeholders.entrySet()) {
             resolved = resolved.replace(entry.getKey(), entry.getValue());
@@ -125,6 +138,7 @@ public final class AdminShopPurchaseCommandSupport {
             final @NotNull Player customer,
             final @NotNull ShopItem item,
             final int purchasedAmount,
+            final double unitPrice,
             final double totalPrice
     ) {
         final Map<String, String> placeholders = new LinkedHashMap<>();
@@ -137,7 +151,7 @@ public final class AdminShopPurchaseCommandSupport {
         placeholders.put("{amount}", String.valueOf(Math.max(0, purchasedAmount)));
         placeholders.put("{item_type}", item.getItem().getType().name());
         placeholders.put("{currency_type}", item.getCurrencyType());
-        placeholders.put("{price_each}", String.format(java.util.Locale.US, "%.2f", item.getValue()));
+        placeholders.put("{price_each}", String.format(java.util.Locale.US, "%.2f", Math.max(0D, unitPrice)));
         placeholders.put("{total_price}", String.format(java.util.Locale.US, "%.2f", Math.max(0D, totalPrice)));
         placeholders.put("{shop_owner}", owner.getName() == null ? ownerId.toString() : owner.getName());
         placeholders.put("{shop_owner_uuid}", ownerId.toString());

@@ -1,6 +1,7 @@
 package com.raindropcentral.rds.view.shop;
 
 import com.raindropcentral.rds.RDS;
+import com.raindropcentral.rds.configs.ConfigSection;
 import com.raindropcentral.rds.database.entity.Shop;
 import com.raindropcentral.rds.items.AbstractItem;
 import com.raindropcentral.rds.items.ShopItem;
@@ -213,19 +214,24 @@ public class ShopInputView extends BaseView {
         }
 
         try {
+            final RDS plugin = this.rds.get(clickContext);
             final Shop shop = this.getCurrentShop(clickContext);
             final List<AbstractItem> storedItems = new ArrayList<>(shop.getItems());
+            final ConfigSection config = plugin.getDefaultConfig();
+            final Map<String, Map<String, Double>> materialPrices = ShopMaterialPriceSupport.loadMaterialPrices(
+                    plugin.getMaterialPricesFile()
+            );
 
             for (ItemStack stack : new TreeMap<>(playerItems).values()) {
                 final ItemStack template = stack.clone();
                 final int amount = template.getAmount();
                 template.setAmount(1);
-                this.mergeStoredItem(storedItems, template, amount);
+                this.mergeStoredItem(storedItems, template, amount, config, materialPrices);
             }
 
             this.normalizeStoredDisplayAmounts(storedItems);
             shop.setItems(storedItems);
-            this.rds.get(clickContext).getShopRepository().update(shop);
+            plugin.getShopRepository().update(shop);
             this.saving.set(true, clickContext);
 
             this.i18n("saved", clickContext.getPlayer())
@@ -382,7 +388,9 @@ public class ShopInputView extends BaseView {
     private void mergeStoredItem(
             final @NotNull List<AbstractItem> storedItems,
             final @NotNull ItemStack template,
-            final int amount
+            final int amount,
+            final @NotNull ConfigSection config,
+            final @NotNull Map<String, Map<String, Double>> materialPrices
     ) {
         for (int index = 0; index < storedItems.size(); index++) {
             final AbstractItem existing = storedItems.get(index);
@@ -398,7 +406,14 @@ public class ShopInputView extends BaseView {
             }
         }
 
-        storedItems.add(new ShopItem(template, amount, "vault", 0D));
+        final ShopMaterialPriceSupport.MaterialPrice defaultPrice = ShopMaterialPriceSupport.resolveDefaultPrice(
+                template.getType(),
+                materialPrices,
+                config.getDefaultCurrencyType(),
+                config.getDefaultItemPrice(),
+                config.getBlacklistedCurrencies()
+        );
+        storedItems.add(new ShopItem(template, amount, defaultPrice.currencyType(), defaultPrice.value()));
     }
 
     private void normalizeStoredDisplayAmounts(
@@ -423,7 +438,10 @@ public class ShopInputView extends BaseView {
                             shopItem.getAdminStockReferenceTime() >= 0L ? shopItem.getAdminStockReferenceTime() : null,
                             shopItem.getAvailabilityMode(),
                             shopItem.getAvailabilityRotationMinutes(),
-                            shopItem.getAdminPurchaseCommands()
+                            shopItem.hasPurchaseLimit() ? shopItem.getPurchaseLimitAmount() : null,
+                            shopItem.hasPurchaseLimit() ? shopItem.getPurchaseLimitWindowMinutes() : null,
+                            shopItem.getAdminPurchaseCommands(),
+                            shopItem.isDynamicPricingEnabled()
                     )
             );
         }

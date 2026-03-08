@@ -11,6 +11,8 @@ import com.raindropcentral.rds.view.shop.anvil.ShopItemAvailabilityMinutesAnvilV
 import com.raindropcentral.rds.view.shop.anvil.ShopItemAdminResetTimerAnvilView;
 import com.raindropcentral.rds.view.shop.anvil.ShopItemAdminStockLimitAnvilView;
 import com.raindropcentral.rds.view.shop.anvil.ShopItemCurrencyTypeAnvilView;
+import com.raindropcentral.rds.view.shop.anvil.ShopItemPurchaseLimitAnvilView;
+import com.raindropcentral.rds.view.shop.anvil.ShopItemPurchaseLimitMinutesAnvilView;
 import com.raindropcentral.rds.view.shop.anvil.ShopItemValueAnvilView;
 import com.raindropcentral.rplatform.utility.heads.view.Proceed;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
@@ -71,7 +73,7 @@ public class ShopItemEditView extends BaseView {
     protected String[] getLayout() {
         return new String[]{
                 "lrm s    ",
-                "an tv   k",
+                "an tvdpwk",
                 "        c"
         };
     }
@@ -152,6 +154,11 @@ public class ShopItemEditView extends BaseView {
                     );
                 });
 
+        render.layoutSlot('d')
+                .renderWith(() -> this.createDynamicPricingItem(player, plugin, this.getEditedItem(render)))
+                .updateOnStateChange(this.editedItem)
+                .onClick(this::handleDynamicPricingToggleClick);
+
         render.layoutSlot('a')
                 .renderWith(() -> this.createAvailabilityModeItem(player, this.getEditedItem(render)))
                 .updateOnStateChange(this.editedItem)
@@ -167,6 +174,34 @@ public class ShopItemEditView extends BaseView {
 
                     clickContext.openForPlayer(
                             ShopItemAvailabilityMinutesAnvilView.class,
+                            this.createItemViewData(clickContext, this.getEditedItem(clickContext))
+                    );
+                });
+
+        render.layoutSlot('p')
+                .renderWith(() -> this.createPurchaseLimitAmountItem(player, this.getEditedItem(render)))
+                .updateOnStateChange(this.editedItem)
+                .onClick(clickContext -> {
+                    if (!this.ensureTaxUnlocked(clickContext)) {
+                        return;
+                    }
+
+                    clickContext.openForPlayer(
+                            ShopItemPurchaseLimitAnvilView.class,
+                            this.createItemViewData(clickContext, this.getEditedItem(clickContext))
+                    );
+                });
+
+        render.layoutSlot('w')
+                .renderWith(() -> this.createPurchaseLimitWindowItem(player, this.getEditedItem(render)))
+                .updateOnStateChange(this.editedItem)
+                .onClick(clickContext -> {
+                    if (!this.ensureTaxUnlocked(clickContext)) {
+                        return;
+                    }
+
+                    clickContext.openForPlayer(
+                            ShopItemPurchaseLimitMinutesAnvilView.class,
                             this.createItemViewData(clickContext, this.getEditedItem(clickContext))
                     );
                 });
@@ -318,6 +353,44 @@ public class ShopItemEditView extends BaseView {
 
         this.i18n("feedback.availability_mode_updated", clickContext.getPlayer())
                 .withPlaceholder("availability_mode", this.getAvailabilityModeLabel(clickContext.getPlayer(), updatedMode))
+                .build()
+                .sendMessage();
+    }
+
+    private void handleDynamicPricingToggleClick(
+            final @NotNull SlotClickContext clickContext
+    ) {
+        clickContext.setCancelled(true);
+
+        final Shop shop = this.getCurrentShop(clickContext);
+        if (shop == null) {
+            this.i18n("feedback.shop_missing", clickContext.getPlayer())
+                    .includePrefix()
+                    .build()
+                    .sendMessage();
+            return;
+        }
+
+        if (!this.canManage(clickContext, shop)) {
+            this.i18n("feedback.not_owner", clickContext.getPlayer())
+                    .includePrefix()
+                    .build()
+                    .sendMessage();
+            return;
+        }
+
+        if (shop.hasTaxDebt()) {
+            this.sendTaxLockedFeedback(clickContext, shop);
+            return;
+        }
+
+        final ShopItem current = this.getEditedItem(clickContext);
+        final boolean updatedEnabled = !current.isDynamicPricingEnabled();
+        this.editedItem.set(current.withDynamicPricingEnabled(updatedEnabled), clickContext);
+        clickContext.update();
+
+        this.i18n("feedback.dynamic_pricing_updated", clickContext.getPlayer())
+                .withPlaceholder("dynamic_pricing", this.getDynamicPricingStateLabel(clickContext.getPlayer(), updatedEnabled))
                 .build()
                 .sendMessage();
     }
@@ -640,18 +713,19 @@ public class ShopItemEditView extends BaseView {
         final Map<String, Object> placeholders;
         if (currentShop != null && currentShop.isAdminShop() && item.hasAdminStockLimit()) {
             loreKey = "summary.admin_limited.lore";
-            placeholders = Map.of(
-                    "amount", item.getAmount(),
-                    "stock_limit", item.getAdminStockLimit(),
-                    "currency_type", item.getCurrencyType(),
-                    "value", item.getValue(),
-                    "restock_mode", this.getAdminRestockModeLabel(player, plugin),
-                    "restock_schedule", this.getAdminRestockSchedule(player, item, plugin),
-                    "availability_mode", this.getAvailabilityModeLabel(player, item),
-                    "availability_state", this.getAvailabilityStateLabel(player, item),
-                    "rotation_minutes", item.getAvailabilityRotationMinutes(),
-                    "command_count", item.getAdminPurchaseCommands().size()
-            );
+            final Map<String, Object> limitedPlaceholders = new HashMap<>();
+            limitedPlaceholders.put("amount", item.getAmount());
+            limitedPlaceholders.put("stock_limit", item.getAdminStockLimit());
+            limitedPlaceholders.put("currency_type", item.getCurrencyType());
+            limitedPlaceholders.put("value", item.getValue());
+            limitedPlaceholders.put("restock_mode", this.getAdminRestockModeLabel(player, plugin));
+            limitedPlaceholders.put("restock_schedule", this.getAdminRestockSchedule(player, item, plugin));
+            limitedPlaceholders.put("availability_mode", this.getAvailabilityModeLabel(player, item));
+            limitedPlaceholders.put("availability_state", this.getAvailabilityStateLabel(player, item));
+            limitedPlaceholders.put("rotation_minutes", item.getAvailabilityRotationMinutes());
+            limitedPlaceholders.put("purchase_limit", this.getPurchaseLimitLabel(player, item));
+            limitedPlaceholders.put("command_count", item.getAdminPurchaseCommands().size());
+            placeholders = limitedPlaceholders;
         } else if (currentShop != null && currentShop.isAdminShop()) {
             loreKey = "summary.admin_unlimited.lore";
             placeholders = Map.of(
@@ -662,6 +736,7 @@ public class ShopItemEditView extends BaseView {
                     "availability_mode", this.getAvailabilityModeLabel(player, item),
                     "availability_state", this.getAvailabilityStateLabel(player, item),
                     "rotation_minutes", item.getAvailabilityRotationMinutes(),
+                    "purchase_limit", this.getPurchaseLimitLabel(player, item),
                     "command_count", item.getAdminPurchaseCommands().size()
             );
         } else {
@@ -672,7 +747,8 @@ public class ShopItemEditView extends BaseView {
                     "value", item.getValue(),
                     "availability_mode", this.getAvailabilityModeLabel(player, item),
                     "availability_state", this.getAvailabilityStateLabel(player, item),
-                    "rotation_minutes", item.getAvailabilityRotationMinutes()
+                    "rotation_minutes", item.getAvailabilityRotationMinutes(),
+                    "purchase_limit", this.getPurchaseLimitLabel(player, item)
             );
         }
 
@@ -724,6 +800,29 @@ public class ShopItemEditView extends BaseView {
                 .build();
     }
 
+    private @NotNull ItemStack createDynamicPricingItem(
+            final @NotNull Player player,
+            final @NotNull RDS plugin,
+            final @NotNull ShopItem item
+    ) {
+        final boolean itemEnabled = item.isDynamicPricingEnabled();
+        final boolean globalEnabled = plugin.getDefaultConfig().getDynamicPricing().isEnabled();
+        final Material material = itemEnabled
+                ? (globalEnabled ? Material.LIME_DYE : Material.YELLOW_DYE)
+                : Material.GRAY_DYE;
+        return UnifiedBuilderFactory.item(material)
+                .setName(this.i18n("dynamic_pricing.name", player).build().component())
+                .setLore(this.i18n("dynamic_pricing.lore", player)
+                        .withPlaceholders(Map.of(
+                                "dynamic_pricing", this.getDynamicPricingStateLabel(player, itemEnabled),
+                                "global_dynamic_pricing", this.getGlobalDynamicPricingStateLabel(player, globalEnabled)
+                        ))
+                        .build()
+                        .children())
+                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                .build();
+    }
+
     private @NotNull ItemStack createAvailabilityModeItem(
             final @NotNull Player player,
             final @NotNull ShopItem item
@@ -758,6 +857,42 @@ public class ShopItemEditView extends BaseView {
                                 "rotation_minutes", item.getAvailabilityRotationMinutes(),
                                 "availability_mode", this.getAvailabilityModeLabel(player, item),
                                 "rotate_mode", this.getAvailabilityModeLabel(player, ShopItem.AvailabilityMode.ROTATE)
+                        ))
+                        .build()
+                        .children())
+                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                .build();
+    }
+
+    private @NotNull ItemStack createPurchaseLimitAmountItem(
+            final @NotNull Player player,
+            final @NotNull ShopItem item
+    ) {
+        return UnifiedBuilderFactory.item(Material.PAPER)
+                .setName(this.i18n("purchase_limit_amount.name", player).build().component())
+                .setLore(this.i18n("purchase_limit_amount.lore", player)
+                        .withPlaceholders(Map.of(
+                                "purchase_limit", this.getPurchaseLimitLabel(player, item),
+                                "limit_amount", item.getPurchaseLimitAmount(),
+                                "window_minutes", item.getPurchaseLimitWindowMinutes()
+                        ))
+                        .build()
+                        .children())
+                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                .build();
+    }
+
+    private @NotNull ItemStack createPurchaseLimitWindowItem(
+            final @NotNull Player player,
+            final @NotNull ShopItem item
+    ) {
+        return UnifiedBuilderFactory.item(Material.CLOCK)
+                .setName(this.i18n("purchase_limit_window.name", player).build().component())
+                .setLore(this.i18n("purchase_limit_window.lore", player)
+                        .withPlaceholders(Map.of(
+                                "purchase_limit", this.getPurchaseLimitLabel(player, item),
+                                "limit_amount", item.hasPurchaseLimit() ? item.getPurchaseLimitAmount() : 1,
+                                "window_minutes", item.hasPurchaseLimit() ? item.getPurchaseLimitWindowMinutes() : 60
                         ))
                         .build()
                         .children())
@@ -864,7 +999,10 @@ public class ShopItemEditView extends BaseView {
                 referenceTime,
                 edited.getAvailabilityMode(),
                 edited.getAvailabilityRotationMinutes(),
-                edited.getAdminPurchaseCommands()
+                edited.hasPurchaseLimit() ? edited.getPurchaseLimitAmount() : null,
+                edited.hasPurchaseLimit() ? edited.getPurchaseLimitWindowMinutes() : null,
+                edited.getAdminPurchaseCommands(),
+                edited.isDynamicPricingEnabled()
         );
     }
 
@@ -905,6 +1043,53 @@ public class ShopItemEditView extends BaseView {
         final String key = item.isAvailableNow()
                 ? "availability_mode.state.available"
                 : "availability_mode.state.unavailable";
+        return this.i18n(key, player)
+                .build()
+                .getI18nVersionWrapper()
+                .asPlaceholder();
+    }
+
+    private @NotNull String getPurchaseLimitLabel(
+            final @NotNull Player player,
+            final @NotNull ShopItem item
+    ) {
+        if (!item.hasPurchaseLimit()) {
+            return this.i18n("purchase_limit.unlimited", player)
+                    .build()
+                    .getI18nVersionWrapper()
+                    .asPlaceholder();
+        }
+
+        return this.i18n("purchase_limit.format", player)
+                .withPlaceholders(Map.of(
+                        "limit_amount", item.getPurchaseLimitAmount(),
+                        "window_minutes", item.getPurchaseLimitWindowMinutes()
+                ))
+                .build()
+                .getI18nVersionWrapper()
+                .asPlaceholder();
+    }
+
+    private @NotNull String getDynamicPricingStateLabel(
+            final @NotNull Player player,
+            final boolean enabled
+    ) {
+        final String key = enabled
+                ? "dynamic_pricing.enabled"
+                : "dynamic_pricing.disabled";
+        return this.i18n(key, player)
+                .build()
+                .getI18nVersionWrapper()
+                .asPlaceholder();
+    }
+
+    private @NotNull String getGlobalDynamicPricingStateLabel(
+            final @NotNull Player player,
+            final boolean enabled
+    ) {
+        final String key = enabled
+                ? "dynamic_pricing.global_enabled"
+                : "dynamic_pricing.global_disabled";
         return this.i18n(key, player)
                 .build()
                 .getI18nVersionWrapper()

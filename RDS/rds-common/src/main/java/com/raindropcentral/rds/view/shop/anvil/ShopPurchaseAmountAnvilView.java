@@ -5,6 +5,7 @@ import com.raindropcentral.rds.database.entity.Shop;
 import com.raindropcentral.rds.items.ShopItem;
 import com.raindropcentral.rds.service.shop.AdminShopStockSupport;
 import com.raindropcentral.rds.view.shop.ShopCustomerView;
+import com.raindropcentral.rds.view.shop.ShopPurchaseLimitSupport;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import com.raindropcentral.rplatform.view.AbstractAnvilView;
 import me.devnatan.inventoryframework.context.Context;
@@ -78,7 +79,7 @@ public class ShopPurchaseAmountAnvilView extends AbstractAnvilView {
     ) {
         try {
             final int amount = Integer.parseInt(input.trim());
-            return amount > 0 && (this.isUnlimitedAdminStock(context) || amount <= this.getMaxPurchasableAmount(context));
+            return amount > 0 && amount <= this.getMaxPurchasableAmount(context);
         } catch (NumberFormatException ignored) {
             return false;
         }
@@ -113,10 +114,11 @@ public class ShopPurchaseAmountAnvilView extends AbstractAnvilView {
             final @Nullable String input,
             final @NotNull Context context
     ) {
-        final String errorKey = this.isAdminShop(context)
-                ? this.isUnlimitedAdminStock(context)
-                    ? "error.invalid_number_admin"
-                    : "error.invalid_number"
+        final boolean unlimitedAdminStock = this.isAdminShop(context)
+                && this.isUnlimitedAdminStock(context)
+                && this.getMaxPurchasableAmount(context) == Integer.MAX_VALUE;
+        final String errorKey = unlimitedAdminStock
+                ? "error.invalid_number_admin"
                 : "error.invalid_number";
         this.i18n(errorKey, context.getPlayer())
                 .withPlaceholders(Map.of(
@@ -163,7 +165,40 @@ public class ShopPurchaseAmountAnvilView extends AbstractAnvilView {
             final @NotNull Context context
     ) {
         final ShopItem item = this.getCurrentTargetItem(context);
-        return item == null ? this.targetItem.get(context).getAmount() : Math.max(0, item.getAmount());
+        if (item == null) {
+            return Math.max(0, this.targetItem.get(context).getAmount());
+        }
+
+        final Shop shop = this.getCurrentShop(context);
+        final int stockMaximum = this.resolveStockMaximum(shop, item);
+        if (shop == null) {
+            return stockMaximum == Integer.MAX_VALUE ? Math.max(0, item.getAmount()) : stockMaximum;
+        }
+
+        final int limitMaximum = ShopPurchaseLimitSupport.getRemainingQuota(
+                shop,
+                item,
+                context.getPlayer().getUniqueId()
+        );
+        if (stockMaximum == Integer.MAX_VALUE) {
+            return Math.max(0, limitMaximum);
+        }
+        if (limitMaximum == Integer.MAX_VALUE) {
+            return stockMaximum;
+        }
+
+        return Math.max(0, Math.min(stockMaximum, limitMaximum));
+    }
+
+    private int resolveStockMaximum(
+            final @Nullable Shop shop,
+            final @NotNull ShopItem item
+    ) {
+        if (shop != null && shop.isAdminShop() && AdminShopStockSupport.isUnlimitedAdminStock(shop, item)) {
+            return Integer.MAX_VALUE;
+        }
+
+        return Math.max(0, item.getAmount());
     }
 
     private Shop getCurrentShop(

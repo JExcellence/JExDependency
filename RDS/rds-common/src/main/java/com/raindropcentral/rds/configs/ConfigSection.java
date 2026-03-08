@@ -37,6 +37,7 @@ public class ConfigSection extends AConfigSection {
 
     private Map<String, StoreCurrencySection> store;
     private String default_currency_type;
+    private Double default_item_price;
     private List<String> blacklisted_currencies;
     private Integer max_shops;
     private Boolean warn_missing_requirements;
@@ -46,6 +47,7 @@ public class ConfigSection extends AConfigSection {
     private AdminShopSection admin_shops;
     private ServerBankSection server_bank;
     private ProtectionSection protection;
+    private DynamicPricingSection dynamic_pricing;
 
     /**
      * Creates a configuration section bound to the provided evaluation environment.
@@ -100,6 +102,19 @@ public class ConfigSection extends AConfigSection {
         }
 
         return "vault";
+    }
+
+    /**
+     * Returns the fallback item price used when no per-material default is configured.
+     *
+     * @return fallback item price
+     */
+    public double getDefaultItemPrice() {
+        if (this.default_item_price == null || !Double.isFinite(this.default_item_price) || this.default_item_price < 0D) {
+            return 0D;
+        }
+
+        return this.default_item_price;
     }
 
     /**
@@ -320,6 +335,17 @@ public class ConfigSection extends AConfigSection {
     }
 
     /**
+     * Returns the configured dynamic-pricing section.
+     *
+     * @return dynamic-pricing configuration
+     */
+    public @NotNull DynamicPricingSection getDynamicPricing() {
+        return this.dynamic_pricing == null
+                ? new DynamicPricingSection(new EvaluationEnvironmentBuilder())
+                : this.dynamic_pricing;
+    }
+
+    /**
      * Returns the initial tax amount for the default tax currency.
      *
      * @return initial tax amount
@@ -436,6 +462,9 @@ public class ConfigSection extends AConfigSection {
         if (configuration.contains("default_currency_type")) {
             section.default_currency_type = configuration.getString("default_currency_type");
         }
+        if (configuration.contains("default_item_price")) {
+            section.default_item_price = configuration.getDouble("default_item_price");
+        }
         if (configuration.contains("blacklisted_currencies")) {
             section.blacklisted_currencies = new ArrayList<>(configuration.getStringList("blacklisted_currencies"));
         }
@@ -452,6 +481,7 @@ public class ConfigSection extends AConfigSection {
         section.admin_shops = AdminShopSection.fromFile(configFile);
         section.server_bank = ServerBankSection.fromFile(configFile);
         section.protection = ProtectionSection.fromFile(configFile);
+        section.dynamic_pricing = DynamicPricingSection.fromFile(configFile);
         return section;
     }
 

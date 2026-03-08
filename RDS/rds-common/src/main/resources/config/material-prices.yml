@@ -1,0 +1,4978 @@
+# Default pricing applied when a new material is first added to a shop.
+# Generated from Paper 1.21.11 Material enum (legacy materials excluded).
+# Values are heuristic rarity-based estimates.
+materials:
+  ACACIA_BOAT:
+    vault: 1.30
+    raindrops: 0.13
+  ACACIA_BUTTON:
+    vault: 2.40
+    raindrops: 0.24
+  ACACIA_CHEST_BOAT:
+    vault: 1.30
+    raindrops: 0.13
+  ACACIA_DOOR:
+    vault: 2.40
+    raindrops: 0.24
+  ACACIA_FENCE:
+    vault: 3.0
+    raindrops: 0.30
+  ACACIA_FENCE_GATE:
+    vault: 3.0
+    raindrops: 0.30
+  ACACIA_HANGING_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  ACACIA_LEAVES:
+    vault: 2.70
+    raindrops: 0.27
+  ACACIA_LOG:
+    vault: 2.70
+    raindrops: 0.27
+  ACACIA_PLANKS:
+    vault: 2.70
+    raindrops: 0.27
+  ACACIA_PRESSURE_PLATE:
+    vault: 2.40
+    raindrops: 0.24
+  ACACIA_SAPLING:
+    vault: 2.70
+    raindrops: 0.27
+  ACACIA_SHELF:
+    vault: 1.0
+    raindrops: 0.10
+  ACACIA_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  ACACIA_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  ACACIA_STAIRS:
+    vault: 2.40
+    raindrops: 0.24
+  ACACIA_TRAPDOOR:
+    vault: 2.40
+    raindrops: 0.24
+  ACACIA_WALL_HANGING_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  ACACIA_WALL_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  ACACIA_WOOD:
+    vault: 2.70
+    raindrops: 0.27
+  ACTIVATOR_RAIL:
+    vault: 1.0
+    raindrops: 0.10
+  AIR:
+    vault: 0.0
+    raindrops: 0.0
+  ALLAY_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  ALLIUM:
+    vault: 1.0
+    raindrops: 0.10
+  AMETHYST_BLOCK:
+    vault: 110.0
+    raindrops: 11.0
+  AMETHYST_CLUSTER:
+    vault: 22.0
+    raindrops: 2.20
+  AMETHYST_SHARD:
+    vault: 22.0
+    raindrops: 2.20
+  ANCIENT_DEBRIS:
+    vault: 75.0
+    raindrops: 7.50
+  ANDESITE:
+    vault: 1.0
+    raindrops: 0.10
+  ANDESITE_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  ANDESITE_STAIRS:
+    vault: 2.40
+    raindrops: 0.24
+  ANDESITE_WALL:
+    vault: 2.40
+    raindrops: 0.24
+  ANGLER_POTTERY_SHERD:
+    vault: 1.40
+    raindrops: 0.14
+  ANVIL:
+    vault: 1.0
+    raindrops: 0.10
+  APPLE:
+    vault: 1.0
+    raindrops: 0.10
+  ARCHER_POTTERY_SHERD:
+    vault: 1.40
+    raindrops: 0.14
+  ARMADILLO_SCUTE:
+    vault: 1.0
+    raindrops: 0.10
+  ARMADILLO_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  ARMOR_STAND:
+    vault: 1.0
+    raindrops: 0.10
+  ARMS_UP_POTTERY_SHERD:
+    vault: 1.40
+    raindrops: 0.14
+  ARROW:
+    vault: 1.0
+    raindrops: 0.10
+  ATTACHED_MELON_STEM:
+    vault: 1.0
+    raindrops: 0.10
+  ATTACHED_PUMPKIN_STEM:
+    vault: 1.0
+    raindrops: 0.10
+  AXOLOTL_BUCKET:
+    vault: 1.50
+    raindrops: 0.15
+  AXOLOTL_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  AZALEA:
+    vault: 1.0
+    raindrops: 0.10
+  AZALEA_LEAVES:
+    vault: 2.70
+    raindrops: 0.27
+  AZURE_BLUET:
+    vault: 1.0
+    raindrops: 0.10
+  BAKED_POTATO:
+    vault: 1.0
+    raindrops: 0.10
+  BAMBOO:
+    vault: 1.0
+    raindrops: 0.10
+  BAMBOO_BLOCK:
+    vault: 1.0
+    raindrops: 0.10
+  BAMBOO_BUTTON:
+    vault: 2.40
+    raindrops: 0.24
+  BAMBOO_CHEST_RAFT:
+    vault: 1.30
+    raindrops: 0.13
+  BAMBOO_DOOR:
+    vault: 2.40
+    raindrops: 0.24
+  BAMBOO_FENCE:
+    vault: 3.0
+    raindrops: 0.30
+  BAMBOO_FENCE_GATE:
+    vault: 3.0
+    raindrops: 0.30
+  BAMBOO_HANGING_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  BAMBOO_MOSAIC:
+    vault: 1.0
+    raindrops: 0.10
+  BAMBOO_MOSAIC_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  BAMBOO_MOSAIC_STAIRS:
+    vault: 2.40
+    raindrops: 0.24
+  BAMBOO_PLANKS:
+    vault: 2.70
+    raindrops: 0.27
+  BAMBOO_PRESSURE_PLATE:
+    vault: 2.40
+    raindrops: 0.24
+  BAMBOO_RAFT:
+    vault: 1.30
+    raindrops: 0.13
+  BAMBOO_SAPLING:
+    vault: 2.70
+    raindrops: 0.27
+  BAMBOO_SHELF:
+    vault: 1.0
+    raindrops: 0.10
+  BAMBOO_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  BAMBOO_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  BAMBOO_STAIRS:
+    vault: 2.40
+    raindrops: 0.24
+  BAMBOO_TRAPDOOR:
+    vault: 2.40
+    raindrops: 0.24
+  BAMBOO_WALL_HANGING_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  BAMBOO_WALL_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  BARREL:
+    vault: 1.0
+    raindrops: 0.10
+  BARRIER:
+    vault: 1.0
+    raindrops: 0.10
+  BASALT:
+    vault: 1.0
+    raindrops: 0.10
+  BAT_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  BEACON:
+    vault: 1500.0
+    raindrops: 150.0
+  BEDROCK:
+    vault: 1.0
+    raindrops: 0.10
+  BEE_NEST:
+    vault: 1.0
+    raindrops: 0.10
+  BEE_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  BEEF:
+    vault: 1.0
+    raindrops: 0.10
+  BEEHIVE:
+    vault: 1.0
+    raindrops: 0.10
+  BEETROOT:
+    vault: 1.0
+    raindrops: 0.10
+  BEETROOT_SEEDS:
+    vault: 0.70
+    raindrops: 0.07
+  BEETROOT_SOUP:
+    vault: 1.0
+    raindrops: 0.10
+  BEETROOTS:
+    vault: 1.0
+    raindrops: 0.10
+  BELL:
+    vault: 8.0
+    raindrops: 0.80
+  BIG_DRIPLEAF:
+    vault: 1.0
+    raindrops: 0.10
+  BIG_DRIPLEAF_STEM:
+    vault: 1.0
+    raindrops: 0.10
+  BIRCH_BOAT:
+    vault: 1.30
+    raindrops: 0.13
+  BIRCH_BUTTON:
+    vault: 2.40
+    raindrops: 0.24
+  BIRCH_CHEST_BOAT:
+    vault: 1.30
+    raindrops: 0.13
+  BIRCH_DOOR:
+    vault: 2.40
+    raindrops: 0.24
+  BIRCH_FENCE:
+    vault: 3.0
+    raindrops: 0.30
+  BIRCH_FENCE_GATE:
+    vault: 3.0
+    raindrops: 0.30
+  BIRCH_HANGING_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  BIRCH_LEAVES:
+    vault: 2.70
+    raindrops: 0.27
+  BIRCH_LOG:
+    vault: 2.70
+    raindrops: 0.27
+  BIRCH_PLANKS:
+    vault: 2.70
+    raindrops: 0.27
+  BIRCH_PRESSURE_PLATE:
+    vault: 2.40
+    raindrops: 0.24
+  BIRCH_SAPLING:
+    vault: 2.70
+    raindrops: 0.27
+  BIRCH_SHELF:
+    vault: 1.0
+    raindrops: 0.10
+  BIRCH_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  BIRCH_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  BIRCH_STAIRS:
+    vault: 2.40
+    raindrops: 0.24
+  BIRCH_TRAPDOOR:
+    vault: 2.40
+    raindrops: 0.24
+  BIRCH_WALL_HANGING_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  BIRCH_WALL_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  BIRCH_WOOD:
+    vault: 2.70
+    raindrops: 0.27
+  BLACK_BANNER:
+    vault: 3.0
+    raindrops: 0.30
+  BLACK_BED:
+    vault: 1.0
+    raindrops: 0.10
+  BLACK_BUNDLE:
+    vault: 8.0
+    raindrops: 0.80
+  BLACK_CANDLE:
+    vault: 8.0
+    raindrops: 0.80
+  BLACK_CANDLE_CAKE:
+    vault: 8.0
+    raindrops: 0.80
+  BLACK_CARPET:
+    vault: 3.0
+    raindrops: 0.30
+  BLACK_CONCRETE:
+    vault: 3.0
+    raindrops: 0.30
+  BLACK_CONCRETE_POWDER:
+    vault: 3.0
+    raindrops: 0.30
+  BLACK_DYE:
+    vault: 0.70
+    raindrops: 0.07
+  BLACK_GLAZED_TERRACOTTA:
+    vault: 3.0
+    raindrops: 0.30
+  BLACK_HARNESS:
+    vault: 1.0
+    raindrops: 0.10
+  BLACK_SHULKER_BOX:
+    vault: 1.0
+    raindrops: 0.10
+  BLACK_STAINED_GLASS:
+    vault: 3.0
+    raindrops: 0.30
+  BLACK_STAINED_GLASS_PANE:
+    vault: 3.0
+    raindrops: 0.30
+  BLACK_TERRACOTTA:
+    vault: 3.0
+    raindrops: 0.30
+  BLACK_WALL_BANNER:
+    vault: 3.0
+    raindrops: 0.30
+  BLACK_WOOL:
+    vault: 3.0
+    raindrops: 0.30
+  BLACKSTONE:
+    vault: 1.0
+    raindrops: 0.10
+  BLACKSTONE_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  BLACKSTONE_STAIRS:
+    vault: 2.40
+    raindrops: 0.24
+  BLACKSTONE_WALL:
+    vault: 2.40
+    raindrops: 0.24
+  BLADE_POTTERY_SHERD:
+    vault: 1.40
+    raindrops: 0.14
+  BLAST_FURNACE:
+    vault: 1.0
+    raindrops: 0.10
+  BLAZE_POWDER:
+    vault: 22.0
+    raindrops: 2.20
+  BLAZE_ROD:
+    vault: 22.0
+    raindrops: 2.20
+  BLAZE_SPAWN_EGG:
+    vault: 52.80
+    raindrops: 5.28
+  BLUE_BANNER:
+    vault: 3.0
+    raindrops: 0.30
+  BLUE_BED:
+    vault: 1.0
+    raindrops: 0.10
+  BLUE_BUNDLE:
+    vault: 8.0
+    raindrops: 0.80
+  BLUE_CANDLE:
+    vault: 8.0
+    raindrops: 0.80
+  BLUE_CANDLE_CAKE:
+    vault: 8.0
+    raindrops: 0.80
+  BLUE_CARPET:
+    vault: 3.0
+    raindrops: 0.30
+  BLUE_CONCRETE:
+    vault: 3.0
+    raindrops: 0.30
+  BLUE_CONCRETE_POWDER:
+    vault: 3.0
+    raindrops: 0.30
+  BLUE_DYE:
+    vault: 0.70
+    raindrops: 0.07
+  BLUE_EGG:
+    vault: 1.0
+    raindrops: 0.10
+  BLUE_GLAZED_TERRACOTTA:
+    vault: 3.0
+    raindrops: 0.30
+  BLUE_HARNESS:
+    vault: 1.0
+    raindrops: 0.10
+  BLUE_ICE:
+    vault: 1.0
+    raindrops: 0.10
+  BLUE_ORCHID:
+    vault: 1.0
+    raindrops: 0.10
+  BLUE_SHULKER_BOX:
+    vault: 1.0
+    raindrops: 0.10
+  BLUE_STAINED_GLASS:
+    vault: 3.0
+    raindrops: 0.30
+  BLUE_STAINED_GLASS_PANE:
+    vault: 3.0
+    raindrops: 0.30
+  BLUE_TERRACOTTA:
+    vault: 3.0
+    raindrops: 0.30
+  BLUE_WALL_BANNER:
+    vault: 3.0
+    raindrops: 0.30
+  BLUE_WOOL:
+    vault: 3.0
+    raindrops: 0.30
+  BOGGED_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  BOLT_ARMOR_TRIM_SMITHING_TEMPLATE:
+    vault: 187.50
+    raindrops: 18.75
+  BONE:
+    vault: 1.0
+    raindrops: 0.10
+  BONE_BLOCK:
+    vault: 1.0
+    raindrops: 0.10
+  BONE_MEAL:
+    vault: 1.0
+    raindrops: 0.10
+  BOOK:
+    vault: 8.0
+    raindrops: 0.80
+  BOOKSHELF:
+    vault: 8.0
+    raindrops: 0.80
+  BORDURE_INDENTED_BANNER_PATTERN:
+    vault: 4.20
+    raindrops: 0.42
+  BOW:
+    vault: 1.0
+    raindrops: 0.10
+  BOWL:
+    vault: 1.0
+    raindrops: 0.10
+  BRAIN_CORAL:
+    vault: 8.0
+    raindrops: 0.80
+  BRAIN_CORAL_BLOCK:
+    vault: 40.0
+    raindrops: 4.0
+  BRAIN_CORAL_FAN:
+    vault: 8.0
+    raindrops: 0.80
+  BRAIN_CORAL_WALL_FAN:
+    vault: 8.0
+    raindrops: 0.80
+  BREAD:
+    vault: 1.0
+    raindrops: 0.10
+  BREEZE_ROD:
+    vault: 8.0
+    raindrops: 0.80
+  BREEZE_SPAWN_EGG:
+    vault: 19.20
+    raindrops: 1.92
+  BREWER_POTTERY_SHERD:
+    vault: 1.40
+    raindrops: 0.14
+  BREWING_STAND:
+    vault: 1.0
+    raindrops: 0.10
+  BRICK:
+    vault: 3.0
+    raindrops: 0.30
+  BRICK_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  BRICK_STAIRS:
+    vault: 2.40
+    raindrops: 0.24
+  BRICK_WALL:
+    vault: 2.40
+    raindrops: 0.24
+  BRICKS:
+    vault: 3.0
+    raindrops: 0.30
+  BROWN_BANNER:
+    vault: 3.0
+    raindrops: 0.30
+  BROWN_BED:
+    vault: 1.0
+    raindrops: 0.10
+  BROWN_BUNDLE:
+    vault: 8.0
+    raindrops: 0.80
+  BROWN_CANDLE:
+    vault: 8.0
+    raindrops: 0.80
+  BROWN_CANDLE_CAKE:
+    vault: 8.0
+    raindrops: 0.80
+  BROWN_CARPET:
+    vault: 3.0
+    raindrops: 0.30
+  BROWN_CONCRETE:
+    vault: 3.0
+    raindrops: 0.30
+  BROWN_CONCRETE_POWDER:
+    vault: 3.0
+    raindrops: 0.30
+  BROWN_DYE:
+    vault: 0.70
+    raindrops: 0.07
+  BROWN_EGG:
+    vault: 1.0
+    raindrops: 0.10
+  BROWN_GLAZED_TERRACOTTA:
+    vault: 3.0
+    raindrops: 0.30
+  BROWN_HARNESS:
+    vault: 1.0
+    raindrops: 0.10
+  BROWN_MUSHROOM:
+    vault: 1.0
+    raindrops: 0.10
+  BROWN_MUSHROOM_BLOCK:
+    vault: 1.0
+    raindrops: 0.10
+  BROWN_SHULKER_BOX:
+    vault: 1.0
+    raindrops: 0.10
+  BROWN_STAINED_GLASS:
+    vault: 3.0
+    raindrops: 0.30
+  BROWN_STAINED_GLASS_PANE:
+    vault: 3.0
+    raindrops: 0.30
+  BROWN_TERRACOTTA:
+    vault: 3.0
+    raindrops: 0.30
+  BROWN_WALL_BANNER:
+    vault: 3.0
+    raindrops: 0.30
+  BROWN_WOOL:
+    vault: 3.0
+    raindrops: 0.30
+  BRUSH:
+    vault: 1.0
+    raindrops: 0.10
+  BUBBLE_COLUMN:
+    vault: 1.0
+    raindrops: 0.10
+  BUBBLE_CORAL:
+    vault: 8.0
+    raindrops: 0.80
+  BUBBLE_CORAL_BLOCK:
+    vault: 40.0
+    raindrops: 4.0
+  BUBBLE_CORAL_FAN:
+    vault: 8.0
+    raindrops: 0.80
+  BUBBLE_CORAL_WALL_FAN:
+    vault: 8.0
+    raindrops: 0.80
+  BUCKET:
+    vault: 1.0
+    raindrops: 0.10
+  BUDDING_AMETHYST:
+    vault: 22.0
+    raindrops: 2.20
+  BUNDLE:
+    vault: 8.0
+    raindrops: 0.80
+  BURN_POTTERY_SHERD:
+    vault: 1.40
+    raindrops: 0.14
+  BUSH:
+    vault: 1.0
+    raindrops: 0.10
+  CACTUS:
+    vault: 1.0
+    raindrops: 0.10
+  CACTUS_FLOWER:
+    vault: 0.70
+    raindrops: 0.07
+  CAKE:
+    vault: 1.0
+    raindrops: 0.10
+  CALCITE:
+    vault: 1.0
+    raindrops: 0.10
+  CALIBRATED_SCULK_SENSOR:
+    vault: 22.0
+    raindrops: 2.20
+  CAMEL_HUSK_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  CAMEL_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  CAMPFIRE:
+    vault: 1.0
+    raindrops: 0.10
+  CANDLE:
+    vault: 8.0
+    raindrops: 0.80
+  CANDLE_CAKE:
+    vault: 8.0
+    raindrops: 0.80
+  CARROT:
+    vault: 1.0
+    raindrops: 0.10
+  CARROT_ON_A_STICK:
+    vault: 1.0
+    raindrops: 0.10
+  CARROTS:
+    vault: 1.0
+    raindrops: 0.10
+  CARTOGRAPHY_TABLE:
+    vault: 1.0
+    raindrops: 0.10
+  CARVED_PUMPKIN:
+    vault: 1.0
+    raindrops: 0.10
+  CAT_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  CAULDRON:
+    vault: 1.0
+    raindrops: 0.10
+  CAVE_AIR:
+    vault: 0.0
+    raindrops: 0.0
+  CAVE_SPIDER_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  CAVE_VINES:
+    vault: 1.0
+    raindrops: 0.10
+  CAVE_VINES_PLANT:
+    vault: 1.0
+    raindrops: 0.10
+  CHAIN_COMMAND_BLOCK:
+    vault: 1100.0
+    raindrops: 110.0
+  CHAINMAIL_BOOTS:
+    vault: 17.60
+    raindrops: 1.76
+  CHAINMAIL_CHESTPLATE:
+    vault: 17.60
+    raindrops: 1.76
+  CHAINMAIL_HELMET:
+    vault: 17.60
+    raindrops: 1.76
+  CHAINMAIL_LEGGINGS:
+    vault: 17.60
+    raindrops: 1.76
+  CHARCOAL:
+    vault: 1.0
+    raindrops: 0.10
+  CHERRY_BOAT:
+    vault: 1.30
+    raindrops: 0.13
+  CHERRY_BUTTON:
+    vault: 2.40
+    raindrops: 0.24
+  CHERRY_CHEST_BOAT:
+    vault: 1.30
+    raindrops: 0.13
+  CHERRY_DOOR:
+    vault: 2.40
+    raindrops: 0.24
+  CHERRY_FENCE:
+    vault: 3.0
+    raindrops: 0.30
+  CHERRY_FENCE_GATE:
+    vault: 3.0
+    raindrops: 0.30
+  CHERRY_HANGING_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  CHERRY_LEAVES:
+    vault: 2.70
+    raindrops: 0.27
+  CHERRY_LOG:
+    vault: 2.70
+    raindrops: 0.27
+  CHERRY_PLANKS:
+    vault: 2.70
+    raindrops: 0.27
+  CHERRY_PRESSURE_PLATE:
+    vault: 2.40
+    raindrops: 0.24
+  CHERRY_SAPLING:
+    vault: 2.70
+    raindrops: 0.27
+  CHERRY_SHELF:
+    vault: 1.0
+    raindrops: 0.10
+  CHERRY_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  CHERRY_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  CHERRY_STAIRS:
+    vault: 2.40
+    raindrops: 0.24
+  CHERRY_TRAPDOOR:
+    vault: 2.40
+    raindrops: 0.24
+  CHERRY_WALL_HANGING_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  CHERRY_WALL_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  CHERRY_WOOD:
+    vault: 2.70
+    raindrops: 0.27
+  CHEST:
+    vault: 1.0
+    raindrops: 0.10
+  CHEST_MINECART:
+    vault: 1.0
+    raindrops: 0.10
+  CHICKEN:
+    vault: 1.0
+    raindrops: 0.10
+  CHICKEN_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  CHIPPED_ANVIL:
+    vault: 1.0
+    raindrops: 0.10
+  CHISELED_BOOKSHELF:
+    vault: 8.0
+    raindrops: 0.80
+  CHISELED_COPPER:
+    vault: 22.0
+    raindrops: 2.20
+  CHISELED_DEEPSLATE:
+    vault: 3.0
+    raindrops: 0.30
+  CHISELED_NETHER_BRICKS:
+    vault: 3.0
+    raindrops: 0.30
+  CHISELED_POLISHED_BLACKSTONE:
+    vault: 3.0
+    raindrops: 0.30
+  CHISELED_QUARTZ_BLOCK:
+    vault: 110.0
+    raindrops: 11.0
+  CHISELED_RED_SANDSTONE:
+    vault: 3.0
+    raindrops: 0.30
+  CHISELED_RESIN_BRICKS:
+    vault: 3.0
+    raindrops: 0.30
+  CHISELED_SANDSTONE:
+    vault: 3.0
+    raindrops: 0.30
+  CHISELED_STONE_BRICKS:
+    vault: 3.0
+    raindrops: 0.30
+  CHISELED_TUFF:
+    vault: 3.0
+    raindrops: 0.30
+  CHISELED_TUFF_BRICKS:
+    vault: 3.0
+    raindrops: 0.30
+  CHORUS_FLOWER:
+    vault: 0.70
+    raindrops: 0.07
+  CHORUS_FRUIT:
+    vault: 1.0
+    raindrops: 0.10
+  CHORUS_PLANT:
+    vault: 1.0
+    raindrops: 0.10
+  CLAY:
+    vault: 1.0
+    raindrops: 0.10
+  CLAY_BALL:
+    vault: 1.0
+    raindrops: 0.10
+  CLOCK:
+    vault: 1.0
+    raindrops: 0.10
+  CLOSED_EYEBLOSSOM:
+    vault: 1.0
+    raindrops: 0.10
+  COAL:
+    vault: 1.0
+    raindrops: 0.10
+  COAL_BLOCK:
+    vault: 1.0
+    raindrops: 0.10
+  COAL_ORE:
+    vault: 1.80
+    raindrops: 0.18
+  COARSE_DIRT:
+    vault: 1.0
+    raindrops: 0.10
+  COAST_ARMOR_TRIM_SMITHING_TEMPLATE:
+    vault: 187.50
+    raindrops: 18.75
+  COBBLED_DEEPSLATE:
+    vault: 1.0
+    raindrops: 0.10
+  COBBLED_DEEPSLATE_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  COBBLED_DEEPSLATE_STAIRS:
+    vault: 2.40
+    raindrops: 0.24
+  COBBLED_DEEPSLATE_WALL:
+    vault: 2.40
+    raindrops: 0.24
+  COBBLESTONE:
+    vault: 1.0
+    raindrops: 0.10
+  COBBLESTONE_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  COBBLESTONE_STAIRS:
+    vault: 2.40
+    raindrops: 0.24
+  COBBLESTONE_WALL:
+    vault: 2.40
+    raindrops: 0.24
+  COBWEB:
+    vault: 1.0
+    raindrops: 0.10
+  COCOA:
+    vault: 1.0
+    raindrops: 0.10
+  COCOA_BEANS:
+    vault: 1.0
+    raindrops: 0.10
+  COD:
+    vault: 1.0
+    raindrops: 0.10
+  COD_BUCKET:
+    vault: 1.50
+    raindrops: 0.15
+  COD_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  COMMAND_BLOCK:
+    vault: 1100.0
+    raindrops: 110.0
+  COMMAND_BLOCK_MINECART:
+    vault: 220.0
+    raindrops: 22.0
+  COMPARATOR:
+    vault: 1.0
+    raindrops: 0.10
+  COMPASS:
+    vault: 1.0
+    raindrops: 0.10
+  COMPOSTER:
+    vault: 1.0
+    raindrops: 0.10
+  CONDUIT:
+    vault: 22.0
+    raindrops: 2.20
+  COOKED_BEEF:
+    vault: 1.0
+    raindrops: 0.10
+  COOKED_CHICKEN:
+    vault: 1.0
+    raindrops: 0.10
+  COOKED_COD:
+    vault: 1.0
+    raindrops: 0.10
+  COOKED_MUTTON:
+    vault: 1.0
+    raindrops: 0.10
+  COOKED_PORKCHOP:
+    vault: 1.0
+    raindrops: 0.10
+  COOKED_RABBIT:
+    vault: 1.0
+    raindrops: 0.10
+  COOKED_SALMON:
+    vault: 1.0
+    raindrops: 0.10
+  COOKIE:
+    vault: 1.0
+    raindrops: 0.10
+  COPPER_AXE:
+    vault: 44.0
+    raindrops: 4.40
+  COPPER_BARS:
+    vault: 22.0
+    raindrops: 2.20
+  COPPER_BLOCK:
+    vault: 110.0
+    raindrops: 11.0
+  COPPER_BOOTS:
+    vault: 48.40
+    raindrops: 4.84
+  COPPER_BULB:
+    vault: 22.0
+    raindrops: 2.20
+  COPPER_CHAIN:
+    vault: 22.0
+    raindrops: 2.20
+  COPPER_CHEST:
+    vault: 22.0
+    raindrops: 2.20
+  COPPER_CHESTPLATE:
+    vault: 48.40
+    raindrops: 4.84
+  COPPER_DOOR:
+    vault: 17.60
+    raindrops: 1.76
+  COPPER_GOLEM_SPAWN_EGG:
+    vault: 52.80
+    raindrops: 5.28
+  COPPER_GOLEM_STATUE:
+    vault: 22.0
+    raindrops: 2.20
+  COPPER_GRATE:
+    vault: 22.0
+    raindrops: 2.20
+  COPPER_HELMET:
+    vault: 48.40
+    raindrops: 4.84
+  COPPER_HOE:
+    vault: 44.0
+    raindrops: 4.40
+  COPPER_HORSE_ARMOR:
+    vault: 48.40
+    raindrops: 4.84
+  COPPER_INGOT:
+    vault: 35.20
+    raindrops: 3.52
+  COPPER_LANTERN:
+    vault: 22.0
+    raindrops: 2.20
+  COPPER_LEGGINGS:
+    vault: 48.40
+    raindrops: 4.84
+  COPPER_NAUTILUS_ARMOR:
+    vault: 22.0
+    raindrops: 2.20
+  COPPER_NUGGET:
+    vault: 5.50
+    raindrops: 0.55
+  COPPER_ORE:
+    vault: 39.60
+    raindrops: 3.96
+  COPPER_PICKAXE:
+    vault: 44.0
+    raindrops: 4.40
+  COPPER_SHOVEL:
+    vault: 44.0
+    raindrops: 4.40
+  COPPER_SPEAR:
+    vault: 22.0
+    raindrops: 2.20
+  COPPER_SWORD:
+    vault: 44.0
+    raindrops: 4.40
+  COPPER_TORCH:
+    vault: 22.0
+    raindrops: 2.20
+  COPPER_TRAPDOOR:
+    vault: 17.60
+    raindrops: 1.76
+  COPPER_WALL_TORCH:
+    vault: 22.0
+    raindrops: 2.20
+  CORNFLOWER:
+    vault: 1.0
+    raindrops: 0.10
+  COW_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  CRACKED_DEEPSLATE_BRICKS:
+    vault: 3.0
+    raindrops: 0.30
+  CRACKED_DEEPSLATE_TILES:
+    vault: 1.0
+    raindrops: 0.10
+  CRACKED_NETHER_BRICKS:
+    vault: 3.0
+    raindrops: 0.30
+  CRACKED_POLISHED_BLACKSTONE_BRICKS:
+    vault: 3.0
+    raindrops: 0.30
+  CRACKED_STONE_BRICKS:
+    vault: 3.0
+    raindrops: 0.30
+  CRAFTER:
+    vault: 1.0
+    raindrops: 0.10
+  CRAFTING_TABLE:
+    vault: 1.0
+    raindrops: 0.10
+  CREAKING_HEART:
+    vault: 1.0
+    raindrops: 0.10
+  CREAKING_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  CREEPER_BANNER_PATTERN:
+    vault: 4.20
+    raindrops: 0.42
+  CREEPER_HEAD:
+    vault: 22.0
+    raindrops: 2.20
+  CREEPER_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  CREEPER_WALL_HEAD:
+    vault: 22.0
+    raindrops: 2.20
+  CRIMSON_BUTTON:
+    vault: 2.40
+    raindrops: 0.24
+  CRIMSON_DOOR:
+    vault: 2.40
+    raindrops: 0.24
+  CRIMSON_FENCE:
+    vault: 3.0
+    raindrops: 0.30
+  CRIMSON_FENCE_GATE:
+    vault: 3.0
+    raindrops: 0.30
+  CRIMSON_FUNGUS:
+    vault: 1.0
+    raindrops: 0.10
+  CRIMSON_HANGING_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  CRIMSON_HYPHAE:
+    vault: 1.0
+    raindrops: 0.10
+  CRIMSON_NYLIUM:
+    vault: 1.0
+    raindrops: 0.10
+  CRIMSON_PLANKS:
+    vault: 2.70
+    raindrops: 0.27
+  CRIMSON_PRESSURE_PLATE:
+    vault: 2.40
+    raindrops: 0.24
+  CRIMSON_ROOTS:
+    vault: 1.0
+    raindrops: 0.10
+  CRIMSON_SHELF:
+    vault: 1.0
+    raindrops: 0.10
+  CRIMSON_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  CRIMSON_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  CRIMSON_STAIRS:
+    vault: 2.40
+    raindrops: 0.24
+  CRIMSON_STEM:
+    vault: 1.0
+    raindrops: 0.10
+  CRIMSON_TRAPDOOR:
+    vault: 2.40
+    raindrops: 0.24
+  CRIMSON_WALL_HANGING_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  CRIMSON_WALL_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  CROSSBOW:
+    vault: 1.0
+    raindrops: 0.10
+  CRYING_OBSIDIAN:
+    vault: 22.0
+    raindrops: 2.20
+  CUT_COPPER:
+    vault: 22.0
+    raindrops: 2.20
+  CUT_COPPER_SLAB:
+    vault: 17.60
+    raindrops: 1.76
+  CUT_COPPER_STAIRS:
+    vault: 17.60
+    raindrops: 1.76
+  CUT_RED_SANDSTONE:
+    vault: 3.0
+    raindrops: 0.30
+  CUT_RED_SANDSTONE_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  CUT_SANDSTONE:
+    vault: 3.0
+    raindrops: 0.30
+  CUT_SANDSTONE_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  CYAN_BANNER:
+    vault: 3.0
+    raindrops: 0.30
+  CYAN_BED:
+    vault: 1.0
+    raindrops: 0.10
+  CYAN_BUNDLE:
+    vault: 8.0
+    raindrops: 0.80
+  CYAN_CANDLE:
+    vault: 8.0
+    raindrops: 0.80
+  CYAN_CANDLE_CAKE:
+    vault: 8.0
+    raindrops: 0.80
+  CYAN_CARPET:
+    vault: 3.0
+    raindrops: 0.30
+  CYAN_CONCRETE:
+    vault: 3.0
+    raindrops: 0.30
+  CYAN_CONCRETE_POWDER:
+    vault: 3.0
+    raindrops: 0.30
+  CYAN_DYE:
+    vault: 0.70
+    raindrops: 0.07
+  CYAN_GLAZED_TERRACOTTA:
+    vault: 3.0
+    raindrops: 0.30
+  CYAN_HARNESS:
+    vault: 1.0
+    raindrops: 0.10
+  CYAN_SHULKER_BOX:
+    vault: 1.0
+    raindrops: 0.10
+  CYAN_STAINED_GLASS:
+    vault: 3.0
+    raindrops: 0.30
+  CYAN_STAINED_GLASS_PANE:
+    vault: 3.0
+    raindrops: 0.30
+  CYAN_TERRACOTTA:
+    vault: 3.0
+    raindrops: 0.30
+  CYAN_WALL_BANNER:
+    vault: 3.0
+    raindrops: 0.30
+  CYAN_WOOL:
+    vault: 3.0
+    raindrops: 0.30
+  DAMAGED_ANVIL:
+    vault: 1.0
+    raindrops: 0.10
+  DANDELION:
+    vault: 1.0
+    raindrops: 0.10
+  DANGER_POTTERY_SHERD:
+    vault: 1.40
+    raindrops: 0.14
+  DARK_OAK_BOAT:
+    vault: 1.30
+    raindrops: 0.13
+  DARK_OAK_BUTTON:
+    vault: 2.40
+    raindrops: 0.24
+  DARK_OAK_CHEST_BOAT:
+    vault: 1.30
+    raindrops: 0.13
+  DARK_OAK_DOOR:
+    vault: 2.40
+    raindrops: 0.24
+  DARK_OAK_FENCE:
+    vault: 3.0
+    raindrops: 0.30
+  DARK_OAK_FENCE_GATE:
+    vault: 3.0
+    raindrops: 0.30
+  DARK_OAK_HANGING_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  DARK_OAK_LEAVES:
+    vault: 2.70
+    raindrops: 0.27
+  DARK_OAK_LOG:
+    vault: 2.70
+    raindrops: 0.27
+  DARK_OAK_PLANKS:
+    vault: 2.70
+    raindrops: 0.27
+  DARK_OAK_PRESSURE_PLATE:
+    vault: 2.40
+    raindrops: 0.24
+  DARK_OAK_SAPLING:
+    vault: 2.70
+    raindrops: 0.27
+  DARK_OAK_SHELF:
+    vault: 1.0
+    raindrops: 0.10
+  DARK_OAK_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  DARK_OAK_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  DARK_OAK_STAIRS:
+    vault: 2.40
+    raindrops: 0.24
+  DARK_OAK_TRAPDOOR:
+    vault: 2.40
+    raindrops: 0.24
+  DARK_OAK_WALL_HANGING_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  DARK_OAK_WALL_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  DARK_OAK_WOOD:
+    vault: 2.70
+    raindrops: 0.27
+  DARK_PRISMARINE:
+    vault: 8.0
+    raindrops: 0.80
+  DARK_PRISMARINE_SLAB:
+    vault: 6.40
+    raindrops: 0.64
+  DARK_PRISMARINE_STAIRS:
+    vault: 6.40
+    raindrops: 0.64
+  DAYLIGHT_DETECTOR:
+    vault: 1.0
+    raindrops: 0.10
+  DEAD_BRAIN_CORAL:
+    vault: 8.0
+    raindrops: 0.80
+  DEAD_BRAIN_CORAL_BLOCK:
+    vault: 40.0
+    raindrops: 4.0
+  DEAD_BRAIN_CORAL_FAN:
+    vault: 8.0
+    raindrops: 0.80
+  DEAD_BRAIN_CORAL_WALL_FAN:
+    vault: 8.0
+    raindrops: 0.80
+  DEAD_BUBBLE_CORAL:
+    vault: 8.0
+    raindrops: 0.80
+  DEAD_BUBBLE_CORAL_BLOCK:
+    vault: 40.0
+    raindrops: 4.0
+  DEAD_BUBBLE_CORAL_FAN:
+    vault: 8.0
+    raindrops: 0.80
+  DEAD_BUBBLE_CORAL_WALL_FAN:
+    vault: 8.0
+    raindrops: 0.80
+  DEAD_BUSH:
+    vault: 0.70
+    raindrops: 0.07
+  DEAD_FIRE_CORAL:
+    vault: 8.0
+    raindrops: 0.80
+  DEAD_FIRE_CORAL_BLOCK:
+    vault: 40.0
+    raindrops: 4.0
+  DEAD_FIRE_CORAL_FAN:
+    vault: 8.0
+    raindrops: 0.80
+  DEAD_FIRE_CORAL_WALL_FAN:
+    vault: 8.0
+    raindrops: 0.80
+  DEAD_HORN_CORAL:
+    vault: 8.0
+    raindrops: 0.80
+  DEAD_HORN_CORAL_BLOCK:
+    vault: 40.0
+    raindrops: 4.0
+  DEAD_HORN_CORAL_FAN:
+    vault: 8.0
+    raindrops: 0.80
+  DEAD_HORN_CORAL_WALL_FAN:
+    vault: 8.0
+    raindrops: 0.80
+  DEAD_TUBE_CORAL:
+    vault: 8.0
+    raindrops: 0.80
+  DEAD_TUBE_CORAL_BLOCK:
+    vault: 40.0
+    raindrops: 4.0
+  DEAD_TUBE_CORAL_FAN:
+    vault: 8.0
+    raindrops: 0.80
+  DEAD_TUBE_CORAL_WALL_FAN:
+    vault: 8.0
+    raindrops: 0.80
+  DEBUG_STICK:
+    vault: 220.0
+    raindrops: 22.0
+  DECORATED_POT:
+    vault: 1.0
+    raindrops: 0.10
+  DEEPSLATE:
+    vault: 1.0
+    raindrops: 0.10
+  DEEPSLATE_BRICK_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  DEEPSLATE_BRICK_STAIRS:
+    vault: 2.40
+    raindrops: 0.24
+  DEEPSLATE_BRICK_WALL:
+    vault: 2.40
+    raindrops: 0.24
+  DEEPSLATE_BRICKS:
+    vault: 3.0
+    raindrops: 0.30
+  DEEPSLATE_COAL_ORE:
+    vault: 1.80
+    raindrops: 0.18
+  DEEPSLATE_COPPER_ORE:
+    vault: 39.60
+    raindrops: 3.96
+  DEEPSLATE_DIAMOND_ORE:
+    vault: 135.0
+    raindrops: 13.50
+  DEEPSLATE_EMERALD_ORE:
+    vault: 135.0
+    raindrops: 13.50
+  DEEPSLATE_GOLD_ORE:
+    vault: 39.60
+    raindrops: 3.96
+  DEEPSLATE_IRON_ORE:
+    vault: 39.60
+    raindrops: 3.96
+  DEEPSLATE_LAPIS_ORE:
+    vault: 39.60
+    raindrops: 3.96
+  DEEPSLATE_REDSTONE_ORE:
+    vault: 39.60
+    raindrops: 3.96
+  DEEPSLATE_TILE_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  DEEPSLATE_TILE_STAIRS:
+    vault: 2.40
+    raindrops: 0.24
+  DEEPSLATE_TILE_WALL:
+    vault: 2.40
+    raindrops: 0.24
+  DEEPSLATE_TILES:
+    vault: 1.0
+    raindrops: 0.10
+  DETECTOR_RAIL:
+    vault: 1.0
+    raindrops: 0.10
+  DIAMOND:
+    vault: 75.0
+    raindrops: 7.50
+  DIAMOND_AXE:
+    vault: 150.0
+    raindrops: 15.0
+  DIAMOND_BLOCK:
+    vault: 375.0
+    raindrops: 37.50
+  DIAMOND_BOOTS:
+    vault: 165.0
+    raindrops: 16.50
+  DIAMOND_CHESTPLATE:
+    vault: 165.0
+    raindrops: 16.50
+  DIAMOND_HELMET:
+    vault: 165.0
+    raindrops: 16.50
+  DIAMOND_HOE:
+    vault: 150.0
+    raindrops: 15.0
+  DIAMOND_HORSE_ARMOR:
+    vault: 165.0
+    raindrops: 16.50
+  DIAMOND_LEGGINGS:
+    vault: 165.0
+    raindrops: 16.50
+  DIAMOND_NAUTILUS_ARMOR:
+    vault: 75.0
+    raindrops: 7.50
+  DIAMOND_ORE:
+    vault: 135.0
+    raindrops: 13.50
+  DIAMOND_PICKAXE:
+    vault: 150.0
+    raindrops: 15.0
+  DIAMOND_SHOVEL:
+    vault: 150.0
+    raindrops: 15.0
+  DIAMOND_SPEAR:
+    vault: 75.0
+    raindrops: 7.50
+  DIAMOND_SWORD:
+    vault: 150.0
+    raindrops: 15.0
+  DIORITE:
+    vault: 1.0
+    raindrops: 0.10
+  DIORITE_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  DIORITE_STAIRS:
+    vault: 2.40
+    raindrops: 0.24
+  DIORITE_WALL:
+    vault: 2.40
+    raindrops: 0.24
+  DIRT:
+    vault: 1.0
+    raindrops: 0.10
+  DIRT_PATH:
+    vault: 1.0
+    raindrops: 0.10
+  DISC_FRAGMENT_5:
+    vault: 1.0
+    raindrops: 0.10
+  DISPENSER:
+    vault: 1.0
+    raindrops: 0.10
+  DOLPHIN_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  DONKEY_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  DRAGON_BREATH:
+    vault: 1.0
+    raindrops: 0.10
+  DRAGON_EGG:
+    vault: 2000.0
+    raindrops: 200.0
+  DRAGON_HEAD:
+    vault: 22.0
+    raindrops: 2.20
+  DRAGON_WALL_HEAD:
+    vault: 22.0
+    raindrops: 2.20
+  DRIED_GHAST:
+    vault: 1.0
+    raindrops: 0.10
+  DRIED_KELP:
+    vault: 1.0
+    raindrops: 0.10
+  DRIED_KELP_BLOCK:
+    vault: 1.0
+    raindrops: 0.10
+  DRIPSTONE_BLOCK:
+    vault: 1.0
+    raindrops: 0.10
+  DROPPER:
+    vault: 1.0
+    raindrops: 0.10
+  DROWNED_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  DUNE_ARMOR_TRIM_SMITHING_TEMPLATE:
+    vault: 187.50
+    raindrops: 18.75
+  ECHO_SHARD:
+    vault: 1.0
+    raindrops: 0.10
+  EGG:
+    vault: 1.0
+    raindrops: 0.10
+  ELDER_GUARDIAN_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  ELYTRA:
+    vault: 1200.0
+    raindrops: 120.0
+  EMERALD:
+    vault: 75.0
+    raindrops: 7.50
+  EMERALD_BLOCK:
+    vault: 375.0
+    raindrops: 37.50
+  EMERALD_ORE:
+    vault: 135.0
+    raindrops: 13.50
+  ENCHANTED_BOOK:
+    vault: 8.0
+    raindrops: 0.80
+  ENCHANTED_GOLDEN_APPLE:
+    vault: 600.0
+    raindrops: 60.0
+  ENCHANTING_TABLE:
+    vault: 75.0
+    raindrops: 7.50
+  END_CRYSTAL:
+    vault: 1.0
+    raindrops: 0.10
+  END_GATEWAY:
+    vault: 1.0
+    raindrops: 0.10
+  END_PORTAL:
+    vault: 1.0
+    raindrops: 0.10
+  END_PORTAL_FRAME:
+    vault: 75.0
+    raindrops: 7.50
+  END_ROD:
+    vault: 1.0
+    raindrops: 0.10
+  END_STONE:
+    vault: 1.0
+    raindrops: 0.10
+  END_STONE_BRICK_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  END_STONE_BRICK_STAIRS:
+    vault: 2.40
+    raindrops: 0.24
+  END_STONE_BRICK_WALL:
+    vault: 2.40
+    raindrops: 0.24
+  END_STONE_BRICKS:
+    vault: 3.0
+    raindrops: 0.30
+  ENDER_CHEST:
+    vault: 22.0
+    raindrops: 2.20
+  ENDER_DRAGON_SPAWN_EGG:
+    vault: 52.80
+    raindrops: 5.28
+  ENDER_EYE:
+    vault: 22.0
+    raindrops: 2.20
+  ENDER_PEARL:
+    vault: 22.0
+    raindrops: 2.20
+  ENDERMAN_SPAWN_EGG:
+    vault: 52.80
+    raindrops: 5.28
+  ENDERMITE_SPAWN_EGG:
+    vault: 52.80
+    raindrops: 5.28
+  EVOKER_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  EXPERIENCE_BOTTLE:
+    vault: 8.0
+    raindrops: 0.80
+  EXPLORER_POTTERY_SHERD:
+    vault: 1.40
+    raindrops: 0.14
+  EXPOSED_CHISELED_COPPER:
+    vault: 22.0
+    raindrops: 2.20
+  EXPOSED_COPPER:
+    vault: 22.0
+    raindrops: 2.20
+  EXPOSED_COPPER_BARS:
+    vault: 22.0
+    raindrops: 2.20
+  EXPOSED_COPPER_BULB:
+    vault: 22.0
+    raindrops: 2.20
+  EXPOSED_COPPER_CHAIN:
+    vault: 22.0
+    raindrops: 2.20
+  EXPOSED_COPPER_CHEST:
+    vault: 22.0
+    raindrops: 2.20
+  EXPOSED_COPPER_DOOR:
+    vault: 17.60
+    raindrops: 1.76
+  EXPOSED_COPPER_GOLEM_STATUE:
+    vault: 22.0
+    raindrops: 2.20
+  EXPOSED_COPPER_GRATE:
+    vault: 22.0
+    raindrops: 2.20
+  EXPOSED_COPPER_LANTERN:
+    vault: 22.0
+    raindrops: 2.20
+  EXPOSED_COPPER_TRAPDOOR:
+    vault: 17.60
+    raindrops: 1.76
+  EXPOSED_CUT_COPPER:
+    vault: 22.0
+    raindrops: 2.20
+  EXPOSED_CUT_COPPER_SLAB:
+    vault: 17.60
+    raindrops: 1.76
+  EXPOSED_CUT_COPPER_STAIRS:
+    vault: 17.60
+    raindrops: 1.76
+  EXPOSED_LIGHTNING_ROD:
+    vault: 1.0
+    raindrops: 0.10
+  EYE_ARMOR_TRIM_SMITHING_TEMPLATE:
+    vault: 187.50
+    raindrops: 18.75
+  FARMLAND:
+    vault: 1.0
+    raindrops: 0.10
+  FEATHER:
+    vault: 1.0
+    raindrops: 0.10
+  FERMENTED_SPIDER_EYE:
+    vault: 1.0
+    raindrops: 0.10
+  FERN:
+    vault: 1.0
+    raindrops: 0.10
+  FIELD_MASONED_BANNER_PATTERN:
+    vault: 4.20
+    raindrops: 0.42
+  FILLED_MAP:
+    vault: 1.0
+    raindrops: 0.10
+  FIRE:
+    vault: 1.0
+    raindrops: 0.10
+  FIRE_CHARGE:
+    vault: 1.0
+    raindrops: 0.10
+  FIRE_CORAL:
+    vault: 8.0
+    raindrops: 0.80
+  FIRE_CORAL_BLOCK:
+    vault: 40.0
+    raindrops: 4.0
+  FIRE_CORAL_FAN:
+    vault: 8.0
+    raindrops: 0.80
+  FIRE_CORAL_WALL_FAN:
+    vault: 8.0
+    raindrops: 0.80
+  FIREFLY_BUSH:
+    vault: 0.70
+    raindrops: 0.07
+  FIREWORK_ROCKET:
+    vault: 1.0
+    raindrops: 0.10
+  FIREWORK_STAR:
+    vault: 1.0
+    raindrops: 0.10
+  FISHING_ROD:
+    vault: 1.0
+    raindrops: 0.10
+  FLETCHING_TABLE:
+    vault: 1.0
+    raindrops: 0.10
+  FLINT:
+    vault: 1.0
+    raindrops: 0.10
+  FLINT_AND_STEEL:
+    vault: 1.0
+    raindrops: 0.10
+  FLOW_ARMOR_TRIM_SMITHING_TEMPLATE:
+    vault: 187.50
+    raindrops: 18.75
+  FLOW_BANNER_PATTERN:
+    vault: 4.20
+    raindrops: 0.42
+  FLOW_POTTERY_SHERD:
+    vault: 1.40
+    raindrops: 0.14
+  FLOWER_BANNER_PATTERN:
+    vault: 4.20
+    raindrops: 0.42
+  FLOWER_POT:
+    vault: 1.0
+    raindrops: 0.10
+  FLOWERING_AZALEA:
+    vault: 1.0
+    raindrops: 0.10
+  FLOWERING_AZALEA_LEAVES:
+    vault: 2.70
+    raindrops: 0.27
+  FOX_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  FRIEND_POTTERY_SHERD:
+    vault: 1.40
+    raindrops: 0.14
+  FROG_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  FROGSPAWN:
+    vault: 1.0
+    raindrops: 0.10
+  FROSTED_ICE:
+    vault: 1.0
+    raindrops: 0.10
+  FURNACE:
+    vault: 1.0
+    raindrops: 0.10
+  FURNACE_MINECART:
+    vault: 1.0
+    raindrops: 0.10
+  GHAST_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  GHAST_TEAR:
+    vault: 1.0
+    raindrops: 0.10
+  GILDED_BLACKSTONE:
+    vault: 1.0
+    raindrops: 0.10
+  GLASS:
+    vault: 3.0
+    raindrops: 0.30
+  GLASS_BOTTLE:
+    vault: 3.0
+    raindrops: 0.30
+  GLASS_PANE:
+    vault: 3.0
+    raindrops: 0.30
+  GLISTERING_MELON_SLICE:
+    vault: 1.0
+    raindrops: 0.10
+  GLOBE_BANNER_PATTERN:
+    vault: 4.20
+    raindrops: 0.42
+  GLOW_BERRIES:
+    vault: 1.0
+    raindrops: 0.10
+  GLOW_INK_SAC:
+    vault: 1.0
+    raindrops: 0.10
+  GLOW_ITEM_FRAME:
+    vault: 1.0
+    raindrops: 0.10
+  GLOW_LICHEN:
+    vault: 1.0
+    raindrops: 0.10
+  GLOW_SQUID_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  GLOWSTONE:
+    vault: 1.0
+    raindrops: 0.10
+  GLOWSTONE_DUST:
+    vault: 1.0
+    raindrops: 0.10
+  GOAT_HORN:
+    vault: 8.0
+    raindrops: 0.80
+  GOAT_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  GOLD_BLOCK:
+    vault: 110.0
+    raindrops: 11.0
+  GOLD_INGOT:
+    vault: 35.20
+    raindrops: 3.52
+  GOLD_NUGGET:
+    vault: 5.50
+    raindrops: 0.55
+  GOLD_ORE:
+    vault: 39.60
+    raindrops: 3.96
+  GOLDEN_APPLE:
+    vault: 22.0
+    raindrops: 2.20
+  GOLDEN_AXE:
+    vault: 44.0
+    raindrops: 4.40
+  GOLDEN_BOOTS:
+    vault: 48.40
+    raindrops: 4.84
+  GOLDEN_CARROT:
+    vault: 22.0
+    raindrops: 2.20
+  GOLDEN_CHESTPLATE:
+    vault: 48.40
+    raindrops: 4.84
+  GOLDEN_HELMET:
+    vault: 48.40
+    raindrops: 4.84
+  GOLDEN_HOE:
+    vault: 44.0
+    raindrops: 4.40
+  GOLDEN_HORSE_ARMOR:
+    vault: 48.40
+    raindrops: 4.84
+  GOLDEN_LEGGINGS:
+    vault: 48.40
+    raindrops: 4.84
+  GOLDEN_NAUTILUS_ARMOR:
+    vault: 22.0
+    raindrops: 2.20
+  GOLDEN_PICKAXE:
+    vault: 44.0
+    raindrops: 4.40
+  GOLDEN_SHOVEL:
+    vault: 44.0
+    raindrops: 4.40
+  GOLDEN_SPEAR:
+    vault: 22.0
+    raindrops: 2.20
+  GOLDEN_SWORD:
+    vault: 44.0
+    raindrops: 4.40
+  GRANITE:
+    vault: 1.0
+    raindrops: 0.10
+  GRANITE_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  GRANITE_STAIRS:
+    vault: 2.40
+    raindrops: 0.24
+  GRANITE_WALL:
+    vault: 2.40
+    raindrops: 0.24
+  GRASS_BLOCK:
+    vault: 1.0
+    raindrops: 0.10
+  GRAVEL:
+    vault: 1.0
+    raindrops: 0.10
+  GRAY_BANNER:
+    vault: 3.0
+    raindrops: 0.30
+  GRAY_BED:
+    vault: 1.0
+    raindrops: 0.10
+  GRAY_BUNDLE:
+    vault: 8.0
+    raindrops: 0.80
+  GRAY_CANDLE:
+    vault: 8.0
+    raindrops: 0.80
+  GRAY_CANDLE_CAKE:
+    vault: 8.0
+    raindrops: 0.80
+  GRAY_CARPET:
+    vault: 3.0
+    raindrops: 0.30
+  GRAY_CONCRETE:
+    vault: 3.0
+    raindrops: 0.30
+  GRAY_CONCRETE_POWDER:
+    vault: 3.0
+    raindrops: 0.30
+  GRAY_DYE:
+    vault: 0.70
+    raindrops: 0.07
+  GRAY_GLAZED_TERRACOTTA:
+    vault: 3.0
+    raindrops: 0.30
+  GRAY_HARNESS:
+    vault: 1.0
+    raindrops: 0.10
+  GRAY_SHULKER_BOX:
+    vault: 1.0
+    raindrops: 0.10
+  GRAY_STAINED_GLASS:
+    vault: 3.0
+    raindrops: 0.30
+  GRAY_STAINED_GLASS_PANE:
+    vault: 3.0
+    raindrops: 0.30
+  GRAY_TERRACOTTA:
+    vault: 3.0
+    raindrops: 0.30
+  GRAY_WALL_BANNER:
+    vault: 3.0
+    raindrops: 0.30
+  GRAY_WOOL:
+    vault: 3.0
+    raindrops: 0.30
+  GREEN_BANNER:
+    vault: 3.0
+    raindrops: 0.30
+  GREEN_BED:
+    vault: 1.0
+    raindrops: 0.10
+  GREEN_BUNDLE:
+    vault: 8.0
+    raindrops: 0.80
+  GREEN_CANDLE:
+    vault: 8.0
+    raindrops: 0.80
+  GREEN_CANDLE_CAKE:
+    vault: 8.0
+    raindrops: 0.80
+  GREEN_CARPET:
+    vault: 3.0
+    raindrops: 0.30
+  GREEN_CONCRETE:
+    vault: 3.0
+    raindrops: 0.30
+  GREEN_CONCRETE_POWDER:
+    vault: 3.0
+    raindrops: 0.30
+  GREEN_DYE:
+    vault: 0.70
+    raindrops: 0.07
+  GREEN_GLAZED_TERRACOTTA:
+    vault: 3.0
+    raindrops: 0.30
+  GREEN_HARNESS:
+    vault: 1.0
+    raindrops: 0.10
+  GREEN_SHULKER_BOX:
+    vault: 1.0
+    raindrops: 0.10
+  GREEN_STAINED_GLASS:
+    vault: 3.0
+    raindrops: 0.30
+  GREEN_STAINED_GLASS_PANE:
+    vault: 3.0
+    raindrops: 0.30
+  GREEN_TERRACOTTA:
+    vault: 3.0
+    raindrops: 0.30
+  GREEN_WALL_BANNER:
+    vault: 3.0
+    raindrops: 0.30
+  GREEN_WOOL:
+    vault: 3.0
+    raindrops: 0.30
+  GRINDSTONE:
+    vault: 1.0
+    raindrops: 0.10
+  GUARDIAN_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  GUNPOWDER:
+    vault: 1.0
+    raindrops: 0.10
+  GUSTER_BANNER_PATTERN:
+    vault: 4.20
+    raindrops: 0.42
+  GUSTER_POTTERY_SHERD:
+    vault: 1.40
+    raindrops: 0.14
+  HANGING_ROOTS:
+    vault: 1.0
+    raindrops: 0.10
+  HAPPY_GHAST_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  HAY_BLOCK:
+    vault: 1.0
+    raindrops: 0.10
+  HEART_OF_THE_SEA:
+    vault: 75.0
+    raindrops: 7.50
+  HEART_POTTERY_SHERD:
+    vault: 1.40
+    raindrops: 0.14
+  HEARTBREAK_POTTERY_SHERD:
+    vault: 1.40
+    raindrops: 0.14
+  HEAVY_CORE:
+    vault: 1000.0
+    raindrops: 100.0
+  HEAVY_WEIGHTED_PRESSURE_PLATE:
+    vault: 2.40
+    raindrops: 0.24
+  HOGLIN_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  HONEY_BLOCK:
+    vault: 40.0
+    raindrops: 4.0
+  HONEY_BOTTLE:
+    vault: 8.0
+    raindrops: 0.80
+  HONEYCOMB:
+    vault: 8.0
+    raindrops: 0.80
+  HONEYCOMB_BLOCK:
+    vault: 40.0
+    raindrops: 4.0
+  HOPPER:
+    vault: 1.0
+    raindrops: 0.10
+  HOPPER_MINECART:
+    vault: 1.0
+    raindrops: 0.10
+  HORN_CORAL:
+    vault: 8.0
+    raindrops: 0.80
+  HORN_CORAL_BLOCK:
+    vault: 40.0
+    raindrops: 4.0
+  HORN_CORAL_FAN:
+    vault: 8.0
+    raindrops: 0.80
+  HORN_CORAL_WALL_FAN:
+    vault: 8.0
+    raindrops: 0.80
+  HORSE_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  HOST_ARMOR_TRIM_SMITHING_TEMPLATE:
+    vault: 187.50
+    raindrops: 18.75
+  HOWL_POTTERY_SHERD:
+    vault: 1.40
+    raindrops: 0.14
+  HUSK_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  ICE:
+    vault: 1.0
+    raindrops: 0.10
+  INFESTED_CHISELED_STONE_BRICKS:
+    vault: 3.0
+    raindrops: 0.30
+  INFESTED_COBBLESTONE:
+    vault: 1.0
+    raindrops: 0.10
+  INFESTED_CRACKED_STONE_BRICKS:
+    vault: 3.0
+    raindrops: 0.30
+  INFESTED_DEEPSLATE:
+    vault: 1.0
+    raindrops: 0.10
+  INFESTED_MOSSY_STONE_BRICKS:
+    vault: 3.0
+    raindrops: 0.30
+  INFESTED_STONE:
+    vault: 1.0
+    raindrops: 0.10
+  INFESTED_STONE_BRICKS:
+    vault: 3.0
+    raindrops: 0.30
+  INK_SAC:
+    vault: 1.0
+    raindrops: 0.10
+  IRON_AXE:
+    vault: 44.0
+    raindrops: 4.40
+  IRON_BARS:
+    vault: 22.0
+    raindrops: 2.20
+  IRON_BLOCK:
+    vault: 110.0
+    raindrops: 11.0
+  IRON_BOOTS:
+    vault: 48.40
+    raindrops: 4.84
+  IRON_CHAIN:
+    vault: 22.0
+    raindrops: 2.20
+  IRON_CHESTPLATE:
+    vault: 48.40
+    raindrops: 4.84
+  IRON_DOOR:
+    vault: 17.60
+    raindrops: 1.76
+  IRON_GOLEM_SPAWN_EGG:
+    vault: 52.80
+    raindrops: 5.28
+  IRON_HELMET:
+    vault: 48.40
+    raindrops: 4.84
+  IRON_HOE:
+    vault: 44.0
+    raindrops: 4.40
+  IRON_HORSE_ARMOR:
+    vault: 48.40
+    raindrops: 4.84
+  IRON_INGOT:
+    vault: 35.20
+    raindrops: 3.52
+  IRON_LEGGINGS:
+    vault: 48.40
+    raindrops: 4.84
+  IRON_NAUTILUS_ARMOR:
+    vault: 22.0
+    raindrops: 2.20
+  IRON_NUGGET:
+    vault: 5.50
+    raindrops: 0.55
+  IRON_ORE:
+    vault: 39.60
+    raindrops: 3.96
+  IRON_PICKAXE:
+    vault: 44.0
+    raindrops: 4.40
+  IRON_SHOVEL:
+    vault: 44.0
+    raindrops: 4.40
+  IRON_SPEAR:
+    vault: 22.0
+    raindrops: 2.20
+  IRON_SWORD:
+    vault: 44.0
+    raindrops: 4.40
+  IRON_TRAPDOOR:
+    vault: 17.60
+    raindrops: 1.76
+  ITEM_FRAME:
+    vault: 1.0
+    raindrops: 0.10
+  JACK_O_LANTERN:
+    vault: 8.0
+    raindrops: 0.80
+  JIGSAW:
+    vault: 220.0
+    raindrops: 22.0
+  JUKEBOX:
+    vault: 1.0
+    raindrops: 0.10
+  JUNGLE_BOAT:
+    vault: 1.30
+    raindrops: 0.13
+  JUNGLE_BUTTON:
+    vault: 2.40
+    raindrops: 0.24
+  JUNGLE_CHEST_BOAT:
+    vault: 1.30
+    raindrops: 0.13
+  JUNGLE_DOOR:
+    vault: 2.40
+    raindrops: 0.24
+  JUNGLE_FENCE:
+    vault: 3.0
+    raindrops: 0.30
+  JUNGLE_FENCE_GATE:
+    vault: 3.0
+    raindrops: 0.30
+  JUNGLE_HANGING_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  JUNGLE_LEAVES:
+    vault: 2.70
+    raindrops: 0.27
+  JUNGLE_LOG:
+    vault: 2.70
+    raindrops: 0.27
+  JUNGLE_PLANKS:
+    vault: 2.70
+    raindrops: 0.27
+  JUNGLE_PRESSURE_PLATE:
+    vault: 2.40
+    raindrops: 0.24
+  JUNGLE_SAPLING:
+    vault: 2.70
+    raindrops: 0.27
+  JUNGLE_SHELF:
+    vault: 1.0
+    raindrops: 0.10
+  JUNGLE_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  JUNGLE_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  JUNGLE_STAIRS:
+    vault: 2.40
+    raindrops: 0.24
+  JUNGLE_TRAPDOOR:
+    vault: 2.40
+    raindrops: 0.24
+  JUNGLE_WALL_HANGING_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  JUNGLE_WALL_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  JUNGLE_WOOD:
+    vault: 2.70
+    raindrops: 0.27
+  KELP:
+    vault: 1.0
+    raindrops: 0.10
+  KELP_PLANT:
+    vault: 1.0
+    raindrops: 0.10
+  KNOWLEDGE_BOOK:
+    vault: 8.0
+    raindrops: 0.80
+  LADDER:
+    vault: 1.0
+    raindrops: 0.10
+  LANTERN:
+    vault: 8.0
+    raindrops: 0.80
+  LAPIS_BLOCK:
+    vault: 110.0
+    raindrops: 11.0
+  LAPIS_LAZULI:
+    vault: 22.0
+    raindrops: 2.20
+  LAPIS_ORE:
+    vault: 39.60
+    raindrops: 3.96
+  LARGE_AMETHYST_BUD:
+    vault: 22.0
+    raindrops: 2.20
+  LARGE_FERN:
+    vault: 1.0
+    raindrops: 0.10
+  LAVA:
+    vault: 1.0
+    raindrops: 0.10
+  LAVA_BUCKET:
+    vault: 1.50
+    raindrops: 0.15
+  LAVA_CAULDRON:
+    vault: 1.0
+    raindrops: 0.10
+  LEAD:
+    vault: 1.0
+    raindrops: 0.10
+  LEAF_LITTER:
+    vault: 1.0
+    raindrops: 0.10
+  LEATHER:
+    vault: 1.0
+    raindrops: 0.10
+  LEATHER_BOOTS:
+    vault: 2.20
+    raindrops: 0.22
+  LEATHER_CHESTPLATE:
+    vault: 2.20
+    raindrops: 0.22
+  LEATHER_HELMET:
+    vault: 2.20
+    raindrops: 0.22
+  LEATHER_HORSE_ARMOR:
+    vault: 2.20
+    raindrops: 0.22
+  LEATHER_LEGGINGS:
+    vault: 2.20
+    raindrops: 0.22
+  LECTERN:
+    vault: 1.0
+    raindrops: 0.10
+  LEVER:
+    vault: 1.0
+    raindrops: 0.10
+  LIGHT:
+    vault: 1.0
+    raindrops: 0.10
+  LIGHT_BLUE_BANNER:
+    vault: 3.0
+    raindrops: 0.30
+  LIGHT_BLUE_BED:
+    vault: 1.0
+    raindrops: 0.10
+  LIGHT_BLUE_BUNDLE:
+    vault: 8.0
+    raindrops: 0.80
+  LIGHT_BLUE_CANDLE:
+    vault: 8.0
+    raindrops: 0.80
+  LIGHT_BLUE_CANDLE_CAKE:
+    vault: 8.0
+    raindrops: 0.80
+  LIGHT_BLUE_CARPET:
+    vault: 3.0
+    raindrops: 0.30
+  LIGHT_BLUE_CONCRETE:
+    vault: 3.0
+    raindrops: 0.30
+  LIGHT_BLUE_CONCRETE_POWDER:
+    vault: 3.0
+    raindrops: 0.30
+  LIGHT_BLUE_DYE:
+    vault: 0.70
+    raindrops: 0.07
+  LIGHT_BLUE_GLAZED_TERRACOTTA:
+    vault: 3.0
+    raindrops: 0.30
+  LIGHT_BLUE_HARNESS:
+    vault: 1.0
+    raindrops: 0.10
+  LIGHT_BLUE_SHULKER_BOX:
+    vault: 1.0
+    raindrops: 0.10
+  LIGHT_BLUE_STAINED_GLASS:
+    vault: 3.0
+    raindrops: 0.30
+  LIGHT_BLUE_STAINED_GLASS_PANE:
+    vault: 3.0
+    raindrops: 0.30
+  LIGHT_BLUE_TERRACOTTA:
+    vault: 3.0
+    raindrops: 0.30
+  LIGHT_BLUE_WALL_BANNER:
+    vault: 3.0
+    raindrops: 0.30
+  LIGHT_BLUE_WOOL:
+    vault: 3.0
+    raindrops: 0.30
+  LIGHT_GRAY_BANNER:
+    vault: 3.0
+    raindrops: 0.30
+  LIGHT_GRAY_BED:
+    vault: 1.0
+    raindrops: 0.10
+  LIGHT_GRAY_BUNDLE:
+    vault: 8.0
+    raindrops: 0.80
+  LIGHT_GRAY_CANDLE:
+    vault: 8.0
+    raindrops: 0.80
+  LIGHT_GRAY_CANDLE_CAKE:
+    vault: 8.0
+    raindrops: 0.80
+  LIGHT_GRAY_CARPET:
+    vault: 3.0
+    raindrops: 0.30
+  LIGHT_GRAY_CONCRETE:
+    vault: 3.0
+    raindrops: 0.30
+  LIGHT_GRAY_CONCRETE_POWDER:
+    vault: 3.0
+    raindrops: 0.30
+  LIGHT_GRAY_DYE:
+    vault: 0.70
+    raindrops: 0.07
+  LIGHT_GRAY_GLAZED_TERRACOTTA:
+    vault: 3.0
+    raindrops: 0.30
+  LIGHT_GRAY_HARNESS:
+    vault: 1.0
+    raindrops: 0.10
+  LIGHT_GRAY_SHULKER_BOX:
+    vault: 1.0
+    raindrops: 0.10
+  LIGHT_GRAY_STAINED_GLASS:
+    vault: 3.0
+    raindrops: 0.30
+  LIGHT_GRAY_STAINED_GLASS_PANE:
+    vault: 3.0
+    raindrops: 0.30
+  LIGHT_GRAY_TERRACOTTA:
+    vault: 3.0
+    raindrops: 0.30
+  LIGHT_GRAY_WALL_BANNER:
+    vault: 3.0
+    raindrops: 0.30
+  LIGHT_GRAY_WOOL:
+    vault: 3.0
+    raindrops: 0.30
+  LIGHT_WEIGHTED_PRESSURE_PLATE:
+    vault: 2.40
+    raindrops: 0.24
+  LIGHTNING_ROD:
+    vault: 1.0
+    raindrops: 0.10
+  LILAC:
+    vault: 1.0
+    raindrops: 0.10
+  LILY_OF_THE_VALLEY:
+    vault: 1.0
+    raindrops: 0.10
+  LILY_PAD:
+    vault: 1.0
+    raindrops: 0.10
+  LIME_BANNER:
+    vault: 3.0
+    raindrops: 0.30
+  LIME_BED:
+    vault: 1.0
+    raindrops: 0.10
+  LIME_BUNDLE:
+    vault: 8.0
+    raindrops: 0.80
+  LIME_CANDLE:
+    vault: 8.0
+    raindrops: 0.80
+  LIME_CANDLE_CAKE:
+    vault: 8.0
+    raindrops: 0.80
+  LIME_CARPET:
+    vault: 3.0
+    raindrops: 0.30
+  LIME_CONCRETE:
+    vault: 3.0
+    raindrops: 0.30
+  LIME_CONCRETE_POWDER:
+    vault: 3.0
+    raindrops: 0.30
+  LIME_DYE:
+    vault: 0.70
+    raindrops: 0.07
+  LIME_GLAZED_TERRACOTTA:
+    vault: 3.0
+    raindrops: 0.30
+  LIME_HARNESS:
+    vault: 1.0
+    raindrops: 0.10
+  LIME_SHULKER_BOX:
+    vault: 1.0
+    raindrops: 0.10
+  LIME_STAINED_GLASS:
+    vault: 3.0
+    raindrops: 0.30
+  LIME_STAINED_GLASS_PANE:
+    vault: 3.0
+    raindrops: 0.30
+  LIME_TERRACOTTA:
+    vault: 3.0
+    raindrops: 0.30
+  LIME_WALL_BANNER:
+    vault: 3.0
+    raindrops: 0.30
+  LIME_WOOL:
+    vault: 3.0
+    raindrops: 0.30
+  LINGERING_POTION:
+    vault: 8.0
+    raindrops: 0.80
+  LLAMA_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  LODESTONE:
+    vault: 1.0
+    raindrops: 0.10
+  LOOM:
+    vault: 1.0
+    raindrops: 0.10
+  MACE:
+    vault: 950.0
+    raindrops: 95.0
+  MAGENTA_BANNER:
+    vault: 3.0
+    raindrops: 0.30
+  MAGENTA_BED:
+    vault: 1.0
+    raindrops: 0.10
+  MAGENTA_BUNDLE:
+    vault: 8.0
+    raindrops: 0.80
+  MAGENTA_CANDLE:
+    vault: 8.0
+    raindrops: 0.80
+  MAGENTA_CANDLE_CAKE:
+    vault: 8.0
+    raindrops: 0.80
+  MAGENTA_CARPET:
+    vault: 3.0
+    raindrops: 0.30
+  MAGENTA_CONCRETE:
+    vault: 3.0
+    raindrops: 0.30
+  MAGENTA_CONCRETE_POWDER:
+    vault: 3.0
+    raindrops: 0.30
+  MAGENTA_DYE:
+    vault: 0.70
+    raindrops: 0.07
+  MAGENTA_GLAZED_TERRACOTTA:
+    vault: 3.0
+    raindrops: 0.30
+  MAGENTA_HARNESS:
+    vault: 1.0
+    raindrops: 0.10
+  MAGENTA_SHULKER_BOX:
+    vault: 1.0
+    raindrops: 0.10
+  MAGENTA_STAINED_GLASS:
+    vault: 3.0
+    raindrops: 0.30
+  MAGENTA_STAINED_GLASS_PANE:
+    vault: 3.0
+    raindrops: 0.30
+  MAGENTA_TERRACOTTA:
+    vault: 3.0
+    raindrops: 0.30
+  MAGENTA_WALL_BANNER:
+    vault: 3.0
+    raindrops: 0.30
+  MAGENTA_WOOL:
+    vault: 3.0
+    raindrops: 0.30
+  MAGMA_BLOCK:
+    vault: 1.0
+    raindrops: 0.10
+  MAGMA_CREAM:
+    vault: 1.0
+    raindrops: 0.10
+  MAGMA_CUBE_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  MANGROVE_BOAT:
+    vault: 1.30
+    raindrops: 0.13
+  MANGROVE_BUTTON:
+    vault: 2.40
+    raindrops: 0.24
+  MANGROVE_CHEST_BOAT:
+    vault: 1.30
+    raindrops: 0.13
+  MANGROVE_DOOR:
+    vault: 2.40
+    raindrops: 0.24
+  MANGROVE_FENCE:
+    vault: 3.0
+    raindrops: 0.30
+  MANGROVE_FENCE_GATE:
+    vault: 3.0
+    raindrops: 0.30
+  MANGROVE_HANGING_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  MANGROVE_LEAVES:
+    vault: 2.70
+    raindrops: 0.27
+  MANGROVE_LOG:
+    vault: 2.70
+    raindrops: 0.27
+  MANGROVE_PLANKS:
+    vault: 2.70
+    raindrops: 0.27
+  MANGROVE_PRESSURE_PLATE:
+    vault: 2.40
+    raindrops: 0.24
+  MANGROVE_PROPAGULE:
+    vault: 1.0
+    raindrops: 0.10
+  MANGROVE_ROOTS:
+    vault: 1.0
+    raindrops: 0.10
+  MANGROVE_SHELF:
+    vault: 1.0
+    raindrops: 0.10
+  MANGROVE_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  MANGROVE_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  MANGROVE_STAIRS:
+    vault: 2.40
+    raindrops: 0.24
+  MANGROVE_TRAPDOOR:
+    vault: 2.40
+    raindrops: 0.24
+  MANGROVE_WALL_HANGING_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  MANGROVE_WALL_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  MANGROVE_WOOD:
+    vault: 2.70
+    raindrops: 0.27
+  MAP:
+    vault: 1.0
+    raindrops: 0.10
+  MEDIUM_AMETHYST_BUD:
+    vault: 22.0
+    raindrops: 2.20
+  MELON:
+    vault: 1.0
+    raindrops: 0.10
+  MELON_SEEDS:
+    vault: 0.70
+    raindrops: 0.07
+  MELON_SLICE:
+    vault: 1.0
+    raindrops: 0.10
+  MELON_STEM:
+    vault: 1.0
+    raindrops: 0.10
+  MILK_BUCKET:
+    vault: 1.50
+    raindrops: 0.15
+  MINECART:
+    vault: 1.0
+    raindrops: 0.10
+  MINER_POTTERY_SHERD:
+    vault: 1.40
+    raindrops: 0.14
+  MOJANG_BANNER_PATTERN:
+    vault: 4.20
+    raindrops: 0.42
+  MOOSHROOM_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  MOSS_BLOCK:
+    vault: 1.0
+    raindrops: 0.10
+  MOSS_CARPET:
+    vault: 3.0
+    raindrops: 0.30
+  MOSSY_COBBLESTONE:
+    vault: 1.0
+    raindrops: 0.10
+  MOSSY_COBBLESTONE_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  MOSSY_COBBLESTONE_STAIRS:
+    vault: 2.40
+    raindrops: 0.24
+  MOSSY_COBBLESTONE_WALL:
+    vault: 2.40
+    raindrops: 0.24
+  MOSSY_STONE_BRICK_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  MOSSY_STONE_BRICK_STAIRS:
+    vault: 2.40
+    raindrops: 0.24
+  MOSSY_STONE_BRICK_WALL:
+    vault: 2.40
+    raindrops: 0.24
+  MOSSY_STONE_BRICKS:
+    vault: 3.0
+    raindrops: 0.30
+  MOURNER_POTTERY_SHERD:
+    vault: 1.40
+    raindrops: 0.14
+  MOVING_PISTON:
+    vault: 1.0
+    raindrops: 0.10
+  MUD:
+    vault: 1.0
+    raindrops: 0.10
+  MUD_BRICK_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  MUD_BRICK_STAIRS:
+    vault: 2.40
+    raindrops: 0.24
+  MUD_BRICK_WALL:
+    vault: 2.40
+    raindrops: 0.24
+  MUD_BRICKS:
+    vault: 3.0
+    raindrops: 0.30
+  MUDDY_MANGROVE_ROOTS:
+    vault: 1.0
+    raindrops: 0.10
+  MULE_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  MUSHROOM_STEM:
+    vault: 1.0
+    raindrops: 0.10
+  MUSHROOM_STEW:
+    vault: 1.0
+    raindrops: 0.10
+  MUSIC_DISC_11:
+    vault: 165.0
+    raindrops: 16.50
+  MUSIC_DISC_13:
+    vault: 165.0
+    raindrops: 16.50
+  MUSIC_DISC_5:
+    vault: 165.0
+    raindrops: 16.50
+  MUSIC_DISC_BLOCKS:
+    vault: 165.0
+    raindrops: 16.50
+  MUSIC_DISC_CAT:
+    vault: 165.0
+    raindrops: 16.50
+  MUSIC_DISC_CHIRP:
+    vault: 165.0
+    raindrops: 16.50
+  MUSIC_DISC_CREATOR:
+    vault: 165.0
+    raindrops: 16.50
+  MUSIC_DISC_CREATOR_MUSIC_BOX:
+    vault: 165.0
+    raindrops: 16.50
+  MUSIC_DISC_FAR:
+    vault: 165.0
+    raindrops: 16.50
+  MUSIC_DISC_LAVA_CHICKEN:
+    vault: 165.0
+    raindrops: 16.50
+  MUSIC_DISC_MALL:
+    vault: 165.0
+    raindrops: 16.50
+  MUSIC_DISC_MELLOHI:
+    vault: 165.0
+    raindrops: 16.50
+  MUSIC_DISC_OTHERSIDE:
+    vault: 165.0
+    raindrops: 16.50
+  MUSIC_DISC_PIGSTEP:
+    vault: 165.0
+    raindrops: 16.50
+  MUSIC_DISC_PRECIPICE:
+    vault: 165.0
+    raindrops: 16.50
+  MUSIC_DISC_RELIC:
+    vault: 165.0
+    raindrops: 16.50
+  MUSIC_DISC_STAL:
+    vault: 165.0
+    raindrops: 16.50
+  MUSIC_DISC_STRAD:
+    vault: 165.0
+    raindrops: 16.50
+  MUSIC_DISC_TEARS:
+    vault: 165.0
+    raindrops: 16.50
+  MUSIC_DISC_WAIT:
+    vault: 165.0
+    raindrops: 16.50
+  MUSIC_DISC_WARD:
+    vault: 165.0
+    raindrops: 16.50
+  MUTTON:
+    vault: 1.0
+    raindrops: 0.10
+  MYCELIUM:
+    vault: 1.0
+    raindrops: 0.10
+  NAME_TAG:
+    vault: 1.0
+    raindrops: 0.10
+  NAUTILUS_SHELL:
+    vault: 1.0
+    raindrops: 0.10
+  NAUTILUS_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  NETHER_BRICK:
+    vault: 3.0
+    raindrops: 0.30
+  NETHER_BRICK_FENCE:
+    vault: 3.0
+    raindrops: 0.30
+  NETHER_BRICK_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  NETHER_BRICK_STAIRS:
+    vault: 2.40
+    raindrops: 0.24
+  NETHER_BRICK_WALL:
+    vault: 2.40
+    raindrops: 0.24
+  NETHER_BRICKS:
+    vault: 3.0
+    raindrops: 0.30
+  NETHER_GOLD_ORE:
+    vault: 39.60
+    raindrops: 3.96
+  NETHER_PORTAL:
+    vault: 1.0
+    raindrops: 0.10
+  NETHER_QUARTZ_ORE:
+    vault: 39.60
+    raindrops: 3.96
+  NETHER_SPROUTS:
+    vault: 1.0
+    raindrops: 0.10
+  NETHER_STAR:
+    vault: 900.0
+    raindrops: 90.0
+  NETHER_WART:
+    vault: 1.0
+    raindrops: 0.10
+  NETHER_WART_BLOCK:
+    vault: 1.0
+    raindrops: 0.10
+  NETHERITE_AXE:
+    vault: 440.0
+    raindrops: 44.0
+  NETHERITE_BLOCK:
+    vault: 1500.0
+    raindrops: 150.0
+  NETHERITE_BOOTS:
+    vault: 484.0
+    raindrops: 48.40
+  NETHERITE_CHESTPLATE:
+    vault: 484.0
+    raindrops: 48.40
+  NETHERITE_HELMET:
+    vault: 484.0
+    raindrops: 48.40
+  NETHERITE_HOE:
+    vault: 440.0
+    raindrops: 44.0
+  NETHERITE_HORSE_ARMOR:
+    vault: 484.0
+    raindrops: 48.40
+  NETHERITE_INGOT:
+    vault: 260.0
+    raindrops: 26.0
+  NETHERITE_LEGGINGS:
+    vault: 484.0
+    raindrops: 48.40
+  NETHERITE_NAUTILUS_ARMOR:
+    vault: 220.0
+    raindrops: 22.0
+  NETHERITE_PICKAXE:
+    vault: 440.0
+    raindrops: 44.0
+  NETHERITE_SCRAP:
+    vault: 85.0
+    raindrops: 8.50
+  NETHERITE_SHOVEL:
+    vault: 440.0
+    raindrops: 44.0
+  NETHERITE_SPEAR:
+    vault: 220.0
+    raindrops: 22.0
+  NETHERITE_SWORD:
+    vault: 440.0
+    raindrops: 44.0
+  NETHERITE_UPGRADE_SMITHING_TEMPLATE:
+    vault: 400.0
+    raindrops: 40.0
+  NETHERRACK:
+    vault: 1.0
+    raindrops: 0.10
+  NOTE_BLOCK:
+    vault: 1.0
+    raindrops: 0.10
+  OAK_BOAT:
+    vault: 1.30
+    raindrops: 0.13
+  OAK_BUTTON:
+    vault: 2.40
+    raindrops: 0.24
+  OAK_CHEST_BOAT:
+    vault: 1.30
+    raindrops: 0.13
+  OAK_DOOR:
+    vault: 2.40
+    raindrops: 0.24
+  OAK_FENCE:
+    vault: 3.0
+    raindrops: 0.30
+  OAK_FENCE_GATE:
+    vault: 3.0
+    raindrops: 0.30
+  OAK_HANGING_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  OAK_LEAVES:
+    vault: 2.70
+    raindrops: 0.27
+  OAK_LOG:
+    vault: 2.70
+    raindrops: 0.27
+  OAK_PLANKS:
+    vault: 2.70
+    raindrops: 0.27
+  OAK_PRESSURE_PLATE:
+    vault: 2.40
+    raindrops: 0.24
+  OAK_SAPLING:
+    vault: 2.70
+    raindrops: 0.27
+  OAK_SHELF:
+    vault: 1.0
+    raindrops: 0.10
+  OAK_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  OAK_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  OAK_STAIRS:
+    vault: 2.40
+    raindrops: 0.24
+  OAK_TRAPDOOR:
+    vault: 2.40
+    raindrops: 0.24
+  OAK_WALL_HANGING_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  OAK_WALL_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  OAK_WOOD:
+    vault: 2.70
+    raindrops: 0.27
+  OBSERVER:
+    vault: 1.0
+    raindrops: 0.10
+  OBSIDIAN:
+    vault: 22.0
+    raindrops: 2.20
+  OCELOT_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  OCHRE_FROGLIGHT:
+    vault: 1.0
+    raindrops: 0.10
+  OMINOUS_BOTTLE:
+    vault: 1.0
+    raindrops: 0.10
+  OMINOUS_TRIAL_KEY:
+    vault: 750.0
+    raindrops: 75.0
+  OPEN_EYEBLOSSOM:
+    vault: 1.0
+    raindrops: 0.10
+  ORANGE_BANNER:
+    vault: 3.0
+    raindrops: 0.30
+  ORANGE_BED:
+    vault: 1.0
+    raindrops: 0.10
+  ORANGE_BUNDLE:
+    vault: 8.0
+    raindrops: 0.80
+  ORANGE_CANDLE:
+    vault: 8.0
+    raindrops: 0.80
+  ORANGE_CANDLE_CAKE:
+    vault: 8.0
+    raindrops: 0.80
+  ORANGE_CARPET:
+    vault: 3.0
+    raindrops: 0.30
+  ORANGE_CONCRETE:
+    vault: 3.0
+    raindrops: 0.30
+  ORANGE_CONCRETE_POWDER:
+    vault: 3.0
+    raindrops: 0.30
+  ORANGE_DYE:
+    vault: 0.70
+    raindrops: 0.07
+  ORANGE_GLAZED_TERRACOTTA:
+    vault: 3.0
+    raindrops: 0.30
+  ORANGE_HARNESS:
+    vault: 1.0
+    raindrops: 0.10
+  ORANGE_SHULKER_BOX:
+    vault: 1.0
+    raindrops: 0.10
+  ORANGE_STAINED_GLASS:
+    vault: 3.0
+    raindrops: 0.30
+  ORANGE_STAINED_GLASS_PANE:
+    vault: 3.0
+    raindrops: 0.30
+  ORANGE_TERRACOTTA:
+    vault: 3.0
+    raindrops: 0.30
+  ORANGE_TULIP:
+    vault: 1.0
+    raindrops: 0.10
+  ORANGE_WALL_BANNER:
+    vault: 3.0
+    raindrops: 0.30
+  ORANGE_WOOL:
+    vault: 3.0
+    raindrops: 0.30
+  OXEYE_DAISY:
+    vault: 1.0
+    raindrops: 0.10
+  OXIDIZED_CHISELED_COPPER:
+    vault: 22.0
+    raindrops: 2.20
+  OXIDIZED_COPPER:
+    vault: 22.0
+    raindrops: 2.20
+  OXIDIZED_COPPER_BARS:
+    vault: 22.0
+    raindrops: 2.20
+  OXIDIZED_COPPER_BULB:
+    vault: 22.0
+    raindrops: 2.20
+  OXIDIZED_COPPER_CHAIN:
+    vault: 22.0
+    raindrops: 2.20
+  OXIDIZED_COPPER_CHEST:
+    vault: 22.0
+    raindrops: 2.20
+  OXIDIZED_COPPER_DOOR:
+    vault: 17.60
+    raindrops: 1.76
+  OXIDIZED_COPPER_GOLEM_STATUE:
+    vault: 22.0
+    raindrops: 2.20
+  OXIDIZED_COPPER_GRATE:
+    vault: 22.0
+    raindrops: 2.20
+  OXIDIZED_COPPER_LANTERN:
+    vault: 22.0
+    raindrops: 2.20
+  OXIDIZED_COPPER_TRAPDOOR:
+    vault: 17.60
+    raindrops: 1.76
+  OXIDIZED_CUT_COPPER:
+    vault: 22.0
+    raindrops: 2.20
+  OXIDIZED_CUT_COPPER_SLAB:
+    vault: 17.60
+    raindrops: 1.76
+  OXIDIZED_CUT_COPPER_STAIRS:
+    vault: 17.60
+    raindrops: 1.76
+  OXIDIZED_LIGHTNING_ROD:
+    vault: 1.0
+    raindrops: 0.10
+  PACKED_ICE:
+    vault: 1.0
+    raindrops: 0.10
+  PACKED_MUD:
+    vault: 1.0
+    raindrops: 0.10
+  PAINTING:
+    vault: 1.0
+    raindrops: 0.10
+  PALE_HANGING_MOSS:
+    vault: 1.0
+    raindrops: 0.10
+  PALE_MOSS_BLOCK:
+    vault: 1.0
+    raindrops: 0.10
+  PALE_MOSS_CARPET:
+    vault: 3.0
+    raindrops: 0.30
+  PALE_OAK_BOAT:
+    vault: 1.30
+    raindrops: 0.13
+  PALE_OAK_BUTTON:
+    vault: 2.40
+    raindrops: 0.24
+  PALE_OAK_CHEST_BOAT:
+    vault: 1.30
+    raindrops: 0.13
+  PALE_OAK_DOOR:
+    vault: 2.40
+    raindrops: 0.24
+  PALE_OAK_FENCE:
+    vault: 3.0
+    raindrops: 0.30
+  PALE_OAK_FENCE_GATE:
+    vault: 3.0
+    raindrops: 0.30
+  PALE_OAK_HANGING_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  PALE_OAK_LEAVES:
+    vault: 2.70
+    raindrops: 0.27
+  PALE_OAK_LOG:
+    vault: 2.70
+    raindrops: 0.27
+  PALE_OAK_PLANKS:
+    vault: 2.70
+    raindrops: 0.27
+  PALE_OAK_PRESSURE_PLATE:
+    vault: 2.40
+    raindrops: 0.24
+  PALE_OAK_SAPLING:
+    vault: 2.70
+    raindrops: 0.27
+  PALE_OAK_SHELF:
+    vault: 1.0
+    raindrops: 0.10
+  PALE_OAK_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  PALE_OAK_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  PALE_OAK_STAIRS:
+    vault: 2.40
+    raindrops: 0.24
+  PALE_OAK_TRAPDOOR:
+    vault: 2.40
+    raindrops: 0.24
+  PALE_OAK_WALL_HANGING_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  PALE_OAK_WALL_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  PALE_OAK_WOOD:
+    vault: 2.70
+    raindrops: 0.27
+  PANDA_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  PAPER:
+    vault: 1.0
+    raindrops: 0.10
+  PARCHED_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  PARROT_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  PEARLESCENT_FROGLIGHT:
+    vault: 1.0
+    raindrops: 0.10
+  PEONY:
+    vault: 1.0
+    raindrops: 0.10
+  PETRIFIED_OAK_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  PHANTOM_MEMBRANE:
+    vault: 1.0
+    raindrops: 0.10
+  PHANTOM_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  PIG_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  PIGLIN_BANNER_PATTERN:
+    vault: 4.20
+    raindrops: 0.42
+  PIGLIN_BRUTE_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  PIGLIN_HEAD:
+    vault: 22.0
+    raindrops: 2.20
+  PIGLIN_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  PIGLIN_WALL_HEAD:
+    vault: 22.0
+    raindrops: 2.20
+  PILLAGER_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  PINK_BANNER:
+    vault: 3.0
+    raindrops: 0.30
+  PINK_BED:
+    vault: 1.0
+    raindrops: 0.10
+  PINK_BUNDLE:
+    vault: 8.0
+    raindrops: 0.80
+  PINK_CANDLE:
+    vault: 8.0
+    raindrops: 0.80
+  PINK_CANDLE_CAKE:
+    vault: 8.0
+    raindrops: 0.80
+  PINK_CARPET:
+    vault: 3.0
+    raindrops: 0.30
+  PINK_CONCRETE:
+    vault: 3.0
+    raindrops: 0.30
+  PINK_CONCRETE_POWDER:
+    vault: 3.0
+    raindrops: 0.30
+  PINK_DYE:
+    vault: 0.70
+    raindrops: 0.07
+  PINK_GLAZED_TERRACOTTA:
+    vault: 3.0
+    raindrops: 0.30
+  PINK_HARNESS:
+    vault: 1.0
+    raindrops: 0.10
+  PINK_PETALS:
+    vault: 0.70
+    raindrops: 0.07
+  PINK_SHULKER_BOX:
+    vault: 1.0
+    raindrops: 0.10
+  PINK_STAINED_GLASS:
+    vault: 3.0
+    raindrops: 0.30
+  PINK_STAINED_GLASS_PANE:
+    vault: 3.0
+    raindrops: 0.30
+  PINK_TERRACOTTA:
+    vault: 3.0
+    raindrops: 0.30
+  PINK_TULIP:
+    vault: 1.0
+    raindrops: 0.10
+  PINK_WALL_BANNER:
+    vault: 3.0
+    raindrops: 0.30
+  PINK_WOOL:
+    vault: 3.0
+    raindrops: 0.30
+  PISTON:
+    vault: 1.0
+    raindrops: 0.10
+  PISTON_HEAD:
+    vault: 22.0
+    raindrops: 2.20
+  PITCHER_CROP:
+    vault: 1.0
+    raindrops: 0.10
+  PITCHER_PLANT:
+    vault: 1.0
+    raindrops: 0.10
+  PITCHER_POD:
+    vault: 1.0
+    raindrops: 0.10
+  PLAYER_HEAD:
+    vault: 22.0
+    raindrops: 2.20
+  PLAYER_WALL_HEAD:
+    vault: 22.0
+    raindrops: 2.20
+  PLENTY_POTTERY_SHERD:
+    vault: 1.40
+    raindrops: 0.14
+  PODZOL:
+    vault: 1.0
+    raindrops: 0.10
+  POINTED_DRIPSTONE:
+    vault: 1.0
+    raindrops: 0.10
+  POISONOUS_POTATO:
+    vault: 1.0
+    raindrops: 0.10
+  POLAR_BEAR_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  POLISHED_ANDESITE:
+    vault: 3.0
+    raindrops: 0.30
+  POLISHED_ANDESITE_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  POLISHED_ANDESITE_STAIRS:
+    vault: 2.40
+    raindrops: 0.24
+  POLISHED_BASALT:
+    vault: 3.0
+    raindrops: 0.30
+  POLISHED_BLACKSTONE:
+    vault: 3.0
+    raindrops: 0.30
+  POLISHED_BLACKSTONE_BRICK_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  POLISHED_BLACKSTONE_BRICK_STAIRS:
+    vault: 2.40
+    raindrops: 0.24
+  POLISHED_BLACKSTONE_BRICK_WALL:
+    vault: 2.40
+    raindrops: 0.24
+  POLISHED_BLACKSTONE_BRICKS:
+    vault: 3.0
+    raindrops: 0.30
+  POLISHED_BLACKSTONE_BUTTON:
+    vault: 2.40
+    raindrops: 0.24
+  POLISHED_BLACKSTONE_PRESSURE_PLATE:
+    vault: 2.40
+    raindrops: 0.24
+  POLISHED_BLACKSTONE_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  POLISHED_BLACKSTONE_STAIRS:
+    vault: 2.40
+    raindrops: 0.24
+  POLISHED_BLACKSTONE_WALL:
+    vault: 2.40
+    raindrops: 0.24
+  POLISHED_DEEPSLATE:
+    vault: 3.0
+    raindrops: 0.30
+  POLISHED_DEEPSLATE_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  POLISHED_DEEPSLATE_STAIRS:
+    vault: 2.40
+    raindrops: 0.24
+  POLISHED_DEEPSLATE_WALL:
+    vault: 2.40
+    raindrops: 0.24
+  POLISHED_DIORITE:
+    vault: 3.0
+    raindrops: 0.30
+  POLISHED_DIORITE_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  POLISHED_DIORITE_STAIRS:
+    vault: 2.40
+    raindrops: 0.24
+  POLISHED_GRANITE:
+    vault: 3.0
+    raindrops: 0.30
+  POLISHED_GRANITE_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  POLISHED_GRANITE_STAIRS:
+    vault: 2.40
+    raindrops: 0.24
+  POLISHED_TUFF:
+    vault: 3.0
+    raindrops: 0.30
+  POLISHED_TUFF_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  POLISHED_TUFF_STAIRS:
+    vault: 2.40
+    raindrops: 0.24
+  POLISHED_TUFF_WALL:
+    vault: 2.40
+    raindrops: 0.24
+  POPPED_CHORUS_FRUIT:
+    vault: 1.0
+    raindrops: 0.10
+  POPPY:
+    vault: 1.0
+    raindrops: 0.10
+  PORKCHOP:
+    vault: 1.0
+    raindrops: 0.10
+  POTATO:
+    vault: 1.0
+    raindrops: 0.10
+  POTATOES:
+    vault: 1.0
+    raindrops: 0.10
+  POTION:
+    vault: 8.0
+    raindrops: 0.80
+  POTTED_ACACIA_SAPLING:
+    vault: 2.70
+    raindrops: 0.27
+  POTTED_ALLIUM:
+    vault: 1.0
+    raindrops: 0.10
+  POTTED_AZALEA_BUSH:
+    vault: 0.70
+    raindrops: 0.07
+  POTTED_AZURE_BLUET:
+    vault: 1.0
+    raindrops: 0.10
+  POTTED_BAMBOO:
+    vault: 1.0
+    raindrops: 0.10
+  POTTED_BIRCH_SAPLING:
+    vault: 2.70
+    raindrops: 0.27
+  POTTED_BLUE_ORCHID:
+    vault: 1.0
+    raindrops: 0.10
+  POTTED_BROWN_MUSHROOM:
+    vault: 1.0
+    raindrops: 0.10
+  POTTED_CACTUS:
+    vault: 1.0
+    raindrops: 0.10
+  POTTED_CHERRY_SAPLING:
+    vault: 2.70
+    raindrops: 0.27
+  POTTED_CLOSED_EYEBLOSSOM:
+    vault: 1.0
+    raindrops: 0.10
+  POTTED_CORNFLOWER:
+    vault: 1.0
+    raindrops: 0.10
+  POTTED_CRIMSON_FUNGUS:
+    vault: 1.0
+    raindrops: 0.10
+  POTTED_CRIMSON_ROOTS:
+    vault: 1.0
+    raindrops: 0.10
+  POTTED_DANDELION:
+    vault: 1.0
+    raindrops: 0.10
+  POTTED_DARK_OAK_SAPLING:
+    vault: 2.70
+    raindrops: 0.27
+  POTTED_DEAD_BUSH:
+    vault: 0.70
+    raindrops: 0.07
+  POTTED_FERN:
+    vault: 1.0
+    raindrops: 0.10
+  POTTED_FLOWERING_AZALEA_BUSH:
+    vault: 0.70
+    raindrops: 0.07
+  POTTED_JUNGLE_SAPLING:
+    vault: 2.70
+    raindrops: 0.27
+  POTTED_LILY_OF_THE_VALLEY:
+    vault: 1.0
+    raindrops: 0.10
+  POTTED_MANGROVE_PROPAGULE:
+    vault: 1.0
+    raindrops: 0.10
+  POTTED_OAK_SAPLING:
+    vault: 2.70
+    raindrops: 0.27
+  POTTED_OPEN_EYEBLOSSOM:
+    vault: 1.0
+    raindrops: 0.10
+  POTTED_ORANGE_TULIP:
+    vault: 1.0
+    raindrops: 0.10
+  POTTED_OXEYE_DAISY:
+    vault: 1.0
+    raindrops: 0.10
+  POTTED_PALE_OAK_SAPLING:
+    vault: 2.70
+    raindrops: 0.27
+  POTTED_PINK_TULIP:
+    vault: 1.0
+    raindrops: 0.10
+  POTTED_POPPY:
+    vault: 1.0
+    raindrops: 0.10
+  POTTED_RED_MUSHROOM:
+    vault: 1.0
+    raindrops: 0.10
+  POTTED_RED_TULIP:
+    vault: 1.0
+    raindrops: 0.10
+  POTTED_SPRUCE_SAPLING:
+    vault: 2.70
+    raindrops: 0.27
+  POTTED_TORCHFLOWER:
+    vault: 1.0
+    raindrops: 0.10
+  POTTED_WARPED_FUNGUS:
+    vault: 1.0
+    raindrops: 0.10
+  POTTED_WARPED_ROOTS:
+    vault: 1.0
+    raindrops: 0.10
+  POTTED_WHITE_TULIP:
+    vault: 1.0
+    raindrops: 0.10
+  POTTED_WITHER_ROSE:
+    vault: 22.0
+    raindrops: 2.20
+  POWDER_SNOW:
+    vault: 1.0
+    raindrops: 0.10
+  POWDER_SNOW_BUCKET:
+    vault: 1.50
+    raindrops: 0.15
+  POWDER_SNOW_CAULDRON:
+    vault: 1.0
+    raindrops: 0.10
+  POWERED_RAIL:
+    vault: 1.0
+    raindrops: 0.10
+  PRISMARINE:
+    vault: 8.0
+    raindrops: 0.80
+  PRISMARINE_BRICK_SLAB:
+    vault: 6.40
+    raindrops: 0.64
+  PRISMARINE_BRICK_STAIRS:
+    vault: 6.40
+    raindrops: 0.64
+  PRISMARINE_BRICKS:
+    vault: 8.0
+    raindrops: 0.80
+  PRISMARINE_CRYSTALS:
+    vault: 8.0
+    raindrops: 0.80
+  PRISMARINE_SHARD:
+    vault: 8.0
+    raindrops: 0.80
+  PRISMARINE_SLAB:
+    vault: 6.40
+    raindrops: 0.64
+  PRISMARINE_STAIRS:
+    vault: 6.40
+    raindrops: 0.64
+  PRISMARINE_WALL:
+    vault: 6.40
+    raindrops: 0.64
+  PRIZE_POTTERY_SHERD:
+    vault: 1.40
+    raindrops: 0.14
+  PUFFERFISH:
+    vault: 1.0
+    raindrops: 0.10
+  PUFFERFISH_BUCKET:
+    vault: 1.50
+    raindrops: 0.15
+  PUFFERFISH_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  PUMPKIN:
+    vault: 1.0
+    raindrops: 0.10
+  PUMPKIN_PIE:
+    vault: 1.0
+    raindrops: 0.10
+  PUMPKIN_SEEDS:
+    vault: 0.70
+    raindrops: 0.07
+  PUMPKIN_STEM:
+    vault: 1.0
+    raindrops: 0.10
+  PURPLE_BANNER:
+    vault: 3.0
+    raindrops: 0.30
+  PURPLE_BED:
+    vault: 1.0
+    raindrops: 0.10
+  PURPLE_BUNDLE:
+    vault: 8.0
+    raindrops: 0.80
+  PURPLE_CANDLE:
+    vault: 8.0
+    raindrops: 0.80
+  PURPLE_CANDLE_CAKE:
+    vault: 8.0
+    raindrops: 0.80
+  PURPLE_CARPET:
+    vault: 3.0
+    raindrops: 0.30
+  PURPLE_CONCRETE:
+    vault: 3.0
+    raindrops: 0.30
+  PURPLE_CONCRETE_POWDER:
+    vault: 3.0
+    raindrops: 0.30
+  PURPLE_DYE:
+    vault: 0.70
+    raindrops: 0.07
+  PURPLE_GLAZED_TERRACOTTA:
+    vault: 3.0
+    raindrops: 0.30
+  PURPLE_HARNESS:
+    vault: 1.0
+    raindrops: 0.10
+  PURPLE_SHULKER_BOX:
+    vault: 1.0
+    raindrops: 0.10
+  PURPLE_STAINED_GLASS:
+    vault: 3.0
+    raindrops: 0.30
+  PURPLE_STAINED_GLASS_PANE:
+    vault: 3.0
+    raindrops: 0.30
+  PURPLE_TERRACOTTA:
+    vault: 3.0
+    raindrops: 0.30
+  PURPLE_WALL_BANNER:
+    vault: 3.0
+    raindrops: 0.30
+  PURPLE_WOOL:
+    vault: 3.0
+    raindrops: 0.30
+  PURPUR_BLOCK:
+    vault: 1.0
+    raindrops: 0.10
+  PURPUR_PILLAR:
+    vault: 1.0
+    raindrops: 0.10
+  PURPUR_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  PURPUR_STAIRS:
+    vault: 2.40
+    raindrops: 0.24
+  QUARTZ:
+    vault: 22.0
+    raindrops: 2.20
+  QUARTZ_BLOCK:
+    vault: 110.0
+    raindrops: 11.0
+  QUARTZ_BRICKS:
+    vault: 22.0
+    raindrops: 2.20
+  QUARTZ_PILLAR:
+    vault: 22.0
+    raindrops: 2.20
+  QUARTZ_SLAB:
+    vault: 17.60
+    raindrops: 1.76
+  QUARTZ_STAIRS:
+    vault: 17.60
+    raindrops: 1.76
+  RABBIT:
+    vault: 1.0
+    raindrops: 0.10
+  RABBIT_FOOT:
+    vault: 1.0
+    raindrops: 0.10
+  RABBIT_HIDE:
+    vault: 1.0
+    raindrops: 0.10
+  RABBIT_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  RABBIT_STEW:
+    vault: 1.0
+    raindrops: 0.10
+  RAIL:
+    vault: 1.0
+    raindrops: 0.10
+  RAISER_ARMOR_TRIM_SMITHING_TEMPLATE:
+    vault: 187.50
+    raindrops: 18.75
+  RAVAGER_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  RAW_COPPER:
+    vault: 27.50
+    raindrops: 2.75
+  RAW_COPPER_BLOCK:
+    vault: 137.50
+    raindrops: 13.75
+  RAW_GOLD:
+    vault: 27.50
+    raindrops: 2.75
+  RAW_GOLD_BLOCK:
+    vault: 137.50
+    raindrops: 13.75
+  RAW_IRON:
+    vault: 27.50
+    raindrops: 2.75
+  RAW_IRON_BLOCK:
+    vault: 137.50
+    raindrops: 13.75
+  RECOVERY_COMPASS:
+    vault: 1.0
+    raindrops: 0.10
+  RED_BANNER:
+    vault: 3.0
+    raindrops: 0.30
+  RED_BED:
+    vault: 1.0
+    raindrops: 0.10
+  RED_BUNDLE:
+    vault: 8.0
+    raindrops: 0.80
+  RED_CANDLE:
+    vault: 8.0
+    raindrops: 0.80
+  RED_CANDLE_CAKE:
+    vault: 8.0
+    raindrops: 0.80
+  RED_CARPET:
+    vault: 3.0
+    raindrops: 0.30
+  RED_CONCRETE:
+    vault: 3.0
+    raindrops: 0.30
+  RED_CONCRETE_POWDER:
+    vault: 3.0
+    raindrops: 0.30
+  RED_DYE:
+    vault: 0.70
+    raindrops: 0.07
+  RED_GLAZED_TERRACOTTA:
+    vault: 3.0
+    raindrops: 0.30
+  RED_HARNESS:
+    vault: 1.0
+    raindrops: 0.10
+  RED_MUSHROOM:
+    vault: 1.0
+    raindrops: 0.10
+  RED_MUSHROOM_BLOCK:
+    vault: 1.0
+    raindrops: 0.10
+  RED_NETHER_BRICK_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  RED_NETHER_BRICK_STAIRS:
+    vault: 2.40
+    raindrops: 0.24
+  RED_NETHER_BRICK_WALL:
+    vault: 2.40
+    raindrops: 0.24
+  RED_NETHER_BRICKS:
+    vault: 3.0
+    raindrops: 0.30
+  RED_SAND:
+    vault: 1.0
+    raindrops: 0.10
+  RED_SANDSTONE:
+    vault: 1.0
+    raindrops: 0.10
+  RED_SANDSTONE_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  RED_SANDSTONE_STAIRS:
+    vault: 2.40
+    raindrops: 0.24
+  RED_SANDSTONE_WALL:
+    vault: 2.40
+    raindrops: 0.24
+  RED_SHULKER_BOX:
+    vault: 1.0
+    raindrops: 0.10
+  RED_STAINED_GLASS:
+    vault: 3.0
+    raindrops: 0.30
+  RED_STAINED_GLASS_PANE:
+    vault: 3.0
+    raindrops: 0.30
+  RED_TERRACOTTA:
+    vault: 3.0
+    raindrops: 0.30
+  RED_TULIP:
+    vault: 1.0
+    raindrops: 0.10
+  RED_WALL_BANNER:
+    vault: 3.0
+    raindrops: 0.30
+  RED_WOOL:
+    vault: 3.0
+    raindrops: 0.30
+  REDSTONE:
+    vault: 22.0
+    raindrops: 2.20
+  REDSTONE_BLOCK:
+    vault: 110.0
+    raindrops: 11.0
+  REDSTONE_LAMP:
+    vault: 22.0
+    raindrops: 2.20
+  REDSTONE_ORE:
+    vault: 39.60
+    raindrops: 3.96
+  REDSTONE_TORCH:
+    vault: 22.0
+    raindrops: 2.20
+  REDSTONE_WALL_TORCH:
+    vault: 22.0
+    raindrops: 2.20
+  REDSTONE_WIRE:
+    vault: 22.0
+    raindrops: 2.20
+  REINFORCED_DEEPSLATE:
+    vault: 1.0
+    raindrops: 0.10
+  REPEATER:
+    vault: 1.0
+    raindrops: 0.10
+  REPEATING_COMMAND_BLOCK:
+    vault: 1100.0
+    raindrops: 110.0
+  RESIN_BLOCK:
+    vault: 1.0
+    raindrops: 0.10
+  RESIN_BRICK:
+    vault: 3.0
+    raindrops: 0.30
+  RESIN_BRICK_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  RESIN_BRICK_STAIRS:
+    vault: 2.40
+    raindrops: 0.24
+  RESIN_BRICK_WALL:
+    vault: 2.40
+    raindrops: 0.24
+  RESIN_BRICKS:
+    vault: 3.0
+    raindrops: 0.30
+  RESIN_CLUMP:
+    vault: 1.0
+    raindrops: 0.10
+  RESPAWN_ANCHOR:
+    vault: 22.0
+    raindrops: 2.20
+  RIB_ARMOR_TRIM_SMITHING_TEMPLATE:
+    vault: 187.50
+    raindrops: 18.75
+  ROOTED_DIRT:
+    vault: 1.0
+    raindrops: 0.10
+  ROSE_BUSH:
+    vault: 0.70
+    raindrops: 0.07
+  ROTTEN_FLESH:
+    vault: 1.0
+    raindrops: 0.10
+  SADDLE:
+    vault: 1.0
+    raindrops: 0.10
+  SALMON:
+    vault: 1.0
+    raindrops: 0.10
+  SALMON_BUCKET:
+    vault: 1.50
+    raindrops: 0.15
+  SALMON_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  SAND:
+    vault: 1.0
+    raindrops: 0.10
+  SANDSTONE:
+    vault: 1.0
+    raindrops: 0.10
+  SANDSTONE_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  SANDSTONE_STAIRS:
+    vault: 2.40
+    raindrops: 0.24
+  SANDSTONE_WALL:
+    vault: 2.40
+    raindrops: 0.24
+  SCAFFOLDING:
+    vault: 1.0
+    raindrops: 0.10
+  SCRAPE_POTTERY_SHERD:
+    vault: 1.40
+    raindrops: 0.14
+  SCULK:
+    vault: 22.0
+    raindrops: 2.20
+  SCULK_CATALYST:
+    vault: 22.0
+    raindrops: 2.20
+  SCULK_SENSOR:
+    vault: 22.0
+    raindrops: 2.20
+  SCULK_SHRIEKER:
+    vault: 22.0
+    raindrops: 2.20
+  SCULK_VEIN:
+    vault: 22.0
+    raindrops: 2.20
+  SEA_LANTERN:
+    vault: 8.0
+    raindrops: 0.80
+  SEA_PICKLE:
+    vault: 1.0
+    raindrops: 0.10
+  SEAGRASS:
+    vault: 1.0
+    raindrops: 0.10
+  SENTRY_ARMOR_TRIM_SMITHING_TEMPLATE:
+    vault: 187.50
+    raindrops: 18.75
+  SHAPER_ARMOR_TRIM_SMITHING_TEMPLATE:
+    vault: 187.50
+    raindrops: 18.75
+  SHEAF_POTTERY_SHERD:
+    vault: 1.40
+    raindrops: 0.14
+  SHEARS:
+    vault: 1.0
+    raindrops: 0.10
+  SHEEP_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  SHELTER_POTTERY_SHERD:
+    vault: 1.40
+    raindrops: 0.14
+  SHIELD:
+    vault: 1.0
+    raindrops: 0.10
+  SHORT_DRY_GRASS:
+    vault: 1.0
+    raindrops: 0.10
+  SHORT_GRASS:
+    vault: 1.0
+    raindrops: 0.10
+  SHROOMLIGHT:
+    vault: 1.0
+    raindrops: 0.10
+  SHULKER_BOX:
+    vault: 1.0
+    raindrops: 0.10
+  SHULKER_SHELL:
+    vault: 75.0
+    raindrops: 7.50
+  SHULKER_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  SILENCE_ARMOR_TRIM_SMITHING_TEMPLATE:
+    vault: 187.50
+    raindrops: 18.75
+  SILVERFISH_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  SKELETON_HORSE_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  SKELETON_SKULL:
+    vault: 22.0
+    raindrops: 2.20
+  SKELETON_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  SKELETON_WALL_SKULL:
+    vault: 22.0
+    raindrops: 2.20
+  SKULL_BANNER_PATTERN:
+    vault: 30.80
+    raindrops: 3.08
+  SKULL_POTTERY_SHERD:
+    vault: 30.80
+    raindrops: 3.08
+  SLIME_BALL:
+    vault: 8.0
+    raindrops: 0.80
+  SLIME_BLOCK:
+    vault: 40.0
+    raindrops: 4.0
+  SLIME_SPAWN_EGG:
+    vault: 19.20
+    raindrops: 1.92
+  SMALL_AMETHYST_BUD:
+    vault: 22.0
+    raindrops: 2.20
+  SMALL_DRIPLEAF:
+    vault: 1.0
+    raindrops: 0.10
+  SMITHING_TABLE:
+    vault: 1.0
+    raindrops: 0.10
+  SMOKER:
+    vault: 1.0
+    raindrops: 0.10
+  SMOOTH_BASALT:
+    vault: 1.0
+    raindrops: 0.10
+  SMOOTH_QUARTZ:
+    vault: 22.0
+    raindrops: 2.20
+  SMOOTH_QUARTZ_SLAB:
+    vault: 17.60
+    raindrops: 1.76
+  SMOOTH_QUARTZ_STAIRS:
+    vault: 17.60
+    raindrops: 1.76
+  SMOOTH_RED_SANDSTONE:
+    vault: 1.0
+    raindrops: 0.10
+  SMOOTH_RED_SANDSTONE_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  SMOOTH_RED_SANDSTONE_STAIRS:
+    vault: 2.40
+    raindrops: 0.24
+  SMOOTH_SANDSTONE:
+    vault: 1.0
+    raindrops: 0.10
+  SMOOTH_SANDSTONE_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  SMOOTH_SANDSTONE_STAIRS:
+    vault: 2.40
+    raindrops: 0.24
+  SMOOTH_STONE:
+    vault: 1.0
+    raindrops: 0.10
+  SMOOTH_STONE_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  SNIFFER_EGG:
+    vault: 1.0
+    raindrops: 0.10
+  SNIFFER_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  SNORT_POTTERY_SHERD:
+    vault: 1.40
+    raindrops: 0.14
+  SNOUT_ARMOR_TRIM_SMITHING_TEMPLATE:
+    vault: 187.50
+    raindrops: 18.75
+  SNOW:
+    vault: 1.0
+    raindrops: 0.10
+  SNOW_BLOCK:
+    vault: 1.0
+    raindrops: 0.10
+  SNOW_GOLEM_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  SNOWBALL:
+    vault: 1.0
+    raindrops: 0.10
+  SOUL_CAMPFIRE:
+    vault: 1.0
+    raindrops: 0.10
+  SOUL_FIRE:
+    vault: 1.0
+    raindrops: 0.10
+  SOUL_LANTERN:
+    vault: 8.0
+    raindrops: 0.80
+  SOUL_SAND:
+    vault: 1.0
+    raindrops: 0.10
+  SOUL_SOIL:
+    vault: 1.0
+    raindrops: 0.10
+  SOUL_TORCH:
+    vault: 1.0
+    raindrops: 0.10
+  SOUL_WALL_TORCH:
+    vault: 3.0
+    raindrops: 0.30
+  SPAWNER:
+    vault: 1800.0
+    raindrops: 180.0
+  SPECTRAL_ARROW:
+    vault: 1.0
+    raindrops: 0.10
+  SPIDER_EYE:
+    vault: 1.0
+    raindrops: 0.10
+  SPIDER_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  SPIRE_ARMOR_TRIM_SMITHING_TEMPLATE:
+    vault: 187.50
+    raindrops: 18.75
+  SPLASH_POTION:
+    vault: 8.0
+    raindrops: 0.80
+  SPONGE:
+    vault: 8.0
+    raindrops: 0.80
+  SPORE_BLOSSOM:
+    vault: 1.0
+    raindrops: 0.10
+  SPRUCE_BOAT:
+    vault: 1.30
+    raindrops: 0.13
+  SPRUCE_BUTTON:
+    vault: 2.40
+    raindrops: 0.24
+  SPRUCE_CHEST_BOAT:
+    vault: 1.30
+    raindrops: 0.13
+  SPRUCE_DOOR:
+    vault: 2.40
+    raindrops: 0.24
+  SPRUCE_FENCE:
+    vault: 3.0
+    raindrops: 0.30
+  SPRUCE_FENCE_GATE:
+    vault: 3.0
+    raindrops: 0.30
+  SPRUCE_HANGING_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  SPRUCE_LEAVES:
+    vault: 2.70
+    raindrops: 0.27
+  SPRUCE_LOG:
+    vault: 2.70
+    raindrops: 0.27
+  SPRUCE_PLANKS:
+    vault: 2.70
+    raindrops: 0.27
+  SPRUCE_PRESSURE_PLATE:
+    vault: 2.40
+    raindrops: 0.24
+  SPRUCE_SAPLING:
+    vault: 2.70
+    raindrops: 0.27
+  SPRUCE_SHELF:
+    vault: 1.0
+    raindrops: 0.10
+  SPRUCE_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  SPRUCE_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  SPRUCE_STAIRS:
+    vault: 2.40
+    raindrops: 0.24
+  SPRUCE_TRAPDOOR:
+    vault: 2.40
+    raindrops: 0.24
+  SPRUCE_WALL_HANGING_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  SPRUCE_WALL_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  SPRUCE_WOOD:
+    vault: 2.70
+    raindrops: 0.27
+  SPYGLASS:
+    vault: 3.0
+    raindrops: 0.30
+  SQUID_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  STICK:
+    vault: 1.0
+    raindrops: 0.10
+  STICKY_PISTON:
+    vault: 1.0
+    raindrops: 0.10
+  STONE:
+    vault: 1.0
+    raindrops: 0.10
+  STONE_AXE:
+    vault: 2.0
+    raindrops: 0.20
+  STONE_BRICK_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  STONE_BRICK_STAIRS:
+    vault: 2.40
+    raindrops: 0.24
+  STONE_BRICK_WALL:
+    vault: 2.40
+    raindrops: 0.24
+  STONE_BRICKS:
+    vault: 3.0
+    raindrops: 0.30
+  STONE_BUTTON:
+    vault: 2.40
+    raindrops: 0.24
+  STONE_HOE:
+    vault: 2.0
+    raindrops: 0.20
+  STONE_PICKAXE:
+    vault: 2.0
+    raindrops: 0.20
+  STONE_PRESSURE_PLATE:
+    vault: 2.40
+    raindrops: 0.24
+  STONE_SHOVEL:
+    vault: 2.0
+    raindrops: 0.20
+  STONE_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  STONE_SPEAR:
+    vault: 1.0
+    raindrops: 0.10
+  STONE_STAIRS:
+    vault: 2.40
+    raindrops: 0.24
+  STONE_SWORD:
+    vault: 2.0
+    raindrops: 0.20
+  STONECUTTER:
+    vault: 1.0
+    raindrops: 0.10
+  STRAY_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  STRIDER_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  STRING:
+    vault: 1.0
+    raindrops: 0.10
+  STRIPPED_ACACIA_LOG:
+    vault: 2.70
+    raindrops: 0.27
+  STRIPPED_ACACIA_WOOD:
+    vault: 2.70
+    raindrops: 0.27
+  STRIPPED_BAMBOO_BLOCK:
+    vault: 1.0
+    raindrops: 0.10
+  STRIPPED_BIRCH_LOG:
+    vault: 2.70
+    raindrops: 0.27
+  STRIPPED_BIRCH_WOOD:
+    vault: 2.70
+    raindrops: 0.27
+  STRIPPED_CHERRY_LOG:
+    vault: 2.70
+    raindrops: 0.27
+  STRIPPED_CHERRY_WOOD:
+    vault: 2.70
+    raindrops: 0.27
+  STRIPPED_CRIMSON_HYPHAE:
+    vault: 1.0
+    raindrops: 0.10
+  STRIPPED_CRIMSON_STEM:
+    vault: 1.0
+    raindrops: 0.10
+  STRIPPED_DARK_OAK_LOG:
+    vault: 2.70
+    raindrops: 0.27
+  STRIPPED_DARK_OAK_WOOD:
+    vault: 2.70
+    raindrops: 0.27
+  STRIPPED_JUNGLE_LOG:
+    vault: 2.70
+    raindrops: 0.27
+  STRIPPED_JUNGLE_WOOD:
+    vault: 2.70
+    raindrops: 0.27
+  STRIPPED_MANGROVE_LOG:
+    vault: 2.70
+    raindrops: 0.27
+  STRIPPED_MANGROVE_WOOD:
+    vault: 2.70
+    raindrops: 0.27
+  STRIPPED_OAK_LOG:
+    vault: 2.70
+    raindrops: 0.27
+  STRIPPED_OAK_WOOD:
+    vault: 2.70
+    raindrops: 0.27
+  STRIPPED_PALE_OAK_LOG:
+    vault: 2.70
+    raindrops: 0.27
+  STRIPPED_PALE_OAK_WOOD:
+    vault: 2.70
+    raindrops: 0.27
+  STRIPPED_SPRUCE_LOG:
+    vault: 2.70
+    raindrops: 0.27
+  STRIPPED_SPRUCE_WOOD:
+    vault: 2.70
+    raindrops: 0.27
+  STRIPPED_WARPED_HYPHAE:
+    vault: 1.0
+    raindrops: 0.10
+  STRIPPED_WARPED_STEM:
+    vault: 1.0
+    raindrops: 0.10
+  STRUCTURE_BLOCK:
+    vault: 1100.0
+    raindrops: 110.0
+  STRUCTURE_VOID:
+    vault: 1.0
+    raindrops: 0.10
+  SUGAR:
+    vault: 1.0
+    raindrops: 0.10
+  SUGAR_CANE:
+    vault: 1.0
+    raindrops: 0.10
+  SUNFLOWER:
+    vault: 1.0
+    raindrops: 0.10
+  SUSPICIOUS_GRAVEL:
+    vault: 1.0
+    raindrops: 0.10
+  SUSPICIOUS_SAND:
+    vault: 1.0
+    raindrops: 0.10
+  SUSPICIOUS_STEW:
+    vault: 1.0
+    raindrops: 0.10
+  SWEET_BERRIES:
+    vault: 1.0
+    raindrops: 0.10
+  SWEET_BERRY_BUSH:
+    vault: 0.70
+    raindrops: 0.07
+  TADPOLE_BUCKET:
+    vault: 1.50
+    raindrops: 0.15
+  TADPOLE_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  TALL_DRY_GRASS:
+    vault: 1.0
+    raindrops: 0.10
+  TALL_GRASS:
+    vault: 1.0
+    raindrops: 0.10
+  TALL_SEAGRASS:
+    vault: 1.0
+    raindrops: 0.10
+  TARGET:
+    vault: 1.0
+    raindrops: 0.10
+  TERRACOTTA:
+    vault: 3.0
+    raindrops: 0.30
+  TEST_BLOCK:
+    vault: 1.0
+    raindrops: 0.10
+  TEST_INSTANCE_BLOCK:
+    vault: 1.0
+    raindrops: 0.10
+  TIDE_ARMOR_TRIM_SMITHING_TEMPLATE:
+    vault: 187.50
+    raindrops: 18.75
+  TINTED_GLASS:
+    vault: 3.0
+    raindrops: 0.30
+  TIPPED_ARROW:
+    vault: 1.0
+    raindrops: 0.10
+  TNT:
+    vault: 1.0
+    raindrops: 0.10
+  TNT_MINECART:
+    vault: 1.0
+    raindrops: 0.10
+  TORCH:
+    vault: 1.0
+    raindrops: 0.10
+  TORCHFLOWER:
+    vault: 1.0
+    raindrops: 0.10
+  TORCHFLOWER_CROP:
+    vault: 1.0
+    raindrops: 0.10
+  TORCHFLOWER_SEEDS:
+    vault: 0.70
+    raindrops: 0.07
+  TOTEM_OF_UNDYING:
+    vault: 75.0
+    raindrops: 7.50
+  TRADER_LLAMA_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  TRAPPED_CHEST:
+    vault: 1.0
+    raindrops: 0.10
+  TRIAL_KEY:
+    vault: 500.0
+    raindrops: 50.0
+  TRIAL_SPAWNER:
+    vault: 220.0
+    raindrops: 22.0
+  TRIDENT:
+    vault: 75.0
+    raindrops: 7.50
+  TRIPWIRE:
+    vault: 1.0
+    raindrops: 0.10
+  TRIPWIRE_HOOK:
+    vault: 1.0
+    raindrops: 0.10
+  TROPICAL_FISH:
+    vault: 1.0
+    raindrops: 0.10
+  TROPICAL_FISH_BUCKET:
+    vault: 1.50
+    raindrops: 0.15
+  TROPICAL_FISH_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  TUBE_CORAL:
+    vault: 8.0
+    raindrops: 0.80
+  TUBE_CORAL_BLOCK:
+    vault: 40.0
+    raindrops: 4.0
+  TUBE_CORAL_FAN:
+    vault: 8.0
+    raindrops: 0.80
+  TUBE_CORAL_WALL_FAN:
+    vault: 8.0
+    raindrops: 0.80
+  TUFF:
+    vault: 1.0
+    raindrops: 0.10
+  TUFF_BRICK_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  TUFF_BRICK_STAIRS:
+    vault: 2.40
+    raindrops: 0.24
+  TUFF_BRICK_WALL:
+    vault: 2.40
+    raindrops: 0.24
+  TUFF_BRICKS:
+    vault: 3.0
+    raindrops: 0.30
+  TUFF_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  TUFF_STAIRS:
+    vault: 2.40
+    raindrops: 0.24
+  TUFF_WALL:
+    vault: 2.40
+    raindrops: 0.24
+  TURTLE_EGG:
+    vault: 1.0
+    raindrops: 0.10
+  TURTLE_HELMET:
+    vault: 2.20
+    raindrops: 0.22
+  TURTLE_SCUTE:
+    vault: 1.0
+    raindrops: 0.10
+  TURTLE_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  TWISTING_VINES:
+    vault: 1.0
+    raindrops: 0.10
+  TWISTING_VINES_PLANT:
+    vault: 1.0
+    raindrops: 0.10
+  VAULT:
+    vault: 1.0
+    raindrops: 0.10
+  VERDANT_FROGLIGHT:
+    vault: 1.0
+    raindrops: 0.10
+  VEX_ARMOR_TRIM_SMITHING_TEMPLATE:
+    vault: 187.50
+    raindrops: 18.75
+  VEX_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  VILLAGER_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  VINDICATOR_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  VINE:
+    vault: 1.0
+    raindrops: 0.10
+  VOID_AIR:
+    vault: 0.0
+    raindrops: 0.0
+  WALL_TORCH:
+    vault: 3.0
+    raindrops: 0.30
+  WANDERING_TRADER_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  WARD_ARMOR_TRIM_SMITHING_TEMPLATE:
+    vault: 187.50
+    raindrops: 18.75
+  WARDEN_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  WARPED_BUTTON:
+    vault: 2.40
+    raindrops: 0.24
+  WARPED_DOOR:
+    vault: 2.40
+    raindrops: 0.24
+  WARPED_FENCE:
+    vault: 3.0
+    raindrops: 0.30
+  WARPED_FENCE_GATE:
+    vault: 3.0
+    raindrops: 0.30
+  WARPED_FUNGUS:
+    vault: 1.0
+    raindrops: 0.10
+  WARPED_FUNGUS_ON_A_STICK:
+    vault: 1.0
+    raindrops: 0.10
+  WARPED_HANGING_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  WARPED_HYPHAE:
+    vault: 1.0
+    raindrops: 0.10
+  WARPED_NYLIUM:
+    vault: 1.0
+    raindrops: 0.10
+  WARPED_PLANKS:
+    vault: 2.70
+    raindrops: 0.27
+  WARPED_PRESSURE_PLATE:
+    vault: 2.40
+    raindrops: 0.24
+  WARPED_ROOTS:
+    vault: 1.0
+    raindrops: 0.10
+  WARPED_SHELF:
+    vault: 1.0
+    raindrops: 0.10
+  WARPED_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  WARPED_SLAB:
+    vault: 2.40
+    raindrops: 0.24
+  WARPED_STAIRS:
+    vault: 2.40
+    raindrops: 0.24
+  WARPED_STEM:
+    vault: 1.0
+    raindrops: 0.10
+  WARPED_TRAPDOOR:
+    vault: 2.40
+    raindrops: 0.24
+  WARPED_WALL_HANGING_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  WARPED_WALL_SIGN:
+    vault: 2.40
+    raindrops: 0.24
+  WARPED_WART_BLOCK:
+    vault: 1.0
+    raindrops: 0.10
+  WATER:
+    vault: 1.0
+    raindrops: 0.10
+  WATER_BUCKET:
+    vault: 1.50
+    raindrops: 0.15
+  WATER_CAULDRON:
+    vault: 1.0
+    raindrops: 0.10
+  WAXED_CHISELED_COPPER:
+    vault: 22.0
+    raindrops: 2.20
+  WAXED_COPPER_BARS:
+    vault: 22.0
+    raindrops: 2.20
+  WAXED_COPPER_BLOCK:
+    vault: 110.0
+    raindrops: 11.0
+  WAXED_COPPER_BULB:
+    vault: 22.0
+    raindrops: 2.20
+  WAXED_COPPER_CHAIN:
+    vault: 22.0
+    raindrops: 2.20
+  WAXED_COPPER_CHEST:
+    vault: 22.0
+    raindrops: 2.20
+  WAXED_COPPER_DOOR:
+    vault: 17.60
+    raindrops: 1.76
+  WAXED_COPPER_GOLEM_STATUE:
+    vault: 22.0
+    raindrops: 2.20
+  WAXED_COPPER_GRATE:
+    vault: 22.0
+    raindrops: 2.20
+  WAXED_COPPER_LANTERN:
+    vault: 22.0
+    raindrops: 2.20
+  WAXED_COPPER_TRAPDOOR:
+    vault: 17.60
+    raindrops: 1.76
+  WAXED_CUT_COPPER:
+    vault: 22.0
+    raindrops: 2.20
+  WAXED_CUT_COPPER_SLAB:
+    vault: 17.60
+    raindrops: 1.76
+  WAXED_CUT_COPPER_STAIRS:
+    vault: 17.60
+    raindrops: 1.76
+  WAXED_EXPOSED_CHISELED_COPPER:
+    vault: 22.0
+    raindrops: 2.20
+  WAXED_EXPOSED_COPPER:
+    vault: 22.0
+    raindrops: 2.20
+  WAXED_EXPOSED_COPPER_BARS:
+    vault: 22.0
+    raindrops: 2.20
+  WAXED_EXPOSED_COPPER_BULB:
+    vault: 22.0
+    raindrops: 2.20
+  WAXED_EXPOSED_COPPER_CHAIN:
+    vault: 22.0
+    raindrops: 2.20
+  WAXED_EXPOSED_COPPER_CHEST:
+    vault: 22.0
+    raindrops: 2.20
+  WAXED_EXPOSED_COPPER_DOOR:
+    vault: 17.60
+    raindrops: 1.76
+  WAXED_EXPOSED_COPPER_GOLEM_STATUE:
+    vault: 22.0
+    raindrops: 2.20
+  WAXED_EXPOSED_COPPER_GRATE:
+    vault: 22.0
+    raindrops: 2.20
+  WAXED_EXPOSED_COPPER_LANTERN:
+    vault: 22.0
+    raindrops: 2.20
+  WAXED_EXPOSED_COPPER_TRAPDOOR:
+    vault: 17.60
+    raindrops: 1.76
+  WAXED_EXPOSED_CUT_COPPER:
+    vault: 22.0
+    raindrops: 2.20
+  WAXED_EXPOSED_CUT_COPPER_SLAB:
+    vault: 17.60
+    raindrops: 1.76
+  WAXED_EXPOSED_CUT_COPPER_STAIRS:
+    vault: 17.60
+    raindrops: 1.76
+  WAXED_EXPOSED_LIGHTNING_ROD:
+    vault: 1.0
+    raindrops: 0.10
+  WAXED_LIGHTNING_ROD:
+    vault: 1.0
+    raindrops: 0.10
+  WAXED_OXIDIZED_CHISELED_COPPER:
+    vault: 22.0
+    raindrops: 2.20
+  WAXED_OXIDIZED_COPPER:
+    vault: 22.0
+    raindrops: 2.20
+  WAXED_OXIDIZED_COPPER_BARS:
+    vault: 22.0
+    raindrops: 2.20
+  WAXED_OXIDIZED_COPPER_BULB:
+    vault: 22.0
+    raindrops: 2.20
+  WAXED_OXIDIZED_COPPER_CHAIN:
+    vault: 22.0
+    raindrops: 2.20
+  WAXED_OXIDIZED_COPPER_CHEST:
+    vault: 22.0
+    raindrops: 2.20
+  WAXED_OXIDIZED_COPPER_DOOR:
+    vault: 17.60
+    raindrops: 1.76
+  WAXED_OXIDIZED_COPPER_GOLEM_STATUE:
+    vault: 22.0
+    raindrops: 2.20
+  WAXED_OXIDIZED_COPPER_GRATE:
+    vault: 22.0
+    raindrops: 2.20
+  WAXED_OXIDIZED_COPPER_LANTERN:
+    vault: 22.0
+    raindrops: 2.20
+  WAXED_OXIDIZED_COPPER_TRAPDOOR:
+    vault: 17.60
+    raindrops: 1.76
+  WAXED_OXIDIZED_CUT_COPPER:
+    vault: 22.0
+    raindrops: 2.20
+  WAXED_OXIDIZED_CUT_COPPER_SLAB:
+    vault: 17.60
+    raindrops: 1.76
+  WAXED_OXIDIZED_CUT_COPPER_STAIRS:
+    vault: 17.60
+    raindrops: 1.76
+  WAXED_OXIDIZED_LIGHTNING_ROD:
+    vault: 1.0
+    raindrops: 0.10
+  WAXED_WEATHERED_CHISELED_COPPER:
+    vault: 22.0
+    raindrops: 2.20
+  WAXED_WEATHERED_COPPER:
+    vault: 22.0
+    raindrops: 2.20
+  WAXED_WEATHERED_COPPER_BARS:
+    vault: 22.0
+    raindrops: 2.20
+  WAXED_WEATHERED_COPPER_BULB:
+    vault: 22.0
+    raindrops: 2.20
+  WAXED_WEATHERED_COPPER_CHAIN:
+    vault: 22.0
+    raindrops: 2.20
+  WAXED_WEATHERED_COPPER_CHEST:
+    vault: 22.0
+    raindrops: 2.20
+  WAXED_WEATHERED_COPPER_DOOR:
+    vault: 17.60
+    raindrops: 1.76
+  WAXED_WEATHERED_COPPER_GOLEM_STATUE:
+    vault: 22.0
+    raindrops: 2.20
+  WAXED_WEATHERED_COPPER_GRATE:
+    vault: 22.0
+    raindrops: 2.20
+  WAXED_WEATHERED_COPPER_LANTERN:
+    vault: 22.0
+    raindrops: 2.20
+  WAXED_WEATHERED_COPPER_TRAPDOOR:
+    vault: 17.60
+    raindrops: 1.76
+  WAXED_WEATHERED_CUT_COPPER:
+    vault: 22.0
+    raindrops: 2.20
+  WAXED_WEATHERED_CUT_COPPER_SLAB:
+    vault: 17.60
+    raindrops: 1.76
+  WAXED_WEATHERED_CUT_COPPER_STAIRS:
+    vault: 17.60
+    raindrops: 1.76
+  WAXED_WEATHERED_LIGHTNING_ROD:
+    vault: 1.0
+    raindrops: 0.10
+  WAYFINDER_ARMOR_TRIM_SMITHING_TEMPLATE:
+    vault: 187.50
+    raindrops: 18.75
+  WEATHERED_CHISELED_COPPER:
+    vault: 22.0
+    raindrops: 2.20
+  WEATHERED_COPPER:
+    vault: 22.0
+    raindrops: 2.20
+  WEATHERED_COPPER_BARS:
+    vault: 22.0
+    raindrops: 2.20
+  WEATHERED_COPPER_BULB:
+    vault: 22.0
+    raindrops: 2.20
+  WEATHERED_COPPER_CHAIN:
+    vault: 22.0
+    raindrops: 2.20
+  WEATHERED_COPPER_CHEST:
+    vault: 22.0
+    raindrops: 2.20
+  WEATHERED_COPPER_DOOR:
+    vault: 17.60
+    raindrops: 1.76
+  WEATHERED_COPPER_GOLEM_STATUE:
+    vault: 22.0
+    raindrops: 2.20
+  WEATHERED_COPPER_GRATE:
+    vault: 22.0
+    raindrops: 2.20
+  WEATHERED_COPPER_LANTERN:
+    vault: 22.0
+    raindrops: 2.20
+  WEATHERED_COPPER_TRAPDOOR:
+    vault: 17.60
+    raindrops: 1.76
+  WEATHERED_CUT_COPPER:
+    vault: 22.0
+    raindrops: 2.20
+  WEATHERED_CUT_COPPER_SLAB:
+    vault: 17.60
+    raindrops: 1.76
+  WEATHERED_CUT_COPPER_STAIRS:
+    vault: 17.60
+    raindrops: 1.76
+  WEATHERED_LIGHTNING_ROD:
+    vault: 1.0
+    raindrops: 0.10
+  WEEPING_VINES:
+    vault: 1.0
+    raindrops: 0.10
+  WEEPING_VINES_PLANT:
+    vault: 1.0
+    raindrops: 0.10
+  WET_SPONGE:
+    vault: 8.0
+    raindrops: 0.80
+  WHEAT:
+    vault: 1.0
+    raindrops: 0.10
+  WHEAT_SEEDS:
+    vault: 0.70
+    raindrops: 0.07
+  WHITE_BANNER:
+    vault: 3.0
+    raindrops: 0.30
+  WHITE_BED:
+    vault: 1.0
+    raindrops: 0.10
+  WHITE_BUNDLE:
+    vault: 8.0
+    raindrops: 0.80
+  WHITE_CANDLE:
+    vault: 8.0
+    raindrops: 0.80
+  WHITE_CANDLE_CAKE:
+    vault: 8.0
+    raindrops: 0.80
+  WHITE_CARPET:
+    vault: 3.0
+    raindrops: 0.30
+  WHITE_CONCRETE:
+    vault: 3.0
+    raindrops: 0.30
+  WHITE_CONCRETE_POWDER:
+    vault: 3.0
+    raindrops: 0.30
+  WHITE_DYE:
+    vault: 0.70
+    raindrops: 0.07
+  WHITE_GLAZED_TERRACOTTA:
+    vault: 3.0
+    raindrops: 0.30
+  WHITE_HARNESS:
+    vault: 1.0
+    raindrops: 0.10
+  WHITE_SHULKER_BOX:
+    vault: 1.0
+    raindrops: 0.10
+  WHITE_STAINED_GLASS:
+    vault: 3.0
+    raindrops: 0.30
+  WHITE_STAINED_GLASS_PANE:
+    vault: 3.0
+    raindrops: 0.30
+  WHITE_TERRACOTTA:
+    vault: 3.0
+    raindrops: 0.30
+  WHITE_TULIP:
+    vault: 1.0
+    raindrops: 0.10
+  WHITE_WALL_BANNER:
+    vault: 3.0
+    raindrops: 0.30
+  WHITE_WOOL:
+    vault: 3.0
+    raindrops: 0.30
+  WILD_ARMOR_TRIM_SMITHING_TEMPLATE:
+    vault: 187.50
+    raindrops: 18.75
+  WILDFLOWERS:
+    vault: 1.0
+    raindrops: 0.10
+  WIND_CHARGE:
+    vault: 1.0
+    raindrops: 0.10
+  WITCH_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  WITHER_ROSE:
+    vault: 22.0
+    raindrops: 2.20
+  WITHER_SKELETON_SKULL:
+    vault: 22.0
+    raindrops: 2.20
+  WITHER_SKELETON_SPAWN_EGG:
+    vault: 52.80
+    raindrops: 5.28
+  WITHER_SKELETON_WALL_SKULL:
+    vault: 22.0
+    raindrops: 2.20
+  WITHER_SPAWN_EGG:
+    vault: 52.80
+    raindrops: 5.28
+  WOLF_ARMOR:
+    vault: 1.0
+    raindrops: 0.10
+  WOLF_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  WOODEN_AXE:
+    vault: 6.0
+    raindrops: 0.60
+  WOODEN_HOE:
+    vault: 6.0
+    raindrops: 0.60
+  WOODEN_PICKAXE:
+    vault: 6.0
+    raindrops: 0.60
+  WOODEN_SHOVEL:
+    vault: 6.0
+    raindrops: 0.60
+  WOODEN_SPEAR:
+    vault: 3.0
+    raindrops: 0.30
+  WOODEN_SWORD:
+    vault: 6.0
+    raindrops: 0.60
+  WRITABLE_BOOK:
+    vault: 8.0
+    raindrops: 0.80
+  WRITTEN_BOOK:
+    vault: 8.0
+    raindrops: 0.80
+  YELLOW_BANNER:
+    vault: 3.0
+    raindrops: 0.30
+  YELLOW_BED:
+    vault: 1.0
+    raindrops: 0.10
+  YELLOW_BUNDLE:
+    vault: 8.0
+    raindrops: 0.80
+  YELLOW_CANDLE:
+    vault: 8.0
+    raindrops: 0.80
+  YELLOW_CANDLE_CAKE:
+    vault: 8.0
+    raindrops: 0.80
+  YELLOW_CARPET:
+    vault: 3.0
+    raindrops: 0.30
+  YELLOW_CONCRETE:
+    vault: 3.0
+    raindrops: 0.30
+  YELLOW_CONCRETE_POWDER:
+    vault: 3.0
+    raindrops: 0.30
+  YELLOW_DYE:
+    vault: 0.70
+    raindrops: 0.07
+  YELLOW_GLAZED_TERRACOTTA:
+    vault: 3.0
+    raindrops: 0.30
+  YELLOW_HARNESS:
+    vault: 1.0
+    raindrops: 0.10
+  YELLOW_SHULKER_BOX:
+    vault: 1.0
+    raindrops: 0.10
+  YELLOW_STAINED_GLASS:
+    vault: 3.0
+    raindrops: 0.30
+  YELLOW_STAINED_GLASS_PANE:
+    vault: 3.0
+    raindrops: 0.30
+  YELLOW_TERRACOTTA:
+    vault: 3.0
+    raindrops: 0.30
+  YELLOW_WALL_BANNER:
+    vault: 3.0
+    raindrops: 0.30
+  YELLOW_WOOL:
+    vault: 3.0
+    raindrops: 0.30
+  ZOGLIN_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  ZOMBIE_HEAD:
+    vault: 22.0
+    raindrops: 2.20
+  ZOMBIE_HORSE_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  ZOMBIE_NAUTILUS_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  ZOMBIE_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  ZOMBIE_VILLAGER_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24
+  ZOMBIE_WALL_HEAD:
+    vault: 22.0
+    raindrops: 2.20
+  ZOMBIFIED_PIGLIN_SPAWN_EGG:
+    vault: 2.40
+    raindrops: 0.24

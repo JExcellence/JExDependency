@@ -36,6 +36,9 @@ class ConfigSectionTest {
         assertTrue(section.hasShopLimit());
         assertTrue(section.shouldWarnMissingRequirements());
         assertTrue(section.getRequirements().isEmpty());
+        assertEquals(0.0D, section.getDefaultItemPrice());
+        assertFalse(section.getDynamicPricing().isEnabled());
+        assertEquals(200L, section.getDynamicPricing().getRefreshIntervalTicks());
         assertEquals(
             IntStream.rangeClosed(1, 10).boxed().toList(),
             section.getMissingRequirementPurchases()
@@ -170,6 +173,86 @@ class ConfigSectionTest {
         assertFalse(section.getProtection().isShopTaxCurrency("gems"));
         assertEquals(5000.0D, section.getProtection().getShopTaxMaximum("vault"));
         assertEquals(1000.0D, section.getProtection().getShopTaxMaximum("coins"));
+    }
+
+    @Test
+    void readsDefaultItemPriceFromConfig(final @TempDir Path tempDir) throws IOException {
+        final Path configFile = tempDir.resolve("config.yml");
+        Files.writeString(configFile, """
+            default_item_price: 42.5
+            """);
+
+        final ConfigSection section = ConfigSection.fromFile(configFile.toFile());
+        assertEquals(42.5D, section.getDefaultItemPrice());
+    }
+
+    @Test
+    void loadsDynamicPricingConfiguration(final @TempDir Path tempDir) throws IOException {
+        final Path configFile = tempDir.resolve("config.yml");
+        Files.writeString(configFile, """
+            dynamic_pricing:
+              enabled: true
+              refresh_interval_ticks: 120
+              recent_sales_window_minutes: 90
+              recent_sales_mode: TRANSACTIONS
+              missing_base_price_mode: FIXED_FALLBACK
+              missing_base_price_fallback: 3.5
+              formula:
+                base_multiplier: 1.4
+                minimum_multiplier: 0.5
+                maximum_multiplier: 2.5
+                shops_selling_weight: 0.4
+                shops_selling_baseline: 6.0
+                listed_items_weight: 0.2
+                listed_items_baseline: 256.0
+                recent_sales_weight: 0.75
+                recent_sales_baseline: 64.0
+              stability:
+                minimum_price: 0.5
+                maximum_price: 9999
+                max_step_change_percent: 0.15
+                smoothing_alpha: 0.25
+                rounding_scale: 3
+              infinite_stock:
+                mode: USE_HIGHEST_FINITE
+                fixed_cap_amount: 2048
+                fallback_amount_when_no_finite: 300
+                count_as_seller: false
+            """);
+
+        final ConfigSection section = ConfigSection.fromFile(configFile.toFile());
+        final DynamicPricingSection dynamicPricing = section.getDynamicPricing();
+
+        assertTrue(dynamicPricing.isEnabled());
+        assertEquals(120L, dynamicPricing.getRefreshIntervalTicks());
+        assertEquals(90L, dynamicPricing.getRecentSalesWindowMinutes());
+        assertEquals(DynamicPricingRecentSalesMode.TRANSACTIONS, dynamicPricing.getRecentSalesMode());
+        assertEquals(DynamicPricingMissingBasePriceMode.FIXED_FALLBACK, dynamicPricing.getMissingBasePriceMode());
+        assertEquals(3.5D, dynamicPricing.getMissingBasePriceFallback());
+
+        final DynamicPricingSection.FormulaSettings formulaSettings = dynamicPricing.getFormulaSettings();
+        assertEquals(1.4D, formulaSettings.baseMultiplier());
+        assertEquals(0.5D, formulaSettings.minimumMultiplier());
+        assertEquals(2.5D, formulaSettings.maximumMultiplier());
+        assertEquals(0.4D, formulaSettings.shopsSellingWeight());
+        assertEquals(6.0D, formulaSettings.shopsSellingBaseline());
+        assertEquals(0.2D, formulaSettings.listedItemsWeight());
+        assertEquals(256.0D, formulaSettings.listedItemsBaseline());
+        assertEquals(0.75D, formulaSettings.recentSalesWeight());
+        assertEquals(64.0D, formulaSettings.recentSalesBaseline());
+
+        final DynamicPricingSection.StabilitySettings stabilitySettings = dynamicPricing.getStabilitySettings();
+        assertEquals(0.5D, stabilitySettings.minimumPrice());
+        assertEquals(9999.0D, stabilitySettings.maximumPrice());
+        assertEquals(0.15D, stabilitySettings.maxStepChangePercent());
+        assertEquals(0.25D, stabilitySettings.smoothingAlpha());
+        assertEquals(3, stabilitySettings.roundingScale());
+
+        final DynamicPricingSection.InfiniteStockSettings infiniteStockSettings = dynamicPricing.getInfiniteStockSettings();
+        assertEquals(DynamicPricingInfiniteStockMode.USE_HIGHEST_FINITE, infiniteStockSettings.mode());
+        assertEquals(2048L, infiniteStockSettings.fixedCapAmount());
+        assertEquals(300L, infiniteStockSettings.fallbackAmountWhenNoFinite());
+        assertFalse(infiniteStockSettings.countAsSeller());
     }
 
     private static double getDouble(final Map<String, Object> definition, final String key) {

@@ -39,7 +39,8 @@ public class TaxSection extends AConfigSection {
     private String time_zone;
     private Boolean join_notification;
     private Double never_item_penalty_rate;
-    private Double maximum_bankruptcy_amount;
+    private Map<String, Double> maximum_bankruptcy_amount;
+    private Double maximum_bankruptcy_amount_default;
 
     /**
      * Creates a new tax section.
@@ -140,21 +141,52 @@ public class TaxSection extends AConfigSection {
     }
 
     /**
-     * Returns the maximum bankruptcy debt tracked per shop and currency.
+     * Returns the configured bankruptcy debt caps by currency.
      *
-     * <p>When this value is positive, unpaid debt accumulation is capped at this amount.
-     * Non-positive values are treated as unlimited.</p>
+     * <p>Each returned value is either a positive cap or {@code -1.0} for unlimited debt.</p>
      *
-     * @return positive cap amount, or {@code -1.0} when uncapped
+     * @return normalized map of per-currency bankruptcy debt caps
      */
-    public double getMaximumBankruptcyAmount() {
-        if (this.maximum_bankruptcy_amount == null) {
-            return -1D;
+    public @NotNull Map<String, Double> getMaximumBankruptcyAmounts() {
+        return this.maximum_bankruptcy_amount == null
+                ? Map.of()
+                : new LinkedHashMap<>(this.maximum_bankruptcy_amount);
+    }
+
+    /**
+     * Returns the maximum bankruptcy debt tracked for one currency.
+     *
+     * <p>When a currency-specific cap is configured, that value is used. When no currency-specific
+     * entry exists, a legacy global fallback cap is used when present. Non-positive values are
+     * treated as unlimited ({@code -1.0}).</p>
+     *
+     * @param currencyType currency identifier
+     * @return positive cap amount for that currency, or {@code -1.0} when uncapped
+     */
+    public double getMaximumBankruptcyAmount(
+            final @Nullable String currencyType
+    ) {
+        final String normalizedCurrencyType = normalizeCurrencyType(currencyType);
+        final Double configuredMaximum = this.maximum_bankruptcy_amount == null
+                ? null
+                : this.maximum_bankruptcy_amount.get(normalizedCurrencyType);
+
+        if (configuredMaximum != null) {
+            return normalizeMaximumBankruptcyAmount(configuredMaximum);
         }
 
-        return this.maximum_bankruptcy_amount > 0D
-                ? this.maximum_bankruptcy_amount
-                : -1D;
+        return this.maximum_bankruptcy_amount_default == null
+                ? -1D
+                : normalizeMaximumBankruptcyAmount(this.maximum_bankruptcy_amount_default);
+    }
+
+    /**
+     * Returns the maximum bankruptcy debt tracked for the default {@code vault} currency.
+     *
+     * @return positive cap amount for {@code vault}, or {@code -1.0} when uncapped
+     */
+    public double getMaximumBankruptcyAmount() {
+        return this.getMaximumBankruptcyAmount("vault");
     }
 
     private @NotNull LocalTime parseStartTime(
@@ -223,6 +255,18 @@ public class TaxSection extends AConfigSection {
         }
     }
 
+    /**
+     * Sets parsed tax-section values.
+     *
+     * @param currencies configured tax currencies
+     * @param duration duration between tax runs in ticks
+     * @param startTime configured tax start time expression
+     * @param timeZone configured tax time zone expression
+     * @param joinNotification whether join notifications are enabled
+     * @param neverItemPenaltyRate multiplier applied per never-available item
+     * @param maximumBankruptcyAmounts per-currency bankruptcy debt caps
+     * @param defaultMaximumBankruptcyAmount optional fallback cap used when a currency-specific cap is not configured
+     */
     public void setContext(
             final @NotNull Map<String, TaxCurrencySection> currencies,
             final long duration,
@@ -230,7 +274,8 @@ public class TaxSection extends AConfigSection {
             final @Nullable String timeZone,
             final boolean joinNotification,
             final double neverItemPenaltyRate,
-            final double maximumBankruptcyAmount
+            final @NotNull Map<String, Double> maximumBankruptcyAmounts,
+            final @Nullable Double defaultMaximumBankruptcyAmount
     ) {
         this.currencies = new LinkedHashMap<>(currencies);
         this.duration = duration;
@@ -238,9 +283,21 @@ public class TaxSection extends AConfigSection {
         this.time_zone = timeZone;
         this.join_notification = joinNotification;
         this.never_item_penalty_rate = Math.max(0D, neverItemPenaltyRate);
-        this.maximum_bankruptcy_amount = maximumBankruptcyAmount > 0D
-                ? maximumBankruptcyAmount
-                : -1D;
+        final Map<String, Double> normalizedMaximums = new LinkedHashMap<>();
+        for (final Map.Entry<String, Double> entry : maximumBankruptcyAmounts.entrySet()) {
+            if (entry.getKey() == null || entry.getKey().isBlank() || entry.getValue() == null) {
+                continue;
+            }
+
+            normalizedMaximums.put(
+                    normalizeCurrencyType(entry.getKey()),
+                    normalizeMaximumBankruptcyAmount(entry.getValue())
+            );
+        }
+        this.maximum_bankruptcy_amount = normalizedMaximums;
+        this.maximum_bankruptcy_amount_default = defaultMaximumBankruptcyAmount == null
+                ? null
+                : normalizeMaximumBankruptcyAmount(defaultMaximumBankruptcyAmount);
     }
 
     public static @NotNull TaxSection fromFile(
@@ -256,6 +313,8 @@ public class TaxSection extends AConfigSection {
 
         final String fallbackCurrencyType = normalizeCurrencyType(defaultCurrencyType);
         final Map<String, TaxCurrencySection> currencies = parseCurrencies(taxesSection, fallbackCurrencyType);
+        final MaximumBankruptcyConfiguration maximumBankruptcyConfiguration =
+                parseMaximumBankruptcyConfiguration(taxesSection);
         section.setContext(
                 currencies,
                 Math.max(1L, taxesSection.getLong("duration", DEFAULT_DURATION_TICKS)),
@@ -263,7 +322,8 @@ public class TaxSection extends AConfigSection {
                 taxesSection.getString("time_zone", ZoneId.systemDefault().getId()),
                 taxesSection.getBoolean("join_notification", true),
                 Math.max(0D, taxesSection.getDouble("never_item_penalty_rate", 0.25D)),
-                taxesSection.getDouble("maximum_bankruptcy_amount", -1D)
+                maximumBankruptcyConfiguration.maximumsByCurrency(),
+                maximumBankruptcyConfiguration.defaultMaximum()
         );
         return section;
     }
@@ -279,7 +339,8 @@ public class TaxSection extends AConfigSection {
                 ZoneId.systemDefault().getId(),
                 true,
                 0.25D,
-                -1D
+                createDefaultMaximumBankruptcyAmounts(),
+                null
         );
         return section;
     }
@@ -341,6 +402,75 @@ public class TaxSection extends AConfigSection {
         return fallback;
     }
 
+    private static @NotNull Map<String, Double> createDefaultMaximumBankruptcyAmounts() {
+        final Map<String, Double> defaults = new LinkedHashMap<>();
+        defaults.put("vault", -1D);
+        defaults.put("raindrops", -1D);
+        return defaults;
+    }
+
+    private static @NotNull MaximumBankruptcyConfiguration parseMaximumBankruptcyConfiguration(
+            final @NotNull ConfigurationSection taxesSection
+    ) {
+        final ConfigurationSection maximumSection =
+                taxesSection.getConfigurationSection("maximum_bankruptcy_amount");
+        if (maximumSection == null) {
+            final Object legacyMaximum = taxesSection.get("maximum_bankruptcy_amount");
+            final Double parsedLegacyMaximum = parseMaximumBankruptcyValue(legacyMaximum);
+            return new MaximumBankruptcyConfiguration(
+                    Map.of(),
+                    parsedLegacyMaximum == null ? null : normalizeMaximumBankruptcyAmount(parsedLegacyMaximum)
+            );
+        }
+
+        final Map<String, Double> parsedMaximums = new LinkedHashMap<>();
+        for (final String rawCurrencyType : maximumSection.getKeys(false)) {
+            if (rawCurrencyType == null || rawCurrencyType.isBlank()) {
+                continue;
+            }
+
+            final Double parsedMaximum = parseMaximumBankruptcyValue(maximumSection.get(rawCurrencyType));
+            if (parsedMaximum == null) {
+                continue;
+            }
+
+            parsedMaximums.put(
+                    normalizeCurrencyType(rawCurrencyType),
+                    normalizeMaximumBankruptcyAmount(parsedMaximum)
+            );
+        }
+        return new MaximumBankruptcyConfiguration(parsedMaximums, null);
+    }
+
+    private static @Nullable Double parseMaximumBankruptcyValue(
+            final @Nullable Object rawValue
+    ) {
+        if (rawValue instanceof Number numberValue) {
+            return numberValue.doubleValue();
+        }
+
+        if (rawValue instanceof String stringValue) {
+            final String normalizedValue = stringValue.trim();
+            if (normalizedValue.isEmpty()) {
+                return null;
+            }
+
+            try {
+                return Double.parseDouble(normalizedValue);
+            } catch (NumberFormatException ignored) {
+                return null;
+            }
+        }
+
+        return null;
+    }
+
+    private static double normalizeMaximumBankruptcyAmount(
+            final double maximumBankruptcyAmount
+    ) {
+        return maximumBankruptcyAmount > 0D ? maximumBankruptcyAmount : -1D;
+    }
+
     private static @NotNull TaxCurrencySection createCurrencySection(
             final @NotNull String currencyType,
             final @NotNull ConfigurationSection section
@@ -371,5 +501,11 @@ public class TaxSection extends AConfigSection {
         }
 
         return currencyType.trim().toLowerCase(Locale.ROOT);
+    }
+
+    private record MaximumBankruptcyConfiguration(
+            @NotNull Map<String, Double> maximumsByCurrency,
+            @Nullable Double defaultMaximum
+    ) {
     }
 }

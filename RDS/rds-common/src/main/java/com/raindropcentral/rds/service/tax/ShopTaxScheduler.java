@@ -280,7 +280,7 @@ public class ShopTaxScheduler {
                         taxableOwnedShops,
                         currencyType,
                         cappedTaxAmount,
-                        taxes.getMaximumBankruptcyAmount()
+                        taxes.getMaximumBankruptcyAmount(currencyType)
                 );
                 placeholders.put("debt_summary", this.formatCurrencySummary(this.summarizeDebtByCurrency(taxableOwnedShops)));
                 this.notifyOwner(owner, chargeResult.failureMessageKey(), placeholders);

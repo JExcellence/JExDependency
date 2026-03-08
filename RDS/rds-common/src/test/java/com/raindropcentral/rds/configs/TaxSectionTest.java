@@ -31,6 +31,10 @@ class TaxSectionTest {
         final TaxSection section = TaxSection.createDefault("vault");
 
         assertEquals(0.25D, section.getNeverItemPenaltyRate(), 1.0E-9D);
+        assertEquals(-1D, section.getMaximumBankruptcyAmount("vault"), 1.0E-9D);
+        assertEquals(-1D, section.getMaximumBankruptcyAmount("raindrops"), 1.0E-9D);
+        assertTrue(section.getMaximumBankruptcyAmounts().containsKey("vault"));
+        assertTrue(section.getMaximumBankruptcyAmounts().containsKey("raindrops"));
         assertEquals(-1D, section.getMaximumBankruptcyAmount(), 1.0E-9D);
     }
 
@@ -67,7 +71,7 @@ class TaxSectionTest {
     }
 
     @Test
-    void readsMaximumBankruptcyAmountFromConfig(final @TempDir Path tempDir) throws IOException {
+    void readsMaximumBankruptcyAmountByCurrencyFromConfig(final @TempDir Path tempDir) throws IOException {
         final Path configFile = tempDir.resolve("config.yml");
         Files.writeString(configFile, """
             taxes:
@@ -75,11 +79,15 @@ class TaxSectionTest {
                 initial_cost: 100.0
                 growth_rate: 1.125
                 maximum_tax: -1
-              maximum_bankruptcy_amount: 2500.0
+              maximum_bankruptcy_amount:
+                vault: 2500.0
+                raindrops: 500.0
             """);
 
         final TaxSection section = TaxSection.fromFile(configFile.toFile(), "vault");
-        assertEquals(2500.0D, section.getMaximumBankruptcyAmount(), 1.0E-9D);
+        assertEquals(2500.0D, section.getMaximumBankruptcyAmount("vault"), 1.0E-9D);
+        assertEquals(500.0D, section.getMaximumBankruptcyAmount("raindrops"), 1.0E-9D);
+        assertEquals(-1.0D, section.getMaximumBankruptcyAmount("coins"), 1.0E-9D);
     }
 
     @Test
@@ -91,11 +99,32 @@ class TaxSectionTest {
                 initial_cost: 100.0
                 growth_rate: 1.125
                 maximum_tax: -1
-              maximum_bankruptcy_amount: 0.0
+              maximum_bankruptcy_amount:
+                vault: 0.0
+                raindrops: -10.0
             """);
 
         final TaxSection section = TaxSection.fromFile(configFile.toFile(), "vault");
-        assertEquals(-1.0D, section.getMaximumBankruptcyAmount(), 1.0E-9D);
-        assertTrue(section.getMaximumBankruptcyAmount() < 0D);
+        assertEquals(-1.0D, section.getMaximumBankruptcyAmount("vault"), 1.0E-9D);
+        assertEquals(-1.0D, section.getMaximumBankruptcyAmount("raindrops"), 1.0E-9D);
+        assertTrue(section.getMaximumBankruptcyAmount("vault") < 0D);
+    }
+
+    @Test
+    void supportsLegacyGlobalMaximumBankruptcyAmount(final @TempDir Path tempDir) throws IOException {
+        final Path configFile = tempDir.resolve("config.yml");
+        Files.writeString(configFile, """
+            taxes:
+              vault:
+                initial_cost: 100.0
+                growth_rate: 1.125
+                maximum_tax: -1
+              maximum_bankruptcy_amount: 2500.0
+            """);
+
+        final TaxSection section = TaxSection.fromFile(configFile.toFile(), "vault");
+        assertEquals(2500.0D, section.getMaximumBankruptcyAmount("vault"), 1.0E-9D);
+        assertEquals(2500.0D, section.getMaximumBankruptcyAmount("raindrops"), 1.0E-9D);
+        assertEquals(2500.0D, section.getMaximumBankruptcyAmount("coins"), 1.0E-9D);
     }
 }

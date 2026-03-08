@@ -217,7 +217,9 @@ taxes:
   never_item_penalty_rate: 0.25
   # Maximum unpaid bankruptcy debt tracked per shop and currency.
   # Positive values cap debt growth; -1 (or any non-positive value) allows unlimited debt.
-  maximum_bankruptcy_amount: -1
+  maximum_bankruptcy_amount:
+    vault: -1
+    raindrops: -1
 # Player shop boss bar settings for /rs bar.
 boss_bar:
   # Bukkit ticks between boss bar refreshes.
@@ -226,6 +228,57 @@ boss_bar:
   view_distance: 12
 # Default currency when items are added to shops - players can change to any currencies not blacklisted
 default_currency_type: vault
+# Fallback item price used when a material has no entry in config/material-prices.yml
+default_item_price: 0.0
 # Blacklisted currencies - players cannot set shops to listed currency
 blacklisted_currencies:
   - raindrops
+# Dynamic market pricing for customer views and checkout.
+dynamic_pricing:
+  # Set to true to enable market-based price adjustments.
+  enabled: true
+  # Bukkit ticks between market snapshot refreshes.
+  refresh_interval_ticks: 200
+  # Sliding window used when counting recent completed sales.
+  recent_sales_window_minutes: 180
+  # ITEM_UNITS or TRANSACTIONS.
+  recent_sales_mode: ITEM_UNITS
+  # CONFIG_DEFAULT, LISTING_VALUE, or FIXED_FALLBACK.
+  missing_base_price_mode: CONFIG_DEFAULT
+  # Used only when missing_base_price_mode is FIXED_FALLBACK.
+  missing_base_price_fallback: 0.0
+  formula:
+    # Base multiplier before market signals are applied.
+    base_multiplier: 1.0
+    # Lower and upper multiplier guards.
+    minimum_multiplier: 0.20
+    maximum_multiplier: 4.00
+    # Supply pressure from number of shops selling the item.
+    shops_selling_weight: 0.35
+    shops_selling_baseline: 4.0
+    # Supply pressure from listed stock quantity.
+    listed_items_weight: 0.25
+    listed_items_baseline: 512.0
+    # Demand pressure from recent completed sales.
+    recent_sales_weight: 0.60
+    recent_sales_baseline: 128.0
+  stability:
+    # Absolute floor and optional absolute cap for final unit prices.
+    minimum_price: 0.01
+    # <= 0 disables the absolute maximum price cap.
+    maximum_price: -1.0
+    # 0.35 = 35% maximum movement per refresh step.
+    max_step_change_percent: 0.35
+    # 0.0 disables smoothing, 1.0 fully trusts newest raw values.
+    smoothing_alpha: 0.35
+    # Decimal places for the final dynamic unit price.
+    rounding_scale: 2
+  infinite_stock:
+    # IGNORE, FIXED_CAP, or USE_HIGHEST_FINITE.
+    mode: FIXED_CAP
+    # Effective listed quantity when mode is FIXED_CAP.
+    fixed_cap_amount: 4096
+    # Fallback effective quantity for USE_HIGHEST_FINITE when no finite listing exists.
+    fallback_amount_when_no_finite: 512
+    # Whether infinite listings count toward the number of shops selling.
+    count_as_seller: true

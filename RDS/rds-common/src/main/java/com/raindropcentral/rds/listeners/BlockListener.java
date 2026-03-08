@@ -36,6 +36,8 @@ import java.util.UUID;
 @SuppressWarnings("unused")
 public class BlockListener implements Listener {
 
+    private static final String TOWN_PLACEMENT_BYPASS_PERMISSION = "raindropshops.admin.bypass.town";
+
     private final RDS rds;
 
     /**
@@ -175,6 +177,10 @@ public class BlockListener implements Listener {
             return true;
         }
 
+        if (hasTownPlacementBypassPermission(player)) {
+            return true;
+        }
+
         final RProtectionBridge protectionBridge = RProtectionBridge.getBridge();
         if (protectionBridge == null || !protectionBridge.isAvailable()) {
             this.sendMessage(player, "block_listener.error.protection_unavailable");
@@ -192,6 +198,18 @@ public class BlockListener implements Listener {
         }
 
         return true;
+    }
+
+    /**
+     * Determines whether a player can bypass own-town placement restrictions.
+     *
+     * @param player player placing the shop block
+     * @return {@code true} when the player has the bypass permission
+     */
+    static boolean hasTownPlacementBypassPermission(
+            final @NotNull Player player
+    ) {
+        return player.hasPermission(TOWN_PLACEMENT_BYPASS_PERMISSION);
     }
 
     private void upgradeShopToDoubleChest(

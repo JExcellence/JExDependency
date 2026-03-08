@@ -8,6 +8,8 @@ import com.raindropcentral.rds.items.AbstractItem;
 import com.raindropcentral.rds.items.ShopItem;
 import com.raindropcentral.rds.service.shop.AdminShopPurchaseCommandSupport;
 import com.raindropcentral.rds.service.shop.AdminShopStockSupport;
+import com.raindropcentral.rds.service.shop.DynamicPricingMarketStats;
+import com.raindropcentral.rds.service.shop.DynamicPricingService;
 import com.raindropcentral.rds.view.shop.anvil.ShopPurchaseAmountAnvilView;
 import com.raindropcentral.rplatform.economy.JExEconomyBridge;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
@@ -146,6 +148,27 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
                         .build()
         ).onClick(clickContext -> {
             if (clickContext.isRightClick()) {
+                final ShopPurchaseLimitSupport.PurchaseLimitCheck limitCheck = ShopPurchaseLimitSupport.checkLimit(
+                        shop,
+                        entry.item(),
+                        clickContext.getPlayer().getUniqueId(),
+                        1
+                );
+                if (!limitCheck.allowed()) {
+                    this.i18n("feedback.purchase_limit_reached", clickContext.getPlayer())
+                            .withPlaceholders(Map.of(
+                                    "item_type", entry.item().getItem().getType().name(),
+                                    "requested_amount", 1,
+                                    "limit_amount", limitCheck.limitAmount(),
+                                    "window_minutes", limitCheck.windowMinutes(),
+                                    "purchased_amount", limitCheck.purchasedAmount(),
+                                    "remaining_amount", limitCheck.remainingAmount()
+                            ))
+                            .build()
+                            .sendMessage();
+                    return;
+                }
+
                 clickContext.openForPlayer(
                         ShopPurchaseAmountAnvilView.class,
                         Map.of(
@@ -235,6 +258,28 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
             return;
         }
 
+        final ShopPurchaseLimitSupport.PurchaseLimitCheck limitCheck = ShopPurchaseLimitSupport.checkLimit(
+                shop,
+                currentItem,
+                context.getPlayer().getUniqueId(),
+                desiredAmount
+        );
+        if (!limitCheck.allowed()) {
+            this.i18n("feedback.purchase_limit_reached", context.getPlayer())
+                    .withPlaceholders(Map.of(
+                            "item_type", currentItem.getItem().getType().name(),
+                            "requested_amount", desiredAmount,
+                            "limit_amount", limitCheck.limitAmount(),
+                            "window_minutes", limitCheck.windowMinutes(),
+                            "purchased_amount", limitCheck.purchasedAmount(),
+                            "remaining_amount", limitCheck.remainingAmount()
+                    ))
+                    .build()
+                    .sendMessage();
+            this.openFreshView(context);
+            return;
+        }
+
         final boolean limitedAdminStock = AdminShopStockSupport.usesLimitedAdminStock(shop, currentItem);
         if ((!shop.isAdminShop() || limitedAdminStock) && desiredAmount > currentItem.getAmount()) {
             this.i18n("feedback.insufficient_stock", context.getPlayer())
@@ -250,7 +295,9 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
         }
 
         final RDS plugin = this.rds.get(context);
-        final double baseTotalPrice = currentItem.getValue() * desiredAmount;
+        final DynamicPricingService.DynamicPriceQuote priceQuote = this.resolvePriceQuote(plugin, currentItem);
+        final double dynamicUnitPrice = priceQuote.unitPrice();
+        final double baseTotalPrice = dynamicUnitPrice * desiredAmount;
         final double discountPercent = plugin.getShopDiscountPercent(context.getPlayer());
         final double totalPrice = plugin.applyShopDiscount(context.getPlayer(), baseTotalPrice);
         final double discountAmount = Math.max(0.0D, baseTotalPrice - totalPrice);
@@ -315,7 +362,8 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
                         currentItem.getCurrencyType(),
                         totalPrice,
                         currentItem.getItem().getType().name(),
-                        desiredAmount
+                        desiredAmount,
+                        currentItem.getEntryId()
                 )
         );
         plugin.getShopRepository().update(shop);
@@ -327,6 +375,7 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
                     shop,
                     currentItem,
                     desiredAmount,
+                    dynamicUnitPrice,
                     totalPrice
             );
         }
@@ -529,10 +578,12 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
             final @NotNull ShopItem item,
             final @NotNull ItemStack displayItem
     ) {
+        final DynamicPricingService.DynamicPriceQuote priceQuote = this.resolvePriceQuote(plugin, item);
+        final double unitPrice = priceQuote.unitPrice();
         final double discountPercent = plugin.getShopDiscountPercent(player);
-        final double discountedEach = plugin.applyShopDiscount(player, item.getValue());
-        final double discountEach = Math.max(0.0D, item.getValue() - discountedEach);
-        final double totalPrice = item.getValue() * item.getAmount();
+        final double discountedEach = plugin.applyShopDiscount(player, unitPrice);
+        final double discountEach = Math.max(0.0D, unitPrice - discountedEach);
+        final double totalPrice = unitPrice * item.getAmount();
         final String loreKey;
         final Map<String, Object> placeholders;
         if (!shop.isAdminShop()) {
@@ -542,11 +593,12 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
                     "item_type", displayItem.getType().name(),
                     "currency_type", item.getCurrencyType(),
                     "currency_name", this.getCurrencyDisplayName(item.getCurrencyType()),
-                    "price_each", this.formatAmount(item.getValue()),
+                    "price_each", this.formatAmount(unitPrice),
                     "total_price", this.formatAmount(totalPrice),
                     "discount_percent", this.formatPercent(discountPercent),
                     "discount_each", this.formatAmount(discountEach),
-                    "discounted_price_each", this.formatAmount(discountedEach)
+                    "discounted_price_each", this.formatAmount(discountedEach),
+                    "purchase_limit", this.getPurchaseLimitLabel(player, item)
             );
         } else if (AdminShopStockSupport.usesLimitedAdminStock(shop, item)) {
             loreKey = "entry.admin_limited.lore";
@@ -556,12 +608,13 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
             limitedPlaceholders.put("item_type", displayItem.getType().name());
             limitedPlaceholders.put("currency_type", item.getCurrencyType());
             limitedPlaceholders.put("currency_name", this.getCurrencyDisplayName(item.getCurrencyType()));
-            limitedPlaceholders.put("price_each", this.formatAmount(item.getValue()));
+            limitedPlaceholders.put("price_each", this.formatAmount(unitPrice));
             limitedPlaceholders.put("discount_percent", this.formatPercent(discountPercent));
             limitedPlaceholders.put("discount_each", this.formatAmount(discountEach));
             limitedPlaceholders.put("discounted_price_each", this.formatAmount(discountedEach));
             limitedPlaceholders.put("restock_mode", this.getAdminRestockModeLabel(player, plugin));
             limitedPlaceholders.put("restock_schedule", this.getAdminRestockSchedule(player, item, plugin));
+            limitedPlaceholders.put("purchase_limit", this.getPurchaseLimitLabel(player, item));
             placeholders = limitedPlaceholders;
         } else {
             loreKey = "entry.admin.lore";
@@ -569,10 +622,11 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
                     "item_type", displayItem.getType().name(),
                     "currency_type", item.getCurrencyType(),
                     "currency_name", this.getCurrencyDisplayName(item.getCurrencyType()),
-                    "price_each", this.formatAmount(item.getValue()),
+                    "price_each", this.formatAmount(unitPrice),
                     "discount_percent", this.formatPercent(discountPercent),
                     "discount_each", this.formatAmount(discountEach),
-                    "discounted_price_each", this.formatAmount(discountedEach)
+                    "discounted_price_each", this.formatAmount(discountedEach),
+                    "purchase_limit", this.getPurchaseLimitLabel(player, item)
             );
         }
         final List<Component> lore = new ArrayList<>(this.i18n(loreKey, player)
@@ -679,6 +733,41 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
 
         final JExEconomyBridge bridge = JExEconomyBridge.getBridge();
         return bridge == null ? currencyType : bridge.getCurrencyDisplayName(currencyType);
+    }
+
+    private @NotNull String getPurchaseLimitLabel(
+            final @NotNull Player player,
+            final @NotNull ShopItem item
+    ) {
+        if (!item.hasPurchaseLimit()) {
+            return this.i18n("entry.purchase_limit_unlimited", player)
+                    .build()
+                    .getI18nVersionWrapper()
+                    .asPlaceholder();
+        }
+
+        return this.i18n("entry.purchase_limit_format", player)
+                .withPlaceholders(Map.of(
+                        "limit_amount", item.getPurchaseLimitAmount(),
+                        "window_minutes", item.getPurchaseLimitWindowMinutes()
+                ))
+                .build()
+                .getI18nVersionWrapper()
+                .asPlaceholder();
+    }
+
+    private @NotNull DynamicPricingService.DynamicPriceQuote resolvePriceQuote(
+            final @NotNull RDS plugin,
+            final @NotNull ShopItem item
+    ) {
+        final DynamicPricingService dynamicPricingService = plugin.getDynamicPricingService();
+        if (dynamicPricingService == null) {
+            return DynamicPricingService.DynamicPriceQuote.staticPrice(
+                    item.getValue(),
+                    DynamicPricingMarketStats.empty()
+            );
+        }
+        return dynamicPricingService.resolvePrice(item);
     }
 
     private @NotNull String formatAmount(final double amount) {

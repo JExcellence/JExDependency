@@ -181,8 +181,17 @@ public class ShopItem extends AbstractItem {
 	@JsonProperty("availabilityRotationMinutes")
 	private final Integer availabilityRotationMinutes;
 
+	@JsonProperty("purchaseLimitAmount")
+	private final Integer purchaseLimitAmount;
+
+	@JsonProperty("purchaseLimitWindowMinutes")
+	private final Integer purchaseLimitWindowMinutes;
+
 	@JsonProperty("adminPurchaseCommands")
 	private final List<AdminPurchaseCommand> adminPurchaseCommands;
+
+	@JsonProperty("dynamicPricingEnabled")
+	private final boolean dynamicPricingEnabled;
 	
 	/**
 	 * Creates a new shop item.
@@ -197,6 +206,60 @@ public class ShopItem extends AbstractItem {
 	 * @param adminStockReferenceTime admin stock reference time
 	 * @param availabilityMode availability mode
 	 * @param availabilityRotationMinutes rotation window in minutes
+	 * @param purchaseLimitAmount purchase limit amount per window
+	 * @param purchaseLimitWindowMinutes purchase limit window in minutes
+	 * @param adminPurchaseCommands admin purchase commands
+	 */
+	public ShopItem(
+		@JsonProperty("entryId") @Nullable UUID entryId,
+		@JsonProperty("item") @NotNull ItemStack item,
+		@JsonProperty("amount") int amount,
+		@JsonProperty("currencyType") @Nullable String currencyType,
+		@JsonProperty("value") double value,
+		@JsonProperty("adminStockLimit") @Nullable Integer adminStockLimit,
+		@JsonProperty("adminRestockIntervalTicks") @Nullable Long adminRestockIntervalTicks,
+		@JsonProperty("adminStockReferenceTime") @Nullable Long adminStockReferenceTime,
+		@JsonProperty("availabilityMode") @Nullable AvailabilityMode availabilityMode,
+		@JsonProperty("availabilityRotationMinutes") @Nullable Integer availabilityRotationMinutes,
+		@JsonProperty("purchaseLimitAmount") @Nullable Integer purchaseLimitAmount,
+		@JsonProperty("purchaseLimitWindowMinutes") @Nullable Integer purchaseLimitWindowMinutes,
+		@JsonProperty("adminPurchaseCommands") @Nullable List<AdminPurchaseCommand> adminPurchaseCommands
+	) {
+		this(
+				entryId,
+				item,
+				amount,
+				currencyType,
+				value,
+				adminStockLimit,
+				adminRestockIntervalTicks,
+				adminStockReferenceTime,
+				availabilityMode,
+				availabilityRotationMinutes,
+				purchaseLimitAmount,
+				purchaseLimitWindowMinutes,
+				adminPurchaseCommands,
+				null
+		);
+	}
+
+	/**
+	 * Creates a new shop item.
+	 *
+	 * @param entryId entry id
+	 * @param item target item payload
+	 * @param amount amount
+	 * @param currencyType currency type
+	 * @param value value
+	 * @param adminStockLimit admin stock limit
+	 * @param adminRestockIntervalTicks admin restock interval ticks
+	 * @param adminStockReferenceTime admin stock reference time
+	 * @param availabilityMode availability mode
+	 * @param availabilityRotationMinutes rotation window in minutes
+	 * @param purchaseLimitAmount purchase limit amount per window
+	 * @param purchaseLimitWindowMinutes purchase limit window in minutes
+	 * @param adminPurchaseCommands admin purchase commands
+	 * @param dynamicPricingEnabled whether dynamic pricing is enabled for this item
 	 */
 	@JsonCreator
 	public ShopItem(
@@ -210,7 +273,10 @@ public class ShopItem extends AbstractItem {
 		@JsonProperty("adminStockReferenceTime") @Nullable Long adminStockReferenceTime,
 		@JsonProperty("availabilityMode") @Nullable AvailabilityMode availabilityMode,
 		@JsonProperty("availabilityRotationMinutes") @Nullable Integer availabilityRotationMinutes,
-		@JsonProperty("adminPurchaseCommands") @Nullable List<AdminPurchaseCommand> adminPurchaseCommands
+		@JsonProperty("purchaseLimitAmount") @Nullable Integer purchaseLimitAmount,
+		@JsonProperty("purchaseLimitWindowMinutes") @Nullable Integer purchaseLimitWindowMinutes,
+		@JsonProperty("adminPurchaseCommands") @Nullable List<AdminPurchaseCommand> adminPurchaseCommands,
+		@JsonProperty("dynamicPricingEnabled") @Nullable Boolean dynamicPricingEnabled
 	) {
 		this.entryId = entryId == null ? UUID.randomUUID() : entryId;
 		this.item = item.clone();
@@ -229,7 +295,61 @@ public class ShopItem extends AbstractItem {
 		this.availabilityRotationMinutes = availabilityRotationMinutes == null || availabilityRotationMinutes < 1
 				? DEFAULT_ROTATION_MINUTES
 				: availabilityRotationMinutes;
+		if (purchaseLimitAmount == null || purchaseLimitAmount < 1
+				|| purchaseLimitWindowMinutes == null || purchaseLimitWindowMinutes < 1) {
+			this.purchaseLimitAmount = null;
+			this.purchaseLimitWindowMinutes = null;
+		} else {
+			this.purchaseLimitAmount = purchaseLimitAmount;
+			this.purchaseLimitWindowMinutes = purchaseLimitWindowMinutes;
+		}
 		this.adminPurchaseCommands = this.normalizeAdminPurchaseCommands(adminPurchaseCommands);
+		this.dynamicPricingEnabled = dynamicPricingEnabled != null && dynamicPricingEnabled;
+	}
+
+	/**
+	 * Creates a new shop item.
+	 *
+	 * @param entryId entry id
+	 * @param item target item payload
+	 * @param amount amount
+	 * @param currencyType currency type
+	 * @param value value
+	 * @param adminStockLimit admin stock limit
+	 * @param adminRestockIntervalTicks admin restock interval ticks
+	 * @param adminStockReferenceTime admin stock reference time
+	 * @param availabilityMode availability mode
+	 * @param availabilityRotationMinutes rotation window in minutes
+	 * @param adminPurchaseCommands admin purchase commands
+	 */
+	public ShopItem(
+		@Nullable UUID entryId,
+		@NotNull ItemStack item,
+		int amount,
+		@Nullable String currencyType,
+		double value,
+		@Nullable Integer adminStockLimit,
+		@Nullable Long adminRestockIntervalTicks,
+		@Nullable Long adminStockReferenceTime,
+		@Nullable AvailabilityMode availabilityMode,
+		@Nullable Integer availabilityRotationMinutes,
+		@Nullable List<AdminPurchaseCommand> adminPurchaseCommands
+	) {
+		this(
+			entryId,
+			item,
+			amount,
+			currencyType,
+			value,
+			adminStockLimit,
+			adminRestockIntervalTicks,
+			adminStockReferenceTime,
+			availabilityMode,
+			availabilityRotationMinutes,
+			null,
+			null,
+			adminPurchaseCommands
+		);
 	}
 
 	/**
@@ -474,6 +594,45 @@ public class ShopItem extends AbstractItem {
 	}
 
 	/**
+	 * Indicates whether this item enforces a per-player purchase limit window.
+	 *
+	 * @return {@code true} when a purchase limit amount and window are configured
+	 */
+	public boolean hasPurchaseLimit() {
+		return this.purchaseLimitAmount != null
+				&& this.purchaseLimitAmount > 0
+				&& this.purchaseLimitWindowMinutes != null
+				&& this.purchaseLimitWindowMinutes > 0;
+	}
+
+	/**
+	 * Returns the configured per-player purchase limit amount.
+	 *
+	 * @return purchase limit amount, or {@code -1} when no limit is configured
+	 */
+	public int getPurchaseLimitAmount() {
+		return this.hasPurchaseLimit() ? this.purchaseLimitAmount : -1;
+	}
+
+	/**
+	 * Returns the configured per-player purchase limit window in minutes.
+	 *
+	 * @return purchase limit window in minutes, or {@code -1} when no limit is configured
+	 */
+	public int getPurchaseLimitWindowMinutes() {
+		return this.hasPurchaseLimit() ? this.purchaseLimitWindowMinutes : -1;
+	}
+
+	/**
+	 * Indicates whether dynamic pricing is enabled for this item.
+	 *
+	 * @return {@code true} when this item opts in to dynamic pricing
+	 */
+	public boolean isDynamicPricingEnabled() {
+		return this.dynamicPricingEnabled;
+	}
+
+	/**
 	 * Returns configured admin-purchase commands for this item.
 	 *
 	 * @return immutable command list
@@ -545,7 +704,10 @@ public class ShopItem extends AbstractItem {
 				this.adminStockReferenceTime,
 				this.availabilityMode,
 				this.availabilityRotationMinutes,
-				updatedCommands
+				this.purchaseLimitAmount,
+				this.purchaseLimitWindowMinutes,
+				updatedCommands,
+				this.dynamicPricingEnabled
 		);
 	}
 
@@ -605,7 +767,10 @@ public class ShopItem extends AbstractItem {
 				this.adminStockReferenceTime,
 				this.availabilityMode,
 				this.availabilityRotationMinutes,
-				this.adminPurchaseCommands
+				this.purchaseLimitAmount,
+				this.purchaseLimitWindowMinutes,
+				this.adminPurchaseCommands,
+				this.dynamicPricingEnabled
 		);
 	}
 
@@ -627,7 +792,10 @@ public class ShopItem extends AbstractItem {
 				this.adminStockReferenceTime,
 				this.availabilityMode,
 				this.availabilityRotationMinutes,
-				this.adminPurchaseCommands
+				this.purchaseLimitAmount,
+				this.purchaseLimitWindowMinutes,
+				this.adminPurchaseCommands,
+				this.dynamicPricingEnabled
 		);
 	}
 
@@ -649,7 +817,10 @@ public class ShopItem extends AbstractItem {
 				this.adminStockReferenceTime,
 				this.availabilityMode,
 				this.availabilityRotationMinutes,
-				this.adminPurchaseCommands
+				this.purchaseLimitAmount,
+				this.purchaseLimitWindowMinutes,
+				this.adminPurchaseCommands,
+				this.dynamicPricingEnabled
 		);
 	}
 
@@ -672,7 +843,10 @@ public class ShopItem extends AbstractItem {
 				this.adminStockReferenceTime,
 				this.availabilityMode,
 				this.availabilityRotationMinutes,
-				this.adminPurchaseCommands
+				this.purchaseLimitAmount,
+				this.purchaseLimitWindowMinutes,
+				this.adminPurchaseCommands,
+				this.dynamicPricingEnabled
 		);
 	}
 
@@ -692,7 +866,10 @@ public class ShopItem extends AbstractItem {
 				updatedReferenceTime,
 				this.availabilityMode,
 				this.availabilityRotationMinutes,
-				this.adminPurchaseCommands
+				this.purchaseLimitAmount,
+				this.purchaseLimitWindowMinutes,
+				this.adminPurchaseCommands,
+				this.dynamicPricingEnabled
 		);
 	}
 
@@ -713,7 +890,10 @@ public class ShopItem extends AbstractItem {
 				updatedReferenceTime,
 				this.availabilityMode,
 				this.availabilityRotationMinutes,
-				this.adminPurchaseCommands
+				this.purchaseLimitAmount,
+				this.purchaseLimitWindowMinutes,
+				this.adminPurchaseCommands,
+				this.dynamicPricingEnabled
 		);
 	}
 
@@ -737,7 +917,10 @@ public class ShopItem extends AbstractItem {
 				this.adminStockReferenceTime,
 				updatedMode,
 				this.availabilityRotationMinutes,
-				this.adminPurchaseCommands
+				this.purchaseLimitAmount,
+				this.purchaseLimitWindowMinutes,
+				this.adminPurchaseCommands,
+				this.dynamicPricingEnabled
 		);
 	}
 
@@ -761,7 +944,10 @@ public class ShopItem extends AbstractItem {
 				this.adminStockReferenceTime,
 				this.availabilityMode,
 				updatedRotationMinutes,
-				this.adminPurchaseCommands
+				this.purchaseLimitAmount,
+				this.purchaseLimitWindowMinutes,
+				this.adminPurchaseCommands,
+				this.dynamicPricingEnabled
 		);
 	}
 
@@ -787,8 +973,76 @@ public class ShopItem extends AbstractItem {
 				this.adminStockReferenceTime,
 				updatedMode,
 				updatedRotationMinutes,
-				this.adminPurchaseCommands
+				this.purchaseLimitAmount,
+				this.purchaseLimitWindowMinutes,
+				this.adminPurchaseCommands,
+				this.dynamicPricingEnabled
 		);
+	}
+
+	/**
+	 * Returns a copy with updated purchase-limit settings.
+	 *
+	 * @param updatedLimitAmount updated per-player purchase limit amount, or {@code null} to disable
+	 * @param updatedWindowMinutes updated purchase-limit window in minutes, or {@code null} to disable
+	 * @return a copy with updated purchase-limit settings
+	 */
+	public @NotNull ShopItem withPurchaseLimit(
+		final @Nullable Integer updatedLimitAmount,
+		final @Nullable Integer updatedWindowMinutes
+	) {
+		return new ShopItem(
+				this.entryId,
+				this.item,
+				this.amount,
+				this.currencyType,
+				this.value,
+				this.adminStockLimit,
+				this.adminRestockIntervalTicks,
+				this.adminStockReferenceTime,
+				this.availabilityMode,
+				this.availabilityRotationMinutes,
+				updatedLimitAmount,
+				updatedWindowMinutes,
+				this.adminPurchaseCommands,
+				this.dynamicPricingEnabled
+		);
+	}
+
+	/**
+	 * Returns a copy with updated dynamic-pricing opt-in state.
+	 *
+	 * @param enabled whether dynamic pricing should be enabled for this item
+	 * @return a copy with updated dynamic-pricing opt-in state
+	 */
+	public @NotNull ShopItem withDynamicPricingEnabled(
+			final boolean enabled
+	) {
+		return new ShopItem(
+				this.entryId,
+				this.item,
+				this.amount,
+				this.currencyType,
+				this.value,
+				this.adminStockLimit,
+				this.adminRestockIntervalTicks,
+				this.adminStockReferenceTime,
+				this.availabilityMode,
+				this.availabilityRotationMinutes,
+				this.purchaseLimitAmount,
+				this.purchaseLimitWindowMinutes,
+				this.adminPurchaseCommands,
+				enabled
+		);
+	}
+
+	/**
+	 * Returns a copy with purchase-limit settings removed.
+	 *
+	 * @return a copy without purchase-limit settings
+	 */
+	public @NotNull ShopItem clearPurchaseLimit() {
+		return this.withPurchaseLimit(null, null);
 	}
 
 	/**
@@ -808,7 +1062,10 @@ public class ShopItem extends AbstractItem {
 				null,
 				this.availabilityMode,
 				this.availabilityRotationMinutes,
-				this.adminPurchaseCommands
+				this.purchaseLimitAmount,
+				this.purchaseLimitWindowMinutes,
+				this.adminPurchaseCommands,
+				this.dynamicPricingEnabled
 		);
 	}
 
@@ -857,6 +1114,15 @@ public class ShopItem extends AbstractItem {
 		}
 		if (this.availabilityRotationMinutes != null && this.availabilityRotationMinutes < 1) {
 			throw new IllegalArgumentException("Availability rotation minutes must be at least 1 when set");
+		}
+		if ((this.purchaseLimitAmount == null) != (this.purchaseLimitWindowMinutes == null)) {
+			throw new IllegalArgumentException("Purchase limit amount and window must both be set or both be null");
+		}
+		if (this.purchaseLimitAmount != null && this.purchaseLimitAmount < 1) {
+			throw new IllegalArgumentException("Purchase limit amount must be at least 1 when set");
+		}
+		if (this.purchaseLimitWindowMinutes != null && this.purchaseLimitWindowMinutes < 1) {
+			throw new IllegalArgumentException("Purchase limit window minutes must be at least 1 when set");
 		}
 		for (final AdminPurchaseCommand command : this.adminPurchaseCommands) {
 			if (command == null || command.command().isBlank()) {

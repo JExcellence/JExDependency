@@ -56,6 +56,10 @@ public class ShopLedgerEntry extends BaseEntity {
     @Column(name = "item_type")
     private String item_type;
 
+    @Column(name = "item_entry_id")
+    @Convert(converter = UUIDConverter.class)
+    private UUID item_entry_id;
+
     @Column(name = "item_amount")
     private Integer item_amount;
 
@@ -75,6 +79,7 @@ public class ShopLedgerEntry extends BaseEntity {
      * @param actorId actor id
      * @param actorName actor name
      * @param itemType item type
+     * @param itemEntryId item entry id
      * @param itemAmount item amount
      * @param countedShops counted shops
      */
@@ -86,6 +91,7 @@ public class ShopLedgerEntry extends BaseEntity {
             final @Nullable UUID actorId,
             final @NotNull String actorName,
             final @Nullable String itemType,
+            final @Nullable UUID itemEntryId,
             final @Nullable Integer itemAmount,
             final @Nullable Integer countedShops
     ) {
@@ -98,10 +104,23 @@ public class ShopLedgerEntry extends BaseEntity {
                 ? (actorId == null ? "Unknown" : actorId.toString())
                 : actorName;
         this.item_type = itemType;
+        this.item_entry_id = itemEntryId;
         this.item_amount = itemAmount;
         this.counted_shops = countedShops;
     }
 
+    /**
+     * Creates a purchase ledger entry without an item entry id (legacy compatibility).
+     *
+     * @param shop target shop
+     * @param actorId actor id
+     * @param actorName actor name
+     * @param currencyType currency type
+     * @param amount total paid amount
+     * @param itemType purchased item type label
+     * @param itemAmount purchased amount
+     * @return created purchase ledger entry
+     */
     public static @NotNull ShopLedgerEntry purchase(
             final @NotNull Shop shop,
             final @Nullable UUID actorId,
@@ -111,6 +130,32 @@ public class ShopLedgerEntry extends BaseEntity {
             final @NotNull String itemType,
             final int itemAmount
     ) {
+        return purchase(shop, actorId, actorName, currencyType, amount, itemType, itemAmount, null);
+    }
+
+    /**
+     * Creates a purchase ledger entry.
+     *
+     * @param shop target shop
+     * @param actorId actor id
+     * @param actorName actor name
+     * @param currencyType currency type
+     * @param amount total paid amount
+     * @param itemType purchased item type label
+     * @param itemAmount purchased amount
+     * @param itemEntryId purchased item entry id
+     * @return created purchase ledger entry
+     */
+    public static @NotNull ShopLedgerEntry purchase(
+            final @NotNull Shop shop,
+            final @Nullable UUID actorId,
+            final @NotNull String actorName,
+            final @NotNull String currencyType,
+            final double amount,
+            final @NotNull String itemType,
+            final int itemAmount,
+            final @Nullable UUID itemEntryId
+    ) {
         return new ShopLedgerEntry(
                 shop,
                 ShopLedgerType.PURCHASE,
@@ -119,6 +164,7 @@ public class ShopLedgerEntry extends BaseEntity {
                 actorId,
                 actorName,
                 itemType,
+                itemEntryId,
                 Math.max(1, itemAmount),
                 null
         );
@@ -139,6 +185,7 @@ public class ShopLedgerEntry extends BaseEntity {
                 amount,
                 actorId,
                 actorName,
+                null,
                 null,
                 null,
                 Math.max(1, countedShops)
@@ -212,6 +259,15 @@ public class ShopLedgerEntry extends BaseEntity {
      */
     public @Nullable String getItemType() {
         return this.item_type;
+    }
+
+    /**
+     * Returns the item entry id.
+     *
+     * @return the item entry id
+     */
+    public @Nullable UUID getItemEntryId() {
+        return this.item_entry_id;
     }
 
     /**

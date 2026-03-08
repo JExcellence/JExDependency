@@ -126,6 +126,7 @@ Primary command handler: `PRS` (`PlayerCommand`), so all subcommands are player-
 | `raindropshops.command.store` | Configured node for `/rs store`. |
 | `raindropshops.command.taxes` | Required for `/rs taxes`. |
 | `raindropshops.admin.shops` | Required in `ShopOverviewView` to toggle a shop between player/admin mode. |
+| `raindropshops.admin.bypass.town` | Allows ShopBlock placement outside the player's own town even when `protection.only_player_shops` is enabled. |
 
 ## Configuration hotspots
 

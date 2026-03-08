@@ -9,11 +9,14 @@ import com.raindropcentral.rds.database.repository.RRDSPlayer;
 import com.raindropcentral.rds.database.repository.RServerBank;
 import com.raindropcentral.rds.database.repository.RShop;
 import com.raindropcentral.rds.database.repository.RRTownShopBank;
+import com.raindropcentral.rds.database.repository.RShopAdminGroupSetting;
+import com.raindropcentral.rds.database.repository.RShopAdminPlayerSetting;
 import com.raindropcentral.rds.service.ShopService;
 import com.raindropcentral.rds.service.scoreboard.ShopSidebarScoreboardService;
 import com.raindropcentral.rds.service.bank.AdminShopServerBankScheduler;
 import com.raindropcentral.rds.service.shop.ShopAdminPlayerSettingsService;
 import com.raindropcentral.rds.service.shop.AdminShopRestockScheduler;
+import com.raindropcentral.rds.service.shop.DynamicPricingService;
 import com.raindropcentral.rds.service.shop.ShopBossBarService;
 import com.raindropcentral.rds.service.tax.ShopTaxScheduler;
 import com.raindropcentral.rds.view.shop.AdminCurrencyView;
@@ -52,6 +55,8 @@ import com.raindropcentral.rds.view.shop.anvil.ShopItemAdminCommandAnvilView;
 import com.raindropcentral.rds.view.shop.anvil.ShopItemAdminCommandDelayAnvilView;
 import com.raindropcentral.rds.view.shop.anvil.ShopItemAdminStockLimitAnvilView;
 import com.raindropcentral.rds.view.shop.anvil.ShopItemCurrencyTypeAnvilView;
+import com.raindropcentral.rds.view.shop.anvil.ShopItemPurchaseLimitAnvilView;
+import com.raindropcentral.rds.view.shop.anvil.ShopItemPurchaseLimitMinutesAnvilView;
 import com.raindropcentral.rds.view.shop.anvil.ShopItemValueAnvilView;
 import com.raindropcentral.rds.view.shop.anvil.ShopMaterialSearchAnvilView;
 import com.raindropcentral.rds.view.shop.anvil.ShopPurchaseAmountAnvilView;
@@ -108,6 +113,7 @@ public class RDS {
     private static final String VAULT_ECONOMY_CLASS = "net.milkbowl.vault.economy.Economy";
     private static final String CONFIG_FOLDER_PATH = "config";
     private static final String CONFIG_FILE_NAME = "config.yml";
+    private static final String MATERIAL_PRICES_FILE_NAME = "material-prices.yml";
     private static final int METRICS_SERVICE_ID = 29963;
 
     private final JavaPlugin plugin;
@@ -128,11 +134,14 @@ public class RDS {
     private AdminShopServerBankScheduler adminShopServerBankScheduler;
     private ShopSidebarScoreboardService shopSidebarScoreboardService;
     private ShopAdminPlayerSettingsService shopAdminPlayerSettingsService;
+    private DynamicPricingService dynamicPricingService;
     private BStatsMetrics metrics;
     private RRDSPlayer playerRepository;
     private RShop shopRepository;
     private RServerBank serverBankRepository;
     private RRTownShopBank townShopBankRepository;
+    private RShopAdminPlayerSetting shopAdminPlayerSettingRepository;
+    private RShopAdminGroupSetting shopAdminGroupSettingRepository;
 
     /**
      * Creates a new shared RDS runtime.
@@ -173,6 +182,7 @@ public class RDS {
         this.scheduler = this.platform.getScheduler();
         this.executor = Executors.newFixedThreadPool(4);
         this.ensureDefaultConfigFile();
+        this.ensureDefaultMaterialPricesFile();
         this.getDefaultConfig().logMissingRequirementWarnings(this.getLogger());
 
         try {
@@ -188,6 +198,7 @@ public class RDS {
         this.initializePlugins();
         this.initializeCommands();
         this.initializeAdminPlayerSettings();
+        this.initializeDynamicPricing();
         this.initializeViews();
         this.initializeTaxes();
         this.initializeAdminShopRestocking();
@@ -227,6 +238,10 @@ public class RDS {
 
         if (this.shopSidebarScoreboardService != null) {
             this.shopSidebarScoreboardService.shutdown();
+        }
+
+        if (this.dynamicPricingService != null) {
+            this.dynamicPricingService.shutdown();
         }
 
         if (this.entityManagerFactory != null) {
@@ -449,6 +464,16 @@ public class RDS {
         return this.plugin.getDataFolder();
     }
 
+    /**
+     * Returns the material-pricing defaults file, extracting the bundled resource when missing.
+     *
+     * @return material pricing configuration file
+     */
+    public @NotNull File getMaterialPricesFile() {
+        this.ensureDefaultMaterialPricesFile();
+        return new File(new File(this.getDataFolder(), CONFIG_FOLDER_PATH), MATERIAL_PRICES_FILE_NAME);
+    }
+
     private @NotNull File getDefaultConfigFile() {
         return new File(new File(this.getDataFolder(), CONFIG_FOLDER_PATH), CONFIG_FILE_NAME);
     }
@@ -475,6 +500,31 @@ public class RDS {
             this.plugin.saveResource(CONFIG_FOLDER_PATH + "/" + CONFIG_FILE_NAME, false);
         } catch (final IllegalArgumentException exception) {
             this.getLogger().warning("Bundled default config could not be extracted: " + exception.getMessage());
+        }
+    }
+
+    private void ensureDefaultMaterialPricesFile() {
+        final File dataFolder = this.getDataFolder();
+        if (!dataFolder.exists() && !dataFolder.mkdirs()) {
+            this.getLogger().warning("Could not create plugin data folder for material price extraction.");
+            return;
+        }
+
+        final File configFolder = new File(dataFolder, CONFIG_FOLDER_PATH);
+        if (!configFolder.exists() && !configFolder.mkdirs()) {
+            this.getLogger().warning("Could not create config folder for material price extraction.");
+            return;
+        }
+
+        final File materialPricesFile = new File(configFolder, MATERIAL_PRICES_FILE_NAME);
+        if (materialPricesFile.exists()) {
+            return;
+        }
+
+        try {
+            this.plugin.saveResource(CONFIG_FOLDER_PATH + "/" + MATERIAL_PRICES_FILE_NAME, false);
+        } catch (final IllegalArgumentException exception) {
+            this.getLogger().warning("Bundled material-prices config could not be extracted: " + exception.getMessage());
         }
     }
 
@@ -537,6 +587,11 @@ public class RDS {
         this.shopAdminPlayerSettingsService.load();
     }
 
+    private void initializeDynamicPricing() {
+        this.dynamicPricingService = new DynamicPricingService(this);
+        this.dynamicPricingService.start();
+    }
+
     private void initializeRepositories() {
         this.playerRepository = new RRDSPlayer(
                 this.executor,
@@ -560,6 +615,16 @@ public class RDS {
         );
 
         this.townShopBankRepository = new RRTownShopBank(
+                this.executor,
+                this.entityManagerFactory
+        );
+
+        this.shopAdminPlayerSettingRepository = new RShopAdminPlayerSetting(
+                this.executor,
+                this.entityManagerFactory
+        );
+
+        this.shopAdminGroupSettingRepository = new RShopAdminGroupSetting(
                 this.executor,
                 this.entityManagerFactory
         );
@@ -636,6 +701,8 @@ public class RDS {
                     new ShopItemAdminCommandAnvilView(),
                     new ShopItemAdminStockLimitAnvilView(),
                     new ShopItemAdminResetTimerAnvilView(),
+                    new ShopItemPurchaseLimitAnvilView(),
+                    new ShopItemPurchaseLimitMinutesAnvilView(),
                     new ShopItemCurrencyTypeAnvilView(),
                     new ShopItemValueAnvilView(),
                     new ShopConfigValueAnvilView(),
@@ -1000,6 +1067,15 @@ public class RDS {
     }
 
     /**
+     * Returns the service that resolves dynamic shop-item prices.
+     *
+     * @return dynamic pricing service, or {@code null} before enable completes
+     */
+    public @Nullable DynamicPricingService getDynamicPricingService() {
+        return this.dynamicPricingService;
+    }
+
+    /**
      * Returns the optional LuckPerms integration wrapper.
      *
      * @return LuckPerms service wrapper, or {@code null} if LuckPerms is unavailable
@@ -1060,5 +1136,23 @@ public class RDS {
      */
     public @Nullable RRTownShopBank getTownShopBankRepository() {
         return this.townShopBankRepository;
+    }
+
+    /**
+     * Returns the repository used for persisted admin per-player shop overrides.
+     *
+     * @return admin player settings repository, or {@code null} before repository initialization completes
+     */
+    public @Nullable RShopAdminPlayerSetting getShopAdminPlayerSettingRepository() {
+        return this.shopAdminPlayerSettingRepository;
+    }
+
+    /**
+     * Returns the repository used for persisted admin per-group shop overrides.
+     *
+     * @return admin group settings repository, or {@code null} before repository initialization completes
+     */
+    public @Nullable RShopAdminGroupSetting getShopAdminGroupSettingRepository() {
+        return this.shopAdminGroupSettingRepository;
     }
 }

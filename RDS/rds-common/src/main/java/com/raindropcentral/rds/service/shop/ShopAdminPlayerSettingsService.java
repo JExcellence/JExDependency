@@ -1,15 +1,9 @@
 package com.raindropcentral.rds.service.shop;
 
-import com.raindropcentral.rds.RDS;
-import com.raindropcentral.rplatform.api.luckperms.LuckPermsService;
-import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -19,14 +13,29 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
+import com.raindropcentral.rds.RDS;
+import com.raindropcentral.rds.database.entity.ShopAdminGroupSetting;
+import com.raindropcentral.rds.database.entity.ShopAdminPlayerSetting;
+import com.raindropcentral.rds.database.repository.RShopAdminGroupSetting;
+import com.raindropcentral.rds.database.repository.RShopAdminPlayerSetting;
+import com.raindropcentral.rplatform.api.luckperms.LuckPermsService;
+import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 /**
  * Persists and resolves player/group-specific admin overrides for shop limits and discounts.
  *
- * <p>Overrides are stored in {@code config/admin-player-settings.yml} and can define:
+ * <p>Overrides are stored in the RDS database tables:
  * <ul>
- *     <li>per-player max shop limits and purchase discounts</li>
- *     <li>per-group max shop limits and purchase discounts</li>
+ *     <li>{@code shop_admin_player_settings}</li>
+ *     <li>{@code shop_admin_group_settings}</li>
  * </ul>
+ *
+ * <p>Legacy flatfile data from {@code config/admin-player-settings.yml} is imported automatically
+ * once on load when present, then archived.</p>
  *
  * <p>Resolution order prefers player values first, then matching group values, then edition/config
  * defaults provided by the caller.</p>
@@ -42,7 +51,7 @@ public class ShopAdminPlayerSettingsService {
     private static final String NAME_PATH = "name";
     private static final String MAX_SHOPS_PATH = "max_shops";
     private static final String DISCOUNT_PERCENT_PATH = "discount_percent";
-    private static final String ADMIN_SETTINGS_FILE = "admin-player-settings.yml";
+    private static final String LEGACY_ADMIN_SETTINGS_FILE = "admin-player-settings.yml";
 
     private final RDS plugin;
 
@@ -60,66 +69,70 @@ public class ShopAdminPlayerSettingsService {
     }
 
     /**
-     * Loads persisted override data from disk.
+     * Loads persisted override data from the database.
      */
     public synchronized void load() {
         this.playerOverrides.clear();
         this.groupOverrides.clear();
 
-        final File settingsFile = this.getSettingsFile();
-        if (!settingsFile.exists()) {
-            return;
-        }
-
-        final YamlConfiguration configuration = YamlConfiguration.loadConfiguration(settingsFile);
-
-        this.loadPlayerOverrides(configuration);
-        this.loadGroupOverrides(configuration);
+        this.importLegacyFlatfileIfPresent();
+        this.loadPlayerOverridesFromDatabase();
+        this.loadGroupOverridesFromDatabase();
     }
 
     /**
-     * Saves all currently loaded overrides to disk.
+     * Persists all currently loaded overrides to the database.
      *
-     * @throws IllegalStateException when the settings file could not be written
+     * <p>Overrides are already persisted on each write operation. This method is retained for
+     * lifecycle compatibility and ensures the in-memory snapshot is fully synchronized.</p>
+     *
+     * @throws IllegalStateException when repository services are unavailable
      */
     public synchronized void save() {
-        final File settingsFile = this.getSettingsFile();
-        final File parent = settingsFile.getParentFile();
-        if (parent != null && !parent.exists() && !parent.mkdirs()) {
-            throw new IllegalStateException("Failed to create settings directory: " + parent.getAbsolutePath());
+        final RShopAdminPlayerSetting playerRepository = this.requirePlayerRepository();
+        final RShopAdminGroupSetting groupRepository = this.requireGroupRepository();
+
+        for (final Map.Entry<UUID, PlayerOverride> entry : this.playerOverrides.entrySet()) {
+            final PlayerOverride override = entry.getValue();
+            if (override == null || (override.maximumShops() == null && override.discountPercent() == null)) {
+                playerRepository.deleteByPlayerId(entry.getKey());
+                continue;
+            }
+
+            playerRepository.upsert(
+                    entry.getKey(),
+                    override.playerName(),
+                    override.maximumShops(),
+                    override.discountPercent()
+            );
         }
 
-        final YamlConfiguration configuration = new YamlConfiguration();
-        for (final Map.Entry<UUID, PlayerOverride> entry : this.playerOverrides.entrySet()) {
-            final String rootPath = PLAYERS_SECTION + "." + entry.getKey();
-            final PlayerOverride override = entry.getValue();
-
-            if (override.playerName() != null && !override.playerName().isBlank()) {
-                configuration.set(rootPath + "." + NAME_PATH, override.playerName());
+        for (final ShopAdminPlayerSetting storedSetting : playerRepository.findAllEntries()) {
+            if (this.playerOverrides.containsKey(storedSetting.getPlayerId())) {
+                continue;
             }
-            if (override.maximumShops() != null) {
-                configuration.set(rootPath + "." + MAX_SHOPS_PATH, override.maximumShops());
-            }
-            if (override.discountPercent() != null) {
-                configuration.set(rootPath + "." + DISCOUNT_PERCENT_PATH, override.discountPercent());
-            }
+            playerRepository.deleteByPlayerId(storedSetting.getPlayerId());
         }
 
         for (final Map.Entry<String, GroupOverride> entry : this.groupOverrides.entrySet()) {
-            final String rootPath = GROUPS_SECTION + "." + entry.getKey();
             final GroupOverride override = entry.getValue();
-            if (override.maximumShops() != null) {
-                configuration.set(rootPath + "." + MAX_SHOPS_PATH, override.maximumShops());
+            if (override == null || (override.maximumShops() == null && override.discountPercent() == null)) {
+                groupRepository.deleteByGroupName(entry.getKey());
+                continue;
             }
-            if (override.discountPercent() != null) {
-                configuration.set(rootPath + "." + DISCOUNT_PERCENT_PATH, override.discountPercent());
-            }
+
+            groupRepository.upsert(
+                    entry.getKey(),
+                    override.maximumShops(),
+                    override.discountPercent()
+            );
         }
 
-        try {
-            configuration.save(settingsFile);
-        } catch (IOException exception) {
-            throw new IllegalStateException("Failed to save admin player settings.", exception);
+        for (final ShopAdminGroupSetting storedSetting : groupRepository.findAllEntries()) {
+            if (this.groupOverrides.containsKey(storedSetting.getGroupName())) {
+                continue;
+            }
+            groupRepository.deleteByGroupName(storedSetting.getGroupName());
         }
     }
 
@@ -285,14 +298,16 @@ public class ShopAdminPlayerSettingsService {
             final int maximumShops
     ) {
         validateMaximumShops(maximumShops);
-        final PlayerOverride current = this.playerOverrides.get(playerId);
+        final UUID validatedPlayerId = Objects.requireNonNull(playerId, "playerId");
+        final PlayerOverride current = this.playerOverrides.get(validatedPlayerId);
         final PlayerOverride updated = new PlayerOverride(
                 normalizeOptionalName(playerName == null && current != null ? current.playerName() : playerName),
                 maximumShops,
                 current == null ? null : current.discountPercent()
         );
-        this.playerOverrides.put(playerId, updated);
-        this.save();
+
+        this.persistPlayerOverride(validatedPlayerId, updated);
+        this.playerOverrides.put(validatedPlayerId, updated);
     }
 
     /**
@@ -310,14 +325,16 @@ public class ShopAdminPlayerSettingsService {
             final double discountPercent
     ) {
         validateDiscountPercent(discountPercent);
-        final PlayerOverride current = this.playerOverrides.get(playerId);
+        final UUID validatedPlayerId = Objects.requireNonNull(playerId, "playerId");
+        final PlayerOverride current = this.playerOverrides.get(validatedPlayerId);
         final PlayerOverride updated = new PlayerOverride(
                 normalizeOptionalName(playerName == null && current != null ? current.playerName() : playerName),
                 current == null ? null : current.maximumShops(),
                 clampDiscountPercent(discountPercent)
         );
-        this.playerOverrides.put(playerId, updated);
-        this.save();
+
+        this.persistPlayerOverride(validatedPlayerId, updated);
+        this.playerOverrides.put(validatedPlayerId, updated);
     }
 
     /**
@@ -329,9 +346,9 @@ public class ShopAdminPlayerSettingsService {
     public synchronized void clearPlayerOverrides(
             final @NotNull UUID playerId
     ) {
-        Objects.requireNonNull(playerId, "playerId");
-        this.playerOverrides.remove(playerId);
-        this.save();
+        final UUID validatedPlayerId = Objects.requireNonNull(playerId, "playerId");
+        this.requirePlayerRepository().deleteByPlayerId(validatedPlayerId);
+        this.playerOverrides.remove(validatedPlayerId);
     }
 
     /**
@@ -354,8 +371,9 @@ public class ShopAdminPlayerSettingsService {
                 maximumShops,
                 current == null ? null : current.discountPercent()
         );
+
+        this.persistGroupOverride(normalizedGroup, updated);
         this.groupOverrides.put(normalizedGroup, updated);
-        this.save();
     }
 
     /**
@@ -378,8 +396,9 @@ public class ShopAdminPlayerSettingsService {
                 current == null ? null : current.maximumShops(),
                 clampDiscountPercent(discountPercent)
         );
+
+        this.persistGroupOverride(normalizedGroup, updated);
         this.groupOverrides.put(normalizedGroup, updated);
-        this.save();
     }
 
     /**
@@ -391,17 +410,102 @@ public class ShopAdminPlayerSettingsService {
     public synchronized void clearGroupOverrides(
             final @NotNull String groupName
     ) {
-        Objects.requireNonNull(groupName, "groupName");
-        this.groupOverrides.remove(normalizeGroupName(groupName));
-        this.save();
+        final String normalizedGroup = normalizeGroupName(groupName);
+        this.requireGroupRepository().deleteByGroupName(normalizedGroup);
+        this.groupOverrides.remove(normalizedGroup);
     }
 
-    private void loadPlayerOverrides(
+    private void loadPlayerOverridesFromDatabase() {
+        final RShopAdminPlayerSetting playerRepository = this.requirePlayerRepository();
+        for (final ShopAdminPlayerSetting setting : playerRepository.findAllEntries()) {
+            final Integer maximumShops = setting.getMaximumShops();
+            final Double discountPercent = setting.getDiscountPercent();
+            if (maximumShops == null && discountPercent == null) {
+                continue;
+            }
+
+            this.playerOverrides.put(
+                    setting.getPlayerId(),
+                    new PlayerOverride(
+                            normalizeOptionalName(setting.getPlayerName()),
+                            maximumShops,
+                            discountPercent
+                    )
+            );
+        }
+    }
+
+    private void loadGroupOverridesFromDatabase() {
+        final RShopAdminGroupSetting groupRepository = this.requireGroupRepository();
+        for (final ShopAdminGroupSetting setting : groupRepository.findAllEntries()) {
+            final Integer maximumShops = setting.getMaximumShops();
+            final Double discountPercent = setting.getDiscountPercent();
+            if (maximumShops == null && discountPercent == null) {
+                continue;
+            }
+
+            final String normalizedGroupName = normalizeGroupName(setting.getGroupName());
+            this.groupOverrides.put(
+                    normalizedGroupName,
+                    new GroupOverride(
+                            normalizedGroupName,
+                            maximumShops,
+                            discountPercent
+                    )
+            );
+        }
+    }
+
+    private void importLegacyFlatfileIfPresent() {
+        final File legacyFile = this.getLegacySettingsFile();
+        if (!legacyFile.exists()) {
+            return;
+        }
+
+        final YamlConfiguration configuration = YamlConfiguration.loadConfiguration(legacyFile);
+        final Map<UUID, PlayerOverride> legacyPlayerOverrides = this.parseLegacyPlayerOverrides(configuration);
+        final Map<String, GroupOverride> legacyGroupOverrides = this.parseLegacyGroupOverrides(configuration);
+        if (legacyPlayerOverrides.isEmpty() && legacyGroupOverrides.isEmpty()) {
+            this.archiveLegacySettingsFile(legacyFile);
+            return;
+        }
+
+        final RShopAdminPlayerSetting playerRepository = this.requirePlayerRepository();
+        final RShopAdminGroupSetting groupRepository = this.requireGroupRepository();
+        for (final Map.Entry<UUID, PlayerOverride> entry : legacyPlayerOverrides.entrySet()) {
+            final PlayerOverride override = entry.getValue();
+            playerRepository.upsert(
+                    entry.getKey(),
+                    override.playerName(),
+                    override.maximumShops(),
+                    override.discountPercent()
+            );
+        }
+
+        for (final Map.Entry<String, GroupOverride> entry : legacyGroupOverrides.entrySet()) {
+            final GroupOverride override = entry.getValue();
+            groupRepository.upsert(
+                    entry.getKey(),
+                    override.maximumShops(),
+                    override.discountPercent()
+            );
+        }
+
+        this.archiveLegacySettingsFile(legacyFile);
+        this.plugin.getLogger().info(
+                "Imported legacy admin player settings from "
+                        + legacyFile.getName()
+                        + " into the database."
+        );
+    }
+
+    private @NotNull Map<UUID, PlayerOverride> parseLegacyPlayerOverrides(
             final @NotNull YamlConfiguration configuration
     ) {
+        final Map<UUID, PlayerOverride> parsedOverrides = new LinkedHashMap<>();
         final var playersSection = configuration.getConfigurationSection(PLAYERS_SECTION);
         if (playersSection == null) {
-            return;
+            return parsedOverrides;
         }
 
         for (final String playerKey : playersSection.getKeys(false)) {
@@ -420,16 +524,19 @@ public class ShopAdminPlayerSettingsService {
             }
 
             final String playerName = normalizeOptionalName(configuration.getString(path + "." + NAME_PATH));
-            this.playerOverrides.put(playerId, new PlayerOverride(playerName, maximumShops, discountPercent));
+            parsedOverrides.put(playerId, new PlayerOverride(playerName, maximumShops, discountPercent));
         }
+
+        return parsedOverrides;
     }
 
-    private void loadGroupOverrides(
+    private @NotNull Map<String, GroupOverride> parseLegacyGroupOverrides(
             final @NotNull YamlConfiguration configuration
     ) {
+        final Map<String, GroupOverride> parsedOverrides = new LinkedHashMap<>();
         final var groupsSection = configuration.getConfigurationSection(GROUPS_SECTION);
         if (groupsSection == null) {
-            return;
+            return parsedOverrides;
         }
 
         for (final String groupKey : groupsSection.getKeys(false)) {
@@ -441,8 +548,40 @@ public class ShopAdminPlayerSettingsService {
                 continue;
             }
 
-            this.groupOverrides.put(normalizedGroup, new GroupOverride(normalizedGroup, maximumShops, discountPercent));
+            parsedOverrides.put(normalizedGroup, new GroupOverride(normalizedGroup, maximumShops, discountPercent));
         }
+
+        return parsedOverrides;
+    }
+
+    private void archiveLegacySettingsFile(
+            final @NotNull File legacyFile
+    ) {
+        final File migratedFile = this.buildLegacyArchiveFile(legacyFile);
+        try {
+            Files.move(
+                    legacyFile.toPath(),
+                    migratedFile.toPath(),
+                    StandardCopyOption.REPLACE_EXISTING
+            );
+        } catch (IOException moveException) {
+            this.plugin.getLogger().warning(
+                    "Failed to archive legacy admin settings file " + legacyFile.getAbsolutePath() + ": " + moveException.getMessage()
+            );
+        }
+    }
+
+    private @NotNull File buildLegacyArchiveFile(
+            final @NotNull File legacyFile
+    ) {
+        final String baseName = legacyFile.getName() + ".migrated";
+        File candidate = new File(legacyFile.getParentFile(), baseName);
+        int suffix = 1;
+        while (candidate.exists()) {
+            candidate = new File(legacyFile.getParentFile(), baseName + "." + suffix);
+            suffix++;
+        }
+        return candidate;
     }
 
     private @Nullable Integer resolveGroupMaximumShops(
@@ -502,8 +641,59 @@ public class ShopAdminPlayerSettingsService {
                 || player.hasPermission("raindropshops.group." + normalizedGroupName);
     }
 
-    private @NotNull File getSettingsFile() {
-        return new File(new File(this.plugin.getDataFolder(), "config"), ADMIN_SETTINGS_FILE);
+    private void persistPlayerOverride(
+            final @NotNull UUID playerId,
+            final @NotNull PlayerOverride override
+    ) {
+        final RShopAdminPlayerSetting playerRepository = this.requirePlayerRepository();
+        if (override.maximumShops() == null && override.discountPercent() == null) {
+            playerRepository.deleteByPlayerId(playerId);
+            return;
+        }
+
+        playerRepository.upsert(
+                playerId,
+                override.playerName(),
+                override.maximumShops(),
+                override.discountPercent()
+        );
+    }
+
+    private void persistGroupOverride(
+            final @NotNull String groupName,
+            final @NotNull GroupOverride override
+    ) {
+        final RShopAdminGroupSetting groupRepository = this.requireGroupRepository();
+        if (override.maximumShops() == null && override.discountPercent() == null) {
+            groupRepository.deleteByGroupName(groupName);
+            return;
+        }
+
+        groupRepository.upsert(
+                groupName,
+                override.maximumShops(),
+                override.discountPercent()
+        );
+    }
+
+    private @NotNull RShopAdminPlayerSetting requirePlayerRepository() {
+        final RShopAdminPlayerSetting repository = this.plugin.getShopAdminPlayerSettingRepository();
+        if (repository != null) {
+            return repository;
+        }
+        throw new IllegalStateException("Admin player settings repository is unavailable.");
+    }
+
+    private @NotNull RShopAdminGroupSetting requireGroupRepository() {
+        final RShopAdminGroupSetting repository = this.plugin.getShopAdminGroupSettingRepository();
+        if (repository != null) {
+            return repository;
+        }
+        throw new IllegalStateException("Admin group settings repository is unavailable.");
+    }
+
+    private @NotNull File getLegacySettingsFile() {
+        return new File(new File(this.plugin.getDataFolder(), "config"), LEGACY_ADMIN_SETTINGS_FILE);
     }
 
     private static @Nullable Integer readMaximumShops(
