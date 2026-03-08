@@ -76,10 +76,6 @@ tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJ
 
     configurations = listOf(project.configurations.getByName("runtimeClasspath"))
     mergeServiceFiles()
-
-    from(project(":RDT:rdt-common").sourceSets.main.get().resources) {
-        exclude("plugin.yml", "paper-plugin.yml")
-    }
 }
 
 tasks.build {

@@ -99,8 +99,6 @@ tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJ
 
     configurations = listOf(project.configurations.getByName("runtimeClasspath"))
     mergeServiceFiles()
-
-    from(project(":RDQ:rdq-common").sourceSets.main.get().resources)
 }
 
 tasks.build {

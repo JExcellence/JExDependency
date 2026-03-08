@@ -1,15 +1,11 @@
 name: "RDR"
 version: ${version}
-main: com.raindropcentral.rdr.RDR
+main: com.raindropcentral.rdr.RDRPremium
 api-version: '1.19'
 description: ${description}
 author: RaindropCentral
 website: https://raindropcentral.com
 softdepend:
-  - RCore
   - Vault
   - JExEconomy
   - TheNewEconomy
-  - LuckPerms
-  - PlaceholderAPI
-  - CMI
