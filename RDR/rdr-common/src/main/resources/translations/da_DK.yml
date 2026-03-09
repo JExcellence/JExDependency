@@ -65,6 +65,12 @@ storage_admin_ui:
         - "<gray>Administrer færdigheder, job, valuta og PlaceholderAPI-værktøjer.</gray>"
         - "<gray>Åbn integrationsspecifikke administratorkontroller.</gray>"
         - "<yellow>Klik for at åbne integrationsstyring.</yellow>"
+    trade_bank:
+      name: "<gradient:#f59e0b:#fbbf24>[Skat] Handelsserverbank</gradient>"
+      lore:
+        - "<gray>Gennemgå indsamlede handelsafgiftssaldi efter valuta.</gray>"
+        - "<gray>Hent server-bank-saldi til din administratorkonto.</gray>"
+        - "<yellow>Klik for at åbne handelsskattebankkontroller.</yellow>"
     currency:
       name: "<gradient:#10b981:#34d399>[Cur] Valutaadministrator</gradient>"
       lore:
@@ -938,6 +944,316 @@ storage_tax_town_bank_ui:
     currency_unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> kan ikke overføres til kommunens bank. By-bankoverførsler understøtter i øjeblikket Vault kun.</gray>"
     transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Kunne ikke overføres <white>{currency}</white><gray> ind i din bybank.</gray>"
     transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Overført <white>{amount}</white><gray> i <white>{currency}</white><gray> til din bybank.</gray>"
+
+trade_admin_bank_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[Admin] Trade Tax Bank</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#f97316>[Info] Server Tax Ledger</gradient>"
+    lore:
+      - "<gray>Sporede valutaer:</gray> <white>{currency_count}</white>"
+      - "<gray>Klik på en valuta for at hæve dens fulde saldo.</gray>"
+      - "<yellow>Kræver:</yellow> <white>raindroprdr.command.admin</white>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[$] {currency}</gradient> <gray>({currency_id})</gray>"
+    lore:
+      - "<gray>Tilgængelig:</gray> <white>{amount}</white>"
+      - "<gray>Rekontroposteringer:</gray> <white>{ledger_count}</white>"
+      - "<gray>Seneste type:</gray> <white>{latest_type}</white>"
+      - "<gray>Seneste beløb:</gray> <white>{latest_amount}</white>"
+      - "<gray>Seneste note:</gray> <white>{latest_note}</white>"
+      - "<yellow>Klik for at hæve denne valutasaldo.</yellow>"
+    latest:
+      none: "<gradient:#6b7280:#9ca3af>[Ingen]</gradient>"
+      deposit: "<gradient:#22c55e:#86efac>[Indbetaling]</gradient>"
+      withdraw: "<gradient:#ef4444:#f87171>[Træk tilbage]</gradient>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] Adminadgang påkrævet</gradient>"
+    lore:
+      - "<gray>Du har ikke tilladelse til at bruge dette handelsskattebankpanel.</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Ingen bankposter</gradient>"
+    lore:
+      - "<gray>Ingen indsamlede momssaldi er gemt lige nu.</gray>"
+  feedback:
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du har ikke tilladelse til at bruge handelsskattebankkontroller.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Tjenesten for handelsskattebank er i øjeblikket ikke tilgængelig.</gray>"
+    empty_balance: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Der blev ikke fundet nogen udbetalingssaldo for <white>{currency}</white><gray>.</gray>"
+    withdraw_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Kunne ikke hæve <white>{currency}</white><gray> fra handelsskattebanken.</gray>"
+    withdraw_success: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Trak <white>{amount}</white><gray> i <white>{currency}</white><gray> fra handelsskattebanken 1]<gray>."
+
+trade_hub_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Handel] Cross-Server Hub</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Handelsoversigt</gradient>"
+    lore:
+      - "<gray>Afventende invitationer:</gray> <white>{pending_invites}</white>"
+      - "<gray>Aktive sessioner:</gray> <white>{active_sessions}</white>"
+      - "<gray>Afventende leveringer:</gray> <white>{pending_deliveries}</white>"
+      - "<yellow>Vælg en handelshandling nedenfor.</yellow>"
+  actions:
+    new_trade:
+      name: "<gradient:#22c55e:#86efac>[+] Ny handelsinvitation</gradient>"
+      lore:
+        - "<gray>Vælg et onlinemål, og send en DB-støttet invitation.</gray>"
+        - "<yellow>Klik for at åbne målvalg.</yellow>"
+    current_trades:
+      name: "<gradient:#38bdf8:#60a5fa>[=] Nuværende handler</gradient>"
+      lore:
+        - "<gray>Gennemgå invitationer, aktive sessioner og færdiggørelsesstatus.</gray>"
+        - "<yellow>Klik for at gennemse aktuelle handler.</yellow>"
+    inbox:
+      name: "<gradient:#f59e0b:#f97316>[Indbakke] Krav og anmodninger</gradient>"
+      lore:
+        - "<gray>Acceptér invitationer og kræve leveringsudbetalinger.</gray>"
+        - "<yellow>Klik for at åbne handelsindbakken.</yellow>"
+    tax_info:
+      name: "<gradient:#38bdf8:#60a5fa>[Skat] Handelsafgifter</gradient>"
+      lore:
+        - "<gray>Gennemgå indstillinger og formler for handelsafgift pr. valuta.</gray>"
+        - "<yellow>Klik for at åbne handelsskatteoplysninger.</yellow>"
+
+trade_tax_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Skat] Handelsafgiftsdefinitioner</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Skattekonfiguration</gradient>"
+    lore:
+      - "<gray>Skattesystem:</gray> <white>{tax_enabled}</white>"
+      - "<gray>Konfigurerede valutaer:</gray> <white>{currency_count}</white>"
+      - "<yellow>Hvert kort viser den aktive formel for den pågældende valuta.</yellow>"
+    tax_enabled:
+      "on": "<gradient:#22c55e:#86efac>[Aktiveret]</gradient>"
+      "off": "<gradient:#ef4444:#f87171>[Deaktiveret]</gradient>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[$] {currency}</gradient> <gray>({currency_id})</gray>"
+    lore:
+      - "<gray>Tilstand:</gray> <white>{mode}</white>"
+      - "<gray>Flad/base:</gray> <white>{flat_amount}</white>"
+      - "<gray>Vækst efter valuta:</gray> <white>{growth_per_currency}</white>"
+      - "<gray>Vækst efter varer:</gray> <white>{growth_per_item}</white>"
+      - "<gray>Eksempel (100 valuta + 5 varer):</gray> <white>{example_tax}</white>"
+      - "<yellow>Skrivebeskyttet informationspanel.</yellow>"
+    mode:
+      flat: "<gradient:#38bdf8:#60a5fa>[FLAT]</gradient>"
+      growth: "<gradient:#f59e0b:#f97316>[VÆKST]</gradient>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Ingen skattevalutaer</gradient>"
+    lore:
+      - "<gray>Ingen handelsafgiftsvalutaer er konfigureret.</gray>"
+
+trade_target_select_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Handel] Vælg mål</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Tilgængelige mål</gradient>"
+    lore:
+      - "<gray>Mål opdaget:</gray> <white>{target_count}</white>"
+      - "<yellow>Klik på et mål for at sende en invitation.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Inviter]</gradient> <white>{target}</white>"
+    lore:
+      - "<gray>Send en vedvarende handelsinvitation til</gray> <white>{target}</white><gray>.</gray>"
+      - "<yellow>Klik for at invitere denne afspiller.</yellow>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>[X] Ingen mål fundet</gradient>"
+    lore:
+      - "<gray>Der blev ikke fundet nogen kvalificerede handelsmål.</gray>"
+
+trade_current_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Handel] Aktuelle sessioner</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Sessionsliste</gradient>"
+    lore:
+      - "<gray>Sporede sessioner:</gray> <white>{session_count}</white>"
+      - "<yellow>Klik på poster for at administrere eller åbne sessioner.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Handel]</gradient> <white>{counterparty}</white> <gray>{status}</gray>"
+    lore:
+      - "<gray>Modpart:</gray> <white>{counterparty}</white>"
+      - "<gray>Status:</gray> <white>{status}</white>"
+      - "<gray>Handel UUID:</gray> <white>{trade_uuid}</white>"
+      - "<yellow>Klik for at åbne denne handelssession.</yellow>"
+  actions:
+    inbox:
+      name: "<gradient:#f59e0b:#f97316>[Indbakke] Krav og anmodninger</gradient>"
+      lore:
+        - "<gray>Åbne invitationer og leveringskrav.</gray>"
+        - "<yellow>Klik for at åbne handelsindbakken.</yellow>"
+  status:
+    invited: "<gradient:#f59e0b:#fbbf24>[Inviteret]</gradient>"
+    active: "<gradient:#22c55e:#86efac>[Aktiv]</gradient>"
+    completing: "<gradient:#38bdf8:#60a5fa>[Fuldfører]</gradient>"
+    completed: "<gradient:#22c55e:#86efac>[Fuldført]</gradient>"
+    canceled: "<gradient:#ef4444:#f87171>[Annulleret]</gradient>"
+    expired: "<gradient:#6b7280:#9ca3af>[Udløbet]</gradient>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Ingen aktuelle handler</gradient>"
+    lore:
+      - "<gray>Ingen ikke-terminale handelssessioner blev fundet.</gray>"
+
+trade_inbox_ui:
+  title: "<gradient:#f59e0b:#f97316>[Handel] Indbakke</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Forespørgsler og leveringer</gradient>"
+    lore:
+      - "<gray>Afventende invitationer:</gray> <white>{invite_count}</white>"
+      - "<gray>Leverancer, der kan gøres gældende:</gray> <white>{delivery_count}</white>"
+      - "<yellow>Invitationer: Klik for at åbne handelssession.</yellow>"
+      - "<yellow>Leveringer: klik for at gøre krav.</yellow>"
+  entry:
+    invite:
+      name: "<gradient:#38bdf8:#60a5fa>[Inviter]</gradient> <white>{from}</white>"
+      lore:
+        - "<gray>Fra:</gray> <white>{from}</white>"
+        - "<gray>Handel UUID:</gray> <white>{trade_uuid}</white>"
+        - "<yellow>Klik for at åbne denne handelssession.</yellow>"
+    delivery:
+      name: "<gradient:#22c55e:#86efac>[Krav]</gradient> <white>{trade_uuid}</white>"
+      lore:
+        - "<gray>Handel UUID:</gray> <white>{trade_uuid}</white>"
+        - "<gray>Vare nyttelastpladser:</gray> <white>{item_count}</white>"
+        - "<gray>Valutaposter:</gray> <white>{currency_count}</white>"
+        - "<yellow>Klik for at gøre krav på denne levering.</yellow>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Indbakke tom</gradient>"
+    lore:
+      - "<gray>Ingen afventende invitationer eller leveringer fundet.</gray>"
+
+trade_session_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Handel] Session</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Sessionstilstand</gradient>"
+    lore:
+      - "<gray>Status:</gray> <white>{status}</white>"
+      - "<gray>Handel UUID:</gray> <white>{trade_uuid}</white>"
+      - "<gray>Revision:</gray> <white>{revision}</white>"
+      - "<gray>Dit Vault-tilbud:</gray> <white>{self_vault}</white>"
+      - "<gray>Partner Vault-tilbud:</gray> <white>{partner_vault}</white>"
+      - "<gray>Dine valutaer:</gray> <white>{self_currency_count}</white> <gray>(i alt:</gray> <white>{self_currency_total}</white><gray>)</gray>"
+      - "<gray>Partner-valutaer:</gray> <white>{partner_currency_count}</white> <gray>(i alt:</gray> <white>{partner_currency_total}</white><gray>)</gray>"
+  status:
+    invited: "<gradient:#f59e0b:#fbbf24>[Inviteret]</gradient>"
+    active: "<gradient:#22c55e:#86efac>[Aktiv]</gradient>"
+    completing: "<gradient:#38bdf8:#60a5fa>[Fuldfører]</gradient>"
+    completed: "<gradient:#22c55e:#86efac>[Fuldført]</gradient>"
+    canceled: "<gradient:#ef4444:#f87171>[Annulleret]</gradient>"
+    expired: "<gradient:#6b7280:#9ca3af>[Udløbet]</gradient>"
+  slots:
+    self_empty_name: "<gradient:#22c55e:#86efac>[Selvplads] #{slot}</gradient>"
+    self_empty_lore:
+      - "<gray>Venstre-klik med et markørelement for at spærre ind i denne plads.</gray>"
+      - "<gray>Shift-klik på din beholdning for automatisk at indsætte i den første ledige plads.</gray>"
+      - "<gray>Højreklik på en fyldt selvplads for at fjerne og refundere.</gray>"
+    partner_empty_name: "<gradient:#38bdf8:#60a5fa>[Partner Slot] #{slot}</gradient>"
+    partner_empty_lore:
+      - "<gray>Forhåndsvisning af partnertilbud vises her.</gray>"
+  actions:
+    invite_accept:
+      name: "<gradient:#22c55e:#86efac>[Acceptér] Start handel</gradient>"
+      lore:
+        - "<gray>Accepter denne invitation, og flyt handel til aktiv tilstand.</gray>"
+    invite_waiting:
+      name: "<gradient:#f59e0b:#fbbf24>[Venter] Invitation afventer</gradient>"
+      lore:
+        - "<gray>Venter på, at din partner accepterer denne invitation.</gray>"
+    currency_manage:
+      name: "<gradient:#f59e0b:#fbbf24>[Coin] Rediger valutatilbud</gradient>"
+      lore:
+        - "<gray>Åbn kontrolelementer pr. valuta med indtastet beløb.</gray>"
+        - "<yellow>Klik for at vælge en valuta.</yellow>"
+    currency_manage_secondary:
+      name: "<gradient:#38bdf8:#60a5fa>[Liste] Valutavælger</gradient>"
+      lore:
+        - "<gray>Vælg tilføj/fjern for Vault- eller JExEconomy-valutaer.</gray>"
+        - "<yellow>Klik for at åbne valutavælger.</yellow>"
+    ready_lock:
+      name: "<gradient:#22c55e:#86efac>[Klar] Låsetilbud</gradient>"
+      lore:
+        - "<gray>Dig:</gray> <white>{self_accepted}</white>"
+        - "<gray>Partner:</gray> <white>{partner_accepted}</white>"
+        - "<gray>Venstreklik for at låse dit tilbud.</gray>"
+        - "<gray>Højreklik for at være uklar.</gray>"
+    ready_unlock:
+      name: "<gradient:#f59e0b:#fbbf24>[Klar] Oplåsningstilbud</gradient>"
+      lore:
+        - "<gray>Dig:</gray> <white>{self_accepted}</white>"
+        - "<gray>Partner:</gray> <white>{partner_accepted}</white>"
+        - "<gray>Dine selvtilbudspladser er låst, mens de er klar.</gray>"
+        - "<gray>Højreklik for at låse op og redigere igen.</gray>"
+    confirm:
+      name: "<gradient:#38bdf8:#60a5fa>[Accepter] Afslut handel</gradient>"
+      lore:
+        - "<gray>Dig:</gray> <white>{self_accepted}</white>"
+        - "<gray>Partner:</gray> <white>{partner_accepted}</white>"
+        - "<gray>Handel afsluttes først, når begge spillere har accepteret.</gray>"
+    cancel:
+      name: "<gradient:#ef4444:#f87171>[Annuller] Afbryd handel</gradient>"
+      lore:
+        - "<gray>Annuller og refunder deponering via leveringsrækker.</gray>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X] Session ikke tilgængelig</gradient>"
+    lore:
+      - "<gray>Denne handelssession kunne ikke indlæses.</gray>"
+
+trade_currency_select_ui:
+  title: "<gradient:#f59e0b:#f97316>[Handel] Valutatilbud</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Valutavælger</gradient>"
+    lore:
+      - "<gray>Tilgængelige valutaer:</gray> <white>{available_count}</white>"
+      - "<gray>Dine aktive tilbud:</gray> <white>{offered_count}</white>"
+      - "<yellow>Venstreklik = tilføj, højreklik = fjern.</yellow>"
+      - "<yellow>Begge handlinger åbner en ambolt til indtastning af beløb.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Valuta]</gradient> <white>{currency}</white>"
+    lore:
+      - "<gray>ID:</gray> <white>{currency_id}</white>"
+      - "<gray>Dit tilbud:</gray> <white>{offered_amount}</white>"
+      - "<yellow>Venstreklik for at tilføje et indtastet beløb.</yellow>"
+      - "<yellow>Højreklik for at fjerne en indtastet mængde.</yellow>"
+  applying:
+    name: "<gradient:#38bdf8:#60a5fa>[Sync] Anvender valutaændring</gradient>"
+    lore:
+      - "<gray>Opdaterer dit tilbud for</gray> <white>{currency}</white><gray>...</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Ingen valutaudbydere</gradient>"
+    lore:
+      - "<gray>Ingen understøttede valutaer er i øjeblikket tilgængelige for handel.</gray>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X] Valutavisning er ikke tilgængelig</gradient>"
+    lore:
+      - "<gray>Denne handelssession kunne ikke indlæses.</gray>"
+
+trade_currency_amount_anvil_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[Handel] {mode} {currency}</gradient>"
+  input:
+    lore:
+      - "<gray>Valuta:</gray> <white>{currency}</white>"
+      - "<gray>Betjening:</gray> <white>{mode}</white>"
+      - "<gray>Nuværende tilbud:</gray> <white>{current_offer}</white>"
+      - "<yellow>Indtast et ikke-negativt decimalbeløb.</yellow>"
+  error:
+    invalid_amount: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Ugyldigt beløb <white>{input}</white><gray> for <white>{currency}</white><gray>. Brug et ikke-negativt tal.</gray>"
+
+trade:
+  message:
+    disabled: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Handel er i øjeblikket deaktiveret i konfig.</gray>"
+    self_target: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du kan ikke handle med dig selv.</gray>"
+    participant_busy: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du har allerede en åben handel med <white>{target}</white><gray>.</gray>"
+    invite_cooldown: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Vent <white>{seconds}</white>s, før du sender endnu en handelsinvitation.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Trafiklager/tjenester er ikke tilgængelige lige nu.</gray>"
+    invite_sent: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Sendte en handelsinvitation til <white>{target}</white><gray>.</gray>"
+    invite_received: "<gradient:#38bdf8:#60a5fa>[Invitation]</gradient> <gray>Du har modtaget en handelsinvitation fra <white>{from}</white><gray>. Åbn </gray><white>/rr trade</white><gray>.</gray>"
+    delivery_pending: "<gradient:#f59e0b:#f97316>[Indbakke]</gradient> <gray>Du har <white>{count}</white> afventende krav om handelslevering.</gray>"
+    success: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Handelshandling gennemført.</gray>"
+    waiting_for_partner: "<gradient:#38bdf8:#60a5fa>[=]</gradient> <gray>Venter på din partnerbekræftelse.</gray>"
+    completed: "<gradient:#22c55e:#86efac>[Udført]</gradient> <gray>Handel afsluttet. Gør krav på din levering i indbakken.</gray>"
+    no_item_in_hand: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Hold en genstand i din hovedhånd først.</gray>"
+    offer_full: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Dit tilbud er allerede på den maksimalt konfigurerede pladsgrænse.</gray>"
+    insufficient_funds: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du har ikke nok midler til denne handelshandling eller dens skatteafgift.</gray>"
+    missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Den handelsrække eksisterer ikke længere.</gray>"
+    forbidden: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du er ikke deltager i den handelshandling.</gray>"
+    invalid_state: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Denne handling er ikke gyldig for den aktuelle handelsstat.</gray>"
+    stale: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Handelsdata ændret på en anden server. Opfriskende session.</gray>"
+    expired: "<gradient:#ef4444:#f87171>[Udløbet]</gradient> <gray>Denne handelsinvitation er allerede udløbet.</gray>"
 
 storage:
   message:

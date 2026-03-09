@@ -65,6 +65,12 @@ storage_admin_ui:
         - "<gray>إدارة أدوات المهارات والوظيفة والعملة وPlaceholderAPI.</gray>"
         - "<gray>افتح عناصر التحكم الإدارية الخاصة بالتكامل.</gray>"
         - "<yellow>انقر لفتح إدارة التكامل.</yellow>"
+    trade_bank:
+      name: "<gradient:#f59e0b:#fbbf24>[الضريبة] بنك الخادم التجاري</gradient>"
+      lore:
+        - "<gray>مراجعة أرصدة الضرائب التجارية المجمعة حسب العملة.</gray>"
+        - "<gray>سحب أرصدة بنك الخادم إلى حساب المشرف الخاص بك.</gray>"
+        - "<yellow>انقر لفتح ضوابط بنك الضرائب التجارية.</yellow>"
     currency:
       name: "<gradient:#10b981:#34d399>[الكير] مدير العملة</gradient>"
       lore:
@@ -938,6 +944,316 @@ storage_tax_town_bank_ui:
     currency_unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> لا يمكن تحويلها إلى بنك المدينة. يتم دعم التحويلات بين البنوك حاليًا Vault فقط.</gray>"
     transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>فشل النقل <white>{currency}</white><gray> إلى بنك مدينتك.</gray>"
     transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>منقول <white>{amount}</white><gray> في <white>{currency}</white><gray> إلى بنك مدينتك.</gray>"
+
+trade_admin_bank_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[المشرف] بنك الضرائب التجاري</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#f97316>[معلومات] دفتر أستاذ ضرائب الخادم</gradient>"
+    lore:
+      - "<gray>العملات التي يتم تتبعها:</gray> <white>{currency_count}</white>"
+      - "<gray>انقر على أي عملة لسحب رصيدها بالكامل.</gray>"
+      - "<yellow>يتطلب:</yellow> <white>raindroprdr.command.admin</white>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[$] {currency}</gradient> <gray>({currency_id})</gray>"
+    lore:
+      - "<gray>متاح:</gray> <white>{amount}</white>"
+      - "<gray>إدخالات دفتر الأستاذ:</gray> <white>{ledger_count}</white>"
+      - "<gray>أحدث نوع:</gray> <white>{latest_type}</white>"
+      - "<gray>آخر مبلغ:</gray> <white>{latest_amount}</white>"
+      - "<gray>أحدث ملاحظة:</gray> <white>{latest_note}</white>"
+      - "<yellow>انقر لسحب رصيد العملة هذا.</yellow>"
+    latest:
+      none: "<gradient:#6b7280:#9ca3af>[لا شيء]</gradient>"
+      deposit: "<gradient:#22c55e:#86efac>[الإيداع]</gradient>"
+      withdraw: "<gradient:#ef4444:#f87171>[سحب]</gradient>"
+  locked:
+    name: "<gradient:#ef4444:#f87171> [X] مطلوب وصول المسؤول</gradient>"
+    lore:
+      - "<gray>ليس لديك إذن لاستخدام لوحة بنك الضرائب التجارية هذه.</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af> [~] لا توجد إدخالات بنكية</gradient>"
+    lore:
+      - "<gray>لا يتم تخزين أرصدة الضرائب التجارية المجمعة في الوقت الحالي.</gray>"
+  feedback:
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>ليس لديك إذن لاستخدام ضوابط بنك الضرائب التجارية.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>خدمة بنك الضرائب التجارية غير متاحة حاليًا.</gray>"
+    empty_balance: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>لم يتم العثور على رصيد قابل للسحب لـ <white>{currency}</white><gray>.</gray>"
+    withdraw_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>فشل في سحب <white>{currency}</white><gray> من بنك الضرائب التجارية.</gray>"
+    withdraw_success: "<gradient:#22c55e:#86efac>] [</gradient> <gray>سحب <white> {amount} <gray> في <white> {currency} </white> <gray> من بنك الضرائب التجارية.</gray>"
+
+trade_hub_ui:
+  title: "<gradient:#22c55e:#14b8a6>[التجارة] المركز عبر الخوادم</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[معلومات] نظرة عامة على التجارة</gradient>"
+    lore:
+      - "<gray>الدعوات في انتظار المراجعة:</gray> <white>{pending_invites}</white>"
+      - "<gray>الجلسات النشطة:</gray> <white>{active_sessions}</white>"
+      - "<gray>عمليات التسليم المعلقة:</gray> <white>{pending_deliveries}</white>"
+      - "<yellow>اختر إجراء تداول أدناه.</yellow>"
+  actions:
+    new_trade:
+      name: "<gradient:#22c55e:#86efac>[+] دعوة تجارية جديدة</gradient>"
+      lore:
+        - "<gray>حدد هدفًا عبر الإنترنت وأرسل دعوة مدعومة بقاعدة البيانات.</gray>"
+        - "<yellow>انقر لفتح اختيار الهدف.</yellow>"
+    current_trades:
+      name: "<gradient:#38bdf8:#60a5fa> [=] الصفقات الحالية</gradient>"
+      lore:
+        - "<gray>مراجعة الدعوات والجلسات النشطة وحالة الاكتمال.</gray>"
+        - "<yellow>انقر لتصفح الصفقات الحالية.</yellow>"
+    inbox:
+      name: "<gradient:#f59e0b:#f97316>[البريد الوارد] المطالبات والطلبات</gradient>"
+      lore:
+        - "<gray>قبول الدعوات والمطالبة بدفعات التسليم.</gray>"
+        - "<yellow>انقر لفتح صندوق الوارد التجاري.</yellow>"
+    tax_info:
+      name: "<gradient:#38bdf8:#60a5fa>[الضريبة] الضرائب التجارية</gradient>"
+      lore:
+        - "<gray>مراجعة إعدادات وصيغ الضرائب التجارية لكل عملة.</gray>"
+        - "<yellow>انقر لفتح معلومات الضريبة التجارية.</yellow>"
+
+trade_tax_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[الضريبة] تعريفات الضريبة التجارية</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[معلومات] تكوين الضريبة</gradient>"
+    lore:
+      - "<gray>النظام الضريبي:</gray> <white>{tax_enabled}</white>"
+      - "<gray>العملات التي تم تكوينها:</gray> <white>{currency_count}</white>"
+      - "<yellow>تعرض كل بطاقة الصيغة النشطة لتلك العملة.</yellow>"
+    tax_enabled:
+      "on": "<gradient:#22c55e:#86efac> [ممكّن] </gradient>"
+      "off": "<gradient:#ef4444:#f87171>[معطل]</gradient>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[$] {currency}</gradient> <gray>({currency_id})</gray>"
+    lore:
+      - "<gray>الوضع:</gray> <white>{mode}</white>"
+      - "<gray>مسطحة/قاعدة:</gray> <white>{flat_amount}</white>"
+      - "<gray>النمو حسب العملة:</gray> <white>{growth_per_currency}</white>"
+      - "<gray>النمو حسب العناصر:</gray> <white>{growth_per_item}</white>"
+      - "<gray>مثال (100 عملة + 5 عناصر):</gray> <white>{example_tax}</white>"
+      - "<yellow>لوحة معلومات للقراءة فقط.</yellow>"
+    mode:
+      flat: "<gradient:#38bdf8:#60a5fa>[مسطحة]</gradient>"
+      growth: "<gradient:#f59e0b:#f97316>[النمو]</gradient>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af> [~] لا توجد عملات ضريبية</gradient>"
+    lore:
+      - "<gray>لم يتم تكوين أي عملات للضرائب التجارية.</gray>"
+
+trade_target_select_ui:
+  title: "<gradient:#22c55e:#14b8a6> [تداول] حدد الهدف</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[معلومات] الأهداف المتاحة</gradient>"
+    lore:
+      - "<gray>الأهداف المكتشفة:</gray> <white>{target_count}</white>"
+      - "<yellow>انقر على هدف لإرسال دعوة.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[دعوة]</gradient> <white>{target}</white>"
+    lore:
+      - "<gray>أرسل دعوة تجارية مستمرة إلى</gray> <white>{target}</white><gray>.</gray>"
+      - "<yellow>انقر لدعوة هذا اللاعب.</yellow>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>[X] لم يتم العثور على أهداف</gradient>"
+    lore:
+      - "<gray>لم يتم العثور على أهداف تجارية مؤهلة.</gray>"
+
+trade_current_ui:
+  title: "<gradient:#22c55e:#14b8a6>[التجارة] الجلسات الحالية</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[معلومات] قائمة الجلسات</gradient>"
+    lore:
+      - "<gray>الجلسات التي تم تتبعها:</gray> <white>{session_count}</white>"
+      - "<yellow>انقر على الإدخالات لإدارة الجلسات أو فتحها.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[التجارة]</gradient> <white>{counterparty}</white> <gray>{status}</gray>"
+    lore:
+      - "<gray>الطرف المقابل:</gray> <white>{counterparty}</white>"
+      - "<gray>الحالة:</gray> <white>{status}</white>"
+      - "<gray>معرف UUID التجاري:</gray> <white>{trade_uuid}</white>"
+      - "<yellow>انقر لفتح جلسة التداول هذه.</yellow>"
+  actions:
+    inbox:
+      name: "<gradient:#f59e0b:#f97316>[البريد الوارد] المطالبات والطلبات</gradient>"
+      lore:
+        - "<gray>فتح الدعوات ومطالبات التسليم.</gray>"
+        - "<yellow>انقر لفتح صندوق الوارد التجاري.</yellow>"
+  status:
+    invited: "<gradient:#f59e0b:#fbbf24>[مدعو]</gradient>"
+    active: "<gradient:#22c55e:#86efac>[نشط]</gradient>"
+    completing: "<gradient:#38bdf8:#60a5fa>[جارٍ الإكمال]</gradient>"
+    completed: "<gradient:#22c55e:#86efac>[مكتملة]</gradient>"
+    canceled: "<gradient:#ef4444:#f87171>[تم الإلغاء]</gradient>"
+    expired: "<gradient:#6b7280:#9ca3af>[انتهت الصلاحية]</gradient>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af> [~] لا توجد صفقات حالية</gradient>"
+    lore:
+      - "<gray>لم يتم العثور على جلسات تداول خارج المحطة.</gray>"
+
+trade_inbox_ui:
+  title: "<gradient:#f59e0b:#f97316>[التجارة] البريد الوارد</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[معلومات] الطلبات والتسليم</gradient>"
+    lore:
+      - "<gray>الدعوات في انتظار المراجعة:</gray> <white>{invite_count}</white>"
+      - "<gray>التسليمات المطالب بها:</gray> <white>{delivery_count}</white>"
+      - "<yellow>الدعوات: انقر لفتح جلسة التداول.</yellow>"
+      - "<yellow>عمليات التسليم: انقر للمطالبة.</yellow>"
+  entry:
+    invite:
+      name: "<gradient:#38bdf8:#60a5fa>[دعوة]</gradient> <white>{from}</white>"
+      lore:
+        - "<gray>من:</gray> <white>{from}</white>"
+        - "<gray>معرف UUID التجاري:</gray> <white>{trade_uuid}</white>"
+        - "<yellow>انقر لفتح جلسة التداول هذه.</yellow>"
+    delivery:
+      name: "<gradient:#22c55e:#86efac>[مطالبة]</gradient> <white>{trade_uuid}</white>"
+      lore:
+        - "<gray>معرف UUID التجاري:</gray> <white>{trade_uuid}</white>"
+        - "<gray>فتحات حمولة العنصر:</gray> <white>{item_count}</white>"
+        - "<gray>إدخالات حمولة العملة:</gray> <white>{currency_count}</white>"
+        - "<yellow>انقر للمطالبة بهذا التسليم.</yellow>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af> [~] البريد الوارد فارغ</gradient>"
+    lore:
+      - "<gray>لم يتم العثور على دعوات معلقة أو عمليات تسليم.</gray>"
+
+trade_session_ui:
+  title: "<gradient:#22c55e:#14b8a6> جلسة التداول</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[معلومات] حالة الجلسة</gradient>"
+    lore:
+      - "<gray>الحالة:</gray> <white>{status}</white>"
+      - "<gray>معرف UUID التجاري:</gray> <white>{trade_uuid}</white>"
+      - "<gray>المراجعة:</gray> <white>{revision}</white>"
+      - "<gray>عرض Vault الخاص بك:</gray> <white>{self_vault}</white>"
+      - "<gray>عرض Partner Vault:</gray> <white>{partner_vault}</white>"
+      - "<gray>عملاتك:</gray> <white>{self_currency_count} </white> <gray>(الإجمالي:</gray> <white>{self_currency_total}</white><gray>)</gray>"
+      - "<gray>عملات الشريك:</gray> <white>{partner_currency_count} </white> <gray>(الإجمالي:</gray> <white>{partner_currency_total}</white><gray>)</gray>"
+  status:
+    invited: "<gradient:#f59e0b:#fbbf24>[مدعو]</gradient>"
+    active: "<gradient:#22c55e:#86efac>[نشط]</gradient>"
+    completing: "<gradient:#38bdf8:#60a5fa>[جارٍ الإكمال]</gradient>"
+    completed: "<gradient:#22c55e:#86efac>[مكتملة]</gradient>"
+    canceled: "<gradient:#ef4444:#f87171>[تم الإلغاء]</gradient>"
+    expired: "<gradient:#6b7280:#9ca3af>[انتهت الصلاحية]</gradient>"
+  slots:
+    self_empty_name: "<gradient:#22c55e:#86efac>[الفتحة الذاتية] #{slot}</gradient>"
+    self_empty_lore:
+      - "<gray>انقر بزر الماوس الأيسر باستخدام عنصر المؤشر للإيداع في هذه الفتحة.</gray>"
+      - "<gray>انقر مع الضغط على Shift على مخزونك لإدراجه تلقائيًا في أول فتحة مجانية.</gray>"
+      - "<gray>انقر بزر الماوس الأيمن على الفتحة الذاتية المملوءة لإزالتها واسترداد أموالها.</gray>"
+    partner_empty_name: "<gradient:#38bdf8:#60a5fa>[فتحة الشريك] #{slot}</gradient>"
+    partner_empty_lore:
+      - "<gray>تظهر معاينة عرض الشريك هنا.</gray>"
+  actions:
+    invite_accept:
+      name: "<gradient:#22c55e:#86efac>[قبول] بدء التجارة</gradient>"
+      lore:
+        - "<gray>اقبل هذه الدعوة وانقل التجارة إلى الحالة النشطة.</gray>"
+    invite_waiting:
+      name: "<gradient:#f59e0b:#fbbf24>[في انتظار] الدعوة معلقة</gradient>"
+      lore:
+        - "<gray>في انتظار قبول شريكك لهذه الدعوة.</gray>"
+    currency_manage:
+      name: "<gradient:#f59e0b:#fbbf24>[العملة] تعديل عرض العملة</gradient>"
+      lore:
+        - "<gray>فتح عناصر التحكم لكل عملة مع إدخال المبلغ المكتوب.</gray>"
+        - "<yellow>انقر لتحديد العملة.</yellow>"
+    currency_manage_secondary:
+      name: "<gradient:#38bdf8:#60a5fa>[List] محدد العملة</gradient>"
+      lore:
+        - "<gray>اختر إضافة/إزالة لعملات Vault أو JExEconomy.</gray>"
+        - "<yellow>انقر لفتح محدد العملة.</yellow>"
+    ready_lock:
+      name: "<gradient:#22c55e:#86efac>[جاهز] عرض القفل</gradient>"
+      lore:
+        - "<gray>أنت:</gray> <white>{self_accepted}</white>"
+        - "<gray>الشريك:</gray> <white>{partner_accepted}</white>"
+        - "<gray>انقر بزر الماوس الأيسر لقفل العرض الخاص بك.</gray>"
+        - "<gray>انقر بزر الماوس الأيمن على غير جاهز.</gray>"
+    ready_unlock:
+      name: "<gradient:#f59e0b:#fbbf24> [جاهز] فتح العرض</gradient>"
+      lore:
+        - "<gray>أنت:</gray> <white>{self_accepted}</white>"
+        - "<gray>الشريك:</gray> <white>{partner_accepted}</white>"
+        - "<gray>تم قفل خانات العرض الذاتي الخاصة بك وهي جاهزة.</gray>"
+        - "<gray>انقر بزر الماوس الأيمن لفتح القفل والتعديل مرة أخرى.</gray>"
+    confirm:
+      name: "<gradient:#38bdf8:#60a5fa>[قبول] إنهاء التجارة</gradient>"
+      lore:
+        - "<gray>أنت:</gray> <white>{self_accepted}</white>"
+        - "<gray>الشريك:</gray> <white>{partner_accepted}</white>"
+        - "<gray>لا تكتمل التجارة إلا بعد موافقة كلا اللاعبين.</gray>"
+    cancel:
+      name: "<gradient:#ef4444:#f87171>[إلغاء] إلغاء التجارة</gradient>"
+      lore:
+        - "<gray>إلغاء واسترداد الضمان عبر صفوف التسليم.</gray>"
+  missing:
+    name: "<gradient:#ef4444:#f87171> [X] الجلسة غير متاحة</gradient>"
+    lore:
+      - "<gray>تعذر تحميل جلسة التداول هذه.</gray>"
+
+trade_currency_select_ui:
+  title: "<gradient:#f59e0b:#f97316>[التجارة] عروض العملات</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[معلومات] محدد العملة</gradient>"
+    lore:
+      - "<gray>العملات المتاحة:</gray> <white>{available_count}</white>"
+      - "<gray>عروضك النشطة:</gray> <white>{offered_count}</white>"
+      - "<yellow>النقر بزر الماوس الأيسر = إضافة، النقر بزر الماوس الأيمن = إزالة.</yellow>"
+      - "<yellow>كلا الإجراءين يفتحان سندان إدخال المبلغ.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[العملة]</gradient> <white>{currency}</white>"
+    lore:
+      - "<gray>المعرف:</gray> <white>{currency_id}</white>"
+      - "<gray>عرضك:</gray> <white>{offered_amount}</white>"
+      - "<yellow>انقر بزر الماوس الأيسر لإضافة المبلغ المكتوب.</yellow>"
+      - "<yellow>انقر بزر الماوس الأيمن لإزالة المبلغ المكتوب.</yellow>"
+  applying:
+    name: "<gradient:#38bdf8:#60a5fa>[Sync] تطبيق تغيير العملة</gradient>"
+    lore:
+      - "<gray>تحديث العرض الخاص بك لـ</gray> <white>{currency}</white><gray>...</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af> [~] لا يوجد مزودو عملة</gradient>"
+    lore:
+      - "<gray>لا توجد عملات مدعومة متاحة حاليًا للتداول.</gray>"
+  missing:
+    name: "<gradient:#ef4444:#f87171> [X] عرض العملة غير متاح</gradient>"
+    lore:
+      - "<gray>تعذر تحميل جلسة التداول هذه.</gray>"
+
+trade_currency_amount_anvil_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[التجارة] {mode} {currency}</gradient>"
+  input:
+    lore:
+      - "<gray>العملة:</gray> <white>{currency}</white>"
+      - "<gray>العملية:</gray> <white>{mode}</white>"
+      - "<gray>العرض الحالي:</gray> <white>{current_offer}</white>"
+      - "<yellow>أدخل مبلغًا عشريًا غير سالب.</yellow>"
+  error:
+    invalid_amount: "<gradient:#ef4444:#f87171> [X] </gradient> <gray>مبلغ غير صالح <white> {input} </white> <gray> لـ <white> {currency} </white> <gray>. استخدم رقمًا غير سالب.</gray>"
+
+trade:
+  message:
+    disabled: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>التجارة معطلة حاليًا في التكوين.</gray>"
+    self_target: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>لا يمكنك التجارة مع نفسك.</gray>"
+    participant_busy: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>لديك بالفعل صفقة تجارية مفتوحة مع <white>{target}</white><gray>.</gray>"
+    invite_cooldown: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>انتظر <white>{seconds}</white> قبل إرسال دعوة تجارية أخرى.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>المستودعات/الخدمات التجارية غير متاحة حاليًا.</gray>"
+    invite_sent: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>أرسلت دعوة تجارية إلى <white>{target}</white><gray>.</gray>"
+    invite_received: "<gradient:#38bdf8:#60a5fa>[Invite]</gradient> <gray>لقد تلقيت دعوة تجارية من <white>{from}</white><gray>. فتح </gray><white>/rr trade</white><gray>.</gray>"
+    delivery_pending: "<gradient:#f59e0b:#f97316>[Inbox]</gradient> <gray>لديك <white>{count}</white> مطالبة (مطالبات) تسليم تجارية معلقة.</gray>"
+    success: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>اكتمل إجراء التداول.</gray>"
+    waiting_for_partner: "<gradient:#38bdf8:#60a5fa>[=]</gradient> <gray>في انتظار تأكيد شريكك.</gray>"
+    completed: "<gradient:#22c55e:#86efac>[Done]</gradient> <gray>اكتملت الصفقة. المطالبة بالتسليم الخاص بك في البريد الوارد.</gray>"
+    no_item_in_hand: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>امسك أحد العناصر في يدك الرئيسية أولاً.</gray>"
+    offer_full: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>عرضك وصل بالفعل إلى الحد الأقصى للفتحة التي تم تكوينها.</gray>"
+    insufficient_funds: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>ليس لديك أموال كافية لهذا الإجراء التجاري أو رسومه الضريبية.</gray>"
+    missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>صف التجارة هذا لم يعد موجودًا.</gray>"
+    forbidden: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>أنت لست مشاركًا في هذا الإجراء التجاري.</gray>"
+    invalid_state: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>هذا الإجراء غير صالح لحالة التجارة الحالية.</gray>"
+    stale: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>تم تغيير بيانات التجارة على خادم آخر. جلسة منعشة.</gray>"
+    expired: "<gradient:#ef4444:#f87171>[منتهية الصلاحية]</gradient> <gray>لقد انتهت صلاحية هذه الدعوة التجارية بالفعل.</gray>"
 
 storage:
   message:

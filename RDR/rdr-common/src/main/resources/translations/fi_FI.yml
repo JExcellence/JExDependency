@@ -65,6 +65,12 @@ storage_admin_ui:
         - "<gray>Hallitse taitoja, töitä, valuuttaa ja PlaceholderAPI-työkaluja.</gray>"
         - "<gray>Avaa integraatiokohtaiset järjestelmänvalvojan ohjaimet.</gray>"
         - "<yellow>Napsauta avataksesi integroinnin hallinnan.</yellow>"
+    trade_bank:
+      name: "<gradient:#f59e0b:#fbbf24>[Tax] Trade Server Bank</gradient>"
+      lore:
+        - "<gray>Tarkista kerätyt kauppaveron saldot valuutoittain.</gray>"
+        - "<gray>Poista palvelin-pankkisaldot järjestelmänvalvojan tilillesi.</gray>"
+        - "<yellow>Avaa kauppaveropankkien valvonta napsauttamalla.</yellow>"
     currency:
       name: "<gradient:#10b981:#34d399>[Valuutta] Valuuttapäällikkö</gradient>"
       lore:
@@ -938,6 +944,316 @@ storage_tax_town_bank_ui:
     currency_unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> ei voi siirtää kaupungin pankkiin. Kaupunki-pankkisiirtoja tuetaan tällä hetkellä Vault vain.</gray>"
     transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Siirto epäonnistui <white>{currency}</white><gray> kaupunkisi pankkiin.</gray>"
     transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Siirretty <white>{amount}</white><gray> sisään <white>{currency}</white><gray> paikkakuntasi pankkiin.</gray>"
+
+trade_admin_bank_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[Järjestelmänvalvoja] Trade Tax Bank</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#f97316>[Tiedot] Palvelinverokirja</gradient>"
+    lore:
+      - "<gray>Seuratut valuutat:</gray> <white>{currency_count}</white>"
+      - "<gray>Voit nostaa sen täyden saldon napsauttamalla mitä tahansa valuuttaa.</gray>"
+      - "<yellow>Vaatii:</yellow> <white>raindroprdr.command.admin</white>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[$] {currency}</gradient> <gray>({currency_id})</gray>"
+    lore:
+      - "<gray>Saatavilla:</gray> <white>{amount}</white>"
+      - "<gray>Pääkirjan merkinnät:</gray> <white>{ledger_count}</white>"
+      - "<gray>Viimeisin tyyppi:</gray> <white>{latest_type}</white>"
+      - "<gray>Viimeisin summa:</gray> <white>{latest_amount}</white>"
+      - "<gray>Viimeisin huomautus:</gray> <white>{latest_note}</white>"
+      - "<yellow>Voit peruuttaa tämän valuuttasaldon napsauttamalla.</yellow>"
+    latest:
+      none: "<gradient:#6b7280:#9ca3af>[Ei mitään]</gradient>"
+      deposit: "<gradient:#22c55e:#86efac>[Talletus]</gradient>"
+      withdraw: "<gradient:#ef4444:#f87171>[Peruuta]</gradient>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] Järjestelmänvalvojan käyttöoikeudet vaaditaan</gradient>"
+    lore:
+      - "<gray>Sinulla ei ole lupaa käyttää tätä kauppaveropankkipaneelia.</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Ei pankkikirjauksia</gradient>"
+    lore:
+      - "<gray>Yhtään kerättyä kauppaveron saldoa ei ole tallennettu tällä hetkellä.</gray>"
+  feedback:
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Sinulla ei ole lupaa käyttää kauppaveropankkien valvontaa.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Terveveropankkipalvelu ei ole tällä hetkellä saatavilla.</gray>"
+    empty_balance: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Yhteelle <white>{currency}</white><gray> ei löytynyt nostettavissa olevaa saldoa.</gray>"
+    withdraw_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray> <white>{currency}</white><gray> ei onnistunut nostamaan kauppaveropankista.</gray>"
+    withdraw_success: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>poisti <white>{amount}</white><gray>:ssa <white>{currency}</white><gray> PH1111]-pankista.[[]"
+
+trade_hub_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Trade] Cross-Server Hub</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Tiedot] Kaupan yleiskatsaus</gradient>"
+    lore:
+      - "<gray>Odottavat kutsut:</gray> <white>{pending_invites}</white>"
+      - "<gray>Aktiiviset istunnot:</gray> <white>{active_sessions}</white>"
+      - "<gray>Odottavat toimitukset:</gray> <white>{pending_deliveries}</white>"
+      - "<yellow>Valitse kauppatapahtuma alta.</yellow>"
+  actions:
+    new_trade:
+      name: "<gradient:#22c55e:#86efac>[+] Uusi kauppakutsu</gradient>"
+      lore:
+        - "<gray>Valitse online-kohde ja lähetä DB:n tukema kutsu.</gray>"
+        - "<yellow>Avaa kohdevalinta napsauttamalla.</yellow>"
+    current_trades:
+      name: "<gradient:#38bdf8:#60a5fa>[=] Nykyiset kaupat</gradient>"
+      lore:
+        - "<gray>Tarkista kutsut, aktiiviset istunnot ja valmistumistila.</gray>"
+        - "<yellow>Selaa nykyisiä kauppoja napsauttamalla.</yellow>"
+    inbox:
+      name: "<gradient:#f59e0b:#f97316>[Inbox] Vaatimukset ja pyynnöt</gradient>"
+      lore:
+        - "<gray>Hyväksy kutsut ja vaadi toimitusmaksut.</gray>"
+        - "<yellow>Avaa kaupankäyntipostilaatikko napsauttamalla.</yellow>"
+    tax_info:
+      name: "<gradient:#38bdf8:#60a5fa>[Tax] Kauppaverot</gradient>"
+      lore:
+        - "<gray>Tarkista valuuttakohtaiset kauppaveroasetukset ja -kaavat.</gray>"
+        - "<yellow>Avaa kaupan verotiedot napsauttamalla.</yellow>"
+
+trade_tax_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Tax] Kauppaveron määritelmät</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Tiedot] Veromääritys</gradient>"
+    lore:
+      - "<gray>Verojärjestelmä:</gray> <white>{tax_enabled}</white>"
+      - "<gray>Määritetyt valuutat:</gray> <white>{currency_count}</white>"
+      - "<yellow>Jokaisessa kortissa näkyy kyseisen valuutan aktiivinen kaava.</yellow>"
+    tax_enabled:
+      "on": "<gradient:#22c55e:#86efac>[Käytössä]</gradient>"
+      "off": "<gradient:#ef4444:#f87171>[Ei käytössä]</gradient>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[$] {currency}</gradient> <gray>({currency_id})</gray>"
+    lore:
+      - "<gray>Tila:</gray> <white>{mode}</white>"
+      - "<gray>Tasainen/pohja:</gray> <white>{flat_amount}</white>"
+      - "<gray>Kasvu valuutan mukaan:</gray> <white>{growth_per_currency}</white>"
+      - "<gray>Kasvu kohteiden mukaan:</gray> <white>{growth_per_item}</white>"
+      - "<gray>Esimerkki (100 valuutta + 5 kohdetta):</gray> <white>{example_tax}</white>"
+      - "<yellow>Vain luku -tietopaneeli.</yellow>"
+    mode:
+      flat: "<gradient:#38bdf8:#60a5fa>[TASO]</gradient>"
+      growth: "<gradient:#f59e0b:#f97316>[KASVU]</gradient>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Ei verovaluuttoja</gradient>"
+    lore:
+      - "<gray>Yhtään kauppaverovaluuttaa ei ole määritetty.</gray>"
+
+trade_target_select_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Kauppa] Valitse kohde</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Tiedot] Saatavilla olevat kohteet</gradient>"
+    lore:
+      - "<gray>Kohteet löydetty:</gray> <white>{target_count}</white>"
+      - "<yellow>Lähetä kutsu napsauttamalla kohdetta.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Kutsu]</gradient> <white>{target}</white>"
+    lore:
+      - "<gray>Lähetä pysyvä kauppakutsu osoitteeseen </gray> <white>{target}</white><gray>.</gray>"
+      - "<yellow>Kutsu tämä pelaaja klikkaamalla.</yellow>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>[X] Kohteita ei löytynyt</gradient>"
+    lore:
+      - "<gray>Kelpoisia kauppakohteita ei löytynyt.</gray>"
+
+trade_current_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Trade] Nykyiset istunnot</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Tiedot] Istuntoluettelo</gradient>"
+    lore:
+      - "<gray>Seuratut istunnot:</gray> <white>{session_count}</white>"
+      - "<yellow>Hallinnoi tai avaa istuntoja napsauttamalla merkintöjä.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Kauppa]</gradient> <white>{counterparty}</white> <gray>{status}</gray>"
+    lore:
+      - "<gray>Vastapuoli:</gray> <white>{counterparty}</white>"
+      - "<gray>Tila:</gray> <white>{status}</white>"
+      - "<gray>kaupan UUID:</gray> <white>{trade_uuid}</white>"
+      - "<yellow>Avaa tämä kauppaistunto napsauttamalla.</yellow>"
+  actions:
+    inbox:
+      name: "<gradient:#f59e0b:#f97316>[Inbox] Vaatimukset ja pyynnöt</gradient>"
+      lore:
+        - "<gray>Avaa kutsut ja toimitusvaatimukset.</gray>"
+        - "<yellow>Avaa kaupankäyntipostilaatikko napsauttamalla.</yellow>"
+  status:
+    invited: "<gradient:#f59e0b:#fbbf24>[Kutsuttu]</gradient>"
+    active: "<gradient:#22c55e:#86efac>[Aktiivinen]</gradient>"
+    completing: "<gradient:#38bdf8:#60a5fa>[Valmis</gradient>"
+    completed: "<gradient:#22c55e:#86efac>[Valmis]</gradient>"
+    canceled: "<gradient:#ef4444:#f87171>[Peruutettu]</gradient>"
+    expired: "<gradient:#6b7280:#9ca3af>[Vanhentunut]</gradient>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Ei nykyisiä kauppoja</gradient>"
+    lore:
+      - "<gray>Muita kuin terminaalisia kauppaistuntoja ei löytynyt.</gray>"
+
+trade_inbox_ui:
+  title: "<gradient:#f59e0b:#f97316>[Trade]-postilaatikko</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Tiedot] Pyynnöt ja toimitukset</gradient>"
+    lore:
+      - "<gray>Odottavat kutsut:</gray> <white>{invite_count}</white>"
+      - "<gray>Vaadittavat toimitukset:</gray> <white>{delivery_count}</white>"
+      - "<yellow>Kutsut: avaa kauppaistunto napsauttamalla.</yellow>"
+      - "<yellow>Toimitukset: lunasta klikkaamalla.</yellow>"
+  entry:
+    invite:
+      name: "<gradient:#38bdf8:#60a5fa>[Kutsu]</gradient> <white>{from}</white>"
+      lore:
+        - "<gray>Lähettäjä:</gray> <white>{from}</white>"
+        - "<gray>kaupan UUID:</gray> <white>{trade_uuid}</white>"
+        - "<yellow>Avaa tämä kauppaistunto napsauttamalla.</yellow>"
+    delivery:
+      name: "<gradient:#22c55e:#86efac>[Vaatia </gradient> <white>{trade_uuid}</white>"
+      lore:
+        - "<gray>kaupan UUID:</gray> <white>{trade_uuid}</white>"
+        - "<gray>Tuotteen hyötykuormapaikat:</gray> <white>{item_count}</white>"
+        - "<gray>Valuutan hyötykuormamerkinnät:</gray> <white>{currency_count}</white>"
+        - "<yellow>Lunasta tämä toimitus napsauttamalla.</yellow>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Postilaatikko tyhjä</gradient>"
+    lore:
+      - "<gray>Odottavia kutsuja tai toimituksia ei löytynyt.</gray>"
+
+trade_session_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Trade]-istunto</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Tiedot] Istuntotila</gradient>"
+    lore:
+      - "<gray>Tila:</gray> <white>{status}</white>"
+      - "<gray>kaupan UUID:</gray> <white>{trade_uuid}</white>"
+      - "<gray>Versio:</gray> <white>{revision}</white>"
+      - "<gray>Holvitarjouksesi:</gray> <white>{self_vault}</white>"
+      - "<gray>Kumppaniholvin tarjous:</gray> <white>{partner_vault}</white>"
+      - "<gray>Valuutamasi: </gray> <white>{self_currency_count}</white> <gray> (yhteensä:</gray> <white>{self_currency_total}</white><gray>1][]"
+      - "<gray>Kumppanin valuutat:</gray> <white>{partner_currency_count}</white> <gray>(yhteensä:</gray> <white>{partner_currency_total}</white><gray>)</gray>"
+  status:
+    invited: "<gradient:#f59e0b:#fbbf24>[Kutsuttu]</gradient>"
+    active: "<gradient:#22c55e:#86efac>[Aktiivinen]</gradient>"
+    completing: "<gradient:#38bdf8:#60a5fa>[Valmis</gradient>"
+    completed: "<gradient:#22c55e:#86efac>[Valmis]</gradient>"
+    canceled: "<gradient:#ef4444:#f87171>[Peruutettu]</gradient>"
+    expired: "<gradient:#6b7280:#9ca3af>[Vanhentunut]</gradient>"
+  slots:
+    self_empty_name: "<gradient:#22c55e:#86efac>[Oma paikka] #{slot}</gradient>"
+    self_empty_lore:
+      - "<gray>Klikkaa kursorikohdetta hiiren vasemmalla painikkeella päästäksesi tähän paikkaan.</gray>"
+      - "<gray>Vaihto-klikkaa mainosjakaumaasi lisätäksesi automaattisesti ensimmäiseen vapaaseen paikkaan.</gray>"
+      - "<gray>Poista ja hyvitä täytettyä paikkaa napsauttamalla hiiren kakkospainikkeella.</gray>"
+    partner_empty_name: "<gradient:#38bdf8:#60a5fa>[Kumppanipaikka] #{slot}</gradient>"
+    partner_empty_lore:
+      - "<gray>Kumppanitarjouksen esikatselu näkyy tässä.</gray>"
+  actions:
+    invite_accept:
+      name: "<gradient:#22c55e:#86efac>[Hyväksy] Aloita kauppa</gradient>"
+      lore:
+        - "<gray>Hyväksy tämä kutsu ja siirrä kauppa aktiiviseen tilaan.</gray>"
+    invite_waiting:
+      name: "<gradient:#f59e0b:#fbbf24>[Odottaa] Kutsu odottaa</gradient>"
+      lore:
+        - "<gray>Odotetaan, että kumppanisi hyväksyy tämän kutsun.</gray>"
+    currency_manage:
+      name: "<gradient:#f59e0b:#fbbf24>[Coin] Muokkaa valuuttatarjousta</gradient>"
+      lore:
+        - "<gray>Avaa valuuttakohtaiset säätimet kirjoittamalla summan.</gray>"
+        - "<yellow>Valitse valuutta napsauttamalla.</yellow>"
+    currency_manage_secondary:
+      name: "<gradient:#38bdf8:#60a5fa>[Lista] Valuutan valitsin</gradient>"
+      lore:
+        - "<gray>Valitse lisää/poista Holvi- tai JExEconomy-valuuttoja varten.</gray>"
+        - "<yellow>Avaa valuuttavalitsin napsauttamalla.</yellow>"
+    ready_lock:
+      name: "<gradient:#22c55e:#86efac>[Valmis] Lukitustarjous</gradient>"
+      lore:
+        - "<gray>Sinä:</gray> <white>{self_accepted}</white>"
+        - "<gray>Kumppani: </gray> <white>{partner_accepted}</white>"
+        - "<gray>Lukitse tarjouksesi hiiren vasemmalla painikkeella.</gray>"
+        - "<gray> Napsauta hiiren kakkospainikkeella, jos haluat olla valmis.</gray>"
+    ready_unlock:
+      name: "<gradient:#f59e0b:#fbbf24>[Valmis] Avaustarjous</gradient>"
+      lore:
+        - "<gray>Sinä:</gray> <white>{self_accepted}</white>"
+        - "<gray>Kumppani: </gray> <white>{partner_accepted}</white>"
+        - "<gray>Itsetarjouspaikkasi on lukittu, kun olet valmis.</gray>"
+        - "<gray>Avaa lukitus hiiren kakkospainikkeella ja muokkaa sitä uudelleen.</gray>"
+    confirm:
+      name: "<gradient:#38bdf8:#60a5fa>[Hyväksy] Viimeistele kauppa</gradient>"
+      lore:
+        - "<gray>Sinä:</gray> <white>{self_accepted}</white>"
+        - "<gray>Kumppani: </gray> <white>{partner_accepted}</white>"
+        - "<gray>Kauppa saatetaan päätökseen vasta, kun molemmat pelaajat hyväksyvät sen.</gray>"
+    cancel:
+      name: "<gradient:#ef4444:#f87171>[Peruuta] Keskeytä kauppa</gradient>"
+      lore:
+        - "<gray>Peruuta ja hyvitä escrow toimitusrivien kautta.</gray>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X] istunto ei saatavilla</gradient>"
+    lore:
+      - "<gray>Tätä kauppaistuntoa ei voitu ladata.</gray>"
+
+trade_currency_select_ui:
+  title: "<gradient:#f59e0b:#f97316>[Trade]-valuuttatarjoukset</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Tiedot] Valuutan valitsin</gradient>"
+    lore:
+      - "<gray>Saatavilla olevat valuutat:</gray> <white>{available_count}</white>"
+      - "<gray>Aktiiviset tarjouksesi:</gray> <white>{offered_count}</white>"
+      - "<yellow>Vasen napsautus = lisää, oikea napsautus = poista.</yellow>"
+      - "<yellow>Molemmat toiminnot avaavat summan syöttöalasimen.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Valuutta]</gradient> <white>{currency}</white>"
+    lore:
+      - "<gray>ID: </gray> <white>{currency_id}</white>"
+      - "<gray>Tarjouksesi:</gray> <white>{offered_amount}</white>"
+      - "<yellow>Lisää kirjoitettu summa hiiren vasemmalla painikkeella.</yellow>"
+      - "<yellow>Poista kirjoitettu summa napsauttamalla hiiren kakkospainiketta.</yellow>"
+  applying:
+    name: "<gradient:#38bdf8:#60a5fa>[synkronointi] Otetaan käyttöön valuutan muutosta</gradient>"
+    lore:
+      - "<gray>Päivitetään tarjoustasi kohteelle </gray> <white>{currency}</white><gray>...</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Ei valuuttatarjoajia</gradient>"
+    lore:
+      - "<gray>Tuettuja valuuttoja ei ole tällä hetkellä saatavilla kauppaan.</gray>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X] Valuuttanäkymä ei ole käytettävissä</gradient>"
+    lore:
+      - "<gray>Tätä kauppaistuntoa ei voitu ladata.</gray>"
+
+trade_currency_amount_anvil_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[Kauppa] {mode} {currency}</gradient>"
+  input:
+    lore:
+      - "<gray>Valuutta:</gray> <white>{currency}</white>"
+      - "<gray>Toiminta:</gray> <white>{mode}</white>"
+      - "<gray>Nykyinen tarjous:</gray> <white>{current_offer}</white>"
+      - "<yellow>Anna ei-negatiivinen desimaaliluku.</yellow>"
+  error:
+    invalid_amount: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Virheellinen summa <white>{input}</white><gray> kohteelle <white>{currency}</white><gray>. Käytä muuta kuin negatiivista lukua.</gray>"
+
+trade:
+  message:
+    disabled: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Kauppa on tällä hetkellä poissa käytöstä asetuksissa.</gray>"
+    self_target: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Et voi käydä kauppaa itsesi kanssa.</gray>"
+    participant_busy: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Sinulla on jo avoin kauppa <white>{target}</white><gray> kanssa.</gray>"
+    invite_cooldown: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Odota <white>{seconds}</white>s ennen kuin lähetät uuden kauppakutsun.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Kauppatietovarastot/palvelut eivät ole tällä hetkellä saatavilla.</gray>"
+    invite_sent: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Lähetti kauppakutsun osoitteeseen <white>{target}</white><gray>.</gray>"
+    invite_received: "<gradient:#38bdf8:#60a5fa>[Kutsu]</gradient> <gray>Sait kaupankäyntikutsun käyttäjältä <white>{from}</white><gray>. Avaa </gray><white>/rr trade</white><gray>.</gray>"
+    delivery_pending: "<gradient:#f59e0b:#f97316>[Inbox]</gradient> <gray>Sinulla on <white>{count}</white> vireillä oleva(t) kaupan toimitusvaatimus(ita).</gray>"
+    success: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Kauppatoimet suoritettu.</gray>"
+    waiting_for_partner: "<gradient:#38bdf8:#60a5fa>[=]</gradient> <gray>Odotetaan kumppanisi vahvistusta.</gray>"
+    completed: "<gradient:#22c55e:#86efac>[Valmis]</gradient> <gray>Kauppa suoritettu. Lunasta toimitus postilaatikossa.</gray>"
+    no_item_in_hand: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Pidä kohdetta ensin pääkädessäsi.</gray>"
+    offer_full: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Tarjouksesi on jo saavuttanut määritetyn enimmäismäärän.</gray>"
+    insufficient_funds: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Sinulla ei ole tarpeeksi varoja tähän kauppatapahtumaan tai sen veromaksuun.</gray>"
+    missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Tätä kauppariviä ei enää ole.</gray>"
+    forbidden: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Et osallistu kyseiseen kauppatapahtumaan.</gray>"
+    invalid_state: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Tämä toiminto ei ole voimassa nykyisessä kauppatilassa.</gray>"
+    stale: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Kauppatietoja muutettu toisella palvelimella. Päivitetään istuntoa.</gray>"
+    expired: "<gradient:#ef4444:#f87171>[Vanhentunut]</gradient> <gray>Tuo kauppakutsu on jo vanhentunut.</gray>"
 
 storage:
   message:

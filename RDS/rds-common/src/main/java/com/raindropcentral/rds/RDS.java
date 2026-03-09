@@ -75,6 +75,7 @@ import de.jexcellence.hibernate.JEHibernate;
 import jakarta.persistence.EntityManagerFactory;
 import me.devnatan.inventoryframework.AnvilInputFeature;
 import me.devnatan.inventoryframework.ViewFrame;
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
@@ -742,11 +743,20 @@ public class RDS {
      * Registers the internal PlaceholderAPI expansion.
      */
     private void initializePlaceholderExpansion() {
+        if (!this.isPlaceholderApiAvailable()) {
+            this.getLogger().info("PlaceholderAPI not detected; skipping RDS placeholder expansion registration.");
+            return;
+        }
+
         this.placeholderRegistry = new PlaceholderRegistry(
             this.plugin,
             new RDSPlaceholderExpansion(this)
         );
         this.placeholderRegistry.register();
+    }
+
+    private boolean isPlaceholderApiAvailable() {
+        return Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI");
     }
 
     private void initializeAdminShopRestocking() {

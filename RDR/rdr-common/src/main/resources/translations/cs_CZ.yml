@@ -65,6 +65,12 @@ storage_admin_ui:
         - "<gray>Spravujte dovednosti, práci, měnu a nástroje PlaceholderAPI.</gray>"
         - "<gray>Otevřete ovládací prvky pro správu specifické pro integraci.</gray>"
         - "<yellow>Kliknutím otevřete správu integrace.</yellow>"
+    trade_bank:
+      name: "<gradient:#f59e0b:#fbbf24>[Tax] Trade Server Bank</gradient>"
+      lore:
+        - "<gray>Zkontrolujte shromážděné zůstatky obchodní daně podle měny.</gray>"
+        - "<gray>Vyberte zůstatky na serveru a bance na svůj účet správce.</gray>"
+        - "<yellow>Kliknutím otevřete bankovní kontroly obchodní daně.</yellow>"
     currency:
       name: "<gradient:#10b981:#34d399>[Cur] Měnový manažer</gradient>"
       lore:
@@ -938,6 +944,316 @@ storage_tax_town_bank_ui:
     currency_unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> nelze převést do městské banky. V současné době jsou podporovány převody na městské banky Vault pouze.</gray>"
     transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Přenos se nezdařil <white>{currency}</white><gray> do vaší městské banky.</gray>"
     transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Převedeno <white>{amount}</white><gray> v <white>{currency}</white><gray> do vaší městské banky.</gray>"
+
+trade_admin_bank_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[Admin] Banka obchodní daně</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#f97316>[Info] Daňová kniha serveru</gradient>"
+    lore:
+      - "<gray>Sledované měny:</gray> <white>{currency_count}</white>"
+      - "<gray>Kliknutím na libovolnou měnu vyberete celý zůstatek.</gray>"
+      - "<yellow>Vyžaduje:</yellow> <white>raindroprdr.command.admin</white>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[$] {currency}</gradient> <gray>({currency_id})</gray>"
+    lore:
+      - "<gray>Dostupné:</gray> <white>{amount}</white>"
+      - "<gray>Záznamy v hlavní knize:</gray> <white>{ledger_count}</white>"
+      - "<gray>Poslední typ:</gray> <white>{latest_type}</white>"
+      - "<gray>Poslední množství:</gray> <white>{latest_amount}</white>"
+      - "<gray>Poslední poznámka:</gray> <white>{latest_note}</white>"
+      - "<yellow>Kliknutím vyberete tento zůstatek v měně.</yellow>"
+    latest:
+      none: "<gradient:#6b7280:#9ca3af>[Žádné]</gradient>"
+      deposit: "<gradient:#22c55e:#86efac>[Vklad]</gradient>"
+      withdraw: "<gradient:#ef4444:#f87171>[Stáhnout]</gradient>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] Je vyžadován přístup správce</gradient>"
+    lore:
+      - "<gray>Nemáte oprávnění používat tento panel obchodní daně.</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Žádné bankovní záznamy</gradient>"
+    lore:
+      - "<gray>V tuto chvíli nejsou uloženy žádné vybrané zůstatky obchodní daně.</gray>"
+  feedback:
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nemáte oprávnění používat bankovní kontroly obchodní daně.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Služba banky obchodní daně je momentálně nedostupná.</gray>"
+    empty_balance: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Pro <white>{currency}</white><gray> nebyl nalezen žádný vymahatelný zůstatek.</gray>"
+    withdraw_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nepodařilo se vybrat <white>{currency}</white><gray> z banky obchodní daně.</gray>"
+    withdraw_success: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Stáhlo <white>{amount}</white><gray> v <white>{currency}</white><gray>] z obchodní daňové banky[][[PH1]].[[PH1]]"
+
+trade_hub_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Obchod] Cross-Server Hub</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Přehled obchodu</gradient>"
+    lore:
+      - "<gray>Nevyřízené pozvánky:</gray> <white>{pending_invites}</white>"
+      - "<gray>Aktivní relace:</gray> <white>{active_sessions}</white>"
+      - "<gray>Čekající dodávky:</gray> <white>{pending_deliveries}</white>"
+      - "<yellow>Níže vyberte obchodní akci.</yellow>"
+  actions:
+    new_trade:
+      name: "<gradient:#22c55e:#86efac>[+] Nová obchodní pozvánka</gradient>"
+      lore:
+        - "<gray>Vyberte online cíl a odešlete pozvánku podporovanou DB.</gray>"
+        - "<yellow>Kliknutím otevřete výběr cíle.</yellow>"
+    current_trades:
+      name: "<gradient:#38bdf8:#60a5fa>[=] Aktuální obchody</gradient>"
+      lore:
+        - "<gray>Zkontrolujte pozvánky, aktivní relace a stav dokončení.</gray>"
+        - "<yellow>Kliknutím můžete procházet aktuální obchody.</yellow>"
+    inbox:
+      name: "<gradient:#f59e0b:#f97316>[Doručená pošta] Nároky a požadavky</gradient>"
+      lore:
+        - "<gray>Přijímání pozvánek a nárokování plateb za doručení.</gray>"
+        - "<yellow>Kliknutím otevřete obchodní schránku.</yellow>"
+    tax_info:
+      name: "<gradient:#38bdf8:#60a5fa>[Tax] Obchodní daně</gradient>"
+      lore:
+        - "<gray>Zkontrolujte nastavení a vzorce obchodní daně pro jednotlivé měny.</gray>"
+        - "<yellow>Kliknutím otevřete informace o obchodní dani.</yellow>"
+
+trade_tax_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Tax] Definice obchodní daně</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Konfigurace daně</gradient>"
+    lore:
+      - "<gray>Daňový systém:</gray> <white>{tax_enabled}</white>"
+      - "<gray>Konfigurované měny:</gray> <white>{currency_count}</white>"
+      - "<yellow>Každá karta zobrazuje aktivní vzorec pro danou měnu.</yellow>"
+    tax_enabled:
+      "on": "<gradient:#22c55e:#86efac>[Povoleno]</gradient>"
+      "off": "<gradient:#ef4444:#f87171>[Zakázáno]</gradient>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[$] {currency}</gradient> <gray>({currency_id})</gray>"
+    lore:
+      - "<gray>Režim:</gray> <white>{mode}</white>"
+      - "<gray>Plochý/základ:</gray> <white>{flat_amount}</white>"
+      - "<gray>Růst podle měny:</gray> <white>{growth_per_currency}</white>"
+      - "<gray>Růst podle položek:</gray> <white>{growth_per_item}</white>"
+      - "<gray>Příklad (100 měny + 5 položek):</gray> <white>{example_tax}</white>"
+      - "<yellow>Informační panel pouze pro čtení.</yellow>"
+    mode:
+      flat: "<gradient:#38bdf8:#60a5fa>[FLAT]</gradient>"
+      growth: "<gradient:#f59e0b:#f97316>[RŮST]</gradient>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Žádné daňové měny</gradient>"
+    lore:
+      - "<gray>Nejsou nakonfigurovány žádné měny obchodní daně.</gray>"
+
+trade_target_select_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Obchod] Vyberte cíl</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Dostupné cíle</gradient>"
+    lore:
+      - "<gray>Zjištěné cíle:</gray> <white>{target_count}</white>"
+      - "<yellow>Kliknutím na cíl odešlete pozvánku.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Pozvat]</gradient> <white>{target}</white>"
+    lore:
+      - "<gray>Pošlete trvalou obchodní pozvánku na </gray> <white>{target}</white><gray>.</gray>"
+      - "<yellow>Kliknutím tohoto hráče pozvěte.</yellow>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>[X] Nebyly nalezeny žádné cíle</gradient>"
+    lore:
+      - "<gray>Nebyly nalezeny žádné vhodné obchodní cíle.</gray>"
+
+trade_current_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Obchod] Aktuální relace</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Seznam relací</gradient>"
+    lore:
+      - "<gray>Sledované relace:</gray> <white>{session_count}</white>"
+      - "<yellow>Kliknutím na položky můžete spravovat nebo otevírat relace.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Obchod]</gradient> <white>{counterparty}</white> <gray>{status}</gray>"
+    lore:
+      - "<gray>Protistrana:</gray> <white>{counterparty}</white>"
+      - "<gray>Stav:</gray> <white>{status}</white>"
+      - "<gray>UUID obchodu:</gray> <white>{trade_uuid}</white>"
+      - "<yellow>Kliknutím otevřete tuto obchodní seanci.</yellow>"
+  actions:
+    inbox:
+      name: "<gradient:#f59e0b:#f97316>[Doručená pošta] Nároky a požadavky</gradient>"
+      lore:
+        - "<gray>Otevřené pozvánky a nároky na doručení.</gray>"
+        - "<yellow>Kliknutím otevřete obchodní schránku.</yellow>"
+  status:
+    invited: "<gradient:#f59e0b:#fbbf24>[Pozváni]</gradient>"
+    active: "<gradient:#22c55e:#86efac>[aktivní]</gradient>"
+    completing: "<gradient:#38bdf8:#60a5fa>[Dokončuji]</gradient>"
+    completed: "<gradient:#22c55e:#86efac>[Dokončeno]</gradient>"
+    canceled: "<gradient:#ef4444:#f87171>[Zrušeno]</gradient>"
+    expired: "<gradient:#6b7280:#9ca3af>[Platnost vypršela]</gradient>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Žádné aktuální obchody</gradient>"
+    lore:
+      - "<gray>Nebyly nalezeny žádné neterminální obchodní relace.</gray>"
+
+trade_inbox_ui:
+  title: "<gradient:#f59e0b:#f97316>[Obchod] Doručená pošta</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Žádosti a dodávky</gradient>"
+    lore:
+      - "<gray>Nevyřízené pozvánky:</gray> <white>{invite_count}</white>"
+      - "<gray>Nárokovatelné dodávky:</gray> <white>{delivery_count}</white>"
+      - "<yellow>Pozvánky: kliknutím otevřete obchodní seanci.</yellow>"
+      - "<yellow>Dodávky: kliknutím reklamujte.</yellow>"
+  entry:
+    invite:
+      name: "<gradient:#38bdf8:#60a5fa>[Pozvat]</gradient> <white>{from}</white>"
+      lore:
+        - "<gray>Od:</gray> <white>{from}</white>"
+        - "<gray>UUID obchodu:</gray> <white>{trade_uuid}</white>"
+        - "<yellow>Kliknutím otevřete tuto obchodní seanci.</yellow>"
+    delivery:
+      name: "<gradient:#22c55e:#86efac>[Nárok]</gradient> <white>{trade_uuid}</white>"
+      lore:
+        - "<gray>UUID obchodu:</gray> <white>{trade_uuid}</white>"
+        - "<gray>Sloty užitečného zatížení položek:</gray> <white>{item_count}</white>"
+        - "<gray>Položky užitečného zatížení měn:</gray> <white>{currency_count}</white>"
+        - "<yellow>Kliknutím nárokujte tuto dodávku.</yellow>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Doručená pošta je prázdná</gradient>"
+    lore:
+      - "<gray>Nebyly nalezeny žádné nevyřízené pozvánky ani doručení.</gray>"
+
+trade_session_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Obchodní] zasedání</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Stav relace</gradient>"
+    lore:
+      - "<gray>Stav:</gray> <white>{status}</white>"
+      - "<gray>UUID obchodu:</gray> <white>{trade_uuid}</white>"
+      - "<gray>Revize:</gray> <white>{revision}</white>"
+      - "<gray>Vaše nabídka Sejfu:</gray> <white>{self_vault}</white>"
+      - "<gray>Nabídka partnerského trezoru:</gray> <white>{partner_vault}</white>"
+      - "<gray>Vaše měny:</gray> <white>{self_currency_count}</white> <gray>(celkem:</gray> <white>{self_currency_total}</white><gray>)</gray>"
+      - "<gray>Partnerské měny:</gray> <white>{partner_currency_count}</white> <gray>(celkem:</gray> <white>{partner_currency_total}</white><gray>)</gray>"
+  status:
+    invited: "<gradient:#f59e0b:#fbbf24>[Pozváni]</gradient>"
+    active: "<gradient:#22c55e:#86efac>[aktivní]</gradient>"
+    completing: "<gradient:#38bdf8:#60a5fa>[Dokončuji]</gradient>"
+    completed: "<gradient:#22c55e:#86efac>[Dokončeno]</gradient>"
+    canceled: "<gradient:#ef4444:#f87171>[Zrušeno]</gradient>"
+    expired: "<gradient:#6b7280:#9ca3af>[Platnost vypršela]</gradient>"
+  slots:
+    self_empty_name: "<gradient:#22c55e:#86efac>[Vlastní slot] #{slot}</gradient>"
+    self_empty_lore:
+      - "<gray>Kliknutím levým tlačítkem myši kurzorem vstoupíte do tohoto slotu.</gray>"
+      - "<gray>Kliknutím se stisknutou klávesou Shift se inventář automaticky vloží do prvního volného slotu.</gray>"
+      - "<gray>Kliknutím pravým tlačítkem na zaplněný vlastní slot jej odeberete a vrátíte peníze.</gray>"
+    partner_empty_name: "<gradient:#38bdf8:#60a5fa>[Partner Slot] #{slot}</gradient>"
+    partner_empty_lore:
+      - "<gray>Tady se zobrazuje náhled nabídky partnera.</gray>"
+  actions:
+    invite_accept:
+      name: "<gradient:#22c55e:#86efac>[Přijmout] Zahájit obchod</gradient>"
+      lore:
+        - "<gray>Přijměte toto pozvání a přesuňte obchod do aktivního stavu.</gray>"
+    invite_waiting:
+      name: "<gradient:#f59e0b:#fbbf24>[Čekání] Nevyřízená pozvánka</gradient>"
+      lore:
+        - "<gray>Čeká se, až váš partner přijme toto pozvání.</gray>"
+    currency_manage:
+      name: "<gradient:#f59e0b:#fbbf24>[Coin] Upravit nabídku měny</gradient>"
+      lore:
+        - "<gray>Otevřete ovládací prvky pro jednotlivé měny se zadáním zadané částky.</gray>"
+        - "<yellow>Kliknutím vyberte měnu.</yellow>"
+    currency_manage_secondary:
+      name: "<gradient:#38bdf8:#60a5fa>[Seznam] Výběr měny</gradient>"
+      lore:
+        - "<gray>Zvolte přidání/odebrání pro měny Vault nebo JExEconomy.</gray>"
+        - "<yellow>Kliknutím otevřete nástroj pro výběr měny.</yellow>"
+    ready_lock:
+      name: "<gradient:#22c55e:#86efac>[Ready] Nabídka zámku</gradient>"
+      lore:
+        - "<gray>Vy:</gray> <white>{self_accepted}</white>"
+        - "<gray>Partner:</gray> <white>{partner_accepted}</white>"
+        - "<gray>Kliknutím levým tlačítkem uzamknete svou nabídku.</gray>"
+        - "<gray>Kliknutím pravým tlačítkem přejdete do stavu nepřipraveno.</gray>"
+    ready_unlock:
+      name: "<gradient:#f59e0b:#fbbf24>[Ready] Odemknout nabídku</gradient>"
+      lore:
+        - "<gray>Vy:</gray> <white>{self_accepted}</white>"
+        - "<gray>Partner:</gray> <white>{partner_accepted}</white>"
+        - "<gray>Vaše pozice pro vlastní nabídku jsou uzamčeny, dokud jsou připraveny.</gray>"
+        - "<gray>Kliknutím pravým tlačítkem odemknete a znovu upravíte.</gray>"
+    confirm:
+      name: "<gradient:#38bdf8:#60a5fa>[Přijmout] Dokončit obchod</gradient>"
+      lore:
+        - "<gray>Vy:</gray> <white>{self_accepted}</white>"
+        - "<gray>Partner:</gray> <white>{partner_accepted}</white>"
+        - "<gray>Obchod bude dokončen až poté, co jej oba hráči přijmou.</gray>"
+    cancel:
+      name: "<gradient:#ef4444:#f87171>[Zrušit] Přerušit obchod</gradient>"
+      lore:
+        - "<gray>Zrušení úschovy u třetí osoby a vrácení peněz prostřednictvím řádků doručení.</gray>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X] relace nedostupná</gradient>"
+    lore:
+      - "<gray>Tuto obchodní seanci nelze načíst.</gray>"
+
+trade_currency_select_ui:
+  title: "<gradient:#f59e0b:#f97316>[Obchod] Nabídky měn</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Výběr měny</gradient>"
+    lore:
+      - "<gray>Dostupné měny:</gray> <white>{available_count}</white>"
+      - "<gray>Vaše aktivní nabídky:</gray> <white>{offered_count}</white>"
+      - "<yellow>Kliknutí levým tlačítkem = přidání, kliknutí pravým tlačítkem = odebrání.</yellow>"
+      - "<yellow>Obě akce otevírají vstupní kovadlinu částky.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Měna]</gradient> <white>{currency}</white>"
+    lore:
+      - "<gray>ID:</gray> <white>{currency_id}</white>"
+      - "<gray>Vaše nabídka:</gray> <white>{offered_amount}</white>"
+      - "<yellow>Kliknutím levým tlačítkem přidáte zadanou částku.</yellow>"
+      - "<yellow>Kliknutím pravým tlačítkem odeberete zadanou částku.</yellow>"
+  applying:
+    name: "<gradient:#38bdf8:#60a5fa>[Sync] Použití změny měny</gradient>"
+    lore:
+      - "<gray>Aktualizace vaší nabídky na </gray> <white>{currency}</white><gray>...</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Žádní poskytovatelé měn</gradient>"
+    lore:
+      - "<gray>V současné době nejsou k obchodování dostupné žádné podporované měny.</gray>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X] Zobrazení měn není k dispozici</gradient>"
+    lore:
+      - "<gray>Tuto obchodní seanci nelze načíst.</gray>"
+
+trade_currency_amount_anvil_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[Obchod] {mode} {currency}</gradient>"
+  input:
+    lore:
+      - "<gray>Měna:</gray> <white>{currency}</white>"
+      - "<gray>Provoz:</gray> <white>{mode}</white>"
+      - "<gray>Aktuální nabídka:</gray> <white>{current_offer}</white>"
+      - "<yellow>Zadejte nezápornou desetinnou hodnotu.</yellow>"
+  error:
+    invalid_amount: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Neplatná částka <white>{input}</white><gray> pro <white>{currency}</white><gray>. Použijte nezáporné číslo.</gray>"
+
+trade:
+  message:
+    disabled: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Obchod je aktuálně zakázán v konfiguraci.</gray>"
+    self_target: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nemůžete obchodovat sami se sebou.</gray>"
+    participant_busy: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Již máte otevřený obchod s <white>{target}</white><gray>.</gray>"
+    invite_cooldown: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Počkejte <white>{seconds}</white>s před odesláním další obchodní pozvánky.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Obchodní úložiště/služby jsou momentálně nedostupné.</gray>"
+    invite_sent: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Poslal pozvánku k obchodu <white>{target}</white><gray>.</gray>"
+    invite_received: "<gradient:#38bdf8:#60a5fa>[Pozvat]</gradient> <gray>Obdrželi jste pozvánku na obchod od <white>{from}</white><gray>. Otevřít </gray><white>/rr trade</white><gray>.</gray>"
+    delivery_pending: "<gradient:#f59e0b:#f97316>[Doručená pošta]</gradient> <gray>Máte <white>{count}</white> čekající na reklamaci obchodního doručení.</gray>"
+    success: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Obchodní akce dokončena.</gray>"
+    waiting_for_partner: "<gradient:#38bdf8:#60a5fa>[=]</gradient> <gray>Čekání na potvrzení partnera.</gray>"
+    completed: "<gradient:#22c55e:#86efac>[Hotovo]</gradient> <gray>Obchod dokončen. Vyžádejte si doručení v doručené poště.</gray>"
+    no_item_in_hand: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nejprve držte předmět v hlavní ruce.</gray>"
+    offer_full: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Vaše nabídka již dosáhla maximálního nakonfigurovaného limitu slotu.</gray>"
+    insufficient_funds: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nemáte dostatek finančních prostředků na tuto obchodní akci nebo její daňový poplatek.</gray>"
+    missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Tento řádek obchodu již neexistuje.</gray>"
+    forbidden: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nejste účastníkem této obchodní akce.</gray>"
+    invalid_state: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Tato akce není platná pro aktuální stav obchodu.</gray>"
+    stale: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Obchodní data se změnila na jiném serveru. Obnovující se relace.</gray>"
+    expired: "<gradient:#ef4444:#f87171>[Platnost vypršela]</gradient> <gray>Platnost této obchodní pozvánky již vypršela.</gray>"
 
 storage:
   message:

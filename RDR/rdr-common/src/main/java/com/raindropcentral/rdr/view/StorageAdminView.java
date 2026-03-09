@@ -18,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
  * Administrative landing view for RDR controls.
  *
  * <p>This view centralizes privileged storage administration actions and currently
- * exposes player/group controls, config-editing, and plugin-integration entry points.</p>
+ * exposes player/group controls, config-editing, plugin integrations, and trade-tax bank controls.</p>
  *
  * @author ItsRainingHP
  * @since 5.0.0
@@ -50,13 +50,13 @@ public class StorageAdminView extends BaseView {
     /**
      * Returns the menu layout for this view.
      *
-     * @return rendered layout with summary, config, and integration controls
+     * @return rendered layout with summary and admin action controls
      */
     @Override
     protected String[] getLayout() {
         return new String[]{
             "    s    ",
-            "  p g i  ",
+            " p g i b ",
             "         "
         };
     }
@@ -91,6 +91,11 @@ public class StorageAdminView extends BaseView {
         render.layoutSlot('i', this.createPluginIntegrationsButton(player))
             .onClick(clickContext -> clickContext.openForPlayer(
                 PluginIntegrationManagementView.class,
+                Map.of("plugin", this.rdr.get(clickContext))
+            ));
+        render.layoutSlot('b', this.createTradeBankButton(player))
+            .onClick(clickContext -> clickContext.openForPlayer(
+                TradeAdminBankView.class,
                 Map.of("plugin", this.rdr.get(clickContext))
             ));
     }
@@ -143,6 +148,16 @@ public class StorageAdminView extends BaseView {
         return UnifiedBuilderFactory.item(Material.WRITABLE_BOOK)
             .setName(this.i18n("actions.config.name", player).build().component())
             .setLore(this.i18n("actions.config.lore", player).build().children())
+            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+            .build();
+    }
+
+    private @NotNull ItemStack createTradeBankButton(
+        final @NotNull Player player
+    ) {
+        return UnifiedBuilderFactory.item(Material.GOLD_BLOCK)
+            .setName(this.i18n("actions.trade_bank.name", player).build().component())
+            .setLore(this.i18n("actions.trade_bank.lore", player).build().children())
             .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
             .build();
     }

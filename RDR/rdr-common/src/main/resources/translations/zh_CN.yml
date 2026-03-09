@@ -65,6 +65,12 @@ storage_admin_ui:
         - "<gray>管理技能、工作、货币和 PlaceholderAPI 工具。</gray>"
         - "<gray>打开集成特定的管理控件。</gray>"
         - "<yellow>单击打开集成管理。</yellow>"
+    trade_bank:
+      name: "<gradient:#f59e0b:#fbbf24>[税] 贸易服务器银行</gradient>"
+      lore:
+        - "<gray>按货币查看收集的贸易税余额。</gray>"
+        - "<gray>将服务器银行余额提取到您的管理员 帐户.</gray>"
+        - "<yellow>单击打开贸易税银行控件。</yellow>"
     currency:
       name: "<gradient:#10b981:#34d399>[Cur] 货币管理器</gradient>"
       lore:
@@ -938,6 +944,316 @@ storage_tax_town_bank_ui:
     currency_unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> 不能转入镇银行。目前支持村镇银行转账 Vault 仅有的。</gray>"
     transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>转账失败 <white>{currency}</white><gray> 存入您的城镇银行。</gray>"
     transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>已转入 <white>{amount}</white><gray> 在 <white>{currency}</white><gray> 到你的城镇银行。</gray>"
+
+trade_admin_bank_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[管理员]贸易税银行</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#f97316>[信息]服务器税 Ledger</gradient>"
+    lore:
+      - "<gray>追踪币种：</gray> <white>{currency_count}</white>"
+      - "<gray>点击任意币种即可提取其全部余额。</gray>"
+      - "<yellow>需要：</yellow> <white>raindroprdr.command.admin</white>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[$] {currency}</gradient> <gray>({currency_id})</gray>"
+    lore:
+      - "<gray>可用：</gray> <white>{amount}</white>"
+      - "<gray>Ledger 条目：</gray> <white>{ledger_count}</white>"
+      - "<gray>最新类型：</gray> <white>{latest_type}</white>"
+      - "<gray>最新金额：</gray> <white>{latest_amount}</white>"
+      - "<gray>最新备注：</gray> <white>{latest_note}</white>"
+      - "<yellow>点击提现该币种 平衡.</yellow>"
+    latest:
+      none: "<gradient:#6b7280:#9ca3af>[无]</gradient>"
+      deposit: "<gradient:#22c55e:#86efac>[Dep osit]</gradient>"
+      withdraw: "<gradient:#ef4444:#f87171>[提款]</gradient>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] 需要管理员访问权限</gradient>"
+    lore:
+      - "<gray>您无权使用此贸易税银行面板。</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] 无银行条目</gradient>"
+    lore:
+      - "<gray>没有收集的贸易税余额 立即存储。</gray>"
+  feedback:
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>您无权使用贸易税银行控件。</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>贸易税银行服务当前已启用 不可用。</gray>"
+    empty_balance: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>未找到 <white>{currency}</white><gray>.</gray>"
+    withdraw_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>提现失败 <white>{currency}</white><gray> 从贸易税银行。</gray>"
+    withdraw_success: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>从 <white>{currency}</white><gray> 中提取 <white>{amount}</white><gray> 贸易税银行.</gray>"
+
+trade_hub_ui:
+  title: "<gradient:#22c55e:#14b8a6>[贸易]跨服务器集线器</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[信息]贸易概述</gradient>"
+    lore:
+      - "<gray>P即将邀请：</gray> <white>{pending_invites}</white>"
+      - "<gray>活跃会话：</gray> <white>{active_sessions}</white>"
+      - "<gray>P即将交付：</gray> <white>{pending_deliveries}</white>"
+      - "<yellow>选择下面的贸易行动。</yellow>"
+  actions:
+    new_trade:
+      name: "<gradient:#22c55e:#86efac>[+]新贸易邀请</gradient>"
+      lore:
+        - "<gray>选择在线目标并发送 DB 支持 邀请.</gray>"
+        - "<yellow>点击打开目标选择。</yellow>"
+    current_trades:
+      name: "<gradient:#38bdf8:#60a5fa>[=] 当前交易</gradient>"
+      lore:
+        - "<gray>查看邀请、活动会话和完成情况 状态.</gray>"
+        - "<yellow>点击浏览当前交易。</yellow>"
+    inbox:
+      name: "<gradient:#f59e0b:#f97316>[收件箱]索赔和请求</gradient>"
+      lore:
+        - "<gray>接受邀请并索赔交付 付款。</gray>"
+        - "<yellow>点击打开交易收件箱。</yellow>"
+    tax_info:
+      name: "<gradient:#38bdf8:#60a5fa>[税]贸易税</gradient>"
+      lore:
+        - "<gray>查看每种货币的贸易税设置并 公式。</gray>"
+        - "<yellow>点击打开贸易税信息。</yellow>"
+
+trade_tax_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[税]贸易税定义</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[信息]税 配置</gradient>"
+    lore:
+      - "<gray>T税制：</gray> <white>{tax_enabled}</white>"
+      - "<gray>配置货币：</gray> <white>{currency_count}</white>"
+      - "<yellow>Each 卡显示该公式的有效公式 货币.</yellow>"
+    tax_enabled:
+      "on": "<gradient:#22c55e:#86efac>[启用]</gradient>"
+      "off": "<gradient:#ef4444:#f87171>[禁用]</gradient>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[$] {currency}</gradient> <gray>({currency_id})</gray>"
+    lore:
+      - "<gray>Mode:</gray> <white>{mode}</white>"
+      - "<gray>F平台/基础：</gray> <white>{flat_amount}</white>"
+      - "<gray>G按货币增长：</gray> <white>{growth_per_currency}</white>"
+      - "<gray>G按物品增长：</gray> <white>{growth_per_item}</white>"
+      - "<gray>示例（100货币+5物品）：</gray> <white>{example_tax}</white>"
+      - "<yellow>只读信息面板。</yellow>"
+    mode:
+      flat: "<gradient:#38bdf8:#60a5fa>[FLAT]</gradient>"
+      growth: "<gradient:#f59e0b:#f97316>[成长]</gradient>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] 无税货币</gradient>"
+    lore:
+      - "<gray>未配置贸易税货币。</gray>"
+
+trade_target_select_ui:
+  title: "<gradient:#22c55e:#14b8a6>[交易] 选择目标</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[信息] 可用目标</gradient>"
+    lore:
+      - "<gray>T发现的目标：</gray> <white>{target_count}</white>"
+      - "<yellow>点击目标发送邀请。</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[邀请]</gradient> <white>{target}</white>"
+    lore:
+      - "<gray>S向 </gray> <white>{target}</white><gray>.</gray> 发送持久贸易邀请"
+      - "<yellow>点击邀请该玩家。</yellow>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>[X] 未找到目标</gradient>"
+    lore:
+      - "<gray>未找到符合条件的贸易目标。</gray>"
+
+trade_current_ui:
+  title: "<gradient:#22c55e:#14b8a6>[交易] 当前会话</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[信息] 会话列表</gradient>"
+    lore:
+      - "<gray>跟踪会话：</gray> <white>{session_count}</white>"
+      - "<yellow>单击条目以管理或打开会话。</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[贸易]</gradient> <white>{counterparty}</white> <gray>{status}</gray>"
+    lore:
+      - "<gray>对方：</gray> <white>{counterparty}</white>"
+      - "<gray>状态：</gray> <white>{status}</white>"
+      - "<gray>贸易 UUID:</gray> <white>{trade_uuid}</white>"
+      - "<yellow>点击打开此交易时段。</yellow>"
+  actions:
+    inbox:
+      name: "<gradient:#f59e0b:#f97316>[收件箱]索赔和请求</gradient>"
+      lore:
+        - "<gray>开放邀请和交付索赔。</gray>"
+        - "<yellow>点击打开交易收件箱。</yellow>"
+  status:
+    invited: "<gradient:#f59e0b:#fbbf24>[已邀请]</gradient>"
+    active: "<gradient:#22c55e:#86efac>[主动]</gradient>"
+    completing: "<gradient:#38bdf8:#60a5fa>[完成]</gradient>"
+    completed: "<gradient:#22c55e:#86efac>[已完成]</gradient>"
+    canceled: "<gradient:#ef4444:#f87171>[已取消]</gradient>"
+    expired: "<gradient:#6b7280:#9ca3af>[已过期]</gradient>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] 没有当前交易</gradient>"
+    lore:
+      - "<gray>未找到非终端交易会话。</gray>"
+
+trade_inbox_ui:
+  title: "<gradient:#f59e0b:#f97316>[交易]收件箱</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[信息]请求和交付</gradient>"
+    lore:
+      - "<gray>P正在处理的邀请：</gray> <white>{invite_count}</white>"
+      - "<gray>Cl可交货：</gray> <white>{delivery_count}</white>"
+      - "<yellow>邀请：点击打开交易 session.</yellow>"
+      - "<yellow>D交付：点击领取。</yellow>"
+  entry:
+    invite:
+      name: "<gradient:#38bdf8:#60a5fa>[邀请]</gradient> <white>{from}</white>"
+      lore:
+        - "<gray>From:</gray> <white>{from}</white>"
+        - "<gray>贸易 UUID:</gray> <white>{trade_uuid}</white>"
+        - "<yellow>点击打开此交易时段。</yellow>"
+    delivery:
+      name: "<gradient:#22c55e:#86efac>[索赔]</gradient> <white>{trade_uuid}</white>"
+      lore:
+        - "<gray>贸易 UUID:</gray> <white>{trade_uuid}</white>"
+        - "<gray>物品有效负载插槽：</gray> <white>{item_count}</white>"
+        - "<gray>货币负载条目：</gray> <white>{currency_count}</white>"
+        - "<yellow>点击领取此 交货。</yellow>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] 收件箱为空</gradient>"
+    lore:
+      - "<gray> 未找到待处理的邀请或交货。</gray>"
+
+trade_session_ui:
+  title: "<gradient:#22c55e:#14b8a6>[交易] 会话</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[信息]会话状态</gradient>"
+    lore:
+      - "<gray>状态：</gray> <white>{status}</white>"
+      - "<gray>贸易 UUID:</gray> <white>{trade_uuid}</white>"
+      - "<gray>修订版：</gray> <white>{revision}</white>"
+      - "<gray>Y您的保管库 报价：</gray> <white>{self_vault}</white>"
+      - "<gray>P合作伙伴保险库报价：</gray> <white>{partner_vault}</white>"
+      - "<gray>Y您的货币：</gray> <white>{self_currency_count}</white> <gray>(总计：</gray> <white>{self_currency_total}</white><gray>)</gray>"
+      - "<gray>P合作伙伴币种：</gray> <white>{partner_currency_count}</white> <gray>(总计:</gray> <white>{partner_currency_total}</white><gray>)</gray>"
+  status:
+    invited: "<gradient:#f59e0b:#fbbf24>[已邀请]</gradient>"
+    active: "<gradient:#22c55e:#86efac>[主动]</gradient>"
+    completing: "<gradient:#38bdf8:#60a5fa>[完成]</gradient>"
+    completed: "<gradient:#22c55e:#86efac>[已完成]</gradient>"
+    canceled: "<gradient:#ef4444:#f87171>[已取消]</gradient>"
+    expired: "<gradient:#6b7280:#9ca3af>[已过期]</gradient>"
+  slots:
+    self_empty_name: "<gradient:#22c55e:#86efac>[自槽]#{slot}</gradient>"
+    self_empty_lore:
+      - "<gray>用光标左键单击 托管到此插槽中。</gray>"
+      - "<gray>按住Shift键单击您的库存以自动插入到第一个空闲插槽中。</gray>"
+      - "<gray>R右键单击已填充的自插槽以将其删除并 退款.</gray>"
+    partner_empty_name: "<gradient:#38bdf8:#60a5fa>[合作伙伴槽位] #{slot}</gradient>"
+    partner_empty_lore:
+      - "<gray>P合作伙伴报价预览出现在此处。</gray>"
+  actions:
+    invite_accept:
+      name: "<gradient:#22c55e:#86efac>[接受]开始 Trade</gradient>"
+      lore:
+        - "<gray>接受此邀请并将交易转至活动状态。</gray>"
+    invite_waiting:
+      name: "<gradient:#f59e0b:#fbbf24>[等待]邀请待处理</gradient>"
+      lore:
+        - "<gray>等待您的合作伙伴接受此邀请。</gray>"
+    currency_manage:
+      name: "<gradient:#f59e0b:#fbbf24>[硬币]编辑货币报价</gradient>"
+      lore:
+        - "<gray>打开输入金额的每种货币控件 输入.</gray>"
+        - "<yellow>点击选择货币。</yellow>"
+    currency_manage_secondary:
+      name: "<gradient:#38bdf8:#60a5fa>[列表]货币选择器</gradient>"
+      lore:
+        - "<gray>选择为Vault或JExEconomy添加/删除 货币.</gray>"
+        - "<yellow>点击打开货币选择器。</yellow>"
+    ready_lock:
+      name: "<gradient:#22c55e:#86efac>[就绪]锁定优惠</gradient>"
+      lore:
+        - "<gray>您:</gray> <white>{self_accepted}</white>"
+        - "<gray>P合作伙伴:</gray> <white>{partner_accepted}</white>"
+        - "<gray>左键单击锁定您的 报价.</gray>"
+        - "<gray>R右键未准备好。</gray>"
+    ready_unlock:
+      name: "<gradient:#f59e0b:#fbbf24>[就绪]解锁报价</gradient>"
+      lore:
+        - "<gray>您:</gray> <white>{self_accepted}</white>"
+        - "<gray>P合作伙伴:</gray> <white>{partner_accepted}</white>"
+        - "<gray>您的自助报价插槽被锁定，同时 准备好。</gray>"
+        - "<gray>右键单击解锁并再次编辑。</gray>"
+    confirm:
+      name: "<gradient:#38bdf8:#60a5fa>[接受]完成交易</gradient>"
+      lore:
+        - "<gray>您:</gray> <white>{self_accepted}</white>"
+        - "<gray>P合作伙伴:</gray> <white>{partner_accepted}</white>"
+        - "<gray>只有双方玩家后交易才能完成 接受.</gray>"
+    cancel:
+      name: "<gradient:#ef4444:#f87171>[取消]中止交易</gradient>"
+      lore:
+        - "<gray>C取消并通过交付行退款托管。</gray>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X]会话 不可用</gradient>"
+    lore:
+      - "<gray>此交易会话无法加载。</gray>"
+
+trade_currency_select_ui:
+  title: "<gradient:#f59e0b:#f97316>[交易]货币报价</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[信息]货币 选择器</gradient>"
+    lore:
+      - "<gray>可用货币：</gray> <white>{available_count}</white>"
+      - "<gray>Y我们的有效报价：</gray> <white>{offered_count}</white>"
+      - "<yellow>左键单击=添加，右键单击=删除。</yellow>"
+      - "<yellow>B两个操作打开金额输入 铁砧.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[货币]</gradient> <white>{currency}</white>"
+    lore:
+      - "<gray>ID:</gray> <white>{currency_id}</white>"
+      - "<gray>我们的报价：</gray> <white>{offered_amount}</white>"
+      - "<yellow>左键单击添加输入的金额。</yellow>"
+      - "<yellow>右击删除输入的金额。</yellow>"
+  applying:
+    name: "<gradient:#38bdf8:#60a5fa>[同步]应用货币 更改</gradient>"
+    lore:
+      - "<gray>更新 </gray> 的报价 <white>{currency}</white><gray>...</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] 无货币 提供商</gradient>"
+    lore:
+      - "<gray> 目前没有支持的货币可供交易。</gray>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X] 货币视图不可用</gradient>"
+    lore:
+      - "<gray>此交易会话无法加载。</gray>"
+
+trade_currency_amount_anvil_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[交易] {mode} {currency}</gradient>"
+  input:
+    lore:
+      - "<gray>货币:</gray> <white>{currency}</white>"
+      - "<gray>操作:</gray> <white>{mode}</white>"
+      - "<gray>当前报价：</gray> <white>{current_offer}</white>"
+      - "<yellow>输入非负小数 amount.</yellow>"
+  error:
+    invalid_amount: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> 的金额 <white>{input}</white><gray> 无效。 使用非负数。</gray>"
+
+trade:
+  message:
+    disabled: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>当前在配置中禁用交易。</gray>"
+    self_target: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>您无法进行交易 </gray>"
+    participant_busy: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>您已与 <white>{target}</white><gray>.</gray>"
+    invite_cooldown: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray> 进行未平仓交易 <white>{seconds}</white> 后再发送另一次交易邀请。</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray> 交易存储库/服务目前不可用。</gray>"
+    invite_sent: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>S向 <white>{target}</white><gray>.</gray>"
+    invite_received: "<gradient:#38bdf8:#60a5fa>[邀请]</gradient> <gray>您收到了来自 <white>{from}</white><gray> 的交易邀请。 打开 </gray><white>/rr trade</white><gray>.</gray>"
+    delivery_pending: "<gradient:#f59e0b:#f97316>[收件箱]</gradient> <gray>您有 <white>{count}</white> 等待交易交付 索赔.</gray>"
+    success: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>交易操作已完成.</gray>"
+    waiting_for_partner: "<gradient:#38bdf8:#60a5fa>[=]</gradient> <gray>等待您的合作伙伴 确认。</gray>"
+    completed: "<gradient:#22c55e:#86efac>[完成]</gradient> <gray>交易已完成。 在收件箱中领取货品。</gray>"
+    no_item_in_hand: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>先在主手上握住一件物品。</gray>"
+    offer_full: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Y您的报价已达到最大配置插槽 限制。</gray>"
+    insufficient_funds: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>您没有足够的资金用于此交易操作或其税费。</gray>"
+    missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray> 该交易行不再 存在。</gray>"
+    forbidden: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>您不是该交易操作的参与者。</gray>"
+    invalid_state: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>此操作对于当前交易无效 状态.</gray>"
+    stale: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>贸易数据在另一台服务器上发生更改。 刷新会话。</gray>"
+    expired: "<gradient:#ef4444:#f87171>[已过期]</gradient> <gray>该交易邀请已过期。</gray>"
 
 storage:
   message:

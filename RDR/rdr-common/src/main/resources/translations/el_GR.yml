@@ -65,6 +65,12 @@ storage_admin_ui:
         - "<gray>Διαχειριστείτε τα εργαλεία δεξιοτήτων, εργασίας, νομίσματος και PlaceholderAPI.</gray>"
         - "<gray>Ανοίξτε τα στοιχεία ελέγχου διαχειριστή για συγκεκριμένη ενσωμάτωση.</gray>"
         - "<yellow>Κάντε κλικ για να ανοίξετε τη διαχείριση ενοποίησης.</yellow>"
+    trade_bank:
+      name: "<gradient:#f59e0b:#fbbf24>[Φόρος] Trade Server Bank</gradient>"
+      lore:
+        - "<gray>Ελέγξτε τα εισπραχθέντα εμπορικά φορολογικά υπόλοιπα ανά νόμισμα.</gray>"
+        - "<gray>Ανάληψη υπολοίπων διακομιστή-τράπεζας στον λογαριασμό διαχειριστή σας.</gray>"
+        - "<yellow>Κάντε κλικ για να ανοίξετε τα τραπεζικά στοιχεία ελέγχου φόρου εμπορίου.</yellow>"
     currency:
       name: "<gradient:#10b981:#34d399>[Cur] Υπεύθυνος νομίσματος</gradient>"
       lore:
@@ -938,6 +944,316 @@ storage_tax_town_bank_ui:
     currency_unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> δεν μπορεί να μεταφερθεί στην τράπεζα της πόλης. Επί του παρόντος υποστηρίζονται οι μεταφορές από την πόλη Vault μόνο.</gray>"
     transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Αποτυχία μεταφοράς <white>{currency}</white><gray> στην τράπεζα της πόλης σας.</gray>"
     transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Μεταφέρθηκε <white>{amount}</white><gray> σε <white>{currency}</white><gray> στην τράπεζα της πόλης σας.</gray>"
+
+trade_admin_bank_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[Διαχειριστής] Τράπεζα Φορολογίας Εμπορίου</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#f97316>[Πληροφορίες] Βιβλίο Φορολογίας Διακομιστή</gradient>"
+    lore:
+      - "<gray>Νομίσματα που παρακολουθούνται:</gray> <white>{currency_count}</white>"
+      - "<gray>Κάντε κλικ σε οποιοδήποτε νόμισμα για να αποσύρετε το πλήρες υπόλοιπό του.</gray>"
+      - "<yellow>Απαιτείται:</yellow> <white>raindroprdr.command.admin</white>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[$] {currency}</gradient> <gray>({currency_id})</gray>"
+    lore:
+      - "<gray>Διαθέσιμο:</gray> <white>{amount}</white>"
+      - "<gray>Εγγραφές στο βιβλίο:</gray> <white>{ledger_count}</white>"
+      - "<gray>Τελευταίος τύπος:</gray> <white>{latest_type}</white>"
+      - "<gray>Τελευταίο ποσό:</gray> <white>{latest_amount}</white>"
+      - "<gray>Τελευταία σημείωση:</gray> <white>{latest_note}</white>"
+      - "<yellow>Κάντε κλικ για ανάληψη αυτού του υπολοίπου νομίσματος.</yellow>"
+    latest:
+      none: "<gradient:#6b7280:#9ca3af>[Καμία]</gradient>"
+      deposit: "<gradient:#22c55e:#86efac>[Κατάθεση]</gradient>"
+      withdraw: "<gradient:#ef4444:#f87171>[Ανάληψη]</gradient>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] Απαιτείται πρόσβαση διαχειριστή</gradient>"
+    lore:
+      - "<gray>Δεν έχετε άδεια να χρησιμοποιήσετε αυτό το πλαίσιο τράπεζας φόρου συναλλαγών.</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Χωρίς τραπεζικές καταχωρίσεις</gradient>"
+    lore:
+      - "<gray>Δεν υπάρχουν εισπραχθέντα εμπορικά φορολογικά υπόλοιπα αυτήν τη στιγμή.</gray>"
+  feedback:
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Δεν έχετε άδεια χρήσης τραπεζικών ελέγχων φόρου εμπορίου.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Η υπηρεσία τράπεζας εμπορικού φόρου δεν είναι διαθέσιμη αυτήν τη στιγμή.</gray>"
+    empty_balance: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Δεν βρέθηκε υπόλοιπο με δυνατότητα ανάληψης για <white>{currency}</white><gray>].</gray>"
+    withdraw_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Απέτυχε η ανάληψη του <white>{currency}</white><gray> από την τράπεζα εμπορικού φόρου.</gray>"
+    withdraw_success: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Αποσύρθηκε το <white>{amount}</white><gray> σε <white>{currency}</white><gray> από την τράπεζα εμπορικού φόρου.</gray>"
+
+trade_hub_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Εμπόριο] Διακομιστικός Διακομιστής</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Πληροφορίες] Επισκόπηση συναλλαγών</gradient>"
+    lore:
+      - "<gray>Εκκρεμείς προσκλήσεις:</gray> <white>{pending_invites}</white>"
+      - "<gray>Ενεργές περίοδοι σύνδεσης:</gray> <white>{active_sessions}</white>"
+      - "<gray>Εκκρεμείς παραδόσεις:</gray> <white>{pending_deliveries}</white>"
+      - "<yellow>Επιλέξτε μια συναλλαγή παρακάτω.</yellow>"
+  actions:
+    new_trade:
+      name: "<gradient:#22c55e:#86efac>[+] Νέα Εμπορική Πρόσκληση</gradient>"
+      lore:
+        - "<gray>Επιλέξτε έναν διαδικτυακό στόχο και στείλτε μια πρόσκληση που υποστηρίζεται από το DB.</gray>"
+        - "<yellow>Κάντε κλικ για να ανοίξετε την επιλογή στόχου.</yellow>"
+    current_trades:
+      name: "<gradient:#38bdf8:#60a5fa>[=] Τρέχουσες συναλλαγές</gradient>"
+      lore:
+        - "<gray>Έλεγχος προσκλήσεων, ενεργών περιόδων σύνδεσης και κατάστασης ολοκλήρωσης.</gray>"
+        - "<yellow>Κάντε κλικ για να περιηγηθείτε στις τρέχουσες συναλλαγές.</yellow>"
+    inbox:
+      name: "<gradient:#f59e0b:#f97316>[Εισερχόμενα] Αξιώσεις και αιτήματα</gradient>"
+      lore:
+        - "<gray>Αποδοχή προσκλήσεων και διεκδίκηση πληρωμών παράδοσης.</gray>"
+        - "<yellow>Κάντε κλικ για να ανοίξετε τα εισερχόμενα συναλλαγών.</yellow>"
+    tax_info:
+      name: "<gradient:#38bdf8:#60a5fa>[Φόρος] Εμπορικοί φόροι</gradient>"
+      lore:
+        - "<gray>Ελέγξτε τις ρυθμίσεις και τους τύπους φόρου συναλλαγών ανά νόμισμα.</gray>"
+        - "<yellow>Κάντε κλικ για να ανοίξετε τα φορολογικά στοιχεία συναλλαγών.</yellow>"
+
+trade_tax_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Φόρος] Ορισμοί φόρου εμπορίου</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Πληροφορίες] Φορολογική διαμόρφωση</gradient>"
+    lore:
+      - "<gray>Φορολογικό σύστημα:</gray> <white>{tax_enabled}</white>"
+      - "<gray>Διαμορφωμένα νομίσματα:</gray> <white>{currency_count}</white>"
+      - "<yellow>Κάθε κάρτα εμφανίζει τον ενεργό τύπο για αυτό το νόμισμα.</yellow>"
+    tax_enabled:
+      "on": "<gradient:#22c55e:#86efac>[Ενεργοποιημένο]</gradient>"
+      "off": "<gradient:#ef4444:#f87171>[Απενεργοποιημένο]</gradient>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[$] {currency}</gradient> <gray>({currency_id})</gray>"
+    lore:
+      - "<gray>Λειτουργία:</gray> <white>{mode}</white>"
+      - "<gray>Επίπεδη/βάση:</gray> <white>{flat_amount}</white>"
+      - "<gray>Ανάπτυξη ανά νόμισμα:</gray> <white>{growth_per_currency}</white>"
+      - "<gray>Ανάπτυξη κατά στοιχεία:</gray> <white>{growth_per_item}</white>"
+      - "<gray>Παράδειγμα (100 νόμισμα + 5 στοιχεία):</gray> <white>{example_tax}</white>"
+      - "<yellow>Πίνακας πληροφοριών μόνο για ανάγνωση.</yellow>"
+    mode:
+      flat: "<gradient:#38bdf8:#60a5fa>[FLAT]</gradient>"
+      growth: "<gradient:#f59e0b:#f97316>[GROWTH]</gradient>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Χωρίς φορολογικά νομίσματα</gradient>"
+    lore:
+      - "<gray>Δεν έχουν διαμορφωθεί νομίσματα φόρου συναλλαγών.</gray>"
+
+trade_target_select_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Εμπόριο] Επιλέξτε στόχο</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Πληροφορίες] Διαθέσιμοι στόχοι</gradient>"
+    lore:
+      - "<gray>Στόχοι που ανακαλύφθηκαν:</gray> <white>{target_count}</white>"
+      - "<yellow>Κάντε κλικ σε έναν στόχο για να στείλετε μια πρόσκληση.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Πρόσκληση]</gradient> <white>{target}</white>"
+    lore:
+      - "<gray>Στείλτε μια συνεχιζόμενη εμπορική πρόσκληση στο</gray> <white>{target}</white><gray>].</gray>"
+      - "<yellow>Κάντε κλικ για να προσκαλέσετε αυτόν τον παίκτη.</yellow>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>[X] Δεν βρέθηκαν στόχοι</gradient>"
+    lore:
+      - "<gray>Δεν βρέθηκαν επιλέξιμοι εμπορικοί στόχοι.</gray>"
+
+trade_current_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Εμπόριο] Τρέχουσες περίοδοι σύνδεσης</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Πληροφορίες] Λίστα περιόδων σύνδεσης</gradient>"
+    lore:
+      - "<gray>Παρακολούθηση συνεδριών:</gray> <white>{session_count}</white>"
+      - "<yellow>Κάντε κλικ στις καταχωρίσεις για διαχείριση ή άνοιγμα συνεδριών.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Εμπόριο]</gradient> <white>{counterparty}</white> <gray>{status}</gray>"
+    lore:
+      - "<gray>Αντισυμβαλλόμενος:</gray> <white>{counterparty}</white>"
+      - "<gray>Κατάσταση:</gray> <white>{status}</white>"
+      - "<gray>UUID συναλλαγών:</gray> <white>{trade_uuid}</white>"
+      - "<yellow>Κάντε κλικ για να ανοίξετε αυτήν τη συνεδρία.</yellow>"
+  actions:
+    inbox:
+      name: "<gradient:#f59e0b:#f97316>[Εισερχόμενα] Αξιώσεις και αιτήματα</gradient>"
+      lore:
+        - "<gray>Ανοιχτές προσκλήσεις και αξιώσεις παράδοσης.</gray>"
+        - "<yellow>Κάντε κλικ για να ανοίξετε τα εισερχόμενα συναλλαγών.</yellow>"
+  status:
+    invited: "<gradient:#f59e0b:#fbbf24>[Προσκλήθηκε]</gradient>"
+    active: "<gradient:#22c55e:#86efac>[Ενεργό]</gradient>"
+    completing: "<gradient:#38bdf8:#60a5fa>[Ολοκλήρωση]</gradient>"
+    completed: "<gradient:#22c55e:#86efac>[Ολοκληρώθηκε]</gradient>"
+    canceled: "<gradient:#ef4444:#f87171>[Ακυρώθηκε]</gradient>"
+    expired: "<gradient:#6b7280:#9ca3af>[Έληξε]</gradient>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Δεν υπάρχουν τρέχουσες συναλλαγές</gradient>"
+    lore:
+      - "<gray>Δεν βρέθηκαν συνεδρίες συναλλαγών χωρίς τερματικό.</gray>"
+
+trade_inbox_ui:
+  title: "<gradient:#f59e0b:#f97316>[Εμπόριο] Εισερχόμενα</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Πληροφορίες] Αιτήματα και παραδόσεις</gradient>"
+    lore:
+      - "<gray>Εκκρεμείς προσκλήσεις:</gray> <white>{invite_count}</white>"
+      - "<gray>Παραδόσεις με αξίωση:</gray> <white>{delivery_count}</white>"
+      - "<yellow>Προσκλήσεις: κάντε κλικ για να ανοίξετε τη συνεδρία.</yellow>"
+      - "<yellow>Παραδόσεις: κάντε κλικ για αξίωση.</yellow>"
+  entry:
+    invite:
+      name: "<gradient:#38bdf8:#60a5fa>[Πρόσκληση]</gradient> <white>{from}</white>"
+      lore:
+        - "<gray>Από:</gray> <white>{from}</white>"
+        - "<gray>UUID συναλλαγών:</gray> <white>{trade_uuid}</white>"
+        - "<yellow>Κάντε κλικ για να ανοίξετε αυτήν τη συνεδρία.</yellow>"
+    delivery:
+      name: "<gradient:#22c55e:#86efac>[Αξίωση]</gradient> <white>{trade_uuid}</white>"
+      lore:
+        - "<gray>UUID συναλλαγών:</gray> <white>{trade_uuid}</white>"
+        - "<gray>Υποδοχές ωφέλιμου φορτίου στοιχείων:</gray> <white>{item_count}</white>"
+        - "<gray>Εισχωρήσεις ωφέλιμου φορτίου νομίσματος:</gray> <white>{currency_count}</white>"
+        - "<yellow>Κάντε κλικ για να διεκδικήσετε αυτήν την παράδοση.</yellow>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Κενά Εισερχόμενα</gradient>"
+    lore:
+      - "<gray>Δεν βρέθηκαν εκκρεμείς προσκλήσεις ή παραδόσεις.</gray>"
+
+trade_session_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Εμπόριο] Συνεδρία</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Πληροφορίες] Κατάσταση περιόδου σύνδεσης</gradient>"
+    lore:
+      - "<gray>Κατάσταση:</gray> <white>{status}</white>"
+      - "<gray>UUID συναλλαγών:</gray> <white>{trade_uuid}</white>"
+      - "<gray>Αναθεώρηση:</gray> <white>{revision}</white>"
+      - "<gray>Η προσφορά σας στο Vault:</gray> <white>{self_vault}</white>"
+      - "<gray>Προσφορά Partner Vault:</gray> <white>{partner_vault}</white>"
+      - "<gray>Τα νομίσματά σας:</gray> <white>{self_currency_count}</white> <gray>](σύνολο:</gray> <white>{self_currency_total}[[PH9]]]<gray>"
+      - "<gray> Νομίσματα συνεργάτη:</gray> <white>{partner_currency_count}</white> <gray>(σύνολο:</gray> <white>{partner_currency_total}</white><gray>)</gray>"
+  status:
+    invited: "<gradient:#f59e0b:#fbbf24>[Προσκλήθηκε]</gradient>"
+    active: "<gradient:#22c55e:#86efac>[Ενεργό]</gradient>"
+    completing: "<gradient:#38bdf8:#60a5fa>[Ολοκλήρωση]</gradient>"
+    completed: "<gradient:#22c55e:#86efac>[Ολοκληρώθηκε]</gradient>"
+    canceled: "<gradient:#ef4444:#f87171>[Ακυρώθηκε]</gradient>"
+    expired: "<gradient:#6b7280:#9ca3af>[Έληξε]</gradient>"
+  slots:
+    self_empty_name: "<gradient:#22c55e:#86efac>[Self Slot] #{slot}</gradient>"
+    self_empty_lore:
+      - "<gray>Κάντε αριστερό κλικ με ένα στοιχείο δρομέα για να φυλάξετε σε αυτήν την υποδοχή.</gray>"
+      - "<gray>Κάντε Shift-κλικ στο απόθεμά σας για αυτόματη εισαγωγή στην πρώτη δωρεάν υποδοχή.</gray>"
+      - "<gray>Κάντε δεξί κλικ σε μια γεμάτη υποδοχή για να αφαιρέσετε και να επιστρέψετε τα χρήματα.</gray>"
+    partner_empty_name: "<gradient:#38bdf8:#60a5fa>[Partner Slot] #{slot}</gradient>"
+    partner_empty_lore:
+      - "<gray>Η προεπισκόπηση προσφοράς συνεργάτη εμφανίζεται εδώ.</gray>"
+  actions:
+    invite_accept:
+      name: "<gradient:#22c55e:#86efac>[Αποδοχή] Έναρξη συναλλαγών</gradient>"
+      lore:
+        - "<gray>Αποδεχτείτε αυτήν την πρόσκληση και μετακινήστε το εμπόριο σε ενεργή κατάσταση.</gray>"
+    invite_waiting:
+      name: "<gradient:#f59e0b:#fbbf24>[Αναμονή] Πρόσκληση σε εκκρεμότητα</gradient>"
+      lore:
+        - "<gray>Περιμένετε να αποδεχτεί αυτή την πρόσκληση ο συνεργάτης σας.</gray>"
+    currency_manage:
+      name: "<gradient:#f59e0b:#fbbf24>[Coin] Επεξεργασία προσφοράς νομίσματος</gradient>"
+      lore:
+        - "<gray>Άνοιγμα στοιχείων ελέγχου ανά νόμισμα με πληκτρολόγηση ποσού.</gray>"
+        - "<yellow>Κάντε κλικ για να επιλέξετε ένα νόμισμα.</yellow>"
+    currency_manage_secondary:
+      name: "<gradient:#38bdf8:#60a5fa>[Λίστα] Επιλογέας νομίσματος</gradient>"
+      lore:
+        - "<gray>Επιλέξτε προσθήκη/αφαίρεση για τα νομίσματα Vault ή JExEconomy.</gray>"
+        - "<yellow>Κάντε κλικ για να ανοίξετε τον επιλογέα νομίσματος.</yellow>"
+    ready_lock:
+      name: "<gradient:#22c55e:#86efac>[Έτοιμη] Προσφορά κλειδώματος</gradient>"
+      lore:
+        - "<gray>Εσείς:</gray> <white>{self_accepted}</white>"
+        - "<gray>Συνεργάτης:</gray> <white>{partner_accepted}</white>"
+        - "<gray>Αριστερό κλικ για να κλειδώσετε την προσφορά σας.</gray>"
+        - "<gray>Κάντε δεξί κλικ για να μην είναι έτοιμο.</gray>"
+    ready_unlock:
+      name: "<gradient:#f59e0b:#fbbf24>[Έτοιμη] Προσφορά ξεκλειδώματος</gradient>"
+      lore:
+        - "<gray>Εσείς:</gray> <white>{self_accepted}</white>"
+        - "<gray>Συνεργάτης:</gray> <white>{partner_accepted}</white>"
+        - "<gray>Οι θέσεις αυτοπροσφοράς σας είναι κλειδωμένες ενώ είναι έτοιμες.</gray>"
+        - "<gray>Κάντε δεξί κλικ για ξεκλείδωμα και επεξεργασία ξανά.</gray>"
+    confirm:
+      name: "<gradient:#38bdf8:#60a5fa>[Αποδοχή] Οριστικοποίηση συναλλαγής</gradient>"
+      lore:
+        - "<gray>Εσείς:</gray> <white>{self_accepted}</white>"
+        - "<gray>Συνεργάτης:</gray> <white>{partner_accepted}</white>"
+        - "<gray>Η συναλλαγή ολοκληρώνεται μόνο αφού αποδεχτούν και οι δύο παίκτες.</gray>"
+    cancel:
+      name: "<gradient:#ef4444:#f87171>[Ακύρωση] Ακύρωση συναλλαγής</gradient>"
+      lore:
+        - "<gray>Ακύρωση και επιστροφή χρημάτων μεσεγγύησης μέσω σειρών παράδοσης.</gray>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X] Η συνεδρία δεν είναι διαθέσιμη</gradient>"
+    lore:
+      - "<gray>Δεν ήταν δυνατή η φόρτωση αυτής της συνεδρίας.</gray>"
+
+trade_currency_select_ui:
+  title: "<gradient:#f59e0b:#f97316>[Εμπόριο] Προσφορές νομισμάτων</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Πληροφορίες] Επιλογέας νομίσματος</gradient>"
+    lore:
+      - "<gray>Διαθέσιμα νομίσματα:</gray> <white>{available_count}</white>"
+      - "<gray>Οι ενεργές προσφορές σας:</gray> <white>{offered_count}</white>"
+      - "<yellow>Αριστερό κλικ = προσθήκη, δεξί κλικ = κατάργηση.</yellow>"
+      - "<yellow>Και οι δύο ενέργειες ανοίγουν ένα αμόνι εισαγωγής ποσού.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Νόμισμα]</gradient> <white>{currency}</white>"
+    lore:
+      - "<gray>Αναγνωριστικό:</gray> <white>{currency_id}</white>"
+      - "<gray>Η προσφορά σας:</gray> <white>{offered_amount}</white>"
+      - "<yellow>Αριστερό κλικ για να προσθέσετε ένα πληκτρολογημένο ποσό.</yellow>"
+      - "<yellow>Κάντε δεξί κλικ για να αφαιρέσετε ένα πληκτρολογημένο ποσό.</yellow>"
+  applying:
+    name: "<gradient:#38bdf8:#60a5fa>[Συγχρονισμός] Εφαρμογή αλλαγής νομίσματος</gradient>"
+    lore:
+      - "<gray>Ενημέρωση της προσφοράς σας για </gray> <white>{currency}</white><gray>...</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Δεν υπάρχουν πάροχοι νομισμάτων</gradient>"
+    lore:
+      - "<gray>Δεν υπάρχουν υποστηριζόμενα νομίσματα προς το παρόν διαθέσιμα για συναλλαγές.</gray>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X] Η προβολή νομίσματος δεν είναι διαθέσιμη</gradient>"
+    lore:
+      - "<gray>Δεν ήταν δυνατή η φόρτωση αυτής της συνεδρίας.</gray>"
+
+trade_currency_amount_anvil_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[Εμπόριο] {mode} {currency}</gradient>"
+  input:
+    lore:
+      - "<gray>Νόμισμα:</gray> <white>{currency}</white>"
+      - "<gray>Λειτουργία:</gray> <white>{mode}</white>"
+      - "<gray>Τρέχουσα προσφορά:</gray> <white>{current_offer}</white>"
+      - "<yellow>Εισαγάγετε ένα μη αρνητικό δεκαδικό ποσό.</yellow>"
+  error:
+    invalid_amount: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Μη έγκυρο ποσό <white>{input}</white>[[PH6]]] για <white>{currency}</white>[[PH10]]]. Χρησιμοποιήστε έναν μη αρνητικό αριθμό.</gray>"
+
+trade:
+  message:
+    disabled: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Το εμπόριο είναι προς το παρόν απενεργοποιημένο στις ρυθμίσεις παραμέτρων.</gray>"
+    self_target: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Δεν μπορείτε να κάνετε συναλλαγές με τον εαυτό σας.</gray>"
+    participant_busy: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Έχετε ήδη μια ανοιχτή συναλλαγή με <white>{target}</white><gray>].<white>"
+    invite_cooldown: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Περιμένετε <white>{seconds}</white>δευτ. πριν στείλετε άλλη πρόσκληση για εμπορικές συναλλαγές.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Τα αποθετήρια/υπηρεσίες συναλλαγών δεν είναι διαθέσιμα αυτήν τη στιγμή.</gray>"
+    invite_sent: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Έστειλε μια εμπορική πρόσκληση στο <white>{target}</white><gray>].</gray>"
+    invite_received: "<gradient:#38bdf8:#60a5fa>[Πρόσκληση]</gradient> <gray>Λάβατε μια εμπορική πρόσκληση από τον <white>{from}</white><gray>. Ανοίξτε το </gray><white>/rr trade</white><gray>].</gray>"
+    delivery_pending: "<gradient:#f59e0b:#f97316>[Εισερχόμενα]</gradient> <gray>Έχετε [[PH3]]]{count}</white> εκκρεμείς αξιώσεις παράδοσης συναλλαγών.</gray>"
+    success: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Ολοκληρώθηκε η εμπορική ενέργεια.</gray>"
+    waiting_for_partner: "<gradient:#38bdf8:#60a5fa>[=]</gradient> <gray>Αναμονή για επιβεβαίωση του συνεργάτη σας.</gray>"
+    completed: "<gradient:#22c55e:#86efac>[Ολοκληρώθηκε]</gradient> <gray>Ολοκληρώθηκε η συναλλαγή. Διεκδικήστε την παράδοσή σας στα εισερχόμενα.</gray>"
+    no_item_in_hand: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Κρατήστε πρώτα ένα αντικείμενο στο κύριο χέρι σας.</gray>"
+    offer_full: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Η προσφορά σας βρίσκεται ήδη στο μέγιστο διαμορφωμένο όριο υποδοχής.</gray>"
+    insufficient_funds: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Δεν έχετε αρκετά χρήματα για αυτήν την εμπορική ενέργεια ή τη φορολογική της χρέωση.</gray>"
+    missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Αυτή η σειρά συναλλαγών δεν υπάρχει πλέον.</gray>"
+    forbidden: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Δεν συμμετέχετε σε αυτήν την εμπορική ενέργεια.</gray>"
+    invalid_state: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Αυτή η ενέργεια δεν ισχύει για την τρέχουσα κατάσταση συναλλαγών.</gray>"
+    stale: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Τα δεδομένα συναλλαγών άλλαξαν σε άλλο διακομιστή. Ανανεωτική περίοδος λειτουργίας.</gray>"
+    expired: "<gradient:#ef4444:#f87171>[Έληξε]</gradient> <gray>Αυτή η εμπορική πρόσκληση έχει ήδη λήξει.</gray>"
 
 storage:
   message:

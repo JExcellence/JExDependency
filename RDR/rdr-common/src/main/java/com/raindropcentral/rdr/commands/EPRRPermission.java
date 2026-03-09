@@ -18,7 +18,8 @@ public enum EPRRPermission implements IPermissionNode{
     ADMIN("commandAdmin","raindroprdr.command.admin"),
     INFO("commandInfo","raindroprdr.command.info"),
     SCOREBOARD("commandScoreboard","raindroprdr.command.scoreboard"),
-    STORAGE("commandStorage","raindroprdr.command.storage")
+    STORAGE("commandStorage","raindroprdr.command.storage"),
+    TRADE("commandTrade","raindroprdr.command.trade")
     ;
 
     /** Internal key used by the configuration system to resolve permissions. */

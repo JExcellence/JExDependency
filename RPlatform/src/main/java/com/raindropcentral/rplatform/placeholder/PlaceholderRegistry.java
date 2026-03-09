@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 
 /**
  * Coordinates PlaceholderAPI expansion registration for a plugin-owned
- * {@link AbstractPlaceholderExpansion}. At construction time the registry captures whether
+ * expansion instance. At construction time the registry captures whether
  * PlaceholderAPI is currently enabled so subsequent {@link #register()} and {@link #unregister()}
  * calls can safely no-op when the dependency is unavailable. Successful operations log the
  * lifecycle transitions while the availability flag enables callers to short-circuit placeholder
@@ -30,7 +30,7 @@ public class PlaceholderRegistry {
     /**
      * Expansion instance used to register and unregister placeholder handlers.
      */
-    private final AbstractPlaceholderExpansion expansion;
+    private final Object expansion;
 
     /**
      * Cache of PlaceholderAPI availability captured during construction.
@@ -45,7 +45,7 @@ public class PlaceholderRegistry {
      */
     public PlaceholderRegistry(
             final @NotNull Plugin plugin,
-            final @NotNull AbstractPlaceholderExpansion expansion
+            final @NotNull Object expansion
     ) {
         this.plugin = plugin;
         this.expansion = expansion;
@@ -62,7 +62,11 @@ public class PlaceholderRegistry {
             return;
         }
 
-        expansion.register();
+        if (!this.invokeNoArgs("register")) {
+            LOGGER.warning("Failed to register PlaceholderAPI expansion for " + plugin.getName());
+            return;
+        }
+
         LOGGER.info("Registered PlaceholderAPI expansion for " + plugin.getName());
     }
 
@@ -71,9 +75,14 @@ public class PlaceholderRegistry {
      * occurred. Emits an informational log for successful unregister operations.
      */
     public void unregister() {
-        if (papiAvailable && expansion.isRegistered()) {
-            expansion.unregister();
+        if (!papiAvailable || !this.invokeBoolean("isRegistered")) {
+            return;
+        }
+
+        if (this.invokeNoArgs("unregister")) {
             LOGGER.info("Unregistered PlaceholderAPI expansion for " + plugin.getName());
+        } else {
+            LOGGER.warning("Failed to unregister PlaceholderAPI expansion for " + plugin.getName());
         }
     }
 
@@ -92,6 +101,32 @@ public class PlaceholderRegistry {
      * @return {@code true} when PlaceholderAPI is available and the expansion reports registration.
      */
     public boolean isRegistered() {
-        return papiAvailable && expansion.isRegistered();
+        return papiAvailable && this.invokeBoolean("isRegistered");
+    }
+
+    private boolean invokeNoArgs(final @NotNull String methodName) {
+        try {
+            this.expansion.getClass().getMethod(methodName).invoke(this.expansion);
+            return true;
+        } catch (ReflectiveOperationException exception) {
+            LOGGER.warning(
+                "Failed to invoke '" + methodName + "' on expansion "
+                    + this.expansion.getClass().getName() + ": " + exception.getMessage()
+            );
+            return false;
+        }
+    }
+
+    private boolean invokeBoolean(final @NotNull String methodName) {
+        try {
+            final Object value = this.expansion.getClass().getMethod(methodName).invoke(this.expansion);
+            return value instanceof Boolean && (Boolean) value;
+        } catch (ReflectiveOperationException exception) {
+            LOGGER.warning(
+                "Failed to invoke '" + methodName + "' on expansion "
+                    + this.expansion.getClass().getName() + ": " + exception.getMessage()
+            );
+            return false;
+        }
     }
 }

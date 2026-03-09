@@ -15,6 +15,7 @@ import com.raindropcentral.rdr.view.StorageAdminView;
 import com.raindropcentral.rdr.view.StorageOverviewView;
 import com.raindropcentral.rdr.view.StorageTaxView;
 import com.raindropcentral.rdr.view.StorageViewLauncher;
+import com.raindropcentral.rdr.view.TradeHubView;
 import de.jexcellence.evaluable.section.ACommandSection;
 import de.jexcellence.jextranslate.i18n.I18n;
 import org.bukkit.entity.Player;
@@ -76,6 +77,7 @@ public class PRR extends PlayerCommand {
             case ADMIN -> this.handleAdminCommand(player);
             case SCOREBOARD -> this.handleScoreboardToggle(player, args);
             case STORAGE -> this.openStorageOverview(player);
+            case TRADE -> this.openTradeHub(player);
             case TAXES -> this.openStorageTaxes(player);
             default -> {
                 if (this.hasNoPermission(player, EPRRPermission.INFO)) {
@@ -230,6 +232,9 @@ public class PRR extends PlayerCommand {
             actions.add(EPRRAction.STORAGE.name().toLowerCase(Locale.ROOT));
             actions.add(EPRRAction.TAXES.name().toLowerCase(Locale.ROOT));
         }
+        if (this.hasPermission(player, EPRRPermission.TRADE)) {
+            actions.add(EPRRAction.TRADE.name().toLowerCase(Locale.ROOT));
+        }
         return List.copyOf(actions);
     }
 
@@ -324,6 +329,25 @@ public class PRR extends PlayerCommand {
 
         this.rdr.getViewFrame().open(
             StorageTaxView.class,
+            player,
+            Map.of("plugin", this.rdr)
+        );
+    }
+
+    private void openTradeHub(final @NotNull Player player) {
+        if (this.hasNoPermission(player, EPRRPermission.TRADE) || this.rdr == null) {
+            return;
+        }
+
+        if (!this.rdr.getDefaultConfig().isTradeEnabled()) {
+            new I18n.Builder("trade.message.disabled", player)
+                .build()
+                .sendMessage();
+            return;
+        }
+
+        this.rdr.getViewFrame().open(
+            TradeHubView.class,
             player,
             Map.of("plugin", this.rdr)
         );

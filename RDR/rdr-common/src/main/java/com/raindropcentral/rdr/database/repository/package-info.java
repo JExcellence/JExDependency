@@ -9,6 +9,7 @@
  * Repository types used to query and persist RDR database entities.
  *
  * <p>Repositories in this package wrap JEHibernate's cached repository support so plugin services can
- * resolve player, storage, and town tax-bank records without hand-written entity manager code.</p>
+ * resolve player, storage, DB-first trade session/delivery, town tax-bank, and server trade-tax bank
+ * records without hand-written entity manager code.</p>
  */
 package com.raindropcentral.rdr.database.repository;

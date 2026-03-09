@@ -65,6 +65,12 @@ storage_admin_ui:
         - "<gray>Beheer tools voor vaardigheden, banen, valuta en PlaceholderAPI.</gray>"
         - "<gray>Open integratiespecifieke beheerdersopties.</gray>"
         - "<yellow>Klik om integratiebeheer te openen.</yellow>"
+    trade_bank:
+      name: "<gradient:#f59e0b:#fbbf24>[Tax] Trade Server Bank</gradient>"
+      lore:
+        - "<gray>Bekijk de verzamelde handelsbelastingsaldi per valuta.</gray>"
+        - "<gray>Trek server-banksaldi op naar uw beheerder account.</gray>"
+        - "<yellow>Klik om de controles op de handelsbelastingbank te openen.</yellow>"
     currency:
       name: "<gradient:#10b981:#34d399>[Cur] Valutabeheerder</gradient>"
       lore:
@@ -938,6 +944,316 @@ storage_tax_town_bank_ui:
     currency_unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> kan niet worden overgemaakt naar de stadsbank. Overschrijvingen per stadsbank worden momenteel ondersteund Vault alleen.</gray>"
     transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Overdracht mislukt <white>{currency}</white><gray> naar uw stadsbank.</gray>"
     transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Overgedragen <white>{amount}</white><gray> in <white>{currency}</white><gray> naar uw stadsbank.</gray>"
+
+trade_admin_bank_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[Admin] Handelsbelastingbank</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#f97316>[Info] Serverbelasting Grootboek</gradient>"
+    lore:
+      - "<gray>Gevolgde valuta's:</gray> <white>{currency_count}</white>"
+      - "<gray>Klik op een valuta om het volledige bedrag op te nemen balans.</gray>"
+      - "<yellow>Vereist:</yellow> <white>raindroprdr.command.admin</white>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[$] {currency}</gradient> <gray>({currency_id})</gray>"
+    lore:
+      - "<gray>Beschikbaar:</gray> <white>{amount}</white>"
+      - "<gray>Ledger vermeldingen:</gray> <white>{ledger_count}</white>"
+      - "<gray>Nieuwste type:</gray> <white>{latest_type}</white>"
+      - "<gray>Nieuwste bedrag:</gray> <white>{latest_amount}</white>"
+      - "<gray>Laatste notitie:</gray> <white>{latest_note}</white>"
+      - "<yellow>Klik om deze valuta op te nemen saldo.</yellow>"
+    latest:
+      none: "<gradient:#6b7280:#9ca3af>[Geen]</gradient>"
+      deposit: "<gradient:#22c55e:#86efac>[Dep osit]</gradient>"
+      withdraw: "<gradient:#ef4444:#f87171>[Intrekken]</gradient>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] Beheerderstoegang vereist</gradient>"
+    lore:
+      - "<gray>U heeft geen toestemming om dit bankpaneel voor handelsbelastingen te gebruiken.</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Geen bank Invoer</gradient>"
+    lore:
+      - "<gray>Er zijn momenteel geen verzamelde handelsbelastingsaldi opgeslagen.</gray>"
+  feedback:
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Je hebt geen toestemming om de handelsbelastingbank te gebruiken controles.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>De handelsbelastingbankservice is momenteel niet beschikbaar.</gray>"
+    empty_balance: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Geen opneembaar saldo gevonden voor <white>{currency}</white><gray>.</gray>"
+    withdraw_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Kan <white>{currency}</white><gray> niet aftrekken van de handelsbelasting bank.</gray>"
+    withdraw_success: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Heeft <white>{amount}</white><gray> in <white>{currency}</white><gray> teruggetrokken van de handelsbelastingbank.</gray>"
+
+trade_hub_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Trade] Cross-Server Hub</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Handelsoverzicht</gradient>"
+    lore:
+      - "<gray>Uitnodigingen in behandeling:</gray> <white>{pending_invites}</white>"
+      - "<gray>Actieve sessies:</gray> <white>{active_sessions}</white>"
+      - "<gray>In afwachting van leveringen:</gray> <white>{pending_deliveries}</white>"
+      - "<yellow>Kies een handelsactie hieronder.</yellow>"
+  actions:
+    new_trade:
+      name: "<gradient:#22c55e:#86efac>[+] Nieuwe ruiluitnodiging</gradient>"
+      lore:
+        - "<gray>Selecteer een online doel en stuur een door DB ondersteunde uitnodiging.</gray>"
+        - "<yellow>Klik om het doel te openen selectie.</yellow>"
+    current_trades:
+      name: "<gradient:#38bdf8:#60a5fa>[=] Huidige transacties</gradient>"
+      lore:
+        - "<gray>Bekijk uitnodigingen, actieve sessies en voltooiingsstatus.</gray>"
+        - "<yellow>Klik om door de huidige te bladeren transacties.</yellow>"
+    inbox:
+      name: "<gradient:#f59e0b:#f97316>[Inbox] Claims en verzoeken</gradient>"
+      lore:
+        - "<gray>Accepteer uitnodigingen en claim uitbetalingen voor bezorging.</gray>"
+        - "<yellow>Klik om de transactie te openen inbox.</yellow>"
+    tax_info:
+      name: "<gradient:#38bdf8:#60a5fa>[Belasting] Handelsbelastingen</gradient>"
+      lore:
+        - "<gray>Bekijk de handelsbelastinginstellingen per valuta en formules.</gray>"
+        - "<yellow>Klik om handelsbelastinginformatie te openen.</yellow>"
+
+trade_tax_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Belasting] Handelsbelastingdefinities</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Belasting Configuratie</gradient>"
+    lore:
+      - "<gray>Belastingsysteem:</gray> <white>{tax_enabled}</white>"
+      - "<gray>Geconfigureerde valuta:</gray> <white>{currency_count}</white>"
+      - "<yellow>Elke kaart toont de actieve formule daarvoor valuta.</yellow>"
+    tax_enabled:
+      "on": "<gradient:#22c55e:#86efac>[Ingeschakeld]</gradient>"
+      "off": "<gradient:#ef4444:#f87171>[Uitgeschakeld]</gradient>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[$] {currency}</gradient> <gray>({currency_id})</gray>"
+    lore:
+      - "<gray>Modus:</gray> <white>{mode}</white>"
+      - "<gray>Flat/base:</gray> <white>{flat_amount}</white>"
+      - "<gray>Groei per valuta:</gray> <white>{growth_per_currency}</white>"
+      - "<gray>Groei per items:</gray> <white>{growth_per_item}</white>"
+      - "<gray>Voorbeeld (100 valuta + 5 items):</gray> <white>{example_tax}</white>"
+      - "<yellow>Alleen-lezen informatiepaneel.</yellow>"
+    mode:
+      flat: "<gradient:#38bdf8:#60a5fa>[FLAT]</gradient>"
+      growth: "<gradient:#f59e0b:#f97316>[GROEI]</gradient>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Geen belastingvaluta</gradient>"
+    lore:
+      - "<gray>Er zijn geen handelsbelastingvaluta's geconfigureerd.</gray>"
+
+trade_target_select_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Handel] Selecteer doel</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Beschikbare doelen</gradient>"
+    lore:
+      - "<gray>Doelstellingen ontdekt:</gray> <white>{target_count}</white>"
+      - "<yellow>Klik op een doel om een ​​uitnodiging te sturen.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Uitnodigen]</gradient> <white>{target}</white>"
+    lore:
+      - "<gray>Stuur een blijvende handelsuitnodiging naar</gray> <white>{target}</white><gray>.</gray>"
+      - "<yellow>Klik om deze speler uit te nodigen.</yellow>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>[X] Geen doelen gevonden</gradient>"
+    lore:
+      - "<gray>Er zijn geen in aanmerking komende handelsdoelen gevonden.</gray>"
+
+trade_current_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Handel] Huidige sessies</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Sessielijst</gradient>"
+    lore:
+      - "<gray>Gevolgde sessies:</gray> <white>{session_count}</white>"
+      - "<yellow>Klik op items om sessies te beheren of te openen.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Handel]</gradient> <white>{counterparty}</white> <gray>{status}</gray>"
+    lore:
+      - "<gray>Tegenpartij:</gray> <white>{counterparty}</white>"
+      - "<gray>Status:</gray> <white>{status}</white>"
+      - "<gray>Handel-UUID:</gray> <white>{trade_uuid}</white>"
+      - "<yellow>Klik om deze handelssessie te openen.</yellow>"
+  actions:
+    inbox:
+      name: "<gradient:#f59e0b:#f97316>[Inbox] Claims en verzoeken</gradient>"
+      lore:
+        - "<gray>Openstaande uitnodigingen en leveringsclaims.</gray>"
+        - "<yellow>Klik om de transactie te openen inbox.</yellow>"
+  status:
+    invited: "<gradient:#f59e0b:#fbbf24>[Uitgenodigd]</gradient>"
+    active: "<gradient:#22c55e:#86efac>[Actief]</gradient>"
+    completing: "<gradient:#38bdf8:#60a5fa>[Voltooid]</gradient>"
+    completed: "<gradient:#22c55e:#86efac>[Voltooid]</gradient>"
+    canceled: "<gradient:#ef4444:#f87171>[Geannuleerd]</gradient>"
+    expired: "<gradient:#6b7280:#9ca3af>[Verlopen]</gradient>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Geen lopende transacties</gradient>"
+    lore:
+      - "<gray>Er zijn geen niet-terminale handelssessies gevonden.</gray>"
+
+trade_inbox_ui:
+  title: "<gradient:#f59e0b:#f97316>[Trade] Inbox</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Verzoeken en leveringen</gradient>"
+    lore:
+      - "<gray>Openstaande uitnodigingen:</gray> <white>{invite_count}</white>"
+      - "<gray>Claimable leveringen:</gray> <white>{delivery_count}</white>"
+      - "<yellow>Uitnodigingen: klik om de transactie te openen sessie.</yellow>"
+      - "<yellow>Leveringen: klik om te claimen.</yellow>"
+  entry:
+    invite:
+      name: "<gradient:#38bdf8:#60a5fa>[Uitnodigen]</gradient> <white>{from}</white>"
+      lore:
+        - "<gray>Van:</gray> <white>{from}</white>"
+        - "<gray>Handel-UUID:</gray> <white>{trade_uuid}</white>"
+        - "<yellow>Klik om deze handelssessie te openen.</yellow>"
+    delivery:
+      name: "<gradient:#22c55e:#86efac>[Claim]</gradient> <white>{trade_uuid}</white>"
+      lore:
+        - "<gray>Handel-UUID:</gray> <white>{trade_uuid}</white>"
+        - "<gray>Itempayload-posities:</gray> <white>{item_count}</white>"
+        - "<gray>Valutapayload-items:</gray> <white>{currency_count}</white>"
+        - "<yellow>Klik om deze bezorging te claimen.</yellow>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Inbox Leeg</gradient>"
+    lore:
+      - "<gray>Geen openstaande uitnodigingen of leveringen gevonden.</gray>"
+
+trade_session_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Trade] Sessie</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Sessie Staat</gradient>"
+    lore:
+      - "<gray>Status:</gray> <white>{status}</white>"
+      - "<gray>Handel-UUID:</gray> <white>{trade_uuid}</white>"
+      - "<gray>Revisie:</gray> <white>{revision}</white>"
+      - "<gray>Uw kluisaanbieding:</gray> <white>{self_vault}</white>"
+      - "<gray>Partner Vault-aanbieding:</gray> <white>{partner_vault}</white>"
+      - "<gray>Uw valuta:</gray> <white>{self_currency_count}</white> <gray>(totaal:</gray> <white>{self_currency_total}</white><gray>)</gray>"
+      - "<gray>Partnervaluta's:</gray> <white>{partner_currency_count}</white> <gray>(totaal:</gray> <white>{partner_currency_total}</white><gray>)</gray>"
+  status:
+    invited: "<gradient:#f59e0b:#fbbf24>[Uitgenodigd]</gradient>"
+    active: "<gradient:#22c55e:#86efac>[Actief]</gradient>"
+    completing: "<gradient:#38bdf8:#60a5fa>[Voltooid]</gradient>"
+    completed: "<gradient:#22c55e:#86efac>[Voltooid]</gradient>"
+    canceled: "<gradient:#ef4444:#f87171>[Geannuleerd]</gradient>"
+    expired: "<gradient:#6b7280:#9ca3af>[Verlopen]</gradient>"
+  slots:
+    self_empty_name: "<gradient:#22c55e:#86efac>[Self Slot] #{slot}</gradient>"
+    self_empty_lore:
+      - "<gray>Klik met de linkermuisknop met de cursor om het item in dit slot te bewaren.</gray>"
+      - "<gray>Shift-klik op je inventaris om deze automatisch in te voegen in de eerste vrije slot.</gray>"
+      - "<gray>Klik met de rechtermuisknop op een ingevulde eigen slot om het te verwijderen en terug te betalen.</gray>"
+    partner_empty_name: "<gradient:#38bdf8:#60a5fa>[Partner Slot] #{slot}</gradient>"
+    partner_empty_lore:
+      - "<gray>Voorbeeld van de partneraanbieding verschijnt hier.</gray>"
+  actions:
+    invite_accept:
+      name: "<gradient:#22c55e:#86efac>[Accepteer] Start Trade</gradient>"
+      lore:
+        - "<gray>Accepteer deze uitnodiging en verplaats de transactie naar de actieve status.</gray>"
+    invite_waiting:
+      name: "<gradient:#f59e0b:#fbbf24>[Wachten] Uitnodiging in behandeling</gradient>"
+      lore:
+        - "<gray>Wacht tot je partner deze uitnodiging accepteert.</gray>"
+    currency_manage:
+      name: "<gradient:#f59e0b:#fbbf24>[Coin] Valutaaanbieding bewerken</gradient>"
+      lore:
+        - "<gray>Open opties per valuta met getypt bedrag invoer.</gray>"
+        - "<yellow>Klik om een valuta te selecteren.</yellow>"
+    currency_manage_secondary:
+      name: "<gradient:#38bdf8:#60a5fa>[Lijst] Valutakiezer</gradient>"
+      lore:
+        - "<gray>Kies toevoegen/verwijderen voor Vault of JExEconomy valuta's.</gray>"
+        - "<yellow>Klik om de valutakiezer te openen.</yellow>"
+    ready_lock:
+      name: "<gradient:#22c55e:#86efac>[Klaar] Aanbieding vergrendelen</gradient>"
+      lore:
+        - "<gray>Jij:</gray> <white>{self_accepted}</white>"
+        - "<gray>Partner:</gray> <white>{partner_accepted}</white>"
+        - "<gray>Klik met de linkermuisknop om uw aanbieding.</gray>"
+        - "<gray>Klik met de rechtermuisknop om niet gereed te zijn.</gray>"
+    ready_unlock:
+      name: "<gradient:#f59e0b:#fbbf24>[Ready] Aanbieding ontgrendelen</gradient>"
+      lore:
+        - "<gray>Jij:</gray> <white>{self_accepted}</white>"
+        - "<gray>Partner:</gray> <white>{partner_accepted}</white>"
+        - "<gray>Uw plaatsen voor zelfaanbiedingen zijn vergrendeld terwijl klaar.</gray>"
+        - "<gray>Klik met de rechtermuisknop om te ontgrendelen en opnieuw te bewerken.</gray>"
+    confirm:
+      name: "<gradient:#38bdf8:#60a5fa>[Accepteer] Handel voltooien</gradient>"
+      lore:
+        - "<gray>Jij:</gray> <white>{self_accepted}</white>"
+        - "<gray>Partner:</gray> <white>{partner_accepted}</white>"
+        - "<gray>De ruil is pas voltooid nadat beide spelers accepteren.</gray>"
+    cancel:
+      name: "<gradient:#ef4444:#f87171>[Annuleren] Transactie afbreken</gradient>"
+      lore:
+        - "<gray>Annuleren en borg terugbetalen via leveringsrijen.</gray>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X] Sessie Niet beschikbaar</gradient>"
+    lore:
+      - "<gray>Deze handelssessie kan niet worden geladen.</gray>"
+
+trade_currency_select_ui:
+  title: "<gradient:#f59e0b:#f97316>[Trade] Valutaaanbiedingen</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Valuta Selector</gradient>"
+    lore:
+      - "<gray>Beschikbare valuta:</gray> <white>{available_count}</white>"
+      - "<gray>Uw actieve aanbiedingen:</gray> <white>{offered_count}</white>"
+      - "<yellow>Links klikken = toevoegen, rechts klikken = verwijderen.</yellow>"
+      - "<yellow>Beide acties openen een invoer van een bedrag aambeeld.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Valuta]</gradient> <white>{currency}</white>"
+    lore:
+      - "<gray>ID:</gray> <white>{currency_id}</white>"
+      - "<gray>Uw aanbieding:</gray> <white>{offered_amount}</white>"
+      - "<yellow>Klik met de linkermuisknop om een getypt bedrag toe te voegen.</yellow>"
+      - "<yellow>Klik met de rechtermuisknop om een getypt bedrag te verwijderen.</yellow>"
+  applying:
+    name: "<gradient:#38bdf8:#60a5fa>[Sync] Valuta toepassen Wijzig</gradient>"
+    lore:
+      - "<gray>Uw aanbieding bijwerken voor</gray> <white>{currency}</white><gray>...</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Geen valuta Aanbieders</gradient>"
+    lore:
+      - "<gray>Er zijn momenteel geen ondersteunde valuta's beschikbaar voor handel.</gray>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X] Valutaweergave niet beschikbaar</gradient>"
+    lore:
+      - "<gray>Deze handelssessie kan niet worden geladen.</gray>"
+
+trade_currency_amount_anvil_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[Handel] {mode} {currency}</gradient>"
+  input:
+    lore:
+      - "<gray>Valuta:</gray> <white>{currency}</white>"
+      - "<gray>Bediening:</gray> <white>{mode}</white>"
+      - "<gray>Huidige aanbieding:</gray> <white>{current_offer}</white>"
+      - "<yellow>Voer een niet-negatief decimaal getal in bedrag.</yellow>"
+  error:
+    invalid_amount: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Ongeldig bedrag <white>{input}</white><gray> voor <white>{currency}</white><gray>. Gebruik een niet-negatief getal.</gray>"
+
+trade:
+  message:
+    disabled: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Handel is momenteel uitgeschakeld in configuratie.</gray>"
+    self_target: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Je kunt niet handel met jezelf.</gray>"
+    participant_busy: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Je hebt al een openstaande transactie met <white>{target}</white><gray>.</gray>"
+    invite_cooldown: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Wacht <white>{seconds}</white>s voordat u nog een transactie verzendt uitnodiging.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Handelsopslagplaatsen/-diensten zijn momenteel niet beschikbaar.</gray>"
+    invite_sent: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Heb een handelsuitnodiging verzonden naar <white>{target}</white><gray>.</gray>"
+    invite_received: "<gradient:#38bdf8:#60a5fa>[Uitnodiging]</gradient> <gray>Je hebt een ruiluitnodiging ontvangen van <white>{from}</white><gray>. Open </gray><white>/rr trade</white><gray>.</gray>"
+    delivery_pending: "<gradient:#f59e0b:#f97316>[Inbox]</gradient> <gray>U heeft <white>{count}</white> openstaande claim(s) voor levering van transacties.</gray>"
+    success: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Handelactie voltooid.</gray>"
+    waiting_for_partner: "<gradient:#38bdf8:#60a5fa>[=]</gradient> <gray>Wachten op je partner bevestiging.</gray>"
+    completed: "<gradient:#22c55e:#86efac>[Gereed]</gradient> <gray>Handel voltooid. Claim je levering in je inbox.</gray>"
+    no_item_in_hand: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Houd eerst een item in je hoofdhand.</gray>"
+    offer_full: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Je bod is heeft al de maximale geconfigureerde slotlimiet bereikt.</gray>"
+    insufficient_funds: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Je hebt niet genoeg geld voor deze handelsactie of de bijbehorende belastingheffing.</gray>"
+    missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Die handelsrij bestaat niet meer.</gray>"
+    forbidden: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Je bent geen deelnemer aan die handelsactie.</gray>"
+    invalid_state: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Deze actie is niet geldig voor de huidige handelsstatus.</gray>"
+    stale: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Handelsgegevens gewijzigd op een andere server. Sessie vernieuwen.</gray>"
+    expired: "<gradient:#ef4444:#f87171>[Verlopen]</gradient> <gray>Die ruiluitnodiging is al verlopen.</gray>"
 
 storage:
   message:

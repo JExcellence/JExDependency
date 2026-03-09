@@ -18,13 +18,18 @@ import com.raindropcentral.commands.CommandFactory;
 import com.raindropcentral.rdr.configs.ConfigSection;
 import com.raindropcentral.rdr.database.entity.RDRPlayer;
 import com.raindropcentral.rdr.database.repository.RRDRPlayer;
+import com.raindropcentral.rdr.database.repository.RRServerBank;
 import com.raindropcentral.rdr.database.repository.RRStorage;
+import com.raindropcentral.rdr.database.repository.RRTradeDelivery;
+import com.raindropcentral.rdr.database.repository.RRTradeSession;
 import com.raindropcentral.rdr.database.repository.RRTownStorageBank;
 import com.raindropcentral.rdr.placeholders.RDRPlaceholderExpansion;
 import com.raindropcentral.rdr.requirement.RDRRequirementSetup;
 import com.raindropcentral.rdr.service.StorageAdminPlayerSettingsService;
 import com.raindropcentral.rdr.service.StorageFilledTaxScheduler;
 import com.raindropcentral.rdr.service.StorageService;
+import com.raindropcentral.rdr.service.TradeInboxPollService;
+import com.raindropcentral.rdr.service.TradeService;
 import com.raindropcentral.rdr.service.scoreboard.StorageSidebarScoreboardService;
 import com.raindropcentral.rdr.view.AdminCurrencyView;
 import com.raindropcentral.rdr.view.PlaceholderAPIView;
@@ -51,6 +56,15 @@ import com.raindropcentral.rdr.view.StorageTaxTownBankView;
 import com.raindropcentral.rdr.view.StorageTaxView;
 import com.raindropcentral.rdr.view.StorageTrustedView;
 import com.raindropcentral.rdr.view.StorageView;
+import com.raindropcentral.rdr.view.TradeCurrentTradesView;
+import com.raindropcentral.rdr.view.TradeAdminBankView;
+import com.raindropcentral.rdr.view.TradeCurrencyAmountAnvilView;
+import com.raindropcentral.rdr.view.TradeCurrencySelectView;
+import com.raindropcentral.rdr.view.TradeHubView;
+import com.raindropcentral.rdr.view.TradeInboxView;
+import com.raindropcentral.rdr.view.TradeSessionView;
+import com.raindropcentral.rdr.view.TradeTaxView;
+import com.raindropcentral.rdr.view.TradeTargetSelectView;
 import com.raindropcentral.rplatform.RPlatform;
 import com.raindropcentral.rplatform.api.PlatformAPIFactory;
 import com.raindropcentral.rplatform.api.PlatformType;
@@ -63,6 +77,7 @@ import de.jexcellence.hibernate.JEHibernate;
 import jakarta.persistence.EntityManagerFactory;
 import me.devnatan.inventoryframework.AnvilInputFeature;
 import me.devnatan.inventoryframework.ViewFrame;
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -106,11 +121,16 @@ public class RDR {
     private StorageSidebarScoreboardService storageSidebarScoreboardService;
     private StorageFilledTaxScheduler storageFilledTaxScheduler;
     private StorageAdminPlayerSettingsService storageAdminPlayerSettingsService;
+    private TradeService tradeService;
+    private TradeInboxPollService tradeInboxPollService;
     private BStatsMetrics metrics;
     private PlaceholderRegistry placeholderRegistry;
 
     private RRDRPlayer playerRepository;
     private RRStorage storageRepository;
+    private RRServerBank serverBankRepository;
+    private RRTradeSession tradeSessionRepository;
+    private RRTradeDelivery tradeDeliveryRepository;
     private RRTownStorageBank townStorageBankRepository;
     private UUID serverUuid;
 
@@ -169,6 +189,7 @@ public class RDR {
         this.initializeAdminPlayerSettings();
         this.initializeCommands();
         this.initializeViews();
+        this.initializeTradeServices();
         this.initializeStorageSidebarScoreboards();
         this.initializeStorageFilledTaxScheduler();
         this.initializePlaceholderExpansion();
@@ -198,6 +219,9 @@ public class RDR {
         }
         if (this.storageFilledTaxScheduler != null) {
             this.storageFilledTaxScheduler.shutdown();
+        }
+        if (this.tradeInboxPollService != null) {
+            this.tradeInboxPollService.shutdown();
         }
         if (this.placeholderRegistry != null) {
             this.placeholderRegistry.unregister();
@@ -490,6 +514,24 @@ public class RDR {
     }
 
     /**
+     * Returns the trade service facade for DB-first escrow trade operations.
+     *
+     * @return trade service, or {@code null} before trade services initialize
+     */
+    public @Nullable TradeService getTradeService() {
+        return this.tradeService;
+    }
+
+    /**
+     * Returns the polling service used for trade inbox/session refresh notifications.
+     *
+     * @return trade inbox poll service, or {@code null} before trade services initialize
+     */
+    public @Nullable TradeInboxPollService getTradeInboxPollService() {
+        return this.tradeInboxPollService;
+    }
+
+    /**
      * Returns the repository used for persisted player storage profiles.
      *
      * @return player repository, or {@code null} before repository initialization completes
@@ -505,6 +547,33 @@ public class RDR {
      */
     public @Nullable RRStorage getStorageRepository() {
         return this.storageRepository;
+    }
+
+    /**
+     * Returns the repository used for persisted server trade-tax bank balances and ledger entries.
+     *
+     * @return server trade-tax bank repository, or {@code null} before repository initialization completes
+     */
+    public @Nullable RRServerBank getServerBankRepository() {
+        return this.serverBankRepository;
+    }
+
+    /**
+     * Returns the repository used for trade-session lifecycle persistence.
+     *
+     * @return trade-session repository, or {@code null} before repository initialization completes
+     */
+    public @Nullable RRTradeSession getTradeSessionRepository() {
+        return this.tradeSessionRepository;
+    }
+
+    /**
+     * Returns the repository used for pending trade-delivery claims.
+     *
+     * @return trade-delivery repository, or {@code null} before repository initialization completes
+     */
+    public @Nullable RRTradeDelivery getTradeDeliveryRepository() {
+        return this.tradeDeliveryRepository;
     }
 
     /**
@@ -739,6 +808,18 @@ public class RDR {
             this.executor,
             this.entityManagerFactory
         );
+        this.serverBankRepository = new RRServerBank(
+            this.executor,
+            this.entityManagerFactory
+        );
+        this.tradeSessionRepository = new RRTradeSession(
+            this.executor,
+            this.entityManagerFactory
+        );
+        this.tradeDeliveryRepository = new RRTradeDelivery(
+            this.executor,
+            this.entityManagerFactory
+        );
         this.townStorageBankRepository = new RRTownStorageBank(
             this.executor,
             this.entityManagerFactory
@@ -807,10 +888,27 @@ public class RDR {
                 new StorageTaxView(),
                 new StorageFrozenStorageView(),
                 new StorageTaxTownBankView(),
-                new StorageView()
+                new StorageView(),
+                new TradeHubView(),
+                new TradeTaxView(),
+                new TradeTargetSelectView(),
+                new TradeCurrentTradesView(),
+                new TradeInboxView(),
+                new TradeSessionView(),
+                new TradeCurrencySelectView(),
+                new TradeCurrencyAmountAnvilView(),
+                new TradeAdminBankView()
             )
             .disableMetrics();
         this.viewFrame = frame.register();
+    }
+
+    private void initializeTradeServices() {
+        this.tradeService = new TradeService(this);
+        this.tradeInboxPollService = new TradeInboxPollService(this);
+        if (this.getDefaultConfig().isTradeEnabled()) {
+            this.tradeInboxPollService.start();
+        }
     }
 
     private void initializeStorageSidebarScoreboards() {
@@ -827,11 +925,20 @@ public class RDR {
      * Registers the internal PlaceholderAPI expansion.
      */
     private void initializePlaceholderExpansion() {
+        if (!this.isPlaceholderApiAvailable()) {
+            this.getLogger().info("PlaceholderAPI not detected; skipping RDR placeholder expansion registration.");
+            return;
+        }
+
         this.placeholderRegistry = new PlaceholderRegistry(
             this.plugin,
             new RDRPlaceholderExpansion(this)
         );
         this.placeholderRegistry.register();
+    }
+
+    private boolean isPlaceholderApiAvailable() {
+        return Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI");
     }
 
     private @NotNull UUID loadOrCreateServerUuid() {

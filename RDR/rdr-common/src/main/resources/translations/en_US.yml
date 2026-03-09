@@ -64,6 +64,12 @@ storage_admin_ui:
         - "<gray>Manage skill, job, currency, and PlaceholderAPI tools.</gray>"
         - "<gray>Open integration-specific admin controls.</gray>"
         - "<yellow>Click to open integration management.</yellow>"
+    trade_bank:
+      name: "<gradient:#f59e0b:#fbbf24>[Tax] Trade Server Bank</gradient>"
+      lore:
+        - "<gray>Review collected trade-tax balances by currency.</gray>"
+        - "<gray>Withdraw server-bank balances to your admin account.</gray>"
+        - "<yellow>Click to open trade tax bank controls.</yellow>"
     currency:
       name: "<gradient:#10b981:#34d399>[Cur] Currency Manager</gradient>"
       lore:
@@ -936,6 +942,316 @@ storage_tax_town_bank_ui:
     currency_unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> cannot be transferred to town bank. Town-bank transfers currently support Vault only.</gray>"
     transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Failed to transfer <white>{currency}</white><gray> into your town bank.</gray>"
     transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Transferred <white>{amount}</white><gray> in <white>{currency}</white><gray> to your town bank.</gray>"
+
+trade_admin_bank_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[Admin] Trade Tax Bank</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#f97316>[Info] Server Tax Ledger</gradient>"
+    lore:
+      - "<gray>Tracked currencies:</gray> <white>{currency_count}</white>"
+      - "<gray>Click any currency to withdraw its full balance.</gray>"
+      - "<yellow>Requires:</yellow> <white>raindroprdr.command.admin</white>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[$] {currency}</gradient> <gray>({currency_id})</gray>"
+    lore:
+      - "<gray>Available:</gray> <white>{amount}</white>"
+      - "<gray>Ledger entries:</gray> <white>{ledger_count}</white>"
+      - "<gray>Latest type:</gray> <white>{latest_type}</white>"
+      - "<gray>Latest amount:</gray> <white>{latest_amount}</white>"
+      - "<gray>Latest note:</gray> <white>{latest_note}</white>"
+      - "<yellow>Click to withdraw this currency balance.</yellow>"
+    latest:
+      none: "<gradient:#6b7280:#9ca3af>[None]</gradient>"
+      deposit: "<gradient:#22c55e:#86efac>[Deposit]</gradient>"
+      withdraw: "<gradient:#ef4444:#f87171>[Withdraw]</gradient>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] Admin Access Required</gradient>"
+    lore:
+      - "<gray>You do not have permission to use this trade-tax bank panel.</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] No Bank Entries</gradient>"
+    lore:
+      - "<gray>No collected trade-tax balances are stored right now.</gray>"
+  feedback:
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>You do not have permission to use trade tax bank controls.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Trade tax bank service is currently unavailable.</gray>"
+    empty_balance: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>No withdrawable balance found for <white>{currency}</white><gray>.</gray>"
+    withdraw_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Failed to withdraw <white>{currency}</white><gray> from the trade tax bank.</gray>"
+    withdraw_success: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Withdrew <white>{amount}</white><gray> in <white>{currency}</white><gray> from the trade tax bank.</gray>"
+
+trade_hub_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Trade] Cross-Server Hub</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Trade Overview</gradient>"
+    lore:
+      - "<gray>Pending invites:</gray> <white>{pending_invites}</white>"
+      - "<gray>Active sessions:</gray> <white>{active_sessions}</white>"
+      - "<gray>Pending deliveries:</gray> <white>{pending_deliveries}</white>"
+      - "<yellow>Choose a trade action below.</yellow>"
+  actions:
+    new_trade:
+      name: "<gradient:#22c55e:#86efac>[+] New Trade Invite</gradient>"
+      lore:
+        - "<gray>Select an online target and send a DB-backed invite.</gray>"
+        - "<yellow>Click to open target selection.</yellow>"
+    current_trades:
+      name: "<gradient:#38bdf8:#60a5fa>[=] Current Trades</gradient>"
+      lore:
+        - "<gray>Review invites, active sessions, and completion state.</gray>"
+        - "<yellow>Click to browse current trades.</yellow>"
+    inbox:
+      name: "<gradient:#f59e0b:#f97316>[Inbox] Claims & Requests</gradient>"
+      lore:
+        - "<gray>Accept invites and claim delivery payouts.</gray>"
+        - "<yellow>Click to open trade inbox.</yellow>"
+    tax_info:
+      name: "<gradient:#38bdf8:#60a5fa>[Tax] Trade Taxes</gradient>"
+      lore:
+        - "<gray>Review per-currency trade-tax settings and formulas.</gray>"
+        - "<yellow>Click to open trade tax information.</yellow>"
+
+trade_tax_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Tax] Trade Tax Definitions</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Tax Configuration</gradient>"
+    lore:
+      - "<gray>Tax system:</gray> <white>{tax_enabled}</white>"
+      - "<gray>Configured currencies:</gray> <white>{currency_count}</white>"
+      - "<yellow>Each card shows the active formula for that currency.</yellow>"
+    tax_enabled:
+      "on": "<gradient:#22c55e:#86efac>[Enabled]</gradient>"
+      "off": "<gradient:#ef4444:#f87171>[Disabled]</gradient>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[$] {currency}</gradient> <gray>({currency_id})</gray>"
+    lore:
+      - "<gray>Mode:</gray> <white>{mode}</white>"
+      - "<gray>Flat/base:</gray> <white>{flat_amount}</white>"
+      - "<gray>Growth by currency:</gray> <white>{growth_per_currency}</white>"
+      - "<gray>Growth by items:</gray> <white>{growth_per_item}</white>"
+      - "<gray>Example (100 currency + 5 items):</gray> <white>{example_tax}</white>"
+      - "<yellow>Read-only information panel.</yellow>"
+    mode:
+      flat: "<gradient:#38bdf8:#60a5fa>[FLAT]</gradient>"
+      growth: "<gradient:#f59e0b:#f97316>[GROWTH]</gradient>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] No Tax Currencies</gradient>"
+    lore:
+      - "<gray>No trade-tax currencies are configured.</gray>"
+
+trade_target_select_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Trade] Select Target</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Available Targets</gradient>"
+    lore:
+      - "<gray>Targets discovered:</gray> <white>{target_count}</white>"
+      - "<yellow>Click a target to send an invite.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Invite]</gradient> <white>{target}</white>"
+    lore:
+      - "<gray>Send a persisted trade invite to</gray> <white>{target}</white><gray>.</gray>"
+      - "<yellow>Click to invite this player.</yellow>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>[X] No Targets Found</gradient>"
+    lore:
+      - "<gray>No eligible trade targets were found.</gray>"
+
+trade_current_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Trade] Current Sessions</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Session List</gradient>"
+    lore:
+      - "<gray>Tracked sessions:</gray> <white>{session_count}</white>"
+      - "<yellow>Click entries to manage or open sessions.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Trade]</gradient> <white>{counterparty}</white> <gray>{status}</gray>"
+    lore:
+      - "<gray>Counterparty:</gray> <white>{counterparty}</white>"
+      - "<gray>Status:</gray> <white>{status}</white>"
+      - "<gray>Trade UUID:</gray> <white>{trade_uuid}</white>"
+      - "<yellow>Click to open this trade session.</yellow>"
+  actions:
+    inbox:
+      name: "<gradient:#f59e0b:#f97316>[Inbox] Claims & Requests</gradient>"
+      lore:
+        - "<gray>Open invites and delivery claims.</gray>"
+        - "<yellow>Click to open trade inbox.</yellow>"
+  status:
+    invited: "<gradient:#f59e0b:#fbbf24>[Invited]</gradient>"
+    active: "<gradient:#22c55e:#86efac>[Active]</gradient>"
+    completing: "<gradient:#38bdf8:#60a5fa>[Completing]</gradient>"
+    completed: "<gradient:#22c55e:#86efac>[Completed]</gradient>"
+    canceled: "<gradient:#ef4444:#f87171>[Canceled]</gradient>"
+    expired: "<gradient:#6b7280:#9ca3af>[Expired]</gradient>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] No Current Trades</gradient>"
+    lore:
+      - "<gray>No non-terminal trade sessions were found.</gray>"
+
+trade_inbox_ui:
+  title: "<gradient:#f59e0b:#f97316>[Trade] Inbox</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Requests & Deliveries</gradient>"
+    lore:
+      - "<gray>Pending invites:</gray> <white>{invite_count}</white>"
+      - "<gray>Claimable deliveries:</gray> <white>{delivery_count}</white>"
+      - "<yellow>Invites: click to open trade session.</yellow>"
+      - "<yellow>Deliveries: click to claim.</yellow>"
+  entry:
+    invite:
+      name: "<gradient:#38bdf8:#60a5fa>[Invite]</gradient> <white>{from}</white>"
+      lore:
+        - "<gray>From:</gray> <white>{from}</white>"
+        - "<gray>Trade UUID:</gray> <white>{trade_uuid}</white>"
+        - "<yellow>Click to open this trade session.</yellow>"
+    delivery:
+      name: "<gradient:#22c55e:#86efac>[Claim]</gradient> <white>{trade_uuid}</white>"
+      lore:
+        - "<gray>Trade UUID:</gray> <white>{trade_uuid}</white>"
+        - "<gray>Item payload slots:</gray> <white>{item_count}</white>"
+        - "<gray>Currency payload entries:</gray> <white>{currency_count}</white>"
+        - "<yellow>Click to claim this delivery.</yellow>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Inbox Empty</gradient>"
+    lore:
+      - "<gray>No pending invites or deliveries found.</gray>"
+
+trade_session_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Trade] Session</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Session State</gradient>"
+    lore:
+      - "<gray>Status:</gray> <white>{status}</white>"
+      - "<gray>Trade UUID:</gray> <white>{trade_uuid}</white>"
+      - "<gray>Revision:</gray> <white>{revision}</white>"
+      - "<gray>Your Vault offer:</gray> <white>{self_vault}</white>"
+      - "<gray>Partner Vault offer:</gray> <white>{partner_vault}</white>"
+      - "<gray>Your currencies:</gray> <white>{self_currency_count}</white> <gray>(total:</gray> <white>{self_currency_total}</white><gray>)</gray>"
+      - "<gray>Partner currencies:</gray> <white>{partner_currency_count}</white> <gray>(total:</gray> <white>{partner_currency_total}</white><gray>)</gray>"
+  status:
+    invited: "<gradient:#f59e0b:#fbbf24>[Invited]</gradient>"
+    active: "<gradient:#22c55e:#86efac>[Active]</gradient>"
+    completing: "<gradient:#38bdf8:#60a5fa>[Completing]</gradient>"
+    completed: "<gradient:#22c55e:#86efac>[Completed]</gradient>"
+    canceled: "<gradient:#ef4444:#f87171>[Canceled]</gradient>"
+    expired: "<gradient:#6b7280:#9ca3af>[Expired]</gradient>"
+  slots:
+    self_empty_name: "<gradient:#22c55e:#86efac>[Self Slot] #{slot}</gradient>"
+    self_empty_lore:
+      - "<gray>Left-click with a cursor item to escrow into this slot.</gray>"
+      - "<gray>Shift-click your inventory to auto-insert into first free slot.</gray>"
+      - "<gray>Right-click a filled self slot to remove and refund.</gray>"
+    partner_empty_name: "<gradient:#38bdf8:#60a5fa>[Partner Slot] #{slot}</gradient>"
+    partner_empty_lore:
+      - "<gray>Partner offer preview appears here.</gray>"
+  actions:
+    invite_accept:
+      name: "<gradient:#22c55e:#86efac>[Accept] Start Trade</gradient>"
+      lore:
+        - "<gray>Accept this invite and move trade to active state.</gray>"
+    invite_waiting:
+      name: "<gradient:#f59e0b:#fbbf24>[Waiting] Invite Pending</gradient>"
+      lore:
+        - "<gray>Waiting for your partner to accept this invite.</gray>"
+    currency_manage:
+      name: "<gradient:#f59e0b:#fbbf24>[Coin] Edit Currency Offer</gradient>"
+      lore:
+        - "<gray>Open per-currency controls with typed amount input.</gray>"
+        - "<yellow>Click to select a currency.</yellow>"
+    currency_manage_secondary:
+      name: "<gradient:#38bdf8:#60a5fa>[List] Currency Selector</gradient>"
+      lore:
+        - "<gray>Choose add/remove for Vault or JExEconomy currencies.</gray>"
+        - "<yellow>Click to open currency selector.</yellow>"
+    ready_lock:
+      name: "<gradient:#22c55e:#86efac>[Ready] Lock Offer</gradient>"
+      lore:
+        - "<gray>You:</gray> <white>{self_accepted}</white>"
+        - "<gray>Partner:</gray> <white>{partner_accepted}</white>"
+        - "<gray>Left click to lock your offer.</gray>"
+        - "<gray>Right click to unready.</gray>"
+    ready_unlock:
+      name: "<gradient:#f59e0b:#fbbf24>[Ready] Unlock Offer</gradient>"
+      lore:
+        - "<gray>You:</gray> <white>{self_accepted}</white>"
+        - "<gray>Partner:</gray> <white>{partner_accepted}</white>"
+        - "<gray>Your self-offer slots are locked while ready.</gray>"
+        - "<gray>Right click to unlock and edit again.</gray>"
+    confirm:
+      name: "<gradient:#38bdf8:#60a5fa>[Accept] Finalize Trade</gradient>"
+      lore:
+        - "<gray>You:</gray> <white>{self_accepted}</white>"
+        - "<gray>Partner:</gray> <white>{partner_accepted}</white>"
+        - "<gray>Trade completes only after both players accept.</gray>"
+    cancel:
+      name: "<gradient:#ef4444:#f87171>[Cancel] Abort Trade</gradient>"
+      lore:
+        - "<gray>Cancel and refund escrow via delivery rows.</gray>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X] Session Unavailable</gradient>"
+    lore:
+      - "<gray>This trade session could not be loaded.</gray>"
+
+trade_currency_select_ui:
+  title: "<gradient:#f59e0b:#f97316>[Trade] Currency Offers</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Currency Selector</gradient>"
+    lore:
+      - "<gray>Available currencies:</gray> <white>{available_count}</white>"
+      - "<gray>Your active offers:</gray> <white>{offered_count}</white>"
+      - "<yellow>Left click = add, right click = remove.</yellow>"
+      - "<yellow>Both actions open an amount input anvil.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Currency]</gradient> <white>{currency}</white>"
+    lore:
+      - "<gray>ID:</gray> <white>{currency_id}</white>"
+      - "<gray>Your offer:</gray> <white>{offered_amount}</white>"
+      - "<yellow>Left click to add a typed amount.</yellow>"
+      - "<yellow>Right click to remove a typed amount.</yellow>"
+  applying:
+    name: "<gradient:#38bdf8:#60a5fa>[Sync] Applying Currency Change</gradient>"
+    lore:
+      - "<gray>Updating your offer for</gray> <white>{currency}</white><gray>...</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] No Currency Providers</gradient>"
+    lore:
+      - "<gray>No supported currencies are currently available for trade.</gray>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X] Currency View Unavailable</gradient>"
+    lore:
+      - "<gray>This trade session could not be loaded.</gray>"
+
+trade_currency_amount_anvil_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[Trade] {mode} {currency}</gradient>"
+  input:
+    lore:
+      - "<gray>Currency:</gray> <white>{currency}</white>"
+      - "<gray>Operation:</gray> <white>{mode}</white>"
+      - "<gray>Current offer:</gray> <white>{current_offer}</white>"
+      - "<yellow>Enter a non-negative decimal amount.</yellow>"
+  error:
+    invalid_amount: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Invalid amount <white>{input}</white><gray> for <white>{currency}</white><gray>. Use a non-negative number.</gray>"
+
+trade:
+  message:
+    disabled: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Trade is currently disabled in config.</gray>"
+    self_target: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>You cannot trade with yourself.</gray>"
+    participant_busy: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>You already have an open trade with <white>{target}</white><gray>.</gray>"
+    invite_cooldown: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Wait <white>{seconds}</white>s before sending another trade invite.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Trade repositories/services are unavailable right now.</gray>"
+    invite_sent: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Sent a trade invite to <white>{target}</white><gray>.</gray>"
+    invite_received: "<gradient:#38bdf8:#60a5fa>[Invite]</gradient> <gray>You received a trade invite from <white>{from}</white><gray>. Open </gray><white>/rr trade</white><gray>.</gray>"
+    delivery_pending: "<gradient:#f59e0b:#f97316>[Inbox]</gradient> <gray>You have <white>{count}</white> pending trade delivery claim(s).</gray>"
+    success: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Trade action completed.</gray>"
+    waiting_for_partner: "<gradient:#38bdf8:#60a5fa>[=]</gradient> <gray>Waiting for your partner confirmation.</gray>"
+    completed: "<gradient:#22c55e:#86efac>[Done]</gradient> <gray>Trade completed. Claim your delivery in inbox.</gray>"
+    no_item_in_hand: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Hold an item in your main hand first.</gray>"
+    offer_full: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Your offer is already at the max configured slot limit.</gray>"
+    insufficient_funds: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>You do not have enough funds for this trade action or its tax charge.</gray>"
+    missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>That trade row no longer exists.</gray>"
+    forbidden: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>You are not a participant for that trade action.</gray>"
+    invalid_state: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>This action is not valid for the current trade state.</gray>"
+    stale: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Trade data changed on another server. Refreshing session.</gray>"
+    expired: "<gradient:#ef4444:#f87171>[Expired]</gradient> <gray>That trade invite already expired.</gray>"
 
 storage:
   message:

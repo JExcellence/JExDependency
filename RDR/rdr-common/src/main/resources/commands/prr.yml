@@ -4,9 +4,9 @@ commands:
     description: 'RDR Commands'
     aliases:
       - rr
-    usage: 'rr [admin|storage|taxes|scoreboard|<hotkey>]'
+    usage: 'rr [admin|storage|taxes|trade|scoreboard|<hotkey>]'
     argumentUsages:
-      1$: 'lut["prefix"] & "&7/" & alias & "&c<admin | storage | taxes | scoreboard | hotkey>"'
+      1$: 'lut["prefix"] & "&7/" & alias & "&c<admin | storage | taxes | trade | scoreboard | hotkey>"'
     errorMessages:
       malformedEnum$: |
         lut["prefix"] & "&7The value &c" & value & " &7is not one of (" &
@@ -29,6 +29,7 @@ commands:
         commandInfo: 'raindroprdr.command.info'
         commandScoreboard: 'raindroprdr.command.scoreboard'
         commandStorage: 'raindroprdr.command.storage'
+        commandTrade: 'raindroprdr.command.trade'
 
 lut:
   prefix: '&8[&1Admin&8] &7'

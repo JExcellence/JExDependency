@@ -12,5 +12,6 @@ public enum EPRRAction {
     INFO,
     SCOREBOARD,
     STORAGE,
+    TRADE,
     TAXES
 }

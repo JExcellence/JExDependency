@@ -6,6 +6,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Method;
+import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
@@ -231,6 +233,41 @@ public class JExEconomyBridge {
 		} catch (Exception e) {
 			LOGGER.log(Level.FINE, "Error checking currency availability", e);
 			return false;
+		}
+	}
+
+	/**
+	 * Returns all available currency identifiers and display names.
+	 *
+	 * @return immutable map of normalized currency identifiers to display names
+	 */
+	@NotNull
+	public Map<String, String> getAvailableCurrencies() {
+		try {
+			Method getAllCurrenciesMethod = adapterClass.getMethod("getAllCurrencies");
+			Object mapObj = getAllCurrenciesMethod.invoke(adapter);
+			if (!(mapObj instanceof Map<?, ?> currencies)) {
+				return Map.of();
+			}
+
+			final Map<String, String> detectedCurrencies = new LinkedHashMap<>();
+			for (Object currency : currencies.values()) {
+				if (currency == null) {
+					continue;
+				}
+				Method getIdentifierMethod = currencyClass.getMethod("getIdentifier");
+				String currencyId = (String) getIdentifierMethod.invoke(currency);
+				if (currencyId == null || currencyId.isBlank()) {
+					continue;
+				}
+
+				final String normalizedCurrencyId = currencyId.trim().toLowerCase(Locale.ROOT);
+				detectedCurrencies.put(normalizedCurrencyId, this.getCurrencyDisplayName(currencyId));
+			}
+			return Map.copyOf(detectedCurrencies);
+		} catch (Exception exception) {
+			LOGGER.log(Level.FINE, "Error loading available currencies", exception);
+			return Map.of();
 		}
 	}
 	

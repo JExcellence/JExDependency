@@ -46,6 +46,16 @@ class ConfigSectionTest {
         assertEquals(-1.0D, section.getProtectionFilledStorageMaximumDebtByCurrency().get("raindrops"));
         assertEquals(0.0D, section.getProtectionFilledStorageTaxes().get("vault"));
         assertEquals(0.0D, section.getProtectionFilledStorageTaxes().get("raindrops"));
+        assertTrue(section.isTradeEnabled());
+        assertEquals(60L, section.getTradeInviteTimeoutSeconds());
+        assertEquals(20L, section.getTradePollIntervalTicks());
+        assertEquals(9, section.getTradeMaxOfferSlots());
+        assertEquals(5L, section.getTradeInviteCooldownSeconds());
+        assertFalse(section.isTradeTaxationEnabled());
+        assertEquals(ConfigSection.TradeTaxMode.FLAT, section.getTradeTaxationCurrencies().get("vault").mode());
+        assertEquals(0.0D, section.getTradeTaxationCurrencies().get("vault").flatAmount());
+        assertEquals(ConfigSection.TradeTaxMode.FLAT, section.getTradeTaxationCurrencies().get("raindrops").mode());
+        assertEquals(0.0D, section.getTradeTaxationCurrencies().get("raindrops").flatAmount());
         assertFalse(section.isProtectionRestrictedStorage("storage-1"));
         assertTrue(section.isProtectionTaxedStorage("storage-1"));
     }
@@ -229,6 +239,71 @@ class ConfigSectionTest {
 
         assertEquals(8.0D, section.getProtectionOpenStorageTaxes().get("vault"));
         assertEquals(2.0D, section.getProtectionOpenStorageTaxes().get("raindrops"));
+    }
+
+    @Test
+    void readsTradeSettingsAndNormalizesInvalidValues(final @TempDir Path tempDir) throws IOException {
+        final Path configFile = tempDir.resolve("config.yml");
+        Files.writeString(configFile, """
+            starting_storages: 1
+            max_storages: 2
+            max_hotkeys: 9
+            trade:
+              enabled: false
+              invite_timeout_seconds: -1
+              poll_interval_ticks: 40
+              max_offer_slots: 99
+              invite_cooldown_seconds: -10
+            """);
+
+        final ConfigSection section = ConfigSection.fromFile(configFile.toFile());
+
+        assertFalse(section.isTradeEnabled());
+        assertEquals(60L, section.getTradeInviteTimeoutSeconds());
+        assertEquals(40L, section.getTradePollIntervalTicks());
+        assertEquals(12, section.getTradeMaxOfferSlots());
+        assertEquals(0L, section.getTradeInviteCooldownSeconds());
+    }
+
+    @Test
+    void parsesTradeTaxationSettingsAndNormalizesInvalidValues(final @TempDir Path tempDir) throws IOException {
+        final Path configFile = tempDir.resolve("config.yml");
+        Files.writeString(configFile, """
+            starting_storages: 1
+            max_storages: 2
+            max_hotkeys: 9
+            trade:
+              taxation:
+                enabled: true
+                currencies:
+                  vault:
+                    mode: GROWTH
+                    flat_amount: 10.0
+                    growth_per_currency_amount: 0.05
+                    growth_per_item: 2.5
+                  raindrops:
+                    mode: FLAT
+                    flat_amount: -2.0
+                  tokens:
+                    mode: "UNKNOWN"
+                    flat_amount: 3
+                    growth_rate_currency_amount: 0.1
+                    growth_rate_item_count: 0.2
+            """);
+
+        final ConfigSection section = ConfigSection.fromFile(configFile.toFile());
+
+        assertTrue(section.isTradeTaxationEnabled());
+        assertEquals(ConfigSection.TradeTaxMode.GROWTH, section.getTradeTaxationCurrencies().get("vault").mode());
+        assertEquals(10.0D, section.getTradeTaxationCurrencies().get("vault").flatAmount());
+        assertEquals(0.05D, section.getTradeTaxationCurrencies().get("vault").growthPerCurrencyAmount());
+        assertEquals(2.5D, section.getTradeTaxationCurrencies().get("vault").growthPerItem());
+        assertEquals(ConfigSection.TradeTaxMode.FLAT, section.getTradeTaxationCurrencies().get("raindrops").mode());
+        assertEquals(0.0D, section.getTradeTaxationCurrencies().get("raindrops").flatAmount());
+        assertEquals(ConfigSection.TradeTaxMode.FLAT, section.getTradeTaxationCurrencies().get("tokens").mode());
+        assertEquals(3.0D, section.getTradeTaxationCurrencies().get("tokens").flatAmount());
+        assertEquals(0.1D, section.getTradeTaxationCurrencies().get("tokens").growthPerCurrencyAmount());
+        assertEquals(0.2D, section.getTradeTaxationCurrencies().get("tokens").growthPerItem());
     }
 
     @Test

@@ -65,6 +65,12 @@ storage_admin_ui:
         - "<gray>Beceri, iş, para birimi ve PlaceholderAPI araçlarını yönetin.</gray>"
         - "<gray>Entegrasyona özel yönetici kontrollerini açın.</gray>"
         - "<yellow>Entegrasyon yönetimini açmak için tıklayın.</yellow>"
+    trade_bank:
+      name: "<gradient:#f59e0b:#fbbf24>[Vergi] Ticaret Sunucusu Bankası</gradient>"
+      lore:
+        - "<gray>Toplanan ticari vergi bakiyelerini para birimine göre inceleyin.</gray>"
+        - "<gray>Sunucu-banka bakiyelerini yöneticinize çekin account.</gray>"
+        - "<yellow>Ticaret vergisi bankası kontrollerini açmak için tıklayın.</yellow>"
     currency:
       name: "<gradient:#10b981:#34d399>[Cur] Para Birimi Yöneticisi</gradient>"
       lore:
@@ -938,6 +944,316 @@ storage_tax_town_bank_ui:
     currency_unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> şehir bankasına devredilemez. Şehir bankası transferleri şu anda destekleniyor Vault sadece.</gray>"
     transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Aktarılamadı <white>{currency}</white><gray> şehir bankasına.</gray>"
     transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Aktarıldı <white>{amount}</white><gray> içinde <white>{currency}</white><gray> şehir bankasına.</gray>"
+
+trade_admin_bank_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[Yönetici] Ticaret Vergisi Bankası</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#f97316>[Bilgi] Sunucu Vergisi Ledger</gradient>"
+    lore:
+      - "<gray>Takip edilen para birimleri:</gray> <white>{currency_count}</white>"
+      - "<gray>Tüm bakiyesini çekmek için herhangi bir para birimine tıklayın.</gray>"
+      - "<yellow>Gerektiren:</yellow> <white>raindroprdr.command.admin</white>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[$] {currency}</gradient> <gray>({currency_id})</gray>"
+    lore:
+      - "<gray>mevcut:</gray> <white>{amount}</white>"
+      - "<gray>LDefter girişleri:</gray> <white>{ledger_count}</white>"
+      - "<gray>En son tür:</gray> <white>{latest_type}</white>"
+      - "<gray>Son tutar:</gray> <white>{latest_amount}</white>"
+      - "<gray>Son not:</gray> <white>{latest_note}</white>"
+      - "<yellow>Bu para birimini çekmek için tıklayın bakiye.</yellow>"
+    latest:
+      none: "<gradient:#6b7280:#9ca3af>[Yok]</gradient>"
+      deposit: "<gradient:#22c55e:#86efac>[Derinlik osit]</gradient>"
+      withdraw: "<gradient:#ef4444:#f87171>[Çekilme]</gradient>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] Yönetici Erişimi Gerekli</gradient>"
+    lore:
+      - "<gray>Bu ticari vergi bankası panelini kullanma izniniz yok.</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Banka Girişi Yok</gradient>"
+    lore:
+      - "<gray>Toplanan ticari vergi bakiyesi yok şu anda saklanıyor.</gray>"
+  feedback:
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray> Ticari vergi bankası kontrollerini kullanma izniniz yok.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray> Ticari vergi bankası hizmeti şu anda etkin kullanılamıyor.</gray>"
+    empty_balance: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray><white>{currency}</white><gray>.</gray>"
+    withdraw_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray> için çekilebilir bakiye bulunamadı Ticari vergi bankasından <white>{currency}</white><gray>.</gray>"
+    withdraw_success: "<gradient:#22c55e:#86efac>[+]</gradient> <gray> <white>{amount}</white><gray> <white>{currency}</white><gray> ticari vergiden çekildi bank.</gray>"
+
+trade_hub_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Ticaret] Sunucular Arası Hub</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Bilgi] Ticarete Genel Bakış</gradient>"
+    lore:
+      - "<gray>PBiten davetler:</gray> <white>{pending_invites}</white>"
+      - "<gray>Etkin oturumlar:</gray> <white>{active_sessions}</white>"
+      - "<gray>Biten teslimatlar:</gray> <white>{pending_deliveries}</white>"
+      - "<yellow>Aşağıdan bir ticaret işlemi seçin.</yellow>"
+  actions:
+    new_trade:
+      name: "<gradient:#22c55e:#86efac>[+] Yeni Ticaret Daveti</gradient>"
+      lore:
+        - "<gray>Çevrimiçi bir hedef seçin ve DB destekli bir işlem gönderin davet.</gray>"
+        - "<yellow>Hedef seçimini açmak için tıklayın.</yellow>"
+    current_trades:
+      name: "<gradient:#38bdf8:#60a5fa>[=] Mevcut İşlemler</gradient>"
+      lore:
+        - "<gray>Davetleri, aktif oturumları ve tamamlamayı inceleyin state.</gray>"
+        - "<yellow>Mevcut işlemlere göz atmak için tıklayın.</yellow>"
+    inbox:
+      name: "<gradient:#f59e0b:#f97316>[Gelen Kutusu] Talepler ve Talepler</gradient>"
+      lore:
+        - "<gray>Davetleri kabul et ve teslimatı talep et ödemeler.</gray>"
+        - "<yellow>Ticaret gelen kutusunu açmak için tıklayın.</yellow>"
+    tax_info:
+      name: "<gradient:#38bdf8:#60a5fa>[Vergi] Ticaret Vergileri</gradient>"
+      lore:
+        - "<gray>Para bazında ticaret vergisi ayarlarını inceleyin ve formüller.</gray>"
+        - "<yellow>Ticaret vergisi bilgilerini açmak için tıklayın.</yellow>"
+
+trade_tax_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Vergi] Ticaret Vergisi Tanımları</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Bilgi] Vergi Yapılandırma</gradient>"
+    lore:
+      - "<gray>Vergi sistemi:</gray> <white>{tax_enabled}</white>"
+      - "<gray>Yapılandırılmış para birimleri:</gray> <white>{currency_count}</white>"
+      - "<yellow>Her kart bunun için aktif formülü gösterir para birimi.</yellow>"
+    tax_enabled:
+      "on": "<gradient:#22c55e:#86efac>[Etkin]</gradient>"
+      "off": "<gradient:#ef4444:#f87171>[Devre Dışı]</gradient>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[$] {currency}</gradient> <gray>({currency_id})</gray>"
+    lore:
+      - "<gray>Modu:</gray> <white>{mode}</white>"
+      - "<gray>Flat/taban:</gray> <white>{flat_amount}</white>"
+      - "<gray>Para bazında büyüme:</gray> <white>{growth_per_currency}</white>"
+      - "<gray>Öğe bazında büyüme:</gray> <white>{growth_per_item}</white>"
+      - "<gray>Örnek (100 para birimi + 5 öğe):</gray> <white>{example_tax}</white>"
+      - "<yellow>Salt okunur bilgi paneli.</yellow>"
+    mode:
+      flat: "<gradient:#38bdf8:#60a5fa>[FLAT]</gradient>"
+      growth: "<gradient:#f59e0b:#f97316>[BÜYÜME]</gradient>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Vergi Yok Para Birimi</gradient>"
+    lore:
+      - "<gray>Hiçbir ticari vergi para birimi yapılandırılmamış.</gray>"
+
+trade_target_select_ui:
+  title: "<gradient:#22c55e:#14b8a6>[İşlem] Hedefi Seç</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Bilgi] Mevcut Hedefler</gradient>"
+    lore:
+      - "<gray>Keşfedilen hedefler:</gray> <white>{target_count}</white>"
+      - "<yellow>Davet göndermek için bir hedefi tıklayın.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Davet et]</gradient> <white>{target}</white>"
+    lore:
+      - "<gray></gray> <white>{target}</white><gray>.</gray> adresine kalıcı bir takas daveti gönderin"
+      - "<yellow>Bu oyuncuyu davet etmek için tıklayın.</yellow>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>[X] Hedef Bulunamadı</gradient>"
+    lore:
+      - "<gray>Uygun ticaret hedefi bulunamadı.</gray>"
+
+trade_current_ui:
+  title: "<gradient:#22c55e:#14b8a6>[İşlem] Mevcut Oturumlar</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Bilgi] Oturum Listesi</gradient>"
+    lore:
+      - "<gray>Takip edilen oturumlar:</gray> <white>{session_count}</white>"
+      - "<yellow>Oturumları yönetmek veya açmak için girişleri tıklayın.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Ticaret]</gradient> <white>{counterparty}</white> <gray>{status}</gray>"
+    lore:
+      - "<gray>Karşı taraf:</gray> <white>{counterparty}</white>"
+      - "<gray>Durumu:</gray> <white>{status}</white>"
+      - "<gray>Ticaret UUID:</gray> <white>{trade_uuid}</white>"
+      - "<yellow>Bu işlem oturumunu açmak için tıklayın.</yellow>"
+  actions:
+    inbox:
+      name: "<gradient:#f59e0b:#f97316>[Gelen Kutusu] Talepler ve Talepler</gradient>"
+      lore:
+        - "<gray>Open davetleri ve teslimat talepleri.</gray>"
+        - "<yellow>Ticaret gelen kutusunu açmak için tıklayın.</yellow>"
+  status:
+    invited: "<gradient:#f59e0b:#fbbf24>[Davetli]</gradient>"
+    active: "<gradient:#22c55e:#86efac>[Aktif]</gradient>"
+    completing: "<gradient:#38bdf8:#60a5fa>[Tamamlanıyor]</gradient>"
+    completed: "<gradient:#22c55e:#86efac>[Tamamlandı]</gradient>"
+    canceled: "<gradient:#ef4444:#f87171>[İptal edildi]</gradient>"
+    expired: "<gradient:#6b7280:#9ca3af>[Süresi doldu]</gradient>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Mevcut İşlem Yok</gradient>"
+    lore:
+      - "<gray>Terminal dışı ticaret seansı bulunamadı.</gray>"
+
+trade_inbox_ui:
+  title: "<gradient:#f59e0b:#f97316>[Ticaret] Gelen Kutusu</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Bilgi] İstekler ve Teslimatlar</gradient>"
+    lore:
+      - "<gray>Beklenen davetler:</gray> <white>{invite_count}</white>"
+      - "<gray>Talep edilebilir teslimatlar:</gray> <white>{delivery_count}</white>"
+      - "<yellow>Davetliler: ticareti açmak için tıklayın oturum.</yellow>"
+      - "<yellow>Teslimatlar: talep etmek için tıklayın.</yellow>"
+  entry:
+    invite:
+      name: "<gradient:#38bdf8:#60a5fa>[Davet et]</gradient> <white>{from}</white>"
+      lore:
+        - "<gray>Gönderen:</gray> <white>{from}</white>"
+        - "<gray>Ticaret UUID:</gray> <white>{trade_uuid}</white>"
+        - "<yellow>Bu işlem oturumunu açmak için tıklayın.</yellow>"
+    delivery:
+      name: "<gradient:#22c55e:#86efac>[İddia]</gradient> <white>{trade_uuid}</white>"
+      lore:
+        - "<gray>Ticaret UUID:</gray> <white>{trade_uuid}</white>"
+        - "<gray>Iöğe yük yuvaları:</gray> <white>{item_count}</white>"
+        - "<gray>Para birimi verisi girişleri:</gray> <white>{currency_count}</white>"
+        - "<yellow>Bunu talep etmek için tıklayın teslimat.</yellow>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Gelen Kutusu Boş</gradient>"
+    lore:
+      - "<gray>Bekleyen davet veya teslimat bulunamadı.</gray>"
+
+trade_session_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Ticaret] Session</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Bilgi] Oturum Durumu</gradient>"
+    lore:
+      - "<gray>Durumu:</gray> <white>{status}</white>"
+      - "<gray>Ticaret UUID:</gray> <white>{trade_uuid}</white>"
+      - "<gray>Revizyon:</gray> <white>{revision}</white>"
+      - "<gray>Vault teklifiniz:</gray> <white>{self_vault}</white>"
+      - "<gray>Partner Vault teklifi:</gray> <white>{partner_vault}</white>"
+      - "<gray>Para birimleriniz:</gray> <white>{self_currency_count}</white> <gray>(toplam:</gray> <white>{self_currency_total}</white><gray>)</gray>"
+      - "<gray>Ortak para birimleri:</gray> <white>{partner_currency_count}</white> <gray>(toplam:</gray>) <white>{partner_currency_total}</white><gray>)</gray>"
+  status:
+    invited: "<gradient:#f59e0b:#fbbf24>[Davetli]</gradient>"
+    active: "<gradient:#22c55e:#86efac>[Aktif]</gradient>"
+    completing: "<gradient:#38bdf8:#60a5fa>[Tamamlanıyor]</gradient>"
+    completed: "<gradient:#22c55e:#86efac>[Tamamlandı]</gradient>"
+    canceled: "<gradient:#ef4444:#f87171>[İptal edildi]</gradient>"
+    expired: "<gradient:#6b7280:#9ca3af>[Süresi doldu]</gradient>"
+  slots:
+    self_empty_name: "<gradient:#22c55e:#86efac>[Kendi Yuvası] #{slot}</gradient>"
+    self_empty_lore:
+      - "<gray>Buna emanet etmek için bir imleç öğesiyle sol tıklayın slot.</gray>"
+      - "<gray>Envanterinizi ilk boş yuvaya otomatik olarak eklemek için Shift tuşunu basılı tutarak tıklayın.</gray>"
+      - "<gray>RKaldırmak ve geri ödeme yapmak için dolu bir kişisel yuvaya sağ tıklayın.</gray>"
+    partner_empty_name: "<gradient:#38bdf8:#60a5fa>[Ortak Slot] #{slot}</gradient>"
+    partner_empty_lore:
+      - "<gray>Ortak teklif önizlemesi burada görünür.</gray>"
+  actions:
+    invite_accept:
+      name: "<gradient:#22c55e:#86efac>[Kabul Et] Ticareti Başlat</gradient>"
+      lore:
+        - "<gray>Bu daveti kabul et ve ticareti aktif hale getir state.</gray>"
+    invite_waiting:
+      name: "<gradient:#f59e0b:#fbbf24>[Bekliyor] Davet Beklemede</gradient>"
+      lore:
+        - "<gray>Ortağınızın bu daveti kabul etmesi bekleniyor.</gray>"
+    currency_manage:
+      name: "<gradient:#f59e0b:#fbbf24>[Coin] Para Birimi Teklifini Düzenle</gradient>"
+      lore:
+        - "<gray>OYazılan tutarla para birimi başına açık kontroller input.</gray>"
+        - "<yellow>Bir para birimi seçmek için tıklayın.</yellow>"
+    currency_manage_secondary:
+      name: "<gradient:#38bdf8:#60a5fa>[Liste] Para Birimi Seçici</gradient>"
+      lore:
+        - "<gray>Vault veya JExEconomy için ekleme/kaldırma seçeneğini seçin para birimleri.</gray>"
+        - "<yellow>Para birimi seçiciyi açmak için tıklayın.</yellow>"
+    ready_lock:
+      name: "<gradient:#22c55e:#86efac>[Hazır] Teklifi Kilitle</gradient>"
+      lore:
+        - "<gray>Sen:</gray> <white>{self_accepted}</white>"
+        - "<gray>Ortak:</gray> <white>{partner_accepted}</white>"
+        - "<gray>Teklifinizi kilitlemek için sol tıklayın.</gray>"
+        - "<gray>Sağ tıklayın hazır değil.</gray>"
+    ready_unlock:
+      name: "<gradient:#f59e0b:#fbbf24>[Hazır] Teklifin Kilidini Aç</gradient>"
+      lore:
+        - "<gray>Sen:</gray> <white>{self_accepted}</white>"
+        - "<gray>Ortak:</gray> <white>{partner_accepted}</white>"
+        - "<gray>Kendi kendine teklif slotlarınız hazır olduğunda kilitlenir.</gray>"
+        - "<gray>Kilidi açmak ve düzenlemek için sağ tıklayın tekrar.</gray>"
+    confirm:
+      name: "<gradient:#38bdf8:#60a5fa>[Kabul Et] Ticareti Sonlandır</gradient>"
+      lore:
+        - "<gray>Sen:</gray> <white>{self_accepted}</white>"
+        - "<gray>Ortak:</gray> <white>{partner_accepted}</white>"
+        - "<gray>Takas ancak her iki oyuncu da kabul ettikten sonra tamamlanır.</gray>"
+    cancel:
+      name: "<gradient:#ef4444:#f87171>[İptal] İptal Trade</gradient>"
+      lore:
+        - "<gray>Teslimat satırları yoluyla emaneti iptal et ve geri öde.</gray>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X] Oturumu Kullanılamıyor</gradient>"
+    lore:
+      - "<gray>Bu işlem oturumu yapılamadı yüklendi.</gray>"
+
+trade_currency_select_ui:
+  title: "<gradient:#f59e0b:#f97316>[Ticaret] Döviz Teklifleri</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Bilgi] Para Birimi Seçici</gradient>"
+    lore:
+      - "<gray>Amevcut para birimleri:</gray> <white>{available_count}</white>"
+      - "<gray>Aktif teklifleriniz:</gray> <white>{offered_count}</white>"
+      - "<yellow>Sol tıklama = ekle, sağ tıklama = kaldır.</yellow>"
+      - "<yellow>Her iki eylem de bir miktar giriş örsünü açar.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Para birimi]</gradient> <white>{currency}</white>"
+    lore:
+      - "<gray>ID:</gray> <white>{currency_id}</white>"
+      - "<gray>Teklifiniz:</gray> <white>{offered_amount}</white>"
+      - "<yellow>Yazılan bir tutarı eklemek için sol tıklayın.</yellow>"
+      - "<yellow>Yazılan bir tutarı kaldırmak için sağ tıklayın.</yellow>"
+  applying:
+    name: "<gradient:#38bdf8:#60a5fa>[Senkronizasyon] Para Birimi Uygulama Değişim</gradient>"
+    lore:
+      - "<gray></gray> <white>{currency}</white><gray>...</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Para Birimi Sağlayıcısı Yok</gradient>"
+    lore:
+      - "<gray>Hayır desteklenen para birimleri şu anda işlem için kullanılabilir.</gray>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X] Para Birimi Görünümü Kullanılamıyor</gradient>"
+    lore:
+      - "<gray>Bu işlem oturumu yapılamadı yüklendi.</gray>"
+
+trade_currency_amount_anvil_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[Ticaret] {mode} {currency}</gradient>"
+  input:
+    lore:
+      - "<gray>Para birimi:</gray> <white>{currency}</white>"
+      - "<gray>Oİşlem:</gray> <white>{mode}</white>"
+      - "<gray>Mevcut teklif:</gray> <white>{current_offer}</white>"
+      - "<yellow>Negatif olmayan bir ondalık sayı girin.</yellow>"
+  error:
+    invalid_amount: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Geçersiz miktar <white>{input}</white><gray> <white>{currency}</white><gray>. Negatif olmayan bir sayı kullanın.</gray>"
+
+trade:
+  message:
+    disabled: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Ticaret şu anda config.</gray>"
+    self_target: "<gradient:#ef4444:#f87171>[X]</gradient> <gray> ile işlem yapamazsınız kendiniz.</gray>"
+    participant_busy: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{target}</white><gray>.</gray>"
+    invite_cooldown: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray> ile zaten açık bir işleminiz var. Başka bir takas daveti göndermeden önce <white>{seconds}</white>'ler.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Ticaret depoları/hizmetleri şu anda kullanılamıyor.</gray>"
+    invite_sent: "<gradient:#22c55e:#86efac>[+]</gradient> <gray><white>{target}</white><gray>'ye bir takas daveti gönderdi.</gray>"
+    invite_received: "<gradient:#38bdf8:#60a5fa>[Davet et]</gradient> <gray><white>{from}</white><gray>'den bir takas daveti aldınız. </gray><white>/rr trade</white><gray>.</gray>"
+    delivery_pending: "<gradient:#f59e0b:#f97316>[Gelen Kutusu]</gradient> <gray>'yi açın. Ticari teslimatı bekleyen <white>{count}</white>'niz var talep(ler).</gray>"
+    success: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Ticaret işlemi tamamlandı.</gray>"
+    waiting_for_partner: "<gradient:#38bdf8:#60a5fa>[=]</gradient> <gray>Ortağınızı bekliyorum onay.</gray>"
+    completed: "<gradient:#22c55e:#86efac>[Bitti]</gradient> <gray>İşlem tamamlandı. Teslimatınızı gelen kutusunda talep edin.</gray>"
+    no_item_in_hand: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Önce bir öğeyi ana elinizde tutun.</gray>"
+    offer_full: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Teklifiniz zaten maksimum yapılandırılmış yuvada limit.</gray>"
+    insufficient_funds: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Bu ticaret işlemi veya vergi ücreti için yeterli paranız yok.</gray>"
+    missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Bu ticaret satırı artık yok var.</gray>"
+    forbidden: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Bu ticaret eyleminin katılımcısı değilsiniz.</gray>"
+    invalid_state: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Bu eylem mevcut ticaret durumu için geçerli değil.</gray>"
+    stale: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Başka bir sunucudaki ticaret verileri değiştirildi. Oturum yenileniyor.</gray>"
+    expired: "<gradient:#ef4444:#f87171>[Süresi doldu]</gradient> <gray>Bu takas davetinin süresi zaten doldu.</gray>"
 
 storage:
   message:

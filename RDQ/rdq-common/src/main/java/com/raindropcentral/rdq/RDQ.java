@@ -56,6 +56,7 @@ import de.jexcellence.hibernate.repository.RepositoryManager;
 import lombok.Getter;
 import me.devnatan.inventoryframework.AnvilInputFeature;
 import me.devnatan.inventoryframework.ViewFrame;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -433,11 +434,20 @@ public abstract class RDQ {
 	 * Registers RDQ internal PlaceholderAPI placeholders when PlaceholderAPI is available.
 	 */
 	private void initializePlaceholderExpansion() {
+		if (!this.isPlaceholderApiAvailable()) {
+			LOGGER.info("PlaceholderAPI not detected; skipping RDQ placeholder expansion registration.");
+			return;
+		}
+
 		this.placeholderRegistry = new PlaceholderRegistry(
 				this.plugin,
 				new RDQPlaceholderExpansion(this)
 		);
 		this.placeholderRegistry.register();
+	}
+
+	private boolean isPlaceholderApiAvailable() {
+		return Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI");
 	}
 
 	/**

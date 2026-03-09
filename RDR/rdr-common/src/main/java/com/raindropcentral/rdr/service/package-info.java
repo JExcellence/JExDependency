@@ -9,6 +9,6 @@
  * Edition-aware service contracts for the shared RDR runtime.
  *
  * <p>These services encapsulate feature limits and behavioural differences between free and premium
- * distributions while keeping the rest of the storage implementation common.</p>
+ * distributions while keeping storage and DB-first trade implementations common.</p>
  */
 package com.raindropcentral.rdr.service;

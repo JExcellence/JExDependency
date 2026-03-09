@@ -65,6 +65,12 @@ storage_admin_ui:
         - "<gray>スキル、ジョブ、通貨、および PlaceholderAPI ツールを管理します。</gray>"
         - "<gray>統合固有の管理コントロールを開きます。</gray>"
         - "<yellow>クリックして統合管理を開きます。</yellow>"
+    trade_bank:
+      name: "<gradient:#f59e0b:#fbbf24>[税金] 貿易サーバー銀行</gradient>"
+      lore:
+        - "<gray>徴収された貿易税残高を通貨ごとに確認します。</gray>"
+        - "<gray>サーバー銀行の残高を管理者に引き出します アカウント。</gray>"
+        - "<yellow>クリックして営業税銀行コントロールを開きます。</yellow>"
     currency:
       name: "<gradient:#10b981:#34d399>[Cur] 通貨マネージャー</gradient>"
       lore:
@@ -938,6 +944,316 @@ storage_tax_town_bank_ui:
     currency_unsupported: "<gradient:#ef4444:#f87171>[×]</gradient> <gray><white>{currency}</white><gray> 都市銀行への振込はできません。現在、都市銀行振込がサポートされています Vault のみ。</gray>"
     transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>転送に失敗しました <white>{currency}</white><gray> あなたの街の銀行に。</gray>"
     transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>転送されました <white>{amount}</white><gray> で <white>{currency}</white><gray> あなたの街の銀行へ。</gray>"
+
+trade_admin_bank_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[管理者] 営業税銀行</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#f97316>[情報] サーバー税 元帳</gradient>"
+    lore:
+      - "<gray>追跡対象通貨:</gray> <white>{currency_count}</white>"
+      - "<gray>通貨をクリックして全額出金してください バランス。</gray>"
+      - "<yellow>必要なもの:</yellow> <white>raindroprdr.command.admin</white>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[$] {currency}</gradient> <gray>({currency_id})</gray>"
+    lore:
+      - "<gray>利用可能:</gray> <white>{amount}</white>"
+      - "<gray>元帳 エントリ:</gray> <white>{ledger_count}</white>"
+      - "<gray>最新のタイプ:</gray> <white>{latest_type}</white>"
+      - "<gray>最新の金額:</gray> <white>{latest_amount}</white>"
+      - "<gray>最新 注:</gray> <white>{latest_note}</white>"
+      - "<yellow>クリックしてこの通貨を引き出します バランス。</yellow>"
+    latest:
+      none: "<gradient:#6b7280:#9ca3af>[なし]</gradient>"
+      deposit: "<gradient:#22c55e:#86efac>[Dep osit]</gradient>"
+      withdraw: "<gradient:#ef4444:#f87171>[撤退]</gradient>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] 管理者アクセスが必要です</gradient>"
+    lore:
+      - "<gray>この営業税銀行パネルを使用する権限がありません。</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] 銀行がありません エントリ</gradient>"
+    lore:
+      - "<gray>現在、徴収された営業税残高は保存されていません。</gray>"
+  feedback:
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>営業税バンクを使用する権限がありません。 コントロール。</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>貿易税銀行サービスは現在ご利用いただけません。</gray>"
+    empty_balance: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray><white>{currency}</white><gray>の引き出し可能な残高が見つかりません。</gray>"
+    withdraw_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>引き出しに失敗しました 営業税銀行から<white>{currency}</white><gray>を引き出しました。</gray>"
+    withdraw_success: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>引き出しました 営業税銀行からの <white>{amount}</white><gray> <white>{currency}</white><gray> は営業税銀行から徴収されます。</gray>"
+
+trade_hub_ui:
+  title: "<gradient:#22c55e:#14b8a6>[貿易] クロスサーバー ハブ</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[情報] 取引概要</gradient>"
+    lore:
+      - "<gray>保留中の招待:</gray> <white>{pending_invites}</white>"
+      - "<gray>アクティブなセッション:</gray> <white>{active_sessions}</white>"
+      - "<gray>保留中の配送:</gray> <white>{pending_deliveries}</white>"
+      - "<yellow>以下の取引アクションを選択してください。</yellow>"
+  actions:
+    new_trade:
+      name: "<gradient:#22c55e:#86efac>[+] 新しい取引の招待</gradient>"
+      lore:
+        - "<gray>オンライン ターゲットを選択し、DB 支援の招待を送信します。</gray>"
+        - "<yellow>クリックしてターゲット選択を開きます。</yellow>"
+    current_trades:
+      name: "<gradient:#38bdf8:#60a5fa>[=] 現在の取引</gradient>"
+      lore:
+        - "<gray>招待状、アクティブなセッション、完了状態を確認します。</gray>"
+        - "<yellow>クリックして現在の取引を参照してください。</yellow>"
+    inbox:
+      name: "<gradient:#f59e0b:#f97316>[受信トレイ] クレームとリクエスト</gradient>"
+      lore:
+        - "<gray>招待を受け入れ、配信の支払いを請求します。</gray>"
+        - "<yellow>クリックして下取り箱を開きます。</yellow>"
+    tax_info:
+      name: "<gradient:#38bdf8:#60a5fa>[税金] 営業税</gradient>"
+      lore:
+        - "<gray>通貨ごとの営業税の設定と計算式を確認します。</gray>"
+        - "<yellow>クリックすると営業税情報が開きます。</yellow>"
+
+trade_tax_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[税] 営業税の定義</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[情報] 税金の設定</gradient>"
+    lore:
+      - "<gray>税制:</gray> <white>{tax_enabled}</white>"
+      - "<gray>設定された通貨:</gray> <white>{currency_count}</white>"
+      - "<yellow>各カードには、その通貨の有効な計算式が表示されます。</yellow>"
+    tax_enabled:
+      "on": "<gradient:#22c55e:#86efac>[有効]</gradient>"
+      "off": "<gradient:#ef4444:#f87171>[無効]</gradient>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[$] {currency}</gradient> <gray>({currency_id})</gray>"
+    lore:
+      - "<gray>モード:</gray> <white>{mode}</white>"
+      - "<gray>フラット/ベース:</gray> <white>{flat_amount}</white>"
+      - "<gray>通貨別の成長率:</gray> <white>{growth_per_currency}</white>"
+      - "<gray>アイテムによる成長:</gray> <white>{growth_per_item}</white>"
+      - "<gray>例 (100 通貨 + 5 アイテム):</gray> <white>{example_tax}</white>"
+      - "<yellow>読み取り専用の情報パネル。</yellow>"
+    mode:
+      flat: "<gradient:#38bdf8:#60a5fa>[フラット]</gradient>"
+      growth: "<gradient:#f59e0b:#f97316>[成長]</gradient>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] 税金通貨なし</gradient>"
+    lore:
+      - "<gray>営業税通貨が設定されていません。</gray>"
+
+trade_target_select_ui:
+  title: "<gradient:#22c55e:#14b8a6>[取引] ターゲットを選択</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[情報] 利用可能なターゲット</gradient>"
+    lore:
+      - "<gray>発見されたターゲット:</gray> <white>{target_count}</white>"
+      - "<yellow>ターゲットをクリックして招待を送信します。</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[招待]</gradient> <white>{target}</white>"
+    lore:
+      - "<gray>継続取引の招待を</gray> <white>{target}</white><gray>に送信します。</gray>"
+      - "<yellow>クリックしてこのプレーヤーを招待します。</yellow>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>[X] ターゲットが見つかりません</gradient>"
+    lore:
+      - "<gray>適格な取引対象が見つかりませんでした。</gray>"
+
+trade_current_ui:
+  title: "<gradient:#22c55e:#14b8a6>[取引] 現在のセッション</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[情報] セッションリスト</gradient>"
+    lore:
+      - "<gray>追跡されたセッション:</gray> <white>{session_count}</white>"
+      - "<yellow>エントリをクリックしてセッションを管理または開きます。</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[取引]</gradient> <white>{counterparty}</white> <gray>{status}</gray>"
+    lore:
+      - "<gray>取引相手:</gray> <white>{counterparty}</white>"
+      - "<gray>ステータス:</gray> <white>{status}</white>"
+      - "<gray>取引UUID:</gray> <white>{trade_uuid}</white>"
+      - "<yellow>クリックしてこの取引セッションを開きます。</yellow>"
+  actions:
+    inbox:
+      name: "<gradient:#f59e0b:#f97316>[受信トレイ] クレームとリクエスト</gradient>"
+      lore:
+        - "<gray>オープンな招待と配達の申し立て。</gray>"
+        - "<yellow>クリックして下取り箱を開きます。</yellow>"
+  status:
+    invited: "<gradient:#f59e0b:#fbbf24>[招待されました]</gradient>"
+    active: "<gradient:#22c55e:#86efac>[アクティブ]</gradient>"
+    completing: "<gradient:#38bdf8:#60a5fa>[完了中]</gradient>"
+    completed: "<gradient:#22c55e:#86efac>[完了]</gradient>"
+    canceled: "<gradient:#ef4444:#f87171>[キャンセルされました]</gradient>"
+    expired: "<gradient:#6b7280:#9ca3af>[期限切れ]</gradient>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] 現在の取引はありません</gradient>"
+    lore:
+      - "<gray>ターミナル以外の取引セッションは見つかりませんでした。</gray>"
+
+trade_inbox_ui:
+  title: "<gradient:#f59e0b:#f97316>[取引] 受信箱</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[情報] リクエストと納品</gradient>"
+    lore:
+      - "<gray>保留中の招待:</gray> <white>{invite_count}</white>"
+      - "<gray>受取可能な配達:</gray> <white>{delivery_count}</white>"
+      - "<yellow>招待: クリックして取引を開始 セッション。</yellow>"
+      - "<yellow>配信: クリックして請求します。</yellow>"
+  entry:
+    invite:
+      name: "<gradient:#38bdf8:#60a5fa>[招待]</gradient> <white>{from}</white>"
+      lore:
+        - "<gray>差出人:</gray> <white>{from}</white>"
+        - "<gray>取引UUID:</gray> <white>{trade_uuid}</white>"
+        - "<yellow>クリックしてこの取引セッションを開きます。</yellow>"
+    delivery:
+      name: "<gradient:#22c55e:#86efac>[クレーム]</gradient> <white>{trade_uuid}</white>"
+      lore:
+        - "<gray>取引UUID:</gray> <white>{trade_uuid}</white>"
+        - "<gray>アイテムペイロード スロット:</gray> <white>{item_count}</white>"
+        - "<gray>通貨ペイロード エントリ:</gray> <white>{currency_count}</white>"
+        - "<yellow>クリックしてこの配送を請求してください。</yellow>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] 受信箱 空</gradient>"
+    lore:
+      - "<gray>保留中の招待や配達は見つかりません。</gray>"
+
+trade_session_ui:
+  title: "<gradient:#22c55e:#14b8a6>[取引] セッション</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[情報] セッション状態</gradient>"
+    lore:
+      - "<gray>ステータス:</gray> <white>{status}</white>"
+      - "<gray>取引UUID:</gray> <white>{trade_uuid}</white>"
+      - "<gray>リビジョン:</gray> <white>{revision}</white>"
+      - "<gray>あなたのボールトオファー:</gray> <white>{self_vault}</white>"
+      - "<gray>パートナーボールト オファー:</gray> <white>{partner_vault}</white>"
+      - "<gray>あなたの通貨:</gray> <white>{self_currency_count}</white> <gray>(合計:</gray>) <white>{self_currency_total}</white><gray>)</gray>"
+      - "<gray>パートナー通貨:</gray> <white>{partner_currency_count}</white> <gray>(合計:</gray> <white>{partner_currency_total}</white><gray>)</gray>"
+  status:
+    invited: "<gradient:#f59e0b:#fbbf24>[招待されました]</gradient>"
+    active: "<gradient:#22c55e:#86efac>[アクティブ]</gradient>"
+    completing: "<gradient:#38bdf8:#60a5fa>[完了中]</gradient>"
+    completed: "<gradient:#22c55e:#86efac>[完了]</gradient>"
+    canceled: "<gradient:#ef4444:#f87171>[キャンセルされました]</gradient>"
+    expired: "<gradient:#6b7280:#9ca3af>[期限切れ]</gradient>"
+  slots:
+    self_empty_name: "<gradient:#22c55e:#86efac>[セルフスロット] #{slot}</gradient>"
+    self_empty_lore:
+      - "<gray>カーソルアイテムを左クリックして、このスロットにエスクローします。</gray>"
+      - "<gray>Shiftキーを押しながらインベントリをクリックすると、最初の空きスロットに自動挿入されます スロット。</gray>"
+      - "<gray>削除して払い戻すには、埋まった自分のスロットを右クリックします。</gray>"
+    partner_empty_name: "<gradient:#38bdf8:#60a5fa>[パートナー スロット] #{slot}</gradient>"
+    partner_empty_lore:
+      - "<gray>パートナー オファーのプレビューがここに表示されます。</gray>"
+  actions:
+    invite_accept:
+      name: "<gradient:#22c55e:#86efac>[承諾] 開始 取引</gradient>"
+      lore:
+        - "<gray>この招待を受け入れ、取引をアクティブな状態に移行します。</gray>"
+    invite_waiting:
+      name: "<gradient:#f59e0b:#fbbf24>[待機中] 招待保留中</gradient>"
+      lore:
+        - "<gray>パートナーがこの招待を受け入れるのを待っています。</gray>"
+    currency_manage:
+      name: "<gradient:#f59e0b:#fbbf24>[コイン] 通貨オファーを編集</gradient>"
+      lore:
+        - "<gray>入力した金額で通貨ごとのコントロールを開きます input.</gray>"
+        - "<yellow>クリックして通貨を選択してください。</yellow>"
+    currency_manage_secondary:
+      name: "<gradient:#38bdf8:#60a5fa>[リスト]通貨セレクター</gradient>"
+      lore:
+        - "<gray>選択してください Vault または JExEconomy 通貨の追加/削除。</gray>"
+        - "<yellow>クリックすると通貨セレクターが開きます。</yellow>"
+    ready_lock:
+      name: "<gradient:#22c55e:#86efac>[準備完了] ロック オファー</gradient>"
+      lore:
+        - "<gray>あなた:</gray> <white>{self_accepted}</white>"
+        - "<gray>パートナー:</gray> <white>{partner_accepted}</white>"
+        - "<gray>左クリックしてオファーをロックします。</gray>"
+        - "<gray>右クリックしてオファーをロックします。 unready.</gray>"
+    ready_unlock:
+      name: "<gradient:#f59e0b:#fbbf24>[準備完了] オファーのロックを解除</gradient>"
+      lore:
+        - "<gray>あなた:</gray> <white>{self_accepted}</white>"
+        - "<gray>パートナー:</gray> <white>{partner_accepted}</white>"
+        - "<gray>その間、セルフオファー スロットはロックされています </gray>"
+        - "<gray>右クリックしてロックを解除し、再度編集します。</gray>"
+    confirm:
+      name: "<gradient:#38bdf8:#60a5fa>[承諾] 完了 Trade</gradient>"
+      lore:
+        - "<gray>あなた:</gray> <white>{self_accepted}</white>"
+        - "<gray>パートナー:</gray> <white>{partner_accepted}</white>"
+        - "<gray>トレードは、両方のプレイヤーが同意した後にのみ完了します。</gray>"
+    cancel:
+      name: "<gradient:#ef4444:#f87171>[キャンセル] 中止 取引</gradient>"
+      lore:
+        - "<gray>配送行を介してエスクローをキャンセルおよび返金します。</gray>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X]セッション 利用できません</gradient>"
+    lore:
+      - "<gray>この取引セッションをロードできませんでした。</gray>"
+
+trade_currency_select_ui:
+  title: "<gradient:#f59e0b:#f97316>[取引]通貨 オファー</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[情報] 通貨セレクター</gradient>"
+    lore:
+      - "<gray>利用可能な通貨:</gray> <white>{available_count}</white>"
+      - "<gray>アクティブなオファー:</gray> <white>{offered_count}</white>"
+      - "<yellow>左クリック = 追加、 右クリック = 削除。</yellow>"
+      - "<yellow>両方のアクションで金額入力アンビルが開きます。</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[通貨]</gradient> <white>{currency}</white>"
+    lore:
+      - "<gray>ID:</gray> <white>{currency_id}</white>"
+      - "<gray>あなたの オファー:</gray> <white>{offered_amount}</white>"
+      - "<yellow>左クリックして、入力した金額を追加します。</yellow>"
+      - "<yellow>右クリックして、入力した金額を削除します。</yellow>"
+  applying:
+    name: "<gradient:#38bdf8:#60a5fa>[同期] 通貨変更の適用</gradient>"
+    lore:
+      - "<gray></gray> <white>{currency}</white><gray>...</gray>のオファーを更新しています"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] 通貨プロバイダーがありません</gradient>"
+    lore:
+      - "<gray>現在取引できるサポート通貨はありません。</gray>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X] 通貨ビューは使用できません</gradient>"
+    lore:
+      - "<gray>この取引セッションをロードできませんでした。</gray>"
+
+trade_currency_amount_anvil_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[取引] {mode} {currency}</gradient>"
+  input:
+    lore:
+      - "<gray>通貨:</gray> <white>{currency}</white>"
+      - "<gray>操作:</gray> <white>{mode}</white>"
+      - "<gray>現在の特典:</gray> <white>{current_offer}</white>"
+      - "<yellow>負ではない小数値を入力してください。</yellow>"
+  error:
+    invalid_amount: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray>の金額<white>{input}</white><gray>が無効です。 負ではない数値を使用してください。</gray>"
+
+trade:
+  message:
+    disabled: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>取引は現在設定で無効になっています。</gray>"
+    self_target: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>自分自身と取引することはできません。</gray>"
+    participant_busy: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>あなたはすでに <white>{target}</white><gray> とオープントレードを行っています。</gray>"
+    invite_cooldown: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>別の取引招待を送信する前に、<white>{seconds}</white>秒待ってください。</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>取引リポジトリ/サービスは現在利用できません。</gray>"
+    invite_sent: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>トレード招待を <white>{target}</white><gray>に送信しました。</gray>"
+    invite_received: "<gradient:#38bdf8:#60a5fa>[招待]</gradient> <gray><white>{from}</white><gray>から取引の招待を受け取りました。 </gray><white>/rr trade</white><gray>を開きます。</gray>"
+    delivery_pending: "<gradient:#f59e0b:#f97316>[受信箱]</gradient> <gray>保留中の取引配送請求 <white>{count}</white> があります。</gray>"
+    success: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>取引アクションが完了しました。</gray>"
+    waiting_for_partner: "<gradient:#38bdf8:#60a5fa>[=]</gradient> <gray>パートナーの確認を待っています。</gray>"
+    completed: "<gradient:#22c55e:#86efac>[完了]</gradient> <gray>取引が完了しました。 受信箱で配達を受け取ってください。</gray>"
+    no_item_in_hand: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>最初にメインハンドにアイテムを持ちます。</gray>"
+    offer_full: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>オファーはすでに設定された最大スロット制限に達しています。</gray>"
+    insufficient_funds: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>この貿易行為またはそれに伴う税金に十分な資金がありません。</gray>"
+    missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>その取引行はもう存在しません。</gray>"
+    forbidden: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>あなたはその取引行動の参加者ではありません。</gray>"
+    invalid_state: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>このアクションは現在の取引状態では無効です。</gray>"
+    stale: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>取引データが別のサーバーで変更されました。 セッションを更新しています。</gray>"
+    expired: "<gradient:#ef4444:#f87171>[期限切れ]</gradient> <gray>そのトレード招待はすでに期限切れです。</gray>"
 
 storage:
   message:

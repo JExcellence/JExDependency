@@ -65,6 +65,12 @@ storage_admin_ui:
         - "<gray>Zarządzaj umiejętnościami, stanowiskami pracy, walutą i narzędziami PlaceholderAPI.</gray>"
         - "<gray>Otwarta kontrola administracyjna specyficzna dla integracji.</gray>"
         - "<yellow>Kliknij, aby otworzyć zarządzanie integracją.</yellow>"
+    trade_bank:
+      name: "<gradient:#f59e0b:#fbbf24>[Podatek] Serwer handlowy Bank</gradient>"
+      lore:
+        - "<gray>Przejrzyj zebrane salda podatku handlowego według waluty.</gray>"
+        - "<gray>Wypłać saldo banku serwera na konto administratora.</gray>"
+        - "<yellow>Kliknij, aby otworzyć kontrolę banku podatku handlowego.</yellow>"
     currency:
       name: "<gradient:#10b981:#34d399>[Cur] Menedżer walut</gradient>"
       lore:
@@ -938,6 +944,316 @@ storage_tax_town_bank_ui:
     currency_unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> nie można przenieść do banku miejskiego. Obecnie obsługiwane są przelewy miejskie-bankowe Vault tylko.</gray>"
     transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Nie udało się przenieść <white>{currency}</white><gray> do swojego banku miejskiego.</gray>"
     transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Przeniesiony <white>{amount}</white><gray> W <white>{currency}</white><gray> do swojego banku miejskiego.</gray>"
+
+trade_admin_bank_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[Administrator] Bank podatków handlowych</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#f97316>[Informacje] Księga podatkowa serwera</gradient>"
+    lore:
+      - "<gray>Śledzone waluty:</gray> <white>{currency_count}</white>"
+      - "<gray>Kliknij dowolną walutę, aby wypłacić całe saldo.</gray>"
+      - "<yellow>Wymaga: </yellow> <white>raindropprdr.command.admin</white>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[$] {currency}</gradient> <gray>({currency_id})</gray>"
+    lore:
+      - "<gray>Dostępne: </gray> <white>{amount}</white>"
+      - "<gray>Wpisy księgi:</gray> <white>{ledger_count}</white>"
+      - "<gray>Najnowszy typ:</gray> <white>{latest_type}</white>"
+      - "<gray>Najnowsza kwota:</gray> <white>{latest_amount}</white>"
+      - "<gray>Najnowsza notatka:</gray> <white>{latest_note}</white>"
+      - "<yellow>Kliknij, aby wypłacić saldo walutowe.</yellow>"
+    latest:
+      none: "<gradient:#6b7280:#9ca3af> [Brak] </gradient>"
+      deposit: "<gradient:#22c55e:#86efac> [Depozyt] </gradient>"
+      withdraw: "<gradient:#ef4444:#f87171> [Wypłata] </gradient>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] Wymagany dostęp administratora</gradient>"
+    lore:
+      - "<gray>Nie masz uprawnień do korzystania z tego panelu banku podatkowego.</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Brak wpisów bankowych</gradient>"
+    lore:
+      - "<gray>W tej chwili nie są przechowywane żadne salda podatku handlowego.</gray>"
+  feedback:
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nie masz uprawnień do korzystania z kontroli bankowej podatku handlowego.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Usługa banku zajmującego się podatkami handlowymi jest obecnie niedostępna.</gray>"
+    empty_balance: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Nie znaleziono salda do wypłaty dla <white>{currency}</white><gray>.</gray>"
+    withdraw_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nie udało się wypłacić <white>{currency}</white><gray> z banku podatku handlowego.</gray>"
+    withdraw_success: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Wycofał <white>{amount}</white><gray> w <white>{currency}</white><gray> z banku podatku handlowego.</gray>"
+
+trade_hub_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Handel] Koncentrator międzyserwerowy</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Przegląd handlu</gradient>"
+    lore:
+      - "<gray>Oczekujące zaproszenia:</gray> <white>{pending_invites}</white>"
+      - "<gray>Aktywne sesje:</gray> <white>{active_sessions}</white>"
+      - "<gray>Oczekujące dostawy:</gray> <white>{pending_deliveries}</white>"
+      - "<yellow>Wybierz akcję handlową poniżej.</yellow>"
+  actions:
+    new_trade:
+      name: "<gradient:#22c55e:#86efac>[+] Nowe zaproszenie do handlu</gradient>"
+      lore:
+        - "<gray>Wybierz cel online i wyślij wiadomość z bazą danych zaproszenie.</gray>"
+        - "<yellow>Kliknij, aby otworzyć wybór celów.</yellow>"
+    current_trades:
+      name: "<gradient:#38bdf8:#60a5fa>[=] Bieżące transakcje</gradient>"
+      lore:
+        - "<gray>Przejrzyj zaproszenia, aktywne sesje i ich zakończenie stan.</gray>"
+        - "<yellow>Kliknij, aby przeglądać bieżące transakcje.</yellow>"
+    inbox:
+      name: "<gradient:#f59e0b:#f97316>[Skrzynka odbiorcza] Roszczenia i prośby</gradient>"
+      lore:
+        - "<gray>AZaakceptuj zaproszenia i odbierz dostawę payouts.</gray>"
+        - "<yellow>Kliknij, aby otworzyć skrzynkę odbiorczą transakcji.</yellow>"
+    tax_info:
+      name: "<gradient:#38bdf8:#60a5fa>[Podatek] Podatki handlowe</gradient>"
+      lore:
+        - "<gray>Przejrzyj ustawienia podatku handlowego według waluty i formuły.</gray>"
+        - "<yellow>Kliknij, aby otworzyć informacje o podatku handlowym.</yellow>"
+
+trade_tax_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Podatek] Definicje podatku handlowego</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Podatek Konfiguracja</gradient>"
+    lore:
+      - "<gray>System podatkowy:</gray> <white>{tax_enabled}</white>"
+      - "<gray>Skonfigurowane waluty:</gray> <white>{currency_count}</white>"
+      - "<yellow>Ekażda karta pokazuje aktywną formułę dla tego waluta.</yellow>"
+    tax_enabled:
+      "on": "<gradient:#22c55e:#86efac>[Włączone]</gradient>"
+      "off": "<gradient:#ef4444:#f87171>[Wyłączone]</gradient>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[$] {currency}</gradient> <gray>({currency_id})</gray>"
+    lore:
+      - "<gray>Tryb:</gray> <white>{mode}</white>"
+      - "<gray>Płat/podstawa:</gray> <white>{flat_amount}</white>"
+      - "<gray>Wzrost według waluty:</gray> <white>{growth_per_currency}</white>"
+      - "<gray>Wzrost według pozycji:</gray> <white>{growth_per_item}</white>"
+      - "<gray>Przykład (100 walut + 5 pozycji):</gray> <white>{example_tax}</white>"
+      - "<yellow>Panel informacyjny tylko do odczytu.</yellow>"
+    mode:
+      flat: "<gradient:#38bdf8:#60a5fa>[FLAT]</gradient>"
+      growth: "<gradient:#f59e0b:#f97316>[WZROST]</gradient>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Brak walut podatkowych</gradient>"
+    lore:
+      - "<gray> Nie skonfigurowano walut podatku handlowego.</gray>"
+
+trade_target_select_ui:
+  title: "<gradient:#22c55e:#14b8a6> [Handel] Wybierz Target</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24> [Informacje] Dostępne cele</gradient>"
+    lore:
+      - "<gray>Odkryte cele:</gray> <white>{target_count}</white>"
+      - "<yellow>Kliknij cel, aby wysłać zaproszenie.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa> [Zaproś] </gradient> <white>{target}</white>"
+    lore:
+      - "<gray>Wyślij stałe zaproszenie do handlu do </gray> <white>{target}</white><gray>.</gray>"
+      - "<yellow>Kliknij, aby zaprosić tego gracza.</yellow>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>[X] Nie znaleziono celów</gradient>"
+    lore:
+      - "<gray>Nie znaleziono kwalifikujących się celów handlowych.</gray>"
+
+trade_current_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Handel] Bieżące sesje</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Informacje] Lista sesji</gradient>"
+    lore:
+      - "<gray>Śledzone sesje:</gray> <white>{session_count}</white>"
+      - "<yellow>Kliknij wpisy, aby zarządzać sesjami lub je otwierać.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa> [Handel] </gradient> <white>{counterparty}</white> <gray>{status}</gray>"
+    lore:
+      - "<gray>Kontrahent:</gray> <white>{counterparty}</white>"
+      - "<gray>Stan: </gray> <white>{status}</white>"
+      - "<gray>Trade UUID:</gray> <white>{trade_uuid}</white>"
+      - "<yellow>Kliknij, aby otworzyć tę sesję handlową.</yellow>"
+  actions:
+    inbox:
+      name: "<gradient:#f59e0b:#f97316>[Skrzynka odbiorcza] Roszczenia i prośby</gradient>"
+      lore:
+        - "<gray>Open zaproszenia i potwierdzenia dostawy.</gray>"
+        - "<yellow>Kliknij, aby otworzyć skrzynkę odbiorczą transakcji.</yellow>"
+  status:
+    invited: "<gradient:#f59e0b:#fbbf24> [zaproszony] </gradient>"
+    active: "<gradient:#22c55e:#86efac> [Aktywny] </gradient>"
+    completing: "<gradient:#38bdf8:#60a5fa> [Kończenie] </gradient>"
+    completed: "<gradient:#22c55e:#86efac> [Ukończono] </gradient>"
+    canceled: "<gradient:#ef4444:#f87171> [Anulowano] </gradient>"
+    expired: "<gradient:#6b7280:#9ca3af> [wygasł] </gradient>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Brak bieżących transakcji</gradient>"
+    lore:
+      - "<gray>Nie znaleziono sesji handlowych poza terminalem.</gray>"
+
+trade_inbox_ui:
+  title: "<gradient:#f59e0b:#f97316>[Handel] Skrzynka odbiorcza</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Informacje] Żądania i dostawy</gradient>"
+    lore:
+      - "<gray>Oczekujące zaproszenia:</gray> <white>{invite_count}</white>"
+      - "<gray>Dostawy podlegające reklamacji:</gray> <white>{delivery_count}</white>"
+      - "<yellow>Invites: kliknij, aby otworzyć sesję handlową.</yellow>"
+      - "<yellow>Dostawy: kliknij, aby odebrać.</yellow>"
+  entry:
+    invite:
+      name: "<gradient:#38bdf8:#60a5fa> [Zaproś] </gradient> <white>{from}</white>"
+      lore:
+        - "<gray>Od:</gray> <white>{from}</white>"
+        - "<gray>Trade UUID:</gray> <white>{trade_uuid}</white>"
+        - "<yellow>Kliknij, aby otworzyć tę sesję handlową.</yellow>"
+    delivery:
+      name: "<gradient:#22c55e:#86efac> [Roszczenie] </gradient> <white>{trade_uuid}</white>"
+      lore:
+        - "<gray>Trade UUID:</gray> <white>{trade_uuid}</white>"
+        - "<gray>Gniazda ładunku przedmiotów:</gray> <white>{item_count}</white>"
+        - "<gray>Wpisy ładunku waluty:</gray> <white>{currency_count}</white>"
+        - "<yellow>Kliknij, aby odebrać tę dostawę.</yellow>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Pusta skrzynka odbiorcza</gradient>"
+    lore:
+      - "<gray> Nie znaleziono oczekujących zaproszeń ani dostaw.</gray>"
+
+trade_session_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Handel] Sesja</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Informacje] Stan sesji</gradient>"
+    lore:
+      - "<gray>Stan: </gray> <white>{status}</white>"
+      - "<gray>Trade UUID:</gray> <white>{trade_uuid}</white>"
+      - "<gray>Wersja:</gray> <white>{revision}</white>"
+      - "<gray>Twoja oferta Vault:</gray> <white>{self_vault}</white>"
+      - "<gray>Oferta Vault dla partnerów:</gray> <white>{partner_vault}</white>"
+      - "<gray>Twoje waluty:</gray> <white>{self_currency_count}</white> <gray>(łącznie:</gray> <white>{self_currency_total}</white><gray>)</gray>"
+      - "<gray>Waluty partnerów:</gray> <white>{partner_currency_count}</white> <gray>(łącznie:</gray> <white>{partner_currency_total}</white><gray>)</gray>"
+  status:
+    invited: "<gradient:#f59e0b:#fbbf24> [zaproszony] </gradient>"
+    active: "<gradient:#22c55e:#86efac> [Aktywny] </gradient>"
+    completing: "<gradient:#38bdf8:#60a5fa> [Kończenie] </gradient>"
+    completed: "<gradient:#22c55e:#86efac> [Ukończono] </gradient>"
+    canceled: "<gradient:#ef4444:#f87171> [Anulowano] </gradient>"
+    expired: "<gradient:#6b7280:#9ca3af> [wygasł] </gradient>"
+  slots:
+    self_empty_name: "<gradient:#22c55e:#86efac> [Slot własny] #{slot}</gradient>"
+    self_empty_lore:
+      - "<gray>Kliknij lewym przyciskiem myszy element kursora, aby umieścić go w tym slocie.</gray>"
+      - "<gray>Kliknij swój ekwipunek, przytrzymując klawisz Shift, aby automatycznie umieścić go w pierwszym wolnym slocie.</gray>"
+      - "<gray>Kliknij prawym przyciskiem myszy wypełnione miejsce, aby je usunąć i zwrócić.</gray>"
+    partner_empty_name: "<gradient:#38bdf8:#60a5fa> [Gniazdo partnera] #{slot}</gradient>"
+    partner_empty_lore:
+      - "Tutaj pojawia się podgląd oferty partnera <gray>.</gray>"
+  actions:
+    invite_accept:
+      name: "<gradient:#22c55e:#86efac> [Akceptuj] Rozpocznij wymianę</gradient>"
+      lore:
+        - "<gray>AZaakceptuj to zaproszenie i przenieś transakcję do stanu aktywnego.</gray>"
+    invite_waiting:
+      name: "<gradient:#f59e0b:#fbbf24> [Oczekiwanie] Zaproszenie w toku</gradient>"
+      lore:
+        - "<gray>Czekam, aż Twój partner przyjmie to zaproszenie.</gray>"
+    currency_manage:
+      name: "<gradient:#f59e0b:#fbbf24>[Moneta] Edytuj ofertę walutową</gradient>"
+      lore:
+        - "<gray>OOpen kontrole walutowe z wpisaniem kwoty.</gray>"
+        - "<yellow>Kliknij, aby wybrać walutę.</yellow>"
+    currency_manage_secondary:
+      name: "<gradient:#38bdf8:#60a5fa>[Lista] Selektor walut</gradient>"
+      lore:
+        - "<gray>Wybierz opcję dodaj/usuń dla walut Vault lub JExEconomy.</gray>"
+        - "<yellow>Kliknij, aby otworzyć selektor walut.</yellow>"
+    ready_lock:
+      name: "<gradient:#22c55e:#86efac>[Gotowy] Zablokuj ofertę</gradient>"
+      lore:
+        - "<gray>Ty:</gray> <white>{self_accepted}</white>"
+        - "<gray>Partner:</gray> <white>{partner_accepted}</white>"
+        - "<gray>Lewy przycisk, aby zablokować ofertę.</gray>"
+        - "<gray>Kliknij prawym przyciskiem myszy, aby nie być gotowym.</gray>"
+    ready_unlock:
+      name: "<gradient:#f59e0b:#fbbf24>[Gotowy] Odblokuj ofertę</gradient>"
+      lore:
+        - "<gray>Ty:</gray> <white>{self_accepted}</white>"
+        - "<gray>Partner:</gray> <white>{partner_accepted}</white>"
+        - "<gray>Twoje miejsca na oferty własne są zablokowane, dopóki są gotowe.</gray>"
+        - "<gray>Kliknij prawym przyciskiem myszy, aby odblokować i edytować ponownie.</gray>"
+    confirm:
+      name: "<gradient:#38bdf8:#60a5fa> [Akceptuj] Zakończ transakcję</gradient>"
+      lore:
+        - "<gray>Ty:</gray> <white>{self_accepted}</white>"
+        - "<gray>Partner:</gray> <white>{partner_accepted}</white>"
+        - "<gray>Trade kończy się dopiero po zaakceptowaniu przez obu graczy.</gray>"
+    cancel:
+      name: "<gradient:#ef4444:#f87171> [Anuluj] Przerwij transakcję</gradient>"
+      lore:
+        - "<gray>Anuluj i zwróć pieniądze w ramach depozytu poprzez wiersze dostawy.</gray>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X] Sesja niedostępna</gradient>"
+    lore:
+      - "<gray>Nie można załadować tej sesji handlowej.</gray>"
+
+trade_currency_select_ui:
+  title: "<gradient:#f59e0b:#f97316>[Handel] Oferty walutowe</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Selektor walut</gradient>"
+    lore:
+      - "<gray>Dostępne waluty: </gray> <white>{available_count}</white>"
+      - "<gray>Twoje aktywne oferty:</gray> <white>{offered_count}</white>"
+      - "<yellow>Lewe kliknięcie = dodaj, prawe kliknięcie = usuń.</yellow>"
+      - "<yellow>Obie akcje otwierają kowadło wprowadzania ilości.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa> [waluta] </gradient> <white>{currency}</white>"
+    lore:
+      - "<gray>ID:</gray> <white>{currency_id}</white>"
+      - "<gray>Twoja oferta:</gray> <white>{offered_amount}</white>"
+      - "<yellow>Kliknij lewym przyciskiem myszy, aby dodać wpisaną kwotę.</yellow>"
+      - "<yellow>Kliknij prawym przyciskiem myszy, aby usunąć wpisaną kwotę.</yellow>"
+  applying:
+    name: "<gradient:#38bdf8:#60a5fa>[Synchronizacja] Stosowanie waluty Zmień</gradient>"
+    lore:
+      - "<gray>Aktualizacja oferty dla</gray> <white>{currency}</white><gray>...</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Brak waluty Dostawcy</gradient>"
+    lore:
+      - "<gray>Brak obsługiwanych walut jest obecnie dostępnych do handlu.</gray>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X] Widok waluty niedostępny</gradient>"
+    lore:
+      - "<gray>Nie można załadować tej sesji handlowej.</gray>"
+
+trade_currency_amount_anvil_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[Handel] {mode} {currency}</gradient>"
+  input:
+    lore:
+      - "<gray>Waluta:</gray> <white>{currency}</white>"
+      - "<gray>Operacja:</gray> <white>{mode}</white>"
+      - "<gray>Aktualna oferta:</gray> <white>{current_offer}</white>"
+      - "<yellow>Wprowadź nieujemną liczbę dziesiętną kwota.</yellow>"
+  error:
+    invalid_amount: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nieprawidłowa kwota <white>{input}</white><gray> dla <white>{currency}</white><gray>. Użyj liczby nieujemnej.</gray>"
+
+trade:
+  message:
+    disabled: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Trade jest obecnie wyłączony w konfiguracji.</gray>"
+    self_target: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nie możesz handlować z siebie.</gray>"
+    participant_busy: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Masz już otwartą transakcję z <white>{target}</white><gray>.</gray>"
+    invite_cooldown: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Czekaj <white>{seconds}</white> przed wysłaniem kolejnego zaproszenia do wymiany.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Repozytoria/usługi handlowe są w tej chwili niedostępne.</gray>"
+    invite_sent: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Wysłałem zaproszenie do handlu do <white>{target}</white><gray>.</gray>"
+    invite_received: "<gradient:#38bdf8:#60a5fa>[Invite]</gradient> <gray>Otrzymałeś zaproszenie do handlu od <white>{from}</white><gray>. Otwórz </gray><white>/rr trade</white><gray>.</gray>"
+    delivery_pending: "<gradient:#f59e0b:#f97316>[Inbox]</gradient> <gray>Masz <white>{count}</white> oczekujące na dostawę handlową roszczenie(a).</gray>"
+    success: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Akcja handlowa zakończona.</gray>"
+    waiting_for_partner: "<gradient:#38bdf8:#60a5fa>[=]</gradient> <gray>Czekam na Twojego partnera potwierdzenie.</gray>"
+    completed: "<gradient:#22c55e:#86efac>[Gotowe]</gradient> <gray>Transakcja zakończona. Odbierz dostawę w skrzynce odbiorczej.</gray>"
+    no_item_in_hand: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Najpierw trzymaj przedmiot w głównej ręce.</gray>"
+    offer_full: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Twoja oferta jest już w maksymalnym skonfigurowanym przedziale limit.</gray>"
+    insufficient_funds: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nie masz wystarczających środków na tę transakcję lub związaną z nią opłatę podatkową.</gray>"
+    missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Ten wiersz transakcji już nie istnieje istnieje.</gray>"
+    forbidden: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nie jesteś uczestnikiem tej akcji handlowej.</gray>"
+    invalid_state: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Ta akcja nie dotyczy bieżącej transakcji stan.</gray>"
+    stale: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Dane handlowe zmienione na innym serwerze. Odświeżanie sesji.</gray>"
+    expired: "<gradient:#ef4444:#f87171>[Wygasło]</gradient> <gray>To zaproszenie do handlu już wygasło.</gray>"
 
 storage:
   message:

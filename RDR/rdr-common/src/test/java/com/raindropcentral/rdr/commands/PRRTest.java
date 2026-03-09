@@ -49,6 +49,16 @@ class PRRTest {
     }
 
     @Test
+    void tabCompletionSuggestsTradeAction() {
+        final PRR command = new PRR(new PRRSection(new EvaluationEnvironmentBuilder()), null);
+        final Player player = this.createPlayer();
+
+        final List<String> suggestions = command.onPlayerTabCompletion(player, "prr", new String[]{"tr"});
+
+        assertEquals(List.of("trade"), suggestions);
+    }
+
+    @Test
     void tabCompletionReturnsEmptyListBeyondFirstArgument() {
         final PRR command = new PRR(new PRRSection(new EvaluationEnvironmentBuilder()), null);
         final Player player = this.createPlayer();

@@ -27,8 +27,8 @@ public class BlockListener implements Listener {
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
         //TODO Fix this to actually check for nexus block
-        String blockName = event.getBlock().getType().name().toLowerCase().replace('_', ' ');
-        event.getPlayer().sendMessage("you broke a " + blockName + " block");
+        //String blockName = event.getBlock().getType().name().toLowerCase().replace('_', ' ');
+        //event.getPlayer().sendMessage("you broke a " + blockName + " block");
     }
 
     @EventHandler

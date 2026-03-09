@@ -50,6 +50,38 @@ protection:
       vault: 0.0
       raindrops: 0.0
 
+# Cross-server DB-first trade settings.
+trade:
+  # Master switch for all /rr trade features.
+  enabled: true
+  # Seconds before pending invites expire.
+  invite_timeout_seconds: 60
+  # Poll interval for invite/session/delivery inbox refresh (20 ticks = 1 second).
+  poll_interval_ticks: 20
+  # Max item offer slots per participant (capped to 12 by the plugin).
+  max_offer_slots: 9
+  # Cooldown in seconds between outbound trade invites by one player.
+  invite_cooldown_seconds: 5
+  # Per-trade completion taxes charged to each participant before settlement finalizes.
+  taxation:
+    # Global switch for trade taxation.
+    enabled: false
+    # Per-currency tax definitions keyed by currency identifier.
+    currencies:
+      # Supported tax modes:
+      # FLAT: tax = flat_amount
+      # GROWTH: tax = flat_amount + (offered_currency_amount * growth_per_currency_amount) + (offered_item_count * growth_per_item)
+      vault:
+        mode: FLAT
+        flat_amount: 0.0
+        growth_per_currency_amount: 0.0
+        growth_per_item: 0.0
+      raindrops:
+        mode: FLAT
+        flat_amount: 0.0
+        growth_per_currency_amount: 0.0
+        growth_per_item: 0.0
+
 # RPlatform-powered requirements consumed for each one-based storage shop purchase tier.
 # Only the tiers required to move from `starting_storages` to `max_storages` are needed.
 # The bundled config defines the first 10 purchase tiers so higher storage caps can reuse the same pattern.

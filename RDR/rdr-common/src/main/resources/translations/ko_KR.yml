@@ -65,6 +65,12 @@ storage_admin_ui:
         - "<gray>기술, 직업, 통화 및 PlaceholderAPI 도구를 관리합니다.</gray>"
         - "<gray>통합 관련 관리 제어를 엽니다.</gray>"
         - "<yellow>통합 관리를 열려면 클릭하세요.</yellow>"
+    trade_bank:
+      name: "<gradient:#f59e0b:#fbbf24>[세금] Trade Server Bank</gradient>"
+      lore:
+        - "<gray>통화별로 징수된 무역세 잔액을 검토합니다.</gray>"
+        - "<gray>서버-은행 잔액을 관리자에게 인출합니다. 계정.</gray>"
+        - "<yellow>무역세 은행 컨트롤을 열려면 클릭하세요.</yellow>"
     currency:
       name: "<gradient:#10b981:#34d399>[Cur] 통화 관리자</gradient>"
       lore:
@@ -938,6 +944,316 @@ storage_tax_town_bank_ui:
     currency_unsupported: "<gradient:#ef4444:#f87171>[엑스]</gradient> <gray><white>{currency}</white><gray> 타운뱅크로 이체할 수 없습니다. 현재 마을 은행 송금이 지원됩니다. Vault 오직.</gray>"
     transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>전송하지 못했습니다. <white>{currency}</white><gray> 당신의 마을 은행에.</gray>"
     transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>전송됨 <white>{amount}</white><gray> ~에 <white>{currency}</white><gray> 당신의 마을 은행에.</gray>"
+
+trade_admin_bank_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[Admin] 무역세 은행</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#f97316>[Info] 서버 세금 원장</gradient>"
+    lore:
+      - "<gray>추적된 통화:</gray> <white>{currency_count}</white>"
+      - "<gray>전체를 인출하려면 통화를 클릭하세요. 잔액.</gray>"
+      - "<yellow>필요:</yellow> <white>raindroprdr.command.admin</white>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[$] {currency}</gradient> <gray>({currency_id})</gray>"
+    lore:
+      - "<gray>사용 가능:</gray> <white>[{amount}</white>"
+      - "<gray>원장 항목:</gray> <white>{ledger_count}</white>"
+      - "<gray>최신 유형:</gray> <white>{latest_type}</white>"
+      - "<gray>최근 금액:</gray> <white>{latest_amount}</white>"
+      - "<gray>최근 참고:</gray> <white>{latest_note}</white>"
+      - "<yellow>이 통화를 인출하려면 클릭하세요. 잔액.</yellow>"
+    latest:
+      none: "<gradient:#6b7280:#9ca3af>[없음]</gradient>"
+      deposit: "<gradient:#22c55e:#86efac>[Dep osit]</gradient>"
+      withdraw: "<gradient:#ef4444:#f87171>[철회]</gradient>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] 관리자 액세스 필요</gradient>"
+    lore:
+      - "<gray>이 무역세 은행 패널을 사용할 권한이 없습니다.</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] 은행 없음 항목</gradient>"
+    lore:
+      - "<gray>지금은 징수된 무역세 잔액이 저장되어 있지 않습니다.</gray>"
+  feedback:
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>무역세 은행을 사용할 권한이 없습니다. 컨트롤.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>무역세 은행 서비스를 현재 사용할 수 없습니다.</gray>"
+    empty_balance: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>아니요 <white>{currency}</white><gray>.</gray>"
+    withdraw_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>에서 출금 가능한 잔액을 찾았습니다. <white>{currency}</white><gray> 무역세 은행에서.</gray>"
+    withdraw_success: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>철수 <white>{amount}</white><gray> in <white>{currency}</white><gray> 무역세 은행에서.</gray>"
+
+trade_hub_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Trade] 서버 간 허브</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[정보] 거래 개요</gradient>"
+    lore:
+      - "<gray>대기 중인 초대:</gray> <white>{pending_invites}</white>"
+      - "<gray>활성 세션:</gray> <white>{active_sessions}</white>"
+      - "<gray>대기 중인 배달:</gray> <white>{pending_deliveries}</white>"
+      - "<yellow>아래에서 거래 활동을 선택하세요.</yellow>"
+  actions:
+    new_trade:
+      name: "<gradient:#22c55e:#86efac>[+] 새로운 거래 초대</gradient>"
+      lore:
+        - "<gray>온라인 대상을 선택하고 DB 지원 초대를 보냅니다.</gray>"
+        - "<yellow>대상 선택을 열려면 클릭하세요.</yellow>"
+    current_trades:
+      name: "<gradient:#38bdf8:#60a5fa>[=] 현재 거래</gradient>"
+      lore:
+        - "<gray>초대, 활성 세션 및 완료 상태를 검토합니다.</gray>"
+        - "<yellow>현재 거래를 탐색하려면 클릭하세요.</yellow>"
+    inbox:
+      name: "<gradient:#f59e0b:#f97316>[Inbox] 청구 및 요청</gradient>"
+      lore:
+        - "<gray>초대를 수락하고 배송 대금을 청구하세요.</gray>"
+        - "<yellow>거래 받은 편지함을 열려면 클릭하세요.</yellow>"
+    tax_info:
+      name: "<gradient:#38bdf8:#60a5fa>[세금] 무역세</gradient>"
+      lore:
+        - "<gray>통화별 무역세 설정 및 공식을 검토합니다.</gray>"
+        - "<yellow>무역세 정보를 열려면 클릭하세요.</yellow>"
+
+trade_tax_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[세금] 무역세 정의</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[정보] 세금 구성</gradient>"
+    lore:
+      - "<gray>세금 제도:</gray> <white>{tax_enabled}</white>"
+      - "<gray>구성된 통화:</gray> <white>{currency_count}</white>"
+      - "<yellow>각 카드에는 해당 통화에 대한 활성 공식이 표시됩니다.</yellow>"
+    tax_enabled:
+      "on": "<gradient:#22c55e:#86efac>[활성화됨]</gradient>"
+      "off": "<gradient:#ef4444:#f87171>[비활성화]</gradient>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[$] {currency}</gradient> <gray>({currency_id})</gray>"
+    lore:
+      - "<gray>모드:</gray> <white>{mode}</white>"
+      - "<gray>플랫/베이스:</gray> <white>{flat_amount}</white>"
+      - "<gray>통화별 성장:</gray> <white>{growth_per_currency}</white>"
+      - "<gray>아이템별 성장:</gray> <white>{growth_per_item}</white>"
+      - "<gray>예(100 통화 + 5개 항목):</gray> <white>{example_tax}</white>"
+      - "<yellow>읽기 전용 정보 패널입니다.</yellow>"
+    mode:
+      flat: "<gradient:#38bdf8:#60a5fa>[플랫]</gradient>"
+      growth: "<gradient:#f59e0b:#f97316>[성장]</gradient>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] 세금 통화 없음</gradient>"
+    lore:
+      - "<gray>무역세 통화가 구성되지 않았습니다.</gray>"
+
+trade_target_select_ui:
+  title: "<gradient:#22c55e:#14b8a6>[거래] 대상 선택</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[정보] 사용 가능한 대상</gradient>"
+    lore:
+      - "<gray>발견된 대상:</gray> <white>{target_count}</white>"
+      - "<yellow>초대장을 보내려면 대상을 클릭하세요.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[초대]</gradient> <white>{target}</white>"
+    lore:
+      - "<gray></gray> <white>{target}</white><gray>.</gray>에 지속적인 거래 초대를 보냅니다."
+      - "<yellow>이 플레이어를 초대하려면 클릭하세요.</yellow>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>[X] 대상을 찾을 수 없음</gradient>"
+    lore:
+      - "<gray>적격한 거래 대상을 찾을 수 없습니다.</gray>"
+
+trade_current_ui:
+  title: "<gradient:#22c55e:#14b8a6>[거래] 현재 세션</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[정보] 세션 목록</gradient>"
+    lore:
+      - "<gray>추적된 세션:</gray> <white>{session_count}</white>"
+      - "<yellow>세션을 관리하거나 열려면 항목을 클릭하세요.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[거래]</gradient> <white>{counterparty}</white> <gray>{status}</gray>"
+    lore:
+      - "<gray>상대방:</gray> <white>{counterparty}</white>"
+      - "<gray>상태:</gray> <white>{status}</white>"
+      - "<gray>거래 UUID:</gray> <white>{trade_uuid}</white>"
+      - "<yellow>이 거래 세션을 열려면 클릭하세요.</yellow>"
+  actions:
+    inbox:
+      name: "<gradient:#f59e0b:#f97316>[Inbox] 청구 및 요청</gradient>"
+      lore:
+        - "<gray>초대 및 배달 요청을 엽니다.</gray>"
+        - "<yellow>거래 받은 편지함을 열려면 클릭하세요.</yellow>"
+  status:
+    invited: "<gradient:#f59e0b:#fbbf24>[초대됨]</gradient>"
+    active: "<gradient:#22c55e:#86efac>[활성]</gradient>"
+    completing: "<gradient:#38bdf8:#60a5fa>[완료 중]</gradient>"
+    completed: "<gradient:#22c55e:#86efac>[완료]</gradient>"
+    canceled: "<gradient:#ef4444:#f87171>[취소됨]</gradient>"
+    expired: "<gradient:#6b7280:#9ca3af>[만료됨]</gradient>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] 현재 거래 없음</gradient>"
+    lore:
+      - "<gray>비터미널 거래 세션이 없습니다.</gray>"
+
+trade_inbox_ui:
+  title: "<gradient:#f59e0b:#f97316>[거래] 받은 편지함</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[정보] 요청 및 배달</gradient>"
+    lore:
+      - "<gray>대기 중인 초대:</gray> <white>{invite_count}</white>"
+      - "<gray>청구 가능한 배달:</gray> <white>{delivery_count}</white>"
+      - "<yellow>초대: 열려면 클릭하세요. 거래 세션.</yellow>"
+      - "<yellow>배송: 요청하려면 클릭하세요.</yellow>"
+  entry:
+    invite:
+      name: "<gradient:#38bdf8:#60a5fa>[초대]</gradient> <white>{from}</white>"
+      lore:
+        - "<gray>시작:</gray> <white>{from}</white>"
+        - "<gray>거래 UUID:</gray> <white>{trade_uuid}</white>"
+        - "<yellow>이 거래 세션을 열려면 클릭하세요.</yellow>"
+    delivery:
+      name: "<gradient:#22c55e:#86efac>[청구]</gradient> <white>{trade_uuid}</white>"
+      lore:
+        - "<gray>거래 UUID:</gray> <white>{trade_uuid}</white>"
+        - "<gray>아이템 페이로드 슬롯:</gray> <white>{item_count}</white>"
+        - "<gray>통화 페이로드 항목:</gray> <white>{currency_count}</white>"
+        - "<yellow>이 배송을 요청하려면 클릭하세요.</yellow>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] 받은편지함 비어 있음</gradient>"
+    lore:
+      - "<gray>보류 중인 초대 또는 배달이 없습니다.</gray>"
+
+trade_session_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Trade] 세션</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[정보] 세션 상태</gradient>"
+    lore:
+      - "<gray>상태:</gray> <white>{status}</white>"
+      - "<gray>거래 UUID:</gray> <white>{trade_uuid}</white>"
+      - "<gray> 개정:</gray> <white>{revision}</white>"
+      - "<gray>Vault 제안:</gray> <white>{self_vault}</white>"
+      - "<gray>파트너 Vault 제공 제안:</gray> <white>{partner_vault}</white>"
+      - "<gray>귀하의 통화:</gray> <white>{self_currency_count}</white> <gray>(총계:</gray> <white>{self_currency_total}</white><gray>)</gray>"
+      - "<gray>파트너 통화:</gray> <white>{partner_currency_count}</white> <gray>(총계:</gray> <white>{partner_currency_total}</white><gray>)</gray>"
+  status:
+    invited: "<gradient:#f59e0b:#fbbf24>[초대됨]</gradient>"
+    active: "<gradient:#22c55e:#86efac>[활성]</gradient>"
+    completing: "<gradient:#38bdf8:#60a5fa>[완료 중]</gradient>"
+    completed: "<gradient:#22c55e:#86efac>[완료]</gradient>"
+    canceled: "<gradient:#ef4444:#f87171>[취소됨]</gradient>"
+    expired: "<gradient:#6b7280:#9ca3af>[만료됨]</gradient>"
+  slots:
+    self_empty_name: "<gradient:#22c55e:#86efac>[셀프 슬롯] #{slot}</gradient>"
+    self_empty_lore:
+      - "<gray>이 슬롯에 에스크로하려면 커서 아이템을 마우스 왼쪽 버튼으로 클릭하세요.</gray>"
+      - "<gray>첫 번째 무료 항목에 자동으로 삽입하려면 Shift 키를 누른 채 인벤토리를 클릭하세요. 슬롯.</gray>"
+      - "<gray>제거하고 환불하려면 채워진 자체 슬롯을 마우스 오른쪽 버튼으로 클릭하세요.</gray>"
+    partner_empty_name: "<gradient:#38bdf8:#60a5fa>[파트너 슬롯] #{slot}</gradient>"
+    partner_empty_lore:
+      - "<gray>파트너 제안 미리보기가 여기에 표시됩니다.</gray>"
+  actions:
+    invite_accept:
+      name: "<gradient:#22c55e:#86efac>[수락] 시작 거래</gradient>"
+      lore:
+        - "<gray>이 초대를 수락하고 거래를 활성 상태로 전환합니다.</gray>"
+    invite_waiting:
+      name: "<gradient:#f59e0b:#fbbf24>[대기 중] 초대 보류 중</gradient>"
+      lore:
+        - "<gray>파트너가 이 초대를 수락하기를 기다리고 있습니다.</gray>"
+    currency_manage:
+      name: "<gradient:#f59e0b:#fbbf24>[Coin] 통화 제안 편집</gradient>"
+      lore:
+        - "<gray>입력된 금액으로 통화별 제어를 엽니다. 입력.</gray>"
+        - "<yellow>통화를 선택하려면 클릭하세요.</yellow>"
+    currency_manage_secondary:
+      name: "<gradient:#38bdf8:#60a5fa>[목록] 통화 선택기</gradient>"
+      lore:
+        - "<gray>추가/제거 선택 Vault 또는 JExEconomy 통화.</gray>"
+        - "<yellow>통화 선택기를 열려면 클릭하세요.</yellow>"
+    ready_lock:
+      name: "<gradient:#22c55e:#86efac>[Ready] 잠금 제안</gradient>"
+      lore:
+        - "<gray>귀하:</gray> <white>{self_accepted}</white>"
+        - "<gray>파트너:</gray> <white>{partner_accepted}</white>"
+        - "<gray> 제안을 잠그려면 왼쪽 클릭하세요.</gray>"
+        - "<gray>오른쪽 클릭: 준비되지 않았습니다.</gray>"
+    ready_unlock:
+      name: "<gradient:#f59e0b:#fbbf24>[준비] 잠금 해제 제안</gradient>"
+      lore:
+        - "<gray>귀하:</gray> <white>{self_accepted}</white>"
+        - "<gray>파트너:</gray> <white>{partner_accepted}</white>"
+        - "<gray>자체 제안 슬롯은 다음 동안 잠겨 있습니다. 준비.</gray>"
+        - "<gray>잠금 해제하고 다시 편집하려면 마우스 오른쪽 버튼을 클릭하십시오.</gray>"
+    confirm:
+      name: "<gradient:#38bdf8:#60a5fa>[수락] 완료 거래</gradient>"
+      lore:
+        - "<gray>귀하:</gray> <white>{self_accepted}</white>"
+        - "<gray>파트너:</gray> <white>{partner_accepted}</white>"
+        - "<gray>거래는 두 플레이어가 모두 수락한 후에만 완료됩니다.</gray>"
+    cancel:
+      name: "<gradient:#ef4444:#f87171>[취소] 중단 거래</gradient>"
+      lore:
+        - "<gray>배송 행을 통해 에스크로를 취소하고 환불합니다.</gray>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X] 세션 사용할 수 없음</gradient>"
+    lore:
+      - "<gray>이 거래 세션을 로드할 수 없습니다.</gray>"
+
+trade_currency_select_ui:
+  title: "<gradient:#f59e0b:#f97316>[Trade] 통화 혜택</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[정보] 통화 선택기</gradient>"
+    lore:
+      - "<gray>사용 가능한 통화:</gray> <white>{available_count}</white>"
+      - "<gray>활성 제안:</gray> <white>{offered_count}</white>"
+      - "<yellow>왼쪽 클릭 = 추가, 마우스 오른쪽 버튼 클릭 = 제거."
+      - "<yellow>두 작업 모두 금액 입력 모루를 엽니다.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[통화]</gradient> <white>{currency}</white>"
+    lore:
+      - "<gray>ID:</gray> <white>{currency_id}</white>"
+      - "<gray>귀하의 제안:</gray> <white>{offered_amount}</white>"
+      - "<yellow>입력된 금액을 추가하려면 왼쪽 버튼을 클릭하세요.</yellow>"
+      - "<yellow>입력된 금액을 삭제하려면 마우스 오른쪽 버튼을 클릭하세요.</yellow>"
+  applying:
+    name: "<gradient:#38bdf8:#60a5fa>[Sync] 통화 적용 중 변경</gradient>"
+    lore:
+      - "<gray></gray> <white>{currency}</white><gray>...</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~]에 대한 제안 업데이트 중 제공자</gradient>"
+    lore:
+      - "<gray>현재 거래에 지원되는 통화가 없습니다.</gray>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X] 통화 보기 이용 불가</gradient>"
+    lore:
+      - "<gray>이 거래 세션을 로드할 수 없습니다.</gray>"
+
+trade_currency_amount_anvil_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[거래] {mode} {currency}</gradient>"
+  input:
+    lore:
+      - "<gray>통화:</gray> <white>{currency}</white>"
+      - "<gray>작업:</gray> <white>{mode}</white>"
+      - "<gray>현재 제안:</gray> <white>{current_offer}</white>"
+      - "<yellow>음수가 아닌 소수점을 입력하세요.</yellow>"
+  error:
+    invalid_amount: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{input}</white><gray> <white>{currency}</white><gray>에 대해 잘못된 금액입니다. 음수가 아닌 숫자를 사용하십시오."
+
+trade:
+  message:
+    disabled: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>현재 구성에서 거래가 비활성화되어 있습니다.</gray>"
+    self_target: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>귀하는 자신과 거래할 수 없습니다.</gray>"
+    participant_busy: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>귀하는 이미 거래를 개시하고 있습니다. <white>{target}</white><gray>.</gray>"
+    invite_cooldown: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>다른 거래를 보내기 전에 <white>{seconds}</white>를 기다리세요. 초대합니다.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>현재 거래 저장소/서비스를 사용할 수 없습니다.</gray>"
+    invite_sent: "<gradient:#22c55e:#86efac>[+]</gradient> <gray><white>{target}</white><gray>에게 거래 초대를 보냈습니다.</gray>"
+    invite_received: "<gradient:#38bdf8:#60a5fa>[초대]</gradient> <gray>다음에서 거래 초대를 받았습니다. <white>{from}</white><gray>. </gray><white>/rr trade</white><gray>.</gray>"
+    delivery_pending: "<gradient:#f59e0b:#f97316>[받은 편지함]</gradient> <gray>을(를) 엽니다. <white>{count}</white> 거래 인도 청구가 보류 중입니다.</gray>"
+    success: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>거래 조치 완료되었습니다.</gray>"
+    waiting_for_partner: "<gradient:#38bdf8:#60a5fa>[=]</gradient> <gray>파트너 확인을 기다리는 중입니다.</gray>"
+    completed: "<gradient:#22c55e:#86efac>[완료]</gradient> <gray>거래가 완료되었습니다. 받은 편지함에서 배송을 요청하세요."
+    no_item_in_hand: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>먼저 주 손에 아이템을 잡으세요.</gray>"
+    offer_full: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>귀하의 제안은 이미 구성된 최대 슬롯 한도에 도달했습니다.</gray>"
+    insufficient_funds: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>이 거래 활동이나 세금을 위한 충분한 자금이 없습니다. 청구됩니다.</gray>"
+    missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>해당 거래 행이 더 이상 존재하지 않습니다.</gray>"
+    forbidden: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>귀하께서는 해당 거래 행이 더 이상 존재하지 않습니다. 해당 거래 조치에 대한 참가자입니다.</gray>"
+    invalid_state: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>이 조치는 현재 거래 상태에 유효하지 않습니다.</gray>"
+    stale: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>거래 데이터가 다른 서버에서 변경되었습니다. 세션을 새로 고치는 중입니다."
+    expired: "<gradient:#ef4444:#f87171>[만료됨]</gradient> <gray>해당 거래 초대가 이미 만료되었습니다.</gray>"
 
 storage:
   message:

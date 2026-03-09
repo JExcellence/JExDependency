@@ -46,6 +46,13 @@ public class ConfigSection extends AConfigSection {
     private Integer protection_filled_storage_maximum_freeze;
     private Map<String, Double> protection_filled_storage_maximum_debt;
     private Map<String, Double> protection_filled_storage_taxes;
+    private Boolean trade_enabled;
+    private Long trade_invite_timeout_seconds;
+    private Long trade_poll_interval_ticks;
+    private Integer trade_max_offer_slots;
+    private Long trade_invite_cooldown_seconds;
+    private Boolean trade_taxation_enabled;
+    private Map<String, TradeTaxCurrencyDefinition> trade_taxation_currencies;
 
     /**
      * Creates a configuration section bound to the provided evaluation environment.
@@ -55,6 +62,69 @@ public class ConfigSection extends AConfigSection {
      */
     public ConfigSection(final @NotNull EvaluationEnvironmentBuilder baseEnvironment) {
         super(baseEnvironment);
+    }
+
+    /**
+     * Supported calculation strategies for configured trade taxes.
+     */
+    public enum TradeTaxMode {
+        /**
+         * Uses only the configured flat tax amount.
+         */
+        FLAT,
+        /**
+         * Uses base tax plus configured growth rates.
+         */
+        GROWTH
+    }
+
+    /**
+     * Normalized per-currency tax definition used when a trade is finalized.
+     *
+     * @param mode tax calculation mode
+     * @param flatAmount flat/base tax amount
+     * @param growthPerCurrencyAmount growth multiplier applied to offered currency amount
+     * @param growthPerItem growth multiplier applied to offered item count
+     */
+    public record TradeTaxCurrencyDefinition(
+        @NotNull TradeTaxMode mode,
+        double flatAmount,
+        double growthPerCurrencyAmount,
+        double growthPerItem
+    ) {
+
+        /**
+         * Creates a normalized trade-tax definition.
+         *
+         * @param mode tax calculation mode
+         * @param flatAmount flat/base tax amount
+         * @param growthPerCurrencyAmount growth multiplier applied to offered currency amount
+         * @param growthPerItem growth multiplier applied to offered item count
+         */
+        public TradeTaxCurrencyDefinition {
+            mode = mode == null ? TradeTaxMode.FLAT : mode;
+            flatAmount = Math.max(0.0D, flatAmount);
+            growthPerCurrencyAmount = Math.max(0.0D, growthPerCurrencyAmount);
+            growthPerItem = Math.max(0.0D, growthPerItem);
+        }
+
+        /**
+         * Calculates tax for one participant offer payload.
+         *
+         * @param offeredCurrencyAmount offered amount in the taxed currency
+         * @param offeredItemCount offered item-stack count
+         * @return non-negative tax amount
+         */
+        public double calculateTax(final double offeredCurrencyAmount, final int offeredItemCount) {
+            if (this.mode == TradeTaxMode.FLAT) {
+                return this.flatAmount;
+            }
+            final double normalizedCurrencyAmount = Math.max(0.0D, offeredCurrencyAmount);
+            final int normalizedItemCount = Math.max(0, offeredItemCount);
+            return this.flatAmount
+                + (normalizedCurrencyAmount * this.growthPerCurrencyAmount)
+                + (normalizedItemCount * this.growthPerItem);
+        }
     }
 
     /**
@@ -253,6 +323,73 @@ public class ConfigSection extends AConfigSection {
     }
 
     /**
+     * Returns whether the trade subsystem is enabled.
+     *
+     * @return {@code true} when trade features are enabled
+     */
+    public boolean isTradeEnabled() {
+        return this.trade_enabled == null || this.trade_enabled;
+    }
+
+    /**
+     * Returns the invite timeout in seconds for pending trade invites.
+     *
+     * @return invite timeout in seconds
+     */
+    public long getTradeInviteTimeoutSeconds() {
+        return this.normalizePositiveLong(this.trade_invite_timeout_seconds, 60L);
+    }
+
+    /**
+     * Returns the poll interval in ticks used by trade inbox and active-session polling.
+     *
+     * @return poll interval in ticks
+     */
+    public long getTradePollIntervalTicks() {
+        return this.normalizePositiveLong(this.trade_poll_interval_ticks, 20L);
+    }
+
+    /**
+     * Returns the maximum number of item-offer slots available per trade participant.
+     *
+     * @return max offer slot count
+     */
+    public int getTradeMaxOfferSlots() {
+        final int configured = this.normalizePositive(this.trade_max_offer_slots, 9);
+        return Math.min(configured, 12);
+    }
+
+    /**
+     * Returns the cooldown in seconds between trade invite creations per initiator.
+     *
+     * @return invite cooldown seconds
+     */
+    public long getTradeInviteCooldownSeconds() {
+        return this.normalizeNonNegative(this.trade_invite_cooldown_seconds, 5L);
+    }
+
+    /**
+     * Returns whether trade-tax charging is enabled for completion settlement.
+     *
+     * @return {@code true} when trade taxes should be charged
+     */
+    public boolean isTradeTaxationEnabled() {
+        return this.trade_taxation_enabled != null && this.trade_taxation_enabled;
+    }
+
+    /**
+     * Returns normalized per-currency trade-tax definitions.
+     *
+     * <p>The returned map always includes defaults for {@code vault} and {@code raindrops} and
+     * normalizes keys to lowercase identifiers.</p>
+     *
+     * @return immutable currency tax-definition map
+     */
+    public @NotNull Map<String, TradeTaxCurrencyDefinition> getTradeTaxationCurrencies() {
+        return normalizeTradeTaxationCurrencies(this.trade_taxation_currencies);
+    }
+
+    /**
      * Returns whether the supplied storage key is covered by protection-area restrictions.
      *
      * @param storageKey storage key to evaluate
@@ -388,6 +525,35 @@ public class ConfigSection extends AConfigSection {
                 section.protection_filled_storage_taxes = parseProtectionTaxes(filledCurrencySection);
             }
         }
+
+        final ConfigurationSection tradeSection = configuration.getConfigurationSection("trade");
+        if (tradeSection != null) {
+            section.trade_enabled = tradeSection.contains("enabled")
+                ? tradeSection.getBoolean("enabled")
+                : section.trade_enabled;
+            section.trade_invite_timeout_seconds = tradeSection.contains("invite_timeout_seconds")
+                ? tradeSection.getLong("invite_timeout_seconds")
+                : section.trade_invite_timeout_seconds;
+            section.trade_poll_interval_ticks = tradeSection.contains("poll_interval_ticks")
+                ? tradeSection.getLong("poll_interval_ticks")
+                : section.trade_poll_interval_ticks;
+            section.trade_max_offer_slots = tradeSection.contains("max_offer_slots")
+                ? tradeSection.getInt("max_offer_slots")
+                : section.trade_max_offer_slots;
+            section.trade_invite_cooldown_seconds = tradeSection.contains("invite_cooldown_seconds")
+                ? tradeSection.getLong("invite_cooldown_seconds")
+                : section.trade_invite_cooldown_seconds;
+
+            final ConfigurationSection tradeTaxationSection = tradeSection.getConfigurationSection("taxation");
+            if (tradeTaxationSection != null) {
+                section.trade_taxation_enabled = tradeTaxationSection.contains("enabled")
+                    ? tradeTaxationSection.getBoolean("enabled")
+                    : section.trade_taxation_enabled;
+                section.trade_taxation_currencies = parseTradeTaxationCurrencies(
+                    tradeTaxationSection.getConfigurationSection("currencies")
+                );
+            }
+        }
         return section;
     }
 
@@ -411,6 +577,13 @@ public class ConfigSection extends AConfigSection {
         section.protection_filled_storage_maximum_freeze = -1;
         section.protection_filled_storage_maximum_debt = createDefaultProtectionMaximumDebt();
         section.protection_filled_storage_taxes = createDefaultProtectionTaxes();
+        section.trade_enabled = true;
+        section.trade_invite_timeout_seconds = 60L;
+        section.trade_poll_interval_ticks = 20L;
+        section.trade_max_offer_slots = 9;
+        section.trade_invite_cooldown_seconds = 5L;
+        section.trade_taxation_enabled = false;
+        section.trade_taxation_currencies = createDefaultTradeTaxationCurrencies();
         return section;
     }
 
@@ -433,6 +606,13 @@ public class ConfigSection extends AConfigSection {
             this.protection_filled_storage_maximum_freeze = this.getProtectionFilledStorageMaximumFreeze();
             this.protection_filled_storage_maximum_debt = this.getProtectionFilledStorageMaximumDebtByCurrency();
             this.protection_filled_storage_taxes = this.getProtectionFilledStorageTaxes();
+            this.trade_enabled = this.isTradeEnabled();
+            this.trade_invite_timeout_seconds = this.getTradeInviteTimeoutSeconds();
+            this.trade_poll_interval_ticks = this.getTradePollIntervalTicks();
+            this.trade_max_offer_slots = this.getTradeMaxOfferSlots();
+            this.trade_invite_cooldown_seconds = this.getTradeInviteCooldownSeconds();
+            this.trade_taxation_enabled = this.isTradeTaxationEnabled();
+            this.trade_taxation_currencies = this.getTradeTaxationCurrencies();
             return;
         }
 
@@ -467,6 +647,13 @@ public class ConfigSection extends AConfigSection {
         this.protection_filled_storage_maximum_freeze = this.getProtectionFilledStorageMaximumFreeze();
         this.protection_filled_storage_maximum_debt = this.getProtectionFilledStorageMaximumDebtByCurrency();
         this.protection_filled_storage_taxes = this.getProtectionFilledStorageTaxes();
+        this.trade_enabled = this.isTradeEnabled();
+        this.trade_invite_timeout_seconds = this.getTradeInviteTimeoutSeconds();
+        this.trade_poll_interval_ticks = this.getTradePollIntervalTicks();
+        this.trade_max_offer_slots = this.getTradeMaxOfferSlots();
+        this.trade_invite_cooldown_seconds = this.getTradeInviteCooldownSeconds();
+        this.trade_taxation_enabled = this.isTradeTaxationEnabled();
+        this.trade_taxation_currencies = this.getTradeTaxationCurrencies();
     }
 
     private int normalizePositive(
@@ -474,6 +661,16 @@ public class ConfigSection extends AConfigSection {
         final int defaultValue
     ) {
         if (value == null || value < 1) {
+            return defaultValue;
+        }
+        return value;
+    }
+
+    private long normalizePositiveLong(
+        final Long value,
+        final long defaultValue
+    ) {
+        if (value == null || value < 1L) {
             return defaultValue;
         }
         return value;
@@ -618,6 +815,61 @@ public class ConfigSection extends AConfigSection {
         return normalizeProtectionMaximumDebt(parsedDebtCaps);
     }
 
+    private static @NotNull Map<String, TradeTaxCurrencyDefinition> parseTradeTaxationCurrencies(
+        final @Nullable ConfigurationSection currenciesSection
+    ) {
+        final Map<String, TradeTaxCurrencyDefinition> parsedDefinitions = createDefaultTradeTaxationCurrencies();
+        if (currenciesSection == null) {
+            return parsedDefinitions;
+        }
+
+        for (final String rawCurrencyId : currenciesSection.getKeys(false)) {
+            if (rawCurrencyId == null || rawCurrencyId.isBlank()) {
+                continue;
+            }
+
+            final String normalizedCurrencyId = rawCurrencyId.trim().toLowerCase(Locale.ROOT);
+            final ConfigurationSection currencySection = currenciesSection.getConfigurationSection(rawCurrencyId);
+            if (currencySection == null) {
+                final Double legacyFlatAmount = parseDoubleValue(currenciesSection.get(rawCurrencyId));
+                if (legacyFlatAmount == null) {
+                    continue;
+                }
+                parsedDefinitions.put(
+                    normalizedCurrencyId,
+                    new TradeTaxCurrencyDefinition(TradeTaxMode.FLAT, legacyFlatAmount, 0.0D, 0.0D)
+                );
+                continue;
+            }
+
+            final TradeTaxMode mode = parseTradeTaxMode(currencySection.getString("mode"));
+            final Double flatAmount = firstNonNull(
+                parseDoubleValue(currencySection.get("flat_amount")),
+                parseDoubleValue(currencySection.get("flat")),
+                parseDoubleValue(currencySection.get("base_amount"))
+            );
+            final Double growthPerCurrencyAmount = firstNonNull(
+                parseDoubleValue(currencySection.get("growth_per_currency_amount")),
+                parseDoubleValue(currencySection.get("growth_rate_currency_amount"))
+            );
+            final Double growthPerItem = firstNonNull(
+                parseDoubleValue(currencySection.get("growth_per_item")),
+                parseDoubleValue(currencySection.get("growth_rate_item_count"))
+            );
+
+            parsedDefinitions.put(
+                normalizedCurrencyId,
+                new TradeTaxCurrencyDefinition(
+                    mode,
+                    flatAmount == null ? 0.0D : flatAmount,
+                    growthPerCurrencyAmount == null ? 0.0D : growthPerCurrencyAmount,
+                    growthPerItem == null ? 0.0D : growthPerItem
+                )
+            );
+        }
+        return normalizeTradeTaxationCurrencies(parsedDefinitions);
+    }
+
     private static @NotNull Map<String, StoreRequirementSection> parsePurchaseRequirementSet(
         final @NotNull ConfigurationSection purchaseSection
     ) {
@@ -655,6 +907,13 @@ public class ConfigSection extends AConfigSection {
         final Map<String, Double> defaults = new LinkedHashMap<>();
         defaults.put("vault", -1.0D);
         defaults.put("raindrops", -1.0D);
+        return defaults;
+    }
+
+    private static @NotNull Map<String, TradeTaxCurrencyDefinition> createDefaultTradeTaxationCurrencies() {
+        final Map<String, TradeTaxCurrencyDefinition> defaults = new LinkedHashMap<>();
+        defaults.put("vault", new TradeTaxCurrencyDefinition(TradeTaxMode.FLAT, 0.0D, 0.0D, 0.0D));
+        defaults.put("raindrops", new TradeTaxCurrencyDefinition(TradeTaxMode.FLAT, 0.0D, 0.0D, 0.0D));
         return defaults;
     }
 
@@ -765,6 +1024,34 @@ public class ConfigSection extends AConfigSection {
         return normalizedMaximumDebt;
     }
 
+    private static @NotNull Map<String, TradeTaxCurrencyDefinition> normalizeTradeTaxationCurrencies(
+        final @Nullable Map<String, TradeTaxCurrencyDefinition> definitions
+    ) {
+        final Map<String, TradeTaxCurrencyDefinition> normalizedDefinitions = createDefaultTradeTaxationCurrencies();
+        if (definitions == null || definitions.isEmpty()) {
+            return Map.copyOf(normalizedDefinitions);
+        }
+
+        for (final Map.Entry<String, TradeTaxCurrencyDefinition> entry : definitions.entrySet()) {
+            if (entry.getKey() == null || entry.getKey().isBlank() || entry.getValue() == null) {
+                continue;
+            }
+
+            final String normalizedCurrencyId = entry.getKey().trim().toLowerCase(Locale.ROOT);
+            final TradeTaxCurrencyDefinition definition = entry.getValue();
+            normalizedDefinitions.put(
+                normalizedCurrencyId,
+                new TradeTaxCurrencyDefinition(
+                    definition.mode(),
+                    definition.flatAmount(),
+                    definition.growthPerCurrencyAmount(),
+                    definition.growthPerItem()
+                )
+            );
+        }
+        return Map.copyOf(normalizedDefinitions);
+    }
+
     private static @Nullable Double parseDoubleValue(final @Nullable Object value) {
         if (value instanceof Number number) {
             return number.doubleValue();
@@ -785,5 +1072,30 @@ public class ConfigSection extends AConfigSection {
         }
 
         return requirementKey.trim().toLowerCase(Locale.ROOT);
+    }
+
+    private static @NotNull TradeTaxMode parseTradeTaxMode(final @Nullable String rawMode) {
+        if (rawMode == null || rawMode.isBlank()) {
+            return TradeTaxMode.FLAT;
+        }
+
+        return switch (rawMode.trim().toUpperCase(Locale.ROOT)) {
+            case "GROWTH" -> TradeTaxMode.GROWTH;
+            default -> TradeTaxMode.FLAT;
+        };
+    }
+
+    @SafeVarargs
+    private static <T> @Nullable T firstNonNull(final @Nullable T... values) {
+        if (values == null) {
+            return null;
+        }
+
+        for (final T value : values) {
+            if (value != null) {
+                return value;
+            }
+        }
+        return null;
     }
 }

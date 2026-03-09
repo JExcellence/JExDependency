@@ -81,14 +81,14 @@ public class AdminSkillsView extends BaseView {
         final int supportedCount = entries.size();
         final int detectedCount = AdminPluginIntegrationSupport.countDetectedEntries(entries);
 
-        render.slot(1, 2).withItem(this.createSummaryItem(player, supportedCount, detectedCount));
+        render.slot(1, 5).withItem(this.createSummaryItem(player, supportedCount, detectedCount));
         if (entries.isEmpty()) {
-            render.slot(2, 2).withItem(this.createEmptyItem(player));
+            render.slot(2, 5).withItem(this.createEmptyItem(player));
             return;
         }
 
         final int maxColumns = 3;
-        for (int index = 0; index < entries.size() && index < maxColumns; index++) {
+        for (int index = 4; index < entries.size() && index < maxColumns; index++) {
             final AdminPluginIntegrationSupport.PluginDetectionEntry entry = entries.get(index);
             render.slot(2, index + 1)
                 .withItem(this.createPluginItem(player, entry))

@@ -65,6 +65,12 @@ storage_admin_ui:
         - "<gray>Gestisci competenze, lavoro, valuta e strumenti PlaceholderAPI.</gray>"
         - "<gray>Apri i controlli di amministrazione specifici dell'integrazione.</gray>"
         - "<yellow>Fare clic per aprire la gestione dell'integrazione.</yellow>"
+    trade_bank:
+      name: "<gradient:#f59e0b:#fbbf24>[Imposte] Banca del server commerciale</gradient>"
+      lore:
+        - "<gray>Rivedi i saldi delle imposte commerciali raccolti in base alla valuta.</gray>"
+        - "<gray>Preleva i saldi della banca del server al tuo amministratore account.</gray>"
+        - "<yellow>Fai clic per aprire i controlli della banca delle imposte commerciali.</yellow>"
     currency:
       name: "<gradient:#10b981:#34d399>[Cur] Gestore valuta</gradient>"
       lore:
@@ -938,6 +944,316 @@ storage_tax_town_bank_ui:
     currency_unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> non può essere trasferito alla banca comunale. Attualmente sono supportati i bonifici bancari comunali Vault soltanto.</gray>"
     transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Trasferimento non riuscito <white>{currency}</white><gray> nella banca della tua città.</gray>"
     transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Trasferito <white>{amount}</white><gray> In <white>{currency}</white><gray> alla banca della tua città.</gray>"
+
+trade_admin_bank_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[Admin] Banca delle imposte commerciali</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#f97316>[Info] Imposta sul server Registro</gradient>"
+    lore:
+      - "<gray>Valute monitorate:</gray> <white>{currency_count}</white>"
+      - "<gray>Fai clic su qualsiasi valuta per prelevarne l'intero importo saldo.</gray>"
+      - "<yellow>Richiede:</yellow> <white>raindroprdr.command.admin</white>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[$] {currency}</gradient> <gray>({currency_id})</gray>"
+    lore:
+      - "<gray>Disponibile:</gray> <white>{amount}</white>"
+      - "<gray>Registro voci:</gray> <white>{ledger_count}</white>"
+      - "<gray>Ultimo tipo:</gray> <white>{latest_type}</white>"
+      - "<gray>Ultimo importo:</gray> <white>{latest_amount}</white>"
+      - "<gray>Ultima nota:</gray> <white>{latest_note}</white>"
+      - "<yellow>Fai clic per ritirare questa valuta saldo.</yellow>"
+    latest:
+      none: "<gradient:#6b7280:#9ca3af>[Nessuno]</gradient>"
+      deposit: "<gradient:#22c55e:#86efac>[Dip osit]</gradient>"
+      withdraw: "<gradient:#ef4444:#f87171>[Ritira]</gradient>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] Accesso amministratore richiesto</gradient>"
+    lore:
+      - "<gray>Non hai l'autorizzazione per utilizzare questo pannello bancario per le imposte commerciali.</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Nessuna banca Voci</gradient>"
+    lore:
+      - "<gray>Nessun saldo delle imposte commerciali raccolto è memorizzato al momento.</gray>"
+  feedback:
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Non hai l'autorizzazione per utilizzare la banca delle imposte commerciali controlli.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Il servizio bancario per le imposte commerciali non è attualmente disponibile.</gray>"
+    empty_balance: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Nessun saldo prelevabile trovato per <white>{currency}</white><gray>.</gray>"
+    withdraw_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Impossibile prelevare <white>{currency}</white><gray> dall'imposta commerciale banca.</gray>"
+    withdraw_success: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Ritirato <white>{amount}</white><gray> in <white>{currency}</white><gray> dall'imposta sul commercio banca.</gray>"
+
+trade_hub_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Trade] Hub cross-server</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Panoramica del trading</gradient>"
+    lore:
+      - "<gray>Inviti in sospeso:</gray> <white>{pending_invites}</white>"
+      - "<gray>Sessioni attive:</gray> <white>{active_sessions}</white>"
+      - "<gray>Consegne in sospeso:</gray> <white>{pending_deliveries}</white>"
+      - "<yellow>Scegli un'azione commerciale di seguito.</yellow>"
+  actions:
+    new_trade:
+      name: "<gradient:#22c55e:#86efac>[+] Nuovo invito commerciale</gradient>"
+      lore:
+        - "<gray>Seleziona un target online e invia un invito supportato da DB.</gray>"
+        - "<yellow>Fai clic per aprire il target selezione.</yellow>"
+    current_trades:
+      name: "<gradient:#38bdf8:#60a5fa>[=] Operazioni correnti</gradient>"
+      lore:
+        - "<gray>Rivedi inviti, sessioni attive e stato di completamento.</gray>"
+        - "<yellow>Fai clic per sfogliare la selezione corrente transazioni.</yellow>"
+    inbox:
+      name: "<gradient:#f59e0b:#f97316>[Posta in arrivo] Reclami e richieste</gradient>"
+      lore:
+        - "<gray>Accetta inviti e richiedi pagamenti per la consegna.</gray>"
+        - "<yellow>Fai clic per aprire casella di posta commerciale.</yellow>"
+    tax_info:
+      name: "<gradient:#38bdf8:#60a5fa>[Imposte] Tasse commerciali</gradient>"
+      lore:
+        - "<gray>Rivedi le impostazioni delle imposte commerciali in base alla valuta e formule.</gray>"
+        - "<yellow>Fare clic per aprire le informazioni sull'imposta commerciale.</yellow>"
+
+trade_tax_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Imposta] Definizioni dell'imposta commerciale</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Imposta Configurazione</gradient>"
+    lore:
+      - "<gray>Sistema fiscale:</gray> <white>{tax_enabled}</white>"
+      - "<gray>Valute configurate:</gray> <white>{currency_count}</white>"
+      - "<yellow>Ogni scheda mostra la formula attiva per quello valuta.</yellow>"
+    tax_enabled:
+      "on": "<gradient:#22c55e:#86efac>[Abilitato]</gradient>"
+      "off": "<gradient:#ef4444:#f87171>[Disabilitato]</gradient>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[$] {currency}</gradient> <gray>({currency_id})</gray>"
+    lore:
+      - "<gray>Modalità:</gray> <white>{mode}</white>"
+      - "<gray>Piatto/base:</gray> <white>{flat_amount}</white>"
+      - "<gray>Crescita per valuta:</gray> <white>{growth_per_currency}</white>"
+      - "<gray>Crescita per elementi:</gray> <white>{growth_per_item}</white>"
+      - "<gray>Esempio (100 valuta + 5 elementi):</gray> <white>{example_tax}</white>"
+      - "<yellow>Pannello informazioni di sola lettura.</yellow>"
+    mode:
+      flat: "<gradient:#38bdf8:#60a5fa>[FLAT]</gradient>"
+      growth: "<gradient:#f59e0b:#f97316>[CRESCITA]</gradient>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Nessuna valuta fiscale</gradient>"
+    lore:
+      - "<gray>Non è configurata alcuna valuta per le imposte commerciali.</gray>"
+
+trade_target_select_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Scambia] Seleziona target</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Informazioni] Target disponibili</gradient>"
+    lore:
+      - "<gray>Obiettivi scoperti:</gray> <white>{target_count}</white>"
+      - "<yellow>Fai clic su una destinazione per inviare un invito.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Invito]</gradient> <white>{target}</white>"
+    lore:
+      - "<gray>Invia un invito commerciale persistente a</gray> <white>{target}</white><gray>.</gray>"
+      - "<yellow>Fai clic per invitare questo giocatore.</yellow>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>[X] Nessun target trovato</gradient>"
+    lore:
+      - "<gray>Non è stato trovato alcun target commerciale idoneo.</gray>"
+
+trade_current_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Trading] Sessioni correnti</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Informazioni] Elenco sessioni</gradient>"
+    lore:
+      - "<gray>Sessioni monitorate:</gray> <white>{session_count}</white>"
+      - "<yellow>Fai clic sulle voci per gestire o aprire le sessioni.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Commercio]</gradient> <white>{counterparty}</white> <gray>{status}</gray>"
+    lore:
+      - "<gray>Controparte:</gray> <white>{counterparty}</white>"
+      - "<gray>Stato:</gray> <white>{status}</white>"
+      - "<gray>UUID dello scambio:</gray> <white>{trade_uuid}</white>"
+      - "<yellow>Fai clic per aprire questa sessione di scambio.</yellow>"
+  actions:
+    inbox:
+      name: "<gradient:#f59e0b:#f97316>[Posta in arrivo] Reclami e richieste</gradient>"
+      lore:
+        - "<gray>Inviti aperti e richieste di consegna.</gray>"
+        - "<yellow>Fai clic per aprire casella di posta commerciale.</yellow>"
+  status:
+    invited: "<gradient:#f59e0b:#fbbf24>[Invitato]</gradient>"
+    active: "<gradient:#22c55e:#86efac>[Attivo]</gradient>"
+    completing: "<gradient:#38bdf8:#60a5fa>[Completamento in corso]</gradient>"
+    completed: "<gradient:#22c55e:#86efac>[Completato]</gradient>"
+    canceled: "<gradient:#ef4444:#f87171>[Annullato]</gradient>"
+    expired: "<gradient:#6b7280:#9ca3af>[Scaduto]</gradient>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Nessuna operazione corrente</gradient>"
+    lore:
+      - "<gray>Non è stata trovata alcuna sessione di negoziazione non terminale.</gray>"
+
+trade_inbox_ui:
+  title: "<gradient:#f59e0b:#f97316>[Trade] Posta in arrivo</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Richieste e consegne</gradient>"
+    lore:
+      - "<gray>Inviti in sospeso:</gray> <white>{invite_count}</white>"
+      - "<gray>Consegne richiedebili:</gray> <white>{delivery_count}</white>"
+      - "<yellow>Inviti: fare clic per aprire lo scambio sessione.</yellow>"
+      - "<yellow>Consegne: fare clic per richiedere.</yellow>"
+  entry:
+    invite:
+      name: "<gradient:#38bdf8:#60a5fa>[Invito]</gradient> <white>{from}</white>"
+      lore:
+        - "<gray>Da:</gray> <white>{from}</white>"
+        - "<gray>UUID dello scambio:</gray> <white>{trade_uuid}</white>"
+        - "<yellow>Fai clic per aprire questa sessione di scambio.</yellow>"
+    delivery:
+      name: "<gradient:#22c55e:#86efac>[Reclama]</gradient> <white>{trade_uuid}</white>"
+      lore:
+        - "<gray>UUID dello scambio:</gray> <white>{trade_uuid}</white>"
+        - "<gray>Slot payload articolo:</gray> <white>{item_count}</white>"
+        - "<gray>Voci payload valuta:</gray> <white>{currency_count}</white>"
+        - "<yellow>Fai clic per richiedere questa consegna.</yellow>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Posta in arrivo Vuoto</gradient>"
+    lore:
+      - "<gray>Nessun invito o consegna in sospeso trovato.</gray>"
+
+trade_session_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Trade] Sessione</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Sessione Stato</gradient>"
+    lore:
+      - "<gray>Stato:</gray> <white>{status}</white>"
+      - "<gray>UUID dello scambio:</gray> <white>{trade_uuid}</white>"
+      - "<gray>Revisione:</gray> <white>{revision}</white>"
+      - "<gray>Offerta di Vault:</gray> <white>{self_vault}</white>"
+      - "<gray>Offerta Partner Vault:</gray> <white>{partner_vault}</white>"
+      - "<gray>Le tue valute:</gray> <white>{self_currency_count}</white> <gray>(totale:</gray> <white>{self_currency_total}</white><gray>)</gray>"
+      - "<gray>Valute dei partner:</gray> <white>{partner_currency_count}</white> <gray>(totale:</gray> <white>{partner_currency_total}</white><gray>)</gray>"
+  status:
+    invited: "<gradient:#f59e0b:#fbbf24>[Invitato]</gradient>"
+    active: "<gradient:#22c55e:#86efac>[Attivo]</gradient>"
+    completing: "<gradient:#38bdf8:#60a5fa>[Completamento in corso]</gradient>"
+    completed: "<gradient:#22c55e:#86efac>[Completato]</gradient>"
+    canceled: "<gradient:#ef4444:#f87171>[Annullato]</gradient>"
+    expired: "<gradient:#6b7280:#9ca3af>[Scaduto]</gradient>"
+  slots:
+    self_empty_name: "<gradient:#22c55e:#86efac>[Self Slot] #{slot}</gradient>"
+    self_empty_lore:
+      - "<gray>Fai clic con il pulsante sinistro del mouse su un elemento del cursore per depositare in questo slot.</gray>"
+      - "<gray>Fai clic tenendo premuto il tasto Maiusc sul tuo inventario per inserirlo automaticamente nel primo slot.</gray>"
+      - "<gray>Fare clic con il pulsante destro del mouse su uno slot personale riempito per rimuoverlo e rimborsarlo.</gray>"
+    partner_empty_name: "<gradient:#38bdf8:#60a5fa>[Slot partner] #{slot}</gradient>"
+    partner_empty_lore:
+      - "<gray>L'anteprima dell'offerta del partner viene visualizzata qui.</gray>"
+  actions:
+    invite_accept:
+      name: "<gradient:#22c55e:#86efac>[Accetta] Avvia l'operazione</gradient>"
+      lore:
+        - "<gray>Accetta questo invito e sposta lo scambio allo stato attivo.</gray>"
+    invite_waiting:
+      name: "<gradient:#f59e0b:#fbbf24>[In attesa] Invito in sospeso</gradient>"
+      lore:
+        - "<gray>In attesa che il tuo partner accetti questo invito.</gray>"
+    currency_manage:
+      name: "<gradient:#f59e0b:#fbbf24>[Coin] Modifica offerta di valuta</gradient>"
+      lore:
+        - "<gray>Apri controlli per valuta con l'importo digitato input.</gray>"
+        - "<yellow>Fare clic per selezionare una valuta.</yellow>"
+    currency_manage_secondary:
+      name: "<gradient:#38bdf8:#60a5fa>[Elenco] Selettore valuta</gradient>"
+      lore:
+        - "<gray>Scegli aggiungi/rimuovi per Vault o JExEconomy valute.</gray>"
+        - "<yellow>Fai clic per aprire il selettore di valuta.</yellow>"
+    ready_lock:
+      name: "<gradient:#22c55e:#86efac>[Pronto] Blocca l'offerta</gradient>"
+      lore:
+        - "<gray>Tu:</gray> <white>{self_accepted}</white>"
+        - "<gray>Partner:</gray> <white>{partner_accepted}</white>"
+        - "<gray>Fai clic con il pulsante sinistro del mouse per bloccare il tuo offerta.</gray>"
+        - "<gray>Fai clic con il pulsante destro del mouse per non essere pronto.</gray>"
+    ready_unlock:
+      name: "<gradient:#f59e0b:#fbbf24>[Pronto] Sblocca offerta</gradient>"
+      lore:
+        - "<gray>Tu:</gray> <white>{self_accepted}</white>"
+        - "<gray>Partner:</gray> <white>{partner_accepted}</white>"
+        - "<gray>I tuoi slot per le auto-offerte sono bloccati mentre sei pronto.</gray>"
+        - "<gray>Fai clic con il pulsante destro del mouse per sbloccare e modificare di nuovo.</gray>"
+    confirm:
+      name: "<gradient:#38bdf8:#60a5fa>[Accetta] Finalizza scambio</gradient>"
+      lore:
+        - "<gray>Tu:</gray> <white>{self_accepted}</white>"
+        - "<gray>Partner:</gray> <white>{partner_accepted}</white>"
+        - "<gray>Lo scambio viene completato solo dopo entrambi i giocatori accettano.</gray>"
+    cancel:
+      name: "<gradient:#ef4444:#f87171>[Annulla] Interrompi lo scambio</gradient>"
+      lore:
+        - "<gray>Annulla e rimborsa il deposito a garanzia tramite le righe di consegna.</gray>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X] Sessione non disponibile</gradient>"
+    lore:
+      - "<gray>Questa sessione di trading non può essere caricata.</gray>"
+
+trade_currency_select_ui:
+  title: "<gradient:#f59e0b:#f97316>[Trade] Offerte di valuta</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Informazioni] Valuta Selettore</gradient>"
+    lore:
+      - "<gray>Valute disponibili:</gray> <white>{available_count}</white>"
+      - "<gray>Le tue offerte attive:</gray> <white>{offered_count}</white>"
+      - "<yellow>Clic sinistro = aggiungi, clic destro = rimuovi.</yellow>"
+      - "<yellow>Entrambe le azioni aprono un inserimento di importo incudine.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Valuta]</gradient> <white>{currency}</white>"
+    lore:
+      - "<gray>ID:</gray> <white>{currency_id}</white>"
+      - "<gray>La tua offerta:</gray> <white>{offered_amount}</white>"
+      - "<yellow>Fare clic con il pulsante sinistro del mouse per aggiungere un importo digitato.</yellow>"
+      - "<yellow>Fare clic con il pulsante destro del mouse per rimuovere un importo digitato.</yellow>"
+  applying:
+    name: "<gradient:#38bdf8:#60a5fa>[Sincronizza] Applicazione della valuta Modifica</gradient>"
+    lore:
+      - "<gray>Aggiornamento dell'offerta per</gray> <white>{currency}</white><gray>...</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Nessuna valuta Fornitori</gradient>"
+    lore:
+      - "<gray>Nessuna valuta supportata è attualmente disponibile per lo scambio.</gray>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X] Visualizzazione valuta non disponibile</gradient>"
+    lore:
+      - "<gray>Questa sessione di trading non può essere caricata.</gray>"
+
+trade_currency_amount_anvil_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[Scambio] {mode} {currency}</gradient>"
+  input:
+    lore:
+      - "<gray>Valuta:</gray> <white>{currency}</white>"
+      - "<gray>Operazione:</gray> <white>{mode}</white>"
+      - "<gray>Offerta attuale:</gray> <white>{current_offer}</white>"
+      - "<yellow>Inserisci un decimale non negativo importo.</yellow>"
+  error:
+    invalid_amount: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Importo non valido <white>{input}</white><gray> per <white>{currency}</white><gray>. Utilizza un numero non negativo.</gray>"
+
+trade:
+  message:
+    disabled: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Lo scambio è attualmente disabilitato nella configurazione.</gray>"
+    self_target: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Non puoi scambiare con te stesso.</gray>"
+    participant_busy: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Hai già uno scambio aperto con <white>{target}</white><gray>.</gray>"
+    invite_cooldown: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Attendere <white>{seconds}</white>s prima di inviare un'altra operazione invito.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>I repository/servizi commerciali non sono disponibili al momento.</gray>"
+    invite_sent: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Inviato un invito commerciale a <white>{target}</white><gray>.</gray>"
+    invite_received: "<gradient:#38bdf8:#60a5fa>[Invito]</gradient> <gray>Hai ricevuto un invito commerciale da <white>{from}</white><gray>. Apri </gray><white>/rr trade</white><gray>.</gray>"
+    delivery_pending: "<gradient:#f59e0b:#f97316>[Posta in arrivo]</gradient> <gray>Hai <white>{count}</white> in attesa di consegna dello scambio reclamo(i).</gray>"
+    success: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Azione commerciale completata.</gray>"
+    waiting_for_partner: "<gradient:#38bdf8:#60a5fa>[=]</gradient> <gray>Aspetto il tuo partner conferma.</gray>"
+    completed: "<gradient:#22c55e:#86efac>[Fatto]</gradient> <gray>Scambio completato. Richiedi la consegna nella posta in arrivo.</gray>"
+    no_item_in_hand: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Tieni prima un oggetto nella mano principale.</gray>"
+    offer_full: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>La tua offerta è già al limite massimo di slot configurato.</gray>"
+    insufficient_funds: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Non disponi di fondi sufficienti per questa azione commerciale o per il relativo addebito fiscale.</gray>"
+    missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Quella riga commerciale non esiste più.</gray>"
+    forbidden: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Non partecipi a quell'azione commerciale.</gray>"
+    invalid_state: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Questa azione non è valida per lo stato commerciale corrente.</gray>"
+    stale: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Dati commerciali modificati su un altro server. Sessione di aggiornamento.</gray>"
+    expired: "<gradient:#ef4444:#f87171>[Scaduto]</gradient> <gray>L'invito allo scambio è già scaduto.</gray>"
 
 storage:
   message:

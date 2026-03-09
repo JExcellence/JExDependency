@@ -34,8 +34,7 @@ public class PlayerJoinListener implements Listener {
     public PlayerJoinListener(RDT plugin) {
         this.plugin = plugin;
     }
-
-    @EventHandler
+    
     /// Handle the player join event:
     ///
     ///     - If the player has no record, create one asynchronously and send a quick start tip.
@@ -45,6 +44,7 @@ public class PlayerJoinListener implements Listener {
     ///
     ///
     /// @param event Bukkit player joins the event
+    @EventHandler
     public void onPlayerJoin(@NonNull PlayerJoinEvent event) {
         var bukkitPlayer = event.getPlayer();
         final int chunkX = bukkitPlayer.getLocation().getChunk().getX();

@@ -65,6 +65,12 @@ storage_admin_ui:
         - "<gray>管理技能、工作、貨幣和 PlaceholderAPI 工具。</gray>"
         - "<gray>開啟整合特定的管理控制項。</gray>"
         - "<yellow>點選開啟整合管理。</yellow>"
+    trade_bank:
+      name: "<gradient:#f59e0b:#fbbf24>[稅] 貿易伺服器銀行</gradient>"
+      lore:
+        - "<gray> 按貨幣查看收取的貿易稅餘額。 </gray>"
+        - "<gray>將伺服器銀行餘額提取到您的管理員帳戶。 </gray>"
+        - "<yellow>點選開啟貿易稅銀行控制。 </yellow>"
     currency:
       name: "<gradient:#10b981:#34d399>[Cur] 貨幣管理器</gradient>"
       lore:
@@ -938,6 +944,316 @@ storage_tax_town_bank_ui:
     currency_unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> 不能轉入鎮銀行。目前支援村鎮銀行轉賬 Vault 僅有的。</gray>"
     transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>轉帳失敗 <white>{currency}</white><gray> 存入您的城鎮銀行。</gray>"
     transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>已轉入 <white>{amount}</white><gray> 在 <white>{currency}</white><gray> 到你的城鎮銀行。</gray>"
+
+trade_admin_bank_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[管理員] 貿易稅銀行</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#f97316>[資訊] 伺服器稅帳</gradient>"
+    lore:
+      - "<gray>追蹤貨幣：</gray> <white>{currency_count}</white>"
+      - "<gray>點擊任意幣種即可提取其全部餘額。 </gray>"
+      - "<yellow>需要：</yellow> <white>raindroprdr.command.admin</white>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[$] {currency}</gradient> <gray>({currency_id})</gray>"
+    lore:
+      - "<gray>可用：</gray> <white>{amount}</white>"
+      - "<gray>L分類帳條目：</gray> <white>{ledger_count}</white>"
+      - "<gray>最新型號：</gray> <white>{latest_type}</white>"
+      - "<gray>最新數量：</gray> <white>{latest_amount}</white>"
+      - "<gray>最新備註：</gray> <white>{latest_note}</white>"
+      - "<yellow>點選提現該幣種餘額。 </yellow>"
+    latest:
+      none: "<gradient:#6b7280:#9ca3af>[無]</gradient>"
+      deposit: "<gradient:#22c55e:#86efac>[儲值]</gradient>"
+      withdraw: "<gradient:#ef4444:#f87171>[提現]</gradient>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] 需要管理員存取權限</gradient>"
+    lore:
+      - "<gray>您無權使用此貿易稅銀行面板。 </gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] 無銀行條目</gradient>"
+    lore:
+      - "<gray> 目前未儲存收集的貿易稅餘額。 </gray>"
+  feedback:
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>您無權使用貿易稅銀行控制。 </gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>貿易稅務銀行服務目前無法使用。 </gray>"
+    empty_balance: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray> 未找到 <white>{currency}</white><gray>.</gray> 的可提款餘額"
+    withdraw_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>從貿易稅銀行提取 <white>{currency}</white><gray> 失敗。 </gray>"
+    withdraw_success: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>從貿易稅銀行提取 <white>{amount}</white><gray> 中的 <white>{currency}</white><gray>。 </gray>"
+
+trade_hub_ui:
+  title: "<gradient:#22c55e:#14b8a6>[貿易] 跨伺服器集線器</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[資訊] 交易概況</gradient>"
+    lore:
+      - "<gray>P結束邀請：</gray> <white>{pending_invites}</white>"
+      - "<gray>活躍會話：</gray> <white>{active_sessions}</white>"
+      - "<gray>P即將交貨：</gray> <white>{pending_deliveries}</white>"
+      - "<yellow>選擇下面的貿易行動。 </yellow>"
+  actions:
+    new_trade:
+      name: "<gradient:#22c55e:#86efac>[+] 新貿易邀請</gradient>"
+      lore:
+        - "<gray>選擇線上目標並傳送資料庫支援的邀請。 </gray>"
+        - "<yellow>點選開啟目標選擇。 </yellow>"
+    current_trades:
+      name: "<gradient:#38bdf8:#60a5fa>[=] 目前交易</gradient>"
+      lore:
+        - "<gray>查看邀請、活動會話和完成狀態。 </gray>"
+        - "<yellow>點選瀏覽目前交易。 </yellow>"
+    inbox:
+      name: "<gradient:#f59e0b:#f97316>[收件匣] 索賠與請求</gradient>"
+      lore:
+        - "<gray>接受邀請並要求交付付款。 </gray>"
+        - "<yellow>點選開啟交易收件匣.</yellow>"
+    tax_info:
+      name: "<gradient:#38bdf8:#60a5fa>[稅] 貿易稅</gradient>"
+      lore:
+        - "<gray>查看每種貨幣的貿易稅設定和公式。 </gray>"
+        - "<yellow>點選開啟貿易稅務資訊。 </yellow>"
+
+trade_tax_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[稅] 貿易稅定義</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[資訊] 稅務配置</gradient>"
+    lore:
+      - "<gray>稅制：</gray> <white>{tax_enabled}</white>"
+      - "<gray>配置幣種：</gray> <white>{currency_count}</white>"
+      - "<yellow>每張卡顯示該貨幣的有效公式。 </yellow>"
+    tax_enabled:
+      "on": "<gradient:#22c55e:#86efac>[啟用]</gradient>"
+      "off": "<gradient:#ef4444:#f87171>[已停用]</gradient>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[$] {currency}</gradient> <gray>({currency_id})</gray>"
+    lore:
+      - "<gray>模式：</gray> <white>{mode}</white>"
+      - "<gray>平面/底座：</gray> <white>{flat_amount}</white>"
+      - "<gray>G 按幣種成長：</gray> <white>{growth_per_currency}</white>"
+      - "<gray>G依項目成長：</gray> <white>{growth_per_item}</white>"
+      - "<gray>範例（100貨幣+5項目）：</gray> <white>{example_tax}</white>"
+      - "<yellow>只讀資訊面板.</yellow>"
+    mode:
+      flat: "<gradient:#38bdf8:#60a5fa>[平面]</gradient>"
+      growth: "<gradient:#f59e0b:#f97316>[成長]</gradient>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] 無稅貨幣</gradient>"
+    lore:
+      - "<gray>未配置貿易稅貨幣。 </gray>"
+
+trade_target_select_ui:
+  title: "<gradient:#22c55e:#14b8a6>[交易] 選擇目標</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[資訊] 可用目標</gradient>"
+    lore:
+      - "<gray>T發現的目標：</gray> <white>{target_count}</white>"
+      - "<yellow>點選目標發送邀請。 </yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[邀請]</gradient> <white>{target}</white>"
+    lore:
+      - "<gray>S向 </gray> <white>{target}</white><gray>.</gray> 發送持久貿易邀請"
+      - "<yellow>點選邀請該玩家。 </yellow>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>[X] 未找到目標</gradient>"
+    lore:
+      - "<gray>未找到符合條件的貿易目標。 </gray>"
+
+trade_current_ui:
+  title: "<gradient:#22c55e:#14b8a6>[交易] 目前會話</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[訊息] 會話清單</gradient>"
+    lore:
+      - "<gray>追蹤會話：</gray> <white>{session_count}</white>"
+      - "<yellow>按一下條目以管理或開啟會話。 </yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[交易]</gradient> <white>{counterparty}</white> <gray>{status}</gray>"
+    lore:
+      - "<gray>對手：</gray> <white>{counterparty}</white>"
+      - "<gray>狀態：</gray> <white>{status}</white>"
+      - "<gray>交易 UUID:</gray> <white>{trade_uuid}</white>"
+      - "<yellow>點選開啟此交易時段。 </yellow>"
+  actions:
+    inbox:
+      name: "<gradient:#f59e0b:#f97316>[收件匣] 索賠與請求</gradient>"
+      lore:
+        - "<gray>開放邀請和交付索賠。 </gray>"
+        - "<yellow>點選開啟交易收件匣.</yellow>"
+  status:
+    invited: "<gradient:#f59e0b:#fbbf24>[已邀請]</gradient>"
+    active: "<gradient:#22c55e:#86efac>[主動]</gradient>"
+    completing: "<gradient:#38bdf8:#60a5fa>[完成]</gradient>"
+    completed: "<gradient:#22c55e:#86efac>[已完成]</gradient>"
+    canceled: "<gradient:#ef4444:#f87171>[已取消]</gradient>"
+    expired: "<gradient:#6b7280:#9ca3af>[已過期]</gradient>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] 沒有當前交易</gradient>"
+    lore:
+      - "<gray>未找到非終端交易會話。 </gray>"
+
+trade_inbox_ui:
+  title: "<gradient:#f59e0b:#f97316>[貿易] 收件匣</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[訊息] 請求與交付</gradient>"
+    lore:
+      - "<gray>P結束邀請：</gray> <white>{invite_count}</white>"
+      - "PHX0XPC 可交貨：</gray> <white>{delivery_count}</white>"
+      - "<yellow>邀請：點選開啟交易時段。 </yellow>"
+      - "<yellow>D 出貨：點選領取。 </yellow>"
+  entry:
+    invite:
+      name: "<gradient:#38bdf8:#60a5fa>[邀請]</gradient> <white>{from}</white>"
+      lore:
+        - "<gray>來自：</gray> <white>{from}</white>"
+        - "<gray>交易 UUID:</gray> <white>{trade_uuid}</white>"
+        - "<yellow>點選開啟此交易時段。 </yellow>"
+    delivery:
+      name: "<gradient:#22c55e:#86efac>[索賠]</gradient> <white>{trade_uuid}</white>"
+      lore:
+        - "<gray>交易 UUID:</gray> <white>{trade_uuid}</white>"
+        - "<gray>物品有效負載槽：</gray> <white>{item_count}</white>"
+        - "<gray> 貨幣有效負載條目：</gray> <white>{currency_count}</white>"
+        - "<yellow>點選領取此貨。 </yellow>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] 收件匣為空</gradient>"
+    lore:
+      - "<gray> 未找到待處理的邀請或交付。 </gray>"
+
+trade_session_ui:
+  title: "<gradient:#22c55e:#14b8a6>[交易] 場次</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[訊息] 會話狀態</gradient>"
+    lore:
+      - "<gray>狀態：</gray> <white>{status}</white>"
+      - "<gray>交易 UUID:</gray> <white>{trade_uuid}</white>"
+      - "<gray>修訂版：</gray> <white>{revision}</white>"
+      - "<gray>Y您的保險庫報價：</gray> <white>{self_vault}</white>"
+      - "<gray>P合作夥伴保險庫報價：</gray> <white>{partner_vault}</white>"
+      - "PHX0XP您的幣種：</gray> <white>{self_currency_count}</white> <gray>(總計：</gray> <white>{self_currency_total}</white><gray>)</gray>"
+      - "<gray>P合作幣種：</gray> <white>{partner_currency_count}</white> <gray>(總計：</gray> <white>{partner_currency_total}</white><gray>)</gray>"
+  status:
+    invited: "<gradient:#f59e0b:#fbbf24>[已邀請]</gradient>"
+    active: "<gradient:#22c55e:#86efac>[主動]</gradient>"
+    completing: "<gradient:#38bdf8:#60a5fa>[完成]</gradient>"
+    completed: "<gradient:#22c55e:#86efac>[已完成]</gradient>"
+    canceled: "<gradient:#ef4444:#f87171>[已取消]</gradient>"
+    expired: "<gradient:#6b7280:#9ca3af>[已過期]</gradient>"
+  slots:
+    self_empty_name: "<gradient:#22c55e:#86efac>[自槽]#{slot}</gradient>"
+    self_empty_lore:
+      - "<gray>左鍵點選遊標項目以託管到此插槽。 </gray>"
+      - "<gray>按住 Shift 鍵並點擊您的庫存以自動插入第一個空閒插槽。 </gray>"
+      - "PHX0XHR右鍵點擊已填滿的自槽以刪除並退款。 </gray>"
+    partner_empty_name: "<gradient:#38bdf8:#60a5fa>[夥伴插槽]#{slot}</gradient>"
+    partner_empty_lore:
+      - "<gray>P合作夥伴報價預覽顯示在此。 </gray>"
+  actions:
+    invite_accept:
+      name: "<gradient:#22c55e:#86efac>[接受]開始交易</gradient>"
+      lore:
+        - "<gray>接受此邀請並將交易轉至活躍狀態。 </gray>"
+    invite_waiting:
+      name: "<gradient:#f59e0b:#fbbf24>[等待] 邀請待定</gradient>"
+      lore:
+        - "<gray>正在等待您的合作夥伴接受此邀請。 </gray>"
+    currency_manage:
+      name: "<gradient:#f59e0b:#fbbf24>[硬幣] 編輯貨幣報價</gradient>"
+      lore:
+        - "<gray> 使用鍵入金額輸入開啟每個貨幣控制項。 </gray>"
+        - "<yellow>點選選擇貨幣。 </yellow>"
+    currency_manage_secondary:
+      name: "<gradient:#38bdf8:#60a5fa>[列表] 貨幣選擇器</gradient>"
+      lore:
+        - "<gray> 選擇新增/刪除 Vault 或 JExEconomy 貨幣。 </gray>"
+        - "<yellow>點選開啟貨幣選擇器。 </yellow>"
+    ready_lock:
+      name: "<gradient:#22c55e:#86efac>[就緒]鎖定優惠</gradient>"
+      lore:
+        - "<gray>您:</gray> <white>{self_accepted}</white>"
+        - "<gray>P合作夥伴:</gray> <white>{partner_accepted}</white>"
+        - "<gray>左鍵點選鎖定您的報價。 </gray>"
+        - "<gray>右键未就绪。 </gray>"
+    ready_unlock:
+      name: "<gradient:#f59e0b:#fbbf24>[就緒]解鎖優惠</gradient>"
+      lore:
+        - "<gray>您:</gray> <white>{self_accepted}</white>"
+        - "<gray>P合作夥伴:</gray> <white>{partner_accepted}</white>"
+        - "<gray>我們的自供插槽在準備就緒時已鎖定。 </gray>"
+        - "<gray>右鍵解鎖並再次編輯。 </gray>"
+    confirm:
+      name: "<gradient:#38bdf8:#60a5fa>[接受] 完成交易</gradient>"
+      lore:
+        - "<gray>您:</gray> <white>{self_accepted}</white>"
+        - "<gray>P合作夥伴:</gray> <white>{partner_accepted}</white>"
+        - "<gray> 交易只有在雙方都接受後才完成。 </gray>"
+    cancel:
+      name: "<gradient:#ef4444:#f87171>[取消] 中止交易</gradient>"
+      lore:
+        - "<gray>透過交貨行取消託管並退款。 </gray>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X] 會話不可用</gradient>"
+    lore:
+      - "<gray>無法載入此交易會話。 </gray>"
+
+trade_currency_select_ui:
+  title: "<gradient:#f59e0b:#f97316>[交易] 貨幣報價</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[資訊] 貨幣選擇器</gradient>"
+    lore:
+      - "<gray>可用貨幣：</gray> <white>{available_count}</white>"
+      - "PHX0XP您的有效報價：</gray> <white>{offered_count}</white>"
+      - "<yellow>左鍵單擊 = 添加，右鍵單擊 = 刪除。 </yellow>"
+      - "<yellow>B兩個動作打開量輸入砧。 </yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[貨幣]</gradient> <white>{currency}</white>"
+    lore:
+      - "<gray>ID:</gray> <white>{currency_id}</white>"
+      - "PHX0XP我們的報價：</gray> <white>{offered_amount}</white>"
+      - "<yellow>左鍵點選新增輸入的金額。 </yellow>"
+      - "PHX0XHR右鍵點選刪除輸入的金額。 </yellow>"
+  applying:
+    name: "<gradient:#38bdf8:#60a5fa>[同步] 應用貨幣變更</gradient>"
+    lore:
+      - "<gray>更新 </gray> <white>{currency}</white><gray>...</gray> 的報價"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] 無貨幣提供者</gradient>"
+    lore:
+      - "<gray> 目前沒有支援的貨幣可用於交易。 </gray>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X] 貨幣視圖不可用</gradient>"
+    lore:
+      - "<gray>無法載入此交易會話。 </gray>"
+
+trade_currency_amount_anvil_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[貿易] {mode} {currency}</gradient>"
+  input:
+    lore:
+      - "<gray>貨幣：</gray> <white>{currency}</white>"
+      - "<gray>操作：</gray> <white>{mode}</white>"
+      - "<gray>目前報價：</gray> <white>{current_offer}</white>"
+      - "<yellow>輸入非負小數金額。 </yellow>"
+  error:
+    invalid_amount: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> 的 <white>{input}</white><gray> 數量無效。 使用非負數.</gray>"
+
+trade:
+  message:
+    disabled: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Trade 目前在 config.</gray> 中已停用"
+    self_target: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>您不能與自己進行交易。 </gray>"
+    participant_busy: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>您已與 <white>{target}</white><gray>.</gray> 進行未平倉交易"
+    invite_cooldown: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray> 在發送另一次交易邀請之前等待 <white>{seconds}</white>。 </gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray> 貿易儲存庫/服務目前無法使用。 </gray>"
+    invite_sent: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>S向 <white>{target}</white><gray>.</gray> 發送交易邀請"
+    invite_received: "<gradient:#38bdf8:#60a5fa>[邀請]</gradient> <gray>您收到來自 <white>{from}</white><gray> 的交易邀請。 開啟 </gray><white>/rr trade</white><gray>.</gray>"
+    delivery_pending: "<gradient:#f59e0b:#f97316>[收件匣]</gradient> <gray>您有 <white>{count}</white> 待處理的交易交付索賠。 </gray>"
+    success: "<gradient:#22c55e:#86efac>[+]</gradient> <gray> 交易作業已完成。 </gray>"
+    waiting_for_partner: "<gradient:#38bdf8:#60a5fa>[=]</gradient> <gray>等待您的合作夥伴確認。 </gray>"
+    completed: "<gradient:#22c55e:#86efac>[已完成]</gradient> <gray>交易已完成。 在收件匣中領取您的貨品。 </gray>"
+    no_item_in_hand: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>先在主手上握住一個物品。 </gray>"
+    offer_full: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Y您的報價達到最大配置插槽限制。 </gray>"
+    insufficient_funds: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>您沒有足夠的資金用於此貿易操作或其稅費。 </gray>"
+    missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray> 該交易行不再存在。 </gray>"
+    forbidden: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>您不是该交易行动的参与者。 </gray>"
+    invalid_state: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>此操作對目前交易狀態無效。 </gray>"
+    stale: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>貿易資料在另一台伺服器上發生變更。 刷新會話。 </gray>"
+    expired: "<gradient:#ef4444:#f87171>[已過期]</gradient> <gray>此交易邀請已過期。 </gray>"
 
 storage:
   message:

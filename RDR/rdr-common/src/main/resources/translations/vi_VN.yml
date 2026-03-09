@@ -65,6 +65,12 @@ storage_admin_ui:
         - "<gray>Quản lý các công cụ kỹ năng, công việc, tiền tệ và PlaceholderAPI.</gray>"
         - "<gray>Mở các điều khiển quản trị dành riêng cho tích hợp.</gray>"
         - "<yellow>Nhấp để mở quản lý tích hợp.</yellow>"
+    trade_bank:
+      name: "<gradient:#f59e0b:#fbbf24>[Tax] Trade Server Bank</gradient>"
+      lore:
+        - "<gray>Xem lại số dư thuế thương mại đã thu theo loại tiền tệ.</gray>"
+        - "<gray>Rút số dư ngân hàng máy chủ cho quản trị viên của bạn account.</gray>"
+        - "<yellow>Nhấp để mở kiểm soát ngân hàng thuế thương mại.</yellow>"
     currency:
       name: "<gradient:#10b981:#34d399>[Cur] Trình quản lý tiền tệ</gradient>"
       lore:
@@ -938,6 +944,316 @@ storage_tax_town_bank_ui:
     currency_unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> không thể chuyển vào ngân hàng thị trấn. Chuyển khoản ngân hàng thị trấn hiện đang hỗ trợ Vault chỉ một.</gray>"
     transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Không thể chuyển <white>{currency}</white><gray> vào ngân hàng thị trấn của bạn.</gray>"
     transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Đã chuyển <white>{amount}</white><gray> TRONG <white>{currency}</white><gray> đến ngân hàng thị trấn của bạn.</gray>"
+
+trade_admin_bank_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[Admin] Ngân hàng thuế thương mại</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#f97316>[Thông tin] Thuế máy chủ Sổ cái</gradient>"
+    lore:
+      - "<gray>Các loại tiền tệ được theo dõi:</gray> <white>{currency_count}</white>"
+      - "<gray>Nhấp vào bất kỳ loại tiền tệ nào để rút toàn bộ số dư.</gray>"
+      - "<yellow>Yêu cầu:</yellow> <white>raindroprdr.command.admin</white>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[$] {currency}</gradient> <gray>({currency_id})</gray>"
+    lore:
+      - "<gray>Có sẵn:</gray> PHX2XP{amount}</white>"
+      - "<gray>LCác mục sổ cái:</gray> <white>{ledger_count}</white>"
+      - "<gray>LLoại mới nhất:</gray> <white>{latest_type}</white>"
+      - "<gray>LSố tiền mới nhất:</gray> <white>{latest_amount}</white>"
+      - "<gray>LGhi chú mới nhất:</gray> <white>{latest_note}</white>"
+      - "<yellow>Nhấp để rút loại tiền này số dư.</yellow>"
+    latest:
+      none: "<gradient:#6b7280:#9ca3af>[None]</gradient>"
+      deposit: "<gradient:#22c55e:#86efac>[Dep osit]</gradient>"
+      withdraw: "<gradient:#ef4444:#f87171>[Rút tiền]</gradient>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] Yêu cầu quyền truy cập của quản trị viên</gradient>"
+    lore:
+      - "<gray>Bạn không có quyền sử dụng bảng điều khiển ngân hàng thuế thương mại này.</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Không có mục nhập ngân hàng</gradient>"
+    lore:
+      - "<gray>Không có số dư thuế thương mại đã thu nào được lưu trữ ngay now.</gray>"
+  feedback:
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Bạn không có quyền sử dụng các biện pháp kiểm soát ngân hàng thuế thương mại.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Dịch vụ ngân hàng thuế thương mại hiện đang được cung cấp không có sẵn.</gray>"
+    empty_balance: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Không tìm thấy số dư có thể rút cho <white>{currency}</white><gray>.</gray>"
+    withdraw_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Không rút được <white>{currency}</white><gray> từ ngân hàng thuế thương mại.</gray>"
+    withdraw_success: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Rút <white>{amount}</white><gray> trong <white>{currency}</white><gray> khỏi thuế thương mại ngân hàng.</gray>"
+
+trade_hub_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Trade] Trung tâm máy chủ chéo</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Thông tin] Tổng quan về giao dịch</gradient>"
+    lore:
+      - "<gray>PLời mời sắp kết thúc:</gray> <white>{pending_invites}</white>"
+      - "<gray>Phiên hoạt động:</gray> <white>{active_sessions}</white>"
+      - "<gray>PĐang giao hàng:</gray> <white>{pending_deliveries}</white>"
+      - "<yellow>Chọn hành động giao dịch bên dưới.</yellow>"
+  actions:
+    new_trade:
+      name: "<gradient:#22c55e:#86efac>[+] Mời giao dịch mới</gradient>"
+      lore:
+        - "<gray>Chọn mục tiêu trực tuyến và gửi lời mời được DB hỗ trợ.</gray>"
+        - "<yellow>Nhấp để mở lựa chọn mục tiêu.</yellow>"
+    current_trades:
+      name: "<gradient:#38bdf8:#60a5fa>[=] Giao dịch hiện tại</gradient>"
+      lore:
+        - "<gray>Xem lại lời mời, phiên hoạt động và trạng thái hoàn thành.</gray>"
+        - "<yellow>Nhấp để duyệt các giao dịch hiện tại.</yellow>"
+    inbox:
+      name: "<gradient:#f59e0b:#f97316>[Hộp thư đến] Khiếu nại & Yêu cầu</gradient>"
+      lore:
+        - "<gray>Chấp nhận lời mời và yêu cầu thanh toán khi giao hàng.</gray>"
+        - "<yellow>Click để mở hộp thư giao dịch.</yellow>"
+    tax_info:
+      name: "<gradient:#38bdf8:#60a5fa>[Thuế] Thuế thương mại</gradient>"
+      lore:
+        - "<gray>Xem lại cài đặt và công thức thuế thương mại theo từng loại tiền tệ.</gray>"
+        - "<yellow>Click để mở thông tin thuế thương mại.</yellow>"
+
+trade_tax_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Thuế] Định nghĩa thuế thương mại</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Thông tin] Cấu hình thuế</gradient>"
+    lore:
+      - "<gray>Hệ thống thuế:</gray> <white>{tax_enabled}</white>"
+      - "<gray>Tiền tệ được định cấu hình:</gray> <white>{currency_count}</white>"
+      - "<yellow>Mỗi thẻ hiển thị công thức hoạt động cho loại tiền đó.</yellow>"
+    tax_enabled:
+      "on": "<gradient:#22c55e:#86efac>[Đã bật]</gradient>"
+      "off": "<gradient:#ef4444:#f87171>[Đã tắt]</gradient>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[$] {currency}</gradient> <gray>({currency_id})</gray>"
+    lore:
+      - "<gray>Chế độ:</gray> <white>{mode}</white>"
+      - "<gray>Flat/đế:</gray> <white>{flat_amount}</white>"
+      - "<gray>GTăng trưởng theo đơn vị tiền tệ:</gray> <white>{growth_per_currency}</white>"
+      - "<gray>G Tăng trưởng theo mục:</gray> <white>{growth_per_item}</white>"
+      - "<gray>Ví dụ (100 tiền tệ + 5 vật phẩm):</gray> <white>{example_tax}</white>"
+      - "<yellow>Bảng thông tin chỉ đọc.</yellow>"
+    mode:
+      flat: "<gradient:#38bdf8:#60a5fa>[FLAT]</gradient>"
+      growth: "<gradient:#f59e0b:#f97316>[TĂNG TRƯỞNG]</gradient>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Loại tiền không có thuế</gradient>"
+    lore:
+      - "<gray>Không có loại tiền tệ thuế thương mại nào được định cấu hình.</gray>"
+
+trade_target_select_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Giao dịch] Chọn mục tiêu</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Thông tin] Mục tiêu có sẵn</gradient>"
+    lore:
+      - "<gray>Mục tiêu được phát hiện:</gray> <white>{target_count}</white>"
+      - "<yellow>Nhấp vào mục tiêu để gửi lời mời.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Mời]</gradient> <white>{target}</white>"
+    lore:
+      - "<gray>Sgửi lời mời giao dịch liên tục tới</gray> <white>{target}</white><gray>.</gray>"
+      - "<yellow>Nhấp để mời người chơi này.</yellow>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>[X] Không tìm thấy mục tiêu</gradient>"
+    lore:
+      - "<gray>Không tìm thấy mục tiêu giao dịch đủ điều kiện.</gray>"
+
+trade_current_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Giao dịch] Phiên hiện tại</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Thông tin] Danh sách phiên</gradient>"
+    lore:
+      - "<gray>Phiên được theo dõi:</gray> <white>{session_count}</white>"
+      - "<yellow>Nhấp vào các mục để quản lý hoặc mở phiên.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Thương mại]</gradient> <white>{counterparty}</white> <gray>{status}</gray>"
+    lore:
+      - "<gray>Đối tác:</gray> <white>{counterparty}</white>"
+      - "<gray>Trạng thái:</gray> <white>{status}</white>"
+      - "<gray>Giao dịch UUID:</gray> <white>{trade_uuid}</white>"
+      - "<yellow>Nhấp để mở phiên giao dịch này.</yellow>"
+  actions:
+    inbox:
+      name: "<gradient:#f59e0b:#f97316>[Hộp thư đến] Khiếu nại & Yêu cầu</gradient>"
+      lore:
+        - "<gray>Mở lời mời và yêu cầu giao hàng.</gray>"
+        - "<yellow>Click để mở hộp thư giao dịch.</yellow>"
+  status:
+    invited: "<gradient:#f59e0b:#fbbf24>[Đã mời]</gradient>"
+    active: "<gradient:#22c55e:#86efac>[Hoạt động]</gradient>"
+    completing: "<gradient:#38bdf8:#60a5fa>[Đang hoàn thành]</gradient>"
+    completed: "<gradient:#22c55e:#86efac>[Đã hoàn thành]</gradient>"
+    canceled: "<gradient:#ef4444:#f87171>[Đã hủy]</gradient>"
+    expired: "<gradient:#6b7280:#9ca3af>[Đã hết hạn]</gradient>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Không có giao dịch hiện tại</gradient>"
+    lore:
+      - "<gray>Không tìm thấy phiên giao dịch không đầu cuối nào.</gray>"
+
+trade_inbox_ui:
+  title: "<gradient:#f59e0b:#f97316>[Trade] Hộp thư đến</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Thông tin] Yêu cầu & Giao hàng</gradient>"
+    lore:
+      - "<gray>PLời mời kết thúc:</gray> <white>{invite_count}</white>"
+      - "<gray>CGiao hàng có thể yêu cầu bồi thường:</gray> <white>{delivery_count}</white>"
+      - "<yellow>Lời mời: nhấp để mở giao dịch session.</yellow>"
+      - "<yellow>DGiao hàng: nhấp để yêu cầu.</yellow>"
+  entry:
+    invite:
+      name: "<gradient:#38bdf8:#60a5fa>[Invite]</gradient> <white>{from}</white>"
+      lore:
+        - "<gray>Từ:</gray> PHX2XP{from}</white>"
+        - "<gray>Giao dịch UUID:</gray> <white>{trade_uuid}</white>"
+        - "<yellow>Nhấp để mở phiên giao dịch này.</yellow>"
+    delivery:
+      name: "<gradient:#22c55e:#86efac>[Xác nhận]</gradient> <white>{trade_uuid}</white>"
+      lore:
+        - "<gray>Giao dịch UUID:</gray> <white>{trade_uuid}</white>"
+        - "<gray>Vị trí tải trọng vật phẩm:</gray> <white>{item_count}</white>"
+        - "<gray>CMục tải trọng tiền tệ:</gray> <white>{currency_count}</white>"
+        - "<yellow>Nhấp để yêu cầu điều này Delivery.</yellow>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Hộp thư đến Empty</gradient>"
+    lore:
+      - "<gray>Không tìm thấy lời mời hoặc giao hàng đang chờ xử lý.</gray>"
+
+trade_session_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Trade] Phiên</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Trạng thái phiên</gradient>"
+    lore:
+      - "<gray>Trạng thái:</gray> <white>{status}</white>"
+      - "<gray>Giao dịch UUID:</gray> <white>{trade_uuid}</white>"
+      - "<gray>Revision:</gray> <white>{revision}</white>"
+      - "<gray>Ưu đãi Vault của bạn:</gray> <white>{self_vault}</white>"
+      - "<gray>Ưu đãi của Partner Vault:</gray> <white>{partner_vault}</white>"
+      - "<gray>Tiền tệ của bạn:</gray> <white>{self_currency_count}</white> <gray>(tổng:</gray> <white>{self_currency_total}</white><gray>)</gray>"
+      - "<gray>Tiền tệ của đối tác:</gray> <white>{partner_currency_count}</white> <gray>(tổng:</gray> <white>{partner_currency_total}</white><gray>)</gray>"
+  status:
+    invited: "<gradient:#f59e0b:#fbbf24>[Đã mời]</gradient>"
+    active: "<gradient:#22c55e:#86efac>[Hoạt động]</gradient>"
+    completing: "<gradient:#38bdf8:#60a5fa>[Đang hoàn thành]</gradient>"
+    completed: "<gradient:#22c55e:#86efac>[Đã hoàn thành]</gradient>"
+    canceled: "<gradient:#ef4444:#f87171>[Đã hủy]</gradient>"
+    expired: "<gradient:#6b7280:#9ca3af>[Đã hết hạn]</gradient>"
+  slots:
+    self_empty_name: "<gradient:#22c55e:#86efac>[Self Slot] #{slot}</gradient>"
+    self_empty_lore:
+      - "<gray>Nhấp chuột trái bằng một mục con trỏ để ký quỹ vào mục này slot.</gray>"
+      - "<gray>Nhấp chuột phải vào kho của bạn để tự động chèn vào ô trống đầu tiên.</gray>"
+      - "<gray>Nhấp chuột phải vào ô tự đã điền để loại bỏ và hoàn tiền.</gray>"
+    partner_empty_name: "<gradient:#38bdf8:#60a5fa>[Vị trí đối tác] #PHX1XP</gradient>"
+    partner_empty_lore:
+      - "<gray>Bản xem trước ưu đãi dành cho đối tác xuất hiện tại đây.</gray>"
+  actions:
+    invite_accept:
+      name: "<gradient:#22c55e:#86efac>[Accept] Bắt đầu giao dịch</gradient>"
+      lore:
+        - "<gray>Chấp nhận lời mời này và chuyển giao dịch sang hoạt động state.</gray>"
+    invite_waiting:
+      name: "<gradient:#f59e0b:#fbbf24>[Đang chờ] Lời mời Đang chờ</gradient>"
+      lore:
+        - "<gray>Đang chờ đối tác của bạn chấp nhận lời mời này.</gray>"
+    currency_manage:
+      name: "<gradient:#f59e0b:#fbbf24>[Coin] Chỉnh sửa ưu đãi tiền tệ</gradient>"
+      lore:
+        - "<gray>Mở kiểm soát mỗi loại tiền tệ với số tiền đã nhập input.</gray>"
+        - "<yellow>Nhấp để chọn loại tiền tệ.</yellow>"
+    currency_manage_secondary:
+      name: "<gradient:#38bdf8:#60a5fa>[List] Bộ chọn tiền tệ</gradient>"
+      lore:
+        - "<gray>Chọn thêm/xóa cho Vault hoặc JExEconomy tiền tệ.</gray>"
+        - "<yellow>Nhấp để mở bộ chọn tiền tệ.</yellow>"
+    ready_lock:
+      name: "<gradient:#22c55e:#86efac>[Ready] Ưu đãi khóa</gradient>"
+      lore:
+        - "<gray>Bạn:</gray> <white>{self_accepted}</white>"
+        - "<gray>Partner:</gray> <white>{partner_accepted}</white>"
+        - "<gray>Nhấp chuột trái để khóa ưu đãi của bạn.</gray>"
+        - "<gray>Nhấp chuột phải vào unready.</gray>"
+    ready_unlock:
+      name: "<gradient:#f59e0b:#fbbf24>[Ready] Mở khóa ưu đãi</gradient>"
+      lore:
+        - "<gray>Bạn:</gray> <white>{self_accepted}</white>"
+        - "<gray>Partner:</gray> <white>{partner_accepted}</white>"
+        - "<gray>Các ô tự ưu đãi của bạn đã bị khóa khi sẵn sàng.</gray>"
+        - "<gray>Nhấp chuột phải để mở khóa và chỉnh sửa lần nữa.</gray>"
+    confirm:
+      name: "<gradient:#38bdf8:#60a5fa>[Accept] Hoàn tất giao dịch</gradient>"
+      lore:
+        - "<gray>Bạn:</gray> <white>{self_accepted}</white>"
+        - "<gray>Partner:</gray> <white>{partner_accepted}</white>"
+        - "<gray>Giao dịch chỉ hoàn thành sau khi cả hai người chơi chấp nhận.</gray>"
+    cancel:
+      name: "<gradient:#ef4444:#f87171>[Hủy] Hủy bỏ Giao dịch</gradient>"
+      lore:
+        - "<gray>CHủy và ký quỹ hoàn tiền qua các hàng phân phối.</gray>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X] Phiên không có sẵn</gradient>"
+    lore:
+      - "<gray> Phiên giao dịch này không thể diễn ra đã nạp.</gray>"
+
+trade_currency_select_ui:
+  title: "<gradient:#f59e0b:#f97316>[Trade] Ưu đãi tiền tệ</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Bộ chọn tiền tệ</gradient>"
+    lore:
+      - "<gray>Các loại tiền tệ có sẵn:</gray> <white>{available_count}</white>"
+      - "<gray>Ưu đãi đang hoạt động của bạn:</gray> <white>{offered_count}</white>"
+      - "<yellow>Nhấp chuột trái = thêm, nhấp chuột phải = loại bỏ.</yellow>"
+      - "<yellow>Cả hai hành động đều mở một số tiền đầu vào đe.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Tiền tệ]</gradient> <white>{currency}</white>"
+    lore:
+      - "<gray>ID:</gray> <white>{currency_id}</white>"
+      - "<gray>Ưu đãi của bạn:</gray> <white>{offered_amount}</white>"
+      - "<yellow>Nhấp chuột trái để thêm số tiền đã nhập.</yellow>"
+      - "<yellow>Nhấp chuột phải để xóa số tiền đã nhập.</yellow>"
+  applying:
+    name: "<gradient:#38bdf8:#60a5fa>[Sync] Áp dụng thay đổi tiền tệ</gradient>"
+    lore:
+      - "<gray>Đang cập nhật ưu đãi của bạn dành cho</gray> <white>{currency}HX4XPH<gray>...</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Không có nhà cung cấp tiền tệ</gradient>"
+    lore:
+      - "<gray>Hiện không có loại tiền tệ nào được hỗ trợ cho Trade.</gray>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X] Chế độ xem tiền tệ không có sẵn</gradient>"
+    lore:
+      - "<gray> Phiên giao dịch này không thể diễn ra đã nạp.</gray>"
+
+trade_currency_amount_anvil_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[Trade] {mode} {currency}</gradient>"
+  input:
+    lore:
+      - "<gray>Tiền tệ:</gray> <white>{currency}</white>"
+      - "<gray>Ohoạt động:</gray> <white>{mode}</white>"
+      - "<gray>Ưu đãi hiện tại:</gray> <white>{current_offer}</white>"
+      - "<yellow>Nhập số thập phân không âm.</yellow>"
+  error:
+    invalid_amount: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Số tiền không hợp lệ <white>{input}</white><gray> cho <white>{currency}</white><gray>. Sử dụng số không âm.</gray>"
+
+trade:
+  message:
+    disabled: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Trade hiện bị vô hiệu hóa trong config.</gray>"
+    self_target: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Bạn không thể giao dịch với chính bạn.</gray>"
+    participant_busy: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Bạn đã có giao dịch mở với <white>{target}</white><gray>.</gray>"
+    invite_cooldown: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Đợi <white>{seconds}</white> trước khi gửi lời mời giao dịch khác.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Các kho/dịch vụ giao dịch hiện không khả dụng.</gray>"
+    invite_sent: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>SGửi lời mời giao dịch tới <white>{target}</white><gray>.</gray>"
+    invite_received: "<gradient:#38bdf8:#60a5fa>[Invite]</gradient> <gray>Bạn đã nhận được lời mời giao dịch từ <white>{from}</white><gray>. Mở </gray><white>/rr trade</white><gray>.</gray>"
+    delivery_pending: "<gradient:#f59e0b:#f97316>[Inbox]</gradient> <gray>Bạn có <white>{count}</white> đang chờ giao hàng (các) khiếu nại.</gray>"
+    success: "<gradient:#22c55e:#86efac>[+]</gradient> <gray> Hành động giao dịch đã hoàn tất.</gray>"
+    waiting_for_partner: "<gradient:#38bdf8:#60a5fa>[=]</gradient> <gray>Đang chờ đối tác của bạn xác nhận.</gray>"
+    completed: "<gradient:#22c55e:#86efac>[Done]</gradient> <gray>Giao dịch đã hoàn tất. Yêu cầu giao hàng trong hộp thư đến.</gray>"
+    no_item_in_hand: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>HGiữ một vật phẩm trong tay chính của bạn trước.</gray>"
+    offer_full: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Ưu đãi của bạn đã ở mức được định cấu hình tối đa limit.</gray>"
+    insufficient_funds: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Bạn không có đủ tiền cho hành động giao dịch này hoặc khoản thuế của nó.</gray>"
+    missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Hàng giao dịch đó không còn nữa tồn tại.</gray>"
+    forbidden: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Bạn không phải là người tham gia cho hành động giao dịch đó.</gray>"
+    invalid_state: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Hành động này không hợp lệ đối với trạng thái giao dịch hiện tại.</gray>"
+    stale: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Dữ liệu giao dịch đã thay đổi trên một máy chủ khác. Đang làm mới phiên.</gray>"
+    expired: "<gradient:#ef4444:#f87171>[Expired]</gradient> <gray>Lời mời giao dịch đó đã hết hạn.</gray>"
 
 storage:
   message:

@@ -65,6 +65,12 @@ storage_admin_ui:
         - "<gray>Управление навыками, работой, валютой и инструментами PlaceholderAPI.</gray>"
         - "<gray>Откройте административные элементы управления, относящиеся к интеграции.</gray>"
         - "<yellow>Нажмите, чтобы открыть управление интеграцией.</yellow>"
+    trade_bank:
+      name: "<gradient:#f59e0b:#fbbf24>[Tax] Trade Server Bank</gradient>"
+      lore:
+        - "<gray>Просмотр собранных остатков торгового налога по валютам.</gray>"
+        - "<gray>Выведите балансы серверного банка своему администратору account.</gray>"
+        - "<yellow>CНажмите, чтобы открыть элементы управления банком торгового налога.</yellow>"
     currency:
       name: "<gradient:#10b981:#34d399>[Cur] Менеджер валют</gradient>"
       lore:
@@ -938,6 +944,316 @@ storage_tax_town_bank_ui:
     currency_unsupported: "<gradient:#ef4444:#f87171>[Х]</gradient> <gray><white>{currency}</white><gray> нельзя перевести в городской банк. В настоящее время поддерживаются городские банковские переводы Vault только.</gray>"
     transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Не удалось перенести <white>{currency}</white><gray> в ваш городской банк.</gray>"
     transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Переведено <white>{amount}</white><gray> в <white>{currency}</white><gray> в ваш городской банк.</gray>"
+
+trade_admin_bank_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[Администратор] Банк торгового налога</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#f97316>[Info] Серверный налог Ledger</gradient>"
+    lore:
+      - "<gray>Отслеживаемые валюты:</gray> <white>{currency_count}</white>"
+      - "<gray>CНажмите любую валюту, чтобы вывести ее в полном объеме. баланс.</gray>"
+      - "<yellow>Requires:</yellow> <white>raindroprdr.command.admin</white>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[$] {currency}</gradient> <gray>({currency_id})</gray>"
+    lore:
+      - "<gray>Available:</gray> <white>{amount}</white>"
+      - "<gray>LЗаписи книги:</gray> <white>{ledger_count}</white>"
+      - "<gray>Последний тип:</gray> <white>{latest_type}</white>"
+      - "<gray>Последняя сумма:</gray> <white>{latest_amount}</white>"
+      - "<gray>Последнее примечание:</gray> <white>{latest_note}</white>"
+      - "<yellow>Нажмите, чтобы вывести эту валюту баланс.</yellow>"
+    latest:
+      none: "<gradient:#6b7280:#9ca3af>[Нет]</gradient>"
+      deposit: "<gradient:#22c55e:#86efac>[Dep osit]</gradient>"
+      withdraw: "<gradient:#ef4444:#f87171>[Вывести]</gradient>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] Требуется доступ администратора</gradient>"
+    lore:
+      - "<gray>У вас нет разрешения на использование этой панели банка торгового налога.</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Банковские записи отсутствуют</gradient>"
+    lore:
+      - "<gray>Нет собрано Остатки торгового налога сохраняются прямо сейчас.</gray>"
+  feedback:
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>У вас нет разрешения на использование банковского контроля торгового налога.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Услуга торгового налогового банка в настоящее время доступна недоступен.</gray>"
+    empty_balance: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Не найден баланс для вывода средств для <white>{currency}</white><gray>.</gray>"
+    withdraw_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Не удалось вывести <white>{currency}</white><gray> из банка торгового налога.</gray>"
+    withdraw_success: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Вывел <white>{amount}</white><gray> в <white>{currency}</white><gray> из банка торгового налога.</gray>"
+
+trade_hub_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Trade] Межсерверный хаб</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Информация] Обзор торговли</gradient>"
+    lore:
+      - "<gray>Ожидают приглашения:</gray> <white>{pending_invites}</white>"
+      - "<gray>Активные сеансы:</gray> <white>{active_sessions}</white>"
+      - "<gray>Ожидают доставки:</gray> <white>{pending_deliveries}</white>"
+      - "<yellow>Выберите торговое действие ниже.</yellow>"
+  actions:
+    new_trade:
+      name: "<gradient:#22c55e:#86efac>[+] Новое торговое приглашение</gradient>"
+      lore:
+        - "<gray>Выберите онлайн-цель и отправьте сообщение, подкрепленное БД приглашение.</gray>"
+        - "<yellow>CНажмите, чтобы открыть целевой выбор.</yellow>"
+    current_trades:
+      name: "<gradient:#38bdf8:#60a5fa>[=] Текущие сделки</gradient>"
+      lore:
+        - "<gray>Просмотр приглашений, активных сессий и завершенных сделок state.</gray>"
+        - "<yellow>CНажмите, чтобы просмотреть текущие сделки.</yellow>"
+    inbox:
+      name: "<gradient:#f59e0b:#f97316>[Входящие] Претензии и запросы</gradient>"
+      lore:
+        - "<gray>Принять приглашения и доставку претензий выплаты.</gray>"
+        - "<yellow>CНажмите, чтобы открыть почтовый ящик для обмена.</yellow>"
+    tax_info:
+      name: "<gradient:#38bdf8:#60a5fa>[Tax] Торговые налоги</gradient>"
+      lore:
+        - "<gray>Просмотрите настройки торгового налога в каждой валюте и формулы.</gray>"
+        - "<yellow>CНажмите, чтобы открыть информацию о торговом налоге.</yellow>"
+
+trade_tax_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Tax] Определения торгового налога</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Tax Конфигурация</gradient>"
+    lore:
+      - "<gray>TНалоговая система:</gray> <white>{tax_enabled}</white>"
+      - "<gray>Настроенные валюты:</gray> <white>{currency_count}</white>"
+      - "<yellow>EНа каждой карточке показана активная формула для этого валюта.</yellow>"
+    tax_enabled:
+      "on": "<gradient:#22c55e:#86efac>[Включено]</gradient>"
+      "off": "<gradient:#ef4444:#f87171>[Отключено]</gradient>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[$] {currency}</gradient> <gray>({currency_id})</gray>"
+    lore:
+      - "<gray>Mode:</gray> <white>{mode}</white>"
+      - "<gray>Flat/base:</gray> <white>{flat_amount}</white>"
+      - "<gray>Рост по валютам:</gray> <white>{growth_per_currency}</white>"
+      - "<gray>Рост по предметам:</gray> <white>{growth_per_item}</white>"
+      - "<gray>Пример (100 единиц валюты + 5 предметов):</gray> <white>{example_tax}</white>"
+      - "<yellow>Информационная панель только для чтения.</yellow>"
+    mode:
+      flat: "<gradient:#38bdf8:#60a5fa>[FLAT]</gradient>"
+      growth: "<gradient:#f59e0b:#f97316>[РОСТ]</gradient>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Нет налоговых валют</gradient>"
+    lore:
+      - "<gray>Валюты торгового налога не настроены.</gray>"
+
+trade_target_select_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Торговля] Выберите цель</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Информация] Доступные цели</gradient>"
+    lore:
+      - "<gray>Обнаружены цели:</gray> <white>{target_count}</white>"
+      - "<yellow>Нажмите цель, чтобы отправить приглашение.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Пригласить]</gradient> <white>{target}</white>"
+    lore:
+      - "<gray>Отправьте постоянное приглашение на обмен </gray> <white>{target}</white><gray>.</gray>"
+      - "<yellow>Нажмите, чтобы пригласить этого игрока.</yellow>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>[X] Цели не найдены</gradient>"
+    lore:
+      - "<gray>Не найдено подходящих торговых целей.</gray>"
+
+trade_current_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Торговля] Текущие сессии</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Информация] Список сеансов</gradient>"
+    lore:
+      - "<gray>Отслеживаемые сеансы: </gray> <white>{session_count}</white>"
+      - "<yellow>Нажмите записи, чтобы управлять сеансами или открывать их.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Торговля]</gradient> <white>{counterparty}</white> <gray>{status}</gray>"
+    lore:
+      - "<gray>Контрагент:</gray> <white>{counterparty}</white>"
+      - "<gray>Статус:</gray> <white>{status}</white>"
+      - "<gray>Trade UUID:</gray> <white>{trade_uuid}</white>"
+      - "<yellow>Нажмите, чтобы открыть эту торговую сессию.</yellow>"
+  actions:
+    inbox:
+      name: "<gradient:#f59e0b:#f97316>[Входящие] Претензии и запросы</gradient>"
+      lore:
+        - "<gray>Открыть приглашения и заявки на доставку.</gray>"
+        - "<yellow>CНажмите, чтобы открыть почтовый ящик для обмена.</yellow>"
+  status:
+    invited: "<gradient:#f59e0b:#fbbf24>[Приглашен]</gradient>"
+    active: "<gradient:#22c55e:#86efac>[Активный]</gradient>"
+    completing: "<gradient:#38bdf8:#60a5fa>[Завершение]</gradient>"
+    completed: "<gradient:#22c55e:#86efac>[Завершено]</gradient>"
+    canceled: "<gradient:#ef4444:#f87171>[Отменено]</gradient>"
+    expired: "<gradient:#6b7280:#9ca3af>[Истекло]</gradient>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Текущих сделок нет</gradient>"
+    lore:
+      - "<gray>Нетерминальных торговых сессий не обнаружено.</gray>"
+
+trade_inbox_ui:
+  title: "<gradient:#f59e0b:#f97316>[Торговля] Входящие</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Информация] Запросы и доставки</gradient>"
+    lore:
+      - "<gray>Ожидают приглашения:</gray> <white>{invite_count}</white>"
+      - "<gray>Cвозможные поставки:</gray> <white>{delivery_count}</white>"
+      - "<yellow>Приглашения: нажмите, чтобы открыть сделку session.</yellow>"
+      - "<yellow>Deliveries: нажмите, чтобы подать заявку.</yellow>"
+  entry:
+    invite:
+      name: "<gradient:#38bdf8:#60a5fa>[Invite]</gradient> <white>{from}</white>"
+      lore:
+        - "<gray>From:</gray> <white>{from}</white>"
+        - "<gray>Trade UUID:</gray> <white>{trade_uuid}</white>"
+        - "<yellow>Нажмите, чтобы открыть эту торговую сессию.</yellow>"
+    delivery:
+      name: "<gradient:#22c55e:#86efac>[Заявка]</gradient> <white>{trade_uuid}</white>"
+      lore:
+        - "<gray>Trade UUID:</gray> <white>{trade_uuid}</white>"
+        - "<gray>Item Слоты полезной нагрузки:</gray> <white>{item_count}</white>"
+        - "<gray>Записи полезных данных валюты:</gray> <white>{currency_count}</white>"
+        - "<yellow>Нажмите, чтобы заявить это доставка.</yellow>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Входящие Пусто</gradient>"
+    lore:
+      - "<gray>Не найдено ожидающих приглашений или доставок.</gray>"
+
+trade_session_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Торговля] Session</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Информация] Состояние сеанса</gradient>"
+    lore:
+      - "<gray>Статус:</gray> <white>{status}</white>"
+      - "<gray>Trade UUID:</gray> <white>{trade_uuid}</white>"
+      - "<gray>Revision:</gray> <white>{revision}</white>"
+      - "<gray>Ваше хранилище предложение:</gray> <white>{self_vault}</white>"
+      - "<gray>Партнерское предложение Vault:</gray> <white>{partner_vault}</white>"
+      - "<gray>Ваши валюты:</gray> <white>{self_currency_count}</white> <gray>(всего:</gray> <white>{self_currency_total}</white><gray>)</gray>"
+      - "<gray>Партнерские валюты:</gray> <white>{partner_currency_count}</white> <gray>(всего:</gray> <white>{partner_currency_total}</white><gray>)</gray>"
+  status:
+    invited: "<gradient:#f59e0b:#fbbf24>[Приглашен]</gradient>"
+    active: "<gradient:#22c55e:#86efac>[Активный]</gradient>"
+    completing: "<gradient:#38bdf8:#60a5fa>[Завершение]</gradient>"
+    completed: "<gradient:#22c55e:#86efac>[Завершено]</gradient>"
+    canceled: "<gradient:#ef4444:#f87171>[Отменено]</gradient>"
+    expired: "<gradient:#6b7280:#9ca3af>[Истекло]</gradient>"
+  slots:
+    self_empty_name: "<gradient:#22c55e:#86efac>[Self Slot] #{slot}</gradient>"
+    self_empty_lore:
+      - "<gray>Щелкните левой кнопкой мыши по элементу курсора, чтобы депонировать в этот слот.</gray>"
+      - "<gray>Удерживая клавишу Shift, щелкните инвентарь, чтобы автоматически вставить его в первый свободный слот.</gray>"
+      - "<gray>Щелкните правой кнопкой мыши по заполненному собственному слоту, чтобы удалить и возврат.</gray>"
+    partner_empty_name: "<gradient:#38bdf8:#60a5fa>[Partner Slot] #{slot}</gradient>"
+    partner_empty_lore:
+      - "<gray>Предварительный просмотр партнерского предложения отображается здесь.</gray>"
+  actions:
+    invite_accept:
+      name: "<gradient:#22c55e:#86efac>[Принять] Начать Trade</gradient>"
+      lore:
+        - "<gray>Примите это приглашение и переведите сделку в активное состояние.</gray>"
+    invite_waiting:
+      name: "<gradient:#f59e0b:#fbbf24>[Ожидание] Ожидание приглашения</gradient>"
+      lore:
+        - "<gray>Ожидание, пока ваш партнер примет это приглашение.</gray>"
+    currency_manage:
+      name: "<gradient:#f59e0b:#fbbf24>[Coin] Изменить предложение валюты</gradient>"
+      lore:
+        - "<gray>OОткройте элементы управления для каждой валюты с введенной суммой input.</gray>"
+        - "<yellow>CНажмите, чтобы выбрать валюту.</yellow>"
+    currency_manage_secondary:
+      name: "<gradient:#38bdf8:#60a5fa>[Список] Выбор валюты</gradient>"
+      lore:
+        - "<gray>Выберите добавление/удаление для Vault или JExEconomy валюты.</gray>"
+        - "<yellow>Нажмите, чтобы открыть выбор валюты.</yellow>"
+    ready_lock:
+      name: "<gradient:#22c55e:#86efac>[Готово] Заблокировать предложение</gradient>"
+      lore:
+        - "<gray>Вы:</gray> <white>{self_accepted}</white>"
+        - "<gray>Партнер:</gray> <white>{partner_accepted}</white>"
+        - "<gray>Нажмите левой кнопкой мыши, чтобы заблокировать Offer.</gray>"
+        - "<gray>Щелкните правой кнопкой мыши, чтобы перейти в состояние «не готово».</gray>"
+    ready_unlock:
+      name: "<gradient:#f59e0b:#fbbf24>[Готово] Разблокировать предложение</gradient>"
+      lore:
+        - "<gray>Вы:</gray> <white>{self_accepted}</white>"
+        - "<gray>Партнер:</gray> <white>{partner_accepted}</white>"
+        - "PHX0XPВаши слоты для самопредложений заблокированы, пока готов.</gray>"
+        - "<gray>RЩелкните правой кнопкой мыши, чтобы разблокировать и снова редактировать.</gray>"
+    confirm:
+      name: "<gradient:#38bdf8:#60a5fa>[Принять] Завершить сделку</gradient>"
+      lore:
+        - "<gray>Вы:</gray> <white>{self_accepted}</white>"
+        - "<gray>Партнер:</gray> <white>{partner_accepted}</white>"
+        - "<gray>Трейд завершается только после того, как оба игрока Accept.</gray>"
+    cancel:
+      name: "<gradient:#ef4444:#f87171>[Отмена] Прервать сделку</gradient>"
+      lore:
+        - "<gray>Отменить и вернуть условное депонирование через строки доставки.</gray>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X] Session Недоступно</gradient>"
+    lore:
+      - "<gray>Не удалось загрузить эту торговую сессию.</gray>"
+
+trade_currency_select_ui:
+  title: "<gradient:#f59e0b:#f97316>[Торговля] Предложения валюты</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Валюта Селектор</gradient>"
+    lore:
+      - "<gray>Доступные валюты:</gray> <white>{available_count}</white>"
+      - "<gray>Ваши активные предложения:</gray> <white>{offered_count}</white>"
+      - "<yellow>Левый клик = добавить, правый клик = удалить.</yellow>"
+      - "<yellow>Оба действия открывают ввод суммы anvil.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Валюта]</gradient> <white>{currency}</white>"
+    lore:
+      - "<gray>ID:</gray> <white>{currency_id}</white>"
+      - "<gray>Ваше предложение:</gray> <white>{offered_amount}</white>"
+      - "<yellow>Щелкните левой кнопкой мыши, чтобы добавить введенную сумму.</yellow>"
+      - "<yellow>RЩелкните правой кнопкой мыши, чтобы удалить введенную сумму.</yellow>"
+  applying:
+    name: "<gradient:#38bdf8:#60a5fa>[Sync] Применение валюты Изменить</gradient>"
+    lore:
+      - "<gray>Обновление вашего предложения для</gray> <white>{currency}</white><gray>...</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Нет валюты Поставщики</gradient>"
+    lore:
+      - "<gray>В настоящее время для торговли недоступны поддерживаемые валюты.</gray>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X] Просмотр валюты недоступен</gradient>"
+    lore:
+      - "<gray>Не удалось загрузить эту торговую сессию.</gray>"
+
+trade_currency_amount_anvil_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[Trade] {mode} {currency}</gradient>"
+  input:
+    lore:
+      - "<gray>Валюта:</gray> <white>{currency}</white>"
+      - "<gray>Операция:</gray> <white>{mode}</white>"
+      - "<gray>Текущее предложение:</gray> <white>{current_offer}</white>"
+      - "<yellow>Введите неотрицательное десятичное число. сумма.</yellow>"
+  error:
+    invalid_amount: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Недопустимая сумма <white>{input}</white><gray> для <white>{currency}</white><gray>. Используйте неотрицательное число.</gray>"
+
+trade:
+  message:
+    disabled: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Трейд в настоящее время отключен в конфигурации.</gray>"
+    self_target: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Вы не можете торговать с себя.</gray>"
+    participant_busy: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>У вас уже есть открытая сделка с <white>{target}</white><gray>.</gray>"
+    invite_cooldown: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Подождите <white>{seconds}</white> перед отправкой еще одного приглашения на обмен.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Трейдовые репозитории/сервисы сейчас недоступны.</gray>"
+    invite_sent: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Sотправил торговое приглашение <white>{target}</white><gray>.</gray>"
+    invite_received: "<gradient:#38bdf8:#60a5fa>[Invite]</gradient> <gray>Вы получили торговое приглашение от <white>{from}</white><gray>. Открыть </gray><white>/rr trade</white><gray>.</gray>"
+    delivery_pending: "<gradient:#f59e0b:#f97316>[Входящие]</gradient> <gray>У вас есть <white>{count}</white>, ожидающие торговой доставки претензия(и).</gray>"
+    success: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Торговое действие завершено.</gray>"
+    waiting_for_partner: "<gradient:#38bdf8:#60a5fa>[=]</gradient> <gray>Ожидание вашего партнера подтверждение.</gray>"
+    completed: "<gradient:#22c55e:#86efac>[Done]</gradient> <gray>Трейд завершен. Заявите о доставке во входящих.</gray>"
+    no_item_in_hand: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Сначала держите предмет в основной руке.</gray>"
+    offer_full: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Ваше предложение уже занято максимально настроенным слотом лимит.</gray>"
+    insufficient_funds: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>У вас недостаточно средств для этой торговой операции или начисления налога.</gray>"
+    missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Этой торговой строки больше нет существует.</gray>"
+    forbidden: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Вы не являетесь участником этой сделки.</gray>"
+    invalid_state: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Это действие недействительно для текущей сделки. состояние.</gray>"
+    stale: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Торговые данные изменены на другом сервере. Обновление сеанса.</gray>"
+    expired: "<gradient:#ef4444:#f87171>[Expired]</gradient> <gray>Срок действия этого торгового приглашения уже истек.</gray>"
 
 storage:
   message:
