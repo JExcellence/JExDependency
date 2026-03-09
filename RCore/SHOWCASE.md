@@ -1,7 +1,7 @@
 # RCore Showcase
 
 RCore is the **free core dependency plugin** for the [RaindropCentral](<https://raindropcentral.com>) stack.  
-It powers shared systems for **RDQ (RaindropQuests)**, **RDR (RaindropReserve)**, and **RDS (RaindropShops)**.
+It powers shared systems for **[RDQ (RaindropQuests)](<https://raindropcentral.com/products/rdq-free>)**, **[RDR (RaindropReserve)](<https://raindropcentral.com/products/rdr-free>)**, and **[RDS (RaindropShops)](<https://raindropcentral.com/products/rds-free>)**.
 
 If you are searching for a **Minecraft core dependency plugin**, **shared player data plugin**, **cross-plugin statistics backend**, or **Paper/Spigot plugin API foundation**, RCore is built for that exact role.
 
@@ -30,9 +30,9 @@ RCore is not just optional glue. It is a central runtime foundation for the majo
 
 | Module | RCore Relationship |
 |---|---|
-| `RDQ` | Declares RCore as a required server dependency in Paper descriptors |
-| `RDR` | Declares RCore as a plugin soft dependency |
-| `RDS` | Declares RCore as a plugin soft dependency |
+| `RDQ` | Declares RCore as a required server dependency |
+| `RDR` | Declares RCore as a required server dependency |
+| `RDS` | Declares RCore as a required server dependency |
 
 For server owners, this means one central core service can support multiple premium gameplay modules without duplicated backend logic.
 

@@ -102,12 +102,13 @@ Bounties are excellent for creating high-stakes moments, conflict hotspots, and 
 
 ### Installation
 
-1. Build or obtain your preferred RDQ edition jar.
-2. Place exactly one edition jar in `plugins/`.
-3. Start the server to generate default RDQ configs.
-4. Configure RDQ in `plugins/RDQ/`.
-5. Restart or reload your server process after major configuration updates.
-6. Use the in-game admin setup tools with `/rq admin`
+1. Download [RCore](<https://raindropcentral.com/products/rcore>)
+2. Download your preferred RDQ edition jar.
+3. Place exactly one edition jar in `plugins/` with RCore.
+4. Start the server to generate default RDQ configs.
+5. Configure RDQ in `plugins/RDQ/`.
+6. Restart or reload your server process after major configuration updates.
+7. Use the in-game admin setup tools with `/rq admin`
 
 ### Key Configuration Files
 
