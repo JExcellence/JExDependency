@@ -191,7 +191,6 @@ Note: `permissions/permissions.yml` also contains larger permission template set
 | Non-selected trees/ranks in UI when limits are reached | Preview-only behavior         | Fully accessible                            |
 | Bounties per commissioner | Fixed max `1`                 | Unlimited - Config-driven (`bounty.yml`)    |
 | Rewards per bounty | Fixed max `1`                 | Unlimited - Config-driven (`bounty.yml`)    |
-| Hunter progression and top hunters | Minimal/free-limited behavior | Full hunter stats and leaderboard workflows |
 | Perk framework | Included                      | Included                                    |
 | Perk active-slot cap | `5`                           | Configurable via `maxEnabledPerksPerPlayer` |
 | Quests system | In development                | In development                              |
