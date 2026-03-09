@@ -4,11 +4,6 @@ RDR (RaindropReserve) is a high-performance Minecraft storage plugin for Paper, 
 
 If you are searching for a Minecraft storage plugin, player vault plugin, shared chest plugin, or Paper/Folia storage system, RDR is built for that exact use case.
 
-## Videos
-
-- Guide Video Placeholder: [Add setup guide URL here](<GUIDE_VIDEO_URL>)
-- Showcase Video Placeholder: [Add gameplay showcase URL here](<SHOWCASE_VIDEO_URL>)
-
 ## Why RDR
 
 - GUI-first storage workflow for fast player onboarding and intuitive daily use.
@@ -63,35 +58,6 @@ RDR jars shade required runtime components, so no separate `RPlatform` install i
 2. Place exactly one edition jar in your server `plugins/` folder.
 3. Start or restart the server.
 4. Configure `plugins/RDR/config/config.yml` for limits, taxes, blacklists, and requirement tiers.
-
-### Build Commands (Source)
-
-From repository root:
-
-```bash
-# Build Free + Premium distributables
-./gradlew :RDR:buildAll
-
-# Run all RDR tests
-./gradlew :RDR:testAll
-
-# Publish all RDR artifacts to local Maven
-./gradlew :RDR:publishLocal
-
-# Build and Javadocs per module
-./gradlew :RDR:rdr-common:build :RDR:rdr-free:build :RDR:rdr-premium:build
-./gradlew :RDR:rdr-common:javadoc :RDR:rdr-free:javadoc :RDR:rdr-premium:javadoc
-```
-
-Windows:
-
-```powershell
-.\gradlew.bat :RDR:buildAll
-.\gradlew.bat :RDR:testAll
-.\gradlew.bat :RDR:publishLocal
-.\gradlew.bat :RDR:rdr-common:build :RDR:rdr-free:build :RDR:rdr-premium:build
-.\gradlew.bat :RDR:rdr-common:javadoc :RDR:rdr-free:javadoc :RDR:rdr-premium:javadoc
-```
 
 ## Commands
 

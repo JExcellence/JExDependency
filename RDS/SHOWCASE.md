@@ -71,35 +71,6 @@ RDS jars shade required runtime components, so no separate `RPlatform` plugin in
 3. Start or restart the server.
 4. Configure files under `plugins/RDS/` (especially taxes, protection, admin shops, and store requirements).
 
-### Build Commands (Source)
-
-From repository root:
-
-```bash
-# Build Free + Premium distributables
-./gradlew :RDS:buildAll
-
-# Run all RDS tests
-./gradlew :RDS:testAll
-
-# Publish all RDS artifacts to local Maven
-./gradlew :RDS:publishLocal
-
-# Build and Javadocs per module
-./gradlew :RDS:rds-common:build :RDS:rds-free:build :RDS:rds-premium:build
-./gradlew :RDS:rds-common:javadoc :RDS:rds-free:javadoc :RDS:rds-premium:javadoc
-```
-
-Windows:
-
-```powershell
-.\gradlew.bat :RDS:buildAll
-.\gradlew.bat :RDS:testAll
-.\gradlew.bat :RDS:publishLocal
-.\gradlew.bat :RDS:rds-common:build :RDS:rds-free:build :RDS:rds-premium:build
-.\gradlew.bat :RDS:rds-common:javadoc :RDS:rds-free:javadoc :RDS:rds-premium:javadoc
-```
-
 ## Commands
 
 Primary command: `/prs`  
