@@ -9,6 +9,14 @@ dependenciesYml {
     generateSpigotVariant.set(true)
 }
 
+val versionMajor: String by project.rootProject.extra { findProperty("rdr.version.major")?.toString() ?: "5" }
+val versionMinor: String by project.rootProject.extra { findProperty("rdr.version.minor")?.toString() ?: "0" }
+val versionPatch: String by project.rootProject.extra { findProperty("rdr.version.patch")?.toString() ?: "0" }
+val versionStage: String by project.rootProject.extra { findProperty("rdr.version.stage")?.toString() ?: "Alpha" }
+val versionBuild: String by project.rootProject.extra { findProperty("rdr.version.build")?.toString() ?: "1" }
+
+val rdrVersion = "$versionMajor.$versionMinor.$versionPatch-$versionStage-Build-$versionBuild"
+
 group = "com.raindropcentral.rdr"
 version = "5.0.0"
 description = "RDR Free - Free edition of Raindrop Distributed Resources"
@@ -65,7 +73,7 @@ tasks.test {
 
 tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
     archiveBaseName.set("RDR")
-    archiveVersion.set(project.version.toString())
+    archiveVersion.set(rdrVersion)
     archiveClassifier.set("Free")
 
     configurations = listOf(project.configurations.getByName("runtimeClasspath"))

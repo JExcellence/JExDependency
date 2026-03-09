@@ -13,7 +13,7 @@ val versionMajor: String by project.rootProject.extra { findProperty("rdq.versio
 val versionMinor: String by project.rootProject.extra { findProperty("rdq.version.minor")?.toString() ?: "0" }
 val versionPatch: String by project.rootProject.extra { findProperty("rdq.version.patch")?.toString() ?: "0" }
 val versionStage: String by project.rootProject.extra { findProperty("rdq.version.stage")?.toString() ?: "Alpha" }
-val versionBuild: String by project.rootProject.extra { findProperty("rdq.version.build")?.toString() ?: "1" }
+val versionBuild: String by project.rootProject.extra { findProperty("rdq.version.build")?.toString() ?: "4" }
 
 val rdqVersion = "$versionMajor.$versionMinor.$versionPatch-$versionStage-Build-$versionBuild"
 

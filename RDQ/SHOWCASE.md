@@ -4,8 +4,7 @@ RDQ (RaindropQuests) is a modern Minecraft progression plugin for Paper, Spigot,
 
 If you are searching for a **Minecraft quests plugin**, **Minecraft rank progression plugin**, **Minecraft bounty hunting plugin**, or **Minecraft perks plugin**, RDQ is built for that exact server experience.
 
-Guide Video Placeholder: `[INSERT_GUIDE_VIDEO_URL_HERE]`  
-Showcase Video Placeholder: `[INSERT_SHOWCASE_VIDEO_URL_HERE]`
+Guide Video Placeholder: [RDQ 6 Setup Guide](https://youtu.be/KvhR2hxiRmk)
 
 ## Why RDQ
 
