@@ -9,6 +9,15 @@ dependenciesYml {
     generateSpigotVariant.set(true)
 }
 
+val versionMajor: String by project.rootProject.extra { findProperty("rdt.version.major")?.toString() ?: "1" }
+val versionMinor: String by project.rootProject.extra { findProperty("rdt.version.minor")?.toString() ?: "0" }
+val versionPatch: String by project.rootProject.extra { findProperty("rdt.version.patch")?.toString() ?: "0" }
+val versionStage: String by project.rootProject.extra { findProperty("rdt.version.stage")?.toString() ?: "Alpha" }
+val versionBuild: String by project.rootProject.extra { findProperty("rdt.version.build")?.toString() ?: "1" }
+
+val rdtVersion = "$versionMajor.$versionMinor.$versionPatch-$versionStage-Build-$versionBuild"
+
+
 group = "com.raindropcentral.rdt"
 version = "1.0.0"
 description = "RDT Free - Free edition of Raindrop Towns"
@@ -65,7 +74,7 @@ tasks.test {
 
 tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
     archiveBaseName.set("RDT")
-    archiveVersion.set(project.version.toString())
+    archiveVersion.set(rdtVersion)
     archiveClassifier.set("Free")
 
     relocate("tools.jackson", "com.raindropcentral.remapped.tools.jackson")
