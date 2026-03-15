@@ -40,13 +40,7 @@ jobs:
           target="${{ inputs.target }}"
 
           if [[ "${target}" == "all" ]]; then
-            matrix='[
-              {"module":"RCore"},
-              {"module":"RDQ"},
-              {"module":"RDR"},
-              {"module":"RDS"},
-              {"module":"RDT"}
-            ]'
+            matrix='[{"module":"RCore"},{"module":"RDQ"},{"module":"RDR"},{"module":"RDS"},{"module":"RDT"}]'
           else
             matrix="[{\"module\":\"${target}\"}]"
           fi
