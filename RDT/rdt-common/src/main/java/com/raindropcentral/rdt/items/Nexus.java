@@ -18,7 +18,16 @@ import java.util.UUID;
 
 public class Nexus {
 
-    public static @NonNull ItemStack getNexusItem(RDT plugin, @NonNull UUID town_uuid, String town_name) {
+    private static final String TOWN_UUID_KEY = "town_uuid";
+    private static final String TOWN_NAME_KEY = "town_name";
+    private static final String MAYOR_UUID_KEY = "mayor_uuid";
+
+    public static @NonNull ItemStack getNexusItem(
+            final RDT plugin,
+            final @NonNull UUID town_uuid,
+            final String town_name,
+            final @NonNull UUID mayor_uuid
+    ) {
         ItemStack nexus = new ItemStack(Material.REINFORCED_DEEPSLATE);
         ItemMeta meta = nexus.getItemMeta();
         meta.displayName(Component.text("Nexus Stone", NamedTextColor.YELLOW));
@@ -27,46 +36,89 @@ public class Nexus {
         meta.lore(lore);
         PersistentDataContainer persistentDataContainer = meta.getPersistentDataContainer();
         persistentDataContainer.set(
-                new NamespacedKey(plugin.getPlugin(), "town_uuid"),
+                new NamespacedKey(plugin.getPlugin(), TOWN_UUID_KEY),
                 PersistentDataType.STRING,
                 town_uuid.toString()
         );
         persistentDataContainer.set(
-                new NamespacedKey(plugin.getPlugin(), "town_name"),
+                new NamespacedKey(plugin.getPlugin(), TOWN_NAME_KEY),
                 PersistentDataType.STRING,
                 town_name
+        );
+        persistentDataContainer.set(
+                new NamespacedKey(plugin.getPlugin(), MAYOR_UUID_KEY),
+                PersistentDataType.STRING,
+                mayor_uuid.toString()
         );
         nexus.setItemMeta(meta);
         return nexus;
     }
 
-    public static boolean equals(RDT plugin, @NonNull ItemStack item){
+    public static boolean equals(final RDT plugin, final @NonNull ItemStack item){
         ItemMeta meta = item.getItemMeta();
+        if (meta == null) {
+            return false;
+        }
         PersistentDataContainer persistentDataContainer = meta.getPersistentDataContainer();
         return persistentDataContainer.has(
-                new NamespacedKey(plugin.getPlugin(), "town_uuid"),
+                new NamespacedKey(plugin.getPlugin(), TOWN_UUID_KEY),
                 PersistentDataType.STRING)
                 &&
                 persistentDataContainer.has(
-                        new NamespacedKey(plugin.getPlugin(), "town_name"),
+                        new NamespacedKey(plugin.getPlugin(), TOWN_NAME_KEY),
+                        PersistentDataType.STRING
+                )
+                &&
+                persistentDataContainer.has(
+                        new NamespacedKey(plugin.getPlugin(), MAYOR_UUID_KEY),
                         PersistentDataType.STRING
                 );
     }
 
-    public static @Nullable UUID getTownUUID(RDT plugin, @NonNull ItemStack item){
+    public static @Nullable UUID getTownUUID(final RDT plugin, final @NonNull ItemStack item){
         ItemMeta meta = item.getItemMeta();
+        if (meta == null) {
+            return null;
+        }
         String s = meta.getPersistentDataContainer().get(
-                new NamespacedKey(plugin.getPlugin(), "town_uuid"),
+                new NamespacedKey(plugin.getPlugin(), TOWN_UUID_KEY),
                 PersistentDataType.STRING
         );
         if (s == null) return null;
-        return UUID.fromString(s);
+        try {
+            return UUID.fromString(s);
+        } catch (IllegalArgumentException ignored) {
+            return null;
+        }
     }
 
-    public static String getTownName(RDT plugin, @NonNull ItemStack item){
-        return item.getItemMeta().getPersistentDataContainer().get(
-                new NamespacedKey(plugin.getPlugin(), "town_name"),
+    public static @Nullable String getTownName(final RDT plugin, final @NonNull ItemStack item){
+        final ItemMeta meta = item.getItemMeta();
+        if (meta == null) {
+            return null;
+        }
+        return meta.getPersistentDataContainer().get(
+                new NamespacedKey(plugin.getPlugin(), TOWN_NAME_KEY),
                 PersistentDataType.STRING
         );
+    }
+
+    public static @Nullable UUID getMayorUUID(final RDT plugin, final @NonNull ItemStack item) {
+        final ItemMeta meta = item.getItemMeta();
+        if (meta == null) {
+            return null;
+        }
+        final String encodedMayor = meta.getPersistentDataContainer().get(
+                new NamespacedKey(plugin.getPlugin(), MAYOR_UUID_KEY),
+                PersistentDataType.STRING
+        );
+        if (encodedMayor == null) {
+            return null;
+        }
+        try {
+            return UUID.fromString(encodedMayor);
+        } catch (IllegalArgumentException ignored) {
+            return null;
+        }
     }
 }

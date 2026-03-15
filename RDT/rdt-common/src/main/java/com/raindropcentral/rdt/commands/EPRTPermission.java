@@ -12,7 +12,7 @@ import de.jexcellence.evaluable.section.IPermissionNode;
 
 public enum EPRTPermission implements IPermissionNode{
     /** Generic permission to use the base command and tab completion. */
-    COMMAND("command","raindroptowns.comamnd"),
+    COMMAND("command","raindroptowns.command"),
     /** Create a new town. */
     CREATE("createCommand","raindroptowns.command.create"),
     /** Delete your town (mayor only). */
@@ -35,7 +35,13 @@ public enum EPRTPermission implements IPermissionNode{
     DEPOSIT("depositCommand","raindroptowns.command.deposit"),
     //withdraw money from the town bank
     WITHDRAW("withdrawCommand","raindroptowns.command.withdraw"),
-    MAIN("mainCommand","raindroptowns.command.main");
+    MAIN("mainCommand","raindroptowns.command.main"),
+    /** Open the town overview command route. */
+    TOWN("townCommand", "raindroptowns.command.town"),
+    /** Trigger delayed safe-teleport to the player's town nexus. */
+    SPAWN("spawnCommand", "raindroptowns.command.spawn"),
+    /** Read command help output. */
+    HELP("helpCommand", "raindroptowns.command.help");
 
     /** Internal key used by the configuration system to resolve permissions. */
     private final String internalName;

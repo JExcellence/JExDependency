@@ -21,6 +21,10 @@ dependencies {
     compileOnly(libs.slf4j.api)
     compileOnly(libs.slf4j.jdk14)
     compileOnly(libs.jboss.logging)
+    compileOnly(libs.jackson.core)
+    compileOnly(libs.jackson.databind)
+    compileOnly(libs.jackson.annotations)
+    compileOnly(libs.jackson.jsr310)
 
     compileOnly(platform(libs.hibernate.platform))
     compileOnly(libs.bundles.hibernate)

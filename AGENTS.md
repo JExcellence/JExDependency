@@ -4,9 +4,15 @@
 - Avoid PowerShell-specific commands.
 
 ## Language Support
-- Always add I18n keys and values to en_US.yml
+- Always add I18n keys and values to the modules en_US.yml in the resources/translations folder
 - Include colors, gradients, or symbols to language values
-- Placeholders can be surrounded by {} or %%
+- Placeholders can be surrounded by %%, and fallback use {}
+
+# Translations
+- When translating Strings from the en_US.yml:
+  - Preserve placeholders surrounded by %% or {}
+  - Maintain color codes surrounded by <>
+  - Do not change any keys
 
 # Java Syntax & Documentation Conventions
 
@@ -29,9 +35,10 @@ This repository follows strict Java coding and documentation standards. Any AI a
 - If a member is intentionally undocumented (rare), it must be `private` and self-explanatory.
 
 Rules:
-- `@author` MUST be present.
-- `@version` MUST be present.
-- Use the project’s author identity (team/org) if available; otherwise use the repo owner/team name.
+- `@author` MUST be present. Default to ItsRainingHP.
+- `@version` MUST be present. 
+- If alterations are made to a file increase the class files version build number by 1. Example: 1.0.0 becomes 1.0.1
+- Use the project’s author identity (team/org) if available; otherwise use ItsRainingHP.
 
 ### 2.3 Zero warnings policy
 All code changes MUST build and generate Javadocs with **no warnings**.

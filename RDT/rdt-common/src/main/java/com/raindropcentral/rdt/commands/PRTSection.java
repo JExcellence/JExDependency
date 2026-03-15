@@ -8,7 +8,7 @@ import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
  * <p>
  * This class binds the command name to the underlying evaluation environment used
  * by the command framework. Command logic itself is handled by {@link PRT} and
- * delegated to {@link com.raindropcentral.rdt.factory.CommandFactory}.
+ * registered through {@link com.raindropcentral.commands.CommandFactory}.
  */
 @SuppressWarnings("unused")
 public class PRTSection extends ACommandSection{

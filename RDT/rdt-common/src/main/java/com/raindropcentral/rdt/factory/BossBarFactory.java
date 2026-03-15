@@ -1,137 +1,209 @@
 package com.raindropcentral.rdt.factory;
 
+import java.util.Map;
+import java.util.Objects;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
 import com.raindropcentral.rdt.RDT;
 import com.raindropcentral.rdt.database.entity.RChunk;
 import com.raindropcentral.rdt.database.entity.RDTPlayer;
 import com.raindropcentral.rdt.database.entity.RTown;
-import com.raindropcentral.rdt.utils.CordMessage;
+import com.raindropcentral.rdt.database.repository.RRDTPlayer;
+import com.raindropcentral.rdt.database.repository.RRTown;
+
+import de.jexcellence.jextranslate.i18n.I18n;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
-import org.bukkit.entity.Player;
-import org.jspecify.annotations.NonNull;
-
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Factory responsible for creating and updating the per-player BossBar
- * that displays town and chunk information.
- * <p>
- * Behavior:
- * <ul>
- *   <li>When a player is inside a claimed chunk, the bar shows the town name
- *   and the current chunk coordinates with a purple progress bar that reflects
- *   the percentage of used claims versus the configured claim limit.</li>
- *   <li>When a player is in an unclaimed chunk, the bar shows "Unincorporated"
- *   with a yellow, full progress bar.</li>
- * </ul>
+ * Builds and updates player town-status boss bars.
  *
- * Implementation notes:
- * <ul>
- *   <li>Bars are cached per player and updated in-place to avoid flicker and
- *   unnecessary object churn.</li>
- *   <li>Title and structural changes (coordinates, town name, color) trigger a
- *   full update; otherwise only the progress is adjusted.</li>
- * </ul>
+ * <p>The bar communicates whether a player currently stands inside one of their own town chunks
+ * or in an unincorporated area. Text is localized through i18n keys.</p>
+ *
+ * @author RaindropCentral
+ * @since 1.0.0
+ * @version 1.0.1
  */
 @SuppressWarnings("StringTemplateMigration")
 public class BossBarFactory {
 
     private final RDT plugin;
-
-    /** Cache of last known boss bars and their coordinates per player. */
-    private final ConcurrentHashMap<UUID, CordMessage> messages = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<UUID, BossBarState> states = new ConcurrentHashMap<>();
 
     /**
-     * Create a new factory bound to the given plugin instance.
+     * Creates a boss bar factory for an RDT runtime.
      *
-     * @param plugin RDT plugin instance (required)
+     * @param plugin active runtime
      */
-    public BossBarFactory(@NonNull RDT plugin) {
+    public BossBarFactory(final @NonNull RDT plugin) {
         this.plugin = plugin;
     }
 
     /**
-     * Compute and present the correct boss bar for the given player and destination chunk.
-     * If the chunk belongs to the player's town, the bar will reflect claim usage progress;
-     * otherwise it will show an "Unincorporated" bar.
-     * Note: This method is designed to be lightweight and is intentionally quiet in logs
-     * to avoid spam on frequent movement updates.
+     * Updates the player boss bar for the given chunk position.
      *
-     * @param player   player to show the bar to (non-null)
-     * @param toChunkX target chunk X coordinate
-     * @param toChunkZ target chunk Z coordinate
+     * @param player target player
+     * @param chunkX current chunk x
+     * @param chunkZ current chunk z
      */
-    public void run(@NonNull Player player, int toChunkX, int toChunkZ) {
-        RDTPlayer rPlayer = this.plugin.getPlayerRepository().findByPlayer(player.getUniqueId());
-        if (rPlayer != null && rPlayer.getTownUUID() != null) {
-            RTown town = this.plugin.getTownRepository().findByTownUUID(rPlayer.getTownUUID());
-            if (town != null) {
-                for (RChunk chunk : town.getChunks()) {
-                    if (toChunkX == chunk.getX_loc() && toChunkZ == chunk.getZ_loc()) {
-                        double percent = (double) town.getChunks().size() / (double) this.plugin.getDefaultConfig().getClaimLimit();
-                        float progress = (float) Math.max(0.0, Math.min(1.0, percent));
-                        updateBar(player, toChunkX, toChunkZ, town.getTownName(), progress);
-                        return;
-                    }
-                }
+    public void run(final @NonNull Player player, final int chunkX, final int chunkZ) {
+        final TownAreaState areaState = this.resolveTownAreaState(player, chunkX, chunkZ);
+        final Component title = this.buildTitle(player, areaState, chunkX, chunkZ);
+        final BossBar.Color color = areaState.color();
+        final float progress = areaState.progress();
+
+        this.states.compute(player.getUniqueId(), (playerId, currentState) -> {
+            if (currentState == null) {
+                final BossBar createdBar = BossBar.bossBar(title, progress, color, BossBar.Overlay.PROGRESS);
+                player.showBossBar(createdBar);
+                return new BossBarState(chunkX, chunkZ, areaState.inTownArea(), areaState.townName(), createdBar);
+            }
+
+            final boolean unchanged = currentState.chunkX() == chunkX
+                    && currentState.chunkZ() == chunkZ
+                    && currentState.inTownArea() == areaState.inTownArea()
+                    && Objects.equals(currentState.townName(), areaState.townName());
+            if (unchanged) {
+                currentState.bossBar().name(title);
+                currentState.bossBar().color(color);
+                currentState.bossBar().progress(progress);
+                player.showBossBar(currentState.bossBar());
+                return currentState;
+            }
+
+            currentState.bossBar().name(title);
+            currentState.bossBar().color(color);
+            currentState.bossBar().progress(progress);
+            player.showBossBar(currentState.bossBar());
+            return new BossBarState(chunkX, chunkZ, areaState.inTownArea(), areaState.townName(), currentState.bossBar());
+        });
+    }
+
+    /**
+     * Hides and removes the active boss bar state for a player.
+     *
+     * @param player player whose boss bar should be removed
+     */
+    public void clear(final @NotNull Player player) {
+        final BossBarState removedState = this.states.remove(player.getUniqueId());
+        if (removedState == null) {
+            return;
+        }
+        player.hideBossBar(removedState.bossBar());
+    }
+
+    private @NotNull Component buildTitle(
+            final @NotNull Player player,
+            final @NotNull TownAreaState areaState,
+            final int chunkX,
+            final int chunkZ
+    ) {
+        final String key = areaState.inTownArea()
+                ? "boss_bar.title.town"
+                : "boss_bar.title.unincorporated";
+        return new I18n.Builder(key, player)
+                .withPlaceholders(Map.of(
+                        "town_name", areaState.townName() == null ? "" : areaState.townName(),
+                        "chunk_x", chunkX,
+                        "chunk_z", chunkZ
+                ))
+                .build()
+                .component();
+    }
+
+    private @NotNull TownAreaState resolveTownAreaState(
+            final @NotNull Player player,
+            final int chunkX,
+            final int chunkZ
+    ) {
+        final RRDTPlayer playerRepository = this.plugin.getPlayerRepository();
+        final RRTown townRepository = this.plugin.getTownRepository();
+        if (playerRepository == null || townRepository == null) {
+            return TownAreaState.unincorporated();
+        }
+
+        final RDTPlayer rdtPlayer = playerRepository.findByPlayer(player.getUniqueId());
+        if (rdtPlayer == null || rdtPlayer.getTownUUID() == null) {
+            return TownAreaState.unincorporated();
+        }
+
+        final RTown town = townRepository.findByTownUUID(rdtPlayer.getTownUUID());
+        if (town == null) {
+            return TownAreaState.unincorporated();
+        }
+
+        if (this.isInsideTownArea(town, chunkX, chunkZ)) {
+            return TownAreaState.town(
+                    town.getTownName(),
+                    this.computeTownProgress(town)
+            );
+        }
+
+        return TownAreaState.unincorporated();
+    }
+
+    private boolean isInsideTownArea(
+            final @NotNull RTown town,
+            final int chunkX,
+            final int chunkZ
+    ) {
+        for (final RChunk chunk : town.getChunks()) {
+            if (chunk.getX_loc() == chunkX && chunk.getZ_loc() == chunkZ) {
+                return true;
             }
         }
-        updateBar(player, toChunkX, toChunkZ, "Unincorporated", 0);
+
+        final Location nexusLocation = town.getNexusLocation();
+        if (nexusLocation == null || nexusLocation.getWorld() == null) {
+            return false;
+        }
+
+        return nexusLocation.getChunk().getX() == chunkX && nexusLocation.getChunk().getZ() == chunkZ;
     }
 
-    /**
-     * Create or update a player's boss bar with the given state.
-     *
-     * @param player    player to show the bar to (non-null)
-     * @param x         chunk X coordinate
-     * @param z         chunk Z coordinate
-     * @param townName  town display name (or "Unincorporated")
-     * @param progress  progress value in range [0, 1]; ignored for Unincorporated
-     */
-    private void updateBar(@NonNull Player player, int x, int z, String townName, float progress) {
-        boolean unincorporated = townName.equalsIgnoreCase("Unincorporated");
-        String title = townName + " - (" + x + ", " + z + ")";
-        BossBar.Color color = unincorporated ? BossBar.Color.YELLOW : BossBar.Color.PURPLE;
-        float barProgress = unincorporated ? 1.0f : progress;
-        updateBarCustom(player, x, z, title, color, barProgress);
+    private float computeTownProgress(final @NotNull RTown town) {
+        final int maxChunkLimit = Math.max(1, this.plugin.getDefaultConfig().getGlobalMaxChunkLimit());
+        final int claimedChunks = Math.max(0, town.getChunks().size());
+        final double ratio = (double) claimedChunks / (double) maxChunkLimit;
+        return (float) Math.max(0.0D, Math.min(1.0D, ratio));
     }
 
-    /**
-     * Create or update the boss bar with fully specified parameters.
-     * Avoids any string templates or formatting features that require preview flags.
-     */
-    private void updateBarCustom(@NonNull Player player, int x, int z, String title, BossBar.Color color, float barProgress) {
-        messages.compute(player.getUniqueId(), (uuid, message) -> {
-            // Create a new boss bar if none exists
-            if (message == null) {
-                BossBar bossBar = BossBar.bossBar(
-                        Component.text(title),
-                        barProgress,
-                        color,
-                        BossBar.Overlay.PROGRESS
-                );
-                player.showBossBar(bossBar);
-                return new CordMessage(uuid, x, z, bossBar);
-            }
+    private record BossBarState(
+            int chunkX,
+            int chunkZ,
+            boolean inTownArea,
+            @Nullable String townName,
+            @NotNull BossBar bossBar
+    ) {}
 
-            BossBar bossBar = message.bossBar();
+    private record TownAreaState(
+            boolean inTownArea,
+            @Nullable String townName,
+            @NotNull BossBar.Color color,
+            float progress
+    ) {
+        private static @NotNull TownAreaState town(
+                final @Nullable String townName,
+                final float progress
+        ) {
+            return new TownAreaState(
+                    true,
+                    townName == null ? "" : townName,
+                    BossBar.Color.PURPLE,
+                    progress
+            );
+        }
 
-            // Check if nothing structural changed
-            String currentTitle = PlainTextComponentSerializer.plainText().serialize(bossBar.name());
-            if (message.x() == x && message.z() == z && currentTitle.equals(title)) {
-                bossBar.progress(barProgress);
-                player.showBossBar(bossBar);
-                return message;
-            }
-
-            // Update the existing boss bar
-            bossBar.name(Component.text(title));
-            bossBar.color(color);
-            bossBar.progress(barProgress);
-            player.showBossBar(bossBar);
-            return new CordMessage(uuid, x, z, bossBar);
-        });
+        private static @NotNull TownAreaState unincorporated() {
+            return new TownAreaState(false, null, BossBar.Color.YELLOW, 1.0F);
+        }
     }
 }

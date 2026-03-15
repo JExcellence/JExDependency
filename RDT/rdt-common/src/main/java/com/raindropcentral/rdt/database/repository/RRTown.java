@@ -3,7 +3,9 @@ package com.raindropcentral.rdt.database.repository;
 import com.raindropcentral.rdt.database.entity.RTown;
 import de.jexcellence.hibernate.repository.CachedRepository;
 import jakarta.persistence.EntityManagerFactory;
+import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Map;
 import java.util.UUID;
@@ -81,6 +83,16 @@ public class RRTown extends CachedRepository<RTown, Long, UUID> {
      */
     public RTown findByTownUUID(UUID uuid) {
         return findByAttributes(Map.of("uuid", uuid)).orElse(null);
+    }
+
+    /**
+     * Finds a town by its placed nexus block location.
+     *
+     * @param location exact persisted nexus location
+     * @return matching town or {@code null} when no town owns that nexus location
+     */
+    public @Nullable RTown findByNexusLocation(final @NotNull Location location) {
+        return findByAttributes(Map.of("nexus_location", location)).orElse(null);
     }
 
 }

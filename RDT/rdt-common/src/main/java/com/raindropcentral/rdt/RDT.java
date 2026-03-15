@@ -7,11 +7,29 @@ import com.raindropcentral.rdt.database.entity.RTown;
 import com.raindropcentral.rdt.database.repository.RRDTPlayer;
 import com.raindropcentral.rdt.database.repository.RRTown;
 import com.raindropcentral.rdt.factory.BossBarFactory;
-import com.raindropcentral.rdt.factory.IRSFactory;
 import com.raindropcentral.rdt.service.TownService;
 import com.raindropcentral.rdt.view.main.MainOverviewView;
+import com.raindropcentral.rdt.view.town.ChunkClaimView;
+import com.raindropcentral.rdt.view.town.CreateTownAnvilView;
+import com.raindropcentral.rdt.view.town.RoleAssignmentPlayerPermissionView;
+import com.raindropcentral.rdt.view.town.RoleCreateNameAnvilView;
+import com.raindropcentral.rdt.view.town.RoleCreateAnvilView;
+import com.raindropcentral.rdt.view.town.RolePermissionView;
+import com.raindropcentral.rdt.view.town.RolePlayerPermissionView;
+import com.raindropcentral.rdt.view.town.RolesOverviewView;
+import com.raindropcentral.rdt.view.town.ServerTownsJoinView;
 import com.raindropcentral.rdt.view.town.ServerTownsOverviewView;
+import com.raindropcentral.rdt.view.town.TownBankView;
+import com.raindropcentral.rdt.view.town.TownChunkTypeView;
+import com.raindropcentral.rdt.view.town.TownChunkView;
+import com.raindropcentral.rdt.view.town.TownInfoView;
+import com.raindropcentral.rdt.view.town.TownInvitePlayerView;
+import com.raindropcentral.rdt.view.town.TownLevelUpRequirementsView;
+import com.raindropcentral.rdt.view.town.TownLevelUpRewardsView;
+import com.raindropcentral.rdt.view.town.TownLevelUpView;
 import com.raindropcentral.rdt.view.town.TownOverviewView;
+import com.raindropcentral.rdt.view.town.TownPendingJoinView;
+import com.raindropcentral.rdt.view.town.TownProtectionsView;
 import com.raindropcentral.rplatform.RPlatform;
 import com.raindropcentral.rplatform.api.PlatformAPIFactory;
 import com.raindropcentral.rplatform.api.PlatformType;
@@ -45,7 +63,7 @@ import java.util.logging.Logger;
  *
  * @author ItsRainingHP
  * @since 1.0.0
- * @version 1.0.0
+ * @version 1.0.10
  */
 @SuppressWarnings({"unused", "FieldCanBeLocal"})
 public class RDT {
@@ -65,7 +83,6 @@ public class RDT {
     private BossBarFactory bossBarFactory;
     private ISchedulerAdapter scheduler;
     private PlatformType platformType;
-    private IRSFactory irsFactory;
 
     private Object economyInstance;
     private ViewFrame viewFrame;
@@ -123,10 +140,6 @@ public class RDT {
         this.initializeCommands();
         this.initializeViews();
         this.bossBarFactory = new BossBarFactory(this);
-        // NO TAXATION WITHOUT REPRESENTATION
-        this.irsFactory = new IRSFactory(this);
-        // Initiate async tasks for each town since last taxation stored in town db
-        this.irsFactory.runAll();
     }
 
     /**
@@ -305,7 +318,26 @@ public class RDT {
                 .install(AnvilInputFeature.AnvilInput)
                 .with(
                         new MainOverviewView(),
+                        new CreateTownAnvilView(),
+                        new RoleCreateAnvilView(),
+                        new RoleCreateNameAnvilView(),
+                        new RolePermissionView(),
+                        new RoleAssignmentPlayerPermissionView(),
+                        new RolePlayerPermissionView(),
+                        new RolesOverviewView(),
+                        new ServerTownsJoinView(),
                         new ServerTownsOverviewView(),
+                        new ChunkClaimView(),
+                        new TownInvitePlayerView(),
+                        new TownPendingJoinView(),
+                        new TownInfoView(),
+                        new TownChunkView(),
+                        new TownChunkTypeView(),
+                        new TownProtectionsView(),
+                        new TownBankView(),
+                        new TownLevelUpView(),
+                        new TownLevelUpRequirementsView(),
+                        new TownLevelUpRewardsView(),
                         new TownOverviewView()
                 )
                 .disableMetrics();
@@ -359,10 +391,6 @@ public class RDT {
 
     public @Nullable PlatformType getPlatformType() {
         return this.platformType;
-    }
-
-    public @Nullable IRSFactory getIrsFactory() {
-        return this.irsFactory;
     }
 
     public @Nullable Object getEconomyInstance() {
