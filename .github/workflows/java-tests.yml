@@ -1,0 +1,26 @@
+name: CI Java Tests
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: java-tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  java-tests:
+    name: Gradle Test (Java 21)
+    runs-on: windows-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Run Java test suite
+        uses: ./.github/actions/run-java-tests
+        with:
+          java-version: "21"

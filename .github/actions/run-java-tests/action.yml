@@ -1,0 +1,24 @@
+name: "Run Java Tests"
+description: "Sets up Java/Gradle and runs the project test suite."
+
+inputs:
+  java-version:
+    description: "Java version to use"
+    required: false
+    default: "21"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set up JDK
+      uses: actions/setup-java@v4
+      with:
+        distribution: temurin
+        java-version: ${{ inputs.java-version }}
+
+    - name: Set up Gradle
+      uses: gradle/actions/setup-gradle@v4
+
+    - name: Run tests
+      shell: pwsh
+      run: .\gradlew.bat --no-daemon test
