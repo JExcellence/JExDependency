@@ -156,11 +156,11 @@ tasks.register("buildAll") {
     tasks.findByPath(":RDT:buildAll")?.mustRunAfter(":publishDependencies")
     
     doLast {
-        val major = findProperty("rdq.version.major") ?: "6"
-        val minor = findProperty("rdq.version.minor") ?: "0"
-        val patch = findProperty("rdq.version.patch") ?: "0"
-        val stage = findProperty("rdq.version.stage") ?: "Alpha"
-        val build = findProperty("rdq.version.build") ?: "1"
+        val major = findProperty("rdq.version.major") ?: "Undefined"
+        val minor = findProperty("rdq.version.minor") ?: "Undefined"
+        val patch = findProperty("rdq.version.patch") ?: "Undefined"
+        val stage = findProperty("rdq.version.stage") ?: "Undefined"
+        val build = findProperty("rdq.version.build") ?: "Undefined"
         val rdqVersion = "$major.$minor.$patch-$stage-Build-$build"
         
         println("========================================================================")

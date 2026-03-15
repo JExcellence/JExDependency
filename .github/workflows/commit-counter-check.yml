@@ -21,6 +21,7 @@ jobs:
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
 
       - name: Validate commit counter and module build numbers
         shell: pwsh
@@ -28,19 +29,21 @@ jobs:
           Set-StrictMode -Version Latest
           $ErrorActionPreference = 'Stop'
 
-          function Get-PropertyValue {
+          function TryGet-PropertyValue {
               param(
                   [Parameter(Mandatory = $true)][string]$Content,
-                  [Parameter(Mandatory = $true)][string]$Key
+                  [Parameter(Mandatory = $true)][string]$Key,
+                  [Parameter(Mandatory = $true)][ref]$OutValue
               )
 
               $escapedKey = [Regex]::Escape($Key)
               $match = [Regex]::Match($Content, "(?m)^$escapedKey=(.*)$")
               if (-not $match.Success) {
-                  throw "Missing property in gradle.properties: $Key"
+                  return $false
               }
 
-              return $match.Groups[1].Value.Trim()
+              $OutValue.Value = $match.Groups[1].Value.Trim()
+              return $true
           }
 
           function Get-IntegerProperty {
@@ -49,7 +52,11 @@ jobs:
                   [Parameter(Mandatory = $true)][string]$Key
               )
 
-              $value = Get-PropertyValue -Content $Content -Key $Key
+              $value = ""
+              if (-not (TryGet-PropertyValue -Content $Content -Key $Key -OutValue ([ref]$value))) {
+                  throw "Missing property in gradle.properties: $Key"
+              }
+
               $parsedValue = 0
               if (-not [int]::TryParse($value, [ref]$parsedValue)) {
                   throw "Property '$Key' must be an integer but was '$value'."
@@ -73,8 +80,18 @@ jobs:
           $previousProperties = ((git show "HEAD^:gradle.properties") -join "`n")
           $currentProperties = Get-Content -Path "gradle.properties" -Raw
 
-          $previousCommit = Get-IntegerProperty -Content $previousProperties -Key "commit"
           $currentCommit = Get-IntegerProperty -Content $currentProperties -Key "commit"
+
+          $previousCommitRaw = ""
+          if (-not (TryGet-PropertyValue -Content $previousProperties -Key "commit" -OutValue ([ref]$previousCommitRaw))) {
+              Write-Host "Previous gradle.properties has no commit property. Baseline introduction detected; skipping validation."
+              exit 0
+          }
+
+          $previousCommit = 0
+          if (-not [int]::TryParse($previousCommitRaw, [ref]$previousCommit)) {
+              throw "Property 'commit' in previous gradle.properties must be an integer but was '$previousCommitRaw'."
+          }
 
           if ($currentCommit -lt $previousCommit) {
               throw "commit cannot be lowered (HEAD^=$previousCommit, HEAD=$currentCommit)."
