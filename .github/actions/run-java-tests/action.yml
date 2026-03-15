@@ -1,11 +1,19 @@
 name: "Run Java Tests"
-description: "Sets up Java/Gradle and runs the project test suite."
+description: "Sets up Java/Gradle, publishes JEConfig dependencies, and runs the project test suite."
 
 inputs:
   java-version:
     description: "Java version to use"
     required: false
     default: "21"
+  jeconfig-repo-url:
+    description: "Git URL for JEConfig repository"
+    required: false
+    default: "https://github.com/Antimatter-Zone/JEConfig.git"
+  jeconfig-repo-ref:
+    description: "Branch, tag, or commit to use from JEConfig repository"
+    required: false
+    default: "main"
 
 runs:
   using: "composite"
@@ -18,6 +26,24 @@ runs:
 
     - name: Set up Gradle
       uses: gradle/actions/setup-gradle@v4
+
+    - name: Publish JEConfig artifacts to Maven Local
+      shell: pwsh
+      run: |
+        $checkoutDir = "$env:GITHUB_WORKSPACE\.external\JEConfig"
+        $repoUrl = "${{ inputs.jeconfig-repo-url }}"
+        $repoRef = "${{ inputs.jeconfig-repo-ref }}"
+
+        if (-not (Test-Path $checkoutDir)) {
+          git clone --branch $repoRef --depth 1 $repoUrl $checkoutDir
+        } else {
+          git -C $checkoutDir fetch --depth 1 origin $repoRef
+          git -C $checkoutDir checkout -f FETCH_HEAD
+        }
+
+        Push-Location $checkoutDir
+        .\gradlew.bat --no-daemon publishToMavenLocal
+        Pop-Location
 
     - name: Run tests
       shell: pwsh
