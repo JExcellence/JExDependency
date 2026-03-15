@@ -15,10 +15,16 @@ import java.io.IOException;
  */
 public class CurrencyRequirementSerializer extends StdSerializer<CurrencyRequirement> {
 
+    /**
+     * Executes CurrencyRequirementSerializer.
+     */
     public CurrencyRequirementSerializer() {
         super(CurrencyRequirement.class);
     }
 
+    /**
+     * Executes serialize.
+     */
     @Override
     public void serialize(CurrencyRequirement requirement, JsonGenerator gen, SerializerProvider provider) 
             throws IOException {
@@ -30,6 +36,9 @@ public class CurrencyRequirementSerializer extends StdSerializer<CurrencyRequire
         gen.writeEndObject();
     }
 
+    /**
+     * Executes serializeWithType.
+     */
     @Override
     public void serializeWithType(CurrencyRequirement requirement, JsonGenerator gen, 
                                    SerializerProvider provider, TypeSerializer typeSer) throws IOException {

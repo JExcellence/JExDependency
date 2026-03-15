@@ -31,11 +31,10 @@ import java.util.logging.Logger;
 
 /**
  * Handler for event-triggered and percentage-based perks.
- * <p>
- * This handler manages the registration, processing, and triggering of perks that
+ *
+ * <p>This handler manages the registration, processing, and triggering of perks that
  * activate in response to game events. It handles cooldown checking, trigger chance
  * calculation, and event processing.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -49,6 +48,9 @@ public class EventPerkHandler {
 	private final Map<UUID, Map<String, Set<PlayerPerk>>> registeredPerks = new ConcurrentHashMap<>();
 	private final Map<String, PerkSection> configCache = new ConcurrentHashMap<>();
 	
+	/**
+	 * Executes EventPerkHandler.
+	 */
 	public EventPerkHandler(@NotNull final RDQ plugin) {
 		this.plugin = plugin;
 	}
@@ -402,6 +404,9 @@ public class EventPerkHandler {
 		LOGGER.info("Cleared perk config cache");
 	}
 	
+	/**
+	 * Executes cleanupPlayer.
+	 */
 	public void cleanupPlayer(@NotNull final UUID playerUuid) {
 		registeredPerks.remove(playerUuid);
 	}

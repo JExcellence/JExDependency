@@ -10,10 +10,9 @@ import java.time.Duration;
 
 /**
  * Event fired when a player completes a quest.
- * <p>
- * This event is called on the main thread after a quest is marked as completed
+ *
+ * <p>This event is called on the main thread after a quest is marked as completed
  * and before rewards are distributed.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0
@@ -73,6 +72,9 @@ public class QuestCompleteEvent extends Event {
         return completionTime;
     }
     
+    /**
+     * Gets handlers.
+     */
     @Override
     @NotNull
     public HandlerList getHandlers() {

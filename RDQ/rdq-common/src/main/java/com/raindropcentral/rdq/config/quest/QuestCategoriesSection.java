@@ -8,9 +8,8 @@ import java.util.Map;
 
 /**
  * Configuration section for quest categories.
- * <p>
- * This section contains a map of all quest categories loaded from the categories.yml file.
- * </p>
+ *
+ * <p>This section contains a map of all quest categories loaded from the categories.yml file.
  *
  * @author RaindropCentral
  * @version 1.0.0

@@ -3,6 +3,9 @@ package com.raindropcentral.rdq.command.player.rq;
 import de.jexcellence.evaluable.section.IPermissionNode;
 import lombok.Getter;
 
+/**
+ * Represents the EPRQPermission API type.
+ */
 @Getter
 public enum EPRQPermission implements IPermissionNode {
 

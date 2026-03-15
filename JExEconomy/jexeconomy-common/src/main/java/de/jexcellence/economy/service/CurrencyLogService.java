@@ -19,11 +19,10 @@ import java.util.concurrent.Executor;
 
 /**
  * Service class for managing currency operation logging.
- * <p>
- * Provides high-level methods for creating, querying, and managing
+ *
+ * <p>Provides high-level methods for creating, querying, and managing
  * currency log entries. Handles automatic log creation for common
  * operations and provides analytics capabilities.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -525,6 +524,9 @@ public class CurrencyLogService {
         private final int totalWithdrawals;
         private final int uniqueUsers;
         
+        /**
+         * Executes BasicCurrencyStats.
+         */
         public BasicCurrencyStats(
             Long currencyId,
             int totalTransactions,
@@ -539,10 +541,25 @@ public class CurrencyLogService {
             this.uniqueUsers = uniqueUsers;
         }
         
+        /**
+         * Gets currencyId.
+         */
         public Long getCurrencyId() { return currencyId; }
+        /**
+         * Gets totalTransactions.
+         */
         public int getTotalTransactions() { return totalTransactions; }
+        /**
+         * Gets totalDeposits.
+         */
         public int getTotalDeposits() { return totalDeposits; }
+        /**
+         * Gets totalWithdrawals.
+         */
         public int getTotalWithdrawals() { return totalWithdrawals; }
+        /**
+         * Gets uniqueUsers.
+         */
         public int getUniqueUsers() { return uniqueUsers; }
     }
 }

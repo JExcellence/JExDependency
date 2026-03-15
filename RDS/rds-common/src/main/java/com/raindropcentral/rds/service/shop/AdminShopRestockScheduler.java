@@ -40,6 +40,9 @@ public class AdminShopRestockScheduler {
         this.running = true;
     }
 
+    /**
+     * Executes restockShop.
+     */
     public boolean restockShop(
             final @NotNull Shop shop
     ) {

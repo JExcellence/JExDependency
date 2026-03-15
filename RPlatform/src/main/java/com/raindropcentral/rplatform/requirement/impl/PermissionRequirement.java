@@ -12,8 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
+/**
+ * Represents the PermissionRequirement API type.
+ */
 public final class PermissionRequirement extends AbstractRequirement {
 
+    /**
+     * Represents the PermissionMode API type.
+     */
     public enum PermissionMode {
         ALL,
         ANY,
@@ -35,19 +41,31 @@ public final class PermissionRequirement extends AbstractRequirement {
     @JsonProperty("checkNegated")
     private final boolean checkNegated;
 
+    /**
+     * Executes PermissionRequirement.
+     */
     public PermissionRequirement(@NotNull String permission) {
         this(List.of(permission), PermissionMode.ALL, 1, null, false);
     }
 
+    /**
+     * Executes PermissionRequirement.
+     */
     public PermissionRequirement(@NotNull List<String> requiredPermissions) {
         this(requiredPermissions, PermissionMode.ALL, requiredPermissions.size(), null, false);
     }
 
+    /**
+     * Executes PermissionRequirement.
+     */
     public PermissionRequirement(@NotNull List<String> requiredPermissions, @NotNull PermissionMode permissionMode) {
         this(requiredPermissions, permissionMode,
                 permissionMode == PermissionMode.ANY ? 1 : requiredPermissions.size(), null, false);
     }
 
+    /**
+     * Executes PermissionRequirement.
+     */
     @JsonCreator
     public PermissionRequirement(@JsonProperty("requiredPermissions") @NotNull List<String> requiredPermissions,
                                 @JsonProperty("permissionMode") @Nullable PermissionMode permissionMode,
@@ -87,6 +105,9 @@ public final class PermissionRequirement extends AbstractRequirement {
         this.checkNegated = checkNegated != null ? checkNegated : false;
     }
 
+    /**
+     * Returns whether met.
+     */
     @Override
     public boolean isMet(@NotNull Player player) {
         return switch (permissionMode) {
@@ -103,6 +124,9 @@ public final class PermissionRequirement extends AbstractRequirement {
         };
     }
 
+    /**
+     * Executes calculateProgress.
+     */
     @Override
     public double calculateProgress(@NotNull Player player) {
         if (requiredPermissions.isEmpty()) {
@@ -120,22 +144,37 @@ public final class PermissionRequirement extends AbstractRequirement {
         };
     }
 
+    /**
+     * Executes consume.
+     */
     @Override
     public void consume(@NotNull Player player) {
     }
 
+    /**
+     * Gets descriptionKey.
+     */
     @Override
     @NotNull
     public String getDescriptionKey() {
         return "requirement.permission";
     }
 
+    /**
+     * Gets minimumRequired.
+     */
     @NotNull public List<String> getRequiredPermissions() { return new ArrayList<>(requiredPermissions); }
     @NotNull public PermissionMode getPermissionMode() { return permissionMode; }
     public int getMinimumRequired() { return minimumRequired; }
+    /**
+     * Returns whether checkNegated.
+     */
     @Nullable public String getDescription() { return description; }
     public boolean isCheckNegated() { return checkNegated; }
 
+    /**
+     * Gets detailedPermissionStatus.
+     */
     @JsonIgnore
     @NotNull
     public List<PermissionStatus> getDetailedPermissionStatus(@NotNull Player player) {
@@ -148,6 +187,9 @@ public final class PermissionRequirement extends AbstractRequirement {
                 .toList();
     }
 
+    /**
+     * Gets heldPermissions.
+     */
     @JsonIgnore
     @NotNull
     public List<String> getHeldPermissions(@NotNull Player player) {
@@ -156,6 +198,9 @@ public final class PermissionRequirement extends AbstractRequirement {
                 .toList();
     }
 
+    /**
+     * Gets missingPermissions.
+     */
     @JsonIgnore
     @NotNull
     public List<String> getMissingPermissions(@NotNull Player player) {
@@ -168,6 +213,9 @@ public final class PermissionRequirement extends AbstractRequirement {
     @JsonIgnore public boolean isAnyMode() { return permissionMode == PermissionMode.ANY; }
     @JsonIgnore public boolean isMinimumMode() { return permissionMode == PermissionMode.MINIMUM; }
 
+    /**
+     * Executes validate.
+     */
     @JsonIgnore
     public void validate() {
         if (requiredPermissions.isEmpty()) {
@@ -188,6 +236,9 @@ public final class PermissionRequirement extends AbstractRequirement {
         }
     }
 
+    /**
+     * Executes fromString.
+     */
     @JsonIgnore
     @NotNull
     public static PermissionRequirement fromString(@NotNull List<String> requiredPermissions,
@@ -209,18 +260,30 @@ public final class PermissionRequirement extends AbstractRequirement {
         return checkNegated != hasPermission;
     }
 
+    /**
+     * Represents the PermissionStatus API type.
+     */
     public static final class PermissionStatus {
         private final int index;
         private final String permission;
         private final boolean hasPermission;
 
+        /**
+         * Executes PermissionStatus.
+         */
         public PermissionStatus(int index, @NotNull String permission, boolean hasPermission) {
             this.index = index;
             this.permission = permission;
             this.hasPermission = hasPermission;
         }
 
+        /**
+         * Gets index.
+         */
         public int getIndex() { return index; }
+        /**
+         * Returns whether permission.
+         */
         @NotNull public String getPermission() { return permission; }
         public boolean hasPermission() { return hasPermission; }
     }

@@ -1,8 +1,17 @@
 /**
  * Common Java configuration for all Raindrop modules
  */
+import org.gradle.api.GradleException
+import org.gradle.api.plugins.quality.CheckstyleExtension
+import org.gradle.api.plugins.quality.Checkstyle
+import org.gradle.api.tasks.compile.JavaCompile
+import org.gradle.api.tasks.javadoc.Javadoc
+import org.gradle.external.javadoc.JavadocMemberLevel
+import org.gradle.external.javadoc.StandardJavadocDocletOptions
+
 plugins {
     java
+    checkstyle
     `maven-publish`
 }
 
@@ -14,6 +23,59 @@ java {
     targetCompatibility = JavaVersion.VERSION_21
     withSourcesJar()
     withJavadocJar()
+}
+
+configure<CheckstyleExtension> {
+    toolVersion = "10.17.0"
+    configFile = rootProject.file("config/checkstyle/google-javadoc-checks.xml")
+    maxWarnings = 0
+    isShowViolations = true
+}
+
+val verifyProjectPackageDocs = tasks.register("verifyPublicApiPackageDocs") {
+    group = "verification"
+    description = "Verifies package-info.java exists for packages that declare public top-level API types."
+
+    doLast {
+        val sourceRoot = layout.projectDirectory.dir("src/main/java").asFile
+        if (!sourceRoot.exists()) {
+            return@doLast
+        }
+
+        val packagePattern = Regex("""(?m)^\s*package\s+([a-zA-Z0-9_.]+)\s*;""")
+        val publicTopLevelTypePattern = Regex(
+            """(?m)^public\s+(?:abstract\s+|final\s+|sealed\s+|non-sealed\s+|strictfp\s+)*(?:class|interface|enum|record|@interface)\b"""
+        )
+        val publicApiPackages = mutableSetOf<String>()
+
+        fileTree(sourceRoot) {
+            include("**/*.java")
+            exclude("**/package-info.java")
+            exclude("**/module-info.java")
+        }.files.forEach { javaFile ->
+            val content = javaFile.readText()
+            if (!publicTopLevelTypePattern.containsMatchIn(content)) {
+                return@forEach
+            }
+
+            val packageName = packagePattern.find(content)?.groupValues?.get(1) ?: return@forEach
+            publicApiPackages.add(packageName)
+        }
+
+        val missingPackages = publicApiPackages
+            .sorted()
+            .filter { packageName ->
+                val packageInfoPath = "src/main/java/${packageName.replace('.', '/')}/package-info.java"
+                !file(packageInfoPath).isFile
+            }
+
+        if (missingPackages.isNotEmpty()) {
+            throw GradleException(
+                "Missing package-info.java for public API packages in ${project.path}:\n" +
+                    missingPackages.joinToString(separator = "\n") { "- $it" }
+            )
+        }
+    }
 }
 
 tasks {
@@ -29,19 +91,34 @@ tasks {
         )
     }
 
-    javadoc {
+    withType<Javadoc>().configureEach {
         options.encoding = "UTF-8"
+        options.memberLevel = JavadocMemberLevel.PUBLIC
+        isFailOnError = true
         (options as StandardJavadocDocletOptions).apply {
-            addStringOption("Xdoclint:none", "-quiet")
-            addBooleanOption("Xdoclint:none", true)
-            addStringOption("Xmaxwarns", "0")
-            addStringOption("Xmaxerrs", "0")
-            // Ignore missing references and network errors
-            addBooleanOption("-ignore-source-errors", true)
-            isFailOnError = false
-            // Skip external links to avoid network dependency
-            // links() intentionally omitted for offline builds
+            addBooleanOption("Werror", true)
+            addBooleanOption("Xdoclint:all,-missing", true)
+            addStringOption("tag", "apiNote:a:API Note:")
+            addStringOption("tag", "implSpec:a:Implementation Requirements:")
+            addStringOption("tag", "implNote:a:Implementation Note:")
         }
+    }
+
+    withType<Checkstyle>().configureEach {
+        reports {
+            xml.required.set(true)
+            html.required.set(true)
+        }
+    }
+
+    named<Checkstyle>("checkstyleMain") {
+        source = fileTree("src/main/java") {
+            include("**/*.java")
+        }
+    }
+
+    named("checkstyleTest") {
+        enabled = false
     }
 
     jar {
@@ -56,6 +133,31 @@ tasks {
             )
         }
     }
+}
+
+if (rootProject.tasks.findByName("verifyPublicApiPackageDocs") == null) {
+    rootProject.tasks.register("verifyPublicApiPackageDocs") {
+        group = "verification"
+        description = "Verifies package-info.java coverage for all public API packages."
+    }
+}
+
+if (rootProject.tasks.findByName("verifyGoogleJavaStyle") == null) {
+    rootProject.tasks.register("verifyGoogleJavaStyle") {
+        group = "verification"
+        description = "Runs Google-style Javadoc and public API package documentation verification."
+        dependsOn(rootProject.tasks.named("verifyPublicApiPackageDocs"))
+    }
+}
+
+rootProject.tasks.named("verifyPublicApiPackageDocs") {
+    dependsOn(verifyProjectPackageDocs)
+}
+
+rootProject.tasks.named("verifyGoogleJavaStyle") {
+    dependsOn(tasks.named("checkstyleMain"))
+    dependsOn(tasks.named("javadoc"))
+    dependsOn(verifyProjectPackageDocs)
 }
 
 repositories {

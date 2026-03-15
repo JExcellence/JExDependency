@@ -42,6 +42,9 @@ import com.raindropcentral.rplatform.database.converter.UUIDConverter;
     "unused",
     "JpaDataSourceORMInspection"
 })
+/**
+ * Represents the RDSPlayer API type.
+ */
 public class RDSPlayer extends BaseEntity {
 
     @Column(name = "player_uuid", unique = true, nullable = false)

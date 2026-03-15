@@ -9,10 +9,9 @@ import java.util.List;
 
 /**
  * Configuration section for permission-based requirements.
- * <p>
- * This section handles all configuration options specific to PermissionRequirement,
+ *
+ * <p>This section handles all configuration options specific to PermissionRequirement,
  * including required permissions and permission checking modes.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -70,10 +69,16 @@ public class PermissionRequirementSection extends AConfigSection {
 	
 	// ~~~ GETTERS ~~~
 	
+	/**
+	 * Gets requireAll.
+	 */
 	public Boolean getRequireAll() {
 		return this.requireAll != null ? this.requireAll : true;
 	}
 	
+	/**
+	 * Gets checkNegation.
+	 */
 	public Boolean getCheckNegation() {
 		return this.checkNegation != null ? this.checkNegation : false;
 	}

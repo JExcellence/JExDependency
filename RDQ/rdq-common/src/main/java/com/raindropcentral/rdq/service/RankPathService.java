@@ -17,12 +17,18 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Represents the RankPathService API type.
+ */
 public class RankPathService {
 	
 	private static final Logger LOGGER = Logger.getLogger(RankPathService.class.getName());
 	private final RDQ rdq;
 	private final RankProgressionManager progressionManager;
 	
+	/**
+	 * Executes RankPathService.
+	 */
 	public RankPathService(final @NotNull RDQ rdq) {
 		this.rdq = rdq;
 		this.progressionManager = new RankProgressionManager(rdq);

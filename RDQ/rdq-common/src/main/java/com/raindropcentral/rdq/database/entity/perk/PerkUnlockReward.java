@@ -17,10 +17,9 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * Entity representing a reward granted when a perk is unlocked.
- * <p>
- * This entity encapsulates an {@link AbstractReward} from RPlatform and its visual icon,
+ *
+ * <p>This entity encapsulates an {@link AbstractReward} from RPlatform and its visual icon,
  * providing convenience methods for reward granting.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -129,6 +128,9 @@ public class PerkUnlockReward extends BaseEntity {
         return reward.getDescriptionKey();
     }
 
+    /**
+     * Executes equals.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -143,6 +145,9 @@ public class PerkUnlockReward extends BaseEntity {
                 displayOrder == that.displayOrder;
     }
 
+    /**
+     * Returns whether hCode.
+     */
     @Override
     public int hashCode() {
         if (this.getId() != null) {
@@ -152,6 +157,9 @@ public class PerkUnlockReward extends BaseEntity {
         return Objects.hash(perk, reward, displayOrder);
     }
 
+    /**
+     * Executes toString.
+     */
     @Override
     public String toString() {
         return "PerkUnlockReward{" +

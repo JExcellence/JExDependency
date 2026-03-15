@@ -13,7 +13,7 @@ import java.io.File;
 import java.util.logging.Logger;
 
 /**
- * Convenience base implementation of {@link PluginDelegate} that forwards common {@link JavaPlugin} helpers to
+ * Convenience base implementation of {@link PluginDelegate} that forwards common {@link JavaPlugin} helpers to.
  * subclasses. Delegates gain access to configuration, logging and command registration utilities without repeatedly
  * dereferencing the underlying plugin.
  *

@@ -30,10 +30,9 @@ import java.util.logging.Logger;
 
 /**
  * Paginated view displaying quests within a specific category.
- * <p>
- * Shows all available quests in the selected category with their status
+ *
+ * <p>Shows all available quests in the selected category with their status
  * and allows players to start or view quest details.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0
@@ -45,6 +44,9 @@ public class QuestListView extends APaginatedView<Quest> {
 	private final State<RDQ> rdq = initialState("plugin");
 	private final State<QuestCategory> category = initialState("category");
 	
+	/**
+	 * Executes QuestListView.
+	 */
 	public QuestListView() {
 		super(QuestCategoryView.class);
 	}

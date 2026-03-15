@@ -162,6 +162,9 @@ public class BalanceChangedEvent extends Event {
         return this.changeTime;
     }
     
+    /**
+     * Gets handlers.
+     */
     @NotNull
     @Override
     public HandlerList getHandlers() {
@@ -169,6 +172,9 @@ public class BalanceChangedEvent extends Event {
         return HANDLERS;
     }
     
+    /**
+     * Gets handlerList.
+     */
     @NotNull
     public static HandlerList getHandlerList() {
         

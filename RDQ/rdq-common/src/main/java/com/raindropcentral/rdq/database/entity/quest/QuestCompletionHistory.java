@@ -14,10 +14,9 @@ import java.util.UUID;
 
 /**
  * Entity representing a player's quest completion history.
- * <p>
- * Tracks how many times a player has completed a quest and when they can
+ *
+ * <p>Tracks how many times a player has completed a quest and when they can
  * repeat it again (for repeatable quests with cooldowns).
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0
@@ -34,6 +33,9 @@ import java.util.UUID;
                 @Index(name = "idx_quest_completion_next_available", columnList = "next_available_at")
         }
 )
+/**
+ * Represents the QuestCompletionHistory API type.
+ */
 public class QuestCompletionHistory extends BaseEntity {
     
     @Serial
@@ -150,6 +152,9 @@ public class QuestCompletionHistory extends BaseEntity {
         this.nextAvailableAt = cooldown.isZero() ? null : Instant.now().plus(cooldown);
     }
     
+    /**
+     * Executes equals.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -163,6 +168,9 @@ public class QuestCompletionHistory extends BaseEntity {
                 questIdentifier != null && questIdentifier.equals(that.questIdentifier);
     }
     
+    /**
+     * Returns whether hCode.
+     */
     @Override
     public int hashCode() {
         if (this.getId() != null) {
@@ -172,6 +180,9 @@ public class QuestCompletionHistory extends BaseEntity {
         return Objects.hash(playerId, questIdentifier);
     }
     
+    /**
+     * Executes toString.
+     */
     @Override
     public String toString() {
         return "QuestCompletionHistory{" +

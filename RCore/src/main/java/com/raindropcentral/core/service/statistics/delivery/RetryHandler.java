@@ -27,12 +27,18 @@ public class RetryHandler {
     private final long initialBackoffMs;
     private final long maxBackoffMs;
 
+    /**
+     * Executes RetryHandler.
+     */
     public RetryHandler(final int maxRetries, final long initialBackoffMs, final long maxBackoffMs) {
         this.maxRetries = maxRetries;
         this.initialBackoffMs = initialBackoffMs;
         this.maxBackoffMs = maxBackoffMs;
     }
 
+    /**
+     * Executes RetryHandler.
+     */
     public RetryHandler(final @NotNull StatisticsDeliveryConfig config) {
         this(config.getMaxRetries(), config.getInitialBackoffMs(), config.getMaxBackoffMs());
     }
@@ -143,11 +149,17 @@ public class RetryHandler {
     public static class DeliveryException extends RuntimeException {
         private final int statusCode;
 
+        /**
+         * Executes DeliveryException.
+         */
         public DeliveryException(final int statusCode, final String message) {
             super(message);
             this.statusCode = statusCode;
         }
 
+        /**
+         * Gets statusCode.
+         */
         public int getStatusCode() {
             return statusCode;
         }

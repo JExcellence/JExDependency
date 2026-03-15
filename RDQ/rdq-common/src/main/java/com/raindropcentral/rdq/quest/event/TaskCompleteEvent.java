@@ -8,9 +8,8 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Event fired when a player completes a quest task.
- * <p>
- * This event is called on the main thread after a task is marked as completed.
- * </p>
+ *
+ * <p>This event is called on the main thread after a task is marked as completed.
  *
  * @author RaindropCentral
  * @version 1.0.0
@@ -70,6 +69,9 @@ public class TaskCompleteEvent extends Event {
         return taskIdentifier;
     }
     
+    /**
+     * Gets handlers.
+     */
     @Override
     @NotNull
     public HandlerList getHandlers() {

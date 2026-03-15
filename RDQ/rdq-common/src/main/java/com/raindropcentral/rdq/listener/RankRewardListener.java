@@ -29,11 +29,17 @@ public class RankRewardListener implements Listener {
 	private final RDQ rdq;
 	private final RewardService rewardService;
 
+	/**
+	 * Executes RankRewardListener.
+	 */
 	public RankRewardListener(final @NotNull RDQ rdq) {
 		this.rdq = rdq;
 		this.rewardService = RewardService.getInstance();
 	}
 
+	/**
+	 * Executes onRankAssigned.
+	 */
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onRankAssigned(final @NotNull RankAssignedEvent event) {
 		final Player player = event.getPlayer();

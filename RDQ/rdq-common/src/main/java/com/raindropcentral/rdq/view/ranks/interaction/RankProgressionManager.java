@@ -23,7 +23,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Manages rank progression operations including starting progression,
+ * Manages rank progression operations including starting progression,.
  * checking completion, handling rank redemption, and automatic rank assignment.
  *
  * Refactored to follow the working pattern from RankPathOverview with:
@@ -39,6 +39,9 @@ public class RankProgressionManager {
 	private final RDQ rdq;
 	private final RankUpgradeProgressService rankUpgradeProgressService;
 	
+	/**
+	 * Executes RankProgressionManager.
+	 */
 	public RankProgressionManager(final @NotNull RDQ rdq) {
 		this.rdq = rdq;
 		this.rankUpgradeProgressService = new RankUpgradeProgressService(this.rdq);

@@ -43,6 +43,9 @@ public class CurrencyCreatedEvent extends CurrencyEvent {
         return this.creationTime;
     }
     
+    /**
+     * Gets handlers.
+     */
     @NotNull
     @Override
     public HandlerList getHandlers() {
@@ -50,6 +53,9 @@ public class CurrencyCreatedEvent extends CurrencyEvent {
         return HANDLERS;
     }
     
+    /**
+     * Gets handlerList.
+     */
     @NotNull
     public static HandlerList getHandlerList() {
         

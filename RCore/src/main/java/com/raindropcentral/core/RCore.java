@@ -23,7 +23,7 @@ import java.util.logging.Level;
 public class RCore extends JavaPlugin {
 
     /**
-     * Delegate that owns lifecycle orchestration, repository wiring, and service
+     * Delegate that owns lifecycle orchestration, repository wiring, and service.
      * publication. Populated during {@link #onLoad()} and cleared if bootstrapping fails so later
      * lifecycle phases can short-circuit safely.
      */

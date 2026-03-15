@@ -19,7 +19,7 @@ import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * Concrete {@link APaginatedView} implementation that presents a searchable roster of offline
+ * Concrete {@link APaginatedView} implementation that presents a searchable roster of offline.
  * players using player head avatars for selection.
  *
  * <p>The view relies on translation keys rooted at {@code paginated_player_ui} for row labelling
@@ -46,7 +46,7 @@ public class PaginatedPlayerView extends APaginatedView<OfflinePlayer> {
     }
 
     /**
-     * Overrides the default back handling to pop the Inventory Framework context stack while
+     * Overrides the default back handling to pop the Inventory Framework context stack while.
      * preserving initial data such as previously selected players.
      *
      * @param clickContext the click context supplied when the return head is activated
@@ -70,7 +70,7 @@ public class PaginatedPlayerView extends APaginatedView<OfflinePlayer> {
     }
 
     /**
-     * Renders each offline player as a localized head item with click-through behaviour that stores
+     * Renders each offline player as a localized head item with click-through behaviour that stores.
      * the selected player back into the view's initial data payload.
      *
      * @param context the render context providing player information
@@ -108,7 +108,7 @@ public class PaginatedPlayerView extends APaginatedView<OfflinePlayer> {
     }
 
     /**
-     * Invoked after pagination chrome renders; currently a no-op hook reserved for future
+     * Invoked after pagination chrome renders; currently a no-op hook reserved for future.
      * embellishments such as filtering controls.
      *
      * @param render the render context for slot management

@@ -22,6 +22,9 @@ public class RCentralConfig {
     private final Plugin plugin;
     private RCentralSection rcentralSection;
 
+    /**
+     * Executes RCentralConfig.
+     */
     public RCentralConfig(@NotNull Plugin plugin) {
         this.plugin = plugin;
         loadConfig();

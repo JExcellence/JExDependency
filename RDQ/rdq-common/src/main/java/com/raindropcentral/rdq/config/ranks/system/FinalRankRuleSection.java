@@ -8,8 +8,8 @@ import java.util.List;
 
 /**
  * Configuration section for defining the rules and requirements for achieving the final rank in the system.
- * <p>
- * This section allows customization of required rank trees, minimum tiers, and special rank options.
+ *
+ * <p>This section allows customization of required rank trees, minimum tiers, and special rank options.
  *
  * @author JExcellence
  * @version 1.0.0

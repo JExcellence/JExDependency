@@ -8,10 +8,9 @@ import java.util.Map;
 
 /**
  * Configuration section for custom requirements.
- * <p>
- * This section handles all configuration options specific to CustomRequirement,
+ *
+ * <p>This section handles all configuration options specific to CustomRequirement,
  * including custom scripts, custom classes, parameters, and custom data handling.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0

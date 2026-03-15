@@ -12,17 +12,15 @@ import java.util.Map;
 
 /**
  * Custom serializer for Bukkit {@link ItemStack} objects.
- * <p>
- * Converts {@code ItemStack} objects to their JSON representation for use with Jackson.
+ *
+ * <p>Converts {@code ItemStack} objects to their JSON representation for use with Jackson.
  * Uses Bukkit's built-in serialization to preserve ALL metadata including attributes, 
  * item flags, persistent data container, and other complex metadata.
- * </p>
  *
- * <p>
- * The serialization uses two approaches:
+ *
+ * <p>The serialization uses two approaches:
  * 1. Bukkit's native serialization (base64 encoded) for complete metadata preservation
  * 2. Fallback to Bukkit's Map serialization for compatibility
- * </p>
  *
  * @author JExcellence
  * @version 2.0.0
@@ -30,16 +28,18 @@ import java.util.Map;
  */
 public class ItemStackJSONSerializer extends StdSerializer<ItemStack> {
 
+    /**
+     * Executes ItemStackJSONSerializer.
+     */
     public ItemStackJSONSerializer() {
         super(ItemStack.class);
     }
 
     /**
      * Serializes an {@link ItemStack} object to JSON.
-     * <p>
-     * Uses Bukkit's built-in serialization to preserve ALL metadata.
+ *
+ * <p>Uses Bukkit's built-in serialization to preserve ALL metadata.
      * First tries binary serialization (most complete), then falls back to Map serialization.
-     * </p>
      *
      * @param itemStack            the {@code ItemStack} to serialize (may be {@code null})
      * @param jsonGenerator        the JSON generator to write to

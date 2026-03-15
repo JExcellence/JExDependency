@@ -23,10 +23,16 @@ public class RDQPlayerJoinListener implements Listener {
     private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
     private final RDQ rdq;
     
+    /**
+     * Executes RDQPlayerJoinListener.
+     */
     public RDQPlayerJoinListener(@NotNull RDQ rdq) {
         this.rdq = rdq;
     }
     
+    /**
+     * Executes onPlayerJoin.
+     */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerJoin(@NotNull PlayerJoinEvent event) {
         Player player = event.getPlayer();
@@ -65,6 +71,9 @@ public class RDQPlayerJoinListener implements Listener {
         });
     }
 
+    /**
+     * Executes onPlayerQuit.
+     */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerQuit(@NotNull final PlayerQuitEvent event) {
         if (this.rdq.getPerkSidebarScoreboardService() == null) {

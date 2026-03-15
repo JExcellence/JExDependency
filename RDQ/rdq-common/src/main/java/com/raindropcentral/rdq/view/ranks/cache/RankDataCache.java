@@ -96,26 +96,44 @@ public class RankDataCache {
 	}
 	
 	// Getters for cached data
+	/**
+	 * Gets rankHierarchy.
+	 */
 	public @NotNull Map<String, RankNode> getRankHierarchy() {
 		return new HashMap<>(this.cachedRankHierarchy);
 	}
 	
+	/**
+	 * Gets worldPositions.
+	 */
 	public @NotNull Map<String, GridPosition> getWorldPositions() {
 		return new HashMap<>(this.cachedWorldPositions);
 	}
 	
+	/**
+	 * Gets rankStatuses.
+	 */
 	public @NotNull Map<String, ERankStatus> getRankStatuses() {
 		return new HashMap<>(this.cachedRankStatuses);
 	}
 	
+	/**
+	 * Gets ownedRanks.
+	 */
 	public @NotNull Set<String> getOwnedRanks() {
 		return new HashSet<>(this.cachedOwnedRanks);
 	}
 	
+	/**
+	 * Gets inProgressRanks.
+	 */
 	public @NotNull Set<String> getInProgressRanks() {
 		return new HashSet<>(this.cachedInProgressRanks);
 	}
 	
+	/**
+	 * Gets lastRefreshTimestamp.
+	 */
 	public long getLastRefreshTimestamp() {
 		return this.lastRefreshTimestamp;
 	}

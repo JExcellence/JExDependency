@@ -52,6 +52,9 @@ public class RequirementCardRenderer {
 
     private static final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();
 
+    /**
+     * Executes RequirementCardRenderer.
+     */
     public RequirementCardRenderer() {
     }
 

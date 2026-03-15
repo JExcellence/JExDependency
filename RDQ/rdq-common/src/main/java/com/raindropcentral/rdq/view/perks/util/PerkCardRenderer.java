@@ -59,6 +59,9 @@ public class PerkCardRenderer {
 
     private final PerkRequirementService requirementService;
 
+    /**
+     * Executes PerkCardRenderer.
+     */
     public PerkCardRenderer(@NotNull final PerkRequirementService requirementService) {
         this.requirementService = requirementService;
     }

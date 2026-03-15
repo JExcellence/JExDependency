@@ -13,8 +13,14 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.IntStream;
 
+/**
+ * Represents the CompositeRequirement API type.
+ */
 public final class CompositeRequirement extends AbstractRequirement {
 
+    /**
+     * Represents the Operator API type.
+     */
     public enum Operator {
         AND,
         OR,
@@ -39,18 +45,30 @@ public final class CompositeRequirement extends AbstractRequirement {
     @JsonProperty("allowPartialProgress")
     private final boolean allowPartialProgress;
 
+    /**
+     * Executes CompositeRequirement.
+     */
     public CompositeRequirement(@NotNull List<AbstractRequirement> requirements) {
         this(requirements, Operator.AND, requirements.size(), null, null, true);
     }
 
+    /**
+     * Executes CompositeRequirement.
+     */
     public CompositeRequirement(@NotNull List<AbstractRequirement> requirements, @NotNull Operator operator) {
         this(requirements, operator, operator == Operator.OR ? 1 : requirements.size(), null, null, true);
     }
 
+    /**
+     * Executes CompositeRequirement.
+     */
     public CompositeRequirement(@NotNull List<AbstractRequirement> requirements, int minimumRequired) {
         this(requirements, Operator.MINIMUM, minimumRequired, null, null, true);
     }
 
+    /**
+     * Executes CompositeRequirement.
+     */
     @JsonCreator
     public CompositeRequirement(@JsonProperty("requirements") @NotNull List<AbstractRequirement> requirements,
                                @JsonProperty("operator") @Nullable Operator operator,
@@ -76,6 +94,9 @@ public final class CompositeRequirement extends AbstractRequirement {
         this.allowPartialProgress = allowPartialProgress != null ? allowPartialProgress : true;
     }
 
+    /**
+     * Returns whether met.
+     */
     @Override
     public boolean isMet(@NotNull Player player) {
         return switch (operator) {
@@ -88,6 +109,9 @@ public final class CompositeRequirement extends AbstractRequirement {
         };
     }
 
+    /**
+     * Executes calculateProgress.
+     */
     @Override
     public double calculateProgress(final @NotNull Player player) {
         if (this.requirements.isEmpty()) return 0.0;
@@ -117,6 +141,9 @@ public final class CompositeRequirement extends AbstractRequirement {
         };
     }
 
+    /**
+     * Executes consume.
+     */
     @Override
     public void consume(final @NotNull Player player) {
         switch (this.operator) {
@@ -130,26 +157,50 @@ public final class CompositeRequirement extends AbstractRequirement {
         }
     }
 
+    /**
+     * Gets descriptionKey.
+     */
     @Override
     @NotNull
     public String getDescriptionKey() { return "requirement.composite." + this.operator.name().toLowerCase(); }
 
+    /**
+     * Gets requirements.
+     */
     @NotNull
     public List<AbstractRequirement> getRequirements() { return new ArrayList<>(this.requirements); }
 
+    /**
+     * Gets operator.
+     */
     @NotNull
     public Operator getOperator() { return this.operator; }
 
+    /**
+     * Gets minimumRequired.
+     */
     public int getMinimumRequired() { return this.minimumRequired; }
 
+    /**
+     * Gets maximumRequired.
+     */
     @Nullable
     public Integer getMaximumRequired() { return this.maximumRequired; }
 
+    /**
+     * Gets description.
+     */
     @Nullable
     public String getDescription() { return this.description; }
 
+    /**
+     * Returns whether allowPartialProgress.
+     */
     public boolean isAllowPartialProgress() { return this.allowPartialProgress; }
 
+    /**
+     * Gets detailedProgress.
+     */
     @JsonIgnore
     @NotNull
     public List<RequirementProgress> getDetailedProgress(final @NotNull Player player) {
@@ -162,12 +213,18 @@ public final class CompositeRequirement extends AbstractRequirement {
                 }).toList();
     }
 
+    /**
+     * Gets completedRequirements.
+     */
     @JsonIgnore
     @NotNull
     public List<AbstractRequirement> getCompletedRequirements(final @NotNull Player player) {
         return this.requirements.stream().filter(req -> req.isMet(player)).toList();
     }
 
+    /**
+     * Gets requirementsByProgress.
+     */
     @JsonIgnore
     @NotNull
     public List<AbstractRequirement> getRequirementsByProgress(final @NotNull Player player) {
@@ -176,15 +233,27 @@ public final class CompositeRequirement extends AbstractRequirement {
                 .toList();
     }
 
+    /**
+     * Returns whether andLogic.
+     */
     @JsonIgnore
     public boolean isAndLogic() { return this.operator == Operator.AND; }
 
+    /**
+     * Returns whether orLogic.
+     */
     @JsonIgnore
     public boolean isOrLogic() { return this.operator == Operator.OR; }
 
+    /**
+     * Returns whether minimumLogic.
+     */
     @JsonIgnore
     public boolean isMinimumLogic() { return this.operator == Operator.MINIMUM; }
 
+    /**
+     * Executes validate.
+     */
     @JsonIgnore
     public void validate() {
         if (this.requirements.isEmpty()) throw new IllegalStateException("CompositeRequirement must have at least one requirement.");
@@ -196,6 +265,9 @@ public final class CompositeRequirement extends AbstractRequirement {
         }
     }
 
+    /**
+     * Executes fromString.
+     */
     @JsonIgnore
     @NotNull
     public static CompositeRequirement fromString(final @NotNull List<AbstractRequirement> requirements,
@@ -209,7 +281,13 @@ public final class CompositeRequirement extends AbstractRequirement {
         return new CompositeRequirement(requirements, operator, minimumRequired, null, null, true);
     }
 
+    /**
+     * Represents the RequirementProgress API type.
+     */
     public record RequirementProgress(int index, @NotNull AbstractRequirement requirement, double progress, boolean completed) {
+        /**
+         * Gets progressPercentage.
+         */
         public int getProgressPercentage() { return (int) (this.progress * 100); }
     }
 }

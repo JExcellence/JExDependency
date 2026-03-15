@@ -65,6 +65,9 @@ public abstract class CurrencyEvent extends Event {
         return this.player != null;
     }
     
+    /**
+     * Gets handlers.
+     */
     @NotNull
     @Override
     public HandlerList getHandlers() {
@@ -72,6 +75,9 @@ public abstract class CurrencyEvent extends Event {
         return HANDLERS;
     }
     
+    /**
+     * Gets handlerList.
+     */
     @NotNull
     public static HandlerList getHandlerList() {
         

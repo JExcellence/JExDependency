@@ -21,13 +21,16 @@ public class BatchProcessor {
 
     private static final Logger LOGGER = CentralLogger.getLoggerByName("RCore");
 
-    /** Batch size limits by priority */
+/** Represents this API member. */
     private static final int CRITICAL_HIGH_BATCH_SIZE = 500;
     private static final int NORMAL_LOW_BULK_BATCH_SIZE = 2000;
 
     private final StatisticsDeliveryConfig config;
     private final String serverUuid;
 
+    /**
+     * Executes BatchProcessor.
+     */
     public BatchProcessor(
         final @NotNull String serverUuid,
         final @NotNull StatisticsDeliveryConfig config

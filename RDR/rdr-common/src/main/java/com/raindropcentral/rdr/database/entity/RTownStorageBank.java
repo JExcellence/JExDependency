@@ -36,6 +36,9 @@ import java.util.Objects;
     "FieldCanBeLocal",
     "JpaDataSourceORMInspection"
 })
+/**
+ * Represents the RTownStorageBank API type.
+ */
 public class RTownStorageBank extends BaseEntity {
 
     @Column(name = "protection_plugin", nullable = false, length = 64)

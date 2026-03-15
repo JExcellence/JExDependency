@@ -20,14 +20,13 @@ import java.util.regex.Pattern;
 
 /**
  * Anvil view for configuring a currency's unique identifier.
- * <p>
- * This view provides an interactive interface for players to input and validate
+ *
+ * <p>This view provides an interactive interface for players to input and validate
  * a new identifier for a currency. The identifier serves as the primary key
  * for currency identification throughout the system and must meet strict
  * validation criteria to ensure system integrity.
- * </p>
  *
- * <h3>Key Features:</h3>
+ * <p><strong>Key Features:</strong>
  * <ul>
  *   <li><strong>Pattern Validation:</strong> Ensures identifiers contain only allowed characters</li>
  *   <li><strong>Length Validation:</strong> Enforces minimum and maximum length requirements</li>
@@ -36,7 +35,7 @@ import java.util.regex.Pattern;
  *   <li><strong>Current Value Display:</strong> Shows the existing identifier for reference</li>
  * </ul>
  *
- * <h3>Validation Rules:</h3>
+ * <p><strong>Validation Rules:</strong>
  * <ul>
  *   <li><strong>Characters:</strong> Only alphanumeric characters, underscores, and hyphens allowed</li>
  *   <li><strong>Length:</strong> Must be between 2 and 16 characters inclusive</li>
@@ -44,7 +43,7 @@ import java.util.regex.Pattern;
  *   <li><strong>Pattern:</strong> Matches regex pattern ^[a-zA-Z0-9_-]+$</li>
  * </ul>
  *
- * <h3>Examples:</h3>
+ * <p><strong>Examples:</strong>
  * <ul>
  *   <li><strong>Valid:</strong> gold, coins, player_points, server-tokens, USD123</li>
  *   <li><strong>Invalid:</strong> a (too short), spaces not allowed, special@chars, toolongidentifier</li>
@@ -85,10 +84,9 @@ public class CurrencyIdentifierAnvilView extends AbstractAnvilView {
 	
 	/**
 	 * Constructs a new {@code CurrencyIdentifierAnvilView} with the currencies creating view as parent.
-	 * <p>
-	 * The view will return to the currencies creating view when the identifier configuration
+ *
+ * <p>The view will return to the currencies creating view when the identifier configuration
 	 * is completed or cancelled.
-	 * </p>
 	 */
 	public CurrencyIdentifierAnvilView() {
 		super(CurrenciesCreatingView.class);
@@ -96,10 +94,9 @@ public class CurrencyIdentifierAnvilView extends AbstractAnvilView {
 	
 	/**
 	 * Returns the internationalization key for this view.
-	 * <p>
-	 * This key is used to load localized strings for the currency identifier configuration
+ *
+ * <p>This key is used to load localized strings for the currency identifier configuration
 	 * interface, including titles, labels, and error messages.
-	 * </p>
 	 *
 	 * @return the i18n key for the currency identifier anvil UI
 	 */
@@ -110,13 +107,12 @@ public class CurrencyIdentifierAnvilView extends AbstractAnvilView {
 	
 	/**
 	 * Processes the user input to set the currency's identifier.
-	 * <p>
-	 * This method validates the input identifier and updates the currency's
+ *
+ * <p>This method validates the input identifier and updates the currency's
 	 * identifier property. If no currency exists, a new currency instance is created
 	 * with the specified identifier.
-	 * </p>
 	 *
-	 * <h3>Processing Steps:</h3>
+	 * <p><strong>Processing Steps:</strong>
 	 * <ol>
 	 *   <li>Check if a currency instance exists</li>
 	 *   <li>Update existing currency or create new one with the identifier</li>
@@ -152,10 +148,9 @@ public class CurrencyIdentifierAnvilView extends AbstractAnvilView {
 	
 	/**
 	 * Provides the initial input text for the anvil interface.
-	 * <p>
-	 * This method returns the current identifier if available,
+ *
+ * <p>This method returns the current identifier if available,
 	 * or falls back to the default behavior if no identifier exists.
-	 * </p>
 	 *
 	 * @param openContext the context when the view is opened, must not be null
 	 * @return the initial input text, never null
@@ -177,12 +172,11 @@ public class CurrencyIdentifierAnvilView extends AbstractAnvilView {
 	
 	/**
 	 * Validates the user input for identifier correctness and uniqueness.
-	 * <p>
-	 * This method performs comprehensive validation to ensure the input
+ *
+ * <p>This method performs comprehensive validation to ensure the input
 	 * meets all requirements for a valid currency identifier.
-	 * </p>
 	 *
-	 * <h3>Validation Steps:</h3>
+	 * <p><strong>Validation Steps:</strong>
 	 * <ol>
 	 *   <li>Check basic input validity (not empty)</li>
 	 *   <li>Verify pattern matches allowed characters</li>
@@ -223,10 +217,9 @@ public class CurrencyIdentifierAnvilView extends AbstractAnvilView {
 	
 	/**
 	 * Configures the first slot (input slot) with appropriate visual elements.
-	 * <p>
-	 * This method sets up the input slot with a name tag icon and localized
+ *
+ * <p>This method sets up the input slot with a name tag icon and localized
 	 * text to guide the user in entering a valid identifier.
-	 * </p>
 	 *
 	 * @param renderContext the rendering context, must not be null
 	 * @param contextPlayer the player viewing the interface, must not be null
@@ -266,13 +259,12 @@ public class CurrencyIdentifierAnvilView extends AbstractAnvilView {
 	
 	/**
 	 * Handles validation failure scenarios with specific error messages.
-	 * <p>
-	 * This method provides detailed error feedback based on the specific
+ *
+ * <p>This method provides detailed error feedback based on the specific
 	 * validation failure, helping users understand what went wrong and
 	 * how to correct their input.
-	 * </p>
 	 *
-	 * <h3>Error Categories:</h3>
+	 * <p><strong>Error Categories:</strong>
 	 * <ul>
 	 *   <li><strong>Empty Input:</strong> No identifier provided</li>
 	 *   <li><strong>Invalid Characters:</strong> Contains disallowed characters</li>
@@ -336,11 +328,10 @@ public class CurrencyIdentifierAnvilView extends AbstractAnvilView {
 	
 	/**
 	 * Prepares the result data to pass back to the parent view.
-	 * <p>
-	 * This method extends the base result preparation by adding the plugin
+ *
+ * <p>This method extends the base result preparation by adding the plugin
 	 * instance and updated currency to the result data, ensuring the parent
 	 * view has all necessary information to continue the workflow.
-	 * </p>
 	 *
 	 * @param processingResult the result from input processing, can be null
 	 * @param originalInput the user's original input, must not be null
@@ -373,10 +364,9 @@ public class CurrencyIdentifierAnvilView extends AbstractAnvilView {
 	
 	/**
 	 * Checks if the given identifier is already taken by another currency.
-	 * <p>
-	 * This method searches through all existing currencies to determine
+ *
+ * <p>This method searches through all existing currencies to determine
 	 * if the proposed identifier conflicts with an existing one.
-	 * </p>
 	 *
 	 * @param proposedIdentifier the identifier to check for uniqueness, must not be null
 	 * @param checkingContext the context for accessing currency data, must not be null

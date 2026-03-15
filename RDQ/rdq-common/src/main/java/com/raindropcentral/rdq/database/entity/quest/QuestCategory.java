@@ -15,10 +15,9 @@ import java.util.Objects;
 
 /**
  * Entity representing a quest category.
- * <p>
- * Quest categories group related quests together for organization and navigation.
+ *
+ * <p>Quest categories group related quests together for organization and navigation.
  * Each category has a unique identifier, display information, and contains multiple quests.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0
@@ -35,6 +34,9 @@ import java.util.Objects;
                 @Index(name = "idx_quest_category_display_order", columnList = "display_order")
         }
 )
+/**
+ * Represents the QuestCategory API type.
+ */
 public class QuestCategory extends BaseEntity {
     
     @Serial
@@ -127,6 +129,9 @@ public class QuestCategory extends BaseEntity {
         quest.setCategory(null);
     }
     
+    /**
+     * Executes equals.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -139,6 +144,9 @@ public class QuestCategory extends BaseEntity {
         return identifier != null && identifier.equals(that.identifier);
     }
     
+    /**
+     * Returns whether hCode.
+     */
     @Override
     public int hashCode() {
         if (this.getId() != null) {
@@ -148,6 +156,9 @@ public class QuestCategory extends BaseEntity {
         return Objects.hash(identifier);
     }
     
+    /**
+     * Executes toString.
+     */
     @Override
     public String toString() {
         return "QuestCategory{" +

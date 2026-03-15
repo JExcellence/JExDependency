@@ -6,6 +6,9 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Represents the RewardEvent API type.
+ */
 public abstract class RewardEvent extends Event {
 
     private static final HandlerList HANDLERS = new HandlerList();
@@ -24,19 +27,31 @@ public abstract class RewardEvent extends Event {
         this.reward = reward;
     }
 
+    /**
+     * Gets player.
+     */
     public @NotNull Player getPlayer() {
         return player;
     }
 
+    /**
+     * Gets reward.
+     */
     public @NotNull AbstractReward getReward() {
         return reward;
     }
 
+    /**
+     * Gets handlers.
+     */
     @Override
     public @NotNull HandlerList getHandlers() {
         return HANDLERS;
     }
 
+    /**
+     * Gets handlerList.
+     */
     public static HandlerList getHandlerList() {
         return HANDLERS;
     }

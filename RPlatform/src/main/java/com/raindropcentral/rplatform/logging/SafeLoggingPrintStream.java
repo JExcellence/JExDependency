@@ -8,7 +8,7 @@ import java.util.Locale;
 import java.util.logging.Level;
 
 /**
- * SafeLoggingPrintStream is a custom PrintStream that redirects output to the logging system
+ * SafeLoggingPrintStream is a custom PrintStream that redirects output to the logging system.
  * while providing recursion protection and fallback to original streams on errors.
  * 
  * <p>This class is used to safely redirect System.out and System.err to the centralized
@@ -41,6 +41,9 @@ class SafeLoggingPrintStream extends PrintStream {
     SafeLoggingPrintStream(@NotNull PluginLogger logger, @NotNull Level level, @NotNull PrintStream originalStream) {
         // Call super with a dummy OutputStream (we override all methods)
         super(new OutputStream() {
+            /**
+             * Executes write.
+             */
             @Override
             public void write(int b) {
                 // Not used - all operations are overridden
@@ -128,11 +131,17 @@ class SafeLoggingPrintStream extends PrintStream {
     
     // ========== Override println methods ==========
     
+    /**
+     * Executes println.
+     */
     @Override
     public void println(String x) {
         logMessage(x);
     }
     
+    /**
+     * Executes println.
+     */
     @Override
     public void println(Object x) {
         if (x == null) {
@@ -142,42 +151,66 @@ class SafeLoggingPrintStream extends PrintStream {
         }
     }
     
+    /**
+     * Executes println.
+     */
     @Override
     public void println() {
         // Empty line - just log empty string
         logMessage("");
     }
     
+    /**
+     * Executes println.
+     */
     @Override
     public void println(boolean x) {
         logMessage(String.valueOf(x));
     }
     
+    /**
+     * Executes println.
+     */
     @Override
     public void println(char x) {
         logMessage(String.valueOf(x));
     }
     
+    /**
+     * Executes println.
+     */
     @Override
     public void println(int x) {
         logMessage(String.valueOf(x));
     }
     
+    /**
+     * Executes println.
+     */
     @Override
     public void println(long x) {
         logMessage(String.valueOf(x));
     }
     
+    /**
+     * Executes println.
+     */
     @Override
     public void println(float x) {
         logMessage(String.valueOf(x));
     }
     
+    /**
+     * Executes println.
+     */
     @Override
     public void println(double x) {
         logMessage(String.valueOf(x));
     }
     
+    /**
+     * Executes println.
+     */
     @Override
     public void println(char[] x) {
         logMessage(String.valueOf(x));
@@ -185,6 +218,9 @@ class SafeLoggingPrintStream extends PrintStream {
     
     // ========== Override print methods ==========
     
+    /**
+     * Executes print.
+     */
     @Override
     public void print(String s) {
         // For print (without newline), we still log it
@@ -194,6 +230,9 @@ class SafeLoggingPrintStream extends PrintStream {
         }
     }
     
+    /**
+     * Executes print.
+     */
     @Override
     public void print(Object obj) {
         if (obj != null) {
@@ -201,36 +240,57 @@ class SafeLoggingPrintStream extends PrintStream {
         }
     }
     
+    /**
+     * Executes print.
+     */
     @Override
     public void print(boolean b) {
         logMessage(String.valueOf(b));
     }
     
+    /**
+     * Executes print.
+     */
     @Override
     public void print(char c) {
         logMessage(String.valueOf(c));
     }
     
+    /**
+     * Executes print.
+     */
     @Override
     public void print(int i) {
         logMessage(String.valueOf(i));
     }
     
+    /**
+     * Executes print.
+     */
     @Override
     public void print(long l) {
         logMessage(String.valueOf(l));
     }
     
+    /**
+     * Executes print.
+     */
     @Override
     public void print(float f) {
         logMessage(String.valueOf(f));
     }
     
+    /**
+     * Executes print.
+     */
     @Override
     public void print(double d) {
         logMessage(String.valueOf(d));
     }
     
+    /**
+     * Executes print.
+     */
     @Override
     public void print(char[] s) {
         logMessage(String.valueOf(s));
@@ -238,6 +298,9 @@ class SafeLoggingPrintStream extends PrintStream {
     
     // ========== Override printf/format methods ==========
     
+    /**
+     * Executes printf.
+     */
     @Override
     public PrintStream printf(String format, Object... args) {
         try {
@@ -250,6 +313,9 @@ class SafeLoggingPrintStream extends PrintStream {
         return this;
     }
     
+    /**
+     * Executes printf.
+     */
     @Override
     public PrintStream printf(Locale l, String format, Object... args) {
         try {
@@ -262,11 +328,17 @@ class SafeLoggingPrintStream extends PrintStream {
         return this;
     }
     
+    /**
+     * Executes format.
+     */
     @Override
     public PrintStream format(String format, Object... args) {
         return printf(format, args);
     }
     
+    /**
+     * Executes format.
+     */
     @Override
     public PrintStream format(Locale l, String format, Object... args) {
         return printf(l, format, args);
@@ -274,6 +346,9 @@ class SafeLoggingPrintStream extends PrintStream {
     
     // ========== Override flush and close ==========
     
+    /**
+     * Executes flush.
+     */
     @Override
     public void flush() {
         // Flush the logger
@@ -287,6 +362,9 @@ class SafeLoggingPrintStream extends PrintStream {
         originalStream.flush();
     }
     
+    /**
+     * Executes close.
+     */
     @Override
     public void close() {
         // Don't close the logger - it's managed by CentralLogger

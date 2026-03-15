@@ -10,8 +10,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Token bucket rate limiter for controlling authentication attempt frequency.
- * <p>
- * Implements a token bucket algorithm where each server UUID has a bucket of tokens.
+ *
+ * <p>Implements a token bucket algorithm where each server UUID has a bucket of tokens.
  * Tokens are consumed on each authentication attempt and refilled at a fixed rate.
  * When the bucket is empty, authentication attempts are rate limited.
  * </p>
@@ -39,8 +39,8 @@ public class RateLimiter {
 
     /**
      * Attempts to consume a token for the given server UUID.
-     * <p>
-     * If a token is available, it is consumed and the method returns true.
+ *
+ * <p>If a token is available, it is consumed and the method returns true.
      * If no tokens are available, the method returns false indicating rate limiting.
      * </p>
      *
@@ -61,8 +61,8 @@ public class RateLimiter {
 
     /**
      * Resets the rate limit for a specific server UUID.
-     * <p>
-     * Useful for clearing rate limits after successful authentication.
+ *
+ * <p>Useful for clearing rate limits after successful authentication.
      * </p>
      *
      * @param serverUuid the server UUID to reset

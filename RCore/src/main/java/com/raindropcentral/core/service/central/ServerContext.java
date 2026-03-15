@@ -12,8 +12,8 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * Context holder for the currently authenticated server.
- * <p>
- * Maintains the server UUID, authentication state, and cached server entity.
+ *
+ * <p>Maintains the server UUID, authentication state, and cached server entity.
  * Provides access to the current server for other components that need to
  * associate data with the authenticated server.
  * </p>
@@ -42,8 +42,8 @@ public class ServerContext {
 
     /**
      * Marks the server as authenticated and loads the server entity.
-     * <p>
-     * This method should be called after successful authentication to establish
+ *
+ * <p>This method should be called after successful authentication to establish
      * the server context for the current session.
      * </p>
      *
@@ -66,8 +66,8 @@ public class ServerContext {
 
     /**
      * Clears the authentication state and cached server entity.
-     * <p>
-     * This method should be called when the server disconnects from the platform.
+ *
+ * <p>This method should be called when the server disconnects from the platform.
      * </p>
      */
     public void clearAuthentication() {
@@ -96,8 +96,8 @@ public class ServerContext {
 
     /**
      * Gets the current authenticated server entity.
-     * <p>
-     * Returns the cached server entity if available. If the cache is stale,
+ *
+ * <p>Returns the cached server entity if available. If the cache is stale,
      * consider calling {@link #refreshServer()} to reload from the database.
      * </p>
      *
@@ -109,8 +109,8 @@ public class ServerContext {
 
     /**
      * Refreshes the cached server entity from the database.
-     * <p>
-     * Useful when the server entity may have been updated by another process
+ *
+ * <p>Useful when the server entity may have been updated by another process
      * and the cache needs to be refreshed.
      * </p>
      *
@@ -129,8 +129,8 @@ public class ServerContext {
 
     /**
      * Gets the cached server entity without wrapping in Optional.
-     * <p>
-     * Returns null if not authenticated or server not loaded.
+ *
+ * <p>Returns null if not authenticated or server not loaded.
      * </p>
      *
      * @return the cached server entity, or null if not available

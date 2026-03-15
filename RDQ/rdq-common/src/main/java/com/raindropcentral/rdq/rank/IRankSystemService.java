@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Interface for rank system service that defines limits and capabilities
+ * Interface for rank system service that defines limits and capabilities.
  * for the rank system. Free and Premium versions implement this differently.
  * 
  * @author JExcellence

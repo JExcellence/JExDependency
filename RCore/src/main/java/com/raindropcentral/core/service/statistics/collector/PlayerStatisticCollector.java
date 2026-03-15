@@ -322,8 +322,8 @@ public class PlayerStatisticCollector {
 
     /**
      * Normalizes a statistic value by converting temporal types to epoch milliseconds.
-     * <p>
-     * This ensures that timestamps are stored as Long values rather than
+ *
+ * <p>This ensures that timestamps are stored as Long values rather than
      * LocalDateTime or Instant objects, which would be serialized as ISO strings
      * and cause parsing issues.
      * </p>

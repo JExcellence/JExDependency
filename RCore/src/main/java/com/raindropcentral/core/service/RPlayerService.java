@@ -12,13 +12,13 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * Service class for managing player entities with comprehensive CRUD operations.
- * <p>
- * This service provides high-level operations for player management, abstracting repository
+ *
+ * <p>This service provides high-level operations for player management, abstracting repository
  * access and providing business logic for player-related operations. All operations are
  * asynchronous and return {@link CompletableFuture} to avoid blocking the main thread.
  * </p>
- * <p>
- * The service automatically injects the {@link RPlayerRepository} via the
+ *
+ * <p>The service automatically injects the {@link RPlayerRepository} via the
  * {@link de.jexcellence.hibernate.repository.RepositoryManager} when instantiated through
  * {@code createInstance()}.
  * </p>
@@ -35,8 +35,8 @@ public class RPlayerService {
 
     /**
      * Constructs a new RPlayerService.
-     * <p>
-     * The repository will be automatically injected by the RepositoryManager when this service
+ *
+ * <p>The repository will be automatically injected by the RepositoryManager when this service
      * is created via {@code RepositoryManager.getInstance().createInstance(RPlayerService.class)}.
      * </p>
      */
@@ -76,8 +76,8 @@ public class RPlayerService {
 
     /**
      * Creates or updates a player entity.
-     * <p>
-     * If a player with the same UUID already exists, it will be updated.
+ *
+ * <p>If a player with the same UUID already exists, it will be updated.
      * Otherwise, a new player entity will be created.
      * </p>
      *
@@ -90,8 +90,8 @@ public class RPlayerService {
 
     /**
      * Creates or updates a player from a Bukkit player instance.
-     * <p>
-     * This is a convenience method that handles the common case of saving a player
+ *
+ * <p>This is a convenience method that handles the common case of saving a player
      * when they join the server. It will create a new RPlayer if one doesn't exist,
      * or update the existing one with current information.
      * </p>
@@ -110,8 +110,8 @@ public class RPlayerService {
 
     /**
      * Updates the last seen timestamp for a player.
-     * <p>
-     * This is typically called when a player leaves the server.
+ *
+ * <p>This is typically called when a player leaves the server.
      * </p>
      *
      * @param uuid the player's unique identifier
@@ -149,8 +149,8 @@ public class RPlayerService {
 
     /**
      * Gets the injected repository instance.
-     * <p>
-     * This is primarily for testing purposes or advanced use cases.
+ *
+ * <p>This is primarily for testing purposes or advanced use cases.
      * </p>
      *
      * @return the player repository

@@ -15,10 +15,10 @@ import java.util.function.Consumer;
 import java.util.logging.Logger;
 
 /**
- * Registry of services discovered either through Bukkit's {@link org.bukkit.plugin.ServicesManager}
+ * Registry of services discovered either through Bukkit's {@link org.bukkit.plugin.ServicesManager}.
  * or loaded reflectively from another plugin's class loader.
- * <p>
- * Instances are thread-safe courtesy of the underlying {@link ConcurrentHashMap} and the
+ *
+ * <p>Instances are thread-safe courtesy of the underlying {@link ConcurrentHashMap} and the
  * asynchronous loading workflow employed by {@link ServiceRegistrationBuilder#load()}.
  * Logging occurs through {@link Logger} at {@code INFO} or {@code WARNING} levels to report
  * registration events and missing required services. Retry attempts performed during discovery
@@ -62,6 +62,9 @@ public class ServiceRegistry {
         return new ServiceRegistrationBuilder<>(this, serviceClass);
     }
 
+    /**
+     * Executes register.
+     */
     public <T> @NotNull ServiceRegistrationBuilder<T> register(final @NotNull String serviceClass) {
         try {
             Class<T> clazz = (Class<T>) Class.forName(serviceClass);
@@ -165,10 +168,10 @@ public class ServiceRegistry {
     }
 
     /**
-     * Builder that orchestrates asynchronous service discovery with retry semantics and
+     * Builder that orchestrates asynchronous service discovery with retry semantics and.
      * optional success or failure callbacks.
-     * <p>
-     * Instances are not thread-safe; share a builder per service registration sequence and
+ *
+ * <p>Instances are not thread-safe; share a builder per service registration sequence and
      * use the produced {@link CompletableFuture} for synchronization.
      *
      * @param <T> service type resolved by the builder

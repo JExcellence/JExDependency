@@ -2,9 +2,8 @@ package com.raindropcentral.rdq.database.entity.perk;
 
 /**
  * Enumeration of perk activation behavior types.
- * <p>
- * Defines how a perk is activated and when its effects are applied.
- * </p>
+ *
+ * <p>Defines how a perk is activated and when its effects are applied.
  *
  * @author JExcellence
  * @version 1.0.0

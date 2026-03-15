@@ -6,7 +6,7 @@
  * for plugin translation management. Initialize during plugin startup and use
  * <code>I18n.of(String, Player)</code> for sending translated messages.</p>
  *
- * <h2>Usage Example</h2>
+ * <p><strong>Usage Example</strong>
  * <pre>{@code
  * public class MyPlugin extends JavaPlugin {
  *     private TranslationManager translations;

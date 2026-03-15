@@ -1,5 +1,5 @@
 /**
- * Shared UI and item composition utilities that back Raindrop Platform user interfaces
+ * Shared UI and item composition utilities that back Raindrop Platform user interfaces.
  * and data entry flows.
  *
  * <p>The package provides cohesive builders and registries that translate higher level

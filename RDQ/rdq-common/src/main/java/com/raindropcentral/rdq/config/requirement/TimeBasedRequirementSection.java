@@ -9,10 +9,9 @@ import java.util.List;
 
 /**
  * Configuration section for time-based requirements.
- * <p>
- * This section handles all configuration options specific to TimeBasedRequirement,
+ *
+ * <p>This section handles all configuration options specific to TimeBasedRequirement,
  * including time constraints, cooldowns, scheduling, and time zone handling.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0

@@ -27,22 +27,34 @@ public abstract class RequirementEvent extends Event {
         this.requirement = requirement;
     }
 
+    /**
+     * Gets player.
+     */
     @NotNull
     public Player getPlayer() {
         return player;
     }
 
+    /**
+     * Gets requirement.
+     */
     @NotNull
     public AbstractRequirement getRequirement() {
         return requirement;
     }
 
+    /**
+     * Gets handlers.
+     */
     @NotNull
     @Override
     public HandlerList getHandlers() {
         return HANDLERS;
     }
 
+    /**
+     * Gets handlerList.
+     */
     @NotNull
     public static HandlerList getHandlerList() {
         return HANDLERS;

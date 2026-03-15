@@ -8,10 +8,9 @@ import java.util.Map;
 
 /**
  * Adapter interface for converting config sections to AbstractRequirement instances.
- * <p>
- * Plugins can implement this interface to provide custom adapters for their
+ *
+ * <p>Plugins can implement this interface to provide custom adapters for their
  * requirement config section types.
- * </p>
  *
  * @param <T> the config section type this adapter handles
  */

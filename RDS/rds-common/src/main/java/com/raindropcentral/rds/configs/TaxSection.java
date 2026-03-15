@@ -64,6 +64,9 @@ public class TaxSection extends AConfigSection {
                 : new LinkedHashMap<>(this.currencies);
     }
 
+    /**
+     * Gets taxCurrency.
+     */
     public @NotNull TaxCurrencySection getTaxCurrency(
             final @Nullable String currencyType
     ) {
@@ -300,6 +303,9 @@ public class TaxSection extends AConfigSection {
                 : normalizeMaximumBankruptcyAmount(defaultMaximumBankruptcyAmount);
     }
 
+    /**
+     * Executes fromFile.
+     */
     public static @NotNull TaxSection fromFile(
             final @NotNull File configFile,
             final @Nullable String defaultCurrencyType
@@ -328,6 +334,9 @@ public class TaxSection extends AConfigSection {
         return section;
     }
 
+    /**
+     * Executes createDefault.
+     */
     public static @NotNull TaxSection createDefault(
             final @Nullable String defaultCurrencyType
     ) {

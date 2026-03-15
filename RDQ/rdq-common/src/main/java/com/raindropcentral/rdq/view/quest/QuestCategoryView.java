@@ -23,10 +23,9 @@ import java.util.logging.Logger;
 
 /**
  * Main quest category selection view.
- * <p>
- * Displays all available quest categories for the player to choose from.
+ *
+ * <p>Displays all available quest categories for the player to choose from.
  * Each category shows its icon, name, and description.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0
@@ -39,6 +38,9 @@ public class QuestCategoryView extends BaseView {
 	
 	private static final int[] CATEGORY_SLOTS = {10, 11, 12, 13, 14, 15, 16, 19, 20, 21, 22, 23, 24, 25};
 	
+	/**
+	 * Executes QuestCategoryView.
+	 */
 	public QuestCategoryView() {
 		super();
 	}
@@ -59,6 +61,9 @@ public class QuestCategoryView extends BaseView {
 		};
 	}
 	
+	/**
+	 * Executes onFirstRender.
+	 */
 	@Override
 	public void onFirstRender(final @NotNull RenderContext render, final @NotNull Player player) {
 		final RDQ plugin = rdq.get(render);

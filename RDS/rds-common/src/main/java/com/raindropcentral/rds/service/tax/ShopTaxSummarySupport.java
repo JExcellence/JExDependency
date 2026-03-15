@@ -37,6 +37,9 @@ public final class ShopTaxSummarySupport {
     private ShopTaxSummarySupport() {
     }
 
+    /**
+     * Executes summarize.
+     */
     public static @NotNull ShopTaxSummary summarize(
             final @NotNull RDS plugin,
             final @NotNull UUID ownerId

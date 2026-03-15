@@ -71,6 +71,9 @@ public class CurrencyDeletedEvent extends CurrencyEvent {
         return this.totalBalanceLost;
     }
     
+    /**
+     * Gets handlers.
+     */
     @NotNull
     @Override
     public HandlerList getHandlers() {
@@ -78,6 +81,9 @@ public class CurrencyDeletedEvent extends CurrencyEvent {
         return HANDLERS;
     }
     
+    /**
+     * Gets handlerList.
+     */
     @NotNull
     public static HandlerList getHandlerList() {
         

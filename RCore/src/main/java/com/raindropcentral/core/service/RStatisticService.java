@@ -12,14 +12,14 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * Service class for managing abstract statistics with comprehensive CRUD operations.
- * <p>
- * This service provides high-level operations for statistic management outside of aggregate
+ *
+ * <p>This service provides high-level operations for statistic management outside of aggregate
  * contexts. It's primarily used for administrative tooling or cross-profile maintenance tasks
  * that need direct access to statistic entities. For player-specific statistics, prefer using
  * {@link RPlayerStatisticService} which operates on the aggregate level.
  * </p>
- * <p>
- * All operations are asynchronous and return {@link CompletableFuture} to avoid blocking
+ *
+ * <p>All operations are asynchronous and return {@link CompletableFuture} to avoid blocking
  * the main thread. The service automatically injects the {@link RStatisticRepository} via the
  * {@link de.jexcellence.hibernate.repository.RepositoryManager} when instantiated through
  * {@code createInstance()}.
@@ -37,8 +37,8 @@ public class RStatisticService {
 
     /**
      * Constructs a new RStatisticService.
-     * <p>
-     * The repository will be automatically injected by the RepositoryManager when this service
+ *
+ * <p>The repository will be automatically injected by the RepositoryManager when this service
      * is created via {@code RepositoryManager.getInstance().createInstance(RStatisticService.class)}.
      * </p>
      */
@@ -58,8 +58,8 @@ public class RStatisticService {
 
     /**
      * Finds all statistics in the database.
-     * <p>
-     * <b>Warning:</b> This operation can be expensive if there are many statistics.
+ *
+ * <p><b>Warning:</b> This operation can be expensive if there are many statistics.
      * Consider using pagination or filtering in production environments.
      * </p>
      *
@@ -81,8 +81,8 @@ public class RStatisticService {
 
     /**
      * Updates an existing statistic entity.
-     * <p>
-     * The statistic must have a non-null ID to be updated.
+ *
+ * <p>The statistic must have a non-null ID to be updated.
      * </p>
      *
      * @param statistic the statistic to update
@@ -94,8 +94,8 @@ public class RStatisticService {
 
     /**
      * Creates or updates a statistic entity.
-     * <p>
-     * If the statistic has a null ID, it will be created. Otherwise, it will be updated.
+ *
+ * <p>If the statistic has a null ID, it will be created. Otherwise, it will be updated.
      * </p>
      *
      * @param statistic the statistic to save
@@ -143,8 +143,8 @@ public class RStatisticService {
 
     /**
      * Deletes multiple statistics by their IDs.
-     * <p>
-     * This is a convenience method for batch deletion operations.
+ *
+ * <p>This is a convenience method for batch deletion operations.
      * </p>
      *
      * @param ids the list of statistic IDs to delete
@@ -159,8 +159,8 @@ public class RStatisticService {
 
     /**
      * Gets the injected repository instance.
-     * <p>
-     * This is primarily for testing purposes or advanced use cases.
+ *
+ * <p>This is primarily for testing purposes or advanced use cases.
      * </p>
      *
      * @return the statistic repository

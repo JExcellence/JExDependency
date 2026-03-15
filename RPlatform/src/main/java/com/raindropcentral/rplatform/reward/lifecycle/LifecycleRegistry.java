@@ -9,6 +9,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Represents the LifecycleRegistry API type.
+ */
 public final class LifecycleRegistry {
 
     private static final Logger LOGGER = Logger.getLogger(LifecycleRegistry.class.getName());
@@ -18,18 +21,30 @@ public final class LifecycleRegistry {
 
     private LifecycleRegistry() {}
 
+    /**
+     * Gets instance.
+     */
     public static LifecycleRegistry getInstance() {
         return INSTANCE;
     }
 
+    /**
+     * Executes registerHook.
+     */
     public void registerHook(@NotNull RewardLifecycleHook hook) {
         hooks.add(hook);
     }
 
+    /**
+     * Executes unregisterHook.
+     */
     public void unregisterHook(@NotNull RewardLifecycleHook hook) {
         hooks.remove(hook);
     }
 
+    /**
+     * Executes executeBeforeGrant.
+     */
     public boolean executeBeforeGrant(@NotNull Player player, @NotNull AbstractReward reward) {
         for (RewardLifecycleHook hook : hooks) {
             try {
@@ -43,6 +58,9 @@ public final class LifecycleRegistry {
         return true;
     }
 
+    /**
+     * Executes executeAfterGrant.
+     */
     public void executeAfterGrant(@NotNull Player player, @NotNull AbstractReward reward, boolean success) {
         for (RewardLifecycleHook hook : hooks) {
             try {
@@ -53,6 +71,9 @@ public final class LifecycleRegistry {
         }
     }
 
+    /**
+     * Executes executeOnError.
+     */
     public void executeOnError(@NotNull Player player, @NotNull AbstractReward reward, @NotNull Throwable error) {
         for (RewardLifecycleHook hook : hooks) {
             try {

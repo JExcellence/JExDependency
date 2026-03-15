@@ -11,8 +11,8 @@ import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Service for tracking metrics related to server authentication and heartbeats.
- * <p>
- * Provides counters and statistics for monitoring the health and performance of
+ *
+ * <p>Provides counters and statistics for monitoring the health and performance of
  * the RaindropCentral integration. Metrics are tracked in-memory and can be
  * exported for monitoring systems.
  * </p>
@@ -144,8 +144,8 @@ public class MetricsTrackingService {
 
     /**
      * Resets all metrics counters.
-     * <p>
-     * Useful for periodic metric resets or testing.
+ *
+ * <p>Useful for periodic metric resets or testing.
      * </p>
      */
     public void resetMetrics() {

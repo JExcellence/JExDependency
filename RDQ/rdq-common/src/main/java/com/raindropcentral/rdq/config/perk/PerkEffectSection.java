@@ -13,10 +13,9 @@ import java.util.logging.Logger;
 
 /**
  * Configuration section for perk effect definitions.
- * <p>
- * This section handles the effect configuration for perks, including potion effects,
+ *
+ * <p>This section handles the effect configuration for perks, including potion effects,
  * event triggers, special abilities, and custom configurations.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -200,46 +199,79 @@ public class PerkEffectSection extends AConfigSection {
 	
 	// ==================== Getters ====================
 	
+	/**
+	 * Gets potionEffectType.
+	 */
 	public String getPotionEffectType() {
 		return potionEffectType;
 	}
 	
+	/**
+	 * Gets amplifier.
+	 */
 	public Integer getAmplifier() {
 		return amplifier == null ? 0 : amplifier;
 	}
 	
+	/**
+	 * Gets durationTicks.
+	 */
 	public Integer getDurationTicks() {
 		return durationTicks == null ? 600 : durationTicks;
 	}
 	
+	/**
+	 * Gets ambient.
+	 */
 	public Boolean getAmbient() {
 		return ambient != null && ambient;
 	}
 	
+	/**
+	 * Gets particles.
+	 */
 	public Boolean getParticles() {
 		return particles == null || particles;
 	}
 	
+	/**
+	 * Gets triggerEvent.
+	 */
 	public String getTriggerEvent() {
 		return triggerEvent;
 	}
 	
+	/**
+	 * Gets cooldownMillis.
+	 */
 	public Long getCooldownMillis() {
 		return cooldownMillis == null ? 0L : cooldownMillis;
 	}
 	
+	/**
+	 * Gets triggerChance.
+	 */
 	public Double getTriggerChance() {
 		return triggerChance == null ? 100.0 : triggerChance;
 	}
 	
+	/**
+	 * Gets specialType.
+	 */
 	public String getSpecialType() {
 		return specialType;
 	}
 	
+	/**
+	 * Gets handlerClass.
+	 */
 	public String getHandlerClass() {
 		return handlerClass;
 	}
 	
+	/**
+	 * Gets customConfig.
+	 */
 	public Map<String, Object> getCustomConfig() {
 		return customConfig;
 	}

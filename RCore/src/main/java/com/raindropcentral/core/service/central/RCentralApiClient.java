@@ -86,6 +86,9 @@ public class RCentralApiClient {
                 .create();
     }
 
+    /**
+     * Performs connectServer.
+     */
     public CompletableFuture<ApiResponse> connectServer(
             final @NotNull String apiKey,
             final @NotNull String serverUuid,
@@ -106,6 +109,9 @@ public class RCentralApiClient {
         return sendRequest("/api/server-data/connect", "POST", apiKey, payload);
     }
 
+    /**
+     * Performs sendHeartbeat.
+     */
     public CompletableFuture<ApiResponse> sendHeartbeat(
             final @NotNull String apiKey,
             final int currentPlayers,
@@ -124,10 +130,16 @@ public class RCentralApiClient {
         return sendRequest("/api/server-data/heartbeat", "POST", apiKey, payload);
     }
 
+    /**
+     * Performs disconnectServer.
+     */
     public CompletableFuture<ApiResponse> disconnectServer(final @NotNull String apiKey) {
         return sendRequest("/api/server-data/disconnect", "POST", apiKey, null);
     }
 
+    /**
+     * Performs shutdownServer.
+     */
     public CompletableFuture<ApiResponse> shutdownServer(
             final @NotNull String apiKey,
             final @NotNull String serverUuid
@@ -139,6 +151,9 @@ public class RCentralApiClient {
         return sendRequest("/api/server-data/shutdown", "POST", apiKey, payload);
     }
 
+    /**
+     * Performs wakeupServer.
+     */
     public CompletableFuture<ApiResponse> wakeupServer(
             final @NotNull String apiKey,
             final @NotNull String serverUuid,
@@ -315,6 +330,9 @@ public class RCentralApiClient {
                 } else if ("POST".equals(method)) {
                     requestBuilder.POST(HttpRequest.BodyPublishers.noBody());
                 } else {
+                    /**
+                     * Represents the type API type.
+                     */
                     requestBuilder.GET();
                 }
 
@@ -333,7 +351,13 @@ public class RCentralApiClient {
         });
     }
 
+    /**
+     * Represents the ApiResponse API type.
+     */
     public record ApiResponse(int statusCode, @Nullable String body, @Nullable String error) {
+        /**
+         * Returns whether success.
+         */
         public boolean isSuccess() {
             return statusCode >= 200 && statusCode < 300;
         }

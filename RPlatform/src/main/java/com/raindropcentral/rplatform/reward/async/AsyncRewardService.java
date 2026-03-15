@@ -10,6 +10,9 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Represents the AsyncRewardService API type.
+ */
 public final class AsyncRewardService {
 
     private static final AsyncRewardService INSTANCE = new AsyncRewardService();
@@ -18,10 +21,16 @@ public final class AsyncRewardService {
 
     private AsyncRewardService() {}
 
+    /**
+     * Gets instance.
+     */
     public static AsyncRewardService getInstance() {
         return INSTANCE;
     }
 
+    /**
+     * Executes grantAsync.
+     */
     public @NotNull CompletableFuture<Boolean> grantAsync(@NotNull Player player, @NotNull AbstractReward reward) {
         return CompletableFuture.supplyAsync(
             () -> rewardService.grant(player, reward).join(),
@@ -29,6 +38,9 @@ public final class AsyncRewardService {
         );
     }
 
+    /**
+     * Executes grantAllAsync.
+     */
     public @NotNull CompletableFuture<Boolean> grantAllAsync(
         @NotNull Player player,
         @NotNull List<AbstractReward> rewards
@@ -39,6 +51,9 @@ public final class AsyncRewardService {
         );
     }
 
+    /**
+     * Executes grantAllWithResults.
+     */
     public @NotNull CompletableFuture<List<RewardResult>> grantAllWithResults(
         @NotNull Player player,
         @NotNull List<AbstractReward> rewards
@@ -57,12 +72,18 @@ public final class AsyncRewardService {
         }, executor);
     }
 
+    /**
+     * Represents the RewardResult API type.
+     */
     public record RewardResult(
         @NotNull AbstractReward reward,
         boolean success,
         Throwable error
     ) {}
 
+    /**
+     * Executes shutdown.
+     */
     public void shutdown() {
         executor.shutdown();
     }

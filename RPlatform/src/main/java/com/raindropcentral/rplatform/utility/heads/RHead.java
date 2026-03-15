@@ -8,10 +8,13 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
+/**
+ * Represents the type API type.
+ */
 @SuppressWarnings("unchecked")
 
 /**
- * Base definition for catalogued heads containing the UUID, texture payload, and translation key
+ * Base definition for catalogued heads containing the UUID, texture payload, and translation key.
  * metadata required to render localized names and lore.
  *
  * @author JExcellence

@@ -53,6 +53,9 @@ public class NativeStatisticCollector {
         Statistic.MINECART_ONE_CM, NativeStatisticSnapshot.TravelMethod.MINECART
     );
 
+    /**
+     * Executes NativeStatisticCollector.
+     */
     public NativeStatisticCollector(final @NotNull StatisticsDeliveryConfig config) {
         this.config = config;
         this.lastSnapshots = new ConcurrentHashMap<>();

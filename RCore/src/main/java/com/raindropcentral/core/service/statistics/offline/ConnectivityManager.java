@@ -27,10 +27,10 @@ public class ConnectivityManager {
 
     private static final Logger LOGGER = CentralLogger.getLoggerByName("RCore");
 
-    /** Number of consecutive failures before switching to offline mode */
+/** Represents this API member. */
     private static final int FAILURE_THRESHOLD = 3;
 
-    /** Probe interval in seconds during offline mode */
+/** Represents this API member. */
     private static final int PROBE_INTERVAL_SECONDS = 30;
 
     private final RCentralApiClient apiClient;
@@ -43,6 +43,9 @@ public class ConnectivityManager {
     private ScheduledFuture<?> probeTask;
     private Consumer<Boolean> connectivityListener;
 
+    /**
+     * Executes ConnectivityManager.
+     */
     public ConnectivityManager(
         final @NotNull RCentralApiClient apiClient,
         final @NotNull String apiKey,

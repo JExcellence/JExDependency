@@ -11,13 +11,13 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * Service class for managing RaindropCentral server connection entities.
- * <p>
- * This service provides high-level operations for server connection management, handling
+ *
+ * <p>This service provides high-level operations for server connection management, handling
  * the persistence of server state and connection information to the RaindropCentral platform.
  * All operations are asynchronous to avoid blocking the main thread.
  * </p>
- * <p>
- * The service automatically injects the {@link RCentralServerRepository} via the
+ *
+ * <p>The service automatically injects the {@link RCentralServerRepository} via the
  * {@link de.jexcellence.hibernate.repository.RepositoryManager} when instantiated through
  * {@code createInstance()}.
  * </p>
@@ -34,8 +34,8 @@ public class RCentralServerService {
 
     /**
      * Constructs a new RCentralServerService.
-     * <p>
-     * The repository will be automatically injected by the RepositoryManager when this service
+ *
+ * <p>The repository will be automatically injected by the RepositoryManager when this service
      * is created via {@code RepositoryManager.getInstance().createInstance(RCentralServerService.class)}.
      * </p>
      */
@@ -55,8 +55,8 @@ public class RCentralServerService {
 
     /**
      * Finds the currently connected server (if any).
-     * <p>
-     * Only one server should be in CONNECTED status at a time.
+ *
+ * <p>Only one server should be in CONNECTED status at a time.
      * </p>
      *
      * @return future containing an optional with the connected server if found
@@ -67,8 +67,8 @@ public class RCentralServerService {
 
     /**
      * Creates or updates a server entity.
-     * <p>
-     * If a server with the same ID already exists, it will be updated.
+ *
+ * <p>If a server with the same ID already exists, it will be updated.
      * Otherwise, a new server entity will be created.
      * </p>
      *
@@ -84,8 +84,8 @@ public class RCentralServerService {
 
     /**
      * Marks a server as connected and ensures all other servers are disconnected.
-     * <p>
-     * This method handles the business logic of ensuring only one server is connected
+ *
+ * <p>This method handles the business logic of ensuring only one server is connected
      * at a time by disconnecting any currently connected server before connecting the new one.
      * </p>
      *
@@ -161,8 +161,8 @@ public class RCentralServerService {
 
     /**
      * Gets the injected repository instance.
-     * <p>
-     * This is primarily for testing purposes or advanced use cases.
+ *
+ * <p>This is primarily for testing purposes or advanced use cases.
      * </p>
      *
      * @return the server repository

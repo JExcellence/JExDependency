@@ -58,6 +58,9 @@ public record PluginMetrics(
         public Builder activeBountyCount(int count) { this.activeBountyCount = count; return this; }
         public Builder completedBountiesInPeriod(int count) { this.completedBountiesInPeriod = count; return this; }
 
+        /**
+         * Performs build.
+         */
         public PluginMetrics build() {
             return new PluginMetrics(
                 activeQuestCount, completedQuestsInPeriod,

@@ -28,6 +28,9 @@ public class HeartbeatScheduler {
     private int consecutiveFailures = 0;
     private boolean isRunning = false;
 
+    /**
+     * Executes HeartbeatScheduler.
+     */
     public HeartbeatScheduler(
         final @NotNull Plugin plugin,
         final @NotNull RPlatform platform,
@@ -140,10 +143,16 @@ public class HeartbeatScheduler {
         }
     }
 
+    /**
+     * Returns whether running.
+     */
     public boolean isRunning() {
         return isRunning;
     }
 
+    /**
+     * Gets consecutiveFailures.
+     */
     public int getConsecutiveFailures() {
         return consecutiveFailures;
     }

@@ -17,6 +17,9 @@ import java.util.function.Function;
  */
 public class RCentralServerRepository extends CachedRepository<RCentralServer, Long, Long> {
 
+    /**
+     * Executes RCentralServerRepository.
+     */
     public RCentralServerRepository(
             final @NotNull ExecutorService executor,
             final @NotNull EntityManagerFactory entityManagerFactory,

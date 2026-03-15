@@ -8,11 +8,10 @@ import java.time.Instant;
 
 /**
  * Sealed interface representing the result of attempting to start a quest.
- * <p>
- * This uses Java's sealed types to provide type-safe result handling with
+ *
+ * <p>This uses Java's sealed types to provide type-safe result handling with
  * pattern matching support. Each result type provides specific information
  * about why the quest start succeeded or failed.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0

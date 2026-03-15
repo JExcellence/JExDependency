@@ -51,6 +51,9 @@ import com.raindropcentral.rplatform.database.converter.UUIDConverter;
         )
     }
 )
+/**
+ * Represents the RTradeSession API type.
+ */
 public class RTradeSession extends BaseEntity {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RTradeSession.class);

@@ -12,7 +12,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
- * Converts {@link List lists} of {@link Material} entries to a semicolon-separated column string and rebuilds
+ * Converts {@link List lists} of {@link Material} entries to a semicolon-separated column string and rebuilds.
  * them for entity hydration.
  *
  * <p>The converter stores each {@link Material#name()} token in upper-case form, skipping {@code null}

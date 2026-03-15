@@ -8,12 +8,11 @@ import java.util.List;
 
 /**
  * Command section configuration for the player pay command.
- * <p>
- * This section provides configuration for the "/pay" command including
- * settings for which currencies can be paid and whether the command is enabled.
- * </p>
  *
- * <h3>Configuration Options:</h3>
+ * <p>This section provides configuration for the "/pay" command including
+ * settings for which currencies can be paid and whether the command is enabled.
+ *
+ * <p><strong>Configuration Options:</strong>
  * <ul>
  *   <li><strong>enabled:</strong> Whether the pay command is enabled</li>
  *   <li><strong>allowed-currencies:</strong> List of currency identifiers that can be paid</li>

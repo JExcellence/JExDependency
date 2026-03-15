@@ -26,6 +26,9 @@ import java.util.function.Function;
         "unused",
         "FieldCanBeLocal"
 })
+/**
+ * Represents the RShop API type.
+ */
 public class RShop extends CachedRepository<Shop, Long, Location> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger("RDS");

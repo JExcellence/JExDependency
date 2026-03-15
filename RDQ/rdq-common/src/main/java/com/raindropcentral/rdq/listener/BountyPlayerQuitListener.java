@@ -23,10 +23,16 @@ public class BountyPlayerQuitListener implements Listener {
 
     private final RDQ rdq;
 
+    /**
+     * Executes BountyPlayerQuitListener.
+     */
     public BountyPlayerQuitListener(@NotNull RDQ rdq) {
         this.rdq = rdq;
     }
 
+    /**
+     * Executes onPlayerQuit.
+     */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerQuit(@NotNull PlayerQuitEvent event) {
         var player = event.getPlayer();

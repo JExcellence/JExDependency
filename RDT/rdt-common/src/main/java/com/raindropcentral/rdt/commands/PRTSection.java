@@ -5,8 +5,8 @@ import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
 
 /**
  * Command section definition for the primary player command {@code /prt}.
- * <p>
- * This class binds the command name to the underlying evaluation environment used
+ *
+ * <p>This class binds the command name to the underlying evaluation environment used
  * by the command framework. Command logic itself is handled by {@link PRT} and
  * registered through {@link com.raindropcentral.commands.CommandFactory}.
  */

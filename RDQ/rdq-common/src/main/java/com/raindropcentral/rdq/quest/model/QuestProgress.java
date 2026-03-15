@@ -6,10 +6,9 @@ import java.util.Map;
 
 /**
  * Immutable record representing the overall progress of a quest.
- * <p>
- * This record provides a summary view of quest progress, including
+ *
+ * <p>This record provides a summary view of quest progress, including
  * completed task count and detailed task-by-task progress.
- * </p>
  *
  * @param questId        the unique quest identifier
  * @param completedTasks the number of completed tasks

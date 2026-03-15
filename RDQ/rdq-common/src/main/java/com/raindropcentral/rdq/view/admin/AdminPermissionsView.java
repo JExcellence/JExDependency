@@ -24,6 +24,9 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Represents the AdminPermissionsView API type.
+ */
 public class AdminPermissionsView extends BaseView {
 	
 	private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
@@ -81,6 +84,9 @@ public class AdminPermissionsView extends BaseView {
 	private static final int REFRESH_DATA_SLOT = 49;
 	private static final int ASSIGN_ALL_SLOT   = 52;
 	
+	/**
+	 * Executes AdminPermissionsView.
+	 */
 	public AdminPermissionsView() {
 		super(AdminOverviewView.class);
 	}
@@ -90,6 +96,9 @@ public class AdminPermissionsView extends BaseView {
 		return "admin_permissions_overview_ui";
 	}
 	
+	/**
+	 * Executes onFirstRender.
+	 */
 	@Override
 	public void onFirstRender(
 		final @NotNull RenderContext render,

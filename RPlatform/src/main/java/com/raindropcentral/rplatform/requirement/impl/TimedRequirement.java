@@ -16,6 +16,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
+/**
+ * Represents the TimedRequirement API type.
+ */
 public final class TimedRequirement extends AbstractRequirement {
 
     @JsonProperty("delegate")
@@ -33,10 +36,16 @@ public final class TimedRequirement extends AbstractRequirement {
     @JsonIgnore
     private final AtomicLong startTimeMillis = new AtomicLong(-1L);
 
+    /**
+     * Executes TimedRequirement.
+     */
     public TimedRequirement(@NotNull AbstractRequirement delegate, long timeLimitSeconds) {
         this(delegate, timeLimitSeconds * 1000, true, null);
     }
 
+    /**
+     * Executes TimedRequirement.
+     */
     @JsonCreator
     public TimedRequirement(
             @JsonProperty("delegate") @NotNull AbstractRequirement delegate,
@@ -54,6 +63,9 @@ public final class TimedRequirement extends AbstractRequirement {
         this.description = description;
     }
 
+    /**
+     * Executes fromTimeConfig.
+     */
     @JsonIgnore
     @NotNull
     public static TimedRequirement fromTimeConfig(@NotNull AbstractRequirement delegate,
@@ -73,9 +85,18 @@ public final class TimedRequirement extends AbstractRequirement {
         return new TimedRequirement(delegate, timeLimitMillis, autoStart, description);
     }
 
+    /**
+     * Executes start.
+     */
     public void start() { this.startTimeMillis.compareAndSet(-1L, System.currentTimeMillis()); }
+    /**
+     * Executes reset.
+     */
     public void reset() { this.startTimeMillis.set(-1L); }
 
+    /**
+     * Returns whether met.
+     */
     @Override
     public boolean isMet(final @NotNull Player player) {
         if (this.autoStart && this.startTimeMillis.get() < 0) this.start();
@@ -85,6 +106,9 @@ public final class TimedRequirement extends AbstractRequirement {
         return this.delegate.isMet(player);
     }
 
+    /**
+     * Executes calculateProgress.
+     */
     @Override
     public double calculateProgress(final @NotNull Player player) {
         if (this.autoStart && this.startTimeMillis.get() < 0) this.start();
@@ -96,42 +120,81 @@ public final class TimedRequirement extends AbstractRequirement {
         return this.delegate.calculateProgress(player) * timeFactor;
     }
 
+    /**
+     * Executes consume.
+     */
     @Override
     public void consume(final @NotNull Player player) {
         if (this.isMet(player)) this.delegate.consume(player);
     }
 
+    /**
+     * Gets descriptionKey.
+     */
     @Override
     @NotNull
     public String getDescriptionKey() { return "requirement.timed"; }
 
+    /**
+     * Gets delegate.
+     */
     @NotNull
     public AbstractRequirement getDelegate() { return this.delegate; }
 
+    /**
+     * Gets timeLimitMillis.
+     */
     public long getTimeLimitMillis() { return this.timeLimitMillis; }
 
+    /**
+     * Gets timeLimitSeconds.
+     */
     @JsonIgnore
     public long getTimeLimitSeconds() { return TimeUnit.MILLISECONDS.toSeconds(this.timeLimitMillis); }
 
+    /**
+     * Gets timeLimitMinutes.
+     */
     @JsonIgnore
     public long getTimeLimitMinutes() { return TimeUnit.MILLISECONDS.toMinutes(this.timeLimitMillis); }
 
+    /**
+     * Gets timeLimitHours.
+     */
     @JsonIgnore
     public long getTimeLimitHours() { return TimeUnit.MILLISECONDS.toHours(this.timeLimitMillis); }
 
+    /**
+     * Gets timeLimitDays.
+     */
     @JsonIgnore
     public long getTimeLimitDays() { return TimeUnit.MILLISECONDS.toDays(this.timeLimitMillis); }
 
+    /**
+     * Gets startTimeMillis.
+     */
     public long getStartTimeMillis() { return this.startTimeMillis.get(); }
 
+    /**
+     * Returns whether autoStart.
+     */
     public boolean isAutoStart() { return this.autoStart; }
 
+    /**
+     * Gets description.
+     */
     @Nullable
     public String getDescription() { return this.description; }
 
+    /**
+     * Returns whether started.
+     */
     @JsonIgnore
     public boolean isStarted() { return this.startTimeMillis.get() >= 0; }
 
+    /**
+     * Returns whether expired.
+     */
     @JsonIgnore
     public boolean isExpired() {
         final long startTime = this.startTimeMillis.get();
@@ -139,6 +202,9 @@ public final class TimedRequirement extends AbstractRequirement {
         return System.currentTimeMillis() - startTime > this.timeLimitMillis;
     }
 
+    /**
+     * Gets remainingTimeMillis.
+     */
     @JsonIgnore
     public long getRemainingTimeMillis() {
         final long startTime = this.startTimeMillis.get();
@@ -146,9 +212,15 @@ public final class TimedRequirement extends AbstractRequirement {
         return Math.max(0, this.timeLimitMillis - (System.currentTimeMillis() - startTime));
     }
 
+    /**
+     * Gets remainingTimeSeconds.
+     */
     @JsonIgnore
     public long getRemainingTimeSeconds() { return TimeUnit.MILLISECONDS.toSeconds(this.getRemainingTimeMillis()); }
 
+    /**
+     * Gets elapsedTimeMillis.
+     */
     @JsonIgnore
     public long getElapsedTimeMillis() {
         final long startTime = this.startTimeMillis.get();
@@ -156,9 +228,15 @@ public final class TimedRequirement extends AbstractRequirement {
         return System.currentTimeMillis() - startTime;
     }
 
+    /**
+     * Gets elapsedTimeSeconds.
+     */
     @JsonIgnore
     public long getElapsedTimeSeconds() { return TimeUnit.MILLISECONDS.toSeconds(this.getElapsedTimeMillis()); }
 
+    /**
+     * Gets formattedStartTime.
+     */
     @JsonIgnore
     @NotNull
     public String getFormattedStartTime() {
@@ -168,6 +246,9 @@ public final class TimedRequirement extends AbstractRequirement {
         return startDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 
+    /**
+     * Gets formattedRemainingTime.
+     */
     @JsonIgnore
     @NotNull
     public String getFormattedRemainingTime() {
@@ -188,6 +269,9 @@ public final class TimedRequirement extends AbstractRequirement {
         return sb.toString().trim();
     }
 
+    /**
+     * Executes validate.
+     */
     @JsonIgnore
     public void validate() {
         if (this.delegate == null) throw new IllegalStateException("Delegate requirement cannot be null.");

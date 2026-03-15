@@ -25,6 +25,9 @@ public final class TeleportReward extends AbstractReward {
     private final float yaw;
     private final float pitch;
 
+    /**
+     * Executes TeleportReward.
+     */
     @JsonCreator
     public TeleportReward(
         @JsonProperty("worldName") @NotNull String worldName,
@@ -42,11 +45,17 @@ public final class TeleportReward extends AbstractReward {
         this.pitch = pitch;
     }
 
+    /**
+     * Gets typeId.
+     */
     @Override
     public @NotNull String getTypeId() {
         return "TELEPORT";
     }
 
+    /**
+     * Executes grant.
+     */
     @Override
     public @NotNull CompletableFuture<Boolean> grant(@NotNull Player player) {
         return CompletableFuture.supplyAsync(() -> {
@@ -71,35 +80,59 @@ public final class TeleportReward extends AbstractReward {
         });
     }
 
+    /**
+     * Gets estimatedValue.
+     */
     @Override
     public double getEstimatedValue() {
         return 0.0;
     }
 
+    /**
+     * Gets worldName.
+     */
     public String getWorldName() {
         return worldName;
     }
 
+    /**
+     * Gets x.
+     */
     public double getX() {
         return x;
     }
 
+    /**
+     * Gets y.
+     */
     public double getY() {
         return y;
     }
 
+    /**
+     * Gets z.
+     */
     public double getZ() {
         return z;
     }
 
+    /**
+     * Gets yaw.
+     */
     public float getYaw() {
         return yaw;
     }
 
+    /**
+     * Gets pitch.
+     */
     public float getPitch() {
         return pitch;
     }
 
+    /**
+     * Executes validate.
+     */
     @Override
     public void validate() {
         if (worldName == null || worldName.trim().isEmpty()) {

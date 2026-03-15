@@ -36,7 +36,7 @@ public final class StorageViewLauncher {
     private StorageViewLauncher() {}
 
     /**
-     * Attempts to acquire a lease for the supplied storage and opens {@link StorageView} when the
+     * Attempts to acquire a lease for the supplied storage and opens {@link StorageView} when the.
      * lease succeeds.
      *
      * @param player player requesting access to the storage

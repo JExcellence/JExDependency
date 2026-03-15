@@ -16,8 +16,8 @@ import java.util.stream.Collectors;
 
 /**
  * Service class for managing player statistics with comprehensive CRUD operations.
- * <p>
- * This utility provides convenience builders and helpers that operate directly on the
+ *
+ * <p>This utility provides convenience builders and helpers that operate directly on the
  * Hibernate-managed {@link RPlayerStatistic} aggregate. All mutation methods assume they are
  * executed within the same transactional boundary as the owning {@link RPlayerStatistic} entity
  * and therefore return simple success flags or counts rather than triggering persistence
@@ -39,7 +39,7 @@ public final class RPlayerStatisticService {
     private RPlayerStatisticService() {}
 
     /**
-     * Creates a new {@link RPlayerStatistic} wrapper for the supplied player without preloading
+     * Creates a new {@link RPlayerStatistic} wrapper for the supplied player without preloading.
      * values.
      *
      * @param player player aggregate that owns the statistics collection; must already be managed
@@ -54,7 +54,7 @@ public final class RPlayerStatisticService {
     }
 
     /**
-     * Creates a new {@link RPlayerStatistic} wrapper for the supplied player and associates it
+     * Creates a new {@link RPlayerStatistic} wrapper for the supplied player and associates it.
      * with a specific server.
      *
      * @param player player aggregate that owns the statistics collection; must already be managed
@@ -73,7 +73,7 @@ public final class RPlayerStatisticService {
     }
 
     /**
-     * Creates a new {@link RPlayerStatistic} wrapper for the supplied player and seeds it with
+     * Creates a new {@link RPlayerStatistic} wrapper for the supplied player and seeds it with.
      * initial values.
      *
      * <p>The provided statistics map will be iterated deterministically to either insert new
@@ -103,7 +103,7 @@ public final class RPlayerStatisticService {
     }
 
     /**
-     * Adds a statistic or updates an existing entry in-place when compatible with the supplied
+     * Adds a statistic or updates an existing entry in-place when compatible with the supplied.
      * value type.
      *
      * <p>Identifiers are treated as globally unique for each player. The implementation first
@@ -489,7 +489,7 @@ public final class RPlayerStatisticService {
     }
 
     /**
-     * Updates an existing statistic entity in place when the provided value is compatible with the
+     * Updates an existing statistic entity in place when the provided value is compatible with the.
      * entity type.
      *
      * <p>The method leaves values unchanged when incompatible types are provided. Exceptions thrown

@@ -20,8 +20,8 @@ import java.util.Map;
 
 /**
  * Persistent representation of a claimed chunk belonging to a {@link RTown}.
- * <p>
- * Each chunk stores its X/Z coordinates and a {@link com.raindropcentral.rdt.utils.ChunkType} describing its role
+ *
+ * <p>Each chunk stores its X/Z coordinates and a {@link com.raindropcentral.rdt.utils.ChunkType} describing its role
  * inside the town (e.g., default). A chunk belongs to a single town.
  *
  * @author ItsRainingHP
@@ -35,6 +35,9 @@ import java.util.Map;
         "DefaultAnnotationParam",
         "JpaDataSourceORMInspection"
 })
+/**
+ * Represents the RChunk API type.
+ */
 public class RChunk extends BaseEntity {
 
     /** Owning {@link RTown}. Matches {@code mappedBy = "town"} in {@link RTown}. */

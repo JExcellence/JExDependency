@@ -1,5 +1,5 @@
 /**
- * Skull-specific builder extensions that wrap UUID and texture handling across server
+ * Skull-specific builder extensions that wrap UUID and texture handling across server.
  * versions.
  *
  * <p>The classes in this package encapsulate differences between the legacy profile API and

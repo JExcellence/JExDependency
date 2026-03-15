@@ -8,9 +8,8 @@ import java.util.Map;
 
 /**
  * Provider for built-in requirement types.
- * <p>
- * This provider registers all the standard requirement types that come with RPlatform.
- * </p>
+ *
+ * <p>This provider registers all the standard requirement types that come with RPlatform.
  *
  * @author ItsRainingHP, JExcellence
  * @since 2.0.0
@@ -21,6 +20,9 @@ public final class BuiltInRequirementProvider implements PluginRequirementProvid
     private static final String PLUGIN_ID = "RPlatform";
     private final Map<String, RequirementType> types = new HashMap<>();
 
+    /**
+     * Executes BuiltInRequirementProvider.
+     */
     public BuiltInRequirementProvider() {
         // Register all built-in types
         types.put("ITEM", new RequirementType("ITEM", PLUGIN_ID, ItemRequirement.class));
@@ -35,18 +37,27 @@ public final class BuiltInRequirementProvider implements PluginRequirementProvid
         types.put("PLUGIN", new RequirementType("PLUGIN", PLUGIN_ID, PluginRequirement.class));
     }
 
+    /**
+     * Gets pluginId.
+     */
     @Override
     @NotNull
     public String getPluginId() {
         return PLUGIN_ID;
     }
 
+    /**
+     * Gets requirementTypes.
+     */
     @Override
     @NotNull
     public Map<String, RequirementType> getRequirementTypes() {
         return Map.copyOf(types);
     }
 
+    /**
+     * Executes register.
+     */
     @Override
     public void register() {
         RequirementRegistry registry = RequirementRegistry.getInstance();
@@ -55,6 +66,9 @@ public final class BuiltInRequirementProvider implements PluginRequirementProvid
         }
     }
 
+    /**
+     * Executes unregister.
+     */
     @Override
     public void unregister() {
         RequirementRegistry registry = RequirementRegistry.getInstance();
@@ -65,9 +79,8 @@ public final class BuiltInRequirementProvider implements PluginRequirementProvid
 
     /**
      * Initializes the built-in requirement types.
-     * <p>
-     * This should be called during RPlatform initialization, before any requirement parsing occurs.
-     * </p>
+ *
+ * <p>This should be called during RPlatform initialization, before any requirement parsing occurs.
      */
     public static void initialize() {
         BuiltInRequirementProvider provider = new BuiltInRequirementProvider();

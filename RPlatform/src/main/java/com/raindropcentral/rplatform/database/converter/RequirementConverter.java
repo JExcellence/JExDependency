@@ -11,16 +11,15 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 
 /**
- * JPA {@link AttributeConverter} for converting {@link AbstractRequirement} objects
+ * JPA {@link AttributeConverter} for converting {@link AbstractRequirement} objects.
  * to and from their JSON string representations for database storage.
- * <p>
- * This converter uses {@link RequirementParser} for serialization, which supports:
+ *
+ * <p>This converter uses {@link RequirementParser} for serialization, which supports:
  * <ul>
  *   <li>Polymorphic requirement types via {@link com.raindropcentral.rplatform.requirement.json.RequirementMixin}</li>
  *   <li>Plugin-registered custom requirement types via {@link RequirementRegistry}</li>
  *   <li>Bukkit-specific types like ItemStack</li>
  * </ul>
- * </p>
  */
 @Converter(autoApply = true)
 public class RequirementConverter implements AttributeConverter<AbstractRequirement, String> {

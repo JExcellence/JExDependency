@@ -20,6 +20,9 @@ public final class RCConnect extends PlayerCommand {
     private static final Pattern API_KEY_PATTERN = Pattern.compile("^[A-Za-z0-9_-]{32,128}$");
     private final RCentralService centralService;
 
+    /**
+     * Executes RCConnect.
+     */
     public RCConnect(
             final @NotNull RCConnectSection section,
             final @NotNull RCore rCore

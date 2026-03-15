@@ -26,6 +26,9 @@ public class DamageTracker {
     private final Map<UUID, List<DamageEvent>> damageMap = new ConcurrentHashMap<>();
     private final long trackingWindowMs;
 
+    /**
+     * Executes DamageTracker.
+     */
     public DamageTracker(long trackingWindowMs) {
         if (trackingWindowMs <= 0) {
             throw new IllegalArgumentException("Tracking window must be positive");
@@ -33,6 +36,9 @@ public class DamageTracker {
         this.trackingWindowMs = trackingWindowMs;
     }
 
+    /**
+     * Executes recordDamage.
+     */
     public void recordDamage(@NotNull UUID victimUuid, @NotNull UUID attackerUuid, double damage) {
         if (damage <= 0) {
             return; // Ignore non-positive damage
@@ -42,6 +48,9 @@ public class DamageTracker {
         damageMap.computeIfAbsent(victimUuid, k -> new ArrayList<>()).add(event);
     }
 
+    /**
+     * Gets damageMap.
+     */
     public @NotNull Map<UUID, Double> getDamageMap(@NotNull UUID victimUuid) {
         List<DamageEvent> events = damageMap.get(victimUuid);
         if (events == null || events.isEmpty()) {
@@ -58,16 +67,25 @@ public class DamageTracker {
                 ));
     }
 
+    /**
+     * Gets totalDamage.
+     */
     public double getTotalDamage(@NotNull UUID victimUuid) {
         return getDamageMap(victimUuid).values().stream()
                 .mapToDouble(Double::doubleValue)
                 .sum();
     }
 
+    /**
+     * Executes clearDamage.
+     */
     public void clearDamage(@NotNull UUID victimUuid) {
         damageMap.remove(victimUuid);
     }
 
+    /**
+     * Executes cleanupExpiredRecords.
+     */
     public void cleanupExpiredRecords() {
         Instant cutoff = Instant.now().minusMillis(trackingWindowMs);
 
@@ -78,6 +96,9 @@ public class DamageTracker {
         });
     }
 
+    /**
+     * Gets trackedVictimCount.
+     */
     public int getTrackedVictimCount() {
         return damageMap.size();
     }

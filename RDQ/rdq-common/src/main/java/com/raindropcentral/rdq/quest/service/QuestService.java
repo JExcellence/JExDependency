@@ -15,8 +15,8 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * Service interface for quest management operations.
- * <p>
- * This service provides all quest-related functionality including:
+ *
+ * <p>This service provides all quest-related functionality including:
  * <ul>
  *     <li>Quest discovery and browsing</li>
  *     <li>Quest starting and abandoning</li>
@@ -24,10 +24,8 @@ import java.util.concurrent.CompletableFuture;
  *     <li>Progress monitoring</li>
  *     <li>Requirement validation</li>
  * </ul>
- * </p>
- * <p>
- * All methods return {@link CompletableFuture} for non-blocking async operations.
- * </p>
+ *
+ * <p>All methods return {@link CompletableFuture} for non-blocking async operations.
  *
  * @author RaindropCentral
  * @version 1.0.0
@@ -62,8 +60,8 @@ public interface QuestService {
     
     /**
      * Attempts to start a quest for a player.
-     * <p>
-     * This method validates:
+ *
+ * <p>This method validates:
      * <ul>
      *     <li>Quest exists and is enabled</li>
      *     <li>Player hasn't reached max active quests</li>
@@ -71,7 +69,6 @@ public interface QuestService {
      *     <li>Quest is not on cooldown</li>
      *     <li>All quest requirements are met</li>
      * </ul>
-     * </p>
      *
      * @param playerId        the player's unique identifier
      * @param questIdentifier the quest identifier
@@ -85,10 +82,9 @@ public interface QuestService {
     
     /**
      * Abandons an active quest for a player.
-     * <p>
-     * This removes the quest from the player's active quests and
+ *
+ * <p>This removes the quest from the player's active quests and
      * cleans up all associated progress data.
-     * </p>
      *
      * @param playerId        the player's unique identifier
      * @param questIdentifier the quest identifier
@@ -124,10 +120,9 @@ public interface QuestService {
     
     /**
      * Checks if a player can start a specific quest.
-     * <p>
-     * This performs all validation checks without actually starting the quest.
+ *
+ * <p>This performs all validation checks without actually starting the quest.
      * Useful for UI display to show why a quest cannot be started.
-     * </p>
      *
      * @param playerId        the player's unique identifier
      * @param questIdentifier the quest identifier
@@ -163,10 +158,9 @@ public interface QuestService {
     
     /**
      * Invalidates all cached data for a player.
-     * <p>
-     * This should be called when player data is modified externally
+ *
+ * <p>This should be called when player data is modified externally
      * or when a full refresh is needed.
-     * </p>
      *
      * @param playerId the player's unique identifier
      */
@@ -174,9 +168,8 @@ public interface QuestService {
     
     /**
      * Invalidates all cached quest definitions.
-     * <p>
-     * This should be called when quest configurations are reloaded.
-     * </p>
+ *
+ * <p>This should be called when quest configurations are reloaded.
      */
     void invalidateQuestCache();
 }

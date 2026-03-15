@@ -22,21 +22,30 @@ public class PayloadCompressor {
 
     private static final Logger LOGGER = CentralLogger.getLoggerByName("RCore");
 
-    /** Default compression threshold in bytes (5KB) */
+/** Represents this API member. */
     private static final int DEFAULT_COMPRESSION_THRESHOLD = 5 * 1024;
 
     private final Gson gson;
     private final int compressionThreshold;
 
+    /**
+     * Executes PayloadCompressor.
+     */
     public PayloadCompressor() {
         this(DEFAULT_COMPRESSION_THRESHOLD);
     }
 
+    /**
+     * Executes PayloadCompressor.
+     */
     public PayloadCompressor(final int compressionThreshold) {
         this.gson = new GsonBuilder().create();
         this.compressionThreshold = compressionThreshold;
     }
 
+    /**
+     * Executes PayloadCompressor.
+     */
     public PayloadCompressor(final @NotNull com.raindropcentral.core.service.statistics.config.StatisticsDeliveryConfig config) {
         this.gson = new GsonBuilder().create();
         this.compressionThreshold = config.getCompressionThresholdBytes();

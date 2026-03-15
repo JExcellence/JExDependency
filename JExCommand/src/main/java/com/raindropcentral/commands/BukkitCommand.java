@@ -25,10 +25,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Abstract Bukkit command wrapper that bridges command execution to custom handlers while
+ * Abstract Bukkit command wrapper that bridges command execution to custom handlers while.
  * providing utility methods for argument parsing, error handling, and tab completion.
- * <p>
- * Instances are provisioned by the {@link CommandFactory}, which injects the {@link ACommandSection}
+ *
+ * <p>Instances are provisioned by the {@link CommandFactory}, which injects the {@link ACommandSection}
  * metadata so commands transparently respect edition gating (for example RDQ Free versus RDQ Premium),
  * surface localization hooks, and remain aligned with the auto-registration pipeline documented in the
  * agent guidelines. Implementations should assume the command lifecycle executes on the Bukkit main
@@ -42,34 +42,34 @@ public abstract class BukkitCommand extends Command {
 
         /**
          * Shared immutable reference returned when no tab completions are available.
-         * <p>
-         * Default value: an empty, {@link Collections#unmodifiableList(List) unmodifiable} list backed by the
+ *
+ * <p>Default value: an empty, {@link Collections#unmodifiableList(List) unmodifiable} list backed by the
          * JDK collection libraries. Dependency requirements: none beyond the Java runtime. Thread safety: safe for
          * concurrent reads because the list is immutable and never mutated after initialization.
          */
         protected static final List<String>                            EMPTY_STRING_LIST  = Collections.unmodifiableList(new ArrayList<>());
         /**
          * Cache of {@link EnumInfo} descriptors keyed by enum type to accelerate enum lookups.
-         * <p>
-         * Default value: an empty {@link WeakHashMap} wrapped in {@link Collections#synchronizedMap(Map)}.
+ *
+ * <p>Default value: an empty {@link WeakHashMap} wrapped in {@link Collections#synchronizedMap(Map)}.
          * Dependency requirements: relies on the {@code de.jexcellence} evaluable library for {@link EnumInfo}
          * descriptors. Thread safety: synchronized map wrapper allows safe concurrent reads, but callers should still
          * prefer accessing the cache from the synchronous command thread to mirror Bukkit&apos;s threading expectations.
          */
         private static final   Map<Class<? extends Enum<?>>, EnumInfo> enumConstantsCache = Collections.synchronizedMap(new WeakHashMap<>());
         /**
-         * Serializer used to translate Adventure {@link Component} instances into legacy strings for
+         * Serializer used to translate Adventure {@link Component} instances into legacy strings for.
          * Bukkit&apos;s messaging API.
-         * <p>
-         * Default value: {@link LegacyComponentSerializer#legacySection()}. Dependency requirements: the Kyori
+ *
+ * <p>Default value: {@link LegacyComponentSerializer#legacySection()}. Dependency requirements: the Kyori
          * Adventure serializer implementation must be present (shaded by the plugin distribution). Thread safety:
          * the serializer is stateless and can be reused safely across threads.
          */
         private static final   LegacyComponentSerializer              LEGACY_SERIALIZER  = LegacyComponentSerializer.legacySection();
         /**
          * Configuration-backed command section that supplies metadata and localized error messages.
-         * <p>
-         * Default value: populated by the {@link CommandFactory} per command. Dependency requirements: requires a
+ *
+ * <p>Default value: populated by the {@link CommandFactory} per command. Dependency requirements: requires a
          * mapped {@link ACommandSection} generated through the config mapper pipeline so localization hooks and
          * edition gating flags remain available. Thread safety: treated as effectively immutable after construction
          * and therefore safe to read on the command thread; avoid mutating it from asynchronous contexts.
@@ -134,7 +134,7 @@ public abstract class BukkitCommand extends Command {
         );
 	
         /**
-         * Executes the command, routing to {@link #onInvocation(CommandSender, String, String[])}
+         * Executes the command, routing to {@link #onInvocation(CommandSender, String, String[])}.
          * and converting thrown {@link CommandError}s into localized feedback.
          * Behaviour: performs edition gating and localization lookups through the injected section before invoking
          * subclass logic. Failure modes: {@link CommandError} triggers localized messages while other exceptions are
@@ -167,7 +167,7 @@ public abstract class BukkitCommand extends Command {
 	}
 	
         /**
-         * Delegates Bukkit tab completion to {@link #onTabCompletion(CommandSender, String, String[])} while
+         * Delegates Bukkit tab completion to {@link #onTabCompletion(CommandSender, String, String[])} while.
          * mapping any {@link CommandError} to localized feedback.
          * Behaviour: executes synchronously on the command thread and ensures localized error messages flow through the
          * section when completion fails. Failure modes: {@link CommandError} responses downgrade to an empty list and log
@@ -196,7 +196,7 @@ public abstract class BukkitCommand extends Command {
 	}
 	
         /**
-         * Resolves an enum argument by lower-case name, throwing a {@link CommandError} when the
+         * Resolves an enum argument by lower-case name, throwing a {@link CommandError} when the.
          * provided token cannot be matched.
          * Behaviour: leverages the synchronized {@link #enumConstantsCache} to reuse {@link EnumInfo} metadata across
          * invocations. Failure modes: raises {@link CommandError} for missing or malformed arguments so localization
@@ -237,7 +237,7 @@ public abstract class BukkitCommand extends Command {
 	}
 	
         /**
-         * Attempts to parse an enum argument and falls back to the provided default when the
+         * Attempts to parse an enum argument and falls back to the provided default when the.
          * argument is absent.
          * Behaviour: delegates to {@link #enumParameter(String[], int, Class)} only when the argument exists.
          * Failure modes: propagates {@link CommandError} for malformed values but suppresses missing-argument errors by
@@ -302,7 +302,7 @@ public abstract class BukkitCommand extends Command {
 	}
 	
         /**
-         * Attempts to resolve a {@link Player} and falls back to the supplied default when the
+         * Attempts to resolve a {@link Player} and falls back to the supplied default when the.
          * argument is missing.
          * Behaviour: mirrors {@link #playerParameter(String[], int)} while gracefully returning the fallback for
          * missing arguments. Failure modes: still raises {@link CommandError} when a supplied player token fails
@@ -354,7 +354,7 @@ public abstract class BukkitCommand extends Command {
 	}
 	
         /**
-         * Resolves the argument at {@code argumentIndex} as an {@link OfflinePlayer} and optionally
+         * Resolves the argument at {@code argumentIndex} as an {@link OfflinePlayer} and optionally.
          * verifies the player has previously joined the server.
          * Behaviour: bridges Bukkit&apos;s offline-player lookup so commands can target players who are not currently online
          * while still feeding edition-aware messaging through the command section. Failure modes: throws
@@ -388,7 +388,7 @@ public abstract class BukkitCommand extends Command {
 	}
 	
         /**
-         * Attempts to resolve an {@link OfflinePlayer} argument and returns the fallback when the
+         * Attempts to resolve an {@link OfflinePlayer} argument and returns the fallback when the.
          * argument is absent.
          * Behaviour: mirrors {@link #offlinePlayerParameter(String[], int, boolean)} while swallowing missing-argument
          * errors. Failure modes: continues to throw {@link CommandError} for malformed input or unmet play-history
@@ -701,7 +701,7 @@ public abstract class BukkitCommand extends Command {
 	}
 	
         /**
-         * Executes the supplied lookup only when the argument is present, returning a fallback when
+         * Executes the supplied lookup only when the argument is present, returning a fallback when.
          * the lookup fails due to {@link EErrorType#MISSING_ARGUMENT}.
          * Behaviour: centralises the fallback pattern used by optional argument helpers. Failure modes: rethrows
          * {@link CommandError} values that are not related to missing arguments so localization can surface the
@@ -759,7 +759,7 @@ public abstract class BukkitCommand extends Command {
 	}
 	
         /**
-         * Sends an Adventure {@link Component} message to a {@link CommandSender} after converting it
+         * Sends an Adventure {@link Component} message to a {@link CommandSender} after converting it.
          * to a legacy-formatted string for maximum platform compatibility.
          * Behaviour: serializes via {@link #LEGACY_SERIALIZER} so localization hooks from the command section flow back
          * through Bukkit&apos;s legacy messaging system. Failure modes: none expected unless the sender is {@code null}.
@@ -777,7 +777,7 @@ public abstract class BukkitCommand extends Command {
         }
 
         /**
-         * Wraps command execution to translate {@link CommandError}s into localized feedback and log
+         * Wraps command execution to translate {@link CommandError}s into localized feedback and log.
          * unexpected failures.
          * Behaviour: centralizes edition-aware error handling so commands consistently emit localized responses and
          * trigger command synchronization. Failure modes: {@link CommandError} results in localized messaging, while all
@@ -831,7 +831,7 @@ public abstract class BukkitCommand extends Command {
 	}
 	
         /**
-         * Resolves a localized error message from the {@link ACommandSection} and delivers it to the
+         * Resolves a localized error message from the {@link ACommandSection} and delivers it to the.
          * sender.
          * Behaviour: maps {@link CommandError} types to the appropriate localization hook so each edition displays
          * consistent messaging. Failure modes: none beyond potential {@link NullPointerException} if the section returns

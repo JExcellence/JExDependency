@@ -70,7 +70,7 @@ public final class BlockListener implements Listener {
     }
 
     /**
-     * Routes block placement events for Nexus placement, Chunk Block placement, and Chunk Block
+     * Routes block placement events for Nexus placement, Chunk Block placement, and Chunk Block.
      * side-coverage protection.
      *
      * @param event block place event

@@ -11,15 +11,13 @@ import java.time.LocalDateTime;
 
 /**
  * Represents a player's completion (absolution) of a rank tree.
- * <p>
- * This entity tracks when a player has successfully completed all ranks
+ *
+ * <p>This entity tracks when a player has successfully completed all ranks
  * within a rank tree, marking it as "absolved". Once a rank tree is absolved,
  * it may unlock new progression paths and provide completion rewards.
- * </p>
  *
- * <p>
- * This entity is mapped to the {@code r_player_rank_tree_completion} table in the database.
- * </p>
+ *
+ * <p>This entity is mapped to the {@code r_player_rank_tree_completion} table in the database.
  *
  * @author JExcellence
  * @version 1.0.0

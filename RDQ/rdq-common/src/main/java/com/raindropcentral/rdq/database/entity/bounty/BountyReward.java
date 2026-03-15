@@ -21,6 +21,9 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * Represents the BountyReward API type.
+ */
 @Entity
 @Table(name = "rdq_bounty_reward")
 @Getter
@@ -46,28 +49,43 @@ public class BountyReward extends BaseEntity {
 
     protected BountyReward() {}
 
+    /**
+     * Executes BountyReward.
+     */
     public BountyReward(@NotNull AbstractReward reward) {
         this.reward = reward;
         this.contributorUniqueId = null;
         this.icon = new IconSection(new EvaluationEnvironmentBuilder());
     }
 
+    /**
+     * Executes BountyReward.
+     */
     public BountyReward(@NotNull AbstractReward reward, @NotNull UUID contributorUniqueId) {
         this.reward = reward;
         this.contributorUniqueId = contributorUniqueId;
         this.icon = new IconSection(new EvaluationEnvironmentBuilder());
     }
 
+    /**
+     * Executes BountyReward.
+     */
     public BountyReward(@NotNull AbstractReward reward, @NotNull IconSection icon, @Nullable UUID contributorUniqueId) {
         this.reward = reward;
         this.icon = icon;
         this.contributorUniqueId = contributorUniqueId;
     }
 
+    /**
+     * Executes grant.
+     */
     public @NotNull CompletableFuture<Boolean> grant(@NotNull Player player) {
         return reward.grant(player);
     }
 
+    /**
+     * Executes equals.
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -75,11 +93,17 @@ public class BountyReward extends BaseEntity {
         return Objects.equals(getId(), other.getId());
     }
 
+    /**
+     * Returns whether hCode.
+     */
     @Override
     public int hashCode() { 
         return Objects.hash(getId()); 
     }
 
+    /**
+     * Executes toString.
+     */
     @Override
     public String toString() {
         return "BountyReward[id=%d, rewardData=%s]".formatted(getId(), reward.toString());

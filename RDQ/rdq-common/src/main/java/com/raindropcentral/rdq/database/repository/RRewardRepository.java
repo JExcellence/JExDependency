@@ -10,10 +10,9 @@ import java.util.function.Function;
 
 /**
  * Repository for managing {@link BaseReward} entities.
- * <p>
- * Extends {@link de.jexcellence.hibernate.repository.CachedRepository} to provide caching and asynchronous database operations
+ *
+ * <p>Extends {@link de.jexcellence.hibernate.repository.CachedRepository} to provide caching and asynchronous database operations
  * for reward entities.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0

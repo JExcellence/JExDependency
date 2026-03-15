@@ -24,15 +24,14 @@ import java.util.logging.Level;
 
 /**
  * Paginated view for selecting a currency to delete with comprehensive safety measures.
- * <p>
- * This view displays all available currencies in a paginated format, allowing
+ *
+ * <p>This view displays all available currencies in a paginated format, allowing
  * administrators to select which currency they want to delete. Each currency entry
  * shows detailed information including the number of affected players and total
  * balances that will be lost. The deletion process includes multiple confirmation
  * steps to prevent accidental data loss.
- * </p>
  *
- * <h3>Key Features:</h3>
+ * <p><strong>Key Features:</strong>
  * <ul>
  *   <li><strong>Currency Selection:</strong> Click-to-select interface for currency deletion</li>
  *   <li><strong>Impact Assessment:</strong> Shows affected players and total balances</li>
@@ -41,7 +40,7 @@ import java.util.logging.Level;
  *   <li><strong>Permission Checks:</strong> Restricted to administrators with delete permissions</li>
  * </ul>
  *
- * <h3>Safety Features:</h3>
+ * <p><strong>Safety Features:</strong>
  * <ul>
  *   <li><strong>Impact Display:</strong> Shows number of players and total currency in circulation</li>
  *   <li><strong>Confirmation Dialog:</strong> Requires explicit confirmation before deletion</li>
@@ -49,7 +48,7 @@ import java.util.logging.Level;
  *   <li><strong>Permission Validation:</strong> Only accessible to authorized administrators</li>
  * </ul>
  *
- * <h3>Deletion Process:</h3>
+ * <p><strong>Deletion Process:</strong>
  * <ol>
  *   <li>Display currency with impact information</li>
  *   <li>Show confirmation dialog with detailed warnings</li>
@@ -79,10 +78,9 @@ public class CurrencyDeletionView extends APaginatedView<Currency> {
 	
 	/**
 	 * Constructs a new {@code CurrencyDeletionView} with the currencies action overview as parent.
-	 * <p>
-	 * The view will display all available currencies for deletion selection and provide
+ *
+ * <p>The view will display all available currencies for deletion selection and provide
 	 * navigation back to the currencies action overview when closed.
-	 * </p>
 	 */
 	public CurrencyDeletionView() {
 		super(CurrenciesActionOverviewView.class);
@@ -90,10 +88,9 @@ public class CurrencyDeletionView extends APaginatedView<Currency> {
 	
 	/**
 	 * Returns the internationalization key for this view.
-	 * <p>
-	 * This key is used to load localized strings for the currency deletion selection
+ *
+ * <p>This key is used to load localized strings for the currency deletion selection
 	 * interface, including titles, labels, warnings, and formatting templates.
-	 * </p>
 	 *
 	 * @return the i18n key for the currency deletion selection UI
 	 */
@@ -104,10 +101,9 @@ public class CurrencyDeletionView extends APaginatedView<Currency> {
 	
 	/**
 	 * Provides the asynchronous data source for the currencies pagination.
-	 * <p>
-	 * This method retrieves all available currencies from the repository with pagination
+ *
+ * <p>This method retrieves all available currencies from the repository with pagination
 	 * support. The results are limited to 128 currencies to optimize performance.
-	 * </p>
 	 *
 	 * @param renderContext the current rendering context, must not be null
 	 * @return a future containing the list of currencies for pagination
@@ -124,12 +120,11 @@ public class CurrencyDeletionView extends APaginatedView<Currency> {
 	
 	/**
 	 * Renders a single currency entry in the pagination view with deletion warnings.
-	 * <p>
-	 * This method creates a visual representation of a currency with a warning-style
+ *
+ * <p>This method creates a visual representation of a currency with a warning-style
 	 * appearance using barrier blocks and red coloring to emphasize the destructive
 	 * nature of the deletion operation. Each entry shows impact information including
 	 * affected players and total balances.
-	 * </p>
 	 *
 	 * @param renderContext the current rendering context, must not be null
 	 * @param itemBuilder the item component builder for creating the display item, must not be null
@@ -208,11 +203,10 @@ public class CurrencyDeletionView extends APaginatedView<Currency> {
 	
 	/**
 	 * Defines the layout structure for the currency deletion selection view.
-	 * <p>
-	 * The layout provides a clean, organized display with currency entries in the center
+ *
+ * <p>The layout provides a clean, organized display with currency entries in the center
 	 * and navigation controls below. The layout emphasizes the serious nature of the
 	 * deletion operation.
-	 * </p>
 	 *
 	 * @return the layout pattern as a string array, never null
 	 */
@@ -228,10 +222,9 @@ public class CurrencyDeletionView extends APaginatedView<Currency> {
 	
 	/**
 	 * Handles additional rendering logic specific to the currency deletion selection view.
-	 * <p>
-	 * Currently, no additional rendering is required for the currency deletion selection,
+ *
+ * <p>Currently, no additional rendering is required for the currency deletion selection,
 	 * as all necessary elements are handled by the pagination system.
-	 * </p>
 	 *
 	 * @param renderContext the current rendering context, must not be null
 	 * @param contextPlayer the player viewing the interface, must not be null
@@ -247,11 +240,10 @@ public class CurrencyDeletionView extends APaginatedView<Currency> {
 	
 	/**
 	 * Handles the currency deletion process with comprehensive safety measures.
-	 * <p>
-	 * This method initiates the currency deletion workflow, including impact assessment,
+ *
+ * <p>This method initiates the currency deletion workflow, including impact assessment,
 	 * confirmation dialogs, and the actual deletion process. It provides detailed
 	 * warnings about the irreversible nature of the operation.
-	 * </p>
 	 *
 	 * @param clickContext the context from the currency selection click, must not be null
 	 * @param currencyToDelete the currency selected for deletion, must not be null
@@ -306,10 +298,9 @@ public class CurrencyDeletionView extends APaginatedView<Currency> {
 	
 	/**
 	 * Handles the cancellation of the currency deletion operation.
-	 * <p>
-	 * This method sends a cancellation message to the requesting player
+ *
+ * <p>This method sends a cancellation message to the requesting player
 	 * when they choose not to proceed with the deletion operation.
-	 * </p>
 	 *
 	 * @param requestingPlayer the player who cancelled the deletion, must not be null
 	 * @param currencyToDelete the currency that was going to be deleted, must not be null
@@ -332,14 +323,13 @@ public class CurrencyDeletionView extends APaginatedView<Currency> {
 	
 	/**
 	 * Executes the actual currency deletion after confirmation.
-	 * <p>
-	 * This method performs the complete deletion process including removing
+ *
+ * <p>This method performs the complete deletion process including removing
 	 * all associated UserCurrency records, updating CurrencyLog records to
 	 * remove foreign key references, deleting the currency from the database,
 	 * updating the cache, and providing user feedback.
-	 * </p>
 	 *
-	 * <h3>Deletion Steps:</h3>
+	 * <p><strong>Deletion Steps:</strong>
 	 * <ol>
 	 *   <li>Send processing notification</li>
 	 *   <li>Delete all associated UserCurrency records</li>
@@ -459,10 +449,9 @@ public class CurrencyDeletionView extends APaginatedView<Currency> {
 	
 	/**
 	 * Sends a success message after completing the currency deletion.
-	 * <p>
-	 * This method sends a detailed success message to the requesting player
+ *
+ * <p>This method sends a detailed success message to the requesting player
 	 * with statistics about the completed deletion operation.
-	 * </p>
 	 *
 	 * @param requestingPlayer the player who requested the deletion, must not be null
 	 * @param deletedCurrency the currency that was deleted, must not be null
@@ -495,10 +484,9 @@ public class CurrencyDeletionView extends APaginatedView<Currency> {
 	
 	/**
 	 * Sends a failure message when the currency deletion fails.
-	 * <p>
-	 * This method sends a failure message to the requesting player when
+ *
+ * <p>This method sends a failure message to the requesting player when
 	 * the deletion operation fails at the database level.
-	 * </p>
 	 *
 	 * @param requestingPlayer the player who requested the deletion, must not be null
 	 * @param currencyToDelete the currency that failed to delete, must not be null
@@ -521,10 +509,9 @@ public class CurrencyDeletionView extends APaginatedView<Currency> {
 	
 	/**
 	 * Sends an error message when the currency deletion encounters an exception.
-	 * <p>
-	 * This method sends detailed error information to the requesting player
+ *
+ * <p>This method sends detailed error information to the requesting player
 	 * when the deletion operation encounters an unexpected exception.
-	 * </p>
 	 *
 	 * @param requestingPlayer the player who requested the deletion, must not be null
 	 * @param currencyToDelete the currency that failed to delete, must not be null

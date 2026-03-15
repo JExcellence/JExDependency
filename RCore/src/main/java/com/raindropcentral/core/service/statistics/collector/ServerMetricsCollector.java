@@ -44,6 +44,9 @@ public class ServerMetricsCollector {
     private int perkActivationCount = 0;
     private int completedBountiesInPeriod = 0;
 
+    /**
+     * Executes ServerMetricsCollector.
+     */
     public ServerMetricsCollector(final @NotNull Plugin plugin) {
         this.plugin = plugin;
         this.customMetricProviders = new ConcurrentHashMap<>();

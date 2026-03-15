@@ -26,10 +26,9 @@ import java.util.logging.Logger;
 
 /**
  * Factory class responsible for loading and initializing the quest system.
- * <p>
- * This class loads quest categories and quest definitions from YAML files,
+ *
+ * <p>This class loads quest categories and quest definitions from YAML files,
  * parses them using ConfigKeeper, and persists them to the database.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0

@@ -12,10 +12,9 @@ import java.util.logging.Logger;
 
 /**
  * Registry for requirement types with dynamic type registration.
- * <p>
- * Supports both the new RequirementType system and legacy string-based registration
+ *
+ * <p>Supports both the new RequirementType system and legacy string-based registration
  * for backward compatibility.
- * </p>
  */
 public final class RequirementRegistry {
 
@@ -35,6 +34,9 @@ public final class RequirementRegistry {
         // No initialization needed here to avoid circular dependencies
     }
 
+    /**
+     * Gets instance.
+     */
     @NotNull
     public static RequirementRegistry getInstance() {
         return INSTANCE;
@@ -112,9 +114,8 @@ public final class RequirementRegistry {
 
     /**
      * Registers a plugin requirement provider.
-     * <p>
-     * This registers all requirement types from the provider and calls its onRegister callback.
-     * </p>
+ *
+ * <p>This registers all requirement types from the provider and calls its onRegister callback.
      *
      * @param provider the provider to register
      */
@@ -208,6 +209,9 @@ public final class RequirementRegistry {
         int totalTypes,
         int providers
     ) {
+        /**
+         * Executes toString.
+         */
         @Override
         public String toString() {
             return String.format(

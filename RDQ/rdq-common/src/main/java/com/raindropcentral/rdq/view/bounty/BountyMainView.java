@@ -43,6 +43,9 @@ public class BountyMainView extends BaseView {
         return 1;
     }
 
+    /**
+     * Executes onFirstRender.
+     */
     @Override
     public void onFirstRender(
         final @NotNull RenderContext render,

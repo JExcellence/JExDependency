@@ -27,7 +27,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Handles downloading dependency artifacts from a curated list of repositories. Downloads are streamed directly to the
+ * Handles downloading dependency artifacts from a curated list of repositories. Downloads are streamed directly to the.
  * plugin's libraries directory, validated as JAR files and optionally executed asynchronously using virtual threads.
  * The downloader keeps track of custom repositories supplied at runtime and logs HTTP outcomes for troubleshooting.
  */
@@ -56,7 +56,7 @@ public class DependencyDownloader {
     }
 
     /**
-     * Registers an additional base repository URL. The URL is normalised to include a trailing slash and will be tried
+     * Registers an additional base repository URL. The URL is normalised to include a trailing slash and will be tried.
      * before the built-in repository list when resolving artifacts.
      *
      * @param repositoryUrl base URL pointing to a Maven-style repository root
@@ -68,7 +68,7 @@ public class DependencyDownloader {
     }
 
     /**
-     * Downloads a dependency asynchronously using the downloader's virtual-thread executor. Callers should inspect the
+     * Downloads a dependency asynchronously using the downloader's virtual-thread executor. Callers should inspect the.
      * returned {@link DownloadResult} to verify success and retrieve the downloaded file.
      *
      * @param coordinate      artifact coordinates to resolve
@@ -87,7 +87,7 @@ public class DependencyDownloader {
     }
 
     /**
-     * Downloads a dependency synchronously. The method validates any cached file before reaching out to remote
+     * Downloads a dependency synchronously. The method validates any cached file before reaching out to remote.
      * repositories, tries custom repositories first and returns a {@link DownloadResult} describing the outcome.
      *
      * @param coordinate      artifact coordinates to resolve
@@ -312,7 +312,7 @@ public class DependencyDownloader {
     }
 
     /**
-     * Shuts down the virtual-thread executor backing asynchronous downloads. Should be invoked when the downloader is
+     * Shuts down the virtual-thread executor backing asynchronous downloads. Should be invoked when the downloader is.
      * no longer needed to allow the JVM to exit cleanly.
      */
     public void shutdown() {

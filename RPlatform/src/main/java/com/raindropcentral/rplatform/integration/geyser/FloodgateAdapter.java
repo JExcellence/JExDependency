@@ -9,10 +9,9 @@ import java.util.UUID;
 
 /**
  * Adapter that wraps Floodgate API calls to isolate the dependency.
- * <p>
- * This class is only instantiated when Floodgate is available on the classpath,
+ *
+ * <p>This class is only instantiated when Floodgate is available on the classpath,
  * preventing ClassNotFoundException in environments without Floodgate.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0

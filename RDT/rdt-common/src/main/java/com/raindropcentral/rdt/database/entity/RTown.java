@@ -55,6 +55,9 @@ import java.util.UUID;
         "unused",
         "JpaDataSourceORMInspection"
 })
+/**
+ * Represents the RTown API type.
+ */
 public class RTown extends BaseEntity {
 
     /** Built-in role ID assigned to the town creator. */

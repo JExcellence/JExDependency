@@ -10,10 +10,9 @@ import java.util.function.Function;
 
 /**
  *
- * <p>
- * Extends {@link de.jexcellence.hibernate.repository.CachedRepository} to provide caching and asynchronous database operations
+ *
+ * <p>Extends {@link de.jexcellence.hibernate.repository.CachedRepository} to provide caching and asynchronous database operations.
  * for player entities, using the player's unique UUID as the cache key.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0

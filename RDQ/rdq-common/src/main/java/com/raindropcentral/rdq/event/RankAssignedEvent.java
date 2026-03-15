@@ -19,6 +19,9 @@ public class RankAssignedEvent extends Event {
 	private final RDQPlayer rdqPlayer;
 	private final RRank rank;
 	
+	/**
+	 * Executes RankAssignedEvent.
+	 */
 	public RankAssignedEvent(
 		final @NotNull Player player,
 		final @NotNull RDQPlayer rdqPlayer,
@@ -29,23 +32,38 @@ public class RankAssignedEvent extends Event {
 		this.rank = rank;
 	}
 	
+	/**
+	 * Gets player.
+	 */
 	public @NotNull Player getPlayer() {
 		return this.player;
 	}
 	
+	/**
+	 * Gets rDQPlayer.
+	 */
 	public @NotNull RDQPlayer getRDQPlayer() {
 		return this.rdqPlayer;
 	}
 	
+	/**
+	 * Gets rank.
+	 */
 	public @NotNull RRank getRank() {
 		return this.rank;
 	}
 	
+	/**
+	 * Gets handlers.
+	 */
 	@Override
 	public @NotNull HandlerList getHandlers() {
 		return HANDLERS;
 	}
 	
+	/**
+	 * Gets handlerList.
+	 */
 	public static HandlerList getHandlerList() {
 		return HANDLERS;
 	}

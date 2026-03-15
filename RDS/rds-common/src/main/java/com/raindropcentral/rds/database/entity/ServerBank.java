@@ -32,6 +32,9 @@ import java.util.Locale;
         "unused",
         "JpaDataSourceORMInspection"
 })
+/**
+ * Represents the ServerBank API type.
+ */
 public class ServerBank extends BaseEntity {
 
     @Column(name = "currency_type", nullable = false)

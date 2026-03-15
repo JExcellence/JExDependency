@@ -4,10 +4,9 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Immutable record representing the progress of a single quest task.
- * <p>
- * This record tracks the current and required progress for a task,
+ *
+ * <p>This record tracks the current and required progress for a task,
  * along with its completion status.
- * </p>
  *
  * @param taskId      the unique task identifier
  * @param taskName    the display name of the task

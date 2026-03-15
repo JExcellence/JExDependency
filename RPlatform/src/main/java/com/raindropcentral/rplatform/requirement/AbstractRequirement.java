@@ -6,9 +6,8 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Base class for all requirement implementations.
- * <p>
- * Each requirement is identified by its type ID which is registered in the RequirementRegistry.
- * </p>
+ *
+ * <p>Each requirement is identified by its type ID which is registered in the RequirementRegistry.
  */
 public abstract non-sealed class AbstractRequirement implements Requirement {
     
@@ -27,6 +26,9 @@ public abstract non-sealed class AbstractRequirement implements Requirement {
         this.consumeOnComplete = consumeOnComplete;
     }
 
+    /**
+     * Gets typeId.
+     */
     @Override
     @NotNull
     public String getTypeId() {

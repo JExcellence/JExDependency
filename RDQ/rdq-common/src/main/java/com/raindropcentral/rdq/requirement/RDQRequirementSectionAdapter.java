@@ -20,10 +20,9 @@ import java.util.logging.Logger;
 
 /**
  * Adapter that converts RDQ's BaseRequirementSection config sections to AbstractRequirement instances.
- * <p>
- * This adapter bridges RDQ's YAML configuration format with RPlatform's requirement system,
+ *
+ * <p>This adapter bridges RDQ's YAML configuration format with RPlatform's requirement system,
  * allowing seamless conversion from config files to runtime requirement objects.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -33,6 +32,9 @@ public class RDQRequirementSectionAdapter implements RequirementSectionAdapter<B
 
     private static final Logger LOGGER = Logger.getLogger(RDQRequirementSectionAdapter.class.getName());
 
+    /**
+     * Executes convert.
+     */
     @Override
     @Nullable
     public AbstractRequirement convert(@NotNull BaseRequirementSection section, @Nullable Map<String, Object> context) {

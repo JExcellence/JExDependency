@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.function.UnaryOperator;
 
 /**
- * Configuration record for {@link CustomAnvilInput} describing initial text, lifecycle behaviour,
+ * Configuration record for {@link CustomAnvilInput} describing initial text, lifecycle behaviour,.
  * and transformation hooks for player input.
  *
  * <p>The config aligns with translation-driven workflows by allowing callers to inject default
@@ -79,7 +79,7 @@ public class CustomAnvilInputConfig {
     }
 
     /**
-     * Configures the view to close immediately when the player interacts with the item placed
+     * Configures the view to close immediately when the player interacts with the item placed.
      * at container's {@link me.devnatan.inventoryframework.ViewType#getResultSlots() first result slot}.
      *
      * @return This anvil input feature config.
@@ -104,8 +104,8 @@ public class CustomAnvilInputConfig {
 
     /**
      * Setups a handler that can be used to transform the input provided by the player.
-     * <p>
-     * Note that it's not called immediately, only when view is closed or the player interacts with
+ *
+ * <p>Note that it's not called immediately, only when view is closed or the player interacts with
      * the item placed at container's {@link me.devnatan.inventoryframework.ViewType#getResultSlots() first result slot}.
      *
      * @param inputChangeHandler The input change handler.

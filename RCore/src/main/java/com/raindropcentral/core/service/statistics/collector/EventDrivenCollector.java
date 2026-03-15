@@ -46,6 +46,9 @@ public class EventDrivenCollector implements Listener {
     private final Map<UUID, ScheduledFuture<?>> consolidationTasks;
     private ScheduledExecutorService executor;
 
+    /**
+     * Executes EventDrivenCollector.
+     */
     public EventDrivenCollector(
         final @NotNull Plugin plugin,
         final @NotNull StatisticsQueueManager queueManager,

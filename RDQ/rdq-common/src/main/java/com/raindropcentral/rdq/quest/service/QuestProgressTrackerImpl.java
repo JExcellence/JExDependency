@@ -25,11 +25,10 @@ import java.util.logging.Logger;
 
 /**
  * Implementation of the quest progress tracker.
- * <p>
- * This service batches progress updates for performance and processes them
+ *
+ * <p>This service batches progress updates for performance and processes them
  * periodically. It handles task completion, quest completion, and reward
  * distribution.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0
@@ -46,7 +45,7 @@ public class QuestProgressTrackerImpl implements QuestProgressTracker {
     private final QuestCompletionHistoryRepository completionHistoryRepository;
     
     /**
-     * Pending progress updates: (playerId, questId, taskId) -> amount
+     * Pending progress updates: (playerId, questId, taskId) -> amount.
      */
     private final Map<ProgressKey, AtomicInteger> pendingUpdates;
     
@@ -70,6 +69,9 @@ public class QuestProgressTrackerImpl implements QuestProgressTracker {
         this.running = false;
     }
     
+    /**
+     * Executes start.
+     */
     @Override
     public void start() {
         if (running) {
@@ -90,6 +92,9 @@ public class QuestProgressTrackerImpl implements QuestProgressTracker {
         LOGGER.info("Quest progress tracker started");
     }
     
+    /**
+     * Executes shutdown.
+     */
     @Override
     @NotNull
     public CompletableFuture<Void> shutdown() {
@@ -110,6 +115,9 @@ public class QuestProgressTrackerImpl implements QuestProgressTracker {
                 .thenRun(() -> LOGGER.info("Quest progress tracker shutdown complete"));
     }
     
+    /**
+     * Executes updateProgress.
+     */
     @Override
     @NotNull
     public CompletableFuture<Void> updateProgress(
@@ -130,6 +138,9 @@ public class QuestProgressTrackerImpl implements QuestProgressTracker {
         return CompletableFuture.completedFuture(null);
     }
     
+    /**
+     * Executes completeTask.
+     */
     @Override
     @NotNull
     public CompletableFuture<Void> completeTask(
@@ -189,6 +200,9 @@ public class QuestProgressTrackerImpl implements QuestProgressTracker {
                 });
     }
     
+    /**
+     * Executes completeQuest.
+     */
     @Override
     @NotNull
     public CompletableFuture<Void> completeQuest(
@@ -240,6 +254,9 @@ public class QuestProgressTrackerImpl implements QuestProgressTracker {
                 });
     }
     
+    /**
+     * Returns whether taskComplete.
+     */
     @Override
     @NotNull
     public CompletableFuture<Boolean> isTaskComplete(
@@ -263,6 +280,9 @@ public class QuestProgressTrackerImpl implements QuestProgressTracker {
                 });
     }
     
+    /**
+     * Gets taskProgress.
+     */
     @Override
     @NotNull
     public CompletableFuture<Integer> getTaskProgress(
@@ -288,6 +308,9 @@ public class QuestProgressTrackerImpl implements QuestProgressTracker {
                 });
     }
     
+    /**
+     * Executes flushPendingUpdates.
+     */
     @Override
     @NotNull
     public CompletableFuture<Void> flushPendingUpdates() {

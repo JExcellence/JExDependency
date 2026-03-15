@@ -14,6 +14,9 @@ import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Represents the RewardService API type.
+ */
 public final class RewardService {
 
     private static final Logger LOGGER = Logger.getLogger(RewardService.class.getName());
@@ -24,10 +27,16 @@ public final class RewardService {
 
     private RewardService() {}
 
+    /**
+     * Gets instance.
+     */
     public static RewardService getInstance() {
         return INSTANCE;
     }
 
+    /**
+     * Executes grant.
+     */
     public @NotNull CompletableFuture<Boolean> grant(@NotNull Player player, @NotNull AbstractReward reward) {
         if (!lifecycleRegistry.executeBeforeGrant(player, reward)) {
             return CompletableFuture.completedFuture(false);
@@ -66,6 +75,9 @@ public final class RewardService {
         });
     }
 
+    /**
+     * Executes grantAll.
+     */
     public @NotNull CompletableFuture<Boolean> grantAll(@NotNull Player player, @NotNull List<AbstractReward> rewards) {
         if (rewards.isEmpty()) {
             return CompletableFuture.completedFuture(true);
@@ -86,6 +98,9 @@ public final class RewardService {
             });
     }
 
+    /**
+     * Executes calculateTotalValue.
+     */
     public double calculateTotalValue(@NotNull List<AbstractReward> rewards) {
         return rewards.stream()
             .mapToDouble(AbstractReward::getEstimatedValue)

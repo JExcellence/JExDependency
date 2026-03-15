@@ -1,5 +1,8 @@
 package com.raindropcentral.rdq.bounty.type;
 
+/**
+ * Represents the EAnnouncementScope API type.
+ */
 public enum EAnnouncementScope {
 
     SERVER,
@@ -7,6 +10,9 @@ public enum EAnnouncementScope {
     TARGET
     ;
 
+    /**
+     * Executes of.
+     */
     public static  EAnnouncementScope of(String value) {
         try  {
             return EAnnouncementScope.valueOf(value);

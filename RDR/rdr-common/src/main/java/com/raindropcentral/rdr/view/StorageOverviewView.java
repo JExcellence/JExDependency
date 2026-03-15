@@ -83,7 +83,7 @@ public class StorageOverviewView extends BaseView {
     }
 
     /**
-     * Renders the storage summary, list-navigation button, storage store button, and optional
+     * Renders the storage summary, list-navigation button, storage store button, and optional.
      * admin button.
      *
      * @param render render context for slot registration

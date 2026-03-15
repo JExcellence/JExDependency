@@ -15,18 +15,16 @@ import java.util.logging.Logger;
 
 /**
  * Service for detecting and interacting with Bedrock Edition players via Floodgate/Geyser.
- * <p>
- * This service provides a clean, non-static API for Bedrock player detection that can be
+ *
+ * <p>This service provides a clean, non-static API for Bedrock player detection that can be
  * registered with the {@link ServiceRegistry} and injected into consuming plugins.
- * </p>
- * <p>
- * Supports multiple detection methods:
+ *
+ * <p>Supports multiple detection methods:
  * <ul>
  *   <li>Floodgate API via ServiceRegistry (preferred)</li>
  *   <li>Direct Floodgate API class loading (fallback)</li>
  *   <li>UUID prefix detection (last resort - checks for Floodgate UUID prefix)</li>
  * </ul>
- * </p>
  *
  * @author JExcellence
  * @version 1.2.0
@@ -193,10 +191,9 @@ public class GeyserService {
 
     /**
      * Checks if a UUID has the Floodgate prefix (starts with 00000000).
-     * <p>
-     * Floodgate assigns UUIDs with version 0 to Bedrock players, which always
+ *
+ * <p>Floodgate assigns UUIDs with version 0 to Bedrock players, which always
      * start with "00000000-" in string form.
-     * </p>
      *
      * @param uuid the UUID to check
      * @return true if the UUID has the Floodgate prefix

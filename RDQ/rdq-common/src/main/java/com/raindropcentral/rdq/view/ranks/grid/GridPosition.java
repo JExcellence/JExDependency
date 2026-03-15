@@ -12,6 +12,9 @@ public class GridPosition {
 	public final int x;
 	public final int y;
 	
+	/**
+	 * Executes GridPosition.
+	 */
 	public GridPosition(
 		final int x,
 		final int y
@@ -47,6 +50,9 @@ public class GridPosition {
 		return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 	}
 	
+	/**
+	 * Executes equals.
+	 */
 	@Override
 	public boolean equals(
 		final Object obj
@@ -60,6 +66,9 @@ public class GridPosition {
 		return this.x == that.x && this.y == that.y;
 	}
 	
+	/**
+	 * Returns whether hCode.
+	 */
 	@Override
 	public int hashCode() {
 		
@@ -69,6 +78,9 @@ public class GridPosition {
 		);
 	}
 	
+	/**
+	 * Executes toString.
+	 */
 	@Override
 	public String toString() {
 		

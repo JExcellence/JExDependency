@@ -9,9 +9,15 @@ import jakarta.persistence.Converter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents the RewardListConverter API type.
+ */
 @Converter
 public class RewardListConverter implements AttributeConverter<List<AbstractReward>, String> {
 
+    /**
+     * Executes convertToDatabaseColumn.
+     */
     @Override
     public String convertToDatabaseColumn(List<AbstractReward> requirements) {
         if (requirements == null || requirements.isEmpty()) {
@@ -24,6 +30,9 @@ public class RewardListConverter implements AttributeConverter<List<AbstractRewa
         }
     }
 
+    /**
+     * Executes convertToEntityAttribute.
+     */
     @Override
     public List<AbstractReward> convertToEntityAttribute(String dbData) {
         if (dbData == null || dbData.isEmpty()) {

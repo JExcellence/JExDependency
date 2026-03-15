@@ -11,10 +11,9 @@ import java.util.Map;
 
 /**
  * Configuration section for composite requirements.
- * <p>
- * This section handles all configuration options specific to CompositeRequirement,
+ *
+ * <p>This section handles all configuration options specific to CompositeRequirement,
  * including sub-requirements, logical operators, and minimum required counts.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -84,10 +83,16 @@ public class CompositeRequirementSection extends AConfigSection {
 	}
 	
 	
+	/**
+	 * Gets description.
+	 */
 	public String getDescription() {
 		return this.description;
 	}
 	
+	/**
+	 * Gets allowPartialProgress.
+	 */
 	public Boolean getAllowPartialProgress() {
 		return this.allowPartialProgress != null ? this.allowPartialProgress : true;
 	}

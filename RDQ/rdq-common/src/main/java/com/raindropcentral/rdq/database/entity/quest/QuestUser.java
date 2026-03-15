@@ -16,10 +16,9 @@ import java.util.UUID;
 
 /**
  * Entity representing a player's progress on a quest.
- * <p>
- * Tracks when a player started a quest, their progress on individual tasks,
+ *
+ * <p>Tracks when a player started a quest, their progress on individual tasks,
  * and completion status.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0
@@ -36,6 +35,9 @@ import java.util.UUID;
                 @Index(name = "idx_quest_user_active", columnList = "player_id, completed")
         }
 )
+/**
+ * Represents the QuestUser API type.
+ */
 public class QuestUser extends BaseEntity {
     
     @Serial
@@ -171,6 +173,9 @@ public class QuestUser extends BaseEntity {
         progress.setQuestUser(null);
     }
     
+    /**
+     * Executes equals.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -184,6 +189,9 @@ public class QuestUser extends BaseEntity {
                 quest != null && quest.equals(questUser.quest);
     }
     
+    /**
+     * Returns whether hCode.
+     */
     @Override
     public int hashCode() {
         if (this.getId() != null) {
@@ -193,6 +201,9 @@ public class QuestUser extends BaseEntity {
         return Objects.hash(playerId, quest);
     }
     
+    /**
+     * Executes toString.
+     */
     @Override
     public String toString() {
         return "QuestUser{" +

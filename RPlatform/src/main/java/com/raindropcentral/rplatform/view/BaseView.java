@@ -37,7 +37,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Template-method implementation for Inventory Framework views that centralizes
+ * Template-method implementation for Inventory Framework views that centralizes.
  * common layout, translation, and navigation behaviour.
  *
  * @author JExcellence
@@ -55,16 +55,19 @@ public abstract class BaseView extends View {
         private static final @Nullable Field ITEM_BUILDER_RENDER_HANDLER_FIELD = resolveItemBuilderField("renderHandler");
 
         /**
-         * State reference to the parent view used for automatic back navigation
+         * State reference to the parent view used for automatic back navigation.
          * through the {@link Return} utility head.
          */
         protected final Class<? extends View> parentClazz;
         /**
-         * Cached base translation key resolved during construction to avoid
+         * Cached base translation key resolved during construction to avoid.
          * repeated {@link #getKey()} lookups when building child keys.
          */
         private final   String                baseKey;
 	
+	/**
+	 * Executes BaseView.
+	 */
 	public BaseView(
 		final @Nullable Class<? extends View> parentClazz
 	) {
@@ -73,6 +76,9 @@ public abstract class BaseView extends View {
 		this.baseKey = this.getKey();
 	}
 	
+	/**
+	 * Executes BaseView.
+	 */
 	public BaseView() {
 		
 		this(null);
@@ -86,7 +92,7 @@ public abstract class BaseView extends View {
         protected abstract String getKey();
 
         /**
-         * Resolves the translation key used for inventory titles by appending the {@code .title}
+         * Resolves the translation key used for inventory titles by appending the {@code .title}.
          * suffix to the base key. Subclasses may override for bespoke naming.
          *
          * @return the fully qualified title translation key
@@ -96,7 +102,7 @@ public abstract class BaseView extends View {
         }
 
         /**
-         * Creates an {@link I18n.Builder} scoped to the view's translation namespace so
+         * Creates an {@link I18n.Builder} scoped to the view's translation namespace so.
          * that downstream calls only provide the suffix for a specific message or lore entry.
          *
          * @param suffix the suffix to append to the base key (for example {@code "button.confirm"})
@@ -111,7 +117,7 @@ public abstract class BaseView extends View {
 	}
 	
         /**
-         * Supplies the default inventory layout, mapping template characters to Inventory Framework
+         * Supplies the default inventory layout, mapping template characters to Inventory Framework.
          * layout slots for consistent background and navigation placement.
          *
          * @return the layout rows, each string representing one row of nine slots
@@ -146,7 +152,7 @@ public abstract class BaseView extends View {
 	}
 	
         /**
-         * Identifies the {@link Material} used while auto-filling empty slots before rendering
+         * Identifies the {@link Material} used while auto-filling empty slots before rendering.
          * interactive components.
          *
          * @return the filler material employed by {@link #createFillItem(Player)}
@@ -156,7 +162,7 @@ public abstract class BaseView extends View {
         }
 
         /**
-         * Signals whether {@link #autoFillEmptySlots(RenderContext, Player)} should seed unused
+         * Signals whether {@link #autoFillEmptySlots(RenderContext, Player)} should seed unused.
          * slots with the filler item ahead of custom rendering.
          *
          * @return {@code true} if empty slots are padded automatically; {@code false} otherwise
@@ -204,7 +210,7 @@ public abstract class BaseView extends View {
 	}
 	
         /**
-         * Handles activation of the {@link Return} head and either closes the inventory or
+         * Handles activation of the {@link Return} head and either closes the inventory or.
          * navigates back to the configured {@link #parentClazz}.
          *
          * @param clickContext the click context provided by Inventory Framework
@@ -311,7 +317,7 @@ public abstract class BaseView extends View {
 	}
 	
         /**
-         * Configures the {@link ViewConfigBuilder} using either the declarative layout or fallback
+         * Configures the {@link ViewConfigBuilder} using either the declarative layout or fallback.
          * size and wires any scheduled updates prior to the view being opened.
          *
          * @param config the configuration builder provided during the initialization phase
@@ -346,7 +352,7 @@ public abstract class BaseView extends View {
 	}
 	
         /**
-         * Applies layout or size configuration, translation-backed titles, and ensures the
+         * Applies layout or size configuration, translation-backed titles, and ensures the.
          * Inventory Framework config stays synchronized with the player's locale.
          *
          * @param open the open context triggered when the view is presented to the player
@@ -371,7 +377,7 @@ public abstract class BaseView extends View {
 	}
 	
         /**
-         * Performs initial render orchestration by drawing navigation heads, delegating to the
+         * Performs initial render orchestration by drawing navigation heads, delegating to the.
          * subclass {@link #onFirstRender(RenderContext, Player)} implementation, and optionally
          * filling unused slots.
          *
@@ -396,6 +402,9 @@ public abstract class BaseView extends View {
 		this.decorateFreeEditionButtons(render);
 	}
 
+    /**
+     * Executes onResume.
+     */
     @Override
     public void onResume(@NotNull Context origin, @NotNull Context target) {
         super.onResume(origin, target);
@@ -663,7 +672,7 @@ public abstract class BaseView extends View {
 	}
 	
         /**
-         * Abstract method for additional rendering logic executed after navigation heads and
+         * Abstract method for additional rendering logic executed after navigation heads and.
          * auto-fill behaviour complete.
          *
          * @param render the render context for slot registration
@@ -675,7 +684,7 @@ public abstract class BaseView extends View {
         );
 
         /**
-         * Places the {@link Return} head in the bottom-left slot when the layout spans
+         * Places the {@link Return} head in the bottom-left slot when the layout spans.
          * multiple rows, wiring it to {@link #handleBackButtonClick(SlotClickContext)}.
          * 
          * <p>The back button is placed at the first slot of the last row (bottom-left corner).

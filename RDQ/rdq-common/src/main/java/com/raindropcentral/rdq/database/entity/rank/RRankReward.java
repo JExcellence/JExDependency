@@ -16,15 +16,13 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * Entity representing a single reward for a {@link RRank} in the RaindropQuests system.
- * <p>
- * This entity encapsulates a single {@link BaseReward} that is granted when achieving the associated rank.
- * It also includes an icon for visual representation and display order.
- * </p>
  *
- * <p>
- * Multiple instances of this entity can exist for a single rank, representing different rewards
+ * <p>This entity encapsulates a single {@link BaseReward} that is granted when achieving the associated rank.
+ * It also includes an icon for visual representation and display order.
+ *
+ *
+ * <p>Multiple instances of this entity can exist for a single rank, representing different rewards
  * that are granted when the rank is achieved.
- * </p>
  */
 @Setter
 @Getter
@@ -144,6 +142,9 @@ public class RRankReward extends BaseEntity {
         return this.reward.getEstimatedValue();
     }
 
+    /**
+     * Executes equals.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -163,6 +164,9 @@ public class RRankReward extends BaseEntity {
         return false;
     }
 
+    /**
+     * Returns whether hCode.
+     */
     @Override
     public int hashCode() {
         if (this.getId() != null) {

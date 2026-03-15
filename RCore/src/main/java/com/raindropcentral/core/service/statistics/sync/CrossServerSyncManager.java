@@ -35,6 +35,9 @@ public class CrossServerSyncManager {
     // Callback for applying synced statistics
     private SyncCallback syncCallback;
 
+    /**
+     * Executes CrossServerSyncManager.
+     */
     public CrossServerSyncManager(
         final @NotNull RCentralApiClient apiClient,
         final @NotNull String apiKey,
@@ -232,11 +235,11 @@ public class CrossServerSyncManager {
      * Statistic scope for cross-server sync.
      */
     public enum StatisticScope {
-        /** Statistic is global across all servers */
+        /** Statistic is global across all servers. */
         GLOBAL,
-        /** Statistic is specific to a server */
+        /** Statistic is specific to a server. */
         SERVER_SPECIFIC,
-        /** Statistic is specific to a world */
+        /** Statistic is specific to a world. */
         WORLD_SPECIFIC
     }
 

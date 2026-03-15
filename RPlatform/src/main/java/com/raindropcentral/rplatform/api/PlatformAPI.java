@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Shared abstraction that exposes messaging, item utilities, and scheduling primitives across
+ * Shared abstraction that exposes messaging, item utilities, and scheduling primitives across.
  * Spigot, Paper, and Folia server implementations.
  *
  * <p><strong>Threading:</strong> Unless noted otherwise, callers must execute operations from the

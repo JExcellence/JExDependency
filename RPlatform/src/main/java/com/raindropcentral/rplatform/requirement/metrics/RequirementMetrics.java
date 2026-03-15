@@ -9,9 +9,8 @@ import java.util.concurrent.atomic.LongAdder;
 
 /**
  * Metrics tracking for requirement operations.
- * <p>
- * Tracks performance, success rates, and usage statistics.
- * </p>
+ *
+ * <p>Tracks performance, success rates, and usage statistics.
  */
 public final class RequirementMetrics {
 
@@ -24,6 +23,9 @@ public final class RequirementMetrics {
 
     private RequirementMetrics() {}
 
+    /**
+     * Gets instance.
+     */
     @NotNull
     public static RequirementMetrics getInstance() {
         return INSTANCE;
@@ -31,16 +33,25 @@ public final class RequirementMetrics {
 
     // ==================== Recording ====================
 
+    /**
+     * Executes recordCheck.
+     */
     public void recordCheck(@NotNull String typeId, long durationNanos, boolean met) {
         totalChecks.increment();
         getOrCreateMetrics(typeId).recordCheck(durationNanos, met);
     }
 
+    /**
+     * Executes recordConsume.
+     */
     public void recordConsume(@NotNull String typeId, long durationNanos) {
         totalConsumes.increment();
         getOrCreateMetrics(typeId).recordConsume(durationNanos);
     }
 
+    /**
+     * Executes recordError.
+     */
     public void recordError(@NotNull String typeId) {
         totalErrors.increment();
         getOrCreateMetrics(typeId).recordError();
@@ -48,28 +59,46 @@ public final class RequirementMetrics {
 
     // ==================== Retrieval ====================
 
+    /**
+     * Gets metrics.
+     */
     @NotNull
     public TypeMetrics getMetrics(@NotNull String typeId) {
         return metricsByType.getOrDefault(typeId, new TypeMetrics());
     }
 
+    /**
+     * Gets allMetrics.
+     */
     @NotNull
     public Map<String, TypeMetrics> getAllMetrics() {
         return Map.copyOf(metricsByType);
     }
 
+    /**
+     * Gets totalChecks.
+     */
     public long getTotalChecks() {
         return totalChecks.sum();
     }
 
+    /**
+     * Gets totalConsumes.
+     */
     public long getTotalConsumes() {
         return totalConsumes.sum();
     }
 
+    /**
+     * Gets totalErrors.
+     */
     public long getTotalErrors() {
         return totalErrors.sum();
     }
 
+    /**
+     * Executes reset.
+     */
     public void reset() {
         metricsByType.clear();
         totalChecks.reset();
@@ -109,37 +138,61 @@ public final class RequirementMetrics {
             errorCount.increment();
         }
 
+        /**
+         * Gets checkCount.
+         */
         public long getCheckCount() {
             return checkCount.sum();
         }
 
+        /**
+         * Gets metCount.
+         */
         public long getMetCount() {
             return metCount.sum();
         }
 
+        /**
+         * Gets consumeCount.
+         */
         public long getConsumeCount() {
             return consumeCount.sum();
         }
 
+        /**
+         * Gets errorCount.
+         */
         public long getErrorCount() {
             return errorCount.sum();
         }
 
+        /**
+         * Gets successRate.
+         */
         public double getSuccessRate() {
             long checks = checkCount.sum();
             return checks > 0 ? (double) metCount.sum() / checks : 0.0;
         }
 
+        /**
+         * Gets averageCheckTimeMs.
+         */
         public double getAverageCheckTimeMs() {
             long checks = checkCount.sum();
             return checks > 0 ? totalCheckTimeNanos.get() / (double) checks / 1_000_000 : 0.0;
         }
 
+        /**
+         * Gets averageConsumeTimeMs.
+         */
         public double getAverageConsumeTimeMs() {
             long consumes = consumeCount.sum();
             return consumes > 0 ? totalConsumeTimeNanos.get() / (double) consumes / 1_000_000 : 0.0;
         }
 
+        /**
+         * Executes toString.
+         */
         @Override
         public String toString() {
             return String.format(

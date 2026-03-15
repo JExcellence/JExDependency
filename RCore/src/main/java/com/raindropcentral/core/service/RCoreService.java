@@ -11,7 +11,7 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * Public contract that exposes asynchronous player and statistic operations backed by the RCore
+ * Public contract that exposes asynchronous player and statistic operations backed by the RCore.
  * persistence layer.
  *
  * <p>Implementations execute work on the executor provided by the active {@code RCoreBackend} and
@@ -313,7 +313,7 @@ public interface RCoreService {
     );
 
     /**
-     * Counts the number of statistics belonging to the supplied plugin namespace for the player
+     * Counts the number of statistics belonging to the supplied plugin namespace for the player.
      * identified by {@link UUID}.
      *
      * <p>The count executes asynchronously on the backend executor. If datastore queries fail, the
@@ -328,7 +328,7 @@ public interface RCoreService {
     CompletableFuture<Long> getStatisticCountForPluginAsync(@NotNull UUID uniqueId, @NotNull String plugin);
 
     /**
-     * Counts the number of statistics belonging to the supplied plugin namespace for the player
+     * Counts the number of statistics belonging to the supplied plugin namespace for the player.
      * referenced by {@link OfflinePlayer}.
      *
      * <p>This overload resolves the player identifier and delegates to

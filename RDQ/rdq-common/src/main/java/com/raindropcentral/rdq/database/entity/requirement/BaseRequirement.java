@@ -17,10 +17,9 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Entity representing a requirement in the RaindropQuests system.
- * <p>
- * This entity encapsulates an {@link AbstractRequirement} from RPlatform and its visual icon,
+ *
+ * <p>This entity encapsulates an {@link AbstractRequirement} from RPlatform and its visual icon,
  * providing convenience methods for requirement evaluation, progress calculation, and resource consumption.
- * </p>
  */
 @Entity
 @Table(name = "r_requirement")
@@ -57,6 +56,9 @@ public class BaseRequirement extends BaseEntity {
     protected BaseRequirement() {
     }
 
+    /**
+     * Executes BaseRequirement.
+     */
     public BaseRequirement(
             @NotNull AbstractRequirement requirement,
             @NotNull IconSection icon
@@ -66,18 +68,30 @@ public class BaseRequirement extends BaseEntity {
         this.icon = icon;
     }
 
+    /**
+     * Returns whether met.
+     */
     public boolean isMet(@NotNull Player player) {
         return requirement.isMet(player);
     }
 
+    /**
+     * Executes calculateProgress.
+     */
     public double calculateProgress(@NotNull Player player) {
         return requirement.calculateProgress(player);
     }
 
+    /**
+     * Executes consume.
+     */
     public void consume(@NotNull Player player) {
         requirement.consume(player);
     }
 
+    /**
+     * Gets typeId.
+     */
     public String getTypeId() {
         return requirement.getTypeId();
     }

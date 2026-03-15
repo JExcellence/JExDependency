@@ -7,7 +7,7 @@ import org.bukkit.potion.PotionType;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Version-agnostic interface for potion-specific builder methods covering base potion types and
+ * Version-agnostic interface for potion-specific builder methods covering base potion types and.
  * supplemental effects.
  *
  * <p>Implementations extend the unified item builder contract and expose fluent APIs that work

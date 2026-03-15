@@ -20,10 +20,9 @@ import java.util.logging.Logger;
 
 /**
  * Adapter that converts BaseRequirementSection to AbstractRequirement.
- * <p>
- * This adapter bridges the RDQ config system with the RPlatform requirement system,
+ *
+ * <p>This adapter bridges the RDQ config system with the RPlatform requirement system,
  * allowing BaseRequirementSection instances to be converted to AbstractRequirement.
- * </p>
  */
 public class BaseRequirementSectionAdapter implements RequirementSectionAdapter<BaseRequirementSection> {
 
@@ -32,11 +31,17 @@ public class BaseRequirementSectionAdapter implements RequirementSectionAdapter<
 
     private BaseRequirementSectionAdapter() {}
 
+    /**
+     * Gets instance.
+     */
     @NotNull
     public static BaseRequirementSectionAdapter getInstance() {
         return INSTANCE;
     }
 
+    /**
+     * Executes convert.
+     */
     @Override
     @Nullable
     public AbstractRequirement convert(@NotNull BaseRequirementSection section, @Nullable Map<String, Object> context) {

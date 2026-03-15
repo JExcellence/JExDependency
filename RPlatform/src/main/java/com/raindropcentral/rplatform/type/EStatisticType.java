@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  * requirements or perk unlock conditions—reference a consistent taxonomy with well-defined
  * defaults.</p>
  *
- * <h3>Categories</h3>
+ * <p><strong>Categories</strong>
  * <ul>
  *     <li><strong>Core:</strong> Basic identity information and login history seeded on first join.</li>
  *     <li><strong>Gameplay:</strong> Sandbox counters summarising moment-to-moment player actions.</li>

@@ -4,10 +4,9 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Sealed interface representing the result of attempting to abandon a quest.
- * <p>
- * This uses Java's sealed types to provide type-safe result handling with
+ *
+ * <p>This uses Java's sealed types to provide type-safe result handling with
  * pattern matching support.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0

@@ -11,15 +11,13 @@ import java.util.concurrent.ExecutorService;
 
 /**
  * Repository for managing {@link Currency} entities with caching support.
- * <p>
- * This repository provides asynchronous and cached access to currency entities,
+ *
+ * <p>This repository provides asynchronous and cached access to currency entities,
  * allowing efficient retrieval and management of currencies by their unique identifier.
  * It extends {@link CachedRepository} to leverage generic CRUD operations and caching.
- * </p>
  *
- * <p>
- * The repository supports the following operations:
- * </p>
+ *
+ * <p>The repository supports the following operations:
  * <ul>
  *   <li>Creating new currency entities</li>
  *   <li>Updating existing currency entities</li>
@@ -28,9 +26,8 @@ import java.util.concurrent.ExecutorService;
  *   <li>Cached lookups for improved performance</li>
  * </ul>
  *
- * <p>
- * Example usage:
- * </p>
+ *
+ * <p>Example usage:
  * <pre>{@code
  * CurrencyRepository repository = new CurrencyRepository(executorService, entityManagerFactory);
  * Optional<Currency> currency = repository.findByKey("gold").join();
@@ -46,10 +43,9 @@ public class CurrencyRepository extends CachedRepository<Currency, Long, String>
 	
 	/**
 	 * Constructs a new {@code CurrencyRepository} with the specified executor service and entity manager factory.
-	 * <p>
-	 * The repository will use the provided executor service for asynchronous operations and the entity manager factory
+ *
+ * <p>The repository will use the provided executor service for asynchronous operations and the entity manager factory
 	 * for JPA database operations. The cache key is configured to use the currency's unique identifier.
-	 * </p>
 	 *
 	 * @param asyncExecutorService the executor service for handling asynchronous database operations, must not be null
 	 * @param jpaEntityManagerFactory the entity manager factory for JPA database operations, must not be null

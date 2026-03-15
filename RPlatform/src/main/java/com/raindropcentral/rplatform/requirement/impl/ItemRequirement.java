@@ -17,6 +17,9 @@ import java.util.Objects;
 import java.util.logging.Logger;
 import java.util.stream.IntStream;
 
+/**
+ * Represents the ItemRequirement API type.
+ */
 public final class ItemRequirement extends AbstractRequirement {
 
     private static final Logger LOGGER = Logger.getLogger(ItemRequirement.class.getName());
@@ -49,6 +52,9 @@ public final class ItemRequirement extends AbstractRequirement {
         this.exactMatch = true;
     }
 
+    /**
+     * Executes ItemRequirement.
+     */
     public ItemRequirement(
             @JsonProperty("requiredItems") @Nullable final List<ItemStack> requiredItems,
             @JsonProperty("itemBuilders") @Nullable final List<ItemBuilder> itemBuilders,
@@ -59,6 +65,9 @@ public final class ItemRequirement extends AbstractRequirement {
         this(requiredItems, null, itemBuilders, consumeOnComplete, description, exactMatch);
     }
 
+    /**
+     * Executes ItemRequirement.
+     */
     @JsonCreator
     public ItemRequirement(
             @JsonProperty("requiredItems") @Nullable final List<ItemStack> requiredItems,
@@ -112,6 +121,9 @@ public final class ItemRequirement extends AbstractRequirement {
     }
 
 
+    /**
+     * Returns whether met.
+     */
     @Override
     public boolean isMet(@NotNull Player player) {
         return IntStream.range(0, this.requiredItems.size())
@@ -122,6 +134,9 @@ public final class ItemRequirement extends AbstractRequirement {
                 ));
     }
 
+    /**
+     * Executes calculateProgress.
+     */
     @Override
     public double calculateProgress(@NotNull Player player) {
         if (this.requiredItems.isEmpty()) return 1.0;
@@ -140,6 +155,9 @@ public final class ItemRequirement extends AbstractRequirement {
         return totalRequired > 0 ? Math.min(1.0, totalCollected / totalRequired) : 1.0;
     }
 
+    /**
+     * Executes consume.
+     */
     @Override
     public void consume(@NotNull Player player) {
         if (!this.consumeOnComplete) return;
@@ -148,22 +166,43 @@ public final class ItemRequirement extends AbstractRequirement {
         }
     }
 
+    /**
+     * Gets descriptionKey.
+     */
     @Override
     public @NotNull String getDescriptionKey() {
         return "requirement.item";
     }
 
+    /**
+     * Gets requiredItems.
+     */
     public List<ItemStack> getRequiredItems() {
         return IntStream.range(0, this.requiredItems.size())
                 .mapToObj(this::createRequiredItemCopy)
                 .collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
     }
 
+    /**
+     * Gets itemBuilders.
+     */
     public List<ItemBuilder> getItemBuilders() { return new ArrayList<>(itemBuilders); }
+    /**
+     * Returns whether consumeOnComplete.
+     */
     public boolean isConsumeOnComplete() { return consumeOnComplete; }
+    /**
+     * Gets description.
+     */
     public @Nullable String getDescription() { return description; }
+    /**
+     * Returns whether exactMatch.
+     */
     public boolean isExactMatch() { return exactMatch; }
 
+    /**
+     * Gets detailedProgress.
+     */
     @JsonIgnore
     @NotNull
     public List<ItemProgress> getDetailedProgress(final @NotNull Player player) {
@@ -181,6 +220,9 @@ public final class ItemRequirement extends AbstractRequirement {
                 .toList();
     }
 
+    /**
+     * Gets missingItems.
+     */
     @JsonIgnore
     @NotNull
     public List<ItemStack> getMissingItems(final @NotNull Player player) {
@@ -199,6 +241,9 @@ public final class ItemRequirement extends AbstractRequirement {
         return missing;
     }
 
+    /**
+     * Executes validate.
+     */
     @JsonIgnore
     public void validate() {
         if (this.requiredItems.isEmpty()) {
@@ -302,6 +347,9 @@ public final class ItemRequirement extends AbstractRequirement {
         return item;
     }
 
+    /**
+     * Represents the ItemProgress API type.
+     */
     public record ItemProgress(
             int index,
             @NotNull ItemStack requiredItem,
@@ -310,6 +358,9 @@ public final class ItemRequirement extends AbstractRequirement {
             double progress,
             boolean completed
     ) {
+        /**
+         * Executes ItemProgress.
+         */
         public ItemProgress(
                 final int index,
                 final @NotNull ItemStack requiredItem,
@@ -326,16 +377,25 @@ public final class ItemRequirement extends AbstractRequirement {
             this.completed = completed;
         }
 
+        /**
+         * Executes requiredItem.
+         */
         @Override
         @NotNull
         public ItemStack requiredItem() {
             return this.requiredItem.clone();
         }
 
+        /**
+         * Gets progressPercentage.
+         */
         public int getProgressPercentage() {
             return (int) (this.progress * 100);
         }
 
+        /**
+         * Gets shortage.
+         */
         public int getShortage() {
             return Math.max(0, this.requiredAmount - this.currentAmount);
         }

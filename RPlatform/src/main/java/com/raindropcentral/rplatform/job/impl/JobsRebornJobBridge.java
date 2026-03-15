@@ -37,16 +37,25 @@ public final class JobsRebornJobBridge extends AbstractReflectionJobBridge {
     public JobsRebornJobBridge() {
     }
 
+    /**
+     * Gets integrationId.
+     */
     @Override
     public @NotNull String getIntegrationId() {
         return INTEGRATION_ID;
     }
 
+    /**
+     * Gets pluginName.
+     */
     @Override
     public @NotNull String getPluginName() {
         return PLUGIN_NAME;
     }
 
+    /**
+     * Returns whether available.
+     */
     @Override
     public boolean isAvailable() {
         final Plugin installedPlugin = resolvePlugin(PLUGIN_NAME, "JobsReborn");
@@ -65,6 +74,9 @@ public final class JobsRebornJobBridge extends AbstractReflectionJobBridge {
         return this.jobsClass != null;
     }
 
+    /**
+     * Gets jobLevel.
+     */
     @Override
     public double getJobLevel(@NotNull Player player, @NotNull String jobId) {
         if (!isAvailable() || jobId.isBlank()) {

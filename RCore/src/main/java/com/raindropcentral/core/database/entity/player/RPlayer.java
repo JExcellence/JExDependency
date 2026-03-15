@@ -71,10 +71,16 @@ public class RPlayer extends BaseEntity {
         return this.uniqueId;
     }
 
+    /**
+     * Gets playerName.
+     */
     public @NotNull String getPlayerName() {
         return this.playerName;
     }
 
+    /**
+     * Performs updatePlayerName.
+     */
     public void updatePlayerName(final @NotNull String newName) {
         this.playerName = validatePlayerName(newName);
     }
@@ -87,28 +93,46 @@ public class RPlayer extends BaseEntity {
         return this.lastSeen;
     }
 
+    /**
+     * Performs updateLastSeen.
+     */
     public void updateLastSeen() {
         this.lastSeen = LocalDateTime.now();
     }
 
+    /**
+     * Gets serversJoined.
+     */
     public @NotNull Set<RCentralServer> getServersJoined() {
         return this.serversJoined;
     }
 
+    /**
+     * Performs addServerJoined.
+     */
     public void addServerJoined(final @NotNull RCentralServer server) {
         this.serversJoined.add(server);
     }
 
+    /**
+     * Gets playerStatistic.
+     */
     public @Nullable RPlayerStatistic getPlayerStatistic() {
         return this.playerStatistic;
     }
 
+    /**
+     * Sets playerStatistic.
+     */
     public void setPlayerStatistic(final @NotNull RPlayerStatistic playerStatistic) {
         Objects.requireNonNull(playerStatistic, "playerStatistic cannot be null");
         this.playerStatistic = playerStatistic;
         playerStatistic.setPlayer(this);
     }
 
+    /**
+     * Returns whether statistics.
+     */
     public boolean hasStatistics() {
         return this.playerStatistic != null && !this.playerStatistic.getStatistics().isEmpty();
     }

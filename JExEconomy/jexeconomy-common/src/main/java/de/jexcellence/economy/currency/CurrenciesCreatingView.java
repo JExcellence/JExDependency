@@ -22,15 +22,14 @@ import java.util.Map;
 
 /**
  * Interactive view for creating and configuring new currencies in the system.
- * <p>
- * This view provides a comprehensive interface for currency creation, allowing users to
+ *
+ * <p>This view provides a comprehensive interface for currency creation, allowing users to
  * configure all aspects of a currency including identifier, symbol, icon, prefix, and suffix.
  * The view integrates with multiple anvil input views for detailed property configuration
  * and handles the complete currency creation workflow including database persistence
  * and player account initialization.
- * </p>
  *
- * <h3>Key Features:</h3>
+ * <p><strong>Key Features:</strong>
  * <ul>
  *   <li><strong>Interactive Configuration:</strong> Click-to-edit interface for all currency properties</li>
  *   <li><strong>Real-time Validation:</strong> Dynamic validation and state management</li>
@@ -39,7 +38,7 @@ import java.util.Map;
  *   <li><strong>State Management:</strong> Maintains currency state across view transitions</li>
  * </ul>
  *
- * <h3>Configuration Elements:</h3>
+ * <p><strong>Configuration Elements:</strong>
  * <ul>
  *   <li><strong>Identifier (n):</strong> Unique currency identifier configuration</li>
  *   <li><strong>Symbol (s):</strong> Currency symbol and visual representation</li>
@@ -49,7 +48,7 @@ import java.util.Map;
  *   <li><strong>Create Button (c):</strong> Finalizes currency creation process</li>
  * </ul>
  *
- * <h3>Creation Workflow:</h3>
+ * <p><strong>Creation Workflow:</strong>
  * <ol>
  *   <li>Configure currency properties through anvil input views</li>
  *   <li>Validate required fields (identifier and symbol)</li>
@@ -83,10 +82,9 @@ public class CurrenciesCreatingView extends BaseView {
 	
 	/**
 	 * Constructs a new {@code CurrenciesCreatingView} with the currencies action overview as parent.
-	 * <p>
-	 * The view will provide currency creation functionality and navigate back to the
+ *
+ * <p>The view will provide currency creation functionality and navigate back to the
 	 * currencies action overview when closed or cancelled.
-	 * </p>
 	 */
 	public CurrenciesCreatingView() {
 		super(CurrenciesActionOverviewView.class);
@@ -94,10 +92,9 @@ public class CurrenciesCreatingView extends BaseView {
 	
 	/**
 	 * Returns the internationalization key for this view.
-	 * <p>
-	 * This key is used to load localized strings for the currency creation interface,
+ *
+ * <p>This key is used to load localized strings for the currency creation interface,
 	 * including titles, labels, and formatting templates.
-	 * </p>
 	 *
 	 * @return the i18n key for the currencies creating UI
 	 */
@@ -108,12 +105,11 @@ public class CurrenciesCreatingView extends BaseView {
 	
 	/**
 	 * Defines the layout structure for the currency creation view.
-	 * <p>
-	 * The layout organizes currency configuration elements in a user-friendly
+ *
+ * <p>The layout organizes currency configuration elements in a user-friendly
 	 * arrangement with the creation button positioned for easy access.
-	 * </p>
 	 *
-	 * <h3>Layout Mapping:</h3>
+	 * <p><strong>Layout Mapping:</strong>
 	 * <ul>
 	 *   <li><strong>n:</strong> Currency identifier configuration</li>
 	 *   <li><strong>s:</strong> Currency symbol configuration</li>
@@ -137,13 +133,12 @@ public class CurrenciesCreatingView extends BaseView {
 	
 	/**
 	 * Handles view resumption when returning from anvil input views.
-	 * <p>
-	 * This method is called when the user returns from an anvil input view after
+ *
+ * <p>This method is called when the user returns from an anvil input view after
 	 * configuring a currency property. It updates the currency state with any
 	 * changes made in the anvil view and refreshes the interface.
-	 * </p>
 	 *
-	 * <h3>State Management:</h3>
+	 * <p><strong>State Management:</strong>
 	 * <ul>
 	 *   <li>Extracts updated currency data from the origin context</li>
 	 *   <li>Updates the mutable currency state</li>
@@ -175,13 +170,12 @@ public class CurrenciesCreatingView extends BaseView {
 	
 	/**
 	 * Renders all currency configuration elements and the creation button.
-	 * <p>
-	 * This method populates the view with interactive elements for configuring
+ *
+ * <p>This method populates the view with interactive elements for configuring
 	 * each aspect of the currency. Each element opens a specialized anvil input
 	 * view for detailed configuration with validation.
-	 * </p>
 	 *
-	 * <h3>Rendered Elements:</h3>
+	 * <p><strong>Rendered Elements:</strong>
 	 * <ul>
 	 *   <li>Currency identifier configuration button</li>
 	 *   <li>Currency symbol configuration button</li>
@@ -209,10 +203,9 @@ public class CurrenciesCreatingView extends BaseView {
 	
 	/**
 	 * Renders the currency identifier configuration button.
-	 * <p>
-	 * This button opens the {@link CurrencyIdentifierAnvilView} for configuring
+ *
+ * <p>This button opens the {@link CurrencyIdentifierAnvilView} for configuring
 	 * the currency's unique identifier with validation and uniqueness checking.
-	 * </p>
 	 *
 	 * @param renderContext the current rendering context, must not be null
 	 * @param contextPlayer the player viewing the interface, must not be null
@@ -254,10 +247,9 @@ public class CurrenciesCreatingView extends BaseView {
 	
 	/**
 	 * Renders the currency symbol configuration button.
-	 * <p>
-	 * This button opens the {@link CurrencySymbolAnvilView} for configuring
+ *
+ * <p>This button opens the {@link CurrencySymbolAnvilView} for configuring
 	 * the currency's visual symbol with length and format validation.
-	 * </p>
 	 *
 	 * @param renderContext the current rendering context, must not be null
 	 * @param contextPlayer the player viewing the interface, must not be null
@@ -299,10 +291,9 @@ public class CurrenciesCreatingView extends BaseView {
 	
 	/**
 	 * Renders the currency icon configuration button.
-	 * <p>
-	 * This button opens the {@link CurrencyIconAnvilView} for configuring
+ *
+ * <p>This button opens the {@link CurrencyIconAnvilView} for configuring
 	 * the currency's material icon with material validation.
-	 * </p>
 	 *
 	 * @param renderContext the current rendering context, must not be null
 	 * @param contextPlayer the player viewing the interface, must not be null
@@ -344,10 +335,9 @@ public class CurrenciesCreatingView extends BaseView {
 	
 	/**
 	 * Renders the currency prefix configuration button.
-	 * <p>
-	 * This button opens the {@link CurrencyPrefixAnvilView} for configuring
+ *
+ * <p>This button opens the {@link CurrencyPrefixAnvilView} for configuring
 	 * the currency's prefix text with length validation.
-	 * </p>
 	 *
 	 * @param renderContext the current rendering context, must not be null
 	 * @param contextPlayer the player viewing the interface, must not be null
@@ -389,10 +379,9 @@ public class CurrenciesCreatingView extends BaseView {
 	
 	/**
 	 * Renders the currency suffix configuration button.
-	 * <p>
-	 * This button opens the {@link CurrencySuffixAnvilView} for configuring
+ *
+ * <p>This button opens the {@link CurrencySuffixAnvilView} for configuring
 	 * the currency's suffix text with length validation.
-	 * </p>
 	 *
 	 * @param renderContext the current rendering context, must not be null
 	 * @param contextPlayer the player viewing the interface, must not be null
@@ -434,13 +423,12 @@ public class CurrenciesCreatingView extends BaseView {
 	
 	/**
 	 * Renders the currency creation button with conditional display logic.
-	 * <p>
-	 * This button is only displayed when the currency has the required fields
+ *
+ * <p>This button is only displayed when the currency has the required fields
 	 * (identifier and symbol) configured. It initiates the currency creation
 	 * process when clicked.
-	 * </p>
 	 *
-	 * <h3>Display Conditions:</h3>
+	 * <p><strong>Display Conditions:</strong>
 	 * <ul>
 	 *   <li>Currency identifier must not be empty</li>
 	 *   <li>Currency symbol must not be empty</li>
@@ -487,10 +475,9 @@ public class CurrenciesCreatingView extends BaseView {
 	
 	/**
 	 * Validates if a currency is ready for creation.
-	 * <p>
-	 * This method checks that all required fields are properly configured
+ *
+ * <p>This method checks that all required fields are properly configured
 	 * before allowing the currency creation process to proceed.
-	 * </p>
 	 *
 	 * @param currencyToValidate the currency to validate, can be null
 	 * @return true if the currency is valid for creation, false otherwise
@@ -512,13 +499,12 @@ public class CurrenciesCreatingView extends BaseView {
 	
 	/**
 	 * Handles the complete currency creation process with validation and error handling.
-	 * <p>
-	 * This method orchestrates the entire currency creation workflow including
+ *
+ * <p>This method orchestrates the entire currency creation workflow including
 	 * existence checking, database creation, and player account initialization.
 	 * It provides comprehensive user feedback throughout the process.
-	 * </p>
 	 *
-	 * <h3>Creation Process:</h3>
+	 * <p><strong>Creation Process:</strong>
 	 * <ol>
 	 *   <li>Extract currency data and plugin instance</li>
 	 *   <li>Update view and send processing notification</li>
@@ -572,10 +558,9 @@ public class CurrenciesCreatingView extends BaseView {
 	
 	/**
 	 * Sends a processing notification to the requesting player.
-	 * <p>
-	 * This method informs the player that the currency creation process has
+ *
+ * <p>This method informs the player that the currency creation process has
 	 * started and is being processed in the background.
-	 * </p>
 	 *
 	 * @param requestingPlayer the player requesting currency creation, must not be null
 	 * @param currencyToCreate the currency being created, must not be null
@@ -598,10 +583,9 @@ public class CurrenciesCreatingView extends BaseView {
 	
 	/**
 	 * Handles the scenario where a currency with the same identifier already exists.
-	 * <p>
-	 * This method sends an appropriate error message to the requesting player
+ *
+ * <p>This method sends an appropriate error message to the requesting player
 	 * when they attempt to create a currency with a duplicate identifier.
-	 * </p>
 	 *
 	 * @param requestingPlayer the player requesting currency creation, must not be null
 	 * @param currencyToCreate the currency that conflicts with an existing one, must not be null
@@ -624,10 +608,9 @@ public class CurrenciesCreatingView extends BaseView {
 	
 	/**
 	 * Handles general creation errors during the currency creation process.
-	 * <p>
-	 * This method sends detailed error information to the requesting player
+ *
+ * <p>This method sends detailed error information to the requesting player
 	 * when the currency creation process encounters an unexpected exception.
-	 * </p>
 	 *
 	 * @param requestingPlayer the player requesting currency creation, must not be null
 	 * @param currencyToCreate the currency that failed to create, must not be null
@@ -654,13 +637,12 @@ public class CurrenciesCreatingView extends BaseView {
 	
 	/**
 	 * Creates the currency in the database and handles the complete workflow.
-	 * <p>
-	 * This method performs the actual database creation operation and manages
+ *
+ * <p>This method performs the actual database creation operation and manages
 	 * the subsequent steps including cache updates and player account creation.
 	 * It provides comprehensive error handling and user feedback.
-	 * </p>
 	 *
-	 * <h3>Database Creation Process:</h3>
+	 * <p><strong>Database Creation Process:</strong>
 	 * <ol>
 	 *   <li>Create new currency entity with configured properties</li>
 	 *   <li>Persist currency to database through adapter</li>
@@ -716,10 +698,9 @@ public class CurrenciesCreatingView extends BaseView {
 	
 	/**
 	 * Handles successful currency creation including cache retrieval and account initialization.
-	 * <p>
-	 * This method manages the post-creation workflow including retrieving the saved
+ *
+ * <p>This method manages the post-creation workflow including retrieving the saved
 	 * currency from cache, initializing player accounts, and providing user feedback.
-	 * </p>
 	 *
 	 * @param newCurrencyEntity the currency that was created, must not be null
 	 * @param pluginInstance the main plugin instance, must not be null
@@ -754,10 +735,9 @@ public class CurrenciesCreatingView extends BaseView {
 	
 	/**
 	 * Finds a currency in the plugin's cache by identifier.
-	 * <p>
-	 * This method searches the in-memory currency cache for a currency with
+ *
+ * <p>This method searches the in-memory currency cache for a currency with
 	 * the specified identifier and returns it if found.
-	 * </p>
 	 *
 	 * @param currencyIdentifier the identifier to search for, must not be null
 	 * @param pluginInstance the main plugin instance, must not be null
@@ -777,10 +757,9 @@ public class CurrenciesCreatingView extends BaseView {
 	
 	/**
 	 * Handles the scenario where a created currency is not found in the cache.
-	 * <p>
-	 * This method sends an error message when the currency was successfully created
+ *
+ * <p>This method sends an error message when the currency was successfully created
 	 * in the database but cannot be found in the in-memory cache.
-	 * </p>
 	 *
 	 * @param requestingPlayer the player who requested creation, must not be null
 	 * @param newCurrencyEntity the currency that was created but not found in cache, must not be null
@@ -803,10 +782,9 @@ public class CurrenciesCreatingView extends BaseView {
 	
 	/**
 	 * Handles currency creation failure scenarios.
-	 * <p>
-	 * This method sends an appropriate error message when the currency creation
+ *
+ * <p>This method sends an appropriate error message when the currency creation
 	 * operation fails at the database level.
-	 * </p>
 	 *
 	 * @param requestingPlayer the player who requested creation, must not be null
 	 * @param newCurrencyEntity the currency that failed to create, must not be null
@@ -829,10 +807,9 @@ public class CurrenciesCreatingView extends BaseView {
 	
 	/**
 	 * Handles database errors during currency creation.
-	 * <p>
-	 * This method sends detailed error information when the currency creation
+ *
+ * <p>This method sends detailed error information when the currency creation
 	 * process encounters a database-related exception.
-	 * </p>
 	 *
 	 * @param requestingPlayer the player who requested creation, must not be null
 	 * @param newCurrencyEntity the currency that failed to create, must not be null
@@ -859,10 +836,9 @@ public class CurrenciesCreatingView extends BaseView {
 	
 	/**
 	 * Sends a success message after successful currency creation.
-	 * <p>
-	 * This method informs the requesting player that the currency has been
+ *
+ * <p>This method informs the requesting player that the currency has been
 	 * successfully created and is now available in the system.
-	 * </p>
 	 *
 	 * @param requestingPlayer the player who requested creation, must not be null
 	 * @param savedCurrency the currency that was successfully created, must not be null
@@ -885,13 +861,12 @@ public class CurrenciesCreatingView extends BaseView {
 	
 	/**
 	 * Creates player accounts for the new currency for all existing users.
-	 * <p>
-	 * This method initializes zero-balance accounts for all existing players
+ *
+ * <p>This method initializes zero-balance accounts for all existing players
 	 * when a new currency is created, ensuring that all players have access
 	 * to the new currency system.
-	 * </p>
 	 *
-	 * <h3>Account Creation Process:</h3>
+	 * <p><strong>Account Creation Process:</strong>
 	 * <ol>
 	 *   <li>Retrieve all existing users from the database</li>
 	 *   <li>Create UserCurrency entities with zero balance for each user</li>
@@ -938,10 +913,9 @@ public class CurrenciesCreatingView extends BaseView {
 	
 	/**
 	 * Processes the creation of user accounts for the new currency.
-	 * <p>
-	 * This method creates UserCurrency entities for each existing user and
+ *
+ * <p>This method creates UserCurrency entities for each existing user and
 	 * persists them to the database, then sends a confirmation message.
-	 * </p>
 	 *
 	 * @param retrievedUsers the list of users to create accounts for, must not be null
 	 * @param savedCurrency the currency to create accounts for, must not be null
@@ -971,10 +945,9 @@ public class CurrenciesCreatingView extends BaseView {
 	
 	/**
 	 * Sends a success message after creating player accounts.
-	 * <p>
-	 * This method informs the requesting player about the successful creation
+ *
+ * <p>This method informs the requesting player about the successful creation
 	 * of player accounts for the new currency.
-	 * </p>
 	 *
 	 * @param requestingPlayer the player who requested currency creation, must not be null
 	 * @param savedCurrency the currency for which accounts were created, must not be null
@@ -1001,10 +974,9 @@ public class CurrenciesCreatingView extends BaseView {
 	
 	/**
 	 * Handles errors during player account creation.
-	 * <p>
-	 * This method sends an error message when the player account creation
+ *
+ * <p>This method sends an error message when the player account creation
 	 * process encounters an exception.
-	 * </p>
 	 *
 	 * @param requestingPlayer the player who requested currency creation, must not be null
 	 * @param savedCurrency the currency for which account creation failed, must not be null
@@ -1031,10 +1003,9 @@ public class CurrenciesCreatingView extends BaseView {
 	
 	/**
 	 * Resets the currency state to allow creating another currency.
-	 * <p>
-	 * This method clears the current currency configuration and updates the view
+ *
+ * <p>This method clears the current currency configuration and updates the view
 	 * to prepare for the creation of a new currency.
-	 * </p>
 	 *
 	 * @param viewContext the current view context, must not be null
 	 */

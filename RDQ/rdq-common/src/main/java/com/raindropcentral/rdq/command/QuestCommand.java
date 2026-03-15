@@ -20,9 +20,8 @@ import java.util.stream.Collectors;
 
 /**
  * Main command handler for the quest system.
- * <p>
- * Handles all quest-related commands including GUI access and quest management.
- * </p>
+ *
+ * <p>Handles all quest-related commands including GUI access and quest management.
  *
  * @author RaindropCentral
  * @version 1.0.0

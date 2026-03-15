@@ -51,6 +51,9 @@ public class ShopStoreView extends BaseView {
         return false;
     }
 
+    /**
+     * Executes renderNavigationButtons.
+     */
     @Override
     public void renderNavigationButtons(
         final @NotNull RenderContext render,
@@ -59,6 +62,9 @@ public class ShopStoreView extends BaseView {
         // Root store view does not use a return button.
     }
 
+    /**
+     * Executes onFirstRender.
+     */
     @Override
     public void onFirstRender(
         final @NotNull RenderContext render,

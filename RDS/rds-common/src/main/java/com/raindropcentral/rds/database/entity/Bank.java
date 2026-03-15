@@ -32,6 +32,9 @@ import org.jetbrains.annotations.NotNull;
         "unused",
         "JpaDataSourceORMInspection"
 })
+/**
+ * Represents the Bank API type.
+ */
 public class Bank extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
@@ -73,6 +76,9 @@ public class Bank extends BaseEntity {
         return this.shop;
     }
 
+    /**
+     * Sets shop.
+     */
     public void setShop(
             final @NotNull Shop shop
     ) {
@@ -97,12 +103,18 @@ public class Bank extends BaseEntity {
         return this.amount;
     }
 
+    /**
+     * Executes matchesCurrencyType.
+     */
     public boolean matchesCurrencyType(
             final @NotNull String currencyType
     ) {
         return this.currency_type.equalsIgnoreCase(currencyType.trim());
     }
 
+    /**
+     * Executes deposit.
+     */
     public double deposit(
             final double depositAmount
     ) {
@@ -114,6 +126,9 @@ public class Bank extends BaseEntity {
         return this.amount;
     }
 
+    /**
+     * Executes withdraw.
+     */
     public double withdraw(
             final double withdrawAmount
     ) {

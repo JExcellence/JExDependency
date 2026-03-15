@@ -79,6 +79,9 @@ public class RankRequirementsJourneyView extends BaseView {
     private RequirementProgressRenderer progressRenderer;
     private RequirementCardRenderer cardRenderer;
 
+    /**
+     * Executes RankRequirementsJourneyView.
+     */
     public RankRequirementsJourneyView() {
         super(RankPathOverview.class);
     }
@@ -141,6 +144,9 @@ public class RankRequirementsJourneyView extends BaseView {
         }
     }
 
+    /**
+     * Executes onFirstRender.
+     */
     @Override
     public void onFirstRender(final @NotNull RenderContext render, final @NotNull Player player) {
         try {
@@ -571,6 +577,9 @@ public class RankRequirementsJourneyView extends BaseView {
         
         // Schedule restoration after 500ms (10 ticks)
         new BukkitRunnable() {
+            /**
+             * Executes run.
+             */
             @Override
             public void run() {
                 // Restore original items or clear the slot
@@ -593,6 +602,9 @@ public class RankRequirementsJourneyView extends BaseView {
         stopPulseAnimation();
         
         this.pulseTask = new BukkitRunnable() {
+            /**
+             * Executes run.
+             */
             @Override
             public void run() {
                 try {

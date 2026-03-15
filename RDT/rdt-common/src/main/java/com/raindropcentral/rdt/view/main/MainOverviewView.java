@@ -58,6 +58,9 @@ public class MainOverviewView extends BaseView {
         click.setCancelled(true);
     }
 
+    /**
+     * Executes onFirstRender.
+     */
     @Override
     public void onFirstRender(
             final @NotNull RenderContext render,

@@ -23,6 +23,9 @@ public class ConflictResolver {
     private final ConflictStrategy defaultStrategy;
     private final Map<String, ConflictStrategy> perKeyStrategies;
 
+    /**
+     * Executes ConflictResolver.
+     */
     public ConflictResolver(final @NotNull ConflictStrategy defaultStrategy) {
         this.defaultStrategy = defaultStrategy;
         this.perKeyStrategies = new ConcurrentHashMap<>();

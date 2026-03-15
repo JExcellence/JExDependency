@@ -24,7 +24,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 /**
- * Folia-specific {@link PlatformAPI} implementation that takes advantage of the Adventure-native
+ * Folia-specific {@link PlatformAPI} implementation that takes advantage of the Adventure-native.
  * APIs and regionized scheduler semantics available on Folia servers.
  *
  * <p><strong>Threading:</strong> Folia enforces regionized execution; callers should schedule work
@@ -83,7 +83,7 @@ public final class FoliaPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * <p><strong>Usage:</strong> Always returns {@link PlatformType#FOLIA} for Folia deployments.</p>
      *
@@ -95,7 +95,7 @@ public final class FoliaPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * <p><strong>Usage:</strong> Folia ships the Adventure bridge, so callers may send Adventure
      * components without legacy fallbacks.</p>
@@ -108,7 +108,7 @@ public final class FoliaPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * <p><strong>Usage:</strong> Always {@code true}; use to toggle Folia-specific scheduling
      * strategies.</p>
@@ -121,7 +121,7 @@ public final class FoliaPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * <p><strong>Usage:</strong> Folia implementation does not allocate additional resources, so
      * the method currently performs no work.</p>
@@ -132,7 +132,7 @@ public final class FoliaPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * <p><strong>Usage:</strong> Delegates directly to {@link Player#sendMessage(Component)} with no
      * conversion.</p>
@@ -146,7 +146,7 @@ public final class FoliaPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * <p><strong>Usage:</strong> Iterates through the provided components and sends each via the
      * Adventure-native API.</p>
@@ -162,7 +162,7 @@ public final class FoliaPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * <p><strong>Usage:</strong> Uses {@link Player#sendActionBar(Component)} which is fully
      * supported on Folia.</p>
@@ -176,7 +176,7 @@ public final class FoliaPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * <p><strong>Usage:</strong> Converts tick timings to milliseconds for Folia's title API before
      * issuing the call.</p>
@@ -204,7 +204,7 @@ public final class FoliaPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * <p><strong>Usage:</strong> Returns the Adventure display name exposed by Folia players.</p>
      *
@@ -217,7 +217,7 @@ public final class FoliaPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * <p><strong>Usage:</strong> Delegates to {@link Player#displayName(Component)} to ensure the
      * new name propagates through Folia's Adventure-aware APIs.</p>
@@ -231,7 +231,7 @@ public final class FoliaPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * <p><strong>Usage:</strong> Reads the component-backed name stored within Folia item meta.</p>
      *
@@ -246,7 +246,7 @@ public final class FoliaPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * <p><strong>Usage:</strong> Applies the Adventure component directly since Folia item meta
      * natively supports it.</p>
@@ -266,7 +266,7 @@ public final class FoliaPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * <p><strong>Usage:</strong> Provides immutable Adventure lore or an empty list when the item
      * lacks lore.</p>
@@ -283,7 +283,7 @@ public final class FoliaPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * <p><strong>Usage:</strong> Writes Adventure components directly into the Folia item meta.</p>
      *
@@ -302,7 +302,7 @@ public final class FoliaPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * <p><strong>Usage:</strong> Generates a head bound to the current player's profile, retaining
      * Adventure metadata.</p>
@@ -323,7 +323,7 @@ public final class FoliaPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * <p><strong>Usage:</strong> Uses Bukkit's offline profile support to populate the head without
      * requiring the player to be online.</p>
@@ -345,7 +345,7 @@ public final class FoliaPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * <p><strong>Usage:</strong> Delegates to the overload that accepts an optional display name for
      * convenience.</p>
@@ -360,7 +360,7 @@ public final class FoliaPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * <p><strong>Usage:</strong> Builds a synthetic profile with the provided texture data and
      * optionally applies a display name.</p>
@@ -387,7 +387,7 @@ public final class FoliaPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * <p><strong>Usage:</strong> Applies the supplied texture onto an existing skull, replacing the
      * underlying profile metadata.</p>
@@ -413,7 +413,7 @@ public final class FoliaPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * <p><strong>Usage:</strong> Returns the Folia server version as reported by Bukkit.</p>
      *
@@ -425,7 +425,7 @@ public final class FoliaPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * <p><strong>Usage:</strong> Provides the Folia-aware scheduler for plugin task orchestration.</p>
      *

@@ -8,11 +8,10 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Entity representing the association between a player and their current rank within a specific rank tree.
- * <p>
- * This entity maps a player to their current rank and rank tree, and tracks whether this rank is currently active.
+ *
+ * <p>This entity maps a player to their current rank and rank tree, and tracks whether this rank is currently active.
  * It is mapped to the {@code r_player_rank} table in the database, with a unique constraint on the combination
  * of player and rank tree to ensure a player can only have one current rank per rank tree.
- * </p>
  *
  * @author JExcellence
  * @version 1.1.0
@@ -23,6 +22,9 @@ import org.jetbrains.annotations.NotNull;
 		name = "r_player_rank",
 		uniqueConstraints = @UniqueConstraint(columnNames = {"player_id", "rank_tree_id"})
 )
+/**
+ * Represents the RPlayerRank API type.
+ */
 public class RPlayerRank extends BaseEntity {
 
 	/**
@@ -248,6 +250,9 @@ public class RPlayerRank extends BaseEntity {
 				this.rankTree.getIdentifier().equals(rankTreeIdentifier);
 	}
 
+	/**
+	 * Executes toString.
+	 */
 	@Override
 	public String toString() {
 

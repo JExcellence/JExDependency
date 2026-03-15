@@ -32,14 +32,13 @@ import java.util.logging.Logger;
 
 /**
  * Factory responsible for loading, constructing, and validating the perk system from configuration files.
- * <p>
- * This factory follows the same pattern as RankSystemFactory with proper entity lifecycle management
+ *
+ * <p>This factory follows the same pattern as RankSystemFactory with proper entity lifecycle management
  * to avoid OptimisticLockException. Key features:
  * - Single-pass entity creation and updates
  * - Fresh entity fetches before each modification
  * - Proper transaction boundaries
  * - Graceful error handling
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -63,6 +62,9 @@ public class PerkSystemFactory {
     private final Map<String, PerkSection> perkSections = new HashMap<>();
     private final Map<String, Perk> perks = new HashMap<>();
 
+    /**
+     * Executes PerkSystemFactory.
+     */
     public PerkSystemFactory(@NotNull RDQ rdq) {
         this.rdq = rdq;
         this.requirementFactory = RequirementFactory.getInstance();
@@ -917,10 +919,9 @@ public class PerkSystemFactory {
 
     /**
      * Reloads the perk system configuration.
-     * <p>
-     * This method reloads all perk configurations from YAML files and updates the database.
+ *
+ * <p>This method reloads all perk configurations from YAML files and updates the database.
      * It preserves player perk ownership and states while updating perk definitions.
-     * </p>
      */
     public void reload() {
         if (isInitializing) {

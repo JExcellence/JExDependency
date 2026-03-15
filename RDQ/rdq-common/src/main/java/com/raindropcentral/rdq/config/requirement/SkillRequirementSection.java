@@ -9,10 +9,9 @@ import java.util.Map;
 
 /**
  * Configuration section for skill-based requirements.
- * <p>
- * This section handles all configuration options specific to SkillRequirement,
+ *
+ * <p>This section handles all configuration options specific to SkillRequirement,
  * including required skills, skill levels, and skill plugin integration.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0

@@ -8,9 +8,8 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Event fired when a player starts a quest.
- * <p>
- * This event is called on the main thread after a quest is successfully started.
- * </p>
+ *
+ * <p>This event is called on the main thread after a quest is successfully started.
  *
  * @author RaindropCentral
  * @version 1.0.0
@@ -56,6 +55,9 @@ public class QuestStartEvent extends Event {
         return quest;
     }
     
+    /**
+     * Gets handlers.
+     */
     @Override
     @NotNull
     public HandlerList getHandlers() {

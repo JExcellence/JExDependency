@@ -30,12 +30,11 @@ import java.util.logging.Logger;
 
 /**
  * Detailed view for a specific quest showing progress, tasks, and actions.
- * <p>
- * This view displays comprehensive information about a quest including:
+ *
+ * <p>This view displays comprehensive information about a quest including:
  * - Quest description and details
  * - Task progress and requirements
  * - Available actions (start, abandon, view progress)
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0
@@ -53,6 +52,9 @@ public class QuestDetailView extends BaseView {
 	private static final int START_BUTTON_SLOT = 48;
 	private static final int ABANDON_BUTTON_SLOT = 50;
 	
+	/**
+	 * Executes QuestDetailView.
+	 */
 	public QuestDetailView() {
 		super(QuestListView.class);
 	}
@@ -80,6 +82,9 @@ public class QuestDetailView extends BaseView {
 		};
 	}
 	
+	/**
+	 * Executes onFirstRender.
+	 */
 	@Override
 	public void onFirstRender(final @NotNull RenderContext render, final @NotNull Player player) {
 		final Quest q = quest.get(render);

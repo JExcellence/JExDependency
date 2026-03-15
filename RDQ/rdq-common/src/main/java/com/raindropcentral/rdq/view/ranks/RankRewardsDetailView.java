@@ -48,6 +48,9 @@ public class RankRewardsDetailView extends BaseView {
         37, 38, 39, 40, 41, 42, 43
     };
 
+    /**
+     * Executes RankRewardsDetailView.
+     */
     public RankRewardsDetailView() {
         super(RankRequirementsJourneyView.class);
     }
@@ -83,6 +86,9 @@ public class RankRewardsDetailView extends BaseView {
         }
     }
 
+    /**
+     * Executes onFirstRender.
+     */
     @Override
     public void onFirstRender(final @NotNull RenderContext render, final @NotNull Player player) {
         try {

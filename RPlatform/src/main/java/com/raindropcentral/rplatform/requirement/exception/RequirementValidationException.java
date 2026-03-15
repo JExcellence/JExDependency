@@ -11,6 +11,9 @@ public final class RequirementValidationException extends RequirementException {
 
     private final ValidationResult validationResult;
 
+    /**
+     * Executes RequirementValidationException.
+     */
     public RequirementValidationException(
         @NotNull String message,
         @Nullable String requirementType,
@@ -20,11 +23,17 @@ public final class RequirementValidationException extends RequirementException {
         this.validationResult = validationResult;
     }
 
+    /**
+     * Gets validationResult.
+     */
     @NotNull
     public ValidationResult getValidationResult() {
         return validationResult;
     }
 
+    /**
+     * Gets message.
+     */
     @Override
     public String getMessage() {
         return super.getMessage() + " - " + validationResult.getMessage();

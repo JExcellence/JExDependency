@@ -12,14 +12,17 @@ import java.util.function.Function;
 
 /**
  * Cached repository for {@link RDTPlayer} entities.
- * <p>
- * Provides CRUD operations and a convenience finder for locating a player by UUID.
+ *
+ * <p>Provides CRUD operations and a convenience finder for locating a player by UUID.
  * Use off the main server thread for blocking calls.
  */
 @SuppressWarnings({
         "unused",
         "FieldCanBeLocal"
 })
+/**
+ * Represents the RRDTPlayer API type.
+ */
 public class RRDTPlayer extends CachedRepository<RDTPlayer, Long, UUID> {
     // Keep a reference to the EntityManagerFactory for custom ad-hoc queries
     private final EntityManagerFactory emf;

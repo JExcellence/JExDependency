@@ -28,6 +28,9 @@ public class PayloadSigner {
 
     private final Gson gson;
 
+    /**
+     * Executes PayloadSigner.
+     */
     public PayloadSigner() {
         this.gson = new Gson();
     }

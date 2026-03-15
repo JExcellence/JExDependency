@@ -1,5 +1,5 @@
 /**
- * Serialization helpers for common Bukkit primitives consumed by configuration and database
+ * Serialization helpers for common Bukkit primitives consumed by configuration and database.
  * layers.
  *
  * <p>The classes provide deterministic string and byte array encodings for

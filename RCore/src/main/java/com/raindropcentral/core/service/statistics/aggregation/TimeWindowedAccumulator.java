@@ -299,10 +299,13 @@ public class TimeWindowedAccumulator {
     ) {}
 
     /**
-     * Custom aggregate definition interface.
+     * Represents type.
      */
     @FunctionalInterface
     public interface AggregateDefinition {
+        /**
+         * Performs compute.
+         */
         Object compute(TimeWindowedAccumulator accumulator);
     }
 }

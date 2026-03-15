@@ -18,13 +18,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Folia scheduler adapter that binds to the platform's region aware APIs entirely through reflection so the
+ * Folia scheduler adapter that binds to the platform's region aware APIs entirely through reflection so the.
  * class is only loaded when Folia is present on the classpath.
- * <p>
- * Methods prefer Folia's {@code GlobalRegionScheduler}, {@code RegionScheduler}, and
+ *
+ * <p>Methods prefer Folia's {@code GlobalRegionScheduler}, {@code RegionScheduler}, and
  * {@code EntityScheduler} contract, falling back to safe global execution when functionality is missing to
  * keep the platform operational.
- * </p>
  *
  * @author JExcellence
  * @since 1.0.0
@@ -49,11 +48,10 @@ public class FoliaISchedulerImpl implements ISchedulerAdapter {
     // -------------------------
 
     /**
-     * {@inheritDoc}
-     * <p>
-     * Redirects to {@link #runGlobal(Runnable)} so work executes on Folia's global region thread, matching
+     * {@inheritDoc}.
+ *
+ * <p>Redirects to {@link #runGlobal(Runnable)} so work executes on Folia's global region thread, matching
      * the synchronous semantics expected by callers.
-     * </p>
      */
     @Override
     public void runSync(@NotNull Runnable task) {
@@ -61,12 +59,11 @@ public class FoliaISchedulerImpl implements ISchedulerAdapter {
     }
 
     /**
-     * {@inheritDoc}
-     * <p>
-     * Uses {@link CompletableFuture#runAsync(Runnable)} to execute work on a JDK managed thread. Folia's
+     * {@inheritDoc}.
+ *
+ * <p>Uses {@link CompletableFuture#runAsync(Runnable)} to execute work on a JDK managed thread. Folia's
      * dedicated async scheduler could be accessed reflectively, but the default executor avoids signature
      * drift across versions.
-     * </p>
      */
     @Override
     public void runAsync(@NotNull Runnable task) {
@@ -74,11 +71,10 @@ public class FoliaISchedulerImpl implements ISchedulerAdapter {
     }
 
     /**
-     * {@inheritDoc}
-     * <p>
-     * Attempts to call {@code GlobalRegionScheduler#runDelayed}. If unavailable, the method simulates a
+     * {@inheritDoc}.
+ *
+ * <p>Attempts to call {@code GlobalRegionScheduler#runDelayed}. If unavailable, the method simulates a
      * one-shot delay using {@code runAtFixedRate} with a very large period.
-     * </p>
      */
     @Override
     public void runDelayed(@NotNull Runnable task, long delayTicks) {
@@ -91,11 +87,10 @@ public class FoliaISchedulerImpl implements ISchedulerAdapter {
     }
 
     /**
-     * {@inheritDoc}
-     * <p>
-     * Uses {@code GlobalRegionScheduler#runAtFixedRate} and falls back to recursively scheduling when the
+     * {@inheritDoc}.
+ *
+ * <p>Uses {@code GlobalRegionScheduler#runAtFixedRate} and falls back to recursively scheduling when the
      * API is missing, preserving approximate cadence.
-     * </p>
      */
     @Override
     public void runRepeating(@NotNull Runnable task, long delayTicks, long periodTicks) {
@@ -106,6 +101,9 @@ public class FoliaISchedulerImpl implements ISchedulerAdapter {
         }
     }
 
+    /**
+     * Executes runRepeatingAsync.
+     */
     @Override
     public void runRepeatingAsync(@NotNull Runnable task, long delayTicks, long periodTicks) {
         final Object global = getAsyncScheduler();
@@ -116,11 +114,10 @@ public class FoliaISchedulerImpl implements ISchedulerAdapter {
     }
 
     /**
-     * {@inheritDoc}
-     * <p>
-     * Prefers {@code EntityScheduler#run}. If direct execution fails, the adapter retries with
+     * {@inheritDoc}.
+ *
+ * <p>Prefers {@code EntityScheduler#run}. If direct execution fails, the adapter retries with
      * {@code runDelayed(..., 0)} to keep execution on the entity's thread when available.
-     * </p>
      */
     @Override
     public void runAtEntity(@NotNull Entity entity, @NotNull Runnable task) {
@@ -131,11 +128,10 @@ public class FoliaISchedulerImpl implements ISchedulerAdapter {
     }
 
     /**
-     * {@inheritDoc}
-     * <p>
-     * Schedules on the region thread hosting {@code location} when Folia exposes a region scheduler. If
+     * {@inheritDoc}.
+ *
+ * <p>Schedules on the region thread hosting {@code location} when Folia exposes a region scheduler. If
      * the reflective call fails the method degrades to {@link #runGlobal(Runnable)} as a safe fallback.
-     * </p>
      */
     @Override
     public void runAtLocation(@NotNull Location location, @NotNull Runnable task) {
@@ -147,11 +143,10 @@ public class FoliaISchedulerImpl implements ISchedulerAdapter {
     }
 
     /**
-     * {@inheritDoc}
-     * <p>
-     * Uses {@code GlobalRegionScheduler#run} and executes immediately when the scheduler cannot be
+     * {@inheritDoc}.
+ *
+ * <p>Uses {@code GlobalRegionScheduler#run} and executes immediately when the scheduler cannot be
      * accessed, ensuring synchronous semantics remain intact.
-     * </p>
      */
     @Override
     public void runGlobal(@NotNull Runnable task) {
@@ -162,11 +157,10 @@ public class FoliaISchedulerImpl implements ISchedulerAdapter {
     }
 
     /**
-     * {@inheritDoc}
-     * <p>
-     * Relies on {@link CompletableFuture#runAsync(Runnable)} to expose completion to callers regardless of
+     * {@inheritDoc}.
+ *
+ * <p>Relies on {@link CompletableFuture#runAsync(Runnable)} to expose completion to callers regardless of
      * whether Folia's async scheduler is accessible.
-     * </p>
      */
     @Override
     public @NotNull CompletableFuture<Void> runAsyncFuture(@NotNull Runnable task) {
@@ -280,7 +274,7 @@ public class FoliaISchedulerImpl implements ISchedulerAdapter {
     }
 
     /**
-     * Creates a {@link Consumer} proxy without binding to Folia's {@code ScheduledTask} type so the JVM can
+     * Creates a {@link Consumer} proxy without binding to Folia's {@code ScheduledTask} type so the JVM can.
      * adapt any runnable to the reflective scheduler APIs.
      *
      * @param runnable work to run when the consumer is invoked

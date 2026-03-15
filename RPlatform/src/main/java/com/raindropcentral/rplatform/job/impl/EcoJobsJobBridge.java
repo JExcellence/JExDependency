@@ -45,16 +45,25 @@ public final class EcoJobsJobBridge extends AbstractReflectionJobBridge {
     public EcoJobsJobBridge() {
     }
 
+    /**
+     * Gets integrationId.
+     */
     @Override
     public @NotNull String getIntegrationId() {
         return INTEGRATION_ID;
     }
 
+    /**
+     * Gets pluginName.
+     */
     @Override
     public @NotNull String getPluginName() {
         return PLUGIN_NAME;
     }
 
+    /**
+     * Returns whether available.
+     */
     @Override
     public boolean isAvailable() {
         final Plugin installedPlugin = resolvePlugin(PLUGIN_NAME, "EcoJobs");
@@ -73,6 +82,9 @@ public final class EcoJobsJobBridge extends AbstractReflectionJobBridge {
         return this.api != null;
     }
 
+    /**
+     * Gets jobLevel.
+     */
     @Override
     public double getJobLevel(@NotNull Player player, @NotNull String jobId) {
         if (!isAvailable() || jobId.isBlank()) {

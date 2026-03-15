@@ -28,6 +28,9 @@ public class ChestRewardDistributor implements RewardDistributor {
 
     private static final Logger LOGGER = Logger.getLogger(ChestRewardDistributor.class.getName());
 
+    /**
+     * Executes distributeRewards.
+     */
     @Override
     public @NotNull CompletableFuture<Void> distributeRewards(
             @NotNull Player hunter,

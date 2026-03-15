@@ -9,10 +9,9 @@ import java.util.List;
 
 /**
  * Immutable record representing an active quest for a player.
- * <p>
- * This record contains all information about a quest that is currently in progress,
+ *
+ * <p>This record contains all information about a quest that is currently in progress,
  * including time limits, progress tracking, and task details.
- * </p>
  *
  * @param questId         the unique quest identifier
  * @param questName       the display name of the quest

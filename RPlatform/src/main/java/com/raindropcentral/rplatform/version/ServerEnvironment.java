@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.logging.Logger;
 
 /**
- * Centralizes environment detection for the running server, eagerly resolving the platform type,
+ * Centralizes environment detection for the running server, eagerly resolving the platform type,.
  * package version, and Minecraft branding details once and exposing them via a thread-safe
  * singleton. Detection leverages lightweight reflection checks and Bukkit access during
  * construction, with the results cached for the lifetime of the JVM. Concurrency is managed via a
@@ -25,7 +25,7 @@ public class ServerEnvironment {
     private static final Logger LOGGER = Logger.getLogger(ServerEnvironment.class.getName());
 
     /**
-     * Lazily initialized singleton instance guarded by {@link #getInstance()} using double-checked
+     * Lazily initialized singleton instance guarded by {@link #getInstance()} using double-checked.
      * locking semantics.
      */
     private static volatile ServerEnvironment instance;
@@ -45,7 +45,7 @@ public class ServerEnvironment {
     }
 
     /**
-     * Provides access to the cached {@link ServerEnvironment} instance, performing detection only
+     * Provides access to the cached {@link ServerEnvironment} instance, performing detection only.
      * on the first call while ensuring concurrent threads see a fully initialized environment.
      *
      * @return the memoized environment snapshot for the running server
@@ -61,34 +61,58 @@ public class ServerEnvironment {
         return instance;
     }
 
+    /**
+     * Gets serverType.
+     */
     public @NotNull ServerType getServerType() {
         return serverType;
     }
 
+    /**
+     * Gets serverVersion.
+     */
     public @NotNull String getServerVersion() {
         return serverVersion;
     }
 
+    /**
+     * Gets minecraftVersion.
+     */
     public @NotNull String getMinecraftVersion() {
         return minecraftVersion;
     }
 
+    /**
+     * Returns whether modern.
+     */
     public boolean isModern() {
         return modernVersion;
     }
 
+    /**
+     * Returns whether paper.
+     */
     public boolean isPaper() {
         return serverType == ServerType.PAPER || serverType == ServerType.PURPUR;
     }
 
+    /**
+     * Returns whether folia.
+     */
     public boolean isFolia() {
         return serverType == ServerType.FOLIA;
     }
 
+    /**
+     * Returns whether spigot.
+     */
     public boolean isSpigot() {
         return serverType == ServerType.SPIGOT;
     }
 
+    /**
+     * Returns whether class.
+     */
     public boolean hasClass(final @NotNull String className) {
         try {
             Class.forName(className);
@@ -98,12 +122,15 @@ public class ServerEnvironment {
         }
     }
 
+    /**
+     * Returns whether versionAtLeast.
+     */
     public boolean isVersionAtLeast(final @NotNull String targetVersion) {
         return serverVersion.compareTo(targetVersion) >= 0;
     }
 
     /**
-     * Determines the active server distribution by testing for Folia, Paper, and Purpur marker
+     * Determines the active server distribution by testing for Folia, Paper, and Purpur marker.
      * classes, defaulting to {@link ServerType#SPIGOT} when none match.
      *
      * @return the detected {@link ServerType}, or {@link ServerType#SPIGOT} when no specific
@@ -125,7 +152,7 @@ public class ServerEnvironment {
     }
 
     /**
-     * Resolves the Minecraft client branding string reported by Bukkit, falling back to
+     * Resolves the Minecraft client branding string reported by Bukkit, falling back to.
      * {@code "unknown"} when the version cannot be read.
      *
      * @return the Minecraft version string, or {@code "unknown"} if detection fails
@@ -140,7 +167,7 @@ public class ServerEnvironment {
     }
 
     /**
-     * Extracts the Bukkit package version from the server implementation name, returning
+     * Extracts the Bukkit package version from the server implementation name, returning.
      * {@code "unknown"} when the value is absent or an error occurs.
      *
      * @return the server package version identifier, or {@code "unknown"} if unavailable
@@ -161,7 +188,7 @@ public class ServerEnvironment {
     }
 
     /**
-     * Evaluates whether the detected server package version represents a modern (1.13+) release,
+     * Evaluates whether the detected server package version represents a modern (1.13+) release,.
      * treating {@code "unknown"} versions as modern to preserve compatibility with future or
      * unrecognized builds.
      *
@@ -184,7 +211,7 @@ public class ServerEnvironment {
     }
 
     /**
-     * Enumerates supported server distributions used to tailor feature toggles and compatibility
+     * Enumerates supported server distributions used to tailor feature toggles and compatibility.
      * checks across the platform.
      */
     public enum ServerType {

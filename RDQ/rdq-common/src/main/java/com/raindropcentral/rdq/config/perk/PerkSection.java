@@ -17,11 +17,10 @@ import java.util.logging.Logger;
 
 /**
  * Configuration section for perk definitions.
- * <p>
- * This section handles the complete perk configuration including identifier, type, category,
+ *
+ * <p>This section handles the complete perk configuration including identifier, type, category,
  * requirements, unlock rewards, and effect configuration. Display name and description keys
  * are automatically generated if not provided.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -197,38 +196,65 @@ public class PerkSection extends AConfigSection {
 	
 	// ==================== Getters ====================
 	
+	/**
+	 * Gets identifier.
+	 */
 	public String getIdentifier() {
 		return identifier;
 	}
 	
+	/**
+	 * Gets perkType.
+	 */
 	public String getPerkType() {
 		return perkType == null ? "PASSIVE" : perkType;
 	}
 	
+	/**
+	 * Gets category.
+	 */
 	public String getCategory() {
 		return category == null ? "UTILITY" : category;
 	}
 	
+	/**
+	 * Gets enabled.
+	 */
 	public Boolean getEnabled() {
 		return enabled == null || enabled;
 	}
 	
+	/**
+	 * Gets displayOrder.
+	 */
 	public Integer getDisplayOrder() {
 		return displayOrder == null ? 0 : displayOrder;
 	}
 	
+	/**
+	 * Gets icon.
+	 */
 	public IconSection getIcon() {
 		return icon == null ? new IconSection(new EvaluationEnvironmentBuilder()) : icon;
 	}
 	
+	/**
+	 * Gets requirements.
+	 */
 	public Map<String, BaseRequirementSection> getRequirements() {
 		return requirements == null ? new HashMap<>() : requirements;
 	}
 	
+	/**
+	 * Gets unlockRewards.
+	 */
 	public Map<String, RewardSection> getUnlockRewards() {
 		return unlockRewards == null ? new HashMap<>() : unlockRewards;
 	}
 	
+	/**
+	 * Gets effect.
+	 */
 	public PerkEffectSection getEffect() {
 		return effect == null ? new PerkEffectSection(new EvaluationEnvironmentBuilder()) : effect;
 	}

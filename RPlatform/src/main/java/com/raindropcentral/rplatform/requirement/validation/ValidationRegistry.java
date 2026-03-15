@@ -10,9 +10,8 @@ import java.util.logging.Logger;
 
 /**
  * Registry for requirement validators.
- * <p>
- * Allows plugins to register custom validators for their requirement types.
- * </p>
+ *
+ * <p>Allows plugins to register custom validators for their requirement types.
  */
 public final class ValidationRegistry {
 
@@ -23,6 +22,9 @@ public final class ValidationRegistry {
 
     private ValidationRegistry() {}
 
+    /**
+     * Gets instance.
+     */
     @NotNull
     public static ValidationRegistry getInstance() {
         return INSTANCE;

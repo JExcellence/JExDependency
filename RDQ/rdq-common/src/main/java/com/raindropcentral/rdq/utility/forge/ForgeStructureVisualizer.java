@@ -13,20 +13,19 @@ import java.util.Map;
 
 /**
  * Utility class for visualizing a custom structure in the Minecraft world for a player.
- * <p>
- * The {@code ForgeStructureVisualizer} provides a static method to display particle effects
+ *
+ * <p>The {@code ForgeStructureVisualizer} provides a static method to display particle effects
  * at each block position of a structure blueprint, helping players see which blocks are
  * correctly placed and which are not. Correct blocks are highlighted with lime particles,
  * while incorrect blocks are highlighted with red particles.
- * </p>
  *
- * <h2>Usage</h2>
+ * <p><strong>Usage</strong>
  * <ul>
  *   <li>Call {@link #visualizeStructure(Player, Location, Map)} to show the structure visualization to a player.</li>
  *   <li>Typically used in conjunction with structure verification logic to provide feedback.</li>
  * </ul>
  *
- * <h2>Visualization Details</h2>
+ * <p><strong>Visualization Details</strong>
  * <ul>
  *   <li>Correct blocks: Lime-colored DUST particles.</li>
  *   <li>Incorrect blocks: Red-colored DUST particles.</li>
@@ -41,8 +40,8 @@ public class ForgeStructureVisualizer {
 
     /**
      * Visualizes the structure at the given origin location for the player.
-     * <p>
-     * For each block in the blueprint, spawns colored particles at the block's location:
+ *
+ * <p>For each block in the blueprint, spawns colored particles at the block's location:
      * <ul>
      *   <li>Lime particles for blocks that match the expected material.</li>
      *   <li>Red particles for blocks that do not match the expected material.</li>

@@ -23,15 +23,13 @@ import java.util.Objects;
 
 /**
  * Entity representing a single upgrade requirement for a {@link RRank} in the RaindropQuests system.
- * <p>
- * This entity encapsulates a single {@link com.raindropcentral.rdq.database.entity.requirement.BaseRequirement} that must be satisfied
- * to fulfill part of the upgrade condition for the associated rank. It also includes an icon for visual representation.
- * </p>
  *
- * <p>
- * Multiple instances of this entity can exist for a single rank, representing different requirements
+ * <p>This entity encapsulates a single {@link com.raindropcentral.rdq.database.entity.requirement.BaseRequirement} that must be satisfied
+ * to fulfill part of the upgrade condition for the associated rank. It also includes an icon for visual representation.
+ *
+ *
+ * <p>Multiple instances of this entity can exist for a single rank, representing different requirements
  * that all need to be completed for the rank upgrade.
- * </p>
  *
  * @author JExcellence
  * @version 2.0.0
@@ -168,6 +166,9 @@ public class RRankUpgradeRequirement extends BaseEntity {
 		this.requirement.consume(player);
 	}
 	
+	/**
+	 * Executes equals.
+	 */
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -187,6 +188,9 @@ public class RRankUpgradeRequirement extends BaseEntity {
 		return false;
 	}
 	
+	/**
+	 * Returns whether hCode.
+	 */
 	@Override
 	public int hashCode() {
 		if (this.getId() != null) {

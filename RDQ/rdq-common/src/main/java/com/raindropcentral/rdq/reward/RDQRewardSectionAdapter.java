@@ -12,10 +12,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+/**
+ * Represents the RDQRewardSectionAdapter API type.
+ */
 public final class RDQRewardSectionAdapter implements RewardSectionAdapter<RewardSection> {
 
     private static final Logger LOGGER = Logger.getLogger(RDQRewardSectionAdapter.class.getName());
 
+    /**
+     * Executes convert.
+     */
     @Override
     public @Nullable AbstractReward convert(@NotNull RewardSection section, @Nullable Map<String, Object> context) {
         String type = section.getType();

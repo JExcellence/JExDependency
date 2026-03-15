@@ -49,7 +49,7 @@ public class PlaceholderManager {
     }
 
     /**
-     * Registers the PlaceholderAPI expansion when available and not yet registered. The method
+     * Registers the PlaceholderAPI expansion when available and not yet registered. The method.
      * aborts when PlaceholderAPI is missing, preventing reflective calls, and logs both successful
      * and failed registration attempts. On success the {@link #registered} flag is set to
      * {@code true}.
@@ -78,7 +78,7 @@ public class PlaceholderManager {
     }
 
     /**
-     * Unregisters the PlaceholderAPI expansion only when previously registered. Failures during
+     * Unregisters the PlaceholderAPI expansion only when previously registered. Failures during.
      * reflection are logged while leaving the {@link #registered} flag unchanged when deregistration
      * cannot be completed.
      */

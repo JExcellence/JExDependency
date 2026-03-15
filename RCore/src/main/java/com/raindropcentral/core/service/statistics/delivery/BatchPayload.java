@@ -94,66 +94,105 @@ public record BatchPayload(
         private String checksum;
         private String signature;
 
+        /**
+         * Performs serverUuid.
+         */
         public Builder serverUuid(final @NotNull String serverUuid) {
             this.serverUuid = serverUuid;
             return this;
         }
 
+        /**
+         * Performs serverUuid.
+         */
         public Builder serverUuid(final @NotNull UUID serverUuid) {
             this.serverUuid = serverUuid.toString();
             return this;
         }
 
+        /**
+         * Performs batchId.
+         */
         public Builder batchId(final @NotNull String batchId) {
             this.batchId = batchId;
             return this;
         }
 
+        /**
+         * Performs timestamp.
+         */
         public Builder timestamp(final long timestamp) {
             this.timestamp = timestamp;
             return this;
         }
 
+        /**
+         * Performs compressed.
+         */
         public Builder compressed(final boolean compressed) {
             this.compressed = compressed;
             return this;
         }
 
+        /**
+         * Performs entries.
+         */
         public Builder entries(final @NotNull List<StatisticEntry> entries) {
             this.entries = entries;
             return this;
         }
 
+        /**
+         * Performs serverMetrics.
+         */
         public Builder serverMetrics(final @Nullable ServerMetrics serverMetrics) {
             this.serverMetrics = serverMetrics;
             return this;
         }
 
+        /**
+         * Performs pluginMetrics.
+         */
         public Builder pluginMetrics(final @Nullable PluginMetrics pluginMetrics) {
             this.pluginMetrics = pluginMetrics;
             return this;
         }
 
+        /**
+         * Performs aggregates.
+         */
         public Builder aggregates(final @Nullable AggregatedStatistics aggregates) {
             this.aggregates = aggregates;
             return this;
         }
 
+        /**
+         * Performs continuationToken.
+         */
         public Builder continuationToken(final @Nullable String continuationToken) {
             this.continuationToken = continuationToken;
             return this;
         }
 
+        /**
+         * Performs checksum.
+         */
         public Builder checksum(final @Nullable String checksum) {
             this.checksum = checksum;
             return this;
         }
 
+        /**
+         * Performs signature.
+         */
         public Builder signature(final @Nullable String signature) {
             this.signature = signature;
             return this;
         }
 
+        /**
+         * Performs build.
+         */
         public BatchPayload build() {
             if (serverUuid == null) throw new IllegalStateException("serverUuid is required");
             if (batchId == null) {

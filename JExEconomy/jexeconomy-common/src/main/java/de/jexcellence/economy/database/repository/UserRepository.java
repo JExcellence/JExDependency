@@ -14,15 +14,13 @@ import java.util.concurrent.ExecutorService;
 
 /**
  * Repository for managing {@link User} entities with caching support.
- * <p>
- * This repository provides asynchronous and cached access to user entities,
+ *
+ * <p>This repository provides asynchronous and cached access to user entities,
  * allowing efficient retrieval and management of users by their unique UUID.
  * It extends {@link CachedRepository} to leverage generic CRUD operations and caching.
- * </p>
  *
- * <p>
- * The repository supports the following operations:
- * </p>
+ *
+ * <p>The repository supports the following operations:
  * <ul>
  *   <li>Creating new user entities</li>
  *   <li>Updating existing user entities</li>
@@ -41,10 +39,9 @@ public class UserRepository extends CachedRepository<User, Long, UUID> {
 
     /**
      * Constructs a new {@code UserRepository} with the specified executor service and entity manager factory.
-     * <p>
-     * The repository will use the provided executor service for asynchronous operations and the entity manager factory
+ *
+ * <p>The repository will use the provided executor service for asynchronous operations and the entity manager factory
      * for JPA database operations. The cache key is configured to use the user's unique identifier (UUID).
-     * </p>
      *
      * @param asyncExecutorService     the executor service for handling asynchronous database operations, must not be null
      * @param jpaEntityManagerFactory  the entity manager factory for JPA database operations, must not be null
@@ -57,7 +54,7 @@ public class UserRepository extends CachedRepository<User, Long, UUID> {
     }
 
     /**
-     * Retrieves a user by UUID using asynchronous execution. The lookup first attempts to resolve
+     * Retrieves a user by UUID using asynchronous execution. The lookup first attempts to resolve.
      * the entity from the cache maintained by {@link CachedRepository} before falling back
      * to the persistence layer if necessary.
      *
@@ -74,7 +71,7 @@ public class UserRepository extends CachedRepository<User, Long, UUID> {
     }
 
     /**
-     * Synchronously locates a user by UUID leveraging the repository cache to avoid redundant
+     * Synchronously locates a user by UUID leveraging the repository cache to avoid redundant.
      * database lookups where possible.
      *
      * @param uniqueId the UUID used to locate the user
@@ -87,7 +84,7 @@ public class UserRepository extends CachedRepository<User, Long, UUID> {
     }
 
     /**
-     * Retrieves a user by stored player name using asynchronous execution. The cache is consulted
+     * Retrieves a user by stored player name using asynchronous execution. The cache is consulted.
      * before dispatching a database query, and the work is executed on the configured repository
      * executor.
      *
@@ -104,7 +101,7 @@ public class UserRepository extends CachedRepository<User, Long, UUID> {
     }
 
     /**
-     * Synchronously locates a user by player name, returning an {@link Optional} so callers can
+     * Synchronously locates a user by player name, returning an {@link Optional} so callers can.
      * gracefully react to missing records without handling {@code null} values.
      *
      * @param playerName player name used to search for the user

@@ -143,6 +143,9 @@ public class ShopBankView extends APaginatedView<ShopBankView.BankViewEntry> {
         }
     }
 
+    /**
+     * Executes onClick.
+     */
     @Override
     public void onClick(
             final @NotNull SlotClickContext click

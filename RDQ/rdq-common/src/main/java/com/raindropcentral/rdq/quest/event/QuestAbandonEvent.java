@@ -8,9 +8,8 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Event fired when a player abandons a quest.
- * <p>
- * This event is called on the main thread after a quest is successfully abandoned.
- * </p>
+ *
+ * <p>This event is called on the main thread after a quest is successfully abandoned.
  *
  * @author RaindropCentral
  * @version 1.0.0
@@ -56,6 +55,9 @@ public class QuestAbandonEvent extends Event {
         return quest;
     }
     
+    /**
+     * Gets handlers.
+     */
     @Override
     @NotNull
     public HandlerList getHandlers() {

@@ -13,10 +13,9 @@ import java.util.Map;
 
 /**
  * Configuration section for item-based requirements.
- * <p>
- * This section handles all configuration options specific to ItemRequirement,
+ *
+ * <p>This section handles all configuration options specific to ItemRequirement,
  * including required items, amounts, and consumption settings.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -44,10 +43,16 @@ public class ItemRequirementSection extends AConfigSection {
 		super(evaluationEnvironmentBuilder);
 	}
 	
+	/**
+	 * Gets consumeOnComplete.
+	 */
 	public Boolean getConsumeOnComplete() {
 		return this.consumeOnComplete != null ? this.consumeOnComplete : true;
 	}
 	
+	/**
+	 * Gets allowPartialProgress.
+	 */
 	public Boolean getAllowPartialProgress() {
 		return this.allowPartialProgress != null ? this.allowPartialProgress : false;
 	}
@@ -75,6 +80,9 @@ public class ItemRequirementSection extends AConfigSection {
 		return items;
 	}
 	
+	/**
+	 * Gets requiredItems.
+	 */
 	public Map<String, ItemStackSection> getRequiredItems() {
 		return this.requiredItems == null ? new HashMap<>() : this.requiredItems;
 	}

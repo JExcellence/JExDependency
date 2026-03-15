@@ -11,6 +11,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Logger;
 
+/**
+ * Represents the CurrencyReward API type.
+ */
 @JsonTypeName("CURRENCY")
 public final class CurrencyReward extends AbstractReward {
 
@@ -19,6 +22,9 @@ public final class CurrencyReward extends AbstractReward {
     private final String currencyId;
     private final double amount;
 
+    /**
+     * Executes CurrencyReward.
+     */
     @JsonCreator
     public CurrencyReward(
         @JsonProperty("currencyId") @NotNull String currencyId,
@@ -28,11 +34,17 @@ public final class CurrencyReward extends AbstractReward {
         this.amount = amount;
     }
 
+    /**
+     * Gets typeId.
+     */
     @Override
     public @NotNull String getTypeId() {
         return "CURRENCY";
     }
 
+    /**
+     * Executes grant.
+     */
     @Override
     public @NotNull CompletableFuture<Boolean> grant(@NotNull Player player) {
         return CompletableFuture.supplyAsync(() -> {
@@ -64,19 +76,31 @@ public final class CurrencyReward extends AbstractReward {
         return false;
     }
 
+    /**
+     * Gets estimatedValue.
+     */
     @Override
     public double getEstimatedValue() {
         return amount;
     }
 
+    /**
+     * Gets currencyId.
+     */
     public String getCurrencyId() {
         return currencyId;
     }
 
+    /**
+     * Gets amount.
+     */
     public double getAmount() {
         return amount;
     }
 
+    /**
+     * Executes validate.
+     */
     @Override
     public void validate() {
         if (currencyId == null || currencyId.isEmpty()) {

@@ -26,7 +26,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Primary orchestrator for the shared Raindrop platform runtime that binds plugin lifecycle
+ * Primary orchestrator for the shared Raindrop platform runtime that binds plugin lifecycle.
  * components, manages async initialization, and exposes integrations such as metrics,
  * placeholders, and database resources.
  *
@@ -48,25 +48,25 @@ public class RPlatform {
     private static RPlatform instance;
 
     /**
-     * Hosting {@link JavaPlugin} providing lifecycle hooks, configuration paths, and scheduler
+     * Hosting {@link JavaPlugin} providing lifecycle hooks, configuration paths, and scheduler.
      * access for the platform.
      */
     private final JavaPlugin plugin;
 
     /**
-     * Platform type resolved from the running environment used to tailor integrations such as
+     * Platform type resolved from the running environment used to tailor integrations such as.
      * scheduler adapters and metrics exporters.
      */
     private final PlatformType platformType;
 
     /**
-     * Abstraction over Bukkit/Folia APIs enabling shared command registration, task scheduling, and
+     * Abstraction over Bukkit/Folia APIs enabling shared command registration, task scheduling, and.
      * shutdown behaviour.
      */
     private final PlatformAPI platformAPI;
 
     /**
-     * Scheduler adapter that runs asynchronous tasks using an implementation suitable for the
+     * Scheduler adapter that runs asynchronous tasks using an implementation suitable for the.
      * detected {@link PlatformType}.
      */
     private final ISchedulerAdapter scheduler;
@@ -77,7 +77,7 @@ public class RPlatform {
     private final ServiceRegistry serviceRegistry;
 
     /**
-     * Platform-aware logger emitting lifecycle and diagnostic messages for both initialization and
+     * Platform-aware logger emitting lifecycle and diagnostic messages for both initialization and.
      * shutdown sequences.
      */
     private final PluginLogger logger;
@@ -123,7 +123,7 @@ public class RPlatform {
     private boolean initialized;
 
     /**
-     * Creates a new platform orchestrator bound to the provided plugin and resolves the environment
+     * Creates a new platform orchestrator bound to the provided plugin and resolves the environment.
      * specific adapters required for initialization.
      *
      * @param plugin plugin instance that owns the platform runtime and supplies configuration paths
@@ -144,7 +144,7 @@ public class RPlatform {
     }
 
     /**
-     * Asynchronously initializes translation, command, and database resources required by the
+     * Asynchronously initializes translation, command, and database resources required by the.
      * platform. Subsequent invocations no-op once initialization finishes.
      *
      * @return a future that completes when asynchronous resource setup finishes or immediately when
@@ -191,10 +191,9 @@ public class RPlatform {
 
     /**
      * Initializes Geyser/Floodgate integration for Bedrock player detection.
-     * <p>
-     * This method should be called during plugin initialization if Bedrock support is desired.
+ *
+ * <p>This method should be called during plugin initialization if Bedrock support is desired.
      * The service will gracefully handle missing Floodgate installations.
-     * </p>
      */
     public void initializeGeyser() {
         if (geyserService == null) {
@@ -206,7 +205,7 @@ public class RPlatform {
     }
 
     /**
-     * Initializes metrics collection through the {@link MetricsManager} when provided a valid
+     * Initializes metrics collection through the {@link MetricsManager} when provided a valid.
      * service identifier.
      *
      * @param serviceId bStats service identifier; values less than or equal to zero are ignored to
@@ -231,7 +230,7 @@ public class RPlatform {
     }
 
     /**
-     * Sets up PlaceholderAPI integration by registering the platform's placeholders under the given
+     * Sets up PlaceholderAPI integration by registering the platform's placeholders under the given.
      * identifier. Subsequent calls are ignored once registration occurs.
      *
      * @param identifier PlaceholderAPI identifier namespace used when registering expansions
@@ -245,7 +244,7 @@ public class RPlatform {
     }
 
     /**
-     * Detects whether the premium platform build is available by checking for a marker resource on
+     * Detects whether the premium platform build is available by checking for a marker resource on.
      * the supplied class loader.
      *
      * @param resourceClass class whose class loader should contain the premium marker resource
@@ -259,7 +258,7 @@ public class RPlatform {
     }
 
     /**
-     * Shuts down platform integrations by unregistering placeholders, closing API adapters, and
+     * Shuts down platform integrations by unregistering placeholders, closing API adapters, and.
      * releasing logging resources.
      */
     public void shutdown() {
@@ -396,7 +395,7 @@ public class RPlatform {
     }
 
     /**
-     * Creates the database directory, copies the bundled Hibernate configuration, and builds the
+     * Creates the database directory, copies the bundled Hibernate configuration, and builds the.
      * {@link EntityManagerFactory} used by platform modules.
      *
      * <p>The method writes files within the plugin data folder and may throw unchecked exceptions

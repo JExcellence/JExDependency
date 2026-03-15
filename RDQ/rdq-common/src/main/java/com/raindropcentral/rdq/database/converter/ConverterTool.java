@@ -7,6 +7,9 @@ import java.lang.reflect.Field;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Represents the ConverterTool API type.
+ */
 public class ConverterTool {
 	
 	/**

@@ -4,6 +4,9 @@ import de.jexcellence.configmapper.sections.AConfigSection;
 import de.jexcellence.configmapper.sections.CSAlways;
 import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
 
+/**
+ * Represents the RankSystemSection API type.
+ */
 @CSAlways
 public class RankSystemSection extends AConfigSection {
 	

@@ -22,7 +22,7 @@ import static me.devnatan.inventoryframework.runtime.thirdparty.ReflectionUtils.
 import static me.devnatan.inventoryframework.runtime.thirdparty.ReflectionUtils.getNMSClass;
 
 /**
- * Custom AnvilInput NMS implementation that fixes the InventoryView casting issue
+ * Custom AnvilInput NMS implementation that fixes the InventoryView casting issue.
  * from the original AnvilInputNMS class in the external library.
  *
  * <p>This implementation provides a more robust and error-resistant approach to

@@ -13,10 +13,9 @@ import java.util.stream.Collectors;
 
 /**
  * Enum representing different severity levels for currency log entries.
- * <p>
- * This enum indicates the importance and urgency of log entries,
+ *
+ * <p>This enum indicates the importance and urgency of log entries,
  * helping with filtering, alerting, and monitoring.
- * </p>
  *
  * @author JExcellence
  * @since 1.0.0

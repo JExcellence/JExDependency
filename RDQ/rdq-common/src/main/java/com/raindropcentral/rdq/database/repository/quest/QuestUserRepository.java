@@ -14,10 +14,9 @@ import java.util.function.Function;
 
 /**
  * Repository for managing persistent {@link QuestUser} entities.
- * <p>
- * Provides cached access to player quest progress with methods for finding
+ *
+ * <p>Provides cached access to player quest progress with methods for finding
  * active quests, completed quests, and quest progress by player and quest.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0

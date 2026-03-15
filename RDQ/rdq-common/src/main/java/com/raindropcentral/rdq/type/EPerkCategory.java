@@ -5,8 +5,8 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Enumeration defining different categories of perks for organization and filtering.
- * <p>
- * This enum categorizes perks based on their functionality and theme:
+ *
+ * <p>This enum categorizes perks based on their functionality and theme:
  * <ul>
  *     <li>{@link #COMBAT} - Combat-related perks (damage, defense, weapons)</li>
  *     <li>{@link #MOVEMENT} - Movement and mobility perks (speed, flight, teleportation)</li>
@@ -17,7 +17,6 @@ import org.jetbrains.annotations.NotNull;
  *     <li>{@link #COSMETIC} - Cosmetic and visual perks (particles, titles, appearances)</li>
  *     <li>{@link #SPECIAL} - Special or unique perks that don't fit other categories</li>
  * </ul>
- * </p>
  *
  * @author ItsRainingHP
  * @version 1.0.0

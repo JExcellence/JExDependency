@@ -217,7 +217,7 @@ public final class PluginLogger {
     }
     
     /**
-     * Activates emergency mode, which bypasses the logging system and writes directly
+     * Activates emergency mode, which bypasses the logging system and writes directly.
      * to original streams. This is used when recursion is detected or logging fails.
      * 
      * @param reason the reason emergency mode was activated

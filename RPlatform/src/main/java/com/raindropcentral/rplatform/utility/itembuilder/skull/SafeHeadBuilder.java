@@ -47,6 +47,9 @@ public class SafeHeadBuilder extends AItemBuilder<SkullMeta, SafeHeadBuilder> im
         }
     }
 
+    /**
+     * Sets playerHead.
+     */
     @Override
     public SafeHeadBuilder setPlayerHead(Player player) {
         if (player == null) {
@@ -65,6 +68,9 @@ public class SafeHeadBuilder extends AItemBuilder<SkullMeta, SafeHeadBuilder> im
         return this;
     }
 
+    /**
+     * Sets playerHead.
+     */
     @Override
     public SafeHeadBuilder setPlayerHead(OfflinePlayer offlinePlayer) {
         if (offlinePlayer == null) {
@@ -86,6 +92,9 @@ public class SafeHeadBuilder extends AItemBuilder<SkullMeta, SafeHeadBuilder> im
         return this;
     }
 
+    /**
+     * Sets customTexture.
+     */
     @Override
     public SafeHeadBuilder setCustomTexture(@NotNull UUID uuid, @NotNull String textures) {
         if (ServerEnvironment.getInstance().isPaper()) {

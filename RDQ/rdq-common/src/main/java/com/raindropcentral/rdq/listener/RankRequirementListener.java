@@ -32,11 +32,17 @@ public class RankRequirementListener implements Listener {
     private final RDQ rdq;
     private final RequirementService requirementService;
 
+    /**
+     * Executes RankRequirementListener.
+     */
     public RankRequirementListener(@NotNull RDQ rdq) {
         this.rdq = rdq;
         this.requirementService = RequirementService.getInstance();
     }
 
+    /**
+     * Executes onRequirementCheck.
+     */
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onRequirementCheck(@NotNull RequirementCheckEvent event) {
         Player player = event.getPlayer();
@@ -52,6 +58,9 @@ public class RankRequirementListener implements Listener {
         });
     }
 
+    /**
+     * Executes onRequirementMet.
+     */
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onRequirementMet(@NotNull RequirementMetEvent event) {
         Player player = event.getPlayer();
@@ -89,6 +98,9 @@ public class RankRequirementListener implements Listener {
         });
     }
 
+    /**
+     * Executes onRequirementConsume.
+     */
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onRequirementConsume(@NotNull RequirementConsumeEvent event) {
         LOGGER.info("Requirement consumed for " + event.getPlayer().getName() + ": " + 

@@ -99,6 +99,9 @@ public class PremiumBountyService implements IBountyService {
         }
     }
 
+    /**
+     * Executes findAll.
+     */
     @Override
     public CompletableFuture<List<Bounty>> findAll(int page, int pageSize) {
         return CompletableFuture.supplyAsync(() -> {
@@ -111,6 +114,9 @@ public class PremiumBountyService implements IBountyService {
         });
     }
 
+    /**
+     * Executes findPlayerBounty.
+     */
     @Override
     public CompletableFuture<Bounty> findPlayerBounty(@NotNull UUID uniqueId) {
         return CompletableFuture.supplyAsync(
@@ -119,6 +125,9 @@ public class PremiumBountyService implements IBountyService {
         );
     }
 
+    /**
+     * Executes findBountiesByCommissioner.
+     */
     @Override
     public CompletableFuture<List<Bounty>> findBountiesByCommissioner(@NotNull UUID commissionerUniqueId) {
         return CompletableFuture.supplyAsync(
@@ -127,6 +136,9 @@ public class PremiumBountyService implements IBountyService {
         );
     }
 
+    /**
+     * Executes create.
+     */
     @Override
     public CompletableFuture<Bounty> create(
             @NotNull UUID targetUniqueId,
@@ -135,6 +147,9 @@ public class PremiumBountyService implements IBountyService {
         return create(targetUniqueId, commissionerUniqueId, List.of());
     }
 
+    /**
+     * Executes create.
+     */
     @Override
     public CompletableFuture<Bounty> create(
             @NotNull UUID targetUniqueId,
@@ -179,6 +194,9 @@ public class PremiumBountyService implements IBountyService {
         });
     }
 
+    /**
+     * Executes update.
+     */
     @Override
     public CompletableFuture<Bounty> update(@NotNull Bounty bounty) {
         return CompletableFuture.supplyAsync(() -> {
@@ -235,6 +253,9 @@ public class PremiumBountyService implements IBountyService {
         throw new RuntimeException("Update retry loop completed without success");
     }
 
+    /**
+     * Executes delete.
+     */
     @Override
     public CompletableFuture<Boolean> delete(@NotNull Bounty bounty) {
         if (bounty.getId() == null) {
@@ -244,11 +265,17 @@ public class PremiumBountyService implements IBountyService {
         return getBountyRepository().deleteAsync(bounty.getId());
     }
 
+    /**
+     * Gets totalBounties.
+     */
     @Override
     public CompletableFuture<Integer> getTotalBounties() {
         return getBountyRepository().findAllAsync(0, Integer.MAX_VALUE).thenApply(bounties -> bounties.size());
     }
 
+    /**
+     * Gets bountyHunter.
+     */
     @Override
     public CompletableFuture<BountyHunter> getBountyHunter(@NotNull RDQPlayer player) {
         return CompletableFuture.supplyAsync(
@@ -257,6 +284,9 @@ public class PremiumBountyService implements IBountyService {
         );
     }
 
+    /**
+     * Gets topHunters.
+     */
     @Override
     public CompletableFuture<List<BountyHunter>> getTopHunters(int limit, @NotNull String orderBy) {
         return CompletableFuture.supplyAsync(() -> {
@@ -269,6 +299,9 @@ public class PremiumBountyService implements IBountyService {
         });
     }
 
+    /**
+     * Executes claim.
+     */
     @Override
     public CompletableFuture<BountyHunter> claim(@NotNull RDQPlayer player, double rewardValue) {
         return CompletableFuture.supplyAsync(() -> {
@@ -299,6 +332,9 @@ public class PremiumBountyService implements IBountyService {
         });
     }
 
+    /**
+     * Gets hunterLevel.
+     */
     @Override
     public CompletableFuture<Integer> getHunterLevel(@NotNull UUID uniqueId) {
         return CompletableFuture.supplyAsync(() -> {
@@ -319,11 +355,17 @@ public class PremiumBountyService implements IBountyService {
         });
     }
 
+    /**
+     * Returns whether premium.
+     */
     @Override
     public boolean isPremium() {
         return true;
     }
 
+    /**
+     * Executes canCreateBounty.
+     */
     @Override
     public boolean canCreateBounty(@NotNull Player player) {
         try {
@@ -336,11 +378,17 @@ public class PremiumBountyService implements IBountyService {
         }
     }
 
+    /**
+     * Gets maxBountiesPerCommissioner.
+     */
     @Override
     public int getMaxBountiesPerCommissioner() {
         return getConfig().getMaxBountiesPerCommissioner();
     }
 
+    /**
+     * Gets maxBountyRewardsPerTarget.
+     */
     @Override
     public int getMaxBountyRewardsPerTarget() {
         return getConfig().getMaxRewardsPerBounty();

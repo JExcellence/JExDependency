@@ -97,7 +97,7 @@ public record DependencyCoordinate(
     }
 
     /**
-     * Parses a Maven coordinate string and returns a {@link DependencyCoordinate}, or {@code null} if the string is not
+     * Parses a Maven coordinate string and returns a {@link DependencyCoordinate}, or {@code null} if the string is not.
      * well-formed.
      *
      * @param gavCoordinates coordinate string in {@code group:artifact:version[:classifier]} format

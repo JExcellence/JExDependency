@@ -1,5 +1,5 @@
 /**
- * Pre-built {@code RHead} implementations that represent common navigation controls in
+ * Pre-built {@code RHead} implementations that represent common navigation controls in.
  * multi-step user interfaces.
  *
  * <p>Each class encapsulates a texture, identifier, and translation backing for a specific

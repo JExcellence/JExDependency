@@ -13,18 +13,23 @@ import java.util.Map;
 
 /**
  * Custom serializer for Bukkit {@link ItemStack} objects.
- * <p>
- * Converts ItemStack objects to their JSON representation for use with Jackson.
+ *
+ * <p>Converts ItemStack objects to their JSON representation for use with Jackson.
  * Uses Bukkit's built-in serialization to preserve ALL metadata including attributes,
  * item flags, persistent data container, and other complex metadata.
- * </p>
  */
 public class ItemStackJSONSerializer extends StdSerializer<ItemStack> {
 
+    /**
+     * Executes ItemStackJSONSerializer.
+     */
     public ItemStackJSONSerializer() {
         super(ItemStack.class);
     }
 
+    /**
+     * Executes serialize.
+     */
     @Override
     public void serialize(
             @Nullable final ItemStack itemStack,

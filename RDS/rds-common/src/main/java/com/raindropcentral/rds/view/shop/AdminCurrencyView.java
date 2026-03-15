@@ -32,8 +32,8 @@ import com.raindropcentral.rplatform.view.APaginatedView;
 
 /**
  * Renders the admin currency management view for RDS.
- * <p>
- * This view lists detected currencies from Vault and JExEconomy, and exposes
+ *
+ * <p>This view lists detected currencies from Vault and JExEconomy, and exposes
  * an action to create the default {@code raindrops} currency when JExEconomy
  * is available.
  *

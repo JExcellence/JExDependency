@@ -13,13 +13,12 @@ import java.util.regex.Pattern;
 
 /**
  * Configuration section that normalizes duration values declared in YAML.
- * <p>
- * The mapper supports both structured entries (for example {@code seconds: 30}) and free-form
+ *
+ * <p>The mapper supports both structured entries (for example {@code seconds: 30}) and free-form
  * strings such as {@code 1d 3h 5m}. All parsed values are exposed in seconds while retaining helper
  * accessors for alternative time units. This allows downstream features to work with consistent
  * numeric representations regardless of how administrators describe the duration in configuration
  * files.
- * </p>
  *
  * @author JExcellence
  * @since 1.0.0
@@ -47,7 +46,7 @@ public class DurationSection extends AConfigSection {
     private static final Pattern NUMBER_PATTERN = Pattern.compile("^\\d+$");
 
     /**
-     * Lookup table mapping textual units to their second multiplier. This supports abbreviated and
+     * Lookup table mapping textual units to their second multiplier. This supports abbreviated and.
      * long-form tokens so administrators can use their preferred vocabulary.
      */
     private static final Map<String, Long> TIME_UNITS = new HashMap<>();
@@ -109,7 +108,7 @@ public class DurationSection extends AConfigSection {
     private Long days;
 
     /**
-     * Creates a new duration section configured with the provided evaluation environment so that
+     * Creates a new duration section configured with the provided evaluation environment so that.
      * embedded expressions resolve consistently with other configuration sections.
      *
      * @param evaluationEnvironmentBuilder builder that supplies the shared expression context
@@ -137,7 +136,7 @@ public class DurationSection extends AConfigSection {
     }
 
     /**
-     * Computes the duration in seconds by prioritizing textual entries, falling back to structured
+     * Computes the duration in seconds by prioritizing textual entries, falling back to structured.
      * numeric keys when necessary.
      *
      * @return duration in seconds, defaulting to {@code 0L} when nothing is configured
@@ -205,12 +204,11 @@ public class DurationSection extends AConfigSection {
 
     /**
      * Attempts to parse the supplied duration string into seconds.
-     * <p>
-     * Compound values (for example {@code 1d 2h}) use {@link #DURATION_PATTERN} while simple
+ *
+ * <p>Compound values (for example {@code 1d 2h}) use {@link #DURATION_PATTERN} while simple
      * {@code value+unit} pairs rely on {@link #parseSimpleDuration(String)}. Numeric-only tokens are
      * treated as seconds by default. Invalid tokens quietly return {@code null} so callers can try
      * additional fallbacks.
-     * </p>
      *
      * @param durationStr free-form duration text from configuration
      * @return parsed seconds, or {@code null} when parsing fails
@@ -348,7 +346,7 @@ public class DurationSection extends AConfigSection {
     }
 
     /**
-     * Validates that the configured duration resolves to a non-negative value and that any textual
+     * Validates that the configured duration resolves to a non-negative value and that any textual.
      * representation can be parsed.
      *
      * @throws IllegalStateException when parsing fails or the computed seconds are negative

@@ -132,7 +132,7 @@ public class RotatingFileHandler extends Handler {
     }
     
     /**
-     * Rotates the log files by:
+     * Rotates the log files by:.
      * 1. Closing the current file
      * 2. Deleting the backup file (if it exists)
      * 3. Renaming current file to backup

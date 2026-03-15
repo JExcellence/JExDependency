@@ -14,10 +14,9 @@ import java.util.Objects;
 
 /**
  * Entity representing a task within a quest.
- * <p>
- * Quest tasks are individual objectives that must be completed as part of a quest.
+ *
+ * <p>Quest tasks are individual objectives that must be completed as part of a quest.
  * Each task has requirements (stored as JSON) and rewards that are granted upon completion.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0
@@ -33,6 +32,9 @@ import java.util.Objects;
                 @Index(name = "idx_quest_task_order", columnList = "order_index")
         }
 )
+/**
+ * Represents the QuestTask API type.
+ */
 public class QuestTask extends BaseEntity {
     
     @Serial
@@ -75,20 +77,18 @@ public class QuestTask extends BaseEntity {
     
     /**
      * JSON data containing RPlatform requirement configuration.
-     * <p>
-     * This field stores the requirement type and parameters that will be
+ *
+ * <p>This field stores the requirement type and parameters that will be
      * parsed and validated using the RPlatform requirement system.
-     * </p>
      */
     @Column(name = "requirement_data", columnDefinition = "TEXT")
     private String requirementData;
     
     /**
      * JSON data containing RPlatform reward configuration.
-     * <p>
-     * This field stores the reward types and parameters that will be
+ *
+ * <p>This field stores the reward types and parameters that will be
      * granted upon task completion using the RPlatform reward system.
-     * </p>
      */
     @Column(name = "reward_data", columnDefinition = "TEXT")
     private String rewardData;
@@ -126,6 +126,9 @@ public class QuestTask extends BaseEntity {
         this.orderIndex = orderIndex;
     }
     
+    /**
+     * Executes equals.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -139,6 +142,9 @@ public class QuestTask extends BaseEntity {
                 taskIdentifier != null && taskIdentifier.equals(questTask.taskIdentifier);
     }
     
+    /**
+     * Returns whether hCode.
+     */
     @Override
     public int hashCode() {
         if (this.getId() != null) {
@@ -148,6 +154,9 @@ public class QuestTask extends BaseEntity {
         return Objects.hash(quest, taskIdentifier);
     }
     
+    /**
+     * Executes toString.
+     */
     @Override
     public String toString() {
         return "QuestTask{" +

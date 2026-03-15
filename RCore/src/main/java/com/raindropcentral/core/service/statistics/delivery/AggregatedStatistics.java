@@ -61,14 +61,44 @@ public record AggregatedStatistics(
         private int totalQuestCompletions = 0;
         private final Map<String, Object> customAggregates = new HashMap<>();
 
+        /**
+         * Executes timestamp.
+         */
         public Builder timestamp(long timestamp) { this.timestamp = timestamp; return this; }
+        /**
+         * Executes totalPlayersTracked.
+         */
         public Builder totalPlayersTracked(int count) { this.totalPlayersTracked = count; return this; }
+        /**
+         * Executes method.
+         */
+        /**
+         * Executes this member.
+         */
+        /**
+         * Executes averagePlaytimeMs.
+         */
         public Builder averagePlaytimeMs(double ms) { this.averagePlaytimeMs = ms; return this; }
+        /**
+         * Executes totalEconomyVolume.
+         */
         public Builder totalEconomyVolume(double volume) { this.totalEconomyVolume = volume; return this; }
+        /**
+         * Executes totalQuestCompletions.
+         */
         public Builder totalQuestCompletions(int count) { this.totalQuestCompletions = count; return this; }
+        /**
+         * Executes customAggregate.
+         */
         public Builder customAggregate(String key, Object value) { this.customAggregates.put(key, value); return this; }
+        /**
+         * Executes customAggregates.
+         */
         public Builder customAggregates(Map<String, Object> aggregates) { this.customAggregates.putAll(aggregates); return this; }
 
+        /**
+         * Executes build.
+         */
         public AggregatedStatistics build() {
             return new AggregatedStatistics(
                 timestamp, totalPlayersTracked, averagePlaytimeMs,

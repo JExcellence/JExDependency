@@ -18,6 +18,9 @@ public final class SoundReward extends AbstractReward {
     private final float volume;
     private final float pitch;
 
+    /**
+     * Executes SoundReward.
+     */
     @JsonCreator
     public SoundReward(
         @JsonProperty("sound") @NotNull Sound sound,
@@ -29,11 +32,17 @@ public final class SoundReward extends AbstractReward {
         this.pitch = Math.max(0.5f, Math.min(2.0f, pitch));
     }
 
+    /**
+     * Gets typeId.
+     */
     @Override
     public @NotNull String getTypeId() {
         return "SOUND";
     }
 
+    /**
+     * Executes grant.
+     */
     @Override
     public @NotNull CompletableFuture<Boolean> grant(@NotNull Player player) {
         return CompletableFuture.supplyAsync(() -> {
@@ -46,23 +55,38 @@ public final class SoundReward extends AbstractReward {
         });
     }
 
+    /**
+     * Gets estimatedValue.
+     */
     @Override
     public double getEstimatedValue() {
         return 0.0;
     }
 
+    /**
+     * Gets sound.
+     */
     public Sound getSound() {
         return sound;
     }
 
+    /**
+     * Gets volume.
+     */
     public float getVolume() {
         return volume;
     }
 
+    /**
+     * Gets pitch.
+     */
     public float getPitch() {
         return pitch;
     }
 
+    /**
+     * Executes validate.
+     */
     @Override
     public void validate() {
         if (sound == null) {

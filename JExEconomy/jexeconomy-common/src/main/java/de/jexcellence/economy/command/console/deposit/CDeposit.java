@@ -17,23 +17,22 @@ import java.util.stream.Collectors;
 
 /**
  * Console command implementation for depositing currency amounts into player accounts.
- * <p>
- * This command provides server administrators with the ability to add currency to any player's
+ *
+ * <p>This command provides server administrators with the ability to add currency to any player's
  * account directly from the server console. It supports all registered currencies within the
  * JExEconomy system and performs comprehensive validation to ensure data integrity.
- * </p>
  *
- * <h3>Command Syntax:</h3>
+ * <p><strong>Command Syntax:</strong>
  * <pre>{@code /cdeposit <player> <currency> <amount>}</pre>
  *
- * <h3>Parameters:</h3>
+ * <p><strong>Parameters:</strong>
  * <ul>
  *   <li><strong>player:</strong> Target player name or UUID (must have played before)</li>
  *   <li><strong>currency:</strong> Valid currency identifier registered in the system</li>
  *   <li><strong>amount:</strong> Positive decimal amount to deposit</li>
  * </ul>
  *
- * <h3>Operation Flow:</h3>
+ * <p><strong>Operation Flow:</strong>
  * <ol>
  *   <li>Validates command arguments and parameter types</li>
  *   <li>Verifies currency exists in the system</li>
@@ -41,14 +40,14 @@ import java.util.stream.Collectors;
  *   <li>Handles response and logs operation results</li>
  * </ol>
  *
- * <h3>Error Handling:</h3>
+ * <p><strong>Error Handling:</strong>
  * <ul>
  *   <li>Invalid player names or UUIDs are rejected</li>
  *   <li>Non-existent currencies are reported with available alternatives</li>
  *   <li>Failed deposit operations are logged with context</li>
  * </ul>
  *
- * <h3>Security Considerations:</h3>
+ * <p><strong>Security Considerations:</strong>
  * <ul>
  *   <li>Console-only execution prevents player abuse</li>
  *   <li>All operations are logged via CurrencyAdapter events</li>
@@ -70,28 +69,25 @@ CDeposit extends ServerCommand {
 	
 	/**
 	 * Logger instance for recording command execution details and debugging information.
-	 * <p>
-	 * Used to track command usage, parameter validation results, operation outcomes,
+ *
+ * <p>Used to track command usage, parameter validation results, operation outcomes,
 	 * and error conditions for administrative monitoring and troubleshooting.
-	 * </p>
 	 */
 	private static final Logger COMMAND_LOGGER = CentralLogger.getLoggerByName("JExEconomy");
 	
 	/**
 	 * Reference to the main JExEconomy plugin instance.
-	 * <p>
-	 * Provides access to currency repositories, adapter services, and other plugin
+ *
+ * <p>Provides access to currency repositories, adapter services, and other plugin
 	 * infrastructure required for executing deposit operations and data persistence.
-	 * </p>
 	 */
 	private final JExEconomy jexEconomyImpl;
 	
 	/**
 	 * Constructs a new console deposit command handler with the specified configuration.
-	 * <p>
-	 * Initializes the command with access to the plugin's currency management infrastructure
+ *
+ * <p>Initializes the command with access to the plugin's currency management infrastructure
 	 * and configures it according to the provided command section settings.
-	 * </p>
 	 *
 	 * @param commandSection the command configuration section defining permissions and settings, must not be null
 	 * @param jexEconomy the main JExEconomy plugin instance providing access to services, must not be null
@@ -107,20 +103,19 @@ CDeposit extends ServerCommand {
 	
 	/**
 	 * Processes console-initiated deposit commands with comprehensive validation and error handling.
-	 * <p>
-	 * This method handles the complete deposit workflow from parameter validation through
+ *
+ * <p>This method handles the complete deposit workflow from parameter validation through
 	 * the CurrencyAdapter service. It performs asynchronous operations to prevent server lag
 	 * and provides detailed logging for administrative monitoring.
-	 * </p>
 	 *
-	 * <h3>Parameter Validation:</h3>
+	 * <p><strong>Parameter Validation:</strong>
 	 * <ul>
 	 *   <li>Validates player existence and play history</li>
 	 *   <li>Confirms currency identifier matches registered currencies</li>
 	 *   <li>Ensures deposit amount is positive and valid</li>
 	 * </ul>
 	 *
-	 * <h3>Asynchronous Processing:</h3>
+	 * <p><strong>Asynchronous Processing:</strong>
 	 * <ul>
 	 *   <li>Deposit operation executed through CurrencyAdapter</li>
 	 *   <li>Events are fired automatically for logging</li>
@@ -170,11 +165,10 @@ CDeposit extends ServerCommand {
 	
 	/**
 	 * Locates a currency entity by its unique identifier within the plugin's currency cache.
-	 * <p>
-	 * This method performs an efficient lookup of currency entities using the in-memory
+ *
+ * <p>This method performs an efficient lookup of currency entities using the in-memory
 	 * cache maintained by the plugin. It provides fast access to currency data without
 	 * requiring database queries during command execution.
-	 * </p>
 	 *
 	 * @param currencyIdentifier the unique identifier of the currency to locate, must not be null
 	 * @return the Currency entity if found, null if no matching currency exists
@@ -190,11 +184,10 @@ CDeposit extends ServerCommand {
 	
 	/**
 	 * Handles unknown currency identifier errors with helpful diagnostic information.
-	 * <p>
-	 * This method logs detailed error information when an invalid currency identifier
+ *
+ * <p>This method logs detailed error information when an invalid currency identifier
 	 * is provided, including a list of all available currencies to assist administrators
 	 * in correcting their commands.
-	 * </p>
 	 *
 	 * @param invalidCurrencyIdentifier the currency identifier that was not found, must not be null
 	 */
@@ -224,11 +217,10 @@ CDeposit extends ServerCommand {
 	
 	/**
 	 * Executes the deposit operation using the CurrencyAdapter service.
-	 * <p>
-	 * This method uses the CurrencyAdapter's deposit method to ensure proper event firing
+ *
+ * <p>This method uses the CurrencyAdapter's deposit method to ensure proper event firing
 	 * and logging. The adapter handles all the complex logic including account validation,
 	 * balance updates, and event notifications.
-	 * </p>
 	 *
 	 * @param targetOfflinePlayer the player to receive the currency deposit, must not be null
 	 * @param targetCurrency the currency entity for the deposit operation, must not be null
@@ -277,11 +269,10 @@ CDeposit extends ServerCommand {
 	
 	/**
 	 * Handles the response from the CurrencyAdapter deposit operation.
-	 * <p>
-	 * This method processes the CurrencyResponse returned by the adapter and logs
+ *
+ * <p>This method processes the CurrencyResponse returned by the adapter and logs
 	 * the appropriate success or failure information. The detailed transaction
 	 * logging is handled automatically by the adapter's event system.
-	 * </p>
 	 *
 	 * @param response the response from the deposit operation, must not be null
 	 * @param targetOfflinePlayer the player who received the deposit, must not be null

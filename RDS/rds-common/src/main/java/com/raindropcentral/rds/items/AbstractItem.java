@@ -21,6 +21,9 @@ import java.util.concurrent.CompletableFuture;
 @JsonSubTypes({
 	@JsonSubTypes.Type(value = ShopItem.class, name = "ITEM"),
 })
+/**
+ * Represents the AbstractItem API type.
+ */
 @JsonIgnoreProperties(value = {"typeId", "estimatedValue", "descriptionKey"}, allowGetters = true)
 public abstract class AbstractItem implements Item {
 	

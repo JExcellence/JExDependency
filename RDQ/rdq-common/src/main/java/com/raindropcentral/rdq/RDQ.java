@@ -68,6 +68,9 @@ import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Represents the RDQ API type.
+ */
 @Getter
 public abstract class RDQ {
 
@@ -161,6 +164,9 @@ public abstract class RDQ {
 	private com.raindropcentral.rdq.quest.service.QuestProgressTracker questProgressTracker;
 	private com.raindropcentral.rdq.quest.cache.QuestCacheManager questCacheManager;
 
+	/**
+	 * Executes RDQ.
+	 */
 	public RDQ(
 			@NotNull JavaPlugin plugin,
 			@NotNull String edition
@@ -171,6 +177,9 @@ public abstract class RDQ {
 		this.executor = Executors.newFixedThreadPool(4);
 	}
 
+	/**
+	 * Executes onEnable.
+	 */
 	public void onEnable() {
 		if (
 				onEnableFuture != null && !onEnableFuture.isDone()

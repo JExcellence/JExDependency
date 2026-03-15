@@ -29,6 +29,9 @@ public class RateLimiter {
     private volatile long pauseUntil;
     private volatile double adaptiveMultiplier;
 
+    /**
+     * Executes RateLimiter.
+     */
     public RateLimiter(final int maxRequestsPerMinute) {
         this.maxRequestsPerMinute = maxRequestsPerMinute;
         this.requestTimestamps = new ConcurrentLinkedDeque<>();
@@ -38,6 +41,9 @@ public class RateLimiter {
         this.adaptiveMultiplier = 1.0;
     }
 
+    /**
+     * Executes RateLimiter.
+     */
     public RateLimiter(final @NotNull StatisticsDeliveryConfig config) {
         this(config.getMaxRequestsPerMinute());
     }

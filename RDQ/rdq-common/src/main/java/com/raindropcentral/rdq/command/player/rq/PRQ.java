@@ -19,6 +19,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+/**
+ * Represents the PRQ API type.
+ */
 @Command
 @SuppressWarnings("unused")
 public class PRQ extends PlayerCommand {
@@ -47,9 +50,8 @@ public class PRQ extends PlayerCommand {
     
     /**
      * Handles the command execution when a player invokes it.
-     * <p>
-     * Checks for the required permission and opens the admin overview view for the player.
-     * </p>
+ *
+ * <p>Checks for the required permission and opens the admin overview view for the player.
      *
      * @param player the player who executed the command
      * @param label  the command label used
@@ -212,9 +214,8 @@ public class PRQ extends PlayerCommand {
     
     /**
      * Provides tab completion suggestions for the command.
-     * <p>
-     * Currently returns an empty list, as there are no suggestions for this command.
-     * </p>
+ *
+ * <p>Currently returns an empty list, as there are no suggestions for this command.
      *
      * @param player the player requesting tab completion
      * @param label  the command label used

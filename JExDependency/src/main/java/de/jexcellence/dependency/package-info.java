@@ -1,7 +1,7 @@
 /**
  * Bootstrap utilities for runtime dependency management used by Raindrop Central plugins.
- * <p>
- * The {@link de.jexcellence.dependency.JEDependency} facade exposes three entry points that control
+ *
+ * <p>The {@link de.jexcellence.dependency.JEDependency} facade exposes three entry points that control
  * how dependencies are downloaded and injected into the plugin class loader:
  * </p>
  * <ul>
@@ -15,8 +15,8 @@
  *     forces the remapping pipeline. When {@code RemappingDependencyManager} is present the call applies package
  *     relocations even if the {@code -Djedependency.remap} system property would otherwise disable the feature.</li>
  * </ul>
- * <p>
- * Dependency metadata is sourced from YAML descriptors located next to the provided anchor class under
+ *
+ * <p>Dependency metadata is sourced from YAML descriptors located next to the provided anchor class under
  * {@code dependency/*.yml}. Any additional coordinates supplied to the entry points are merged into that list.
  * The {@code DependencyManager} (or remapping counterpart) then downloads artifacts into the plugin data directory
  * under {@code <data>/libraries}. When remapping is enabled the effective jars are materialized within the
@@ -24,8 +24,8 @@
  * {@code -Djedependency.relocations.prefix}, and {@code -Djedependency.relocations.excludes} customize relocation
  * rules that the remapper applies while producing those remapped jars.
  * </p>
- * <p>
- * The Paper loader integration implemented in
+ *
+ * <p>The Paper loader integration implemented in
  * {@link de.jexcellence.dependency.loader.PaperPluginLoader} performs the same YAML resolution, download, and
  * remapping logic ahead of plugin start-up. It also sets {@code paper.plugin.loader.active=true} so the plugin-side
  * bootstrap can detect that the loader already primed {@code <data>/libraries}. When {@link de.jexcellence.dependency.JEDependency}

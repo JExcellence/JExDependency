@@ -14,18 +14,23 @@ import java.util.*;
 
 /**
  * Custom deserializer for Bukkit {@link ItemStack} objects.
- * <p>
- * Reconstructs ItemStack objects from their JSON representation,
+ *
+ * <p>Reconstructs ItemStack objects from their JSON representation,
  * supporting both binary serialization (complete metadata preservation) and
  * Map serialization (fallback compatibility).
- * </p>
  */
 public class ItemStackJSONDeserializer extends StdDeserializer<ItemStack> {
 
+    /**
+     * Executes ItemStackJSONDeserializer.
+     */
     public ItemStackJSONDeserializer() {
         super(ItemStack.class);
     }
 
+    /**
+     * Executes deserialize.
+     */
     @Override
     public @NotNull ItemStack deserialize(
             @NotNull final JsonParser jsonParser,

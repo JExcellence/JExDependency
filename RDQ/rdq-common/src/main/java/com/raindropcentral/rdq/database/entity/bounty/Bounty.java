@@ -10,6 +10,9 @@ import java.io.Serial;
 import java.time.LocalDateTime;
 import java.util.*;
 
+/**
+ * Stores a bounty contract and its attached rewards.
+ */
 @Entity
 @Table(
         name = "r_bounty",
@@ -59,12 +62,18 @@ public class Bounty extends BaseEntity {
 
         protected Bounty() {}
 
+        /**
+         * Executes Bounty.
+         */
         public Bounty(@NotNull UUID targetUniqueId, @NotNull UUID commissionerUniqueId) {
                 this.targetUniqueId = targetUniqueId;
                 this.commissionerUniqueId = commissionerUniqueId;
                 this.expiresAt = null; //expires never
         }
 
+        /**
+         * Executes Bounty.
+         */
         public Bounty(
                 @NotNull UUID targetUniqueId,
                 @NotNull UUID commissionerUniqueId,
@@ -74,19 +83,31 @@ public class Bounty extends BaseEntity {
                 this.rewards = rewards;
         }
 
+        /**
+         * Executes addReward.
+         */
         public void addReward(@NotNull BountyReward rewardItem) {
 
                 rewards.add(rewardItem);
         }
 
+        /**
+         * Returns whether claimed.
+         */
         public boolean isClaimed() {
                 return claimedBy != null;
         }
 
+        /**
+         * Returns whether expired.
+         */
         public boolean isExpired() {
                 return expiresAt != null && LocalDateTime.now().isAfter(expiresAt);
         }
 
+        /**
+         * Executes claim.
+         */
         public void claim(
                 @NotNull UUID claimedBy
         ) {
@@ -95,6 +116,9 @@ public class Bounty extends BaseEntity {
                 this.active = false;
         }
 
+        /**
+         * Executes expire.
+         */
         public void expire() {
                 this.active = false;
         }

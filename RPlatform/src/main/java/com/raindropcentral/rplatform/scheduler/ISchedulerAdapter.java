@@ -9,16 +9,15 @@ import org.jetbrains.annotations.NotNull;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * Coordinates cross-platform scheduling so the {@link com.raindropcentral.rplatform.RPlatform} runtime can
+ * Coordinates cross-platform scheduling so the {@link com.raindropcentral.rplatform.RPlatform} runtime can.
  * offer a single façade over Folia's region aware execution model and the legacy Bukkit scheduler used by
  * Paper and Spigot.
- * <p>
- * Each method describes whether work happens on the primary tick thread or asynchronously so callers can
+ *
+ * <p>Each method describes whether work happens on the primary tick thread or asynchronously so callers can
  * interact with Bukkit APIs safely. Implementations are discovered reflectively via
  * {@link #create(JavaPlugin, PlatformType)} ensuring Folia servers load
  * {@code scheduler.impl.FoliaISchedulerImpl} while other platforms fall back to
  * {@code scheduler.impl.BukkitISchedulerImpl}.
- * </p>
  *
  * @author JExcellence
  * @since 1.0.0
@@ -28,11 +27,10 @@ public interface ISchedulerAdapter {
 
     /**
      * Executes the supplied {@code task} on the main server thread.
-     * <p>
-     * On Folia this delegates to the global region scheduler, while Paper and Spigot enqueue the task on
+ *
+ * <p>On Folia this delegates to the global region scheduler, while Paper and Spigot enqueue the task on
      * the standard Bukkit synchronous scheduler queue. Use this for Bukkit API interactions that must
      * occur on the tick thread.
-     * </p>
      *
      * @param task runnable to execute synchronously; must not be {@code null}
      */
@@ -40,10 +38,9 @@ public interface ISchedulerAdapter {
 
     /**
      * Schedules the {@code task} away from the primary server thread.
-     * <p>
-     * Implementations may use the Bukkit asynchronous pool or the JVM's default executor. Because the task
+ *
+ * <p>Implementations may use the Bukkit asynchronous pool or the JVM's default executor. Because the task
      * runs off-thread it must avoid touching Bukkit state unless it hands work back to {@link #runSync(Runnable)}.
-     * </p>
      *
      * @param task runnable to execute asynchronously; must not be {@code null}
      */
@@ -51,11 +48,10 @@ public interface ISchedulerAdapter {
 
     /**
      * Enqueues {@code task} to execute after {@code delayTicks} on the scheduler's synchronous thread model.
-     * <p>
-     * Folia implementations leverage the global region scheduler, while Bukkit/Paper use
+ *
+ * <p>Folia implementations leverage the global region scheduler, while Bukkit/Paper use
      * {@code BukkitScheduler#runTaskLater}. The task therefore executes on the tick thread when the delay
      * expires.
-     * </p>
      *
      * @param task runnable to execute after the delay; must not be {@code null}
      * @param delayTicks number of ticks to wait before execution
@@ -63,13 +59,12 @@ public interface ISchedulerAdapter {
     void runDelayed(final @NotNull Runnable task, final long delayTicks);
 
     /**
-     * Registers {@code task} to execute repeatedly with the given delay and period on the scheduler's
+     * Registers {@code task} to execute repeatedly with the given delay and period on the scheduler's.
      * synchronous execution context.
-     * <p>
-     * The first invocation happens after {@code delayTicks}; subsequent executions repeat every
+ *
+ * <p>The first invocation happens after {@code delayTicks}; subsequent executions repeat every
      * {@code periodTicks}. Implementations make best efforts to keep cadence consistent with the server
      * tick rate.
-     * </p>
      *
      * @param task runnable to execute repeatedly; must not be {@code null}
      * @param delayTicks initial delay before the first run, in ticks
@@ -77,15 +72,17 @@ public interface ISchedulerAdapter {
      */
     void runRepeating(final @NotNull Runnable task, final long delayTicks, final long periodTicks);
 
+    /**
+     * Executes runRepeatingAsync.
+     */
     void runRepeatingAsync(final @NotNull Runnable task, final long delayTicks, final long periodTicks);
 
     /**
      * Executes {@code task} in the context of {@code entity}'s scheduler if the platform supports it.
-     * <p>
-     * Folia scopes the work to the entity's region, preserving thread safety guarantees for entity state,
+ *
+ * <p>Folia scopes the work to the entity's region, preserving thread safety guarantees for entity state,
      * while Bukkit/Paper fall back to {@link #runSync(Runnable)} because entity scoped schedulers are not
      * available.
-     * </p>
      *
      * @param entity entity whose scheduler should host the task; must not be {@code null}
      * @param task runnable to execute for the entity context; must not be {@code null}
@@ -93,12 +90,11 @@ public interface ISchedulerAdapter {
     void runAtEntity(final @NotNull Entity entity, final @NotNull Runnable task);
 
     /**
-     * Executes {@code task} for the region that contains {@code location} when a region aware scheduler
+     * Executes {@code task} for the region that contains {@code location} when a region aware scheduler.
      * exists.
-     * <p>
-     * Folia keeps the work pinned to the region thread, ensuring world access happens without blocking
+ *
+ * <p>Folia keeps the work pinned to the region thread, ensuring world access happens without blocking
      * other regions. On Bukkit/Paper the task executes on the main thread.
-     * </p>
      *
      * @param location location to determine the execution region; must not be {@code null}
      * @param task runnable to execute for the region; must not be {@code null}
@@ -107,10 +103,9 @@ public interface ISchedulerAdapter {
 
     /**
      * Executes {@code task} on the platform's global scheduler entry point.
-     * <p>
-     * Folia resolves the global region scheduler while Bukkit/Paper schedules the work on the main thread.
+ *
+ * <p>Folia resolves the global region scheduler while Bukkit/Paper schedules the work on the main thread.
      * Callers should use this for tick thread safe logic that is not tied to a particular location or entity.
-     * </p>
      *
      * @param task runnable to execute globally; must not be {@code null}
      */
@@ -118,10 +113,9 @@ public interface ISchedulerAdapter {
 
     /**
      * Executes {@code task} asynchronously and propagates completion via a {@link CompletableFuture}.
-     * <p>
-     * The returned future completes successfully when the task finishes or exceptionally when the task
+ *
+ * <p>The returned future completes successfully when the task finishes or exceptionally when the task
      * throws. This is useful for coordinating async work with the rest of the platform.
-     * </p>
      *
      * @param task runnable to execute asynchronously; must not be {@code null}
      * @return future that completes when the task finishes
@@ -129,7 +123,7 @@ public interface ISchedulerAdapter {
     @NotNull CompletableFuture<Void> runAsyncFuture(final @NotNull Runnable task);
 
     /**
-     * Creates a scheduler adapter for the supplied {@code platformType} using reflection so Folia can load
+     * Creates a scheduler adapter for the supplied {@code platformType} using reflection so Folia can load.
      * its region aware implementation without introducing a hard compile time dependency.
      *
      * @param plugin        owning plugin used when interacting with scheduler APIs
@@ -147,7 +141,7 @@ public interface ISchedulerAdapter {
     }
 
     /**
-     * Attempts to construct the Folia scheduler implementation and falls back to the Bukkit variant if
+     * Attempts to construct the Folia scheduler implementation and falls back to the Bukkit variant if.
      * any reflection step fails.
      *
      * @param plugin plugin instance used when binding to scheduler APIs

@@ -37,14 +37,14 @@ public final class CurrencyRequirement extends AbstractRequirement {
 	private final boolean consumable;
 
 	/**
-	 * Simple constructor
+	 * Simple constructor.
 	 */
 	public CurrencyRequirement(@NotNull String currencyId, double amount) {
 		this(currencyId, amount, false);
 	}
 
 	/**
-	 * Full constructor
+	 * Full constructor.
 	 */
 	@JsonCreator
 	public CurrencyRequirement(
@@ -67,24 +67,39 @@ public final class CurrencyRequirement extends AbstractRequirement {
 		this.consumable = consumable != null && consumable;
 	}
 
+	/**
+	 * Gets currencyId.
+	 */
 	@NotNull
 	public String getCurrencyId() {
 		return currencyId;
 	}
 
+	/**
+	 * Gets amount.
+	 */
 	public double getAmount() {
 		return amount;
 	}
 
+	/**
+	 * Returns whether consumable.
+	 */
 	public boolean isConsumable() {
 		return consumable;
 	}
 
+	/**
+	 * Returns whether met.
+	 */
 	@Override
 	public boolean isMet(@NotNull Player player) {
 		return getCurrentBalance(player) >= amount;
 	}
 
+	/**
+	 * Executes calculateProgress.
+	 */
 	@Override
 	public double calculateProgress(@NotNull Player player) {
 		if (amount <= 0) {
@@ -95,6 +110,9 @@ public final class CurrencyRequirement extends AbstractRequirement {
 		return Math.min(1.0, balance / amount);
 	}
 
+	/**
+	 * Executes consume.
+	 */
 	@Override
 	public void consume(@NotNull Player player) {
 		if (!consumable) {
@@ -144,6 +162,9 @@ public final class CurrencyRequirement extends AbstractRequirement {
 		LOGGER.log(Level.WARNING, "Cannot consume - no economy plugin found for currency: " + currencyId);
 	}
 
+	/**
+	 * Gets descriptionKey.
+	 */
 	@Override
 	@NotNull
 	public String getDescriptionKey() {
@@ -188,7 +209,7 @@ public final class CurrencyRequirement extends AbstractRequirement {
 	}
 	
 	/**
-	 * Gets the current balance for this currency
+	 * Gets the current balance for this currency.
 	 */
 	@JsonIgnore
 	public double getCurrentBalance(@NotNull Player player) {
@@ -221,7 +242,7 @@ public final class CurrencyRequirement extends AbstractRequirement {
 	}
 	
 	/**
-	 * Checks if this is a Vault currency identifier
+	 * Checks if this is a Vault currency identifier.
 	 */
 	@JsonIgnore
 	private boolean isVaultCurrency(String identifier) {
@@ -231,7 +252,7 @@ public final class CurrencyRequirement extends AbstractRequirement {
 	}
 	
 	/**
-	 * Validates this requirement
+	 * Validates this requirement.
 	 */
 	@JsonIgnore
 	public void validate() {

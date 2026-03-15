@@ -24,10 +24,16 @@ public class BountyDamageListener implements Listener {
 
     private final RDQ rdq;
 
+    /**
+     * Executes BountyDamageListener.
+     */
     public BountyDamageListener(@NotNull RDQ rdq) {
         this.rdq = rdq;
     }
 
+    /**
+     * Executes onEntityDamageByEntity.
+     */
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = false)  // Changed to catch cancelled events too
     public void onEntityDamageByEntity(@NotNull EntityDamageByEntityEvent event) {
         // Only track player-on-player damage

@@ -90,6 +90,9 @@ public class ShopInputView extends BaseView {
         );
     }
 
+    /**
+     * Executes onFirstRender.
+     */
     @Override
     public void onFirstRender(
             final @NotNull RenderContext render,
@@ -136,6 +139,9 @@ public class ShopInputView extends BaseView {
         ).onClick(this::handleConfirmClick);
     }
 
+    /**
+     * Executes onClick.
+     */
     @Override
     public void onClick(
             final @NotNull SlotClickContext click
@@ -165,6 +171,9 @@ public class ShopInputView extends BaseView {
         }
     }
 
+    /**
+     * Executes onClose.
+     */
     @Override
     public void onClose(
             final @NotNull CloseContext close

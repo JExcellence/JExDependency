@@ -6,9 +6,8 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Lifecycle hooks for requirement execution.
- * <p>
- * Allows plugins to inject custom logic before/after requirement operations.
- * </p>
+ *
+ * <p>Allows plugins to inject custom logic before/after requirement operations.
  */
 public interface RequirementLifecycleHook {
 

@@ -18,11 +18,10 @@ import java.util.logging.Logger;
 
 /**
  * Handler for special ability perks.
- * <p>
- * This handler manages special abilities like flight, glow effect, fall damage immunity,
+ *
+ * <p>This handler manages special abilities like flight, glow effect, fall damage immunity,
  * and death protection (keep inventory/experience). It also implements event listeners
  * for damage prevention and death protection.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0

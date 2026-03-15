@@ -18,19 +18,22 @@ public class RequirementContext {
     
     private RequirementContext() {}
     
+    /**
+     * Gets instance.
+     */
     public static RequirementContext getInstance() {
         return INSTANCE;
     }
     
     /**
-     * Register a service in the context
+     * Register a service in the context.
      */
     public void registerService(String key, Object service) {
         services.put(key, service);
     }
     
     /**
-     * Get a service from the context
+     * Get a service from the context.
      */
     @Nullable
     public <T> T getService(String key, Class<T> type) {
@@ -42,7 +45,7 @@ public class RequirementContext {
     }
     
     /**
-     * Get a service as Object (for reflection-based access)
+     * Get a service as Object (for reflection-based access).
      */
     @Nullable
     public Object getService(String key) {
@@ -50,14 +53,14 @@ public class RequirementContext {
     }
     
     /**
-     * Check if a service is registered
+     * Check if a service is registered.
      */
     public boolean hasService(String key) {
         return services.containsKey(key);
     }
     
     /**
-     * Clear all services (useful for testing)
+     * Clear all services (useful for testing).
      */
     public void clear() {
         services.clear();

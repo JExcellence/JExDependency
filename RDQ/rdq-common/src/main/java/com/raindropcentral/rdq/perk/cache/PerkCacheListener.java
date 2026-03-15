@@ -15,9 +15,8 @@ import java.util.logging.Logger;
 
 /**
  * Event listener for managing simple perk cache lifecycle.
- * <p>
- * Loads all player perks on join (async) and saves all changes on quit (blocking).
- * </p>
+ *
+ * <p>Loads all player perks on join (async) and saves all changes on quit (blocking).
  *
  * @author JExcellence
  * @version 2.0.0
@@ -28,6 +27,9 @@ public class PerkCacheListener implements Listener {
 
 	private final RDQ rdq;
 
+	/**
+	 * Executes PerkCacheListener.
+	 */
 	public PerkCacheListener(@NotNull final RDQ rdq) {
 		this.rdq = rdq;
 	}

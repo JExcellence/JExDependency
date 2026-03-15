@@ -46,6 +46,9 @@ import org.slf4j.LoggerFactory;
     "FieldCanBeLocal",
     "JpaDataSourceORMInspection"
 })
+/**
+ * Represents the RServerBank API type.
+ */
 public class RServerBank extends BaseEntity {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RServerBank.class);

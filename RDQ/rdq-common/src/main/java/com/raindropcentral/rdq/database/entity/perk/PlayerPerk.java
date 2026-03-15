@@ -14,10 +14,9 @@ import java.util.Objects;
 
 /**
  * Entity representing a player's association with a perk.
- * <p>
- * This entity tracks the ownership, enabled state, active state, cooldown status,
+ *
+ * <p>This entity tracks the ownership, enabled state, active state, cooldown status,
  * and usage statistics for a specific perk owned by a player.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -29,6 +28,9 @@ import java.util.Objects;
         name = "rdq_player_perk",
         uniqueConstraints = @UniqueConstraint(columnNames = {"player_id", "perk_id"})
 )
+/**
+ * Represents the PlayerPerk API type.
+ */
 public class PlayerPerk extends BaseEntity {
 
     /**
@@ -209,6 +211,9 @@ public class PlayerPerk extends BaseEntity {
         this.activationCount++;
     }
 
+    /**
+     * Executes equals.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -222,6 +227,9 @@ public class PlayerPerk extends BaseEntity {
                 perk != null && perk.equals(that.perk);
     }
 
+    /**
+     * Returns whether hCode.
+     */
     @Override
     public int hashCode() {
         if (this.getId() != null) {
@@ -231,6 +239,9 @@ public class PlayerPerk extends BaseEntity {
         return Objects.hash(player, perk);
     }
 
+    /**
+     * Executes toString.
+     */
     @Override
     public String toString() {
         return "PlayerPerk{" +

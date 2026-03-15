@@ -1,17 +1,16 @@
 /**
  * Configuration and factory utilities for the RPlatform requirement system.
- * <p>
- * This package provides tools for creating requirements from configuration data:
- * </p>
  *
- * <h2>Key Classes</h2>
+ * <p>This package provides tools for creating requirements from configuration data:
+ *
+ * <p><strong>Key Classes</strong>
  * <ul>
  *   <li>{@link com.raindropcentral.rplatform.requirement.config.RequirementFactory} - Creates requirements from config maps</li>
  *   <li>{@link com.raindropcentral.rplatform.requirement.config.RequirementBuilder} - Fluent builder API for requirements</li>
  *   <li>{@link com.raindropcentral.rplatform.requirement.config.RequirementSectionAdapter} - Interface for custom config adapters</li>
  * </ul>
  *
- * <h2>Usage Examples</h2>
+ * <p><strong>Usage Examples</strong>
  *
  * <p><b>Using RequirementBuilder:</b></p>
  * <pre>{@code

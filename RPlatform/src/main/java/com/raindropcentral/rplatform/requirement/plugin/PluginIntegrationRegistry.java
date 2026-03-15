@@ -178,31 +178,49 @@ public final class PluginIntegrationRegistry {
             this.delegate = delegate;
         }
 
+        /**
+         * Gets integrationId.
+         */
         @Override
         public @NotNull String getIntegrationId() {
             return delegate.getIntegrationId();
         }
 
+        /**
+         * Gets pluginName.
+         */
         @Override
         public @NotNull String getPluginName() {
             return delegate.getPluginName();
         }
 
+        /**
+         * Gets category.
+         */
         @Override
         public @NotNull String getCategory() {
             return CATEGORY_SKILLS;
         }
 
+        /**
+         * Returns whether available.
+         */
         @Override
         public boolean isAvailable() {
             return delegate.isAvailable();
         }
 
+        /**
+         * Gets value.
+         */
         @Override
         public double getValue(@NotNull Player player, @NotNull String key) {
             return delegate.getSkillLevel(player, key);
         }
 
+        /**
+         * Executes consume.
+         */
         @Override
         public boolean consume(@NotNull Player player, @NotNull String key, double amount) {
             return delegate.consumeSkillLevel(player, key, amount);
@@ -217,31 +235,49 @@ public final class PluginIntegrationRegistry {
             this.delegate = delegate;
         }
 
+        /**
+         * Gets integrationId.
+         */
         @Override
         public @NotNull String getIntegrationId() {
             return delegate.getIntegrationId();
         }
 
+        /**
+         * Gets pluginName.
+         */
         @Override
         public @NotNull String getPluginName() {
             return delegate.getPluginName();
         }
 
+        /**
+         * Gets category.
+         */
         @Override
         public @NotNull String getCategory() {
             return CATEGORY_JOBS;
         }
 
+        /**
+         * Returns whether available.
+         */
         @Override
         public boolean isAvailable() {
             return delegate.isAvailable();
         }
 
+        /**
+         * Gets value.
+         */
         @Override
         public double getValue(@NotNull Player player, @NotNull String key) {
             return delegate.getJobLevel(player, key);
         }
 
+        /**
+         * Executes consume.
+         */
         @Override
         public boolean consume(@NotNull Player player, @NotNull String key, double amount) {
             return delegate.consumeJobLevel(player, key, amount);

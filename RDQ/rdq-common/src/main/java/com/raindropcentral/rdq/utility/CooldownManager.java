@@ -5,10 +5,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Utility class for managing cooldowns for arbitrary keys (such as player UUIDs or location identifiers).
- * <p>
- * This class provides thread-safe methods to check, set, and clear cooldowns for unique keys,
+ *
+ * <p>This class provides thread-safe methods to check, set, and clear cooldowns for unique keys,
  * allowing you to prevent repeated actions within a specified time window.
- * </p>
  *
  * <ul>
  *   <li>Use {@link #isOnCooldown(String, long)} to check if a key is still on cooldown.</li>
@@ -17,9 +16,8 @@ import java.util.concurrent.ConcurrentHashMap;
  *   <li>Use {@link #clearCooldown(String)} to remove a cooldown entry.</li>
  * </ul>
  *
- * <p>
- * Example usage: Preventing a player from performing an action more than once every 5 seconds.
- * </p>
+ *
+ * <p>Example usage: Preventing a player from performing an action more than once every 5 seconds.
  *
  * @author JExcellence
  * @version 1.0.0
@@ -29,9 +27,8 @@ public class CooldownManager {
 
     /**
      * Map storing the last-used timestamp (in ms) for each key.
-     * <p>
-     * The key can be any unique identifier, such as a player UUID or a location string.
-     * </p>
+ *
+ * <p>The key can be any unique identifier, such as a player UUID or a location string.
      */
     private final Map<String, Long> cooldowns = new ConcurrentHashMap<>();
 
@@ -65,9 +62,8 @@ public class CooldownManager {
 
     /**
      * Resets or starts the cooldown for the given key.
-     * <p>
-     * Sets the last-used timestamp to the current system time.
-     * </p>
+ *
+ * <p>Sets the last-used timestamp to the current system time.
      *
      * @param key The unique identifier.
      */

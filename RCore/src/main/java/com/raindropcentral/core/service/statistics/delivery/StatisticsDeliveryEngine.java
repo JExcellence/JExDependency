@@ -43,6 +43,9 @@ public class StatisticsDeliveryEngine {
     // Delivery callback for actual transmission
     private DeliveryCallback deliveryCallback;
 
+    /**
+     * Executes StatisticsDeliveryEngine.
+     */
     public StatisticsDeliveryEngine(
         final @NotNull RateLimiter rateLimiter,
         final @NotNull RetryHandler retryHandler,
@@ -259,9 +262,18 @@ public class StatisticsDeliveryEngine {
             .receipt(b.receipt() != null ? b.receipt() : a.receipt())
             .build();
     }
+/**
+ * Executes method.
+ */
+/**
+ * Executes this member.
+ */
 
     // ==================== Metrics ====================
 
+    /**
+     * Gets metrics.
+     */
     public DeliveryMetrics getMetrics() {
         long total = totalDeliveries.get();
         long successful = successfulDeliveries.get();
@@ -270,15 +282,24 @@ public class StatisticsDeliveryEngine {
 
         return new DeliveryMetrics(
             total,
+            /**
+             * Executes method.
+             */
             successful,
             failed,
             totalStatisticsDelivered.get(),
+            /**
+             * Executes get.
+             */
             totalBytesTransmitted.get(),
             avgLatency,
             total > 0 ? (double) successful / total : 1.0
         );
     }
 
+    /**
+     * Executes resetMetrics.
+     */
     public void resetMetrics() {
         totalDeliveries.set(0);
         successfulDeliveries.set(0);
@@ -297,6 +318,9 @@ public class StatisticsDeliveryEngine {
         long failedDeliveries,
         long totalStatisticsDelivered,
         long totalBytesTransmitted,
+        /**
+         * Executes this member.
+         */
         long averageLatencyMs,
         double successRate
     ) {}
@@ -306,6 +330,9 @@ public class StatisticsDeliveryEngine {
      */
     @FunctionalInterface
     public interface DeliveryCallback {
+        /**
+         * Performs deliver.
+         */
         CompletableFuture<DeliveryReceipt> deliver(
             BatchPayload batch,
             PayloadCompressor.CompressionResult compressionResult

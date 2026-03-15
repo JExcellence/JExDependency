@@ -5,9 +5,8 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Validator for requirement configurations.
- * <p>
- * Validates requirements before they are used to catch configuration errors early.
- * </p>
+ *
+ * <p>Validates requirements before they are used to catch configuration errors early.
  *
  * @param <T> the requirement type to validate
  */

@@ -320,6 +320,9 @@ public class StatisticsQueueManager {
 
     // ==================== Status Methods ====================
 
+    /**
+     * Returns whether backpressureActive.
+     */
     public boolean isBackpressureActive() {
         return backpressureController.isBackpressureActive();
     }
@@ -328,14 +331,23 @@ public class StatisticsQueueManager {
         return backpressureController.getCurrentLevel();
     }
 
+    /**
+     * Gets queueSize.
+     */
     public int getQueueSize(final @NotNull DeliveryPriority priority) {
         return queues.get(priority).size();
     }
 
+    /**
+     * Gets totalQueueSize.
+     */
     public int getTotalQueueSize() {
         return totalQueueSize.get();
     }
 
+    /**
+     * Gets backpressureController.
+     */
     public BackpressureController getBackpressureController() {
         return backpressureController;
     }

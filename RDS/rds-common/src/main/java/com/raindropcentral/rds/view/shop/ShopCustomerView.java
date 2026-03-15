@@ -84,6 +84,9 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
         );
     }
 
+    /**
+     * Executes onResume.
+     */
     @Override
     public void onResume(
             final @NotNull Context origin,
@@ -209,6 +212,9 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
         }
     }
 
+    /**
+     * Executes onClick.
+     */
     @Override
     public void onClick(
             final @NotNull SlotClickContext click

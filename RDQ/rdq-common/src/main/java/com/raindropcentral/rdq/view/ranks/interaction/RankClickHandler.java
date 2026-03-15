@@ -26,6 +26,9 @@ public class RankClickHandler {
 	
 	private final RankProgressionManager progressionManager;
 	
+	/**
+	 * Executes RankClickHandler.
+	 */
 	public RankClickHandler(final @NotNull RankProgressionManager progressionManager) {
 		this.progressionManager = progressionManager;
 	}

@@ -2,10 +2,9 @@ package de.jexcellence.economy.type;
 
 /**
  * Enum representing different types of currency log entries.
- * <p>
- * This enum categorizes log entries based on the nature of the operation
+ *
+ * <p>This enum categorizes log entries based on the nature of the operation
  * or event being logged, allowing for efficient filtering and analysis.
- * </p>
  */
 public enum ELogType {
     

@@ -13,16 +13,14 @@ import java.util.Objects;
 
 /**
  * Represents a tree of ranks within the RaindropQuests system.
- * <p>
- * A rank tree organizes a progression path for players, grouping related ranks and
+ *
+ * <p>A rank tree organizes a progression path for players, grouping related ranks and
  * defining prerequisites, connections, and unlock conditions between different trees.
  * Each tree has a unique identifier, display keys for localization, an icon, and
  * various configuration options for ordering and progression logic.
- * </p>
  *
- * <p>
- * This entity is mapped to the {@code r_rank_tree} table in the database.
- * </p>
+ *
+ * <p>This entity is mapped to the {@code r_rank_tree} table in the database.
  *
  * @author JExcellence
  * @version 1.0.2
@@ -90,6 +88,9 @@ public class RRankTree extends BaseEntity {
 	
 	protected RRankTree() {}
 	
+	/**
+	 * Executes RRankTree.
+	 */
 	public RRankTree(
 		final @NotNull String identifier,
 		final @NotNull String displayNameKey,
@@ -110,50 +111,86 @@ public class RRankTree extends BaseEntity {
 		this.isFinalRankTree = isFinalRankTree;
 	}
 	
+	/**
+	 * Gets identifier.
+	 */
 	public String getIdentifier() {
 		return this.identifier;
 	}
 	
+	/**
+	 * Gets displayNameKey.
+	 */
 	public String getDisplayNameKey() {
 		return this.displayNameKey;
 	}
 	
+	/**
+	 * Gets descriptionKey.
+	 */
 	public String getDescriptionKey() {
 		return this.descriptionKey;
 	}
 	
+	/**
+	 * Gets displayOrder.
+	 */
 	public int getDisplayOrder() {
 		return this.displayOrder;
 	}
 	
+	/**
+	 * Sets displayOrder.
+	 */
 	public void setDisplayOrder(final int displayOrder) {
 		this.displayOrder = displayOrder;
 	}
 	
+	/**
+	 * Gets minimumRankTreesToBeDone.
+	 */
 	public int getMinimumRankTreesToBeDone() {
 		return this.minimumRankTreesToBeDone;
 	}
 	
+	/**
+	 * Sets minimumRankTreesToBeDone.
+	 */
 	public void setMinimumRankTreesToBeDone(final int minimumRankTreesToBeDone) {
 		this.minimumRankTreesToBeDone = minimumRankTreesToBeDone;
 	}
 	
+	/**
+	 * Returns whether enabled.
+	 */
 	public boolean isEnabled() {
 		return this.isEnabled;
 	}
 	
+	/**
+	 * Returns whether finalRankTree.
+	 */
 	public boolean isFinalRankTree() {
 		return this.isFinalRankTree;
 	}
 	
+	/**
+	 * Sets finalRankTree.
+	 */
 	public void setFinalRankTree(final boolean finalRankTree) {
 		isFinalRankTree = finalRankTree;
 	}
 	
+	/**
+	 * Gets icon.
+	 */
 	public IconSection getIcon() {
 		return this.icon;
 	}
 	
+	/**
+	 * Gets ranks.
+	 */
 	public List<RRank> getRanks() {
 		return this.ranks;
 	}
@@ -178,6 +215,9 @@ public class RRankTree extends BaseEntity {
 		}
 	}
 	
+	/**
+	 * Gets prerequisiteRankTrees.
+	 */
 	public List<RRankTree> getPrerequisiteRankTrees() {
 		return this.prerequisiteRankTrees;
 	}
@@ -202,6 +242,9 @@ public class RRankTree extends BaseEntity {
 		}
 	}
 	
+	/**
+	 * Gets unlockedRankTrees.
+	 */
 	public List<RRankTree> getUnlockedRankTrees() {
 		return this.unlockedRankTrees;
 	}
@@ -226,6 +269,9 @@ public class RRankTree extends BaseEntity {
 		}
 	}
 	
+	/**
+	 * Gets connectedRankTrees.
+	 */
 	public List<RRankTree> getConnectedRankTrees() {
 		return this.connectedRankTrees;
 	}
@@ -250,11 +296,17 @@ public class RRankTree extends BaseEntity {
 		}
 	}
 	
+	/**
+	 * Gets version.
+	 */
 	public int getVersion() {
 		return version;
 	}
 	
 	// equals and hashCode based on identifier for entity identity
+	/**
+	 * Executes equals.
+	 */
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -263,6 +315,9 @@ public class RRankTree extends BaseEntity {
 		return Objects.equals(identifier, that.identifier);
 	}
 	
+	/**
+	 * Returns whether hCode.
+	 */
 	@Override
 	public int hashCode() {
 		return Objects.hash(identifier);

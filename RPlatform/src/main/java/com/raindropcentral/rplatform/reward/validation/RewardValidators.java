@@ -8,6 +8,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Represents the RewardValidators API type.
+ */
 public final class RewardValidators {
 
     private static final Map<Class<? extends AbstractReward>, RewardValidator<?>> VALIDATORS = new HashMap<>();
@@ -147,6 +150,9 @@ public final class RewardValidators {
 
     private RewardValidators() {}
 
+    /**
+     * Executes registerValidator.
+     */
     public static <T extends AbstractReward> void registerValidator(
         @NotNull Class<T> rewardClass,
         @NotNull RewardValidator<T> validator
@@ -154,6 +160,9 @@ public final class RewardValidators {
         VALIDATORS.put(rewardClass, validator);
     }
 
+    /**
+     * Executes validate.
+     */
     @SuppressWarnings("unchecked")
     public static <T extends AbstractReward> ValidationResult validate(@NotNull T reward) {
         RewardValidator<T> validator = (RewardValidator<T>) VALIDATORS.get(reward.getClass());
@@ -165,6 +174,9 @@ public final class RewardValidators {
         return validateDefault(reward);
     }
 
+    /**
+     * Executes validateOrThrow.
+     */
     public static <T extends AbstractReward> void validateOrThrow(@NotNull T reward) {
         ValidationResult result = validate(reward);
         if (!result.valid()) {

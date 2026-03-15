@@ -12,14 +12,13 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * Core interface defining the contract for currency management operations within the JExEconomy system.
- * <p>
- * This interface serves as the primary abstraction layer for all currency-related operations,
+ *
+ * <p>This interface serves as the primary abstraction layer for all currency-related operations,
  * providing a comprehensive API for balance management, transaction processing, and entity
  * lifecycle management. All operations are designed to be asynchronous to prevent blocking
  * the main server thread during database operations.
- * </p>
  *
- * <h3>Core Functionality Areas:</h3>
+ * <p><strong>Core Functionality Areas:</strong>
  * <ul>
  *   <li><strong>Balance Operations:</strong> Retrieve player balances for specific currencies</li>
  *   <li><strong>Transaction Management:</strong> Handle deposits and withdrawals with validation</li>
@@ -28,7 +27,7 @@ import java.util.concurrent.CompletableFuture;
  *   <li><strong>Validation Services:</strong> Check currency existence and data integrity</li>
  * </ul>
  *
- * <h3>Design Principles:</h3>
+ * <p><strong>Design Principles:</strong>
  * <ul>
  *   <li><strong>Asynchronous Operations:</strong> All methods return CompletableFuture for non-blocking execution</li>
  *   <li><strong>Type Safety:</strong> Comprehensive use of @NotNull and @Nullable annotations</li>
@@ -36,12 +35,11 @@ import java.util.concurrent.CompletableFuture;
  *   <li><strong>Consistency:</strong> Standardized response patterns using CurrencyResponse</li>
  * </ul>
  *
- * <h3>Implementation Notes:</h3>
- * <p>
- * Implementations of this interface should ensure thread safety, proper error handling,
+ * <p><strong>Implementation Notes:</strong>
+ *
+ * <p>Implementations of this interface should ensure thread safety, proper error handling,
  * and efficient database access patterns. All monetary operations should include appropriate
  * validation to prevent negative balances and ensure data integrity.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -55,13 +53,12 @@ public interface ICurrencyAdapter {
 	
 	/**
 	 * Retrieves the current balance of a player for a specific currency.
-	 * <p>
-	 * This method performs an asynchronous lookup of the player's balance in the specified
+ *
+ * <p>This method performs an asynchronous lookup of the player's balance in the specified
 	 * currency. If the player has no account for the given currency, the balance will be 0.0.
 	 * The operation is safe for offline players and will not cause server lag.
-	 * </p>
 	 *
-	 * <h3>Behavior:</h3>
+	 * <p><strong>Behavior:</strong>
 	 * <ul>
 	 *   <li>Returns 0.0 if the player has no account for the currency</li>
 	 *   <li>Returns the actual balance if an account exists</li>
@@ -81,13 +78,12 @@ public interface ICurrencyAdapter {
 	
 	/**
 	 * Retrieves the balance from an existing UserCurrency entity.
-	 * <p>
-	 * This method provides direct access to the balance stored in a UserCurrency entity.
+ *
+ * <p>This method provides direct access to the balance stored in a UserCurrency entity.
 	 * It's more efficient than the player-based method when you already have the
 	 * UserCurrency entity available, as it avoids additional database lookups.
-	 * </p>
 	 *
-	 * <h3>Use Cases:</h3>
+	 * <p><strong>Use Cases:</strong>
 	 * <ul>
 	 *   <li>When processing multiple currencies for the same player</li>
 	 *   <li>During batch operations or reporting</li>
@@ -105,14 +101,13 @@ public interface ICurrencyAdapter {
 	
 	/**
 	 * Deposits a specified amount of currency into a player's account.
-	 * <p>
-	 * This method performs a secure deposit operation, adding the specified amount to the
+ *
+ * <p>This method performs a secure deposit operation, adding the specified amount to the
 	 * player's existing balance for the given currency. The operation includes validation
 	 * to ensure the amount is positive and the currency is valid. If the player doesn't
 	 * have an account for the currency, one will be created automatically.
-	 * </p>
 	 *
-	 * <h3>Operation Details:</h3>
+	 * <p><strong>Operation Details:</strong>
 	 * <ul>
 	 *   <li>Validates that the deposit amount is positive</li>
 	 *   <li>Creates player account if it doesn't exist</li>
@@ -120,7 +115,7 @@ public interface ICurrencyAdapter {
 	 *   <li>Returns detailed response with new balance and operation status</li>
 	 * </ul>
 	 *
-	 * <h3>Error Conditions:</h3>
+	 * <p><strong>Error Conditions:</strong>
 	 * <ul>
 	 *   <li>Negative or zero amounts will result in failure response</li>
 	 *   <li>Invalid currency will result in failure response</li>
@@ -139,6 +134,12 @@ public interface ICurrencyAdapter {
 		final double depositAmount
 	);
 
+	/**
+	 * Executes method.
+	 */
+	/**
+	 * Executes deposit.
+	 */
 	@NotNull CompletableFuture<CurrencyResponse> deposit(
 			final @NotNull OfflinePlayer targetOfflinePlayer,
 			final @NotNull String targetCurrencyIdentifier,
@@ -147,13 +148,12 @@ public interface ICurrencyAdapter {
 	
 	/**
 	 * Deposits a specified amount into an existing UserCurrency entity.
-	 * <p>
-	 * This method provides direct deposit functionality for UserCurrency entities,
+ *
+ * <p>This method provides direct deposit functionality for UserCurrency entities,
 	 * offering better performance when the entity is already available. The operation
 	 * updates the entity's balance and persists the changes to the database.
-	 * </p>
 	 *
-	 * <h3>Performance Benefits:</h3>
+	 * <p><strong>Performance Benefits:</strong>
 	 * <ul>
 	 *   <li>Avoids additional entity lookups</li>
 	 *   <li>Reduces database round trips</li>
@@ -173,14 +173,13 @@ public interface ICurrencyAdapter {
 	
 	/**
 	 * Withdraws a specified amount of currency from a player's account.
-	 * <p>
-	 * This method performs a secure withdrawal operation, removing the specified amount
+ *
+ * <p>This method performs a secure withdrawal operation, removing the specified amount
 	 * from the player's balance for the given currency. The operation includes validation
 	 * to ensure sufficient funds are available and the amount is positive. Insufficient
 	 * funds will result in a failure response without modifying the balance.
-	 * </p>
 	 *
-	 * <h3>Validation Checks:</h3>
+	 * <p><strong>Validation Checks:</strong>
 	 * <ul>
 	 *   <li>Verifies withdrawal amount is positive</li>
 	 *   <li>Confirms sufficient balance exists</li>
@@ -188,7 +187,7 @@ public interface ICurrencyAdapter {
 	 *   <li>Prevents negative balance scenarios</li>
 	 * </ul>
 	 *
-	 * <h3>Transaction Safety:</h3>
+	 * <p><strong>Transaction Safety:</strong>
 	 * <ul>
 	 *   <li>Atomic balance updates prevent race conditions</li>
 	 *   <li>Rollback capability on database errors</li>
@@ -210,13 +209,12 @@ public interface ICurrencyAdapter {
 	
 	/**
 	 * Withdraws a specified amount from an existing UserCurrency entity.
-	 * <p>
-	 * This method provides direct withdrawal functionality for UserCurrency entities,
+ *
+ * <p>This method provides direct withdrawal functionality for UserCurrency entities,
 	 * offering optimal performance when the entity is already loaded. The operation
 	 * validates sufficient funds and updates the entity balance atomically.
-	 * </p>
 	 *
-	 * <h3>Efficiency Features:</h3>
+	 * <p><strong>Efficiency Features:</strong>
 	 * <ul>
 	 *   <li>Direct entity access without lookups</li>
 	 *   <li>Reduced database operations</li>
@@ -236,13 +234,12 @@ public interface ICurrencyAdapter {
 	
 	/**
 	 * Creates a new player entity in the currency system.
-	 * <p>
-	 * This method initializes a new player record in the database, creating the necessary
+ *
+ * <p>This method initializes a new player record in the database, creating the necessary
 	 * foundation for currency operations. The player entity stores essential information
 	 * such as UUID and current name, and serves as the basis for all currency accounts.
-	 * </p>
 	 *
-	 * <h3>Creation Process:</h3>
+	 * <p><strong>Creation Process:</strong>
 	 * <ul>
 	 *   <li>Extracts player UUID and current name</li>
 	 *   <li>Checks for existing player records</li>
@@ -250,12 +247,11 @@ public interface ICurrencyAdapter {
 	 *   <li>Updates existing records if player name changed</li>
 	 * </ul>
 	 *
-	 * <h3>Idempotent Behavior:</h3>
-	 * <p>
-	 * This method is designed to be idempotent - calling it multiple times with the same
+	 * <p><strong>Idempotent Behavior:</strong>
+ *
+ * <p>This method is designed to be idempotent - calling it multiple times with the same
 	 * player will not create duplicate records but may update the player's current name
 	 * if it has changed since the last update.
-	 * </p>
 	 *
 	 * @param targetOfflinePlayer the player for whom to create an entity, must not be null
 	 * @return a CompletableFuture containing true if creation was successful, false otherwise
@@ -267,13 +263,12 @@ public interface ICurrencyAdapter {
 	
 	/**
 	 * Creates a new currency entity in the system.
-	 * <p>
-	 * This method registers a new currency type in the database, making it available
+ *
+ * <p>This method registers a new currency type in the database, making it available
 	 * for use throughout the system. The currency entity contains all configuration
 	 * information including symbol, prefix, suffix, and display properties.
-	 * </p>
 	 *
-	 * <h3>Validation Requirements:</h3>
+	 * <p><strong>Validation Requirements:</strong>
 	 * <ul>
 	 *   <li>Currency identifier must be unique</li>
 	 *   <li>Symbol must not be empty</li>
@@ -281,7 +276,7 @@ public interface ICurrencyAdapter {
 	 *   <li>Icon material must be valid</li>
 	 * </ul>
 	 *
-	 * <h3>Post-Creation Effects:</h3>
+	 * <p><strong>Post-Creation Effects:</strong>
 	 * <ul>
 	 *   <li>Currency becomes available for player accounts</li>
 	 *   <li>Automatic cache updates occur</li>
@@ -299,13 +294,12 @@ public interface ICurrencyAdapter {
 	
 	/**
 	 * Checks whether a currency with the specified identifier exists in the system.
-	 * <p>
-	 * This method performs a lookup to determine if a currency with the given identifier
+ *
+ * <p>This method performs a lookup to determine if a currency with the given identifier
 	 * is registered in the database. It's useful for validation before performing
 	 * operations that require a specific currency to exist.
-	 * </p>
 	 *
-	 * <h3>Lookup Behavior:</h3>
+	 * <p><strong>Lookup Behavior:</strong>
 	 * <ul>
 	 *   <li>Performs case-sensitive identifier matching</li>
 	 *   <li>Checks both active and inactive currencies</li>
@@ -313,7 +307,7 @@ public interface ICurrencyAdapter {
 	 *   <li>Returns false for null or empty identifiers</li>
 	 * </ul>
 	 *
-	 * <h3>Common Use Cases:</h3>
+	 * <p><strong>Common Use Cases:</strong>
 	 * <ul>
 	 *   <li>Validating user input in commands</li>
 	 *   <li>Preventing duplicate currency creation</li>
@@ -330,13 +324,12 @@ public interface ICurrencyAdapter {
 	
 	/**
 	 * Creates a new player-currency relationship entity.
-	 * <p>
-	 * This method establishes a connection between a player and a currency by creating
+ *
+ * <p>This method establishes a connection between a player and a currency by creating
 	 * a UserCurrency entity. This entity represents the player's account for that specific
 	 * currency and tracks their balance and transaction history.
-	 * </p>
 	 *
-	 * <h3>Relationship Creation:</h3>
+	 * <p><strong>Relationship Creation:</strong>
 	 * <ul>
 	 *   <li>Links existing User and Currency entities</li>
 	 *   <li>Initializes balance to zero</li>
@@ -344,7 +337,7 @@ public interface ICurrencyAdapter {
 	 *   <li>Enables currency operations for the player</li>
 	 * </ul>
 	 *
-	 * <h3>Prerequisites:</h3>
+	 * <p><strong>Prerequisites:</strong>
 	 * <ul>
 	 *   <li>Both User and Currency entities must exist</li>
 	 *   <li>No existing relationship should exist (prevents duplicates)</li>
@@ -363,14 +356,13 @@ public interface ICurrencyAdapter {
 	
 	/**
 	 * Retrieves all currency accounts associated with a specific player.
-	 * <p>
-	 * This method returns a comprehensive list of all UserCurrency entities for the
+ *
+ * <p>This method returns a comprehensive list of all UserCurrency entities for the
 	 * specified player, providing access to all their currency accounts and balances.
 	 * The list includes all currencies the player has accounts for, regardless of
 	 * whether the balance is zero or positive.
-	 * </p>
 	 *
-	 * <h3>Return Data:</h3>
+	 * <p><strong>Return Data:</strong>
 	 * <ul>
 	 *   <li>All UserCurrency entities for the player</li>
 	 *   <li>Current balance for each currency</li>
@@ -378,7 +370,7 @@ public interface ICurrencyAdapter {
 	 *   <li>Account creation timestamps</li>
 	 * </ul>
 	 *
-	 * <h3>Performance Considerations:</h3>
+	 * <p><strong>Performance Considerations:</strong>
 	 * <ul>
 	 *   <li>Results may be cached for frequently accessed players</li>
 	 *   <li>Large currency lists may impact performance</li>
@@ -395,13 +387,12 @@ public interface ICurrencyAdapter {
 	
 	/**
 	 * Retrieves a specific currency account for a player by currency identifier.
-	 * <p>
-	 * This method performs a targeted lookup to find the UserCurrency entity that
+ *
+ * <p>This method performs a targeted lookup to find the UserCurrency entity that
 	 * represents the specified player's account for the named currency. It's more
 	 * efficient than retrieving all currencies when you only need one specific account.
-	 * </p>
 	 *
-	 * <h3>Lookup Process:</h3>
+	 * <p><strong>Lookup Process:</strong>
 	 * <ul>
 	 *   <li>Validates currency identifier exists</li>
 	 *   <li>Searches for player's account for that currency</li>
@@ -409,7 +400,7 @@ public interface ICurrencyAdapter {
 	 *   <li>Includes full entity data when found</li>
 	 * </ul>
 	 *
-	 * <h3>Null Return Conditions:</h3>
+	 * <p><strong>Null Return Conditions:</strong>
 	 * <ul>
 	 *   <li>Currency identifier doesn't exist in system</li>
 	 *   <li>Player has no account for the specified currency</li>

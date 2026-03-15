@@ -13,11 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * JPA {@link AttributeConverter} for converting lists of {@link AbstractRequirement} objects
+ * JPA {@link AttributeConverter} for converting lists of {@link AbstractRequirement} objects.
  * to and from their JSON string representations for database storage.
- * <p>
- * Use this converter when an entity needs to store multiple requirements in a single column.
- * </p>
+ *
+ * <p>Use this converter when an entity needs to store multiple requirements in a single column.
  *
  * <p><b>Usage Example:</b></p>
  * <pre>{@code

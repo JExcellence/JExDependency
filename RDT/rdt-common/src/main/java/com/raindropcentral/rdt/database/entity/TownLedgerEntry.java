@@ -30,6 +30,9 @@ import java.util.UUID;
         "unused",
         "JpaDataSourceORMInspection"
 })
+/**
+ * Represents the TownLedgerEntry API type.
+ */
 public class TownLedgerEntry extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)

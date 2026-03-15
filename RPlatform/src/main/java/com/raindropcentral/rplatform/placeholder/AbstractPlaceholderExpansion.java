@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Base {@link PlaceholderExpansion} implementation that caches the resolved placeholder
+ * Base {@link PlaceholderExpansion} implementation that caches the resolved placeholder.
  * identifiers and drives the lifecycle for registering and handling PlaceholderAPI requests.
  * Implementations provide the concrete placeholder keys and the logic to resolve each key for
  * players. Construction builds the placeholder cache so repeated registration cycles reuse the
@@ -37,7 +37,7 @@ public abstract class AbstractPlaceholderExpansion extends PlaceholderExpansion 
     private final List<String> placeholders;
 
     /**
-     * Creates a new expansion and caches the placeholder definitions to avoid repetitive lookups
+     * Creates a new expansion and caches the placeholder definitions to avoid repetitive lookups.
      * during registration.
      *
      * @param plugin plugin providing metadata and lifecycle ownership for the expansion.
@@ -120,7 +120,7 @@ public abstract class AbstractPlaceholderExpansion extends PlaceholderExpansion 
     }
 
     /**
-     * Delegates PlaceholderAPI offline player requests to the player-based handler when an online
+     * Delegates PlaceholderAPI offline player requests to the player-based handler when an online.
      * player instance is available.
      *
      * @param offlinePlayer offline player requesting the placeholder.
@@ -139,7 +139,7 @@ public abstract class AbstractPlaceholderExpansion extends PlaceholderExpansion 
     }
 
     /**
-     * Resolves a placeholder request for an online player by delegating to
+     * Resolves a placeholder request for an online player by delegating to.
      * {@link #resolvePlaceholder(Player, String)}.
      *
      * @param player player context for resolution, may be {@code null} depending on PlaceholderAPI

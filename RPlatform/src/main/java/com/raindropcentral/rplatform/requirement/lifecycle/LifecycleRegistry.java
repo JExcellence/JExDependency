@@ -21,16 +21,25 @@ public final class LifecycleRegistry {
 
     private LifecycleRegistry() {}
 
+    /**
+     * Gets instance.
+     */
     @NotNull
     public static LifecycleRegistry getInstance() {
         return INSTANCE;
     }
 
+    /**
+     * Executes registerHook.
+     */
     public void registerHook(@NotNull RequirementLifecycleHook hook) {
         hooks.add(hook);
         LOGGER.info("Registered lifecycle hook: " + hook.getClass().getSimpleName());
     }
 
+    /**
+     * Executes unregisterHook.
+     */
     public void unregisterHook(@NotNull RequirementLifecycleHook hook) {
         hooks.remove(hook);
         LOGGER.info("Unregistered lifecycle hook: " + hook.getClass().getSimpleName());
@@ -38,6 +47,9 @@ public final class LifecycleRegistry {
 
     // ==================== Hook Execution ====================
 
+    /**
+     * Executes executeBeforeCheck.
+     */
     public boolean executeBeforeCheck(@NotNull Player player, @NotNull AbstractRequirement requirement) {
         for (RequirementLifecycleHook hook : hooks) {
             try {
@@ -51,6 +63,9 @@ public final class LifecycleRegistry {
         return true;
     }
 
+    /**
+     * Executes executeAfterCheck.
+     */
     public void executeAfterCheck(@NotNull Player player, @NotNull AbstractRequirement requirement, boolean met, double progress) {
         for (RequirementLifecycleHook hook : hooks) {
             try {
@@ -61,6 +76,9 @@ public final class LifecycleRegistry {
         }
     }
 
+    /**
+     * Executes executeBeforeConsume.
+     */
     public boolean executeBeforeConsume(@NotNull Player player, @NotNull AbstractRequirement requirement) {
         for (RequirementLifecycleHook hook : hooks) {
             try {
@@ -74,6 +92,9 @@ public final class LifecycleRegistry {
         return true;
     }
 
+    /**
+     * Executes executeAfterConsume.
+     */
     public void executeAfterConsume(@NotNull Player player, @NotNull AbstractRequirement requirement) {
         for (RequirementLifecycleHook hook : hooks) {
             try {
@@ -84,6 +105,9 @@ public final class LifecycleRegistry {
         }
     }
 
+    /**
+     * Executes executeOnError.
+     */
     public void executeOnError(@NotNull Player player, @NotNull AbstractRequirement requirement, @NotNull Throwable error) {
         for (RequirementLifecycleHook hook : hooks) {
             try {

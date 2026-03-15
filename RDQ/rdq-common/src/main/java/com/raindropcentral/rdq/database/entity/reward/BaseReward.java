@@ -21,10 +21,9 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * Entity representing a reward in the RaindropQuests system.
- * <p>
- * This entity encapsulates an {@link AbstractReward} from RPlatform and its visual icon,
+ *
+ * <p>This entity encapsulates an {@link AbstractReward} from RPlatform and its visual icon,
  * providing convenience methods for reward granting.
- * </p>
  */
 @Entity
 @Table(name = "r_reward")
@@ -68,6 +67,9 @@ public class BaseReward extends BaseEntity {
     protected BaseReward() {
     }
 
+    /**
+     * Executes BaseReward.
+     */
     public BaseReward(
             @NotNull AbstractReward reward,
             @NotNull IconSection icon
@@ -83,6 +85,9 @@ public class BaseReward extends BaseEntity {
         this.icon = icon;
     }
 
+    /**
+     * Gets reward.
+     */
     public AbstractReward getReward() {
         if (cachedReward == null && rewardJson != null) {
             try {
@@ -95,6 +100,9 @@ public class BaseReward extends BaseEntity {
         return cachedReward;
     }
 
+    /**
+     * Sets reward.
+     */
     public void setReward(@NotNull AbstractReward reward) {
         this.cachedReward = reward;
         try {
@@ -105,14 +113,23 @@ public class BaseReward extends BaseEntity {
         }
     }
 
+    /**
+     * Executes grant.
+     */
     public CompletableFuture<Boolean> grant(@NotNull Player player) {
         return getReward().grant(player);
     }
 
+    /**
+     * Gets estimatedValue.
+     */
     public double getEstimatedValue() {
         return getReward().getEstimatedValue();
     }
 
+    /**
+     * Gets typeId.
+     */
     public String getTypeId() {
         return getReward().getTypeId();
     }

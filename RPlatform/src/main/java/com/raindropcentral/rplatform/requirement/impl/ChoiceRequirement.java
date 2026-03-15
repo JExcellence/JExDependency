@@ -14,6 +14,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
+/**
+ * Represents the ChoiceRequirement API type.
+ */
 public final class ChoiceRequirement extends AbstractRequirement {
 
     @JsonProperty("choices")
@@ -37,14 +40,23 @@ public final class ChoiceRequirement extends AbstractRequirement {
     @JsonProperty("allowChoiceChange")
     private final boolean allowChoiceChange;
 
+    /**
+     * Executes ChoiceRequirement.
+     */
     public ChoiceRequirement(@NotNull List<AbstractRequirement> choices) {
         this(choices, 1, null, null, null, true, false, true);
     }
 
+    /**
+     * Executes ChoiceRequirement.
+     */
     public ChoiceRequirement(@NotNull List<AbstractRequirement> choices, int minimumChoicesRequired) {
         this(choices, minimumChoicesRequired, null, null, null, true, false, true);
     }
 
+    /**
+     * Executes ChoiceRequirement.
+     */
     @JsonCreator
     public ChoiceRequirement(
             @JsonProperty("choices") @NotNull List<AbstractRequirement> choices,
@@ -76,12 +88,18 @@ public final class ChoiceRequirement extends AbstractRequirement {
         this.allowChoiceChange = allowChoiceChange != null ? allowChoiceChange : true;
     }
 
+    /**
+     * Returns whether met.
+     */
     @Override
     public boolean isMet(@NotNull Player player) {
         var completedChoices = this.choices.stream().filter(req -> req.isMet(player)).count();
         return completedChoices >= this.minimumChoicesRequired;
     }
 
+    /**
+     * Executes calculateProgress.
+     */
     @Override
     public double calculateProgress(@NotNull Player player) {
         if (this.choices.isEmpty()) return 0.0;
@@ -104,6 +122,9 @@ public final class ChoiceRequirement extends AbstractRequirement {
         return Math.min(1.0, totalProgress / this.minimumChoicesRequired);
     }
 
+    /**
+     * Executes consume.
+     */
     @Override
     public void consume(@NotNull Player player) {
         if (this.choices.isEmpty()) return;
@@ -112,27 +133,54 @@ public final class ChoiceRequirement extends AbstractRequirement {
                 .limit(this.minimumChoicesRequired).forEach(req -> req.consume(player));
     }
 
+    /**
+     * Gets descriptionKey.
+     */
     @Override
     @NotNull
     public String getDescriptionKey() { return "requirement.choice"; }
 
+    /**
+     * Gets choices.
+     */
     @NotNull
     public List<AbstractRequirement> getChoices() { return new ArrayList<>(this.choices); }
 
+    /**
+     * Gets minimumChoicesRequired.
+     */
     public int getMinimumChoicesRequired() { return this.minimumChoicesRequired; }
 
+    /**
+     * Gets maximumRequired.
+     */
     @Nullable
     public Integer getMaximumRequired() { return this.maximumRequired; }
 
+    /**
+     * Gets description.
+     */
     @Nullable
     public String getDescription() { return this.description; }
 
+    /**
+     * Returns whether allowPartialProgress.
+     */
     public boolean isAllowPartialProgress() { return this.allowPartialProgress; }
 
+    /**
+     * Returns whether mutuallyExclusive.
+     */
     public boolean isMutuallyExclusive() { return this.mutuallyExclusive; }
 
+    /**
+     * Returns whether allowChoiceChange.
+     */
     public boolean isAllowChoiceChange() { return this.allowChoiceChange; }
 
+    /**
+     * Gets detailedProgress.
+     */
     @JsonIgnore
     @NotNull
     public List<ChoiceProgress> getDetailedProgress(@NotNull Player player) {
@@ -145,21 +193,33 @@ public final class ChoiceRequirement extends AbstractRequirement {
                 }).toList();
     }
 
+    /**
+     * Gets bestChoice.
+     */
     @JsonIgnore
     @NotNull
     public Optional<AbstractRequirement> getBestChoice(@NotNull Player player) {
         return this.choices.stream().max(Comparator.comparingDouble(req -> req.calculateProgress(player)));
     }
 
+    /**
+     * Gets completedChoices.
+     */
     @JsonIgnore
     @NotNull
     public List<AbstractRequirement> getCompletedChoices(@NotNull Player player) {
         return this.choices.stream().filter(req -> req.isMet(player)).toList();
     }
 
+    /**
+     * Returns whether singleChoice.
+     */
     @JsonIgnore
     public boolean isSingleChoice() { return this.minimumChoicesRequired == 1; }
 
+    /**
+     * Executes validate.
+     */
     @JsonIgnore
     public void validate() {
         if (this.choices.isEmpty()) throw new IllegalStateException("ChoiceRequirement must have at least one choice.");
@@ -171,7 +231,13 @@ public final class ChoiceRequirement extends AbstractRequirement {
         }
     }
 
+    /**
+     * Represents the ChoiceProgress API type.
+     */
     public record ChoiceProgress(int index, @NotNull AbstractRequirement choice, double progress, boolean completed) {
+        /**
+         * Gets progressPercentage.
+         */
         public int getProgressPercentage() { return (int) (this.progress * 100); }
     }
 }

@@ -17,15 +17,24 @@ import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Represents the PlayerPreLogin API type.
+ */
 public class PlayerPreLogin implements Listener {
 
     private final static Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
     private final RDQ rdq;
 
+    /**
+     * Executes PlayerPreLogin.
+     */
     public  PlayerPreLogin(@NotNull RDQ rdq) {
         this.rdq = rdq;
     }
 
+    /**
+     * Executes onAsyncPreLogin.
+     */
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onAsyncPreLogin(AsyncPlayerPreLoginEvent event) {
         var uniqueId = event.getUniqueId();

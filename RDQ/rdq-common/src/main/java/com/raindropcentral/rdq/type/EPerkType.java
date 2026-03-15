@@ -2,15 +2,14 @@ package com.raindropcentral.rdq.type;
 
 /**
  * Enumeration defining different types of perks and their activation behaviors.
- * <p>
- * This enum categorizes perks based on how they function:
+ *
+ * <p>This enum categorizes perks based on how they function:
  * <ul>
  *     <li>{@link #TOGGLEABLE_PASSIVE} - Perks that can be toggled on/off without cooldown</li>
  *     <li>{@link #EVENT_TRIGGERED} - Perks that activate on specific events and have cooldown</li>
  *     <li>{@link #INSTANT_USE} - Perks that provide immediate effects and have cooldown</li>
  *     <li>{@link #DURATION_BASED} - Perks that last for a specific duration with cooldown</li>
  * </ul>
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0

@@ -81,6 +81,9 @@ public class TaxCurrencySection extends AConfigSection {
         return this.getMaximumTax() >= 0D;
     }
 
+    /**
+     * Sets context.
+     */
     public void setContext(
             final @NotNull String type,
             final double initialCost,

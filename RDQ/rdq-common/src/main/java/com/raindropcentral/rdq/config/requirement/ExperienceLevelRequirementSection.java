@@ -6,10 +6,9 @@ import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
 
 /**
  * Configuration section for experience level-based requirements.
- * <p>
- * This section handles all configuration options specific to ExperienceLevelRequirement,
+ *
+ * <p>This section handles all configuration options specific to ExperienceLevelRequirement,
  * including required levels, experience types, and consumption settings.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -53,10 +52,16 @@ public class ExperienceLevelRequirementSection extends AConfigSection {
 		super(evaluationEnvironmentBuilder);
 	}
 	
+	/**
+	 * Gets consumeOnComplete.
+	 */
 	public Boolean getConsumeOnComplete() {
 		return this.consumeOnComplete != null ? this.consumeOnComplete : true;
 	}
 	
+	/**
+	 * Gets description.
+	 */
 	public String getDescription() {
 		return this.description;
 	}

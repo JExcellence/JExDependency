@@ -6,10 +6,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Marker annotation used to flag command handler classes for discovery and automatic
+ * Marker annotation used to flag command handler classes for discovery and automatic.
  * registration within the command factory.
- * <p>
- * Annotated handlers participate in edition gating, localization, and constructor wiring performed by the
+ *
+ * <p>Annotated handlers participate in edition gating, localization, and constructor wiring performed by the
  * {@link com.raindropcentral.commands.CommandFactory CommandFactory}.
  *
  * @author JExcellence

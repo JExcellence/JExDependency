@@ -9,10 +9,9 @@ import java.util.Map;
 
 /**
  * Configuration section for currency-based requirements.
- * <p>
- * This section handles all configuration options specific to CurrencyRequirement,
+ *
+ * <p>This section handles all configuration options specific to CurrencyRequirement,
  * including required currencies, amounts, and consumption settings.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -74,10 +73,16 @@ public class CurrencyRequirementSection extends AConfigSection {
 		super(evaluationEnvironmentBuilder);
 	}
 	
+	/**
+	 * Gets consumeOnComplete.
+	 */
 	public Boolean getConsumeOnComplete() {
 		return this.consumeOnComplete != null ? this.consumeOnComplete : true;
 	}
 	
+	/**
+	 * Gets currencyPlugin.
+	 */
 	public String getCurrencyPlugin() {
 		return this.currencyPlugin != null ? this.currencyPlugin : "vault";
 	}

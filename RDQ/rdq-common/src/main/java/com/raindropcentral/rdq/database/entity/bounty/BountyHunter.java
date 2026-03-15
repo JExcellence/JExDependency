@@ -9,6 +9,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.Serial;
 
+/**
+ * Tracks bounty-claim statistics for a player.
+ */
 @Entity
 @Table(
         name = "r_bounty_hunter",
@@ -43,19 +46,31 @@ public class BountyHunter extends BaseEntity {
 
     protected BountyHunter() {}
 
+    /**
+     * Executes BountyHunter.
+     */
     public BountyHunter(final @NotNull RDQPlayer player) {
         this.player = player;
     }
 
+    /**
+     * Executes recordClaim.
+     */
     public void recordClaim(final double rewardValue) {
         incrementBountiesClaimed();
         addRewardValue(rewardValue);
     }
 
+    /**
+     * Executes incrementBountiesClaimed.
+     */
     public void incrementBountiesClaimed() {
         this.bountiesClaimed++;
     }
 
+    /**
+     * Executes addRewardValue.
+     */
     public void addRewardValue(final double value) {
         if (value > 0) {
             this.totalRewardValue += value;

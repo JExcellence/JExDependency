@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Stores {@link Map} entries of string keys to {@link ItemStack} values using a delimiter-safe Base64 format
+ * Stores {@link Map} entries of string keys to {@link ItemStack} values using a delimiter-safe Base64 format.
  * and restores them for entity hydration.
  *
  * <p>Each key is encoded as UTF-8 before applying Base64 and combined with the value payload using

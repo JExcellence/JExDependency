@@ -17,10 +17,9 @@ import java.util.Objects;
 
 /**
  * Entity representing a quest.
- * <p>
- * A quest is a collection of tasks that players must complete to earn rewards.
+ *
+ * <p>A quest is a collection of tasks that players must complete to earn rewards.
  * Quests can be repeatable, have cooldowns, time limits, and difficulty levels.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0
@@ -38,6 +37,9 @@ import java.util.Objects;
                 @Index(name = "idx_quest_difficulty", columnList = "difficulty")
         }
 )
+/**
+ * Represents the Quest API type.
+ */
 public class Quest extends BaseEntity {
     
     @Serial
@@ -193,6 +195,9 @@ public class Quest extends BaseEntity {
         task.setQuest(null);
     }
     
+    /**
+     * Executes equals.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -205,6 +210,9 @@ public class Quest extends BaseEntity {
         return identifier != null && identifier.equals(quest.identifier);
     }
     
+    /**
+     * Returns whether hCode.
+     */
     @Override
     public int hashCode() {
         if (this.getId() != null) {
@@ -214,6 +222,9 @@ public class Quest extends BaseEntity {
         return Objects.hash(identifier);
     }
     
+    /**
+     * Executes toString.
+     */
     @Override
     public String toString() {
         return "Quest{" +

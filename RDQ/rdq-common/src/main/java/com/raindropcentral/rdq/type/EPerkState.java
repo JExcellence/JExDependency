@@ -5,8 +5,8 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Enumeration defining the different states a perk can be in for a player.
- * <p>
- * This enum represents the relationship between a player and a perk:
+ *
+ * <p>This enum represents the relationship between a player and a perk:
  * <ul>
  *     <li>{@link #LOCKED} - Player has not unlocked this perk yet</li>
  *     <li>{@link #AVAILABLE} - Player has unlocked the perk but it's not currently active</li>
@@ -14,7 +14,6 @@ import org.jetbrains.annotations.NotNull;
  *     <li>{@link #COOLDOWN} - Player has the perk but it's on cooldown</li>
  *     <li>{@link #DISABLED} - Perk is globally disabled by administrators</li>
  * </ul>
- * </p>
  *
  * @author ItsRainingHP
  * @version 1.0.0

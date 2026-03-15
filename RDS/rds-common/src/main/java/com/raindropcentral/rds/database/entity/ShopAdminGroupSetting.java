@@ -26,6 +26,9 @@ import org.jetbrains.annotations.Nullable;
         "unused",
         "JpaDataSourceORMInspection"
 })
+/**
+ * Represents the ShopAdminGroupSetting API type.
+ */
 public class ShopAdminGroupSetting extends BaseEntity {
 
     @Column(name = "group_name", nullable = false, unique = true)

@@ -16,10 +16,9 @@ import java.util.Objects;
 
 /**
  * Entity representing a requirement that must be met to unlock a perk.
- * <p>
- * This entity encapsulates an {@link AbstractRequirement} from RPlatform and its visual icon,
+ *
+ * <p>This entity encapsulates an {@link AbstractRequirement} from RPlatform and its visual icon,
  * providing convenience methods for requirement evaluation and progress calculation.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -138,6 +137,9 @@ public class PerkRequirement extends BaseEntity {
         return requirement.getDescriptionKey();
     }
 
+    /**
+     * Executes equals.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -152,6 +154,9 @@ public class PerkRequirement extends BaseEntity {
                 displayOrder == that.displayOrder;
     }
 
+    /**
+     * Returns whether hCode.
+     */
     @Override
     public int hashCode() {
         if (this.getId() != null) {
@@ -161,6 +166,9 @@ public class PerkRequirement extends BaseEntity {
         return Objects.hash(perk, requirement, displayOrder);
     }
 
+    /**
+     * Executes toString.
+     */
     @Override
     public String toString() {
         return "PerkRequirement{" +

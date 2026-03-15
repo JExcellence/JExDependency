@@ -83,13 +83,34 @@ public record QueueStatistics(
         private double capacityUsed = 0.0;
         private int persistedCount = 0;
 
+        /**
+         * Executes sizeByPriority.
+         */
         public Builder sizeByPriority(Map<DeliveryPriority, Integer> map) { this.sizeByPriority = map; return this; }
+        /**
+         * Executes totalSize.
+         */
         public Builder totalSize(int size) { this.totalSize = size; return this; }
+        /**
+         * Executes oldestEntryAgeMs.
+         */
         public Builder oldestEntryAgeMs(long age) { this.oldestEntryAgeMs = age; return this; }
+        /**
+         * Executes backpressureLevel.
+         */
         public Builder backpressureLevel(BackpressureLevel level) { this.backpressureLevel = level; return this; }
+        /**
+         * Executes capacityUsed.
+         */
         public Builder capacityUsed(double used) { this.capacityUsed = used; return this; }
+        /**
+         * Executes persistedCount.
+         */
         public Builder persistedCount(int count) { this.persistedCount = count; return this; }
 
+        /**
+         * Executes build.
+         */
         public QueueStatistics build() {
             return new QueueStatistics(
                 sizeByPriority, totalSize, oldestEntryAgeMs,

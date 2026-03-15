@@ -25,6 +25,9 @@ import org.jetbrains.annotations.Nullable;
         "unused",
         "FieldCanBeLocal"
 })
+/**
+ * Represents the RShopAdminGroupSetting API type.
+ */
 public class RShopAdminGroupSetting extends BaseRepository<ShopAdminGroupSetting, Long> {
 
     private final EntityManagerFactory entityManagerFactory;

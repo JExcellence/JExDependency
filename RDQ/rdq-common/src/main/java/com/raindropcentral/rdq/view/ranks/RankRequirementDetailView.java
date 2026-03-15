@@ -67,6 +67,9 @@ public class RankRequirementDetailView extends APaginatedView<RankRequirementDet
 		private final int                          itemIndex;
 		private final RequirementDetailItemType    type;
 
+		/**
+		 * Executes RequirementDetailItem.
+		 */
 		public RequirementDetailItem(
 				final @NotNull ItemStack displayItem,
 				final @NotNull String itemName,
@@ -81,6 +84,9 @@ public class RankRequirementDetailView extends APaginatedView<RankRequirementDet
 			this.type = RequirementDetailItemType.ITEM_PROGRESS;
 		}
 
+		/**
+		 * Executes RequirementDetailItem.
+		 */
 		public RequirementDetailItem(
 				final @NotNull ItemStack displayItem,
 				final @NotNull String itemName,
@@ -94,26 +100,41 @@ public class RankRequirementDetailView extends APaginatedView<RankRequirementDet
 			this.type = type;
 		}
 
+		/**
+		 * Gets displayItem.
+		 */
 		public ItemStack getDisplayItem() {
 
 			return displayItem;
 		}
 
+		/**
+		 * Gets itemName.
+		 */
 		public String getItemName() {
 
 			return itemName;
 		}
 
+		/**
+		 * Gets itemProgress.
+		 */
 		public ItemRequirement.ItemProgress getItemProgress() {
 
 			return itemProgress;
 		}
 
+		/**
+		 * Gets itemIndex.
+		 */
 		public int getItemIndex() {
 
 			return itemIndex;
 		}
 
+		/**
+		 * Gets type.
+		 */
 		public RequirementDetailItemType getType() {
 
 			return type;
@@ -121,6 +142,9 @@ public class RankRequirementDetailView extends APaginatedView<RankRequirementDet
 
 	}
 
+	/**
+	 * Represents the RequirementDetailItemType API type.
+	 */
 	public enum RequirementDetailItemType {
 		ITEM_PROGRESS,
 		SUMMARY,
@@ -128,6 +152,9 @@ public class RankRequirementDetailView extends APaginatedView<RankRequirementDet
 		FILLER
 	}
 
+	/**
+	 * Executes RankRequirementDetailView.
+	 */
 	public RankRequirementDetailView() {
 
 		super(RankRequirementsJourneyView.class);

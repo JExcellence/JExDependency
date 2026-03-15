@@ -10,20 +10,19 @@ import java.util.Optional;
 
 /**
  * Enumeration defining permission nodes for currency-related player commands within the JExEconomy system.
- * <p>
- * This enum provides a comprehensive permission framework for controlling access to currency management
+ *
+ * <p>This enum provides a comprehensive permission framework for controlling access to currency management
  * operations. Each permission node represents a specific level of access to currency functionality,
  * enabling fine-grained control over who can perform various currency operations.
- * </p>
  *
- * <h3>Permission Hierarchy:</h3>
+ * <p><strong>Permission Hierarchy:</strong>
  * <ul>
  *   <li><strong>Base Access:</strong> {@link #CURRENCIES} - Basic currency command access</li>
  *   <li><strong>Administrative Operations:</strong> {@link #CREATE}, {@link #DELETE}, {@link #EDIT} - Currency modification rights</li>
  *   <li><strong>Information Access:</strong> {@link #OVERVIEW} - Currency viewing and listing permissions</li>
  * </ul>
  *
- * <h3>Security Model:</h3>
+ * <p><strong>Security Model:</strong>
  * <ul>
  *   <li><strong>Granular Control:</strong> Each operation has its own permission node</li>
  *   <li><strong>Hierarchical Structure:</strong> Permissions follow a logical hierarchy</li>
@@ -31,7 +30,7 @@ import java.util.Optional;
  *   <li><strong>Integration Ready:</strong> Implements IPermissionNode for framework integration</li>
  * </ul>
  *
- * <h3>Usage Patterns:</h3>
+ * <p><strong>Usage Patterns:</strong>
  * <ul>
  *   <li>Permission checks before command execution</li>
  *   <li>Role-based access control configuration</li>
@@ -39,7 +38,7 @@ import java.util.Optional;
  *   <li>API endpoint security validation</li>
  * </ul>
  *
- * <h3>Integration Points:</h3>
+ * <p><strong>Integration Points:</strong>
  * <ul>
  *   <li>Command framework permission validation</li>
  *   <li>User interface access control</li>
@@ -57,13 +56,12 @@ public enum ECurrenciesPermission implements IPermissionNode {
 	
 	/**
 	 * Base permission node for accessing currency commands and functionality.
-	 * <p>
-	 * This permission grants basic access to the currency command system, allowing
+ *
+ * <p>This permission grants basic access to the currency command system, allowing
 	 * users to execute the base currency command and access general currency
 	 * information. It serves as the foundation permission for all currency operations.
-	 * </p>
 	 *
-	 * <h3>Access Granted:</h3>
+	 * <p><strong>Access Granted:</strong>
 	 * <ul>
 	 *   <li>Basic currency command execution</li>
 	 *   <li>Access to currency help information</li>
@@ -71,7 +69,7 @@ public enum ECurrenciesPermission implements IPermissionNode {
 	 *   <li>Foundation for other currency permissions</li>
 	 * </ul>
 	 *
-	 * <h3>Security Level:</h3>
+	 * <p><strong>Security Level:</strong>
 	 * <ul>
 	 *   <li><strong>Risk Level:</strong> Low - Read-only access to basic functionality</li>
 	 *   <li><strong>User Type:</strong> General users and administrators</li>
@@ -85,13 +83,12 @@ public enum ECurrenciesPermission implements IPermissionNode {
 	
 	/**
 	 * Permission node for creating new currency entities within the system.
-	 * <p>
-	 * This permission grants the ability to create new currencies with custom
+ *
+ * <p>This permission grants the ability to create new currencies with custom
 	 * properties, including identifiers, symbols, prefixes, and suffixes. Currency
 	 * creation is a high-privilege operation that affects the entire system.
-	 * </p>
 	 *
-	 * <h3>Access Granted:</h3>
+	 * <p><strong>Access Granted:</strong>
 	 * <ul>
 	 *   <li>Creation of new currency entities</li>
 	 *   <li>Definition of currency properties and formatting</li>
@@ -99,14 +96,14 @@ public enum ECurrenciesPermission implements IPermissionNode {
 	 *   <li>System-wide currency configuration</li>
 	 * </ul>
 	 *
-	 * <h3>Security Level:</h3>
+	 * <p><strong>Security Level:</strong>
 	 * <ul>
 	 *   <li><strong>Risk Level:</strong> High - Creates system-wide changes</li>
 	 *   <li><strong>User Type:</strong> Administrators and senior staff only</li>
 	 *   <li><strong>Impact:</strong> Affects all players and system economy</li>
 	 * </ul>
 	 *
-	 * <h3>Prerequisites:</h3>
+	 * <p><strong>Prerequisites:</strong>
 	 * <ul>
 	 *   <li>Typically requires {@link #CURRENCIES} base permission</li>
 	 *   <li>Administrative role or equivalent access level</li>
@@ -120,13 +117,12 @@ public enum ECurrenciesPermission implements IPermissionNode {
 	
 	/**
 	 * Permission node for deleting existing currency entities from the system.
-	 * <p>
-	 * This permission grants the ability to permanently remove currencies from
+ *
+ * <p>This permission grants the ability to permanently remove currencies from
 	 * the database, including all associated player balances and transaction
 	 * history. This is the most destructive currency operation available.
-	 * </p>
 	 *
-	 * <h3>Access Granted:</h3>
+	 * <p><strong>Access Granted:</strong>
 	 * <ul>
 	 *   <li>Permanent deletion of currency entities</li>
 	 *   <li>Removal of all associated player balances</li>
@@ -134,14 +130,14 @@ public enum ECurrenciesPermission implements IPermissionNode {
 	 *   <li>System cache and configuration updates</li>
 	 * </ul>
 	 *
-	 * <h3>Security Level:</h3>
+	 * <p><strong>Security Level:</strong>
 	 * <ul>
 	 *   <li><strong>Risk Level:</strong> Critical - Irreversible data destruction</li>
 	 *   <li><strong>User Type:</strong> Senior administrators only</li>
 	 *   <li><strong>Impact:</strong> Permanent loss of player currency data</li>
 	 * </ul>
 	 *
-	 * <h3>Safety Considerations:</h3>
+	 * <p><strong>Safety Considerations:</strong>
 	 * <ul>
 	 *   <li>Should require additional confirmation mechanisms</li>
 	 *   <li>Comprehensive audit logging recommended</li>
@@ -156,13 +152,12 @@ public enum ECurrenciesPermission implements IPermissionNode {
 	
 	/**
 	 * Permission node for editing and updating existing currency properties.
-	 * <p>
-	 * This permission grants the ability to modify currency properties such as
+ *
+ * <p>This permission grants the ability to modify currency properties such as
 	 * symbols, prefixes, suffixes, and identifiers. Editing operations affect
 	 * how currencies are displayed and formatted throughout the system.
-	 * </p>
 	 *
-	 * <h3>Access Granted:</h3>
+	 * <p><strong>Access Granted:</strong>
 	 * <ul>
 	 *   <li>Modification of currency symbols and formatting</li>
 	 *   <li>Updates to currency identifiers (with uniqueness validation)</li>
@@ -170,14 +165,14 @@ public enum ECurrenciesPermission implements IPermissionNode {
 	 *   <li>Real-time system configuration updates</li>
 	 * </ul>
 	 *
-	 * <h3>Security Level:</h3>
+	 * <p><strong>Security Level:</strong>
 	 * <ul>
 	 *   <li><strong>Risk Level:</strong> Medium - Modifies system-wide display and behavior</li>
 	 *   <li><strong>User Type:</strong> Administrators and trusted staff</li>
 	 *   <li><strong>Impact:</strong> Changes how currencies appear to all players</li>
 	 * </ul>
 	 *
-	 * <h3>Validation Requirements:</h3>
+	 * <p><strong>Validation Requirements:</strong>
 	 * <ul>
 	 *   <li>Currency existence validation before modification</li>
 	 *   <li>Uniqueness checks for identifier changes</li>
@@ -192,13 +187,12 @@ public enum ECurrenciesPermission implements IPermissionNode {
 	
 	/**
 	 * Permission node for viewing comprehensive currency overviews and listings.
-	 * <p>
-	 * This permission grants access to currency overview functionality, allowing
+ *
+ * <p>This permission grants access to currency overview functionality, allowing
 	 * users to view lists of all available currencies with their properties and
 	 * status information. This is primarily an informational permission.
-	 * </p>
 	 *
-	 * <h3>Access Granted:</h3>
+	 * <p><strong>Access Granted:</strong>
 	 * <ul>
 	 *   <li>Viewing complete currency listings</li>
 	 *   <li>Access to currency property information</li>
@@ -206,14 +200,14 @@ public enum ECurrenciesPermission implements IPermissionNode {
 	 *   <li>Currency usage statistics and metrics</li>
 	 * </ul>
 	 *
-	 * <h3>Security Level:</h3>
+	 * <p><strong>Security Level:</strong>
 	 * <ul>
 	 *   <li><strong>Risk Level:</strong> Low - Read-only access to system information</li>
 	 *   <li><strong>User Type:</strong> General users, staff, and administrators</li>
 	 *   <li><strong>Impact:</strong> No system modifications possible</li>
 	 * </ul>
 	 *
-	 * <h3>Information Provided:</h3>
+	 * <p><strong>Information Provided:</strong>
 	 * <ul>
 	 *   <li>Currency identifiers and symbols</li>
 	 *   <li>Formatting properties (prefix, suffix)</li>
@@ -228,31 +222,28 @@ public enum ECurrenciesPermission implements IPermissionNode {
 	
 	/**
 	 * The internal identifier used for this permission node within the evaluation framework.
-	 * <p>
-	 * This field stores the internal name that the permission system uses to identify
+ *
+ * <p>This field stores the internal name that the permission system uses to identify
 	 * and reference this specific permission node. The internal name is used for
 	 * configuration mapping, permission resolution, and framework integration.
-	 * </p>
 	 */
 	private final String permissionInternalIdentifier;
 	
 	/**
 	 * The fallback permission node string used for compatibility and external integration.
-	 * <p>
-	 * This field provides a standardized permission string that can be used with
+ *
+ * <p>This field provides a standardized permission string that can be used with
 	 * external permission management systems or as a fallback when the internal
 	 * permission system is not available. It follows standard permission naming conventions.
-	 * </p>
 	 */
 	private final String fallbackPermissionNode;
 	
 	/**
 	 * Constructs a new currency permission enum constant with the specified identifiers.
-	 * <p>
-	 * This constructor initializes the permission node with both an internal identifier
+ *
+ * <p>This constructor initializes the permission node with both an internal identifier
 	 * for framework integration and a fallback permission string for external compatibility.
 	 * Both identifiers are required and must be non-null.
-	 * </p>
 	 *
 	 * @param permissionInternalIdentifier the internal identifier used by the evaluation framework, must not be null
 	 * @param fallbackPermissionNode the fallback permission string for external systems, must not be null
@@ -275,11 +266,10 @@ public enum ECurrenciesPermission implements IPermissionNode {
 	
 	/**
 	 * Retrieves the internal identifier for this permission node.
-	 * <p>
-	 * This method returns the internal name used by the evaluation framework to
+ *
+ * <p>This method returns the internal name used by the evaluation framework to
 	 * identify and process this permission node. The internal identifier is used
 	 * for configuration mapping, permission resolution, and system integration.
-	 * </p>
 	 *
 	 * @return the internal identifier string, never null
 	 */
@@ -290,11 +280,10 @@ public enum ECurrenciesPermission implements IPermissionNode {
 	
 	/**
 	 * Retrieves the fallback permission node string for external compatibility.
-	 * <p>
-	 * This method returns the standardized permission string that can be used
+ *
+ * <p>This method returns the standardized permission string that can be used
 	 * with external permission management systems or as a fallback when the
 	 * internal permission system is not available.
-	 * </p>
 	 *
 	 * @return the fallback permission node string, never null
 	 */
@@ -305,13 +294,12 @@ public enum ECurrenciesPermission implements IPermissionNode {
 	
 	/**
 	 * Attempts to resolve a currency permission from its internal identifier.
-	 * <p>
-	 * This method provides case-sensitive lookup of currency permissions based on
+ *
+ * <p>This method provides case-sensitive lookup of currency permissions based on
 	 * their internal identifier strings. It returns an Optional containing the
 	 * matching permission if found, or empty if no match exists.
-	 * </p>
 	 *
-	 * <h3>Matching Behavior:</h3>
+	 * <p><strong>Matching Behavior:</strong>
 	 * <ul>
 	 *   <li>Case-sensitive comparison for precise matching</li>
 	 *   <li>Exact string matching against internal identifiers</li>
@@ -337,13 +325,12 @@ public enum ECurrenciesPermission implements IPermissionNode {
 	
 	/**
 	 * Attempts to resolve a currency permission from its fallback node string.
-	 * <p>
-	 * This method provides case-sensitive lookup of currency permissions based on
+ *
+ * <p>This method provides case-sensitive lookup of currency permissions based on
 	 * their fallback permission node strings. This is useful for integration with
 	 * external permission systems that use standardized permission strings.
-	 * </p>
 	 *
-	 * <h3>Matching Behavior:</h3>
+	 * <p><strong>Matching Behavior:</strong>
 	 * <ul>
 	 *   <li>Case-sensitive comparison for precise matching</li>
 	 *   <li>Exact string matching against fallback node strings</li>
@@ -369,21 +356,20 @@ public enum ECurrenciesPermission implements IPermissionNode {
 	
 	/**
 	 * Determines whether this permission represents an administrative operation.
-	 * <p>
-	 * This method identifies permissions that should be restricted to users with
+ *
+ * <p>This method identifies permissions that should be restricted to users with
 	 * administrative privileges due to their system-wide impact or security
 	 * implications. Administrative permissions typically affect global system
 	 * state or other players' data.
-	 * </p>
 	 *
-	 * <h3>Administrative Permissions:</h3>
+	 * <p><strong>Administrative Permissions:</strong>
 	 * <ul>
 	 *   <li>{@link #CREATE} - Creates new system-wide currencies</li>
 	 *   <li>{@link #DELETE} - Removes currencies affecting all players</li>
 	 *   <li>{@link #EDIT} - Modifies currency properties affecting all users</li>
 	 * </ul>
 	 *
-	 * <h3>Non-Administrative Permissions:</h3>
+	 * <p><strong>Non-Administrative Permissions:</strong>
 	 * <ul>
 	 *   <li>{@link #CURRENCIES} - Basic command access</li>
 	 *   <li>{@link #OVERVIEW} - Read-only information access</li>
@@ -399,18 +385,17 @@ public enum ECurrenciesPermission implements IPermissionNode {
 	
 	/**
 	 * Determines whether this permission represents a destructive operation.
-	 * <p>
-	 * This method identifies permissions that allow operations which permanently
+ *
+ * <p>This method identifies permissions that allow operations which permanently
 	 * modify or remove data from the system. Destructive permissions require
 	 * special handling in user interfaces and security systems.
-	 * </p>
 	 *
-	 * <h3>Destructive Permissions:</h3>
+	 * <p><strong>Destructive Permissions:</strong>
 	 * <ul>
 	 *   <li>{@link #DELETE} - Permanently removes currencies and associated data</li>
 	 * </ul>
 	 *
-	 * <h3>Non-Destructive Permissions:</h3>
+	 * <p><strong>Non-Destructive Permissions:</strong>
 	 * <ul>
 	 *   <li>{@link #CREATE} - Adds new data without removing existing data</li>
 	 *   <li>{@link #EDIT} - Modifies existing data but preserves core structure</li>

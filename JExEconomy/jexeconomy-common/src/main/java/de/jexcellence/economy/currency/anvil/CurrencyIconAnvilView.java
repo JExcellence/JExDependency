@@ -18,13 +18,12 @@ import java.util.Map;
 
 /**
  * Anvil view for configuring a currency's icon material.
- * <p>
- * This view provides an interactive interface for players to input and validate
+ *
+ * <p>This view provides an interactive interface for players to input and validate
  * a new icon material for a currency. The icon material serves as the visual
  * representation of the currency in various UI elements throughout the system.
- * </p>
  *
- * <h3>Key Features:</h3>
+ * <p><strong>Key Features:</strong>
  * <ul>
  *   <li><strong>Material Validation:</strong> Ensures entered materials are valid Minecraft items</li>
  *   <li><strong>Real-time Feedback:</strong> Provides immediate validation feedback to users</li>
@@ -32,14 +31,14 @@ import java.util.Map;
  *   <li><strong>Error Handling:</strong> Comprehensive error messages for different validation failures</li>
  * </ul>
  *
- * <h3>Input Requirements:</h3>
+ * <p><strong>Input Requirements:</strong>
  * <ul>
  *   <li>Must be a valid Minecraft material name (case-insensitive)</li>
  *   <li>Material must represent an actual item (not air or blocks)</li>
  *   <li>Examples: GOLD_INGOT, DIAMOND, EMERALD, IRON_INGOT</li>
  * </ul>
  *
- * <h3>Validation Process:</h3>
+ * <p><strong>Validation Process:</strong>
  * <ol>
  *   <li>Check if input is not empty</li>
  *   <li>Verify material exists in Minecraft</li>
@@ -66,10 +65,9 @@ public class CurrencyIconAnvilView extends AbstractAnvilView {
 	
 	/**
 	 * Constructs a new {@code CurrencyIconAnvilView} with the currencies creating view as parent.
-	 * <p>
-	 * The view will return to the currencies creating view when the icon configuration
+ *
+ * <p>The view will return to the currencies creating view when the icon configuration
 	 * is completed or cancelled.
-	 * </p>
 	 */
 	public CurrencyIconAnvilView() {
 		super(CurrenciesCreatingView.class);
@@ -77,10 +75,9 @@ public class CurrencyIconAnvilView extends AbstractAnvilView {
 	
 	/**
 	 * Returns the internationalization key for this view.
-	 * <p>
-	 * This key is used to load localized strings for the currency icon configuration
+ *
+ * <p>This key is used to load localized strings for the currency icon configuration
 	 * interface, including titles, labels, and error messages.
-	 * </p>
 	 *
 	 * @return the i18n key for the currency icon anvil UI
 	 */
@@ -91,13 +88,12 @@ public class CurrencyIconAnvilView extends AbstractAnvilView {
 	
 	/**
 	 * Processes the user input to set the currency's icon material.
-	 * <p>
-	 * This method validates the input material name and updates the currency's
+ *
+ * <p>This method validates the input material name and updates the currency's
 	 * icon property. If no currency exists, a new currency instance is created
 	 * with the specified icon material.
-	 * </p>
 	 *
-	 * <h3>Processing Steps:</h3>
+	 * <p><strong>Processing Steps:</strong>
 	 * <ol>
 	 *   <li>Parse the input string to a Material enum value</li>
 	 *   <li>Check if a currency instance exists</li>
@@ -130,13 +126,12 @@ public class CurrencyIconAnvilView extends AbstractAnvilView {
 	
 	/**
 	 * Provides title placeholders for dynamic title generation.
-	 * <p>
-	 * This method returns placeholders that can be used in the view's title
+ *
+ * <p>This method returns placeholders that can be used in the view's title
 	 * to display contextual information such as the current icon material
 	 * and currency identifier.
-	 * </p>
 	 *
-	 * <h3>Available Placeholders:</h3>
+	 * <p><strong>Available Placeholders:</strong>
 	 * <ul>
 	 *   <li><strong>current_icon:</strong> The current icon material name or default</li>
 	 *   <li><strong>identifier:</strong> The currency identifier or "New Currency"</li>
@@ -175,10 +170,9 @@ public class CurrencyIconAnvilView extends AbstractAnvilView {
 	
 	/**
 	 * Provides the initial input text for the anvil interface.
-	 * <p>
-	 * This method returns the current icon material name if available,
+ *
+ * <p>This method returns the current icon material name if available,
 	 * or a default material name to pre-populate the input field.
-	 * </p>
 	 *
 	 * @param openContext the context when the view is opened, must not be null
 	 * @return the initial input text, never null
@@ -200,12 +194,11 @@ public class CurrencyIconAnvilView extends AbstractAnvilView {
 	
 	/**
 	 * Validates the user input for material name correctness.
-	 * <p>
-	 * This method performs comprehensive validation to ensure the input
+ *
+ * <p>This method performs comprehensive validation to ensure the input
 	 * represents a valid, usable Minecraft material for currency icons.
-	 * </p>
 	 *
-	 * <h3>Validation Criteria:</h3>
+	 * <p><strong>Validation Criteria:</strong>
 	 * <ul>
 	 *   <li>Input must not be empty or whitespace-only</li>
 	 *   <li>Material must exist in the Minecraft Material enum</li>
@@ -240,10 +233,9 @@ public class CurrencyIconAnvilView extends AbstractAnvilView {
 	
 	/**
 	 * Configures the first slot (input slot) with appropriate visual elements.
-	 * <p>
-	 * This method sets up the input slot with an item frame icon and localized
+ *
+ * <p>This method sets up the input slot with an item frame icon and localized
 	 * text to guide the user in entering a valid material name.
-	 * </p>
 	 *
 	 * @param renderContext the rendering context, must not be null
 	 * @param contextPlayer the player viewing the interface, must not be null
@@ -274,13 +266,12 @@ public class CurrencyIconAnvilView extends AbstractAnvilView {
 	
 	/**
 	 * Handles validation failure scenarios with specific error messages.
-	 * <p>
-	 * This method provides detailed error feedback based on the specific
+ *
+ * <p>This method provides detailed error feedback based on the specific
 	 * validation failure, helping users understand what went wrong and
 	 * how to correct their input.
-	 * </p>
 	 *
-	 * <h3>Error Categories:</h3>
+	 * <p><strong>Error Categories:</strong>
 	 * <ul>
 	 *   <li><strong>Empty Input:</strong> No material name provided</li>
 	 *   <li><strong>Invalid Material:</strong> Material name doesn't exist</li>
@@ -344,11 +335,10 @@ public class CurrencyIconAnvilView extends AbstractAnvilView {
 	
 	/**
 	 * Prepares the result data to pass back to the parent view.
-	 * <p>
-	 * This method extends the base result preparation by adding the plugin
+ *
+ * <p>This method extends the base result preparation by adding the plugin
 	 * instance and updated currency to the result data, ensuring the parent
 	 * view has all necessary information to continue the workflow.
-	 * </p>
 	 *
 	 * @param processingResult the result from input processing, can be null
 	 * @param originalInput the user's original input, must not be null

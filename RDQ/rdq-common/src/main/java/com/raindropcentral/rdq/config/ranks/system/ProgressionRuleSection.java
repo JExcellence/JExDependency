@@ -8,8 +8,8 @@ import java.util.List;
 
 /**
  * Configuration section for progression rules in the rank system.
- * <p>
- * This class defines various rules and options that control how users progress through ranks,
+ *
+ * <p>This class defines various rules and options that control how users progress through ranks,
  * including linear progression, skipping, multiple active trees, switching, and related costs.
  *
  * @author JExcellence

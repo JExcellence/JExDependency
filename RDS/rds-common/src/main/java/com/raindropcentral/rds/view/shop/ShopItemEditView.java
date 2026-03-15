@@ -95,6 +95,9 @@ public class ShopItemEditView extends BaseView {
         );
     }
 
+    /**
+     * Executes onResume.
+     */
     @Override
     public void onResume(
             final @NotNull Context origin,
@@ -108,6 +111,9 @@ public class ShopItemEditView extends BaseView {
         target.update();
     }
 
+    /**
+     * Executes onFirstRender.
+     */
     @Override
     public void onFirstRender(
             final @NotNull RenderContext render,
@@ -255,6 +261,9 @@ public class ShopItemEditView extends BaseView {
         }
     }
 
+    /**
+     * Executes onClick.
+     */
     @Override
     public void onClick(
             final @NotNull SlotClickContext click

@@ -15,14 +15,13 @@ import java.util.Map;
 
 /**
  * Action overview view for currency management operations.
- * <p>
- * This view provides the main menu for currency-related actions including
+ *
+ * <p>This view provides the main menu for currency-related actions including
  * creating, editing, viewing, and deleting currencies. Each action is
  * represented by an appropriate material and leads to the corresponding
  * functionality within the currency management system.
- * </p>
  *
- * <h3>Available Actions:</h3>
+ * <p><strong>Available Actions:</strong>
  * <ul>
  *   <li><strong>Create Currency (c):</strong> Opens the currency creation interface</li>
  *   <li><strong>Edit Currency (e):</strong> Provides access to currency editing functionality</li>
@@ -30,21 +29,19 @@ import java.util.Map;
  *   <li><strong>Delete Currency (d):</strong> Administrative function for currency deletion (permission-restricted)</li>
  * </ul>
  *
- * <h3>Permission Requirements:</h3>
- * <p>
- * Most actions are available to all users, but the delete functionality requires one of:
- * </p>
+ * <p><strong>Permission Requirements:</strong>
+ *
+ * <p>Most actions are available to all users, but the delete functionality requires one of:
  * <ul>
  *   <li><code>jexeconomy.admin.delete</code> - Specific delete permission</li>
  *   <li><code>jexeconomy.admin.*</code> - All administrative permissions</li>
  *   <li>Server operator status</li>
  * </ul>
  *
- * <h3>Layout Structure:</h3>
- * <p>
- * The view uses a simple horizontal layout with four action buttons centered
+ * <p><strong>Layout Structure:</strong>
+ *
+ * <p>The view uses a simple horizontal layout with four action buttons centered
  * in the middle row, providing easy access to all currency management functions.
- * </p>
  *
  * @author JExcellence
  * @see BaseView
@@ -62,10 +59,9 @@ public class CurrenciesActionOverviewView extends BaseView {
 	
 	/**
 	 * Returns the internationalization key for this view.
-	 * <p>
-	 * This key is used to load localized strings for the action overview interface,
+ *
+ * <p>This key is used to load localized strings for the action overview interface,
 	 * including titles, labels, and action descriptions.
-	 * </p>
 	 *
 	 * @return the i18n key for the currencies action overview UI
 	 */
@@ -76,12 +72,11 @@ public class CurrenciesActionOverviewView extends BaseView {
 	
 	/**
 	 * Defines the layout structure for the action overview view.
-	 * <p>
-	 * The layout provides a clean, centered arrangement of action buttons
+ *
+ * <p>The layout provides a clean, centered arrangement of action buttons
 	 * with visual spacing for optimal user experience.
-	 * </p>
 	 *
-	 * <h3>Layout Mapping:</h3>
+	 * <p><strong>Layout Mapping:</strong>
 	 * <ul>
 	 *   <li><strong>c:</strong> Create currency action button</li>
 	 *   <li><strong>e:</strong> Edit currency action button</li>
@@ -102,13 +97,12 @@ public class CurrenciesActionOverviewView extends BaseView {
 	
 	/**
 	 * Renders all action buttons and their associated functionality.
-	 * <p>
-	 * This method populates the view with interactive action buttons for
+ *
+ * <p>This method populates the view with interactive action buttons for
 	 * currency management operations. Each button is configured with appropriate
 	 * materials, localized text, and click handlers.
-	 * </p>
 	 *
-	 * <h3>Rendered Actions:</h3>
+	 * <p><strong>Rendered Actions:</strong>
 	 * <ul>
 	 *   <li>Create currency button with proceed head icon</li>
 	 *   <li>Edit currency button with anvil material</li>
@@ -132,10 +126,9 @@ public class CurrenciesActionOverviewView extends BaseView {
 	
 	/**
 	 * Renders the create currency action button.
-	 * <p>
-	 * This button opens the {@link CurrenciesCreatingView} where users can
+ *
+ * <p>This button opens the {@link CurrenciesCreatingView} where users can
 	 * configure and create new currencies in the system.
-	 * </p>
 	 *
 	 * @param renderContext the current rendering context, must not be null
 	 * @param contextPlayer the player viewing the interface, must not be null
@@ -173,10 +166,9 @@ public class CurrenciesActionOverviewView extends BaseView {
 	
 	/**
 	 * Renders the edit currency action button.
-	 * <p>
-	 * This button opens the {@link CurrencyEditingView} where users can
+ *
+ * <p>This button opens the {@link CurrencyEditingView} where users can
 	 * select and modify existing currencies in the system.
-	 * </p>
 	 *
 	 * @param renderContext the current rendering context, must not be null
 	 * @param contextPlayer the player viewing the interface, must not be null
@@ -215,10 +207,9 @@ public class CurrenciesActionOverviewView extends BaseView {
 	
 	/**
 	 * Renders the view currencies action button.
-	 * <p>
-	 * This button opens the {@link CurrenciesOverviewView} where users can
+ *
+ * <p>This button opens the {@link CurrenciesOverviewView} where users can
 	 * browse all existing currencies with pagination support.
-	 * </p>
 	 *
 	 * @param renderContext the current rendering context, must not be null
 	 * @param contextPlayer the player viewing the interface, must not be null
@@ -257,16 +248,14 @@ public class CurrenciesActionOverviewView extends BaseView {
 	
 	/**
 	 * Renders the delete currency action button with permission restrictions.
-	 * <p>
-	 * This button is only visible to users with appropriate administrative permissions.
+ *
+ * <p>This button is only visible to users with appropriate administrative permissions.
 	 * It opens the {@link CurrencyDeletionView} where administrators can select
 	 * currencies to delete with comprehensive safety measures and impact assessment.
-	 * </p>
 	 *
-	 * <h3>Permission Requirements:</h3>
-	 * <p>
-	 * The button is displayed only if the player has one of:
-	 * </p>
+	 * <p><strong>Permission Requirements:</strong>
+ *
+ * <p>The button is displayed only if the player has one of:
 	 * <ul>
 	 *   <li><code>jexeconomy.admin.delete</code> - Specific delete permission</li>
 	 *   <li><code>jexeconomy.admin.*</code> - All administrative permissions</li>
@@ -313,10 +302,9 @@ public class CurrenciesActionOverviewView extends BaseView {
 	
 	/**
 	 * Checks if a player has permission to access the delete currency functionality.
-	 * <p>
-	 * This method verifies that the player has one of the required permissions
+ *
+ * <p>This method verifies that the player has one of the required permissions
 	 * or is a server operator, allowing them to access administrative delete functions.
-	 * </p>
 	 *
 	 * @param targetPlayer the player to check permissions for, must not be null
 	 * @return true if the player has delete permissions, false otherwise

@@ -41,11 +41,17 @@ public class Number0 extends RHead {
     );
   }
 
+  /**
+   * Gets translationKey.
+   */
   @Override
   public String getTranslationKey() {
     return "head.pagination." + this.getIdentifier();
   }
 
+  /**
+   * Gets head.
+   */
   @Override
   public ItemStack getHead(final @NotNull Player player) {
     final String translationKey = this.getTranslationKey();

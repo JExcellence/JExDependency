@@ -39,6 +39,9 @@ import java.util.Objects;
         "unused",
         "JpaDataSourceORMInspection"
 })
+/**
+ * Represents the TownLevelRequirementProgress API type.
+ */
 public class TownLevelRequirementProgress extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

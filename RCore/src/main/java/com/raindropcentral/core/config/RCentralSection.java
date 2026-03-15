@@ -15,6 +15,9 @@ public class RCentralSection extends AConfigSection {
     private Boolean developmentMode;
     private Boolean autoDetect;
 
+    /**
+     * Executes RCentralSection.
+     */
     public RCentralSection(EvaluationEnvironmentBuilder baseEnvironment) {
         super(baseEnvironment);
     }

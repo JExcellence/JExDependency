@@ -23,6 +23,9 @@ public final class ParticleReward extends AbstractReward {
     private final double offsetZ;
     private final double extra;
 
+    /**
+     * Executes ParticleReward.
+     */
     @JsonCreator
     public ParticleReward(
         @JsonProperty("particle") @NotNull Particle particle,
@@ -40,11 +43,17 @@ public final class ParticleReward extends AbstractReward {
         this.extra = extra;
     }
 
+    /**
+     * Gets typeId.
+     */
     @Override
     public @NotNull String getTypeId() {
         return "PARTICLE";
     }
 
+    /**
+     * Executes grant.
+     */
     @Override
     public @NotNull CompletableFuture<Boolean> grant(@NotNull Player player) {
         return CompletableFuture.supplyAsync(() -> {
@@ -65,35 +74,59 @@ public final class ParticleReward extends AbstractReward {
         });
     }
 
+    /**
+     * Gets estimatedValue.
+     */
     @Override
     public double getEstimatedValue() {
         return 0.0;
     }
 
+    /**
+     * Gets particle.
+     */
     public Particle getParticle() {
         return particle;
     }
 
+    /**
+     * Gets count.
+     */
     public int getCount() {
         return count;
     }
 
+    /**
+     * Gets offsetX.
+     */
     public double getOffsetX() {
         return offsetX;
     }
 
+    /**
+     * Gets offsetY.
+     */
     public double getOffsetY() {
         return offsetY;
     }
 
+    /**
+     * Gets offsetZ.
+     */
     public double getOffsetZ() {
         return offsetZ;
     }
 
+    /**
+     * Gets extra.
+     */
     public double getExtra() {
         return extra;
     }
 
+    /**
+     * Executes validate.
+     */
     @Override
     public void validate() {
         if (particle == null) {

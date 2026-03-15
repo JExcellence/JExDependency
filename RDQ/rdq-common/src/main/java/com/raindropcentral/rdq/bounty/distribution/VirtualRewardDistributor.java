@@ -24,6 +24,9 @@ public class VirtualRewardDistributor implements RewardDistributor {
 
     private static final Logger LOGGER = Logger.getLogger(VirtualRewardDistributor.class.getName());
 
+    /**
+     * Executes distributeRewards.
+     */
     @Override
     public @NotNull CompletableFuture<Void> distributeRewards(
             @NotNull Player hunter,

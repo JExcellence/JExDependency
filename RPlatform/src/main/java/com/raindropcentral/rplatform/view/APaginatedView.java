@@ -22,7 +22,7 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * Template-method extension of {@link BaseView} that implements a paginated grid pattern with
+ * Template-method extension of {@link BaseView} that implements a paginated grid pattern with.
  * navigation heads sourced from the head utility library.
  *
  * <p>The class coordinates asynchronous data loading via {@link Pagination} state, wires
@@ -39,7 +39,7 @@ import java.util.concurrent.CompletableFuture;
 public abstract class APaginatedView<T> extends BaseView {
 
         /**
-         * Lazy pagination state that drives asynchronous data retrieval and exposes the
+         * Lazy pagination state that drives asynchronous data retrieval and exposes the.
          * {@link Pagination} instance to rendering callbacks.
          * 
          * <p>The pagination state is built during field initialization using the default
@@ -51,12 +51,18 @@ public abstract class APaginatedView<T> extends BaseView {
 			.elementFactory(this::renderEntryWithPromotion)
 			.build();
 	
+	/**
+	 * Executes APaginatedView.
+	 */
 	public APaginatedView(
 		final @Nullable Class<? extends View> parentClazz
 	) {
 		super(parentClazz);
 	}
 	
+	/**
+	 * Executes APaginatedView.
+	 */
 	public APaginatedView() {
 		this(null);
 	}
@@ -102,7 +108,7 @@ public abstract class APaginatedView<T> extends BaseView {
 	}
 	
         /**
-         * Declares the default pagination layout, mapping navigation heads and entry placeholders to
+         * Declares the default pagination layout, mapping navigation heads and entry placeholders to.
          * template characters.
          * 
          * <p>Layout characters:
@@ -170,7 +176,7 @@ public abstract class APaginatedView<T> extends BaseView {
         }
 
         /**
-         * Coordinates pagination navigation and indicator rendering after the base view has drawn
+         * Coordinates pagination navigation and indicator rendering after the base view has drawn.
          * navigation controls.
          *
          * @param render the render context used to access layout slots
@@ -201,7 +207,7 @@ public abstract class APaginatedView<T> extends BaseView {
 	}
 	
         /**
-         * Hook for subclasses to render domain specific components after the pagination chrome has
+         * Hook for subclasses to render domain specific components after the pagination chrome has.
          * been laid out.
          *
          * @param render the render context to bind slot behaviour
@@ -213,7 +219,7 @@ public abstract class APaginatedView<T> extends BaseView {
         );
 	
         /**
-         * Renders {@link Previous} and {@link Next} heads into the layout while binding state aware
+         * Renders {@link Previous} and {@link Next} heads into the layout while binding state aware.
          * click handlers.
          *
          * @param render the render context exposing layout slots
@@ -245,7 +251,7 @@ public abstract class APaginatedView<T> extends BaseView {
 	}
 	
         /**
-         * Renders the page indicator item, translating lore through the view's base key and showing
+         * Renders the page indicator item, translating lore through the view's base key and showing.
          * the current and maximum page counts.
          *
          * @param render the render context for slot registration
@@ -302,7 +308,7 @@ public abstract class APaginatedView<T> extends BaseView {
 	}
 	
         /**
-         * Resolves the {@link ItemStack} displayed in the page indicator slot, preferring numbered
+         * Resolves the {@link ItemStack} displayed in the page indicator slot, preferring numbered.
          * heads and falling back to a localized paper item.
          *
          * @param player the viewer whose locale informs translation resolution
@@ -333,7 +339,7 @@ public abstract class APaginatedView<T> extends BaseView {
 	}
 	
         /**
-         * Obtains the {@link Pagination} instance for the provided render context so subclasses can
+         * Obtains the {@link Pagination} instance for the provided render context so subclasses can.
          * inspect page state.
          *
          * @param context the render context associated with the current frame
@@ -346,6 +352,9 @@ public abstract class APaginatedView<T> extends BaseView {
 		return this.pagination.get(context);
 	}
 
+    /**
+     * Executes onResume.
+     */
     @Override
     public void onResume(@NotNull Context origin, @NotNull Context target) {
         super.onResume(origin, target);

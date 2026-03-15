@@ -10,12 +10,11 @@ import java.util.Set;
 
 /**
  * Configuration section that maps permission nodes to potion or perk amplifier values.
- * <p>
- * Administrators can declare a default amplifier alongside permission-specific overrides, optional
+ *
+ * <p>Administrators can declare a default amplifier alongside permission-specific overrides, optional
  * minimum and maximum bounds, and a strategy for selecting the strongest applicable amplifier. This
  * ensures perk strength scales predictably with the permission hierarchy while preventing
  * out-of-range values.
- * </p>
  *
  * @author JExcellence
  * @since 1.0.0

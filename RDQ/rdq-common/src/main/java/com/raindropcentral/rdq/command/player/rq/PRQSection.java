@@ -11,6 +11,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Represents the PRQSection API type.
+ */
 public class PRQSection extends ACommandSection implements PermissionParentProvider {
 
     private static final String COMMAND_NAME = "prq";
@@ -18,10 +21,16 @@ public class PRQSection extends ACommandSection implements PermissionParentProvi
     @CSAlways
     private Map<String, Object> permissionParents;
 
+    /**
+     * Executes PRQSection.
+     */
     public PRQSection(EvaluationEnvironmentBuilder environmentBuilder) {
         super(COMMAND_NAME, environmentBuilder);
     }
 
+    /**
+     * Gets permissionParents.
+     */
     @Override
     public @NotNull Map<String, List<String>> getPermissionParents() {
         if (this.permissionParents == null) {

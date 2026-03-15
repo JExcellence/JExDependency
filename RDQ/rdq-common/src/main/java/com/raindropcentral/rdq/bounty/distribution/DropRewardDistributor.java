@@ -24,6 +24,9 @@ public class DropRewardDistributor implements RewardDistributor {
 
     private static final Logger LOGGER = Logger.getLogger(DropRewardDistributor.class.getName());
 
+    /**
+     * Executes distributeRewards.
+     */
     @Override
     public @NotNull CompletableFuture<Void> distributeRewards(
             @NotNull Player hunter,

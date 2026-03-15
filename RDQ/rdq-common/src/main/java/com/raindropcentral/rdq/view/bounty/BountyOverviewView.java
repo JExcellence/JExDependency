@@ -31,6 +31,9 @@ public class BountyOverviewView extends APaginatedView<Bounty> {
 
     private final State<RDQ> rdq = initialState("plugin");
 
+    /**
+     * Executes BountyOverviewView.
+     */
     public BountyOverviewView() {
         super(BountyMainView.class);
     }

@@ -12,10 +12,9 @@ import java.util.Map;
 
 /**
  * Configuration section for managing permissions in the admin view.
- * <p>
- * This section handles the default group and its associated permissions,
+ *
+ * <p>This section handles the default group and its associated permissions,
  * providing methods to retrieve permissions in a structured format.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -50,11 +49,10 @@ public class PermissionsSection extends AConfigSection {
     
     /**
      * Retrieves the permissions for the default group in a normalized format.
-     * <p>
-     * The returned map contains permission names as keys and lists of permission values as values.
+ *
+ * <p>The returned map contains permission names as keys and lists of permission values as values.
      * If a permission value is a single string, it is wrapped in a singleton list.
      * If a permission value is a list, only string elements are included.
-     * </p>
      *
      * @return a map of permission names to lists of permission values, or an empty map if no permissions are set
      */

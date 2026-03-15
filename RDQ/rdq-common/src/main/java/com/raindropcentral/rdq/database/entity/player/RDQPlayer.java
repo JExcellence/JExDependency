@@ -11,11 +11,10 @@ import java.util.*;
 
 /**
  * Entity representing a RaindropQuests player extension.
- * <p>
- * This entity is mapped to the {@code rdq_player} table and extends the core player
+ *
+ * <p>This entity is mapped to the {@code rdq_player} table and extends the core player
  * with quest-specific features like bounties, ranks, rank paths, and perks.
  * Uses UUID reference to RCore's RPlayer instead of direct entity relationship.
- * </p>
  *
  * @author JExcellence
  */
@@ -43,15 +42,13 @@ public class RDQPlayer extends BaseEntity {
 
     /**
      * The player's rank associations across multiple rank trees.
-     * <p>
-     * This field establishes a one-to-many relationship with the {@link com.raindropcentral.rdq.database.entity.rank.RPlayerRank} entity,
+ *
+ * <p>This field establishes a one-to-many relationship with the {@link com.raindropcentral.rdq.database.entity.rank.RPlayerRank} entity,
      * representing the player's current ranks across different rank trees. The association is eagerly fetched,
      * cascades all operations, and removes orphans when the relationship is broken.
-     * </p>
-     * <p>
-     * A player can have multiple rank records - one for each rank tree they are progressing in.
+ *
+ * <p>A player can have multiple rank records - one for each rank tree they are progressing in.
      * Mapped by the {@code rdqPlayer} property in {@link com.raindropcentral.rdq.database.entity.rank.RPlayerRank}.
-     * </p>
      */
     @OneToMany(
             fetch = FetchType.EAGER,
@@ -117,18 +114,30 @@ public class RDQPlayer extends BaseEntity {
         return this.playerRanks;
     }
 
+    /**
+     * Gets playerRankPaths.
+     */
     public List<RPlayerRankPath> getPlayerRankPaths() {
         return this.playerRankPaths;
     }
 
+    /**
+     * Sets uniqueId.
+     */
     public void setUniqueId(UUID uniqueId) {
         this.uniqueId = uniqueId;
     }
 
+    /**
+     * Gets playerName.
+     */
     public String getPlayerName() {
         return playerName;
     }
 
+    /**
+     * Sets playerName.
+     */
     public void setPlayerName(String playerName) {
         this.playerName = playerName;
     }
@@ -238,6 +247,9 @@ public class RDQPlayer extends BaseEntity {
         return this.playerRanks.getFirst();
     }
 
+    /**
+     * Executes equals.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -245,6 +257,9 @@ public class RDQPlayer extends BaseEntity {
         return uniqueId.equals(rdqPlayer.uniqueId);
     }
 
+    /**
+     * Returns whether hCode.
+     */
     @Override
     public int hashCode() {
         return uniqueId.hashCode();

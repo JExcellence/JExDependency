@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.UUID;
 
 /**
- * Legacy skull builder that adapts reflective profile APIs to support texture manipulation across
+ * Legacy skull builder that adapts reflective profile APIs to support texture manipulation across.
  * historical Bukkit versions.
  *
  * <p>Used when {@link com.raindropcentral.rplatform.version.ServerEnvironment#isPaper()} is false.

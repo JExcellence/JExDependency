@@ -9,10 +9,9 @@ import java.util.Map;
 
 /**
  * Configuration section for location-based requirements.
- * <p>
- * This section handles all configuration options specific to LocationRequirement,
+ *
+ * <p>This section handles all configuration options specific to LocationRequirement,
  * including world, region, coordinate, and distance requirements.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -106,6 +105,9 @@ public class LocationRequirementSection extends AConfigSection {
 	
 	// ~~~ GETTERS ~~~
 	
+	/**
+	 * Gets exactLocation.
+	 */
 	public Boolean getExactLocation() {
 		return this.exactLocation != null ? this.exactLocation : false;
 	}
@@ -187,14 +189,23 @@ public class LocationRequirementSection extends AConfigSection {
 		return 0.0;
 	}
 	
+	/**
+	 * Gets x.
+	 */
 	public Double getX() {
 		return this.x;
 	}
 	
+	/**
+	 * Gets y.
+	 */
 	public Double getY() {
 		return this.y;
 	}
 	
+	/**
+	 * Gets z.
+	 */
 	public Double getZ() {
 		return this.z;
 	}

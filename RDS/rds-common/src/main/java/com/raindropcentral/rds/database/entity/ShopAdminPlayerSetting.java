@@ -28,6 +28,9 @@ import org.jetbrains.annotations.Nullable;
         "unused",
         "JpaDataSourceORMInspection"
 })
+/**
+ * Represents the ShopAdminPlayerSetting API type.
+ */
 public class ShopAdminPlayerSetting extends BaseEntity {
 
     @Column(name = "player_uuid", nullable = false, unique = true)

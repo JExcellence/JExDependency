@@ -76,32 +76,50 @@ public class FreeRankSystemService implements IRankSystemService {
         return instance;
     }
 
+    /**
+     * Returns whether premium.
+     */
     @Override
     public boolean isPremium() {
         return false;
     }
 
+    /**
+     * Gets maxAbsolvableRankTrees.
+     */
     @Override
     public int getMaxAbsolvableRankTrees() {
         return MAX_ABSOLVABLE_RANK_TREES;
     }
 
+    /**
+     * Gets maxRanksPerTree.
+     */
     @Override
     public int getMaxRanksPerTree() {
         return MAX_RANKS_PER_TREE;
     }
 
+    /**
+     * Gets maxActiveRankPaths.
+     */
     @Override
     public int getMaxActiveRankPaths() {
         return MAX_ACTIVE_RANK_PATHS;
     }
 
+    /**
+     * Executes canStartNewRankTree.
+     */
     @Override
     public boolean canStartNewRankTree(@NotNull RDQPlayer player) {
         int absolvedCount = getAbsolvedRankTreeCount(player);
         return absolvedCount < MAX_ABSOLVABLE_RANK_TREES;
     }
 
+    /**
+     * Executes canProgressToRank.
+     */
     @Override
     public boolean canProgressToRank(@NotNull RDQPlayer player, @NotNull RRank rank) {
         RRankTree rankTree = rank.getRankTree();
@@ -111,6 +129,9 @@ public class FreeRankSystemService implements IRankSystemService {
         return !isRankBeyondLimit(rank, rankTree);
     }
 
+    /**
+     * Returns whether previewOnly.
+     */
     @Override
     public boolean isPreviewOnly(@NotNull RDQPlayer player, @NotNull RRankTree rankTree) {
         // If player already has this tree active or absolved, it's not preview-only
@@ -123,6 +144,9 @@ public class FreeRankSystemService implements IRankSystemService {
         return absolvedCount >= MAX_ABSOLVABLE_RANK_TREES;
     }
 
+    /**
+     * Returns whether rankBeyondLimit.
+     */
     @Override
     public boolean isRankBeyondLimit(@NotNull RRank rank, @NotNull RRankTree rankTree) {
         // Get all ranks in the tree sorted by tier
@@ -143,6 +167,9 @@ public class FreeRankSystemService implements IRankSystemService {
         return rankPosition > MAX_RANKS_PER_TREE;
     }
 
+    /**
+     * Gets absolvedRankTreeCount.
+     */
     @Override
     public int getAbsolvedRankTreeCount(@NotNull RDQPlayer player) {
         try {
@@ -164,6 +191,9 @@ public class FreeRankSystemService implements IRankSystemService {
         }
     }
 
+    /**
+     * Gets activeRankPathCount.
+     */
     @Override
     public int getActiveRankPathCount(@NotNull RDQPlayer player) {
         try {
@@ -183,6 +213,9 @@ public class FreeRankSystemService implements IRankSystemService {
         }
     }
 
+    /**
+     * Gets restrictionMessageKey.
+     */
     @Override
     public @NotNull String getRestrictionMessageKey(@NotNull RankRestrictionType restrictionType) {
         return switch (restrictionType) {

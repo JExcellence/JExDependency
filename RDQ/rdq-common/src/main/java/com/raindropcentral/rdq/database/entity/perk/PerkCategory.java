@@ -2,9 +2,8 @@ package com.raindropcentral.rdq.database.entity.perk;
 
 /**
  * Enumeration of perk thematic categories.
- * <p>
- * Used for organizing and filtering perks in the UI.
- * </p>
+ *
+ * <p>Used for organizing and filtering perks in the UI.
  *
  * @author JExcellence
  * @version 1.0.0

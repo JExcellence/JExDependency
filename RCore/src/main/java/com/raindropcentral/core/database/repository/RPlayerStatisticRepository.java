@@ -14,28 +14,28 @@ import java.util.concurrent.ExecutorService;
 import java.util.function.Function;
 
 /**
- * Repository handling {@link RPlayerStatistic} aggregates. Provides cached access keyed by the
+ * Repository handling {@link RPlayerStatistic} aggregates. Provides cached access keyed by the.
  * surrogate identifier to support efficient statistic loading on dedicated executors.
- * <p>
- * The statistic table relies on a surrogate identifier instead of the natural UUID from the
+ *
+ * <p>The statistic table relies on a surrogate identifier instead of the natural UUID from the
  * player record to avoid repetitive joins when statistics are queried or updated in bulk. The
  * repository therefore exposes the surrogate key as the cache identifier so repeated lookups by
  * primary key remain hot and avoid unnecessary round-trips to the database layer.
  * </p>
- * <p>
- * Aggregated statistics are materialized lazily using the cached lookup before being rehydrated
+ *
+ * <p>Aggregated statistics are materialized lazily using the cached lookup before being rehydrated
  * into the calling {@code RPlayer} aggregate. By keeping the statistics cached with their
  * surrogate identifiers, load operations perform in constant time even as the number of tracked
  * statistic rows grows across sessions.
  * </p>
- * <p>
- * All asynchronous work is scheduled on the shared {@link ExecutorService}
+ *
+ * <p>All asynchronous work is scheduled on the shared {@link ExecutorService}
  * provided by the {@link CachedRepository} base class. This guarantees that database and
  * hydration tasks operate on the same bounded executor configured for the core services, avoiding
  * accidental execution on the common fork-join pool and ensuring predictable threading semantics
  * during batch statistic updates.
- * <p>
- * Callers should log cache misses, aggregate initializations, and mutation workflows with
+ *
+ * <p>Callers should log cache misses, aggregate initializations, and mutation workflows with
  * {@link com.raindropcentral.rplatform.logging.CentralLogger CentralLogger}. Log at debug level
  * when a lookup cannot be served from cache (empty result) and at info level before applying
  * create/update/delete operations so statistic changes can be audited. Any asynchronous failure or
@@ -66,8 +66,8 @@ public class RPlayerStatisticRepository extends CachedRepository<RPlayerStatisti
 
     /**
      * Finds all statistics for a specific player and server.
-     * <p>
-     * Returns only statistics that match both the player and server criteria,
+ *
+ * <p>Returns only statistics that match both the player and server criteria,
      * enabling per-server statistics tracking.
      * </p>
      *
@@ -88,8 +88,8 @@ public class RPlayerStatisticRepository extends CachedRepository<RPlayerStatisti
 
     /**
      * Finds all statistics for a specific server across all players.
-     * <p>
-     * Useful for server-wide statistics aggregation and analysis.
+ *
+ * <p>Useful for server-wide statistics aggregation and analysis.
      * </p>
      *
      * @param server the server to find statistics for
@@ -102,8 +102,8 @@ public class RPlayerStatisticRepository extends CachedRepository<RPlayerStatisti
 
     /**
      * Finds all statistics for a specific player across all servers.
-     * <p>
-     * Useful for cross-server player statistics aggregation.
+ *
+ * <p>Useful for cross-server player statistics aggregation.
      * </p>
      *
      * @param player the player to find statistics for
@@ -116,8 +116,8 @@ public class RPlayerStatisticRepository extends CachedRepository<RPlayerStatisti
 
     /**
      * Finds statistics for a player on a specific server, or creates a new one if none exists.
-     * <p>
-     * This is a convenience method for ensuring a player has statistics on a server.
+ *
+ * <p>This is a convenience method for ensuring a player has statistics on a server.
      * </p>
      *
      * @param player the player to find or create statistics for

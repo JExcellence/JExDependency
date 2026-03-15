@@ -22,13 +22,12 @@ import java.util.Map;
 
 /**
  * Interactive view for editing existing currency properties.
- * <p>
- * This view provides a comprehensive interface for modifying all editable aspects
+ *
+ * <p>This view provides a comprehensive interface for modifying all editable aspects
  * of an existing currency including symbol, icon, prefix, and suffix. The identifier
  * cannot be changed to maintain database integrity and prevent conflicts.
- * </p>
  *
- * <h3>Key Features:</h3>
+ * <p><strong>Key Features:</strong>
  * <ul>
  *   <li><strong>Property Editing:</strong> Click-to-edit interface for currency properties</li>
  *   <li><strong>Real-time Updates:</strong> Changes are reflected immediately in the interface</li>
@@ -37,7 +36,7 @@ import java.util.Map;
  *   <li><strong>State Management:</strong> Maintains currency state across view transitions</li>
  * </ul>
  *
- * <h3>Editable Properties:</h3>
+ * <p><strong>Editable Properties:</strong>
  * <ul>
  *   <li><strong>Symbol (s):</strong> Currency symbol and visual representation</li>
  *   <li><strong>Icon (i):</strong> Material icon for graphical interfaces</li>
@@ -46,7 +45,7 @@ import java.util.Map;
  *   <li><strong>Save Button (v):</strong> Saves all changes to the database</li>
  * </ul>
  *
- * <h3>Non-Editable Properties:</h3>
+ * <p><strong>Non-Editable Properties:</strong>
  * <ul>
  *   <li><strong>Identifier:</strong> Cannot be changed to maintain database integrity</li>
  * </ul>
@@ -70,10 +69,9 @@ public class CurrencyPropertiesEditingView extends BaseView {
 	
 	/**
 	 * Constructs a new {@code CurrencyPropertiesEditingView} with the currency editing view as parent.
-	 * <p>
-	 * The view will provide currency property editing functionality and navigate back to the
+ *
+ * <p>The view will provide currency property editing functionality and navigate back to the
 	 * currency editing selection view when closed or cancelled.
-	 * </p>
 	 */
 	public CurrencyPropertiesEditingView() {
 		super(CurrencyEditingView.class);
@@ -81,10 +79,9 @@ public class CurrencyPropertiesEditingView extends BaseView {
 	
 	/**
 	 * Returns the internationalization key for this view.
-	 * <p>
-	 * This key is used to load localized strings for the currency properties editing
+ *
+ * <p>This key is used to load localized strings for the currency properties editing
 	 * interface, including titles, labels, and formatting templates.
-	 * </p>
 	 *
 	 * @return the i18n key for the currency properties editing UI
 	 */
@@ -95,12 +92,11 @@ public class CurrencyPropertiesEditingView extends BaseView {
 	
 	/**
 	 * Defines the layout structure for the currency properties editing view.
-	 * <p>
-	 * The layout organizes currency property editing elements in a user-friendly
+ *
+ * <p>The layout organizes currency property editing elements in a user-friendly
 	 * arrangement with the save button positioned for easy access.
-	 * </p>
 	 *
-	 * <h3>Layout Mapping:</h3>
+	 * <p><strong>Layout Mapping:</strong>
 	 * <ul>
 	 *   <li><strong>n:</strong> Currency identifier display (read-only)</li>
 	 *   <li><strong>s:</strong> Currency symbol editing</li>
@@ -124,11 +120,10 @@ public class CurrencyPropertiesEditingView extends BaseView {
 	
 	/**
 	 * Handles view resumption when returning from anvil input views.
-	 * <p>
-	 * This method is called when the user returns from an anvil input view after
+ *
+ * <p>This method is called when the user returns from an anvil input view after
 	 * editing a currency property. It updates the currency state with any
 	 * changes made in the anvil view and refreshes the interface.
-	 * </p>
 	 *
 	 * @param originContext the context from the anvil input view, must not be null
 	 * @param targetContext the context of this view being resumed, must not be null
@@ -155,11 +150,10 @@ public class CurrencyPropertiesEditingView extends BaseView {
 	
 	/**
 	 * Renders all currency property editing elements and the save button.
-	 * <p>
-	 * This method populates the view with interactive elements for editing
+ *
+ * <p>This method populates the view with interactive elements for editing
 	 * each modifiable aspect of the currency. The identifier is displayed
 	 * as read-only to maintain database integrity.
-	 * </p>
 	 *
 	 * @param renderContext the current rendering context, must not be null
 	 * @param contextPlayer the player viewing the interface, must not be null
@@ -184,10 +178,9 @@ public class CurrencyPropertiesEditingView extends BaseView {
 	
 	/**
 	 * Renders the currency identifier display (read-only).
-	 * <p>
-	 * This element shows the currency identifier but does not allow editing
+ *
+ * <p>This element shows the currency identifier but does not allow editing
 	 * to maintain database integrity and prevent conflicts.
-	 * </p>
 	 *
 	 * @param renderContext the current rendering context, must not be null
 	 * @param contextPlayer the player viewing the interface, must not be null
@@ -226,10 +219,9 @@ public class CurrencyPropertiesEditingView extends BaseView {
 	
 	/**
 	 * Renders the currency symbol editing button.
-	 * <p>
-	 * This button opens the {@link CurrencySymbolAnvilView} for editing
+ *
+ * <p>This button opens the {@link CurrencySymbolAnvilView} for editing
 	 * the currency's visual symbol with validation.
-	 * </p>
 	 *
 	 * @param renderContext the current rendering context, must not be null
 	 * @param contextPlayer the player viewing the interface, must not be null
@@ -280,10 +272,9 @@ public class CurrencyPropertiesEditingView extends BaseView {
 	
 	/**
 	 * Renders the currency icon editing button.
-	 * <p>
-	 * This button opens the {@link CurrencyIconAnvilView} for editing
+ *
+ * <p>This button opens the {@link CurrencyIconAnvilView} for editing
 	 * the currency's material icon with validation.
-	 * </p>
 	 *
 	 * @param renderContext the current rendering context, must not be null
 	 * @param contextPlayer the player viewing the interface, must not be null
@@ -334,10 +325,9 @@ public class CurrencyPropertiesEditingView extends BaseView {
 	
 	/**
 	 * Renders the currency prefix editing button.
-	 * <p>
-	 * This button opens the {@link CurrencyPrefixAnvilView} for editing
+ *
+ * <p>This button opens the {@link CurrencyPrefixAnvilView} for editing
 	 * the currency's prefix text with validation.
-	 * </p>
 	 *
 	 * @param renderContext the current rendering context, must not be null
 	 * @param contextPlayer the player viewing the interface, must not be null
@@ -392,10 +382,9 @@ public class CurrencyPropertiesEditingView extends BaseView {
 	
 	/**
 	 * Renders the currency suffix editing button.
-	 * <p>
-	 * This button opens the {@link CurrencySuffixAnvilView} for editing
+ *
+ * <p>This button opens the {@link CurrencySuffixAnvilView} for editing
 	 * the currency's suffix text with validation.
-	 * </p>
 	 *
 	 * @param renderContext the current rendering context, must not be null
 	 * @param contextPlayer the player viewing the interface, must not be null
@@ -450,10 +439,9 @@ public class CurrencyPropertiesEditingView extends BaseView {
 	
 	/**
 	 * Renders the save changes button.
-	 * <p>
-	 * This button saves all changes made to the currency properties to the database
+ *
+ * <p>This button saves all changes made to the currency properties to the database
 	 * and updates the in-memory cache.
-	 * </p>
 	 *
 	 * @param renderContext the current rendering context, must not be null
 	 * @param contextPlayer the player viewing the interface, must not be null
@@ -490,10 +478,9 @@ public class CurrencyPropertiesEditingView extends BaseView {
 	
 	/**
 	 * Handles saving currency changes to the database.
-	 * <p>
-	 * This method saves the modified currency properties to the database,
+ *
+ * <p>This method saves the modified currency properties to the database,
 	 * updates the in-memory cache, and provides user feedback.
-	 * </p>
 	 *
 	 * @param clickContext the context from the save button click, must not be null
 	 * @param requestingPlayer the player requesting the save operation, must not be null

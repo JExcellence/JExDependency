@@ -46,16 +46,25 @@ public final class EcoSkillsSkillBridge extends AbstractReflectionSkillBridge {
     public EcoSkillsSkillBridge() {
     }
 
+    /**
+     * Gets integrationId.
+     */
     @Override
     public @NotNull String getIntegrationId() {
         return INTEGRATION_ID;
     }
 
+    /**
+     * Gets pluginName.
+     */
     @Override
     public @NotNull String getPluginName() {
         return PLUGIN_NAME;
     }
 
+    /**
+     * Returns whether available.
+     */
     @Override
     public boolean isAvailable() {
         final Plugin installedPlugin = resolvePlugin(PLUGIN_NAME, "EcoSkills");
@@ -74,6 +83,9 @@ public final class EcoSkillsSkillBridge extends AbstractReflectionSkillBridge {
         return this.api != null;
     }
 
+    /**
+     * Gets skillLevel.
+     */
     @Override
     public double getSkillLevel(@NotNull Player player, @NotNull String skillId) {
         if (!isAvailable() || skillId.isBlank()) {

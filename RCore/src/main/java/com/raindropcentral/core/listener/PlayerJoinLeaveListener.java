@@ -16,8 +16,8 @@ import java.util.logging.Logger;
 
 /**
  * Listener for managing player entities in the local database.
- * <p>
- * Creates or updates RPlayer entities when players join, and updates last seen
+ *
+ * <p>Creates or updates RPlayer entities when players join, and updates last seen
  * timestamp when they leave. This maintains local player data for plugin features.
  * </p>
  *
@@ -45,8 +45,8 @@ public class PlayerJoinLeaveListener implements Listener {
 
     /**
      * Handles player join events to create/update player entities in local database.
-     * <p>
-     * Always creates or updates the RPlayer entity with current player information.
+ *
+ * <p>Always creates or updates the RPlayer entity with current player information.
      * This maintains accurate local player data for plugin features.
      * </p>
      *
@@ -78,8 +78,8 @@ public class PlayerJoinLeaveListener implements Listener {
 
     /**
      * Handles player quit events to update the last seen timestamp.
-     * <p>
-     * Updates the player's lastSeen timestamp in the local database when they leave.
+ *
+ * <p>Updates the player's lastSeen timestamp in the local database when they leave.
      * </p>
      *
      * @param event the player quit event

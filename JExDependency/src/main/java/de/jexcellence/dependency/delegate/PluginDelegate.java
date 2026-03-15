@@ -4,7 +4,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * High-level abstraction that mirrors the {@link JavaPlugin} lifecycle while allowing delegation of behaviour to
+ * High-level abstraction that mirrors the {@link JavaPlugin} lifecycle while allowing delegation of behaviour to.
  * alternate classes. Implementations can offload startup, shutdown and configuration logic without extending
  * {@link JavaPlugin} directly.
  *

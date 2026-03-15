@@ -7,6 +7,9 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
+/**
+ * Represents the RewardRegistry API type.
+ */
 public final class RewardRegistry {
 
     private static final Logger LOGGER = Logger.getLogger(RewardRegistry.class.getName());
@@ -17,10 +20,16 @@ public final class RewardRegistry {
 
     private RewardRegistry() {}
 
+    /**
+     * Gets instance.
+     */
     public static RewardRegistry getInstance() {
         return INSTANCE;
     }
 
+    /**
+     * Executes registerType.
+     */
     public void registerType(@NotNull RewardType type) {
         String key = type.id();
         if (rewardTypes.containsKey(key)) {
@@ -31,6 +40,9 @@ public final class RewardRegistry {
         LOGGER.info("Registered reward type: " + type.getQualifiedName());
     }
 
+    /**
+     * Executes unregisterType.
+     */
     public void unregisterType(@NotNull String typeName) {
         RewardType removed = rewardTypes.remove(typeName);
         if (removed != null) {
@@ -38,6 +50,9 @@ public final class RewardRegistry {
         }
     }
 
+    /**
+     * Executes registerProvider.
+     */
     public void registerProvider(@NotNull PluginRewardProvider provider) {
         String pluginId = provider.getPluginId();
         if (providers.containsKey(pluginId)) {
@@ -49,6 +64,9 @@ public final class RewardRegistry {
         LOGGER.info("Registered reward provider: " + pluginId);
     }
 
+    /**
+     * Executes unregisterProvider.
+     */
     public void unregisterProvider(@NotNull String pluginId) {
         PluginRewardProvider provider = providers.remove(pluginId);
         if (provider != null) {
@@ -57,31 +75,52 @@ public final class RewardRegistry {
         }
     }
 
+    /**
+     * Gets rewardType.
+     */
     public RewardType getRewardType(@NotNull String typeName) {
         return rewardTypes.get(typeName);
     }
 
+    /**
+     * Returns whether registered.
+     */
     public boolean isRegistered(@NotNull String typeName) {
         return rewardTypes.containsKey(typeName);
     }
 
+    /**
+     * Gets rewardTypes.
+     */
     public Map<String, RewardType> getRewardTypes() {
         return Map.copyOf(rewardTypes);
     }
 
+    /**
+     * Gets providers.
+     */
     public Map<String, PluginRewardProvider> getProviders() {
         return Map.copyOf(providers);
     }
 
+    /**
+     * Gets provider.
+     */
     public PluginRewardProvider getProvider(@NotNull String pluginId) {
         return providers.get(pluginId);
     }
 
+    /**
+     * Gets implementationClass.
+     */
     public Class<? extends AbstractReward> getImplementationClass(@NotNull String typeName) {
         RewardType type = rewardTypes.get(typeName);
         return type != null ? type.implementationClass() : null;
     }
 
+    /**
+     * Executes configureObjectMapper.
+     */
     public ObjectMapper configureObjectMapper(@NotNull ObjectMapper mapper) {
         // The @JsonSubTypes annotation on AbstractReward already handles subtype registration
         // No need to manually register subtypes here

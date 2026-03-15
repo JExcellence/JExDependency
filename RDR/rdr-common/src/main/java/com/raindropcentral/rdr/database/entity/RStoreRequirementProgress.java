@@ -37,6 +37,9 @@ import com.raindropcentral.rplatform.database.converter.ItemStackConverter;
         columnNames = {"player_id", "progress_key"}
     )
 )
+/**
+ * Represents the RStoreRequirementProgress API type.
+ */
 public class RStoreRequirementProgress extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

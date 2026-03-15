@@ -14,10 +14,9 @@ import java.util.function.Function;
 
 /**
  * Repository for managing persistent {@link Quest} entities.
- * <p>
- * Provides cached access to quests with methods for finding by category,
+ *
+ * <p>Provides cached access to quests with methods for finding by category,
  * difficulty, and enabled status.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0

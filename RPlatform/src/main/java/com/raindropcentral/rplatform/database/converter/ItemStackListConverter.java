@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Persists collections of {@link ItemStack} values as a semicolon-delimited Base64 payload and restores them
+ * Persists collections of {@link ItemStack} values as a semicolon-delimited Base64 payload and restores them.
  * for entity hydration.
  *
  * <p>Each non-empty stack is encoded via {@link ItemStack#serializeAsBytes()} and Base64 while empty or

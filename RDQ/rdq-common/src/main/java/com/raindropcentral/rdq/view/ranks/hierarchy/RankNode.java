@@ -16,6 +16,9 @@ public class RankNode {
 	public final @NotNull List<RankNode> children = new ArrayList<>();
 	public final @NotNull List<RankNode> parents  = new ArrayList<>();
 	
+	/**
+	 * Executes RankNode.
+	 */
 	public RankNode(final @NotNull RRank rank) {
 		
 		this.rank = rank;
@@ -53,6 +56,9 @@ public class RankNode {
 		return this.parents.size();
 	}
 	
+	/**
+	 * Executes toString.
+	 */
 	@Override
 	public String toString() {
 		

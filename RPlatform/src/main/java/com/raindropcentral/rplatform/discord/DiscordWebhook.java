@@ -16,11 +16,10 @@ import java.util.logging.Logger;
 
 /**
  * Provides a lightweight client for dispatching Discord webhook messages from Bukkit-based plugins.
- * <p>
- * This helper supports simple text and embed payloads, performing the HTTP work asynchronously on a
+ *
+ * <p>This helper supports simple text and embed payloads, performing the HTTP work asynchronously on a
  * cached thread pool. Failures are logged using the plugin logger so callers can monitor delivery
  * health without blocking the main server thread.
- * </p>
  *
  * @author JExcellence
  * @since 1.0.0
@@ -61,11 +60,10 @@ public class DiscordWebhook {
 
     /**
      * Sends a plain text message to the configured Discord webhook asynchronously.
-     * <p>
-     * The payload is encoded as JSON using the {@code content} field and executed on the shared
+ *
+ * <p>The payload is encoded as JSON using the {@code content} field and executed on the shared
      * executor so Bukkit's main thread remains responsive. Any I/O failures are caught, logged at the
      * warning level, and result in a {@code false} outcome within the returned future.
-     * </p>
      *
      * @param content message body to deliver, mapped to the Discord {@code content} field
      * @return future that completes with {@code true} when Discord responds with a 2xx status
@@ -84,11 +82,10 @@ public class DiscordWebhook {
 
     /**
      * Sends a single-field embed to the Discord webhook asynchronously using the shared executor.
-     * <p>
-     * The generated JSON payload includes the title, description, and color fields expected by the
+ *
+ * <p>The generated JSON payload includes the title, description, and color fields expected by the
      * Discord embeds API. When an exception occurs during transmission the error is logged and the
      * resulting future resolves to {@code false}.
-     * </p>
      *
      * @param title       embed title text
      * @param description embed body text
@@ -162,7 +159,7 @@ public class DiscordWebhook {
     }
 
     /**
-     * Fluent builder that enforces providing both the plugin context and webhook URL before
+     * Fluent builder that enforces providing both the plugin context and webhook URL before.
      * instantiating a {@link DiscordWebhook}.
      */
     public static final class Builder {

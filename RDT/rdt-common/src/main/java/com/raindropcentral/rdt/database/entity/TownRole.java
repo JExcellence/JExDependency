@@ -36,6 +36,9 @@ import java.util.Set;
         "unused",
         "JpaDataSourceORMInspection"
 })
+/**
+ * Represents the TownRole API type.
+ */
 public class TownRole extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)

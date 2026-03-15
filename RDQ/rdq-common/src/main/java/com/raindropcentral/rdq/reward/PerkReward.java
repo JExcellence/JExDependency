@@ -50,6 +50,9 @@ public final class PerkReward extends AbstractReward {
 		perkManagementService = service;
 	}
 	
+	/**
+	 * Executes PerkReward.
+	 */
 	@JsonCreator
 	public PerkReward(
 			@JsonProperty("perkIdentifier") @NotNull String perkIdentifier,
@@ -59,15 +62,24 @@ public final class PerkReward extends AbstractReward {
 		this.autoEnable = autoEnable;
 	}
 	
+	/**
+	 * Executes PerkReward.
+	 */
 	public PerkReward(@NotNull String perkIdentifier) {
 		this(perkIdentifier, false);
 	}
 	
+	/**
+	 * Gets typeId.
+	 */
 	@Override
 	public @NotNull String getTypeId() {
 		return "PERK";
 	}
 	
+	/**
+	 * Executes grant.
+	 */
 	@Override
 	public @NotNull CompletableFuture<Boolean> grant(@NotNull Player player) {
 		if (perkManagementService == null) {
@@ -129,11 +141,17 @@ public final class PerkReward extends AbstractReward {
 				.sendMessage();
 	}
 	
+	/**
+	 * Gets estimatedValue.
+	 */
 	@Override
 	public double getEstimatedValue() {
 		return 100.0;
 	}
 	
+	/**
+	 * Executes validate.
+	 */
 	@Override
 	public void validate() {
 		if (perkIdentifier == null || perkIdentifier.isEmpty()) {

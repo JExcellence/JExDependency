@@ -12,10 +12,9 @@ import java.util.Objects;
 
 /**
  * Entity representing a player's progress on a specific quest task.
- * <p>
- * Tracks the current progress value, required progress value, and completion status
+ *
+ * <p>Tracks the current progress value, required progress value, and completion status
  * for an individual task within a quest.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0
@@ -31,6 +30,9 @@ import java.util.Objects;
                 @Index(name = "idx_quest_task_progress_completed", columnList = "completed")
         }
 )
+/**
+ * Represents the QuestTaskProgress API type.
+ */
 public class QuestTaskProgress extends BaseEntity {
     
     @Serial
@@ -149,6 +151,9 @@ public class QuestTaskProgress extends BaseEntity {
         return this.currentProgress;
     }
     
+    /**
+     * Executes equals.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -162,6 +167,9 @@ public class QuestTaskProgress extends BaseEntity {
                 taskIdentifier != null && taskIdentifier.equals(that.taskIdentifier);
     }
     
+    /**
+     * Returns whether hCode.
+     */
     @Override
     public int hashCode() {
         if (this.getId() != null) {
@@ -171,6 +179,9 @@ public class QuestTaskProgress extends BaseEntity {
         return Objects.hash(questUser, taskIdentifier);
     }
     
+    /**
+     * Executes toString.
+     */
     @Override
     public String toString() {
         return "QuestTaskProgress{" +

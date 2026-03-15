@@ -33,6 +33,9 @@ public class RCentralService {
     private RCentralServer serverEntity;
     private HeartbeatScheduler heartbeatScheduler;
 
+    /**
+     * Executes RCentralService.
+     */
     public RCentralService(final @NotNull Plugin plugin, final @NotNull RPlatform platform) {
         this.plugin = plugin;
         this.platform = platform;
@@ -112,9 +115,18 @@ public class RCentralService {
                         LOGGER.warning("Connection failed: " + errorMsg);
                         return new ConnectionResult(false, errorMsg, errorCode);
                     }
+                /**
+                 * Executes method.
+                 */
+                /**
+                 * Executes this member.
+                 */
                 });
     }
 
+    /**
+     * Executes disconnect.
+     */
     public CompletableFuture<Boolean> disconnect() {
         var apiKey = config.getString("connection.api-key");
         if (apiKey == null) {
@@ -139,10 +151,16 @@ public class RCentralService {
                 });
     }
 
+    /**
+     * Returns whether connected.
+     */
     public boolean isConnected() {
         return serverEntity != null && serverEntity.isConnected();
     }
 
+    /**
+     * Gets serverUuid.
+     */
     public UUID getServerUuid() {
         return serverUuid;
     }
@@ -272,6 +290,9 @@ public class RCentralService {
     private String parseErrorMessage(final RCentralApiClient.ApiResponse response) {
         if (response.error() != null) {
             return response.error();
+        /**
+         * Represents the type API type.
+         */
         }
 
         return switch (response.statusCode()) {
@@ -284,6 +305,9 @@ public class RCentralService {
         };
     }
 
+    /**
+     * Represents the ConnectionResult API type.
+     */
     public record ConnectionResult(boolean success, String errorMessage, String errorCode) {}
 
     // ==================== Getters for Statistics Delivery ====================

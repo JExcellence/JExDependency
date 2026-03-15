@@ -10,10 +10,10 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 /**
- * Base command implementation for console-only interactions, ensuring only the server
+ * Base command implementation for console-only interactions, ensuring only the server.
  * console can execute the command logic while deferring to subclasses for behavior.
- * <p>
- * The {@link CommandFactory} injects the relevant {@link ACommandSection} so console commands honour edition gating
+ *
+ * <p>The {@link CommandFactory} injects the relevant {@link ACommandSection} so console commands honour edition gating
  * (for example, maintenance commands that only ship with premium editions) and reuse localization hooks for feedback.
  *
  * @author JExcellence
@@ -55,7 +55,7 @@ public abstract class ServerCommand extends BukkitCommand {
         );
 
         /**
-         * Verifies the sender is the server console and delegates to
+         * Verifies the sender is the server console and delegates to.
          * {@link #onPlayerInvocation(ConsoleCommandSender, String, String[])}.
          * Behaviour: bridges edition-aware localization so unauthorized senders receive consistent messaging. Failure
          * modes: raises {@link CommandError} when the sender is not the console. Asynchronous considerations: invoked

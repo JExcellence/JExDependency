@@ -20,14 +20,13 @@ import java.util.stream.Collectors;
 
 /**
  * Service for checking perk requirements, tracking progress, and handling perk unlocks.
- * <p>
- * This service handles:
+ *
+ * <p>This service handles:
  * - Checking if all requirements for a perk are met
  * - Calculating progress for individual requirements
  * - Calculating overall progress for a perk
  * - Attempting to unlock perks when requirements are met
  * - Granting unlock rewards
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -227,15 +226,14 @@ public class PerkRequirementService {
     
     /**
      * Attempts to unlock a perk for a player.
-     * <p>
-     * This method:
+ *
+ * <p>This method:
      * 1. Checks if the player already has the perk unlocked
      * 2. Verifies all requirements are met
      * 3. Consumes requirement resources
      * 4. Grants the perk to the player
      * 5. Grants unlock rewards
      * 6. Sends a notification to the player
-     * </p>
      *
      * @param player the player attempting to unlock the perk
      * @param rdqPlayer the RDQPlayer entity
@@ -456,6 +454,9 @@ public class PerkRequirementService {
         private final String messageKey;
         private final PlayerPerk playerPerk;
         
+        /**
+         * Executes UnlockResult.
+         */
         public UnlockResult(
                 final boolean success,
                 @NotNull final UnlockResultType resultType,
@@ -468,18 +469,30 @@ public class PerkRequirementService {
             this.playerPerk = playerPerk;
         }
         
+        /**
+         * Returns whether success.
+         */
         public boolean isSuccess() {
             return success;
         }
         
+        /**
+         * Gets resultType.
+         */
         public UnlockResultType getResultType() {
             return resultType;
         }
         
+        /**
+         * Gets messageKey.
+         */
         public String getMessageKey() {
             return messageKey;
         }
         
+        /**
+         * Gets playerPerk.
+         */
         public PlayerPerk getPlayerPerk() {
             return playerPerk;
         }
@@ -496,6 +509,9 @@ public class PerkRequirementService {
                     .sendMessage();
         }
         
+        /**
+         * Executes toString.
+         */
         @Override
         public String toString() {
             return "UnlockResult{" +

@@ -62,26 +62,26 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
     private static final int METRICS_SERVICE_ID = 25809;
 
     /**
-     * Logger emitting lifecycle and repository wiring information through the shared
+     * Logger emitting lifecycle and repository wiring information through the shared.
      * {@link CentralLogger} infrastructure.
      */
     private static Logger LOGGER;
 
     /**
-     * Executor backing asynchronous repository access and other background tasks. Created
+     * Executor backing asynchronous repository access and other background tasks. Created.
      * during construction and shut down in {@link #onDisable()} to avoid leaking virtual threads.
      */
     private final ExecutorService executor;
 
     /**
-     * Snapshot of optional plugin integrations detected during {@link #initializePlugins()}. The
+     * Snapshot of optional plugin integrations detected during {@link #initializePlugins()}. The.
      * map is mutated only on the main thread while bootstrapping and exposed as an immutable copy
      * for diagnostics.
      */
     private final Map<String, Boolean> enabledSupportedPlugins;
 
     /**
-     * Guard future tracking the asynchronous enable pipeline so duplicate invocations can be
+     * Guard future tracking the asynchronous enable pipeline so duplicate invocations can be.
      * rejected and so failure paths can cancel pending stages.
      */
     private volatile CompletableFuture<Void> enableFuture;
@@ -201,7 +201,7 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
     }
 
     /**
-     * Returns the shared platform facade which exposes dependency injection, metrics, and
+     * Returns the shared platform facade which exposes dependency injection, metrics, and.
      * persistence utilities.
      *
      * @return the initialized platform instance
@@ -229,7 +229,7 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
     }
 
     /**
-     * Attempts a graceful executor shutdown from {@link #onDisable()} before interrupting outstanding
+     * Attempts a graceful executor shutdown from {@link #onDisable()} before interrupting outstanding.
      * tasks.
      *
      * <p>The method waits up to ten seconds for tasks to finish and logs whenever a forced shutdown
@@ -265,8 +265,8 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
 
     /**
      * Initializes RCentralService and registers commands/listeners through the shared command factory.
-     * <p>
-     * Creates the RCentralService first so it can be injected into commands that need it.
+ *
+ * <p>Creates the RCentralService first so it can be injected into commands that need it.
      * Passes this implementation instance as context so commands can access services through
      * dependency injection.
      * </p>
@@ -373,7 +373,7 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
     }
 
     /**
-     * Schedules the provided runnable on the Bukkit main thread and exposes its completion as a
+     * Schedules the provided runnable on the Bukkit main thread and exposes its completion as a.
      * future.
      *
      * <p>Errors thrown by the runnable complete the returned future exceptionally so the enable
@@ -420,6 +420,9 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
         ===============================================================================================
         """;
 
+    /**
+     * Gets executor.
+     */
     public ExecutorService getExecutor() {
         return executor;
     }
@@ -428,18 +431,30 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
         return enableFuture;
     }
 
+    /**
+     * Performs getrCoreService.
+     */
     public RCoreService getrCoreService() {
         return rCoreService;
     }
 
+    /**
+     * Gets rCentralService.
+     */
     public RCentralService getrCentralService() {
         return rCentralService;
     }
 
+    /**
+     * Gets rCoreAdapter.
+     */
     public RCoreAdapter getrCoreAdapter() {
         return rCoreAdapter;
     }
 
+    /**
+     * Gets playerRepository.
+     */
     public RPlayerRepository getPlayerRepository() {
         return playerRepository;
     }

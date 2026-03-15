@@ -1,11 +1,10 @@
 /**
  * RPlatform Requirement System - Shared foundation for all requirement types.
- * <p>
- * This package provides the core requirement infrastructure that can be used by any plugin
- * in the RaindropCentral ecosystem.
- * </p>
  *
- * <h2>Core Classes</h2>
+ * <p>This package provides the core requirement infrastructure that can be used by any plugin
+ * in the RaindropCentral ecosystem.
+ *
+ * <p><strong>Core Classes</strong>
  * <ul>
  *   <li>{@link com.raindropcentral.rplatform.requirement.Requirement} - Sealed interface for all requirements</li>
  *   <li>{@link com.raindropcentral.rplatform.requirement.AbstractRequirement} - Base class for implementations</li>
@@ -14,19 +13,19 @@
  *   <li>{@link com.raindropcentral.rplatform.requirement.RequirementService} - Caching service for requirement checks</li>
  * </ul>
  *
- * <h2>Database Persistence</h2>
+ * <p><strong>Database Persistence</strong>
  * <ul>
  *   <li>{@link com.raindropcentral.rplatform.database.converter.RequirementConverter} - JPA converter for single requirements</li>
  *   <li>{@link com.raindropcentral.rplatform.database.converter.RequirementListConverter} - JPA converter for requirement lists</li>
  * </ul>
  *
- * <h2>JSON Serialization</h2>
+ * <p><strong>JSON Serialization</strong>
  * <ul>
  *   <li>{@link com.raindropcentral.rplatform.requirement.json.RequirementParser} - JSON serialization/deserialization</li>
  *   <li>{@link com.raindropcentral.rplatform.requirement.json.RequirementMixin} - Jackson polymorphic type handling</li>
  * </ul>
  *
- * <h2>Built-in Requirement Types</h2>
+ * <p><strong>Built-in Requirement Types</strong>
  * <ul>
  *   <li>ITEM - Item-based requirements</li>
  *   <li>CURRENCY - Economy integration</li>
@@ -40,12 +39,11 @@
  *   <li>PLUGIN - External plugin integration (skills/jobs and other value providers)</li>
  * </ul>
  *
- * <h2>Plugin Extension</h2>
- * <p>
- * Plugins can register their own requirement types by implementing
+ * <p><strong>Plugin Extension</strong>
+ *
+ * <p>Plugins can register their own requirement types by implementing
  * {@link com.raindropcentral.rplatform.requirement.PluginRequirementProvider}
  * and registering with {@link com.raindropcentral.rplatform.requirement.RequirementRegistry}.
- * </p>
  *
  * <p><b>Example:</b></p>
  * <pre>{@code

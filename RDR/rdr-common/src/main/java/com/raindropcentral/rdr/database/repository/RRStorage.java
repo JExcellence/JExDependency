@@ -271,7 +271,7 @@ public class RRStorage extends BaseRepository<RStorage, Long> {
     }
 
     /**
-     * Assigns a hotkey to the target storage, clearing any duplicate binding for the same player in
+     * Assigns a hotkey to the target storage, clearing any duplicate binding for the same player in.
      * the same transaction.
      *
      * @param storageId target storage row identifier

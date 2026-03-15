@@ -27,16 +27,31 @@ import java.util.Map;
  */
 public interface PluginRequirementProvider {
 
+    /**
+     * Executes this member.
+     */
     @NotNull
     String getPluginId();
 
+    /**
+     * Executes this member.
+     */
     @NotNull
     Map<String, RequirementType> getRequirementTypes();
 
+    /**
+     * Executes onRegister.
+     */
     default void onRegister() {}
 
+    /**
+     * Executes onUnregister.
+     */
     default void onUnregister() {}
 
+    /**
+     * Executes register.
+     */
     default void register() {
         RequirementRegistry registry = RequirementRegistry.getInstance();
         for (RequirementType type : getRequirementTypes().values()) {
@@ -45,6 +60,9 @@ public interface PluginRequirementProvider {
         onRegister();
     }
 
+    /**
+     * Executes unregister.
+     */
     default void unregister() {
         RequirementRegistry registry = RequirementRegistry.getInstance();
         for (String typeName : getRequirementTypes().keySet()) {

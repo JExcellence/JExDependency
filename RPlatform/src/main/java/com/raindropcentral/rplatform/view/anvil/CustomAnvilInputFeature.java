@@ -28,7 +28,7 @@ import static java.util.Objects.requireNonNull;
 import static me.devnatan.inventoryframework.IFViewFrame.FRAME_REGISTERED;
 
 /**
- * Inventory Framework feature that injects {@link CustomAnvilInput} support with improved result
+ * Inventory Framework feature that injects {@link CustomAnvilInput} support with improved result.
  * synchronization and translation-aware input handling.
  *
  * <p>The feature coordinates reflection hooks to patch the upstream NMS integration, mirroring the
@@ -73,6 +73,9 @@ public final class CustomAnvilInputFeature implements Feature<CustomAnvilInputCo
     
     private CustomAnvilInputFeature() {}
     
+    /**
+     * Executes name.
+     */
     @Override
     public @NotNull String name() {
         return "Anvil Input";
@@ -80,7 +83,7 @@ public final class CustomAnvilInputFeature implements Feature<CustomAnvilInputCo
 
     @Override
     /**
-     * Installs the feature with the provided configuration and registers pipeline interceptors for
+     * Installs the feature with the provided configuration and registers pipeline interceptors for.
      * open, close, and click phases.
      *
      * @param framework the view frame being configured
@@ -98,7 +101,7 @@ public final class CustomAnvilInputFeature implements Feature<CustomAnvilInputCo
 
     @Override
     /**
-     * Removes previously registered interceptors to avoid memory leaks when the feature is
+     * Removes previously registered interceptors to avoid memory leaks when the feature is.
      * uninstalled.
      *
      * @param framework the view frame from which interceptors should be removed
@@ -187,12 +190,21 @@ public final class CustomAnvilInputFeature implements Feature<CustomAnvilInputCo
             // Forces internal state initialization
             context.getInternalStateValue(anvilInput);
             context.watchState(anvilInput.internalId(), new StateWatcher() {
+                /**
+                 * Executes stateRegistered.
+                 */
                 @Override
                 public void stateRegistered(@NotNull State<?> state, Object caller) {}
                 
+                /**
+                 * Executes stateUnregistered.
+                 */
                 @Override
                 public void stateUnregistered(@NotNull State<?> state, Object caller) {}
                 
+                /**
+                 * Executes stateValueGet.
+                 */
                 @Override
                 public void stateValueGet(
                     @NotNull State<?> state,
@@ -200,6 +212,9 @@ public final class CustomAnvilInputFeature implements Feature<CustomAnvilInputCo
                     @NotNull StateValue internalValue,
                     Object rawValue) {}
                 
+                /**
+                 * Executes stateValueSet.
+                 */
                 @Override
                 public void stateValueSet(
                     @NotNull StateValueHost host,

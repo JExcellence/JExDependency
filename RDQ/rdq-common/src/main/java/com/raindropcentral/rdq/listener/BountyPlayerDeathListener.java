@@ -28,10 +28,16 @@ public class BountyPlayerDeathListener implements Listener {
 
     private final RDQ rdq;
 
+    /**
+     * Executes BountyPlayerDeathListener.
+     */
     public BountyPlayerDeathListener(@NotNull RDQ rdq) {
         this.rdq = rdq;
     }
 
+    /**
+     * Executes onPlayerDeath.
+     */
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerDeath(@NotNull PlayerDeathEvent event) {
         var victim = event.getEntity();

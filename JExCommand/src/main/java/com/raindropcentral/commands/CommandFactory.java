@@ -20,8 +20,8 @@ import java.util.logging.Level;
 /**
  * Generic CommandFactory that can register commands and listeners for any JavaPlugin.
  * Supports passing custom context objects (like RDQ, RDQFree, RDQPremium) to commands and listeners.
- * <p>
- * The factory drives the auto-registration pipeline outlined in {@code AGENTS.md}, injecting configuration sections so
+ *
+ * <p>The factory drives the auto-registration pipeline outlined in {@code AGENTS.md}, injecting configuration sections so
  * commands inherit edition gating rules, localization hooks, and consistent constructor wiring across Paper and Spigot
  * distributions.
  *
@@ -97,10 +97,10 @@ public class CommandFactory {
     }
 
     /**
-     * Scans the plugin classpath for command and listener implementations annotated with
+     * Scans the plugin classpath for command and listener implementations annotated with.
      * {@link com.raindropcentral.commands.utility.Command} and registers them.
-     * <p>
-     * The discovery process performs two passes:
+ *
+ * <p>The discovery process performs two passes:
      * <ul>
      *     <li>Command classes under {@code *command*} packages are instantiated via {@link #registerCommand(Class)}.</li>
      *     <li>Listener classes under {@code *listener*} packages are instantiated via {@link #registerListener(Class)}.</li>
@@ -156,10 +156,10 @@ public class CommandFactory {
     }
 
     /**
-     * Instantiates a command class by locating its configuration section, selecting the most specific
+     * Instantiates a command class by locating its configuration section, selecting the most specific.
      * constructor, and delegating to the {@link CommandUpdater} for registration.
-     * <p>
-     * Constructor selection follows these precedence rules:
+ *
+ * <p>Constructor selection follows these precedence rules:
      * <ol>
      *     <li>Exact match with the configured context object's class.</li>
      *     <li>Constructor whose parameter type is assignable from the context object's class.</li>
@@ -287,7 +287,7 @@ public class CommandFactory {
     }
 
     /**
-     * Loads a command configuration section, ensuring the YAML file and section type follow the
+     * Loads a command configuration section, ensuring the YAML file and section type follow the.
      * naming conventions documented in {@code AGENTS.md}.
      * Behaviour: hydrates the section so localization hooks and edition gating toggles are available to the command
      * constructor. Failure modes: throws {@link Exception} when mapping fails; callers log and continue processing.

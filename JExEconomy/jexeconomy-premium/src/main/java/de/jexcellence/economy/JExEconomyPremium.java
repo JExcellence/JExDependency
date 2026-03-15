@@ -5,10 +5,16 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Level;
 
+/**
+ * Represents the JExEconomyPremium API type.
+ */
 public final class JExEconomyPremium extends JavaPlugin {
 
     private JExEconomyPremiumImpl jexEconomyImpl;
 
+    /**
+     * Executes onLoad.
+     */
     @Override
     public void onLoad() {
         try {
@@ -21,6 +27,9 @@ public final class JExEconomyPremium extends JavaPlugin {
         }
     }
 
+    /**
+     * Executes onEnable.
+     */
     @Override
     public void onEnable() {
         if (this.jexEconomyImpl != null) {
@@ -31,6 +40,9 @@ public final class JExEconomyPremium extends JavaPlugin {
         }
     }
 
+    /**
+     * Executes onDisable.
+     */
     @Override
     public void onDisable() {
         if (this.jexEconomyImpl != null) {
@@ -38,6 +50,9 @@ public final class JExEconomyPremium extends JavaPlugin {
         }
     }
 
+    /**
+     * Gets impl.
+     */
     public JExEconomyPremiumImpl getImpl() {
         return this.jexEconomyImpl;
     }

@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.logging.Logger;
 
 /**
- * Coordinates PlaceholderAPI expansion registration for a plugin-owned
+ * Coordinates PlaceholderAPI expansion registration for a plugin-owned.
  * expansion instance. At construction time the registry captures whether
  * PlaceholderAPI is currently enabled so subsequent {@link #register()} and {@link #unregister()}
  * calls can safely no-op when the dependency is unavailable. Successful operations log the
@@ -53,7 +53,7 @@ public class PlaceholderRegistry {
     }
 
     /**
-     * Registers the expansion when PlaceholderAPI is available. Logs a warning if the dependency
+     * Registers the expansion when PlaceholderAPI is available. Logs a warning if the dependency.
      * is missing and logs an informational message when registration succeeds.
      */
     public void register() {
@@ -71,7 +71,7 @@ public class PlaceholderRegistry {
     }
 
     /**
-     * Unregisters the expansion only when PlaceholderAPI was available and registration previously
+     * Unregisters the expansion only when PlaceholderAPI was available and registration previously.
      * occurred. Emits an informational log for successful unregister operations.
      */
     public void unregister() {

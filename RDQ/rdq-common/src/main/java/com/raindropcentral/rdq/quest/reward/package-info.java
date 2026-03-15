@@ -1,19 +1,17 @@
 /**
  * Quest-specific reward implementations for RPlatform integration.
- * <p>
- * This package contains reward classes that integrate with the quest system:
+ *
+ * <p>This package contains reward classes that integrate with the quest system:
  * <ul>
  *     <li>{@link com.raindropcentral.rdq.quest.reward.QuestReward} - 
  *         Grants quest start or completion as a reward</li>
  * </ul>
- * </p>
- * <p>
- * These rewards extend {@link com.raindropcentral.rplatform.reward.AbstractReward}
+ *
+ * <p>These rewards extend {@link com.raindropcentral.rplatform.reward.AbstractReward}
  * and integrate with the quest service layer to grant quest-related rewards. They are
  * registered with RPlatform's RewardRegistry during quest system initialization.
- * </p>
- * <p>
- * Example usage in quest configuration:
+ *
+ * <p>Example usage in quest configuration:
  * <pre>
  * rewards:
  *   - type: QUEST
@@ -23,11 +21,9 @@
  *     currencyId: coins
  *     amount: 1000
  * </pre>
- * </p>
- * <p>
- * Quest rewards are particularly useful for creating quest chains where completing
+ *
+ * <p>Quest rewards are particularly useful for creating quest chains where completing
  * one quest automatically starts the next quest in the sequence.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0

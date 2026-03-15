@@ -10,6 +10,7 @@ import java.util.function.Function;
 
 /**
  *
+  * Documents this API member.
  * @author JExcellence
  * @version 1.0.0
  * @since TBD
@@ -18,6 +19,7 @@ public class RPlayerRankUpgradeProgressRepository extends CachedRepository<RPlay
 	
 	/**
 	 *
+	  * Documents this API member.
 	 * @param executor             the {@link java.util.concurrent.ExecutorService} used for asynchronous repository operations
 	 * @param entityManagerFactory the {@link jakarta.persistence.EntityManagerFactory} used to create and manage entity managers
 	 */

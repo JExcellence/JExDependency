@@ -4,10 +4,9 @@ import com.raindropcentral.rplatform.requirement.impl.*;
 
 /**
  * Registers core RPlatform requirement types.
- * <p>
- * This class should be called during RPlatform initialization to register
+ *
+ * <p>This class should be called during RPlatform initialization to register
  * all built-in requirement types.
- * </p>
  *
  * @author ItsRainingHP, JExcellence
  * @since 2.0.0

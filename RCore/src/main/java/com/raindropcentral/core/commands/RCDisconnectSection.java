@@ -12,6 +12,9 @@ public final class RCDisconnectSection extends ACommandSection {
 
     private static final String COMMAND_NAME = "rcdisconnect";
 
+    /**
+     * Executes RCDisconnectSection.
+     */
     public RCDisconnectSection(final @NotNull EvaluationEnvironmentBuilder evaluationEnvironmentBuilder) {
         super(COMMAND_NAME, evaluationEnvironmentBuilder);
     }

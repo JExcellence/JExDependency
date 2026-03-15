@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Converts item lore {@link List lists} to a semicolon-delimited Base64 string for persistence and rebuilds
+ * Converts item lore {@link List lists} to a semicolon-delimited Base64 string for persistence and rebuilds.
  * them during entity hydration.
  *
  * <p>Every line is encoded as UTF-8 bytes before applying Base64, preserving {@code null} entries as empty

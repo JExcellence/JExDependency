@@ -27,15 +27,13 @@ import java.util.logging.Logger;
 
 /**
  * Event listener for tracking quest progress from game events.
- * <p>
- * This listener monitors various Bukkit events and updates quest task progress
+ *
+ * <p>This listener monitors various Bukkit events and updates quest task progress
  * accordingly. It handles events like entity kills, block breaking/placing,
  * item consumption, fishing, and movement.
- * </p>
- * <p>
- * Note: This is a simplified implementation. Task matching logic should be
+ *
+ * <p>Note: This is a simplified implementation. Task matching logic should be
  * implemented based on task requirements stored in the database.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0
@@ -238,9 +236,8 @@ public class QuestEventListener implements Listener {
     
     /**
      * Handles player movement events for distance/exploration quest tasks.
-     * <p>
-     * This event is throttled to prevent excessive updates.
-     * </p>
+ *
+ * <p>This event is throttled to prevent excessive updates.
      *
      * @param event the player move event
      */

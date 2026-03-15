@@ -32,6 +32,12 @@ import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Represents the type API type.
+ */
+/**
+ * Represents the JExEconomy API type.
+ */
 public abstract class JExEconomy {
 
     private static final Logger LOGGER = CentralLogger.getLoggerByName("JExEconomy");
@@ -63,6 +69,9 @@ public abstract class JExEconomy {
         this.platform = new RPlatform(plugin);
     }
 
+    /**
+     * Performs onLoad.
+     */
     public void onLoad() {
         try {
             LOGGER.info("Loading JExEconomy " + edition + " Edition");
@@ -71,6 +80,9 @@ public abstract class JExEconomy {
         }
     }
 
+    /**
+     * Performs onEnable.
+     */
     public void onEnable() {
         if (enableFuture != null && !enableFuture.isDone()) {
             LOGGER.warning("Enable sequence already in progress");
@@ -95,6 +107,9 @@ public abstract class JExEconomy {
                 });
     }
 
+    /**
+     * Performs onDisable.
+     */
     public void onDisable() {
         isDisabling = true;
         if (enableFuture != null && !enableFuture.isDone()) {
@@ -253,88 +268,142 @@ public abstract class JExEconomy {
         }
     }
 
+    /**
+     * Gets plugin.
+     */
     @NotNull
     public JavaPlugin getPlugin() {
         return plugin;
     }
 
+    /**
+     * Gets edition.
+     */
     @Nullable
     public String getEdition() {
         return edition;
     }
 
+    /**
+     * Gets executor.
+     */
     @NotNull
     public ExecutorService getExecutor() {
         return executor;
     }
 
+    /**
+     * Gets platform.
+     */
     @NotNull
     public RPlatform getPlatform() {
         return platform;
     }
 
+    /**
+     * Gets viewFrame.
+     */
     @NotNull
     public ViewFrame getViewFrame() {
         return viewFrame;
     }
 
+    /**
+     * Gets commandFactory.
+     */
     @NotNull
     public CommandFactory getCommandFactory() {
         return commandFactory;
     }
 
+    /**
+     * Gets currencyAdapter.
+     */
     @NotNull
     public CurrencyAdapter getCurrencyAdapter() {
         return currencyAdapter;
     }
 
+    /**
+     * Gets currencyRepository.
+     */
     @NotNull
     public CurrencyRepository getCurrencyRepository() {
         return currencyRepository;
     }
 
+    /**
+     * Gets userRepository.
+     */
     @NotNull
     public UserRepository getUserRepository() {
         return userRepository;
     }
 
+    /**
+     * Gets userCurrencyRepository.
+     */
     @NotNull
     public UserCurrencyRepository getUserCurrencyRepository() {
         return userCurrencyRepository;
     }
 
+    /**
+     * Gets currencyLogRepository.
+     */
     @NotNull
     public CurrencyLogRepository getCurrencyLogRepository() {
         return currencyLogRepository;
     }
 
+    /**
+     * Gets logService.
+     */
     @NotNull
     public CurrencyLogService getLogService() {
         return logService;
     }
 
+    /**
+     * Gets vaultMigrationManager.
+     */
     @NotNull
     public VaultMigrationManager getVaultMigrationManager() {
         return vaultMigrationManager;
     }
 
+    /**
+     * Gets currencies.
+     */
     @NotNull
     public Map<Long, Currency> getCurrencies() {
         return currencyCache;
     }
 
+    /**
+     * Returns whether disabling.
+     */
     public boolean isDisabling() {
         return isDisabling;
     }
 
+    /**
+     * Returns whether postEnableCompleted.
+     */
     public boolean isPostEnableCompleted() {
         return postEnableCompleted;
     }
 
+    /**
+     * Gets enableFuture.
+     */
     public @Nullable CompletableFuture<Void> getEnableFuture() {
         return enableFuture;
     }
 
+    /**
+     * Returns whether enabled.
+     */
     public boolean isEnabled() {
         return plugin.isEnabled();
     }

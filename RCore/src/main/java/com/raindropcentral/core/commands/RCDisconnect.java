@@ -18,6 +18,9 @@ public final class RCDisconnect extends PlayerCommand {
 
     private final RCentralService centralService;
 
+    /**
+     * Executes RCDisconnect.
+     */
     public RCDisconnect(
             final @NotNull RCDisconnectSection section,
             final @NotNull RCore rCore

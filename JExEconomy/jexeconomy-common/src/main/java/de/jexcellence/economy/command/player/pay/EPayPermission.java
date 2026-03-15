@@ -5,10 +5,9 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Permission enumeration for the pay command system.
- * <p>
- * Defines the permission nodes required for executing pay operations
+ *
+ * <p>Defines the permission nodes required for executing pay operations
  * within the JExEconomy plugin.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -37,11 +36,17 @@ public enum EPayPermission implements IPermissionNode {
         this.fallbackNode = fallbackNode;
     }
 
+    /**
+     * Gets internalName.
+     */
     @Override
     public @NotNull String getInternalName() {
         return this.internalName;
     }
 
+    /**
+     * Gets fallbackNode.
+     */
     @Override
     public @NotNull String getFallbackNode() {
         return this.fallbackNode;
@@ -56,6 +61,9 @@ public enum EPayPermission implements IPermissionNode {
         return this.fallbackNode;
     }
 
+    /**
+     * Executes toString.
+     */
     @Override
     public String toString() {
         return this.fallbackNode;

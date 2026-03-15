@@ -26,6 +26,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * Represents the BountyRewardView API type.
+ */
 public class BountyRewardView extends APaginatedView<BountyReward> {
 	
 	private final State<RDQ>                                rdq              = initialState("plugin");
@@ -36,6 +39,9 @@ public class BountyRewardView extends APaginatedView<BountyReward> {
 	
 	private boolean isReturning;
 	
+	/**
+	 * Executes BountyRewardView.
+	 */
 	public BountyRewardView() {
 		super(BountyCreationView.class);
 	}
@@ -268,6 +274,9 @@ public class BountyRewardView extends APaginatedView<BountyReward> {
 			});
 	}
 	
+	/**
+	 * Executes onClick.
+	 */
 	@Override
 	public void onClick(
 		final @NotNull SlotClickContext click
@@ -288,6 +297,9 @@ public class BountyRewardView extends APaginatedView<BountyReward> {
 		}
 	}
 	
+	/**
+	 * Executes onClose.
+	 */
 	@Override
 	public void onClose(
 		final @NotNull CloseContext close

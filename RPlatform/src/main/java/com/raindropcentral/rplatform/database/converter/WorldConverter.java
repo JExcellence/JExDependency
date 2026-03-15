@@ -7,7 +7,7 @@ import org.bukkit.World;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Converts Bukkit {@link World} references to their world name for persistence and restores them during
+ * Converts Bukkit {@link World} references to their world name for persistence and restores them during.
  * entity hydration.
  *
  * <p>{@code null} attributes map to {@code null} columns and blank column values return {@code null}

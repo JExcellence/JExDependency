@@ -20,7 +20,7 @@ public class DeliveryMetricsTracker {
 
     private static final Logger LOGGER = CentralLogger.getLoggerByName("RCore");
 
-    /** Rolling window size in milliseconds (1 hour) */
+/** Represents this API member. */
     private static final long ROLLING_WINDOW_MS = 60 * 60 * 1000L;
 
     // Lifetime counters
@@ -37,6 +37,9 @@ public class DeliveryMetricsTracker {
     // Session tracking
     private final Instant sessionStart = Instant.now();
 
+    /**
+     * Executes DeliveryMetricsTracker.
+     */
     public DeliveryMetricsTracker() {
     }
 

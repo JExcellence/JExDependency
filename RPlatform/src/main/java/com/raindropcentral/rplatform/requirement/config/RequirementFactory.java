@@ -14,11 +14,10 @@ import java.util.logging.Logger;
 
 /**
  * Factory for creating AbstractRequirement instances from configuration data.
- * <p>
- * This factory provides a centralized, extensible way to create requirements from
+ *
+ * <p>This factory provides a centralized, extensible way to create requirements from
  * various configuration formats. Plugins can register custom converters for their
  * own requirement types.
- * </p>
  *
  * <p><b>Usage:</b></p>
  * <pre>{@code
@@ -53,6 +52,9 @@ public final class RequirementFactory {
         registerDefaultConverters();
     }
 
+    /**
+     * Gets instance.
+     */
     @NotNull
     public static RequirementFactory getInstance() {
         return INSTANCE;
@@ -85,10 +87,9 @@ public final class RequirementFactory {
 
     /**
      * Registers a section adapter for a specific config section class.
-     * <p>
-     * Section adapters allow plugins to convert their custom config section types
+ *
+ * <p>Section adapters allow plugins to convert their custom config section types
      * directly to AbstractRequirement instances.
-     * </p>
      * 
      * <p><b>Note:</b> Duplicate registrations are ignored to prevent infinite loops
      * and CPU spikes during initialization.</p>
@@ -572,7 +573,7 @@ public final class RequirementFactory {
     }
 
     /**
-     * Backward compatibility: Convert old JOBS format to new PLUGIN format
+     * Backward compatibility: Convert old JOBS format to new PLUGIN format.
      */
     private PluginRequirement createJobsRequirementCompat(Map<String, Object> config) {
         String pluginStr = getString(config, "jobPlugin", "auto");
@@ -597,7 +598,7 @@ public final class RequirementFactory {
     }
 
     /**
-     * Backward compatibility: Convert old SKILLS format to new PLUGIN format
+     * Backward compatibility: Convert old SKILLS format to new PLUGIN format.
      */
     private PluginRequirement createSkillsRequirementCompat(Map<String, Object> config) {
         String pluginStr = getString(config, "skillPlugin", "auto");

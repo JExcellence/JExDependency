@@ -12,6 +12,9 @@ public final class RCConnectSection extends ACommandSection {
 
     private static final String COMMAND_NAME = "rcconnect";
 
+    /**
+     * Executes RCConnectSection.
+     */
     public RCConnectSection(final @NotNull EvaluationEnvironmentBuilder evaluationEnvironmentBuilder) {
         super(COMMAND_NAME, evaluationEnvironmentBuilder);
     }

@@ -10,10 +10,9 @@ import java.util.function.Function;
 
 /**
  * Repository for managing {@link Bounty} entities in the RaindropQuests system.
- * <p>
- * Extends {@link CachedRepository} to provide caching and asynchronous database operations
+ *
+ * <p>Extends {@link CachedRepository} to provide caching and asynchronous database operations
  * for bounty entities, using the commissioner's UUID as the cache key.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0

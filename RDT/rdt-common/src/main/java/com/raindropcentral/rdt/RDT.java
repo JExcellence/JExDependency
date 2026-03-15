@@ -344,59 +344,107 @@ public class RDT {
         this.viewFrame = frame.register();
     }
 
+    /**
+     * Executes method.
+     */
+    /**
+     * Executes this member.
+     */
+    /**
+     * Gets eco.
+     */
     public @Nullable net.milkbowl.vault.economy.Economy getEco() {
         if (this.economyInstance == null) return null;
         return (net.milkbowl.vault.economy.Economy) this.economyInstance;
     }
 
+    /**
+     * Gets plugin.
+     */
     public @NotNull JavaPlugin getPlugin() {
         return this.plugin;
     }
 
+    /**
+     * Gets logger.
+     */
     public @NotNull Logger getLogger() {
         return this.plugin.getLogger();
     }
 
+    /**
+     * Gets server.
+     */
     public @NotNull Server getServer() {
         return this.plugin.getServer();
     }
 
+    /**
+     * Gets executor.
+     */
     public @Nullable ExecutorService getExecutor() {
         return this.executor;
     }
 
+    /**
+     * Gets platform.
+     */
     public @Nullable RPlatform getPlatform() {
         return this.platform;
     }
 
+    /**
+     * Gets entityManagerFactory.
+     */
     public @Nullable EntityManagerFactory getEntityManagerFactory() {
         return this.entityManagerFactory;
     }
 
+    /**
+     * Gets townRepository.
+     */
     public @Nullable RRTown getTownRepository() {
         return this.townRepository;
     }
 
+    /**
+     * Gets playerRepository.
+     */
     public @Nullable RRDTPlayer getPlayerRepository() {
         return this.playerRepository;
     }
 
+    /**
+     * Gets bossBarFactory.
+     */
     public @Nullable BossBarFactory getBossBarFactory() {
         return this.bossBarFactory;
     }
 
+    /**
+     * Gets scheduler.
+     */
     public @Nullable ISchedulerAdapter getScheduler() {
         return this.scheduler;
     }
 
+    /**
+     * Gets platformType.
+     */
     public @Nullable PlatformType getPlatformType() {
         return this.platformType;
     }
 
+    /**
+     * Gets economyInstance.
+     */
     public @Nullable Object getEconomyInstance() {
         return this.economyInstance;
     }
 
+    /**
+     * Gets viewFrame.
+     */
     public @Nullable ViewFrame getViewFrame() {
         return this.viewFrame;
     }

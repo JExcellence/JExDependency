@@ -13,11 +13,10 @@ import java.util.logging.Logger;
 
 /**
  * Coordinates translation resources for a {@link JavaPlugin} using the modern {@link R18nManager} API.
- * <p>
- * The manager should be constructed and {@link #initialize() initialized} during plugin startup.
+ *
+ * <p>The manager should be constructed and {@link #initialize() initialized} during plugin startup.
  * Initialization is asynchronous and returns a {@link CompletableFuture} that completes when
  * translations are loaded and ready to use.
- * </p>
  *
  * @author JExcellence
  * @version 2.0.0
@@ -83,10 +82,9 @@ public class TranslationManager {
 
     /**
      * Initializes the R18n translation system asynchronously.
-     * <p>
-     * Must be called before any translation operations. The returned future completes
+ *
+ * <p>Must be called before any translation operations. The returned future completes
      * when translations are loaded and ready to use.
-     * </p>
      *
      * @return a CompletableFuture that completes when initialization is done
      */
@@ -118,9 +116,8 @@ public class TranslationManager {
 
     /**
      * Shuts down the translation system and releases resources.
-     * <p>
-     * Should be called in the plugin's onDisable() method.
-     * </p>
+ *
+ * <p>Should be called in the plugin's onDisable() method.
      */
     public void shutdown() {
         if (r18n != null) {
@@ -263,30 +260,48 @@ public class TranslationManager {
         private boolean enableMetrics = false;
         private boolean enableFileWatcher = false;
 
+        /**
+         * Executes Builder.
+         */
         public Builder(final @NotNull JavaPlugin plugin) {
             this.plugin = plugin;
         }
 
+        /**
+         * Executes defaultLocale.
+         */
         public Builder defaultLocale(final @NotNull String locale) {
             this.defaultLocale = locale;
             return this;
         }
 
+        /**
+         * Executes supportedLocales.
+         */
         public Builder supportedLocales(final @NotNull String... locales) {
             this.supportedLocales = locales;
             return this;
         }
 
+        /**
+         * Executes enableMetrics.
+         */
         public Builder enableMetrics(final boolean enable) {
             this.enableMetrics = enable;
             return this;
         }
 
+        /**
+         * Executes enableFileWatcher.
+         */
         public Builder enableFileWatcher(final boolean enable) {
             this.enableFileWatcher = enable;
             return this;
         }
 
+        /**
+         * Executes build.
+         */
         public TranslationManager build() {
             return new TranslationManager(
                     plugin,

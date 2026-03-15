@@ -10,12 +10,11 @@ import java.util.Set;
 
 /**
  * Configuration section that maps permissions to cooldown durations expressed in seconds.
- * <p>
- * Each permission can define its own cooldown override while a default value ensures fallbacks for
+ *
+ * <p>Each permission can define its own cooldown override while a default value ensures fallbacks for
  * players without specific permissions. The section selects the smallest positive cooldown (or zero
  * for no cooldown) when multiple permissions apply, supporting fast-track permissions that reduce or
  * remove cooldowns entirely.
- * </p>
  *
  * @author JExcellence
  * @since 1.0.0

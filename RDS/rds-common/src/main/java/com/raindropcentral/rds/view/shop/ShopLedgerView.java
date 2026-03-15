@@ -135,6 +135,9 @@ public class ShopLedgerView extends APaginatedView<ShopLedgerEntry> {
         }
     }
 
+    /**
+     * Executes onClick.
+     */
     @Override
     public void onClick(
             final @NotNull SlotClickContext click

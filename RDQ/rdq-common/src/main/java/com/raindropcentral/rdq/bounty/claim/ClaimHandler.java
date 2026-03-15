@@ -25,6 +25,9 @@ public class ClaimHandler {
     private final EClaimMode claimMode;
     private final boolean selfClaimAllowed;
 
+    /**
+     * Executes ClaimHandler.
+     */
     public ClaimHandler(@NotNull DamageTracker damageTracker, @NotNull EClaimMode claimMode, boolean selfClaimAllowed) {
         this.damageTracker = damageTracker;
         this.claimMode = claimMode;

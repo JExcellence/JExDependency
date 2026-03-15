@@ -37,6 +37,9 @@ import java.util.UUID;
         "unused",
         "JpaDataSourceORMInspection"
 })
+/**
+ * Represents the RDTPlayer API type.
+ */
 public class RDTPlayer extends BaseEntity {
 
     /** Default role assigned to newly joined town members. */

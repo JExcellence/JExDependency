@@ -14,8 +14,8 @@ import java.util.logging.Logger;
 
 /**
  * Implementation delegate for RDQ Premium Edition.
- * <p>
- * This class handles all the actual plugin logic, separated from the main plugin class
+ *
+ * <p>This class handles all the actual plugin logic, separated from the main plugin class
  * to allow for proper dependency loading via JEDependency before any external classes
  * are referenced.
  * </p>
@@ -31,6 +31,9 @@ public final class RDQPremiumImpl extends AbstractPluginDelegate<RDQPremium> {
 
     private @Nullable RDQ rdq;
 
+    /**
+     * Executes RDQPremiumImpl.
+     */
     public RDQPremiumImpl(@NotNull RDQPremium plugin) {
         super(plugin);
     }
@@ -45,6 +48,9 @@ public final class RDQPremiumImpl extends AbstractPluginDelegate<RDQPremium> {
         return rdq;
     }
 
+    /**
+     * Executes onLoad.
+     */
     @Override
     public void onLoad() {
         try {
@@ -83,6 +89,9 @@ public final class RDQPremiumImpl extends AbstractPluginDelegate<RDQPremium> {
         }
     }
 
+    /**
+     * Executes onEnable.
+     */
     @Override
     public void onEnable() {
         if (rdq == null) {
@@ -94,6 +103,9 @@ public final class RDQPremiumImpl extends AbstractPluginDelegate<RDQPremium> {
         rdq.onEnable();
     }
 
+    /**
+     * Executes onDisable.
+     */
     @Override
     public void onDisable() {
         try {

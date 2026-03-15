@@ -23,14 +23,13 @@ import java.util.Map;
 
 /**
  * Detail view for displaying comprehensive information about a specific currency.
- * <p>
- * This view provides a read-only display of all currency properties including
+ *
+ * <p>This view provides a read-only display of all currency properties including
  * identifier, symbol, icon, prefix, suffix, and additional metadata. It also
  * offers administrative functions such as viewing the leaderboard and resetting
  * all player balances to zero for users with appropriate permissions.
- * </p>
  *
- * <h3>Key Features:</h3>
+ * <p><strong>Key Features:</strong>
  * <ul>
  *   <li><strong>Currency Information Display:</strong> Shows all currency properties in an organized layout</li>
  *   <li><strong>Leaderboard Access:</strong> Provides quick navigation to currency leaderboard rankings</li>
@@ -38,7 +37,7 @@ import java.util.Map;
  *   <li><strong>Permission-Based Access:</strong> Restricts administrative functions to authorized users</li>
  * </ul>
  *
- * <h3>Layout Structure:</h3>
+ * <p><strong>Layout Structure:</strong>
  * <ul>
  *   <li><strong>Currency Icon (i):</strong> Displays the currency's visual representation</li>
  *   <li><strong>Currency Symbol (s):</strong> Shows the currency's symbol and related information</li>
@@ -48,10 +47,9 @@ import java.util.Map;
  *   <li><strong>Reset Function (r):</strong> Administrative balance reset functionality</li>
  * </ul>
  *
- * <h3>Administrative Permissions:</h3>
- * <p>
- * The reset functionality requires one of the following permissions:
- * </p>
+ * <p><strong>Administrative Permissions:</strong>
+ *
+ * <p>The reset functionality requires one of the following permissions:
  * <ul>
  *   <li><code>jexeconomy.admin.reset</code> - Specific reset permission</li>
  *   <li><code>jexeconomy.admin.*</code> - All administrative permissions</li>
@@ -82,10 +80,9 @@ public class CurrencyDetailView extends BaseView {
 	
 	/**
 	 * Constructs a new {@code CurrencyDetailView} with the currencies overview as parent.
-	 * <p>
-	 * The view will display detailed information about a specific currency and provide
+ *
+ * <p>The view will display detailed information about a specific currency and provide
 	 * navigation back to the currencies overview when closed.
-	 * </p>
 	 */
 	public CurrencyDetailView() {
 		super(CurrenciesOverviewView.class);
@@ -93,10 +90,9 @@ public class CurrencyDetailView extends BaseView {
 	
 	/**
 	 * Returns the internationalization key for this view.
-	 * <p>
-	 * This key is used to load localized strings for the currency detail interface,
+ *
+ * <p>This key is used to load localized strings for the currency detail interface,
 	 * including titles, labels, and formatting templates.
-	 * </p>
 	 *
 	 * @return the i18n key for the currency detail UI
 	 */
@@ -107,12 +103,11 @@ public class CurrencyDetailView extends BaseView {
 	
 	/**
 	 * Defines the layout structure for the currency detail view.
-	 * <p>
-	 * The layout organizes currency information and administrative functions
+ *
+ * <p>The layout organizes currency information and administrative functions
 	 * in a user-friendly arrangement with clear visual separation.
-	 * </p>
 	 *
-	 * <h3>Layout Mapping:</h3>
+	 * <p><strong>Layout Mapping:</strong>
 	 * <ul>
 	 *   <li><strong>i:</strong> Currency icon display</li>
 	 *   <li><strong>s:</strong> Currency symbol information</li>
@@ -137,13 +132,12 @@ public class CurrencyDetailView extends BaseView {
 	
 	/**
 	 * Renders all currency detail elements and interactive components.
-	 * <p>
-	 * This method populates the view with currency information displays and
+ *
+ * <p>This method populates the view with currency information displays and
 	 * interactive elements including the leaderboard access and administrative
 	 * functions. Each element is positioned according to the layout configuration.
-	 * </p>
 	 *
-	 * <h3>Rendered Elements:</h3>
+	 * <p><strong>Rendered Elements:</strong>
 	 * <ul>
 	 *   <li>Currency icon with material information</li>
 	 *   <li>Currency symbol display with context</li>
@@ -173,10 +167,9 @@ public class CurrencyDetailView extends BaseView {
 	
 	/**
 	 * Renders the currency icon display element.
-	 * <p>
-	 * This method creates an interactive display showing the currency's icon
+ *
+ * <p>This method creates an interactive display showing the currency's icon
 	 * material with detailed information about its visual representation.
-	 * </p>
 	 *
 	 * @param renderContext the current rendering context, must not be null
 	 * @param contextPlayer the player viewing the interface, must not be null
@@ -224,10 +217,9 @@ public class CurrencyDetailView extends BaseView {
 	
 	/**
 	 * Renders the currency symbol display element.
-	 * <p>
-	 * This method creates an interactive display showing the currency's symbol
+ *
+ * <p>This method creates an interactive display showing the currency's symbol
 	 * with contextual information about its usage and meaning.
-	 * </p>
 	 *
 	 * @param renderContext the current rendering context, must not be null
 	 * @param contextPlayer the player viewing the interface, must not be null
@@ -273,10 +265,9 @@ public class CurrencyDetailView extends BaseView {
 	
 	/**
 	 * Renders the currency prefix display element.
-	 * <p>
-	 * This method creates an interactive display showing the currency's prefix
+ *
+ * <p>This method creates an interactive display showing the currency's prefix
 	 * configuration, including whether a prefix is set and its current value.
-	 * </p>
 	 *
 	 * @param renderContext the current rendering context, must not be null
 	 * @param contextPlayer the player viewing the interface, must not be null
@@ -315,10 +306,9 @@ public class CurrencyDetailView extends BaseView {
 	
 	/**
 	 * Renders the currency suffix display element.
-	 * <p>
-	 * This method creates an interactive display showing the currency's suffix
+ *
+ * <p>This method creates an interactive display showing the currency's suffix
 	 * configuration, including whether a suffix is set and its current value.
-	 * </p>
 	 *
 	 * @param renderContext the current rendering context, must not be null
 	 * @param contextPlayer the player viewing the interface, must not be null
@@ -357,10 +347,9 @@ public class CurrencyDetailView extends BaseView {
 	
 	/**
 	 * Renders the leaderboard access button.
-	 * <p>
-	 * This method creates an interactive button that allows users to navigate
+ *
+ * <p>This method creates an interactive button that allows users to navigate
 	 * to the currency leaderboard view to see top player rankings.
-	 * </p>
 	 *
 	 * @param renderContext the current rendering context, must not be null
 	 * @param contextPlayer the player viewing the interface, must not be null
@@ -414,11 +403,10 @@ public class CurrencyDetailView extends BaseView {
 	
 	/**
 	 * Renders the administrative reset function button.
-	 * <p>
-	 * This method creates a permission-restricted button that allows authorized
+ *
+ * <p>This method creates a permission-restricted button that allows authorized
 	 * users to reset all player balances for the displayed currency to zero.
 	 * The button is only visible to users with appropriate permissions.
-	 * </p>
 	 *
 	 * @param renderContext the current rendering context, must not be null
 	 * @param contextPlayer the player viewing the interface, must not be null
@@ -470,10 +458,9 @@ public class CurrencyDetailView extends BaseView {
 	
 	/**
 	 * Checks if a player has permission to use the reset functionality.
-	 * <p>
-	 * This method verifies that the player has one of the required permissions
+ *
+ * <p>This method verifies that the player has one of the required permissions
 	 * or is a server operator, allowing them to access administrative functions.
-	 * </p>
 	 *
 	 * @param targetPlayer the player to check permissions for, must not be null
 	 * @return true if the player has reset permissions, false otherwise
@@ -488,14 +475,13 @@ public class CurrencyDetailView extends BaseView {
 	
 	/**
 	 * Handles the reset all balances functionality with confirmation dialog.
-	 * <p>
-	 * This method initiates the process of resetting all player balances for the
+ *
+ * <p>This method initiates the process of resetting all player balances for the
 	 * specified currency. It first retrieves all user-currency associations,
 	 * calculates the total amount to be reset, and then presents a confirmation
 	 * dialog to the user before proceeding with the operation.
-	 * </p>
 	 *
-	 * <h3>Process Flow:</h3>
+	 * <p><strong>Process Flow:</strong>
 	 * <ol>
 	 *   <li>Retrieve all user-currency associations for the target currency</li>
 	 *   <li>Calculate total amount and player count</li>
@@ -575,11 +561,10 @@ public class CurrencyDetailView extends BaseView {
 	
 	/**
 	 * Shows the confirmation dialog for the reset operation.
-	 * <p>
-	 * This method creates and displays a confirmation dialog with detailed
+ *
+ * <p>This method creates and displays a confirmation dialog with detailed
 	 * information about the reset operation, including the number of players
 	 * affected and the total amount to be reset.
-	 * </p>
 	 *
 	 * @param clickContext the context from the button click, must not be null
 	 * @param targetCurrency the currency to reset balances for, must not be null
@@ -641,10 +626,9 @@ public class CurrencyDetailView extends BaseView {
 	
 	/**
 	 * Handles the cancellation of the reset operation.
-	 * <p>
-	 * This method sends a cancellation message to the requesting player
+ *
+ * <p>This method sends a cancellation message to the requesting player
 	 * when they choose not to proceed with the reset operation.
-	 * </p>
 	 *
 	 * @param requestingPlayer the player who cancelled the reset, must not be null
 	 * @param targetCurrency the currency that was going to be reset, must not be null
@@ -667,13 +651,12 @@ public class CurrencyDetailView extends BaseView {
 	
 	/**
 	 * Executes the actual reset operation after confirmation.
-	 * <p>
-	 * This method performs the balance reset operation by setting all player
+ *
+ * <p>This method performs the balance reset operation by setting all player
 	 * balances to zero and updating the database. It provides feedback to the
 	 * requesting player about the operation's progress and results.
-	 * </p>
 	 *
-	 * <h3>Operation Steps:</h3>
+	 * <p><strong>Operation Steps:</strong>
 	 * <ol>
 	 *   <li>Send processing notification to the requesting player</li>
 	 *   <li>Reset all balances to zero</li>
@@ -732,10 +715,9 @@ public class CurrencyDetailView extends BaseView {
 	
 	/**
 	 * Sends a success message after completing the reset operation.
-	 * <p>
-	 * This method sends a detailed success message to the requesting player
+ *
+ * <p>This method sends a detailed success message to the requesting player
 	 * with statistics about the completed reset operation.
-	 * </p>
 	 *
 	 * @param requestingPlayer the player who requested the reset, must not be null
 	 * @param targetCurrency the currency that was reset, must not be null
@@ -768,10 +750,9 @@ public class CurrencyDetailView extends BaseView {
 	
 	/**
 	 * Sends an error message when the reset operation fails.
-	 * <p>
-	 * This method sends an error message to the requesting player when
+ *
+ * <p>This method sends an error message to the requesting player when
 	 * the reset operation encounters an exception during execution.
-	 * </p>
 	 *
 	 * @param requestingPlayer the player who requested the reset, must not be null
 	 * @param targetCurrency the currency that failed to reset, must not be null

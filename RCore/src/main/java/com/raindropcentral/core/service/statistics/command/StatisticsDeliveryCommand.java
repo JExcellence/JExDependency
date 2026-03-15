@@ -32,10 +32,16 @@ public class StatisticsDeliveryCommand implements CommandExecutor, TabCompleter 
     private final StatisticsDeliveryService service;
     private boolean diagnosticMode = false;
 
+    /**
+     * Executes StatisticsDeliveryCommand.
+     */
     public StatisticsDeliveryCommand(final @NotNull StatisticsDeliveryService service) {
         this.service = service;
     }
 
+    /**
+     * Executes onCommand.
+     */
     @Override
     public boolean onCommand(
         @NotNull CommandSender sender,
@@ -191,6 +197,9 @@ public class StatisticsDeliveryCommand implements CommandExecutor, TabCompleter 
         return String.format("%.1f GB", bytes / (1024.0 * 1024 * 1024));
     }
 
+    /**
+     * Executes onTabComplete.
+     */
     @Override
     public @Nullable List<String> onTabComplete(
         @NotNull CommandSender sender,

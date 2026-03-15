@@ -122,6 +122,9 @@ public class PaperPluginLoader implements PluginLoader {
         // Add console handler with simple format that includes plugin name
         final ConsoleHandler handler = new ConsoleHandler();
         handler.setFormatter(new Formatter() {
+            /**
+             * Executes format.
+             */
             @Override
             public String format(final LogRecord record) {
                 return String.format("[%s/%s] %s%n", LOGGER_NAME, currentPluginName, record.getMessage());
@@ -154,7 +157,7 @@ public class PaperPluginLoader implements PluginLoader {
     }
 
     /**
-     * Prepares the plugin classpath by downloading declared dependencies, optionally remapping them and adding the
+     * Prepares the plugin classpath by downloading declared dependencies, optionally remapping them and adding the.
      * resulting jar files to Paper's bootstrap classpath. The method is invoked by Paper on the main server thread
      * during plugin discovery and therefore performs logging rather than throwing checked exceptions.
      *

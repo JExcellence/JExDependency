@@ -10,20 +10,19 @@ import java.util.Optional;
 
 /**
  * Enumeration defining permission nodes for individual currency command operations within the JExEconomy system.
- * <p>
- * This enum provides a comprehensive permission framework for controlling access to individual
+ *
+ * <p>This enum provides a comprehensive permission framework for controlling access to individual
  * currency operations that players can perform. Unlike the broader currencies management system,
  * this enum focuses on permissions for single-currency operations and player-specific currency
  * interactions, enabling fine-grained control over currency access and modification rights.
- * </p>
  *
- * <h3>Permission Hierarchy:</h3>
+ * <p><strong>Permission Hierarchy:</strong>
  * <ul>
  *   <li><strong>Base Access:</strong> {@link #CURRENCY} - Basic individual currency command access</li>
  *   <li><strong>Cross-Player Operations:</strong> {@link #CURRENCY_OTHER} - Access to other players' currency data</li>
  * </ul>
  *
- * <h3>Security Model:</h3>
+ * <p><strong>Security Model:</strong>
  * <ul>
  *   <li><strong>Player-Centric Design:</strong> Permissions focused on individual player currency operations</li>
  *   <li><strong>Privacy Protection:</strong> Separate permissions for accessing other players' data</li>
@@ -31,7 +30,7 @@ import java.util.Optional;
  *   <li><strong>Framework Integration:</strong> Implements IPermissionNode for seamless integration</li>
  * </ul>
  *
- * <h3>Usage Patterns:</h3>
+ * <p><strong>Usage Patterns:</strong>
  * <ul>
  *   <li>Permission validation before individual currency operations</li>
  *   <li>Access control for player currency viewing and modification</li>
@@ -39,7 +38,7 @@ import java.util.Optional;
  *   <li>Cross-player currency operation authorization</li>
  * </ul>
  *
- * <h3>Integration Points:</h3>
+ * <p><strong>Integration Points:</strong>
  * <ul>
  *   <li>Individual currency command framework integration</li>
  *   <li>Player-specific currency user interfaces</li>
@@ -57,14 +56,13 @@ public enum ECurrencyPermission implements IPermissionNode {
 	
 	/**
 	 * Base permission node for accessing individual currency commands and functionality.
-	 * <p>
-	 * This permission grants basic access to individual currency command operations,
+ *
+ * <p>This permission grants basic access to individual currency command operations,
 	 * allowing players to execute currency-specific commands and access their own
 	 * currency information. It serves as the foundation permission for all individual
 	 * currency operations and player-specific currency interactions.
-	 * </p>
 	 *
-	 * <h3>Access Granted:</h3>
+	 * <p><strong>Access Granted:</strong>
 	 * <ul>
 	 *   <li>Basic individual currency command execution</li>
 	 *   <li>Access to personal currency information and balances</li>
@@ -72,7 +70,7 @@ public enum ECurrencyPermission implements IPermissionNode {
 	 *   <li>Personal currency transaction history viewing</li>
 	 * </ul>
 	 *
-	 * <h3>Security Level:</h3>
+	 * <p><strong>Security Level:</strong>
 	 * <ul>
 	 *   <li><strong>Risk Level:</strong> Low - Limited to personal currency data access</li>
 	 *   <li><strong>User Type:</strong> General players and administrators</li>
@@ -80,7 +78,7 @@ public enum ECurrencyPermission implements IPermissionNode {
 	 *   <li><strong>Impact:</strong> No system-wide modifications possible</li>
 	 * </ul>
 	 *
-	 * <h3>Typical Operations:</h3>
+	 * <p><strong>Typical Operations:</strong>
 	 * <ul>
 	 *   <li>Viewing personal currency balances</li>
 	 *   <li>Accessing currency-specific information</li>
@@ -95,14 +93,13 @@ public enum ECurrencyPermission implements IPermissionNode {
 	
 	/**
 	 * Permission node for accessing and viewing other players' currency information.
-	 * <p>
-	 * This permission grants the ability to view and potentially interact with
+ *
+ * <p>This permission grants the ability to view and potentially interact with
 	 * other players' currency data, including balances, transaction histories,
 	 * and currency-specific information. This is a higher-privilege permission
 	 * typically reserved for administrators and trusted staff members.
-	 * </p>
 	 *
-	 * <h3>Access Granted:</h3>
+	 * <p><strong>Access Granted:</strong>
 	 * <ul>
 	 *   <li>Viewing other players' currency balances</li>
 	 *   <li>Accessing other players' transaction histories</li>
@@ -110,7 +107,7 @@ public enum ECurrencyPermission implements IPermissionNode {
 	 *   <li>Administrative currency oversight functions</li>
 	 * </ul>
 	 *
-	 * <h3>Security Level:</h3>
+	 * <p><strong>Security Level:</strong>
 	 * <ul>
 	 *   <li><strong>Risk Level:</strong> Medium - Access to sensitive player financial data</li>
 	 *   <li><strong>User Type:</strong> Administrators, moderators, and trusted staff</li>
@@ -118,7 +115,7 @@ public enum ECurrencyPermission implements IPermissionNode {
 	 *   <li><strong>Impact:</strong> Potential privacy implications for player data</li>
 	 * </ul>
 	 *
-	 * <h3>Privacy Considerations:</h3>
+	 * <p><strong>Privacy Considerations:</strong>
 	 * <ul>
 	 *   <li>Should be granted only to trusted users</li>
 	 *   <li>Access should be logged for audit purposes</li>
@@ -126,7 +123,7 @@ public enum ECurrencyPermission implements IPermissionNode {
 	 *   <li>Regular review of permission holders recommended</li>
 	 * </ul>
 	 *
-	 * <h3>Prerequisites:</h3>
+	 * <p><strong>Prerequisites:</strong>
 	 * <ul>
 	 *   <li>Typically requires {@link #CURRENCY} base permission</li>
 	 *   <li>Administrative or moderator role recommended</li>
@@ -140,32 +137,29 @@ public enum ECurrencyPermission implements IPermissionNode {
 	
 	/**
 	 * The internal identifier used for this permission node within the evaluation framework.
-	 * <p>
-	 * This field stores the internal name that the permission system uses to identify
+ *
+ * <p>This field stores the internal name that the permission system uses to identify
 	 * and reference this specific permission node. The internal name is used for
 	 * configuration mapping, permission resolution, and framework integration.
-	 * </p>
 	 */
 	private final String permissionInternalIdentifier;
 	
 	/**
 	 * The fallback permission node string used for compatibility and external integration.
-	 * <p>
-	 * This field provides a standardized permission string that can be used with
+ *
+ * <p>This field provides a standardized permission string that can be used with
 	 * external permission management systems or as a fallback when the internal
 	 * permission system is not available. It follows standard permission naming conventions.
-	 * </p>
 	 */
 	private final String fallbackPermissionNode;
 	
 	/**
 	 * Constructs a new currency permission enum constant with the specified identifiers.
-	 * <p>
-	 * This constructor initializes the permission node with both an internal identifier
+ *
+ * <p>This constructor initializes the permission node with both an internal identifier
 	 * for framework integration and a fallback permission string for external compatibility.
 	 * Both identifiers are required and must be non-null for proper permission system
 	 * integration and functionality.
-	 * </p>
 	 *
 	 * @param permissionInternalIdentifier the internal identifier used by the evaluation framework, must not be null
 	 * @param fallbackPermissionNode the fallback permission string for external systems, must not be null
@@ -188,12 +182,11 @@ public enum ECurrencyPermission implements IPermissionNode {
 	
 	/**
 	 * Retrieves the internal identifier for this permission node.
-	 * <p>
-	 * This method returns the internal name used by the evaluation framework to
+ *
+ * <p>This method returns the internal name used by the evaluation framework to
 	 * identify and process this permission node. The internal identifier is used
 	 * for configuration mapping, permission resolution, and system integration
 	 * within the JExEconomy plugin's permission framework.
-	 * </p>
 	 *
 	 * @return the internal identifier string, never null
 	 */
@@ -204,12 +197,11 @@ public enum ECurrencyPermission implements IPermissionNode {
 	
 	/**
 	 * Retrieves the fallback permission node string for external compatibility.
-	 * <p>
-	 * This method returns the standardized permission string that can be used
+ *
+ * <p>This method returns the standardized permission string that can be used
 	 * with external permission management systems or as a fallback when the
 	 * internal permission system is not available. This ensures compatibility
 	 * with various permission management plugins and systems.
-	 * </p>
 	 *
 	 * @return the fallback permission node string, never null
 	 */
@@ -220,14 +212,13 @@ public enum ECurrencyPermission implements IPermissionNode {
 	
 	/**
 	 * Attempts to resolve a currency permission from its internal identifier.
-	 * <p>
-	 * This method provides case-sensitive lookup of currency permissions based on
+ *
+ * <p>This method provides case-sensitive lookup of currency permissions based on
 	 * their internal identifier strings. It returns an Optional containing the
 	 * matching permission if found, or empty if no match exists. This method
 	 * is useful for configuration parsing and permission resolution.
-	 * </p>
 	 *
-	 * <h3>Matching Behavior:</h3>
+	 * <p><strong>Matching Behavior:</strong>
 	 * <ul>
 	 *   <li>Case-sensitive comparison for precise matching</li>
 	 *   <li>Exact string matching against internal identifiers</li>
@@ -253,14 +244,13 @@ public enum ECurrencyPermission implements IPermissionNode {
 	
 	/**
 	 * Attempts to resolve a currency permission from its fallback node string.
-	 * <p>
-	 * This method provides case-sensitive lookup of currency permissions based on
+ *
+ * <p>This method provides case-sensitive lookup of currency permissions based on
 	 * their fallback permission node strings. This is useful for integration with
 	 * external permission systems that use standardized permission strings and
 	 * for configuration systems that reference fallback nodes.
-	 * </p>
 	 *
-	 * <h3>Matching Behavior:</h3>
+	 * <p><strong>Matching Behavior:</strong>
 	 * <ul>
 	 *   <li>Case-sensitive comparison for precise matching</li>
 	 *   <li>Exact string matching against fallback node strings</li>
@@ -286,24 +276,23 @@ public enum ECurrencyPermission implements IPermissionNode {
 	
 	/**
 	 * Determines whether this permission involves access to other players' data.
-	 * <p>
-	 * This method identifies permissions that allow access to other players' currency
+ *
+ * <p>This method identifies permissions that allow access to other players' currency
 	 * information, which has privacy and security implications. Such permissions
 	 * typically require higher trust levels and should be granted carefully with
 	 * appropriate oversight and logging.
-	 * </p>
 	 *
-	 * <h3>Cross-Player Permissions:</h3>
+	 * <p><strong>Cross-Player Permissions:</strong>
 	 * <ul>
 	 *   <li>{@link #CURRENCY_OTHER} - Allows access to other players' currency data</li>
 	 * </ul>
 	 *
-	 * <h3>Personal Permissions:</h3>
+	 * <p><strong>Personal Permissions:</strong>
 	 * <ul>
 	 *   <li>{@link #CURRENCY} - Limited to personal currency data access</li>
 	 * </ul>
 	 *
-	 * <h3>Security Implications:</h3>
+	 * <p><strong>Security Implications:</strong>
 	 * <ul>
 	 *   <li>Cross-player permissions should be logged for audit purposes</li>
 	 *   <li>Regular review of permission holders is recommended</li>
@@ -319,24 +308,23 @@ public enum ECurrencyPermission implements IPermissionNode {
 	
 	/**
 	 * Determines whether this permission is suitable for general player access.
-	 * <p>
-	 * This method identifies permissions that can be safely granted to general
+ *
+ * <p>This method identifies permissions that can be safely granted to general
 	 * players without significant security or privacy concerns. These permissions
 	 * typically involve access to personal data only and do not affect other
 	 * players or system-wide settings.
-	 * </p>
 	 *
-	 * <h3>General Player Permissions:</h3>
+	 * <p><strong>General Player Permissions:</strong>
 	 * <ul>
 	 *   <li>{@link #CURRENCY} - Safe for general player access to personal data</li>
 	 * </ul>
 	 *
-	 * <h3>Restricted Permissions:</h3>
+	 * <p><strong>Restricted Permissions:</strong>
 	 * <ul>
 	 *   <li>{@link #CURRENCY_OTHER} - Should be restricted to trusted users</li>
 	 * </ul>
 	 *
-	 * <h3>Permission Granting Guidelines:</h3>
+	 * <p><strong>Permission Granting Guidelines:</strong>
 	 * <ul>
 	 *   <li>General player permissions can be granted by default</li>
 	 *   <li>Restricted permissions require manual review and approval</li>

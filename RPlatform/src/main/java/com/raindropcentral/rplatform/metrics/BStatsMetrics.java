@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 import java.util.zip.GZIPOutputStream;
 
 /**
- * Provides a relocated copy of the bStats metrics implementation that schedules data collection,
+ * Provides a relocated copy of the bStats metrics implementation that schedules data collection,.
  * builds JSON payloads, and submits them to the bStats service on behalf of a {@link JavaPlugin}.
  * The implementation mirrors the upstream API while respecting the repository's relocation
  * requirements, allowing callers to register charts and control log verbosity at runtime.
@@ -99,7 +99,7 @@ public class BStatsMetrics {
     }
 
     /**
-     * Loads the bStats configuration, creating the file with sensible defaults when missing and
+     * Loads the bStats configuration, creating the file with sensible defaults when missing and.
      * logging a warning if the file cannot be written to disk.
      *
      * @param configFile the configuration file to load
@@ -134,7 +134,7 @@ public class BStatsMetrics {
     }
 
     /**
-     * Appends platform specific data such as player counts, JVM metadata, and server information to
+     * Appends platform specific data such as player counts, JVM metadata, and server information to.
      * the provided JSON builder.
      *
      * @param builder the JSON builder receiving platform fields
@@ -161,7 +161,7 @@ public class BStatsMetrics {
     }
 
     /**
-     * Coordinates the lifecycle of scheduled submissions, including data aggregation and HTTP
+     * Coordinates the lifecycle of scheduled submissions, including data aggregation and HTTP.
      * transport to the bStats endpoint. Handles logging for lifecycle events and submission
      * outcomes to aid diagnostics.
      *
@@ -280,7 +280,7 @@ public class BStatsMetrics {
         }
 
         /**
-         * Sets up the recurring submission tasks using randomized delays to reduce coordinated
+         * Sets up the recurring submission tasks using randomized delays to reduce coordinated.
          * request bursts across servers.
          */
         private void startSubmitting() {
@@ -334,7 +334,7 @@ public class BStatsMetrics {
         }
 
         /**
-         * Sends the prepared payload while capturing and optionally logging exceptions using the
+         * Sends the prepared payload while capturing and optionally logging exceptions using the.
          * provided error consumer.
          *
          * @param data the payload to transmit
@@ -350,7 +350,7 @@ public class BStatsMetrics {
         }
 
         /**
-         * Performs the HTTP POST request to the bStats endpoint, logging the outbound payload and
+         * Performs the HTTP POST request to the bStats endpoint, logging the outbound payload and.
          * response when configured to do so.
          *
          * @param data the JSON payload to submit
@@ -395,7 +395,7 @@ public class BStatsMetrics {
         }
 
         /**
-         * Verifies that the metrics class has been relocated away from the default bStats package,
+         * Verifies that the metrics class has been relocated away from the default bStats package,.
          * throwing an {@link IllegalStateException} when relocation is skipped.
          */
         private void checkRelocation() {
@@ -437,7 +437,7 @@ public class BStatsMetrics {
     }
 
     /**
-     * Base chart abstraction used by the metrics implementation to transform plugin provided data
+     * Base chart abstraction used by the metrics implementation to transform plugin provided data.
      * into JSON structures suitable for submission.
      *
      * @author JExcellence
@@ -461,7 +461,7 @@ public class BStatsMetrics {
         }
 
         /**
-         * Builds the JSON object representing this chart, logging errors when data gathering fails
+         * Builds the JSON object representing this chart, logging errors when data gathering fails.
          * and error logging is enabled.
          *
          * @param errorLogger the logger used for chart specific failures
@@ -730,7 +730,7 @@ public class BStatsMetrics {
     }
 
     /**
-     * Lightweight JSON builder used to construct payloads without bringing in an additional
+     * Lightweight JSON builder used to construct payloads without bringing in an additional.
      * dependency.
      *
      * @author JExcellence
@@ -889,11 +889,17 @@ public class BStatsMetrics {
                 this.value = value;
             }
 
+            /**
+             * Executes toString.
+             */
             @Override
             public @NotNull String toString() {
                 return value;
             }
 
+            /**
+             * Executes equals.
+             */
             @Override
             public boolean equals(final Object o) {
                 if (this == o) return true;
@@ -902,6 +908,9 @@ public class BStatsMetrics {
                 return value.equals(that.value);
             }
 
+            /**
+             * Returns whether hCode.
+             */
             @Override
             public int hashCode() {
                 return value.hashCode();

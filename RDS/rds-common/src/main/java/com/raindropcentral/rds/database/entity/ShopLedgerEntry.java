@@ -30,6 +30,9 @@ import java.util.UUID;
         "unused",
         "JpaDataSourceORMInspection"
 })
+/**
+ * Represents the ShopLedgerEntry API type.
+ */
 public class ShopLedgerEntry extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
@@ -170,6 +173,9 @@ public class ShopLedgerEntry extends BaseEntity {
         );
     }
 
+    /**
+     * Executes taxation.
+     */
     public static @NotNull ShopLedgerEntry taxation(
             final @NotNull Shop shop,
             final @Nullable UUID actorId,
@@ -201,6 +207,9 @@ public class ShopLedgerEntry extends BaseEntity {
         return this.shop;
     }
 
+    /**
+     * Sets shop.
+     */
     public void setShop(
             final @NotNull Shop shop
     ) {

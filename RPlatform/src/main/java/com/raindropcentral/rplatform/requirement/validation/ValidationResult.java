@@ -101,37 +101,58 @@ public record ValidationResult(
     
     // ==================== Builder Pattern ====================
     
+    /**
+     * Executes builder.
+     */
     @NotNull
     public static Builder builder() {
         return new Builder();
     }
     
+    /**
+     * Represents the Builder API type.
+     */
     public static final class Builder {
         private final List<String> errors = new ArrayList<>();
         private final List<String> warnings = new ArrayList<>();
 
         private Builder() {}
 
+        /**
+         * Executes addError.
+         */
         public Builder addError(@NotNull String message) {
             errors.add(message);
             return this;
         }
 
+        /**
+         * Executes addWarning.
+         */
         public Builder addWarning(@NotNull String message) {
             warnings.add(message);
             return this;
         }
 
+        /**
+         * Executes addErrorIf.
+         */
         public Builder addErrorIf(boolean condition, @NotNull String message) {
             if (condition) errors.add(message);
             return this;
         }
 
+        /**
+         * Executes addWarningIf.
+         */
         public Builder addWarningIf(boolean condition, @NotNull String message) {
             if (condition) warnings.add(message);
             return this;
         }
 
+        /**
+         * Executes build.
+         */
         public ValidationResult build() {
             return new ValidationResult(!errors.isEmpty() ? false : true, errors, warnings);
         }

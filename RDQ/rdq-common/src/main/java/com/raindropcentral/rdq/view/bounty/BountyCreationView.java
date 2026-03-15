@@ -28,8 +28,8 @@ import java.util.logging.Logger;
 
 /**
  * InventoryFramework view for creating a new bounty in the RaindropQuests system.
- * <p>
- * This view allows players to:
+ *
+ * <p>This view allows players to:
  * <ul>
  *   <li>Select a target player for the bounty</li>
  *   <li>Add item and currency rewards</li>
@@ -37,12 +37,10 @@ import java.util.logging.Logger;
  * </ul>
  * The view manages state for the selected target, rewards, and inserted items,
  * and provides feedback and validation throughout the bounty creation process.
- * </p>
  *
- * <p>
- * Navigation to related views (such as {@link PaginatedPlayerView}, {@link BountyRewardView}, and {@link BountyPlayerInfoView})
+ *
+ * <p>Navigation to related views (such as {@link PaginatedPlayerView}, {@link BountyRewardView}, and {@link BountyPlayerInfoView})
  * is handled based on user actions and current state.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -216,6 +214,9 @@ public class BountyCreationView extends BaseView {
 		return "bounty_creation_ui";
 	}
 	
+	/**
+	 * Executes onFirstRender.
+	 */
 	@Override
 	public void onFirstRender(
 		final @NotNull RenderContext render,

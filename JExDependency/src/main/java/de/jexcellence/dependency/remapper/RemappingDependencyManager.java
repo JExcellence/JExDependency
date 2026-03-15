@@ -123,7 +123,7 @@ public class RemappingDependencyManager {
     }
 
     /**
-     * Fallback no-arg constructor for compatibility that defaults to the working directory. Mainly intended for
+     * Fallback no-arg constructor for compatibility that defaults to the working directory. Mainly intended for.
      * command-line usage or testing scenarios.
      */
     public RemappingDependencyManager() {
@@ -140,7 +140,7 @@ public class RemappingDependencyManager {
     // ----------------- Public API: relocation and remapping -----------------
 
     /**
-     * Registers a package relocation mapping. Package names are normalised and restricted roots (e.g. {@code java}) are
+     * Registers a package relocation mapping. Package names are normalised and restricted roots (e.g. {@code java}) are.
      * ignored to avoid interfering with core classes.
      *
      * @param fromPackage original package name in dot notation
@@ -167,7 +167,7 @@ public class RemappingDependencyManager {
     }
 
     /**
-     * Remaps the specified jar into the configured remapped directory using registered relocations. When no relocations
+     * Remaps the specified jar into the configured remapped directory using registered relocations. When no relocations.
      * are registered the jar is copied verbatim while stripping invalid signature files.
      *
      * @param inputJar  original jar file
@@ -208,7 +208,7 @@ public class RemappingDependencyManager {
     // ----------------- Legacy JEDependency-compatible lifecycle -----------------
 
     /**
-     * Legacy entry point that downloads declared dependencies, applies relocations when configured and injects them
+     * Legacy entry point that downloads declared dependencies, applies relocations when configured and injects them.
      * into the plugin's class loader. The method is synchronous and logs failures rather than propagating them.
      *
      * @param additionalDependencies optional coordinates ({@code group:artifact:version[:classifier]}) appended to the YAML list
@@ -258,7 +258,7 @@ public class RemappingDependencyManager {
     }
 
     /**
-     * Performs downloading, remapping and injection using the supplied class loader rather than the anchor class's
+     * Performs downloading, remapping and injection using the supplied class loader rather than the anchor class's.
      * loader. Intended for legacy reflective invocation by {@link de.jexcellence.dependency.JEDependency}.
      *
      * @param classLoader class loader that should receive injected jars
@@ -606,6 +606,9 @@ public class RemappingDependencyManager {
                     ));
         }
 
+        /**
+         * Executes map.
+         */
         @Override
         public String map(final String internalName) {
             if (internalName == null) return null;
@@ -616,6 +619,9 @@ public class RemappingDependencyManager {
             return relocateInternal(internalName);
         }
 
+        /**
+         * Executes mapPackageName.
+         */
         @Override
         public String mapPackageName(final String name) {
             if (name == null) return null;

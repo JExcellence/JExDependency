@@ -24,11 +24,10 @@ import java.util.logging.Logger;
 
 /**
  * Handler for potion effect perks.
- * <p>
- * This handler manages the application, removal, and continuous refresh of potion effects
+ *
+ * <p>This handler manages the application, removal, and continuous refresh of potion effects
  * for passive perks. It maintains a scheduled task that refreshes potion effects to ensure
  * they remain active while the perk is enabled.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0

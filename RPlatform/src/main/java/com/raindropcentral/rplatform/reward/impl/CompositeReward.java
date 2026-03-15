@@ -13,6 +13,9 @@ import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Represents the CompositeReward API type.
+ */
 @JsonTypeName("COMPOSITE")
 public final class CompositeReward extends AbstractReward {
 
@@ -21,6 +24,9 @@ public final class CompositeReward extends AbstractReward {
     private final List<AbstractReward> rewards;
     private final boolean continueOnError;
 
+    /**
+     * Executes CompositeReward.
+     */
     @JsonCreator
     public CompositeReward(
         @JsonProperty("rewards") @NotNull List<AbstractReward> rewards,
@@ -30,11 +36,17 @@ public final class CompositeReward extends AbstractReward {
         this.continueOnError = continueOnError;
     }
 
+    /**
+     * Gets typeId.
+     */
     @Override
     public @NotNull String getTypeId() {
         return "COMPOSITE";
     }
 
+    /**
+     * Executes grant.
+     */
     @Override
     public @NotNull CompletableFuture<Boolean> grant(@NotNull Player player) {
         if (rewards.isEmpty()) {
@@ -87,6 +99,9 @@ public final class CompositeReward extends AbstractReward {
             });
     }
 
+    /**
+     * Gets estimatedValue.
+     */
     @Override
     public double getEstimatedValue() {
         return rewards.stream()
@@ -94,18 +109,30 @@ public final class CompositeReward extends AbstractReward {
             .sum();
     }
 
+    /**
+     * Gets rewards.
+     */
     public List<AbstractReward> getRewards() {
         return List.copyOf(rewards);
     }
 
+    /**
+     * Returns whether continueOnError.
+     */
     public boolean isContinueOnError() {
         return continueOnError;
     }
 
+    /**
+     * Gets rewardCount.
+     */
     public int getRewardCount() {
         return rewards.size();
     }
 
+    /**
+     * Executes validate.
+     */
     @Override
     public void validate() {
         if (rewards.isEmpty()) {

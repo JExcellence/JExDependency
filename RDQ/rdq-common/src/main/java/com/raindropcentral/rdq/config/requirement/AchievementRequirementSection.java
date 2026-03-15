@@ -9,10 +9,9 @@ import java.util.List;
 
 /**
  * Configuration section for achievement-based requirements.
- * <p>
- * This section handles all configuration options specific to AchievementRequirement,
+ *
+ * <p>This section handles all configuration options specific to AchievementRequirement,
  * including required achievements and achievement checking modes.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -73,6 +72,7 @@ public class AchievementRequirementSection extends AConfigSection {
 	/**
 0	 * Gets the single required achievement, trying multiple field names.
 	 *
+	  * Documents this API member.
 	 * @return the required achievement
 	 */
 	public String getRequiredAchievement() {

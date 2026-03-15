@@ -25,19 +25,17 @@ import java.util.logging.Logger;
 
 /**
  * Primary implementation of the ICurrencyAdapter interface providing comprehensive currency management operations.
- * <p>
- * This adapter serves as the main entry point for all currency-related operations within the JExEconomy system.
+ *
+ * <p>This adapter serves as the main entry point for all currency-related operations within the JExEconomy system.
  * It provides asynchronous implementations for balance management, transaction processing, entity creation,
  * and query operations while ensuring thread safety and proper error handling. Enhanced with event system
  * for external plugin integration and operation monitoring.
- * </p>
- * <p>
- * All operations fire appropriate events that can be listened to by other plugins or internal systems
+ *
+ * <p>All operations fire appropriate events that can be listened to by other plugins or internal systems
  * for logging, monitoring, and integration purposes. The adapter maintains separation of concerns by
  * focusing solely on currency operations while delegating logging to event listeners.
- * </p>
  *
- * <h3>Core Functionality:</h3>
+ * <p><strong>Core Functionality:</strong>
  * <ul>
  *   <li><strong>Balance Operations:</strong> Retrieve player balances with caching and optimization</li>
  *   <li><strong>Transaction Processing:</strong> Handle deposits and withdrawals with validation and persistence</li>
@@ -47,7 +45,7 @@ import java.util.logging.Logger;
  *   <li><strong>Event System:</strong> Fire events for currency operations and balance changes</li>
  * </ul>
  *
- * <h3>Design Principles:</h3>
+ * <p><strong>Design Principles:</strong>
  * <ul>
  *   <li><strong>Asynchronous Operations:</strong> All database operations execute on background threads</li>
  *   <li><strong>Thread Safety:</strong> Safe for concurrent access from multiple threads</li>
@@ -57,14 +55,13 @@ import java.util.logging.Logger;
  *   <li><strong>Separation of Concerns:</strong> Focused on currency operations, delegates logging to events</li>
  * </ul>
  *
- * <h3>Implementation Notes:</h3>
- * <p>
- * This implementation uses the JExEconomy plugin's repository layer for data access and leverages
+ * <p><strong>Implementation Notes:</strong>
+ *
+ * <p>This implementation uses the JExEconomy plugin's repository layer for data access and leverages
  * the plugin's executor service for asynchronous operations. All monetary operations include
  * appropriate validation and atomic updates to ensure data consistency. Events are fired for
  * all significant operations to allow external plugins to integrate with the currency system.
  * Logging is handled by event listeners to maintain clean separation of concerns.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -76,30 +73,27 @@ public class CurrencyAdapter implements ICurrencyAdapter {
 
     /**
      * Logger instance for recording currency adapter operations and errors.
-     * <p>
-     * Used for debugging, monitoring, and error tracking throughout the adapter's lifecycle.
+ *
+ * <p>Used for debugging, monitoring, and error tracking throughout the adapter's lifecycle.
      * All significant operations and errors are logged with appropriate severity levels.
      * Database logging is handled separately through event listeners.
-     * </p>
      */
     private static final Logger ADAPTER_LOGGER = CentralLogger.getLoggerByName("JExEconomy");
 
     /**
      * Reference to the currency runtime providing access to all system components.
-     * <p>
-     * Provides access to repositories, executor services, and other plugin components
+ *
+ * <p>Provides access to repositories, executor services, and other plugin components
      * required for currency operations. This reference is used throughout the adapter
      * to access the plugin's infrastructure and services.
-     * </p>
      */
     private JExEconomy jexEconomyImpl;
 
     /**
      * Constructs a new CurrencyAdapter with the specified currency runtime.
-     * <p>
-     * Initializes the adapter with access to the runtime's repositories, executor services,
+ *
+ * <p>Initializes the adapter with access to the runtime's repositories, executor services,
      * and other infrastructure components required for currency operations.
-     * </p>
      *
      * @param jexEconomyImpl the currency runtime providing access to repositories and services, must not be null
      * @throws IllegalArgumentException if runtime is null
@@ -110,11 +104,10 @@ public class CurrencyAdapter implements ICurrencyAdapter {
 
     /**
      * Retrieves the current balance of a player for a specific currency.
-     * <p>
-     * This method performs an asynchronous lookup of the player's balance in the specified
+ *
+ * <p>This method performs an asynchronous lookup of the player's balance in the specified
      * currency. If the player has no account for the given currency, the balance will be 0.0.
      * The operation is safe for offline players and will not cause server lag.
-     * </p>
      *
      * @param targetOfflinePlayer the player whose balance should be retrieved, must not be null
      * @param targetCurrency the currency for which to retrieve the balance, must not be null
@@ -141,11 +134,10 @@ public class CurrencyAdapter implements ICurrencyAdapter {
 
     /**
      * Retrieves the balance from an existing UserCurrency entity.
-     * <p>
-     * This method provides direct access to the balance stored in a UserCurrency entity.
+ *
+ * <p>This method provides direct access to the balance stored in a UserCurrency entity.
      * It's more efficient than the player-based method when you already have the
      * UserCurrency entity available, as it avoids additional database lookups.
-     * </p>
      *
      * @param userCurrencyEntity the UserCurrency entity containing the balance, must not be null
      * @return a CompletableFuture containing the balance as a Double value
@@ -161,12 +153,11 @@ public class CurrencyAdapter implements ICurrencyAdapter {
 
     /**
      * Deposits a specified amount of currency into a player's account.
-     * <p>
-     * This method performs a secure deposit operation, adding the specified amount to the
+ *
+ * <p>This method performs a secure deposit operation, adding the specified amount to the
      * player's existing balance for the given currency. The operation includes validation
      * to ensure the amount is positive and the currency is valid. If the player doesn't
      * have an account for the currency, one will be created automatically.
-     * </p>
      *
      * @param targetOfflinePlayer the player to deposit currency to, must not be null
      * @param targetCurrency the currency to deposit, must not be null
@@ -205,6 +196,9 @@ public class CurrencyAdapter implements ICurrencyAdapter {
                 );
     }
 
+    /**
+     * Executes deposit.
+     */
     @Override
     public @NotNull CompletableFuture<CurrencyResponse> deposit(@NotNull OfflinePlayer targetOfflinePlayer, @NotNull String targetCurrencyIdentifier, double depositAmount) {
         return this.findUserCurrencyEntity(targetOfflinePlayer, targetCurrencyIdentifier)
@@ -234,11 +228,10 @@ public class CurrencyAdapter implements ICurrencyAdapter {
 
     /**
      * Deposits a specified amount into an existing UserCurrency entity.
-     * <p>
-     * This method provides direct deposit functionality for UserCurrency entities,
+ *
+ * <p>This method provides direct deposit functionality for UserCurrency entities,
      * offering better performance when the entity is already available. The operation
      * updates the entity's balance and persists the changes to the database.
-     * </p>
      *
      * @param userCurrencyEntity the UserCurrency entity to deposit to, must not be null
      * @param depositAmount the amount to deposit, must be positive
@@ -267,12 +260,11 @@ public class CurrencyAdapter implements ICurrencyAdapter {
 
     /**
      * Withdraws a specified amount of currency from a player's account.
-     * <p>
-     * This method performs a secure withdrawal operation, removing the specified amount
+ *
+ * <p>This method performs a secure withdrawal operation, removing the specified amount
      * from the player's balance for the given currency. The operation includes validation
      * to ensure sufficient funds are available and the amount is positive. Insufficient
      * funds will result in a failure response without modifying the balance.
-     * </p>
      *
      * @param targetOfflinePlayer the player to withdraw currency from, must not be null
      * @param targetCurrency the currency to withdraw, must not be null
@@ -313,11 +305,10 @@ public class CurrencyAdapter implements ICurrencyAdapter {
 
     /**
      * Withdraws a specified amount from an existing UserCurrency entity.
-     * <p>
-     * This method provides direct withdrawal functionality for UserCurrency entities,
+ *
+ * <p>This method provides direct withdrawal functionality for UserCurrency entities,
      * offering optimal performance when the entity is already loaded. The operation
      * validates sufficient funds and updates the entity balance atomically.
-     * </p>
      *
      * @param userCurrencyEntity the UserCurrency entity to withdraw from, must not be null
      * @param withdrawalAmount the amount to withdraw, must be positive
@@ -346,11 +337,10 @@ public class CurrencyAdapter implements ICurrencyAdapter {
 
     /**
      * Creates a new player entity in the currency system.
-     * <p>
-     * This method initializes a new player record in the database, creating the necessary
+ *
+ * <p>This method initializes a new player record in the database, creating the necessary
      * foundation for currency operations. The player entity stores essential information
      * such as UUID and current name, and serves as the basis for all currency accounts.
-     * </p>
      *
      * @param targetOfflinePlayer the player for whom to create an entity, must not be null
      * @return a CompletableFuture containing true if creation was successful, false otherwise
@@ -387,12 +377,11 @@ public class CurrencyAdapter implements ICurrencyAdapter {
 
     /**
      * Creates a new currency entity in the system with event firing.
-     * <p>
-     * This method registers a new currency type in the database, making it available
+ *
+ * <p>This method registers a new currency type in the database, making it available
      * for use throughout the system. The currency entity contains all configuration
      * information including symbol, prefix, suffix, and display properties. Events
      * are fired before and after creation to allow external plugins to integrate.
-     * </p>
      *
      * @param newCurrencyEntity the currency entity to create, must not be null and must be valid
      * @return a CompletableFuture containing true if creation was successful, false otherwise
@@ -405,12 +394,11 @@ public class CurrencyAdapter implements ICurrencyAdapter {
 
     /**
      * Creates a new currency entity in the system with event firing and player context.
-     * <p>
-     * This method registers a new currency type in the database, making it available
+ *
+ * <p>This method registers a new currency type in the database, making it available
      * for use throughout the system. The currency entity contains all configuration
      * information including symbol, prefix, suffix, and display properties. Events
      * are fired before and after creation to allow external plugins to integrate.
-     * </p>
      *
      * @param newCurrencyEntity the currency entity to create, must not be null and must be valid
      * @param creator the player creating the currency (null if created by system/console)
@@ -508,11 +496,10 @@ public class CurrencyAdapter implements ICurrencyAdapter {
 
     /**
      * Deletes a currency from the system with event firing.
-     * <p>
-     * This method removes a currency from the database and all associated player accounts.
+ *
+ * <p>This method removes a currency from the database and all associated player accounts.
      * Events are fired before and after deletion to allow external plugins to integrate
      * and potentially prevent deletion of important currencies.
-     * </p>
      *
      * @param currencyIdentifier the identifier of the currency to delete, must not be null
      * @param deleter the player deleting the currency (null if deleted by system/console)
@@ -593,11 +580,10 @@ public class CurrencyAdapter implements ICurrencyAdapter {
 
     /**
      * Checks whether a currency with the specified identifier exists in the system.
-     * <p>
-     * This method performs a lookup to determine if a currency with the given identifier
+ *
+ * <p>This method performs a lookup to determine if a currency with the given identifier
      * is registered in the database. It's useful for validation before performing
      * operations that require a specific currency to exist.
-     * </p>
      *
      * @param currencyIdentifier the identifier of the currency to check, may be null
      * @return a CompletableFuture containing true if the currency exists, false otherwise
@@ -620,11 +606,10 @@ public class CurrencyAdapter implements ICurrencyAdapter {
 
     /**
      * Creates a new player-currency relationship entity.
-     * <p>
-     * This method establishes a connection between a player and a currency by creating
+ *
+ * <p>This method establishes a connection between a player and a currency by creating
      * a UserCurrency entity. This entity represents the player's account for that specific
      * currency and tracks their balance and transaction history.
-     * </p>
      *
      * @param targetPlayerEntity the User entity representing the player, must not be null
      * @param targetCurrencyEntity the Currency entity to associate with the player, must not be null
@@ -660,12 +645,11 @@ public class CurrencyAdapter implements ICurrencyAdapter {
 
     /**
      * Retrieves all currency accounts associated with a specific player.
-     * <p>
-     * This method returns a comprehensive list of all UserCurrency entities for the
+ *
+ * <p>This method returns a comprehensive list of all UserCurrency entities for the
      * specified player, providing access to all their currency accounts and balances.
      * The list includes all currencies the player has accounts for, regardless of
      * whether the balance is zero or positive.
-     * </p>
      *
      * @param targetOfflinePlayer the player whose currency accounts should be retrieved, must not be null
      * @return a CompletableFuture containing a List of UserCurrency entities, may be empty but never null
@@ -682,11 +666,10 @@ public class CurrencyAdapter implements ICurrencyAdapter {
 
     /**
      * Retrieves a specific currency account for a player by currency identifier.
-     * <p>
-     * This method performs a targeted lookup to find the UserCurrency entity that
+ *
+ * <p>This method performs a targeted lookup to find the UserCurrency entity that
      * represents the specified player's account for the named currency. It's more
      * efficient than retrieving all currencies when you only need one specific account.
-     * </p>
      *
      * @param targetOfflinePlayer the player whose currency account should be retrieved, must not be null
      * @param currencyIdentifier the identifier of the currency to retrieve, may be null
@@ -742,15 +725,14 @@ public class CurrencyAdapter implements ICurrencyAdapter {
 
     /**
      * Locates a UserCurrency entity for the specified player and currency combination.
-     * <p>
-     * This private helper method performs database lookup to find the UserCurrency entity
+ *
+ * <p>This private helper method performs database lookup to find the UserCurrency entity
      * that represents the player's account for the specified currency. It's used internally
      * by other methods to avoid code duplication and ensure consistent lookup behavior.
-     * </p>
      *
      * @param targetOfflinePlayer the player to find the currency account for, must not be null
      * @param targetCurrency the currency to find the account for, must not be null
-     * @return a CompletableFuture containing the UserCurrency entity if found CompletableFuture<null> otherwise
+     * @return a CompletableFuture containing the UserCurrency entity if found, or {@code null} otherwise
      */
     private @NotNull CompletableFuture<@Nullable UserCurrency> findUserCurrencyEntity(
             final @NotNull OfflinePlayer targetOfflinePlayer,
@@ -782,10 +764,9 @@ public class CurrencyAdapter implements ICurrencyAdapter {
 
     /**
      * Gets the number of players affected by a currency.
-     * <p>
-     * This helper method counts how many players have accounts for the specified currency.
+ *
+ * <p>This helper method counts how many players have accounts for the specified currency.
      * Used for providing statistics in currency deletion events.
-     * </p>
      *
      * @param currency the currency to count affected players for
      * @return a CompletableFuture containing the number of affected players
@@ -808,10 +789,9 @@ public class CurrencyAdapter implements ICurrencyAdapter {
 
     /**
      * Gets the total balance across all players for a currency.
-     * <p>
-     * This helper method calculates the sum of all player balances for the specified currency.
+ *
+ * <p>This helper method calculates the sum of all player balances for the specified currency.
      * Used for providing statistics in currency deletion events.
-     * </p>
      *
      * @param currency the currency to calculate total balance for
      * @return a CompletableFuture containing the total balance
@@ -836,11 +816,10 @@ public class CurrencyAdapter implements ICurrencyAdapter {
 
     /**
      * Creates a standardized failure response with error logging.
-     * <p>
-     * This private helper method creates CurrencyResponse objects for failed operations
+ *
+ * <p>This private helper method creates CurrencyResponse objects for failed operations
      * with consistent error handling and logging. It ensures all failure responses
      * follow the same format and are properly logged for debugging purposes.
-     * </p>
      *
      * @param attemptedAmount the amount that was attempted in the failed operation
      * @param currentBalance the current balance at the time of failure
@@ -864,12 +843,11 @@ public class CurrencyAdapter implements ICurrencyAdapter {
 
     /**
      * Executes a currency transaction operation with comprehensive error handling, logging, and event firing.
-     * <p>
-     * This private helper method provides a unified way to execute both deposit and withdrawal
+ *
+ * <p>This private helper method provides a unified way to execute both deposit and withdrawal
      * operations with consistent validation, error handling, database persistence, and event firing.
      * It reduces code duplication and ensures all transaction operations follow the same patterns
      * while integrating with the event system. Database logging is handled by creating CurrencyLog entities.
-     * </p>
      *
      * @param userCurrencyEntity the UserCurrency entity to operate on, must not be null
      * @param transactionAmount the amount to process in the transaction
@@ -1012,11 +990,10 @@ public class CurrencyAdapter implements ICurrencyAdapter {
 
     /**
      * Creates and persists a transaction log entry for currency operations.
-     * <p>
-     * This helper method creates CurrencyLog entities for all transaction operations,
+ *
+ * <p>This helper method creates CurrencyLog entities for all transaction operations,
      * providing a comprehensive audit trail in the database. The logging is performed
      * asynchronously to avoid blocking the main transaction flow.
-     * </p>
      *
      * @param userCurrencyEntity the UserCurrency entity involved in the transaction
      * @param operationType the type of operation (DEPOSIT, WITHDRAW, etc.)
@@ -1088,10 +1065,9 @@ public class CurrencyAdapter implements ICurrencyAdapter {
 
     /**
      * Creates and persists a management log entry for currency operations.
-     * <p>
-     * This helper method creates CurrencyLog entities for currency management operations
+ *
+ * <p>This helper method creates CurrencyLog entities for currency management operations
      * such as creation and deletion, providing administrative audit trails.
-     * </p>
      *
      * @param currency the currency involved in the operation
      * @param operation the operation performed (e.g., "created", "deleted")
@@ -1155,20 +1131,18 @@ public class CurrencyAdapter implements ICurrencyAdapter {
     
     /**
      * Retrieves all available currencies in the system.
-     * <p>
-     * This method provides access to all currencies that have been registered in the
+ *
+ * <p>This method provides access to all currencies that have been registered in the
      * JExEconomy system. The returned map is keyed by currency ID and contains the
      * full Currency entity for each registered currency.
-     * </p>
-     * <p>
-     * This is useful for external plugins that need to:
+ *
+ * <p>This is useful for external plugins that need to:
      * <ul>
      *   <li>List all available currencies</li>
      *   <li>Register currency bridges for requirement systems</li>
      *   <li>Provide currency selection interfaces</li>
      *   <li>Validate currency identifiers</li>
      * </ul>
-     * </p>
      *
      * @return an unmodifiable map of currency ID to Currency entity
      * @since 1.0.0
@@ -1180,11 +1154,10 @@ public class CurrencyAdapter implements ICurrencyAdapter {
     
     /**
      * Gets the currency repository for direct database access.
-     * <p>
-     * This method provides access to the underlying currency repository,
+ *
+ * <p>This method provides access to the underlying currency repository,
      * allowing direct queries to the database. Useful for loading currencies
      * before they are cached in memory.
-     * </p>
      *
      * @return the currency repository
      * @since 2.0.1

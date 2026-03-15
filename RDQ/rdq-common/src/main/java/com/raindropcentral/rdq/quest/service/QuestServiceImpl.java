@@ -26,11 +26,10 @@ import java.util.stream.Collectors;
 
 /**
  * Implementation of the quest service.
- * <p>
- * This service manages all quest-related operations including quest discovery,
+ *
+ * <p>This service manages all quest-related operations including quest discovery,
  * starting, abandoning, and progress tracking. It uses Caffeine caching for
  * improved performance on frequently accessed data.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0
@@ -88,6 +87,9 @@ public class QuestServiceImpl implements QuestService {
         this.maxActiveQuests = MAX_ACTIVE_QUESTS_DEFAULT;
     }
     
+    /**
+     * Gets categories.
+     */
     @Override
     @NotNull
     public CompletableFuture<List<QuestCategory>> getCategories() {
@@ -109,6 +111,9 @@ public class QuestServiceImpl implements QuestService {
                 });
     }
     
+    /**
+     * Gets questsByCategory.
+     */
     @Override
     @NotNull
     public CompletableFuture<List<Quest>> getQuestsByCategory(@NotNull final String categoryIdentifier) {
@@ -133,6 +138,9 @@ public class QuestServiceImpl implements QuestService {
                 });
     }
     
+    /**
+     * Gets quest.
+     */
     @Override
     @NotNull
     public CompletableFuture<Optional<Quest>> getQuest(@NotNull final String questIdentifier) {
@@ -154,6 +162,9 @@ public class QuestServiceImpl implements QuestService {
                 });
     }
     
+    /**
+     * Executes startQuest.
+     */
     @Override
     @NotNull
     public CompletableFuture<QuestStartResult> startQuest(
@@ -203,6 +214,9 @@ public class QuestServiceImpl implements QuestService {
                 });
     }
     
+    /**
+     * Executes abandonQuest.
+     */
     @Override
     @NotNull
     public CompletableFuture<QuestAbandonResult> abandonQuest(
@@ -241,6 +255,9 @@ public class QuestServiceImpl implements QuestService {
                 });
     }
     
+    /**
+     * Gets activeQuests.
+     */
     @Override
     @NotNull
     public CompletableFuture<List<ActiveQuest>> getActiveQuests(@NotNull final UUID playerId) {
@@ -268,6 +285,9 @@ public class QuestServiceImpl implements QuestService {
                 });
     }
     
+    /**
+     * Gets progress.
+     */
     @Override
     @NotNull
     public CompletableFuture<Optional<QuestProgress>> getProgress(
@@ -282,6 +302,9 @@ public class QuestServiceImpl implements QuestService {
                 });
     }
     
+    /**
+     * Executes canStartQuest.
+     */
     @Override
     @NotNull
     public CompletableFuture<QuestStartResult> canStartQuest(
@@ -359,6 +382,9 @@ public class QuestServiceImpl implements QuestService {
                 });
     }
     
+    /**
+     * Gets activeQuestCount.
+     */
     @Override
     @NotNull
     public CompletableFuture<Integer> getActiveQuestCount(@NotNull final UUID playerId) {
@@ -369,6 +395,9 @@ public class QuestServiceImpl implements QuestService {
                 });
     }
     
+    /**
+     * Returns whether questActive.
+     */
     @Override
     @NotNull
     public CompletableFuture<Boolean> isQuestActive(
@@ -383,11 +412,17 @@ public class QuestServiceImpl implements QuestService {
                 });
     }
     
+    /**
+     * Executes invalidatePlayerCache.
+     */
     @Override
     public void invalidatePlayerCache(@NotNull final UUID playerId) {
         activeQuestCache.invalidate(playerId);
     }
     
+    /**
+     * Executes invalidateQuestCache.
+     */
     @Override
     public void invalidateQuestCache() {
         categoryCache.invalidateAll();

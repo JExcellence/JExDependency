@@ -2,8 +2,8 @@ package com.raindropcentral.rdt.commands;
 
 /**
  * Sub-commands supported by the primary player command ({@code /prt}).
- * <p>
- * Each enum value maps to a corresponding handler method in
+ *
+ * <p>Each enum value maps to a corresponding handler method in
  * {@link PRT}.
  */
 public enum EPRTAction {

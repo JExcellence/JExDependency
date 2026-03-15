@@ -6,8 +6,8 @@ import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
 
 /**
  * Represents the configuration section for a specific notification type in the rank system.
- * <p>
- * This class encapsulates settings related to how notifications are displayed and delivered,
+ *
+ * <p>This class encapsulates settings related to how notifications are displayed and delivered,
  * such as enabling/disabling, broadcast options, display methods (title, action bar),
  * translation keys for text, and sound type. Default values are provided for all fields if unset.
  *

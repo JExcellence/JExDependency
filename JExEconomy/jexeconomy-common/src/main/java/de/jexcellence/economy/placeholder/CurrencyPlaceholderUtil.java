@@ -13,14 +13,13 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * Utility class for handling currency-related placeholders in the JExEconomy system.
- * <p>
- * This class provides comprehensive methods to retrieve and format currency and player balance information
+ *
+ * <p>This class provides comprehensive methods to retrieve and format currency and player balance information
  * for use in placeholder systems, such as PlaceholderAPI or custom in-game formatting.
  * It supports various formatting styles, currency information retrieval, and seamless integration with
  * player and currency repositories.
- * </p>
  *
- * <h3>Core Functionality:</h3>
+ * <p><strong>Core Functionality:</strong>
  * <ul>
  *   <li><strong>Currency Information:</strong> Retrieve currency symbols, prefixes, suffixes, and identifiers</li>
  *   <li><strong>Balance Formatting:</strong> Format player balances with multiple number format options</li>
@@ -28,14 +27,14 @@ import java.util.concurrent.CompletableFuture;
  *   <li><strong>Statistical Data:</strong> Calculate total currency in circulation and top player balances</li>
  * </ul>
  *
- * <h3>Supported Placeholder Formats:</h3>
+ * <p><strong>Supported Placeholder Formats:</strong>
  * <ul>
  *   <li><code>currency_{identifier}_{infoType}</code> - Currency information placeholders</li>
  *   <li><code>player_currency_{identifier}_{format}</code> - Raw player balance placeholders</li>
  *   <li><code>player_formatted_currency_{identifier}_{format}</code> - Fully formatted balance placeholders</li>
  * </ul>
  *
- * <h3>Number Formatting Options:</h3>
+ * <p><strong>Number Formatting Options:</strong>
  * <ul>
  *   <li><strong>amount:</strong> Standard decimal format (e.g., 1234.56)</li>
  *   <li><strong>amount-rounded:</strong> Rounded to whole numbers (e.g., 1235)</li>
@@ -66,11 +65,10 @@ public class CurrencyPlaceholderUtil {
 	
 	/**
 	 * Constructs a new {@code CurrencyPlaceholderUtil} for the given plugin instance.
-	 * <p>
-	 * Initializes number formatters for German-style and standard decimal formatting.
+ *
+ * <p>Initializes number formatters for German-style and standard decimal formatting.
 	 * The German formatter uses dots as thousand separators with no decimal places,
 	 * while the decimal formatter maintains two decimal places for precision.
-	 * </p>
 	 *
 	 * @param jexEconomyImpl the main JExEconomy plugin instance, must not be null
 	 * @throws IllegalArgumentException if the plugin instance is null
@@ -91,13 +89,12 @@ public class CurrencyPlaceholderUtil {
 	
 	/**
 	 * Retrieves currency information based on the provided identifier and information type.
-	 * <p>
-	 * This method searches for a currency by its identifier (case-insensitive) and returns
+ *
+ * <p>This method searches for a currency by its identifier (case-insensitive) and returns
 	 * the requested information type. If the currency is not found or the information type
 	 * is invalid, an empty string is returned.
-	 * </p>
 	 *
-	 * <h3>Supported Information Types:</h3>
+	 * <p><strong>Supported Information Types:</strong>
 	 * <ul>
 	 *   <li><strong>name:</strong> Returns the currency identifier</li>
 	 *   <li><strong>symbol:</strong> Returns the currency symbol</li>
@@ -134,13 +131,12 @@ public class CurrencyPlaceholderUtil {
 	
 	/**
 	 * Retrieves a player's currency balance with various formatting options.
-	 * <p>
-	 * This method searches for the specified currency and player combination, then formats
+ *
+ * <p>This method searches for the specified currency and player combination, then formats
 	 * the balance according to the requested format type. If the currency or player balance
 	 * is not found, "N/A" is returned.
-	 * </p>
 	 *
-	 * <h3>Supported Format Types:</h3>
+	 * <p><strong>Supported Format Types:</strong>
 	 * <ul>
 	 *   <li><strong>amount:</strong> Standard decimal format with two decimal places</li>
 	 *   <li><strong>amount-rounded:</strong> Rounded to whole numbers</li>
@@ -196,16 +192,14 @@ public class CurrencyPlaceholderUtil {
 	
 	/**
 	 * Retrieves a fully formatted player balance with currency symbols and formatting.
-	 * <p>
-	 * This method combines the player's balance with the currency's prefix, symbol, and suffix
+ *
+ * <p>This method combines the player's balance with the currency's prefix, symbol, and suffix
 	 * to create a complete formatted string. The balance is formatted according to the specified
 	 * format type, and the result includes all currency display elements.
-	 * </p>
 	 *
-	 * <h3>Format Structure:</h3>
-	 * <p>
-	 * The returned string follows the pattern: <code>prefix + formatted_amount + symbol + suffix</code>
-	 * </p>
+	 * <p><strong>Format Structure:</strong>
+ *
+ * <p>The returned string follows the pattern: <code>prefix + formatted_amount + symbol + suffix</code>
 	 *
 	 * @param targetPlayerId the UUID of the player, must not be null
 	 * @param currencyIdentifier the currency identifier (case-insensitive), must not be null
@@ -247,13 +241,12 @@ public class CurrencyPlaceholderUtil {
 	
 	/**
 	 * Processes a placeholder string for a specific player.
-	 * <p>
-	 * This method serves as the main entry point for placeholder resolution, handling various
+ *
+ * <p>This method serves as the main entry point for placeholder resolution, handling various
 	 * placeholder formats and delegating to appropriate methods for processing. It supports
 	 * currency information placeholders, player balance placeholders, and formatted balance placeholders.
-	 * </p>
 	 *
-	 * <h3>Supported Placeholder Patterns:</h3>
+	 * <p><strong>Supported Placeholder Patterns:</strong>
 	 * <ul>
 	 *   <li><code>currency_{identifier}_{infoType}</code> - Currency information</li>
 	 *   <li><code>player_currency_{identifier}_{format}</code> - Raw player balance</li>
@@ -337,11 +330,10 @@ public class CurrencyPlaceholderUtil {
 	
 	/**
 	 * Retrieves the top players for a specific currency.
-	 * <p>
-	 * This method is currently a stub implementation and returns an empty map.
+ *
+ * <p>This method is currently a stub implementation and returns an empty map.
 	 * Future implementations will query the database for the highest balance holders
 	 * of the specified currency and return their names mapped to their balances.
-	 * </p>
 	 *
 	 * @param currencyIdentifier the currency identifier (case-insensitive), must not be null
 	 * @param resultLimit the maximum number of players to return, must be positive
@@ -364,13 +356,12 @@ public class CurrencyPlaceholderUtil {
 	
 	/**
 	 * Formats a raw balance amount according to the specified format type.
-	 * <p>
-	 * This utility method provides consistent number formatting across the placeholder system.
+ *
+ * <p>This utility method provides consistent number formatting across the placeholder system.
 	 * It supports the same format types as the balance retrieval methods and can be used
 	 * independently for formatting currency amounts.
-	 * </p>
 	 *
-	 * <h3>Supported Format Types:</h3>
+	 * <p><strong>Supported Format Types:</strong>
 	 * <ul>
 	 *   <li><strong>amount:</strong> Standard decimal format with two decimal places</li>
 	 *   <li><strong>amount-rounded:</strong> Rounded to whole numbers</li>
@@ -397,17 +388,15 @@ public class CurrencyPlaceholderUtil {
 	
 	/**
 	 * Retrieves the total amount of a specific currency in circulation.
-	 * <p>
-	 * This method calculates the sum of all player balances for the specified currency.
+ *
+ * <p>This method calculates the sum of all player balances for the specified currency.
 	 * The calculation is performed asynchronously to prevent blocking the main thread.
 	 * Currently, this is a stub implementation that returns 0.0.
-	 * </p>
 	 *
-	 * <h3>Future Implementation:</h3>
-	 * <p>
-	 * The complete implementation will query the user-currency repository to sum all
+	 * <p><strong>Future Implementation:</strong>
+ *
+ * <p>The complete implementation will query the user-currency repository to sum all
 	 * balances for the specified currency and return the total circulation amount.
-	 * </p>
 	 *
 	 * @param currencyIdentifier the currency identifier (case-insensitive), must not be null
 	 * @return a future that will complete with the total amount in circulation

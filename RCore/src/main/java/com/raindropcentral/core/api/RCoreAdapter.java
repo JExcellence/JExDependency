@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * <p>The adapter ensures all asynchronous operations leverage the backend's
+ * <p>The adapter ensures all asynchronous operations leverage the backend's.
  * {@link Executor Executor} so Bukkit consumers observe
  * consistent threading semantics described in the package overview.</p>
  *
@@ -30,7 +30,7 @@ import java.util.logging.Logger;
 public class RCoreAdapter implements RCoreService {
 
     /**
-     * Shared logger used to emit lifecycle and error information for backend
+     * Shared logger used to emit lifecycle and error information for backend.
      * delegation calls, supporting RDQ and RPlatform diagnostics.
      */
     private static final Logger LOGGER = CentralLogger.getLoggerByName("RCore");
@@ -39,7 +39,7 @@ public class RCoreAdapter implements RCoreService {
     private RCoreImpl impl;
 
     /**
-     * Creates a new adapter that proxies calls to the supplied backend while
+     * Creates a new adapter that proxies calls to the supplied backend while.
      * caching the backend executor for all asynchronous chains initiated by the
      * adapter.
      *
@@ -54,7 +54,7 @@ public class RCoreAdapter implements RCoreService {
     }
 
     /**
-     * Asynchronously locates a player by unique identifier using the backend
+     * Asynchronously locates a player by unique identifier using the backend.
      * executor. Failures emitted by the backend are logged with a
      * {@link java.util.logging.Level#WARNING WARNING} severity before the
      * resulting {@link CompletableFuture} completes exceptionally.
@@ -69,7 +69,7 @@ public class RCoreAdapter implements RCoreService {
     }
 
     /**
-     * Delegates to {@link #findPlayerAsync(UUID)} with the offline player's
+     * Delegates to {@link #findPlayerAsync(UUID)} with the offline player's.
      * unique identifier, preserving the executor guarantees and logging
      * behaviour of the primary lookup.
      *
@@ -83,7 +83,7 @@ public class RCoreAdapter implements RCoreService {
     }
 
     /**
-     * Asynchronously locates a player by last known name while reusing the
+     * Asynchronously locates a player by last known name while reusing the.
      * backend executor for completion stages. Failures are logged at
      * {@link java.util.logging.Level#WARNING WARNING} prior to propagating the
      * exceptional completion to callers.
@@ -97,18 +97,24 @@ public class RCoreAdapter implements RCoreService {
         return playerRepository.findByNameAsync(playerName);
     }
 
+    /**
+     * Executes playerExistsAsync.
+     */
     @Override
     public CompletableFuture<Boolean> playerExistsAsync(@NotNull UUID uniqueId) {
         return null;
     }
 
+    /**
+     * Executes playerExistsAsync.
+     */
     @Override
     public CompletableFuture<Boolean> playerExistsAsync(@NotNull OfflinePlayer offlinePlayer) {
         return null;
     }
 
     /**
-     * Creates a new player asynchronously when the identifier is not already
+     * Creates a new player asynchronously when the identifier is not already.
      * registered, ensuring statistic scaffolding is initialized prior to
      * persistence. Duplicate player attempts are logged as warnings and short
      * circuit to an empty optional. Persistence failures are logged at
@@ -152,7 +158,7 @@ public class RCoreAdapter implements RCoreService {
     }
 
     /**
-     * Persists updates for the provided player via the backend executor. A
+     * Persists updates for the provided player via the backend executor. A.
      * failed persistence call is logged at {@link java.util.logging.Level#SEVERE
      * SEVERE} before the future completes exceptionally.
      *
@@ -175,7 +181,7 @@ public class RCoreAdapter implements RCoreService {
     }
 
     /**
-     * Retrieves player statistics asynchronously, mapping absent players to an
+     * Retrieves player statistics asynchronously, mapping absent players to an.
      * empty optional while executing mapping operations on the backend executor
      * to maintain thread affinity.
      *
@@ -190,7 +196,7 @@ public class RCoreAdapter implements RCoreService {
     }
 
     /**
-     * Resolves statistics for an offline player using the player's UUID while
+     * Resolves statistics for an offline player using the player's UUID while.
      * preserving the executor usage and optional semantics of
      * {@link #findPlayerStatisticsAsync(UUID)}.
      *
@@ -207,7 +213,7 @@ public class RCoreAdapter implements RCoreService {
     }
 
     /**
-     * Asynchronously locates a statistic value for the specified identifier and
+     * Asynchronously locates a statistic value for the specified identifier and.
      * plugin, retaining backend executor affinity. The resulting future
      * completes exceptionally if the underlying player lookup fails and no
      * additional logging is performed beyond the lookup warnings.
@@ -234,7 +240,7 @@ public class RCoreAdapter implements RCoreService {
     }
 
     /**
-     * Convenience overload that resolves the UUID from an offline player before
+     * Convenience overload that resolves the UUID from an offline player before.
      * forwarding to {@link #findStatisticValueAsync(UUID, String, String)},
      * inheriting the executor usage and failure propagation described there.
      *
@@ -257,7 +263,7 @@ public class RCoreAdapter implements RCoreService {
     }
 
     /**
-     * Determines asynchronously whether a statistic exists for the supplied
+     * Determines asynchronously whether a statistic exists for the supplied.
      * identifier within the player statistics snapshot. Failures while fetching
      * player data propagate to the returned future without additional logging
      * beyond the lookup warnings.
@@ -285,7 +291,7 @@ public class RCoreAdapter implements RCoreService {
     }
 
     /**
-     * Convenience overload that delegates to
+     * Convenience overload that delegates to.
      * {@link #hasStatisticAsync(UUID, String, String)} using the player's UUID,
      * preserving the executor usage and failure propagation semantics of the
      * primary overload.
@@ -309,7 +315,7 @@ public class RCoreAdapter implements RCoreService {
     }
 
     /**
-     * Removes a statistic from the player snapshot and persists the change via
+     * Removes a statistic from the player snapshot and persists the change via.
      * the backend executor. When persistence fails the error is logged at
      * {@link java.util.logging.Level#SEVERE SEVERE} prior to propagating the
      * exceptional completion.
@@ -354,7 +360,7 @@ public class RCoreAdapter implements RCoreService {
     }
 
     /**
-     * Convenience overload that delegates to
+     * Convenience overload that delegates to.
      * {@link #removeStatisticAsync(UUID, String, String)} using the player's
      * UUID, inheriting the executor usage and severe error logging of the
      * primary overload.
@@ -378,7 +384,7 @@ public class RCoreAdapter implements RCoreService {
     }
 
     /**
-     * Adds or replaces a statistic for the supplied player and persists the
+     * Adds or replaces a statistic for the supplied player and persists the.
      * updated aggregate through the backend executor. When the player is
      * missing a warning is emitted and a completed future of {@code false} is
      * returned. Persistence failures are logged at
@@ -427,7 +433,7 @@ public class RCoreAdapter implements RCoreService {
     }
 
     /**
-     * Convenience overload that delegates to
+     * Convenience overload that delegates to.
      * {@link #addOrReplaceStatisticAsync(UUID, RAbstractStatistic)} using the
      * player's UUID, inheriting the executor usage and logging semantics of the
      * primary overload.
@@ -448,7 +454,7 @@ public class RCoreAdapter implements RCoreService {
     }
 
     /**
-     * Determines asynchronously how many statistics the specified plugin owns
+     * Determines asynchronously how many statistics the specified plugin owns.
      * for the player. Mapping occurs on the backend executor and failures in
      * the lookup stage propagate to the returned future without additional
      * logging beyond the player lookup warnings.
@@ -473,7 +479,7 @@ public class RCoreAdapter implements RCoreService {
     }
 
     /**
-     * Convenience overload that delegates to
+     * Convenience overload that delegates to.
      * {@link #getStatisticCountForPluginAsync(UUID, String)} using the player's
      * UUID, inheriting the executor usage and failure propagation semantics of
      * the primary overload.

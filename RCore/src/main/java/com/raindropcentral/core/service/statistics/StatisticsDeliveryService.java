@@ -74,6 +74,9 @@ public class StatisticsDeliveryService {
     private final AtomicBoolean running = new AtomicBoolean(false);
     private final AtomicBoolean paused = new AtomicBoolean(false);
 
+    /**
+     * Executes StatisticsDeliveryService.
+     */
     public StatisticsDeliveryService(
         final @NotNull Plugin plugin,
         final @NotNull StatisticsDeliveryConfig config,
@@ -371,10 +374,28 @@ public class StatisticsDeliveryService {
 
     // ==================== Getters ====================
 
+    /**
+     * Gets queueManager.
+     */
     public StatisticsQueueManager getQueueManager() { return queueManager; }
+    /**
+     * Gets deliveryEngine.
+     */
     public StatisticsDeliveryEngine getDeliveryEngine() { return deliveryEngine; }
+    /**
+     * Gets aggregator.
+     */
     public StatisticsAggregator getAggregator() { return aggregator; }
+    /**
+     * Gets syncManager.
+     */
     public CrossServerSyncManager getSyncManager() { return syncManager; }
+    /**
+     * Gets eventCollector.
+     */
     public EventDrivenCollector getEventCollector() { return eventCollector; }
+    /**
+     * Gets config.
+     */
     public StatisticsDeliveryConfig getConfig() { return config; }
 }

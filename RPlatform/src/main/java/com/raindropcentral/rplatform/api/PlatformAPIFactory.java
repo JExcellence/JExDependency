@@ -8,7 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Utility responsible for instantiating {@link PlatformAPI} implementations based on the active
+ * Utility responsible for instantiating {@link PlatformAPI} implementations based on the active.
  * server environment.
  *
  * <p>The factory performs a hierarchy of reflection checks to determine whether Folia, modern
@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 public class PlatformAPIFactory {
 
     /**
-     * Logger used to communicate detection and fallback results through the centralized logging
+     * Logger used to communicate detection and fallback results through the centralized logging.
      * pipeline.
      *
      * <p><strong>Lifecycle:</strong> Shared across the JVM; the JUL bridge ensures the handlers and

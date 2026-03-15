@@ -2,10 +2,9 @@ package com.raindropcentral.rdq.quest.model;
 
 /**
  * Enum representing the difficulty levels for individual quest tasks.
- * <p>
- * Task difficulty is independent of quest difficulty and allows for
+ *
+ * <p>Task difficulty is independent of quest difficulty and allows for
  * fine-grained control over individual task challenges within a quest.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0

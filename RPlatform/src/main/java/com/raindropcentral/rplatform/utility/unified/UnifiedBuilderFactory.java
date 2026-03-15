@@ -145,7 +145,7 @@ public class UnifiedBuilderFactory {
     }
 
     /**
-     * Returns the appropriate item builder (modern or legacy) based on server version for an
+     * Returns the appropriate item builder (modern or legacy) based on server version for an.
      * existing {@link ItemStack} instance.
      *
      * @param item base item stack to mutate

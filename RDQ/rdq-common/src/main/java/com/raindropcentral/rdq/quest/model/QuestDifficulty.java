@@ -4,10 +4,9 @@ import lombok.Getter;
 
 /**
  * Enum representing the difficulty levels for quests.
- * <p>
- * Each difficulty level has an associated reward multiplier and color code
+ *
+ * <p>Each difficulty level has an associated reward multiplier and color code
  * for display purposes using MiniMessage formatting.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0
@@ -41,13 +40,13 @@ public enum QuestDifficulty {
     EXTREME(3.0, "<red>");
 
     /**
-     * -- GETTER --
+     * -- GETTER --.
      *  Gets the reward multiplier for this difficulty level.
      *
      */
     private final double rewardMultiplier;
     /**
-     * -- GETTER --
+     * -- GETTER --.
      *  Gets the MiniMessage color code for this difficulty level.
      *
      */

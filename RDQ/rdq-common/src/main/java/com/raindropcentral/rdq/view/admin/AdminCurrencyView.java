@@ -33,8 +33,8 @@ import com.raindropcentral.rplatform.view.APaginatedView;
 
 /**
  * Administrative currency overview view.
- * <p>
- * This view lists currencies RDQ can detect from installed economy integrations.
+ *
+ * <p>This view lists currencies RDQ can detect from installed economy integrations.
  * It includes Vault when available and provides a dedicated control for creating
  * the default RDQ currency {@code raindrops} through JExEconomy.
  *

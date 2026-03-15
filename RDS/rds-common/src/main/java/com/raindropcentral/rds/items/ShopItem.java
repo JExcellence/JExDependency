@@ -28,6 +28,9 @@ import java.util.UUID;
 		value = {"availableNow", "estimatedValue", "typeId", "descriptionKey"},
 		ignoreUnknown = true
 )
+/**
+ * Represents the ShopItem API type.
+ */
 public class ShopItem extends AbstractItem {
 
 	public static final int DEFAULT_ROTATION_MINUTES = 60;
@@ -390,7 +393,7 @@ public class ShopItem extends AbstractItem {
 	}
 	
 	/**
-	 * Convenience constructor that uses the ItemStack's amount
+	 * Convenience constructor that uses the ItemStack's amount.
 	 */
 	public ShopItem(@NotNull ItemStack item) {
 		this(null, item, item.getAmount(), "vault", 0D, null, null, null);
@@ -497,14 +500,14 @@ public class ShopItem extends AbstractItem {
 	}
 	
 	/**
-	 * Gets the item template (always amount 1)
+	 * Gets the item template (always amount 1).
 	 */
 	public ItemStack getItem() {
 		return item.clone();
 	}
 	
 	/**
-	 * Gets the actual amount (can exceed max stack size)
+	 * Gets the actual amount (can exceed max stack size).
 	 */
 	public int getAmount() {
 		return amount;
@@ -850,6 +853,9 @@ public class ShopItem extends AbstractItem {
 		);
 	}
 
+	/**
+	 * Executes withAdminStockSettings.
+	 */
 	public @NotNull ShopItem withAdminStockSettings(
 		@Nullable Integer updatedStockLimit,
 		@Nullable Long updatedRestockIntervalTicks,
@@ -873,6 +879,9 @@ public class ShopItem extends AbstractItem {
 		);
 	}
 
+	/**
+	 * Executes withAdminStockState.
+	 */
 	public @NotNull ShopItem withAdminStockState(
 		int updatedAmount,
 		@Nullable Integer updatedStockLimit,

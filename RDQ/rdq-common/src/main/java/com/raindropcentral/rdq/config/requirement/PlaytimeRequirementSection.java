@@ -13,11 +13,10 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Configuration section for playtime-based requirements.
- * <p>
- * This section handles all configuration options specific to PlaytimeRequirement,
+ *
+ * <p>This section handles all configuration options specific to PlaytimeRequirement,
  * including required playtime in various units, world-specific requirements,
  * and conversion utilities.
- * </p>
  *
  * @author JExcellence
  * @version 1.1.0

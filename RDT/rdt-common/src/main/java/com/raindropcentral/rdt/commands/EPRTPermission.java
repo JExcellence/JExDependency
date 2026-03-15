@@ -4,8 +4,8 @@ import de.jexcellence.evaluable.section.IPermissionNode;
 
 /**
  * Permission nodes used by the primary player command ({@code /prt}).
- * <p>
- * Each enum value provides an {@code internalName} used by the configuration system
+ *
+ * <p>Each enum value provides an {@code internalName} used by the configuration system
  * and a {@code fallbackNode} string that represents the default Bukkit permission
  * when no explicit mapping is provided.
  */
@@ -60,11 +60,17 @@ public enum EPRTPermission implements IPermissionNode{
         this.fallbackNode = fallbackNode;
     }
 
+    /**
+     * Gets internalName.
+     */
     @Override
     public String getInternalName() {
         return this.internalName;
     }
 
+    /**
+     * Gets fallbackNode.
+     */
     @Override
     public String getFallbackNode() {
         return this.fallbackNode;

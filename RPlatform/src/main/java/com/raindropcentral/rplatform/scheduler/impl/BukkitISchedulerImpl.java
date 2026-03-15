@@ -13,12 +13,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Bukkit/Paper scheduler implementation that delegates to {@link org.bukkit.scheduler.BukkitScheduler}
+ * Bukkit/Paper scheduler implementation that delegates to {@link org.bukkit.scheduler.BukkitScheduler}.
  * for all operations while preserving {@link ISchedulerAdapter}'s threading guarantees.
- * <p>
- * Entity and location scoped scheduling is emulated by returning to the main thread because the legacy
+ *
+ * <p>Entity and location scoped scheduling is emulated by returning to the main thread because the legacy
  * scheduler lacks Folia's region abstractions.
- * </p>
  *
  * @author JExcellence
  * @since 1.0.0
@@ -39,11 +38,10 @@ public class BukkitISchedulerImpl implements ISchedulerAdapter {
     }
 
     /**
-     * {@inheritDoc}
-     * <p>
-     * Delegates to {@link org.bukkit.scheduler.BukkitScheduler#runTask(org.bukkit.plugin.Plugin, Runnable)}
+     * {@inheritDoc}.
+ *
+ * <p>Delegates to {@link org.bukkit.scheduler.BukkitScheduler#runTask(org.bukkit.plugin.Plugin, Runnable)}
      * ensuring the task runs on the primary tick thread.
-     * </p>
      */
     @Override
     public void runSync(@NotNull Runnable task) {
@@ -51,11 +49,10 @@ public class BukkitISchedulerImpl implements ISchedulerAdapter {
     }
 
     /**
-     * {@inheritDoc}
-     * <p>
-     * Uses {@link org.bukkit.scheduler.BukkitScheduler#runTaskAsynchronously(org.bukkit.plugin.Plugin, Runnable)}
+     * {@inheritDoc}.
+ *
+ * <p>Uses {@link org.bukkit.scheduler.BukkitScheduler#runTaskAsynchronously(org.bukkit.plugin.Plugin, Runnable)}
      * which executes on Bukkit's managed async pool.
-     * </p>
      */
     @Override
     public void runAsync(@NotNull Runnable task) {
@@ -63,11 +60,10 @@ public class BukkitISchedulerImpl implements ISchedulerAdapter {
     }
 
     /**
-     * {@inheritDoc}
-     * <p>
-     * Schedules via {@link org.bukkit.scheduler.BukkitScheduler#runTaskLater(org.bukkit.plugin.Plugin, Runnable, long)}
+     * {@inheritDoc}.
+ *
+ * <p>Schedules via {@link org.bukkit.scheduler.BukkitScheduler#runTaskLater(org.bukkit.plugin.Plugin, Runnable, long)}
      * so the task runs synchronously after the configured delay.
-     * </p>
      */
     @Override
     public void runDelayed(@NotNull Runnable task, long delayTicks) {
@@ -75,27 +71,28 @@ public class BukkitISchedulerImpl implements ISchedulerAdapter {
     }
 
     /**
-     * {@inheritDoc}
-     * <p>
-     * Uses {@link org.bukkit.scheduler.BukkitScheduler#runTaskTimer(org.bukkit.plugin.Plugin, Runnable, long, long)}
+     * {@inheritDoc}.
+ *
+ * <p>Uses {@link org.bukkit.scheduler.BukkitScheduler#runTaskTimer(org.bukkit.plugin.Plugin, Runnable, long, long)}
      * guaranteeing execution on the main thread at the requested cadence.
-     * </p>
      */
     @Override
     public void runRepeating(@NotNull Runnable task, long delayTicks, long periodTicks) {
         Bukkit.getScheduler().runTaskTimer(plugin, safe(task), delayTicks, periodTicks);
     }
 
+    /**
+     * Executes runRepeatingAsync.
+     */
     @Override
     public void runRepeatingAsync(@NotNull Runnable task, long delayTicks, long periodTicks) {
         Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, safe(task), delayTicks, periodTicks);
     }
 
     /**
-     * {@inheritDoc}
-     * <p>
-     * Since entity scoped schedulers are unavailable, this simply redirects to {@link #runSync(Runnable)}.
-     * </p>
+     * {@inheritDoc}.
+ *
+ * <p>Since entity scoped schedulers are unavailable, this simply redirects to {@link #runSync(Runnable)}.
      */
     @Override
     public void runAtEntity(@NotNull Entity entity, @NotNull Runnable task) {
@@ -103,11 +100,10 @@ public class BukkitISchedulerImpl implements ISchedulerAdapter {
     }
 
     /**
-     * {@inheritDoc}
-     * <p>
-     * Location scoped execution is emulated by running on the main thread because Bukkit has no region
+     * {@inheritDoc}.
+ *
+ * <p>Location scoped execution is emulated by running on the main thread because Bukkit has no region
      * aware scheduler.
-     * </p>
      */
     @Override
     public void runAtLocation(@NotNull Location location, @NotNull Runnable task) {
@@ -115,10 +111,9 @@ public class BukkitISchedulerImpl implements ISchedulerAdapter {
     }
 
     /**
-     * {@inheritDoc}
-     * <p>
-     * The Bukkit implementation treats global execution as synchronous execution on the tick thread.
-     * </p>
+     * {@inheritDoc}.
+ *
+ * <p>The Bukkit implementation treats global execution as synchronous execution on the tick thread.
      */
     @Override
     public void runGlobal(@NotNull Runnable task) {
@@ -126,11 +121,10 @@ public class BukkitISchedulerImpl implements ISchedulerAdapter {
     }
 
     /**
-     * {@inheritDoc}
-     * <p>
-     * The future completes from within the scheduler callback to propagate errors using the platform's
+     * {@inheritDoc}.
+ *
+ * <p>The future completes from within the scheduler callback to propagate errors using the platform's
      * logging configuration.
-     * </p>
      */
     @Override
     public @NotNull CompletableFuture<Void> runAsyncFuture(@NotNull Runnable task) {

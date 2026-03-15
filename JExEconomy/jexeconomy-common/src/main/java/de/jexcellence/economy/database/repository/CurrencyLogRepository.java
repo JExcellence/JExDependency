@@ -21,11 +21,10 @@ import java.util.concurrent.ExecutorService;
 
 /**
  * Repository interface for CurrencyLog entity operations.
- * <p>
- * Provides specialized methods for querying, filtering, and analyzing
+ *
+ * <p>Provides specialized methods for querying, filtering, and analyzing
  * currency operation logs. Supports both synchronous and asynchronous
  * operations for different use cases.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -36,6 +35,9 @@ public class CurrencyLogRepository extends CachedRepository<CurrencyLog, Long, L
     private final ExecutorService asyncExecutorService;
     private final EntityManagerFactory entityManagerFactory;
     
+    /**
+     * Executes CurrencyLogRepository.
+     */
     public CurrencyLogRepository(
         final @NotNull ExecutorService asyncExecutorService,
         final @NotNull EntityManagerFactory jpaEntityManagerFactory

@@ -71,6 +71,9 @@ public class ShopBossBarService {
         this.enabledStates.clear();
     }
 
+    /**
+     * Executes toggleFor.
+     */
     public boolean toggleFor(
             final @NotNull Player player
     ) {
@@ -98,6 +101,9 @@ public class ShopBossBarService {
         return enabled;
     }
 
+    /**
+     * Executes clearPlayer.
+     */
     public void clearPlayer(
             final @NotNull Player player
     ) {
@@ -105,6 +111,9 @@ public class ShopBossBarService {
         this.hideDisplayedBar(player);
     }
 
+    /**
+     * Returns whether enabled.
+     */
     public boolean isEnabled(
             final @NotNull Player player
     ) {
@@ -114,6 +123,9 @@ public class ShopBossBarService {
         );
     }
 
+    /**
+     * Executes refreshPlayer.
+     */
     public void refreshPlayer(
             final @NotNull Player player
     ) {

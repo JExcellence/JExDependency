@@ -145,6 +145,9 @@ public class ShopTrustedView extends APaginatedView<ShopTrustedView.TrustedPlaye
         }
     }
 
+    /**
+     * Executes onClick.
+     */
     @Override
     public void onClick(
             final @NotNull SlotClickContext click

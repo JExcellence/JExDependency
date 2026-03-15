@@ -7,8 +7,8 @@ import java.util.logging.Level;
 
 /**
  * Main plugin class for RDQ Free Edition.
- * <p>
- * This class serves as the entry point for the Bukkit plugin system and delegates all
+ *
+ * <p>This class serves as the entry point for the Bukkit plugin system and delegates all
  * functionality to {@link RDQFreeImpl}. The delegate handles the staged enable pipeline:
  * asynchronous platform and executor preparation (stage 1), component and view wiring (stage 2),
  * and repository hydration (stage 3) that provides database-backed services for commands,
@@ -23,6 +23,9 @@ public final class RDQFree extends JavaPlugin {
 
     private RDQFreeImpl impl;
 
+    /**
+     * Executes onLoad.
+     */
     @Override
     public void onLoad() {
         try {
@@ -35,6 +38,9 @@ public final class RDQFree extends JavaPlugin {
         }
     }
 
+    /**
+     * Executes onEnable.
+     */
     @Override
     public void onEnable() {
         if (impl != null) {
@@ -55,6 +61,9 @@ public final class RDQFree extends JavaPlugin {
         }
     }
 
+    /**
+     * Gets impl.
+     */
     public RDQFreeImpl getImpl() {
         return impl;
     }

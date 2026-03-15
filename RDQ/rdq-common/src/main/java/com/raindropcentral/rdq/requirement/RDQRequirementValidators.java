@@ -8,9 +8,8 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Validators for RDQ-specific requirement validation.
- * <p>
- * Provides comprehensive validation for all requirement types used in RDQ.
- * </p>
+ *
+ * <p>Provides comprehensive validation for all requirement types used in RDQ.
  */
 public final class RDQRequirementValidators {
 

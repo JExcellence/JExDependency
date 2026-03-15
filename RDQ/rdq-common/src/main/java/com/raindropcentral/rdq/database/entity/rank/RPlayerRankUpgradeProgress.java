@@ -7,15 +7,13 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Entity representing a player's progress towards fulfilling a specific rank upgrade requirement.
- * <p>
- * Each instance of this class tracks the progress of a single player towards a single
+ *
+ * <p>Each instance of this class tracks the progress of a single player towards a single
  * {@link RRankUpgradeRequirement}. This follows the same pattern as the generator system
  * where progress is tracked against individual requirements.
- * </p>
  *
- * <p>
- * This entity is mapped to the {@code r_player_rank_upgrade_progress} table in the database.
- * </p>
+ *
+ * <p>This entity is mapped to the {@code r_player_rank_upgrade_progress} table in the database.
  *
  * @author JExcellence
  * @version 2.0.0
@@ -26,6 +24,9 @@ import org.jetbrains.annotations.NotNull;
 		name = "r_player_rank_upgrade_progress",
 		uniqueConstraints = @UniqueConstraint(columnNames = {"player_id", "upgrade_requirement_id"})
 )
+/**
+ * Represents the RPlayerRankUpgradeProgress API type.
+ */
 public class RPlayerRankUpgradeProgress extends BaseEntity {
 
 	/**
@@ -50,10 +51,9 @@ public class RPlayerRankUpgradeProgress extends BaseEntity {
 
 	/**
 	 * The progress value towards completing the requirement.
-	 * <p>
-	 * The meaning and scale of this value depend on the requirement's implementation.
+ *
+ * <p>The meaning and scale of this value depend on the requirement's implementation.
 	 * Progress is typically between 0.0 and 1.0, where 1.0 means completed.
-	 * </p>
 	 */
 	@Column(name = "progress_value", nullable = false)
 	private double progress;

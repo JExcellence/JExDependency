@@ -48,6 +48,9 @@ import org.jetbrains.annotations.Nullable;
         "unused",
         "JpaDataSourceORMInspection"
 })
+/**
+ * Represents the Shop API type.
+ */
 public class Shop extends BaseEntity {
 
     private static final Logger LOGGER = LoggerFactory.getLogger("RDS");
@@ -230,6 +233,9 @@ public class Shop extends BaseEntity {
         return this.bankEntries.size();
     }
 
+    /**
+     * Gets bankAmount.
+     */
     public double getBankAmount(
             final @NotNull String currencyType
     ) {
@@ -237,6 +243,9 @@ public class Shop extends BaseEntity {
         return bankEntry == null ? 0D : bankEntry.getAmount();
     }
 
+    /**
+     * Executes addBank.
+     */
     public double addBank(
             final @NotNull String currencyType,
             final double amount
@@ -253,6 +262,9 @@ public class Shop extends BaseEntity {
         return bankEntry.deposit(amount);
     }
 
+    /**
+     * Executes withdrawBank.
+     */
     public boolean withdrawBank(
             final @NotNull String currencyType,
             final double amount
@@ -555,6 +567,9 @@ public class Shop extends BaseEntity {
         return List.copyOf(this.ledgerEntries);
     }
 
+    /**
+     * Executes addLedgerEntry.
+     */
     public void addLedgerEntry(
             final @NotNull ShopLedgerEntry ledgerEntry
     ) {
@@ -575,6 +590,9 @@ public class Shop extends BaseEntity {
         return this.ledgerEntries == null ? 0 : this.ledgerEntries.size();
     }
 
+    /**
+     * Gets ledgerEntryCount.
+     */
     public int getLedgerEntryCount(
             final @NotNull ShopLedgerType ledgerType
     ) {
@@ -592,6 +610,9 @@ public class Shop extends BaseEntity {
         return count;
     }
 
+    /**
+     * Sets trustedPlayers.
+     */
     public void setTrustedPlayers(
             final @Nullable Map<UUID, ShopTrustStatus> trustedPlayers
     ) {
@@ -618,6 +639,9 @@ public class Shop extends BaseEntity {
         }
     }
 
+    /**
+     * Gets trustStatus.
+     */
     public @NotNull ShopTrustStatus getTrustStatus(
             final @NotNull UUID playerId
     ) {
@@ -628,6 +652,9 @@ public class Shop extends BaseEntity {
         return this.getTrustedPlayers().getOrDefault(playerId, ShopTrustStatus.PUBLIC);
     }
 
+    /**
+     * Sets trustStatus.
+     */
     public void setTrustStatus(
             final @NotNull UUID playerId,
             final @NotNull ShopTrustStatus status
@@ -646,6 +673,9 @@ public class Shop extends BaseEntity {
         this.setTrustedPlayers(trustedPlayers);
     }
 
+    /**
+     * Gets trustedPlayerCount.
+     */
     public int getTrustedPlayerCount(
             final @NotNull ShopTrustStatus status
     ) {
@@ -659,18 +689,27 @@ public class Shop extends BaseEntity {
         return count;
     }
 
+    /**
+     * Executes canAccessOverview.
+     */
     public boolean canAccessOverview(
             final @NotNull UUID playerId
     ) {
         return this.isOwner(playerId) || this.getTrustStatus(playerId) != ShopTrustStatus.PUBLIC;
     }
 
+    /**
+     * Executes canSupply.
+     */
     public boolean canSupply(
             final @NotNull UUID playerId
     ) {
         return this.isOwner(playerId) || this.getTrustStatus(playerId).hasSupplyAccess();
     }
 
+    /**
+     * Executes canManage.
+     */
     public boolean canManage(
             final @NotNull UUID playerId
     ) {

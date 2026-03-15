@@ -26,6 +26,9 @@ public class StatisticsAggregator {
     private final Map<UUID, Map<String, Object>> playerStatistics;
     private final Map<String, List<Double>> statisticValues;
 
+    /**
+     * Executes StatisticsAggregator.
+     */
     public StatisticsAggregator() {
         this.playerStatistics = new ConcurrentHashMap<>();
         this.statisticValues = new ConcurrentHashMap<>();

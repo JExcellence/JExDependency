@@ -8,8 +8,14 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * Represents the ExperienceReward API type.
+ */
 public final class ExperienceReward extends AbstractReward {
 
+    /**
+     * Represents the ExperienceType API type.
+     */
     public enum ExperienceType {
         POINTS, LEVELS
     }
@@ -17,6 +23,9 @@ public final class ExperienceReward extends AbstractReward {
     private final int amount;
     private final ExperienceType type;
 
+    /**
+     * Executes ExperienceReward.
+     */
     @JsonCreator
     public ExperienceReward(
         @JsonProperty("amount") int amount,
@@ -26,11 +35,17 @@ public final class ExperienceReward extends AbstractReward {
         this.type = type != null ? type : ExperienceType.POINTS;
     }
 
+    /**
+     * Gets typeId.
+     */
     @Override
     public @NotNull String getTypeId() {
         return "EXPERIENCE";
     }
 
+    /**
+     * Executes grant.
+     */
     @Override
     public @NotNull CompletableFuture<Boolean> grant(@NotNull Player player) {
         return CompletableFuture.supplyAsync(() -> {
@@ -43,19 +58,31 @@ public final class ExperienceReward extends AbstractReward {
         });
     }
 
+    /**
+     * Gets estimatedValue.
+     */
     @Override
     public double getEstimatedValue() {
         return type == ExperienceType.LEVELS ? amount * 100.0 : amount;
     }
 
+    /**
+     * Gets amount.
+     */
     public int getAmount() {
         return amount;
     }
 
+    /**
+     * Gets experienceType.
+     */
     public ExperienceType getExperienceType() {
         return type;
     }
 
+    /**
+     * Executes validate.
+     */
     @Override
     public void validate() {
         if (amount <= 0) {

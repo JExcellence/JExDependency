@@ -28,10 +28,16 @@ public class BountyPlayerJoinListener implements Listener {
 
     private final RDQ rdq;
 
+    /**
+     * Executes BountyPlayerJoinListener.
+     */
     public BountyPlayerJoinListener(@NotNull RDQ rdq) {
         this.rdq = rdq;
     }
 
+    /**
+     * Executes onPlayerJoin.
+     */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerJoin(@NotNull PlayerJoinEvent event) {
         var player = event.getPlayer();

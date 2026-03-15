@@ -23,10 +23,16 @@ public class PerkEventListener implements Listener {
     
     private final RDQ rdq;
     
+    /**
+     * Executes PerkEventListener.
+     */
     public PerkEventListener(@NotNull final RDQ rdq) {
         this.rdq = rdq;
     }
     
+    /**
+     * Executes onPlayerItemConsume.
+     */
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerItemConsume(@NotNull final PlayerItemConsumeEvent event) {
         Player player = event.getPlayer();
@@ -37,6 +43,9 @@ public class PerkEventListener implements Listener {
         rdq.getPerkActivationService().getEventPerkHandler().processEvent(player, "PLAYER_ITEM_CONSUME", event);
     }
     
+    /**
+     * Executes onPlayerFish.
+     */
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerFish(@NotNull final PlayerFishEvent event) {
         Player player = event.getPlayer();

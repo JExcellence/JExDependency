@@ -18,14 +18,13 @@ import java.util.stream.Collectors;
 
 /**
  * Command handler for individual player currency operations and balance inquiries.
- * <p>
- * This class provides comprehensive functionality for players to interact with individual
+ *
+ * <p>This class provides comprehensive functionality for players to interact with individual
  * currencies within the JExEconomy system. It supports both personal balance inquiries
  * and administrative operations for viewing other players' currency information, with
  * appropriate permission validation and localized user feedback.
- * </p>
  *
- * <h3>Supported Operations:</h3>
+ * <p><strong>Supported Operations:</strong>
  * <ul>
  *   <li><strong>Personal Balance Inquiry:</strong> View own balance for specific currencies</li>
  *   <li><strong>Complete Balance Overview:</strong> Display all currency balances for a player</li>
@@ -33,7 +32,7 @@ import java.util.stream.Collectors;
  *   <li><strong>Administrative Oversight:</strong> Monitor currency usage across multiple players</li>
  * </ul>
  *
- * <h3>Command Syntax:</h3>
+ * <p><strong>Command Syntax:</strong>
  * <ul>
  *   <li><code>/pcurrency</code> - Display all personal currency balances</li>
  *   <li><code>/pcurrency all</code> - Display all personal currency balances (explicit)</li>
@@ -42,21 +41,19 @@ import java.util.stream.Collectors;
  *   <li><code>/pcurrency &lt;currency&gt; &lt;player&gt;</code> - Display specific currency balance for another player</li>
  * </ul>
  *
- * <h3>Permission Integration:</h3>
- * <p>
- * The command system integrates with {@link ECurrencyPermission} to ensure appropriate
+ * <p><strong>Permission Integration:</strong>
+ *
+ * <p>The command system integrates with {@link ECurrencyPermission} to ensure appropriate
  * access control. Personal operations require basic currency permissions, while cross-player
  * operations require elevated permissions for privacy and security protection.
- * </p>
  *
- * <h3>Internationalization Support:</h3>
- * <p>
- * All user feedback is processed through the {@link I18n} system, providing localized
+ * <p><strong>Internationalization Support:</strong>
+ *
+ * <p>All user feedback is processed through the {@link I18n} system, providing localized
  * content based on player language preferences. Error messages, balance displays, and
  * help information are all culturally and linguistically appropriate.
- * </p>
  *
- * <h3>Tab Completion Features:</h3>
+ * <p><strong>Tab Completion Features:</strong>
  * <ul>
  *   <li>Dynamic currency identifier completion based on available currencies</li>
  *   <li>Online player name completion for cross-player operations</li>
@@ -76,23 +73,21 @@ public class PCurrency extends PlayerCommand {
 	
 	/**
 	 * The main JExEconomy plugin instance providing access to core services and repositories.
-	 * <p>
-	 * This instance serves as the primary gateway to the plugin's infrastructure,
+ *
+ * <p>This instance serves as the primary gateway to the plugin's infrastructure,
 	 * including currency repositories, adapter services, executor services, and
 	 * user interface frameworks required for currency balance operations.
-	 * </p>
 	 */
 	private final JExEconomy jexEconomyImpl;
 	
 	/**
 	 * Constructs a new player currency command handler with the specified configuration and plugin instance.
-	 * <p>
-	 * This constructor initializes the command handler with the necessary dependencies to
+ *
+ * <p>This constructor initializes the command handler with the necessary dependencies to
 	 * perform individual currency operations. It establishes connections to the plugin's
 	 * infrastructure and configures the command for player accessibility and permission validation.
-	 * </p>
 	 *
-	 * <h3>Initialization Process:</h3>
+	 * <p><strong>Initialization Process:</strong>
 	 * <ul>
 	 *   <li>Registers the command with the parent command framework</li>
 	 *   <li>Establishes connection to the JExEconomy plugin instance</li>
@@ -114,13 +109,12 @@ public class PCurrency extends PlayerCommand {
 	
 	/**
 	 * Handles the execution of individual currency commands initiated by players.
-	 * <p>
-	 * This method serves as the primary entry point for all individual currency operations.
+ *
+ * <p>This method serves as the primary entry point for all individual currency operations.
 	 * It performs permission validation, argument parsing, and delegates to appropriate
 	 * handler methods based on the requested operation type and target scope.
-	 * </p>
 	 *
-	 * <h3>Execution Flow:</h3>
+	 * <p><strong>Execution Flow:</strong>
 	 * <ol>
 	 *   <li>Validates base currency command permissions</li>
 	 *   <li>Parses command arguments to determine operation type</li>
@@ -130,19 +124,17 @@ public class PCurrency extends PlayerCommand {
 	 *   <li>Delegates to appropriate balance display methods</li>
 	 * </ol>
 	 *
-	 * <h3>Permission Validation:</h3>
-	 * <p>
-	 * Personal operations require {@link ECurrencyPermission#CURRENCY} permission,
+	 * <p><strong>Permission Validation:</strong>
+ *
+ * <p>Personal operations require {@link ECurrencyPermission#CURRENCY} permission,
 	 * while cross-player operations require {@link ECurrencyPermission#CURRENCY_OTHER}
 	 * permission for privacy and security protection.
-	 * </p>
 	 *
-	 * <h3>Error Handling:</h3>
-	 * <p>
-	 * Invalid currency identifiers, non-existent players, and permission failures
+	 * <p><strong>Error Handling:</strong>
+ *
+ * <p>Invalid currency identifiers, non-existent players, and permission failures
 	 * result in localized error messages sent to the player through the
 	 * internationalization system.
-	 * </p>
 	 *
 	 * @param commandExecutingPlayer the player executing the currency command, must not be null
 	 * @param commandLabel the command label used to invoke this command, must not be null
@@ -225,31 +217,28 @@ public class PCurrency extends PlayerCommand {
 	
 	/**
 	 * Provides intelligent tab completion suggestions for currency command arguments.
-	 * <p>
-	 * This method generates context-sensitive completion suggestions based on the current
+ *
+ * <p>This method generates context-sensitive completion suggestions based on the current
 	 * argument position, player permissions, and available system data. It supports
 	 * completion for currency identifiers, the "all" keyword, and player names.
-	 * </p>
 	 *
-	 * <h3>Completion Categories:</h3>
+	 * <p><strong>Completion Categories:</strong>
 	 * <ul>
 	 *   <li><strong>First Argument:</strong> "all" keyword and available currency identifiers</li>
 	 *   <li><strong>Second Argument:</strong> Online player names (with appropriate permissions)</li>
 	 * </ul>
 	 *
-	 * <h3>Permission-Based Filtering:</h3>
-	 * <p>
-	 * Player name completion is only provided to users with
+	 * <p><strong>Permission-Based Filtering:</strong>
+ *
+ * <p>Player name completion is only provided to users with
 	 * {@link ECurrencyPermission#CURRENCY_OTHER} permission, ensuring that
 	 * completion suggestions respect access control policies.
-	 * </p>
 	 *
-	 * <h3>Dynamic Content:</h3>
-	 * <p>
-	 * Currency identifiers are retrieved from the system in real-time, and
+	 * <p><strong>Dynamic Content:</strong>
+ *
+ * <p>Currency identifiers are retrieved from the system in real-time, and
 	 * player names reflect currently online players, ensuring that completion
 	 * suggestions are always current and relevant.
-	 * </p>
 	 *
 	 * @param tabCompletionRequestingPlayer the player requesting tab completion, must not be null
 	 * @param commandLabel the command label being completed, must not be null
@@ -300,14 +289,13 @@ public class PCurrency extends PlayerCommand {
 	
 	/**
 	 * Displays the balance of a specific currency for a target player.
-	 * <p>
-	 * This method retrieves and displays the balance information for a specific currency
+ *
+ * <p>This method retrieves and displays the balance information for a specific currency
 	 * and player combination. It handles both personal balance inquiries and cross-player
 	 * balance viewing, with appropriate message formatting based on the relationship
 	 * between the requesting player and the target player.
-	 * </p>
 	 *
-	 * <h3>Display Features:</h3>
+	 * <p><strong>Display Features:</strong>
 	 * <ul>
 	 *   <li>Asynchronous balance retrieval to prevent server lag</li>
 	 *   <li>Localized message formatting based on sender-target relationship</li>
@@ -315,18 +303,16 @@ public class PCurrency extends PlayerCommand {
 	 *   <li>Formatted balance display with appropriate decimal precision</li>
 	 * </ul>
 	 *
-	 * <h3>Message Differentiation:</h3>
-	 * <p>
-	 * The method uses different internationalization keys for personal balance
+	 * <p><strong>Message Differentiation:</strong>
+ *
+ * <p>The method uses different internationalization keys for personal balance
 	 * inquiries versus cross-player balance viewing, ensuring that messages
 	 * are contextually appropriate and user-friendly.
-	 * </p>
 	 *
-	 * <h3>Asynchronous Processing:</h3>
-	 * <p>
-	 * Balance retrieval is performed asynchronously using the plugin's executor
+	 * <p><strong>Asynchronous Processing:</strong>
+ *
+ * <p>Balance retrieval is performed asynchronously using the plugin's executor
 	 * service to prevent blocking the main server thread during database operations.
-	 * </p>
 	 *
 	 * @param messageRecipientPlayer the player who will receive the balance information message, must not be null
 	 * @param balanceTargetPlayer the player whose balance is being queried, must not be null
@@ -371,39 +357,35 @@ public class PCurrency extends PlayerCommand {
 	
 	/**
 	 * Displays all currency balances for a target player in a comprehensive overview format.
-	 * <p>
-	 * This method retrieves and displays a complete overview of all currency balances
+ *
+ * <p>This method retrieves and displays a complete overview of all currency balances
 	 * for a specified player. It includes header information, individual balance entries,
 	 * and footer formatting to provide a professional and readable balance summary.
-	 * </p>
 	 *
-	 * <h3>Display Structure:</h3>
+	 * <p><strong>Display Structure:</strong>
 	 * <ul>
 	 *   <li><strong>Header:</strong> Contextual header indicating whose balances are displayed</li>
 	 *   <li><strong>Balance Entries:</strong> Individual lines for each currency with complete formatting</li>
 	 *   <li><strong>Footer:</strong> Closing information and summary details</li>
 	 * </ul>
 	 *
-	 * <h3>Empty State Handling:</h3>
-	 * <p>
-	 * The method gracefully handles cases where no currencies exist in the system
+	 * <p><strong>Empty State Handling:</strong>
+ *
+ * <p>The method gracefully handles cases where no currencies exist in the system
 	 * or where the target player has no currency accounts, providing appropriate
 	 * informational messages for each scenario.
-	 * </p>
 	 *
-	 * <h3>Asynchronous Processing:</h3>
-	 * <p>
-	 * All currency data retrieval is performed asynchronously to prevent server
+	 * <p><strong>Asynchronous Processing:</strong>
+ *
+ * <p>All currency data retrieval is performed asynchronously to prevent server
 	 * lag during database operations, with results processed on the plugin's
 	 * dedicated executor service.
-	 * </p>
 	 *
-	 * <h3>Internationalization:</h3>
-	 * <p>
-	 * All messages use different internationalization keys based on whether the
+	 * <p><strong>Internationalization:</strong>
+ *
+ * <p>All messages use different internationalization keys based on whether the
 	 * inquiry is for personal balances or another player's balances, ensuring
 	 * contextually appropriate messaging.
-	 * </p>
 	 *
 	 * @param messageRecipientPlayer the player who will receive the balance overview message, must not be null
 	 * @param balanceTargetPlayer the player whose balances are being displayed, must not be null

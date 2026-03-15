@@ -61,6 +61,9 @@ public class StoreCurrencySection extends AConfigSection {
 		return growth_rate == null ? 1.125 : growth_rate;
 	}
 	
+	/**
+	 * Sets context.
+	 */
 	public void setContext(
 		String type,
 		double initial_cost,

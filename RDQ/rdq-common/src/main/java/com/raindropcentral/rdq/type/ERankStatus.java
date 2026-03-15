@@ -1,5 +1,8 @@
 package com.raindropcentral.rdq.type;
 
+/**
+ * Represents the ERankStatus API type.
+ */
 public enum ERankStatus {
 	/**
 	 * The player owns this rank.

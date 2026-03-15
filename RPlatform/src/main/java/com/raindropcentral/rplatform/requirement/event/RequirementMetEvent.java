@@ -11,16 +11,25 @@ public final class RequirementMetEvent extends RequirementEvent {
 
     private final double progress;
 
+    /**
+     * Executes RequirementMetEvent.
+     */
     public RequirementMetEvent(@NotNull Player player, @NotNull AbstractRequirement requirement, double progress) {
         super(player, requirement);
         this.progress = progress;
     }
 
+    /**
+     * Executes RequirementMetEvent.
+     */
     public RequirementMetEvent(@NotNull Player player, @NotNull AbstractRequirement requirement, double progress, boolean async) {
         super(player, requirement, async);
         this.progress = progress;
     }
 
+    /**
+     * Gets progress.
+     */
     public double getProgress() {
         return progress;
     }

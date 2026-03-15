@@ -9,10 +9,9 @@ import java.util.List;
 
 /**
  * Configuration section for icon display properties.
- * <p>
- * This section handles the visual representation of items in GUIs, including type,
+ *
+ * <p>This section handles the visual representation of items in GUIs, including type,
  * display name, description/lore, and various visual effects like enchantments and flags.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0

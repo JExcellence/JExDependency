@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
- * Core coordinator for synchronous dependency handling within a plugin lifecycle. The manager loads dependency
+ * Core coordinator for synchronous dependency handling within a plugin lifecycle. The manager loads dependency.
  * coordinates from bundled YAML files and optional runtime additions, downloads missing artifacts, performs module
  * de-encapsulation and injects the resulting jars into the plugin's class loader. Logging is routed through the plugin
  * logger to match Bukkit/Paper diagnostics expectations.
@@ -42,7 +42,7 @@ public class DependencyManager {
     private final YamlDependencyLoader yamlLoader;
 
     /**
-     * Creates a dependency manager bound to a plugin and anchor class. The anchor class determines both where YAML
+     * Creates a dependency manager bound to a plugin and anchor class. The anchor class determines both where YAML.
      * descriptors are located and which class loader will receive injected jars.
      *
      * @param plugin      owning plugin providing loggers and the data directory
@@ -61,7 +61,7 @@ public class DependencyManager {
     }
 
     /**
-     * Performs synchronous dependency resolution on the calling thread. The method blocks while downloads complete,
+     * Performs synchronous dependency resolution on the calling thread. The method blocks while downloads complete,.
      * performs module de-encapsulation to allow reflective classpath injection, and injects each successfully
      * downloaded artifact into the plugin class loader.
      *
@@ -102,7 +102,7 @@ public class DependencyManager {
     }
 
     /**
-     * Runs dependency resolution asynchronously using virtual threads. Downloading and injection are executed on the
+     * Runs dependency resolution asynchronously using virtual threads. Downloading and injection are executed on the.
      * returned {@link CompletableFuture}, while YAML parsing and configuration happen within the async task. Callers
      * should inspect the resulting {@link ProcessingResult} to surface failures.
      *
@@ -281,7 +281,7 @@ public class DependencyManager {
     }
 
     /**
-     * Shuts down executor-backed collaborators such as {@link DependencyDownloader}. Invoking this during plugin
+     * Shuts down executor-backed collaborators such as {@link DependencyDownloader}. Invoking this during plugin.
      * disable ensures no lingering async download tasks remain.
      */
     public void shutdown() {

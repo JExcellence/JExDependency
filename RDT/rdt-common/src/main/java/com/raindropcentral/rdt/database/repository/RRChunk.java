@@ -12,14 +12,17 @@ import java.util.function.Function;
 
 /**
  * Cached repository for {@link RChunk} entities.
- * <p>
- * Provides standard CRUD operations and a convenience finder for locating
+ *
+ * <p>Provides standard CRUD operations and a convenience finder for locating
  * a chunk by its X/Z coordinates. Use off the main server thread for blocking calls.
  */
 @SuppressWarnings({
         "unused",
         "FieldCanBeLocal"
 })
+/**
+ * Represents the RRChunk API type.
+ */
 public class RRChunk extends CachedRepository<RChunk, Long, UUID> {
     // Keep a reference to the EntityManagerFactory for custom ad-hoc queries
     private final EntityManagerFactory emf;

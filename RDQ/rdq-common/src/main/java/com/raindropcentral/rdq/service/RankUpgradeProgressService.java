@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 import java.util.logging.Logger;
 
 /**
- * Enhanced service for managing player rank upgrade progress with improved
+ * Enhanced service for managing player rank upgrade progress with improved.
  * async handling and better error recovery.
  *
  * @author JExcellence
@@ -29,6 +29,9 @@ public class RankUpgradeProgressService {
 	
 	private final RDQ rdq;
 	
+	/**
+	 * Executes RankUpgradeProgressService.
+	 */
 	public RankUpgradeProgressService(final @NotNull RDQ rdq) {
 		this.rdq = rdq;
 	}

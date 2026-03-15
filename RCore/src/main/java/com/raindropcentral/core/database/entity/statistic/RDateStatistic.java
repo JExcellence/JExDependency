@@ -10,6 +10,12 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Objects;
 
+/**
+ * Represents the type API type.
+ */
+/**
+ * Represents the RDateStatistic API type.
+ */
 @Entity
 @DiscriminatorValue("DATE")
 public class RDateStatistic extends RAbstractStatistic {
@@ -28,31 +34,52 @@ public class RDateStatistic extends RAbstractStatistic {
         this.value = Objects.requireNonNull(value, "value cannot be null");
     }
     
+    /**
+     * Gets value.
+     */
     @Override
     public @NotNull Long getValue() {
         return this.value;
     }
     
+    /**
+     * Sets value.
+     */
     public void setValue(final @NotNull Long value) {
         this.value = Objects.requireNonNull(value, "value cannot be null");
     }
     
+    /**
+     * Gets asInstant.
+     */
     public @NotNull Instant getAsInstant() {
         return Instant.ofEpochMilli(this.value);
     }
     
+    /**
+     * Gets asLocalDateTime.
+     */
     public @NotNull LocalDateTime getAsLocalDateTime() {
         return LocalDateTime.ofInstant(getAsInstant(), ZoneOffset.UTC);
     }
     
+    /**
+     * Returns whether before.
+     */
     public boolean isBefore(final @NotNull Instant other) {
         return getAsInstant().isBefore(other);
     }
     
+    /**
+     * Returns whether after.
+     */
     public boolean isAfter(final @NotNull Instant other) {
         return getAsInstant().isAfter(other);
     }
     
+    /**
+     * Performs updateToNow.
+     */
     public void updateToNow() {
         this.value = System.currentTimeMillis();
     }

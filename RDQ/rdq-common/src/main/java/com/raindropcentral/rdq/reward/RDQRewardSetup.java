@@ -5,6 +5,9 @@ import com.raindropcentral.rplatform.reward.config.RewardFactory;
 
 import java.util.logging.Logger;
 
+/**
+ * Represents the RDQRewardSetup API type.
+ */
 public final class RDQRewardSetup {
 
     private static final Logger LOGGER = Logger.getLogger(RDQRewardSetup.class.getName());
@@ -12,6 +15,9 @@ public final class RDQRewardSetup {
 
     private RDQRewardSetup() {}
 
+    /**
+     * Executes initialize.
+     */
     public static void initialize() {
         if (initialized) {
             LOGGER.warning("RDQ Reward System already initialized");

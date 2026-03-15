@@ -16,15 +16,13 @@ import java.util.concurrent.ExecutorService;
 
 /**
  * Repository for managing {@link UserCurrency} entities with caching support.
- * <p>
- * This repository provides asynchronous and cached access to user-currency associations,
+ *
+ * <p>This repository provides asynchronous and cached access to user-currency associations,
  * allowing efficient retrieval and management of user balances for specific currencies.
  * It extends {@link CachedRepository} to leverage generic CRUD operations and caching.
- * </p>
  *
- * <p>
- * The repository supports the following operations:
- * </p>
+ *
+ * <p>The repository supports the following operations:
  * <ul>
  *   <li>Creating new user-currency associations</li>
  *   <li>Updating existing user balances</li>
@@ -34,9 +32,8 @@ import java.util.concurrent.ExecutorService;
  *   <li>Cached lookups for improved performance</li>
  * </ul>
  *
- * <p>
- * Example usage:
- * </p>
+ *
+ * <p>Example usage:
  * <pre>{@code
  * UserCurrencyRepository repository = new UserCurrencyRepository(executorService, entityManagerFactory);
  * CompletableFuture<List<UserCurrency>> topUsers = repository.findTopByCurrency(currency, 10);
@@ -53,10 +50,9 @@ public class UserCurrencyRepository extends CachedRepository<UserCurrency, Long,
 	
 	/**
 	 * Constructs a new {@code UserCurrencyRepository} with the specified executor service and entity manager factory.
-	 * <p>
-	 * The repository will use the provided executor service for asynchronous operations and the entity manager factory
+ *
+ * <p>The repository will use the provided executor service for asynchronous operations and the entity manager factory
 	 * for JPA database operations. The cache key is configured to use the player's unique identifier (UUID).
-	 * </p>
 	 *
 	 * @param asyncExecutorService the executor service for handling asynchronous database operations, must not be null
 	 * @param jpaEntityManagerFactory the entity manager factory for JPA database operations, must not be null
@@ -76,11 +72,10 @@ public class UserCurrencyRepository extends CachedRepository<UserCurrency, Long,
 
         /**
          * Retrieves all {@link UserCurrency} associations belonging to the supplied player identifier.
-         * <p>
-         * The lookup leverages the repository cache keyed by the player's {@link UUID} before falling
+ *
+ * <p>The lookup leverages the repository cache keyed by the player's {@link UUID} before falling
          * back to the persistence layer, mirroring the behaviour used by higher-level services when
          * materialising balances for a player session.
-         * </p>
          *
          * @param playerUniqueId the unique identifier of the player, must not be {@code null}
          * @return a future resolving to the cached or freshly loaded associations for the player
@@ -101,11 +96,10 @@ public class UserCurrencyRepository extends CachedRepository<UserCurrency, Long,
 
         /**
          * Resolves all {@link UserCurrency} records linked to the provided {@link Currency}.
-         * <p>
-         * The request first probes the cache with the currency identifier to reuse prior query
+ *
+ * <p>The request first probes the cache with the currency identifier to reuse prior query
          * results and then delegates to the persistence layer if required. Consumers typically use
          * this method when presenting currency leaderboards or performing reconciliation jobs.
-         * </p>
          *
          * @param targetCurrency the currency to resolve associations for, must not be {@code null}
          * @return a future yielding the cached or loaded associations tied to the currency
@@ -126,13 +120,12 @@ public class UserCurrencyRepository extends CachedRepository<UserCurrency, Long,
 
         /**
          * Finds the top user-currency associations for a given currency, limited by the specified count.
-         * <p>
-	 * This method retrieves all {@link UserCurrency} entities associated with the given currency,
+ *
+ * <p>This method retrieves all {@link UserCurrency} entities associated with the given currency,
 	 * ordered by balance (highest first), and returns a sublist containing up to the specified limit.
 	 * If no associations are found, an empty list is returned.
-	 * </p>
 	 *
-	 * <h3>Performance Considerations:</h3>
+	 * <p><strong>Performance Considerations:</strong>
 	 * <ul>
 	 *   <li>Results are fetched asynchronously to avoid blocking the calling thread</li>
 	 *   <li>The limit is applied after fetching to ensure accurate top results</li>

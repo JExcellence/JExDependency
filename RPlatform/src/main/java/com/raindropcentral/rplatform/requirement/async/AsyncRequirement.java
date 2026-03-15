@@ -8,9 +8,8 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * Base class for requirements that need async operations (database, API calls, etc.).
- * <p>
- * Provides both sync and async methods - sync methods delegate to async for consistency.
- * </p>
+ *
+ * <p>Provides both sync and async methods - sync methods delegate to async for consistency.
  */
 public abstract class AsyncRequirement extends AbstractRequirement {
 
@@ -44,16 +43,25 @@ public abstract class AsyncRequirement extends AbstractRequirement {
 
     // ==================== Sync Methods (Delegate to Async) ====================
 
+    /**
+     * Returns whether met.
+     */
     @Override
     public final boolean isMet(@NotNull Player player) {
         return isMetAsync(player).join();
     }
 
+    /**
+     * Executes calculateProgress.
+     */
     @Override
     public final double calculateProgress(@NotNull Player player) {
         return calculateProgressAsync(player).join();
     }
 
+    /**
+     * Executes consume.
+     */
     @Override
     public final void consume(@NotNull Player player) {
         consumeAsync(player).join();

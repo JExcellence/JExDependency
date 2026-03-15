@@ -25,20 +25,14 @@ This repository follows strict Java coding and documentation standards. Any AI a
 
 ## 2) Hard Requirements (Non-Negotiable)
 ### 2.1 Javadoc is mandatory
-- **Every public class, record, interface, enum, annotation, and public method MUST have Javadoc.**
-- Package-level Javadoc MUST exist via `package-info.java` for each package that contains public API.
-- Javadoc must be meaningful (describe purpose, behavior, constraints, side effects).
-- For methods:
-    - Include `@param` for each parameter
-    - Include `@return` when non-void
-    - Include `@throws` for each thrown exception (checked or intentionally propagated runtime exceptions)
-- If a member is intentionally undocumented (rare), it must be `private` and self-explanatory.
-
-Rules:
-- `@author` MUST be present. Default to ItsRainingHP.
-- `@version` MUST be present. 
-- If alterations are made to a file increase the class files version build number by 1. Example: 1.0.0 becomes 1.0.1
-- Use the project’s author identity (team/org) if available; otherwise use ItsRainingHP.
+- Follow Google Java Style and Google Javadoc guidance for all public API documentation.
+- **Every public class, record, interface, enum, annotation, and public method MUST have meaningful Javadoc.**
+- Package-level Javadoc MUST exist via `package-info.java` for each package that exposes public top-level API types.
+- Start each Javadoc block with a clear summary sentence. For additional paragraphs, use `<p>`.
+- Use `@param`, `@return`, and `@throws` when applicable. Do not add tags that do not apply.
+- Use inline tags correctly, especially `{@code}` for literals and `{@link}` for references.
+- Favor meaningful documentation over boilerplate text.
+- Unchanged `@Override` methods may rely on inherited documentation. Use `/** {@inheritDoc} */` when local clarification is needed.
 
 ### 2.3 Zero warnings policy
 All code changes MUST build and generate Javadocs with **no warnings**.
@@ -94,6 +88,7 @@ If any warning is unavoidable:
 After making changes, the agent MUST attempt to run the following commands locally and ensure **zero warnings**:
 
 ### Gradle (preferred)
+- Run style verification: `./gradlew clean verifyGoogleJavaStyle`
 - Use project specific building such as `./gradlew clean RDR:build`
 - Use project specific Javadocs such as `./gradlew RDR:javadoc` (or the repo’s Javadoc task if named differently)
 

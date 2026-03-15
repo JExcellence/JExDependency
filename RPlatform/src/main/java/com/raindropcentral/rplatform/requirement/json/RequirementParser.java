@@ -16,10 +16,9 @@ import java.util.logging.Logger;
 
 /**
  * Utility class for serializing and deserializing {@link AbstractRequirement} objects to and from JSON.
- * <p>
- * This class provides static methods to convert between JSON strings and {@link AbstractRequirement} instances,
+ *
+ * <p>This class provides static methods to convert between JSON strings and {@link AbstractRequirement} instances,
  * supporting polymorphic deserialization based on the "type" field and handling Bukkit-specific types such as {@link ItemStack}.
- * </p>
  */
 public final class RequirementParser {
 
@@ -107,9 +106,8 @@ public final class RequirementParser {
 
     /**
      * Resets the cached ObjectMapper, forcing recreation on next use.
-     * <p>
-     * Call this after registering new requirement types to ensure they are included.
-     * </p>
+ *
+ * <p>Call this after registering new requirement types to ensure they are included.
      */
     public static void resetMapper() {
         synchronized (RequirementParser.class) {

@@ -25,6 +25,9 @@ import java.util.function.Function;
         "unused",
         "FieldCanBeLocal"
 })
+/**
+ * Represents the RServerBank API type.
+ */
 public class RServerBank extends CachedRepository<ServerBank, Long, String> {
 
     private final EntityManagerFactory entityManagerFactory;

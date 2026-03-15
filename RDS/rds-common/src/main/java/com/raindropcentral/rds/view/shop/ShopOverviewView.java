@@ -68,6 +68,9 @@ public class ShopOverviewView extends BaseView {
         );
     }
 
+    /**
+     * Executes onFirstRender.
+     */
     @Override
     public void onFirstRender(
             final @NotNull RenderContext render,
@@ -332,6 +335,9 @@ public class ShopOverviewView extends BaseView {
         }
     }
 
+    /**
+     * Executes onClick.
+     */
     @Override
     public void onClick(
             final @NotNull SlotClickContext click

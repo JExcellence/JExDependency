@@ -75,6 +75,16 @@ public class MetricsCollector {
             .collect(Collectors.joining(","));
     }
 
+    /**
+     * Snapshot of server metrics collected for API transmission.
+     *
+     * @param currentPlayers current online player count
+     * @param maxPlayers configured maximum player count
+     * @param tps measured ticks per second
+     * @param serverVersion server software version string
+     * @param memory memory usage snapshot
+     * @param playerList comma-separated player names when included
+     */
     public record ServerMetrics(
         int currentPlayers,
         int maxPlayers,
@@ -84,10 +94,21 @@ public class MetricsCollector {
         String playerList
     ) {}
 
+    /**
+     * Memory usage snapshot in megabytes.
+     *
+     * @param usedMb used heap memory in megabytes
+     * @param maxMb maximum heap memory in megabytes
+     */
     public record MemoryInfo(
         long usedMb,
         long maxMb
     ) {
+        /**
+         * Returns used heap percentage.
+         *
+         * @return heap usage percent, or {@code 0} when max memory is unavailable
+         */
         public int usagePercent() {
             return maxMb > 0 ? (int) ((usedMb * 100) / maxMb) : 0;
         }

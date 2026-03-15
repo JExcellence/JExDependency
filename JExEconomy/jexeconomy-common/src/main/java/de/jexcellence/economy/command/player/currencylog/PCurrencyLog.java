@@ -32,13 +32,12 @@ import java.util.stream.Collectors;
 
 /**
  * Enhanced player command implementation for viewing currency logs with advanced filtering and modern interactive pagination.
- * <p>
- * This command provides players and administrators with comprehensive access to currency
+ *
+ * <p>This command provides players and administrators with comprehensive access to currency
  * transaction logs, featuring beautiful MiniMessage formatting, advanced filtering capabilities,
  * and intuitive pagination controls matching the modern RDQImpl design standards.
- * </p>
  *
- * <h3>Enhanced Features:</h3>
+ * <p><strong>Enhanced Features:</strong>
  * <ul>
  *   <li>Modern MiniMessage gradients and formatting</li>
  *   <li>Interactive filtering with hover effects</li>
@@ -760,11 +759,17 @@ public class PCurrencyLog extends PlayerCommand {
         private ELogLevel logLevel;
         private EChangeType operationType;
 
+        /**
+         * Returns whether activeFilters.
+         */
         public boolean hasActiveFilters() {
             return playerUuid != null || currencyId != null || logType != null ||
                     logLevel != null || operationType != null;
         }
 
+        /**
+         * Gets filterDescription.
+         */
         public String getFilterDescription() {
             StringBuilder description = new StringBuilder();
 

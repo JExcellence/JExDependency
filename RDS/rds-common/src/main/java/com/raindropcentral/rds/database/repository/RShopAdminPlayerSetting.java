@@ -25,6 +25,9 @@ import org.jetbrains.annotations.Nullable;
         "unused",
         "FieldCanBeLocal"
 })
+/**
+ * Represents the RShopAdminPlayerSetting API type.
+ */
 public class RShopAdminPlayerSetting extends BaseRepository<ShopAdminPlayerSetting, Long> {
 
     private final EntityManagerFactory entityManagerFactory;

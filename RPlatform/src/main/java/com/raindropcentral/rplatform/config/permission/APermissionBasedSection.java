@@ -12,13 +12,12 @@ import java.util.Set;
 
 /**
  * Abstract base for configuration sections that expose values gated by permissions.
- * <p>
- * Implementations declare a default value alongside a map of permission-specific overrides. When a
+ *
+ * <p>Implementations declare a default value alongside a map of permission-specific overrides. When a
  * player is evaluated, the section inspects their effective permissions, resolves the most
  * appropriate override, and optionally applies bounds or additional validation. This shared logic is
  * used by duration, cooldown, and amplifier sections to provide consistent semantics across
  * configuration files.
- * </p>
  *
  * @param <T> numeric or comparable type returned by the configuration section
  * @author JExcellence
@@ -34,7 +33,7 @@ public abstract class APermissionBasedSection<T> extends AConfigSection {
     private Boolean enabled;
 
     /**
-     * Flag from {@code useBestValue} indicating whether the resolver should search for the best match
+     * Flag from {@code useBestValue} indicating whether the resolver should search for the best match.
      * or simply stop at the first applicable permission.
      */
     private Boolean useBestValue;
@@ -70,7 +69,7 @@ public abstract class APermissionBasedSection<T> extends AConfigSection {
     }
 
     /**
-     * Calculates the effective value for the supplied player by extracting their permissions and
+     * Calculates the effective value for the supplied player by extracting their permissions and.
      * delegating to {@link #getEffectiveValue(Set)}.
      *
      * @param player player whose permissions should be evaluated (may be {@code null})

@@ -55,6 +55,9 @@ import com.raindropcentral.rplatform.database.converter.UUIDConverter;
         )
     }
 )
+/**
+ * Represents the RStorage API type.
+ */
 public class RStorage extends BaseEntity {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RStorage.class);

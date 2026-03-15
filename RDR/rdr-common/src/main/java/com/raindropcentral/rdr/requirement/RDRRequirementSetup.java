@@ -60,6 +60,9 @@ public final class RDRRequirementSetup {
     private static final class StoreRequirementSectionAdapter
         implements RequirementSectionAdapter<StoreRequirementSection> {
 
+        /**
+         * Executes convert.
+         */
         @Override
         public @Nullable AbstractRequirement convert(
             final @NotNull StoreRequirementSection section,

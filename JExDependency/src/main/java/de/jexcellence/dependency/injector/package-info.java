@@ -1,8 +1,8 @@
 /**
- * Supplies runtime classpath injection utilities used by both the Paper plugin loader and the
+ * Supplies runtime classpath injection utilities used by both the Paper plugin loader and the.
  * plugin-side dependency bootstrap.
- * <p>
- * {@link de.jexcellence.dependency.injector.ClasspathInjector} is invoked by the loader
+ *
+ * <p>{@link de.jexcellence.dependency.injector.ClasspathInjector} is invoked by the loader
  * integration and by {@link de.jexcellence.dependency.JEDependency} once the Bukkit plugin gains
  * control. During the Paper bootstrap phase the
  * {@link de.jexcellence.dependency.loader.PaperPluginLoader} downloads or remaps declared

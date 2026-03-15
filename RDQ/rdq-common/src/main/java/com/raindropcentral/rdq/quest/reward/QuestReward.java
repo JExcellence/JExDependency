@@ -15,13 +15,12 @@ import java.util.logging.Logger;
 
 /**
  * Reward that grants quest start or completion as a reward.
- * <p>
- * This reward integrates with the quest service to automatically start a quest
+ *
+ * <p>This reward integrates with the quest service to automatically start a quest
  * for a player or mark a quest as completed. This is useful for quest chains
  * where completing one quest automatically starts or completes another.
- * </p>
- * <p>
- * Example JSON configuration:
+ *
+ * <p>Example JSON configuration:
  * <pre>
  * {
  *   "type": "QUEST",
@@ -29,7 +28,6 @@ import java.util.logging.Logger;
  *   "action": "START"
  * }
  * </pre>
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0
@@ -97,9 +95,8 @@ public final class QuestReward extends AbstractReward {
     
     /**
      * Sets the quest service for this reward.
-     * <p>
-     * This is called during initialization by the quest system.
-     * </p>
+ *
+ * <p>This is called during initialization by the quest system.
      *
      * @param questService the quest service
      */
@@ -127,12 +124,18 @@ public final class QuestReward extends AbstractReward {
         return action;
     }
     
+    /**
+     * Gets typeId.
+     */
     @Override
     @NotNull
     public String getTypeId() {
         return "QUEST";
     }
     
+    /**
+     * Executes grant.
+     */
     @Override
     @NotNull
     public CompletableFuture<Boolean> grant(@NotNull final Player player) {
@@ -175,10 +178,9 @@ public final class QuestReward extends AbstractReward {
     
     /**
      * Grants quest completion to the player.
-     * <p>
-     * This is an admin/cheat function that immediately completes the quest
+ *
+ * <p>This is an admin/cheat function that immediately completes the quest
      * without requiring the player to complete tasks.
-     * </p>
      *
      * @param player the player
      * @return a future completing with true if successful
@@ -190,6 +192,9 @@ public final class QuestReward extends AbstractReward {
         return CompletableFuture.completedFuture(false);
     }
     
+    /**
+     * Gets estimatedValue.
+     */
     @Override
     public double getEstimatedValue() {
         // Quest rewards have variable value depending on the quest
@@ -197,12 +202,18 @@ public final class QuestReward extends AbstractReward {
         return 50.0;
     }
     
+    /**
+     * Gets descriptionKey.
+     */
     @Override
     @NotNull
     public String getDescriptionKey() {
         return "reward.quest." + action.name().toLowerCase();
     }
     
+    /**
+     * Executes validate.
+     */
     @Override
     public void validate() {
         if (questIdentifier == null || questIdentifier.trim().isEmpty()) {

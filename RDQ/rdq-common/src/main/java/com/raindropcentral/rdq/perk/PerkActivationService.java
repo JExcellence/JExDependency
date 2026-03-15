@@ -25,13 +25,12 @@ import java.util.logging.Logger;
 
 /**
  * Service for managing perk activation, deactivation, and lifecycle.
- * <p>
- * This service handles:
+ *
+ * <p>This service handles:
  * - Activating and deactivating perk effects
  * - Managing cooldowns
  * - Handling player login/logout lifecycle
  * - Processing game events for event-triggered perks
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0

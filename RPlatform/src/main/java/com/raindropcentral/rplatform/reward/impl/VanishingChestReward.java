@@ -17,6 +17,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * Represents the VanishingChestReward API type.
+ */
 @JsonTypeName("VANISHING_CHEST")
 public final class VanishingChestReward extends AbstractReward {
 
@@ -25,6 +28,9 @@ public final class VanishingChestReward extends AbstractReward {
     private final long durationTicks;
     private final boolean dropItemsOnVanish;
 
+    /**
+     * Executes VanishingChestReward.
+     */
     @JsonCreator
     public VanishingChestReward(
         @JsonProperty("items") @NotNull List<ItemStack> items,
@@ -36,11 +42,17 @@ public final class VanishingChestReward extends AbstractReward {
         this.dropItemsOnVanish = dropItemsOnVanish;
     }
 
+    /**
+     * Gets typeId.
+     */
     @Override
     public @NotNull String getTypeId() {
         return "VANISHING_CHEST";
     }
 
+    /**
+     * Executes grant.
+     */
     @Override
     public @NotNull CompletableFuture<Boolean> grant(@NotNull Player player) {
         return CompletableFuture.supplyAsync(() -> {
@@ -137,6 +149,9 @@ public final class VanishingChestReward extends AbstractReward {
         return block.getType() == Material.AIR || block.getType().isAir();
     }
 
+    /**
+     * Gets estimatedValue.
+     */
     @Override
     public double getEstimatedValue() {
         return items.stream()
@@ -144,18 +159,30 @@ public final class VanishingChestReward extends AbstractReward {
             .sum();
     }
 
+    /**
+     * Gets items.
+     */
     public List<ItemStack> getItems() {
         return items.stream().map(ItemStack::clone).toList();
     }
 
+    /**
+     * Gets durationTicks.
+     */
     public long getDurationTicks() {
         return durationTicks;
     }
 
+    /**
+     * Returns whether dropItemsOnVanish.
+     */
     public boolean isDropItemsOnVanish() {
         return dropItemsOnVanish;
     }
 
+    /**
+     * Executes validate.
+     */
     @Override
     public void validate() {
         if (items == null || items.isEmpty()) {

@@ -14,10 +14,9 @@ import java.util.logging.Logger;
 
 /**
  * Listener for managing quest cache on player join/quit.
- * <p>
- * This listener automatically loads quest data when a player joins
+ *
+ * <p>This listener automatically loads quest data when a player joins
  * and saves it when they quit.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0
@@ -29,6 +28,9 @@ public class QuestCacheListener implements Listener {
     private final QuestCacheManager cacheManager;
     private final RDQ rdq;
 
+    /**
+     * Executes QuestCacheListener.
+     */
     public QuestCacheListener(@NotNull final RDQ rdq) {
         this.rdq = rdq;
         // TODO: Implement getQuestCacheManager() in RDQ.java
@@ -37,9 +39,8 @@ public class QuestCacheListener implements Listener {
     
     /**
      * Handles player join event - loads quest data.
-     * <p>
-     * Uses LOWEST priority to load data before other plugins access it.
-     * </p>
+ *
+ * <p>Uses LOWEST priority to load data before other plugins access it.
      *
      * @param event the player join event
      */
@@ -57,9 +58,8 @@ public class QuestCacheListener implements Listener {
     
     /**
      * Handles player quit event - saves and unloads quest data.
-     * <p>
-     * Uses MONITOR priority to save data after other plugins are done.
-     * </p>
+ *
+ * <p>Uses MONITOR priority to save data after other plugins are done.
      *
      * @param event the player quit event
      */

@@ -16,11 +16,10 @@ import java.util.Map;
 
 /**
  * GUI view for displaying and managing player ranks in RaindropQuests.
- * <p>
- * This view provides an interface for players to view and interact with their available ranks.
+ *
+ * <p>This view provides an interface for players to view and interact with their available ranks.
  * It integrates with the InventoryFramework system and supports internationalized titles.
  * The view is initialized with a reference to the main plugin instance ({@link RDQ}).
- * </p>
  *
  * <ul>
  *   <li>Sets up the inventory size and title using i18n messages.</li>
@@ -71,6 +70,9 @@ public class RankMainView extends BaseView {
         return 1;
     }
     
+    /**
+     * Executes onFirstRender.
+     */
     @Override
     public void onFirstRender(
         final @NotNull RenderContext render,

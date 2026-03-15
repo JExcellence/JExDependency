@@ -16,12 +16,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Represents the type API type.
+ */
+/**
+ * Represents the Nexus API type.
+ */
 public class Nexus {
 
     private static final String TOWN_UUID_KEY = "town_uuid";
+    /**
+     * Executes this member.
+     */
     private static final String TOWN_NAME_KEY = "town_name";
     private static final String MAYOR_UUID_KEY = "mayor_uuid";
 
+    /**
+     * Gets nexusItem.
+     */
     public static @NonNull ItemStack getNexusItem(
             final RDT plugin,
             final @NonNull UUID town_uuid,
@@ -42,21 +54,33 @@ public class Nexus {
         );
         persistentDataContainer.set(
                 new NamespacedKey(plugin.getPlugin(), TOWN_NAME_KEY),
+                /**
+                 * Executes method.
+                 */
                 PersistentDataType.STRING,
                 town_name
         );
         persistentDataContainer.set(
                 new NamespacedKey(plugin.getPlugin(), MAYOR_UUID_KEY),
                 PersistentDataType.STRING,
+                /**
+                 * Executes toString.
+                 */
                 mayor_uuid.toString()
         );
         nexus.setItemMeta(meta);
         return nexus;
     }
 
+    /**
+     * Executes equals.
+     */
     public static boolean equals(final RDT plugin, final @NonNull ItemStack item){
         ItemMeta meta = item.getItemMeta();
         if (meta == null) {
+            /**
+             * Executes method.
+             */
             return false;
         }
         PersistentDataContainer persistentDataContainer = meta.getPersistentDataContainer();
@@ -66,20 +90,35 @@ public class Nexus {
                 &&
                 persistentDataContainer.has(
                         new NamespacedKey(plugin.getPlugin(), TOWN_NAME_KEY),
+                        /**
+                         * Executes this member.
+                         */
                         PersistentDataType.STRING
                 )
                 &&
                 persistentDataContainer.has(
                         new NamespacedKey(plugin.getPlugin(), MAYOR_UUID_KEY),
+                        /**
+                         * Executes method.
+                         */
                         PersistentDataType.STRING
                 );
     }
 
+    /**
+     * Gets townUUID.
+     */
     public static @Nullable UUID getTownUUID(final RDT plugin, final @NonNull ItemStack item){
         ItemMeta meta = item.getItemMeta();
         if (meta == null) {
             return null;
+        /**
+         * Executes method.
+         */
         }
+        /**
+         * Gets persistentDataContainer.
+         */
         String s = meta.getPersistentDataContainer().get(
                 new NamespacedKey(plugin.getPlugin(), TOWN_UUID_KEY),
                 PersistentDataType.STRING
@@ -91,7 +130,13 @@ public class Nexus {
             return null;
         }
     }
+/**
+ * Executes this member.
+ */
 
+    /**
+     * Gets townName.
+     */
     public static @Nullable String getTownName(final RDT plugin, final @NonNull ItemStack item){
         final ItemMeta meta = item.getItemMeta();
         if (meta == null) {
@@ -103,6 +148,9 @@ public class Nexus {
         );
     }
 
+    /**
+     * Gets mayorUUID.
+     */
     public static @Nullable UUID getMayorUUID(final RDT plugin, final @NonNull ItemStack item) {
         final ItemMeta meta = item.getItemMeta();
         if (meta == null) {

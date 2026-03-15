@@ -38,6 +38,9 @@ public class BountyPlayerInfoView extends BaseView {
     private final State<Optional<Bounty>> bounty = initialState("bounty");
     private final State<Map<UUID, Map<Integer, ItemStack>>> insertedItems = initialState("insertedItems");
 
+    /**
+     * Executes BountyPlayerInfoView.
+     */
     public BountyPlayerInfoView() {
         super(BountyOverviewView.class);
     }
@@ -71,6 +74,9 @@ public class BountyPlayerInfoView extends BaseView {
         return "bounty_player_info_ui";
     }
 
+    /**
+     * Executes onFirstRender.
+     */
     @Override
     public void onFirstRender(final @NotNull RenderContext render, final @NotNull Player player) {
         renderTargetHead(render, player);
@@ -165,6 +171,9 @@ public class BountyPlayerInfoView extends BaseView {
         });
     }
 
+    /**
+     * Executes onResume.
+     */
     @Override
     public void onResume(final @NotNull Context origin, final @NotNull Context target) {
         @SuppressWarnings("unchecked")

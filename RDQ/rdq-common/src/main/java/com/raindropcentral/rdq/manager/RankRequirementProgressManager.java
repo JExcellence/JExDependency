@@ -22,19 +22,17 @@ import java.util.logging.Logger;
 
 /**
  * Manages rank requirement progress, including persistence, validation, and state management.
- * <p>
- * This manager handles:
+ *
+ * <p>This manager handles:
  * - Calculating and caching requirement progress (via RequirementService)
  * - Persisting completion states to the database
  * - Preventing over-completion of requirements
  * - Validating rank completion eligibility
  * - Coordinating between different rank views
- * </p>
- * <p>
- * <b>IMPORTANT:</b> This manager now uses {@link RequirementService} instead of calling
+ *
+ * <p><b>IMPORTANT:</b> This manager now uses {@link RequirementService} instead of calling
  * requirement methods directly. This ensures that requirement events are properly fired
  * and the rank progression system integrates with the event-driven architecture.
- * </p>
  *
  * @author ItsRainingHP
  * @version 2.0.0
@@ -54,6 +52,9 @@ public class RankRequirementProgressManager {
 	// Cache expiry time (30 seconds)
 	private static final long CACHE_EXPIRY_MS = 30000L;
 	
+	/**
+	 * Executes RankRequirementProgressManager.
+	 */
 	public RankRequirementProgressManager(@NotNull RDQ rdq) {
 		this.rdq = rdq;
 		this.requirementService = RequirementService.getInstance();
@@ -89,11 +90,10 @@ public class RankRequirementProgressManager {
 	
 	/**
 	 * Attempts to complete a requirement and persists the result.
-	 * <p>
-	 * This method now uses {@link RequirementService#isMet(Player, AbstractRequirement)}
+ *
+ * <p>This method now uses {@link RequirementService#isMet(Player, AbstractRequirement)}
 	 * and {@link RequirementService#consume(Player, AbstractRequirement)} to ensure
 	 * that requirement events are properly fired throughout the completion process.
-	 * </p>
 	 * This method will consume the required resources if the requirement is successfully completed.
 	 */
 	public @NotNull RequirementCompletionResult attemptRequirementCompletion(
@@ -301,13 +301,12 @@ public class RankRequirementProgressManager {
 	
 	/**
 	 * Calculates the current progress for a specific requirement.
-	 * <p>
-	 * This method now uses {@link RequirementService#checkRequirement(Player, AbstractRequirement)}
+ *
+ * <p>This method now uses {@link RequirementService#checkRequirement(Player, AbstractRequirement)}
 	 * instead of calling requirement methods directly. This ensures that:
 	 * - RequirementCheckEvent is fired
 	 * - Progress is automatically tracked by RankRequirementListener
 	 * - The system integrates with the event-driven architecture
-	 * </p>
 	 */
 	private @NotNull RequirementProgressData calculateRequirementProgress(
 		@NotNull Player player,
@@ -459,6 +458,9 @@ public class RankRequirementProgressManager {
 	
 	// Data classes and enums
 	
+	/**
+	 * Represents the RequirementStatus API type.
+	 */
 	public enum RequirementStatus {
 		NOT_STARTED,
 		IN_PROGRESS,
@@ -467,6 +469,9 @@ public class RankRequirementProgressManager {
 		ERROR
 	}
 	
+	/**
+	 * Snapshot of requirement progress information for presentation and workflow control.
+	 */
 	public static class RequirementProgressData {
 		private final String requirementId;
 		private final String requirementType;
@@ -477,6 +482,9 @@ public class RankRequirementProgressManager {
 		private final String statusMessage;
 		private final int displayOrder;
 		
+		/**
+		 * Executes RequirementProgressData.
+		 */
 		public RequirementProgressData(
 			@NotNull String requirementId,
 			@NotNull String requirementType,
@@ -498,31 +506,70 @@ public class RankRequirementProgressManager {
 		}
 		
 		// Getters
+		/**
+		 * Gets requirementId.
+		 */
 		public String getRequirementId() { return requirementId; }
+		/**
+		 * Gets requirementType.
+		 */
 		public String getRequirementType() { return requirementType; }
+		/**
+		 * Gets descriptionKey.
+		 */
 		public String getDescriptionKey() { return descriptionKey; }
+		/**
+		 * Returns whether completed.
+		 */
 		public boolean isCompleted() { return isCompleted; }
+		/**
+		 * Gets progressPercentage.
+		 */
 		public double getProgressPercentage() { return progressPercentage; }
+		/**
+		 * Gets status.
+		 */
 		public RequirementStatus getStatus() { return status; }
+		/**
+		 * Gets statusMessage.
+		 */
 		public String getStatusMessage() { return statusMessage; }
+		/**
+		 * Gets displayOrder.
+		 */
 		public int getDisplayOrder() { return displayOrder; }
 		
+		/**
+		 * Gets progressAsPercentage.
+		 */
 		public int getProgressAsPercentage() {
 			return (int) Math.round(progressPercentage * 100);
 		}
 		
+		/**
+		 * Returns whether progress.
+		 */
 		public boolean hasProgress() {
 			return progressPercentage > 0.0;
 		}
 		
+		/**
+		 * Gets formattedProgress.
+		 */
 		public String getFormattedProgress() {
 			return getProgressAsPercentage() + "%";
 		}
 		
+		/**
+		 * Executes canBeCompleted.
+		 */
 		public boolean canBeCompleted() {
 			return status == RequirementStatus.READY_TO_COMPLETE && !isCompleted;
 		}
 		
+		/**
+		 * Executes toString.
+		 */
 		@Override
 		public String toString() {
 			return "RequirementProgressData{" +
@@ -535,11 +582,17 @@ public class RankRequirementProgressManager {
 		}
 	}
 	
+	/**
+	 * Outcome of attempting to complete a requirement.
+	 */
 	public static class RequirementCompletionResult {
 		private final boolean success;
 		private final String messageKey;
 		private final RequirementProgressData updatedProgress;
 		
+		/**
+		 * Executes RequirementCompletionResult.
+		 */
 		public RequirementCompletionResult(
 			boolean success,
 			@NotNull String messageKey,
@@ -550,10 +603,22 @@ public class RankRequirementProgressManager {
 			this.updatedProgress = updatedProgress;
 		}
 		
+		/**
+		 * Returns whether success.
+		 */
 		public boolean isSuccess() { return success; }
+		/**
+		 * Gets messageKey.
+		 */
 		public String getMessageKey() { return messageKey; }
+		/**
+		 * Gets updatedProgress.
+		 */
 		public RequirementProgressData getUpdatedProgress() { return updatedProgress; }
 		
+		/**
+		 * Executes sendMessage.
+		 */
 		public void sendMessage(@NotNull Player player) {
             new I18n.Builder(messageKey, player).includePrefix().build().sendMessage();
 		}

@@ -18,24 +18,23 @@ import java.util.stream.Collectors;
 
 /**
  * Console command implementation for withdrawing currency amounts from player accounts.
- * <p>
- * This command provides server administrators with the ability to remove currency from any player's
+ *
+ * <p>This command provides server administrators with the ability to remove currency from any player's
  * account directly from the server console. It supports all registered currencies within the
  * JExEconomy system and performs comprehensive validation to ensure data integrity and prevent
  * overdrafts or invalid operations.
- * </p>
  *
- * <h3>Command Syntax:</h3>
+ * <p><strong>Command Syntax:</strong>
  * <pre>{@code /cwithdraw <player> <currency> <amount>}</pre>
  *
- * <h3>Parameters:</h3>
+ * <p><strong>Parameters:</strong>
  * <ul>
  *   <li><strong>player:</strong> Target player name or UUID (must have played before)</li>
  *   <li><strong>currency:</strong> Valid currency identifier registered in the system</li>
  *   <li><strong>amount:</strong> Positive decimal amount to withdraw (must not exceed current balance)</li>
  * </ul>
  *
- * <h3>Operation Flow:</h3>
+ * <p><strong>Operation Flow:</strong>
  * <ol>
  *   <li>Validates command arguments and parameter types</li>
  *   <li>Verifies currency exists in the system</li>
@@ -44,7 +43,7 @@ import java.util.stream.Collectors;
  *   <li>Reports operation results for audit purposes</li>
  * </ol>
  *
- * <h3>Validation Rules:</h3>
+ * <p><strong>Validation Rules:</strong>
  * <ul>
  *   <li>Player must exist and have played on the server before</li>
  *   <li>Currency identifier must match a registered currency</li>
@@ -53,7 +52,7 @@ import java.util.stream.Collectors;
  *   <li>Player must have an existing account for the specified currency</li>
  * </ul>
  *
- * <h3>Error Handling:</h3>
+ * <p><strong>Error Handling:</strong>
  * <ul>
  *   <li>Invalid player names or UUIDs are rejected with appropriate messages</li>
  *   <li>Non-existent currencies are reported with available alternatives</li>
@@ -62,7 +61,7 @@ import java.util.stream.Collectors;
  *   <li>Failed withdrawal operations are logged with full context</li>
  * </ul>
  *
- * <h3>Security Considerations:</h3>
+ * <p><strong>Security Considerations:</strong>
  * <ul>
  *   <li>Console-only execution prevents player abuse</li>
  *   <li>All operations are logged for comprehensive audit trails</li>
@@ -84,31 +83,28 @@ public class CWithdraw extends ServerCommand {
 	
 	/**
 	 * Logger instance for recording command execution details and debugging information.
-	 * <p>
-	 * Used to track command usage, parameter validation results, operation outcomes,
+ *
+ * <p>Used to track command usage, parameter validation results, operation outcomes,
 	 * and error conditions for administrative monitoring and troubleshooting. All
 	 * withdrawal operations are logged for audit trail purposes.
-	 * </p>
 	 */
 	private static final Logger COMMAND_LOGGER = CentralLogger.getLoggerByName("JExEconomy");
 	
 	/**
 	 * Reference to the main JExEconomy plugin instance.
-	 * <p>
-	 * Provides access to currency repositories, adapter services, and other plugin
+ *
+ * <p>Provides access to currency repositories, adapter services, and other plugin
 	 * infrastructure required for executing withdrawal operations and data persistence.
 	 * This reference is essential for accessing the plugin's currency management system.
-	 * </p>
 	 */
 	private final JExEconomy jexEconomyImpl;
 	
 	/**
 	 * Constructs a new console withdrawal command handler with the specified configuration.
-	 * <p>
-	 * Initializes the command with access to the plugin's currency management infrastructure
+ *
+ * <p>Initializes the command with access to the plugin's currency management infrastructure
 	 * and configures it according to the provided command section settings. The constructor
 	 * validates that all required dependencies are provided and properly configured.
-	 * </p>
 	 *
 	 * @param commandSection the command configuration section defining permissions and settings, must not be null
 	 * @param jexEconomy the main JExEconomy plugin instance providing access to services, must not be null
@@ -125,12 +121,11 @@ public class CWithdraw extends ServerCommand {
 	
 	/**
 	 * Processes console-initiated withdrawal commands with comprehensive validation and error handling.
-	 * <p>
-	 * This method handles the complete withdrawal workflow from parameter validation through
+ *
+ * <p>This method handles the complete withdrawal workflow from parameter validation through
 	 * database persistence. It performs asynchronous operations to prevent server lag
 	 * and provides detailed logging for administrative monitoring. The method ensures
 	 * that all withdrawal operations maintain data integrity and prevent invalid states.
-	 * </p>
 	 *
 	 * @param consoleCommandSender the console sender executing the command, must not be null
 	 * @param commandLabel the command label used for invocation, must not be null
@@ -174,11 +169,10 @@ public class CWithdraw extends ServerCommand {
 	
 	/**
 	 * Locates a currency entity by its unique identifier within the plugin's currency cache.
-	 * <p>
-	 * This method performs an efficient lookup of currency entities using the in-memory
+ *
+ * <p>This method performs an efficient lookup of currency entities using the in-memory
 	 * cache maintained by the plugin. It provides fast access to currency data without
 	 * requiring database queries during command execution, improving overall performance.
-	 * </p>
 	 *
 	 * @param currencyIdentifier the unique identifier of the currency to locate, must not be null
 	 * @return the Currency entity if found, null if no matching currency exists
@@ -194,12 +188,11 @@ public class CWithdraw extends ServerCommand {
 	
 	/**
 	 * Handles unknown currency identifier errors with helpful diagnostic information.
-	 * <p>
-	 * This method logs detailed error information when an invalid currency identifier
+ *
+ * <p>This method logs detailed error information when an invalid currency identifier
 	 * is provided, including a comprehensive list of all available currencies to assist
 	 * administrators in correcting their commands. The information helps reduce command
 	 * errors and improves administrative efficiency.
-	 * </p>
 	 *
 	 * @param invalidCurrencyIdentifier the currency identifier that was not found, must not be null
 	 */
@@ -229,12 +222,11 @@ public class CWithdraw extends ServerCommand {
 	
 	/**
 	 * Executes the withdrawal operation using the CurrencyAdapter service.
-	 * <p>
-	 * This method delegates the withdrawal operation to the CurrencyAdapter, which handles
+ *
+ * <p>This method delegates the withdrawal operation to the CurrencyAdapter, which handles
 	 * all validation, balance checking, and database persistence. The operation is performed
 	 * asynchronously to prevent server lag, and comprehensive logging is provided for
 	 * audit trail purposes.
-	 * </p>
 	 *
 	 * @param targetOfflinePlayer the player from whom to withdraw currency, must not be null
 	 * @param targetCurrency the currency entity for the withdrawal operation, must not be null
@@ -283,11 +275,10 @@ public class CWithdraw extends ServerCommand {
 	
 	/**
 	 * Handles the response from the withdrawal operation with comprehensive logging.
-	 * <p>
-	 * This method processes the CurrencyResponse returned by the withdrawal operation,
+ *
+ * <p>This method processes the CurrencyResponse returned by the withdrawal operation,
 	 * logging success or failure details for administrative monitoring and audit trails.
 	 * Both successful and failed operations are recorded with complete transaction context.
-	 * </p>
 	 *
 	 * @param response the response from the withdrawal operation, must not be null
 	 * @param targetOfflinePlayer the player from whom currency was withdrawn, must not be null

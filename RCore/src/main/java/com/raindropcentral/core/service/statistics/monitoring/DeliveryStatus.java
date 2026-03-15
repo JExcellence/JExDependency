@@ -92,18 +92,60 @@ public record DeliveryStatus(
         private BackpressureLevel backpressureStatus = BackpressureLevel.NONE;
         private boolean offlineMode = false;
 
+        /**
+         * Executes running.
+         */
         public Builder running(boolean running) { this.running = running; return this; }
+        /**
+         * Executes paused.
+         */
         public Builder paused(boolean paused) { this.paused = paused; return this; }
+        /**
+         * Executes lastSuccessTime.
+         */
         public Builder lastSuccessTime(Instant time) { this.lastSuccessTime = time; return this; }
+        /**
+         * Executes method.
+         */
+        /**
+         * Executes this member.
+         */
+        /**
+         * Executes lastFailureTime.
+         */
         public Builder lastFailureTime(Instant time) { this.lastFailureTime = time; return this; }
+        /**
+         * Executes pendingByPriority.
+         */
         public Builder pendingByPriority(Map<DeliveryPriority, Integer> map) { this.pendingByPriority = map; return this; }
+        /**
+         * Executes totalPending.
+         */
         public Builder totalPending(int count) { this.totalPending = count; return this; }
+        /**
+         * Executes failedCount.
+         */
         public Builder failedCount(long count) { this.failedCount = count; return this; }
+        /**
+         * Executes retryCount.
+         */
         public Builder retryCount(long count) { this.retryCount = count; return this; }
+        /**
+         * Executes queueDepth.
+         */
         public Builder queueDepth(int depth) { this.queueDepth = depth; return this; }
+        /**
+         * Executes backpressureStatus.
+         */
         public Builder backpressureStatus(BackpressureLevel level) { this.backpressureStatus = level; return this; }
+        /**
+         * Executes offlineMode.
+         */
         public Builder offlineMode(boolean offline) { this.offlineMode = offline; return this; }
 
+        /**
+         * Executes build.
+         */
         public DeliveryStatus build() {
             return new DeliveryStatus(
                 running, paused, lastSuccessTime, lastFailureTime,

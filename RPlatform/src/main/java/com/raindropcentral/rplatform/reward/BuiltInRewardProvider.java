@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
+/**
+ * Represents the BuiltInRewardProvider API type.
+ */
 public final class BuiltInRewardProvider implements PluginRewardProvider {
 
     private static final Logger LOGGER = Logger.getLogger(BuiltInRewardProvider.class.getName());
@@ -18,6 +21,9 @@ public final class BuiltInRewardProvider implements PluginRewardProvider {
         initialize();
     }
 
+    /**
+     * Gets instance.
+     */
     public static BuiltInRewardProvider getInstance() {
         return INSTANCE;
     }
@@ -36,30 +42,48 @@ public final class BuiltInRewardProvider implements PluginRewardProvider {
         rewardTypes.put("VANISHING_CHEST", RewardType.core("VANISHING_CHEST", VanishingChestReward.class));
     }
 
+    /**
+     * Gets pluginId.
+     */
     @Override
     public @NotNull String getPluginId() {
         return "rplatform";
     }
 
+    /**
+     * Gets rewardTypes.
+     */
     @Override
     public @NotNull Map<String, RewardType> getRewardTypes() {
         return Map.copyOf(rewardTypes);
     }
 
+    /**
+     * Executes onRegister.
+     */
     @Override
     public void onRegister() {
         LOGGER.info("Registered " + rewardTypes.size() + " built-in reward types");
     }
 
+    /**
+     * Executes onUnregister.
+     */
     @Override
     public void onUnregister() {
         LOGGER.info("Unregistered built-in reward types");
     }
 
+    /**
+     * Executes register.
+     */
     public void register() {
         RewardRegistry.getInstance().registerProvider(this);
     }
 
+    /**
+     * Executes unregister.
+     */
     public void unregister() {
         RewardRegistry.getInstance().unregisterProvider(getPluginId());
     }

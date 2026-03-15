@@ -1,11 +1,10 @@
 /**
  * Comprehensive reward system for granting rewards to players.
- * <p>
- * The reward system provides a flexible, event-driven framework for managing and granting
- * various types of rewards including items, currency, experience, commands, and more.
- * </p>
  *
- * <h2>Core Components</h2>
+ * <p>The reward system provides a flexible, event-driven framework for managing and granting
+ * various types of rewards including items, currency, experience, commands, and more.
+ *
+ * <p><strong>Core Components</strong>
  * <ul>
  *   <li>{@link com.raindropcentral.rplatform.reward.RewardService} - Main service for granting rewards</li>
  *   <li>{@link com.raindropcentral.rplatform.reward.RewardRegistry} - Central registry for reward types</li>
@@ -13,7 +12,7 @@
  *   <li>{@link com.raindropcentral.rplatform.reward.config.RewardBuilder} - Fluent API for creating rewards</li>
  * </ul>
  *
- * <h2>Reward Types</h2>
+ * <p><strong>Reward Types</strong>
  * <ul>
  *   <li>{@link com.raindropcentral.rplatform.reward.impl.ItemReward} - Give items to players</li>
  *   <li>{@link com.raindropcentral.rplatform.reward.impl.CurrencyReward} - Grant currency via Vault</li>
@@ -24,7 +23,7 @@
  *   <li>{@link com.raindropcentral.rplatform.reward.impl.PermissionReward} - Grant permissions</li>
  * </ul>
  *
- * <h2>Example Usage</h2>
+ * <p><strong>Example Usage</strong>
  * <pre>{@code
  * // Create a reward
  * ItemReward reward = RewardBuilder.item()

@@ -1,5 +1,5 @@
 /**
- * Utility abstractions that connect annotated command implementations to the
+ * Utility abstractions that connect annotated command implementations to the.
  * reflection-driven registration pipeline provided by the {@link com.raindropcentral.commands.CommandFactory}.
  *
  * <p>The {@link com.raindropcentral.commands.utility.Command Command} annotation marks concrete

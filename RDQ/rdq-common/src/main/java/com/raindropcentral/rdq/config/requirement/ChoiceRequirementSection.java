@@ -11,10 +11,9 @@ import java.util.Map;
 
 /**
  * Configuration section for choice requirements.
- * <p>
- * This section handles all configuration options specific to ChoiceRequirement,
+ *
+ * <p>This section handles all configuration options specific to ChoiceRequirement,
  * including choice options, selection modes, and choice descriptions.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -97,14 +96,23 @@ public class ChoiceRequirementSection extends AConfigSection {
 	// ~~~ GETTERS ~~~
 	
 	
+	/**
+	 * Gets allowPartialProgress.
+	 */
 	public Boolean getAllowPartialProgress() {
 		return this.allowPartialProgress != null ? this.allowPartialProgress : true;
 	}
 	
+	/**
+	 * Gets mutuallyExclusive.
+	 */
 	public Boolean getMutuallyExclusive() {
 		return this.mutuallyExclusive != null ? this.mutuallyExclusive : false;
 	}
 	
+	/**
+	 * Gets allowChoiceChange.
+	 */
 	public Boolean getAllowChoiceChange() {
 		return this.allowChoiceChange != null ? this.allowChoiceChange : true;
 	}

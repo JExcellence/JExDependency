@@ -15,12 +15,11 @@ import java.util.logging.Logger;
 
 /**
  * Cache manager for player quest data.
- * <p>
- * This cache loads all active quests for a player on join, stores them in memory,
+ *
+ * <p>This cache loads all active quests for a player on join, stores them in memory,
  * and saves them back to the database on leave. This provides instant access to
  * quest data without database queries.
- * </p>
- * <h3>Design Philosophy</h3>
+ * <p><strong>Design Philosophy</strong>
  * <ul>
  *   <li>Load all active quests on player join</li>
  *   <li>Update progress instantly in memory</li>
@@ -41,22 +40,22 @@ public class QuestCacheManager {
     private final QuestUserRepository repository;
     
     /**
-     * Cache of player quest data: UUID -> List of QuestUser
+     * Cache of player quest data: UUID -> List of QuestUser.
      */
     private final ConcurrentHashMap<UUID, List<QuestUser>> cache;
     
     /**
-     * Set of players with unsaved changes
+     * Set of players with unsaved changes.
      */
     private final Set<UUID> dirtyPlayers;
     
     /**
-     * Auto-save task
+     * Auto-save task.
      */
     private BukkitTask autoSaveTask;
     
     /**
-     * Whether to log performance metrics
+     * Whether to log performance metrics.
      */
     private final boolean logPerformance;
     
@@ -114,11 +113,10 @@ public class QuestCacheManager {
     
     /**
      * Loads all active quests for a player from the database into memory.
-     * <p>
-     * Thread Safety: The loaded list is wrapped in a synchronized list
+ *
+ * <p>Thread Safety: The loaded list is wrapped in a synchronized list
      * to prevent ConcurrentModificationException when quests are modified
      * while auto-save is running.
-     * </p>
      *
      * @param playerId the player's UUID
      * @return a future completing when loading is done
@@ -148,9 +146,8 @@ public class QuestCacheManager {
     
     /**
      * Loads all active quests for a player synchronously (blocking).
-     * <p>
-     * Use loadPlayerAsync() for better performance.
-     * </p>
+ *
+ * <p>Use loadPlayerAsync() for better performance.
      *
      * @param playerId the player's UUID
      */
@@ -315,9 +312,8 @@ public class QuestCacheManager {
     
     /**
      * Auto-saves all players with unsaved changes.
-     * <p>
-     * This is called periodically for crash protection.
-     * </p>
+ *
+ * <p>This is called periodically for crash protection.
      *
      * @return the number of players saved
      */

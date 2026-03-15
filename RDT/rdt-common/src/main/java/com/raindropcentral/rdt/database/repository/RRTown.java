@@ -14,8 +14,8 @@ import java.util.function.Function;
 
 /**
  * Cached repository for {@link com.raindropcentral.rdt.database.entity.RTown} entities.
- * <p>
- * Responsibilities:
+ *
+ * <p>Responsibilities:
  * <ul>
  *   <li>Provide standard CRUD operations backed by {@link CachedRepository}</li>
  *   <li>Expose convenience finders for common lookups (by mayor, name, or town UUID)</li>
@@ -30,6 +30,9 @@ import java.util.function.Function;
         "unused",
         "FieldCanBeLocal"
 })
+/**
+ * Represents the RRTown API type.
+ */
 public class RRTown extends CachedRepository<RTown, Long, UUID> {
 
     // Keep a reference to the EntityManagerFactory for custom ad-hoc queries

@@ -41,6 +41,9 @@ public class PerkOverviewView extends APaginatedView<Perk> {
 
     private PerkCardRenderer cardRenderer;
 
+    /**
+     * Executes PerkOverviewView.
+     */
     public PerkOverviewView() {
         super();
     }

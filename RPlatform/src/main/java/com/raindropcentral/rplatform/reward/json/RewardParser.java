@@ -10,6 +10,9 @@ import com.raindropcentral.rplatform.reward.RewardRegistry;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Represents the RewardParser API type.
+ */
 public final class RewardParser {
 
     private static ObjectMapper objectMapper;
@@ -17,6 +20,9 @@ public final class RewardParser {
 
     private RewardParser() {}
 
+    /**
+     * Gets objectMapper.
+     */
     public static ObjectMapper getObjectMapper() {
         if (objectMapper == null) {
             synchronized (MAPPER_LOCK) {
@@ -44,6 +50,9 @@ public final class RewardParser {
         return mapper;
     }
 
+    /**
+     * Executes parse.
+     */
     public static AbstractReward parse(@NotNull final String json) {
         try {
             return getObjectMapper().readValue(json, AbstractReward.class);
@@ -52,6 +61,9 @@ public final class RewardParser {
         }
     }
 
+    /**
+     * Executes serialize.
+     */
     public static String serialize(@NotNull final AbstractReward reward) {
         try {
             return getObjectMapper().writeValueAsString(reward);
@@ -60,6 +72,9 @@ public final class RewardParser {
         }
     }
 
+    /**
+     * Executes resetMapper.
+     */
     public static void resetMapper() {
         objectMapper = null;
     }

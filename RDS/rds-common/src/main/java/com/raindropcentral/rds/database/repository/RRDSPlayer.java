@@ -21,6 +21,9 @@ import java.util.function.Function;
         "unused",
         "FieldCanBeLocal"
 })
+/**
+ * Represents the RRDSPlayer API type.
+ */
 public class RRDSPlayer extends CachedRepository<RDSPlayer, Long, UUID> {
 
     private final EntityManagerFactory emf;

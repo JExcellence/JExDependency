@@ -51,6 +51,9 @@ public class AdminOverviewView extends BaseView {
 		return 3;
 	}
 	
+	/**
+	 * Executes onFirstRender.
+	 */
 	@Override
 	public void onFirstRender(
 		final @NotNull RenderContext render,
@@ -63,10 +66,9 @@ public class AdminOverviewView extends BaseView {
 	
 	/**
 	 * Initializes the button that opens the permissions management view.
-	 * <p>
-	 * The button is displayed as a diamond item with internationalized name and lore.
+ *
+ * <p>The button is displayed as a diamond item with internationalized name and lore.
 	 * When clicked, it opens the {@link AdminPermissionsView} for the player, passing the plugin instance as state.
-	 * </p>
 	 *
 	 * @param context The render context for the current inventory.
 	 * @param player  The player viewing the GUI.

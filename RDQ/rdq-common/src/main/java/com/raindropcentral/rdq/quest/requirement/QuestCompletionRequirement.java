@@ -17,12 +17,11 @@ import java.util.logging.Logger;
 
 /**
  * Requirement that checks if a player has completed a specific quest.
- * <p>
- * This requirement integrates with the quest completion history system to verify
+ *
+ * <p>This requirement integrates with the quest completion history system to verify
  * that a player has completed a quest at least once (or a minimum number of times).
- * </p>
- * <p>
- * Example JSON configuration:
+ *
+ * <p>Example JSON configuration:
  * <pre>
  * {
  *   "type": "QUEST_COMPLETION",
@@ -30,7 +29,6 @@ import java.util.logging.Logger;
  *   "minCompletions": 1
  * }
  * </pre>
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0
@@ -80,9 +78,8 @@ public final class QuestCompletionRequirement extends AbstractRequirement {
     
     /**
      * Sets the repository for this requirement.
-     * <p>
-     * This is called during initialization by the quest system.
-     * </p>
+ *
+ * <p>This is called during initialization by the quest system.
      *
      * @param repository the completion history repository
      */
@@ -109,6 +106,9 @@ public final class QuestCompletionRequirement extends AbstractRequirement {
         return minCompletions;
     }
     
+    /**
+     * Returns whether met.
+     */
     @Override
     public boolean isMet(@NotNull final Player player) {
         if (repository == null) {
@@ -136,6 +136,9 @@ public final class QuestCompletionRequirement extends AbstractRequirement {
         }
     }
     
+    /**
+     * Executes calculateProgress.
+     */
     @Override
     public double calculateProgress(@NotNull final Player player) {
         if (repository == null) {
@@ -164,11 +167,17 @@ public final class QuestCompletionRequirement extends AbstractRequirement {
         }
     }
     
+    /**
+     * Executes consume.
+     */
     @Override
     public void consume(@NotNull final Player player) {
         // Quest completions are not consumable - they remain in history
     }
     
+    /**
+     * Gets descriptionKey.
+     */
     @Override
     @NotNull
     public String getDescriptionKey() {

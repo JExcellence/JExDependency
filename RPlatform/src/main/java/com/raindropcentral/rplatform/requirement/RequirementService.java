@@ -19,9 +19,8 @@ import java.util.logging.Logger;
 
 /**
  * Service for checking, consuming, and calculating progress of requirements.
- * <p>
- * Provides caching, event firing, and lifecycle hook integration.
- * </p>
+ *
+ * <p>Provides caching, event firing, and lifecycle hook integration.
  */
 public final class RequirementService {
 
@@ -36,6 +35,9 @@ public final class RequirementService {
 
     private RequirementService() {}
 
+    /**
+     * Gets instance.
+     */
     @NotNull
     public static RequirementService getInstance() {
         return INSTANCE;
@@ -43,6 +45,9 @@ public final class RequirementService {
 
     // ==================== Core Operations ====================
 
+    /**
+     * Returns whether met.
+     */
     public boolean isMet(@NotNull Player player, @NotNull AbstractRequirement requirement) {
         // Check cache first
         String cacheKey = getCacheKey(requirement);
@@ -94,6 +99,9 @@ public final class RequirementService {
         }
     }
 
+    /**
+     * Executes calculateProgress.
+     */
     public double calculateProgress(@NotNull Player player, @NotNull AbstractRequirement requirement) {
         String cacheKey = getCacheKey(requirement);
         CachedResult cached = getCachedResult(player.getUniqueId(), cacheKey);
@@ -114,6 +122,9 @@ public final class RequirementService {
         }
     }
 
+    /**
+     * Executes consume.
+     */
     public void consume(@NotNull Player player, @NotNull AbstractRequirement requirement) {
         // Fire consume event
         RequirementConsumeEvent event = new RequirementConsumeEvent(player, requirement);
@@ -144,6 +155,9 @@ public final class RequirementService {
 
     // ==================== Batch Operations ====================
 
+    /**
+     * Executes calculateOverallProgress.
+     */
     public double calculateOverallProgress(@NotNull Player player, @NotNull List<AbstractRequirement> requirements) {
         if (requirements.isEmpty()) return 1.0;
         
@@ -153,20 +167,32 @@ public final class RequirementService {
             .orElse(0.0);
     }
 
+    /**
+     * Executes consumeAll.
+     */
     public void consumeAll(@NotNull Player player, @NotNull List<AbstractRequirement> requirements) {
         requirements.forEach(req -> consume(player, req));
     }
 
+    /**
+     * Executes areAllMet.
+     */
     public boolean areAllMet(@NotNull Player player, @NotNull List<AbstractRequirement> requirements) {
         return requirements.stream().allMatch(req -> isMet(player, req));
     }
 
     // ==================== Cache Management ====================
 
+    /**
+     * Executes clearCache.
+     */
     public void clearCache(@NotNull UUID playerId) {
         cache.remove(playerId);
     }
 
+    /**
+     * Executes clearCache.
+     */
     public void clearCache(@NotNull UUID playerId, @NotNull String cacheKey) {
         Map<String, CachedResult> playerCache = cache.get(playerId);
         if (playerCache != null) {
@@ -174,10 +200,16 @@ public final class RequirementService {
         }
     }
 
+    /**
+     * Executes clearAllCache.
+     */
     public void clearAllCache() {
         cache.clear();
     }
 
+    /**
+     * Executes cleanupExpiredCache.
+     */
     public void cleanupExpiredCache() {
         long now = System.currentTimeMillis();
         cache.entrySet().removeIf(entry -> {

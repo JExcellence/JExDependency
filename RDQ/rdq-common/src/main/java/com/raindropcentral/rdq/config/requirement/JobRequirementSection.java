@@ -9,10 +9,9 @@ import java.util.Map;
 
 /**
  * Configuration section for job-based requirements.
- * <p>
- * This section handles all configuration options specific to JobRequirement,
+ *
+ * <p>This section handles all configuration options specific to JobRequirement,
  * including required jobs, job levels, and job plugin integration.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
