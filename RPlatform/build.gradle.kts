@@ -35,12 +35,23 @@ dependencies {
     compileOnly(libs.vault.api) { isTransitive = false }
     
     compileOnly("org.jetbrains:annotations:24.0.1")
+
+    testImplementation(platform(libs.junit.bom))
+    testImplementation(libs.junit.jupiter.api)
+    testRuntimeOnly(libs.junit.jupiter.engine)
+    testRuntimeOnly(libs.junit.platform.launcher)
+    testImplementation(libs.paper.api)
+    testCompileOnly(libs.jackson.annotations)
 }
 
 tasks {
     jar {
         archiveBaseName.set("RPlatform")
     }
+}
+
+tasks.withType<Test>().configureEach {
+    useJUnitPlatform()
 }
 
 afterEvaluate {

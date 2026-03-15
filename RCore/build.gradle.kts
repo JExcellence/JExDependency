@@ -67,6 +67,13 @@ dependencies {
     implementation(libs.bundles.inventory) { isTransitive = false }
 
     compileOnly(libs.jexeconomy)
+
+    testImplementation(platform(libs.junit.bom))
+    testImplementation(libs.junit.jupiter.api)
+    testRuntimeOnly(libs.junit.jupiter.engine)
+    testRuntimeOnly(libs.junit.platform.launcher)
+    testImplementation(libs.paper.api)
+    testCompileOnly(libs.jackson.annotations)
 }
 
 tasks.processResources {
@@ -99,6 +106,10 @@ tasks.named("build") {
 
 tasks.named<Jar>("jar") {
     enabled = false
+}
+
+tasks.withType<Test>().configureEach {
+    useJUnitPlatform()
 }
 
 publishing {
