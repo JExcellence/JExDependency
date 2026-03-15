@@ -232,7 +232,7 @@ runs:
         for i in "${!names[@]}"; do
           name="${names[$i]}"
           pattern="${patterns[$i]}"
-          candidates=( "${workspace}/${pattern}" )
+          mapfile -t candidates < <(compgen -G "${workspace}/${pattern}" || true)
           matches=()
 
           for candidate in "${candidates[@]}"; do
