@@ -24,3 +24,4 @@ jobs:
         uses: ./.github/actions/run-java-tests
         with:
           java-version: "21"
+          jeconfig-token: ${{ secrets.JECONFIG_READ_TOKEN || github.token }}
