@@ -1,0 +1,153 @@
+name: Force Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "Module to release"
+        required: true
+        default: "all"
+        type: choice
+        options:
+          - all
+          - RCore
+          - RDQ
+          - RDR
+          - RDS
+          - RDT
+      prerelease:
+        description: "Mark generated releases as prerelease"
+        required: true
+        default: true
+        type: boolean
+
+concurrency:
+  group: force-release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  resolve-targets:
+    name: Resolve Target Modules
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.resolve.outputs.matrix }}
+    steps:
+      - name: Resolve matrix
+        id: resolve
+        shell: bash
+        run: |
+          set -euo pipefail
+          target="${{ inputs.target }}"
+
+          if [[ "${target}" == "all" ]]; then
+            matrix='[
+              {"module":"RCore"},
+              {"module":"RDQ"},
+              {"module":"RDR"},
+              {"module":"RDS"},
+              {"module":"RDT"}
+            ]'
+          else
+            matrix="[{\"module\":\"${target}\"}]"
+          fi
+
+          echo "Resolved matrix: ${matrix}"
+          echo "matrix=${matrix}" >> "${GITHUB_OUTPUT}"
+
+  force-release:
+    name: Build And Publish Force Release
+    needs: resolve-targets
+    runs-on:
+      - self-hosted
+      - Linux
+      - X64
+      - RDC
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJson(needs.resolve-targets.outputs.matrix) }}
+    permissions:
+      contents: write
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Resolve release metadata
+        id: meta
+        shell: bash
+        run: |
+          set -euo pipefail
+          module="${{ matrix.module }}"
+
+          case "${module}" in
+            RCore) prefix="rcore" ;;
+            RDQ) prefix="rdq" ;;
+            RDR) prefix="rdr" ;;
+            RDS) prefix="rds" ;;
+            RDT) prefix="rdt" ;;
+            *) echo "Unsupported module: ${module}" >&2; exit 1 ;;
+          esac
+
+          get_prop() {
+            local key="$1"
+            local value
+            value="$(grep -E "^${key}=" gradle.properties | tail -n 1 | cut -d'=' -f2- | tr -d '\r')"
+            if [[ -z "${value}" ]]; then
+              echo "Missing property: ${key}" >&2
+              exit 1
+            fi
+            printf '%s' "${value}"
+          }
+
+          major="$(get_prop "${prefix}.version.major")"
+          minor="$(get_prop "${prefix}.version.minor")"
+          patch="$(get_prop "${prefix}.version.patch")"
+          stage="$(get_prop "${prefix}.version.stage")"
+          build="$(get_prop "${prefix}.version.build")"
+          version="${major}.${minor}.${patch}-${stage}-Build-${build}"
+          normalized_version="$(printf '%s' "${version}" | tr '[:upper:]' '[:lower:]' | tr -cs 'a-z0-9.-' '-')"
+
+          tag="force-${prefix}-${normalized_version}-r${GITHUB_RUN_NUMBER}-a${GITHUB_RUN_ATTEMPT}"
+          release_name="FORCE ${module} ${version} (run ${GITHUB_RUN_NUMBER}.${GITHUB_RUN_ATTEMPT})"
+
+          {
+            echo "tag=${tag}"
+            echo "release_name=${release_name}"
+            echo "version=${version}"
+            echo "module=${module}"
+          } >> "${GITHUB_OUTPUT}"
+
+      - name: Build release jars for target module
+        id: build-release
+        uses: ./.github/actions/build-release-jars
+        with:
+          java-version: "21"
+          target-module: ${{ matrix.module }}
+          jeconfig-token: ${{ secrets.JECONFIG_READ_TOKEN || github.token }}
+
+      - name: Upload jars to workflow artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: force-release-jars-${{ matrix.module }}-${{ steps.meta.outputs.tag }}
+          path: ${{ steps.build-release.outputs.artifacts-dir }}/*.jar
+          if-no-files-found: error
+
+      - name: Create force GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.meta.outputs.tag }}
+          target_commitish: ${{ github.sha }}
+          name: ${{ steps.meta.outputs.release_name }}
+          prerelease: ${{ inputs.prerelease }}
+          generate_release_notes: false
+          body: |
+            FORCE TEST RELEASE
+            Module: ${{ steps.meta.outputs.module }}
+            Version: ${{ steps.meta.outputs.version }}
+            Commit: ${{ github.sha }}
+            Triggered by: ${{ github.actor }}
+          files: |
+            ${{ steps.build-release.outputs.artifacts-dir }}/*.jar
+          fail_on_unmatched_files: true
