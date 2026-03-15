@@ -119,6 +119,66 @@ The project uses Gradle with the Wrapper committed. Typical commands:
 
 Run these commands from the repository root after making changes. For full verification, follow up with integration tests or Windows-specific packaging via `build-all.bat` if required by your workflow.
 
+## Versioning & Build Numbers
+
+`gradle.properties` now includes a commit counter:
+
+```properties
+commit=1831
+```
+
+When `commit` increases, build numbers are recalculated for these modules:
+`RCore`, `RDQ`, `RDR`, `RDS`, `RDT`.
+
+The sync logic only changes:
+
+- `rcore.version.build`
+- `rdq.version.build`
+- `rdr.version.build`
+- `rds.version.build`
+- `rdt.version.build`
+
+Each module build number is updated by counting how many of the last `delta` commits touched that module directory, where `delta = (current commit - HEAD commit)`.
+
+### Version Counter Gradle tasks
+
+| Task | Purpose |
+| --- | --- |
+| `syncBuildNumbersFromCommitCounter` | Applies commit-delta module build bumps to `gradle.properties`. |
+| `validateCommitCounter` | Fails the build if `commit` was lowered compared to `HEAD`. |
+| `installGitHooks` | Sets `core.hooksPath` to `scripts/git-hooks` for repository-managed hooks. |
+
+### Recommended workflow
+
+1. Install hooks once per clone:
+```bash
+# Windows
+gradlew.bat installGitHooks
+
+# Linux/Mac
+./gradlew installGitHooks
+```
+2. Increase `commit=` in `gradle.properties`.
+3. Commit normally.
+
+With hooks installed, `scripts/git-hooks/pre-commit` will:
+
+- Reject commits that lower `commit`.
+- Auto-run `syncBuildNumbersFromCommitCounter` when `commit` increases.
+- Re-stage `gradle.properties` with updated module build numbers.
+
+### Manual workflow (no hooks)
+
+```bash
+# Windows
+gradlew.bat validateCommitCounter syncBuildNumbersFromCommitCounter
+
+# Linux/Mac
+./gradlew validateCommitCounter syncBuildNumbersFromCommitCounter
+```
+
+If this is the first commit introducing the `commit` field, the sync task treats it as baseline setup and does not apply retroactive build bumps until the next commit increase.
+
 ### Containerized build pipeline
 
 The repository also ships a Docker-based builder that mirrors the Windows batch process. The image layers the Gradle sources onto an Eclipse Temurin JDK 21 base, installs `curl` and `git`, and then invokes `scripts/docker-build.sh` to prepare Maven-local dependencies, build the shaded jars, and copy them into an artifact directory. The script exits early when `RCore-Premium-<version>.jar`, `RDQ-Free-<version>.jar`, `RDQ-Premium-<version>.jar`, and `JExEconomy-<version>.jar` already exist in the target location, avoiding unnecessary rebuilds.【F:Dockerfile†L1-L30】【F:scripts/docker-build.sh†L1-L142】
