@@ -1,5 +1,5 @@
 name: "Run Java Tests"
-description: "Sets up Java/Gradle, publishes JEConfig dependencies, and runs the project test suite."
+description: "Sets up Java/Gradle, publishes required local artifacts in build-all order, and runs tests."
 
 inputs:
   java-version:
@@ -60,8 +60,39 @@ runs:
         }
 
         Push-Location $checkoutDir
-        .\gradlew.bat --no-daemon publishToMavenLocal
-        Pop-Location
+        try {
+          .\gradlew.bat --no-daemon publishToMavenLocal
+          if ($LASTEXITCODE -ne 0) {
+            throw "Gradle task failed: publishToMavenLocal (JEConfig)"
+          }
+        } finally {
+          Pop-Location
+        }
+
+    - name: Build and publish internal modules in required order
+      shell: pwsh
+      run: |
+        $tasks = @(
+          "clean"
+          ":JExDependency:publishToMavenLocal"
+          ":JExCommand:publishToMavenLocal"
+          ":JExTranslate:publishToMavenLocal"
+          ":RPlatform:publishToMavenLocal"
+          ":JExEconomy:publishLocal"
+          ":RCore:publishLocal"
+          ":RDQ:buildAll"
+          ":RDR:buildAll"
+          ":RDS:buildAll"
+          ":RDT:buildAll"
+        )
+
+        foreach ($task in $tasks) {
+          Write-Host "Running Gradle task: $task"
+          .\gradlew.bat --no-daemon $task
+          if ($LASTEXITCODE -ne 0) {
+            throw "Gradle task failed: $task"
+          }
+        }
 
     - name: Run tests
       shell: pwsh
