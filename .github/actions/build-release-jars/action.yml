@@ -200,6 +200,9 @@ runs:
           default { throw "Unsupported target-module: $targetModule" }
         }
 
+        # Ensure a single hashtable target (e.g., RCORE) is treated as one item, not a map with Count=2 keys.
+        $targets = @($targets)
+
         foreach ($target in $targets) {
           $matchPath = Join-Path $workspace $target.pattern
           $matches = @(

@@ -20,6 +20,22 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v6
 
+      - name: Validate commit counter and build number sync
+        shell: pwsh
+        run: |
+          Set-StrictMode -Version Latest
+          $ErrorActionPreference = 'Stop'
+
+          .\gradlew.bat --no-daemon validateCommitCounter syncBuildNumbersFromCommitCounter
+          if ($LASTEXITCODE -ne 0) {
+            throw "Commit counter/build number validation failed."
+          }
+
+          git diff --exit-code -- gradle.properties
+          if ($LASTEXITCODE -ne 0) {
+            throw "gradle.properties is out of sync. Run 'gradlew.bat validateCommitCounter syncBuildNumbersFromCommitCounter' locally and commit the updated gradle.properties."
+          }
+
       - name: Run Java test suite
         uses: ./.github/actions/run-java-tests
         with:
