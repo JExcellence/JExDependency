@@ -79,6 +79,7 @@ runs:
           ":JExTranslate:publishToMavenLocal"
           ":RPlatform:publishToMavenLocal"
           ":JExEconomy:publishLocal"
+          ":JExEconomy:publishMavenPublicationToMavenLocal"
           ":RCore:publishLocal"
           ":RDQ:buildAll"
           ":RDR:buildAll"
