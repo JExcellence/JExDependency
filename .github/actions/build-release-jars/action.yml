@@ -77,34 +77,78 @@ runs:
           Pop-Location
         }
 
+    - name: Validate target module version properties
+      shell: pwsh
+      run: |
+        $targetModule = "${{ inputs.target-module }}"
+        $normalizedTargetModule = $targetModule.Trim().ToUpperInvariant()
+        $versionPrefix = switch ($normalizedTargetModule) {
+          "RCORE" { "rcore" }
+          "RDQ" { "rdq" }
+          "RDR" { "rdr" }
+          "RDS" { "rds" }
+          "RDT" { "rdt" }
+          default { throw "Unsupported target-module: $targetModule" }
+        }
+
+        $propertiesFile = Join-Path $env:GITHUB_WORKSPACE "gradle.properties"
+        if (-not (Test-Path $propertiesFile)) {
+          throw "Missing gradle.properties at $propertiesFile"
+        }
+
+        $lines = Get-Content -Path $propertiesFile
+        $fields = @("major", "minor", "patch", "stage", "build")
+
+        foreach ($field in $fields) {
+          $key = "$versionPrefix.version.$field"
+          $line = $lines | Where-Object { $_ -match "^\s*$([regex]::Escape($key))\s*=" } | Select-Object -Last 1
+
+          if (-not $line) {
+            throw "Missing required version property: $key. The release would fall back to an undefined version."
+          }
+
+          $value = ($line -split "=", 2)[1].Trim()
+          if ([string]::IsNullOrWhiteSpace($value) -or $value.Equals("undefined", [System.StringComparison]::OrdinalIgnoreCase)) {
+            throw "Invalid version property $key='$value'. Undefined fallback versions are not allowed for releases."
+          }
+        }
+
     - name: Build and publish internal modules in required order
       shell: pwsh
       run: |
         $targetModule = "${{ inputs.target-module }}"
         $normalizedTargetModule = $targetModule.Trim().ToUpperInvariant()
 
-        $tasks = [System.Collections.Generic.List[string]]::new()
-        $tasks.AddRange(@(
+        $tasks = @(
           "clean"
+          ":JExDependency:clean"
+          ":JExDependency:build"
           ":JExDependency:publishToMavenLocal"
+          ":JExCommand:clean"
+          ":JExCommand:build"
           ":JExCommand:publishToMavenLocal"
+          ":JExTranslate:clean"
+          ":JExTranslate:build"
           ":JExTranslate:publishToMavenLocal"
+          ":RPlatform:clean"
+          ":RPlatform:build"
           ":RPlatform:publishToMavenLocal"
+          ":JExEconomy:clean"
+          ":JExEconomy:build"
           ":JExEconomy:publishLocal"
           ":JExEconomy:publishMavenPublicationToMavenLocal"
-          ":RCore:publishLocal"
-        ))
+        )
 
-        switch ($normalizedTargetModule) {
-          "RCORE" { }
-          "RDQ" { $tasks.Add(":RDQ:buildAll") }
-          "RDR" { $tasks.Add(":RDR:buildAll") }
-          "RDS" { $tasks.Add(":RDS:buildAll") }
-          "RDT" { $tasks.Add(":RDT:buildAll") }
+        $targetTasks = switch ($normalizedTargetModule) {
+          "RCORE" { @(":RCore:clean", ":RCore:build", ":RCore:publishLocal") }
+          "RDQ" { @(":RCore:clean", ":RCore:build", ":RCore:publishLocal", ":RDQ:clean", ":RDQ:buildAll") }
+          "RDR" { @(":RCore:clean", ":RCore:build", ":RCore:publishLocal", ":RDR:clean", ":RDR:buildAll") }
+          "RDS" { @(":RCore:clean", ":RCore:build", ":RCore:publishLocal", ":RDS:clean", ":RDS:buildAll") }
+          "RDT" { @(":RCore:clean", ":RCore:build", ":RCore:publishLocal", ":RDT:clean", ":RDT:buildAll") }
           default { throw "Unsupported target-module: $targetModule" }
         }
 
-        foreach ($task in $tasks) {
+        foreach ($task in $tasks + $targetTasks) {
           Write-Host "Running Gradle task: $task"
           .\gradlew.bat --no-daemon $task
           if ($LASTEXITCODE -ne 0) {

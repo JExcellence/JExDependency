@@ -10,8 +10,66 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  wait-for-java-tests:
+    name: Wait For Java Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      actions: read
+      contents: read
+    steps:
+      - name: Wait for CI Java Tests workflow success
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const workflowId = "java-tests.yml";
+            const headSha = context.sha;
+            const maxAttempts = 120;
+            const delayMs = 15000;
+
+            const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+            for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+              const response = await github.rest.actions.listWorkflowRuns({
+                owner,
+                repo,
+                workflow_id: workflowId,
+                event: "push",
+                head_sha: headSha,
+                per_page: 20
+              });
+
+              const run = response.data.workflow_runs.find((candidate) => candidate.head_sha === headSha);
+
+              if (!run) {
+                core.info(`Attempt ${attempt}/${maxAttempts}: CI Java Tests run not found yet for ${headSha}.`);
+                await sleep(delayMs);
+                continue;
+              }
+
+              core.info(`Attempt ${attempt}/${maxAttempts}: Found run ${run.id} with status=${run.status}, conclusion=${run.conclusion}.`);
+
+              if (run.status !== "completed") {
+                await sleep(delayMs);
+                continue;
+              }
+
+              if (run.conclusion !== "success") {
+                core.setFailed(`CI Java Tests did not succeed for ${headSha}. Conclusion: ${run.conclusion}`);
+                return;
+              }
+
+              core.info(`CI Java Tests succeeded for ${headSha}.`);
+              return;
+            }
+
+            core.setFailed(`Timed out waiting for CI Java Tests to complete for ${headSha}.`);
+
   detect-version-changes:
     name: Detect Version Changes
+    needs: wait-for-java-tests
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -65,6 +123,10 @@ jobs:
             value="$(grep -E "^${key}=" gradle.properties | tail -n 1 | cut -d'=' -f2- | tr -d '\r')"
             if [[ -z "${value}" ]]; then
               echo "Missing expected property: ${key}" >&2
+              exit 1
+            fi
+            if [[ "${value,,}" == "undefined" ]]; then
+              echo "Property ${key} resolved to undefined, which is not allowed for releases." >&2
               exit 1
             fi
             printf '%s' "${value}"
