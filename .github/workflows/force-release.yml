@@ -21,6 +21,9 @@ on:
         default: true
         type: boolean
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
 concurrency:
   group: force-release-${{ github.ref }}
   cancel-in-progress: false
@@ -45,8 +48,9 @@ jobs:
             matrix="[{\"module\":\"${target}\"}]"
           fi
 
+          matrix="$(printf '%s' "${matrix}" | tr -d '\r\n')"
           echo "Resolved matrix: ${matrix}"
-          echo "matrix=${matrix}" >> "${GITHUB_OUTPUT}"
+          printf 'matrix=%s\n' "${matrix}" >> "${GITHUB_OUTPUT}"
 
   force-release:
     name: Build And Publish Force Release
@@ -122,7 +126,7 @@ jobs:
           jeconfig-token: ${{ secrets.JECONFIG_READ_TOKEN || github.token }}
 
       - name: Upload jars to workflow artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: force-release-jars-${{ matrix.module }}-${{ steps.meta.outputs.tag }}
           path: ${{ steps.build-release.outputs.artifacts-dir }}/*.jar
