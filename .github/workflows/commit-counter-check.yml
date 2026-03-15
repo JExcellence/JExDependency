@@ -12,7 +12,11 @@ concurrency:
 jobs:
   commit-counter-check:
     name: Validate Commit Counter And Build Numbers
-    runs-on: windows-latest
+    runs-on:
+      - self-hosted
+      - Linux
+      - X64
+      - RDC
     permissions:
       contents: read
 

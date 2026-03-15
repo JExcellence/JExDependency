@@ -30,6 +30,13 @@ outputs:
 runs:
   using: "composite"
   steps:
+    - name: Normalize root Gradle wrapper for Linux
+      shell: bash
+      run: |
+        set -euo pipefail
+        sed -i 's/\r$//' ./gradlew
+        chmod +x ./gradlew
+
     - name: Set up JDK
       uses: actions/setup-java@v5
       with:
@@ -59,67 +66,66 @@ runs:
         persist-credentials: false
 
     - name: Publish JEConfig artifacts to Maven Local
-      shell: pwsh
+      shell: bash
       run: |
-        $checkoutDir = "$env:GITHUB_WORKSPACE\.external\JEConfig"
+        set -euo pipefail
+        checkout_dir="${GITHUB_WORKSPACE}/.external/JEConfig"
 
-        if (-not (Test-Path $checkoutDir)) {
-          throw "JEConfig checkout directory was not created: $checkoutDir"
-        }
+        if [[ ! -d "${checkout_dir}" ]]; then
+          echo "JEConfig checkout directory was not created: ${checkout_dir}" >&2
+          exit 1
+        fi
 
-        Push-Location $checkoutDir
-        try {
-          .\gradlew.bat --no-daemon publishToMavenLocal
-          if ($LASTEXITCODE -ne 0) {
-            throw "Gradle task failed: publishToMavenLocal (JEConfig)"
-          }
-        } finally {
-          Pop-Location
-        }
+        pushd "${checkout_dir}" >/dev/null
+        sed -i 's/\r$//' ./gradlew
+        chmod +x ./gradlew
+        ./gradlew --no-daemon publishToMavenLocal
+        popd >/dev/null
 
     - name: Validate target module version properties
-      shell: pwsh
+      shell: bash
       run: |
-        $targetModule = "${{ inputs.target-module }}"
-        $normalizedTargetModule = $targetModule.Trim().ToUpperInvariant()
-        $versionPrefix = switch ($normalizedTargetModule) {
-          "RCORE" { "rcore" }
-          "RDQ" { "rdq" }
-          "RDR" { "rdr" }
-          "RDS" { "rds" }
-          "RDT" { "rdt" }
-          default { throw "Unsupported target-module: $targetModule" }
-        }
+        set -euo pipefail
+        target_module="${{ inputs.target-module }}"
+        normalized_target_module="$(printf '%s' "${target_module}" | tr '[:lower:]' '[:upper:]')"
 
-        $propertiesFile = Join-Path $env:GITHUB_WORKSPACE "gradle.properties"
-        if (-not (Test-Path $propertiesFile)) {
-          throw "Missing gradle.properties at $propertiesFile"
-        }
+        case "${normalized_target_module}" in
+          RCORE) version_prefix="rcore" ;;
+          RDQ) version_prefix="rdq" ;;
+          RDR) version_prefix="rdr" ;;
+          RDS) version_prefix="rds" ;;
+          RDT) version_prefix="rdt" ;;
+          *) echo "Unsupported target-module: ${target_module}" >&2; exit 1 ;;
+        esac
 
-        $lines = Get-Content -Path $propertiesFile
-        $fields = @("major", "minor", "patch", "stage", "build")
+        properties_file="${GITHUB_WORKSPACE}/gradle.properties"
+        if [[ ! -f "${properties_file}" ]]; then
+          echo "Missing gradle.properties at ${properties_file}" >&2
+          exit 1
+        fi
 
-        foreach ($field in $fields) {
-          $key = "$versionPrefix.version.$field"
-          $line = $lines | Where-Object { $_ -match "^\s*$([regex]::Escape($key))\s*=" } | Select-Object -Last 1
-
-          if (-not $line) {
-            throw "Missing required version property: $key. The release would fall back to an undefined version."
-          }
-
-          $value = ($line -split "=", 2)[1].Trim()
-          if ([string]::IsNullOrWhiteSpace($value) -or $value.Equals("undefined", [System.StringComparison]::OrdinalIgnoreCase)) {
-            throw "Invalid version property $key='$value'. Undefined fallback versions are not allowed for releases."
-          }
-        }
+        fields=(major minor patch stage build)
+        for field in "${fields[@]}"; do
+          key="${version_prefix}.version.${field}"
+          value="$(grep -E "^${key}=" "${properties_file}" | tail -n 1 | cut -d'=' -f2- | tr -d '\r')"
+          if [[ -z "${value}" ]]; then
+            echo "Missing required version property: ${key}. The release would fall back to an undefined version." >&2
+            exit 1
+          fi
+          if [[ "${value,,}" == "undefined" ]]; then
+            echo "Invalid version property ${key}='${value}'. Undefined fallback versions are not allowed for releases." >&2
+            exit 1
+          fi
+        done
 
     - name: Build and publish internal modules in required order
-      shell: pwsh
+      shell: bash
       run: |
-        $targetModule = "${{ inputs.target-module }}"
-        $normalizedTargetModule = $targetModule.Trim().ToUpperInvariant()
+        set -euo pipefail
+        target_module="${{ inputs.target-module }}"
+        normalized_target_module="$(printf '%s' "${target_module}" | tr '[:lower:]' '[:upper:]')"
 
-        $tasks = @(
+        common_tasks=(
           "clean"
           ":JExDependency:clean"
           ":JExDependency:build"
@@ -139,95 +145,128 @@ runs:
           ":JExEconomy:publishMavenPublicationToMavenLocal"
         )
 
-        $targetTasks = switch ($normalizedTargetModule) {
-          "RCORE" { @(":RCore:clean", ":RCore:build", ":RCore:publishLocal") }
-          "RDQ" { @(":RCore:clean", ":RCore:build", ":RCore:publishLocal", ":RDQ:clean", ":RDQ:buildAll") }
-          "RDR" { @(":RCore:clean", ":RCore:build", ":RCore:publishLocal", ":RDR:clean", ":RDR:buildAll") }
-          "RDS" { @(":RCore:clean", ":RCore:build", ":RCore:publishLocal", ":RDS:clean", ":RDS:buildAll") }
-          "RDT" { @(":RCore:clean", ":RCore:build", ":RCore:publishLocal", ":RDT:clean", ":RDT:buildAll") }
-          default { throw "Unsupported target-module: $targetModule" }
-        }
+        case "${normalized_target_module}" in
+          RCORE)
+            target_tasks=(":RCore:clean" ":RCore:build" ":RCore:publishLocal")
+            ;;
+          RDQ)
+            target_tasks=(":RCore:clean" ":RCore:build" ":RCore:publishLocal" ":RDQ:clean" ":RDQ:buildAll")
+            ;;
+          RDR)
+            target_tasks=(":RCore:clean" ":RCore:build" ":RCore:publishLocal" ":RDR:clean" ":RDR:buildAll")
+            ;;
+          RDS)
+            target_tasks=(":RCore:clean" ":RCore:build" ":RCore:publishLocal" ":RDS:clean" ":RDS:buildAll")
+            ;;
+          RDT)
+            target_tasks=(":RCore:clean" ":RCore:build" ":RCore:publishLocal" ":RDT:clean" ":RDT:buildAll")
+            ;;
+          *)
+            echo "Unsupported target-module: ${target_module}" >&2
+            exit 1
+            ;;
+        esac
 
-        foreach ($task in $tasks + $targetTasks) {
-          Write-Host "Running Gradle task: $task"
-          .\gradlew.bat --no-daemon $task
-          if ($LASTEXITCODE -ne 0) {
-            throw "Gradle task failed: $task"
-          }
-        }
+        for task in "${common_tasks[@]}" "${target_tasks[@]}"; do
+          echo "Running Gradle task: ${task}"
+          ./gradlew --no-daemon "${task}"
+        done
 
     - name: Stage release artifacts
       id: stage-release-artifacts
-      shell: pwsh
+      shell: bash
       run: |
-        $workspace = $env:GITHUB_WORKSPACE
-        $targetModule = "${{ inputs.target-module }}"
-        $normalizedTargetModule = $targetModule.Trim().ToUpperInvariant()
-        $artifactsDirRelative = "release-artifacts"
-        $artifactsDir = Join-Path $workspace $artifactsDirRelative
+        set -euo pipefail
+        shopt -s nullglob
 
-        if (Test-Path $artifactsDir) {
-          Remove-Item -Path $artifactsDir -Recurse -Force
-        }
-        New-Item -Path $artifactsDir -ItemType Directory -Force | Out-Null
+        workspace="${GITHUB_WORKSPACE}"
+        target_module="${{ inputs.target-module }}"
+        normalized_target_module="$(printf '%s' "${target_module}" | tr '[:lower:]' '[:upper:]')"
+        artifacts_dir_relative="release-artifacts"
+        artifacts_dir="${workspace}/${artifacts_dir_relative}"
 
-        $targets = switch ($normalizedTargetModule) {
-          "RCORE" { @(@{ name = "RCore"; pattern = "RCore/build/libs/RCore-*.jar" }) }
-          "RDQ" {
-            @(
-              @{ name = "RDQ Free"; pattern = "RDQ/rdq-free/build/libs/RDQ-*-Free.jar" }
-              @{ name = "RDQ Premium"; pattern = "RDQ/rdq-premium/build/libs/RDQ-*-Premium.jar" }
+        rm -rf "${artifacts_dir}"
+        mkdir -p "${artifacts_dir}"
+
+        names=()
+        patterns=()
+        case "${normalized_target_module}" in
+          RCORE)
+            names=("RCore")
+            patterns=("RCore/build/libs/RCore-*.jar")
+            ;;
+          RDQ)
+            names=("RDQ Free" "RDQ Premium")
+            patterns=(
+              "RDQ/rdq-free/build/libs/RDQ-*-Free.jar"
+              "RDQ/rdq-premium/build/libs/RDQ-*-Premium.jar"
             )
-          }
-          "RDR" {
-            @(
-              @{ name = "RDR Free"; pattern = "RDR/rdr-free/build/libs/RDR-*-Free.jar" }
-              @{ name = "RDR Premium"; pattern = "RDR/rdr-premium/build/libs/RDR-*-Premium.jar" }
+            ;;
+          RDR)
+            names=("RDR Free" "RDR Premium")
+            patterns=(
+              "RDR/rdr-free/build/libs/RDR-*-Free.jar"
+              "RDR/rdr-premium/build/libs/RDR-*-Premium.jar"
             )
-          }
-          "RDS" {
-            @(
-              @{ name = "RDS Free"; pattern = "RDS/rds-free/build/libs/RDS-*-Free.jar" }
-              @{ name = "RDS Premium"; pattern = "RDS/rds-premium/build/libs/RDS-*-Premium.jar" }
+            ;;
+          RDS)
+            names=("RDS Free" "RDS Premium")
+            patterns=(
+              "RDS/rds-free/build/libs/RDS-*-Free.jar"
+              "RDS/rds-premium/build/libs/RDS-*-Premium.jar"
             )
-          }
-          "RDT" {
-            @(
-              @{ name = "RDT Free"; pattern = "RDT/rdt-free/build/libs/RDT-*-Free.jar" }
-              @{ name = "RDT Premium"; pattern = "RDT/rdt-premium/build/libs/RDT-*-Premium.jar" }
+            ;;
+          RDT)
+            names=("RDT Free" "RDT Premium")
+            patterns=(
+              "RDT/rdt-free/build/libs/RDT-*-Free.jar"
+              "RDT/rdt-premium/build/libs/RDT-*-Premium.jar"
             )
-          }
-          default { throw "Unsupported target-module: $targetModule" }
-        }
+            ;;
+          *)
+            echo "Unsupported target-module: ${target_module}" >&2
+            exit 1
+            ;;
+        esac
 
-        # Ensure a single hashtable target (e.g., RCORE) is treated as one item, not a map with Count=2 keys.
-        $targets = @($targets)
+        for i in "${!names[@]}"; do
+          name="${names[$i]}"
+          pattern="${patterns[$i]}"
+          candidates=( "${workspace}/${pattern}" )
+          matches=()
 
-        foreach ($target in $targets) {
-          $matchPath = Join-Path $workspace $target.pattern
-          $matches = @(
-            Get-ChildItem -Path $matchPath -File -ErrorAction SilentlyContinue |
-            Where-Object { $_.Name -notmatch "(?i)sources|javadoc" }
-          )
+          for candidate in "${candidates[@]}"; do
+            if [[ ! -f "${candidate}" ]]; then
+              continue
+            fi
+            jar_name="$(basename "${candidate}")"
+            if [[ "${jar_name,,}" == *sources* || "${jar_name,,}" == *javadoc* ]]; then
+              continue
+            fi
+            matches+=("${candidate}")
+          done
 
-          if ($matches.Count -ne 1) {
-            Write-Host "Expected exactly one jar for $($target.name), found $($matches.Count)."
-            if ($matches.Count -gt 0) {
-              $matches | ForEach-Object { Write-Host " - $($_.FullName)" }
-            } else {
-              Write-Host "Pattern used: $($target.pattern)"
-            }
-            throw "Release artifact resolution failed for $($target.name)."
-          }
+          if [[ ${#matches[@]} -ne 1 ]]; then
+            echo "Expected exactly one jar for ${name}, found ${#matches[@]}."
+            if [[ ${#matches[@]} -gt 0 ]]; then
+              for file in "${matches[@]}"; do
+                echo " - ${file}"
+              done
+            else
+              echo "Pattern used: ${pattern}"
+            fi
+            exit 1
+          fi
 
-          $jar = $matches[0]
-          Copy-Item -Path $jar.FullName -Destination (Join-Path $artifactsDir $jar.Name) -Force
-          Write-Host "Staged $($target.name): $($jar.Name)"
-        }
+          jar="${matches[0]}"
+          cp "${jar}" "${artifacts_dir}/"
+          echo "Staged ${name}: $(basename "${jar}")"
+        done
 
-        $artifactCount = @(Get-ChildItem -Path $artifactsDir -File -Filter "*.jar").Count
-        if ($artifactCount -ne $targets.Count) {
-          throw "Expected $($targets.Count) release jars for $targetModule, found $artifactCount."
-        }
+        artifact_count="$(find "${artifacts_dir}" -maxdepth 1 -type f -name '*.jar' | wc -l | tr -d '[:space:]')"
+        if [[ "${artifact_count}" != "${#names[@]}" ]]; then
+          echo "Expected ${#names[@]} release jars for ${target_module}, found ${artifact_count}." >&2
+          exit 1
+        fi
 
-        "artifacts-dir=$artifactsDirRelative" >> $env:GITHUB_OUTPUT
+        echo "artifacts-dir=${artifacts_dir_relative}" >> "${GITHUB_OUTPUT}"

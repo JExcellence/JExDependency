@@ -12,7 +12,11 @@ concurrency:
 jobs:
   java-tests:
     name: Gradle Test (Java 21)
-    runs-on: windows-latest
+    runs-on:
+      - self-hosted
+      - Linux
+      - X64
+      - RDC
     permissions:
       contents: read
 
@@ -21,19 +25,17 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Validate commit counter and build number sync
-        shell: pwsh
+        shell: bash
         run: |
-          Set-StrictMode -Version Latest
-          $ErrorActionPreference = 'Stop'
+          set -euo pipefail
+          sed -i 's/\r$//' ./gradlew
+          chmod +x ./gradlew
 
-          .\gradlew.bat --no-daemon validateCommitCounter syncBuildNumbersFromCommitCounter
-          if ($LASTEXITCODE -ne 0) {
-            throw "Commit counter/build number validation failed."
-          }
+          ./gradlew --no-daemon validateCommitCounter syncBuildNumbersFromCommitCounter
 
-          git diff --exit-code -- gradle.properties
-          if ($LASTEXITCODE -ne 0) {
-            throw "gradle.properties is out of sync. Run 'gradlew.bat validateCommitCounter syncBuildNumbersFromCommitCounter' locally and commit the updated gradle.properties."
+          git diff --exit-code -- gradle.properties || {
+            echo "gradle.properties is out of sync. Run './gradlew validateCommitCounter syncBuildNumbersFromCommitCounter' locally and commit the updated gradle.properties." >&2
+            exit 1
           }
 
       - name: Run Java test suite

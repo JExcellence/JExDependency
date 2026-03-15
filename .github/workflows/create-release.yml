@@ -8,6 +8,8 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # Keep lightweight coordination on GitHub-hosted runners so a single
+  # self-hosted builder is not blocked by orchestration/polling jobs.
   detect-version-changes:
     name: Detect Version Changes
     runs-on: ubuntu-latest
@@ -226,7 +228,12 @@ jobs:
       - detect-version-changes
       - wait-for-java-tests
     if: ${{ needs.detect-version-changes.outputs.has-changes == 'true' }}
-    runs-on: windows-latest
+    # Build-heavy work is pinned to the self-hosted runner labels below.
+    runs-on:
+      - self-hosted
+      - Linux
+      - X64
+      - RDC
     strategy:
       fail-fast: false
       matrix:
