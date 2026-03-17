@@ -117,6 +117,7 @@ town_info_ui:
       - "<gradient:#64748b:#94a3b8>Claimed Chunks:</gradient> <gradient:#22c55e:#86efac>%claimed_chunks%</gradient>"
       - "<gradient:#64748b:#94a3b8>Town Level:</gradient> <gradient:#22c55e:#86efac>%town_level%</gradient>"
       - "<gradient:#64748b:#94a3b8>Nexus Chunk:</gradient> <gradient:#38bdf8:#7dd3fc>(%nexus_chunk_x%, %nexus_chunk_z%)</gradient>"
+      - "<gradient:#64748b:#94a3b8>Nexus Server:</gradient> <gradient:#22d3ee:#67e8f9>%nexus_server%</gradient>"
       - "<gradient:#64748b:#94a3b8>Status:</gradient> <gradient:#22d3ee:#67e8f9>%active_state%</gradient>"
     state:
       active: "<gradient:#22c55e:#86efac>Active ✅</gradient>"
@@ -260,6 +261,7 @@ town_overview_ui:
     lore:
       - "<gradient:#64748b:#94a3b8>Placed State: %placed_state%</gradient>"
       - "<gradient:#64748b:#94a3b8>Nexus Location: %world% (%x%, %y%, %z%)</gradient>"
+      - "<gradient:#64748b:#94a3b8>Nexus Server:</gradient> <gradient:#22d3ee:#67e8f9>%nexus_server%</gradient>"
       - "<gradient:#64748b:#94a3b8>Town Level:</gradient> <gradient:#22c55e:#86efac>%town_level% ➜ %next_level%</gradient>"
     state:
       placed: "<gradient:#22c55e:#86efac>Placed ✅</gradient>"
@@ -338,6 +340,7 @@ town_overview_ui:
     name: "<gradient:#22c55e:#86efac>📍 Set Town Spawn</gradient>"
     lore:
       - "<gradient:#64748b:#94a3b8>Current Spawn:</gradient> <gradient:#38bdf8:#7dd3fc>%spawn_world% (%spawn_x%, %spawn_y%, %spawn_z%)</gradient>"
+      - "<gradient:#64748b:#94a3b8>Spawn Server:</gradient> <gradient:#22d3ee:#67e8f9>%spawn_server%</gradient>"
       - "<gradient:#64748b:#94a3b8>Click to set spawn to your current location.</gradient>"
       - "<gradient:#64748b:#94a3b8>Requires permission:</gradient> <gradient:#38bdf8:#7dd3fc>%permission%</gradient>"
     unavailable:
@@ -901,6 +904,10 @@ command:
       no_permission: "<gradient:#ef4444:#f87171>⚠ You need %permission% to open your town view.</gradient>"
     spawn:
       starting: "<gradient:#f59e0b:#fbbf24>⏳ Teleporting to your town spawn in %seconds% second(s)...</gradient>"
+      routing: "<gradient:#38bdf8:#7dd3fc>🧭 Routing you to server %server% for town spawn handoff...</gradient>"
+      proxy_unavailable: "<gradient:#ef4444:#f87171>⚠ Proxy routing is unavailable right now. Try again shortly.</gradient>"
+      destination_unavailable: "<gradient:#ef4444:#f87171>⚠ Destination server %server% is unavailable for town spawn.</gradient>"
+      arrival_expired: "<gradient:#ef4444:#f87171>⚠ Town spawn arrival token expired. Run /rt spawn again.</gradient>"
       spawn_unavailable: "<gradient:#ef4444:#f87171>⚠ This town does not have a configured spawn location.</gradient>"
       nexus_unavailable: "<gradient:#ef4444:#f87171>⚠ Your town does not have a placed nexus block.</gradient>"
       world_unavailable: "<gradient:#ef4444:#f87171>⚠ Town spawn world data is unavailable.</gradient>"

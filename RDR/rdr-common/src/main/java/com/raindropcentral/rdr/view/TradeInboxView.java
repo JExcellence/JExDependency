@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdr.view;
 
 import java.util.ArrayList;
@@ -106,7 +119,7 @@ public class TradeInboxView extends BaseView {
         for (int index = 0; index < slotLimit; index++) {
             final InboxEntry entry = entries.get(index);
             final int slot = ENTRY_SLOTS[index];
-            render.slot(slot, this.createEntryItem(player, entry))
+            render.slot(slot, this.createEntryItem(player, entry, plugin.getServerRouteId()))
                 .onClick(clickContext -> {
                     clickContext.setCancelled(true);
                     if (tradeService == null) {
@@ -137,6 +150,14 @@ public class TradeInboxView extends BaseView {
     ) {
         if (entry.invite() != null) {
             final RTradeSession invite = entry.invite();
+            if (clickContext.isRightClick()) {
+                tradeService.requestJoinPartnerServer(player, invite.getTradeUuid())
+                    .thenAccept(response -> plugin.getScheduler().runSync(() -> {
+                        this.sendJoinPartnerResultMessage(player, response);
+                        clickContext.openForPlayer(TradeInboxView.class, Map.of("plugin", plugin));
+                    }));
+                return;
+            }
             clickContext.openForPlayer(
                 TradeSessionView.class,
                 Map.of("plugin", plugin, "trade_uuid", invite.getTradeUuid())
@@ -194,10 +215,12 @@ public class TradeInboxView extends BaseView {
 
     private @NotNull ItemStack createEntryItem(
         final @NotNull Player viewer,
-        final @NotNull InboxEntry entry
+        final @NotNull InboxEntry entry,
+        final @NotNull String localServerRouteId
     ) {
         if (entry.invite() != null) {
             final RTradeSession invite = entry.invite();
+            final String fromServerId = this.normalizeServerIdForUi(invite.getInitiatorLastKnownServerId());
             return UnifiedBuilderFactory.item(Material.PAPER)
                 .setName(this.i18n("entry.invite.name", viewer)
                     .withPlaceholder("from", this.resolvePlayerName(invite.getInitiatorUuid()))
@@ -206,7 +229,9 @@ public class TradeInboxView extends BaseView {
                 .setLore(this.i18n("entry.invite.lore", viewer)
                     .withPlaceholders(Map.of(
                         "from", this.resolvePlayerName(invite.getInitiatorUuid()),
-                        "trade_uuid", invite.getTradeUuid()
+                        "trade_uuid", invite.getTradeUuid(),
+                        "from_server", fromServerId,
+                        "from_presence", this.resolvePresenceStateLabel(fromServerId, localServerRouteId)
                     ))
                     .build()
                     .children())
@@ -247,6 +272,44 @@ public class TradeInboxView extends BaseView {
         }
         final var offlinePlayer = org.bukkit.Bukkit.getOfflinePlayer(playerUuid);
         return offlinePlayer.getName() == null ? playerUuid.toString() : offlinePlayer.getName();
+    }
+
+    private void sendJoinPartnerResultMessage(
+        final @NotNull Player player,
+        final @NotNull TradeService.JoinPartnerResponse response
+    ) {
+        final String key = switch (response.result()) {
+            case ROUTING -> "trade.message.join_partner_routing";
+            case ALREADY_ON_SERVER -> "trade.message.join_partner_already_here";
+            case MISSING -> "trade.message.missing";
+            case FORBIDDEN -> "trade.message.forbidden";
+            case PARTNER_UNAVAILABLE -> "trade.message.join_partner_unavailable";
+            case UNAVAILABLE -> "trade.message.unavailable";
+        };
+        new I18n.Builder(key, player)
+            .withPlaceholder("server", this.normalizeServerIdForUi(response.serverId()))
+            .build()
+            .sendMessage();
+    }
+
+    private @NotNull String resolvePresenceStateLabel(
+        final @NotNull String serverId,
+        final @NotNull String localServerRouteId
+    ) {
+        if ("offline".equalsIgnoreCase(serverId)) {
+            return "Offline";
+        }
+        if (serverId.equalsIgnoreCase(localServerRouteId)) {
+            return "Local Online";
+        }
+        return "Remote Online";
+    }
+
+    private @NotNull String normalizeServerIdForUi(final @NotNull String serverId) {
+        if (serverId == null || serverId.isBlank()) {
+            return "offline";
+        }
+        return serverId;
     }
 
     private record InboxEntry(

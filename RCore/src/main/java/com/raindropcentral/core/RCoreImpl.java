@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.core;
 
 import com.raindropcentral.commands.CommandFactory;
@@ -8,6 +21,9 @@ import com.raindropcentral.core.database.entity.player.RPlayer;
 import com.raindropcentral.core.database.entity.statistic.RAbstractStatistic;
 import com.raindropcentral.core.database.entity.statistic.RPlayerStatistic;
 import com.raindropcentral.core.database.repository.*;
+import com.raindropcentral.core.proxy.ProxyHostConfig;
+import com.raindropcentral.core.proxy.RCorePaperProxyBridge;
+import com.raindropcentral.core.proxy.RCoreProxyCoordinator;
 import com.raindropcentral.core.service.RCoreService;
 import com.raindropcentral.core.service.central.RCentralService;
 import com.raindropcentral.core.service.statistics.StatisticsDeliveryService;
@@ -16,14 +32,18 @@ import com.raindropcentral.rplatform.RPlatform;
 import com.raindropcentral.rplatform.api.PlatformType;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.metrics.BStatsMetrics;
+import com.raindropcentral.rplatform.proxy.ProxyService;
 import de.jexcellence.dependency.delegate.AbstractPluginDelegate;
 import de.jexcellence.hibernate.repository.InjectRepository;
 import de.jexcellence.hibernate.repository.RepositoryManager;
 import jakarta.persistence.EntityManagerFactory;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.ServicePriority;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -108,6 +128,8 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
     private BStatsMetrics metrics;
 
     private RCoreAdapter rCoreAdapter;
+    private RCorePaperProxyBridge proxyBridge;
+    private RCoreProxyCoordinator proxyCoordinator;
 
     @InjectRepository
     private RPlayerRepository playerRepository;
@@ -157,6 +179,7 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
 
         this.enableFuture = this.platform.initialize()
                 .thenCompose(v -> runSync(() -> {
+                    initializeProxyBridge();
                     rCoreAdapter = new RCoreAdapter(this);
                     registerServices();
 
@@ -188,6 +211,16 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
      */
     @Override
     public void onDisable() {
+        if (this.proxyBridge != null) {
+            this.proxyBridge.shutdown();
+            this.proxyBridge = null;
+        }
+        this.proxyCoordinator = null;
+        if (this.platform != null) {
+            this.platform.setProxyService(null);
+        }
+        Bukkit.getServicesManager().unregisterAll(this.getPlugin());
+
         // Shutdown statistics delivery service first to flush pending statistics
         StatisticsDeliveryServiceFactory.shutdown(this.statisticsDeliveryService);
 
@@ -259,8 +292,70 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
                     getPlugin(),
                     ServicePriority.Normal
             );
-            LOGGER.info("Registered CurrencyAdapter service");
+            LOGGER.info("Registered RCoreAdapter service");
         }
+
+        if (this.proxyBridge != null) {
+            Bukkit.getServer().getServicesManager().register(
+                ProxyService.class,
+                this.proxyBridge,
+                getPlugin(),
+                ServicePriority.High
+            );
+            LOGGER.info("Registered ProxyService bridge");
+        }
+    }
+
+    private void initializeProxyBridge() {
+        if (this.proxyBridge != null) {
+            return;
+        }
+
+        this.proxyCoordinator = new RCoreProxyCoordinator(loadProxyHostConfig());
+        this.proxyBridge = new RCorePaperProxyBridge(this.getPlugin(), this.proxyCoordinator);
+        if (this.platform != null) {
+            this.platform.setProxyService(this.proxyBridge);
+        }
+    }
+
+    private @NotNull ProxyHostConfig loadProxyHostConfig() {
+        final File proxyDirectory = new File(this.getPlugin().getDataFolder(), "proxy");
+        if (!proxyDirectory.exists() && !proxyDirectory.mkdirs()) {
+            LOGGER.warning("Could not create proxy config folder; using defaults.");
+            return ProxyHostConfig.defaults(this.getPlugin().getServer().getName().toLowerCase(Locale.ROOT));
+        }
+
+        final File proxyConfigFile = new File(proxyDirectory, "proxy.yml");
+        if (!proxyConfigFile.exists()) {
+            this.getPlugin().saveResource("proxy/proxy.yml", false);
+        }
+
+        final YamlConfiguration configuration = YamlConfiguration.loadConfiguration(proxyConfigFile);
+        final String defaultRouteId = this.getPlugin().getServer().getName().toLowerCase(Locale.ROOT);
+        final String channelName = configuration.getString("channel_name", "raindrop:proxy");
+        final int protocolVersion = configuration.getInt("protocol_version", 1);
+        final long requestTimeoutMillis = configuration.getLong("request_timeout_millis", 5_000L);
+        final long tokenTtlMillis = configuration.getLong("token_ttl_millis", 120_000L);
+        final String serverRouteId = configuration.getString("server_route_id", defaultRouteId);
+        final Map<String, String> routeAliases = new HashMap<>();
+        final ConfigurationSection aliasSection = configuration.getConfigurationSection("route_aliases");
+        if (aliasSection != null) {
+            for (final String key : aliasSection.getKeys(false)) {
+                final String value = aliasSection.getString(key);
+                if (value != null && !value.isBlank()) {
+                    routeAliases.put(key, value);
+                }
+            }
+        }
+
+        return new ProxyHostConfig(
+            channelName,
+            protocolVersion,
+            requestTimeoutMillis,
+            tokenTtlMillis,
+            serverRouteId,
+            routeAliases
+        );
     }
 
     /**

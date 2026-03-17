@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdt.database.repository;
 
 import com.raindropcentral.rdt.database.entity.RTown;
@@ -37,6 +50,7 @@ public class RRTown extends CachedRepository<RTown, Long, UUID> {
 
     // Keep a reference to the EntityManagerFactory for custom ad-hoc queries
     private final EntityManagerFactory emf;
+    private final String fallbackServerId;
 
     /**
      * Construct a repository for {@link RTown}.
@@ -52,8 +66,28 @@ public class RRTown extends CachedRepository<RTown, Long, UUID> {
             @NotNull Class<RTown> entityClass,
             @NotNull Function<RTown, UUID> keyExtractor
     ) {
+        this(executorService, entityManagerFactory, entityClass, keyExtractor, "server");
+    }
+
+    /**
+     * Construct a repository for {@link RTown} with one fallback server identifier.
+     *
+     * @param executorService executor for async operations
+     * @param entityManagerFactory JPA entity manager factory
+     * @param entityClass entity class (typically {@link RTown}.class)
+     * @param keyExtractor cache key extractor (unique external identifier)
+     * @param fallbackServerId fallback server ID used for legacy ownership backfill
+     */
+    public RRTown(
+            @NotNull ExecutorService executorService,
+            @NotNull EntityManagerFactory entityManagerFactory,
+            @NotNull Class<RTown> entityClass,
+            @NotNull Function<RTown, UUID> keyExtractor,
+            @NotNull String fallbackServerId
+    ) {
         super(executorService, entityManagerFactory, entityClass, keyExtractor);
         this.emf = entityManagerFactory;
+        this.fallbackServerId = fallbackServerId;
     }
 
     /**
@@ -64,7 +98,7 @@ public class RRTown extends CachedRepository<RTown, Long, UUID> {
      * @return the first town found where this player is mayor, or {@code null} if none
      */
     public RTown findByMayor(UUID mayor) {
-        return findByAttributes(Map.of("mayor", mayor)).orElse(null);
+        return this.backfillAndReturn(findByAttributes(Map.of("mayor", mayor)).orElse(null));
     }
 
 
@@ -75,7 +109,7 @@ public class RRTown extends CachedRepository<RTown, Long, UUID> {
      * @return matching town or {@code null} if none
      */
     public RTown findByTName(String townName) {
-        return findByAttributes(Map.of("townName", townName)).orElse(null);
+        return this.backfillAndReturn(findByAttributes(Map.of("townName", townName)).orElse(null));
     }
 
     /**
@@ -85,7 +119,7 @@ public class RRTown extends CachedRepository<RTown, Long, UUID> {
      * @return matching town or {@code null} if none
      */
     public RTown findByTownUUID(UUID uuid) {
-        return findByAttributes(Map.of("uuid", uuid)).orElse(null);
+        return this.backfillAndReturn(findByAttributes(Map.of("uuid", uuid)).orElse(null));
     }
 
     /**
@@ -95,7 +129,17 @@ public class RRTown extends CachedRepository<RTown, Long, UUID> {
      * @return matching town or {@code null} when no town owns that nexus location
      */
     public @Nullable RTown findByNexusLocation(final @NotNull Location location) {
-        return findByAttributes(Map.of("nexus_location", location)).orElse(null);
+        return this.backfillAndReturn(findByAttributes(Map.of("nexus_location", location)).orElse(null));
+    }
+
+    private @Nullable RTown backfillAndReturn(final @Nullable RTown town) {
+        if (town == null) {
+            return null;
+        }
+        if (town.ensureAuthoritativeServerOwnership(this.fallbackServerId)) {
+            this.update(town);
+        }
+        return town;
     }
 
 }

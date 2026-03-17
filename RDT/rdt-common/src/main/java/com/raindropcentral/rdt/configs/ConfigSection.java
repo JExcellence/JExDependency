@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdt.configs;
 
 import java.io.File;
@@ -50,11 +63,16 @@ public class ConfigSection extends AConfigSection {
     private static final double DEFAULT_TOWN_LEVEL_BASE_REQUIREMENT = 2500.0D;
     private static final double DEFAULT_TOWN_LEVEL_REQUIREMENT_GROWTH = 1.2D;
     private static final double DEFAULT_TOWN_LEVEL_REWARD_MULTIPLIER = 0.2D;
+    private static final boolean DEFAULT_PROXY_ENABLED = false;
+    private static final boolean DEFAULT_PROXY_TOWN_SPAWN_ENABLED = false;
 
     private Integer global_max_chunk_limit;
     private Integer chunk_block_min_y;
     private Integer chunk_block_max_y;
     private Integer town_spawn_teleport_delay_seconds;
+    private Boolean proxy_enabled;
+    private Boolean proxy_town_spawn_enabled;
+    private String proxy_server_route_id;
     private String chunk_type_icon_nexus;
     private String chunk_type_icon_default;
     private String chunk_type_icon_bank;
@@ -122,6 +140,39 @@ public class ConfigSection extends AConfigSection {
             return DEFAULT_TOWN_SPAWN_TELEPORT_DELAY_SECONDS;
         }
         return this.town_spawn_teleport_delay_seconds;
+    }
+
+    /**
+     * Returns whether proxy-backed features are enabled.
+     *
+     * @return {@code true} when proxy-backed features are enabled
+     */
+    public boolean isProxyEnabled() {
+        return this.proxy_enabled != null ? this.proxy_enabled : DEFAULT_PROXY_ENABLED;
+    }
+
+    /**
+     * Returns whether town-spawn routing should use proxy transfer handoff.
+     *
+     * @return {@code true} when proxy-backed town spawn is enabled
+     */
+    public boolean isProxyTownSpawnEnabled() {
+        final boolean enabled = this.proxy_town_spawn_enabled != null
+                ? this.proxy_town_spawn_enabled
+                : DEFAULT_PROXY_TOWN_SPAWN_ENABLED;
+        return this.isProxyEnabled() && enabled;
+    }
+
+    /**
+     * Returns the configured authoritative route ID for this server.
+     *
+     * @return configured route ID, or empty when not configured
+     */
+    public @NotNull String getProxyServerRouteId() {
+        if (this.proxy_server_route_id == null) {
+            return "";
+        }
+        return this.proxy_server_route_id.trim();
     }
 
     /**
@@ -253,6 +304,34 @@ public class ConfigSection extends AConfigSection {
                     "town_spawn_teleport_delay_seconds",
                     DEFAULT_TOWN_SPAWN_TELEPORT_DELAY_SECONDS
             );
+        }
+        final ConfigurationSection proxySection = configuration.getConfigurationSection("proxy");
+        if (proxySection != null) {
+            if (proxySection.contains("enabled")) {
+                section.proxy_enabled = proxySection.getBoolean("enabled", DEFAULT_PROXY_ENABLED);
+            }
+            if (proxySection.contains("server_route_id")) {
+                section.proxy_server_route_id = proxySection.getString("server_route_id", "");
+            }
+            if (proxySection.contains("town_spawn_enabled")) {
+                section.proxy_town_spawn_enabled = proxySection.getBoolean(
+                        "town_spawn_enabled",
+                        DEFAULT_PROXY_TOWN_SPAWN_ENABLED
+                );
+            }
+        } else {
+            if (configuration.contains("proxy_enabled")) {
+                section.proxy_enabled = configuration.getBoolean("proxy_enabled", DEFAULT_PROXY_ENABLED);
+            }
+            if (configuration.contains("proxy_server_route_id")) {
+                section.proxy_server_route_id = configuration.getString("proxy_server_route_id", "");
+            }
+            if (configuration.contains("proxy_town_spawn_enabled")) {
+                section.proxy_town_spawn_enabled = configuration.getBoolean(
+                        "proxy_town_spawn_enabled",
+                        DEFAULT_PROXY_TOWN_SPAWN_ENABLED
+                );
+            }
         }
         if (configuration.contains("chunk_type_icon_nexus")) {
             section.chunk_type_icon_nexus = configuration.getString("chunk_type_icon_nexus");

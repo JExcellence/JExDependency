@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdt;
 
 import com.raindropcentral.commands.CommandFactory;
@@ -8,6 +21,7 @@ import com.raindropcentral.rdt.database.repository.RRDTPlayer;
 import com.raindropcentral.rdt.database.repository.RRTown;
 import com.raindropcentral.rdt.factory.BossBarFactory;
 import com.raindropcentral.rdt.service.TownService;
+import com.raindropcentral.rdt.service.TownSpawnService;
 import com.raindropcentral.rdt.view.main.MainOverviewView;
 import com.raindropcentral.rdt.view.town.ChunkClaimView;
 import com.raindropcentral.rdt.view.town.CreateTownAnvilView;
@@ -30,6 +44,9 @@ import com.raindropcentral.rdt.view.town.TownLevelUpView;
 import com.raindropcentral.rdt.view.town.TownOverviewView;
 import com.raindropcentral.rdt.view.town.TownPendingJoinView;
 import com.raindropcentral.rdt.view.town.TownProtectionsView;
+import com.raindropcentral.rplatform.proxy.NoOpProxyService;
+import com.raindropcentral.rplatform.proxy.ProxyActionResult;
+import com.raindropcentral.rplatform.proxy.ProxyService;
 import com.raindropcentral.rplatform.RPlatform;
 import com.raindropcentral.rplatform.api.PlatformAPIFactory;
 import com.raindropcentral.rplatform.api.PlatformType;
@@ -51,8 +68,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.CompletableFuture;
 import java.util.logging.Logger;
 
 /**
@@ -83,6 +102,8 @@ public class RDT {
     private BossBarFactory bossBarFactory;
     private ISchedulerAdapter scheduler;
     private PlatformType platformType;
+    private ProxyService proxyService;
+    private TownSpawnService townSpawnService;
 
     private Object economyInstance;
     private ViewFrame viewFrame;
@@ -123,6 +144,8 @@ public class RDT {
         this.platformType = PlatformAPIFactory.detectPlatformType();
         this.scheduler = this.platform.getScheduler();
         this.executor = Executors.newFixedThreadPool(4);
+        this.initializeProxyService();
+        this.townSpawnService = new TownSpawnService(this);
         this.ensureDefaultConfigFile();
 
         try {
@@ -147,6 +170,10 @@ public class RDT {
      */
     public void onDisable() {
         this.getLogger().info("Disabling RDT (" + this.edition + "): closing Hibernate");
+        if (this.proxyService != null) {
+            this.proxyService.unregisterActionHandler("rdt", "town_spawn_arrival");
+        }
+        this.townSpawnService = null;
 
         if (this.executor != null) {
             this.executor.shutdownNow();
@@ -275,7 +302,8 @@ public class RDT {
                 this.executor,
                 this.entityManagerFactory,
                 RTown.class,
-                RTown::getIdentifier
+                RTown::getIdentifier,
+                this.getServerRouteId()
         );
     }
 
@@ -447,5 +475,67 @@ public class RDT {
      */
     public @Nullable ViewFrame getViewFrame() {
         return this.viewFrame;
+    }
+
+    /**
+     * Returns the active proxy service bridge.
+     *
+     * @return proxy service bridge
+     */
+    public @NotNull ProxyService getProxyService() {
+        if (this.proxyService == null) {
+            this.proxyService = NoOpProxyService.createDefault();
+        }
+        return this.proxyService;
+    }
+
+    /**
+     * Returns the town-spawn flow service.
+     *
+     * @return town-spawn service, or {@code null} before enable completes
+     */
+    public @Nullable TownSpawnService getTownSpawnService() {
+        return this.townSpawnService;
+    }
+
+    /**
+     * Returns the configured authoritative route ID for this server.
+     *
+     * @return server route identifier
+     */
+    public @NotNull String getServerRouteId() {
+        final String configuredRouteId = this.getDefaultConfig().getProxyServerRouteId();
+        if (!configuredRouteId.isBlank()) {
+            return configuredRouteId;
+        }
+        final String serverName = this.getServer().getName();
+        if (serverName == null || serverName.isBlank()) {
+            return "server";
+        }
+        return serverName.trim().toLowerCase(Locale.ROOT);
+    }
+
+    private void initializeProxyService() {
+        final ProxyService registeredProxyService =
+                this.getServer().getServicesManager().load(ProxyService.class);
+        if (registeredProxyService != null) {
+            this.proxyService = registeredProxyService;
+            this.getLogger().info("ProxyService bridge detected via Bukkit ServicesManager.");
+            return;
+        }
+
+        if (this.platform != null && this.platform.getProxyService() != null) {
+            this.proxyService = this.platform.getProxyService();
+        } else {
+            this.proxyService = NoOpProxyService.createDefault();
+        }
+
+        this.proxyService.registerActionHandler(
+            TownSpawnService.MODULE_ID,
+            TownSpawnService.TOWN_SPAWN_ARRIVAL_ACTION,
+            envelope -> CompletableFuture.completedFuture(
+                ProxyActionResult.success("Town-spawn arrival handler registered.")
+            )
+        );
     }
 }

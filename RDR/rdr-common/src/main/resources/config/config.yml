@@ -62,6 +62,12 @@ trade:
   max_offer_slots: 9
   # Cooldown in seconds between outbound trade invites by one player.
   invite_cooldown_seconds: 5
+  # Proxy-enhanced trade UI controls.
+  proxy:
+    # Enables proxy-backed participant presence badges and online route hints.
+    presence_enabled: false
+    # Enables UI actions that route the player to the partner's current server.
+    join_partner_action_enabled: false
   # Per-trade completion taxes charged to each participant before settlement finalizes.
   taxation:
     # Global switch for trade taxation.
@@ -81,6 +87,13 @@ trade:
         flat_amount: 0.0
         growth_per_currency_amount: 0.0
         growth_per_item: 0.0
+
+# Shared proxy bridge controls.
+proxy:
+  # Enables module-level proxy integrations.
+  enabled: false
+  # Optional authoritative route identifier for this Paper server.
+  server_route_id: ""
 
 # RPlatform-powered requirements consumed for each one-based storage shop purchase tier.
 # Only the tiers required to move from `starting_storages` to `max_storages` are needed.

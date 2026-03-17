@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdr.view;
 
 import java.util.List;
@@ -10,6 +23,7 @@ import com.raindropcentral.rdr.database.entity.TradeSessionStatus;
 import com.raindropcentral.rdr.service.TradeService;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import com.raindropcentral.rplatform.view.BaseView;
+import de.jexcellence.jextranslate.i18n.I18n;
 import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.state.State;
@@ -109,13 +123,13 @@ public class TradeCurrentTradesView extends BaseView {
         for (int index = 0; index < slotLimit; index++) {
             final RTradeSession session = sessions.get(index);
             final int slot = ENTRY_SLOTS[index];
-            render.slot(slot, this.createSessionItem(player, session))
+            render.slot(slot, this.createSessionItem(player, session, plugin.getServerRouteId()))
                 .onClick(clickContext -> {
                     clickContext.setCancelled(true);
                     if (tradeService == null) {
                         return;
                     }
-                    this.handleSessionClick(clickContext, plugin, session);
+                    this.handleSessionClick(clickContext, plugin, tradeService, player, session);
                 });
         }
     }
@@ -133,8 +147,18 @@ public class TradeCurrentTradesView extends BaseView {
     private void handleSessionClick(
         final @NotNull SlotClickContext clickContext,
         final @NotNull RDR plugin,
+        final @NotNull TradeService tradeService,
+        final @NotNull Player player,
         final @NotNull RTradeSession session
     ) {
+        if (clickContext.isRightClick()) {
+            tradeService.requestJoinPartnerServer(player, session.getTradeUuid())
+                .thenAccept(response -> plugin.getScheduler().runSync(() -> {
+                    this.sendJoinPartnerResultMessage(player, response);
+                    clickContext.openForPlayer(TradeCurrentTradesView.class, Map.of("plugin", plugin));
+                }));
+            return;
+        }
         clickContext.openForPlayer(
             TradeSessionView.class,
             Map.of("plugin", plugin, "trade_uuid", session.getTradeUuid())
@@ -157,11 +181,16 @@ public class TradeCurrentTradesView extends BaseView {
 
     private @NotNull ItemStack createSessionItem(
         final @NotNull Player viewer,
-        final @NotNull RTradeSession session
+        final @NotNull RTradeSession session,
+        final @NotNull String localServerRouteId
     ) {
         final UUID counterpartyUuid = session.getCounterpartyUuid(viewer.getUniqueId());
         final String counterpartyName = this.resolvePlayerName(counterpartyUuid);
         final String statusDisplay = this.resolveStatusDisplay(session.getStatus());
+        final String counterpartyServer = counterpartyUuid == null
+            ? "offline"
+            : this.normalizeServerIdForUi(session.getLastKnownServerIdForParticipant(counterpartyUuid));
+        final String counterpartyPresence = this.resolvePresenceStateLabel(counterpartyServer, localServerRouteId);
 
         return UnifiedBuilderFactory.item(this.resolveStatusMaterial(session.getStatus()))
             .setName(this.i18n("entry.name", viewer)
@@ -175,7 +204,9 @@ public class TradeCurrentTradesView extends BaseView {
                 .withPlaceholders(Map.of(
                     "counterparty", counterpartyName,
                     "status", statusDisplay,
-                    "trade_uuid", session.getTradeUuid()
+                    "trade_uuid", session.getTradeUuid(),
+                    "counterparty_server", counterpartyServer,
+                    "counterparty_presence", counterpartyPresence
                 ))
                 .build()
                 .children())
@@ -231,5 +262,43 @@ public class TradeCurrentTradesView extends BaseView {
         }
         final var offlinePlayer = org.bukkit.Bukkit.getOfflinePlayer(playerUuid);
         return offlinePlayer.getName() == null ? playerUuid.toString() : offlinePlayer.getName();
+    }
+
+    private void sendJoinPartnerResultMessage(
+        final @NotNull Player player,
+        final @NotNull TradeService.JoinPartnerResponse response
+    ) {
+        final String key = switch (response.result()) {
+            case ROUTING -> "trade.message.join_partner_routing";
+            case ALREADY_ON_SERVER -> "trade.message.join_partner_already_here";
+            case MISSING -> "trade.message.missing";
+            case FORBIDDEN -> "trade.message.forbidden";
+            case PARTNER_UNAVAILABLE -> "trade.message.join_partner_unavailable";
+            case UNAVAILABLE -> "trade.message.unavailable";
+        };
+        new I18n.Builder(key, player)
+            .withPlaceholder("server", this.normalizeServerIdForUi(response.serverId()))
+            .build()
+            .sendMessage();
+    }
+
+    private @NotNull String resolvePresenceStateLabel(
+        final @NotNull String serverId,
+        final @NotNull String localServerRouteId
+    ) {
+        if ("offline".equalsIgnoreCase(serverId)) {
+            return "Offline";
+        }
+        if (serverId.equalsIgnoreCase(localServerRouteId)) {
+            return "Local Online";
+        }
+        return "Remote Online";
+    }
+
+    private @NotNull String normalizeServerIdForUi(final @NotNull String serverId) {
+        if (serverId == null || serverId.isBlank()) {
+            return "offline";
+        }
+        return serverId;
     }
 }

@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdr.configs;
 
 import de.jexcellence.configmapper.sections.AConfigSection;
@@ -51,6 +64,10 @@ public class ConfigSection extends AConfigSection {
     private Long trade_poll_interval_ticks;
     private Integer trade_max_offer_slots;
     private Long trade_invite_cooldown_seconds;
+    private Boolean proxy_enabled;
+    private String proxy_server_route_id;
+    private Boolean trade_proxy_presence_enabled;
+    private Boolean trade_proxy_join_action_enabled;
     private Boolean trade_taxation_enabled;
     private Map<String, TradeTaxCurrencyDefinition> trade_taxation_currencies;
 
@@ -369,6 +386,47 @@ public class ConfigSection extends AConfigSection {
     }
 
     /**
+     * Returns whether proxy-backed features are enabled.
+     *
+     * @return {@code true} when proxy-backed features are enabled
+     */
+    public boolean isProxyEnabled() {
+        return this.proxy_enabled != null && this.proxy_enabled;
+    }
+
+    /**
+     * Returns the configured authoritative route ID for this Paper server.
+     *
+     * @return configured server route ID, or empty when not configured
+     */
+    public @NotNull String getProxyServerRouteId() {
+        if (this.proxy_server_route_id == null) {
+            return "";
+        }
+        return this.proxy_server_route_id.trim();
+    }
+
+    /**
+     * Returns whether trade views should merge proxy presence data.
+     *
+     * @return {@code true} when proxy-backed trade presence is enabled
+     */
+    public boolean isTradeProxyPresenceEnabled() {
+        final boolean configured = this.trade_proxy_presence_enabled != null && this.trade_proxy_presence_enabled;
+        return this.isProxyEnabled() && configured;
+    }
+
+    /**
+     * Returns whether trade UIs should show join-partner server actions.
+     *
+     * @return {@code true} when join-partner server actions are enabled
+     */
+    public boolean isTradeProxyJoinActionEnabled() {
+        final boolean configured = this.trade_proxy_join_action_enabled != null && this.trade_proxy_join_action_enabled;
+        return this.isTradeProxyPresenceEnabled() && configured;
+    }
+
+    /**
      * Returns whether trade-tax charging is enabled for completion settlement.
      *
      * @return {@code true} when trade taxes should be charged
@@ -526,6 +584,23 @@ public class ConfigSection extends AConfigSection {
             }
         }
 
+        final ConfigurationSection proxySection = configuration.getConfigurationSection("proxy");
+        if (proxySection != null) {
+            section.proxy_enabled = proxySection.contains("enabled")
+                ? proxySection.getBoolean("enabled")
+                : section.proxy_enabled;
+            section.proxy_server_route_id = proxySection.contains("server_route_id")
+                ? proxySection.getString("server_route_id")
+                : section.proxy_server_route_id;
+        } else {
+            section.proxy_enabled = configuration.contains("proxy_enabled")
+                ? configuration.getBoolean("proxy_enabled")
+                : section.proxy_enabled;
+            section.proxy_server_route_id = configuration.contains("proxy_server_route_id")
+                ? configuration.getString("proxy_server_route_id")
+                : section.proxy_server_route_id;
+        }
+
         final ConfigurationSection tradeSection = configuration.getConfigurationSection("trade");
         if (tradeSection != null) {
             section.trade_enabled = tradeSection.contains("enabled")
@@ -543,6 +618,22 @@ public class ConfigSection extends AConfigSection {
             section.trade_invite_cooldown_seconds = tradeSection.contains("invite_cooldown_seconds")
                 ? tradeSection.getLong("invite_cooldown_seconds")
                 : section.trade_invite_cooldown_seconds;
+            final ConfigurationSection tradeProxySection = tradeSection.getConfigurationSection("proxy");
+            if (tradeProxySection != null) {
+                section.trade_proxy_presence_enabled = tradeProxySection.contains("presence_enabled")
+                    ? tradeProxySection.getBoolean("presence_enabled")
+                    : section.trade_proxy_presence_enabled;
+                section.trade_proxy_join_action_enabled = tradeProxySection.contains("join_partner_action_enabled")
+                    ? tradeProxySection.getBoolean("join_partner_action_enabled")
+                    : section.trade_proxy_join_action_enabled;
+            } else {
+                section.trade_proxy_presence_enabled = tradeSection.contains("proxy_presence_enabled")
+                    ? tradeSection.getBoolean("proxy_presence_enabled")
+                    : section.trade_proxy_presence_enabled;
+                section.trade_proxy_join_action_enabled = tradeSection.contains("proxy_join_partner_action_enabled")
+                    ? tradeSection.getBoolean("proxy_join_partner_action_enabled")
+                    : section.trade_proxy_join_action_enabled;
+            }
 
             final ConfigurationSection tradeTaxationSection = tradeSection.getConfigurationSection("taxation");
             if (tradeTaxationSection != null) {
@@ -582,6 +673,10 @@ public class ConfigSection extends AConfigSection {
         section.trade_poll_interval_ticks = 20L;
         section.trade_max_offer_slots = 9;
         section.trade_invite_cooldown_seconds = 5L;
+        section.proxy_enabled = false;
+        section.proxy_server_route_id = "";
+        section.trade_proxy_presence_enabled = false;
+        section.trade_proxy_join_action_enabled = false;
         section.trade_taxation_enabled = false;
         section.trade_taxation_currencies = createDefaultTradeTaxationCurrencies();
         return section;
@@ -611,6 +706,10 @@ public class ConfigSection extends AConfigSection {
             this.trade_poll_interval_ticks = this.getTradePollIntervalTicks();
             this.trade_max_offer_slots = this.getTradeMaxOfferSlots();
             this.trade_invite_cooldown_seconds = this.getTradeInviteCooldownSeconds();
+            this.proxy_enabled = this.isProxyEnabled();
+            this.proxy_server_route_id = this.getProxyServerRouteId();
+            this.trade_proxy_presence_enabled = this.isTradeProxyPresenceEnabled();
+            this.trade_proxy_join_action_enabled = this.isTradeProxyJoinActionEnabled();
             this.trade_taxation_enabled = this.isTradeTaxationEnabled();
             this.trade_taxation_currencies = this.getTradeTaxationCurrencies();
             return;
@@ -652,6 +751,10 @@ public class ConfigSection extends AConfigSection {
         this.trade_poll_interval_ticks = this.getTradePollIntervalTicks();
         this.trade_max_offer_slots = this.getTradeMaxOfferSlots();
         this.trade_invite_cooldown_seconds = this.getTradeInviteCooldownSeconds();
+        this.proxy_enabled = this.isProxyEnabled();
+        this.proxy_server_route_id = this.getProxyServerRouteId();
+        this.trade_proxy_presence_enabled = this.isTradeProxyPresenceEnabled();
+        this.trade_proxy_join_action_enabled = this.isTradeProxyJoinActionEnabled();
         this.trade_taxation_enabled = this.isTradeTaxationEnabled();
         this.trade_taxation_currencies = this.getTradeTaxationCurrencies();
     }

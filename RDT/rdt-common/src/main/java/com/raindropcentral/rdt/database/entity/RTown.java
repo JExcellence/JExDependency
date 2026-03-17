@@ -1,7 +1,21 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdt.database.entity;
 
 import com.raindropcentral.rdt.utils.TownPermissions;
 import com.raindropcentral.rdt.utils.TownProtections;
+import com.raindropcentral.rplatform.proxy.NetworkLocation;
 import com.raindropcentral.rplatform.database.converter.LocationConverter;
 import com.raindropcentral.rplatform.database.converter.UUIDConverter;
 import de.jexcellence.hibernate.entity.BaseEntity;
@@ -19,7 +33,9 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.NonNull;
@@ -172,6 +188,18 @@ public class RTown extends BaseEntity {
     @Convert(converter = LocationConverter.class)
     private Location town_spawn_location;
 
+    @Column(name = "nexus_server_id", unique = false, nullable = true, length = 64)
+    private String nexus_server_id;
+
+    @Column(name = "town_spawn_server_id", unique = false, nullable = true, length = 64)
+    private String town_spawn_server_id;
+
+    @Column(name = "nexus_world_name", unique = false, nullable = true, length = 255)
+    private String nexus_world_name;
+
+    @Column(name = "town_spawn_world_name", unique = false, nullable = true, length = 255)
+    private String town_spawn_world_name;
+
     /** Required by Hibernate. */
     protected RTown() {
     }
@@ -190,7 +218,7 @@ public class RTown extends BaseEntity {
             final String townName,
             final @Nullable Location nexusLocation
     ) {
-        this(uuid, mayor, townName, nexusLocation, nexusLocation);
+        this(uuid, mayor, townName, nexusLocation, nexusLocation, null);
     }
 
     /**
@@ -209,12 +237,35 @@ public class RTown extends BaseEntity {
             final @Nullable Location nexusLocation,
             final @Nullable Location townSpawnLocation
     ) {
+        this(uuid, mayor, townName, nexusLocation, townSpawnLocation, null);
+    }
+
+    /**
+     * Creates a new town record with explicit nexus and town-spawn locations and route ownership.
+     *
+     * @param uuid public town UUID
+     * @param mayor creator/mayor UUID
+     * @param townName unique display name
+     * @param nexusLocation initial nexus location, or {@code null} when not placed
+     * @param townSpawnLocation initial town spawn location, or {@code null} when not set
+     * @param authoritativeServerId authoritative server route identifier for persisted locations
+     */
+    public RTown(
+            final UUID uuid,
+            final UUID mayor,
+            final String townName,
+            final @Nullable Location nexusLocation,
+            final @Nullable Location townSpawnLocation,
+            final @Nullable String authoritativeServerId
+    ) {
         this.uuid = uuid;
         this.mayor = mayor;
         this.townName = townName;
         this.founded = System.currentTimeMillis();
-        this.nexus_location = nexusLocation;
-        this.town_spawn_location = townSpawnLocation;
+        this.setNexusLocation(nexusLocation);
+        this.setTownSpawnLocation(townSpawnLocation);
+        this.setNexusServerId(authoritativeServerId);
+        this.setTownSpawnServerId(authoritativeServerId);
         this.town_level = 1;
         this.active = true;
         this.ensureDefaultRoles();
@@ -869,6 +920,7 @@ public class RTown extends BaseEntity {
      */
     public void setNexusLocation(final @Nullable Location nexusLocation) {
         this.nexus_location = nexusLocation;
+        this.nexus_world_name = resolveWorldName(nexusLocation, this.nexus_world_name);
     }
 
     /**
@@ -887,6 +939,194 @@ public class RTown extends BaseEntity {
      */
     public void setTownSpawnLocation(final @Nullable Location townSpawnLocation) {
         this.town_spawn_location = townSpawnLocation;
+        this.town_spawn_world_name = resolveWorldName(townSpawnLocation, this.town_spawn_world_name);
+    }
+
+    /**
+     * Returns the authoritative server ID for the nexus location.
+     *
+     * @return authoritative nexus server ID, or {@code null} when not assigned
+     */
+    public @Nullable String getNexusServerId() {
+        return normalizeServerId(this.nexus_server_id);
+    }
+
+    /**
+     * Updates the authoritative server ID for the nexus location.
+     *
+     * @param nexusServerId authoritative server ID, or {@code null} to clear
+     */
+    public void setNexusServerId(final @Nullable String nexusServerId) {
+        this.nexus_server_id = normalizeServerId(nexusServerId);
+    }
+
+    /**
+     * Returns the authoritative server ID for the town spawn location.
+     *
+     * @return authoritative town-spawn server ID, or {@code null} when not assigned
+     */
+    public @Nullable String getTownSpawnServerId() {
+        return normalizeServerId(this.town_spawn_server_id);
+    }
+
+    /**
+     * Updates the authoritative server ID for the town spawn location.
+     *
+     * @param townSpawnServerId authoritative server ID, or {@code null} to clear
+     */
+    public void setTownSpawnServerId(final @Nullable String townSpawnServerId) {
+        this.town_spawn_server_id = normalizeServerId(townSpawnServerId);
+    }
+
+    /**
+     * Returns the normalized network location for the nexus.
+     *
+     * @param fallbackServerId fallback server ID when no authoritative ID has been set
+     * @return network location, or {@code null} when no nexus location exists
+     */
+    public @Nullable NetworkLocation getNexusNetworkLocation(final @NotNull String fallbackServerId) {
+        if (this.nexus_location == null) {
+            return null;
+        }
+        return new NetworkLocation(
+            this.resolveNexusServerId(fallbackServerId),
+            resolveWorldName(this.nexus_location, this.nexus_world_name),
+            this.nexus_location.getX(),
+            this.nexus_location.getY(),
+            this.nexus_location.getZ(),
+            this.nexus_location.getYaw(),
+            this.nexus_location.getPitch()
+        );
+    }
+
+    /**
+     * Returns the normalized network location for the town spawn.
+     *
+     * @param fallbackServerId fallback server ID when no authoritative ID has been set
+     * @return network location, or {@code null} when no town-spawn location exists
+     */
+    public @Nullable NetworkLocation getTownSpawnNetworkLocation(final @NotNull String fallbackServerId) {
+        if (this.town_spawn_location == null) {
+            return null;
+        }
+        return new NetworkLocation(
+            this.resolveTownSpawnServerId(fallbackServerId),
+            resolveWorldName(this.town_spawn_location, this.town_spawn_world_name),
+            this.town_spawn_location.getX(),
+            this.town_spawn_location.getY(),
+            this.town_spawn_location.getZ(),
+            this.town_spawn_location.getYaw(),
+            this.town_spawn_location.getPitch()
+        );
+    }
+
+    /**
+     * Updates the nexus from one network location payload.
+     *
+     * @param networkLocation replacement network location, or {@code null} to clear
+     */
+    public void setNexusNetworkLocation(final @Nullable NetworkLocation networkLocation) {
+        if (networkLocation == null) {
+            this.setNexusLocation(null);
+            this.setNexusServerId(null);
+            this.nexus_world_name = null;
+            return;
+        }
+        final World world = Bukkit.getWorld(networkLocation.worldName());
+        this.setNexusLocation(new Location(
+            world,
+            networkLocation.x(),
+            networkLocation.y(),
+            networkLocation.z(),
+            networkLocation.yaw(),
+            networkLocation.pitch()
+        ));
+        this.setNexusServerId(networkLocation.serverId());
+        this.nexus_world_name = networkLocation.worldName();
+    }
+
+    /**
+     * Updates the town spawn from one network location payload.
+     *
+     * @param networkLocation replacement network location, or {@code null} to clear
+     */
+    public void setTownSpawnNetworkLocation(final @Nullable NetworkLocation networkLocation) {
+        if (networkLocation == null) {
+            this.setTownSpawnLocation(null);
+            this.setTownSpawnServerId(null);
+            this.town_spawn_world_name = null;
+            return;
+        }
+        final World world = Bukkit.getWorld(networkLocation.worldName());
+        this.setTownSpawnLocation(new Location(
+            world,
+            networkLocation.x(),
+            networkLocation.y(),
+            networkLocation.z(),
+            networkLocation.yaw(),
+            networkLocation.pitch()
+        ));
+        this.setTownSpawnServerId(networkLocation.serverId());
+        this.town_spawn_world_name = networkLocation.worldName();
+    }
+
+    /**
+     * Backfills missing authoritative server and world ownership metadata.
+     *
+     * @param fallbackServerId fallback server ID to apply when ownership fields are missing
+     * @return {@code true} when any metadata field changed
+     */
+    public boolean ensureAuthoritativeServerOwnership(final @NotNull String fallbackServerId) {
+        boolean changed = false;
+        if (this.nexus_location != null && this.getNexusServerId() == null) {
+            this.nexus_server_id = normalizeServerId(fallbackServerId);
+            changed = true;
+        }
+        if (this.town_spawn_location != null && this.getTownSpawnServerId() == null) {
+            this.town_spawn_server_id = normalizeServerId(fallbackServerId);
+            changed = true;
+        }
+
+        final String resolvedNexusWorldName = resolveWorldName(this.nexus_location, this.nexus_world_name);
+        if (!Objects.equals(this.nexus_world_name, resolvedNexusWorldName)) {
+            this.nexus_world_name = resolvedNexusWorldName;
+            changed = true;
+        }
+
+        final String resolvedTownSpawnWorldName = resolveWorldName(this.town_spawn_location, this.town_spawn_world_name);
+        if (!Objects.equals(this.town_spawn_world_name, resolvedTownSpawnWorldName)) {
+            this.town_spawn_world_name = resolvedTownSpawnWorldName;
+            changed = true;
+        }
+        return changed;
+    }
+
+    /**
+     * Resolves the nexus authoritative server ID with a fallback value.
+     *
+     * @param fallbackServerId fallback server ID
+     * @return resolved nexus server ID
+     */
+    public @NotNull String resolveNexusServerId(final @NotNull String fallbackServerId) {
+        final String resolved = normalizeServerId(this.nexus_server_id);
+        if (resolved != null) {
+            return resolved;
+        }
+        return normalizeFallbackServerId(fallbackServerId);
+    }
+
+    /**
+     * Resolves the town-spawn authoritative server ID with a fallback value.
+     *
+     * @param fallbackServerId fallback server ID
+     * @return resolved town-spawn server ID
+     */
+    public @NotNull String resolveTownSpawnServerId(final @NotNull String fallbackServerId) {
+        final String resolved = normalizeServerId(this.town_spawn_server_id);
+        if (resolved != null) {
+            return resolved;
+        }
+        return normalizeFallbackServerId(fallbackServerId);
     }
 
     /**
@@ -981,7 +1221,11 @@ public class RTown extends BaseEntity {
                 "Town Level: " + this.getTownLevel() + "\n" +
                 "Level Requirement Progress: " + this.levelRequirementProgress.size() + "\n" +
                 "Nexus Location: " + this.nexus_location + "\n" +
-                "Town Spawn Location: " + this.town_spawn_location + "\n";
+                "Nexus Server ID: " + this.nexus_server_id + "\n" +
+                "Nexus World Name: " + this.nexus_world_name + "\n" +
+                "Town Spawn Location: " + this.town_spawn_location + "\n" +
+                "Town Spawn Server ID: " + this.town_spawn_server_id + "\n" +
+                "Town Spawn World Name: " + this.town_spawn_world_name + "\n";
     }
 
     private @NotNull String normalizeCurrencyId(final @NonNull String currencyId) {
@@ -1040,6 +1284,33 @@ public class RTown extends BaseEntity {
             throw new IllegalArgumentException("progressKey cannot be blank");
         }
         return normalizedProgressKey;
+    }
+
+    private static @NotNull String resolveWorldName(
+            final @Nullable Location location,
+            final @Nullable String fallbackWorldName
+    ) {
+        if (location != null && location.getWorld() != null) {
+            return location.getWorld().getName();
+        }
+        if (fallbackWorldName == null || fallbackWorldName.isBlank()) {
+            return "unknown";
+        }
+        return fallbackWorldName.trim();
+    }
+
+    private static @Nullable String normalizeServerId(final @Nullable String serverId) {
+        if (serverId == null || serverId.isBlank()) {
+            return null;
+        }
+        return serverId.trim();
+    }
+
+    private static @NotNull String normalizeFallbackServerId(final @NotNull String fallbackServerId) {
+        if (fallbackServerId.isBlank()) {
+            return "server";
+        }
+        return fallbackServerId.trim();
     }
 
     private void ensureDefaultRoles() {

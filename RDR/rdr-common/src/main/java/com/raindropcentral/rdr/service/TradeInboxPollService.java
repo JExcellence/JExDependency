@@ -1,15 +1,28 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdr.service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CompletableFuture;
 
 import com.raindropcentral.rdr.RDR;
 import com.raindropcentral.rdr.database.entity.RTradeDelivery;
@@ -17,10 +30,13 @@ import com.raindropcentral.rdr.database.entity.RTradeSession;
 import com.raindropcentral.rdr.database.repository.RRTradeDelivery;
 import com.raindropcentral.rdr.database.repository.RRTradeSession;
 import com.raindropcentral.rdr.view.TradeSessionView;
+import com.raindropcentral.rplatform.proxy.ProxyActionEnvelope;
+import com.raindropcentral.rplatform.proxy.ProxyActionResult;
 import de.jexcellence.jextranslate.i18n.I18n;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Poll-based cross-server trade inbox synchronization service.
@@ -35,6 +51,11 @@ import org.jetbrains.annotations.NotNull;
 public class TradeInboxPollService {
 
     private static final int DEFAULT_EXPIRY_CHECK_INTERVAL_POLLS = 30;
+    private static final String ACTION_MODULE_ID = "rdr";
+    private static final String ACTION_ID_TRADE_SESSION_REFRESH = "trade_session_live_refresh";
+    private static final String ACTION_PAYLOAD_KEY_TRADE_UUID = "trade_uuid";
+    private static final String OFFLINE_SERVER_ID = "offline";
+    private static final String UNKNOWN_SERVER_ID = "unknown";
 
     private final RDR plugin;
     private final Map<String, Long> inviteRevisionCache = new ConcurrentHashMap<>();
@@ -64,6 +85,11 @@ public class TradeInboxPollService {
 
         final long pollInterval = Math.max(1L, this.plugin.getDefaultConfig().getTradePollIntervalTicks());
         this.plugin.getScheduler().runRepeatingAsync(this::poll, pollInterval, pollInterval);
+        this.plugin.getProxyService().registerActionHandler(
+            ACTION_MODULE_ID,
+            ACTION_ID_TRADE_SESSION_REFRESH,
+            this::handleProxyTradeSessionRefresh
+        );
         this.running = true;
     }
 
@@ -76,6 +102,10 @@ public class TradeInboxPollService {
         this.deliveryCountCache.clear();
         this.watchedTradeRevisionCache.clear();
         this.watchedTradeViewers.clear();
+        this.plugin.getProxyService().unregisterActionHandler(
+            ACTION_MODULE_ID,
+            ACTION_ID_TRADE_SESSION_REFRESH
+        );
     }
 
     /**
@@ -91,7 +121,8 @@ public class TradeInboxPollService {
     ) {
         final UUID validatedTradeUuid = Objects.requireNonNull(tradeUuid, "tradeUuid cannot be null");
         final UUID validatedPlayerUuid = Objects.requireNonNull(playerUuid, "playerUuid cannot be null");
-        this.watchedTradeViewers.computeIfAbsent(validatedTradeUuid, ignored -> new HashSet<>()).add(validatedPlayerUuid);
+        this.watchedTradeViewers.computeIfAbsent(validatedTradeUuid, ignored -> ConcurrentHashMap.newKeySet())
+            .add(validatedPlayerUuid);
     }
 
     /**
@@ -117,6 +148,44 @@ public class TradeInboxPollService {
             this.watchedTradeViewers.remove(validatedTradeUuid);
             this.watchedTradeRevisionCache.remove(validatedTradeUuid);
         }
+    }
+
+    /**
+     * Immediately refreshes open watched-session views for one trade UUID on this server.
+     *
+     * <p>This is used by live trade UI mutations so participants can see partner offer changes
+     * without waiting for the next asynchronous poll cycle.</p>
+     *
+     * @param tradeUuid watched trade UUID
+     * @return {@code true} when at least one local viewer refresh was scheduled
+     * @throws NullPointerException if {@code tradeUuid} is {@code null}
+     */
+    public boolean refreshWatchedTradeSession(final @NotNull UUID tradeUuid) {
+        final UUID validatedTradeUuid = Objects.requireNonNull(tradeUuid, "tradeUuid cannot be null");
+        final Set<UUID> viewers = this.watchedTradeViewers.get(validatedTradeUuid);
+        if (viewers == null || viewers.isEmpty()) {
+            return false;
+        }
+        return this.refreshWatchedTradeSessionViewers(validatedTradeUuid, viewers);
+    }
+
+    /**
+     * Publishes one live trade-session refresh to local viewers and remote participant servers.
+     *
+     * @param session updated trade session snapshot
+     * @param actorUuid participant UUID who triggered the mutation
+     * @return {@code true} when at least one local viewer refresh was scheduled
+     * @throws NullPointerException if any argument is {@code null}
+     */
+    public boolean publishLiveTradeSessionRefresh(
+        final @NotNull RTradeSession session,
+        final @NotNull UUID actorUuid
+    ) {
+        final RTradeSession validatedSession = Objects.requireNonNull(session, "session cannot be null");
+        final UUID validatedActorUuid = Objects.requireNonNull(actorUuid, "actorUuid cannot be null");
+        final boolean localRefreshScheduled = this.refreshWatchedTradeSession(validatedSession.getTradeUuid());
+        this.publishProxyTradeSessionRefresh(validatedSession, validatedActorUuid);
+        return localRefreshScheduled;
     }
 
     private void poll() {
@@ -215,19 +284,7 @@ public class TradeInboxPollService {
             if (viewers == null || viewers.isEmpty()) {
                 continue;
             }
-
-            for (final UUID viewerUuid : viewers) {
-                final Player viewer = Bukkit.getPlayer(viewerUuid);
-                if (viewer == null || !viewer.isOnline()) {
-                    continue;
-                }
-
-                this.plugin.getScheduler().runSync(() -> this.plugin.getViewFrame().open(
-                    TradeSessionView.class,
-                    viewer,
-                    Map.of("plugin", this.plugin, "trade_uuid", tradeUuid)
-                ));
-            }
+            this.refreshWatchedTradeSessionViewers(tradeUuid, viewers);
         }
     }
 
@@ -255,5 +312,96 @@ public class TradeInboxPollService {
         }
         final var offlinePlayer = Bukkit.getOfflinePlayer(playerUuid);
         return offlinePlayer.getName() == null ? playerUuid.toString() : offlinePlayer.getName();
+    }
+
+    private @NotNull CompletableFuture<ProxyActionResult> handleProxyTradeSessionRefresh(
+        final @NotNull ProxyActionEnvelope envelope
+    ) {
+        final String tradeUuidValue = envelope.payload().get(ACTION_PAYLOAD_KEY_TRADE_UUID);
+        if (tradeUuidValue == null || tradeUuidValue.isBlank()) {
+            return CompletableFuture.completedFuture(
+                ProxyActionResult.failure("invalid_payload", "Missing trade session refresh payload.")
+            );
+        }
+
+        final UUID parsedTradeUuid;
+        try {
+            parsedTradeUuid = UUID.fromString(tradeUuidValue);
+        } catch (IllegalArgumentException exception) {
+            return CompletableFuture.completedFuture(
+                ProxyActionResult.failure("invalid_trade_uuid", "Trade session refresh payload is invalid.")
+            );
+        }
+
+        this.refreshWatchedTradeSession(parsedTradeUuid);
+        return CompletableFuture.completedFuture(ProxyActionResult.success("Trade session refresh dispatched."));
+    }
+
+    private void publishProxyTradeSessionRefresh(
+        final @NotNull RTradeSession session,
+        final @NotNull UUID actorUuid
+    ) {
+        if (!this.plugin.getProxyService().isAvailable()) {
+            return;
+        }
+
+        final String sourceServerId = normalizeServerId(this.plugin.getServerRouteId(), "server");
+        final Set<String> targetServerIds = new java.util.LinkedHashSet<>();
+        targetServerIds.add(normalizeServerId(session.getInitiatorLastKnownServerId(), OFFLINE_SERVER_ID));
+        targetServerIds.add(normalizeServerId(session.getPartnerLastKnownServerId(), OFFLINE_SERVER_ID));
+        for (final String targetServerId : targetServerIds) {
+            if (targetServerId.isBlank()
+                || OFFLINE_SERVER_ID.equalsIgnoreCase(targetServerId)
+                || UNKNOWN_SERVER_ID.equalsIgnoreCase(targetServerId)
+                || sourceServerId.equalsIgnoreCase(targetServerId)) {
+                continue;
+            }
+
+            this.plugin.getProxyService().sendAction(new ProxyActionEnvelope(
+                UUID.randomUUID(),
+                this.plugin.getProxyService().protocolVersion(),
+                ACTION_MODULE_ID,
+                ACTION_ID_TRADE_SESSION_REFRESH,
+                actorUuid,
+                sourceServerId,
+                targetServerId,
+                "",
+                Map.of(ACTION_PAYLOAD_KEY_TRADE_UUID, session.getTradeUuid().toString()),
+                System.currentTimeMillis()
+            ));
+        }
+    }
+
+    private boolean refreshWatchedTradeSessionViewers(
+        final @NotNull UUID tradeUuid,
+        final @NotNull Set<UUID> viewers
+    ) {
+        if (this.plugin.getScheduler() == null || this.plugin.getViewFrame() == null || viewers.isEmpty()) {
+            return false;
+        }
+
+        final Set<UUID> viewerSnapshot = Set.copyOf(viewers);
+        this.plugin.getScheduler().runSync(() -> {
+            for (final UUID viewerUuid : viewerSnapshot) {
+                final Player viewer = Bukkit.getPlayer(viewerUuid);
+                if (viewer == null || !viewer.isOnline()) {
+                    continue;
+                }
+
+                this.plugin.getViewFrame().open(
+                    TradeSessionView.class,
+                    viewer,
+                    Map.of("plugin", this.plugin, "trade_uuid", tradeUuid)
+                );
+            }
+        });
+        return true;
+    }
+
+    private static @NotNull String normalizeServerId(final @Nullable String serverId, final @NotNull String fallback) {
+        if (serverId == null || serverId.isBlank()) {
+            return fallback;
+        }
+        return serverId.trim();
     }
 }

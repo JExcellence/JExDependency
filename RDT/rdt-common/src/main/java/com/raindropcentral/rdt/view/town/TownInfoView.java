@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdt.view.town;
 
 import java.util.Map;
@@ -112,6 +125,7 @@ public final class TownInfoView extends BaseView {
         final String nexusChunkZ = nexusLocation == null || nexusLocation.getWorld() == null
                 ? "-"
                 : String.valueOf(nexusLocation.getChunk().getZ());
+        final String nexusServer = town.getNexusServerId() == null ? "-" : town.getNexusServerId();
 
         return UnifiedBuilderFactory.item(Material.BOOK)
                 .setName(this.i18n("info.name", player)
@@ -125,6 +139,7 @@ public final class TownInfoView extends BaseView {
                                 "claimed_chunks", town.getChunks().size(),
                                 "nexus_chunk_x", nexusChunkX,
                                 "nexus_chunk_z", nexusChunkZ,
+                                "nexus_server", nexusServer,
                                 "town_level", town.getTownLevel(),
                                 "active_state", this.resolveActiveState(player, town.getActive())
                         ))

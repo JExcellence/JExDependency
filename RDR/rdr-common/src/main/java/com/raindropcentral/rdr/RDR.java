@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdr;
 
 import java.io.File;
@@ -71,6 +84,8 @@ import com.raindropcentral.rplatform.api.PlatformType;
 import com.raindropcentral.rplatform.api.luckperms.LuckPermsService;
 import com.raindropcentral.rplatform.metrics.BStatsMetrics;
 import com.raindropcentral.rplatform.placeholder.PlaceholderRegistry;
+import com.raindropcentral.rplatform.proxy.NoOpProxyService;
+import com.raindropcentral.rplatform.proxy.ProxyService;
 import com.raindropcentral.rplatform.scheduler.ISchedulerAdapter;
 import com.raindropcentral.rplatform.service.ServiceRegistry;
 import de.jexcellence.hibernate.JEHibernate;
@@ -114,6 +129,7 @@ public class RDR {
     private EntityManagerFactory entityManagerFactory;
     private ISchedulerAdapter scheduler;
     private PlatformType platformType;
+    private ProxyService proxyService;
 
     private Object economyInstance;
     private LuckPermsService luckPermsService;
@@ -170,6 +186,7 @@ public class RDR {
         this.initializeMetrics();
         this.platformType = PlatformAPIFactory.detectPlatformType();
         this.scheduler = this.platform.getScheduler();
+        this.initializeProxyService();
         this.executor = Executors.newFixedThreadPool(4);
         this.ensureDefaultConfigFile();
         this.getDefaultConfig().logMissingRequirementWarnings(this.getLogger());
@@ -227,6 +244,7 @@ public class RDR {
             this.placeholderRegistry.unregister();
             this.placeholderRegistry = null;
         }
+        this.proxyService = NoOpProxyService.createDefault();
 
         if (this.entityManagerFactory != null) {
             try {
@@ -457,6 +475,35 @@ public class RDR {
      */
     public @Nullable PlatformType getPlatformType() {
         return this.platformType;
+    }
+
+    /**
+     * Returns the proxy service bridge used for cross-server presence and routing.
+     *
+     * @return active proxy service bridge
+     */
+    public @NotNull ProxyService getProxyService() {
+        if (this.proxyService == null) {
+            this.proxyService = NoOpProxyService.createDefault();
+        }
+        return this.proxyService;
+    }
+
+    /**
+     * Returns the configured authoritative route ID for this Paper server.
+     *
+     * @return local server route identifier
+     */
+    public @NotNull String getServerRouteId() {
+        final String configuredRouteId = this.getDefaultConfig().getProxyServerRouteId();
+        if (!configuredRouteId.isBlank()) {
+            return configuredRouteId;
+        }
+        final String serverName = this.plugin.getServer().getName();
+        if (serverName == null || serverName.isBlank()) {
+            return "server";
+        }
+        return serverName.trim().toLowerCase(Locale.ROOT);
     }
 
     /**
@@ -770,6 +817,22 @@ public class RDR {
             this.luckPermsService = null;
             this.getLogger().info("LuckPerms service not present; continuing without LuckPerms integration");
         }).load();
+    }
+
+    private void initializeProxyService() {
+        final ProxyService registeredProxyService =
+            this.plugin.getServer().getServicesManager().load(ProxyService.class);
+        if (registeredProxyService != null) {
+            this.proxyService = registeredProxyService;
+            return;
+        }
+
+        if (this.platform != null && this.platform.getProxyService() != null) {
+            this.proxyService = this.platform.getProxyService();
+            return;
+        }
+
+        this.proxyService = NoOpProxyService.createDefault();
     }
 
     private void initializeCommands() {

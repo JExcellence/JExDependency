@@ -1,17 +1,33 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdr.service;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
 import com.raindropcentral.rdr.RDR;
@@ -23,6 +39,8 @@ import com.raindropcentral.rdr.database.entity.TradeSessionStatus;
 import com.raindropcentral.rdr.database.repository.RRServerBank;
 import com.raindropcentral.rdr.database.repository.RRTradeDelivery;
 import com.raindropcentral.rdr.database.repository.RRTradeSession;
+import com.raindropcentral.rplatform.proxy.PlayerPresenceSnapshot;
+import com.raindropcentral.rplatform.proxy.ProxyTransferRequest;
 import com.raindropcentral.rplatform.economy.JExEconomyBridge;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -52,6 +70,10 @@ public class TradeService {
     private static final String TRADE_TAX_ROLLBACK_NOTE = "trade_tax_rollback";
     private static final String SERVER_BANK_ADMIN_WITHDRAW_NOTE = "admin_withdrawal";
     private static final String SERVER_BANK_ADMIN_WITHDRAW_ROLLBACK_NOTE = "admin_withdrawal_rollback";
+    private static final String OFFLINE_SERVER_ID = "offline";
+    private static final String MODULE_ID = "rdr";
+    private static final String JOIN_PARTNER_ACTION_ID = "join_partner_server";
+    private static final long PROXY_PRESENCE_LOOKUP_TIMEOUT_MILLIS = 350L;
 
     /**
      * Invite operation result.
@@ -147,6 +169,82 @@ public class TradeService {
          * Trade repositories are unavailable.
          */
         UNAVAILABLE
+    }
+
+    /**
+     * Presence state used by trade target discovery and UI rendering.
+     */
+    public enum PresenceState {
+        /**
+         * Participant is online on the local server.
+         */
+        LOCAL_ONLINE,
+        /**
+         * Participant is online on a different network server.
+         */
+        REMOTE_ONLINE,
+        /**
+         * Participant is currently offline.
+         */
+        OFFLINE
+    }
+
+    /**
+     * Proxy join-partner operation result.
+     */
+    public enum JoinPartnerResult {
+        /**
+         * Player transfer request was accepted by the proxy bridge.
+         */
+        ROUTING,
+        /**
+         * Requesting actor is already on the destination server.
+         */
+        ALREADY_ON_SERVER,
+        /**
+         * Trade row could not be found.
+         */
+        MISSING,
+        /**
+         * Requesting actor is not a participant in the selected trade.
+         */
+        FORBIDDEN,
+        /**
+         * Partner is offline or no destination route is available.
+         */
+        PARTNER_UNAVAILABLE,
+        /**
+         * Proxy-backed routing is disabled or unavailable.
+         */
+        UNAVAILABLE
+    }
+
+    /**
+     * Trade target snapshot combining identity and presence details.
+     *
+     * @param targetUuid target player UUID
+     * @param targetName resolved target display name
+     * @param presenceState resolved target presence state
+     * @param serverId target server route identifier, or {@code offline}
+     */
+    public record TradeTargetSnapshot(
+        @NotNull UUID targetUuid,
+        @NotNull String targetName,
+        @NotNull PresenceState presenceState,
+        @NotNull String serverId
+    ) {
+    }
+
+    /**
+     * Join-partner routing response with resolved destination metadata.
+     *
+     * @param result join-partner result
+     * @param serverId resolved destination server route identifier
+     */
+    public record JoinPartnerResponse(
+        @NotNull JoinPartnerResult result,
+        @NotNull String serverId
+    ) {
     }
 
     /**
@@ -390,6 +488,111 @@ public class TradeService {
     }
 
     /**
+     * Returns trade-target snapshots with proxy-aware presence state and server metadata.
+     *
+     * @param viewerUuid viewer UUID to exclude from the result
+     * @param limit maximum number of targets to return
+     * @return immutable trade-target snapshot list
+     * @throws NullPointerException if {@code viewerUuid} is {@code null}
+     */
+    public @NotNull List<TradeTargetSnapshot> findTradeTargets(
+        final @NotNull UUID viewerUuid,
+        final int limit
+    ) {
+        final List<UUID> targetUuids = this.findTradeTargetUuids(viewerUuid, limit);
+        if (targetUuids.isEmpty()) {
+            return List.of();
+        }
+
+        final Map<UUID, PlayerPresenceSnapshot> livePresenceSnapshots = this.findPresenceSnapshots(targetUuids);
+        final List<TradeTargetSnapshot> snapshots = new java.util.ArrayList<>(targetUuids.size());
+        for (final UUID targetUuid : targetUuids) {
+            final String targetName = this.resolvePlayerName(targetUuid);
+            final String serverId = this.resolveServerId(targetUuid, OFFLINE_SERVER_ID, livePresenceSnapshots);
+            final PresenceState presenceState = this.resolvePresenceState(targetUuid, OFFLINE_SERVER_ID, livePresenceSnapshots);
+            snapshots.add(new TradeTargetSnapshot(targetUuid, targetName, presenceState, serverId));
+        }
+        return List.copyOf(snapshots);
+    }
+
+    /**
+     * Requests transfer of the actor to their trade partner's current server when available.
+     *
+     * @param actor requesting player
+     * @param tradeUuid trade UUID
+     * @return async join-partner routing response
+     * @throws NullPointerException if any argument is {@code null}
+     */
+    public @NotNull CompletableFuture<JoinPartnerResponse> requestJoinPartnerServer(
+        final @NotNull Player actor,
+        final @NotNull UUID tradeUuid
+    ) {
+        final Player validatedActor = Objects.requireNonNull(actor, "actor cannot be null");
+        final UUID validatedTradeUuid = Objects.requireNonNull(tradeUuid, "tradeUuid cannot be null");
+        final RRTradeSession sessionRepository = this.plugin.getTradeSessionRepository();
+        if (sessionRepository == null || !this.isTradeProxyJoinActionAvailable()) {
+            return CompletableFuture.completedFuture(new JoinPartnerResponse(JoinPartnerResult.UNAVAILABLE, OFFLINE_SERVER_ID));
+        }
+
+        return this.supplyAsync(() -> sessionRepository.findByTradeUuid(validatedTradeUuid))
+            .thenCompose(session -> {
+                if (session == null) {
+                    return CompletableFuture.completedFuture(
+                        new JoinPartnerResponse(JoinPartnerResult.MISSING, OFFLINE_SERVER_ID)
+                    );
+                }
+                if (!session.hasParticipant(validatedActor.getUniqueId())) {
+                    return CompletableFuture.completedFuture(
+                        new JoinPartnerResponse(JoinPartnerResult.FORBIDDEN, OFFLINE_SERVER_ID)
+                    );
+                }
+
+                final UUID counterpartyUuid = session.getCounterpartyUuid(validatedActor.getUniqueId());
+                if (counterpartyUuid == null) {
+                    return CompletableFuture.completedFuture(
+                        new JoinPartnerResponse(JoinPartnerResult.MISSING, OFFLINE_SERVER_ID)
+                    );
+                }
+
+                final String fallbackServerId = session.getLastKnownServerIdForParticipant(counterpartyUuid);
+                final String partnerServerId = this.resolveServerId(counterpartyUuid, fallbackServerId, Map.of());
+                if (OFFLINE_SERVER_ID.equalsIgnoreCase(partnerServerId)) {
+                    return CompletableFuture.completedFuture(
+                        new JoinPartnerResponse(JoinPartnerResult.PARTNER_UNAVAILABLE, OFFLINE_SERVER_ID)
+                    );
+                }
+
+                final String localServerRouteId = this.plugin.getServerRouteId();
+                if (partnerServerId.equalsIgnoreCase(localServerRouteId)) {
+                    return CompletableFuture.completedFuture(
+                        new JoinPartnerResponse(JoinPartnerResult.ALREADY_ON_SERVER, partnerServerId)
+                    );
+                }
+
+                final ProxyTransferRequest transferRequest = new ProxyTransferRequest(
+                    validatedActor.getUniqueId(),
+                    localServerRouteId,
+                    partnerServerId,
+                    "",
+                    Map.of(
+                        "module", MODULE_ID,
+                        "action", JOIN_PARTNER_ACTION_ID,
+                        "trade_uuid", validatedTradeUuid.toString(),
+                        "partner_uuid", counterpartyUuid.toString()
+                    )
+                );
+
+                return this.plugin.getProxyService().requestPlayerTransfer(transferRequest)
+                    .handle((success, throwable) -> {
+                        if (throwable != null || !Boolean.TRUE.equals(success)) {
+                            return new JoinPartnerResponse(JoinPartnerResult.PARTNER_UNAVAILABLE, partnerServerId);
+                        }
+                        return new JoinPartnerResponse(JoinPartnerResult.ROUTING, partnerServerId);
+                    });
+            });
+    }
+
+    /**
      * Creates a new trade invite from initiator to partner.
      *
      * @param initiator invite initiator
@@ -476,18 +679,26 @@ public class TradeService {
                 validatedPartnerUuid,
                 now.plusSeconds(config.getTradeInviteTimeoutSeconds())
             )
-            .thenApply(result -> {
-                if (result.status() == RRTradeSession.InviteCreateStatus.CREATED) {
-                    this.inviteCooldowns.put(
-                        validatedInitiator.getUniqueId(),
-                        LocalDateTime.now().plusSeconds(config.getTradeInviteCooldownSeconds())
-                    );
-                    return new InviteCreateResponse(InviteResult.SUCCESS, result.tradeUuid());
+            .thenCompose(result -> {
+                if (result.status() != RRTradeSession.InviteCreateStatus.CREATED || result.tradeUuid() == null) {
+                    if (result.status() == RRTradeSession.InviteCreateStatus.SELF_TRADE) {
+                        return CompletableFuture.completedFuture(new InviteCreateResponse(InviteResult.SELF_TARGET, null));
+                    }
+                    return CompletableFuture.completedFuture(new InviteCreateResponse(InviteResult.PARTICIPANT_BUSY, null));
                 }
-                if (result.status() == RRTradeSession.InviteCreateStatus.SELF_TRADE) {
-                    return new InviteCreateResponse(InviteResult.SELF_TARGET, null);
-                }
-                return new InviteCreateResponse(InviteResult.PARTICIPANT_BUSY, null);
+
+                this.inviteCooldowns.put(
+                    validatedInitiator.getUniqueId(),
+                    LocalDateTime.now().plusSeconds(config.getTradeInviteCooldownSeconds())
+                );
+                return this.refreshParticipantServerSnapshots(
+                    result.tradeUuid(),
+                    validatedInitiator.getUniqueId(),
+                    validatedPartnerUuid,
+                    this.plugin.getServerRouteId(),
+                    OFFLINE_SERVER_ID,
+                    this.plugin.getServerRouteId()
+                ).thenApply(ignored -> new InviteCreateResponse(InviteResult.SUCCESS, result.tradeUuid()));
             });
     }
 
@@ -539,7 +750,11 @@ public class TradeService {
                             default -> SessionResult.INVALID_STATE;
                         };
                     });
-            });
+            })
+            .thenCompose(result ->
+                this.refreshTradeSessionSnapshotsIfSuccessful(validatedTradeUuid, result)
+                    .thenApply(ignored -> result)
+            );
     }
 
     /**
@@ -615,7 +830,11 @@ public class TradeService {
                             default -> SessionResult.INVALID_STATE;
                         };
                     });
-            });
+            })
+            .thenCompose(result ->
+                this.refreshTradeSessionSnapshotsIfSuccessful(validatedTradeUuid, result)
+                    .thenApply(ignored -> result)
+            );
     }
 
     /**
@@ -705,7 +924,11 @@ public class TradeService {
                     return CompletableFuture.completedFuture(result);
                 }
                 return this.resolveCompletionInvalidState(sessionRepository, validatedTradeUuid, actorUuid);
-            });
+            })
+            .thenCompose(result ->
+                this.refreshTradeSessionSnapshotsIfSuccessful(validatedTradeUuid, result)
+                    .thenApply(ignored -> result)
+            );
     }
 
     /**
@@ -777,7 +1000,11 @@ public class TradeService {
                         }
                         return mapped;
                     });
-            });
+            })
+            .thenCompose(result ->
+                this.refreshTradeSessionSnapshotsIfSuccessful(validatedTradeUuid, result)
+                    .thenApply(ignored -> result)
+            );
     }
 
     /**
@@ -840,7 +1067,11 @@ public class TradeService {
                         offers
                     )
                     .thenApply(TradeService::mapMutationResult);
-            });
+            })
+            .thenCompose(result ->
+                this.refreshTradeSessionSnapshotsIfSuccessful(validatedTradeUuid, result)
+                    .thenApply(ignored -> result)
+            );
     }
 
     /**
@@ -897,7 +1128,11 @@ public class TradeService {
                         }
                         return mapped;
                     });
-            });
+            })
+            .thenCompose(result ->
+                this.refreshTradeSessionSnapshotsIfSuccessful(validatedTradeUuid, result)
+                    .thenApply(ignored -> result)
+            );
     }
 
     /**
@@ -999,7 +1234,11 @@ public class TradeService {
                         }
                         return SessionResult.SUCCESS;
                     });
-            });
+            })
+            .thenCompose(result ->
+                this.refreshTradeSessionSnapshotsIfSuccessful(validatedTradeUuid, result)
+                    .thenApply(ignored -> result)
+            );
     }
 
     /**
@@ -1150,6 +1389,212 @@ public class TradeService {
 
         final long remaining = Duration.between(LocalDateTime.now(), cooldownUntil).getSeconds();
         return Math.max(0L, remaining);
+    }
+
+    /**
+     * Returns whether trade target discovery should query proxy presence snapshots.
+     *
+     * @return {@code true} when trade proxy presence is enabled and available
+     */
+    public boolean isTradeProxyPresenceAvailable() {
+        return this.plugin.getDefaultConfig().isTradeProxyPresenceEnabled()
+            && this.plugin.getProxyService().isAvailable();
+    }
+
+    /**
+     * Returns whether join-partner actions are enabled for trade UIs.
+     *
+     * @return {@code true} when join-partner actions are enabled and available
+     */
+    public boolean isTradeProxyJoinActionAvailable() {
+        return this.plugin.getDefaultConfig().isTradeProxyJoinActionEnabled()
+            && this.plugin.getProxyService().isAvailable();
+    }
+
+    /**
+     * Returns presence snapshots for participant UUIDs when proxy presence is available.
+     *
+     * @param participantUuids participant UUID collection
+     * @return immutable presence snapshot map
+     * @throws NullPointerException if {@code participantUuids} is {@code null}
+     */
+    public @NotNull Map<UUID, PlayerPresenceSnapshot> findPresenceSnapshots(
+        final @NotNull Collection<UUID> participantUuids
+    ) {
+        final List<UUID> participantSnapshot = List.copyOf(
+            Objects.requireNonNull(participantUuids, "participantUuids cannot be null")
+        );
+        if (participantSnapshot.isEmpty() || !this.isTradeProxyPresenceAvailable()) {
+            return Map.of();
+        }
+
+        try {
+            return this.plugin.getProxyService().findPresence(participantSnapshot)
+                .completeOnTimeout(Map.of(), PROXY_PRESENCE_LOOKUP_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)
+                .exceptionally(throwable -> Map.of())
+                .join();
+        } catch (RuntimeException ignored) {
+            return Map.of();
+        }
+    }
+
+    /**
+     * Resolves one participant server identifier from live proxy presence or fallback metadata.
+     *
+     * @param participantUuid participant UUID
+     * @param fallbackServerId fallback server identifier
+     * @param livePresenceSnapshots pre-fetched live presence snapshots
+     * @return resolved participant server identifier
+     * @throws NullPointerException if any non-nullable argument is {@code null}
+     */
+    public @NotNull String resolveServerId(
+        final @NotNull UUID participantUuid,
+        final @Nullable String fallbackServerId,
+        final @NotNull Map<UUID, PlayerPresenceSnapshot> livePresenceSnapshots
+    ) {
+        final UUID validatedParticipantUuid = Objects.requireNonNull(participantUuid, "participantUuid cannot be null");
+        final Map<UUID, PlayerPresenceSnapshot> snapshots = Objects.requireNonNull(
+            livePresenceSnapshots,
+            "livePresenceSnapshots cannot be null"
+        );
+        final String localServerRouteId = this.plugin.getServerRouteId();
+
+        final Player onlinePlayer = Bukkit.getPlayer(validatedParticipantUuid);
+        if (onlinePlayer != null && onlinePlayer.isOnline()) {
+            return localServerRouteId;
+        }
+
+        final PlayerPresenceSnapshot snapshot = snapshots.get(validatedParticipantUuid);
+        if (snapshot != null && snapshot.online()) {
+            return normalizeServerId(snapshot.serverId(), OFFLINE_SERVER_ID);
+        }
+        if (!snapshots.isEmpty()) {
+            return normalizeServerId(fallbackServerId, OFFLINE_SERVER_ID);
+        }
+
+        final Optional<PlayerPresenceSnapshot> liveSnapshot = this.findSinglePresenceSnapshot(validatedParticipantUuid);
+        if (liveSnapshot.isPresent() && liveSnapshot.get().online()) {
+            return normalizeServerId(liveSnapshot.get().serverId(), OFFLINE_SERVER_ID);
+        }
+
+        return normalizeServerId(fallbackServerId, OFFLINE_SERVER_ID);
+    }
+
+    /**
+     * Resolves one participant presence state from live presence and fallback metadata.
+     *
+     * @param participantUuid participant UUID
+     * @param fallbackServerId fallback server identifier
+     * @param livePresenceSnapshots pre-fetched live presence snapshots
+     * @return resolved participant presence state
+     * @throws NullPointerException if any non-nullable argument is {@code null}
+     */
+    public @NotNull PresenceState resolvePresenceState(
+        final @NotNull UUID participantUuid,
+        final @Nullable String fallbackServerId,
+        final @NotNull Map<UUID, PlayerPresenceSnapshot> livePresenceSnapshots
+    ) {
+        final String resolvedServerId = this.resolveServerId(participantUuid, fallbackServerId, livePresenceSnapshots);
+        if (OFFLINE_SERVER_ID.equalsIgnoreCase(resolvedServerId)) {
+            return PresenceState.OFFLINE;
+        }
+        return resolvedServerId.equalsIgnoreCase(this.plugin.getServerRouteId())
+            ? PresenceState.LOCAL_ONLINE
+            : PresenceState.REMOTE_ONLINE;
+    }
+
+    private @NotNull CompletableFuture<Void> refreshTradeSessionSnapshotsIfSuccessful(
+        final @NotNull UUID tradeUuid,
+        final @NotNull SessionResult result
+    ) {
+        if (result != SessionResult.SUCCESS
+            && result != SessionResult.WAITING_FOR_PARTNER
+            && result != SessionResult.COMPLETED) {
+            return CompletableFuture.completedFuture(null);
+        }
+
+        final RRTradeSession sessionRepository = this.plugin.getTradeSessionRepository();
+        if (sessionRepository == null) {
+            return CompletableFuture.completedFuture(null);
+        }
+
+        final UUID validatedTradeUuid = Objects.requireNonNull(tradeUuid, "tradeUuid cannot be null");
+        return this.supplyAsync(() -> sessionRepository.findByTradeUuid(validatedTradeUuid))
+            .thenCompose(session -> {
+                if (session == null) {
+                    return CompletableFuture.completedFuture(null);
+                }
+                return this.refreshParticipantServerSnapshots(
+                    validatedTradeUuid,
+                    session.getInitiatorUuid(),
+                    session.getPartnerUuid(),
+                    session.getInitiatorLastKnownServerId(),
+                    session.getPartnerLastKnownServerId(),
+                    null
+                );
+            });
+    }
+
+    private @NotNull CompletableFuture<Void> refreshParticipantServerSnapshots(
+        final @NotNull UUID tradeUuid,
+        final @NotNull UUID initiatorUuid,
+        final @NotNull UUID partnerUuid,
+        final @Nullable String initiatorFallbackServerId,
+        final @Nullable String partnerFallbackServerId,
+        final @Nullable String originServerId
+    ) {
+        final RRTradeSession sessionRepository = this.plugin.getTradeSessionRepository();
+        if (sessionRepository == null) {
+            return CompletableFuture.completedFuture(null);
+        }
+
+        final Map<UUID, PlayerPresenceSnapshot> livePresenceSnapshots = this.findPresenceSnapshots(
+            List.of(initiatorUuid, partnerUuid)
+        );
+        final String initiatorServerId = this.resolveServerId(
+            initiatorUuid,
+            initiatorFallbackServerId,
+            livePresenceSnapshots
+        );
+        final String partnerServerId = this.resolveServerId(
+            partnerUuid,
+            partnerFallbackServerId,
+            livePresenceSnapshots
+        );
+        final String normalizedOriginServerId = originServerId == null || originServerId.isBlank()
+            ? null
+            : originServerId.trim();
+
+        return sessionRepository.refreshParticipantServerSnapshotsAsync(
+                tradeUuid,
+                initiatorServerId,
+                partnerServerId,
+                normalizedOriginServerId
+            )
+            .handle((ignored, throwable) -> null);
+    }
+
+    private @NotNull Optional<PlayerPresenceSnapshot> findSinglePresenceSnapshot(final @NotNull UUID participantUuid) {
+        if (!this.isTradeProxyPresenceAvailable()) {
+            return Optional.empty();
+        }
+        try {
+            return this.plugin.getProxyService().findPresence(participantUuid)
+                .completeOnTimeout(Optional.empty(), PROXY_PRESENCE_LOOKUP_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)
+                .exceptionally(throwable -> Optional.empty())
+                .join();
+        } catch (RuntimeException ignored) {
+            return Optional.empty();
+        }
+    }
+
+    private @NotNull String resolvePlayerName(final @NotNull UUID playerUuid) {
+        final Player onlinePlayer = Bukkit.getPlayer(playerUuid);
+        if (onlinePlayer != null) {
+            return onlinePlayer.getName();
+        }
+        final var offlinePlayer = Bukkit.getOfflinePlayer(playerUuid);
+        return offlinePlayer.getName() == null ? playerUuid.toString() : offlinePlayer.getName();
     }
 
     private boolean isCurrencyAvailableForTrading(final @NotNull String currencyId) {
@@ -1455,6 +1900,16 @@ public class TradeService {
 
     private static @NotNull String normalizeCurrencyId(final @NotNull String currencyId) {
         return Objects.requireNonNull(currencyId, "currencyId cannot be null").trim().toLowerCase(Locale.ROOT);
+    }
+
+    private static @NotNull String normalizeServerId(
+        final @Nullable String serverId,
+        final @NotNull String fallbackServerId
+    ) {
+        if (serverId == null || serverId.isBlank()) {
+            return fallbackServerId;
+        }
+        return serverId.trim();
     }
 
     private static boolean safeJoin(final @NotNull CompletableFuture<Boolean> future) {

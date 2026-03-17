@@ -1,0 +1,19 @@
+# RCore proxy bridge configuration
+
+# Plugin message channel used for Paper <-> proxy action transport.
+channel_name: "raindrop:proxy"
+
+# Proxy action payload protocol version.
+protocol_version: 1
+
+# Timeout for proxy action requests in milliseconds.
+request_timeout_millis: 5000
+
+# Default pending-arrival token TTL in milliseconds.
+token_ttl_millis: 120000
+
+# Authoritative route identifier for this Paper server.
+server_route_id: "server"
+
+# Optional aliases resolved to canonical route identifiers.
+route_aliases: {}

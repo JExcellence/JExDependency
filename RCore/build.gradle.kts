@@ -28,6 +28,9 @@ description = "Core plugin providing shared functionality for Raindrop plugins"
 
 dependencies {
     compileOnly(libs.paper.api)
+    compileOnly(project(":RPlatform"))
+    compileOnly("com.velocitypowered:velocity-api:3.4.0")
+    annotationProcessor("com.velocitypowered:velocity-api:3.4.0")
 
     // Adventure APIs (core APIs are compileOnly as Paper provides them)
     compileOnly(libs.adventure.api)
@@ -72,6 +75,7 @@ dependencies {
     testImplementation(libs.junit.jupiter.api)
     testRuntimeOnly(libs.junit.jupiter.engine)
     testRuntimeOnly(libs.junit.platform.launcher)
+    testImplementation(project(":RPlatform"))
     testImplementation(libs.paper.api)
     testCompileOnly(libs.jackson.annotations)
 }
@@ -84,7 +88,7 @@ tasks.processResources {
         "apiVersion" to "1.21"
     )
     inputs.properties(props)
-    filesMatching(listOf("plugin.yml", "paper-plugin.yml")) {
+    filesMatching(listOf("plugin.yml", "paper-plugin.yml", "velocity-plugin.json")) {
         expand(props)
     }
 }

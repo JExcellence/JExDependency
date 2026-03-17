@@ -10,6 +10,15 @@ chunk_block_max_y: 10
 # Delay in seconds before /rt spawn teleports the player to a safe location near their nexus.
 town_spawn_teleport_delay_seconds: 3
 
+# Proxy-backed routing controls.
+proxy:
+  # Enables proxy-aware module features.
+  enabled: false
+  # Optional authoritative route identifier for this Paper server.
+  server_route_id: ""
+  # Routes /rt spawn through proxy transfer when the town spawn is owned by another server.
+  town_spawn_enabled: false
+
 # Icon/material mapping used for chunk type views and chunk block placement material changes.
 chunk_type_icon_nexus: REINFORCED_DEEPSLATE
 chunk_type_icon_default: OAK_PLANKS

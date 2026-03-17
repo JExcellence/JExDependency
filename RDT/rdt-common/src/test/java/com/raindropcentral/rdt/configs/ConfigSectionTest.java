@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdt.configs;
 
 import com.raindropcentral.rdt.utils.ChunkType;
@@ -14,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -35,6 +49,9 @@ class ConfigSectionTest {
         assertEquals(-10, section.getChunkBlockMinY());
         assertEquals(10, section.getChunkBlockMaxY());
         assertEquals(3, section.getTownSpawnTeleportDelaySeconds());
+        assertFalse(section.isProxyEnabled());
+        assertFalse(section.isProxyTownSpawnEnabled());
+        assertEquals("", section.getProxyServerRouteId());
         assertEquals(Material.REINFORCED_DEEPSLATE, section.getChunkTypeIconMaterial(ChunkType.NEXUS));
         assertEquals(Material.OAK_PLANKS, section.getChunkTypeIconMaterial(ChunkType.DEFAULT));
         assertEquals(10, section.getHighestConfiguredTownLevel());
@@ -57,6 +74,10 @@ class ConfigSectionTest {
             chunk_block_min_y: 7
             chunk_block_max_y: 4
             town_spawn_teleport_delay_seconds: -1
+            proxy:
+              enabled: true
+              server_route_id: "alpha"
+              town_spawn_enabled: true
             chunk_type_icon_nexus: DIAMOND_BLOCK
             chunk_type_icon_default: not_a_material
             town:
@@ -80,6 +101,9 @@ class ConfigSectionTest {
         assertEquals(-10, section.getChunkBlockMinY());
         assertEquals(10, section.getChunkBlockMaxY());
         assertEquals(3, section.getTownSpawnTeleportDelaySeconds());
+        assertTrue(section.isProxyEnabled());
+        assertTrue(section.isProxyTownSpawnEnabled());
+        assertEquals("alpha", section.getProxyServerRouteId());
         assertEquals(Material.DIAMOND_BLOCK, section.getChunkTypeIconMaterial(ChunkType.NEXUS));
         assertEquals(Material.OAK_PLANKS, section.getChunkTypeIconMaterial(ChunkType.DEFAULT));
 

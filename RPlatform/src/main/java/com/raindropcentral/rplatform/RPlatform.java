@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rplatform;
 
 import com.raindropcentral.rplatform.api.PlatformAPI;
@@ -10,6 +23,8 @@ import com.raindropcentral.rplatform.logging.PluginLogger;
 import com.raindropcentral.rplatform.metrics.BStatsMetrics;
 import com.raindropcentral.rplatform.metrics.MetricsManager;
 import com.raindropcentral.rplatform.placeholder.PlaceholderManager;
+import com.raindropcentral.rplatform.proxy.NoOpProxyService;
+import com.raindropcentral.rplatform.proxy.ProxyService;
 import com.raindropcentral.rplatform.requirement.BuiltInRequirementProvider;
 import com.raindropcentral.rplatform.scheduler.ISchedulerAdapter;
 import com.raindropcentral.rplatform.service.ServiceRegistry;
@@ -81,6 +96,10 @@ public class RPlatform {
      * shutdown sequences.
      */
     private final PluginLogger logger;
+    /**
+     * Proxy bridge used by network-aware modules when a proxy coordinator is available.
+     */
+    private ProxyService proxyService;
 
     /**
      * Handles command updates for JEx command framework integrations once initialization completes.
@@ -136,6 +155,7 @@ public class RPlatform {
         this.scheduler = ISchedulerAdapter.create(plugin, platformType);
         this.serviceRegistry = new ServiceRegistry();
         this.logger = CentralLogger.getLogger(plugin);
+        this.proxyService = NoOpProxyService.createDefault();
         this.premiumVersion = false;
         this.initialized = false;
         
@@ -336,6 +356,27 @@ public class RPlatform {
      */
     public @NotNull PluginLogger getLogger() {
         return logger;
+    }
+
+    /**
+     * Returns the currently configured proxy bridge.
+     *
+     * @return active proxy bridge implementation
+     */
+    public @NotNull ProxyService getProxyService() {
+        return this.proxyService;
+    }
+
+    /**
+     * Replaces the active proxy bridge implementation.
+     *
+     * <p>Passing {@code null} restores the local no-op bridge so standalone Paper installs remain
+     * functional.</p>
+     *
+     * @param proxyService replacement proxy bridge, or {@code null} for no-op fallback
+     */
+    public void setProxyService(final @Nullable ProxyService proxyService) {
+        this.proxyService = proxyService == null ? NoOpProxyService.createDefault() : proxyService;
     }
 
     /**

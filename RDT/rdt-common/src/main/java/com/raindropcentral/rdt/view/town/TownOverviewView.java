@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdt.view.town;
 
 import java.util.Map;
@@ -190,6 +203,7 @@ public class TownOverviewView extends BaseView {
         final String worldName = nexusLocation == null || nexusLocation.getWorld() == null
                 ? "unknown"
                 : nexusLocation.getWorld().getName();
+        final String nexusServer = town.getNexusServerId() == null ? "-" : town.getNexusServerId();
         final @Nullable Integer nextLevel = plugin == null
                 ? null
                 : plugin.getDefaultConfig().getNextTownLevel(town.getTownLevel());
@@ -206,6 +220,7 @@ public class TownOverviewView extends BaseView {
                                 "x", nexusLocation == null ? "-" : nexusLocation.getBlockX(),
                                 "y", nexusLocation == null ? "-" : nexusLocation.getBlockY(),
                                 "z", nexusLocation == null ? "-" : nexusLocation.getBlockZ(),
+                                "nexus_server", nexusServer,
                                 "town_level", town.getTownLevel(),
                                 "next_level", nextLevel == null ? "-" : nextLevel
                         ))
@@ -348,6 +363,7 @@ public class TownOverviewView extends BaseView {
         final String worldName = townSpawnLocation == null || townSpawnLocation.getWorld() == null
                 ? "-"
                 : townSpawnLocation.getWorld().getName();
+        final String spawnServer = town.getTownSpawnServerId() == null ? "-" : town.getTownSpawnServerId();
 
         return UnifiedBuilderFactory.item(Material.LODESTONE)
                 .setName(this.i18n("spawn.name", player)
@@ -360,6 +376,7 @@ public class TownOverviewView extends BaseView {
                                 "spawn_x", townSpawnLocation == null ? "-" : townSpawnLocation.getBlockX(),
                                 "spawn_y", townSpawnLocation == null ? "-" : townSpawnLocation.getBlockY(),
                                 "spawn_z", townSpawnLocation == null ? "-" : townSpawnLocation.getBlockZ(),
+                                "spawn_server", spawnServer,
                                 "permission", TownPermissions.PLACE_NEXUS.getPermissionKey()
                         ))
                         .build()
@@ -695,6 +712,7 @@ public class TownOverviewView extends BaseView {
         }
 
         town.setTownSpawnLocation(playerLocation);
+        town.setTownSpawnServerId(plugin.getServerRouteId());
         plugin.getTownRepository().update(town);
         this.i18n("spawn.success.updated", player)
                 .includePrefix()

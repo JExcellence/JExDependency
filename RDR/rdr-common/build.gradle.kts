@@ -34,7 +34,7 @@ dependencies {
     compileOnly(libs.bundles.hibernate)
     compileOnly(libs.jehibernate)
     compileOnly(libs.adventure.platform.bukkit)
-    compileOnly(libs.rplatform)
+    compileOnly(project(":RPlatform"))
 
     compileOnly(libs.bundles.jexcellence) {
         isTransitive = false
