@@ -7,7 +7,7 @@
 
 identifier: "legendary_trader"
 category: "trader"
-difficulty: LEGENDARY
+difficulty: EXPERT
 
 icon:
   material: "NETHER_STAR"

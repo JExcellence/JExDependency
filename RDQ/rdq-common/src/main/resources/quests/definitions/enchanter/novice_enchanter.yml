@@ -7,7 +7,7 @@
 
 identifier: "novice_enchanter"
 category: "enchanter"
-difficulty: TRIVIAL
+difficulty: EASY
 
 icon:
   material: "ENCHANTING_TABLE"

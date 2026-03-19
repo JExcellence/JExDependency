@@ -7,7 +7,7 @@
 
 identifier: "combat_apprentice"
 category: "combat"
-difficulty: NORMAL
+difficulty: MEDIUM
 
 icon:
   material: "DIAMOND_SWORD"

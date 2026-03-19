@@ -7,7 +7,7 @@
 
 identifier: "legendary_baker"
 category: "baker"
-difficulty: LEGENDARY
+difficulty: EXPERT
 
 icon:
   material: "CAKE"

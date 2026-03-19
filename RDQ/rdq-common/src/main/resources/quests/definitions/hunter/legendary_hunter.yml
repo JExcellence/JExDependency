@@ -4,7 +4,7 @@
 
 identifier: "legendary_hunter"
 category: "hunter"
-difficulty: LEGENDARY
+difficulty: EXPERT
 
 icon:
   material: "BOW"

@@ -1,6 +1,6 @@
 identifier: "legendary_explorer"
 category: "explorer"
-difficulty: LEGENDARY
+difficulty: EXPERT
 icon:
   material: "RECOVERY_COMPASS"
   display_name_key: "quest.legendary_explorer.name"

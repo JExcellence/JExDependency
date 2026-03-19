@@ -7,7 +7,7 @@
 
 identifier: "zombie_hunter_veteran"
 category: "combat"
-difficulty: NORMAL
+difficulty: MEDIUM
 
 icon:
   material: "ZOMBIE_HEAD"

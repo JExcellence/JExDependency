@@ -1,6 +1,6 @@
 identifier: "novice_explorer"
 category: "explorer"
-difficulty: TRIVIAL
+difficulty: EASY
 icon:
   material: "COMPASS"
   display_name_key: "quest.novice_explorer.name"

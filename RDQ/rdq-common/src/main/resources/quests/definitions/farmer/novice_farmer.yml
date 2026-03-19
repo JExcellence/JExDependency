@@ -1,6 +1,6 @@
 identifier: "novice_farmer"
 category: "farmer"
-difficulty: TRIVIAL
+difficulty: EASY
 icon:
   material: "WOODEN_HOE"
   display_name_key: "quest.novice_farmer.name"

@@ -7,7 +7,7 @@
 
 identifier: "challenge_dragon_slayer"
 category: "challenge"
-difficulty: LEGENDARY
+difficulty: EXPERT
 
 icon:
   material: "DRAGON_HEAD"

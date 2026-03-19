@@ -4,7 +4,7 @@
 
 identifier: "novice_miner"
 category: "miner"
-difficulty: TRIVIAL
+difficulty: EASY
 
 icon:
   material: "WOODEN_PICKAXE"

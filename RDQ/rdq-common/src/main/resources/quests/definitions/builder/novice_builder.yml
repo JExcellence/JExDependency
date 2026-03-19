@@ -7,7 +7,7 @@
 
 identifier: "novice_builder"
 category: "builder"
-difficulty: TRIVIAL
+difficulty: EASY
 
 icon:
   material: "OAK_PLANKS"

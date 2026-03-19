@@ -7,7 +7,7 @@
 
 identifier: "legendary_enchanter"
 category: "enchanter"
-difficulty: LEGENDARY
+difficulty: EXPERT
 
 icon:
   material: "END_CRYSTAL"

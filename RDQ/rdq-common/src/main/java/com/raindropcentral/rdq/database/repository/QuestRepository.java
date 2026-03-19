@@ -194,8 +194,10 @@ public class QuestRepository extends CachedRepository<Quest, Long, String> {
 	 * Finds all enabled quests ordered by category and difficulty.
 	 * <p>
 	 * This method is used for displaying all available quests in a structured manner.
-	 * Uses LEFT JOIN FETCH to eagerly load categories, avoiding LazyInitializationException
-	 * when accessing the category after the session is closed.
+	 * Uses LEFT JOIN FETCH to eagerly load categories, and then explicitly initializes
+	 * the prerequisiteQuestIds ElementCollection while the session is still open, to
+	 * avoid LazyInitializationException when these collections are accessed after the
+	 * session is closed (e.g., during ProgressionValidator initialization).
 	 * </p>
 	 *
 	 * @return CompletableFuture containing the list of all enabled quests
@@ -205,14 +207,23 @@ public class QuestRepository extends CachedRepository<Quest, Long, String> {
 		return CompletableFuture.supplyAsync(() -> {
 			EntityManager em = entityManagerFactory.createEntityManager();
 			try {
-				return em.createQuery(
+				// Load quests with category eagerly (avoids LazyInitializationException in QuestCacheManager)
+				final List<Quest> quests = em.createQuery(
 					"SELECT DISTINCT q FROM Quest q " +
 					"LEFT JOIN FETCH q.category " +
 					"WHERE q.enabled = true " +
 					"ORDER BY q.category.sortOrder, q.difficulty",
 					Quest.class
-				)
-				.getResultList();
+				).getResultList();
+
+				// Eagerly initialize the prerequisiteQuestIds ElementCollection for each quest
+				// while the session is still open, preventing LazyInitializationException in
+				// ProgressionValidator (called during initializeQuestSystem).
+				for (final Quest quest : quests) {
+					quest.getPrerequisiteQuestIds().size();
+				}
+
+				return quests;
 			} finally {
 				em.close();
 			}

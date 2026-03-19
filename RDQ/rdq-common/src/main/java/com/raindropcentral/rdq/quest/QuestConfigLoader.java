@@ -7,11 +7,7 @@ import com.raindropcentral.rdq.config.quest.QuestCategorySection;
 import com.raindropcentral.rdq.config.quest.QuestSystemSection;
 import com.raindropcentral.rdq.database.entity.quest.Quest;
 import com.raindropcentral.rdq.database.entity.quest.QuestCategory;
-import com.raindropcentral.rdq.database.entity.quest.QuestRequirement;
-import com.raindropcentral.rdq.database.entity.quest.QuestReward;
 import com.raindropcentral.rdq.database.entity.quest.QuestTask;
-import com.raindropcentral.rdq.database.entity.quest.QuestTaskRequirement;
-import com.raindropcentral.rdq.database.entity.quest.QuestTaskReward;
 import com.raindropcentral.rdq.database.repository.QuestCategoryRepository;
 import com.raindropcentral.rdq.database.repository.QuestRepository;
 import com.raindropcentral.rdq.model.quest.QuestDifficulty;
@@ -364,11 +360,11 @@ public class QuestConfigLoader {
 		quest.setCategory(category);
 		
 		// Parse difficulty
-		final String difficultyStr = config.getString("difficulty", "NORMAL");
+		final String difficultyStr = config.getString("difficulty", "MEDIUM");
 		try {
 			quest.setDifficulty(QuestDifficulty.valueOf(difficultyStr.toUpperCase()));
 		} catch (IllegalArgumentException e) {
-			quest.setDifficulty(QuestDifficulty.NORMAL);
+			quest.setDifficulty(QuestDifficulty.MEDIUM);
 			LOGGER.warning("Invalid difficulty for quest " + identifier + ": " + difficultyStr);
 		}
 		
@@ -424,31 +420,37 @@ public class QuestConfigLoader {
 			parseFailureConditions(failureSection, quest);
 		}
 
-		// Parse tasks (map structure in YAML where keys are task identifiers)
-		final ConfigurationSection tasksSection = config.getConfigurationSection("tasks");
-		if (tasksSection != null) {
-			final java.util.Set<String> taskKeys = tasksSection.getKeys(false);
-			LOGGER.fine("Parsing " + taskKeys.size() + " tasks for quest: " + identifier);
+		// Reset tasks to a new list to avoid touching the lazy-loaded proxy on existing quests.
+		// orphanRemoval = true on Quest.tasks means Hibernate will delete the old task rows
+		// and cascade-insert the new ones when the quest is saved.
+		final List<QuestTask> parsedTasks = new java.util.ArrayList<>();
+
+		// Parse tasks (list structure in YAML: each task is a "- identifier: ..." item)
+		final List<?> tasksList = config.getList("tasks");
+		if (tasksList != null && !tasksList.isEmpty()) {
+			LOGGER.fine("Parsing " + tasksList.size() + " tasks for quest: " + identifier);
 			int taskOrder = 0;
-			for (final String taskKey : taskKeys) {
-				try {
-					final ConfigurationSection taskSection = tasksSection.getConfigurationSection(taskKey);
-					if (taskSection != null) {
-						// Convert ConfigurationSection to Map for parseTask
-						final Map<String, Object> taskMap = convertSectionToMap(taskSection);
+			for (final Object taskObj : tasksList) {
+				if (taskObj instanceof Map) {
+					try {
+						@SuppressWarnings("unchecked")
+						final Map<String, Object> taskMap = (Map<String, Object>) taskObj;
 						final QuestTask task = parseTask(taskMap, quest, taskOrder++);
 						if (task != null) {
-							quest.addTask(task);
+							parsedTasks.add(task);
 							LOGGER.fine("Added task: " + task.getIdentifier() + " (type: " + task.getTaskType() + ")");
 						}
+					} catch (Exception e) {
+						LOGGER.log(Level.WARNING, "Failed to parse task in quest " + identifier, e);
 					}
-				} catch (Exception e) {
-					LOGGER.log(Level.WARNING, "Failed to parse task " + taskKey + " in quest " + identifier, e);
 				}
 			}
 		} else {
 			LOGGER.warning("Quest " + identifier + " has no tasks defined");
 		}
+
+		// Replace the tasks collection without touching the lazy proxy
+		quest.setTasks(parsedTasks);
 		
 		// Parse prerequisites
 		final List<String> prerequisites = config.getStringList("prerequisites");

@@ -1,6 +1,6 @@
 identifier: "legendary_miner"
 category: "miner"
-difficulty: LEGENDARY
+difficulty: EXPERT
 icon:
   material: "NETHERITE_PICKAXE"
   display_name_key: "quest.legendary_miner.name"

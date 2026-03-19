@@ -7,7 +7,7 @@
 
 identifier: "apprentice_baker"
 category: "baker"
-difficulty: TRIVIAL
+difficulty: EASY
 
 icon:
   material: "BREAD"

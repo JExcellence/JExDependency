@@ -1,6 +1,6 @@
 identifier: "legendary_farmer"
 category: "farmer"
-difficulty: LEGENDARY
+difficulty: EXPERT
 icon:
   material: "NETHERITE_HOE"
   display_name_key: "quest.legendary_farmer.name"
