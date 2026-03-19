@@ -1,0 +1,52 @@
+identifier: "grand_farmer"
+category: "farmer"
+difficulty: HARD
+icon:
+  material: "GOLDEN_HOE"
+  display_name_key: "quest.grand_farmer.name"
+  description_key: "quest.grand_farmer.description"
+  custom_model_data: 6003
+  enchanted: true
+tasks:
+  - identifier: "harvest_melons"
+    type: "BREAK_BLOCKS"
+    target: "MELON"
+    amount: 256
+    icon:
+      material: "MELON"
+      display_name_key: "quest.grand_farmer.task1.name"
+  - identifier: "harvest_pumpkins"
+    type: "BREAK_BLOCKS"
+    target: "PUMPKIN"
+    amount: 256
+    icon:
+      material: "PUMPKIN"
+      display_name_key: "quest.grand_farmer.task2.name"
+  - identifier: "collect_honey"
+    type: "COLLECT_ITEMS"
+    target: "HONEY_BOTTLE"
+    amount: 32
+    icon:
+      material: "HONEY_BOTTLE"
+      display_name_key: "quest.grand_farmer.task3.name"
+rewards:
+  - type: "CURRENCY"
+    currency_id: "coins"
+    amount: 1000
+  - type: "EXPERIENCE"
+    amount: 600
+  - type: "TITLE"
+    title_id: "grand_farmer"
+prerequisites:
+  - "master_farmer"
+attributes:
+  repeatable: false
+  quest_type: "MAIN"
+  min_level: 20
+  chain_id: "farmer_chain"
+  chain_order: 4
+metadata:
+  author: "RDQ Team"
+  created: "2026-03-16"
+  version: "1.0.0"
+  tags: ["farmer", "expert", "farming", "chain"]

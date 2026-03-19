@@ -60,6 +60,7 @@ dependencies {
         isTransitive = false
     }
     compileOnly(project(":RCore"))
+    compileOnly(project(":RPlatform"))
     compileOnly(libs.bundles.jeconfig) { isTransitive = false }
     compileOnly(libs.bundles.inventory)
 

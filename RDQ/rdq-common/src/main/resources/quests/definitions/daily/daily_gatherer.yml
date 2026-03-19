@@ -1,0 +1,102 @@
+# ============================================================================
+# DAILY QUEST: Daily Gatherer
+# ============================================================================
+# Repeatable daily quest for gathering resources.
+# Resets every 24 hours. Provides consistent rewards.
+# ============================================================================
+
+identifier: "daily_gatherer"
+category: "daily"
+difficulty: EASY
+
+icon:
+  material: "CHEST"
+  display_name_key: "quest.daily_gatherer.name"
+  description_key: "quest.daily_gatherer.description"
+  custom_model_data: 5001
+  enchanted: true
+  item_flags:
+    - HIDE_ENCHANTS
+
+tasks:
+  - identifier: "break_any_blocks"
+    type: "BREAK_BLOCKS"
+    target: "ANY"
+    amount: 500
+    icon:
+      material: "DIAMOND_PICKAXE"
+      display_name_key: "quest.daily_gatherer.task1.name"
+  
+  - identifier: "collect_any_items"
+    type: "COLLECT_ITEMS"
+    target: "ANY"
+    amount: 100
+    consume: false
+    icon:
+      material: "HOPPER"
+      display_name_key: "quest.daily_gatherer.task2.name"
+
+rewards:
+  - type: "CURRENCY"
+    currency_id: "coins"
+    amount: 500
+  - type: "EXPERIENCE"
+    amount: 200
+  - type: "ITEM"
+    material: "DIAMOND"
+    amount: 3
+    display_name_key: "item.daily_reward.name"
+    lore_key: "item.daily_reward.lore"
+
+prerequisites: []
+
+requirements:
+  - type: "LEVEL"
+    level: 5
+
+attributes:
+  repeatable: true
+  repeat_cooldown: 86400  # 24 hours
+  hidden: false
+  quest_type: "DAILY"
+  time_limit: 0
+  min_level: 5
+  max_concurrent: 1
+  auto_start: false
+  show_in_log: true
+  chain_id: ""
+  chain_order: 0
+
+effects:
+  start_particle: "HAPPY_VILLAGER"
+  complete_particle: "TOTEM_OF_UNDYING"
+  start_sound: "BLOCK_NOTE_BLOCK_PLING"
+  complete_sound: "ENTITY_PLAYER_LEVELUP"
+  start_title:
+    title_key: "quest.daily_gatherer.start.title"
+    subtitle_key: "quest.daily_gatherer.start.subtitle"
+    fade_in: 10
+    stay: 70
+    fade_out: 20
+  complete_title:
+    title_key: "quest.daily_gatherer.complete.title"
+    subtitle_key: "quest.daily_gatherer.complete.subtitle"
+    fade_in: 10
+    stay: 70
+    fade_out: 20
+
+failure_conditions:
+  fail_on_death: false
+  fail_on_logout: false
+  fail_on_timeout: false
+
+metadata:
+  author: "RDQ Team"
+  created: "2026-03-12"
+  modified: "2026-03-12"
+  version: "1.0.0"
+  tags:
+    - "daily"
+    - "repeatable"
+    - "gathering"
+    - "easy"

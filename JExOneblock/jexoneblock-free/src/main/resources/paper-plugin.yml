@@ -1,0 +1,19 @@
+name: "JExOneblock"
+version: ${version}
+main: de.jexcellence.oneblock.JExOneblockFree
+loader: de.jexcellence.dependency.loader.PaperPluginLoader
+api-version: ${apiVersion}
+description: ${description}
+author: JExcellence
+website: https://jexcellence.de
+dependencies:
+  server:
+    Vault:
+      load: BEFORE
+      required: false
+    LuckPerms:
+      load: BEFORE
+      required: false
+    PlaceholderAPI:
+      load: BEFORE
+      required: false

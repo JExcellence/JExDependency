@@ -1,0 +1,51 @@
+identifier: "grand_explorer"
+category: "explorer"
+difficulty: HARD
+icon:
+  material: "ELYTRA"
+  display_name_key: "quest.grand_explorer.name"
+  description_key: "quest.grand_explorer.description"
+  custom_model_data: 7003
+  enchanted: true
+tasks:
+  - identifier: "find_end_city"
+    type: "REACH_LOCATION"
+    target: "END_CITY"
+    amount: 1
+    icon:
+      material: "PURPUR_BLOCK"
+      display_name_key: "quest.grand_explorer.task1.name"
+  - identifier: "find_ocean_monument"
+    type: "REACH_LOCATION"
+    target: "OCEAN_MONUMENT"
+    amount: 1
+    icon:
+      material: "PRISMARINE"
+      display_name_key: "quest.grand_explorer.task2.name"
+  - identifier: "find_woodland_mansion"
+    type: "REACH_LOCATION"
+    target: "WOODLAND_MANSION"
+    amount: 1
+    icon:
+      material: "DARK_OAK_LOG"
+      display_name_key: "quest.grand_explorer.task3.name"
+rewards:
+  - type: "CURRENCY"
+    currency_id: "coins"
+    amount: 1000
+  - type: "EXPERIENCE"
+    amount: 600
+  - type: "TITLE"
+    title_id: "grand_explorer"
+prerequisites:
+  - "master_explorer"
+attributes:
+  repeatable: false
+  quest_type: "MAIN"
+  chain_id: "explorer_chain"
+  chain_order: 4
+metadata:
+  author: "RDQ Team"
+  created: "2026-03-16"
+  version: "1.0.0"
+  tags: ["explorer", "expert", "exploration", "chain"]

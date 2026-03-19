@@ -1,0 +1,51 @@
+identifier: "novice_explorer"
+category: "explorer"
+difficulty: TRIVIAL
+icon:
+  material: "COMPASS"
+  display_name_key: "quest.novice_explorer.name"
+  description_key: "quest.novice_explorer.description"
+  custom_model_data: 7000
+tasks:
+  - identifier: "travel_distance"
+    type: "TRAVEL_DISTANCE"
+    amount: 1000
+    icon:
+      material: "LEATHER_BOOTS"
+      display_name_key: "quest.novice_explorer.task1.name"
+  - identifier: "discover_biomes"
+    type: "DISCOVER_BIOME"
+    target: "FOREST"
+    amount: 1
+    icon:
+      material: "OAK_SAPLING"
+      display_name_key: "quest.novice_explorer.task2.name"
+  - identifier: "craft_map"
+    type: "CRAFT_ITEMS"
+    target: "MAP"
+    amount: 1
+    icon:
+      material: "MAP"
+      display_name_key: "quest.novice_explorer.task3.name"
+rewards:
+  - type: "CURRENCY"
+    currency_id: "coins"
+    amount: 150
+  - type: "EXPERIENCE"
+    amount: 75
+  - type: "ITEM"
+    material: "COMPASS"
+    amount: 1
+    display_name_key: "item.explorer_compass.name"
+    lore_key: "item.explorer_compass.lore"
+prerequisites: []
+attributes:
+  repeatable: false
+  quest_type: "MAIN"
+  chain_id: "explorer_chain"
+  chain_order: 1
+metadata:
+  author: "RDQ Team"
+  created: "2026-03-16"
+  version: "1.0.0"
+  tags: ["explorer", "beginner", "exploration", "chain"]

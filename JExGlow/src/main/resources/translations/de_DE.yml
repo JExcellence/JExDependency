@@ -1,0 +1,22 @@
+# JExGlow Translation File - German (DE)
+# MiniMessage format with gradients and styling
+# Placeholders use {placeholder} format
+
+# ============================================
+# GLOBAL PREFIX
+# ============================================
+prefix: "<gradient:#60a5fa:#3b82f6>[JExGlow]</gradient> "
+
+# ============================================
+# GLOW COMMANDS
+# ============================================
+glow:
+  command:
+    description: "Verwalte Spieler-Leuchteffekte"
+    enabled: "<green>Leuchteffekt für <white>{player}</white> aktiviert</green>"
+    disabled: "<red>Leuchteffekt für <white>{player}</white> deaktiviert</red>"
+    player-not-found: "<red>Spieler <white>{player}</white> nicht gefunden</red>"
+    usage: "<red>Verwendung: /glow [on|off] [spieler]</red>"
+  error:
+    database: "<red>Datenbankfehler aufgetreten. Bitte kontaktiere einen Administrator.</red>"
+    general: "<red>Ein Fehler ist bei der Verarbeitung deiner Anfrage aufgetreten.</red>"

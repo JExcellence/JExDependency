@@ -1,0 +1,22 @@
+# JExGlow Translation File - English (US)
+# MiniMessage format with gradients and styling
+# Placeholders use {placeholder} format
+
+# ============================================
+# GLOBAL PREFIX
+# ============================================
+prefix: "<gradient:#60a5fa:#3b82f6>[JExGlow]</gradient> "
+
+# ============================================
+# GLOW COMMANDS
+# ============================================
+glow:
+  command:
+    description: "Manage player glow effects"
+    enabled: "<green>Glow effect enabled for <white>{player}</white></green>"
+    disabled: "<red>Glow effect disabled for <white>{player}</white></red>"
+    player-not-found: "<red>Player <white>{player}</white> not found</red>"
+    usage: "<red>Usage: /glow <on|off> <player></red>"
+  error:
+    database: "<red>Database error occurred. Please contact an administrator.</red>"
+    general: "<red>An error occurred while processing your request.</red>"

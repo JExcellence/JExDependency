@@ -1,0 +1,65 @@
+identifier: "legendary_farmer"
+category: "farmer"
+difficulty: LEGENDARY
+icon:
+  material: "NETHERITE_HOE"
+  display_name_key: "quest.legendary_farmer.name"
+  description_key: "quest.legendary_farmer.description"
+  custom_model_data: 6004
+  enchanted: true
+tasks:
+  - identifier: "harvest_all_crops"
+    type: "BREAK_BLOCKS"
+    target: "WHEAT"
+    amount: 1000
+    icon:
+      material: "WHEAT"
+      display_name_key: "quest.legendary_farmer.task1.name"
+  - identifier: "breed_all_animals"
+    type: "BREED_ANIMALS"
+    target: "COW"
+    amount: 100
+    icon:
+      material: "BEEF"
+      display_name_key: "quest.legendary_farmer.task2.name"
+  - identifier: "create_farm"
+    type: "PLACE_BLOCKS"
+    target: "FARMLAND"
+    amount: 500
+    icon:
+      material: "FARMLAND"
+      display_name_key: "quest.legendary_farmer.task3.name"
+  - identifier: "collect_golden_carrots"
+    type: "CRAFT_ITEMS"
+    target: "GOLDEN_CARROT"
+    amount: 64
+    icon:
+      material: "GOLDEN_CARROT"
+      display_name_key: "quest.legendary_farmer.task4.name"
+rewards:
+  - type: "CURRENCY"
+    currency_id: "coins"
+    amount: 5000
+  - type: "EXPERIENCE"
+    amount: 2000
+  - type: "TITLE"
+    title_id: "legendary_farmer"
+  - type: "PERK"
+    perk_id: "master_farmer"
+    duration: 0
+prerequisites:
+  - "grand_farmer"
+requirements:
+  - type: "LEVEL"
+    level: 30
+attributes:
+  repeatable: false
+  quest_type: "CHALLENGE"
+  min_level: 30
+  chain_id: "farmer_chain"
+  chain_order: 5
+metadata:
+  author: "RDQ Team"
+  created: "2026-03-16"
+  version: "1.0.0"
+  tags: ["farmer", "legendary", "farming", "chain", "challenge"]

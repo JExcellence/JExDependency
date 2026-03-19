@@ -1,0 +1,112 @@
+# ============================================================================
+# TUTORIAL QUEST: Welcome to the Server
+# ============================================================================
+# This is the first quest players receive when joining the server.
+# It introduces basic mechanics and rewards them for exploring.
+# ============================================================================
+
+identifier: "tutorial_welcome"
+category: "tutorial"
+difficulty: EASY
+
+icon:
+  material: "BOOK"
+  display_name_key: "quest.tutorial_welcome.name"
+  description_key: "quest.tutorial_welcome.description"
+  custom_model_data: 1001
+  enchanted: true
+  item_flags:
+    - HIDE_ENCHANTS
+
+tasks:
+  - identifier: "explore_spawn"
+    type: "REACH_LOCATION"
+    location:
+      world: "world"
+      x: 0
+      y: 64
+      z: 0
+      radius: 20
+    icon:
+      material: "COMPASS"
+      display_name_key: "quest.tutorial_welcome.task1.name"
+  
+  - identifier: "open_menu"
+    type: "CUSTOM"
+    custom_type: "OPEN_MENU"
+    target: "main_menu"
+    amount: 1
+    icon:
+      material: "NETHER_STAR"
+      display_name_key: "quest.tutorial_welcome.task2.name"
+  
+  - identifier: "talk_to_guide"
+    type: "TALK_TO_NPC"
+    npc_id: "spawn_guide"
+    icon:
+      material: "PLAYER_HEAD"
+      display_name_key: "quest.tutorial_welcome.task3.name"
+
+rewards:
+  - type: "CURRENCY"
+    currency_id: "coins"
+    amount: 100
+  - type: "EXPERIENCE"
+    amount: 50
+  - type: "ITEM"
+    material: "WOODEN_SWORD"
+    amount: 1
+    display_name_key: "item.starter_sword.name"
+    lore_key: "item.starter_sword.lore"
+    enchantments:
+      SHARPNESS: 1
+
+prerequisites: []
+
+requirements: []
+
+attributes:
+  repeatable: false
+  hidden: false
+  quest_type: "TUTORIAL"
+  time_limit: 0
+  min_level: 1
+  max_concurrent: 1
+  auto_start: true
+  show_in_log: true
+  chain_id: "tutorial_chain"
+  chain_order: 1
+
+effects:
+  start_particle: "VILLAGER_HAPPY"
+  complete_particle: "FIREWORK"
+  start_sound: "ENTITY_PLAYER_LEVELUP"
+  complete_sound: "UI_TOAST_CHALLENGE_COMPLETE"
+  start_title:
+    title_key: "quest.tutorial_welcome.start.title"
+    subtitle_key: "quest.tutorial_welcome.start.subtitle"
+    fade_in: 10
+    stay: 70
+    fade_out: 20
+  complete_title:
+    title_key: "quest.tutorial_welcome.complete.title"
+    subtitle_key: "quest.tutorial_welcome.complete.subtitle"
+    fade_in: 10
+    stay: 70
+    fade_out: 20
+
+failure_conditions:
+  fail_on_death: false
+  fail_on_logout: false
+  fail_on_timeout: false
+
+metadata:
+  author: "RDQ Team"
+  created: "2026-03-12"
+  modified: "2026-03-12"
+  version: "1.0.0"
+  tags:
+    - "tutorial"
+    - "beginner"
+    - "introduction"
+    - "auto_start"

@@ -1,0 +1,232 @@
+# JExHome English (US) Translations with Blue-Orange Gradient Theme
+
+prefix:
+  - "<gradient:#1e3a8a:#60a5fa>JExHome</gradient> <gradient:#ea580c:#fb923c>|</gradient> <white>"
+
+general:
+  no_permission: "<gradient:#dc2626:#ef4444>Access Denied:</gradient> <white>You don't have permission to use this command.</white>"
+  invalid_player: "<gradient:#dc2626:#ef4444>Player Not Found:</gradient> <white>The specified player could not be found.</white>"
+  loading: "<gradient:#1e3a8a:#60a5fa>Loading:</gradient> <white>Please wait while we process your request...</white>"
+  success: "<gradient:#059669:#10b981>Success:</gradient> <white>Operation completed successfully!</white>"
+  error: "<gradient:#dc2626:#ef4444>Error:</gradient> <white>An unexpected error occurred. Please try again later.</white>"
+
+# ═══════════════════════════════════════════════════════════════
+# HOME OVERVIEW UI
+# ═══════════════════════════════════════════════════════════════
+
+home_overview_ui:
+  title: "<gradient:#1e3a8a:#60a5fa>Your Homes</gradient> <dark_gray>(%home_count%/%max_homes%)</dark_gray>"
+
+  home:
+    name: "<gradient:#1e3a8a:#60a5fa>%home_name%</gradient>"
+    lore:
+      - ""
+      - "<gray>World:</gray> <gradient:#ea580c:#fb923c>%world%</gradient>"
+      - "<gray>Location:</gray> <gradient:#ea580c:#fb923c>%location%</gradient>"
+      - ""
+      - "<gray>Visits:</gray> <gradient:#1e3a8a:#60a5fa>%visit_count%</gradient>"
+      - "<gray>Last visited:</gray> <gray>%last_visited%</gray>"
+      - ""
+      - "<gradient:#1e3a8a:#60a5fa>Left-click</gradient> <gray>to teleport</gray>"
+      - "<gradient:#ea580c:#fb923c>Right-click</gradient> <gray>for options</gray>"
+
+    options_coming_soon: "<gradient:#d97706:#f59e0b>Coming Soon:</gradient> <white>Options for <gradient:#1e3a8a:#60a5fa>%home_name%</gradient> coming soon!</white>"
+    world_not_loaded: "<gradient:#d97706:#f59e0b>World Not Loaded:</gradient> <white>World <gradient:#ea580c:#fb923c>%world%</gradient> is not loaded.</white>"
+    teleported: "<gradient:#059669:#10b981>Teleported:</gradient> <white>You have been teleported to <gradient:#1e3a8a:#60a5fa>%home_name%</gradient>.</white>"
+
+  filter:
+    title: "<gradient:#1e3a8a:#60a5fa>Filter Homes</gradient>"
+    lore:
+      - ""
+      - "<gray>Current:</gray> <gradient:#ea580c:#fb923c>%current%</gradient>"
+      - ""
+      - "<gradient:#1e3a8a:#60a5fa>Click to toggle filter</gradient>"
+
+  sort:
+    title: "<gradient:#1e3a8a:#60a5fa>Sort Homes</gradient>"
+    lore:
+      - ""
+      - "<gray>Current:</gray> <gradient:#ea580c:#fb923c>%current%</gradient>"
+      - ""
+      - "<gradient:#1e3a8a:#60a5fa>Click to change sort order</gradient>"
+
+  create:
+    title: "<gradient:#059669:#10b981>Create New Home</gradient>"
+    lore:
+      - ""
+      - "<gray>Create a new home at your</gray>"
+      - "<gray>current location.</gray>"
+      - ""
+      - "<gradient:#059669:#10b981>Click to create home</gradient>"
+
+# ═══════════════════════════════════════════════════════════════
+# SETHOME ANVIL UI
+# ═══════════════════════════════════════════════════════════════
+
+sethome_anvil_ui:
+  title: "<gradient:#1e3a8a:#60a5fa>Create Home</gradient>"
+
+  input:
+    name: "<gradient:#1e3a8a:#60a5fa>Enter Home Name</gradient>"
+    lore:
+      - ""
+      - "<gray>Type a name for your new home.</gray>"
+      - ""
+      - "<gradient:#1e3a8a:#60a5fa>Requirements:</gradient>"
+      - "<white>Letters, numbers, underscores only</white>"
+      - "<white>No spaces or special characters</white>"
+      - "<white>Max 32 characters</white>"
+      - ""
+      - "<gradient:#059669:#10b981>Type name and click result</gradient>"
+
+  success: "<gradient:#059669:#10b981>Home Created:</gradient> <white>Successfully created home <gradient:#1e3a8a:#60a5fa>%home_name%</gradient>!</white>"
+  error: "<gradient:#dc2626:#ef4444>Creation Failed:</gradient> <white>Failed to create home <gradient:#1e3a8a:#60a5fa>%home_name%</gradient>. Please try again.</white>"
+
+  error.invalid_input:
+    empty: "<gradient:#dc2626:#ef4444>Invalid Name:</gradient> <white>Home name cannot be empty!</white>"
+    invalid_name: "<gradient:#dc2626:#ef4444>Invalid Name:</gradient> <white>Only letters, numbers, and underscores allowed. No spaces.</white>"
+
+# ═══════════════════════════════════════════════════════════════
+# PAGE INDICATOR (used by APaginatedView)
+# ═══════════════════════════════════════════════════════════════
+
+page:
+  name: "<gradient:#1e3a8a:#60a5fa>Page %page%</gradient>"
+  lore:
+    - ""
+    - "<gray>Page:</gray> <gradient:#1e3a8a:#60a5fa>%page%</gradient> <gray>of</gray> <gradient:#1e3a8a:#60a5fa>%max_page%</gradient>"
+    - "<gray>Total items:</gray> <gradient:#ea580c:#fb923c>%items_count%</gradient>"
+  fallback: "<gray>Page %page%</gray>"
+
+# ═══════════════════════════════════════════════════════════════
+# DELETE HOME UI
+# ═══════════════════════════════════════════════════════════════
+
+delete_home_ui:
+  title: "<gradient:#dc2626:#ef4444>Delete Home</gradient>"
+
+  home:
+    name: "<gradient:#dc2626:#ef4444>%home_name%</gradient>"
+    lore:
+      - ""
+      - "<gray>World:</gray> <gradient:#ea580c:#fb923c>%world%</gradient>"
+      - "<gray>Location:</gray> <gradient:#ea580c:#fb923c>%location%</gradient>"
+      - ""
+      - "<gradient:#dc2626:#ef4444>Click to delete</gradient>"
+
+# ═══════════════════════════════════════════════════════════════
+# DELETE HOME CONFIRMATION
+# ═══════════════════════════════════════════════════════════════
+
+delete_home_confirm:
+  title: "<gradient:#dc2626:#ef4444>Confirm Delete</gradient>"
+
+  confirm:
+    name: "<gradient:#059669:#10b981>Confirm Delete</gradient>"
+    lore:
+      - ""
+      - "<gray>Delete home:</gray> <gradient:#1e3a8a:#60a5fa>%home_name%</gradient>"
+      - "<gray>World:</gray> <gradient:#ea580c:#fb923c>%world%</gradient>"
+      - "<gray>Location:</gray> <gradient:#ea580c:#fb923c>%location%</gradient>"
+      - ""
+      - "<gradient:#059669:#10b981>Click to confirm deletion</gradient>"
+
+  cancel:
+    name: "<gradient:#dc2626:#ef4444>Cancel</gradient>"
+    lore:
+      - ""
+      - "<gray>Keep home:</gray> <gradient:#1e3a8a:#60a5fa>%home_name%</gradient>"
+      - ""
+      - "<gradient:#dc2626:#ef4444>Click to cancel</gradient>"
+
+# ═══════════════════════════════════════════════════════════════
+# COMMAND MESSAGES
+# ═══════════════════════════════════════════════════════════════
+
+home:
+  teleported: "<gradient:#059669:#10b981>Teleported:</gradient> <white>You have been teleported to <gradient:#1e3a8a:#60a5fa>%home_name%</gradient>.</white>"
+  does_not_exist: "<gradient:#dc2626:#ef4444>Not Found:</gradient> <white>Home <gradient:#1e3a8a:#60a5fa>%home_name%</gradient> does not exist.</white>"
+  world_not_loaded: "<gradient:#d97706:#f59e0b>World Not Loaded:</gradient> <white>World <gradient:#ea580c:#fb923c>%world%</gradient> is not loaded.</white>"
+  error:
+    internal: "<gradient:#dc2626:#ef4444>Internal Error:</gradient> <white>An internal error occurred. Please try again later.</white>"
+
+sethome:
+  usage: "<gradient:#1e3a8a:#60a5fa>Usage:</gradient> <white>/sethome <name></white>"
+  created: "<gradient:#059669:#10b981>Home Created:</gradient> <white>Successfully created home <gradient:#1e3a8a:#60a5fa>%home_name%</gradient>!</white>"
+  home_overwritten: "<gradient:#d97706:#f59e0b>Home Updated:</gradient> <white>Home <gradient:#1e3a8a:#60a5fa>%home_name%</gradient> location has been updated.</white>"
+  home_limit_reached: "<gradient:#dc2626:#ef4444>Limit Reached:</gradient> <white>You have reached your home limit <gray>(%current%/%max%)</gray>.</white>"
+
+delhome:
+  usage: "<gradient:#1e3a8a:#60a5fa>Usage:</gradient> <white>/delhome <name></white>"
+  deleted: "<gradient:#059669:#10b981>Home Deleted:</gradient> <white>Successfully deleted home <gradient:#1e3a8a:#60a5fa>%home_name%</gradient>!</white>"
+  does_not_exist: "<gradient:#dc2626:#ef4444>Not Found:</gradient> <white>Home <gradient:#1e3a8a:#60a5fa>%home_name%</gradient> does not exist.</white>"
+
+# ═══════════════════════════════════════════════════════════════
+# ADMIN COMMAND MESSAGES
+# ═══════════════════════════════════════════════════════════════
+
+admin:
+  player_not_found: "<gradient:#dc2626:#ef4444>Player Not Found:</gradient> <white>Player <gradient:#ea580c:#fb923c>%player_name%</gradient> has never joined this server.</white>"
+  home_not_found: "<gradient:#dc2626:#ef4444>Home Not Found:</gradient> <white>Home <gradient:#1e3a8a:#60a5fa>%home_name%</gradient> does not exist for player <gradient:#ea580c:#fb923c>%player_name%</gradient>.</white>"
+  sethome:
+    success: "<gradient:#059669:#10b981>Home Created:</gradient> <white>Successfully created home <gradient:#1e3a8a:#60a5fa>%home_name%</gradient> for <gradient:#ea580c:#fb923c>%player_name%</gradient>.</white>"
+  delhome:
+    success: "<gradient:#059669:#10b981>Home Deleted:</gradient> <white>Successfully deleted home <gradient:#1e3a8a:#60a5fa>%home_name%</gradient> for <gradient:#ea580c:#fb923c>%player_name%</gradient>.</white>"
+  home:
+    success: "<gradient:#059669:#10b981>Teleported:</gradient> <white>You have been teleported to <gradient:#1e3a8a:#60a5fa>%home_name%</gradient> of <gradient:#ea580c:#fb923c>%player_name%</gradient>.</white>"
+  usage:
+    general: "<gradient:#1e3a8a:#60a5fa>Usage:</gradient> <white>/homeadmin <sethome|delhome|home> <player> <name></white>"
+    sethome: "<gradient:#1e3a8a:#60a5fa>Usage:</gradient> <white>/homeadmin sethome <player> <name></white>"
+    delhome: "<gradient:#1e3a8a:#60a5fa>Usage:</gradient> <white>/homeadmin delhome <player> <name></white>"
+    home: "<gradient:#1e3a8a:#60a5fa>Usage:</gradient> <white>/homeadmin home <player> <name></white>"
+
+# ═══════════════════════════════════════════════════════════════
+# TELEPORT MESSAGES
+# ═══════════════════════════════════════════════════════════════
+
+teleport:
+  warmup: "<gradient:#d97706:#f59e0b>Teleporting:</gradient> <white>Teleporting in <gradient:#1e3a8a:#60a5fa>%seconds%</gradient> seconds...</white>"
+  cancelled:
+    moved: "<gradient:#dc2626:#ef4444>Teleport Cancelled:</gradient> <white>You moved! Teleport cancelled.</white>"
+    damaged: "<gradient:#dc2626:#ef4444>Teleport Cancelled:</gradient> <white>You took damage! Teleport cancelled.</white>"
+
+# ═══════════════════════════════════════════════════════════════
+# HEAD TRANSLATIONS (used by RHead utility)
+# ═══════════════════════════════════════════════════════════════
+
+head:
+  house:
+    name: "<gradient:#1e3a8a:#60a5fa>Home</gradient>"
+    lore:
+      - ""
+      - "<gray>Your home location</gray>"
+
+  return:
+    name: "<gradient:#ea580c:#fb923c>Go Back</gradient>"
+    lore:
+      - ""
+      - "<gray>Return to previous menu</gray>"
+
+# ═══════════════════════════════════════════════════════════════
+# BEDROCK FORM TRANSLATIONS
+# ═══════════════════════════════════════════════════════════════
+
+bedrock:
+  home_overview:
+    title: "Your Homes (%1$s/%2$s)"
+    content: "Select a home to teleport:"
+    create_button: "+ Create New Home"
+  
+  set_home:
+    title: "Create New Home"
+    content: "Enter a name for your new home:"
+    input_label: "Home Name"
+    input_placeholder: "my_home"
+    confirm_button: "Create"
+    cancel_button: "Cancel"
+  
+  delete_home:
+    title: "Delete Home"
+    content: "Are you sure you want to delete '%1$s'?\n\nWorld: %2$s\nLocation: %3$s\n\nThis action cannot be undone!"
+    confirm_button: "Delete"
+    cancel_button: "Cancel"

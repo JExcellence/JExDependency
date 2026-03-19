@@ -4,53 +4,61 @@ import com.raindropcentral.commands.CommandFactory;
 import com.raindropcentral.rdq.bounty.IBountyService;
 import com.raindropcentral.rdq.bounty.utility.BountyFactory;
 import com.raindropcentral.rdq.bounty.visual.VisualIndicatorManager;
+import com.raindropcentral.rdq.cache.quest.PlayerQuestProgressCache;
+import com.raindropcentral.rdq.cache.quest.QuestCacheManager;
+import com.raindropcentral.rdq.cache.quest.QuestProgressAutoSaveTask;
 import com.raindropcentral.rdq.config.perk.PerkSystemSection;
-
 import com.raindropcentral.rdq.database.entity.bounty.Bounty;
 import com.raindropcentral.rdq.database.entity.bounty.BountyHunter;
 import com.raindropcentral.rdq.database.entity.perk.Perk;
 import com.raindropcentral.rdq.database.entity.perk.PlayerPerk;
 import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
-import com.raindropcentral.rdq.database.entity.quest.Quest;
-import com.raindropcentral.rdq.database.entity.quest.QuestCategory;
-import com.raindropcentral.rdq.database.entity.quest.QuestCompletionHistory;
-import com.raindropcentral.rdq.database.entity.quest.QuestUser;
+import com.raindropcentral.rdq.database.entity.quest.*;
 import com.raindropcentral.rdq.database.entity.rank.*;
 import com.raindropcentral.rdq.database.entity.requirement.BaseRequirement;
 import com.raindropcentral.rdq.database.entity.reward.BaseReward;
 import com.raindropcentral.rdq.database.repository.*;
-import com.raindropcentral.rdq.placeholders.RDQPlaceholderExpansion;
+import com.raindropcentral.rdq.database.repository.quest.PlayerQuestProgressRepository;
+import com.raindropcentral.rdq.database.repository.quest.PlayerTaskProgressRepository;
 import com.raindropcentral.rdq.perk.PerkActivationService;
 import com.raindropcentral.rdq.perk.PerkManagementService;
 import com.raindropcentral.rdq.perk.PerkRequirementService;
 import com.raindropcentral.rdq.perk.PerkSystemFactory;
+import com.raindropcentral.rdq.perk.cache.SimplePerkCache;
 import com.raindropcentral.rdq.permissions.PermissionsService;
+import com.raindropcentral.rdq.placeholders.RDQPlaceholderExpansion;
+import com.raindropcentral.rdq.quest.QuestConfigLoader;
+import com.raindropcentral.rdq.quest.progression.QuestCompletionTracker;
 import com.raindropcentral.rdq.rank.IRankSystemService;
 import com.raindropcentral.rdq.rank.RankSystemFactory;
+import com.raindropcentral.rdq.rank.progression.RankCompletionTracker;
+import com.raindropcentral.rdq.requirement.RDQRequirementSetup;
+import com.raindropcentral.rdq.reward.RDQRewardSetup;
 import com.raindropcentral.rdq.service.RankPathService;
+import com.raindropcentral.rdq.service.RankUpgradeService;
+import com.raindropcentral.rdq.service.quest.QuestProgressTracker;
+import com.raindropcentral.rdq.service.quest.QuestProgressTrackerImpl;
+import com.raindropcentral.rdq.service.quest.QuestService;
+import com.raindropcentral.rdq.service.quest.QuestServiceImpl;
 import com.raindropcentral.rdq.service.scoreboard.PerkSidebarScoreboardService;
-import com.raindropcentral.rdq.view.admin.AdminCurrencyView;
-import com.raindropcentral.rdq.view.admin.AdminJobsView;
-import com.raindropcentral.rdq.view.admin.AdminOverviewView;
-import com.raindropcentral.rdq.view.admin.AdminPermissionsView;
-import com.raindropcentral.rdq.view.admin.AdminSkillsView;
-import com.raindropcentral.rdq.view.admin.PlaceholderAPIView;
-import com.raindropcentral.rdq.view.admin.PluginIntegrationManagementView;
+import com.raindropcentral.rdq.view.admin.*;
 import com.raindropcentral.rdq.view.bounty.*;
 import com.raindropcentral.rdq.view.main.MainOverviewView;
 import com.raindropcentral.rdq.view.perks.PerkDetailView;
 import com.raindropcentral.rdq.view.perks.PerkOverviewView;
+import com.raindropcentral.rdq.view.quest.QuestCategoryView;
+import com.raindropcentral.rdq.view.quest.QuestDetailView;
+import com.raindropcentral.rdq.view.quest.QuestListView;
 import com.raindropcentral.rdq.view.ranks.*;
 import com.raindropcentral.rplatform.RPlatform;
 import com.raindropcentral.rplatform.api.PlatformType;
 import com.raindropcentral.rplatform.api.luckperms.LuckPermsService;
 import com.raindropcentral.rplatform.metrics.BStatsMetrics;
 import com.raindropcentral.rplatform.placeholder.PlaceholderRegistry;
-
+import com.raindropcentral.rplatform.progression.ProgressionValidator;
 import com.raindropcentral.rplatform.service.ServiceRegistry;
 import com.raindropcentral.rplatform.view.ConfirmationView;
 import com.raindropcentral.rplatform.view.PaginatedPlayerView;
-
 import de.jexcellence.hibernate.repository.InjectRepository;
 import de.jexcellence.hibernate.repository.RepositoryManager;
 import lombok.Getter;
@@ -62,6 +70,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -87,6 +97,7 @@ public abstract class RDQ {
 	private PermissionsService permissionsService;
 	private RankSystemFactory rankSystemFactory;
 	private RankPathService rankPathService;
+	private RankUpgradeService rankUpgradeService;
 
 	@InjectRepository
 	private RDQPlayerRepository playerRepository;
@@ -128,16 +139,19 @@ public abstract class RDQ {
 	private PlayerPerkRepository playerPerkRepository;
 
 	@InjectRepository
-	private com.raindropcentral.rdq.database.repository.quest.QuestCategoryRepository questCategoryRepository;
+	private QuestCategoryRepository questCategoryRepository;
 
 	@InjectRepository
-	private com.raindropcentral.rdq.database.repository.quest.QuestRepository questRepository;
+	private QuestRepository questRepository;
 
 	@InjectRepository
-	private com.raindropcentral.rdq.database.repository.quest.QuestUserRepository questUserRepository;
+	private PlayerQuestProgressRepository playerQuestProgressRepository;
 
 	@InjectRepository
-	private com.raindropcentral.rdq.database.repository.quest.QuestCompletionHistoryRepository questCompletionHistoryRepository;
+	private PlayerTaskProgressRepository playerTaskProgressRepository;
+
+	@InjectRepository
+	private QuestCompletionHistoryRepository questCompletionHistoryRepository;
 
 	private LuckPermsService luckPermsService;
 	private IBountyService bountyService;
@@ -150,16 +164,18 @@ public abstract class RDQ {
 	private PerkManagementService perkManagementService;
 	private PerkActivationService perkActivationService;
 	private PerkRequirementService perkRequirementService;
-	private com.raindropcentral.rdq.perk.cache.SimplePerkCache playerPerkCache;
+	private SimplePerkCache playerPerkCache;
     private PerkSidebarScoreboardService perkSidebarScoreboardService;
 	private BStatsMetrics metrics;
 	private @Nullable PlaceholderRegistry placeholderRegistry;
 
 	// Quest system components
-	private com.raindropcentral.rdq.quest.QuestSystemFactory questSystemFactory;
-	private com.raindropcentral.rdq.quest.service.QuestService questService;
-	private com.raindropcentral.rdq.quest.service.QuestProgressTracker questProgressTracker;
-	private com.raindropcentral.rdq.quest.cache.QuestCacheManager questCacheManager;
+	private QuestService questService;
+	private QuestProgressTracker questProgressTracker;
+	private QuestCacheManager questCacheManager;
+	private PlayerQuestProgressCache playerQuestProgressCache;
+	private QuestProgressAutoSaveTask questProgressAutoSaveTask;
+	private ProgressionValidator<Quest> questProgressionValidator;
 
 	public RDQ(
 			@NotNull JavaPlugin plugin,
@@ -189,19 +205,19 @@ public abstract class RDQ {
 					initializeViews();
 					initializeMetrics();
 
-					com.raindropcentral.rdq.requirement.RDQRequirementSetup.initialize();
+					RDQRequirementSetup.initialize();
 
-					com.raindropcentral.rdq.reward.RDQRewardSetup.initialize();
+					RDQRewardSetup.initialize();
 
-					rankPathService = new RankPathService(this);
+					// Initialize rank system with progression support
+					initializeRankSystem();
+					
 					permissionsService = new PermissionsService(this);
 
 					bountyService = createBountyService();
 					bountyFactory = new BountyFactory(this, bountyService);
 
 					rankSystemService = createRankSystemService();
-					rankSystemFactory = new RankSystemFactory(this);
-					this.rankSystemFactory.initialize();
 
 					initializePerkSystem();
 					perkSidebarScoreboardService = new PerkSidebarScoreboardService(this);
@@ -259,6 +275,8 @@ public abstract class RDQ {
 
 		if (emf == null) {
 			LOGGER.warning("EntityManagerFactory not initialized");
+			this.getPlugin().getServer().getPluginManager().disablePlugin(this.getPlugin());
+			this.onDisable();
 			return;
 		}
 
@@ -280,18 +298,21 @@ public abstract class RDQ {
 		repositoryManager.register(PlayerPerkRepository.class, PlayerPerk.class, PlayerPerk::getId);
 		
 		// Quest system repositories
-		repositoryManager.register(com.raindropcentral.rdq.database.repository.quest.QuestCategoryRepository.class, 
-			com.raindropcentral.rdq.database.entity.quest.QuestCategory.class, 
-			com.raindropcentral.rdq.database.entity.quest.QuestCategory::getIdentifier);
-		repositoryManager.register(com.raindropcentral.rdq.database.repository.quest.QuestRepository.class, 
-			com.raindropcentral.rdq.database.entity.quest.Quest.class, 
-			com.raindropcentral.rdq.database.entity.quest.Quest::getIdentifier);
-		repositoryManager.register(com.raindropcentral.rdq.database.repository.quest.QuestUserRepository.class, 
-			com.raindropcentral.rdq.database.entity.quest.QuestUser.class, 
-			com.raindropcentral.rdq.database.entity.quest.QuestUser::getId);
-		repositoryManager.register(com.raindropcentral.rdq.database.repository.quest.QuestCompletionHistoryRepository.class, 
-			com.raindropcentral.rdq.database.entity.quest.QuestCompletionHistory.class,
-			qch -> qch.getPlayerId().toString() + ":" + qch.getQuestIdentifier());
+		repositoryManager.register(QuestCategoryRepository.class, 
+			QuestCategory.class, 
+			QuestCategory::getIdentifier);
+		repositoryManager.register(QuestRepository.class, 
+			Quest.class, 
+			Quest::getIdentifier);
+		repositoryManager.register(QuestCompletionHistoryRepository.class, 
+			QuestCompletionHistory.class,
+			QuestCompletionHistory::getId);
+		repositoryManager.register(PlayerQuestProgressRepository.class,
+			PlayerQuestProgress.class,
+			PlayerQuestProgress::getPlayerId);
+		repositoryManager.register(PlayerTaskProgressRepository.class,
+			PlayerTaskProgress.class,
+			PlayerTaskProgress::getId);
 
 		repositoryManager.injectInto(this);
 	}
@@ -344,9 +365,9 @@ public abstract class RDQ {
 						new RankRewardsDetailView(),
 						new PerkOverviewView(),
 						new PerkDetailView(),
-						new com.raindropcentral.rdq.view.quest.QuestCategoryView(),
-						new com.raindropcentral.rdq.view.quest.QuestListView(),
-						new com.raindropcentral.rdq.view.quest.QuestDetailView()
+						new QuestCategoryView(),
+						new QuestListView(),
+						new QuestDetailView()
 				)
 				.defaultConfig(config -> {
 					config.cancelOnClick();
@@ -358,6 +379,52 @@ public abstract class RDQ {
 				.disableMetrics();
 		frame = registerViews(frame);
 		this.viewFrame = frame.register();
+	}
+
+	/**
+	 * Initializes the rank system components.
+	 * Creates the rank factory, path service, and upgrade service with progression support.
+	 */
+	private void initializeRankSystem() {
+		try {
+			LOGGER.info("Initializing rank system...");
+
+			// Initialize rank system factory and load rank definitions
+			rankSystemFactory = new RankSystemFactory(this);
+			rankSystemFactory.initialize();
+
+			// Create completion tracker for rank progression
+			RankCompletionTracker completionTracker = 
+				new RankCompletionTracker(
+					playerRankRepository,
+					rankRepository
+				);
+
+			// Load all ranks for progression validator
+			List<RRank> allRanks =
+				rankRepository.findAllByAttributes(java.util.Map.of());
+
+			// Create progression validator
+			ProgressionValidator<RRank> progressionValidator = 
+				new ProgressionValidator<>(
+					completionTracker,
+					allRanks
+				);
+
+			// Initialize rank path service with progression support
+			rankPathService = new RankPathService(this, progressionValidator, completionTracker);
+
+			// Initialize rank upgrade service
+			rankUpgradeService = new RankUpgradeService(
+				this,
+				progressionValidator,
+				completionTracker
+			);
+
+			LOGGER.info("Rank system initialized successfully!");
+		} catch (Exception e) {
+			LOGGER.log(Level.SEVERE, "Failed to initialize rank system", e);
+		}
 	}
 
 	/**
@@ -375,7 +442,7 @@ public abstract class RDQ {
 			PerkSystemSection systemConfig = perkSystemFactory.getPerkSystemSection();
 
 			// Initialize simple perk cache
-			playerPerkCache = new com.raindropcentral.rdq.perk.cache.SimplePerkCache(
+			playerPerkCache = new SimplePerkCache(
 					playerPerkRepository,
 					systemConfig.getCacheLogPerformance()
 			);
@@ -411,18 +478,56 @@ public abstract class RDQ {
 
 	/**
 	 * Initializes the quest system components.
-	 * Creates the quest factory, service, progress tracker, and cache manager.
+	 * Creates the quest factory, service, progress tracker, and cache managers.
 	 */
 	private void initializeQuestSystem() {
 		try {
 			LOGGER.info("Initializing quest system...");
 
-			questService = new com.raindropcentral.rdq.quest.service.QuestServiceImpl(this);
-			questProgressTracker = new com.raindropcentral.rdq.quest.service.QuestProgressTrackerImpl(this);
-			questCacheManager = new com.raindropcentral.rdq.quest.cache.QuestCacheManager(this, false);
-			questSystemFactory = new com.raindropcentral.rdq.quest.QuestSystemFactory(this);
+			// Load quest configurations from YAML and persist to database
+			final QuestConfigLoader configLoader = new QuestConfigLoader(this);
+			configLoader.loadConfigurations().join();
 			
-			questSystemFactory.initialize().join();
+			// Initialize quest definition cache manager
+			questCacheManager = new QuestCacheManager(this);
+			
+			// Initialize player quest progress cache
+			playerQuestProgressCache = new PlayerQuestProgressCache(
+				playerQuestProgressRepository,
+				false // Set to true for performance logging
+			);
+			
+			// Initialize quest definition cache from database
+			questCacheManager.initialize().join();
+			
+			// Load all quests for progression validator
+			List<Quest> allQuests = new ArrayList<>(questCacheManager.getAllCategories().stream()
+				.flatMap(cat -> questCacheManager.getQuestsByCategory(cat.getIdentifier()).stream())
+				.toList());
+			
+			// Create quest completion tracker
+			final QuestCompletionTracker questCompletionTracker = new QuestCompletionTracker(
+				questCompletionHistoryRepository,
+				playerQuestProgressCache
+			);
+			
+			// Create quest progression validator
+			questProgressionValidator = new ProgressionValidator<>(
+				questCompletionTracker,
+				allQuests
+			);
+			
+			// Initialize quest service (uses cache managers and progression components)
+			questService = new QuestServiceImpl(this);
+			questProgressTracker = new QuestProgressTrackerImpl(this);
+			
+			// Start quest progress auto-save task (every 5 minutes)
+			questProgressAutoSaveTask = new QuestProgressAutoSaveTask(playerQuestProgressCache);
+			questProgressAutoSaveTask.runTaskTimerAsynchronously(
+				plugin,
+				20 * 60 * 5,  // Initial delay: 5 minutes
+				20 * 60 * 5   // Repeat: every 5 minutes
+			);
 
 			LOGGER.info("Quest system initialized successfully!");
 		} catch (Exception e) {
@@ -450,6 +555,248 @@ public abstract class RDQ {
 		return Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI");
 	}
 
+	public RankPathService getRankPathService() {
+		return rankPathService;
+	}
+
+	public RankUpgradeService getRankUpgradeService() {
+		return rankUpgradeService;
+	}
+
+	public RankSystemFactory getRankSystemFactory() {
+		return rankSystemFactory;
+	}
+
+	/**
+	 * Gets the hosting plugin instance.
+	 *
+	 * @return the plugin instance
+	 */
+	@NotNull
+	public JavaPlugin getPlugin() {
+		return plugin;
+	}
+
+	/**
+	 * Gets the LuckPerms service.
+	 *
+	 * @return the LuckPerms service, or null if not available
+	 */
+	@Nullable
+	public LuckPermsService getLuckPermsService() {
+		return luckPermsService;
+	}
+
+	/**
+	 * Gets the executor service.
+	 *
+	 * @return the executor service
+	 */
+	@NotNull
+	public ExecutorService getExecutor() {
+		return executor;
+	}
+
+	/**
+	 * Gets the platform instance.
+	 *
+	 * @return the platform instance
+	 */
+	@NotNull
+	public RPlatform getPlatform() {
+		return platform;
+	}
+
+	/**
+	 * Gets the player repository.
+	 *
+	 * @return the player repository
+	 */
+	@NotNull
+	public RDQPlayerRepository getPlayerRepository() {
+		return playerRepository;
+	}
+
+	/**
+	 * Gets the rank repository.
+	 *
+	 * @return the rank repository
+	 */
+	@NotNull
+	public RRankRepository getRankRepository() {
+		return rankRepository;
+	}
+
+	/**
+	 * Gets the rank tree repository.
+	 *
+	 * @return the rank tree repository
+	 */
+	@NotNull
+	public RRankTreeRepository getRankTreeRepository() {
+		return rankTreeRepository;
+	}
+
+	/**
+	 * Gets the player rank repository.
+	 *
+	 * @return the player rank repository
+	 */
+	@NotNull
+	public RPlayerRankRepository getPlayerRankRepository() {
+		return playerRankRepository;
+	}
+
+	/**
+	 * Gets the player rank path repository.
+	 *
+	 * @return the player rank path repository
+	 */
+	@NotNull
+	public RPlayerRankPathRepository getPlayerRankPathRepository() {
+		return playerRankPathRepository;
+	}
+
+	/**
+	 * Gets the player rank upgrade progress repository.
+	 *
+	 * @return the player rank upgrade progress repository
+	 */
+	@NotNull
+	public RPlayerRankUpgradeProgressRepository getPlayerRankUpgradeProgressRepository() {
+		return playerRankUpgradeProgressRepository;
+	}
+
+	/**
+	 * Gets the requirement repository.
+	 *
+	 * @return the requirement repository
+	 */
+	@NotNull
+	public RRequirementRepository getRequirementRepository() {
+		return requirementRepository;
+	}
+
+	/**
+	 * Gets the reward repository.
+	 *
+	 * @return the reward repository
+	 */
+	@NotNull
+	public RRewardRepository getRewardRepository() {
+		return rewardRepository;
+	}
+
+	/**
+	 * Gets the rank reward repository.
+	 *
+	 * @return the rank reward repository
+	 */
+	@NotNull
+	public RRankRewardRepository getRankRewardRepository() {
+		return rankRewardRepository;
+	}
+
+	/**
+	 * Gets the perk repository.
+	 *
+	 * @return the perk repository
+	 */
+	@NotNull
+	public PerkRepository getPerkRepository() {
+		return perkRepository;
+	}
+
+	/**
+	 * Gets the quest category repository.
+	 *
+	 * @return the quest category repository
+	 */
+	@NotNull
+	public QuestCategoryRepository getQuestCategoryRepository() {
+		return questCategoryRepository;
+	}
+
+	/**
+	 * Gets the quest repository.
+	 *
+	 * @return the quest repository
+	 */
+	@NotNull
+	public QuestRepository getQuestRepository() {
+		return questRepository;
+	}
+
+	/**
+	 * Gets the player quest progress repository.
+	 *
+	 * @return the player quest progress repository
+	 */
+	@NotNull
+	public PlayerQuestProgressRepository getPlayerQuestProgressRepository() {
+		return playerQuestProgressRepository;
+	}
+
+	/**
+	 * Gets the player task progress repository.
+	 *
+	 * @return the player task progress repository
+	 */
+	@NotNull
+	public PlayerTaskProgressRepository getPlayerTaskProgressRepository() {
+		return playerTaskProgressRepository;
+	}
+
+	/**
+	 * Gets the quest service.
+	 *
+	 * @return the quest service
+	 */
+	@NotNull
+	public QuestService getQuestService() {
+		return questService;
+	}
+
+	/**
+	 * Gets the quest progress tracker.
+	 *
+	 * @return the quest progress tracker
+	 */
+	@NotNull
+	public QuestProgressTracker getQuestProgressTracker() {
+		return questProgressTracker;
+	}
+
+	/**
+	 * Gets the quest cache manager.
+	 *
+	 * @return the quest cache manager
+	 */
+	@NotNull
+	public QuestCacheManager getQuestCacheManager() {
+		return questCacheManager;
+	}
+
+	/**
+	 * Gets the player quest progress cache.
+	 *
+	 * @return the player quest progress cache
+	 */
+	@NotNull
+	public PlayerQuestProgressCache getPlayerQuestProgressCache() {
+		return playerQuestProgressCache;
+	}
+
+	/**
+	 * Gets the quest progression validator.
+	 *
+	 * @return the quest progression validator
+	 */
+	@NotNull
+	public ProgressionValidator<Quest> getQuestProgressionValidator() {
+		return questProgressionValidator;
+	}
+
 	/**
 	 * Called when the plugin is being disabled.
 	 * Shuts down the visual indicator manager and other resources.
@@ -462,13 +809,24 @@ public abstract class RDQ {
 			placeholderRegistry = null;
 		}
 
-		if (questCacheManager != null) {
+		// Shutdown quest progress auto-save task
+		if (questProgressAutoSaveTask != null) {
 			try {
-				LOGGER.info("Saving all quest caches before shutdown...");
-				questCacheManager.autoSaveAll();
-				LOGGER.info("Quest caches saved successfully");
+				questProgressAutoSaveTask.cancel();
+				LOGGER.info("Quest progress auto-save task cancelled");
 			} catch (Exception e) {
-				LOGGER.log(Level.SEVERE, "Failed to save quest caches during shutdown", e);
+				LOGGER.log(Level.WARNING, "Error cancelling quest progress auto-save task", e);
+			}
+		}
+
+		// Save all dirty quest progress caches
+		if (playerQuestProgressCache != null) {
+			try {
+				LOGGER.info("Saving all dirty quest progress caches before shutdown...");
+				int savedCount = playerQuestProgressCache.autoSaveAll();
+				LOGGER.info("Saved " + savedCount + " player quest progress caches successfully");
+			} catch (Exception e) {
+				LOGGER.log(Level.SEVERE, "Failed to save quest progress caches during shutdown", e);
 			}
 		}
 

@@ -1,0 +1,49 @@
+# JExHome System Configuration
+
+# Home limits by permission node
+# -1 means unlimited homes
+homeLimits:
+  jexhome.limit.basic: 3
+  jexhome.limit.vip: 10
+  jexhome.limit.unlimited: -1
+
+# Default home name when none is specified
+defaultHomeName: "home"
+
+# Teleport settings
+teleport:
+  # Warmup delay in seconds (0 = instant)
+  delay: 3
+  # Cancel teleport if player moves
+  cancelOnMove: true
+  # Cancel teleport if player takes damage
+  cancelOnDamage: true
+  # Show countdown in action bar
+  showCountdown: true
+  # Play sound effects during warmup
+  playSounds: true
+  # Show particle effects during warmup
+  showParticles: true
+
+# Bedrock Edition support settings
+# Requires Floodgate/Geyser to be installed for Bedrock player detection
+bedrock:
+  # Enable Bedrock Forms for Bedrock players
+  # When enabled, Bedrock players will see native forms instead of chest GUIs
+  enabled: true
+  # Force all players to use chest GUI (ignores Bedrock detection)
+  # Set to true if you want a consistent experience for all players
+  forceChestGui: false
+
+# Color scheme with gradient definitions
+colors:
+  # Primary gradient (blue theme)
+  primaryGradient: "#1e3a8a:#60a5fa"
+  # Secondary gradient (orange theme)
+  secondaryGradient: "#ea580c:#fb923c"
+  # Success gradient (green)
+  successGradient: "#059669:#10b981"
+  # Error gradient (red)
+  errorGradient: "#dc2626:#ef4444"
+  # Warning gradient (yellow/orange)
+  warningGradient: "#d97706:#f59e0b"

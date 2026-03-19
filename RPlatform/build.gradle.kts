@@ -35,6 +35,14 @@ dependencies {
     compileOnly(libs.vault.api) { isTransitive = false }
     
     compileOnly("org.jetbrains:annotations:24.0.1")
+    
+    // Test dependencies
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.1")
+    testImplementation("org.jetbrains:annotations:24.0.1")
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 tasks {

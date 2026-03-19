@@ -1,0 +1,48 @@
+identifier: "skilled_explorer"
+category: "explorer"
+difficulty: EASY
+icon:
+  material: "FILLED_MAP"
+  display_name_key: "quest.skilled_explorer.name"
+  description_key: "quest.skilled_explorer.description"
+  custom_model_data: 7001
+tasks:
+  - identifier: "discover_desert"
+    type: "DISCOVER_BIOME"
+    target: "DESERT"
+    amount: 1
+    icon:
+      material: "SAND"
+      display_name_key: "quest.skilled_explorer.task1.name"
+  - identifier: "discover_ocean"
+    type: "DISCOVER_BIOME"
+    target: "OCEAN"
+    amount: 1
+    icon:
+      material: "WATER_BUCKET"
+      display_name_key: "quest.skilled_explorer.task2.name"
+  - identifier: "discover_mountains"
+    type: "DISCOVER_BIOME"
+    target: "MOUNTAINS"
+    amount: 1
+    icon:
+      material: "STONE"
+      display_name_key: "quest.skilled_explorer.task3.name"
+rewards:
+  - type: "CURRENCY"
+    currency_id: "coins"
+    amount: 300
+  - type: "EXPERIENCE"
+    amount: 150
+prerequisites:
+  - "novice_explorer"
+attributes:
+  repeatable: false
+  quest_type: "MAIN"
+  chain_id: "explorer_chain"
+  chain_order: 2
+metadata:
+  author: "RDQ Team"
+  created: "2026-03-16"
+  version: "1.0.0"
+  tags: ["explorer", "intermediate", "exploration", "chain"]

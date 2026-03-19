@@ -1,0 +1,53 @@
+identifier: "master_miner"
+category: "miner"
+difficulty: MEDIUM
+icon:
+  material: "DIAMOND_PICKAXE"
+  display_name_key: "quest.master_miner.name"
+  description_key: "quest.master_miner.description"
+  custom_model_data: 5002
+  enchanted: true
+tasks:
+  - identifier: "mine_diamonds"
+    type: "BREAK_BLOCKS"
+    target: "DIAMOND_ORE"
+    amount: 32
+    icon:
+      material: "DIAMOND"
+      display_name_key: "quest.master_miner.task1.name"
+  - identifier: "mine_lapis"
+    type: "BREAK_BLOCKS"
+    target: "LAPIS_ORE"
+    amount: 64
+    icon:
+      material: "LAPIS_LAZULI"
+      display_name_key: "quest.master_miner.task2.name"
+  - identifier: "mine_emeralds"
+    type: "BREAK_BLOCKS"
+    target: "EMERALD_ORE"
+    amount: 16
+    icon:
+      material: "EMERALD"
+      display_name_key: "quest.master_miner.task3.name"
+rewards:
+  - type: "CURRENCY"
+    currency_id: "coins"
+    amount: 500
+  - type: "EXPERIENCE"
+    amount: 300
+  - type: "PERK"
+    perk_id: "fortune_boost"
+    duration: 7200
+prerequisites:
+  - "skilled_miner"
+attributes:
+  repeatable: false
+  quest_type: "MAIN"
+  min_level: 10
+  chain_id: "miner_chain"
+  chain_order: 3
+metadata:
+  author: "RDQ Team"
+  created: "2026-03-16"
+  version: "1.0.0"
+  tags: ["miner", "advanced", "mining", "chain"]

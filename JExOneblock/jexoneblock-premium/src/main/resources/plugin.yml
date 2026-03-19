@@ -1,0 +1,12 @@
+name: "JExOneblock"
+version: ${version}
+main: de.jexcellence.oneblock.JExOneblockPremium
+api-version: ${apiVersion}
+description: ${description}
+author: JExcellence
+website: https://jexcellence.de
+softdepend:
+  - Vault
+  - LuckPerms
+  - PlaceholderAPI
+  - JExMultiverse

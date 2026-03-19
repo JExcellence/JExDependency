@@ -1,0 +1,122 @@
+# ============================================================================
+# TRADER QUEST: Legendary Trader
+# ============================================================================
+# Ultimate trading challenge requiring mastery of all commerce skills.
+# Final quest in the trader progression chain.
+# ============================================================================
+
+identifier: "legendary_trader"
+category: "trader"
+difficulty: LEGENDARY
+
+icon:
+  material: "NETHER_STAR"
+  display_name_key: "quest.legendary_trader.name"
+  description_key: "quest.legendary_trader.description"
+  custom_model_data: 8004
+  enchanted: true
+
+tasks:
+  - identifier: "collect_massive_emeralds"
+    type: "COLLECT_ITEMS"
+    target: "EMERALD_BLOCK"
+    amount: 64
+    icon:
+      material: "EMERALD_BLOCK"
+      display_name_key: "quest.legendary_trader.task1.name"
+  
+  - identifier: "trade_legendary_amount"
+    type: "TRADE_WITH_VILLAGER"
+    amount: 500
+    icon:
+      material: "EMERALD"
+      display_name_key: "quest.legendary_trader.task2.name"
+  
+  - identifier: "collect_nether_stars"
+    type: "COLLECT_ITEMS"
+    target: "NETHER_STAR"
+    amount: 4
+    icon:
+      material: "NETHER_STAR"
+      display_name_key: "quest.legendary_trader.task3.name"
+  
+  - identifier: "collect_ultimate_wealth"
+    type: "COLLECT_ITEMS"
+    target: "NETHERITE_BLOCK"
+    amount: 16
+    icon:
+      material: "NETHERITE_BLOCK"
+      display_name_key: "quest.legendary_trader.task4.name"
+
+rewards:
+  - type: "CURRENCY"
+    currency_id: "coins"
+    amount: 10000
+  - type: "EXPERIENCE"
+    amount: 3000
+  - type: "ITEM"
+    material: "NETHER_STAR"
+    amount: 2
+    display_name_key: "item.legendary_trader_star.name"
+    lore_key: "item.legendary_trader_star.lore"
+  - type: "ITEM"
+    material: "EMERALD_BLOCK"
+    amount: 32
+    display_name_key: "item.legendary_trader_emerald.name"
+    lore_key: "item.legendary_trader_emerald.lore"
+  - type: "PERK"
+    perk_id: "legendary_trader"
+    duration: 0
+  - type: "TITLE"
+    title_id: "trade_tycoon"
+
+prerequisites:
+  - "grand_trader"
+
+requirements:
+  - type: "LEVEL"
+    level: 50
+  - type: "CURRENCY"
+    currency_id: "coins"
+    amount: 20000
+
+attributes:
+  repeatable: false
+  hidden: false
+  quest_type: "CHALLENGE"
+  time_limit: 0
+  min_level: 50
+  max_concurrent: 1
+  auto_start: false
+  show_in_log: true
+  chain_id: "trader_chain"
+  chain_order: 5
+
+effects:
+  start_particle: "DRAGON_BREATH"
+  complete_particle: "END_ROD"
+  start_sound: "ENTITY_VILLAGER_CELEBRATE"
+  complete_sound: "UI_TOAST_CHALLENGE_COMPLETE"
+  complete_title:
+    title_key: "quest.legendary_trader.complete.title"
+    subtitle_key: "quest.legendary_trader.complete.subtitle"
+    fade_in: 20
+    stay: 100
+    fade_out: 20
+
+failure_conditions:
+  fail_on_death: false
+  fail_on_logout: false
+  fail_on_timeout: false
+
+metadata:
+  author: "RDQ Team"
+  created: "2026-03-16"
+  modified: "2026-03-16"
+  version: "1.0.0"
+  tags:
+    - "trader"
+    - "legendary"
+    - "economy"
+    - "chain"
+    - "challenge"

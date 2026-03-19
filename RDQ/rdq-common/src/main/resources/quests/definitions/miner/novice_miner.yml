@@ -1,0 +1,91 @@
+# ============================================================================
+# MINER QUEST: Novice Miner
+# ============================================================================
+
+identifier: "novice_miner"
+category: "miner"
+difficulty: TRIVIAL
+
+icon:
+  material: "WOODEN_PICKAXE"
+  display_name_key: "quest.novice_miner.name"
+  description_key: "quest.novice_miner.description"
+  custom_model_data: 5000
+  enchanted: false
+
+tasks:
+  - identifier: "mine_stone"
+    type: "BREAK_BLOCKS"
+    target: "STONE"
+    amount: 100
+    icon:
+      material: "STONE"
+      display_name_key: "quest.novice_miner.task1.name"
+  
+  - identifier: "mine_coal"
+    type: "BREAK_BLOCKS"
+    target: "COAL_ORE"
+    amount: 32
+    icon:
+      material: "COAL"
+      display_name_key: "quest.novice_miner.task2.name"
+  
+  - identifier: "craft_stone_pickaxe"
+    type: "CRAFT_ITEMS"
+    target: "STONE_PICKAXE"
+    amount: 1
+    icon:
+      material: "STONE_PICKAXE"
+      display_name_key: "quest.novice_miner.task3.name"
+
+rewards:
+  - type: "CURRENCY"
+    currency_id: "coins"
+    amount: 150
+  - type: "EXPERIENCE"
+    amount: 75
+  - type: "ITEM"
+    material: "IRON_PICKAXE"
+    amount: 1
+    display_name_key: "item.miner_pickaxe.name"
+    lore_key: "item.miner_pickaxe.lore"
+    enchantments:
+      EFFICIENCY: 2
+
+prerequisites: []
+
+requirements: []
+
+attributes:
+  repeatable: false
+  hidden: false
+  quest_type: "MAIN"
+  time_limit: 0
+  min_level: 1
+  max_concurrent: 1
+  auto_start: false
+  show_in_log: true
+  chain_id: "miner_chain"
+  chain_order: 1
+
+effects:
+  start_particle: "BLOCK_CRACK"
+  complete_particle: "CRIT"
+  start_sound: "BLOCK_STONE_BREAK"
+  complete_sound: "ENTITY_PLAYER_LEVELUP"
+
+failure_conditions:
+  fail_on_death: false
+  fail_on_logout: false
+  fail_on_timeout: false
+
+metadata:
+  author: "RDQ Team"
+  created: "2026-03-16"
+  modified: "2026-03-16"
+  version: "1.0.0"
+  tags:
+    - "miner"
+    - "beginner"
+    - "mining"
+    - "chain"

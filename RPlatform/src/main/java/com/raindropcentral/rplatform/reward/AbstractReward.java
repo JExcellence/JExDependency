@@ -25,7 +25,7 @@ import java.util.concurrent.CompletableFuture;
     @JsonSubTypes.Type(value = ParticleReward.class, name = "PARTICLE"),
     @JsonSubTypes.Type(value = VanishingChestReward.class, name = "VANISHING_CHEST")
 })
-@JsonIgnoreProperties(value = {"typeId", "estimatedValue", "descriptionKey"}, allowGetters = true)
+@JsonIgnoreProperties(value = {"typeId", "estimatedValue", "descriptionKey"}, allowGetters = true, ignoreUnknown = true)
 public abstract non-sealed class AbstractReward implements Reward {
 
     @Override

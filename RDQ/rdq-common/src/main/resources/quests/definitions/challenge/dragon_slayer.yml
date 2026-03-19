@@ -1,0 +1,149 @@
+# ============================================================================
+# CHALLENGE QUEST: Dragon Slayer
+# ============================================================================
+# Legendary challenge quest. Requires defeating the Ender Dragon.
+# Provides exceptional rewards and permanent title.
+# ============================================================================
+
+identifier: "challenge_dragon_slayer"
+category: "challenge"
+difficulty: LEGENDARY
+
+icon:
+  material: "DRAGON_HEAD"
+  display_name_key: "quest.dragon_slayer.name"
+  description_key: "quest.dragon_slayer.description"
+  custom_model_data: 6001
+  enchanted: true
+  item_flags:
+    - HIDE_ENCHANTS
+    - HIDE_ATTRIBUTES
+
+tasks:
+  - identifier: "find_stronghold"
+    type: "REACH_LOCATION"
+    location:
+      world: "world"
+      x: 0
+      y: 0
+      z: 0
+      radius: 100
+      structure: "STRONGHOLD"
+    icon:
+      material: "END_PORTAL_FRAME"
+      display_name_key: "quest.dragon_slayer.task1.name"
+  
+  - identifier: "enter_end"
+    type: "REACH_LOCATION"
+    location:
+      world: "world_the_end"
+      x: 0
+      y: 64
+      z: 0
+      radius: 50
+    icon:
+      material: "END_STONE"
+      display_name_key: "quest.dragon_slayer.task2.name"
+  
+  - identifier: "slay_dragon"
+    type: "KILL_MOBS"
+    target: "ENDER_DRAGON"
+    amount: 1
+    icon:
+      material: "DRAGON_HEAD"
+      display_name_key: "quest.dragon_slayer.task3.name"
+  
+  - identifier: "collect_egg"
+    type: "COLLECT_ITEMS"
+    target: "DRAGON_EGG"
+    amount: 1
+    consume: false
+    icon:
+      material: "DRAGON_EGG"
+      display_name_key: "quest.dragon_slayer.task4.name"
+
+rewards:
+  - type: "CURRENCY"
+    currency_id: "coins"
+    amount: 50000
+  - type: "EXPERIENCE"
+    amount: 10000
+  - type: "ITEM"
+    material: "NETHERITE_SWORD"
+    amount: 1
+    display_name_key: "item.dragon_slayer_blade.name"
+    lore_key: "item.dragon_slayer_blade.lore"
+    enchantments:
+      SHARPNESS: 10
+      FIRE_ASPECT: 5
+      UNBREAKING: 10
+      LOOTING: 5
+    custom_model_data: 9001
+  - type: "TITLE"
+    title_id: "dragon_slayer"
+  - type: "PERK"
+    perk_id: "dragon_wings"
+    duration: 0  # Permanent
+  - type: "PERMISSION"
+    permission: "rdq.special.dragon_slayer"
+    duration: 0  # Permanent
+
+prerequisites:
+  - "zombie_hunter_ii"
+  - "novice_miner"
+
+requirements:
+  - type: "LEVEL"
+    level: 50
+  - type: "RANK"
+    rank_id: "veteran"
+  - type: "CURRENCY"
+    currency_id: "coins"
+    amount: 10000
+
+attributes:
+  repeatable: false
+  hidden: false
+  quest_type: "CHALLENGE"
+  time_limit: 0
+  min_level: 50
+  max_concurrent: 1
+  auto_start: false
+  show_in_log: true
+  chain_id: "legendary_challenges"
+  chain_order: 1
+
+effects:
+  start_particle: "DRAGON_BREATH"
+  complete_particle: "END_ROD"
+  start_sound: "ENTITY_ENDER_DRAGON_GROWL"
+  complete_sound: "ENTITY_ENDER_DRAGON_DEATH"
+  start_title:
+    title_key: "quest.dragon_slayer.start.title"
+    subtitle_key: "quest.dragon_slayer.start.subtitle"
+    fade_in: 20
+    stay: 100
+    fade_out: 20
+  complete_title:
+    title_key: "quest.dragon_slayer.complete.title"
+    subtitle_key: "quest.dragon_slayer.complete.subtitle"
+    fade_in: 20
+    stay: 100
+    fade_out: 20
+
+failure_conditions:
+  fail_on_death: false
+  fail_on_logout: false
+  fail_on_timeout: false
+
+metadata:
+  author: "RDQ Team"
+  created: "2026-03-12"
+  modified: "2026-03-12"
+  version: "1.0.0"
+  tags:
+    - "challenge"
+    - "legendary"
+    - "end"
+    - "boss"
+    - "dragon"

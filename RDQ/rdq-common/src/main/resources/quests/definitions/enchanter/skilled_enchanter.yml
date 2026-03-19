@@ -1,0 +1,102 @@
+# ============================================================================
+# ENCHANTER QUEST: Skilled Enchanter
+# ============================================================================
+# Intermediate enchanting quest with more complex enchantment tasks.
+# Second quest in the enchanter progression chain.
+# ============================================================================
+
+identifier: "skilled_enchanter"
+category: "enchanter"
+difficulty: EASY
+
+icon:
+  material: "ENCHANTED_BOOK"
+  display_name_key: "quest.skilled_enchanter.name"
+  description_key: "quest.skilled_enchanter.description"
+  custom_model_data: 7001
+  enchanted: false
+
+tasks:
+  - identifier: "craft_bookshelves"
+    type: "CRAFT_ITEMS"
+    target: "BOOKSHELF"
+    amount: 15
+    icon:
+      material: "BOOKSHELF"
+      display_name_key: "quest.skilled_enchanter.task1.name"
+  
+  - identifier: "collect_experience"
+    type: "GAIN_EXPERIENCE"
+    amount: 500
+    icon:
+      material: "EXPERIENCE_BOTTLE"
+      display_name_key: "quest.skilled_enchanter.task2.name"
+  
+  - identifier: "enchant_diamond_tools"
+    type: "ENCHANT_ITEM"
+    target: "DIAMOND_PICKAXE"
+    amount: 3
+    icon:
+      material: "DIAMOND_PICKAXE"
+      display_name_key: "quest.skilled_enchanter.task3.name"
+  
+  - identifier: "craft_anvil"
+    type: "CRAFT_ITEMS"
+    target: "ANVIL"
+    amount: 1
+    icon:
+      material: "ANVIL"
+      display_name_key: "quest.skilled_enchanter.task4.name"
+
+rewards:
+  - type: "CURRENCY"
+    currency_id: "coins"
+    amount: 500
+  - type: "EXPERIENCE"
+    amount: 300
+  - type: "ITEM"
+    material: "ENCHANTED_BOOK"
+    amount: 3
+    display_name_key: "item.skilled_enchanter_book.name"
+    lore_key: "item.skilled_enchanter_book.lore"
+    enchantments:
+      EFFICIENCY: 3
+
+prerequisites:
+  - "novice_enchanter"
+
+requirements: []
+
+attributes:
+  repeatable: false
+  hidden: false
+  quest_type: "MAIN"
+  time_limit: 0
+  min_level: 5
+  max_concurrent: 1
+  auto_start: false
+  show_in_log: true
+  chain_id: "enchanter_chain"
+  chain_order: 2
+
+effects:
+  start_particle: "ENCHANT"
+  complete_particle: "ENCHANTING_TABLE"
+  start_sound: "BLOCK_ENCHANTMENT_TABLE_USE"
+  complete_sound: "ENTITY_PLAYER_LEVELUP"
+
+failure_conditions:
+  fail_on_death: false
+  fail_on_logout: false
+  fail_on_timeout: false
+
+metadata:
+  author: "RDQ Team"
+  created: "2026-03-16"
+  modified: "2026-03-16"
+  version: "1.0.0"
+  tags:
+    - "enchanter"
+    - "intermediate"
+    - "magic"
+    - "chain"

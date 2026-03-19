@@ -1,0 +1,9 @@
+name: JExGlow
+version: ${version}
+main: de.jexcellence.glow.JExGlow
+api-version: '1.21'
+author: JExcellence
+description: Persistent player glow effects
+website: https://jexcellence.de
+softdepend:
+  - PlaceholderAPI

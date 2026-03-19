@@ -1,0 +1,13 @@
+name: "JExHome"
+version: ${version}
+main: de.jexcellence.home.JExHomeFree
+api-version: ${apiVersion}
+description: ${description}
+author: JExcellence
+website: https://jexcellence.de
+softdepend:
+  - Vault
+  - LuckPerms
+  - PlaceholderAPI
+  - floodgate
+  - Geyser-Spigot

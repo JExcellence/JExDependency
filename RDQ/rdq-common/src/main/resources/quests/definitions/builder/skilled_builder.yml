@@ -1,0 +1,104 @@
+# ============================================================================
+# BUILDER QUEST: Skilled Builder
+# ============================================================================
+# Intermediate building quest with more complex construction tasks.
+# Second quest in the builder progression chain.
+# ============================================================================
+
+identifier: "skilled_builder"
+category: "builder"
+difficulty: EASY
+
+icon:
+  material: "BRICKS"
+  display_name_key: "quest.skilled_builder.name"
+  description_key: "quest.skilled_builder.description"
+  custom_model_data: 6001
+  enchanted: false
+
+tasks:
+  - identifier: "craft_bricks"
+    type: "CRAFT_ITEMS"
+    target: "BRICKS"
+    amount: 64
+    icon:
+      material: "BRICKS"
+      display_name_key: "quest.skilled_builder.task1.name"
+  
+  - identifier: "place_stone"
+    type: "PLACE_BLOCKS"
+    target: "STONE_BRICKS"
+    amount: 200
+    icon:
+      material: "STONE_BRICKS"
+      display_name_key: "quest.skilled_builder.task2.name"
+  
+  - identifier: "craft_stairs"
+    type: "CRAFT_ITEMS"
+    target: "OAK_STAIRS"
+    amount: 32
+    icon:
+      material: "OAK_STAIRS"
+      display_name_key: "quest.skilled_builder.task3.name"
+  
+  - identifier: "place_glass"
+    type: "PLACE_BLOCKS"
+    target: "GLASS"
+    amount: 50
+    icon:
+      material: "GLASS"
+      display_name_key: "quest.skilled_builder.task4.name"
+
+rewards:
+  - type: "CURRENCY"
+    currency_id: "coins"
+    amount: 400
+  - type: "EXPERIENCE"
+    amount: 200
+  - type: "ITEM"
+    material: "IRON_AXE"
+    amount: 1
+    display_name_key: "item.skilled_builder_axe.name"
+    lore_key: "item.skilled_builder_axe.lore"
+    enchantments:
+      EFFICIENCY: 3
+      UNBREAKING: 2
+
+prerequisites:
+  - "novice_builder"
+
+requirements: []
+
+attributes:
+  repeatable: false
+  hidden: false
+  quest_type: "MAIN"
+  time_limit: 0
+  min_level: 5
+  max_concurrent: 1
+  auto_start: false
+  show_in_log: true
+  chain_id: "builder_chain"
+  chain_order: 2
+
+effects:
+  start_particle: "VILLAGER_HAPPY"
+  complete_particle: "HAPPY_VILLAGER"
+  start_sound: "BLOCK_STONE_PLACE"
+  complete_sound: "ENTITY_PLAYER_LEVELUP"
+
+failure_conditions:
+  fail_on_death: false
+  fail_on_logout: false
+  fail_on_timeout: false
+
+metadata:
+  author: "RDQ Team"
+  created: "2026-03-16"
+  modified: "2026-03-16"
+  version: "1.0.0"
+  tags:
+    - "builder"
+    - "intermediate"
+    - "construction"
+    - "chain"

@@ -60,6 +60,15 @@ public class RRankReward extends BaseEntity {
     private int displayOrder = 0;
 
     /**
+     * Gets the display order for this reward.
+     *
+     * @return the display order
+     */
+    public int getDisplayOrder() {
+        return displayOrder;
+    }
+
+    /**
      * Whether this reward should be automatically granted when the rank is achieved.
      */
     @Column(name = "auto_grant", nullable = false)

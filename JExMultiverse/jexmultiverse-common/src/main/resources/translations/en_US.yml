@@ -1,0 +1,105 @@
+# JExMultiverse English (US) Translations
+
+prefix:
+  - "<gradient:#ff7f50:#ff4500>✦ Multiverse ✦</gradient> <dark_gray>|</dark_gray> <white>"
+
+multiverse_editor_ui:
+  title: "<gradient:#ff7f50:#ff4500>Edit World</gradient> <dark_gray>(%world_name%)</dark_gray>"
+
+  spawn_location:
+    name: "<gradient:#ff7f50:#ff4500>Set Spawn Point</gradient>"
+    lore:
+      - ""
+      - "<gray>Current:</gray> <gradient:#ffa500:#ff6347>%spawn_location%</gradient>"
+      - ""
+      - "<gradient:#ff7f50:#ff4500>Click</gradient> <gray>to set spawn to your location</gray>"
+    updated: "<gradient:#32cd32:#228b22>Spawn Updated:</gradient> <white>Spawn set to <gradient:#ff7f50:#ff4500>%spawn_location%</gradient>.</white>"
+
+  global_spawn:
+    name: "<gradient:#ff7f50:#ff4500>Global Spawn</gradient>"
+    lore:
+      - ""
+      - "<gray>Status:</gray> <gradient:#ffa500:#ff6347>%status%</gradient>"
+      - ""
+      - "<gray>When enabled, all players will</gray>"
+      - "<gray>spawn in this world.</gray>"
+      - ""
+      - "<gradient:#ff7f50:#ff4500>Click</gradient> <gray>to toggle</gray>"
+    enabled: "<gradient:#32cd32:#228b22>Global Spawn Enabled:</gradient> <white>World <gradient:#ff7f50:#ff4500>%world_name%</gradient> is now the global spawn.</white>"
+    disabled: "<gradient:#ffa500:#ff8c00>Global Spawn Disabled:</gradient> <white>World <gradient:#ff7f50:#ff4500>%world_name%</gradient> is no longer the global spawn.</white>"
+
+  pvp_toggle:
+    name: "<gradient:#ff7f50:#ff4500>PvP Toggle</gradient>"
+    lore:
+      - ""
+      - "<gray>Status:</gray> <gradient:#ffa500:#ff6347>%status%</gradient>"
+      - ""
+      - "<gray>Controls whether players can</gray>"
+      - "<gray>fight each other in this world.</gray>"
+      - ""
+      - "<gradient:#ff7f50:#ff4500>Click</gradient> <gray>to toggle</gray>"
+    enabled: "<gradient:#dc143c:#b22222>PvP Enabled:</gradient> <white>PvP is now enabled in <gradient:#ff7f50:#ff4500>%world_name%</gradient>.</white>"
+    disabled: "<gradient:#32cd32:#228b22>PvP Disabled:</gradient> <white>PvP is now disabled in <gradient:#ff7f50:#ff4500>%world_name%</gradient>.</white>"
+
+  save_changes:
+    name: "<gradient:#32cd32:#228b22>Save Changes</gradient>"
+    lore:
+      - ""
+      - "<gray>Save all changes to the database.</gray>"
+      - ""
+      - "<gradient:#32cd32:#228b22>Click</gradient> <gray>to save</gray>"
+
+  save:
+    processing: "<gradient:#ffa500:#ff8c00>Saving:</gradient> <white>Saving changes for <gradient:#ff7f50:#ff4500>%world_name%</gradient>...</white>"
+    success: "<gradient:#32cd32:#228b22>Saved:</gradient> <white>Changes to <gradient:#ff7f50:#ff4500>%world_name%</gradient> saved successfully!</white>"
+    failed: "<gradient:#dc143c:#b22222>Save Failed:</gradient> <white>Failed to save <gradient:#ff7f50:#ff4500>%world_name%</gradient>: %error%</white>"
+
+multiverse:
+  help:
+    - ""
+    - "<gradient:#ff7f50:#ff4500>✦ Multiverse Commands ✦</gradient>"
+    - ""
+    - "<gradient:#ffa500:#ff6347>/mv create <name> [env] [type]</gradient> <gray>- Create a world</gray>"
+    - "<gradient:#ffa500:#ff6347>/mv delete <name></gradient> <gray>- Delete a world</gray>"
+    - "<gradient:#ffa500:#ff6347>/mv edit <name></gradient> <gray>- Edit world settings</gray>"
+    - "<gradient:#ffa500:#ff6347>/mv teleport <name></gradient> <gray>- Teleport to a world</gray>"
+    - "<gradient:#ffa500:#ff6347>/mv load <name></gradient> <gray>- Load a world</gray>"
+    - ""
+
+  usage:
+    create: "<gradient:#ff7f50:#ff4500>Usage:</gradient> <white>/mv create <name> [environment] [type]</white>"
+    delete: "<gradient:#ff7f50:#ff4500>Usage:</gradient> <white>/mv delete <name></white>"
+    edit: "<gradient:#ff7f50:#ff4500>Usage:</gradient> <white>/mv edit <name></white>"
+    teleport: "<gradient:#ff7f50:#ff4500>Usage:</gradient> <white>/mv teleport <name></white>"
+    load: "<gradient:#ff7f50:#ff4500>Usage:</gradient> <white>/mv load <name></white>"
+
+  world_already_exists: "<gradient:#dc143c:#b22222>Error:</gradient> <white>World <gradient:#ff7f50:#ff4500>%world_name%</gradient> already exists.</white>"
+  preparing_world: "<gradient:#ffa500:#ff8c00>Creating:</gradient> <white>Creating world <gradient:#ff7f50:#ff4500>%world_name%</gradient>...</white>"
+  world_created: "<gradient:#32cd32:#228b22>Created:</gradient> <white>World <gradient:#ff7f50:#ff4500>%world_name%</gradient> created successfully! Type: %type%, Environment: %environment%</white>"
+  world_does_not_exist: "<gradient:#dc143c:#b22222>Error:</gradient> <white>World <gradient:#ff7f50:#ff4500>%world_name%</gradient> does not exist.</white>"
+  world_contains_players: "<gradient:#dc143c:#b22222>Error:</gradient> <white>Cannot delete <gradient:#ff7f50:#ff4500>%world_name%</gradient> - players are still in the world.</white>"
+  world_deleted: "<gradient:#32cd32:#228b22>Deleted:</gradient> <white>World <gradient:#ff7f50:#ff4500>%world_name%</gradient> has been deleted.</white>"
+  world_deletion_failed: "<gradient:#dc143c:#b22222>Error:</gradient> <white>Failed to delete world <gradient:#ff7f50:#ff4500>%world_name%</gradient>.</white>"
+  world_creation_failed: "<gradient:#dc143c:#b22222>Error:</gradient> <white>Failed to create world <gradient:#ff7f50:#ff4500>%world_name%</gradient>: %error%</white>"
+  world_not_loaded: "<gradient:#dc143c:#b22222>Error:</gradient> <white>World <gradient:#ff7f50:#ff4500>%world_name%</gradient> is not loaded.</white>"
+  world_already_loaded: "<gradient:#ffa500:#ff8c00>Info:</gradient> <white>World <gradient:#ff7f50:#ff4500>%world_name%</gradient> is already loaded.</white>"
+  loading_world: "<gradient:#ffa500:#ff8c00>Loading:</gradient> <white>Loading world <gradient:#ff7f50:#ff4500>%world_name%</gradient>...</white>"
+  world_loaded: "<gradient:#32cd32:#228b22>Loaded:</gradient> <white>World <gradient:#ff7f50:#ff4500>%world_name%</gradient> has been loaded.</white>"
+  world_load_failed: "<gradient:#dc143c:#b22222>Error:</gradient> <white>Failed to load world <gradient:#ff7f50:#ff4500>%world_name%</gradient>.</white>"
+  teleported: "<gradient:#32cd32:#228b22>Teleported:</gradient> <white>You have been teleported to <gradient:#ff7f50:#ff4500>%world_name%</gradient>.</white>"
+  editor_opened: "<gradient:#32cd32:#228b22>Editor:</gradient> <white>Opening editor for <gradient:#ff7f50:#ff4500>%world_name%</gradient>.</white>"
+  world_type_not_available: "<gradient:#dc143c:#b22222>Error:</gradient> <white>World type <gradient:#ff7f50:#ff4500>%type%</gradient> is not available in this edition.</white>"
+  world_limit_reached: "<gradient:#dc143c:#b22222>Limit Reached:</gradient> <white>You have reached the maximum world limit (%limit%).</white>"
+
+spawn:
+  teleporting_to_spawn: "<gradient:#ffa500:#ff8c00>Teleporting:</gradient> <white>Teleporting to spawn...</white>"
+  spawn_not_found: "<gradient:#dc143c:#b22222>Error:</gradient> <white>No spawn location configured.</white>"
+  teleported: "<gradient:#32cd32:#228b22>Teleported:</gradient> <white>You have been teleported to spawn.</white>"
+  teleport_failed: "<gradient:#dc143c:#b22222>Error:</gradient> <white>Failed to teleport to spawn. Please try again.</white>"
+
+head:
+  return:
+    name: "<gradient:#ff7f50:#ff4500>Go Back</gradient>"
+    lore:
+      - ""
+      - "<gray>Return to previous menu</gray>"

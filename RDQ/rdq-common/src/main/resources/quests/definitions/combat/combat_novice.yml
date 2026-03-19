@@ -1,0 +1,108 @@
+# ============================================================================
+# COMBAT QUEST: Combat Novice
+# ============================================================================
+# Intermediate combat quest with varied mob types.
+# Second quest in the main combat progression chain.
+# ============================================================================
+
+identifier: "combat_novice"
+category: "combat"
+difficulty: EASY
+
+icon:
+  material: "IRON_SWORD"
+  display_name_key: "quest.combat_novice.name"
+  description_key: "quest.combat_novice.description"
+  custom_model_data: 2010
+  enchanted: false
+
+tasks:
+  - identifier: "kill_hostile_mobs"
+    type: "KILL_MOBS"
+    target: "HOSTILE"
+    amount: 25
+    icon:
+      material: "IRON_SWORD"
+      display_name_key: "quest.combat_novice.task1.name"
+  
+  - identifier: "kill_skeletons"
+    type: "KILL_MOBS"
+    target: "SKELETON"
+    amount: 10
+    icon:
+      material: "SKELETON_SKULL"
+      display_name_key: "quest.combat_novice.task2.name"
+  
+  - identifier: "kill_creepers"
+    type: "KILL_MOBS"
+    target: "CREEPER"
+    amount: 5
+    icon:
+      material: "CREEPER_HEAD"
+      display_name_key: "quest.combat_novice.task3.name"
+
+rewards:
+  - type: "CURRENCY"
+    currency_id: "coins"
+    amount: 500
+  - type: "EXPERIENCE"
+    amount: 200
+  - type: "ITEM"
+    material: "IRON_SWORD"
+    amount: 1
+    display_name_key: "item.novice_blade.name"
+    lore_key: "item.novice_blade.lore"
+    enchantments:
+      SHARPNESS: 2
+      UNBREAKING: 1
+
+prerequisites:
+  - "combat_basic"
+
+requirements: []
+
+attributes:
+  repeatable: false
+  hidden: false
+  quest_type: "MAIN"
+  time_limit: 0
+  min_level: 3
+  max_concurrent: 1
+  auto_start: false
+  show_in_log: true
+  chain_id: "combat_main_chain"
+  chain_order: 2
+
+effects:
+  start_particle: "SWEEP_ATTACK"
+  complete_particle: "ENCHANTED_HIT"
+  start_sound: "ITEM_ARMOR_EQUIP_DIAMOND"
+  complete_sound: "ENTITY_PLAYER_LEVELUP"
+  start_title:
+    title_key: "quest.combat_novice.start.title"
+    subtitle_key: "quest.combat_novice.start.subtitle"
+    fade_in: 10
+    stay: 70
+    fade_out: 20
+  complete_title:
+    title_key: "quest.combat_novice.complete.title"
+    subtitle_key: "quest.combat_novice.complete.subtitle"
+    fade_in: 10
+    stay: 70
+    fade_out: 20
+
+failure_conditions:
+  fail_on_death: false
+  fail_on_logout: false
+  fail_on_timeout: false
+
+metadata:
+  author: "RDQ Team"
+  created: "2026-03-14"
+  modified: "2026-03-14"
+  version: "1.0.0"
+  tags:
+    - "combat"
+    - "intermediate"
+    - "chain"
+    - "varied"

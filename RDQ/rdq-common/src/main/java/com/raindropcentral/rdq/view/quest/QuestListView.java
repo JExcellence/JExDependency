@@ -3,8 +3,10 @@ package com.raindropcentral.rdq.view.quest;
 import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.database.entity.quest.Quest;
 import com.raindropcentral.rdq.database.entity.quest.QuestCategory;
-import com.raindropcentral.rdq.quest.model.QuestStartResult;
-import com.raindropcentral.rdq.quest.service.QuestService;
+import com.raindropcentral.rdq.database.entity.quest.QuestReward;
+import com.raindropcentral.rdq.database.entity.quest.QuestTask;
+import com.raindropcentral.rdq.model.quest.QuestStartResult;
+import com.raindropcentral.rdq.service.quest.QuestService;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import com.raindropcentral.rplatform.view.APaginatedView;
@@ -31,8 +33,9 @@ import java.util.logging.Logger;
 /**
  * Paginated view displaying quests within a specific category.
  * <p>
- * Shows all available quests in the selected category with their status
- * and allows players to start or view quest details.
+ * Shows all available quests in the selected category with their status,
+ * difficulty, rewards preview, and allows players to start or view quest details.
+ * Uses the new I18n structure with proper quest.{quest_id}.name keys.
  * </p>
  *
  * @author RaindropCentral
@@ -64,13 +67,20 @@ public class QuestListView extends APaginatedView<Quest> {
 	protected CompletableFuture<List<Quest>> getAsyncPaginationSource(final @NotNull Context context) {
 		final RDQ plugin = rdq.get(context);
 		final QuestCategory cat = category.get(context);
-		final QuestService questService = plugin.getQuestService();
 		
 		if (cat == null) {
 			return CompletableFuture.completedFuture(List.of());
 		}
 		
-		return questService.getQuestsByCategory(cat.getIdentifier());
+		LOGGER.info("Loading quests for category: " + cat.getIdentifier());
+		
+		// Get quests from cache manager (instant access)
+		final List<Quest> quests = plugin.getQuestCacheManager().getQuestsByCategory(cat.getIdentifier());
+		
+		LOGGER.info("Loaded " + quests.size() + " quests from cache");
+		
+		// Return instantly as CompletableFuture
+		return CompletableFuture.completedFuture(quests);
 	}
 	
 	@Override
@@ -85,19 +95,60 @@ public class QuestListView extends APaginatedView<Quest> {
 		final QuestService questService = plugin.getQuestService();
 		
 		builder.renderWith(() -> {
-			final Material material = Material.valueOf(quest.getIcon().getMaterial().toUpperCase());
-			final Component name = new I18n.Builder(quest.getIcon().getDisplayNameKey(), player).build().component();
-			
-			// Build lore with status information
+			final Material material = Material.BOOK; // Default material for quest list
+
+			// Quest-specific keys use absolute paths (quest.{id}.name)
+			final Component name = new I18n.Builder("quest." + quest.getIdentifier() + ".name", player).build().component();
+
+			// Build comprehensive lore
 			final List<Component> lore = new ArrayList<>();
-			lore.addAll(new I18n.Builder(quest.getIcon().getDescriptionKey(), player).build().children());
+
+			// Add quest description (absolute key)
+			lore.addAll(new I18n.Builder("quest." + quest.getIdentifier() + ".description", player).build().children());
 			lore.add(Component.empty());
-			
-			// Add difficulty
+
+			// Add difficulty with color (absolute key under quest.difficulty.*)
 			final String difficultyKey = "quest.difficulty." + quest.getDifficulty().name().toLowerCase();
 			lore.add(new I18n.Builder(difficultyKey, player).build().component());
-			
-			// Add status placeholder (will be updated async)
+
+			// Add task count (relative to view.quest.list)
+			lore.add(i18n("task_count", player)
+					.withPlaceholder("count", String.valueOf(quest.getTasks().size()))
+					.build()
+					.component());
+
+			// Add rewards preview
+			if (!quest.getRewards().isEmpty()) {
+				lore.add(Component.empty());
+				lore.add(i18n("rewards", player).build().component());
+
+				// Show first 3 rewards
+				int rewardCount = 0;
+				for (QuestReward reward : quest.getRewards()) {
+					if (rewardCount >= 3) {
+						final int remaining = quest.getRewards().size() - 3;
+						lore.add(i18n("more_rewards", player)
+								.withPlaceholder("count", String.valueOf(remaining))
+								.build()
+								.component());
+						break;
+					}
+					lore.add(formatRewardPreview(player, reward));
+					rewardCount++;
+				}
+			}
+
+			// Add prerequisites if any
+			if (quest.hasPrerequisites()) {
+				lore.add(Component.empty());
+				lore.add(i18n("prerequisites", player).build().component());
+				for (String prereq : quest.getPreviousNodeIdentifiers()) {
+					lore.add(Component.text("  §7- " + prereq));
+				}
+			}
+
+			// Add status (will be updated async)
+			lore.add(Component.empty());
 			lore.add(new I18n.Builder("quest.status.loading", player).build().component());
 			
 			return UnifiedBuilderFactory.item(material)
@@ -105,6 +156,32 @@ public class QuestListView extends APaginatedView<Quest> {
 					.setLore(lore)
 					.build();
 		}).onClick(click -> handleQuestClick(click, quest));
+	}
+	
+	/**
+	 * Formats a reward for preview display in the quest list.
+	 *
+	 * @param player the player viewing the quest
+	 * @param reward the reward to format
+	 * @return formatted reward component
+	 */
+	private Component formatRewardPreview(final @NotNull Player player, final @NotNull QuestReward reward) {
+		// Use the reward's description or estimated value for display
+		String description = reward.getReward().getDescription();
+		if (description != null && !description.isBlank()) {
+			return Component.text("§7" + description);
+		}
+		
+		// Fallback to estimated value
+		double value = reward.getEstimatedValue();
+		if (value > 0) {
+			return new I18n.Builder("view.quest.reward.value", player)
+					.withPlaceholder("value", String.format("%.0f", value))
+					.build()
+					.component();
+		}
+		
+		return Component.text("§7Reward");
 	}
 	
 	@Override
@@ -134,8 +211,8 @@ public class QuestListView extends APaginatedView<Quest> {
 						// Try to start the quest
 						questService.startQuest(player.getUniqueId(), quest.getIdentifier())
 								.thenAccept(result -> {
-									handleQuestStartResult(player, result);
-									if (result instanceof QuestStartResult.Success) {
+									handleQuestStartResult(player, result, quest);
+									if (result.success()) {
 										// Refresh view to show updated status
 										click.update();
 									}
@@ -151,50 +228,20 @@ public class QuestListView extends APaginatedView<Quest> {
 	
 	private void handleQuestStartResult(
 			final @NotNull Player player,
-			final @NotNull QuestStartResult result
+			final @NotNull QuestStartResult result,
+			final @NotNull Quest quest
 	) {
-		switch (result) {
-			case QuestStartResult.Success success -> {
-				new I18n.Builder("quest.notification.started", player)
-						.withPlaceholder("quest", success.questName())
-						.build()
-						.sendMessage();
-			}
-			case QuestStartResult.AlreadyActive alreadyActive -> {
-				new I18n.Builder("quest.command.start.already_active", player).build().sendMessage();
-			}
-			case QuestStartResult.MaxActiveReached maxActive -> {
-				new I18n.Builder("quest.command.start.max_active", player)
-						.withPlaceholder("max", String.valueOf(maxActive.maxActive()))
-						.build()
-						.sendMessage();
-			}
-			case QuestStartResult.RequirementsNotMet requirements -> {
-				new I18n.Builder("quest.command.start.requirements_not_met", player).build().sendMessage();
-			}
-			case QuestStartResult.OnCooldown cooldown -> {
-				new I18n.Builder("quest.command.start.on_cooldown", player)
-						.withPlaceholder("time", formatDuration(cooldown.remainingTime()))
-						.build()
-						.sendMessage();
-			}
-			case QuestStartResult.QuestNotFound notFound -> {
-				new I18n.Builder("quest.general.quest_not_found", player)
-						.withPlaceholder("quest", notFound.questId())
-						.build()
-						.sendMessage();
-			}
-		}
-	}
-	
-	private String formatDuration(final @NotNull Duration duration) {
-		final long hours = duration.toHours();
-		final long minutes = duration.toMinutesPart();
-		
-		if (hours > 0) {
-			return String.format("%dh %dm", hours, minutes);
+		if (result.success()) {
+			new I18n.Builder("quest.notification.started", player)
+					.withPlaceholder("quest", quest.getDisplayName())
+					.build()
+					.sendMessage();
 		} else {
-			return String.format("%dm", minutes);
+			// Show failure reason
+			new I18n.Builder("quest.command.start.failed", player)
+					.withPlaceholder("reason", result.failureReason())
+					.build()
+					.sendMessage();
 		}
 	}
 }

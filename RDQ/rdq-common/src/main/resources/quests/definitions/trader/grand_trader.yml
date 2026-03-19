@@ -1,0 +1,102 @@
+# ============================================================================
+# TRADER QUEST: Grand Trader
+# ============================================================================
+# Expert-level trading quest with massive commerce requirements.
+# Fourth quest in the trader progression chain.
+# ============================================================================
+
+identifier: "grand_trader"
+category: "trader"
+difficulty: HARD
+
+icon:
+  material: "NETHERITE_INGOT"
+  display_name_key: "quest.grand_trader.name"
+  description_key: "quest.grand_trader.description"
+  custom_model_data: 8003
+  enchanted: true
+
+tasks:
+  - identifier: "trade_all_professions"
+    type: "TRADE_WITH_VILLAGER"
+    amount: 100
+    icon:
+      material: "EMERALD_BLOCK"
+      display_name_key: "quest.grand_trader.task1.name"
+  
+  - identifier: "collect_emerald_blocks"
+    type: "COLLECT_ITEMS"
+    target: "EMERALD_BLOCK"
+    amount: 32
+    icon:
+      material: "EMERALD_BLOCK"
+      display_name_key: "quest.grand_trader.task2.name"
+  
+  - identifier: "collect_netherite_ingots"
+    type: "COLLECT_ITEMS"
+    target: "NETHERITE_INGOT"
+    amount: 16
+    icon:
+      material: "NETHERITE_INGOT"
+      display_name_key: "quest.grand_trader.task3.name"
+
+rewards:
+  - type: "CURRENCY"
+    currency_id: "coins"
+    amount: 3500
+  - type: "EXPERIENCE"
+    amount: 1500
+  - type: "ITEM"
+    material: "NETHERITE_INGOT"
+    amount: 8
+    display_name_key: "item.grand_trader_netherite.name"
+    lore_key: "item.grand_trader_netherite.lore"
+  - type: "PERK"
+    perk_id: "grand_trader"
+    duration: 14400
+  - type: "TITLE"
+    title_id: "grand_merchant"
+
+prerequisites:
+  - "master_trader"
+
+requirements:
+  - type: "LEVEL"
+    level: 30
+  - type: "CURRENCY"
+    currency_id: "coins"
+    amount: 5000
+
+attributes:
+  repeatable: false
+  hidden: false
+  quest_type: "MAIN"
+  time_limit: 0
+  min_level: 30
+  max_concurrent: 1
+  auto_start: false
+  show_in_log: true
+  chain_id: "trader_chain"
+  chain_order: 4
+
+effects:
+  start_particle: "END_ROD"
+  complete_particle: "TOTEM_OF_UNDYING"
+  start_sound: "ENTITY_VILLAGER_CELEBRATE"
+  complete_sound: "UI_TOAST_CHALLENGE_COMPLETE"
+
+failure_conditions:
+  fail_on_death: false
+  fail_on_logout: false
+  fail_on_timeout: false
+
+metadata:
+  author: "RDQ Team"
+  created: "2026-03-16"
+  modified: "2026-03-16"
+  version: "1.0.0"
+  tags:
+    - "trader"
+    - "expert"
+    - "economy"
+    - "chain"

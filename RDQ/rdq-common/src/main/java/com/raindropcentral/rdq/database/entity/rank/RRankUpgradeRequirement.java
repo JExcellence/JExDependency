@@ -79,6 +79,15 @@ public class RRankUpgradeRequirement extends BaseEntity {
 	 */
 	@Column(name = "display_order")
 	private int displayOrder = 0;
+
+	/**
+	 * Gets the display order for this requirement.
+	 *
+	 * @return the display order
+	 */
+	public int getDisplayOrder() {
+		return displayOrder;
+	}
 	
 	@Version
 	@Column(name = "version")

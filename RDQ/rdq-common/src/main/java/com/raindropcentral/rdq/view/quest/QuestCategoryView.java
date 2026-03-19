@@ -2,23 +2,24 @@ package com.raindropcentral.rdq.view.quest;
 
 import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.database.entity.quest.QuestCategory;
-import com.raindropcentral.rdq.quest.service.QuestService;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
-import com.raindropcentral.rplatform.view.BaseView;
+import com.raindropcentral.rplatform.view.APaginatedView;
 import de.jexcellence.jextranslate.i18n.I18n;
+import me.devnatan.inventoryframework.component.BukkitItemComponentBuilder;
+import me.devnatan.inventoryframework.context.Context;
 import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.state.State;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
+import java.util.concurrent.CompletableFuture;
 import java.util.logging.Logger;
 
 /**
@@ -26,18 +27,17 @@ import java.util.logging.Logger;
  * <p>
  * Displays all available quest categories for the player to choose from.
  * Each category shows its icon, name, and description.
+ * Uses APaginatedView for async loading pattern.
  * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0
  */
-public class QuestCategoryView extends BaseView {
+public class QuestCategoryView extends APaginatedView<QuestCategory> {
 	
 	private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
 	
 	private final State<RDQ> rdq = initialState("plugin");
-	
-	private static final int[] CATEGORY_SLOTS = {10, 11, 12, 13, 14, 15, 16, 19, 20, 21, 22, 23, 24, 25};
 	
 	public QuestCategoryView() {
 		super();
@@ -52,70 +52,75 @@ public class QuestCategoryView extends BaseView {
 	protected @NotNull String[] getLayout() {
 		return new String[]{
 				"XXXXXXXXX",
-				"X       X",
-				"X       X",
+				"XOOOOOOOX",
+				"XOOOOOOOX",
 				"XXXXXXXXX",
-				"         "
+				"   <p>   "
 		};
 	}
 	
 	@Override
-	public void onFirstRender(final @NotNull RenderContext render, final @NotNull Player player) {
-		final RDQ plugin = rdq.get(render);
-		final QuestService questService = plugin.getQuestService();
+	protected CompletableFuture<List<QuestCategory>> getAsyncPaginationSource(final @NotNull Context context) {
+		LOGGER.info("Loading quest categories from cache...");
 		
-		// Load categories asynchronously
-		questService.getCategories()
-				.thenAccept(categories -> {
-					// Switch back to main thread to update the view
-					org.bukkit.Bukkit.getScheduler().runTask(plugin.getPlugin(), () -> {
-						renderCategories(render, player, categories);
-						render.update();  // Update the view to show the categories
-					});
-				})
-				.exceptionally(ex -> {
-					LOGGER.log(Level.SEVERE, "Error loading quest categories for player " + player.getName(), ex);
-					return null;
-				});
+		final RDQ plugin = rdq.get(context);
+		
+		// Get categories from cache manager (instant access)
+		final List<QuestCategory> categories = plugin.getQuestCacheManager().getAllCategories();
+		
+		LOGGER.info("Loaded " + categories.size() + " categories from cache");
+		
+		// Return instantly as CompletableFuture
+		return CompletableFuture.completedFuture(categories);
 	}
 	
-	private void renderCategories(
-			final @NotNull RenderContext render,
-			final @NotNull Player player,
-			final @NotNull List<QuestCategory> categories
+	@Override
+	protected void renderEntry(
+			final @NotNull Context context,
+			final @NotNull BukkitItemComponentBuilder builder,
+			final int index,
+			final @NotNull QuestCategory category
 	) {
-		int slotIndex = 0;
+		final Player player = context.getPlayer();
+		final RDQ plugin = rdq.get(context);
 		
-		for (QuestCategory category : categories) {
-			if (!category.isEnabled()) {
-				continue;
-			}
-			
-			if (slotIndex >= CATEGORY_SLOTS.length) {
-				break;
-			}
-			
-			final int slot = CATEGORY_SLOTS[slotIndex++];
-			renderCategory(render, player, category, slot);
-		}
-	}
-	
-	private void renderCategory(
-			final @NotNull RenderContext render,
-			final @NotNull Player player,
-			final @NotNull QuestCategory category,
-			final int slot
-	) {
-		render.slot(slot).renderWith(() -> {
-			final Material material = Material.valueOf(category.getIcon().getMaterial().toUpperCase());
-			final Component name = new I18n.Builder(category.getIcon().getDisplayNameKey(), player).build().component();
-			final List<Component> lore = new I18n.Builder(category.getIcon().getDescriptionKey(), player).build().children();
+		builder.renderWith(() -> {
+			// Use iconMaterial if available, otherwise default to BOOK
+			final Material material = category.getIconMaterial() != null
+					? Material.valueOf(category.getIconMaterial().toUpperCase())
+					: Material.BOOK;
+
+			// Quest category names use absolute keys (quest.category.{id}.name)
+			final Component name = new I18n.Builder("quest.category." + category.getIdentifier() + ".name", player).build().component();
+
+			// Build lore with category description and quest count
+			final List<Component> lore = new ArrayList<>();
+
+			// Add category description from absolute icon.lore key
+			lore.addAll(new I18n.Builder("quest.category." + category.getIdentifier() + ".icon.lore", player).build().children());
+			lore.add(Component.empty());
+
+			// Add quest count (relative to view.quest.categories)
+			final int questCount = plugin.getQuestCacheManager().getQuestsByCategory(category.getIdentifier()).size();
+			lore.add(i18n("quest_count", player)
+					.withPlaceholder("count", String.valueOf(questCount))
+					.build()
+					.component());
+
+			// Add click hint (relative to view.quest.categories)
+			lore.add(Component.empty());
+			lore.add(i18n("click_to_view", player).build().component());
 			
 			return UnifiedBuilderFactory.item(material)
 					.setName(name)
 					.setLore(lore)
 					.build();
 		}).onClick(click -> handleCategoryClick(click, category));
+	}
+	
+	@Override
+	protected void onPaginatedRender(final @NotNull RenderContext render, final @NotNull Player player) {
+		// No additional UI elements needed for category view
 	}
 	
 	private void handleCategoryClick(

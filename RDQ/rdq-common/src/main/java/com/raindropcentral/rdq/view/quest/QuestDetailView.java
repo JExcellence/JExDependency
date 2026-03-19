@@ -2,11 +2,14 @@ package com.raindropcentral.rdq.view.quest;
 
 import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.database.entity.quest.Quest;
-import com.raindropcentral.rdq.quest.model.QuestAbandonResult;
-import com.raindropcentral.rdq.quest.model.QuestProgress;
-import com.raindropcentral.rdq.quest.model.QuestStartResult;
-import com.raindropcentral.rdq.quest.model.TaskProgress;
-import com.raindropcentral.rdq.quest.service.QuestService;
+import com.raindropcentral.rdq.database.entity.quest.QuestRequirement;
+import com.raindropcentral.rdq.database.entity.quest.QuestReward;
+import com.raindropcentral.rdq.database.entity.quest.QuestTask;
+import com.raindropcentral.rdq.model.quest.QuestAbandonResult;
+import com.raindropcentral.rdq.model.quest.QuestProgress;
+import com.raindropcentral.rdq.model.quest.QuestStartResult;
+import com.raindropcentral.rdq.model.quest.TaskProgress;
+import com.raindropcentral.rdq.service.quest.QuestService;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import com.raindropcentral.rplatform.view.BaseView;
@@ -29,16 +32,19 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Detailed view for a specific quest showing progress, tasks, and actions.
+ * Detailed view for a specific quest showing comprehensive information.
  * <p>
- * This view displays comprehensive information about a quest including:
- * - Quest description and details
- * - Task progress and requirements
- * - Available actions (start, abandon, view progress)
+ * This view displays:
+ * - Quest description and difficulty
+ * - All tasks with progress indicators
+ * - All rewards with icons and descriptions
+ * - All requirements with status indicators
+ * - Prerequisite quests with completion status
+ * - Available actions (start, abandon)
  * </p>
  *
  * @author RaindropCentral
- * @version 1.0.0
+ * @version 2.0.0
  */
 public class QuestDetailView extends BaseView {
 	
@@ -47,9 +53,11 @@ public class QuestDetailView extends BaseView {
 	private final State<RDQ> rdq = initialState("plugin");
 	private final State<Quest> quest = initialState("quest");
 	
+	// Layout slots
 	private static final int QUEST_INFO_SLOT = 4;
-	private static final int PROGRESS_SLOT = 22;
-	private static final int[] TASK_SLOTS = {28, 29, 30, 31, 32, 33, 34};
+	private static final int[] TASK_SLOTS = {19, 20, 21, 22, 23, 24, 25};
+	private static final int[] REWARD_SLOTS = {37, 38, 39, 40, 41, 42, 43};
+	private static final int[] REQUIREMENT_SLOTS = {10, 11, 12, 13, 14, 15, 16};
 	private static final int START_BUTTON_SLOT = 48;
 	private static final int ABANDON_BUTTON_SLOT = 50;
 	
@@ -71,12 +79,13 @@ public class QuestDetailView extends BaseView {
 	@Override
 	protected @NotNull String[] getLayout() {
 		return new String[]{
-				"XXXXXXXXX",
-				"X       X",
-				"X   P   X",
-				"X       X",
-				"XXXXXXXXX",
-				"         "
+				"XXXXXXXXX",  // Row 1: Decoration
+				"XrrrrrrrX",  // Row 2: Requirements (r)
+				"XXXXXXXXX",  // Row 3: Decoration
+				"XtttttttX",  // Row 4: Tasks (t)
+				"XXXXXXXXX",  // Row 5: Decoration
+				"XwwwwwwwX",  // Row 6: Rewards (w)
+				"         "   // Row 7: Action buttons + back
 		};
 	}
 	
@@ -90,13 +99,25 @@ public class QuestDetailView extends BaseView {
 			return;
 		}
 		
-		renderQuestInfo(render, player, q);
+		// Render quest info at top (with overall progress if active)
+		renderQuestInfo(render, player, q, plugin);
+		
+		// Render requirements section
+		renderRequirements(render, player, q);
+		
+		// Render tasks section
+		renderTasks(render, player, q, plugin);
+		
+		// Render rewards section
+		renderRewards(render, player, q);
+		
+		// Render action buttons based on quest status
 		renderQuestStatus(render, player, q, plugin);
 	}
 	
 	private void renderErrorState(final @NotNull RenderContext render, final @NotNull Player player) {
 		render.slot(QUEST_INFO_SLOT).renderWith(() -> {
-			final Component errorName = new I18n.Builder("quest.general.error", player).build().component();
+			final Component errorName = i18n("error.quest_not_found", player).build().component();
 			return UnifiedBuilderFactory.item(Material.BARRIER)
 					.setName(errorName)
 					.build();
@@ -106,33 +127,423 @@ public class QuestDetailView extends BaseView {
 	private void renderQuestInfo(
 			final @NotNull RenderContext render,
 			final @NotNull Player player,
-			final @NotNull Quest q
+			final @NotNull Quest q,
+			final @NotNull RDQ plugin
 	) {
 		render.slot(QUEST_INFO_SLOT).renderWith(() -> {
-			final Material material = Material.valueOf(q.getIcon().getMaterial().toUpperCase());
-			final Component name = new I18n.Builder(q.getIcon().getDisplayNameKey(), player).build().component();
-			
+			final Material material = Material.BOOK;
+			final Component name = new I18n.Builder("quest." + q.getIdentifier() + ".name", player).build().component();
+
 			final List<Component> lore = new ArrayList<>();
-			lore.addAll(new I18n.Builder(q.getIcon().getDescriptionKey(), player).build().children());
+			lore.addAll(new I18n.Builder("quest." + q.getIdentifier() + ".description", player).build().children());
 			lore.add(Component.empty());
-			
+
 			// Add difficulty
-			final String difficultyKey = "quest.difficulty." + q.getDifficulty().name().toLowerCase();
-			lore.add(new I18n.Builder(difficultyKey, player).build().component());
-			
+			final String difficultyKey = "difficulty." + q.getDifficulty().name().toLowerCase();
+			lore.add(i18n(difficultyKey, player).build().component());
+
 			// Add repeatable info
 			if (q.isRepeatable()) {
-				lore.add(new I18n.Builder("quest.command.info.repeatable", player)
-						.withPlaceholder("repeatable", "Yes")
+				lore.add(i18n("info.repeatable", player).build().component());
+				if (q.getCooldownMinutes() != null && q.getCooldownMinutes() > 0) {
+					lore.add(i18n("info.cooldown", player)
+							.withPlaceholder("time", formatDuration(Duration.ofMinutes(q.getCooldownMinutes())))
+							.build()
+							.component());
+				}
+			}
+
+			// Add time limit if present
+			if (q.hasTimeLimit()) {
+				lore.add(i18n("info.time_limit", player)
+						.withPlaceholder("time", formatDuration(q.getTimeLimit()))
 						.build()
 						.component());
 			}
-			
+
+			// Add prerequisite count
+			if (!q.getPrerequisiteQuestIds().isEmpty()) {
+				lore.add(Component.empty());
+				lore.add(i18n("info.prerequisites", player)
+						.withPlaceholder("count", q.getPrerequisiteQuestIds().size())
+						.build()
+						.component());
+			}
+
 			return UnifiedBuilderFactory.item(material)
 					.setName(name)
 					.setLore(lore)
 					.build();
 		});
+
+		// Async: add overall progress if quest is active
+		final QuestService questService = plugin.getQuestService();
+		questService.isQuestActive(player.getUniqueId(), q.getIdentifier())
+				.thenCompose(isActive -> {
+					if (isActive) {
+						return questService.getProgress(player.getUniqueId(), q.getIdentifier());
+					}
+					return java.util.concurrent.CompletableFuture.completedFuture(java.util.Optional.empty());
+				})
+				.thenAccept(progressOpt -> {
+					if (progressOpt.isPresent()) {
+						final QuestProgress progress = progressOpt.get();
+						render.slot(QUEST_INFO_SLOT).renderWith(() -> {
+							final Component infoName = new I18n.Builder("quest." + q.getIdentifier() + ".name", player).build().component();
+
+							final List<Component> lore = new ArrayList<>();
+							lore.addAll(new I18n.Builder("quest." + q.getIdentifier() + ".description", player).build().children());
+							lore.add(Component.empty());
+
+							// Overall progress bar
+							lore.add(buildProgressBar(progress.overallProgress() / 100.0));
+							lore.add(i18n("overall.percentage", player)
+									.withPlaceholder("percentage", (int) progress.overallProgress())
+									.build()
+									.component());
+							lore.add(i18n("overall.completed_tasks", player)
+									.withPlaceholder("completed", progress.taskProgress().stream().filter(TaskProgress::completed).count())
+									.withPlaceholder("total", progress.taskProgress().size())
+									.build()
+									.component());
+							lore.add(Component.empty());
+
+							// Difficulty
+							lore.add(i18n("difficulty." + q.getDifficulty().name().toLowerCase(), player).build().component());
+
+							// Repeatable
+							if (q.isRepeatable()) {
+								lore.add(i18n("info.repeatable", player).build().component());
+							}
+
+							// Time limit
+							if (q.hasTimeLimit()) {
+								lore.add(i18n("info.time_limit", player)
+										.withPlaceholder("time", formatDuration(q.getTimeLimit()))
+										.build()
+										.component());
+							}
+
+							return UnifiedBuilderFactory.item(Material.ENCHANTED_BOOK)
+									.setName(infoName)
+									.setLore(lore)
+									.build();
+						});
+					}
+				})
+				.exceptionally(ex -> {
+					LOGGER.log(Level.SEVERE, "Error loading quest progress for info display", ex);
+					return null;
+				});
+	}
+	
+	private void renderRequirements(
+			final @NotNull RenderContext render,
+			final @NotNull Player player,
+			final @NotNull Quest q
+	) {
+		final List<QuestRequirement> requirements = q.getRequirements();
+		
+		for (int i = 0; i < REQUIREMENT_SLOTS.length && i < requirements.size(); i++) {
+			final QuestRequirement requirement = requirements.get(i);
+			final int slot = REQUIREMENT_SLOTS[i];
+			
+			render.slot(slot).renderWith(() -> {
+				final boolean isMet = requirement.isMet(player);
+				final Material material = Material.valueOf(requirement.getIcon().getMaterial().toUpperCase());
+				final Component name = new I18n.Builder(requirement.getIcon().getDisplayNameKey(), player).build().component();
+
+				final List<Component> lore = new ArrayList<>();
+				lore.addAll(new I18n.Builder(requirement.getIcon().getDescriptionKey(), player).build().children());
+				lore.add(Component.empty());
+				
+				// Add status
+				if (isMet) {
+					lore.add(i18n("requirement.met", player).build().component());
+				} else {
+					lore.add(i18n("requirement.not_met", player).build().component());
+					
+					// Add progress if available
+					final double progress = requirement.calculateProgress(player);
+					if (progress > 0 && progress < 1.0) {
+						lore.add(i18n("requirement.progress", player)
+								.withPlaceholder("progress", String.format("%.1f", progress * 100))
+								.build()
+								.component());
+					}
+				}
+				
+				return UnifiedBuilderFactory.item(material)
+						.setName(name)
+						.setLore(lore)
+						.build();
+			});
+		}
+		
+		// Fill empty requirement slots
+		for (int i = requirements.size(); i < REQUIREMENT_SLOTS.length; i++) {
+			render.slot(REQUIREMENT_SLOTS[i]).renderWith(() -> createFillItem(player));
+		}
+	}
+	
+	private void renderTasks(
+			final @NotNull RenderContext render,
+			final @NotNull Player player,
+			final @NotNull Quest q,
+			final @NotNull RDQ plugin
+	) {
+		final List<QuestTask> tasks = q.getTasks();
+		final QuestService questService = plugin.getQuestService();
+		
+		// Check if quest is active to show progress
+		questService.isQuestActive(player.getUniqueId(), q.getIdentifier())
+				.thenAccept(isActive -> {
+					if (isActive) {
+						// Show tasks with progress
+						questService.getProgress(player.getUniqueId(), q.getIdentifier())
+								.thenAccept(progressOpt -> {
+									if (progressOpt.isPresent()) {
+										renderTasksWithProgress(render, player, q, progressOpt.get());
+									} else {
+										renderTasksWithoutProgress(render, player, tasks);
+									}
+								});
+					} else {
+						// Show tasks without progress
+						renderTasksWithoutProgress(render, player, tasks);
+					}
+				})
+				.exceptionally(ex -> {
+					LOGGER.log(Level.SEVERE, "Error checking quest status", ex);
+					renderTasksWithoutProgress(render, player, tasks);
+					return null;
+				});
+	}
+	
+	private void renderTasksWithoutProgress(
+			final @NotNull RenderContext render,
+			final @NotNull Player player,
+			final @NotNull List<QuestTask> tasks
+	) {
+		for (int i = 0; i < TASK_SLOTS.length && i < tasks.size(); i++) {
+			final QuestTask task = tasks.get(i);
+			final int slot = TASK_SLOTS[i];
+			final int taskNumber = i + 1;
+			
+			render.slot(slot).renderWith(() -> {
+				final Component name = new I18n.Builder("quest." + task.getQuest().getIdentifier() + ".task" + taskNumber + ".name", player)
+						.build()
+						.component();
+
+				final List<Component> lore = new ArrayList<>();
+				lore.add(i18n("task.not_started", player).build().component());
+				lore.add(Component.empty());
+				lore.add(i18n("task.difficulty", player)
+						.withPlaceholder("difficulty", task.getDifficulty().name())
+						.build()
+						.component());
+				
+				if (task.isOptional()) {
+					lore.add(i18n("task.optional", player).build().component());
+				}
+				
+				return UnifiedBuilderFactory.item(Material.PAPER)
+						.setName(name)
+						.setLore(lore)
+						.build();
+			});
+		}
+		
+		// Fill empty task slots
+		for (int i = tasks.size(); i < TASK_SLOTS.length; i++) {
+			render.slot(TASK_SLOTS[i]).renderWith(() -> createFillItem(player));
+		}
+	}
+	
+	private void renderTasksWithProgress(
+			final @NotNull RenderContext render,
+			final @NotNull Player player,
+			final @NotNull Quest q,
+			final @NotNull QuestProgress progress
+	) {
+		final List<QuestTask> tasks = q.getTasks();
+
+		for (int i = 0; i < TASK_SLOTS.length && i < tasks.size(); i++) {
+			final QuestTask task = tasks.get(i);
+			final int slot = TASK_SLOTS[i];
+			final int taskNumber = i + 1;
+
+			// Find task progress by task identifier
+			final TaskProgress taskProgress = progress.taskProgress().stream()
+					.filter(tp -> tp.taskIdentifier().equals(task.getIdentifier()))
+					.findFirst()
+					.orElse(null);
+
+			render.slot(slot).renderWith(() -> {
+				final boolean completed = taskProgress != null && taskProgress.completed();
+
+				// Dynamic material based on progress stage
+				final Material material = getTaskProgressMaterial(taskProgress, completed);
+
+				final Component name = new I18n.Builder("quest." + q.getIdentifier() + ".task" + taskNumber + ".name", player)
+						.build()
+						.component();
+
+				final List<Component> lore = new ArrayList<>();
+
+				if (taskProgress != null) {
+					// Visual progress bar
+					lore.add(buildProgressBar(taskProgress.progressPercentage()));
+
+					lore.add(i18n("task.progress_bar", player)
+							.withPlaceholder("current", taskProgress.currentProgress())
+							.withPlaceholder("required", taskProgress.requiredProgress())
+							.build()
+							.component());
+
+					final int percentage = (int) (taskProgress.progressPercentage() * 100);
+					lore.add(i18n("task.progress_percentage", player)
+							.withPlaceholder("percentage", percentage)
+							.build()
+							.component());
+
+					if (completed) {
+						lore.add(Component.empty());
+						lore.add(i18n("task.completed", player).build().component());
+					} else {
+						lore.add(Component.empty());
+						int remaining = taskProgress.requiredProgress() - taskProgress.currentProgress();
+						lore.add(i18n("task.remaining", player)
+								.withPlaceholder("remaining", remaining)
+								.build()
+								.component());
+
+						// Milestone indicators
+						final double pct = taskProgress.progressPercentage();
+						if (pct >= 0.75) {
+							lore.add(i18n("task.milestone.almost_done", player).build().component());
+						} else if (pct >= 0.50) {
+							lore.add(i18n("task.milestone.halfway", player).build().component());
+						} else if (pct >= 0.25) {
+							lore.add(i18n("task.milestone.quarter", player).build().component());
+						}
+					}
+				} else {
+					lore.add(i18n("task.not_started", player).build().component());
+				}
+
+				lore.add(Component.empty());
+				lore.add(i18n("task.difficulty", player)
+						.withPlaceholder("difficulty", task.getDifficulty().name())
+						.build()
+						.component());
+
+				if (task.isOptional()) {
+					lore.add(i18n("task.optional", player).build().component());
+				}
+
+				return UnifiedBuilderFactory.item(material)
+						.setName(name)
+						.setLore(lore)
+						.build();
+			});
+		}
+
+		// Fill empty task slots
+		for (int i = tasks.size(); i < TASK_SLOTS.length; i++) {
+			render.slot(TASK_SLOTS[i]).renderWith(() -> createFillItem(player));
+		}
+	}
+
+	/**
+	 * Gets the material for a task based on its progress state.
+	 */
+	private Material getTaskProgressMaterial(final TaskProgress taskProgress, final boolean completed) {
+		if (completed) {
+			return Material.LIME_DYE;
+		}
+		if (taskProgress == null) {
+			return Material.GRAY_DYE;
+		}
+		final double pct = taskProgress.progressPercentage();
+		if (pct >= 0.75) {
+			return Material.YELLOW_DYE;
+		} else if (pct >= 0.25) {
+			return Material.ORANGE_DYE;
+		} else if (pct > 0) {
+			return Material.RED_DYE;
+		}
+		return Material.GRAY_DYE;
+	}
+
+	/**
+	 * Builds a visual progress bar component using colored Unicode characters.
+	 *
+	 * @param percentage progress percentage (0.0 to 1.0)
+	 * @return a component representing a visual progress bar
+	 */
+	private Component buildProgressBar(final double percentage) {
+		final int totalBars = 20;
+		final int filledBars = (int) (percentage * totalBars);
+		final int emptyBars = totalBars - filledBars;
+
+		final String filled = "█".repeat(filledBars);
+		final String empty = "░".repeat(emptyBars);
+
+		// Color the bar based on progress
+		final String color;
+		if (percentage >= 1.0) {
+			color = "<green>";
+		} else if (percentage >= 0.75) {
+			color = "<yellow>";
+		} else if (percentage >= 0.50) {
+			color = "<gold>";
+		} else {
+			color = "<red>";
+		}
+
+		return Component.text(color + filled + "<gray>" + empty);
+	}
+	
+	private void renderRewards(
+			final @NotNull RenderContext render,
+			final @NotNull Player player,
+			final @NotNull Quest q
+	) {
+		final List<QuestReward> rewards = q.getRewards();
+		
+		for (int i = 0; i < REWARD_SLOTS.length && i < rewards.size(); i++) {
+			final QuestReward reward = rewards.get(i);
+			final int slot = REWARD_SLOTS[i];
+			
+			render.slot(slot).renderWith(() -> {
+				final Material material = Material.valueOf(reward.getIcon().getMaterial().toUpperCase());
+				final Component name = new I18n.Builder(reward.getIcon().getDisplayNameKey(), player).build().component();
+
+				final List<Component> lore = new ArrayList<>();
+				lore.addAll(new I18n.Builder(reward.getIcon().getDescriptionKey(), player).build().children());
+				lore.add(Component.empty());
+				
+				// Add estimated value
+				final double value = reward.getEstimatedValue();
+				if (value > 0) {
+					lore.add(i18n("reward.value", player)
+							.withPlaceholder("value", String.format("%.2f", value))
+							.build()
+							.component());
+				}
+				
+				return UnifiedBuilderFactory.item(material)
+						.setName(name)
+						.setLore(lore)
+						.build();
+			});
+		}
+		
+		// Fill empty reward slots
+		for (int i = rewards.size(); i < REWARD_SLOTS.length; i++) {
+			render.slot(REWARD_SLOTS[i]).renderWith(() -> createFillItem(player));
+		}
 	}
 	
 	private void renderQuestStatus(
@@ -146,9 +557,9 @@ public class QuestDetailView extends BaseView {
 		questService.isQuestActive(player.getUniqueId(), q.getIdentifier())
 				.thenAccept(isActive -> {
 					if (isActive) {
-						renderActiveQuestStatus(render, player, q, plugin);
+						renderAbandonButton(render, player, q);
 					} else {
-						renderInactiveQuestStatus(render, player, q, plugin);
+						renderStartButton(render, player, q, plugin);
 					}
 				})
 				.exceptionally(ex -> {
@@ -157,131 +568,47 @@ public class QuestDetailView extends BaseView {
 				});
 	}
 	
-	private void renderActiveQuestStatus(
-			final @NotNull RenderContext render,
-			final @NotNull Player player,
-			final @NotNull Quest q,
-			final @NotNull RDQ plugin
-	) {
-		final QuestService questService = plugin.getQuestService();
-		
-		// Render progress
-		questService.getProgress(player.getUniqueId(), q.getIdentifier())
-				.thenAccept(progressOpt -> {
-					if (progressOpt.isPresent()) {
-						renderProgress(render, player, progressOpt.get());
-					}
-				});
-		
-		// Render abandon button
-		renderAbandonButton(render, player, q);
-	}
-	
-	private void renderInactiveQuestStatus(
-			final @NotNull RenderContext render,
-			final @NotNull Player player,
-			final @NotNull Quest q,
-			final @NotNull RDQ plugin
-	) {
-		final QuestService questService = plugin.getQuestService();
-		
-		// Check if can start
-		questService.canStartQuest(player.getUniqueId(), q.getIdentifier())
-				.thenAccept(result -> {
-					if (result instanceof QuestStartResult.Success) {
-						renderStartButton(render, player, q);
-					} else {
-						renderCooldownInfo(render, player);
-					}
-				});
-	}
-	
-	private void renderProgress(
-			final @NotNull RenderContext render,
-			final @NotNull Player player,
-			final @NotNull QuestProgress progress
-	) {
-		// Render overall progress
-		render.slot(PROGRESS_SLOT).renderWith(() -> {
-			final Component name = new I18n.Builder("view.quest.progress.overall", player).build().component();
-			final List<Component> lore = List.of(
-					new I18n.Builder("view.quest.progress.percentage", player)
-							.withPlaceholder("progress", String.valueOf(progress.getOverallProgressPercentage()))
-							.build()
-							.component(),
-					new I18n.Builder("view.quest.progress.tasks_completed", player)
-							.withPlaceholder("completed", String.valueOf(progress.completedTasks()))
-							.withPlaceholder("total", String.valueOf(progress.totalTasks()))
-							.build()
-							.component()
-			);
-			
-			return UnifiedBuilderFactory.item(Material.EXPERIENCE_BOTTLE)
-					.setName(name)
-					.setLore(lore)
-					.build();
-		});
-		
-		// Render individual task progress
-		renderTaskProgress(render, player, new ArrayList<>(progress.taskProgress().values()));
-	}
-	
-	private void renderTaskProgress(
-			final @NotNull RenderContext render,
-			final @NotNull Player player,
-			final @NotNull List<TaskProgress> taskProgress
-	) {
-		int slotIndex = 0;
-		
-		for (TaskProgress task : taskProgress) {
-			if (slotIndex >= TASK_SLOTS.length) {
-				break;
-			}
-			
-			final int slot = TASK_SLOTS[slotIndex++];
-			
-			render.slot(slot).renderWith(() -> {
-				final Material taskMaterial = task.completed() ? Material.LIME_DYE : Material.GRAY_DYE;
-				
-				final List<Component> taskLore = new ArrayList<>();
-				taskLore.add(new I18n.Builder("view.quest.task.progress", player)
-						.withPlaceholder("current", String.valueOf(task.current()))
-						.withPlaceholder("required", String.valueOf(task.required()))
-						.build()
-						.component());
-				
-				if (task.completed()) {
-					taskLore.add(new I18n.Builder("view.quest.task.completed", player).build().component());
-				} else {
-					final int remaining = task.getRemaining();
-					taskLore.add(new I18n.Builder("view.quest.task.remaining", player)
-							.withPlaceholder("remaining", String.valueOf(remaining))
-							.build()
-							.component());
-				}
-				
-				return UnifiedBuilderFactory.item(taskMaterial)
-						.setName(Component.text(task.taskName()))
-						.setLore(taskLore)
-						.build();
-			});
-		}
-	}
-	
 	private void renderStartButton(
 			final @NotNull RenderContext render,
 			final @NotNull Player player,
-			final @NotNull Quest q
+			final @NotNull Quest q,
+			final @NotNull RDQ plugin
 	) {
-		render.slot(START_BUTTON_SLOT).renderWith(() -> {
-			final Component name = new I18n.Builder("view.quest.items.start.name", player).build().component();
-			final List<Component> lore = new I18n.Builder("view.quest.items.start.lore", player).build().children();
-			
-			return UnifiedBuilderFactory.item(Material.LIME_DYE)
-					.setName(name)
-					.setLore(lore)
-					.build();
-		}).onClick(click -> handleStartQuest(click, q));
+		final QuestService questService = plugin.getQuestService();
+		
+		questService.canStartQuest(player.getUniqueId(), q.getIdentifier())
+				.thenAccept(result -> {
+					if (result.success()) {
+						render.slot(START_BUTTON_SLOT).renderWith(() -> {
+							final Component name = i18n("items.start.name", player).build().component();
+							final List<Component> lore = i18n("items.start.lore", player).build().children();
+							
+							return UnifiedBuilderFactory.item(Material.LIME_DYE)
+									.setName(name)
+									.setLore(lore)
+									.build();
+						}).onClick(click -> handleStartQuest(click, q));
+					} else {
+						render.slot(START_BUTTON_SLOT).renderWith(() -> {
+							final Component name = i18n("items.cannot_start.name", player).build().component();
+							final List<Component> lore = List.of(
+									i18n("items.cannot_start.reason", player)
+											.withPlaceholder("reason", result.failureReason())
+											.build()
+											.component()
+							);
+							
+							return UnifiedBuilderFactory.item(Material.BARRIER)
+									.setName(name)
+									.setLore(lore)
+									.build();
+						});
+					}
+				})
+				.exceptionally(ex -> {
+					LOGGER.log(Level.SEVERE, "Error checking if can start quest", ex);
+					return null;
+				});
 	}
 	
 	private void renderAbandonButton(
@@ -290,27 +617,14 @@ public class QuestDetailView extends BaseView {
 			final @NotNull Quest q
 	) {
 		render.slot(ABANDON_BUTTON_SLOT).renderWith(() -> {
-			final Component name = new I18n.Builder("view.quest.items.abandon.name", player).build().component();
-			final List<Component> lore = new I18n.Builder("view.quest.items.abandon.lore", player).build().children();
+			final Component name = i18n("items.abandon.name", player).build().component();
+			final List<Component> lore = i18n("items.abandon.lore", player).build().children();
 			
 			return UnifiedBuilderFactory.item(Material.RED_DYE)
 					.setName(name)
 					.setLore(lore)
 					.build();
 		}).onClick(click -> handleAbandonQuest(click, q));
-	}
-	
-	private void renderCooldownInfo(
-			final @NotNull RenderContext render,
-			final @NotNull Player player
-	) {
-		render.slot(START_BUTTON_SLOT).renderWith(() -> {
-			final Component name = new I18n.Builder("quest.status.on_cooldown", player).build().component();
-			
-			return UnifiedBuilderFactory.item(Material.CLOCK)
-					.setName(name)
-					.build();
-		});
 	}
 	
 	private void handleStartQuest(
@@ -323,14 +637,14 @@ public class QuestDetailView extends BaseView {
 		
 		questService.startQuest(player.getUniqueId(), q.getIdentifier())
 				.thenAccept(result -> {
-					handleQuestStartResult(player, result);
-					if (result instanceof QuestStartResult.Success) {
+					handleQuestStartResult(player, result, q);
+					if (result.success()) {
 						click.update(); // Refresh view
 					}
 				})
 				.exceptionally(ex -> {
 					LOGGER.log(Level.SEVERE, "Error starting quest", ex);
-					new I18n.Builder("quest.general.error", player).build().sendMessage();
+					i18n("error.general", player).build().sendMessage();
 					return null;
 				});
 	}
@@ -345,67 +659,41 @@ public class QuestDetailView extends BaseView {
 		
 		questService.abandonQuest(player.getUniqueId(), q.getIdentifier())
 				.thenAccept(result -> {
-					switch (result) {
-						case QuestAbandonResult.Success success -> {
-							new I18n.Builder("quest.notification.abandoned", player)
-									.withPlaceholder("quest", success.questName())
-									.build()
-									.sendMessage();
-							click.update(); // Refresh view
-						}
-						case QuestAbandonResult.NotActive notActive -> {
-							new I18n.Builder("quest.command.abandon.not_active", player).build().sendMessage();
-						}
-						case QuestAbandonResult.QuestNotFound notFound -> {
-							new I18n.Builder("quest.general.quest_not_found", player)
-									.withPlaceholder("quest", q.getIdentifier())
-									.build()
-									.sendMessage();
-						}
+					if (result.success()) {
+						i18n("notification.abandoned", player)
+								.withPlaceholder("quest", q.getDisplayName())
+								.build()
+								.sendMessage();
+						click.update(); // Refresh view
+					} else {
+						i18n("error.abandon_failed", player)
+								.withPlaceholder("reason", result.failureReason())
+								.build()
+								.sendMessage();
 					}
 				})
 				.exceptionally(ex -> {
 					LOGGER.log(Level.SEVERE, "Error abandoning quest", ex);
-					new I18n.Builder("quest.general.error", player).build().sendMessage();
+					i18n("error.general", player).build().sendMessage();
 					return null;
 				});
 	}
 	
 	private void handleQuestStartResult(
 			final @NotNull Player player,
-			final @NotNull QuestStartResult result
+			final @NotNull QuestStartResult result,
+			final @NotNull Quest quest
 	) {
-		switch (result) {
-			case QuestStartResult.Success success -> {
-				new I18n.Builder("quest.notification.started", player)
-						.withPlaceholder("quest", success.questName())
-						.build()
-						.sendMessage();
-			}
-			case QuestStartResult.AlreadyActive alreadyActive -> {
-				new I18n.Builder("quest.command.start.already_active", player).build().sendMessage();
-			}
-			case QuestStartResult.MaxActiveReached maxActive -> {
-				new I18n.Builder("quest.command.start.max_active", player)
-						.withPlaceholder("max", String.valueOf(maxActive.maxActive()))
-						.build()
-						.sendMessage();
-			}
-			case QuestStartResult.RequirementsNotMet requirements -> {
-				new I18n.Builder("quest.command.start.requirements_not_met", player).build().sendMessage();
-			}
-			case QuestStartResult.OnCooldown cooldown -> {
-				new I18n.Builder("quest.command.start.on_cooldown", player)
-						.withPlaceholder("time", formatDuration(cooldown.remainingTime()))
-						.build()
-						.sendMessage();
-			}
-			case QuestStartResult.QuestNotFound notFound -> {
-				new I18n.Builder("quest.general.quest_not_found", player)
-						.withPlaceholder("quest", notFound.questId())
-						.build()
-						.sendMessage();
-			}
+		if (result.success()) {
+			i18n("notification.started", player)
+					.withPlaceholder("quest", quest.getDisplayName())
+					.build()
+					.sendMessage();
+		} else {
+			i18n("error.start_failed", player)
+					.withPlaceholder("reason", result.failureReason())
+					.build()
+					.sendMessage();
 		}
 	}
 	

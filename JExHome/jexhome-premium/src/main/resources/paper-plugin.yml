@@ -1,0 +1,25 @@
+name: "JExHome"
+version: ${version}
+main: de.jexcellence.home.JExHomePremium
+loader: de.jexcellence.dependency.loader.PaperPluginLoader
+api-version: "${apiVersion}"
+description: ${description}
+author: JExcellence
+website: https://jexcellence.de
+dependencies:
+  server:
+    Vault:
+      load: BEFORE
+      required: false
+    LuckPerms:
+      load: BEFORE
+      required: false
+    PlaceholderAPI:
+      load: BEFORE
+      required: false
+    floodgate:
+      load: BEFORE
+      required: false
+    Geyser-Spigot:
+      load: BEFORE
+      required: false

@@ -3,6 +3,7 @@ package com.raindropcentral.rdq.view.bounty;
 import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.database.entity.bounty.Bounty;
 import com.raindropcentral.rdq.database.entity.bounty.BountyReward;
+import com.raindropcentral.rplatform.reward.impl.CurrencyReward;
 import com.raindropcentral.rplatform.reward.impl.ItemReward;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import com.raindropcentral.rplatform.view.BaseView;
@@ -136,7 +137,7 @@ public class BountyCreationView extends BaseView {
 		Player  player  = context.getPlayer();
 		boolean enabled = this.target.get(context).isPresent();
 		List<BountyReward> bountyRewards = new ArrayList<>(this.rewards.get(context));
-		bountyRewards = bountyRewards.stream().filter(bountyReward -> bountyReward.getReward() instanceof com.raindropcentral.rplatform.reward.impl.CurrencyReward).toList();
+		bountyRewards = bountyRewards.stream().filter(bountyReward -> bountyReward.getReward() instanceof CurrencyReward).toList();
 		return UnifiedBuilderFactory
 			       .item(enabled ?
 			             Material.GOLD_INGOT :

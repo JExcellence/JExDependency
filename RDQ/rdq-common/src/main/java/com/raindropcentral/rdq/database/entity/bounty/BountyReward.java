@@ -68,6 +68,24 @@ public class BountyReward extends BaseEntity {
         return reward.grant(player);
     }
 
+    /**
+     * Gets the reward instance.
+     *
+     * @return the abstract reward
+     */
+    public AbstractReward getReward() {
+        return reward;
+    }
+
+    /**
+     * Gets the contributor's unique ID.
+     *
+     * @return the contributor UUID, or null if no contributor
+     */
+    public UUID getContributorUniqueId() {
+        return contributorUniqueId;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;

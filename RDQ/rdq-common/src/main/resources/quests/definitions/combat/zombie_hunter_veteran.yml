@@ -1,0 +1,119 @@
+# ============================================================================
+# COMBAT QUEST: Zombie Hunter II
+# ============================================================================
+# Second quest in the Zombie Hunter chain. Increases difficulty.
+# Requires completion of Zombie Hunter I.
+# ============================================================================
+
+identifier: "zombie_hunter_veteran"
+category: "combat"
+difficulty: NORMAL
+
+icon:
+  material: "ZOMBIE_HEAD"
+  display_name_key: "quest.zombie_hunter_veteran.name"
+  description_key: "quest.zombie_hunter_veteran.description"
+  custom_model_data: 2002
+  enchanted: true
+  item_flags:
+    - HIDE_ENCHANTS
+
+tasks:
+  - identifier: "kill_zombies"
+    type: "KILL_MOBS"
+    target: "ZOMBIE"
+    amount: 50
+    icon:
+      material: "ZOMBIE_HEAD"
+      display_name_key: "quest.zombie_hunter_veteran.task1.name"
+  
+  - identifier: "kill_husks"
+    type: "KILL_MOBS"
+    target: "HUSK"
+    amount: 10
+    icon:
+      material: "SAND"
+      display_name_key: "quest.zombie_hunter_veteran.task2.name"
+  
+  - identifier: "survive_night"
+    type: "SURVIVE_TIME"
+    duration: 600
+    conditions:
+      - "NIGHT_TIME"
+    icon:
+      material: "CLOCK"
+      display_name_key: "quest.zombie_hunter_veteran.task3.name"
+
+rewards:
+  - type: "CURRENCY"
+    currency_id: "coins"
+    amount: 750
+  - type: "EXPERIENCE"
+    amount: 300
+  - type: "ITEM"
+    material: "DIAMOND_SWORD"
+    amount: 1
+    display_name_key: "item.undead_bane.name"
+    lore_key: "item.undead_bane.lore"
+    enchantments:
+      SHARPNESS: 3
+      SMITE: 3
+      UNBREAKING: 2
+    custom_model_data: 3002
+  - type: "PERK"
+    perk_id: "night_vision"
+    duration: 7200
+
+prerequisites:
+  - "zombie_hunter_recruit"
+
+requirements:
+  - type: "LEVEL"
+    level: 5
+
+attributes:
+  repeatable: false
+  hidden: false
+  quest_type: "MAIN"
+  time_limit: 0
+  min_level: 5
+  max_concurrent: 1
+  auto_start: false
+  show_in_log: true
+  chain_id: "zombie_hunter_chain"
+  chain_order: 2
+
+effects:
+  start_particle: "SOUL"
+  complete_particle: "SOUL_FIRE_FLAME"
+  start_sound: "ENTITY_ZOMBIE_VILLAGER_AMBIENT"
+  complete_sound: "ENTITY_ZOMBIE_VILLAGER_DEATH"
+  start_title:
+    title_key: "quest.zombie_hunter_veteran.start.title"
+    subtitle_key: "quest.zombie_hunter_veteran.start.subtitle"
+    fade_in: 10
+    stay: 70
+    fade_out: 20
+  complete_title:
+    title_key: "quest.zombie_hunter_veteran.complete.title"
+    subtitle_key: "quest.zombie_hunter_veteran.complete.subtitle"
+    fade_in: 10
+    stay: 70
+    fade_out: 20
+
+failure_conditions:
+  fail_on_death: false
+  fail_on_logout: false
+  fail_on_timeout: false
+
+metadata:
+  author: "RDQ Team"
+  created: "2026-03-12"
+  modified: "2026-03-12"
+  version: "1.0.0"
+  tags:
+    - "combat"
+    - "zombies"
+    - "intermediate"
+    - "chain"
+    - "night"

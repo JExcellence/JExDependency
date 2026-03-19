@@ -8,6 +8,7 @@ import com.raindropcentral.rdq.database.entity.perk.PerkType;
 import com.raindropcentral.rdq.database.entity.perk.PlayerPerk;
 import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
 import com.raindropcentral.rdq.database.repository.PlayerPerkRepository;
+import com.raindropcentral.rdq.perk.cache.SimplePerkCache;
 import com.raindropcentral.rdq.perk.handler.EventPerkHandler;
 import com.raindropcentral.rdq.perk.handler.PotionPerkHandler;
 import com.raindropcentral.rdq.perk.handler.SpecialPerkHandler;
@@ -49,7 +50,7 @@ public class PerkActivationService {
     private final PlayerPerkRepository playerPerkRepository;
     private final PerkManagementService perkManagementService;
     private final double cooldownMultiplier;
-    private com.raindropcentral.rdq.perk.cache.SimplePerkCache cache;
+    private SimplePerkCache cache;
     
     // Effect handlers
     private final PotionPerkHandler potionPerkHandler;
@@ -94,7 +95,7 @@ public class PerkActivationService {
      *
      * @param cache the simple perk cache
      */
-    public void setCache(@NotNull final com.raindropcentral.rdq.perk.cache.SimplePerkCache cache) {
+    public void setCache(@NotNull final SimplePerkCache cache) {
         this.cache = cache;
         LOGGER.info("SimplePerkCache injected into PerkActivationService");
     }

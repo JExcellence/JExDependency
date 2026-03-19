@@ -1,0 +1,63 @@
+identifier: "legendary_explorer"
+category: "explorer"
+difficulty: LEGENDARY
+icon:
+  material: "RECOVERY_COMPASS"
+  display_name_key: "quest.legendary_explorer.name"
+  description_key: "quest.legendary_explorer.description"
+  custom_model_data: 7004
+  enchanted: true
+tasks:
+  - identifier: "discover_all_biomes"
+    type: "DISCOVER_BIOME"
+    target: "ALL"
+    amount: 50
+    icon:
+      material: "FILLED_MAP"
+      display_name_key: "quest.legendary_explorer.task1.name"
+  - identifier: "travel_extreme"
+    type: "TRAVEL_DISTANCE"
+    amount: 100000
+    icon:
+      material: "ELYTRA"
+      display_name_key: "quest.legendary_explorer.task2.name"
+  - identifier: "find_all_structures"
+    type: "REACH_LOCATION"
+    target: "ALL_STRUCTURES"
+    amount: 10
+    icon:
+      material: "STRUCTURE_BLOCK"
+      display_name_key: "quest.legendary_explorer.task3.name"
+  - identifier: "map_world"
+    type: "CRAFT_ITEMS"
+    target: "FILLED_MAP"
+    amount: 100
+    icon:
+      material: "FILLED_MAP"
+      display_name_key: "quest.legendary_explorer.task4.name"
+rewards:
+  - type: "CURRENCY"
+    currency_id: "coins"
+    amount: 5000
+  - type: "EXPERIENCE"
+    amount: 2000
+  - type: "TITLE"
+    title_id: "legendary_explorer"
+  - type: "PERK"
+    perk_id: "world_traveler"
+    duration: 0
+prerequisites:
+  - "grand_explorer"
+requirements:
+  - type: "LEVEL"
+    level: 30
+attributes:
+  repeatable: false
+  quest_type: "CHALLENGE"
+  chain_id: "explorer_chain"
+  chain_order: 5
+metadata:
+  author: "RDQ Team"
+  created: "2026-03-16"
+  version: "1.0.0"
+  tags: ["explorer", "legendary", "exploration", "chain", "challenge"]

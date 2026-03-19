@@ -1,0 +1,53 @@
+identifier: "master_farmer"
+category: "farmer"
+difficulty: MEDIUM
+icon:
+  material: "DIAMOND_HOE"
+  display_name_key: "quest.master_farmer.name"
+  description_key: "quest.master_farmer.description"
+  custom_model_data: 6002
+  enchanted: true
+tasks:
+  - identifier: "breed_cows"
+    type: "BREED_ANIMALS"
+    target: "COW"
+    amount: 20
+    icon:
+      material: "BEEF"
+      display_name_key: "quest.master_farmer.task1.name"
+  - identifier: "breed_pigs"
+    type: "BREED_ANIMALS"
+    target: "PIG"
+    amount: 20
+    icon:
+      material: "PORKCHOP"
+      display_name_key: "quest.master_farmer.task2.name"
+  - identifier: "breed_chickens"
+    type: "BREED_ANIMALS"
+    target: "CHICKEN"
+    amount: 30
+    icon:
+      material: "CHICKEN"
+      display_name_key: "quest.master_farmer.task3.name"
+rewards:
+  - type: "CURRENCY"
+    currency_id: "coins"
+    amount: 500
+  - type: "EXPERIENCE"
+    amount: 300
+  - type: "PERK"
+    perk_id: "green_thumb"
+    duration: 7200
+prerequisites:
+  - "skilled_farmer"
+attributes:
+  repeatable: false
+  quest_type: "MAIN"
+  min_level: 10
+  chain_id: "farmer_chain"
+  chain_order: 3
+metadata:
+  author: "RDQ Team"
+  created: "2026-03-16"
+  version: "1.0.0"
+  tags: ["farmer", "advanced", "farming", "chain"]

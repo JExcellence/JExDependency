@@ -1,0 +1,126 @@
+# ============================================================================
+# COMBAT QUEST: Combat Apprentice
+# ============================================================================
+# Advanced combat quest with challenging mob types.
+# Third quest in the main combat progression chain.
+# ============================================================================
+
+identifier: "combat_apprentice"
+category: "combat"
+difficulty: NORMAL
+
+icon:
+  material: "DIAMOND_SWORD"
+  display_name_key: "quest.combat_apprentice.name"
+  description_key: "quest.combat_apprentice.description"
+  custom_model_data: 2011
+  enchanted: true
+  item_flags:
+    - HIDE_ENCHANTS
+
+tasks:
+  - identifier: "kill_hostile_mobs"
+    type: "KILL_MOBS"
+    target: "HOSTILE"
+    amount: 75
+    icon:
+      material: "DIAMOND_SWORD"
+      display_name_key: "quest.combat_apprentice.task1.name"
+  
+  - identifier: "kill_spiders"
+    type: "KILL_MOBS"
+    target: "SPIDER"
+    amount: 20
+    icon:
+      material: "SPIDER_EYE"
+      display_name_key: "quest.combat_apprentice.task2.name"
+  
+  - identifier: "kill_endermen"
+    type: "KILL_MOBS"
+    target: "ENDERMAN"
+    amount: 10
+    icon:
+      material: "ENDER_PEARL"
+      display_name_key: "quest.combat_apprentice.task3.name"
+  
+  - identifier: "kill_blazes"
+    type: "KILL_MOBS"
+    target: "BLAZE"
+    amount: 5
+    icon:
+      material: "BLAZE_ROD"
+      display_name_key: "quest.combat_apprentice.task4.name"
+
+rewards:
+  - type: "CURRENCY"
+    currency_id: "coins"
+    amount: 1500
+  - type: "EXPERIENCE"
+    amount: 750
+  - type: "ITEM"
+    material: "DIAMOND_SWORD"
+    amount: 1
+    display_name_key: "item.apprentice_blade.name"
+    lore_key: "item.apprentice_blade.lore"
+    enchantments:
+      SHARPNESS: 4
+      UNBREAKING: 2
+      LOOTING: 2
+    custom_model_data: 3011
+  - type: "PERK"
+    perk_id: "combat_mastery"
+    duration: 10800
+
+prerequisites:
+  - "combat_novice"
+
+requirements:
+  - type: "LEVEL"
+    level: 10
+
+attributes:
+  repeatable: false
+  hidden: false
+  quest_type: "MAIN"
+  time_limit: 0
+  min_level: 10
+  max_concurrent: 1
+  auto_start: false
+  show_in_log: true
+  chain_id: "combat_main_chain"
+  chain_order: 3
+
+effects:
+  start_particle: "FLAME"
+  complete_particle: "LAVA"
+  start_sound: "ITEM_ARMOR_EQUIP_NETHERITE"
+  complete_sound: "UI_TOAST_CHALLENGE_COMPLETE"
+  start_title:
+    title_key: "quest.combat_apprentice.start.title"
+    subtitle_key: "quest.combat_apprentice.start.subtitle"
+    fade_in: 10
+    stay: 70
+    fade_out: 20
+  complete_title:
+    title_key: "quest.combat_apprentice.complete.title"
+    subtitle_key: "quest.combat_apprentice.complete.subtitle"
+    fade_in: 10
+    stay: 70
+    fade_out: 20
+
+failure_conditions:
+  fail_on_death: false
+  fail_on_logout: false
+  fail_on_timeout: false
+
+metadata:
+  author: "RDQ Team"
+  created: "2026-03-14"
+  modified: "2026-03-14"
+  version: "1.0.0"
+  tags:
+    - "combat"
+    - "advanced"
+    - "chain"
+    - "nether"
+    - "end"

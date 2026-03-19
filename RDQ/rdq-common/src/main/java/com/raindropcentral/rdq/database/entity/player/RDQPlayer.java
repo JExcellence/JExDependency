@@ -109,6 +109,26 @@ public class RDQPlayer extends BaseEntity {
     }
 
     /**
+     * Gets the unique identifier (UUID) of the player.
+     * Alias for getUniqueId() for backward compatibility.
+     *
+     * @return the player's UUID
+     */
+    public UUID getPlayerId() {
+        return this.uniqueId;
+    }
+
+    /**
+     * Gets the player's name.
+     * Alias for getPlayerName() for backward compatibility.
+     *
+     * @return the player's name
+     */
+    public String getName() {
+        return this.playerName;
+    }
+
+    /**
      * Gets all rank associations for this player across different rank trees.
      *
      * @return a list of {@link RPlayerRank} entities representing the player's ranks in various trees

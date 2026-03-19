@@ -1,0 +1,94 @@
+# ============================================================================
+# BAKER QUEST: Apprentice Baker
+# ============================================================================
+# Entry-level baking quest introducing basic food crafting.
+# First quest in the baker progression chain.
+# ============================================================================
+
+identifier: "apprentice_baker"
+category: "baker"
+difficulty: TRIVIAL
+
+icon:
+  material: "BREAD"
+  display_name_key: "quest.apprentice_baker.name"
+  description_key: "quest.apprentice_baker.description"
+  custom_model_data: 3000
+  enchanted: false
+
+tasks:
+  - identifier: "collect_wheat"
+    type: "COLLECT_ITEMS"
+    target: "WHEAT"
+    amount: 64
+    icon:
+      material: "WHEAT"
+      display_name_key: "quest.apprentice_baker.task1.name"
+  
+  - identifier: "craft_bread"
+    type: "CRAFT_ITEMS"
+    target: "BREAD"
+    amount: 20
+    icon:
+      material: "BREAD"
+      display_name_key: "quest.apprentice_baker.task2.name"
+  
+  - identifier: "bake_cookies"
+    type: "CRAFT_ITEMS"
+    target: "COOKIE"
+    amount: 16
+    icon:
+      material: "COOKIE"
+      display_name_key: "quest.apprentice_baker.task3.name"
+
+rewards:
+  - type: "CURRENCY"
+    currency_id: "coins"
+    amount: 150
+  - type: "EXPERIENCE"
+    amount: 75
+  - type: "ITEM"
+    material: "GOLDEN_HOE"
+    amount: 1
+    display_name_key: "item.baker_hoe.name"
+    lore_key: "item.baker_hoe.lore"
+    enchantments:
+      EFFICIENCY: 2
+
+prerequisites: []
+
+requirements: []
+
+attributes:
+  repeatable: false
+  hidden: false
+  quest_type: "MAIN"
+  time_limit: 0
+  min_level: 1
+  max_concurrent: 1
+  auto_start: false
+  show_in_log: true
+  chain_id: "baker_chain"
+  chain_order: 1
+
+effects:
+  start_particle: "VILLAGER_HAPPY"
+  complete_particle: "HEART"
+  start_sound: "BLOCK_FURNACE_FIRE_CRACKLE"
+  complete_sound: "ENTITY_PLAYER_LEVELUP"
+
+failure_conditions:
+  fail_on_death: false
+  fail_on_logout: false
+  fail_on_timeout: false
+
+metadata:
+  author: "RDQ Team"
+  created: "2026-03-16"
+  modified: "2026-03-16"
+  version: "1.0.0"
+  tags:
+    - "baker"
+    - "beginner"
+    - "crafting"
+    - "chain"

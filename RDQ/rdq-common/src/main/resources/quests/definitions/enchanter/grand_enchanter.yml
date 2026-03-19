@@ -1,0 +1,106 @@
+# ============================================================================
+# ENCHANTER QUEST: Grand Enchanter
+# ============================================================================
+# Expert-level enchanting quest with complex enchantment requirements.
+# Fourth quest in the enchanter progression chain.
+# ============================================================================
+
+identifier: "grand_enchanter"
+category: "enchanter"
+difficulty: HARD
+
+icon:
+  material: "NETHER_STAR"
+  display_name_key: "quest.grand_enchanter.name"
+  description_key: "quest.grand_enchanter.description"
+  custom_model_data: 7003
+  enchanted: true
+
+tasks:
+  - identifier: "collect_netherite"
+    type: "COLLECT_ITEMS"
+    target: "NETHERITE_INGOT"
+    amount: 8
+    icon:
+      material: "NETHERITE_INGOT"
+      display_name_key: "quest.grand_enchanter.task1.name"
+  
+  - identifier: "enchant_netherite_gear"
+    type: "ENCHANT_ITEM"
+    target: "NETHERITE_CHESTPLATE"
+    amount: 1
+    icon:
+      material: "NETHERITE_CHESTPLATE"
+      display_name_key: "quest.grand_enchanter.task2.name"
+  
+  - identifier: "gain_massive_xp"
+    type: "GAIN_EXPERIENCE"
+    amount: 3000
+    icon:
+      material: "EXPERIENCE_BOTTLE"
+      display_name_key: "quest.grand_enchanter.task3.name"
+
+rewards:
+  - type: "CURRENCY"
+    currency_id: "coins"
+    amount: 3000
+  - type: "EXPERIENCE"
+    amount: 1200
+  - type: "ITEM"
+    material: "ENCHANTED_BOOK"
+    amount: 10
+    display_name_key: "item.grand_enchanter_book.name"
+    lore_key: "item.grand_enchanter_book.lore"
+    enchantments:
+      PROTECTION: 4
+      UNBREAKING: 3
+      MENDING: 1
+  - type: "PERK"
+    perk_id: "grand_enchanter"
+    duration: 14400
+  - type: "TITLE"
+    title_id: "grand_enchanter"
+
+prerequisites:
+  - "master_enchanter"
+
+requirements:
+  - type: "LEVEL"
+    level: 30
+  - type: "CURRENCY"
+    currency_id: "coins"
+    amount: 5000
+
+attributes:
+  repeatable: false
+  hidden: false
+  quest_type: "MAIN"
+  time_limit: 0
+  min_level: 30
+  max_concurrent: 1
+  auto_start: false
+  show_in_log: true
+  chain_id: "enchanter_chain"
+  chain_order: 4
+
+effects:
+  start_particle: "END_ROD"
+  complete_particle: "TOTEM_OF_UNDYING"
+  start_sound: "BLOCK_ENCHANTMENT_TABLE_USE"
+  complete_sound: "UI_TOAST_CHALLENGE_COMPLETE"
+
+failure_conditions:
+  fail_on_death: false
+  fail_on_logout: false
+  fail_on_timeout: false
+
+metadata:
+  author: "RDQ Team"
+  created: "2026-03-16"
+  modified: "2026-03-16"
+  version: "1.0.0"
+  tags:
+    - "enchanter"
+    - "expert"
+    - "magic"
+    - "chain"

@@ -29,7 +29,7 @@ include(":JExTranslate")
 include(":RPlatform")
 
 // Simple plugin modules
-//include(":JExGlow")
+include(":JExGlow")
 
 // JExEconomy with submodules
 include(":JExEconomy")

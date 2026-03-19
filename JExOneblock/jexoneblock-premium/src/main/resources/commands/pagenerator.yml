@@ -1,0 +1,8 @@
+name: agenerator
+description: Admin command for managing generator structures
+usage: /agenerator <subcommand>
+permission: jexoneblock.admin.generator
+aliases:
+  - agen
+  - agenerators
+  - admingenerat

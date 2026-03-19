@@ -1,0 +1,88 @@
+# ============================================================================
+# HUNTER QUEST: Skilled Hunter
+# ============================================================================
+# Intermediate hunting quest targeting hostile mobs.
+# Second quest in the hunter progression chain.
+# ============================================================================
+
+identifier: "skilled_hunter"
+category: "hunter"
+difficulty: EASY
+
+icon:
+  material: "CROSSBOW"
+  display_name_key: "quest.skilled_hunter.name"
+  description_key: "quest.skilled_hunter.description"
+  custom_model_data: 4001
+  enchanted: false
+
+tasks:
+  - identifier: "kill_zombies"
+    type: "KILL_MOBS"
+    target: "ZOMBIE"
+    amount: 30
+    icon:
+      material: "ROTTEN_FLESH"
+      display_name_key: "quest.skilled_hunter.task1.name"
+  
+  - identifier: "kill_skeletons"
+    type: "KILL_MOBS"
+    target: "SKELETON"
+    amount: 25
+    icon:
+      material: "BONE"
+      display_name_key: "quest.skilled_hunter.task2.name"
+  
+  - identifier: "kill_creepers"
+    type: "KILL_MOBS"
+    target: "CREEPER"
+    amount: 15
+    icon:
+      material: "GUNPOWDER"
+      display_name_key: "quest.skilled_hunter.task3.name"
+
+rewards:
+  - type: "CURRENCY"
+    currency_id: "coins"
+    amount: 300
+  - type: "EXPERIENCE"
+    amount: 150
+
+prerequisites:
+  - "novice_hunter"
+
+requirements: []
+
+attributes:
+  repeatable: false
+  hidden: false
+  quest_type: "MAIN"
+  time_limit: 0
+  min_level: 5
+  max_concurrent: 1
+  auto_start: false
+  show_in_log: true
+  chain_id: "hunter_chain"
+  chain_order: 2
+
+effects:
+  start_particle: "CRIT"
+  complete_particle: "CRIT_MAGIC"
+  start_sound: "ENTITY_ARROW_SHOOT"
+  complete_sound: "ENTITY_PLAYER_LEVELUP"
+
+failure_conditions:
+  fail_on_death: false
+  fail_on_logout: false
+  fail_on_timeout: false
+
+metadata:
+  author: "RDQ Team"
+  created: "2026-03-16"
+  modified: "2026-03-16"
+  version: "1.0.0"
+  tags:
+    - "hunter"
+    - "intermediate"
+    - "combat"
+    - "chain"

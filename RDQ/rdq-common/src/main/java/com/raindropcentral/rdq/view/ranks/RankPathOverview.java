@@ -3178,6 +3178,16 @@ public class RankPathOverview extends BaseView {
                 player
         ));
 
+        // Show requirement progress for IN_PROGRESS or AVAILABLE ranks
+        if (!previewMode && (status == RankStatus.IN_PROGRESS || status == RankStatus.AVAILABLE)) {
+            this.addRequirementProgress(lore, player, rank);
+        }
+
+        // Show reward preview for all non-locked ranks
+        if (status != RankStatus.LOCKED && status != RankStatus.FREE_VERSION_LOCKED) {
+            this.addRewardPreview(lore, player, rank);
+        }
+
         if (!previewMode) {
             lore.add(Component.empty());
             this.addClickInstructions(
@@ -3196,6 +3206,109 @@ public class RankPathOverview extends BaseView {
         }
 
         return lore;
+    }
+
+    /**
+     * Adds requirement progress indicators to the rank lore.
+     */
+    private void addRequirementProgress(
+            final @NotNull List<Component> lore,
+            final @NotNull Player player,
+            final @NotNull RRank rank
+    ) {
+        try {
+            final List<RRankUpgradeRequirement> requirements = rank.getUpgradeRequirementsOrdered();
+            if (requirements == null || requirements.isEmpty()) {
+                return;
+            }
+
+            lore.add(Component.empty());
+            lore.add(this.i18n("progress.requirements_header", player).build().component());
+
+            int metCount = 0;
+            for (final RRankUpgradeRequirement req : requirements) {
+                final boolean isMet = req.isMet(player);
+                if (isMet) {
+                    metCount++;
+                }
+                final double progress = req.calculateProgress(player);
+                final String statusIcon = isMet ? "<green>✓</green>" : "<red>✗</red>";
+                final int pctInt = (int) (progress * 100);
+
+                lore.add(Component.text("  " + statusIcon + " <gray>" + req.getIcon().getDisplayNameKey() + "</gray> <dark_gray>(" + pctInt + "%)</dark_gray>"));
+            }
+
+            // Overall requirement progress bar
+            final double overallProgress = requirements.isEmpty() ? 0 : (double) metCount / requirements.size();
+            lore.add(buildRankProgressBar(overallProgress));
+            lore.add(this.i18n("progress.requirements_count", player)
+                    .withPlaceholder("met", metCount)
+                    .withPlaceholder("total", requirements.size())
+                    .build()
+                    .component());
+        } catch (final Exception exception) {
+            LOGGER.log(Level.FINE, "Could not load requirement progress for rank: " + rank.getIdentifier(), exception);
+        }
+    }
+
+    /**
+     * Adds a preview of rewards for the rank.
+     */
+    private void addRewardPreview(
+            final @NotNull List<Component> lore,
+            final @NotNull Player player,
+            final @NotNull RRank rank
+    ) {
+        try {
+            final List<RRankReward> rewards = rank.getRewardsOrdered();
+            if (rewards == null || rewards.isEmpty()) {
+                return;
+            }
+
+            lore.add(Component.empty());
+            lore.add(this.i18n("progress.rewards_header", player).build().component());
+
+            int shown = 0;
+            for (final RRankReward reward : rewards) {
+                if (shown >= 3) {
+                    final int remaining = rewards.size() - 3;
+                    lore.add(this.i18n("progress.more_rewards", player)
+                            .withPlaceholder("count", remaining)
+                            .build()
+                            .component());
+                    break;
+                }
+                lore.add(Component.text("  <gray>- " + reward.getIcon().getDisplayNameKey() + "</gray>"));
+                shown++;
+            }
+        } catch (final Exception exception) {
+            LOGGER.log(Level.FINE, "Could not load rewards for rank: " + rank.getIdentifier(), exception);
+        }
+    }
+
+    /**
+     * Builds a visual progress bar for rank requirements.
+     */
+    private Component buildRankProgressBar(final double percentage) {
+        final int totalBars = 15;
+        final int filledBars = (int) (percentage * totalBars);
+        final int emptyBars = totalBars - filledBars;
+
+        final String filled = "█".repeat(filledBars);
+        final String empty = "░".repeat(emptyBars);
+
+        final String color;
+        if (percentage >= 1.0) {
+            color = "<green>";
+        } else if (percentage >= 0.75) {
+            color = "<yellow>";
+        } else if (percentage >= 0.50) {
+            color = "<gold>";
+        } else {
+            color = "<red>";
+        }
+
+        return Component.text("  " + color + filled + "<gray>" + empty);
     }
 
     private @NotNull Component createStatusComponent(

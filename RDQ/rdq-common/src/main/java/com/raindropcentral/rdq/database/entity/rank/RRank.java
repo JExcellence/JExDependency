@@ -2,6 +2,7 @@ package com.raindropcentral.rdq.database.entity.rank;
 
 import com.raindropcentral.rdq.config.utility.IconSection;
 import com.raindropcentral.rdq.database.converter.IconSectionConverter;
+import com.raindropcentral.rplatform.progression.IProgressionNode;
 import de.jexcellence.hibernate.entity.BaseEntity;
 import jakarta.persistence.*;
 import org.jetbrains.annotations.NotNull;
@@ -24,6 +25,11 @@ import java.util.stream.Collectors;
  * </p>
  *
  * <p>
+ * This entity implements {@link IProgressionNode} to support the RPlatform progression system,
+ * enabling prerequisite validation and automatic unlocking of dependent ranks.
+ * </p>
+ *
+ * <p>
  * This entity is mapped to the {@code r_rank} table in the database.
  * </p>
  *
@@ -33,7 +39,7 @@ import java.util.stream.Collectors;
  */
 @Entity
 @Table(name = "r_rank")
-public class RRank extends BaseEntity {
+public class RRank extends BaseEntity implements IProgressionNode<RRank> {
 	
 	@Transient
 	private static final Logger LOGGER = Logger.getLogger(RRank.class.getName());
@@ -235,10 +241,6 @@ public class RRank extends BaseEntity {
 		final int weight
 	) {
 		this(identifier, displayNameKey, descriptionKey, assignedLuckPermsGroup, prefixKey, suffixKey, icon, isInitialRank, tier, weight, null);
-	}
-	
-	public String getIdentifier() {
-		return this.identifier;
 	}
 	
 	public String getDisplayNameKey() {
@@ -463,6 +465,57 @@ public class RRank extends BaseEntity {
 		
 		return removed;
 	}
+	
+	// ============================================
+	// IProgressionNode Implementation
+	// ============================================
+	
+	/**
+	 * Gets the unique identifier for this progression node.
+	 * <p>
+	 * This is used by the RPlatform progression system to identify nodes
+	 * and manage prerequisite relationships.
+	 * </p>
+	 *
+	 * @return the rank identifier
+	 */
+	@Override
+	@NotNull
+	public String getIdentifier() {
+		return this.identifier;
+	}
+	
+	/**
+	 * Gets the list of prerequisite node identifiers.
+	 * <p>
+	 * These ranks must be achieved before this rank can be unlocked.
+	 * </p>
+	 *
+	 * @return the list of prerequisite rank identifiers, never null
+	 */
+	@Override
+	@NotNull
+	public List<String> getPreviousNodeIdentifiers() {
+		return this.previousRanks != null ? this.previousRanks : new ArrayList<>();
+	}
+	
+	/**
+	 * Gets the list of dependent node identifiers.
+	 * <p>
+	 * These ranks will be unlocked when this rank is achieved.
+	 * </p>
+	 *
+	 * @return the list of dependent rank identifiers, never null
+	 */
+	@Override
+	@NotNull
+	public List<String> getNextNodeIdentifiers() {
+		return this.nextRanks != null ? this.nextRanks : new ArrayList<>();
+	}
+	
+	// ============================================
+	// Object Methods
+	// ============================================
 	
 	@Override
 	public boolean equals(Object o) {

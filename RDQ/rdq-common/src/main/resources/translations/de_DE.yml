@@ -2346,3 +2346,61 @@ difficulty:
   normal: <gradient:#f59e0b:#fbbf24>Normal</gradient>
   hard: <gradient:#ef4444:#f87171>Hart</gradient>
   extreme: <gradient:#a855f7:#c084fc>Extrem</gradient>
+# ============================================
+# QUEST SYSTEM
+# ============================================
+quest:
+  # Quest Categories
+  category:
+    combat:
+      name: "<gradient:#ef4444:#f87171>⚔ Kampf</gradient>"
+      description: "<gradient:#6b7280:#9ca3af>Meistere die Kunst des Kampfes</gradient>"
+    mining:
+      name: "<gradient:#6b7280:#9ca3af>⛏ Bergbau</gradient>"
+      description: "<gradient:#6b7280:#9ca3af>Grabe tief in die Erde</gradient>"
+    building:
+      name: "<gradient:#f59e0b:#fbbf24>🏗 Bauen</gradient>"
+      description: "<gradient:#6b7280:#9ca3af>Erschaffe prächtige Strukturen</gradient>"
+  
+  # Combat Basic Quest
+  combat_basic:
+    name: "<gradient:#ef4444:#f87171>⚔ Erste Schritte im Kampf</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Lerne die Grundlagen des Monsterkampfes</gradient>"
+    task:
+      kill_zombies_basic: "<gradient:#6b7280:#9ca3af>Töte 5 Zombies um deine Kampfbereitschaft zu beweisen</gradient>"
+      craft_wooden_sword: "<gradient:#6b7280:#9ca3af>Erschaffe deine erste Waffe</gradient>"
+  
+  # Zombie Slayer Basic Quest
+  zombie_slayer_basic:
+    name: "<gradient:#ef4444:#f87171>🧟 Zombie-Jäger: Anfänger</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Beginne deine Spezialisierung auf Zombie-Eliminierung</gradient>"
+    task:
+      kill_zombies_basic: "<gradient:#6b7280:#9ca3af>Eliminiere 5 Zombies um dein Jäger-Training zu beginnen</gradient>"
+  
+  # Building Quest Chain
+  building_basic:
+    name: "<gradient:#f59e0b:#fbbf24>🏗 Erste Schritte im Bauen</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Lerne die Grundlagen des Bauens</gradient>"
+    task:
+      place_wood_blocks: "<gradient:#6b7280:#9ca3af>Platziere 64 Eichenbretter um mit dem Bauen zu beginnen</gradient>"
+      craft_crafting_table: "<gradient:#6b7280:#9ca3af>Erstelle eine Werkbank für erweiterte Rezepte</gradient>"
+  
+  building_intermediate:
+    name: "<gradient:#f59e0b:#fbbf24>🏗 Fortgeschrittener Baumeister</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Erweitere deine Baufähigkeiten</gradient>"
+    task:
+      place_stone_blocks: "<gradient:#6b7280:#9ca3af>Platziere 256 Steinziegel für stabile Gebäude</gradient>"
+      craft_furnace: "<gradient:#6b7280:#9ca3af>Erstelle einen Ofen zum Schmelzen von Materialien</gradient>"
+      place_glass: "<gradient:#6b7280:#9ca3af>Platziere 32 Glasblöcke für Fenster</gradient>"
+  
+  building_advanced:
+    name: "<gradient:#f59e0b:#fbbf24>🏗 Experten-Baumeister</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Meistere komplexe Bautechniken</gradient>"
+    task:
+      place_blocks_advanced: "<gradient:#6b7280:#9ca3af>Platziere 2000 Blöcke in fortgeschrittenen Bauprojekten</gradient>"
+      craft_iron_door: "<gradient:#6b7280:#9ca3af>Erstelle 2 Eisentüren für sichere Eingänge</gradient>"
+      place_redstone_components: "<gradient:#6b7280:#9ca3af>Platziere 64 Redstone für automatisierte Systeme</gradient>"
+  
+  builders_dream:
+    name: "<gradient:#f59e0b:#fbbf24>🏗 Baumeister-Traum</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Erreiche die ultimative Baumeisterschaft</gradient>"

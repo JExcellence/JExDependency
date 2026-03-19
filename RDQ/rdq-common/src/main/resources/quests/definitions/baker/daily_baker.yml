@@ -1,0 +1,87 @@
+# ============================================================================
+# BAKER QUEST: Daily Baker
+# ============================================================================
+# Daily repeatable baking quest for consistent rewards.
+# Can be completed once per day.
+# ============================================================================
+
+identifier: "daily_baker"
+category: "baker"
+difficulty: EASY
+
+icon:
+  material: "BREAD"
+  display_name_key: "quest.daily_baker.name"
+  description_key: "quest.daily_baker.description"
+  custom_model_data: 3005
+  enchanted: false
+
+tasks:
+  - identifier: "craft_bread_daily"
+    type: "CRAFT_ITEMS"
+    target: "BREAD"
+    amount: 32
+    icon:
+      material: "BREAD"
+      display_name_key: "quest.daily_baker.task1.name"
+  
+  - identifier: "craft_cookies_daily"
+    type: "CRAFT_ITEMS"
+    target: "COOKIE"
+    amount: 24
+    icon:
+      material: "COOKIE"
+      display_name_key: "quest.daily_baker.task2.name"
+  
+  - identifier: "craft_cakes_daily"
+    type: "CRAFT_ITEMS"
+    target: "CAKE"
+    amount: 3
+    icon:
+      material: "CAKE"
+      display_name_key: "quest.daily_baker.task3.name"
+
+rewards:
+  - type: "CURRENCY"
+    currency_id: "coins"
+    amount: 200
+  - type: "EXPERIENCE"
+    amount: 100
+
+prerequisites:
+  - "apprentice_baker"
+
+requirements: []
+
+attributes:
+  repeatable: true
+  repeat_cooldown: 86400
+  hidden: false
+  quest_type: "DAILY"
+  time_limit: 0
+  min_level: 1
+  max_concurrent: 1
+  auto_start: false
+  show_in_log: true
+
+effects:
+  start_particle: "VILLAGER_HAPPY"
+  complete_particle: "HEART"
+  start_sound: "BLOCK_FURNACE_FIRE_CRACKLE"
+  complete_sound: "ENTITY_PLAYER_LEVELUP"
+
+failure_conditions:
+  fail_on_death: false
+  fail_on_logout: false
+  fail_on_timeout: false
+
+metadata:
+  author: "RDQ Team"
+  created: "2026-03-16"
+  modified: "2026-03-16"
+  version: "1.0.0"
+  tags:
+    - "baker"
+    - "daily"
+    - "repeatable"
+    - "crafting"

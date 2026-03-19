@@ -1,0 +1,90 @@
+# ============================================================================
+# BAKER QUEST: Grand Baker
+# ============================================================================
+# Expert-level baking quest with massive production requirements.
+# Fourth quest in the baker progression chain.
+# ============================================================================
+
+identifier: "grand_baker"
+category: "baker"
+difficulty: HARD
+
+icon:
+  material: "ENCHANTED_GOLDEN_APPLE"
+  display_name_key: "quest.grand_baker.name"
+  description_key: "quest.grand_baker.description"
+  custom_model_data: 3003
+  enchanted: true
+
+tasks:
+  - identifier: "craft_cakes_bulk"
+    type: "CRAFT_ITEMS"
+    target: "CAKE"
+    amount: 25
+    icon:
+      material: "CAKE"
+      display_name_key: "quest.grand_baker.task1.name"
+  
+  - identifier: "craft_pumpkin_pies_bulk"
+    type: "CRAFT_ITEMS"
+    target: "PUMPKIN_PIE"
+    amount: 50
+    icon:
+      material: "PUMPKIN_PIE"
+      display_name_key: "quest.grand_baker.task2.name"
+  
+  - identifier: "collect_milk_buckets"
+    type: "COLLECT_ITEMS"
+    target: "MILK_BUCKET"
+    amount: 32
+    icon:
+      material: "MILK_BUCKET"
+      display_name_key: "quest.grand_baker.task3.name"
+
+rewards:
+  - type: "CURRENCY"
+    currency_id: "coins"
+    amount: 1000
+  - type: "EXPERIENCE"
+    amount: 600
+  - type: "TITLE"
+    title_id: "grand_baker"
+
+prerequisites:
+  - "master_baker"
+
+requirements: []
+
+attributes:
+  repeatable: false
+  hidden: false
+  quest_type: "MAIN"
+  time_limit: 0
+  min_level: 20
+  max_concurrent: 1
+  auto_start: false
+  show_in_log: true
+  chain_id: "baker_chain"
+  chain_order: 4
+
+effects:
+  start_particle: "ENCHANT"
+  complete_particle: "END_ROD"
+  start_sound: "BLOCK_ENCHANTMENT_TABLE_USE"
+  complete_sound: "UI_TOAST_CHALLENGE_COMPLETE"
+
+failure_conditions:
+  fail_on_death: false
+  fail_on_logout: false
+  fail_on_timeout: false
+
+metadata:
+  author: "RDQ Team"
+  created: "2026-03-16"
+  modified: "2026-03-16"
+  version: "1.0.0"
+  tags:
+    - "baker"
+    - "expert"
+    - "crafting"
+    - "chain"

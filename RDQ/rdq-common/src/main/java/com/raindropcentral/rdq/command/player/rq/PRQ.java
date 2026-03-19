@@ -7,6 +7,8 @@ import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
 import com.raindropcentral.rdq.view.admin.AdminOverviewView;
 import com.raindropcentral.rdq.view.bounty.BountyMainView;
 import com.raindropcentral.rdq.view.main.MainOverviewView;
+import com.raindropcentral.rdq.view.perks.PerkOverviewView;
+import com.raindropcentral.rdq.view.quest.QuestCategoryView;
 import com.raindropcentral.rdq.view.ranks.RankMainView;
 import de.jexcellence.jextranslate.i18n.I18n;
 import org.bukkit.entity.Player;
@@ -143,7 +145,7 @@ public class PRQ extends PlayerCommand {
                     return;
                 }
                 this.rdq.getViewFrame().open(
-                    com.raindropcentral.rdq.view.quest.QuestCategoryView.class,
+                    QuestCategoryView.class,
                     player,
                     Map.of(
                         "plugin",
@@ -187,7 +189,7 @@ public class PRQ extends PlayerCommand {
                 }
                 
                 this.rdq.getViewFrame().open(
-                    com.raindropcentral.rdq.view.perks.PerkOverviewView.class,
+                    PerkOverviewView.class,
                     player,
                     Map.of(
                         "plugin",
