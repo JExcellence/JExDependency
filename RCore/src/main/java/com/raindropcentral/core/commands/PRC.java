@@ -34,6 +34,7 @@ import java.util.regex.Pattern;
  * key argument for both actions.</p>
  */
 @Command
+@SuppressWarnings("unused")
 public final class PRC extends PlayerCommand {
     
     private static final Pattern API_KEY_PATTERN = Pattern.compile("^[A-Za-z0-9_-]{32,128}$");
@@ -75,7 +76,7 @@ public final class PRC extends PlayerCommand {
         switch (action) {
             case CONNECT -> this.handleConnect(player, args);
             case DISCONNECT -> this.handleDisconnect(player, args);
-            case INVALID -> this.sendUsage(player);
+            default -> this.sendUsage(player);
         }
     }
 
