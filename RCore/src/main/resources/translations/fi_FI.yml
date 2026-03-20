@@ -3,13 +3,13 @@
 prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
 
 rcconnect:
-  usage: "<gray>Käyttö: /rcconnect <api-key></gray>"
+  usage: "<gray>Käyttö: /rc <connect|disconnect> <api-key></gray>"
   connecting: "<yellow>Yhdistetään RaindropCentraliin...</yellow>"
   success: "<green>Yhteys RaindropCentraliin muodostettiin onnistuneesti!</green> <gray>Palvelin lähettää nyt heartbeat-signaaleja.</gray>"
   error:
     invalid_key: "<red>Virheellinen API-avaimen muoto. API-avainten tulee olla 32-128 aakkosnumeerista merkkiä.</red>"
     uuid_mismatch: "<red>Tämä API-avain kuuluu toiselle Minecraft-tilille.</red>"
-    already_connected: "<yellow>Palvelin on jo yhdistetty.</yellow> <gray>Käytä ensin komentoa /rcdisconnect.</gray>"
+    already_connected: "<yellow>Palvelin on jo yhdistetty.</yellow> <gray>Käytä ensin komentoa /rc disconnect <api-key>.</gray>"
     network: "<red>Verkkovirhe: %error%</red>"
 
 rcdisconnect:

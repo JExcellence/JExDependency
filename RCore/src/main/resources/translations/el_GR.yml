@@ -3,13 +3,13 @@
 prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
 
 rcconnect:
-  usage: "<gray>Χρήση: /rcconnect <api-key></gray>"
+  usage: "<gray>Χρήση: /rc <connect|disconnect> <api-key></gray>"
   connecting: "<yellow>Σύνδεση με το RaindropCentral...</yellow>"
   success: "<green>Η σύνδεση με το RaindropCentral ολοκληρώθηκε με επιτυχία!</green> <gray>Ο διακομιστής στέλνει πλέον heartbeat σήματα.</gray>"
   error:
     invalid_key: "<red>Μη έγκυρη μορφή κλειδιού API. Τα κλειδιά API πρέπει να έχουν 32-128 αλφαριθμητικούς χαρακτήρες.</red>"
     uuid_mismatch: "<red>Αυτό το κλειδί API ανήκει σε διαφορετικό λογαριασμό Minecraft.</red>"
-    already_connected: "<yellow>Ο διακομιστής είναι ήδη συνδεδεμένος.</yellow> <gray>Χρησιμοποιήστε πρώτα το /rcdisconnect.</gray>"
+    already_connected: "<yellow>Ο διακομιστής είναι ήδη συνδεδεμένος.</yellow> <gray>Χρησιμοποιήστε πρώτα το /rc disconnect <api-key>.</gray>"
     network: "<red>Σφάλμα δικτύου: %error%</red>"
 
 rcdisconnect:

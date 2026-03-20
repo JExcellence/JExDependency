@@ -3,13 +3,13 @@
 prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
 
 rcconnect:
-  usage: "<gray>Uso: /rcconnect <api-key></gray>"
+  usage: "<gray>Uso: /rc <connect|disconnect> <api-key></gray>"
   connecting: "<yellow>Connessione a RaindropCentral...</yellow>"
   success: "<green>Connessione a RaindropCentral riuscita!</green> <gray>Il server sta ora inviando heartbeat.</gray>"
   error:
     invalid_key: "<red>Formato della chiave API non valido. Le chiavi API devono contenere 32-128 caratteri alfanumerici.</red>"
     uuid_mismatch: "<red>Questa chiave API appartiene a un account Minecraft diverso.</red>"
-    already_connected: "<yellow>Il server e gia connesso.</yellow> <gray>Usa prima /rcdisconnect.</gray>"
+    already_connected: "<yellow>Il server e gia connesso.</yellow> <gray>Usa prima /rc disconnect <api-key>.</gray>"
     network: "<red>Errore di rete: %error%</red>"
 
 rcdisconnect:

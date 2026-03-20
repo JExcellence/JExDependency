@@ -18,17 +18,20 @@ import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Command section configuration for /rcdisconnect command.
- * Loads configuration from resources/commands/rcdisconnect.yml
+ * Command section configuration for the {@code /rc} command.
+ *
+ * <p>Loads command metadata from {@code resources/commands/rc.yml}.</p>
  */
-public final class RCDisconnectSection extends ACommandSection {
+public final class PRCSection extends ACommandSection {
 
-    private static final String COMMAND_NAME = "rcdisconnect";
+    private static final String COMMAND_NAME = "rc";
 
     /**
-     * Executes RCDisconnectSection.
+     * Creates the command section for the central integration command.
+     *
+     * @param evaluationEnvironmentBuilder expression environment used by evaluable command sections
      */
-    public RCDisconnectSection(final @NotNull EvaluationEnvironmentBuilder evaluationEnvironmentBuilder) {
+    public PRCSection(final @NotNull EvaluationEnvironmentBuilder evaluationEnvironmentBuilder) {
         super(COMMAND_NAME, evaluationEnvironmentBuilder);
     }
 }

@@ -3,13 +3,13 @@
 prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
 
 rcconnect:
-  usage: "<gray>Bruk: /rcconnect <api-key></gray>"
+  usage: "<gray>Bruk: /rc <connect|disconnect> <api-key></gray>"
   connecting: "<yellow>Kobler til RaindropCentral...</yellow>"
   success: "<green>Tilkobling til RaindropCentral var vellykket!</green> <gray>Serveren sender naa heartbeats.</gray>"
   error:
     invalid_key: "<red>Ugyldig API-noekkel format. API-noekler skal vaere 32-128 alfanumeriske tegn.</red>"
     uuid_mismatch: "<red>Denne API-noekkelen tilhoerer en annen Minecraft-konto.</red>"
-    already_connected: "<yellow>Serveren er allerede tilkoblet.</yellow> <gray>Bruk /rcdisconnect foerst.</gray>"
+    already_connected: "<yellow>Serveren er allerede tilkoblet.</yellow> <gray>Bruk /rc disconnect <api-key> foerst.</gray>"
     network: "<red>Nettverksfeil: %error%</red>"
 
 rcdisconnect:

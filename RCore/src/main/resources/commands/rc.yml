@@ -1,0 +1,21 @@
+commands:
+  rc:
+    name: 'rc'
+    description: 'Manage this server connection to RaindropCentral'
+    aliases: []
+    usage: 'rc <connect|disconnect> <api-key>'
+    errorMessages:
+      invalidKey$: 'lut["prefix"] & "&cInvalid API key format"'
+      uuidMismatch$: 'lut["prefix"] & "&cThis API key belongs to a different Minecraft account"'
+      alreadyConnected$: 'lut["prefix"] & "&eServer is already connected. Use /rc disconnect <api-key> first"'
+      networkError$: 'lut["prefix"] & "&cNetwork error: " & error'
+      notConnected$: 'lut["prefix"] & "&cServer is not connected to RaindropCentral"'
+      disconnectFailed$: 'lut["prefix"] & "&cFailed to disconnect: " & error'
+    permissions:
+      missingMessage$: 'lut["prefix"] & "&cYou lack the permission: " & permission'
+      nodes:
+        connect: 'rcore.central.connect'
+        disconnect: 'rcore.central.disconnect'
+
+lut:
+  prefix: '&8[&bRaindropCentral&8] &7'

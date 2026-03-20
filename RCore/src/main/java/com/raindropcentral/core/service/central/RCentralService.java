@@ -138,11 +138,26 @@ public class RCentralService {
     }
 
     /**
-     * Executes disconnect.
+     * Disconnects from RaindropCentral by using the configured API key.
+     *
+     * @return asynchronous result indicating whether disconnect succeeded
      */
     public CompletableFuture<Boolean> disconnect() {
         var apiKey = config.getString("connection.api-key");
         if (apiKey == null) {
+            return CompletableFuture.completedFuture(false);
+        }
+        return disconnect(apiKey);
+    }
+
+    /**
+     * Disconnects from RaindropCentral using a provided API key.
+     *
+     * @param apiKey API key that must match the stored connection key
+     * @return asynchronous result indicating whether disconnect succeeded
+     */
+    public CompletableFuture<Boolean> disconnect(final @NotNull String apiKey) {
+        if (!matchesStoredApiKey(apiKey)) {
             return CompletableFuture.completedFuture(false);
         }
 
@@ -162,6 +177,17 @@ public class RCentralService {
                     }
                     return false;
                 });
+    }
+
+    /**
+     * Verifies whether the provided API key matches the currently connected server key.
+     *
+     * @param apiKey API key provided by the command sender
+     * @return {@code true} when the key matches the stored key, otherwise {@code false}
+     */
+    public boolean matchesStoredApiKey(final @NotNull String apiKey) {
+        var configuredApiKey = config.getString("connection.api-key");
+        return configuredApiKey != null && configuredApiKey.equals(apiKey);
     }
 
     /**
@@ -249,8 +275,8 @@ public class RCentralService {
                         
                         startHeartbeat(apiKey);
                     } else {
-                        LOGGER.warning("Wakeup ping failed: " + response.statusCode() + 
-                                " - Server will need manual reconnection via /rcconnect");
+                        LOGGER.warning("Wakeup ping failed: " + response.statusCode() +
+                                " - Server will need manual reconnection via /rc connect <api-key>");
                         if (response.statusCode() == 401 || response.statusCode() == 403) {
                             config.set("connection.api-key", null);
                             plugin.saveConfig();

@@ -3,13 +3,13 @@
 prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
 
 rcconnect:
-  usage: "<gray>用法: /rcconnect <api-key></gray>"
+  usage: "<gray>用法: /rc <connect|disconnect> <api-key></gray>"
   connecting: "<yellow>正在连接到 RaindropCentral...</yellow>"
   success: "<green>已成功连接到 RaindropCentral！</green> <gray>服务器现在正在发送心跳。</gray>"
   error:
     invalid_key: "<red>API 密钥格式无效。API 密钥应为 32-128 个字母数字字符。</red>"
     uuid_mismatch: "<red>此 API 密钥属于另一个 Minecraft 账号。</red>"
-    already_connected: "<yellow>服务器已连接。</yellow> <gray>请先使用 /rcdisconnect。</gray>"
+    already_connected: "<yellow>服务器已连接。</yellow> <gray>请先使用 /rc disconnect <api-key>。</gray>"
     network: "<red>网络错误: %error%</red>"
 
 rcdisconnect:

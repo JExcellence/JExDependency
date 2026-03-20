@@ -3,13 +3,13 @@
 prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
 
 rcconnect:
-  usage: "<gray>Kullanim: /rcconnect <api-key></gray>"
+  usage: "<gray>Kullanim: /rc <connect|disconnect> <api-key></gray>"
   connecting: "<yellow>RaindropCentral'a baglaniliyor...</yellow>"
   success: "<green>RaindropCentral'a basariyla baglanildi!</green> <gray>Sunucu artik heartbeat gonderiyor.</gray>"
   error:
     invalid_key: "<red>Gecersiz API anahtari bicimi. API anahtarlari 32-128 alfanumerik karakter olmali.</red>"
     uuid_mismatch: "<red>Bu API anahtari farkli bir Minecraft hesabina ait.</red>"
-    already_connected: "<yellow>Sunucu zaten bagli.</yellow> <gray>Once /rcdisconnect kullanin.</gray>"
+    already_connected: "<yellow>Sunucu zaten bagli.</yellow> <gray>Once /rc disconnect <api-key> kullanin.</gray>"
     network: "<red>Ag hatasi: %error%</red>"
 
 rcdisconnect:

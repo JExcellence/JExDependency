@@ -3,13 +3,13 @@
 prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
 
 rcconnect:
-  usage: "<gray>Použití: /rcconnect <api-key></gray>"
+  usage: "<gray>Použití: /rc <connect|disconnect> <api-key></gray>"
   connecting: "<yellow>Připojování k RaindropCentral...</yellow>"
   success: "<green>Připojení k RaindropCentral bylo úspěšné!</green> <gray>Server nyní odesílá heartbeat signály.</gray>"
   error:
     invalid_key: "<red>Neplatný formát API klíče. API klíče musí mít 32-128 alfanumerických znaků.</red>"
     uuid_mismatch: "<red>Tento API klíč patří k jinému účtu Minecraft.</red>"
-    already_connected: "<yellow>Server je již připojen.</yellow> <gray>Nejprve použijte /rcdisconnect.</gray>"
+    already_connected: "<yellow>Server je již připojen.</yellow> <gray>Nejprve použijte /rc disconnect <api-key>.</gray>"
     network: "<red>Chyba sítě: %error%</red>"
 
 rcdisconnect:

@@ -3,13 +3,13 @@
 prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
 
 rcconnect:
-  usage: "<gray>الاستخدام: /rcconnect <api-key></gray>"
+  usage: "<gray>الاستخدام: /rc <connect|disconnect> <api-key></gray>"
   connecting: "<yellow>جاري الاتصال بـ RaindropCentral...</yellow>"
   success: "<green>تم الاتصال بـ RaindropCentral بنجاح!</green> <gray>السيرفر بيبعت نبضات دلوقتي.</gray>"
   error:
     invalid_key: "<red>صيغة مفتاح الـ API غير صحيحة. لازم مفتاح الـ API يكون من 32 إلى 128 حرف أو رقم.</red>"
     uuid_mismatch: "<red>مفتاح الـ API ده تابع لحساب Minecraft مختلف.</red>"
-    already_connected: "<yellow>السيرفر متصل بالفعل.</yellow> <gray>استخدم /rcdisconnect الأول.</gray>"
+    already_connected: "<yellow>السيرفر متصل بالفعل.</yellow> <gray>استخدم /rc disconnect <api-key> الأول.</gray>"
     network: "<red>خطأ في الشبكة: %error%</red>"
 
 rcdisconnect:

@@ -105,13 +105,8 @@ RCore is mostly infrastructure, but it includes connection commands for Raindrop
 
 | Command | Description | Permission |
 |---|---|---|
-| `/rcconnect <api-key>` | Connect this server to RaindropCentral | `rcore.central.connect` |
-| `/rcdisconnect` | Disconnect this server from RaindropCentral | `rcore.central.disconnect` |
-
-Aliases:
-
-- `/rclink` for `/rcconnect`
-- `/rcunlink` for `/rcdisconnect`
+| `/rc connect <api-key>` | Connect this server to RaindropCentral | `rcore.central.connect` |
+| `/rc disconnect <api-key>` | Disconnect this server from RaindropCentral | `rcore.central.disconnect` |
 
 ## Permissions
 

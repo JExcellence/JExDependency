@@ -3,13 +3,13 @@
 prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
 
 rcconnect:
-  usage: "<gray>Gebruik: /rcconnect <api-key></gray>"
+  usage: "<gray>Gebruik: /rc <connect|disconnect> <api-key></gray>"
   connecting: "<yellow>Verbinding maken met RaindropCentral...</yellow>"
   success: "<green>Succesvol verbonden met RaindropCentral!</green> <gray>Server verzendt nu heartbeats.</gray>"
   error:
     invalid_key: "<red>Ongeldig API-sleutelformaat. API-sleutels moeten 32-128 alfanumerieke tekens bevatten.</red>"
     uuid_mismatch: "<red>Deze API-sleutel hoort bij een ander Minecraft-account.</red>"
-    already_connected: "<yellow>Server is al verbonden.</yellow> <gray>Gebruik eerst /rcdisconnect.</gray>"
+    already_connected: "<yellow>Server is al verbonden.</yellow> <gray>Gebruik eerst /rc disconnect <api-key>.</gray>"
     network: "<red>Netwerkfout: %error%</red>"
 
 rcdisconnect:
