@@ -20,7 +20,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Command section configuration for the {@code /rc} command.
  *
- * <p>Loads command metadata from {@code resources/commands/rc.yml}.</p>
+ * <p>Loads command metadata from {@code resources/commands/prc.yml}.</p>
  */
 public final class PRCSection extends ACommandSection {
 

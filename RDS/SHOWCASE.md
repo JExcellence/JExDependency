@@ -1,4 +1,4 @@
-# RDS Showcase
+# RDS (RaindropShops)
 
 RDS (RaindropShops) is a feature-rich Minecraft shop plugin for Paper, Spigot, and Folia servers that offers scalable player shops, server-admin shops, smart stock behavior, and economy-aware taxation.
 

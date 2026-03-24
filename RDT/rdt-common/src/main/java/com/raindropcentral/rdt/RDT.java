@@ -48,30 +48,24 @@ import com.raindropcentral.rplatform.proxy.NoOpProxyService;
 import com.raindropcentral.rplatform.proxy.ProxyActionResult;
 import com.raindropcentral.rplatform.proxy.ProxyService;
 import com.raindropcentral.rplatform.RPlatform;
-import com.raindropcentral.rplatform.api.PlatformAPIFactory;
 import com.raindropcentral.rplatform.api.PlatformType;
 import com.raindropcentral.rplatform.scheduler.ISchedulerAdapter;
 import com.raindropcentral.rplatform.service.ServiceRegistry;
-import de.jexcellence.hibernate.JEHibernate;
 import jakarta.persistence.EntityManagerFactory;
 import me.devnatan.inventoryframework.AnvilInputFeature;
 import me.devnatan.inventoryframework.ViewFrame;
 import org.bukkit.Server;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jspecify.annotations.NonNull;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.CompletableFuture;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -104,6 +98,7 @@ public class RDT {
     private PlatformType platformType;
     private ProxyService proxyService;
     private TownSpawnService townSpawnService;
+    private volatile CompletableFuture<Void> enableFuture;
 
     private Object economyInstance;
     private ViewFrame viewFrame;
@@ -139,30 +134,36 @@ public class RDT {
      * Initializes repositories, views, and runtime services.
      */
     public void onEnable() {
-        this.getLogger().info("Enabling RDT (" + this.edition + ") Edition");
-        this.platform.initialize();
-        this.platformType = PlatformAPIFactory.detectPlatformType();
-        this.scheduler = this.platform.getScheduler();
-        this.executor = Executors.newFixedThreadPool(4);
-        this.initializeProxyService();
-        this.townSpawnService = new TownSpawnService(this);
-        this.ensureDefaultConfigFile();
-
-        try {
-            this.initializeHibernate();
-            this.initializeRepositories();
-            this.getLogger().info("Hibernate initialized");
-        } catch (final Exception exception) {
-            this.getLogger().warning("Failed to initialize RDT persistence: " + exception.getMessage());
-            this.onDisable();
+        if (this.enableFuture != null && !this.enableFuture.isDone()) {
+            this.getLogger().warning("Enable sequence already in progress for RDT (" + this.edition + ")");
             return;
         }
 
-        this.getLogger().info("Connecting to economy");
-        this.initializePlugins();
-        this.initializeCommands();
-        this.initializeViews();
-        this.bossBarFactory = new BossBarFactory(this);
+        this.getLogger().info("Enabling RDT (" + this.edition + ") Edition");
+        this.enableFuture = this.platform.initialize()
+                .thenCompose(ignored -> this.runSync(() -> {
+                    this.entityManagerFactory = this.requireEntityManagerFactory();
+                    this.platformType = this.platform.getPlatformType();
+                    this.scheduler = this.platform.getScheduler();
+                    this.initializeProxyService();
+                    this.townSpawnService = new TownSpawnService(this);
+                    this.ensureDefaultConfigFile();
+                    this.initializeRepositories();
+                    this.getLogger().info("Persistence initialized via RPlatform");
+                    this.getLogger().info("Connecting to economy");
+                    this.initializePlugins();
+                    this.initializeCommands();
+                    this.initializeViews();
+                    this.bossBarFactory = new BossBarFactory(this);
+                    this.getLogger().info("RDT (" + this.edition + ") Edition enabled successfully");
+                }))
+                .exceptionally(throwable -> {
+                    this.runSync(() -> {
+                        this.getLogger().log(Level.SEVERE, "Failed to initialize RDT (" + this.edition + ")", throwable);
+                        this.plugin.getServer().getPluginManager().disablePlugin(this.plugin);
+                    });
+                    return null;
+                });
     }
 
     /**
@@ -307,37 +308,25 @@ public class RDT {
         );
     }
 
-    @SuppressWarnings("resource")
-    private void initializeHibernate() throws IOException {
-        final File file = this.getHibernateFile();
-
-        if (!file.exists()) {
-            try (InputStream in = this.plugin.getResource("database/hibernate.properties")) {
-                if (in == null) {
-                    throw new IOException("Missing resource com.raindropcentral.rdt.database/hibernate.properties");
-                }
-                Files.copy(in, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
-            }
+    private @NotNull EntityManagerFactory requireEntityManagerFactory() {
+        final EntityManagerFactory factory = this.platform.getEntityManagerFactory();
+        if (factory == null) {
+            throw new IllegalStateException("RPlatform did not initialize the entity manager factory.");
         }
-
-        this.entityManagerFactory =
-                new JEHibernate(file.getAbsolutePath())
-                        .getEntityManagerFactory();
+        return factory;
     }
 
-    @Contract(" -> new")
-    private @NonNull File getHibernateFile() throws IOException {
-        final File data = this.plugin.getDataFolder();
-        if (!data.exists() && !data.mkdirs()) {
-            throw new IOException("Could not create data folder");
-        }
-
-        final File db = new File(data, "database");
-        if (!db.exists() && !db.mkdirs()) {
-            throw new IOException("Could not create com.raindropcentral.rdt.database folder");
-        }
-
-        return new File(db, "hibernate.properties");
+    private @NotNull CompletableFuture<Void> runSync(final @NotNull Runnable task) {
+        final CompletableFuture<Void> future = new CompletableFuture<>();
+        this.platform.getScheduler().runSync(() -> {
+            try {
+                task.run();
+                future.complete(null);
+            } catch (final Throwable throwable) {
+                future.completeExceptionally(throwable);
+            }
+        });
+        return future;
     }
 
     private void initializeViews() {
@@ -372,14 +361,9 @@ public class RDT {
         this.viewFrame = frame.register();
     }
 
+    
     /**
-     * Executes method.
-     */
-    /**
-     * Executes this member.
-     */
-    /**
-     * Gets eco.
+     * Gets eco. Executes this member.
      */
     public @Nullable net.milkbowl.vault.economy.Economy getEco() {
         if (this.economyInstance == null) return null;

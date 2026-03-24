@@ -37,8 +37,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.util.concurrent.CompletableFuture;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Primary orchestrator for the shared Raindrop platform runtime that binds plugin lifecycle.
@@ -167,6 +165,9 @@ public class RPlatform {
      * Asynchronously initializes translation, command, and database resources required by the.
      * platform. Subsequent invocations no-op once initialization finishes.
      *
+     * <p>The scheduler first performs requirement and database bootstrap on the platform's
+     * synchronous execution context, then awaits asynchronous translation loading.</p>
+     *
      * @return a future that completes when asynchronous resource setup finishes or immediately when
      *         initialization has already been performed
      */
@@ -174,8 +175,8 @@ public class RPlatform {
         if (initialized) {
             return CompletableFuture.completedFuture(null);
         }
-        logger.info("Preparing Async translation task");
-        return CompletableFuture.runAsync(() -> {
+        logger.info("Preparing platform initialization task");
+        return this.runSyncFuture(() -> {
             logger.info("Initializing RPlatform for " + platformType.name());
 
             // Initialize requirement system first
@@ -194,7 +195,7 @@ public class RPlatform {
             
             logger.info("RPlatform initialized successfully");
             initialized = true;
-        }, scheduler::runAsync).thenCompose(v -> {
+        }).thenCompose(v -> {
             // Initialize translations after platform setup - must be awaited
             logger.info("Initializing translation system...");
             return translationManager.initialize().thenRun(() -> {
@@ -207,6 +208,19 @@ public class RPlatform {
                 // translationManager.cleanupUnsupportedFiles();
             });
         });
+    }
+
+    private @NotNull CompletableFuture<Void> runSyncFuture(final @NotNull Runnable task) {
+        final CompletableFuture<Void> future = new CompletableFuture<>();
+        this.scheduler.runSync(() -> {
+            try {
+                task.run();
+                future.complete(null);
+            } catch (final Throwable throwable) {
+                future.completeExceptionally(throwable);
+            }
+        });
+        return future;
     }
 
     /**

@@ -1,4 +1,4 @@
-# RCore Showcase
+# RCore
 
 RCore is the **free core dependency plugin** for the [RaindropCentral](<https://raindropcentral.com>) stack.  
 It powers shared systems for **[RDQ (RaindropQuests)](<https://raindropcentral.com/products/rdq-free>)**, **[RDR (RaindropReserve)](<https://raindropcentral.com/products/rdr-free>)**, and **[RDS (RaindropShops)](<https://raindropcentral.com/products/rds-free>)**.

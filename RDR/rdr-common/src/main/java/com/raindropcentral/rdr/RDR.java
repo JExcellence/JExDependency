@@ -15,16 +15,16 @@ package com.raindropcentral.rdr;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.raindropcentral.commands.CommandFactory;
@@ -79,7 +79,6 @@ import com.raindropcentral.rdr.view.TradeSessionView;
 import com.raindropcentral.rdr.view.TradeTaxView;
 import com.raindropcentral.rdr.view.TradeTargetSelectView;
 import com.raindropcentral.rplatform.RPlatform;
-import com.raindropcentral.rplatform.api.PlatformAPIFactory;
 import com.raindropcentral.rplatform.api.PlatformType;
 import com.raindropcentral.rplatform.api.luckperms.LuckPermsService;
 import com.raindropcentral.rplatform.metrics.BStatsMetrics;
@@ -88,7 +87,6 @@ import com.raindropcentral.rplatform.proxy.NoOpProxyService;
 import com.raindropcentral.rplatform.proxy.ProxyService;
 import com.raindropcentral.rplatform.scheduler.ISchedulerAdapter;
 import com.raindropcentral.rplatform.service.ServiceRegistry;
-import de.jexcellence.hibernate.JEHibernate;
 import jakarta.persistence.EntityManagerFactory;
 import me.devnatan.inventoryframework.AnvilInputFeature;
 import me.devnatan.inventoryframework.ViewFrame;
@@ -96,10 +94,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jspecify.annotations.NonNull;
 
 /**
  * Shared runtime bootstrap for RDR editions.
@@ -141,6 +137,7 @@ public class RDR {
     private TradeInboxPollService tradeInboxPollService;
     private BStatsMetrics metrics;
     private PlaceholderRegistry placeholderRegistry;
+    private volatile CompletableFuture<Void> enableFuture;
 
     private RRDRPlayer playerRepository;
     private RRStorage storageRepository;
@@ -180,37 +177,41 @@ public class RDR {
      * Initializes persistence, commands, listeners, and views for the running edition.
      */
     public void onEnable() {
-        this.getLogger().info("Enabling RDR (" + this.edition + ") Edition");
-
-        this.platform.initialize();
-        this.initializeMetrics();
-        this.platformType = PlatformAPIFactory.detectPlatformType();
-        this.scheduler = this.platform.getScheduler();
-        this.initializeProxyService();
-        this.executor = Executors.newFixedThreadPool(4);
-        this.ensureDefaultConfigFile();
-        this.getDefaultConfig().logMissingRequirementWarnings(this.getLogger());
-        RDRRequirementSetup.initialize(this);
-        this.serverUuid = this.loadOrCreateServerUuid();
-
-        try {
-            this.initializeHibernate();
-            this.initializeRepositories();
-        } catch (final Exception exception) {
-            this.getLogger().warning("Failed to initialize RDR persistence: " + exception.getMessage());
-            this.onDisable();
+        if (this.enableFuture != null && !this.enableFuture.isDone()) {
+            this.getLogger().warning("Enable sequence already in progress for RDR (" + this.edition + ")");
             return;
         }
 
-        this.initializePlugins();
-        this.initializeAdminPlayerSettings();
-        this.initializeCommands();
-        this.initializeViews();
-        this.initializeTradeServices();
-        this.initializeStorageSidebarScoreboards();
-        this.initializeStorageFilledTaxScheduler();
-        this.initializePlaceholderExpansion();
-        this.getLogger().info("RDR (" + this.edition + ") Edition enabled successfully");
+        this.getLogger().info("Enabling RDR (" + this.edition + ") Edition");
+        this.enableFuture = this.platform.initialize()
+            .thenCompose(ignored -> this.runSync(() -> {
+                this.entityManagerFactory = this.requireEntityManagerFactory();
+                this.initializeMetrics();
+                this.platformType = this.platform.getPlatformType();
+                this.scheduler = this.platform.getScheduler();
+                this.initializeProxyService();
+                this.ensureDefaultConfigFile();
+                this.getDefaultConfig().logMissingRequirementWarnings(this.getLogger());
+                RDRRequirementSetup.initialize(this);
+                this.serverUuid = this.loadOrCreateServerUuid();
+                this.initializeRepositories();
+                this.initializePlugins();
+                this.initializeAdminPlayerSettings();
+                this.initializeCommands();
+                this.initializeViews();
+                this.initializeTradeServices();
+                this.initializeStorageSidebarScoreboards();
+                this.initializeStorageFilledTaxScheduler();
+                this.initializePlaceholderExpansion();
+                this.getLogger().info("RDR (" + this.edition + ") Edition enabled successfully");
+            }))
+            .exceptionally(throwable -> {
+                this.runSync(() -> {
+                    this.getLogger().log(Level.SEVERE, "Failed to initialize RDR (" + this.edition + ")", throwable);
+                    this.plugin.getServer().getPluginManager().disablePlugin(this.plugin);
+                });
+                return null;
+            });
     }
 
     /**
@@ -889,37 +890,25 @@ public class RDR {
         );
     }
 
-    @SuppressWarnings("resource")
-    private void initializeHibernate() throws IOException {
-        final File file = this.getHibernateFile();
-
-        if (!file.exists()) {
-            try (InputStream in = this.plugin.getResource("database/hibernate.properties")) {
-                if (in == null) {
-                    throw new IOException("Missing resource com.raindropcentral.rdr.database/hibernate.properties");
-                }
-                Files.copy(in, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
-            }
+    private @NotNull EntityManagerFactory requireEntityManagerFactory() {
+        final EntityManagerFactory factory = this.platform.getEntityManagerFactory();
+        if (factory == null) {
+            throw new IllegalStateException("RPlatform did not initialize the entity manager factory.");
         }
-
-        this.entityManagerFactory =
-            new JEHibernate(file.getAbsolutePath())
-                .getEntityManagerFactory();
+        return factory;
     }
 
-    @Contract(" -> new")
-    private @NonNull File getHibernateFile() throws IOException {
-        final File data = this.plugin.getDataFolder();
-        if (!data.exists() && !data.mkdirs()) {
-            throw new IOException("Could not create data folder");
-        }
-
-        final File db = new File(data, "database");
-        if (!db.exists() && !db.mkdirs()) {
-            throw new IOException("Could not create com.raindropcentral.rdr.database folder");
-        }
-
-        return new File(db, "hibernate.properties");
+    private @NotNull CompletableFuture<Void> runSync(final @NotNull Runnable task) {
+        final CompletableFuture<Void> future = new CompletableFuture<>();
+        this.platform.getScheduler().runSync(() -> {
+            try {
+                task.run();
+                future.complete(null);
+            } catch (final Throwable throwable) {
+                future.completeExceptionally(throwable);
+            }
+        });
+        return future;
     }
 
     private void initializeViews() {
