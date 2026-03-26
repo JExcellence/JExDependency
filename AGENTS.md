@@ -106,8 +106,8 @@ After making changes, the agent MUST attempt to run the following commands local
 
 ### Gradle (preferred)
 - Run style verification: `./gradlew clean verifyGoogleJavaStyle`
-- Use project specific building such as `./gradlew clean RDR:build`
-- Use project specific Javadocs such as `./gradlew RDR:javadoc` (or the repo’s Javadoc task if named differently)
+- Use project specific building such as `./gradlew clean :RDR:rdr-free:build`
+- Use project specific Javadocs such as `./gradlew :RDR:rdr-free:javadoc` (or the repo’s Javadoc task if named differently)
 
 If the repo uses multi-module builds, run at root and ensure all modules succeed.
 
