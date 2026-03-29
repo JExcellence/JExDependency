@@ -19,7 +19,7 @@
 This repository follows strict Java coding and documentation standards. Any AI agent contributing code MUST comply with the rules below.
 
 ## 1) Language + Tooling
-- Java version: **Java 24**
+- Java version: **Java 21**
 - Build tool: **Gradle (Kotlin DSL)** unless otherwise stated by the repo.
 - Prefer modern Java features where appropriate (records, switch expressions, `var` where readable, sealed types when useful).
 
