@@ -240,7 +240,7 @@ jobs:
     needs:
       - detect-version-changes
       - wait-for-java-tests
-    if: ${{ needs.detect-version-changes.outputs.has-changes == 'true' }}
+    if: ${{ github.ref != 'refs/heads/staging' && needs.detect-version-changes.outputs.has-changes == 'true' }}
     # Build-heavy work is pinned to the self-hosted runner labels below.
     runs-on:
       - self-hosted
