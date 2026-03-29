@@ -104,12 +104,13 @@ public class RDQPlayerJoinListener implements Listener {
             return;
         }
 
-        this.rdq.getPlatform().getScheduler().runDelayed(() -> {
-            if (!player.isOnline()) {
-                return;
-            }
+        this.rdq.getPlatform().getScheduler().runDelayed(() ->
+                this.rdq.getPlatform().getScheduler().runAtEntity(player, () -> {
+                    if (!player.isOnline()) {
+                        return;
+                    }
 
-            this.rdq.getPerkSidebarScoreboardService().enable(player);
-        }, 20L);
+                    this.rdq.getPerkSidebarScoreboardService().enable(player);
+                }), 20L);
     }
 }

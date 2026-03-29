@@ -637,7 +637,7 @@ public class RankProgressionManager {
 			}
 			
 			// Fire custom event - RankRewardListener will handle the rewards
-			Bukkit.getScheduler().runTask(this.rdq.getPlugin(), () -> {
+			this.rdq.getPlatform().getScheduler().runAtEntity(player, () -> {
 				final RankAssignedEvent event = new RankAssignedEvent(player, rdqPlayer, rank);
 				Bukkit.getPluginManager().callEvent(event);
 			});

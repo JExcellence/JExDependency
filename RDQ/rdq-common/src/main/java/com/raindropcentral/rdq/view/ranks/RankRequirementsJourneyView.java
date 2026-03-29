@@ -25,6 +25,7 @@ import com.raindropcentral.rdq.manager.RankRequirementProgressManager.Requiremen
 import com.raindropcentral.rdq.view.ranks.util.RequirementCardRenderer;
 import com.raindropcentral.rdq.view.ranks.util.RequirementProgressRenderer;
 import com.raindropcentral.rplatform.logging.CentralLogger;
+import com.raindropcentral.rplatform.scheduler.CancellableTaskHandle;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import com.raindropcentral.rplatform.view.BaseView;
 import me.devnatan.inventoryframework.context.Context;
@@ -38,7 +39,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -67,7 +67,7 @@ public class RankRequirementsJourneyView extends BaseView {
     private final MutableState<Boolean> pulseState = mutableState(false);
     
     // Pulsing animation task
-    private BukkitRunnable pulseTask;
+    private CancellableTaskHandle pulseTask;
 
     // Layout constants
     private static final int BACK_SLOT = 0;
@@ -589,21 +589,14 @@ public class RankRequirementsJourneyView extends BaseView {
         }
         
         // Schedule restoration after 500ms (10 ticks)
-        new BukkitRunnable() {
-            /**
-             * Executes run.
-             */
-            @Override
-            public void run() {
-                // Restore original items or clear the slot
-                for (final int slot : validSurroundingSlots) {
-                    final ItemStack original = originalItems.get(slot);
-                    inventory.setItem(slot, original);
-                }
-                // Trigger a full update to ensure proper rendering
-                ctx.update();
-            }
-        }.runTaskLater(rdqPlugin.getPlugin(), 10L);
+        rdqPlugin.getPlatform().getScheduler().runDelayed(() ->
+                rdqPlugin.getPlatform().getScheduler().runAtEntity(player, () -> {
+                    for (final int slot : validSurroundingSlots) {
+                        final ItemStack original = originalItems.get(slot);
+                        inventory.setItem(slot, original);
+                    }
+                    ctx.update();
+                }), 10L);
     }
 
     /**
@@ -614,25 +607,15 @@ public class RankRequirementsJourneyView extends BaseView {
         // Cancel any existing pulse task
         stopPulseAnimation();
         
-        this.pulseTask = new BukkitRunnable() {
-            /**
-             * Executes run.
-             */
-            @Override
-            public void run() {
-                try {
-                    // Toggle pulse state
-                    final boolean currentState = pulseState.get(render);
-                    pulseState.set(!currentState, render);
-                } catch (final Exception e) {
-                    // View may have been closed, cancel the task
-                    this.cancel();
-                }
-            }
-        };
-        
-        // Run every 10 ticks (500ms) for pulsing effect
-        this.pulseTask.runTaskTimer(plugin.getPlugin(), 10L, 10L);
+        this.pulseTask = plugin.getPlatform().getScheduler().runRepeating(() ->
+                plugin.getPlatform().getScheduler().runAtEntity(render.getPlayer(), () -> {
+                    try {
+                        final boolean currentState = pulseState.get(render);
+                        pulseState.set(!currentState, render);
+                    } catch (final Exception e) {
+                        stopPulseAnimation();
+                    }
+                }), 10L, 10L);
     }
     
     /**
@@ -640,11 +623,7 @@ public class RankRequirementsJourneyView extends BaseView {
      */
     private void stopPulseAnimation() {
         if (this.pulseTask != null) {
-            try {
-                this.pulseTask.cancel();
-            } catch (final IllegalStateException ignored) {
-                // Task was already cancelled
-            }
+            this.pulseTask.cancel();
             this.pulseTask = null;
         }
     }

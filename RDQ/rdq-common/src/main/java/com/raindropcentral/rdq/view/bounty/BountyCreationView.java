@@ -404,7 +404,7 @@ public class BountyCreationView extends BaseView {
 						bounty -> {
 							if (bounty != null) {
 								// Update existing bounty with new reward
-								rdq.getPlatform().getScheduler().runSync(() -> {
+								rdq.getPlatform().getScheduler().runAtEntity(player, () -> {
 									LOGGER.info("=== BOUNTY UPDATE START ===");
 									LOGGER.info("Found existing bounty with " + bounty.getRewards().size() + " rewards");
 									LOGGER.info("UI rewards list has " + this.rewards.get(clickContext).size() + " rewards");
@@ -447,19 +447,17 @@ public class BountyCreationView extends BaseView {
 											.thenAccept(updatedBounty -> {
 												LOGGER.info("AddRewardsToBounty completed successfully for " + target.get().getName());
 
-												// Always run on main thread
-												rdq.getPlatform().getScheduler().runSync(() -> {
-													LOGGER.info("Running success callback on main thread for " + player.getName());
-
-													// Apply visual indicators to the target player if they're online
-													Player targetPlayer = Bukkit.getPlayer(target.get().getUniqueId());
-													if (targetPlayer != null && targetPlayer.isOnline()) {
-														// Force refresh visual indicators for updated bounty
+												Player targetPlayer = Bukkit.getPlayer(target.get().getUniqueId());
+												if (targetPlayer != null && targetPlayer.isOnline()) {
+													rdq.getPlatform().getScheduler().runAtEntity(targetPlayer, () -> {
 														rdq.getVisualIndicatorManager().forceRefreshIndicators(targetPlayer);
 														LOGGER.info("Refreshed visual indicators for " + targetPlayer.getName() + " after bounty update");
-													}
+													});
+												}
 
-													// Send success message
+												rdq.getPlatform().getScheduler().runAtEntity(player, () -> {
+													LOGGER.info("Running success callback on entity thread for " + player.getName());
+
 													this.i18n(
 															"bounty_creation.confirm.success",
 															player
@@ -474,8 +472,7 @@ public class BountyCreationView extends BaseView {
 											.exceptionally(throwable -> {
 												LOGGER.log(Level.SEVERE, "Failed to add rewards to bounty for " + target.get().getName(), throwable);
 
-												// Send error message on main thread
-												rdq.getPlatform().getScheduler().runSync(() -> {
+												rdq.getPlatform().getScheduler().runAtEntity(player, () -> {
 													this.i18n(
 															"bounty_creation.confirm.error",
 															player
@@ -496,30 +493,30 @@ public class BountyCreationView extends BaseView {
 												this.mergeSimilarRewardItems(this.rewards.get(clickContext))
 										)
 										.thenAccept(createdBounty -> {
-											rdq.getPlatform().getScheduler().runSync(() -> {
-												Player targetPlayer = Bukkit.getPlayer(target.get().getUniqueId());
-												if (targetPlayer != null && targetPlayer.isOnline()) {
+											Player targetPlayer = Bukkit.getPlayer(target.get().getUniqueId());
+											if (targetPlayer != null && targetPlayer.isOnline()) {
+												rdq.getPlatform().getScheduler().runAtEntity(targetPlayer, () -> {
 													rdq.getVisualIndicatorManager().applyIndicators(targetPlayer);
 													rdq.getVisualIndicatorManager().updatePlayerDisplay(targetPlayer);
-												}
+												});
+											}
 
-												this.i18n(
-														"bounty_creation.confirm.success",
-														player
-												).includePrefix().withPlaceholder(
-														"target_name",
-														target.map(OfflinePlayer::getName).orElse("not_defined")
-												).build().sendMessage();
-											});
+											rdq.getPlatform().getScheduler().runAtEntity(player, () -> this.i18n(
+													"bounty_creation.confirm.success",
+													player
+											).includePrefix().withPlaceholder(
+													"target_name",
+													target.map(OfflinePlayer::getName).orElse("not_defined")
+											).build().sendMessage());
 										})
 										.exceptionally(ex -> {
-											this.i18n(
+											rdq.getPlatform().getScheduler().runAtEntity(player, () -> this.i18n(
 													"confirm.error",
 													player
 											).includePrefix().withPlaceholder(
 													"error_message",
 													"Failed to create bounty: " + ex.getMessage()
-											).build().sendMessage();
+											).build().sendMessage());
 											return null;
 										});
 								
@@ -539,7 +536,7 @@ public class BountyCreationView extends BaseView {
 							Level.WARNING,
 							"Error occurred when trying to search for an existing bounty: " + throwable.getMessage()
 						);
-						rdq.getPlatform().getScheduler().runSync(clickContext::closeForPlayer);
+						rdq.getPlatform().getScheduler().runAtEntity(clickContext.getPlayer(), clickContext::closeForPlayer);
 						return null;
 					});
 			})

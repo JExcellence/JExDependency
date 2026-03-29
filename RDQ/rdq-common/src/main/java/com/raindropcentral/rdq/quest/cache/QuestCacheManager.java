@@ -16,8 +16,7 @@ package com.raindropcentral.rdq.quest.cache;
 import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.database.entity.quest.QuestUser;
 import com.raindropcentral.rdq.database.repository.quest.QuestUserRepository;
-import org.bukkit.Bukkit;
-import org.bukkit.scheduler.BukkitTask;
+import com.raindropcentral.rplatform.scheduler.CancellableTaskHandle;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -65,7 +64,7 @@ public class QuestCacheManager {
     /**
      * Auto-save task.
      */
-    private BukkitTask autoSaveTask;
+    private CancellableTaskHandle autoSaveTask;
     
     /**
      * Whether to log performance metrics.
@@ -98,8 +97,7 @@ public class QuestCacheManager {
             return;
         }
         
-        autoSaveTask = Bukkit.getScheduler().runTaskTimerAsynchronously(
-                plugin.getPlugin(),
+        autoSaveTask = plugin.getPlatform().getScheduler().runRepeatingAsync(
                 this::autoSaveAll,
                 AUTO_SAVE_INTERVAL_TICKS,
                 AUTO_SAVE_INTERVAL_TICKS

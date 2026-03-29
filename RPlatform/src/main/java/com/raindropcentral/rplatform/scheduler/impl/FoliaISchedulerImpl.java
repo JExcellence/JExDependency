@@ -13,12 +13,15 @@
 
 package com.raindropcentral.rplatform.scheduler.impl;
 
+import com.raindropcentral.rplatform.scheduler.CancellableTaskHandle;
 import com.raindropcentral.rplatform.scheduler.ISchedulerAdapter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.lang.invoke.MethodHandles;
 import java.lang.reflect.InvocationTargetException;
@@ -26,6 +29,9 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -90,13 +96,44 @@ public class FoliaISchedulerImpl implements ISchedulerAdapter {
      * one-shot delay using {@code runAtFixedRate} with a very large period.
      */
     @Override
-    public void runDelayed(@NotNull Runnable task, long delayTicks) {
+    public @NotNull CancellableTaskHandle runDelayed(@NotNull Runnable task, long delayTicks) {
         final Object global = getGlobalScheduler();
-        if (!tryInvoke(global, "runDelayed", new Class[]{JavaPlugin.class, Consumer.class, long.class}, new Object[]{plugin, toConsumer(task), delayTicks})) {
-            tryInvoke(global, "runAtFixedRate",
-                    new Class[]{JavaPlugin.class, Consumer.class, long.class, long.class},
-                    new Object[]{plugin, toConsumer(task), delayTicks, Long.MAX_VALUE / 4});
+        final Object scheduledTask = invoke(
+                global,
+                "runDelayed",
+                new Class[]{Plugin.class, Consumer.class, long.class},
+                new Object[]{plugin, toConsumer(task), delayTicks}
+        );
+        if (scheduledTask != null) {
+            return new ReflectiveTaskHandle(scheduledTask);
         }
+
+        final AtomicReference<ReflectiveTaskHandle> handleRef = new AtomicReference<>();
+        final Object repeatingTask = invoke(
+                global,
+                "runAtFixedRate",
+                new Class[]{Plugin.class, Consumer.class, long.class, long.class},
+                new Object[]{
+                        plugin,
+                        toConsumer(() -> {
+                            final ReflectiveTaskHandle handle = handleRef.get();
+                            if (handle != null) {
+                                handle.cancel();
+                            }
+                            safe(task).run();
+                        }),
+                        delayTicks,
+                        Long.MAX_VALUE / 4
+                }
+        );
+        if (repeatingTask != null) {
+            final ReflectiveTaskHandle handle = new ReflectiveTaskHandle(repeatingTask);
+            handleRef.set(handle);
+            return handle;
+        }
+
+        runGlobal(task);
+        return CancellableTaskHandle.noop();
     }
 
     /**
@@ -106,24 +143,42 @@ public class FoliaISchedulerImpl implements ISchedulerAdapter {
      * API is missing, preserving approximate cadence.
      */
     @Override
-    public void runRepeating(@NotNull Runnable task, long delayTicks, long periodTicks) {
+    public @NotNull CancellableTaskHandle runRepeating(@NotNull Runnable task, long delayTicks, long periodTicks) {
         final Object global = getGlobalScheduler();
-        if (!tryInvoke(global, "runAtFixedRate", new Class[]{JavaPlugin.class, Consumer.class, long.class, long.class},
-                new Object[]{plugin, toConsumer(task), delayTicks, periodTicks})) {
-            runDelayed(() -> runRepeating(task, periodTicks, periodTicks), delayTicks);
+        final Object scheduledTask = invoke(
+                global,
+                "runAtFixedRate",
+                new Class[]{Plugin.class, Consumer.class, long.class, long.class},
+                new Object[]{plugin, toConsumer(task), delayTicks, periodTicks}
+        );
+        if (scheduledTask != null) {
+            return new ReflectiveTaskHandle(scheduledTask);
         }
+
+        final ReschedulingTaskHandle handle = new ReschedulingTaskHandle();
+        scheduleRepeatingFallback(handle, task, delayTicks, periodTicks, false);
+        return handle;
     }
 
     /**
      * Executes runRepeatingAsync.
      */
     @Override
-    public void runRepeatingAsync(@NotNull Runnable task, long delayTicks, long periodTicks) {
+    public @NotNull CancellableTaskHandle runRepeatingAsync(@NotNull Runnable task, long delayTicks, long periodTicks) {
         final Object global = getAsyncScheduler();
-        if (!tryInvoke(global, "runAtFixedRate", new Class[]{JavaPlugin.class, Consumer.class, long.class, long.class},
-                new Object[]{plugin, toConsumer(task), delayTicks, periodTicks})) {
-            runDelayed(() -> runRepeatingAsync(task, periodTicks, periodTicks), delayTicks);
+        final Object scheduledTask = invoke(
+                global,
+                "runAtFixedRate",
+                new Class[]{Plugin.class, Consumer.class, long.class, long.class, TimeUnit.class},
+                new Object[]{plugin, toConsumer(task), ticksToMillis(delayTicks), ticksToMillis(periodTicks), TimeUnit.MILLISECONDS}
+        );
+        if (scheduledTask != null) {
+            return new ReflectiveTaskHandle(scheduledTask);
         }
+
+        final ReschedulingTaskHandle handle = new ReschedulingTaskHandle();
+        scheduleRepeatingFallback(handle, task, delayTicks, periodTicks, true);
+        return handle;
     }
 
     /**
@@ -135,9 +190,36 @@ public class FoliaISchedulerImpl implements ISchedulerAdapter {
     @Override
     public void runAtEntity(@NotNull Entity entity, @NotNull Runnable task) {
         final Object entityScheduler = getEntityScheduler(entity);
-        if (!tryInvoke(entityScheduler, "run", new Class[]{Consumer.class}, new Object[]{toConsumer(task)})) {
-            tryInvoke(entityScheduler, "runDelayed", new Class[]{Consumer.class, long.class}, new Object[]{toConsumer(task), 0L});
+        if (invoke(
+                entityScheduler,
+                "run",
+                new Class[]{Plugin.class, Consumer.class, Runnable.class},
+                new Object[]{plugin, toConsumer(task), null}
+        ) != null) {
+            return;
         }
+
+        final Object delayedTask = invoke(
+                entityScheduler,
+                "runDelayed",
+                new Class[]{Plugin.class, Consumer.class, Runnable.class, long.class},
+                new Object[]{plugin, toConsumer(task), null, 1L}
+        );
+        if (delayedTask != null) {
+            return;
+        }
+
+        final Object executeResult = invoke(
+                entityScheduler,
+                "execute",
+                new Class[]{Plugin.class, Runnable.class, Runnable.class, long.class},
+                new Object[]{plugin, safe(task), null, 1L}
+        );
+        if (Boolean.TRUE.equals(executeResult)) {
+            return;
+        }
+
+        runGlobal(task);
     }
 
     /**
@@ -149,8 +231,12 @@ public class FoliaISchedulerImpl implements ISchedulerAdapter {
     @Override
     public void runAtLocation(@NotNull Location location, @NotNull Runnable task) {
         final Object region = getRegionScheduler();
-        if (!tryInvoke(region, "run", new Class[]{JavaPlugin.class, Location.class, Consumer.class},
-                new Object[]{plugin, location, toConsumer(task)})) {
+        if (invoke(
+                region,
+                "run",
+                new Class[]{Plugin.class, Location.class, Consumer.class},
+                new Object[]{plugin, location, toConsumer(task)}
+        ) == null) {
             runGlobal(task);
         }
     }
@@ -164,7 +250,8 @@ public class FoliaISchedulerImpl implements ISchedulerAdapter {
     @Override
     public void runGlobal(@NotNull Runnable task) {
         final Object global = getGlobalScheduler();
-        if (!tryInvoke(global, "run", new Class[]{JavaPlugin.class, Consumer.class}, new Object[]{plugin, toConsumer(task)})) {
+        if (invoke(global, "run", new Class[]{Plugin.class, Consumer.class}, new Object[]{plugin, toConsumer(task)}) == null &&
+                invoke(global, "execute", new Class[]{Plugin.class, Runnable.class}, new Object[]{plugin, safe(task)}) == null) {
             safe(task).run();
         }
     }
@@ -249,19 +336,22 @@ public class FoliaISchedulerImpl implements ISchedulerAdapter {
      * @param args       arguments forwarded to the method
      * @return {@code true} when invocation succeeded; {@code false} otherwise
      */
-    private boolean tryInvoke(Object target, String methodName, Class<?>[] paramTypes, Object[] args) {
-        if (target == null) return false;
+    private @Nullable Object invoke(Object target, String methodName, Class<?>[] paramTypes, Object[] args) {
+        if (target == null) {
+            return null;
+        }
         try {
             final Method m = findMethod(target.getClass(), methodName, paramTypes);
-            if (m == null) return false;
-            m.invoke(target, args);
-            return true;
+            if (m == null) {
+                return null;
+            }
+            return m.invoke(target, args);
         } catch (InvocationTargetException ite) {
             LOG.log(Level.SEVERE, "[Scheduler/Folia] Invocation failed for " + methodName, ite.getTargetException());
-            return false;
+            return null;
         } catch (Throwable t) {
             LOG.log(Level.SEVERE, "[Scheduler/Folia] Invocation failed for " + methodName, t);
-            return false;
+            return null;
         }
     }
 
@@ -284,6 +374,36 @@ public class FoliaISchedulerImpl implements ISchedulerAdapter {
             }
             return null;
         }
+    }
+
+    private long ticksToMillis(final long ticks) {
+        return Math.max(1L, ticks) * 50L;
+    }
+
+    private void scheduleRepeatingFallback(
+            final @NotNull ReschedulingTaskHandle handle,
+            final @NotNull Runnable task,
+            final long delayTicks,
+            final long periodTicks,
+            final boolean async
+    ) {
+        if (handle.isCancelled()) {
+            return;
+        }
+
+        handle.setDelegate(runDelayed(() -> {
+            if (handle.isCancelled()) {
+                return;
+            }
+
+            if (async) {
+                runAsync(task);
+            } else {
+                safe(task).run();
+            }
+
+            scheduleRepeatingFallback(handle, task, periodTicks, periodTicks, async);
+        }, delayTicks));
     }
 
     /**
@@ -344,5 +464,90 @@ public class FoliaISchedulerImpl implements ISchedulerAdapter {
                 throw t;
             }
         };
+    }
+
+    private final class ReflectiveTaskHandle implements CancellableTaskHandle {
+
+        private final Object delegate;
+        private final AtomicBoolean cancelled = new AtomicBoolean();
+
+        private ReflectiveTaskHandle(final @NotNull Object delegate) {
+            this.delegate = delegate;
+        }
+
+        @Override
+        public boolean cancel() {
+            if (isCancelled()) {
+                return false;
+            }
+
+            final Object result = invoke(delegate, "cancel", new Class[0], new Object[0]);
+            final boolean cancelledNow = interpretCancellationResult(result) || isCancelled();
+            if (cancelledNow) {
+                cancelled.set(true);
+            }
+            return cancelledNow;
+        }
+
+        @Override
+        public boolean isCancelled() {
+            if (cancelled.get()) {
+                return true;
+            }
+
+            final Object cancelledResult = invoke(delegate, "isCancelled", new Class[0], new Object[0]);
+            if (cancelledResult instanceof Boolean isCancelled) {
+                if (isCancelled) {
+                    cancelled.set(true);
+                }
+                return isCancelled;
+            }
+
+            final Object executionState = invoke(delegate, "getExecutionState", new Class[0], new Object[0]);
+            if (executionState instanceof Enum<?> enumState) {
+                final boolean currentlyCancelled = enumState.name().startsWith("CANCELLED");
+                if (currentlyCancelled) {
+                    cancelled.set(true);
+                }
+                return currentlyCancelled;
+            }
+
+            return cancelled.get();
+        }
+
+        private boolean interpretCancellationResult(final @Nullable Object result) {
+            if (result instanceof Enum<?> enumResult) {
+                final String name = enumResult.name();
+                return name.startsWith("CANCELLED") || name.startsWith("NEXT_RUNS_CANCELLED");
+            }
+
+            return result instanceof Boolean booleanResult && booleanResult;
+        }
+    }
+
+    private static final class ReschedulingTaskHandle implements CancellableTaskHandle {
+
+        private final AtomicBoolean cancelled = new AtomicBoolean();
+        private volatile CancellableTaskHandle delegate = CancellableTaskHandle.noop();
+
+        @Override
+        public boolean cancel() {
+            final boolean changed = cancelled.compareAndSet(false, true);
+            delegate.cancel();
+            return changed;
+        }
+
+        @Override
+        public boolean isCancelled() {
+            return cancelled.get() || delegate.isCancelled();
+        }
+
+        private void setDelegate(final @NotNull CancellableTaskHandle delegate) {
+            if (cancelled.get()) {
+                delegate.cancel();
+                return;
+            }
+            this.delegate = delegate;
+        }
     }
 }

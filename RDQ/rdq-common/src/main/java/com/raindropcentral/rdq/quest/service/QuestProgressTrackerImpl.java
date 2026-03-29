@@ -20,9 +20,9 @@ import com.raindropcentral.rdq.database.repository.quest.QuestRepository;
 import com.raindropcentral.rdq.database.repository.quest.QuestUserRepository;
 import com.raindropcentral.rdq.quest.event.QuestCompleteEvent;
 import com.raindropcentral.rdq.quest.event.TaskCompleteEvent;
+import com.raindropcentral.rplatform.scheduler.CancellableTaskHandle;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
@@ -62,7 +62,7 @@ public class QuestProgressTrackerImpl implements QuestProgressTracker {
      */
     private final Map<ProgressKey, AtomicInteger> pendingUpdates;
     
-    private BukkitTask batchTask;
+    private CancellableTaskHandle batchTask;
     private volatile boolean running;
     
     /**
@@ -95,8 +95,7 @@ public class QuestProgressTrackerImpl implements QuestProgressTracker {
         running = true;
         
         // Start batch processing task
-        batchTask = Bukkit.getScheduler().runTaskTimerAsynchronously(
-                plugin.getPlugin(),
+        batchTask = plugin.getPlatform().getScheduler().runRepeatingAsync(
                 this::processBatch,
                 BATCH_INTERVAL_TICKS,
                 BATCH_INTERVAL_TICKS
@@ -518,11 +517,13 @@ public class QuestProgressTrackerImpl implements QuestProgressTracker {
             @NotNull final Quest quest,
             @NotNull final String taskIdentifier
     ) {
-        Bukkit.getScheduler().runTask(plugin.getPlugin(), () -> {
+        plugin.getPlatform().getScheduler().runGlobal(() -> {
             final Player player = Bukkit.getPlayer(playerId);
             if (player != null) {
-                final TaskCompleteEvent event = new TaskCompleteEvent(player, quest, taskIdentifier);
-                Bukkit.getPluginManager().callEvent(event);
+                plugin.getPlatform().getScheduler().runAtEntity(player, () -> {
+                    final TaskCompleteEvent event = new TaskCompleteEvent(player, quest, taskIdentifier);
+                    Bukkit.getPluginManager().callEvent(event);
+                });
             }
         });
     }
@@ -537,15 +538,17 @@ public class QuestProgressTrackerImpl implements QuestProgressTracker {
             @NotNull final UUID playerId,
             @NotNull final Quest quest
     ) {
-        Bukkit.getScheduler().runTask(plugin.getPlugin(), () -> {
+        plugin.getPlatform().getScheduler().runGlobal(() -> {
             final Player player = Bukkit.getPlayer(playerId);
             if (player != null) {
-                final QuestCompleteEvent event = new QuestCompleteEvent(
-                        player,
-                        quest,
-                        Duration.between(Instant.now(), Instant.now()) // TODO: Calculate actual time
-                );
-                Bukkit.getPluginManager().callEvent(event);
+                plugin.getPlatform().getScheduler().runAtEntity(player, () -> {
+                    final QuestCompleteEvent event = new QuestCompleteEvent(
+                            player,
+                            quest,
+                            Duration.between(Instant.now(), Instant.now()) // TODO: Calculate actual time
+                    );
+                    Bukkit.getPluginManager().callEvent(event);
+                });
             }
         });
     }

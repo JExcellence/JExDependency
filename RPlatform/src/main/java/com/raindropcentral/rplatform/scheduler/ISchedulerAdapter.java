@@ -68,8 +68,9 @@ public interface ISchedulerAdapter {
      *
      * @param task runnable to execute after the delay; must not be {@code null}
      * @param delayTicks number of ticks to wait before execution
+     * @return cancellable handle for the scheduled task
      */
-    void runDelayed(final @NotNull Runnable task, final long delayTicks);
+    @NotNull CancellableTaskHandle runDelayed(final @NotNull Runnable task, final long delayTicks);
 
     /**
      * Registers {@code task} to execute repeatedly with the given delay and period on the scheduler's.
@@ -82,13 +83,14 @@ public interface ISchedulerAdapter {
      * @param task runnable to execute repeatedly; must not be {@code null}
      * @param delayTicks initial delay before the first run, in ticks
      * @param periodTicks interval between runs after the initial delay, in ticks
+     * @return cancellable handle for the scheduled task
      */
-    void runRepeating(final @NotNull Runnable task, final long delayTicks, final long periodTicks);
+    @NotNull CancellableTaskHandle runRepeating(final @NotNull Runnable task, final long delayTicks, final long periodTicks);
 
     /**
      * Executes runRepeatingAsync.
      */
-    void runRepeatingAsync(final @NotNull Runnable task, final long delayTicks, final long periodTicks);
+    @NotNull CancellableTaskHandle runRepeatingAsync(final @NotNull Runnable task, final long delayTicks, final long periodTicks);
 
     /**
      * Executes {@code task} in the context of {@code entity}'s scheduler if the platform supports it.

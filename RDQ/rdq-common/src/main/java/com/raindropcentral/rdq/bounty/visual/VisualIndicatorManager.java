@@ -14,6 +14,7 @@
 package com.raindropcentral.rdq.bounty.visual;
 
 import com.raindropcentral.rdq.RDQ;
+import com.raindropcentral.rplatform.scheduler.CancellableTaskHandle;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
@@ -51,6 +52,8 @@ public class VisualIndicatorManager {
     private final int particleIntervalTicks;
 
     private final Map<UUID, PlayerIndicatorState> activeIndicators = new ConcurrentHashMap<>();
+    private CancellableTaskHandle particleTask;
+    private CancellableTaskHandle refreshTask;
 
     /**
      * Creates a new VisualIndicatorManager with default configuration.
@@ -111,10 +114,14 @@ public class VisualIndicatorManager {
      * @param player the player to apply indicators to
      */
     public void applyIndicators(@NotNull Player player) {
+        rdq.getPlatform().getScheduler().runAtEntity(player, () -> applyIndicatorsNow(player));
+    }
+
+    private void applyIndicatorsNow(@NotNull final Player player) {
         UUID playerId = player.getUniqueId();
 
         if (activeIndicators.containsKey(playerId)) {
-            removeIndicators(player);
+            removeIndicatorsNow(player);
         }
 
         try {
@@ -151,6 +158,10 @@ public class VisualIndicatorManager {
      * @param player the player to remove indicators from
      */
     public void removeIndicators(@NotNull Player player) {
+        rdq.getPlatform().getScheduler().runAtEntity(player, () -> removeIndicatorsNow(player));
+    }
+
+    private void removeIndicatorsNow(@NotNull final Player player) {
         UUID playerId = player.getUniqueId();
 
         PlayerIndicatorState state = activeIndicators.remove(playerId);
@@ -205,7 +216,7 @@ public class VisualIndicatorManager {
      * - 14.3: Spawn particles around players with active bounties at configured interval
      */
     private void startParticleTask() {
-        rdq.getPlatform().getScheduler().runRepeating(
+        particleTask = rdq.getPlatform().getScheduler().runRepeating(
                 this::spawnParticles,
                 particleIntervalTicks,
                 particleIntervalTicks
@@ -217,7 +228,7 @@ public class VisualIndicatorManager {
      * This task runs every 30 seconds to reapply indicators that may have been overridden.
      */
     private void startPeriodicRefreshTask() {
-        rdq.getPlatform().getScheduler().runRepeating(
+        refreshTask = rdq.getPlatform().getScheduler().runRepeating(
                 this::refreshIndicatorsForOnlinePlayers,
                 600L,
                 600L
@@ -233,19 +244,21 @@ public class VisualIndicatorManager {
         for (UUID playerId : activeIndicators.keySet()) {
             Player player = Bukkit.getPlayer(playerId);
             if (player != null && player.isOnline()) {
-                try {
+                rdq.getPlatform().getScheduler().runAtEntity(player, () -> {
+                    try {
                     PlayerIndicatorState state = activeIndicators.get(playerId);
                     if (state != null) {
                         String currentDisplayName = player.displayName().toString();
                         if (!currentDisplayName.contains("BOUNTY") && !currentDisplayName.contains("💀")) {
                             LOGGER.fine("Refreshing lost visual indicators for " + player.getName());
-                            applyIndicators(player);
-                            refreshCount++;
+                            applyIndicatorsNow(player);
                         }
                     }
-                } catch (Exception e) {
-                    LOGGER.log(Level.WARNING, "Failed to refresh indicators for " + player.getName(), e);
-                }
+                    } catch (Exception e) {
+                        LOGGER.log(Level.WARNING, "Failed to refresh indicators for " + player.getName(), e);
+                    }
+                });
+                refreshCount++;
             }
         }
         
@@ -273,32 +286,34 @@ public class VisualIndicatorManager {
             }
             particleCount++;
 
-            try {
-                Location loc = player.getLocation().add(0, 2, 0);
+            rdq.getPlatform().getScheduler().runAtEntity(player, () -> {
+                try {
+                    Location loc = player.getLocation().add(0, 2, 0);
 
-                player.getWorld().spawnParticle(
-                        particleType,
-                        loc,
-                        12,
-                        0.5,
-                        0.8,
-                        0.5,
-                        0.03
-                );
+                    player.getWorld().spawnParticle(
+                            particleType,
+                            loc,
+                            12,
+                            0.5,
+                            0.8,
+                            0.5,
+                            0.03
+                    );
 
-                player.getWorld().spawnParticle(
-                        Particle.SMOKE,
-                        loc.add(0, 0.5, 0),
-                        4,
-                        0.3,
-                        0.3,
-                        0.3,
-                        0.01
-                );
-                
-            } catch (Exception e) {
-                LOGGER.log(Level.WARNING, "Failed to spawn particles for " + player.getName(), e);
-            }
+                    player.getWorld().spawnParticle(
+                            Particle.SMOKE,
+                            loc.add(0, 0.5, 0),
+                            4,
+                            0.3,
+                            0.3,
+                            0.3,
+                            0.01
+                    );
+
+                } catch (Exception e) {
+                    LOGGER.log(Level.WARNING, "Failed to spawn particles for " + player.getName(), e);
+                }
+            });
         }
 
         if (particleCount > 0 && System.currentTimeMillis() % 10000 < particleIntervalTicks * 50) {
@@ -313,6 +328,14 @@ public class VisualIndicatorManager {
      * - 14.4: Stop particles when bounty claimed/expired
      */
     public void shutdown() {
+        if (particleTask != null) {
+            particleTask.cancel();
+            particleTask = null;
+        }
+        if (refreshTask != null) {
+            refreshTask.cancel();
+            refreshTask = null;
+        }
         for (UUID playerId : activeIndicators.keySet()) {
             Player player = Bukkit.getPlayer(playerId);
             if (player != null && player.isOnline()) {
@@ -341,8 +364,7 @@ public class VisualIndicatorManager {
         for (UUID playerId : activeIndicators.keySet()) {
             Player player = Bukkit.getPlayer(playerId);
             if (player != null && player.isOnline()) {
-                removeIndicators(player);
-                applyIndicators(player);
+                forceRefreshIndicators(player);
             }
         }
         LOGGER.info("Refreshed visual indicators for " + activeIndicators.size() + " players");
@@ -355,16 +377,18 @@ public class VisualIndicatorManager {
      * @param player the player to force refresh indicators for
      */
     public void forceRefreshIndicators(@NotNull Player player) {
-        UUID playerId = player.getUniqueId();
+        rdq.getPlatform().getScheduler().runAtEntity(player, () -> {
+            UUID playerId = player.getUniqueId();
 
-        if (activeIndicators.containsKey(playerId)) {
-            removeIndicators(player);
-        }
+            if (activeIndicators.containsKey(playerId)) {
+                removeIndicatorsNow(player);
+            }
 
-        applyIndicators(player);
-        updatePlayerDisplay(player);
-        
-        LOGGER.info("Force refreshed visual indicators for " + player.getName());
+            applyIndicatorsNow(player);
+            updatePlayerDisplayNow(player);
+
+            LOGGER.info("Force refreshed visual indicators for " + player.getName());
+        });
     }
 
     /**
@@ -374,6 +398,10 @@ public class VisualIndicatorManager {
      * @param player the player to update
      */
     public void updatePlayerDisplay(@NotNull Player player) {
+        rdq.getPlatform().getScheduler().runAtEntity(player, () -> updatePlayerDisplayNow(player));
+    }
+
+    private void updatePlayerDisplayNow(@NotNull final Player player) {
         UUID playerId = player.getUniqueId();
         
         if (!activeIndicators.containsKey(playerId)) {
@@ -381,14 +409,18 @@ public class VisualIndicatorManager {
         }
 
         try {
-            rdq.getPlatform().getScheduler().runSync(() -> {
-                for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+            for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+                rdq.getPlatform().getScheduler().runAtEntity(onlinePlayer, () -> {
+                    if (!player.isOnline()) {
+                        return;
+                    }
+
                     onlinePlayer.hidePlayer(rdq.getPlugin(), player);
                     onlinePlayer.showPlayer(rdq.getPlugin(), player);
-                }
-                
-                LOGGER.fine("Forced display update for " + player.getName());
-            });
+                });
+            }
+
+            LOGGER.fine("Forced display update for " + player.getName());
             
         } catch (Exception e) {
             LOGGER.log(Level.WARNING, "Failed to update player display for " + player.getName(), e);

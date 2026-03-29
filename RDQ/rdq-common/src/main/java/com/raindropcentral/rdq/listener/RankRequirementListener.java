@@ -241,7 +241,7 @@ public class RankRequirementListener implements Listener {
                 LOGGER.info("Player " + player.getName() + " has met all requirements for rank: " + 
                             currentRank.getIdentifier());
                 
-                Bukkit.getScheduler().runTask(rdq.getPlugin(), () -> {
+                rdq.getPlatform().getScheduler().runAtEntity(player, () -> {
                     if (player.isOnline()) {
                         // Send translated rank-up notification
                         new I18n.Builder("rank.messages.requirements_complete", player)
