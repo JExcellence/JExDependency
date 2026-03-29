@@ -20,6 +20,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -68,6 +69,17 @@ public interface SkillBridge {
     boolean isAvailable();
 
     /**
+     * Lists skills currently exposed by the bridged plugin for the supplied player context.
+     *
+     * @param player player opening the skill picker
+     * @return immutable list of available skills
+     * @throws NullPointerException if {@code player} is {@code null}
+     */
+    default @NotNull List<SkillDescriptor> getAvailableSkills(@NotNull Player player) {
+        return List.of();
+    }
+
+    /**
      * Resolves a player's current level for a skill identifier.
      *
      * @param player player to inspect
@@ -113,15 +125,29 @@ public interface SkillBridge {
     }
 
     /**
+     * Adds one or more levels to a player skill.
+     *
+     * <p>Write support is optional. Bridges should return {@code false} when the external API does
+     * not provide a safe additive level grant path.</p>
+     *
+     * @param player player to modify
+     * @param skillId skill identifier to add levels to
+     * @param amount number of levels to add
+     * @return {@code true} when the level grant succeeds
+     * @throws NullPointerException if {@code player} or {@code skillId} is {@code null}
+     */
+    default boolean addSkillLevels(@NotNull Player player, @NotNull String skillId, int amount) {
+        return false;
+    }
+
+    /**
      * Detects the first available skill bridge from the default list.
      *
      * @return first available bridge, or {@code null} when no supported plugin is available
      */
     static @Nullable SkillBridge getBridge() {
-        for (final SkillBridge bridge : DEFAULT_BRIDGES) {
-            if (bridge.isAvailable()) {
-                return bridge;
-            }
+        for (final SkillBridge bridge : getAvailableBridges()) {
+            return bridge;
         }
         return null;
     }
@@ -169,5 +195,36 @@ public interface SkillBridge {
      */
     static @NotNull List<SkillBridge> getDefaultBridges() {
         return DEFAULT_BRIDGES;
+    }
+
+    /**
+     * Returns all available skill bridges in discovery order.
+     *
+     * @return immutable list of available bridges
+     */
+    static @NotNull List<SkillBridge> getAvailableBridges() {
+        final List<SkillBridge> availableBridges = new ArrayList<>();
+        for (final SkillBridge bridge : DEFAULT_BRIDGES) {
+            if (bridge.isAvailable()) {
+                availableBridges.add(bridge);
+            }
+        }
+        return List.copyOf(availableBridges);
+    }
+
+    /**
+     * Immutable skill descriptor used by claim-cookie skill pickers.
+     *
+     * @param integrationId normalized bridge integration identifier
+     * @param pluginName plugin name backing the skill
+     * @param skillId normalized skill identifier
+     * @param displayName user-facing skill label
+     */
+    record SkillDescriptor(
+            @NotNull String integrationId,
+            @NotNull String pluginName,
+            @NotNull String skillId,
+            @NotNull String displayName
+    ) {
     }
 }

@@ -25,9 +25,16 @@ import com.raindropcentral.core.proxy.ProxyHostConfig;
 import com.raindropcentral.core.proxy.RCorePaperProxyBridge;
 import com.raindropcentral.core.proxy.RCoreProxyCoordinator;
 import com.raindropcentral.core.service.RCoreService;
+import com.raindropcentral.core.service.central.DropletClaimService;
 import com.raindropcentral.core.service.central.RCentralService;
+import com.raindropcentral.core.service.central.cookie.ActiveCookieBoostService;
 import com.raindropcentral.core.service.statistics.StatisticsDeliveryService;
 import com.raindropcentral.core.service.statistics.StatisticsDeliveryServiceFactory;
+import com.raindropcentral.core.view.DropletClaimsView;
+import com.raindropcentral.core.view.DropletJobSelectionView;
+import com.raindropcentral.core.view.DropletSkillSelectionView;
+import com.raindropcentral.rplatform.cookie.CookieBoostIntegrationRegistrar;
+import com.raindropcentral.rplatform.cookie.CookieBoostLookup;
 import com.raindropcentral.rplatform.RPlatform;
 import com.raindropcentral.rplatform.api.PlatformType;
 import com.raindropcentral.rplatform.logging.CentralLogger;
@@ -42,6 +49,8 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.ServicePriority;
 import org.jetbrains.annotations.NotNull;
+import me.devnatan.inventoryframework.AnvilInputFeature;
+import me.devnatan.inventoryframework.ViewFrame;
 
 import java.io.File;
 import java.util.HashMap;
@@ -120,12 +129,15 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
      * RaindropCentral connection service for managing platform integration.
      */
     private RCentralService rCentralService;
+    private DropletClaimService dropletClaimService;
+    private ActiveCookieBoostService activeCookieBoostService;
 
     /**
      * Statistics delivery service for transmitting player statistics to RaindropCentral.
      */
     private StatisticsDeliveryService statisticsDeliveryService;
     private BStatsMetrics metrics;
+    private ViewFrame viewFrame;
 
     private RCoreAdapter rCoreAdapter;
     private RCorePaperProxyBridge proxyBridge;
@@ -368,6 +380,10 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
      */
     private void initializeComponents() {
         this.rCentralService = new RCentralService(this.getPlugin(), this.platform);
+        this.activeCookieBoostService = new ActiveCookieBoostService(this);
+        this.platform.getServiceRegistry().bind(CookieBoostLookup.class, this.activeCookieBoostService);
+        CookieBoostIntegrationRegistrar.register(this.getPlugin(), this.activeCookieBoostService);
+        this.dropletClaimService = new DropletClaimService(this);
 
         // Initialize statistics delivery service
         this.statisticsDeliveryService = StatisticsDeliveryServiceFactory.create(
@@ -375,8 +391,24 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
         );
         StatisticsDeliveryServiceFactory.initialize(this.statisticsDeliveryService);
 
+        this.initializeViews();
+        this.activeCookieBoostService.hydrateOnlinePlayers();
+
         var commandFactory = new CommandFactory(this.getPlugin(), this);
         commandFactory.registerAllCommandsAndListeners();
+    }
+
+    private void initializeViews() {
+        final ViewFrame frame = ViewFrame
+                .create(this.getPlugin())
+                .install(AnvilInputFeature.AnvilInput)
+                .with(
+                        new DropletClaimsView(),
+                        new DropletSkillSelectionView(),
+                        new DropletJobSelectionView()
+                )
+                .disableMetrics();
+        this.viewFrame = frame.register();
     }
     
     /**
@@ -424,7 +456,7 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
      */
     private void initializePlugins() {
         final List<String> supportedPlugins = List.of(
-                "Aura", "ChestSort", "CMI", "DiscordSRV", "EcoJobs",
+                "Aura", "AuraSkills", "ChestSort", "CMI", "DiscordSRV", "EcoJobs",
                 "EssentialsChat", "EssentialsDiscord", "EssentialsSpawn",
                 "Jobs", "mcMMO", "MysticMobs", "ProtocolLib", "RDR",
                 "Towny", "TownyChat"
@@ -561,5 +593,32 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
      */
     public StatisticsDeliveryService getStatisticsDeliveryService() {
         return statisticsDeliveryService;
+    }
+
+    /**
+     * Provides access to the droplet claim flow service.
+     *
+     * @return droplet claim service
+     */
+    public @NotNull DropletClaimService getDropletClaimService() {
+        return this.dropletClaimService;
+    }
+
+    /**
+     * Provides access to the active droplet boost runtime service.
+     *
+     * @return boost lookup and persistence service
+     */
+    public @NotNull ActiveCookieBoostService getActiveCookieBoostService() {
+        return this.activeCookieBoostService;
+    }
+
+    /**
+     * Provides access to the registered inventory view frame.
+     *
+     * @return inventory view frame, or {@code null} when unavailable
+     */
+    public ViewFrame getViewFrame() {
+        return this.viewFrame;
     }
 }

@@ -165,8 +165,10 @@ public class RPlatform {
      * Asynchronously initializes translation, command, and database resources required by the.
      * platform. Subsequent invocations no-op once initialization finishes.
      *
-     * <p>The scheduler first performs requirement and database bootstrap on the platform's
-     * synchronous execution context, then awaits asynchronous translation loading.</p>
+     * <p>Lightweight registry and helper setup runs immediately during plugin enable while blocking
+     * database bootstrap is dispatched through the scheduler's asynchronous executor. Translation
+     * resources are then loaded via their own asynchronous pipeline so Folia region threads never
+     * perform JDBC startup work.</p>
      *
      * @return a future that completes when asynchronous resource setup finishes or immediately when
      *         initialization has already been performed
@@ -176,23 +178,23 @@ public class RPlatform {
             return CompletableFuture.completedFuture(null);
         }
         logger.info("Preparing platform initialization task");
-        return this.runSyncFuture(() -> {
-            logger.info("Initializing RPlatform for " + platformType.name());
+        logger.info("Initializing RPlatform for " + platformType.name());
 
-            // Initialize requirement system first
-            logger.info("Initializing requirement system...");
-            BuiltInRequirementProvider.initialize();
-            logger.info("Requirement system initialized");
+        // Initialize requirement system first
+        logger.info("Initializing requirement system...");
+        BuiltInRequirementProvider.initialize();
+        logger.info("Requirement system initialized");
 
+        translationManager = TranslationManager.builder(plugin)
+                .defaultLocale("en_US").supportedLocales("de_DE", "en_US")
+                .enableMetrics(true)
+                .build();
+
+        commandUpdater = new CommandUpdater(plugin);
+
+        return this.scheduler.runAsyncFuture(() -> {
             this.initializeDatabaseResources();
 
-            translationManager = TranslationManager.builder(plugin)
-                    .defaultLocale("en_US").supportedLocales("de_DE", "en_US")
-                    .enableMetrics(true)
-                    .build();
-            
-            commandUpdater = new CommandUpdater(plugin);
-            
             logger.info("RPlatform initialized successfully");
             initialized = true;
         }).thenCompose(v -> {
@@ -208,19 +210,6 @@ public class RPlatform {
                 // translationManager.cleanupUnsupportedFiles();
             });
         });
-    }
-
-    private @NotNull CompletableFuture<Void> runSyncFuture(final @NotNull Runnable task) {
-        final CompletableFuture<Void> future = new CompletableFuture<>();
-        this.scheduler.runSync(() -> {
-            try {
-                task.run();
-                future.complete(null);
-            } catch (final Throwable throwable) {
-                future.completeExceptionally(throwable);
-            }
-        });
-        return future;
     }
 
     /**

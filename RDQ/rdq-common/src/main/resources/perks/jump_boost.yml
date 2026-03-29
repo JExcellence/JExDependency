@@ -4,7 +4,7 @@ identifier: "jump_boost"
 perkType: "PASSIVE"
 category: "MOVEMENT"
 enabled: true
-displayOrder: 1
+displayOrder: 3
 
 icon:
   type: "RABBIT_FOOT"

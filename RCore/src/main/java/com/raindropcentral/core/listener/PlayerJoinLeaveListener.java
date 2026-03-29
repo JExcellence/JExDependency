@@ -16,6 +16,7 @@ package com.raindropcentral.core.listener;
 import com.raindropcentral.core.RCore;
 import com.raindropcentral.core.database.entity.player.RPlayer;
 import com.raindropcentral.core.database.repository.RPlayerRepository;
+import com.raindropcentral.core.service.central.DropletClaimService;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -43,6 +44,7 @@ public class PlayerJoinLeaveListener implements Listener {
     private static final Logger LOGGER = CentralLogger.getLoggerByName("RCore");
 
     private final RCore core;
+    private final DropletClaimService dropletClaimService;
 
     private RPlayerRepository playerRepository;
 
@@ -54,6 +56,7 @@ public class PlayerJoinLeaveListener implements Listener {
     public PlayerJoinLeaveListener(final @NotNull RCore core) {
         this.core = core;
         this.playerRepository = this.core.getImpl().getPlayerRepository();
+        this.dropletClaimService = this.core.getImpl().getDropletClaimService();
     }
 
     /**
@@ -68,6 +71,8 @@ public class PlayerJoinLeaveListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerJoin(final @NotNull PlayerJoinEvent event) {
         var player = event.getPlayer();
+        this.dropletClaimService.deliverPendingRewards(player);
+        this.core.getImpl().getActiveCookieBoostService().hydratePlayer(player);
 
         playerRepository.findByUuidAsync(player.getUniqueId())
                 .thenCompose(existingPlayer -> {
@@ -100,6 +105,7 @@ public class PlayerJoinLeaveListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerQuit(final @NotNull PlayerQuitEvent event) {
         var player = event.getPlayer();
+        this.core.getImpl().getActiveCookieBoostService().removePlayerCache(player.getUniqueId());
 
         playerRepository.findByUuidAsync(player.getUniqueId())
                 .thenCompose(rPlayer -> rPlayer

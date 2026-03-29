@@ -143,6 +143,23 @@ public class ServiceRegistry {
     }
 
     /**
+     * Binds a concrete service instance directly into the registry cache.
+     *
+     * <p>This is used for services created inside the current plugin runtime that should be
+     * discoverable through the shared platform registry without going through Bukkit's global
+     * service manager.</p>
+     *
+     * @param serviceClass service type used as the cache key
+     * @param service service instance to expose
+     * @param <T> service type
+     * @return the bound service instance
+     */
+    public <T> @NotNull T bind(final @NotNull Class<T> serviceClass, final @NotNull T service) {
+        registerService(serviceClass.getName(), service);
+        return service;
+    }
+
+    /**
      * Store a resolved service within the registry cache.
      *
      * @param key     fully qualified class name used to identify the service

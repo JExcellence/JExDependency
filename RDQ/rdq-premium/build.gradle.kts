@@ -24,6 +24,7 @@ description = "RDQ Premium - Premium edition of RaindropQuests"
 dependencies {
     implementation(project(":RDQ:rdq-common"))
     implementation(project(":JExCommand"))
+    implementation(project(":RPlatform"))
 
     compileOnly(libs.paper.api)
 
@@ -65,6 +66,7 @@ dependencies {
     implementation(libs.bundles.jexcellence) {
         exclude(group = "de.jexcellence.hibernate")
         exclude(group = "com.raindropcentral.commands", module = "jexcommand")
+        exclude(group = "com.raindropcentral.platform", module = "rplatform")
         isTransitive = false
     }
     implementation(libs.bundles.jeconfig) { isTransitive = false }

@@ -9,6 +9,7 @@ softdepend:
   - JExEconomy
   - LuckPerms
   - Aura
+  - AuraSkills
   - ChestSort
   - CMI
   - DiscordSRV

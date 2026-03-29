@@ -3,13 +3,14 @@
 prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
 
 rcconnect:
-  usage: "<gray>使用方法: /rc <connect|disconnect> <api-key></gray>"
+  usage: "<gray>使用法: /rc <connect &lt;api-key&gt;|disconnect|claim droplets></gray>"
+  usage_no_claim: "<gray>使用法: /rc <connect &lt;api-key&gt;|disconnect></gray>"
   connecting: "<yellow>RaindropCentral に接続中...</yellow>"
   success: "<green>RaindropCentral への接続に成功しました！</green> <gray>サーバーは現在ハートビートを送信しています。</gray>"
   error:
     invalid_key: "<red>API キーの形式が無効です。API キーは 32〜128 文字の英数字である必要があります。</red>"
     uuid_mismatch: "<red>この API キーは別の Minecraft アカウントに紐づいています。</red>"
-    already_connected: "<yellow>サーバーはすでに接続されています。</yellow> <gray>先に /rc disconnect <api-key> を使用してください。</gray>"
+    already_connected: "<yellow>サーバーはすでに接続されています。</yellow> <gray>最初に/rc disconnectを使用してください。</gray>"
     network: "<red>ネットワークエラー: %error%</red>"
 
 rcdisconnect:
@@ -19,6 +20,152 @@ rcdisconnect:
     not_connected: "<red>サーバーは RaindropCentral に接続されていません。</red>"
     failed: "<red>切断に失敗しました。もう一度お試しください。</red>"
     network: "<red>ネットワークエラー: %error%</red>"
+
+rcclaim:
+  loading: "<yellow>未請求のドロップレット報酬について RaindropCentral を確認中...</yellow>"
+  claiming_item: "<yellow>RaindropCentral...</yellow> から %item_name% を請求しています"
+  success:
+    claimed: "<green>あなたは %item_name%.</green> を申請しました"
+    claimed_skill_targeted: "<green>あなたは %item_name% を申請しました。</green> <gray>クッキーを右クリックしてスキルを選択してください。</gray>"
+    claimed_job_targeted: "<green>あなたは %item_name% を申請しました。</green> <gray>クッキーを右クリックしてジョブを選択してください。</gray>"
+    claimed_activate: "<green>あなたは %item_name% を申請しました。</green> <gray>クッキーを右クリックして有効にします。</gray>"
+    skill_granted: "<green>%skill_name%.</green> <gray>で 1 レベルを付与されました出典: %plugin_name%.</gray>"
+    job_granted: "<green>%job_name%.</green> <gray>で 1 レベルを付与されました出典: %plugin_name%.</gray>"
+    skill_xp_boost_applied: "<green>%skill_name%.</green> <gray> の +%rate_percent%% スキル XP をアクティブ化しました。出典: %plugin_name%。期間: %duration_minutes% 分.</gray>"
+    skill_xp_boost_refreshed: "<green>更新 +%skill_name%.</green> <gray> の +%rate_percent%% スキル XP 出典: %plugin_name%。期間が %duration_minutes% 分にリセットされました。</gray>"
+    job_xp_boost_applied: "<green>%job_name% の +%rate_percent%% ジョブ XP をアクティブ化しました。</green> <gray>出典: %plugin_name%。期間: %duration_minutes% 分.</gray>"
+    job_xp_boost_refreshed: "<green>%job_name%.</green> <gray>ソース: %plugin_name% の +%rate_percent%% ジョブ XP を更新しました。期間が %duration_minutes% 分にリセットされました。</gray>"
+    job_vault_boost_applied: "<green>%job_name%.</green> <gray> の +%rate_percent%% ジョブ マネーがアクティブになりました。出典: %plugin_name%。期間: %duration_minutes% 分.</gray>"
+    job_vault_boost_refreshed: "<green>%job_name%.</green> <gray> の +%rate_percent%% ジョブ マネーを更新しました。出典: %plugin_name%。期間が %duration_minutes% 分にリセットされました。</gray>"
+    double_drop_boost_applied: "<green>ダブル ドロップをアクティブ化しました。</green> <gray>期間: %duration_minutes% 分。</gray>"
+    double_drop_boost_refreshed: "<green>ダブル ドロップを更新しました。</green> <gray>期間を %duration_minutes% 分にリセットしました。</gray>"
+    pending_delivery: "<green>保留中のドロップレット報酬 %count% 個を配信しました。</green>"
+  error:
+    store_disabled: "<red>このサーバーは /rc claim droplets.</red> を無効にしました"
+    not_connected: "ドロップレットを要求するには、<red>RCore を RaindropCentral バックエンドに接続する必要があります。</red>"
+    cooldown: "<yellow>/rc claim droplets を再度使用する前に、%seconds% 秒待ってください。</yellow>"
+    not_registered: "<red>あなたの Minecraft アカウントは RaindropCentral アカウントにリンクされていません。</red>"
+    no_unclaimed: "<yellow>現在、未請求のドロップレット報酬はありません。</yellow>"
+    api_unavailable: "<red>XXQTOK1QXZ は現在利用できません: %error%XXQTOK3QXZ"
+    menu_unavailable: "<red>ドロップレット要求メニューは現在利用できません。後でもう一度試してください。</red>"
+    item_disabled: "<red>このサーバーは %item_name%.</red> <gray>アイテム ID: %item_code%</gray> の要求を無効にしました"
+    unsupported_item: "<red>このドロップレット報酬は、このサーバーではまだサポートされていません。</red> <gray>アイテム ID: %item_code%</gray>"
+    no_supported_skills: "<red>このサーバーには現在、この報酬でサポートされているスキル プラグインがありません。</red>"
+    no_supported_jobs: "<red>このサーバーには現在、この報酬でサポートされているジョブ プラグインがありません。</red>"
+    inventory_full: "<red>この報酬を受け取るには、少なくとも 1 つの無料在庫スロットが必要です。</red>"
+    claim_in_progress: "<yellow>その申し立てはすでに進行中です。バックエンドが応答するまでお待ちください。</yellow>"
+    claim_failed: "<red>ドロップレット報酬の受け取りに失敗しました: %error%XXQTOK2QXZ"
+    already_claimed: "<yellow>そのドロップレット報酬はすでに受け取られています。</yellow>"
+    purchase_unavailable: "<red>そのドロップレット報酬はもう受け取れません。</red>"
+    cookie_missing: "<red>ドロップレット クッキーがインベントリ内に見つかりませんでした。</red>"
+    skill_grant_failed: "<red>%skill_name% で 1 レベルの付与に失敗しました。</red>"
+    job_grant_failed: "<red>%job_name% で 1 レベルの付与に失敗しました。</red>"
+    boost_activation_failed: "<red>%item_name%.</red> をアクティブ化できませんでした"
+    unsupported_integration: "<red>このドロップレット Cookie に必要な統合は、現在利用できません。</red>"
+    boost_expired: "<yellow>ドロップレット クッキー ブーストの有効期限が切れました。</yellow>"
+
+rc_claim_droplets_ui:
+  title: "要求されていないドロップレット"
+  page:
+    name: "<yellow>ページ %page%/%max_page%</yellow>"
+    lore:
+      - "<gray>ZZQTOK1QXZ 要求可能なエントリがリストされています。</gray>"
+  summary:
+    name: "<gold>クレームキュー</gold>"
+    lore:
+      - "<gray>未請求エントリ: %item_count%</gray>"
+      - "<gray>このサーバーでサポートされています: %supported_count%</gray>"
+      - "<yellow>サポートされている報酬をクリックして獲得してください。</yellow>"
+  empty:
+    name: "<red>未請求の報酬はありません</red>"
+    lore:
+      - "<gray>現在、未請求のドロップレット報酬はありません。</gray>"
+  entry:
+    supported:
+      name: "<green>XXQTOK1QXZXXQTOK2QXZ"
+      lore:
+        - "<gray>アイテムID: %item_code%</gray>"
+        - "<gray>使用量: %amount_spent% 液滴 </gray>"
+        - "<yellow>クリックしてこの報酬を受け取りましょう。</yellow>"
+    item_disabled:
+      name: "<red>XXQTOK1QXZXXQTOK2QXZ"
+      lore:
+        - "<gray>アイテムID: %item_code%</gray>"
+        - "<red>このサーバーはこの報酬の請求を無効にしています。</red>"
+    unsupported_item:
+      name: "<red>XXQTOK1QXZXXQTOK2QXZ"
+      lore:
+        - "<gray>アイテムID: %item_code%</gray>"
+        - "<red>この特典はこのサーバーではサポートされていません。</red>"
+    no_skills:
+      name: "<red>XXQTOK1QXZXXQTOK2QXZ"
+      lore:
+        - "<gray>アイテムID: %item_code%</gray>"
+        - "<red>この報酬にはサポートされているスキル プラグインがインストールされていません。</red>"
+    no_jobs:
+      name: "<red>XXQTOK1QXZXXQTOK2QXZ"
+      lore:
+        - "<gray>アイテムID: %item_code%</gray>"
+        - "<red>この報酬にはサポートされているジョブ プラグインがインストールされていません。</red>"
+
+rc_claim_droplet_skills_ui:
+  title: "スキルを選択してください"
+  page:
+    name: "<yellow>ページ %page%/%max_page%</yellow>"
+    lore:
+      - "<gray>XXQTOK1QXZ スキル エントリがリストされています。</gray>"
+  summary:
+    name: "<gold>スキル選択</gold>"
+    lore:
+      - "<gray>利用可能なスキル: %skill_count%ZZQTOK2QXZ"
+      - "<yellow>クッキーを消費するスキルを 1 つ選択してください。</yellow>"
+  empty:
+    name: "<red>利用可能なスキルはありません</red>"
+    lore:
+      - "<gray>現在利用できるサポートされているスキルはありません。</gray>"
+  entry:
+    name: "<green>XXQTOK1QXZXXQTOK2QXZ"
+    level_lore:
+      - "<gray>プラグイン: %plugin_name%XXQTOK2QXZ"
+      - "<gray>現在のレベル: %current_level%ZZQTOK2QXZ"
+      - "<yellow>クリックすると、このスキルのレベルが 1 上がります。</yellow>"
+    boost_lore:
+      - "<gray>プラグイン: %plugin_name%XXQTOK2QXZ"
+      - "<gray>現在のレベル: %current_level%ZZQTOK2QXZ"
+      - "<gray>ブースト: +%rate_percent%% XP (%duration_minutes% 分)</gray>"
+      - "<yellow>クリックしてこのスキルブーストを有効にします。</yellow>"
+
+rc_claim_droplet_jobs_ui:
+  title: "仕事を選ぶ"
+  page:
+    name: "<yellow>ページ %page%/%max_page%</yellow>"
+    lore:
+      - "<gray>XXQTOK1QXZ ジョブ エントリがリストされます。</gray>"
+  summary:
+    name: "<gold>ジョブ選択</gold>"
+    lore:
+      - "<gray>利用可能なジョブ: %job_count%</gray>"
+      - "<yellow>Cookie を消費するジョブを 1 つ選択してください。</yellow>"
+  empty:
+    name: "<red>求人はありません</red>"
+    lore:
+      - "<gray>現在、サポートされているジョブはありません。</gray>"
+  entry:
+    name: "<green>XXQTOK1QXZXXQTOK2QXZ"
+    level_lore:
+      - "<gray>プラグイン: %plugin_name%XXQTOK2QXZ"
+      - "<gray>現在のレベル: %current_level%ZZQTOK2QXZ"
+      - "<yellow>クリックすると、このジョブのレベルが 1 つ上がります。</yellow>"
+    xp_boost_lore:
+      - "<gray>プラグイン: %plugin_name%XXQTOK2QXZ"
+      - "<gray>現在のレベル: %current_level%ZZQTOK2QXZ"
+      - "<gray>ブースト: +%rate_percent%% XP (%duration_minutes% 分)</gray>"
+      - "<yellow>クリックしてこのジョブ XP ブーストをアクティブ化します。</yellow>"
+    vault_boost_lore:
+      - "<gray>プラグイン: %plugin_name%XXQTOK2QXZ"
+      - "<gray>現在のレベル: %current_level%ZZQTOK2QXZ"
+      - "<gray>ブースト: +%rate_percent%% マネー (%duration_minutes% 分)</gray>"
+      - "<yellow>クリックしてこのジョブのマネーブーストをアクティブ化します。</yellow>"
 
 general:
   no_permission: "<red>このコマンドを使用する権限がありません。</red>"

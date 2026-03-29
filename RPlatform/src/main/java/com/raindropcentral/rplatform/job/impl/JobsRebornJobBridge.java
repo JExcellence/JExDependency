@@ -13,11 +13,15 @@
 
 package com.raindropcentral.rplatform.job.impl;
 
+import com.raindropcentral.rplatform.job.JobBridge;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -154,6 +158,87 @@ public final class JobsRebornJobBridge extends AbstractReflectionJobBridge {
         }
     }
 
+    @Override
+    public @NotNull List<JobBridge.JobDescriptor> getAvailableJobs(@NotNull Player player) {
+        if (!isAvailable()) {
+            return List.of();
+        }
+
+        final Object jobs = invokeStaticOptional(this.jobsClass, "getJobs");
+        if (!(jobs instanceof Iterable<?> iterableJobs)) {
+            return List.of();
+        }
+
+        final List<JobBridge.JobDescriptor> descriptors = new ArrayList<>();
+        for (final Object job : iterableJobs) {
+            if (job == null) {
+                continue;
+            }
+
+            final String id = resolveJobIdentifier(job);
+            final String displayName = resolveJobDisplayName(job);
+            if (id.isBlank() || displayName.isBlank()) {
+                continue;
+            }
+
+            descriptors.add(new JobBridge.JobDescriptor(
+                    this.getIntegrationId(),
+                    this.getPluginName(),
+                    id,
+                    displayName
+            ));
+        }
+
+        return descriptors.stream()
+                .sorted(Comparator.comparing(JobBridge.JobDescriptor::displayName, String.CASE_INSENSITIVE_ORDER))
+                .toList();
+    }
+
+    @Override
+    public boolean addJobLevels(@NotNull Player player, @NotNull String jobId, int amount) {
+        if (!isAvailable() || jobId.isBlank() || amount <= 0) {
+            return false;
+        }
+
+        try {
+            final Object jobsPlayer = resolveJobsPlayer(player);
+            final Object job = resolveJob(jobId.trim());
+            if (jobsPlayer == null || job == null) {
+                return false;
+            }
+
+            final int currentLevel = Math.max((int) Math.floor(getJobLevel(player, jobId.trim())), 0);
+            final int targetLevel = currentLevel + amount;
+
+            Object progression = firstNonNull(
+                    invokeOptional(jobsPlayer, "getJobProgression", job),
+                    invokeOptional(jobsPlayer, "getJobProgression", jobId.trim())
+            );
+            if (progression == null) {
+                invokeOptional(jobsPlayer, "joinJob", job);
+                progression = firstNonNull(
+                        invokeOptional(jobsPlayer, "getJobProgression", job),
+                        invokeOptional(jobsPlayer, "getJobProgression", jobId.trim())
+                );
+            }
+
+            if (progression == null) {
+                return false;
+            }
+
+            final Object setResult = invokeOptional(progression, "setLevel", targetLevel);
+            invokeOptional(jobsPlayer, "save");
+            if (setResult instanceof Boolean booleanResult && !booleanResult) {
+                return false;
+            }
+
+            return getJobLevel(player, jobId.trim()) >= targetLevel;
+        } catch (Exception exception) {
+            LOGGER.log(Level.FINE, "Failed to add JobsReborn levels for " + player.getName(), exception);
+            return false;
+        }
+    }
+
     private @Nullable Class<?> resolveJobsClass(final @NotNull Plugin installedPlugin) {
         for (final String className : JOBS_CLASS_NAMES) {
             final Class<?> resolvedClass = loadClass(installedPlugin, className);
@@ -219,6 +304,25 @@ public final class JobsRebornJobBridge extends AbstractReflectionJobBridge {
             return resolveNamedEntry(iterableJobs, jobId);
         }
         return null;
+    }
+
+    private @NotNull String resolveJobIdentifier(final @NotNull Object job) {
+        final Object resolved = firstNonNull(
+                invokeOptional(job, "getName"),
+                invokeOptional(job, "getJobName"),
+                invokeOptional(job, "getId"),
+                invokeOptional(job, "getIdentifier")
+        );
+        return resolved == null ? "" : resolved.toString();
+    }
+
+    private @NotNull String resolveJobDisplayName(final @NotNull Object job) {
+        final Object resolved = firstNonNull(
+                invokeOptional(job, "getDisplayName"),
+                invokeOptional(job, "getName"),
+                invokeOptional(job, "getJobName")
+        );
+        return resolved == null ? "" : resolved.toString();
     }
 
     private @Nullable Double resolveProgressionLevel(

@@ -3,13 +3,14 @@
 prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
 
 rcconnect:
-  usage: "<gray>Usage: /rc <connect|disconnect> <api-key></gray>"
+  usage: "<gray>Usage: /rc <connect &lt;api-key&gt;|disconnect|claim droplets></gray>"
+  usage_no_claim: "<gray>Usage: /rc <connect &lt;api-key&gt;|disconnect></gray>"
   connecting: "<yellow>Connecting to RaindropCentral...</yellow>"
   success: "<green>Successfully connected to RaindropCentral!</green> <gray>Server is now sending heartbeats.</gray>"
   error:
     invalid_key: "<red>Invalid API key format. API keys should be 32-128 alphanumeric characters.</red>"
     uuid_mismatch: "<red>This API key belongs to a different Minecraft account.</red>"
-    already_connected: "<yellow>Server is already connected.</yellow> <gray>Use /rc disconnect <api-key> first.</gray>"
+    already_connected: "<yellow>Server is already connected.</yellow> <gray>Use /rc disconnect first.</gray>"
     network: "<red>Network error: %error%</red>"
 
 rcdisconnect:
@@ -19,6 +20,152 @@ rcdisconnect:
     not_connected: "<red>Server is not connected to RaindropCentral.</red>"
     failed: "<red>Failed to disconnect. Please try again.</red>"
     network: "<red>Network error: %error%</red>"
+
+rcclaim:
+  loading: "<yellow>Checking RaindropCentral for unclaimed droplet rewards...</yellow>"
+  claiming_item: "<yellow>Claiming %item_name% from RaindropCentral...</yellow>"
+  success:
+    claimed: "<green>You claimed %item_name%.</green>"
+    claimed_skill_targeted: "<green>You claimed %item_name%.</green> <gray>Right-click the cookie to choose a skill.</gray>"
+    claimed_job_targeted: "<green>You claimed %item_name%.</green> <gray>Right-click the cookie to choose a job.</gray>"
+    claimed_activate: "<green>You claimed %item_name%.</green> <gray>Right-click the cookie to activate it.</gray>"
+    skill_granted: "<green>Granted 1 level in %skill_name%.</green> <gray>Source: %plugin_name%.</gray>"
+    job_granted: "<green>Granted 1 level in %job_name%.</green> <gray>Source: %plugin_name%.</gray>"
+    skill_xp_boost_applied: "<green>Activated +%rate_percent%% skill XP for %skill_name%.</green> <gray>Source: %plugin_name%. Duration: %duration_minutes% minute(s).</gray>"
+    skill_xp_boost_refreshed: "<green>Refreshed +%rate_percent%% skill XP for %skill_name%.</green> <gray>Source: %plugin_name%. Duration reset to %duration_minutes% minute(s).</gray>"
+    job_xp_boost_applied: "<green>Activated +%rate_percent%% job XP for %job_name%.</green> <gray>Source: %plugin_name%. Duration: %duration_minutes% minute(s).</gray>"
+    job_xp_boost_refreshed: "<green>Refreshed +%rate_percent%% job XP for %job_name%.</green> <gray>Source: %plugin_name%. Duration reset to %duration_minutes% minute(s).</gray>"
+    job_vault_boost_applied: "<green>Activated +%rate_percent%% job money for %job_name%.</green> <gray>Source: %plugin_name%. Duration: %duration_minutes% minute(s).</gray>"
+    job_vault_boost_refreshed: "<green>Refreshed +%rate_percent%% job money for %job_name%.</green> <gray>Source: %plugin_name%. Duration reset to %duration_minutes% minute(s).</gray>"
+    double_drop_boost_applied: "<green>Activated double drops.</green> <gray>Duration: %duration_minutes% minute(s).</gray>"
+    double_drop_boost_refreshed: "<green>Refreshed double drops.</green> <gray>Duration reset to %duration_minutes% minute(s).</gray>"
+    pending_delivery: "<green>Delivered %count% pending droplet reward(s).</green>"
+  error:
+    store_disabled: "<red>This server has disabled /rc claim droplets.</red>"
+    not_connected: "<red>RCore must be connected to the RaindropCentral backend before you can claim droplets.</red>"
+    cooldown: "<yellow>Please wait %seconds% second(s) before using /rc claim droplets again.</yellow>"
+    not_registered: "<red>Your Minecraft account is not linked to a RaindropCentral account.</red>"
+    no_unclaimed: "<yellow>You do not have any unclaimed droplet rewards right now.</yellow>"
+    api_unavailable: "<red>RaindropCentral is unavailable right now: %error%</red>"
+    menu_unavailable: "<red>The droplet claim menu is unavailable right now. Please try again later.</red>"
+    item_disabled: "<red>This server has disabled claiming %item_name%.</red> <gray>Item ID: %item_code%</gray>"
+    unsupported_item: "<red>This droplet reward is not supported on this server yet.</red> <gray>Item ID: %item_code%</gray>"
+    no_supported_skills: "<red>This server does not currently have a supported skills plugin for this reward.</red>"
+    no_supported_jobs: "<red>This server does not currently have a supported jobs plugin for this reward.</red>"
+    inventory_full: "<red>You need at least one free inventory slot before claiming this reward.</red>"
+    claim_in_progress: "<yellow>That claim is already in progress. Please wait for the backend to respond.</yellow>"
+    claim_failed: "<red>Failed to claim that droplet reward: %error%</red>"
+    already_claimed: "<yellow>That droplet reward has already been claimed.</yellow>"
+    purchase_unavailable: "<red>That droplet reward is no longer available to claim.</red>"
+    cookie_missing: "<red>The droplet cookie could not be found in your inventory.</red>"
+    skill_grant_failed: "<red>Failed to grant 1 level in %skill_name%.</red>"
+    job_grant_failed: "<red>Failed to grant 1 level in %job_name%.</red>"
+    boost_activation_failed: "<red>Failed to activate %item_name%.</red>"
+    unsupported_integration: "<red>The required integration for this droplet cookie is not available right now.</red>"
+    boost_expired: "<yellow>That droplet cookie boost has expired.</yellow>"
+
+rc_claim_droplets_ui:
+  title: "Unclaimed Droplets"
+  page:
+    name: "<yellow>Page %page%/%max_page%</yellow>"
+    lore:
+      - "<gray>%items_count% claimable entries listed.</gray>"
+  summary:
+    name: "<gold>Claim Queue</gold>"
+    lore:
+      - "<gray>Unclaimed entries: %item_count%</gray>"
+      - "<gray>Supported on this server: %supported_count%</gray>"
+      - "<yellow>Click a supported reward to claim it.</yellow>"
+  empty:
+    name: "<red>No Unclaimed Rewards</red>"
+    lore:
+      - "<gray>You currently do not have any unclaimed droplet rewards.</gray>"
+  entry:
+    supported:
+      name: "<green>%item_name%</green>"
+      lore:
+        - "<gray>Item ID: %item_code%</gray>"
+        - "<gray>Spent: %amount_spent% droplets</gray>"
+        - "<yellow>Click to claim this reward.</yellow>"
+    item_disabled:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>Item ID: %item_code%</gray>"
+        - "<red>This server has disabled claiming this reward.</red>"
+    unsupported_item:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>Item ID: %item_code%</gray>"
+        - "<red>This reward is not supported on this server.</red>"
+    no_skills:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>Item ID: %item_code%</gray>"
+        - "<red>No supported skills plugin is installed for this reward.</red>"
+    no_jobs:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>Item ID: %item_code%</gray>"
+        - "<red>No supported jobs plugin is installed for this reward.</red>"
+
+rc_claim_droplet_skills_ui:
+  title: "Choose A Skill"
+  page:
+    name: "<yellow>Page %page%/%max_page%</yellow>"
+    lore:
+      - "<gray>%items_count% skill entries listed.</gray>"
+  summary:
+    name: "<gold>Skill Selection</gold>"
+    lore:
+      - "<gray>Available skills: %skill_count%</gray>"
+      - "<yellow>Choose one skill to consume the cookie.</yellow>"
+  empty:
+    name: "<red>No Skills Available</red>"
+    lore:
+      - "<gray>No supported skills are available right now.</gray>"
+  entry:
+    name: "<green>%skill_name%</green>"
+    level_lore:
+      - "<gray>Plugin: %plugin_name%</gray>"
+      - "<gray>Current level: %current_level%</gray>"
+      - "<yellow>Click to gain 1 level in this skill.</yellow>"
+    boost_lore:
+      - "<gray>Plugin: %plugin_name%</gray>"
+      - "<gray>Current level: %current_level%</gray>"
+      - "<gray>Boost: +%rate_percent%% XP for %duration_minutes% minute(s)</gray>"
+      - "<yellow>Click to activate this skill boost.</yellow>"
+
+rc_claim_droplet_jobs_ui:
+  title: "Choose A Job"
+  page:
+    name: "<yellow>Page %page%/%max_page%</yellow>"
+    lore:
+      - "<gray>%items_count% job entries listed.</gray>"
+  summary:
+    name: "<gold>Job Selection</gold>"
+    lore:
+      - "<gray>Available jobs: %job_count%</gray>"
+      - "<yellow>Choose one job to consume the cookie.</yellow>"
+  empty:
+    name: "<red>No Jobs Available</red>"
+    lore:
+      - "<gray>No supported jobs are available right now.</gray>"
+  entry:
+    name: "<green>%job_name%</green>"
+    level_lore:
+      - "<gray>Plugin: %plugin_name%</gray>"
+      - "<gray>Current level: %current_level%</gray>"
+      - "<yellow>Click to gain 1 level in this job.</yellow>"
+    xp_boost_lore:
+      - "<gray>Plugin: %plugin_name%</gray>"
+      - "<gray>Current level: %current_level%</gray>"
+      - "<gray>Boost: +%rate_percent%% XP for %duration_minutes% minute(s)</gray>"
+      - "<yellow>Click to activate this job XP boost.</yellow>"
+    vault_boost_lore:
+      - "<gray>Plugin: %plugin_name%</gray>"
+      - "<gray>Current level: %current_level%</gray>"
+      - "<gray>Boost: +%rate_percent%% money for %duration_minutes% minute(s)</gray>"
+      - "<yellow>Click to activate this job money boost.</yellow>"
 
 general:
   no_permission: "<red>You don't have permission to use this command.</red>"

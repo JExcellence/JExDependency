@@ -16,6 +16,7 @@ package com.raindropcentral.core.commands;
 import com.raindropcentral.commands.PlayerCommand;
 import com.raindropcentral.commands.utility.Command;
 import com.raindropcentral.core.RCore;
+import com.raindropcentral.core.service.central.DropletClaimService;
 import com.raindropcentral.core.service.central.RCentralService;
 import de.jexcellence.jextranslate.i18n.I18n;
 import org.bukkit.entity.Player;
@@ -30,8 +31,8 @@ import java.util.regex.Pattern;
 /**
  * Command handler for {@code /rc}.
  *
- * <p>The command supports {@code connect} and {@code disconnect} subcommands and expects an API
- * key argument for both actions.</p>
+ * <p>The command supports {@code connect}, {@code disconnect}, and {@code claim droplets}
+ * subcommands for RaindropCentral connectivity and droplet reward redemption.</p>
  */
 @Command
 @SuppressWarnings("unused")
@@ -39,6 +40,7 @@ public final class PRC extends PlayerCommand {
     
     private static final Pattern API_KEY_PATTERN = Pattern.compile("^[A-Za-z0-9_-]{32,128}$");
     private final RCentralService centralService;
+    private final DropletClaimService dropletClaimService;
 
     /**
      * Creates the player command handler for central connection actions.
@@ -52,6 +54,7 @@ public final class PRC extends PlayerCommand {
     ) {
         super(section);
         this.centralService = rCore.getImpl().getRCentralService();
+        this.dropletClaimService = rCore.getImpl().getDropletClaimService();
     }
 
     @Override
@@ -60,14 +63,12 @@ public final class PRC extends PlayerCommand {
             final @NotNull String alias,
             final @NotNull String[] args
     ) {
-        if (args.length != 2) {
+        if (args.length == 0 || args[0] == null || args[0].isBlank()) {
             this.sendUsage(player);
             return;
         }
 
-        final RCAction action = RCAction.fromRawValue(
-                stringParameter(args, 0)
-        );
+        final RCAction action = RCAction.fromRawValue(stringParameter(args, 0));
         if (action == RCAction.INVALID) {
             this.sendUsage(player);
             return;
@@ -76,6 +77,7 @@ public final class PRC extends PlayerCommand {
         switch (action) {
             case CONNECT -> this.handleConnect(player, args);
             case DISCONNECT -> this.handleDisconnect(player, args);
+            case CLAIM -> this.handleClaim(player, args);
             default -> this.sendUsage(player);
         }
     }
@@ -86,22 +88,33 @@ public final class PRC extends PlayerCommand {
             final @NotNull String alias,
             final @NotNull String[] args
     ) {
-        if (args.length != 1) {
-            return List.of();
+        if (args.length == 1) {
+            final List<String> availableSubcommands = new ArrayList<>();
+            if (this.hasPermission(player, ERCentralPermission.CONNECT)) {
+                availableSubcommands.add("connect");
+            }
+            if (this.hasPermission(player, ERCentralPermission.DISCONNECT)) {
+                availableSubcommands.add("disconnect");
+            }
+            if (this.hasPermission(player, ERCentralPermission.CLAIM_DROPLETS) && this.dropletClaimService.isDropletStoreEnabled()) {
+                availableSubcommands.add("claim");
+            }
+            return StringUtil.copyPartialMatches(args[0], availableSubcommands, new ArrayList<>());
         }
-
-        final List<String> availableSubcommands = new ArrayList<>();
-        if (this.hasPermission(player, ERCentralPermission.CONNECT)) {
-            availableSubcommands.add("connect");
+        if (args.length == 2
+                && "claim".equalsIgnoreCase(args[0])
+                && this.hasPermission(player, ERCentralPermission.CLAIM_DROPLETS)
+                && this.dropletClaimService.isDropletStoreEnabled()) {
+            return StringUtil.copyPartialMatches(args[1], List.of("droplets"), new ArrayList<>());
         }
-        if (this.hasPermission(player, ERCentralPermission.DISCONNECT)) {
-            availableSubcommands.add("disconnect");
-        }
-        return StringUtil.copyPartialMatches(args[0], availableSubcommands, new ArrayList<>());
+        return List.of();
     }
 
     private void sendUsage(final @NotNull Player player) {
-        new I18n.Builder("rcconnect.usage", player)
+        final String usageKey = this.dropletClaimService.isDropletStoreEnabled()
+                ? "rcconnect.usage"
+                : "rcconnect.usage_no_claim";
+        new I18n.Builder(usageKey, player)
                 .includePrefix()
                 .build().sendMessage();
     }
@@ -111,6 +124,10 @@ public final class PRC extends PlayerCommand {
             final @NotNull String[] args
     ) {
         if (this.hasNoPermission(player, ERCentralPermission.CONNECT)) {
+            return;
+        }
+        if (args.length != 2) {
+            this.sendUsage(player);
             return;
         }
 
@@ -168,24 +185,13 @@ public final class PRC extends PlayerCommand {
         if (this.hasNoPermission(player, ERCentralPermission.DISCONNECT)) {
             return;
         }
+        if (args.length != 1) {
+            this.sendUsage(player);
+            return;
+        }
 
         if (!this.centralService.isConnected()) {
             new I18n.Builder("rcdisconnect.error.not_connected", player)
-                    .includePrefix()
-                    .build().sendMessage();
-            return;
-        }
-
-        final String apiKey = stringParameter(args, 1);
-        if (!API_KEY_PATTERN.matcher(apiKey).matches()) {
-            new I18n.Builder("rcconnect.error.invalid_key", player)
-                    .includePrefix()
-                    .build().sendMessage();
-            return;
-        }
-
-        if (!this.centralService.matchesStoredApiKey(apiKey)) {
-            new I18n.Builder("rcconnect.error.invalid_key", player)
                     .includePrefix()
                     .build().sendMessage();
             return;
@@ -195,7 +201,7 @@ public final class PRC extends PlayerCommand {
                 .includePrefix()
                 .build().sendMessage();
 
-        this.centralService.disconnect(apiKey).thenAccept(success -> {
+        this.centralService.disconnect().thenAccept(success -> {
             if (success) {
                 new I18n.Builder("rcdisconnect.success", player)
                         .includePrefix()
@@ -214,9 +220,25 @@ public final class PRC extends PlayerCommand {
         });
     }
 
+    private void handleClaim(
+            final @NotNull Player player,
+            final @NotNull String[] args
+    ) {
+        if (this.hasNoPermission(player, ERCentralPermission.CLAIM_DROPLETS)) {
+            return;
+        }
+        if (args.length != 2 || !"droplets".equalsIgnoreCase(args[1])) {
+            this.sendUsage(player);
+            return;
+        }
+
+        this.dropletClaimService.openClaimsMenu(player);
+    }
+
     private enum RCAction {
         CONNECT,
         DISCONNECT,
+        CLAIM,
         INVALID;
 
         private static @NotNull RCAction fromRawValue(final @NotNull String rawValue) {
@@ -224,6 +246,7 @@ public final class PRC extends PlayerCommand {
             return switch (normalizedValue) {
                 case "connect" -> CONNECT;
                 case "disconnect" -> DISCONNECT;
+                case "claim" -> CLAIM;
                 default -> INVALID;
             };
         }
