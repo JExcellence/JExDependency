@@ -548,39 +548,54 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
         """;
 
     /**
-     * Gets executor.
+     * Returns the executor used for asynchronous repository and startup work.
+     *
+     * @return plugin-scoped executor service
      */
     public ExecutorService getExecutor() {
         return executor;
     }
 
+    /**
+     * Returns the in-flight enable future, if startup has begun.
+     *
+     * @return enable pipeline future, or {@code null} when enable has not started
+     */
     public CompletableFuture<Void> getEnableFuture() {
         return enableFuture;
     }
 
     /**
-     * Performs getrCoreService.
+     * Returns the adapter-backed core service published to Bukkit's service registry.
+     *
+     * @return registered RCore service handle, or {@code null} when services are not registered yet
      */
     public RCoreService getrCoreService() {
         return rCoreService;
     }
 
     /**
-     * Gets rCentralService.
+     * Returns the active RaindropCentral connection service.
+     *
+     * @return central service instance, or {@code null} before component initialization
      */
     public RCentralService getrCentralService() {
         return rCentralService;
     }
 
     /**
-     * Gets rCoreAdapter.
+     * Returns the adapter exposed to other plugins through Bukkit services.
+     *
+     * @return RCore adapter, or {@code null} before registration
      */
     public RCoreAdapter getrCoreAdapter() {
         return rCoreAdapter;
     }
 
     /**
-     * Gets playerRepository.
+     * Returns the player repository injected during repository initialization.
+     *
+     * @return player repository, or {@code null} until repositories are wired
      */
     public RPlayerRepository getPlayerRepository() {
         return playerRepository;

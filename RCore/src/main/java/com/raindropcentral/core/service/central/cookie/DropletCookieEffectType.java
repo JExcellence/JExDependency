@@ -34,14 +34,29 @@ public enum DropletCookieEffectType {
         this.boostType = boostType;
     }
 
+    /**
+     * Returns whether this effect is persisted as a timed multiplier boost.
+     *
+     * @return {@code true} when the effect maps to a {@link CookieBoostType}
+     */
     public boolean isTimedBoost() {
         return this.boostType != null;
     }
 
+    /**
+     * Returns the runtime boost type used by integration hooks.
+     *
+     * @return boost type, or {@code null} for instant grant effects
+     */
     public @Nullable CookieBoostType boostType() {
         return this.boostType;
     }
 
+    /**
+     * Returns the statistic key suffix used for persistence and diagnostics.
+     *
+     * @return stable key fragment for this effect type
+     */
     public @NotNull String statisticKey() {
         return switch (this) {
             case SKILL_XP_RATE -> "skill_xp";

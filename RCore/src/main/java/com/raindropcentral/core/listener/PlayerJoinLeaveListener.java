@@ -29,15 +29,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Listener for managing player entities in the local database.
+ * Maintains local player state as players join and leave the server.
  *
- * <p>Creates or updates RPlayer entities when players join, and updates last seen
- * timestamp when they leave. This maintains local player data for plugin features.
- * </p>
- *
- * @author JExcellence
- * @since 1.0.0
- * @version 2.0.0
+ * <p>Besides refreshing the persisted {@link RPlayer} aggregate, the listener also delivers any
+ * queued droplet rewards and rehydrates active timed cookie boosts when players reconnect.</p>
  */
 public class PlayerJoinLeaveListener implements Listener {
 
@@ -49,9 +44,9 @@ public class PlayerJoinLeaveListener implements Listener {
     private RPlayerRepository playerRepository;
 
     /**
-     * Constructs a new PlayerJoinLeaveListener.
+     * Creates the listener bound to the active {@link RCore} plugin instance.
      *
-     * @throws NullPointerException if context is null
+     * @param core plugin context used to resolve repositories and droplet services
      */
     public PlayerJoinLeaveListener(final @NotNull RCore core) {
         this.core = core;
@@ -60,11 +55,7 @@ public class PlayerJoinLeaveListener implements Listener {
     }
 
     /**
-     * Handles player join events to create/update player entities in local database.
- *
- * <p>Always creates or updates the RPlayer entity with current player information.
-     * This maintains accurate local player data for plugin features.
-     * </p>
+     * Delivers queued rewards, restores active boosts, and upserts the local player aggregate.
      *
      * @param event the player join event
      */
@@ -95,10 +86,7 @@ public class PlayerJoinLeaveListener implements Listener {
     }
 
     /**
-     * Handles player quit events to update the last seen timestamp.
- *
- * <p>Updates the player's lastSeen timestamp in the local database when they leave.
-     * </p>
+     * Clears runtime boost cache entries and records the player's latest seen timestamp.
      *
      * @param event the player quit event
      */

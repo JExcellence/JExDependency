@@ -54,6 +54,12 @@ public class RCentralApiClient {
     private final Gson gson;
     private final String baseUrl;
 
+    /**
+     * Creates an HTTP client bound to the supplied backend base URL.
+     *
+     * @param plugin plugin providing logging context
+     * @param baseUrl RaindropCentral backend base URL without a trailing slash requirement
+     */
     public RCentralApiClient(final @NotNull Plugin plugin, final @NotNull String baseUrl) {
         this.plugin = plugin;
         this.logger = plugin.getLogger();
@@ -104,7 +110,17 @@ public class RCentralApiClient {
     }
 
     /**
-     * Performs connectServer.
+     * Sends the initial server-connect request to RaindropCentral.
+     *
+     * @param apiKey active server API key
+     * @param serverUuid unique identifier for the server instance
+     * @param serverVersion reported Minecraft server version
+     * @param pluginVersion RCore plugin version
+     * @param playerUuid UUID of the player performing the connect flow
+     * @param playerName username of the player performing the connect flow
+     * @param maxPlayers current configured maximum player count
+     * @param compatibilitySnapshot optional droplet-store compatibility metadata
+     * @return asynchronous transport response
      */
     public CompletableFuture<ApiResponse> connectServer(
             final @NotNull String apiKey,
@@ -129,7 +145,15 @@ public class RCentralApiClient {
     }
 
     /**
-     * Performs sendHeartbeat.
+     * Sends a server heartbeat update including optional droplet-store compatibility metadata.
+     *
+     * @param apiKey active server API key
+     * @param currentPlayers current online player count
+     * @param maxPlayers current configured maximum player count
+     * @param tps reported server TPS snapshot
+     * @param playerList optional serialized player list
+     * @param compatibilitySnapshot optional droplet-store compatibility metadata
+     * @return asynchronous transport response
      */
     public CompletableFuture<ApiResponse> sendHeartbeat(
             final @NotNull String apiKey,
@@ -152,7 +176,14 @@ public class RCentralApiClient {
     }
 
     /**
-     * Performs sendHeartbeat without compatibility metadata.
+     * Sends a heartbeat update without droplet-store compatibility metadata.
+     *
+     * @param apiKey active server API key
+     * @param currentPlayers current online player count
+     * @param maxPlayers current configured maximum player count
+     * @param tps reported server TPS snapshot
+     * @param playerList optional serialized player list
+     * @return asynchronous transport response
      */
     public CompletableFuture<ApiResponse> sendHeartbeat(
             final @NotNull String apiKey,
@@ -165,14 +196,21 @@ public class RCentralApiClient {
     }
 
     /**
-     * Performs disconnectServer.
+     * Sends a disconnect notification for the currently connected server.
+     *
+     * @param apiKey active server API key
+     * @return asynchronous transport response
      */
     public CompletableFuture<ApiResponse> disconnectServer(final @NotNull String apiKey) {
         return sendRequest("/api/server-data/disconnect", "POST", apiKey, null);
     }
 
     /**
-     * Performs shutdownServer.
+     * Sends a shutdown notification so the backend can mark the server offline.
+     *
+     * @param apiKey active server API key
+     * @param serverUuid unique identifier for the server instance
+     * @return asynchronous transport response
      */
     public CompletableFuture<ApiResponse> shutdownServer(
             final @NotNull String apiKey,
@@ -186,7 +224,17 @@ public class RCentralApiClient {
     }
 
     /**
-     * Performs wakeupServer.
+     * Sends a wake-up notification used when reconnecting an already registered server.
+     *
+     * @param apiKey active server API key
+     * @param serverUuid unique identifier for the server instance
+     * @param serverVersion reported Minecraft server version
+     * @param pluginVersion RCore plugin version
+     * @param maxPlayers current configured maximum player count
+     * @param minecraftUuid optional UUID of the player waking the server
+     * @param minecraftUsername optional username of the player waking the server
+     * @param compatibilitySnapshot optional droplet-store compatibility metadata
+     * @return asynchronous transport response
      */
     public CompletableFuture<ApiResponse> wakeupServer(
             final @NotNull String apiKey,
@@ -408,9 +456,6 @@ public class RCentralApiClient {
                 } else if ("POST".equals(method)) {
                     requestBuilder.POST(HttpRequest.BodyPublishers.noBody());
                 } else {
-                    /**
-                     * Represents the type API type.
-                     */
                     requestBuilder.GET();
                 }
 
@@ -502,11 +547,17 @@ public class RCentralApiClient {
     }
 
     /**
-     * Represents the ApiResponse API type.
+     * Lightweight transport response returned by non-typed backend endpoints.
+     *
+     * @param statusCode HTTP status code returned by the backend
+     * @param body raw response body, if any
+     * @param error local transport error, if one occurred
      */
     public record ApiResponse(int statusCode, @Nullable String body, @Nullable String error) {
         /**
-         * Returns whether success.
+         * Returns whether the backend response was successful.
+         *
+         * @return {@code true} for HTTP 2xx responses
          */
         public boolean isSuccess() {
             return statusCode >= 200 && statusCode < 300;
@@ -561,7 +612,7 @@ public class RCentralApiClient {
             @Nullable String claimedServerName
     ) {
         /**
-         * Gets the best available item code for UI rendering.
+         * Returns the best available item code for UI rendering.
          *
          * @return non-blank item code, or an empty string when unavailable
          */
@@ -570,7 +621,7 @@ public class RCentralApiClient {
         }
 
         /**
-         * Gets the best available item display name for UI rendering.
+         * Returns the best available item display name for UI rendering.
          *
          * @return item name, or the item code when the name is unavailable
          */

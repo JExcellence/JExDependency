@@ -63,25 +63,19 @@ public final class McMMOSkillBridge extends AbstractReflectionSkillBridge {
     public McMMOSkillBridge() {
     }
 
-    /**
-     * Gets integrationId.
-     */
+    /** {@inheritDoc} */
     @Override
     public @NotNull String getIntegrationId() {
         return INTEGRATION_ID;
     }
 
-    /**
-     * Gets pluginName.
-     */
+    /** {@inheritDoc} */
     @Override
     public @NotNull String getPluginName() {
         return PLUGIN_NAME;
     }
 
-    /**
-     * Returns whether available.
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean isAvailable() {
         final Plugin installedPlugin = resolvePlugin(PLUGIN_NAME, "mcMMO");
@@ -105,9 +99,7 @@ public final class McMMOSkillBridge extends AbstractReflectionSkillBridge {
         return this.experienceApiClass != null && this.skillTypeClass != null;
     }
 
-    /**
-     * Gets skillLevel.
-     */
+    /** {@inheritDoc} */
     @Override
     public double getSkillLevel(@NotNull Player player, @NotNull String skillId) {
         if (!isAvailable() || skillId.isBlank()) {

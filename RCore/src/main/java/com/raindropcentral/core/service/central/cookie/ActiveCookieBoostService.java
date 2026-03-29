@@ -48,6 +48,11 @@ public final class ActiveCookieBoostService implements CookieBoostLookup {
     private final String statisticPlugin;
     private final Map<UUID, Map<String, ActiveCookieBoost>> boostsByPlayer = new ConcurrentHashMap<>();
 
+    /**
+     * Creates the runtime service and starts periodic cleanup of expired online-player boosts.
+     *
+     * @param plugin active RCore implementation providing repositories and scheduler access
+     */
     public ActiveCookieBoostService(final @NotNull RCoreImpl plugin) {
         this.plugin = plugin;
         this.logger = plugin.getPlugin().getLogger();
@@ -55,6 +60,7 @@ public final class ActiveCookieBoostService implements CookieBoostLookup {
         this.plugin.getPlatform().getScheduler().runRepeating(this::cleanupOnlinePlayers, CLEANUP_INTERVAL_TICKS, CLEANUP_INTERVAL_TICKS);
     }
 
+    /** {@inheritDoc} */
     @Override
     public double getMultiplier(
             final @NotNull UUID playerId,
@@ -66,6 +72,15 @@ public final class ActiveCookieBoostService implements CookieBoostLookup {
         return boost == null ? 1.0D : boost.multiplier();
     }
 
+    /**
+     * Activates or refreshes a timed boost for the supplied player and target.
+     *
+     * @param player player receiving the boost
+     * @param definition droplet cookie definition being redeemed
+     * @param integrationId optional integration identifier for scoped boosts
+     * @param targetId optional skill or job identifier for scoped boosts
+     * @return future describing whether persistence succeeded and whether an earlier boost was replaced
+     */
     public @NotNull CompletableFuture<BoostActivationResult> activateBoost(
             final @NotNull Player player,
             final @NotNull DropletCookieDefinition definition,
@@ -102,6 +117,11 @@ public final class ActiveCookieBoostService implements CookieBoostLookup {
                 });
     }
 
+    /**
+     * Loads persisted boosts for the supplied player into the in-memory runtime cache.
+     *
+     * @param player player whose boost statistics should be hydrated
+     */
     public void hydratePlayer(final @NotNull OfflinePlayer player) {
         this.plugin.getPlayerRepository().findByUuidAsync(player.getUniqueId())
                 .thenCompose(optionalPlayer -> optionalPlayer
@@ -113,10 +133,18 @@ public final class ActiveCookieBoostService implements CookieBoostLookup {
                 });
     }
 
+    /**
+     * Hydrates boost state for every currently connected player.
+     */
     public void hydrateOnlinePlayers() {
         Bukkit.getOnlinePlayers().forEach(this::hydratePlayer);
     }
 
+    /**
+     * Removes all cached boosts for the supplied player.
+     *
+     * @param playerId player whose runtime boost cache should be cleared
+     */
     public void removePlayerCache(final @NotNull UUID playerId) {
         this.boostsByPlayer.remove(playerId);
     }
@@ -288,6 +316,12 @@ public final class ActiveCookieBoostService implements CookieBoostLookup {
         return value == null ? "" : value.trim().toLowerCase();
     }
 
+    /**
+     * Result of attempting to activate a persisted droplet boost.
+     *
+     * @param success whether the boost was stored successfully
+     * @param replaced whether an earlier boost with the same scope was replaced
+     */
     public record BoostActivationResult(boolean success, boolean replaced) {
     }
 }

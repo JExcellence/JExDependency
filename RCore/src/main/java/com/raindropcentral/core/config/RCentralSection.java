@@ -26,7 +26,10 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * Configuration section for RaindropCentral backend connection settings.
+ * Snapshot of the {@code rcentral.yml} connection and droplet-store settings.
+ *
+ * <p>The section captures both backend connectivity flags and the per-item compatibility toggles
+ * reported to RaindropCentral for the in-game droplet claim flow.</p>
  */
 @CSAlways
 public class RCentralSection extends AConfigSection {
@@ -41,9 +44,11 @@ public class RCentralSection extends AConfigSection {
     private final Map<String, Boolean> dropletStoreRewardStates;
 
     /**
-     * Executes RCentralSection.
+     * Creates a section with default droplet reward compatibility enabled.
+     *
+     * @param baseEnvironment expression environment used by the config mapper base class
      */
-    public RCentralSection(EvaluationEnvironmentBuilder baseEnvironment) {
+    public RCentralSection(final @NotNull EvaluationEnvironmentBuilder baseEnvironment) {
         super(baseEnvironment);
         this.dropletStoreRewardStates = new LinkedHashMap<>();
         for (final String itemCode : DropletCookieDefinitions.allItemCodes()) {
@@ -84,7 +89,9 @@ public class RCentralSection extends AConfigSection {
     }
 
     /**
-     * Gets the backend URL. Returns null if not explicitly set or empty.
+     * Returns the configured backend base URL.
+     *
+     * @return backend URL, or {@code null} when auto-detection should be used
      */
     @Nullable
     public String getBackendUrl() {
@@ -92,15 +99,18 @@ public class RCentralSection extends AConfigSection {
     }
 
     /**
-     * Checks if development mode is explicitly enabled.
+     * Returns whether development-mode endpoints should be preferred.
+     *
+     * @return {@code true} when development mode is enabled
      */
     public boolean isDevelopmentMode() {
         return developmentMode != null && developmentMode;
     }
 
     /**
-     * Checks if auto-detection should be used.
-     * Defaults to true if not specified.
+     * Returns whether backend auto-detection should be used.
+     *
+     * @return {@code true} when auto-detection is enabled or left unspecified
      */
     public boolean isAutoDetect() {
         return autoDetect == null || autoDetect;

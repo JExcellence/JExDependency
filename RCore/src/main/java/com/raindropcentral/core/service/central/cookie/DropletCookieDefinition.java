@@ -32,30 +32,65 @@ public record DropletCookieDefinition(
         long durationSeconds
 ) {
 
+    /**
+     * Returns whether redeeming the cookie activates a timed runtime boost.
+     *
+     * @return {@code true} for boost-style cookies persisted through player statistics
+     */
     public boolean isTimedBoost() {
         return this.effectType.isTimedBoost();
     }
 
+    /**
+     * Returns whether the cookie requires a skill selection before activation.
+     *
+     * @return {@code true} when the cookie targets a skill bridge entry
+     */
     public boolean isSkillTargeted() {
         return this.targetType == DropletCookieTargetType.SKILL;
     }
 
+    /**
+     * Returns whether the cookie requires a job selection before activation.
+     *
+     * @return {@code true} when the cookie targets a job bridge entry
+     */
     public boolean isJobTargeted() {
         return this.targetType == DropletCookieTargetType.JOB;
     }
 
+    /**
+     * Returns whether the cookie can be activated immediately without a target picker.
+     *
+     * @return {@code true} when no skill or job selection is required
+     */
     public boolean activatesDirectly() {
         return this.targetType == DropletCookieTargetType.NONE;
     }
 
+    /**
+     * Converts the decimal bonus into a whole-number percentage for UI messages.
+     *
+     * @return rounded percentage value, such as {@code 50} for {@code 0.5}
+     */
     public int ratePercent() {
         return (int) Math.round(this.rateBonus * 100.0D);
     }
 
+    /**
+     * Returns the boost duration in whole minutes for UI presentation.
+     *
+     * @return non-negative duration rounded down to minutes
+     */
     public long durationMinutes() {
         return Math.max(0L, this.durationSeconds / 60L);
     }
 
+    /**
+     * Returns the persistent item type identifier written into cookie item metadata.
+     *
+     * @return store item code backing this definition
+     */
     public @NotNull String itemType() {
         return this.itemCode;
     }

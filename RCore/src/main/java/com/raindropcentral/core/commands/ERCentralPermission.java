@@ -36,17 +36,13 @@ public enum ERCentralPermission implements IPermissionNode {
         this.fallbackPermissionNode = fallbackPermissionNode;
     }
 
-    /**
-     * Gets internalName.
-     */
+    /** {@inheritDoc} */
     @Override
     public @NotNull String getInternalName() {
         return this.permissionInternalIdentifier;
     }
 
-    /**
-     * Gets fallbackNode.
-     */
+    /** {@inheritDoc} */
     @Override
     public @NotNull String getFallbackNode() {
         return this.fallbackPermissionNode;

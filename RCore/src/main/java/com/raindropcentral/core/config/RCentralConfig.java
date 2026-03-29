@@ -39,9 +39,11 @@ public class RCentralConfig {
     private RCentralSection rcentralSection;
 
     /**
-     * Executes RCentralConfig.
+     * Creates and loads the RaindropCentral configuration manager.
+     *
+     * @param plugin plugin whose data folder contains {@code rcentral/rcentral.yml}
      */
-    public RCentralConfig(@NotNull Plugin plugin) {
+    public RCentralConfig(final @NotNull Plugin plugin) {
         this.plugin = plugin;
         loadConfig();
     }
@@ -82,7 +84,7 @@ public class RCentralConfig {
     }
 
     /**
-     * Gets the configured backend URL, or null if not set.
+     * Returns the configured backend URL, or {@code null} when not explicitly set.
      */
     @Nullable
     public String getBackendUrl() {
@@ -129,6 +131,13 @@ public class RCentralConfig {
         return resolveDropletStoreCompatibilitySnapshot(this.rcentralSection);
     }
 
+    /**
+     * Computes the compatibility payload sent to the backend from the loaded section snapshot.
+     *
+     * @param section loaded configuration section
+     * @return compatibility state describing whether droplet claims are enabled and which supported
+     *         item codes remain claimable on this server
+     */
     static @NotNull DropletStoreCompatibilitySnapshot resolveDropletStoreCompatibilitySnapshot(
             final @NotNull RCentralSection section
     ) {
@@ -142,10 +151,22 @@ public class RCentralConfig {
         return new DropletStoreCompatibilitySnapshot(true, enabledItemCodes);
     }
 
+    /**
+     * Immutable backend compatibility snapshot for the droplet claim feature.
+     *
+     * @param dropletStoreEnabled whether the server exposes droplet claiming at all
+     * @param enabledItemCodes supported item codes that remain enabled locally
+     */
     public record DropletStoreCompatibilitySnapshot(
             boolean dropletStoreEnabled,
             @NotNull List<String> enabledItemCodes
     ) {
+        /**
+         * Creates an immutable compatibility snapshot.
+         *
+         * @param dropletStoreEnabled whether the claim flow is enabled
+         * @param enabledItemCodes locally enabled supported item codes
+         */
         public DropletStoreCompatibilitySnapshot {
             enabledItemCodes = List.copyOf(enabledItemCodes);
         }

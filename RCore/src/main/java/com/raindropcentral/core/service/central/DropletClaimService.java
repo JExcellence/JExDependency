@@ -67,6 +67,11 @@ public final class DropletClaimService {
     private final Map<UUID, List<ItemStack>> pendingRewards = new ConcurrentHashMap<>();
     private final Map<UUID, Long> claimCommandTimestamps = new ConcurrentHashMap<>();
 
+    /**
+     * Creates the droplet claim runtime service.
+     *
+     * @param plugin active RCore implementation providing scheduler, views, and backend services
+     */
     public DropletClaimService(final @NotNull RCoreImpl plugin) {
         this.plugin = plugin;
         this.logger = plugin.getPlugin().getLogger();
@@ -76,6 +81,11 @@ public final class DropletClaimService {
         this.itemVersionKey = new NamespacedKey(plugin.getPlugin(), "droplet_item_version");
     }
 
+    /**
+     * Opens the droplet claims menu for the supplied player after validating prerequisites.
+     *
+     * @param player player requesting the claim UI
+     */
     public void openClaimsMenu(final @NotNull Player player) {
         if (!this.isDropletStoreEnabled()) {
             this.send(player, "rcclaim.error.store_disabled");
@@ -111,6 +121,13 @@ public final class DropletClaimService {
                 });
     }
 
+    /**
+     * Returns whether the supplied purchase can be claimed on the current server.
+     *
+     * @param player player attempting the claim
+     * @param purchase purchase under evaluation
+     * @return compatibility status used by the UI and claim flow
+     */
     public @NotNull ClaimSupportStatus getSupportStatus(
             final @NotNull Player player,
             final @NotNull RCentralApiClient.DropletStorePurchaseData purchase
@@ -131,6 +148,12 @@ public final class DropletClaimService {
         return ClaimSupportStatus.SUPPORTED;
     }
 
+    /**
+     * Starts the backend claim request for a selected purchase and delivers the resulting cookie.
+     *
+     * @param player player claiming the purchase
+     * @param purchase selected droplet-store purchase
+     */
     public void handlePurchaseSelection(
             final @NotNull Player player,
             final @NotNull RCentralApiClient.DropletStorePurchaseData purchase
@@ -192,6 +215,12 @@ public final class DropletClaimService {
                 .whenComplete((ignored, throwable) -> this.inFlightClaims.remove(claimKey));
     }
 
+    /**
+     * Routes a droplet cookie item to the correct activation path.
+     *
+     * @param player player using the cookie
+     * @param cookie droplet cookie item stack
+     */
     public void handleCookieUse(final @NotNull Player player, final @NotNull ItemStack cookie) {
         final DropletCookieDefinition definition = this.getCookieDefinition(cookie);
         if (definition == null) {
@@ -211,6 +240,13 @@ public final class DropletClaimService {
         this.handleDirectCookieUse(player, cookie, definition);
     }
 
+    /**
+     * Opens the skill selection menu for a skill-targeted cookie.
+     *
+     * @param player player redeeming the cookie
+     * @param cookie cookie item being redeemed
+     * @param definition resolved cookie definition
+     */
     public void openSkillSelectionMenu(
             final @NotNull Player player,
             final @NotNull ItemStack cookie,
@@ -233,6 +269,13 @@ public final class DropletClaimService {
         );
     }
 
+    /**
+     * Opens the job selection menu for a job-targeted cookie.
+     *
+     * @param player player redeeming the cookie
+     * @param cookie cookie item being redeemed
+     * @param definition resolved cookie definition
+     */
     public void openJobSelectionMenu(
             final @NotNull Player player,
             final @NotNull ItemStack cookie,
@@ -255,6 +298,14 @@ public final class DropletClaimService {
         );
     }
 
+    /**
+     * Applies the selected skill target to the cookie redemption flow.
+     *
+     * @param player player redeeming the cookie
+     * @param skillDescriptor selected skill target
+     * @param cookie cookie item being redeemed
+     * @param definition resolved cookie definition
+     */
     public void handleSkillSelection(
             final @NotNull Player player,
             final @NotNull SkillBridge.SkillDescriptor skillDescriptor,
@@ -301,6 +352,14 @@ public final class DropletClaimService {
         }
     }
 
+    /**
+     * Applies the selected job target to the cookie redemption flow.
+     *
+     * @param player player redeeming the cookie
+     * @param jobDescriptor selected job target
+     * @param cookie cookie item being redeemed
+     * @param definition resolved cookie definition
+     */
     public void handleJobSelection(
             final @NotNull Player player,
             final @NotNull JobBridge.JobDescriptor jobDescriptor,
@@ -347,6 +406,11 @@ public final class DropletClaimService {
         }
     }
 
+    /**
+     * Delivers any queued cookies that were claimed while the player was offline.
+     *
+     * @param player player receiving deferred rewards
+     */
     public void deliverPendingRewards(final @NotNull Player player) {
         final List<ItemStack> rewards = this.pendingRewards.remove(player.getUniqueId());
         if (rewards == null || rewards.isEmpty()) {
@@ -359,6 +423,12 @@ public final class DropletClaimService {
         this.send(player, "rcclaim.success.pending_delivery", Map.of("count", rewards.size()));
     }
 
+    /**
+     * Returns the deduplicated set of skill targets currently available to the player.
+     *
+     * @param player player opening the skill selector
+     * @return immutable sorted list of available skills
+     */
     public @NotNull List<SkillBridge.SkillDescriptor> getAvailableSkillDescriptors(final @NotNull Player player) {
         final Map<String, SkillBridge.SkillDescriptor> descriptors = new LinkedHashMap<>();
         for (final SkillBridge bridge : SkillBridge.getAvailableBridges()) {
@@ -379,6 +449,12 @@ public final class DropletClaimService {
                 .toList();
     }
 
+    /**
+     * Returns the deduplicated set of job targets currently available to the player.
+     *
+     * @param player player opening the job selector
+     * @return immutable sorted list of available jobs
+     */
     public @NotNull List<JobBridge.JobDescriptor> getAvailableJobDescriptors(final @NotNull Player player) {
         final Map<String, JobBridge.JobDescriptor> descriptors = new LinkedHashMap<>();
         for (final JobBridge bridge : JobBridge.getAvailableBridges()) {
@@ -399,6 +475,13 @@ public final class DropletClaimService {
                 .toList();
     }
 
+    /**
+     * Resolves the player's current level for the supplied skill descriptor.
+     *
+     * @param player player to inspect
+     * @param descriptor skill target descriptor
+     * @return resolved level, or {@code 0} when the bridge is unavailable
+     */
     public double getCurrentSkillLevel(
             final @NotNull Player player,
             final @NotNull SkillBridge.SkillDescriptor descriptor
@@ -407,6 +490,13 @@ public final class DropletClaimService {
         return bridge == null ? 0.0D : bridge.getSkillLevel(player, descriptor.skillId());
     }
 
+    /**
+     * Resolves the player's current level for the supplied job descriptor.
+     *
+     * @param player player to inspect
+     * @param descriptor job target descriptor
+     * @return resolved level, or {@code 0} when the bridge is unavailable
+     */
     public double getCurrentJobLevel(
             final @NotNull Player player,
             final @NotNull JobBridge.JobDescriptor descriptor
@@ -415,14 +505,31 @@ public final class DropletClaimService {
         return bridge == null ? 0.0D : bridge.getJobLevel(player, descriptor.jobId());
     }
 
+    /**
+     * Resolves a droplet cookie definition from an item stack's metadata tags.
+     *
+     * @param item item stack to inspect
+     * @return matching cookie definition, or {@code null} when the item is unsupported
+     */
     public @Nullable DropletCookieDefinition getCookieDefinition(final @Nullable ItemStack item) {
         return DropletCookieDefinitions.get(this.readItemCode(item));
     }
 
+    /**
+     * Returns whether the droplet-store claim flow is enabled by configuration.
+     *
+     * @return {@code true} when claims are allowed on this server
+     */
     public boolean isDropletStoreEnabled() {
         return this.centralService.isDropletStoreEnabled();
     }
 
+    /**
+     * Returns whether the supplied item stack is a tagged droplet cookie created by this service.
+     *
+     * @param item item stack to inspect
+     * @return {@code true} when the item is a recognized droplet cookie
+     */
     public boolean isDropletCookie(final @Nullable ItemStack item) {
         if (item == null || item.getType() != Material.COOKIE || !item.hasItemMeta()) {
             return false;
@@ -771,6 +878,9 @@ public final class DropletClaimService {
         return Math.max(1L, (remainingCooldownMillis + 999L) / 1000L);
     }
 
+    /**
+     * Compatibility result returned when evaluating whether a purchase can be claimed locally.
+     */
     public enum ClaimSupportStatus {
         SUPPORTED,
         ITEM_DISABLED,

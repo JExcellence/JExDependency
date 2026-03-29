@@ -33,10 +33,21 @@ public final class DropletCookieDefinitions {
     private DropletCookieDefinitions() {
     }
 
+    /**
+     * Returns every supported droplet-store item code in registration order.
+     *
+     * @return immutable list of supported item codes
+     */
     public static @NotNull List<String> allItemCodes() {
         return List.copyOf(DEFINITIONS.keySet());
     }
 
+    /**
+     * Resolves a cookie definition by store item code.
+     *
+     * @param itemCode backend item code supplied by the droplet-store API
+     * @return matching definition, or {@code null} when unsupported
+     */
     public static @Nullable DropletCookieDefinition get(final @Nullable String itemCode) {
         if (itemCode == null || itemCode.isBlank()) {
             return null;
