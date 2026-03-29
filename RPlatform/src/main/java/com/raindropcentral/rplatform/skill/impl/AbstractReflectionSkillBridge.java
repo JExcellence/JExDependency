@@ -21,7 +21,10 @@ import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Locale;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -55,6 +58,27 @@ abstract class AbstractReflectionSkillBridge implements SkillBridge {
         }
     }
 
+    protected final @NotNull InvocationAttempt invokeOptionalAttempt(
+        final @Nullable Object target,
+        final @NotNull String methodName,
+        final Object... arguments
+    ) {
+        if (target == null) {
+            return InvocationAttempt.notInvoked();
+        }
+
+        try {
+            final Method method = findMethod(target.getClass(), methodName, arguments);
+            if (method == null) {
+                return InvocationAttempt.notInvoked();
+            }
+            method.setAccessible(true);
+            return new InvocationAttempt(true, unwrapOptional(method.invoke(target, arguments)));
+        } catch (ReflectiveOperationException ignored) {
+            return InvocationAttempt.notInvoked();
+        }
+    }
+
     protected final @Nullable Object invokeStaticOptional(
         final @Nullable Class<?> owner,
         final @NotNull String methodName,
@@ -73,6 +97,27 @@ abstract class AbstractReflectionSkillBridge implements SkillBridge {
             return unwrapOptional(method.invoke(null, arguments));
         } catch (ReflectiveOperationException ignored) {
             return null;
+        }
+    }
+
+    protected final @NotNull InvocationAttempt invokeStaticOptionalAttempt(
+        final @Nullable Class<?> owner,
+        final @NotNull String methodName,
+        final Object... arguments
+    ) {
+        if (owner == null) {
+            return InvocationAttempt.notInvoked();
+        }
+
+        try {
+            final Method method = findMethod(owner, methodName, arguments);
+            if (method == null) {
+                return InvocationAttempt.notInvoked();
+            }
+            method.setAccessible(true);
+            return new InvocationAttempt(true, unwrapOptional(method.invoke(null, arguments)));
+        } catch (ReflectiveOperationException ignored) {
+            return InvocationAttempt.notInvoked();
         }
     }
 
@@ -150,6 +195,76 @@ abstract class AbstractReflectionSkillBridge implements SkillBridge {
             }
         }
         return null;
+    }
+
+    protected final @Nullable Boolean asBoolean(final @Nullable Object value) {
+        if (value instanceof Boolean booleanValue) {
+            return booleanValue;
+        }
+        if (value instanceof String text && !text.isBlank()) {
+            return Boolean.parseBoolean(text);
+        }
+        return null;
+    }
+
+    protected final @NotNull List<Object> asObjectList(final @Nullable Object value) {
+        if (value == null) {
+            return List.of();
+        }
+        if (value instanceof Object[] array) {
+            return Arrays.asList(array);
+        }
+        if (value instanceof Iterable<?> iterable) {
+            final List<Object> values = new ArrayList<>();
+            for (final Object entry : iterable) {
+                values.add(entry);
+            }
+            return values;
+        }
+        if (value instanceof Map<?, ?> map) {
+            return new ArrayList<>(map.values());
+        }
+        return List.of(value);
+    }
+
+    protected final @NotNull String toDisplayText(
+        final @Nullable Object value,
+        final @NotNull String fallback
+    ) {
+        if (value == null) {
+            return fallback;
+        }
+
+        final String text = value.toString().trim();
+        return text.isEmpty() ? fallback : text;
+    }
+
+    protected final @NotNull String titleCase(
+        final @NotNull String value
+    ) {
+        final String normalized = value.trim()
+            .replace('-', ' ')
+            .replace('_', ' ');
+        if (normalized.isBlank()) {
+            return value;
+        }
+
+        final String[] parts = normalized.split("\\s+");
+        final StringBuilder builder = new StringBuilder();
+        for (final String part : parts) {
+            if (part.isBlank()) {
+                continue;
+            }
+            if (builder.length() > 0) {
+                builder.append(' ');
+            }
+            final String lower = part.toLowerCase(Locale.ROOT);
+            builder.append(Character.toUpperCase(lower.charAt(0)));
+            if (lower.length() > 1) {
+                builder.append(lower.substring(1));
+            }
+        }
+        return builder.toString();
     }
 
     protected final @NotNull String normalizeLookupKey(final @NotNull String input) {
@@ -321,5 +436,12 @@ abstract class AbstractReflectionSkillBridge implements SkillBridge {
             return optional.orElse(null);
         }
         return value;
+    }
+
+    protected record InvocationAttempt(boolean invoked, @Nullable Object value) {
+
+        private static @NotNull InvocationAttempt notInvoked() {
+            return new InvocationAttempt(false, null);
+        }
     }
 }

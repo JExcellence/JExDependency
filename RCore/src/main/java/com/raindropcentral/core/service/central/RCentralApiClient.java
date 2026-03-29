@@ -15,9 +15,12 @@ package com.raindropcentral.core.service.central;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+import com.raindropcentral.core.config.RCentralConfig;
 import com.raindropcentral.core.service.statistics.delivery.BatchPayload;
 import com.raindropcentral.core.service.statistics.delivery.DeliveryReceipt;
 import com.raindropcentral.core.service.statistics.delivery.StatisticEntry;
@@ -33,6 +36,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
 import java.time.Instant;
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -50,6 +54,12 @@ public class RCentralApiClient {
     private final Gson gson;
     private final String baseUrl;
 
+    /**
+     * Creates an HTTP client bound to the supplied backend base URL.
+     *
+     * @param plugin plugin providing logging context
+     * @param baseUrl RaindropCentral backend base URL without a trailing slash requirement
+     */
     public RCentralApiClient(final @NotNull Plugin plugin, final @NotNull String baseUrl) {
         this.plugin = plugin;
         this.logger = plugin.getLogger();
@@ -100,7 +110,17 @@ public class RCentralApiClient {
     }
 
     /**
-     * Performs connectServer.
+     * Sends the initial server-connect request to RaindropCentral.
+     *
+     * @param apiKey active server API key
+     * @param serverUuid unique identifier for the server instance
+     * @param serverVersion reported Minecraft server version
+     * @param pluginVersion RCore plugin version
+     * @param playerUuid UUID of the player performing the connect flow
+     * @param playerName username of the player performing the connect flow
+     * @param maxPlayers current configured maximum player count
+     * @param compatibilitySnapshot optional droplet-store compatibility metadata
+     * @return asynchronous transport response
      */
     public CompletableFuture<ApiResponse> connectServer(
             final @NotNull String apiKey,
@@ -109,7 +129,8 @@ public class RCentralApiClient {
             final @NotNull String pluginVersion,
             final @NotNull String playerUuid,
             final @NotNull String playerName,
-            final int maxPlayers
+            final int maxPlayers,
+            final @Nullable RCentralConfig.DropletStoreCompatibilitySnapshot compatibilitySnapshot
     ) {
         var payload = new JsonObject();
         payload.addProperty("serverUuid", serverUuid);
@@ -118,19 +139,29 @@ public class RCentralApiClient {
         payload.addProperty("minecraftUuid", playerUuid);
         payload.addProperty("minecraftUsername", playerName);
         payload.addProperty("maxPlayers", maxPlayers);
+        applyDropletStoreCompatibility(payload, compatibilitySnapshot);
 
         return sendRequest("/api/server-data/connect", "POST", apiKey, payload);
     }
 
     /**
-     * Performs sendHeartbeat.
+     * Sends a server heartbeat update including optional droplet-store compatibility metadata.
+     *
+     * @param apiKey active server API key
+     * @param currentPlayers current online player count
+     * @param maxPlayers current configured maximum player count
+     * @param tps reported server TPS snapshot
+     * @param playerList optional serialized player list
+     * @param compatibilitySnapshot optional droplet-store compatibility metadata
+     * @return asynchronous transport response
      */
     public CompletableFuture<ApiResponse> sendHeartbeat(
             final @NotNull String apiKey,
             final int currentPlayers,
             final int maxPlayers,
             final double tps,
-            final @Nullable String playerList
+            final @Nullable String playerList,
+            final @Nullable RCentralConfig.DropletStoreCompatibilitySnapshot compatibilitySnapshot
     ) {
         var payload = new JsonObject();
         payload.addProperty("currentPlayers", currentPlayers);
@@ -139,19 +170,47 @@ public class RCentralApiClient {
         if (playerList != null) {
             payload.addProperty("playerList", playerList);
         }
+        applyDropletStoreCompatibility(payload, compatibilitySnapshot);
 
         return sendRequest("/api/server-data/heartbeat", "POST", apiKey, payload);
     }
 
     /**
-     * Performs disconnectServer.
+     * Sends a heartbeat update without droplet-store compatibility metadata.
+     *
+     * @param apiKey active server API key
+     * @param currentPlayers current online player count
+     * @param maxPlayers current configured maximum player count
+     * @param tps reported server TPS snapshot
+     * @param playerList optional serialized player list
+     * @return asynchronous transport response
+     */
+    public CompletableFuture<ApiResponse> sendHeartbeat(
+            final @NotNull String apiKey,
+            final int currentPlayers,
+            final int maxPlayers,
+            final double tps,
+            final @Nullable String playerList
+    ) {
+        return sendHeartbeat(apiKey, currentPlayers, maxPlayers, tps, playerList, null);
+    }
+
+    /**
+     * Sends a disconnect notification for the currently connected server.
+     *
+     * @param apiKey active server API key
+     * @return asynchronous transport response
      */
     public CompletableFuture<ApiResponse> disconnectServer(final @NotNull String apiKey) {
         return sendRequest("/api/server-data/disconnect", "POST", apiKey, null);
     }
 
     /**
-     * Performs shutdownServer.
+     * Sends a shutdown notification so the backend can mark the server offline.
+     *
+     * @param apiKey active server API key
+     * @param serverUuid unique identifier for the server instance
+     * @return asynchronous transport response
      */
     public CompletableFuture<ApiResponse> shutdownServer(
             final @NotNull String apiKey,
@@ -165,7 +224,17 @@ public class RCentralApiClient {
     }
 
     /**
-     * Performs wakeupServer.
+     * Sends a wake-up notification used when reconnecting an already registered server.
+     *
+     * @param apiKey active server API key
+     * @param serverUuid unique identifier for the server instance
+     * @param serverVersion reported Minecraft server version
+     * @param pluginVersion RCore plugin version
+     * @param maxPlayers current configured maximum player count
+     * @param minecraftUuid optional UUID of the player waking the server
+     * @param minecraftUsername optional username of the player waking the server
+     * @param compatibilitySnapshot optional droplet-store compatibility metadata
+     * @return asynchronous transport response
      */
     public CompletableFuture<ApiResponse> wakeupServer(
             final @NotNull String apiKey,
@@ -174,7 +243,8 @@ public class RCentralApiClient {
             final @NotNull String pluginVersion,
             final int maxPlayers,
             final @Nullable String minecraftUuid,
-            final @Nullable String minecraftUsername
+            final @Nullable String minecraftUsername,
+            final @Nullable RCentralConfig.DropletStoreCompatibilitySnapshot compatibilitySnapshot
     ) {
         var payload = new JsonObject();
         payload.addProperty("serverUuid", serverUuid);
@@ -187,8 +257,51 @@ public class RCentralApiClient {
         if (minecraftUsername != null) {
             payload.addProperty("minecraftUsername", minecraftUsername);
         }
+        applyDropletStoreCompatibility(payload, compatibilitySnapshot);
 
         return sendRequest("/api/server-data/wakeup", "POST", apiKey, payload);
+    }
+
+    /**
+     * Requests unclaimed droplet-store purchases for a player.
+     *
+     * @param apiKey active server API key
+     * @param playerUuid player UUID linked to RaindropCentral
+     * @return asynchronous parsed API response
+     */
+    public CompletableFuture<ParsedApiResponse<List<DropletStorePurchaseData>>> getUnclaimedDropletPurchases(
+            final @NotNull String apiKey,
+            final @NotNull UUID playerUuid
+    ) {
+        return sendTypedRequest(
+                "/api/server-data/droplet-store/players/" + playerUuid + "/purchases/unclaimed",
+                "GET",
+                apiKey,
+                null,
+                new TypeToken<List<DropletStorePurchaseData>>() {}.getType()
+        );
+    }
+
+    /**
+     * Marks a droplet-store purchase as claimed for a player.
+     *
+     * @param apiKey active server API key
+     * @param playerUuid player UUID linked to RaindropCentral
+     * @param purchaseId purchase identifier to claim
+     * @return asynchronous parsed API response
+     */
+    public CompletableFuture<ParsedApiResponse<DropletStorePurchaseData>> claimDropletPurchase(
+            final @NotNull String apiKey,
+            final @NotNull UUID playerUuid,
+            final long purchaseId
+    ) {
+        return sendTypedRequest(
+                "/api/server-data/droplet-store/players/" + playerUuid + "/purchases/" + purchaseId + "/claim",
+                "POST",
+                apiKey,
+                null,
+                DropletStorePurchaseData.class
+        );
     }
 
     // ==================== Statistics Delivery Methods ====================
@@ -343,9 +456,6 @@ public class RCentralApiClient {
                 } else if ("POST".equals(method)) {
                     requestBuilder.POST(HttpRequest.BodyPublishers.noBody());
                 } else {
-                    /**
-                     * Represents the type API type.
-                     */
                     requestBuilder.GET();
                 }
 
@@ -364,15 +474,162 @@ public class RCentralApiClient {
         });
     }
 
+    private <T> CompletableFuture<ParsedApiResponse<T>> sendTypedRequest(
+            final @NotNull String endpoint,
+            final @NotNull String method,
+            final @NotNull String apiKey,
+            final @Nullable JsonObject payload,
+            final @NotNull Type dataType
+    ) {
+        return sendRequest(endpoint, method, apiKey, payload)
+                .thenApply(response -> this.parseTypedResponse(response, dataType));
+    }
+
+    private <T> @NotNull ParsedApiResponse<T> parseTypedResponse(
+            final @NotNull ApiResponse response,
+            final @NotNull Type dataType
+    ) {
+        if (response.body() == null || response.body().isBlank()) {
+            return new ParsedApiResponse<>(response.statusCode(), null, null, response.error());
+        }
+
+        try {
+            final JsonObject root = this.gson.fromJson(response.body(), JsonObject.class);
+            if (root == null) {
+                return new ParsedApiResponse<>(response.statusCode(), null, null, response.error());
+            }
+
+            final String message = this.extractMessage(root);
+            final JsonElement dataElement = root.get("data");
+            final T data = dataElement == null || dataElement.isJsonNull()
+                    ? null
+                    : this.gson.fromJson(dataElement, dataType);
+
+            return new ParsedApiResponse<>(response.statusCode(), data, message, response.error());
+        } catch (RuntimeException exception) {
+            this.logger.log(Level.WARNING, "Failed to parse API response body", exception);
+            return new ParsedApiResponse<>(
+                    response.statusCode(),
+                    null,
+                    response.body(),
+                    response.error() == null ? exception.getMessage() : response.error()
+            );
+        }
+    }
+
+    private @Nullable String extractMessage(final @NotNull JsonObject root) {
+        final JsonElement messageElement = root.get("message");
+        if (messageElement != null && !messageElement.isJsonNull()) {
+            return messageElement.getAsString();
+        }
+
+        final JsonElement errorElement = root.get("error");
+        if (errorElement != null && !errorElement.isJsonNull()) {
+            return errorElement.getAsString();
+        }
+
+        return null;
+    }
+
+    static void applyDropletStoreCompatibility(
+            final @NotNull JsonObject payload,
+            final @Nullable RCentralConfig.DropletStoreCompatibilitySnapshot compatibilitySnapshot
+    ) {
+        if (compatibilitySnapshot == null) {
+            return;
+        }
+
+        payload.addProperty("dropletStoreEnabled", compatibilitySnapshot.dropletStoreEnabled());
+
+        final JsonArray enabledItemCodes = new JsonArray();
+        compatibilitySnapshot.enabledItemCodes().forEach(enabledItemCodes::add);
+        payload.add("enabledDropletStoreItemCodes", enabledItemCodes);
+    }
+
     /**
-     * Represents the ApiResponse API type.
+     * Lightweight transport response returned by non-typed backend endpoints.
+     *
+     * @param statusCode HTTP status code returned by the backend
+     * @param body raw response body, if any
+     * @param error local transport error, if one occurred
      */
     public record ApiResponse(int statusCode, @Nullable String body, @Nullable String error) {
         /**
-         * Returns whether success.
+         * Returns whether the backend response was successful.
+         *
+         * @return {@code true} for HTTP 2xx responses
          */
         public boolean isSuccess() {
             return statusCode >= 200 && statusCode < 300;
+        }
+    }
+
+    /**
+     * Parsed wrapper around the backend API response envelope.
+     *
+     * @param statusCode HTTP status code returned by the backend
+     * @param data parsed response payload
+     * @param message response message from the backend envelope
+     * @param error local transport or parse error, if present
+     * @param <T> parsed data type
+     */
+    public record ParsedApiResponse<T>(
+            int statusCode,
+            @Nullable T data,
+            @Nullable String message,
+            @Nullable String error
+    ) {
+        /**
+         * Returns whether the backend response was successful.
+         *
+         * @return {@code true} for HTTP 2xx responses
+         */
+        public boolean isSuccess() {
+            return statusCode >= 200 && statusCode < 300;
+        }
+    }
+
+    /**
+     * Lightweight droplet-store purchase payload used by the in-game claim flow.
+     *
+     * @param id purchase identifier
+     * @param dropletStoreItemId numeric store item identifier
+     * @param purchaseDate purchase timestamp string from the backend
+     * @param amountSpent droplets spent on the purchase
+     * @param itemCode store item code
+     * @param itemName store item display name
+     * @param claimedAt claim timestamp string from the backend
+     * @param claimedServerName claim server snapshot
+     */
+    public record DropletStorePurchaseData(
+            long id,
+            @Nullable Long dropletStoreItemId,
+            @Nullable String purchaseDate,
+            int amountSpent,
+            @Nullable String itemCode,
+            @Nullable String itemName,
+            @Nullable String claimedAt,
+            @Nullable String claimedServerName
+    ) {
+        /**
+         * Returns the best available item code for UI rendering.
+         *
+         * @return non-blank item code, or an empty string when unavailable
+         */
+        public @NotNull String itemCodeOrBlank() {
+            return itemCode == null ? "" : itemCode;
+        }
+
+        /**
+         * Returns the best available item display name for UI rendering.
+         *
+         * @return item name, or the item code when the name is unavailable
+         */
+        public @NotNull String itemNameOrCode() {
+            if (itemName != null && !itemName.isBlank()) {
+                return itemName;
+            }
+            return itemCodeOrBlank();
         }
     }
 }

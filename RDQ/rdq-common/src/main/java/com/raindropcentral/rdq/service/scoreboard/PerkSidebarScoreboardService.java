@@ -24,6 +24,7 @@ import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.database.entity.perk.Perk;
 import com.raindropcentral.rdq.database.entity.perk.PlayerPerk;
 import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
+import com.raindropcentral.rplatform.scheduler.CancellableTaskHandle;
 import de.jexcellence.jextranslate.i18n.I18n;
 import io.papermc.paper.scoreboard.numbers.NumberFormat;
 import net.kyori.adventure.text.Component;
@@ -88,6 +89,7 @@ public final class PerkSidebarScoreboardService {
 
     private final RDQ plugin;
     private final Map<UUID, SidebarState> activeSidebars = new ConcurrentHashMap<>();
+    private @Nullable CancellableTaskHandle refreshTask;
 
     /**
      * Creates the perks sidebar service for the owning plugin.
@@ -104,7 +106,7 @@ public final class PerkSidebarScoreboardService {
      * Starts periodic refreshes for every active perks sidebar.
      */
     public void start() {
-        this.plugin.getPlatform().getScheduler().runRepeating(
+        this.refreshTask = this.plugin.getPlatform().getScheduler().runRepeating(
             this::refreshActivePlayers,
             UPDATE_PERIOD_TICKS,
             UPDATE_PERIOD_TICKS
@@ -115,6 +117,10 @@ public final class PerkSidebarScoreboardService {
      * Disables every active perks sidebar and restores prior player scoreboards.
      */
     public void shutdown() {
+        if (this.refreshTask != null) {
+            this.refreshTask.cancel();
+            this.refreshTask = null;
+        }
         for (final Player player : Bukkit.getOnlinePlayers()) {
             this.disable(player);
         }
@@ -180,7 +186,7 @@ public final class PerkSidebarScoreboardService {
                 continue;
             }
 
-            this.refreshPlayer(player, state);
+            this.plugin.getPlatform().getScheduler().runAtEntity(player, () -> this.refreshPlayer(player, state));
         }
     }
 

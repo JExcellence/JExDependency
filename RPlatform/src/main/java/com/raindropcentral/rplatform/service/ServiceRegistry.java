@@ -76,12 +76,16 @@ public class ServiceRegistry {
     }
 
     /**
-     * Executes register.
+     * Begin constructing a registration for a service using its fully qualified class name.
+     *
+     * @param serviceClass fully qualified service class name
+     * @param <T> service type
+     * @return builder capable of loading and caching the resolved service instance
+     * @throws RuntimeException when the class cannot be loaded
      */
     public <T> @NotNull ServiceRegistrationBuilder<T> register(final @NotNull String serviceClass) {
         try {
-            Class<T> clazz = (Class<T>) Class.forName(serviceClass);
-            return new ServiceRegistrationBuilder<>(this, clazz);
+            return new ServiceRegistrationBuilder<>(this, castServiceClass(Class.forName(serviceClass)));
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -143,6 +147,23 @@ public class ServiceRegistry {
     }
 
     /**
+     * Binds a concrete service instance directly into the registry cache.
+     *
+     * <p>This is used for services created inside the current plugin runtime that should be
+     * discoverable through the shared platform registry without going through Bukkit's global
+     * service manager.</p>
+     *
+     * @param serviceClass service type used as the cache key
+     * @param service service instance to expose
+     * @param <T> service type
+     * @return the bound service instance
+     */
+    public <T> @NotNull T bind(final @NotNull Class<T> serviceClass, final @NotNull T service) {
+        registerService(serviceClass.getName(), service);
+        return service;
+    }
+
+    /**
      * Store a resolved service within the registry cache.
      *
      * @param key     fully qualified class name used to identify the service
@@ -178,6 +199,11 @@ public class ServiceRegistry {
         } catch (final ClassNotFoundException e) {
             return null;
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    private static <T> @NotNull Class<T> castServiceClass(final @NotNull Class<?> serviceClass) {
+        return (Class<T>) serviceClass;
     }
 
     /**

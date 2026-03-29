@@ -638,14 +638,17 @@ public class RankPathRankRequirementOverview extends APaginatedView<RRankUpgrade
 	private void scheduleReturnToParent(final @NotNull SlotClickContext clickContext, final @NotNull Map<String, Object> updatedData, final long delayMs) {
 		final RDQ rdq = this.rdq.get(clickContext);
 		
-		Bukkit.getServer().getScheduler().runTaskLater(rdq.getPlugin(), () -> {
-			try {
-				clickContext.openForPlayer(RankPathOverview.class, updatedData);
-			} catch (Exception exception) {
-				LOGGER.log(Level.WARNING, "Failed to return to parent view", exception);
-				clickContext.getPlayer().closeInventory();
-			}
-		}, delayMs / 50L);
+		rdq.getPlatform().getScheduler().runDelayed(() ->
+				rdq.getPlatform().getScheduler().runAtEntity(clickContext.getPlayer(), () -> {
+					try {
+						clickContext.openForPlayer(RankPathOverview.class, updatedData);
+					} catch (Exception exception) {
+						LOGGER.log(Level.WARNING, "Failed to return to parent view", exception);
+						clickContext.getPlayer().closeInventory();
+					}
+				}),
+			delayMs / 50L
+		);
 	}
 	
 	/**

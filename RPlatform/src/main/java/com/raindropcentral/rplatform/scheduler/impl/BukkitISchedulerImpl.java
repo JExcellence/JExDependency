@@ -13,11 +13,13 @@
 
 package com.raindropcentral.rplatform.scheduler.impl;
 
+import com.raindropcentral.rplatform.scheduler.CancellableTaskHandle;
 import com.raindropcentral.rplatform.scheduler.ISchedulerAdapter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -79,8 +81,8 @@ public class BukkitISchedulerImpl implements ISchedulerAdapter {
      * so the task runs synchronously after the configured delay.
      */
     @Override
-    public void runDelayed(@NotNull Runnable task, long delayTicks) {
-        Bukkit.getScheduler().runTaskLater(plugin, safe(task), delayTicks);
+    public @NotNull CancellableTaskHandle runDelayed(@NotNull Runnable task, long delayTicks) {
+        return new BukkitTaskHandle(Bukkit.getScheduler().runTaskLater(plugin, safe(task), delayTicks));
     }
 
     /**
@@ -90,16 +92,16 @@ public class BukkitISchedulerImpl implements ISchedulerAdapter {
      * guaranteeing execution on the main thread at the requested cadence.
      */
     @Override
-    public void runRepeating(@NotNull Runnable task, long delayTicks, long periodTicks) {
-        Bukkit.getScheduler().runTaskTimer(plugin, safe(task), delayTicks, periodTicks);
+    public @NotNull CancellableTaskHandle runRepeating(@NotNull Runnable task, long delayTicks, long periodTicks) {
+        return new BukkitTaskHandle(Bukkit.getScheduler().runTaskTimer(plugin, safe(task), delayTicks, periodTicks));
     }
 
     /**
      * Executes runRepeatingAsync.
      */
     @Override
-    public void runRepeatingAsync(@NotNull Runnable task, long delayTicks, long periodTicks) {
-        Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, safe(task), delayTicks, periodTicks);
+    public @NotNull CancellableTaskHandle runRepeatingAsync(@NotNull Runnable task, long delayTicks, long periodTicks) {
+        return new BukkitTaskHandle(Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, safe(task), delayTicks, periodTicks));
     }
 
     /**
@@ -170,5 +172,29 @@ public class BukkitISchedulerImpl implements ISchedulerAdapter {
                 throw t;
             }
         };
+    }
+
+    private static final class BukkitTaskHandle implements CancellableTaskHandle {
+
+        private final BukkitTask task;
+
+        private BukkitTaskHandle(final @NotNull BukkitTask task) {
+            this.task = task;
+        }
+
+        @Override
+        public boolean cancel() {
+            if (task.isCancelled()) {
+                return false;
+            }
+
+            task.cancel();
+            return true;
+        }
+
+        @Override
+        public boolean isCancelled() {
+            return task.isCancelled();
+        }
     }
 }

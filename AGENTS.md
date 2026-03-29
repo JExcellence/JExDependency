@@ -19,7 +19,7 @@
 This repository follows strict Java coding and documentation standards. Any AI agent contributing code MUST comply with the rules below.
 
 ## 1) Language + Tooling
-- Java version: **Java 24**
+- Java version: **Java 21**
 - Build tool: **Gradle (Kotlin DSL)** unless otherwise stated by the repo.
 - Prefer modern Java features where appropriate (records, switch expressions, `var` where readable, sealed types when useful).
 
@@ -106,8 +106,8 @@ After making changes, the agent MUST attempt to run the following commands local
 
 ### Gradle (preferred)
 - Run style verification: `./gradlew clean verifyGoogleJavaStyle`
-- Use project specific building such as `./gradlew clean RDR:build`
-- Use project specific Javadocs such as `./gradlew RDR:javadoc` (or the repo’s Javadoc task if named differently)
+- Use project specific building such as `./gradlew clean :RDR:rdr-free:build`
+- Use project specific Javadocs such as `./gradlew :RDR:rdr-free:javadoc` (or the repo’s Javadoc task if named differently)
 
 If the repo uses multi-module builds, run at root and ensure all modules succeed.
 

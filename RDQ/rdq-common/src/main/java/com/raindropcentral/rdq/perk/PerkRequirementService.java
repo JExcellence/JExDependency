@@ -13,6 +13,7 @@
 
 package com.raindropcentral.rdq.perk;
 
+import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.database.entity.perk.Perk;
 import com.raindropcentral.rdq.database.entity.perk.PerkRequirement;
 import com.raindropcentral.rdq.database.entity.perk.PerkUnlockReward;
@@ -48,6 +49,7 @@ public class PerkRequirementService {
     
     private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
     
+    private final RDQ plugin;
     private final PerkManagementService perkManagementService;
     private final RequirementService requirementService;
     
@@ -57,8 +59,10 @@ public class PerkRequirementService {
      * @param perkManagementService the perk management service
      */
     public PerkRequirementService(
+            @NotNull final RDQ plugin,
             @NotNull final PerkManagementService perkManagementService
     ) {
+        this.plugin = plugin;
         this.perkManagementService = perkManagementService;
         this.requirementService = RequirementService.getInstance();
     }
@@ -292,8 +296,8 @@ public class PerkRequirementService {
                 
                 // Run consumption synchronously on main thread
                 CompletableFuture<Boolean> consumptionFuture = new CompletableFuture<>();
-                org.bukkit.Bukkit.getScheduler().runTask(
-                        org.bukkit.Bukkit.getPluginManager().getPlugin("RDQ"),
+                plugin.getPlatform().getScheduler().runAtEntity(
+                        player,
                         () -> {
                             try {
                                 for (PerkRequirement perkRequirement : sortedRequirements) {
@@ -441,11 +445,11 @@ public class PerkRequirementService {
             final String nameKey = perk.getIcon().getDisplayNameKey();
             
             // Send notification message
-            new I18n.Builder("reward.perk.unlocked", player)
+            plugin.getPlatform().getScheduler().runAtEntity(player, () -> new I18n.Builder("reward.perk.unlocked", player)
                     .includePrefix()
                     .withPlaceholder("perk", nameKey != null ? nameKey : perk.getIdentifier())
                     .build()
-                    .sendMessage();
+                    .sendMessage());
             
             LOGGER.log(Level.FINE, "Sent unlock notification to player {0} for perk {1}", 
                     new Object[]{player.getName(), perk.getIdentifier()});

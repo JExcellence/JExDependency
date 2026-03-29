@@ -411,7 +411,7 @@ public abstract class RDQ {
 			// Inject cache into management service
 			perkManagementService.setCache(playerPerkCache);
 
-			perkRequirementService = new PerkRequirementService(perkManagementService);
+			perkRequirementService = new PerkRequirementService(this, perkManagementService);
 
 			perkActivationService = new PerkActivationService(
 					this,

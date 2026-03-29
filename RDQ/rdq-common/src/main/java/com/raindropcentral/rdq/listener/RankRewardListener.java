@@ -19,7 +19,6 @@ import com.raindropcentral.rdq.database.entity.rank.RRankReward;
 import com.raindropcentral.rdq.event.RankAssignedEvent;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.reward.RewardService;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -69,7 +68,7 @@ public class RankRewardListener implements Listener {
 				
 				for (final RRankReward rankReward : rewards) {
 					if (rankReward.isAutoGrant()) {
-						Bukkit.getScheduler().runTask(this.rdq.getPlugin(), () -> {
+						this.rdq.getPlatform().getScheduler().runAtEntity(player, () -> {
 							this.rewardService.grant(player, rankReward.getReward().getReward())
 								.thenAccept(success -> {
 									if (success) {

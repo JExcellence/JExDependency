@@ -26,6 +26,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HexFormat;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Logger;
@@ -100,8 +101,18 @@ public class RCentralService {
         var serverVersion = Bukkit.getVersion();
         var pluginVersion = plugin.getPluginMeta().getVersion();
         var maxPlayers = Bukkit.getMaxPlayers();
+        var compatibilitySnapshot = rcentralConfig.getDropletStoreCompatibilitySnapshot();
 
-        return apiClient.connectServer(apiKey, serverUuid.toString(), serverVersion, pluginVersion, playerUuid, playerName, maxPlayers)
+        return apiClient.connectServer(
+                        apiKey,
+                        serverUuid.toString(),
+                        serverVersion,
+                        pluginVersion,
+                        playerUuid,
+                        playerName,
+                        maxPlayers,
+                        compatibilitySnapshot
+                )
                 .thenApply(response -> {
                     if (response.isSuccess()) {
                         config.set("connection.api-key", apiKey);
@@ -256,12 +267,22 @@ public class RCentralService {
         var serverVersion = Bukkit.getVersion();
         var pluginVersion = plugin.getPluginMeta().getVersion();
         var maxPlayers = Bukkit.getMaxPlayers();
+        var compatibilitySnapshot = rcentralConfig.getDropletStoreCompatibilitySnapshot();
         
         // Retrieve stored player info from last successful connection
         var minecraftUuid = config.getString("connection.minecraft-uuid");
         var minecraftUsername = config.getString("connection.minecraft-username");
 
-        apiClient.wakeupServer(apiKey, serverUuid.toString(), serverVersion, pluginVersion, maxPlayers, minecraftUuid, minecraftUsername)
+        apiClient.wakeupServer(
+                        apiKey,
+                        serverUuid.toString(),
+                        serverVersion,
+                        pluginVersion,
+                        maxPlayers,
+                        minecraftUuid,
+                        minecraftUsername,
+                        compatibilitySnapshot
+                )
                 .thenAccept(response -> {
                     if (response.isSuccess()) {
                         LOGGER.info("Wakeup ping sent successfully - server marked as online");
@@ -296,7 +317,14 @@ public class RCentralService {
         }
 
         var sharePlayerList = config.getBoolean("privacy.share-player-list", true);
-        heartbeatScheduler = new HeartbeatScheduler(plugin, platform, apiClient, apiKey, sharePlayerList);
+        heartbeatScheduler = new HeartbeatScheduler(
+                plugin,
+                platform,
+                apiClient,
+                apiKey,
+                sharePlayerList,
+                this::getDropletStoreCompatibilitySnapshot
+        );
         heartbeatScheduler.start();
     }
 
@@ -367,5 +395,73 @@ public class RCentralService {
      */
     public String getApiKey() {
         return config.getString("connection.api-key");
+    }
+
+    /**
+     * Checks whether droplet-store claiming is enabled for this server.
+     *
+     * @return {@code true} when `/rc claim droplets` should be available
+     */
+    public boolean isDropletStoreEnabled() {
+        return this.rcentralConfig.isDropletsStoreEnabled();
+    }
+
+    /**
+     * Gets the effective droplet-store compatibility snapshot used for backend reporting.
+     *
+     * @return current compatibility snapshot derived from rcentral.yml
+     */
+    public @NotNull RCentralConfig.DropletStoreCompatibilitySnapshot getDropletStoreCompatibilitySnapshot() {
+        return this.rcentralConfig.getDropletStoreCompatibilitySnapshot();
+    }
+
+    /**
+     * Checks whether one supported droplet-store reward is enabled.
+     *
+     * @param itemCode backend item code
+     * @return {@code true} when claiming is allowed for that reward
+     */
+    public boolean isDropletStoreRewardEnabled(final @NotNull String itemCode) {
+        return this.rcentralConfig.isDropletStoreRewardEnabled(itemCode);
+    }
+
+    /**
+     * Fetches unclaimed droplet-store purchases for a player linked to RaindropCentral.
+     *
+     * @param playerUuid player UUID to look up
+     * @return asynchronous parsed API response
+     */
+    public CompletableFuture<RCentralApiClient.ParsedApiResponse<List<RCentralApiClient.DropletStorePurchaseData>>> getUnclaimedDropletPurchases(
+            final @NotNull UUID playerUuid
+    ) {
+        final String apiKey = this.getApiKey();
+        if (apiKey == null || !this.isConnected()) {
+            return CompletableFuture.completedFuture(
+                    new RCentralApiClient.ParsedApiResponse<>(0, null, "Server is not connected to RaindropCentral.", "Not connected")
+            );
+        }
+
+        return this.apiClient.getUnclaimedDropletPurchases(apiKey, playerUuid);
+    }
+
+    /**
+     * Claims a droplet-store purchase for a linked player.
+     *
+     * @param playerUuid player UUID to identify the linked account
+     * @param purchaseId purchase identifier to claim
+     * @return asynchronous parsed API response
+     */
+    public CompletableFuture<RCentralApiClient.ParsedApiResponse<RCentralApiClient.DropletStorePurchaseData>> claimDropletPurchase(
+            final @NotNull UUID playerUuid,
+            final long purchaseId
+    ) {
+        final String apiKey = this.getApiKey();
+        if (apiKey == null || !this.isConnected()) {
+            return CompletableFuture.completedFuture(
+                    new RCentralApiClient.ParsedApiResponse<>(0, null, "Server is not connected to RaindropCentral.", "Not connected")
+            );
+        }
+
+        return this.apiClient.claimDropletPurchase(apiKey, playerUuid, purchaseId);
     }
 }

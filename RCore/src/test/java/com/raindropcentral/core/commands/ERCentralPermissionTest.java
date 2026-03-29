@@ -33,5 +33,8 @@ class ERCentralPermissionTest {
 
         assertEquals("disconnect", ERCentralPermission.DISCONNECT.getInternalName());
         assertEquals("rcore.central.disconnect", ERCentralPermission.DISCONNECT.getFallbackNode());
+
+        assertEquals("claimDroplets", ERCentralPermission.CLAIM_DROPLETS.getInternalName());
+        assertEquals("rcore.central.claim.droplets", ERCentralPermission.CLAIM_DROPLETS.getFallbackNode());
     }
 }

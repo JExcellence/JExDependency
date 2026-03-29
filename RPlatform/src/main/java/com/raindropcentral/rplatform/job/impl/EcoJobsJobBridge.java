@@ -13,12 +13,16 @@
 
 package com.raindropcentral.rplatform.job.impl;
 
+import com.raindropcentral.rplatform.job.JobBridge;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -58,25 +62,19 @@ public final class EcoJobsJobBridge extends AbstractReflectionJobBridge {
     public EcoJobsJobBridge() {
     }
 
-    /**
-     * Gets integrationId.
-     */
+    /** {@inheritDoc} */
     @Override
     public @NotNull String getIntegrationId() {
         return INTEGRATION_ID;
     }
 
-    /**
-     * Gets pluginName.
-     */
+    /** {@inheritDoc} */
     @Override
     public @NotNull String getPluginName() {
         return PLUGIN_NAME;
     }
 
-    /**
-     * Returns whether available.
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean isAvailable() {
         final Plugin installedPlugin = resolvePlugin(PLUGIN_NAME, "EcoJobs");
@@ -95,9 +93,7 @@ public final class EcoJobsJobBridge extends AbstractReflectionJobBridge {
         return this.api != null;
     }
 
-    /**
-     * Gets jobLevel.
-     */
+    /** {@inheritDoc} */
     @Override
     public double getJobLevel(@NotNull Player player, @NotNull String jobId) {
         if (!isAvailable() || jobId.isBlank()) {
@@ -111,6 +107,65 @@ public final class EcoJobsJobBridge extends AbstractReflectionJobBridge {
         } catch (Exception exception) {
             LOGGER.log(Level.FINE, "Failed to resolve EcoJobs level for " + player.getName(), exception);
             return 0.0D;
+        }
+    }
+
+    @Override
+    public @NotNull List<JobBridge.JobDescriptor> getAvailableJobs(@NotNull Player player) {
+        if (!isAvailable()) {
+            return List.of();
+        }
+
+        final List<Object> jobs = this.resolveAllJobObjects();
+        if (jobs.isEmpty()) {
+            return List.of();
+        }
+
+        final List<JobBridge.JobDescriptor> descriptors = new ArrayList<>();
+        for (final Object job : jobs) {
+            final String id = resolveJobIdentifier(job);
+            final String displayName = resolveJobDisplayName(job);
+            if (id.isBlank() || displayName.isBlank()) {
+                continue;
+            }
+
+            descriptors.add(new JobBridge.JobDescriptor(
+                    this.getIntegrationId(),
+                    this.getPluginName(),
+                    id,
+                    displayName
+            ));
+        }
+
+        return descriptors.stream()
+                .sorted(Comparator.comparing(JobBridge.JobDescriptor::displayName, String.CASE_INSENSITIVE_ORDER))
+                .toList();
+    }
+
+    @Override
+    public boolean addJobLevels(@NotNull Player player, @NotNull String jobId, int amount) {
+        if (!isAvailable() || jobId.isBlank() || amount <= 0) {
+            return false;
+        }
+
+        try {
+            final Object resolvedApi = this.api;
+            final Object jobObject = resolveJobObject(jobId.trim());
+            if (resolvedApi == null || jobObject == null) {
+                return false;
+            }
+
+            final int currentLevel = Math.max((int) Math.floor(getJobLevel(player, jobId.trim())), 0);
+            final int targetLevel = currentLevel + amount;
+            invokeOptional(resolvedApi, "setJobLevel", player, jobObject, targetLevel);
+            invokeOptional(resolvedApi, "setLevel", player, jobObject, targetLevel);
+            invokeOptional(resolvedApi, "setJobLevel", player.getUniqueId(), jobObject, targetLevel);
+            invokeOptional(resolvedApi, "setLevel", player.getUniqueId(), jobObject, targetLevel);
+
+            return getJobLevel(player, jobId.trim()) >= targetLevel;
+        } catch (Exception exception) {
+            LOGGER.log(Level.FINE, "Failed to add EcoJobs levels for " + player.getName(), exception);
+            return false;
         }
     }
 
@@ -259,5 +314,46 @@ public final class EcoJobsJobBridge extends AbstractReflectionJobBridge {
         }
 
         return null;
+    }
+
+    private @NotNull List<Object> resolveAllJobObjects() {
+        final Plugin installedPlugin = this.plugin;
+        if (installedPlugin == null) {
+            return List.of();
+        }
+
+        for (final String className : JOB_CLASS_NAMES) {
+            final Class<?> jobClass = loadClass(installedPlugin, className);
+            if (jobClass == null) {
+                continue;
+            }
+
+            final Object values = invokeStaticOptional(jobClass, "values");
+            if (values instanceof Object[] arrayValues && arrayValues.length > 0) {
+                return Arrays.asList(arrayValues);
+            }
+        }
+
+        return List.of();
+    }
+
+    private @NotNull String resolveJobIdentifier(final @NotNull Object job) {
+        final Object resolved = firstNonNull(
+                invokeOptional(job, "getId"),
+                invokeOptional(job, "getID"),
+                invokeOptional(job, "getKey"),
+                invokeOptional(job, "getIdentifier"),
+                invokeOptional(job, "getName")
+        );
+        return resolved == null ? "" : resolved.toString();
+    }
+
+    private @NotNull String resolveJobDisplayName(final @NotNull Object job) {
+        final Object resolved = firstNonNull(
+                invokeOptional(job, "getDisplayName"),
+                invokeOptional(job, "getFormattedName"),
+                invokeOptional(job, "getName")
+        );
+        return resolved == null ? "" : resolved.toString();
     }
 }

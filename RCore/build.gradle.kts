@@ -28,7 +28,7 @@ description = "Core plugin providing shared functionality for Raindrop plugins"
 
 dependencies {
     compileOnly(libs.paper.api)
-    compileOnly(project(":RPlatform"))
+    implementation(project(":RPlatform"))
     compileOnly("com.velocitypowered:velocity-api:3.4.0")
     annotationProcessor("com.velocitypowered:velocity-api:3.4.0")
 
@@ -64,10 +64,13 @@ dependencies {
 
     implementation(libs.bundles.jexcellence) {
         exclude(group = "de.jexcellence.hibernate")
+        exclude(group = "com.raindropcentral.platform", module = "rplatform")
         isTransitive = false
     }
     implementation(libs.bundles.jeconfig) { isTransitive = false }
-    implementation(libs.bundles.inventory) { isTransitive = false }
+    // InventoryFramework is provided at runtime through JExDependency/Paper loader.
+    // Packaging a second relocated copy into RCore splits class ownership and breaks ViewFrame feature installation.
+    compileOnly(libs.bundles.inventory)
 
     compileOnly(libs.jexeconomy)
 

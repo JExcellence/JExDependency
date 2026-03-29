@@ -3,13 +3,14 @@
 prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
 
 rcconnect:
-  usage: "<gray>用法: /rc <connect|disconnect> <api-key></gray>"
+  usage: "<gray>用法：/rc <connect &lt;api-key&gt;|disconnect|claim droplets></gray>"
+  usage_no_claim: "<gray>用法：/rc <connect &lt;api-key&gt;|disconnect></gray>"
   connecting: "<yellow>正在連線到 RaindropCentral...</yellow>"
   success: "<green>已成功連線到 RaindropCentral！</green> <gray>伺服器現在正在傳送心跳。</gray>"
   error:
     invalid_key: "<red>API 金鑰格式無效。API 金鑰應為 32-128 個英數字元。</red>"
     uuid_mismatch: "<red>此 API 金鑰屬於另一個 Minecraft 帳號。</red>"
-    already_connected: "<yellow>伺服器已連線。</yellow> <gray>請先使用 /rc disconnect <api-key>。</gray>"
+    already_connected: "<yellow>伺服器已連線。 </yellow> <gray> 先使用/rc disconnect。 </gray>"
     network: "<red>網路錯誤: %error%</red>"
 
 rcdisconnect:
@@ -19,6 +20,152 @@ rcdisconnect:
     not_connected: "<red>伺服器未連線到 RaindropCentral。</red>"
     failed: "<red>中斷連線失敗。請再試一次。</red>"
     network: "<red>網路錯誤: %error%</red>"
+
+rcclaim:
+  loading: "<yellow>正在檢查RaindropCentral是否有無人認領的水滴獎勵...</yellow>"
+  claiming_item: "<yellow>從 RaindropCentral...</yellow> 聲明 %item_name%"
+  success:
+    claimed: "<green>您已認領 %item_name%.</green>"
+    claimed_skill_targeted: "<green>您領取了%item_name%.</green> <gray>右鍵點選cookie選擇技能。 </gray>"
+    claimed_job_targeted: "<green>您聲明了%item_name%.</green> <gray>右鍵點選cookie以選擇作業。 </gray>"
+    claimed_activate: "<green>您聲明了 %item_name%.</green> <gray>右鍵單擊 cookie 將其啟動。 </gray>"
+    skill_granted: "<green>在%skill_name%.</green> <gray>中授予1級來源：%plugin_name%.</gray>"
+    job_granted: "<green>在%job_name%.</green> <gray>中授予1級來源：%plugin_name%.</gray>"
+    skill_xp_boost_applied: "<green>啟動+%rate_percent%% %skill_name%的技能XP。 </green> <gray>來源：%plugin_name%。持續時間：%duration_minutes% 分鐘.</gray>"
+    skill_xp_boost_refreshed: "<green>刷新了%skill_name%的+%rate_percent%%技能XP。 </green> <gray>來源：%plugin_name%。持續時間重設為 %duration_minutes% 分鐘。 </gray>"
+    job_xp_boost_applied: "<green>啟動+%rate_percent%% %job_name%的作業XP。 </green> <gray>來源：%plugin_name%。持續時間：%duration_minutes% 分鐘.</gray>"
+    job_xp_boost_refreshed: "<green>刷新了%job_name%的+%rate_percent%%作業XP。 </green> <gray>來源：%plugin_name%。持續時間重設為 %duration_minutes% 分鐘。 </gray>"
+    job_vault_boost_applied: "<green>啟動+%rate_percent%% %job_name%的工作經費。 </green> <gray>來源：%plugin_name%。持續時間：%duration_minutes% 分鐘.</gray>"
+    job_vault_boost_refreshed: "<green>刷新了+%rate_percent%% %job_name%的工作經費。 </green> <gray>來源：%plugin_name%。持續時間重設為 %duration_minutes% 分鐘。 </gray>"
+    double_drop_boost_applied: "<green>活化雙滴。 </green> <gray>持續時間：%duration_minutes% 分鐘。 </gray>"
+    double_drop_boost_refreshed: "<green>刷新雙滴。 </green> <gray>持續時間重設為%duration_minutes%分鐘。 </gray>"
+    pending_delivery: "<green>已交付%count%待處理的水滴獎勵。 </green>"
+  error:
+    store_disabled: "<red>此伺服器已停用 /rc claim droplets.</red>"
+    not_connected: "<red>RCore 必須連接到 RaindropCentral 後端才能領取 Droplet。 </red>"
+    cooldown: "<yellow>請等待%seconds%秒後再使用/rc claim droplets。 </yellow>"
+    not_registered: "<red>您的Minecraft帳號未連結至RaindropCentral帳號。 </red>"
+    no_unclaimed: "<yellow>您目前沒有任何無人認領的水滴獎勵。 </yellow>"
+    api_unavailable: "<red>RaindropCentral 目前無法使用：%error%</red>"
+    menu_unavailable: "<red> 水滴領取菜單目前無法使用。請稍後重試。 </red>"
+    item_disabled: "<red>此伺服器已停用聲明 %item_name%.</red> <gray>專案 ID：%item_code%</gray>"
+    unsupported_item: "<red> 此伺服器尚不支援該水滴獎勵。 </red> <gray>專案 ID：%item_code%</gray>"
+    no_supported_skills: "<red>該伺服器目前沒有支援此獎勵的技能插件。 </red>"
+    no_supported_jobs: "<red>該伺服器目前沒有支援此獎勵的作業插件。 </red>"
+    inventory_full: "<red>在領取此獎勵之前，您至少需要一個免費庫存插槽。 </red>"
+    claim_in_progress: "<yellow>該索賠已在進行中。請等待後端響應。 </yellow>"
+    claim_failed: "<red>領取水滴獎勵失敗：%error%</red>"
+    already_claimed: "<yellow>此水滴獎勵已領取。 </yellow>"
+    purchase_unavailable: "<red>該水滴獎勵已無法領取。 </red>"
+    cookie_missing: "<red>在您的庫存中找不到水滴餅乾。 </red>"
+    skill_grant_failed: "<red>未能在 %skill_name%.</red> 中授予 1 級"
+    job_grant_failed: "<red>未能在 %job_name%.</red> 中授予 1 級"
+    boost_activation_failed: "<red>啟動%item_name%.</red>失敗"
+    unsupported_integration: "<red>此 Droplet Cookie 所需的整合目前無法使用。 </red>"
+    boost_expired: "<yellow>那個水滴餅乾增強已經過期了。 </yellow>"
+
+rc_claim_droplets_ui:
+  title: "無人認領的水滴"
+  page:
+    name: "<yellow>頁面 %page%/%max_page%</yellow>"
+    lore:
+      - "<gray>%items_count% 列出可索賠條目。 </gray>"
+  summary:
+    name: "<gold>索賠佇列</gold>"
+    lore:
+      - "<gray>無人認領的條目：%item_count%</gray>"
+      - "<gray>此伺服器支援：%supported_count%</gray>"
+      - "<yellow>點擊支援的獎勵即可領取。 </yellow>"
+  empty:
+    name: "<red>沒有無人領取的獎勵</red>"
+    lore:
+      - "<gray>您目前沒有任何無人領取的水滴獎勵。 </gray>"
+  entry:
+    supported:
+      name: "<green>%item_name%</green>"
+      lore:
+        - "<gray>商品 ID：%item_code%</gray>"
+        - "<gray>使用：%amount_spent%水滴</gray>"
+        - "<yellow>點擊領取此獎勵。 </yellow>"
+    item_disabled:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>商品 ID：%item_code%</gray>"
+        - "<red>該伺服器已禁止領取該獎勵。 </red>"
+    unsupported_item:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>商品 ID：%item_code%</gray>"
+        - "<red> 此伺服器不支援此獎勵。 </red>"
+    no_skills:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>商品 ID：%item_code%</gray>"
+        - "<red>此獎勵沒有安裝支援的技能插件。 </red>"
+    no_jobs:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>商品 ID：%item_code%</gray>"
+        - "<red>此獎勵沒有安裝支援的作業插件。 </red>"
+
+rc_claim_droplet_skills_ui:
+  title: "選擇技能"
+  page:
+    name: "<yellow>頁面 %page%/%max_page%</yellow>"
+    lore:
+      - "<gray>%items_count% 技能條目列出。 </gray>"
+  summary:
+    name: "<gold>技能選擇</gold>"
+    lore:
+      - "<gray>可用技能：%skill_count%</gray>"
+      - "<yellow>選擇一項技能消耗cookie。 </yellow>"
+  empty:
+    name: "<red>沒有可用技能</red>"
+    lore:
+      - "<gray> 目前沒有支援的技能。 </gray>"
+  entry:
+    name: "<green>%skill_name%</green>"
+    level_lore:
+      - "<gray>插件：%plugin_name%</gray>"
+      - "<gray>目前等級：%current_level%</gray>"
+      - "<yellow>點選此技能獲得1級。 </yellow>"
+    boost_lore:
+      - "<gray>插件：%plugin_name%</gray>"
+      - "<gray>目前等級：%current_level%</gray>"
+      - "<gray>Boost：+%rate_percent%% XP %duration_minutes% 分鐘</gray>"
+      - "<yellow>點選啟動此技能提升。 </yellow>"
+
+rc_claim_droplet_jobs_ui:
+  title: "選擇工作"
+  page:
+    name: "<yellow>頁面 %page%/%max_page%</yellow>"
+    lore:
+      - "列出 <gray>%items_count% 作業條目。 </gray>"
+  summary:
+    name: "<gold>職位選擇</gold>"
+    lore:
+      - "<gray>可用職位：%job_count%</gray>"
+      - "<yellow>選擇一項作業來消費cookie。 </yellow>"
+  empty:
+    name: "<red>沒有可用的職位</red>"
+    lore:
+      - "<gray> 目前沒有可用的支援作業。 </gray>"
+  entry:
+    name: "<green>%job_name%</green>"
+    level_lore:
+      - "<gray>插件：%plugin_name%</gray>"
+      - "<gray>目前等級：%current_level%</gray>"
+      - "<yellow>點擊此工作即可獲得1級。 </yellow>"
+    xp_boost_lore:
+      - "<gray>插件：%plugin_name%</gray>"
+      - "<gray>目前等級：%current_level%</gray>"
+      - "<gray>Boost：+%rate_percent%% XP %duration_minutes% 分鐘</gray>"
+      - "<yellow>點選啟動該工作XP提升。 </yellow>"
+    vault_boost_lore:
+      - "<gray>插件：%plugin_name%</gray>"
+      - "<gray>目前等級：%current_level%</gray>"
+      - "<gray>Boost：+%rate_percent%% 錢 %duration_minutes% 分鐘 </gray>"
+      - "<yellow>點選啟動此工作金錢加成。 </yellow>"
 
 general:
   no_permission: "<red>你沒有權限使用此指令。</red>"

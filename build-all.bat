@@ -1,117 +1,120 @@
 @echo off
+setlocal
+
+pushd "%~dp0" >nul || (
+    echo ERROR: Failed to switch to script directory.
+    pause
+    exit /b 1
+)
+
+set "GRADLEW=%CD%\gradlew.bat"
+if not exist "%GRADLEW%" (
+    echo ERROR: Gradle wrapper not found at "%GRADLEW%".
+    popd
+    pause
+    exit /b 1
+)
+
 echo ========================================
 echo RaindropCentral Build Script
 echo ========================================
 echo.
 
 echo [1/12] Validating commit counter and syncing module build numbers...
-call gradlew validateCommitCounter syncBuildNumbersFromCommitCounter
+call "%GRADLEW%" validateCommitCounter syncBuildNumbersFromCommitCounter
 if %ERRORLEVEL% NEQ 0 (
-    echo ERROR: Version sync failed!
-    pause
-    exit /b %ERRORLEVEL%
+    call :fail "Version sync failed!" %ERRORLEVEL%
 )
 echo.
 
 echo [2/12] Cleaning project...
-call gradlew clean
+call "%GRADLEW%" clean
 if %ERRORLEVEL% NEQ 0 (
-    echo ERROR: Clean failed!
-    pause
-    exit /b %ERRORLEVEL%
+    call :fail "Clean failed!" %ERRORLEVEL%
 )
 echo.
 
 echo [3/12] Building and publishing JExDependency...
-call gradlew :JExDependency:publishToMavenLocal
+call "%GRADLEW%" :JExDependency:publishToMavenLocal
 if %ERRORLEVEL% NEQ 0 (
-    echo ERROR: JExDependency build failed!
-    pause
-    exit /b %ERRORLEVEL%
+    call :fail "JExDependency build failed!" %ERRORLEVEL%
 )
 echo.
 
 echo [4/12] Building and publishing JExCommand...
-call gradlew :JExCommand:publishToMavenLocal
+call "%GRADLEW%" :JExCommand:publishToMavenLocal
 if %ERRORLEVEL% NEQ 0 (
-    echo ERROR: JExCommand build failed!
-    pause
-    exit /b %ERRORLEVEL%
+    call :fail "JExCommand build failed!" %ERRORLEVEL%
 )
 echo.
 
 echo [5/12] Building and publishing JExTranslate...
-call gradlew :JExTranslate:publishToMavenLocal
+call "%GRADLEW%" :JExTranslate:publishToMavenLocal
 if %ERRORLEVEL% NEQ 0 (
-    echo ERROR: JExTranslate build failed!
-    pause
-    exit /b %ERRORLEVEL%
+    call :fail "JExTranslate build failed!" %ERRORLEVEL%
 )
 echo.
 
 echo [6/12] Building and publishing RPlatform...
-call gradlew :RPlatform:publishToMavenLocal
+call "%GRADLEW%" :RPlatform:publishToMavenLocal
 if %ERRORLEVEL% NEQ 0 (
-    echo ERROR: RPlatform build failed!
-    pause
-    exit /b %ERRORLEVEL%
+    call :fail "RPlatform build failed!" %ERRORLEVEL%
 )
 echo.
 
 echo [7/12] Building and publishing JExEconomy-common...
-call gradlew :JExEconomy:publishLocal
+call "%GRADLEW%" :JExEconomy:publishLocal
 if %ERRORLEVEL% NEQ 0 (
-    echo ERROR: JExEconomy build failed!
-    pause
-    exit /b %ERRORLEVEL%
+    call :fail "JExEconomy build failed!" %ERRORLEVEL%
 )
 echo.
 
 echo [8/12] Building and publishing RCore...
-call gradlew :RCore:publishLocal
+call "%GRADLEW%" :RCore:publishLocal
 if %ERRORLEVEL% NEQ 0 (
-    echo ERROR: RCore build failed!
-    pause
-    exit /b %ERRORLEVEL%
+    call :fail "RCore build failed!" %ERRORLEVEL%
 )
 echo.
 
 echo [9/12] Building RDQ (buildAll)...
-call gradlew :RDQ:buildAll
+call "%GRADLEW%" :RDQ:buildAll
 if %ERRORLEVEL% NEQ 0 (
-    echo ERROR: RDQ buildAll failed!
-    pause
-    exit /b %ERRORLEVEL%
+    call :fail "RDQ buildAll failed!" %ERRORLEVEL%
 )
 echo.
 
 echo [10/12] Building RDR (buildAll)...
-call gradlew :RDR:buildAll
+call "%GRADLEW%" :RDR:buildAll
 if %ERRORLEVEL% NEQ 0 (
-    echo ERROR: RDR buildAll failed!
-    pause
-    exit /b %ERRORLEVEL%
+    call :fail "RDR buildAll failed!" %ERRORLEVEL%
 )
 echo.
 
 echo [11/12] Building RDS (buildAll)...
-call gradlew :RDS:buildAll
+call "%GRADLEW%" :RDS:buildAll
 if %ERRORLEVEL% NEQ 0 (
-    echo ERROR: RDS buildAll failed!
-    pause
-    exit /b %ERRORLEVEL%
+    call :fail "RDS buildAll failed!" %ERRORLEVEL%
 )
 echo.
 
 echo [12/12] Building RDT (buildAll)...
-call gradlew :RDT:buildAll
+call "%GRADLEW%" :RDT:buildAll
 if %ERRORLEVEL% NEQ 0 (
-    echo ERROR: RDT buildAll failed!
-    pause
-    exit /b %ERRORLEVEL%
+    call :fail "RDT buildAll failed!" %ERRORLEVEL%
 )
 echo.
 
 echo ========================================
 echo Build completed successfully!
 echo ========================================
+
+popd
+endlocal
+exit /b 0
+
+:fail
+echo ERROR: %~1
+set "EXIT_CODE=%~2"
+popd
+pause
+endlocal & exit /b %EXIT_CODE%

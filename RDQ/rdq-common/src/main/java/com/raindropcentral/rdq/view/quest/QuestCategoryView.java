@@ -86,7 +86,7 @@ public class QuestCategoryView extends BaseView {
 		questService.getCategories()
 				.thenAccept(categories -> {
 					// Switch back to main thread to update the view
-					org.bukkit.Bukkit.getScheduler().runTask(plugin.getPlugin(), () -> {
+					plugin.getPlatform().getScheduler().runAtEntity(player, () -> {
 						renderCategories(render, player, categories);
 						render.update();  // Update the view to show the categories
 					});

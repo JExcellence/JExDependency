@@ -22,7 +22,8 @@ import org.jetbrains.annotations.NotNull;
 public enum ERCentralPermission implements IPermissionNode {
 
     CONNECT("connect", "rcore.central.connect"),
-    DISCONNECT("disconnect", "rcore.central.disconnect");
+    DISCONNECT("disconnect", "rcore.central.disconnect"),
+    CLAIM_DROPLETS("claimDroplets", "rcore.central.claim.droplets");
 
     private final String permissionInternalIdentifier;
     private final String fallbackPermissionNode;
@@ -35,17 +36,13 @@ public enum ERCentralPermission implements IPermissionNode {
         this.fallbackPermissionNode = fallbackPermissionNode;
     }
 
-    /**
-     * Gets internalName.
-     */
+    /** {@inheritDoc} */
     @Override
     public @NotNull String getInternalName() {
         return this.permissionInternalIdentifier;
     }
 
-    /**
-     * Gets fallbackNode.
-     */
+    /** {@inheritDoc} */
     @Override
     public @NotNull String getFallbackNode() {
         return this.fallbackPermissionNode;

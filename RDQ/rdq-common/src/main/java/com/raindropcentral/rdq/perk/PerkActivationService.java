@@ -25,6 +25,7 @@ import com.raindropcentral.rdq.perk.handler.EventPerkHandler;
 import com.raindropcentral.rdq.perk.handler.PotionPerkHandler;
 import com.raindropcentral.rdq.perk.handler.SpecialPerkHandler;
 import com.raindropcentral.rplatform.logging.CentralLogger;
+import com.raindropcentral.rplatform.scheduler.CancellableTaskHandle;
 import lombok.Getter;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -72,8 +73,8 @@ public class PerkActivationService {
     private final Map<java.util.UUID, List<PlayerPerk>> activePerksCache = new ConcurrentHashMap<>();
     
     // Scheduled tasks
-    private org.bukkit.scheduler.BukkitTask cooldownCleanupTask;
-    private org.bukkit.scheduler.BukkitTask autoSaveTask;
+    private CancellableTaskHandle cooldownCleanupTask;
+    private CancellableTaskHandle autoSaveTask;
     
     /**
      * Constructs a new PerkActivationService.
@@ -772,8 +773,7 @@ public class PerkActivationService {
         }
         
         // Run every 5 minutes (6000 ticks)
-        autoSaveTask = org.bukkit.Bukkit.getScheduler().runTaskTimerAsynchronously(
-                plugin.getPlugin(),
+        autoSaveTask = plugin.getPlatform().getScheduler().runRepeatingAsync(
                 () -> {
                     try {
                         LOGGER.fine("Running auto-save task...");
@@ -812,8 +812,7 @@ public class PerkActivationService {
             return;
         }
         
-        cooldownCleanupTask = org.bukkit.Bukkit.getScheduler().runTaskTimerAsynchronously(
-                plugin.getPlugin(),
+        cooldownCleanupTask = plugin.getPlatform().getScheduler().runRepeatingAsync(
                 () -> {
                     try {
                         // Find all player perks with expired cooldowns

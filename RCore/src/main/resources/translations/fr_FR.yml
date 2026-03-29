@@ -3,13 +3,14 @@
 prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
 
 rcconnect:
-  usage: "<gray>Utilisation: /rc <connect|disconnect> <api-key></gray>"
+  usage: "<gray>Utilisation : /rc <connect &lt;api-key&gt;|disconnect|claim droplets></gray>"
+  usage_no_claim: "<gray>Utilisation : /rc <connect &lt;api-key&gt;|disconnect></gray>"
   connecting: "<yellow>Connexion a RaindropCentral...</yellow>"
   success: "<green>Connexion a RaindropCentral reussie !</green> <gray>Le serveur envoie maintenant des heartbeats.</gray>"
   error:
     invalid_key: "<red>Format de cle API invalide. Les cles API doivent contenir 32 a 128 caracteres alphanumeriques.</red>"
     uuid_mismatch: "<red>Cette cle API appartient a un autre compte Minecraft.</red>"
-    already_connected: "<yellow>Le serveur est deja connecte.</yellow> <gray>Utilisez d abord /rc disconnect <api-key>.</gray>"
+    already_connected: "<yellow>Le serveur est déjà connecté.</yellow> <gray>Utilisez d'abord /rc disconnect.</gray>"
     network: "<red>Erreur reseau: %error%</red>"
 
 rcdisconnect:
@@ -19,6 +20,152 @@ rcdisconnect:
     not_connected: "<red>Le serveur n est pas connecte a RaindropCentral.</red>"
     failed: "<red>Echec de la deconnexion. Veuillez reessayer.</red>"
     network: "<red>Erreur reseau: %error%</red>"
+
+rcclaim:
+  loading: "<yellow>Vérification de RaindropCentral pour les récompenses de gouttelettes non réclamées...</yellow>"
+  claiming_item: "<yellow>Réclamation de %item_name% auprès de RaindropCentral...</yellow>"
+  success:
+    claimed: "<green>Vous avez revendiqué %item_name%.</green>"
+    claimed_skill_targeted: "<green>Vous avez revendiqué %item_name%.</green> <gray>Cliquez avec le bouton droit sur le cookie pour choisir une compétence.</gray>"
+    claimed_job_targeted: "<green>Vous avez revendiqué %item_name%.</green> <gray>Cliquez avec le bouton droit sur le cookie pour choisir une tâche.</gray>"
+    claimed_activate: "<green>Vous avez revendiqué %item_name%.</green> <gray>Cliquez droit sur le cookie pour l'activer.</gray>"
+    skill_granted: "<green>Obtenu 1 niveau dans %skill_name%.</green> <gray>Source : %plugin_name%.</gray>"
+    job_granted: "<green>Obtenu 1 niveau dans %job_name%.</green> <gray>Source : %plugin_name%.</gray>"
+    skill_xp_boost_applied: "<green>Activé + XP de compétence %rate_percent%% pour %skill_name%.</green> <gray>Source : %plugin_name%. Durée : %duration_minutes% minute(s).</gray>"
+    skill_xp_boost_refreshed: "<green>RActualisation + XP de compétence %rate_percent%% pour %skill_name%.</green> <gray>Source : %plugin_name%. Durée réinitialisée à %duration_minutes% minute(s).</gray>"
+    job_xp_boost_applied: "<green>Activé +%rate_percent%% travail XP pour %job_name%.</green> <gray>Source : %plugin_name%. Durée : %duration_minutes% minute(s).</gray>"
+    job_xp_boost_refreshed: "<green>Travail XP actualisé + %rate_percent%% pour %job_name%.</green> <gray>Source : %plugin_name%. Durée réinitialisée à %duration_minutes% minute(s).</gray>"
+    job_vault_boost_applied: "<green>Activé + argent de travail %rate_percent%% pour %job_name%.</green> <gray>Source : %plugin_name%. Durée : %duration_minutes% minute(s).</gray>"
+    job_vault_boost_refreshed: "<green>RActualisé + Argent de travail %rate_percent%% pour %job_name%.</green> <gray>Source : %plugin_name%. Durée réinitialisée à %duration_minutes% minute(s).</gray>"
+    double_drop_boost_applied: "<green>Doubles gouttes activées.</green> <gray>Durée : %duration_minutes% minute(s).</gray>"
+    double_drop_boost_refreshed: "<green>Doubles gouttes actualisées.</green> <gray>Durée réinitialisée à %duration_minutes% minute(s).</gray>"
+    pending_delivery: "<green>%count% livrée(s) en attente de récompense(s) par gouttelettes.</green>"
+  error:
+    store_disabled: "<red>Ce serveur a désactivé /rc claim droplets.</red>"
+    not_connected: "<red>RCore doit être connecté au backend RaindropCentral avant de pouvoir réclamer des droplets.</red>"
+    cooldown: "<yellow>Veuillez attendre %seconds% seconde(s) avant d'utiliser à nouveau /rc claim droplets.</yellow>"
+    not_registered: "<red>Votre compte Minecraft n'est pas lié à un compte RaindropCentral.</red>"
+    no_unclaimed: "<yellow>Vous n'avez actuellement aucune récompense droplet non réclamée.</yellow>"
+    api_unavailable: "<red>RaindropCentral n'est pas disponible pour le moment : %error%</red>"
+    menu_unavailable: "<red>Le menu de réclamation de gouttelettes n'est pas disponible pour le moment. Veuillez réessayer plus tard.</red>"
+    item_disabled: "<red>Ce serveur a désactivé la revendication %item_name%.</red> <gray>ID d'article : %item_code%</gray>"
+    unsupported_item: "<red>Cette récompense de droplet n'est pas encore prise en charge sur ce serveur.</red> <gray>ID d'article : %item_code%</gray>"
+    no_supported_skills: "<red>Ce serveur ne dispose actuellement pas d'un plugin de compétences pris en charge pour cette récompense.</red>"
+    no_supported_jobs: "<red>Ce serveur ne dispose actuellement pas d'un plug-in de tâches pris en charge pour cette récompense.</red>"
+    inventory_full: "<red>Vous avez besoin d'au moins un emplacement d'inventaire gratuit avant de réclamer cette récompense.</red>"
+    claim_in_progress: "<yellow>Cette réclamation est déjà en cours. Veuillez attendre que le backend réponde.</yellow>"
+    claim_failed: "<red>Échec de la réclamation de cette récompense en forme de gouttelette : %error%</red>"
+    already_claimed: "<yellow>Cette récompense en forme de gouttelettes a déjà été réclamée.</yellow>"
+    purchase_unavailable: "<red>Cette récompense en forme de gouttelettes n'est plus disponible.</red>"
+    cookie_missing: "<red>Le cookie gouttelette est introuvable dans votre inventaire.</red>"
+    skill_grant_failed: "<red>Échec de l'octroi de 1 niveau dans %skill_name%.</red>"
+    job_grant_failed: "<red>Échec de l'octroi de 1 niveau dans %job_name%.</red>"
+    boost_activation_failed: "<red>Échec de l'activation de %item_name%.</red>"
+    unsupported_integration: "<red>L'intégration requise pour ce cookie droplet n'est pas disponible pour le moment.</red>"
+    boost_expired: "<yellow>Ce boost de cookie de gouttelettes a expiré.</yellow>"
+
+rc_claim_droplets_ui:
+  title: "Gouttelettes non réclamées"
+  page:
+    name: "<yellow>Page %page%/%max_page%</yellow>"
+    lore:
+      - "<gray>%items_count% entrées récupérables répertoriées.</gray>"
+  summary:
+    name: "<gold>File d'attente des réclamations</gold>"
+    lore:
+      - "<gray>Entrée non réclamée : %item_count%</gray>"
+      - "<gray>Supporté sur ce serveur : %supported_count%</gray>"
+      - "<yellow>Cliquez sur une récompense prise en charge pour la réclamer.</yellow>"
+  empty:
+    name: "<red>Aucune récompense non réclamée</red>"
+    lore:
+      - "<gray>Vous n'avez actuellement aucune récompense droplet non réclamée.</gray>"
+  entry:
+    supported:
+      name: "<green>%item_name%</green>"
+      lore:
+        - "<gray>ID de l'article : %item_code%</gray>"
+        - "<gray>Dépensé : gouttelettes %amount_spent%</gray>"
+        - "<yellow>Cliquez pour réclamer cette récompense.</yellow>"
+    item_disabled:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>ID de l'article : %item_code%</gray>"
+        - "<red>Ce serveur a désactivé la réclamation de cette récompense.</red>"
+    unsupported_item:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>ID de l'article : %item_code%</gray>"
+        - "<red>Cette récompense n'est pas prise en charge sur ce serveur.</red>"
+    no_skills:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>ID de l'article : %item_code%</gray>"
+        - "<red>Aucun plugin de compétences pris en charge n'est installé pour cette récompense.</red>"
+    no_jobs:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>ID de l'article : %item_code%</gray>"
+        - "<red>Aucun plugin d'emploi pris en charge n'est installé pour cette récompense.</red>"
+
+rc_claim_droplet_skills_ui:
+  title: "Choisissez une compétence"
+  page:
+    name: "<yellow>Page %page%/%max_page%</yellow>"
+    lore:
+      - "Entrées de compétences <gray>%items_count% répertoriées.</gray>"
+  summary:
+    name: "<gold>Sélection de compétences</gold>"
+    lore:
+      - "<gray>ACompétences disponibles : %skill_count%</gray>"
+      - "<yellow>Choisissez une compétence pour consommer le cookie.</yellow>"
+  empty:
+    name: "<red>Aucune compétence disponible</red>"
+    lore:
+      - "<gray>Aucune compétence prise en charge n'est disponible pour le moment.</gray>"
+  entry:
+    name: "<green>%skill_name%</green>"
+    level_lore:
+      - "<gray>Plugin : %plugin_name%</gray>"
+      - "<gray>Niveau actuel : %current_level%</gray>"
+      - "<yellow>Cliquez pour gagner 1 niveau dans cette compétence.</yellow>"
+    boost_lore:
+      - "<gray>Plugin : %plugin_name%</gray>"
+      - "<gray>Niveau actuel : %current_level%</gray>"
+      - "<gray>Boost : +%rate_percent%% XP pour %duration_minutes% minute(s)</gray>"
+      - "<yellow>Cliquez pour activer ce boost de compétence.</yellow>"
+
+rc_claim_droplet_jobs_ui:
+  title: "Choisissez un emploi"
+  page:
+    name: "<yellow>Page %page%/%max_page%</yellow>"
+    lore:
+      - "Entrées de travail <gray>%items_count% répertoriées.</gray>"
+  summary:
+    name: "<gold>Sélection d'emploi</gold>"
+    lore:
+      - "<gray>AEmplois disponibles : %job_count%</gray>"
+      - "<yellow>Choisissez une tâche pour consommer le cookie.</yellow>"
+  empty:
+    name: "<red>Aucun emploi disponible</red>"
+    lore:
+      - "<gray>Aucune tâche prise en charge n'est disponible pour le moment.</gray>"
+  entry:
+    name: "<green>%job_name%</green>"
+    level_lore:
+      - "<gray>Plugin : %plugin_name%</gray>"
+      - "<gray>Niveau actuel : %current_level%</gray>"
+      - "<yellow>Cliquez pour gagner 1 niveau dans ce job.</yellow>"
+    xp_boost_lore:
+      - "<gray>Plugin : %plugin_name%</gray>"
+      - "<gray>Niveau actuel : %current_level%</gray>"
+      - "<gray>Boost : +%rate_percent%% XP pour %duration_minutes% minute(s)</gray>"
+      - "<yellow>Cliquez pour activer ce job XP boost.</yellow>"
+    vault_boost_lore:
+      - "<gray>Plugin : %plugin_name%</gray>"
+      - "<gray>Niveau actuel : %current_level%</gray>"
+      - "<gray>Boost : +%rate_percent%% argent pour %duration_minutes% minute(s)</gray>"
+      - "<yellow>Cliquez pour activer cette augmentation de l'argent du travail.</yellow>"
 
 general:
   no_permission: "<red>Vous n avez pas la permission d utiliser cette commande.</red>"

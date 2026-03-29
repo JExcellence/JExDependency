@@ -5,3 +5,25 @@
 # Leave empty for automatic detection
 # Set to a specific URL to override (e.g., "http://localhost:3000" or "https://raindropcentral.com")
 backendUrl: "https://api.raindropcentral.com"
+
+# Droplet store claim settings
+# enabled: master toggle for `/rc claim droplets`
+# When false, the command is blocked and hidden from tab completion
+# rewards: per-item toggles for supported droplet-store rewards
+# Disabled rewards still appear in the claim menu as barriers so players know the server turned them off
+droplets_store:
+  enabled: true
+  rewards:
+    # Controls claiming for skill and job droplet-store reward items
+    skill-level-cookie: true
+    skill-xp-rate-10-cookie: true
+    skill-xp-rate-50-cookie: true
+    skill-xp-rate-100-cookie: true
+    job-level-cookie: true
+    job-xp-rate-10-cookie: true
+    job-xp-rate-50-cookie: true
+    job-xp-rate-100-cookie: true
+    job-vault-rate-10-cookie: true
+    job-vault-rate-50-cookie: true
+    job-vault-rate-100-cookie: true
+    double-drop-rate-cookie: true

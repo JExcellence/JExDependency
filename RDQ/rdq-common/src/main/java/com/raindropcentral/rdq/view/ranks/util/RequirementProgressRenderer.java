@@ -197,15 +197,16 @@ public class RequirementProgressRenderer {
             final int slotToFill = oldFilledSlots + i;
             final long delay = delayPerSlot * (i + 1);
 
-            rdq.getPlatform().getScheduler().runDelayed(() -> {
-                if (slotToFill < PROGRESS_SLOTS.length) {
-                    context.slot(PROGRESS_SLOTS[slotToFill])
-                            .renderWith(() -> UnifiedBuilderFactory.item(FILLED_MATERIAL)
-                                    .setName(Component.text(" "))
-                                    .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
-                                    .build());
-                }
-            }, delay);
+            rdq.getPlatform().getScheduler().runDelayed(() ->
+                    rdq.getPlatform().getScheduler().runAtEntity(context.getPlayer(), () -> {
+                        if (slotToFill < PROGRESS_SLOTS.length) {
+                            context.slot(PROGRESS_SLOTS[slotToFill])
+                                    .renderWith(() -> UnifiedBuilderFactory.item(FILLED_MATERIAL)
+                                            .setName(Component.text(" "))
+                                            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                                            .build());
+                        }
+                    }), delay);
         }
     }
 }

@@ -3,13 +3,14 @@
 prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
 
 rcconnect:
-  usage: "<gray>Käyttö: /rc <connect|disconnect> <api-key></gray>"
+  usage: "<gray>Käyttö: /rc <connect &lt;api-key&gt;|disconnect|claim droplets></gray>"
+  usage_no_claim: "<gray>Käyttö: /rc <connect &lt;api-key&gt;|disconnect></gray>"
   connecting: "<yellow>Yhdistetään RaindropCentraliin...</yellow>"
   success: "<green>Yhteys RaindropCentraliin muodostettiin onnistuneesti!</green> <gray>Palvelin lähettää nyt heartbeat-signaaleja.</gray>"
   error:
     invalid_key: "<red>Virheellinen API-avaimen muoto. API-avainten tulee olla 32-128 aakkosnumeerista merkkiä.</red>"
     uuid_mismatch: "<red>Tämä API-avain kuuluu toiselle Minecraft-tilille.</red>"
-    already_connected: "<yellow>Palvelin on jo yhdistetty.</yellow> <gray>Käytä ensin komentoa /rc disconnect <api-key>.</gray>"
+    already_connected: "<yellow>Palvelin on jo yhdistetty.</yellow> <gray>Käytä ensin /rc disconnect.</gray>"
     network: "<red>Verkkovirhe: %error%</red>"
 
 rcdisconnect:
@@ -19,6 +20,152 @@ rcdisconnect:
     not_connected: "<red>Palvelin ei ole yhdistetty RaindropCentraliin.</red>"
     failed: "<red>Yhteyden katkaisu epäonnistui. Yritä uudelleen.</red>"
     network: "<red>Verkkovirhe: %error%</red>"
+
+rcclaim:
+  loading: "<yellow>RaindropCentral:n tarkistaminen lunastamattomien pisarapalkkioiden varalta...</yellow>"
+  claiming_item: "<yellow> %item_name%:n vaatiminen RaindropCentral...</yellow>"
+  success:
+    claimed: "<green>Vaatit %item_name%.</green>"
+    claimed_skill_targeted: "<green>Vaatinut %item_name%.</green> <gray> Napsauta evästettä hiiren kakkospainikkeella valitaksesi taidon.</gray>"
+    claimed_job_targeted: "<green>Vaatit %item_name%.</green> <gray> Napsauta evästettä hiiren kakkospainikkeella valitaksesi työ.</gray>"
+    claimed_activate: "<green>Väitit %item_name%.</green> <gray> Napsauta evästettä hiiren kakkospainikkeella aktivoidaksesi sen.</gray>"
+    skill_granted: "<green>Myönnetty 1 taso kohteessa %skill_name%.</green> <gray>Lähde: %plugin_name%.</gray>"
+    job_granted: "<green>Myönnetty 1 taso kohteessa %job_name%.</green> <gray>Lähde: %plugin_name%.</gray>"
+    skill_xp_boost_applied: "<green>Aktivoitu +%rate_percent%%-taito XP for %skill_name%.</green> <gray>Lähde: %plugin_name%. Kesto: %duration_minutes% minuutti(a).</gray>"
+    skill_xp_boost_refreshed: "<green>Päivitetty +%rate_percent%% taito XP for %skill_name%.</green> <gray>Lähde: %plugin_name%. Kesto palautettiin %duration_minutes% minuuttiin.</gray>"
+    job_xp_boost_applied: "<green>Aktivoitu +%rate_percent%% työ XP mallille %job_name%.</green> <gray>Lähde: %plugin_name%. Kesto: %duration_minutes% minuutti(a).</gray>"
+    job_xp_boost_refreshed: "<green>Päivitetty +%rate_percent%% työ XP mallille %job_name%.</green> <gray>Lähde: %plugin_name%. Kesto palautettiin %duration_minutes% minuuttiin.</gray>"
+    job_vault_boost_applied: "<green>Aktivoitu +%rate_percent%% työraha %job_name%.</green> <gray>Lähde: %plugin_name%. Kesto: %duration_minutes% minuutti(a).</gray>"
+    job_vault_boost_refreshed: "<green>Päivitetty +%rate_percent%% työraha %job_name%.</green> <gray>Lähde: %plugin_name%. Kesto palautettiin %duration_minutes% minuuttiin.</gray>"
+    double_drop_boost_applied: "<green>Aktivoidut kaksoispisarat.</green> <gray>Kesto: %duration_minutes% minuutti(a).</gray>"
+    double_drop_boost_refreshed: "<green>Päivitetty kaksoispisara.</green> <gray>Kesto nollattu %duration_minutes% minuuttiin.</gray>"
+    pending_delivery: "<green>Toimitettu %count% odottaa pisarapalkintoa.</green>"
+  error:
+    store_disabled: "<red>Tämä palvelin on poistanut /rc claim droplets.</red> käytöstä"
+    not_connected: "<red>RCore on liitettävä RaindropCentral-taustajärjestelmään, ennen kuin voit vaatia pisaroita.</red>"
+    cooldown: "<yellow>Odota %seconds% sekuntia ennen kuin käytät /rc claim droplets:tä uudelleen.</yellow>"
+    not_registered: "<red>Minecraft-tiliäsi ei ole linkitetty RaindropCentral-tiliin.</red>"
+    no_unclaimed: "<yellow>Sinulla ei ole lunastamattomia pisarapalkintoja juuri nyt.</yellow>"
+    api_unavailable: "<red>RaindropCentral ei ole saatavilla juuri nyt: %error%</red>"
+    menu_unavailable: "<red>Pisaravaatimusvalikko ei ole tällä hetkellä käytettävissä. Yritä myöhemmin uudelleen.</red>"
+    item_disabled: "<red>Tämä palvelin on poistanut vaatimuksen %item_name%.</red> <gray>Tuotetunnus: %item_code%</gray>"
+    unsupported_item: "<red>Tätä pisarapalkkiota ei tueta vielä tällä palvelimella.</red> <gray>Tuotetunnus: %item_code%</gray>"
+    no_supported_skills: "<red>Tällä palvelimella ei tällä hetkellä ole tuettua osaamislaajennusta tälle palkinnolle.</red>"
+    no_supported_jobs: "<red>Tällä palvelimella ei tällä hetkellä ole tuettua työlaajennusta tälle palkkiolle.</red>"
+    inventory_full: "<red>Tarvitset vähintään yhden ilmaisen varastopaikan ennen tämän palkinnon lunastamista.</red>"
+    claim_in_progress: "<yellow>Se vaatimus on jo käsittelyssä. Odota, että taustaosa vastaa.</yellow>"
+    claim_failed: "<red>Pisarapalkkion lunastaminen epäonnistui: %error%</red>"
+    already_claimed: "<yellow>Tuo pisarapalkinto on jo lunastettu.</yellow>"
+    purchase_unavailable: "<red>Sitä pisarapalkkiota ei voi enää lunastaa.</red>"
+    cookie_missing: "<red>Pisaraevästettä ei löydy varastostasi.</red>"
+    skill_grant_failed: "<red>Yhden tason myöntäminen epäonnistui kohteessa %skill_name%.</red>"
+    job_grant_failed: "<red>Yhden tason myöntäminen epäonnistui kohteessa %job_name%.</red>"
+    boost_activation_failed: "<red> Aktivointi epäonnistui %item_name%.</red>"
+    unsupported_integration: "<red>Tämän pisaraevästeen vaadittava integrointi ei ole saatavilla juuri nyt.</red>"
+    boost_expired: "<yellow>Tuo pisarakeksitehoste on vanhentunut.</yellow>"
+
+rc_claim_droplets_ui:
+  title: "Lunastamattomat pisarat"
+  page:
+    name: "<yellow>sivu %page%/%max_page%</yellow>"
+    lore:
+      - "Luettelo <gray>%items_count% korvausvaatimusten kohteena olevat merkinnät.</gray>"
+  summary:
+    name: "<gold>Vaatimusjono</gold>"
+    lore:
+      - "<gray> Lunastamattomat merkinnät: %item_count%</gray>"
+      - "<gray>Tuettu tällä palvelimella: %supported_count%</gray>"
+      - "<yellow>Napsauta tuettua palkintoa lunastaaksesi sen.</yellow>"
+  empty:
+    name: "<red>Ei lunastamattomia palkintoja</red>"
+    lore:
+      - "<gray>Sinulla ei tällä hetkellä ole lunastamattomia pisarapalkintoja.</gray>"
+  entry:
+    supported:
+      name: "<green>%item_name%</green>"
+      lore:
+        - "<gray>Tuotetunnus: %item_code%</gray>"
+        - "<gray>Käytetty: %amount_spent% pisaroita</gray>"
+        - "<yellow>Lunasta tämä palkinto napsauttamalla.</yellow>"
+    item_disabled:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>Tuotetunnus: %item_code%</gray>"
+        - "<red>Tämä palvelin on poistanut tämän palkinnon lunastamisen käytöstä.</red>"
+    unsupported_item:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>Tuotetunnus: %item_code%</gray>"
+        - "<red>Tätä palkintoa ei tueta tällä palvelimella.</red>"
+    no_skills:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>Tuotetunnus: %item_code%</gray>"
+        - "<red>Tälle palkkiolle ei ole asennettu tuettuja taitojen laajennusta.</red>"
+    no_jobs:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>Tuotetunnus: %item_code%</gray>"
+        - "<red>Tälle palkkiolle ei ole asennettu tuettujen töiden laajennusta.</red>"
+
+rc_claim_droplet_skills_ui:
+  title: "Valitse taito"
+  page:
+    name: "<yellow>sivu %page%/%max_page%</yellow>"
+    lore:
+      - "<gray>%items_count% taitomerkinnät lueteltu.</gray>"
+  summary:
+    name: "<gold>Taitojen valinta</gold>"
+    lore:
+      - "<gray>ASaatavat taidot: %skill_count%</gray>"
+      - "<yellow>Valitse yksi taito kuluttaaksesi evästeen.</yellow>"
+  empty:
+    name: "<red>Ei taitoja saatavilla</red>"
+    lore:
+      - "<gray>Tuettuja taitoja ei ole saatavilla juuri nyt.</gray>"
+  entry:
+    name: "<green>%skill_name%</green>"
+    level_lore:
+      - "<gray>Plugin: %plugin_name%</gray>"
+      - "<gray>Nykyinen taso: %current_level%</gray>"
+      - "<yellow>Napsauta saadaksesi 1 tason tässä taidossa.</yellow>"
+    boost_lore:
+      - "<gray>Plugin: %plugin_name%</gray>"
+      - "<gray>Nykyinen taso: %current_level%</gray>"
+      - "<gray>Boost: +%rate_percent%% XP %duration_minutes% minuutille </gray>"
+      - "<yellow>Klikkaa aktivoidaksesi tämän taidonlisäyksen.</yellow>"
+
+rc_claim_droplet_jobs_ui:
+  title: "Valitse Työ"
+  page:
+    name: "<yellow>sivu %page%/%max_page%</yellow>"
+    lore:
+      - "<gray>%items_count% työtehtävät lueteltu.</gray>"
+  summary:
+    name: "<gold>Työn valinta</gold>"
+    lore:
+      - "<gray>Avapaita työpaikkoja: %job_count%</gray>"
+      - "<yellow>Valitse yksi työ käyttääksesi evästeen.</yellow>"
+  empty:
+    name: "<red>Ei työpaikkoja saatavilla</red>"
+    lore:
+      - "<gray>Tuettuja töitä ei ole tällä hetkellä saatavilla.</gray>"
+  entry:
+    name: "<green>%job_name%</green>"
+    level_lore:
+      - "<gray>Plugin: %plugin_name%</gray>"
+      - "<gray>Nykyinen taso: %current_level%</gray>"
+      - "<yellow>Napsauta saadaksesi 1 tason tässä työssä.</yellow>"
+    xp_boost_lore:
+      - "<gray>Plugin: %plugin_name%</gray>"
+      - "<gray>Nykyinen taso: %current_level%</gray>"
+      - "<gray>Boost: +%rate_percent%% XP %duration_minutes% minuutille </gray>"
+      - "<yellow>Klikkaa aktivoidaksesi tämän työn XP boost.</yellow>"
+    vault_boost_lore:
+      - "<gray>Plugin: %plugin_name%</gray>"
+      - "<gray>Nykyinen taso: %current_level%</gray>"
+      - "<gray>Boost: +%rate_percent%% rahaa %duration_minutes% minuutille </gray>"
+      - "<yellow>Klikkaa aktivoidaksesi tämän työpaikan rahanlisäyksen.</yellow>"
 
 general:
   no_permission: "<red>Sinulla ei ole oikeutta käyttää tätä komentoa.</red>"

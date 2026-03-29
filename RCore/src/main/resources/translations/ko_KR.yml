@@ -3,13 +3,14 @@
 prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
 
 rcconnect:
-  usage: "<gray>사용법: /rc <connect|disconnect> <api-key></gray>"
+  usage: "<gray>사용법: /rc <connect &lt;api-key&gt;|disconnect|claim droplets></gray>"
+  usage_no_claim: "<gray>사용법: /rc <connect &lt;api-key&gt;|disconnect></gray>"
   connecting: "<yellow>RaindropCentral에 연결 중...</yellow>"
   success: "<green>RaindropCentral에 성공적으로 연결되었습니다!</green> <gray>서버가 이제 하트비트를 전송하고 있습니다.</gray>"
   error:
     invalid_key: "<red>API 키 형식이 올바르지 않습니다. API 키는 32~128자의 영숫자여야 합니다.</red>"
     uuid_mismatch: "<red>이 API 키는 다른 Minecraft 계정에 속해 있습니다.</red>"
-    already_connected: "<yellow>서버가 이미 연결되어 있습니다.</yellow> <gray>먼저 /rc disconnect <api-key>를 사용하세요.</gray>"
+    already_connected: "<yellow>서버가 이미 연결되어 있습니다.</yellow> <gray>먼저 /rc disconnect를 사용하세요.</gray>"
     network: "<red>네트워크 오류: %error%</red>"
 
 rcdisconnect:
@@ -19,6 +20,152 @@ rcdisconnect:
     not_connected: "<red>서버가 RaindropCentral에 연결되어 있지 않습니다.</red>"
     failed: "<red>연결 해제에 실패했습니다. 다시 시도해 주세요.</red>"
     network: "<red>네트워크 오류: %error%</red>"
+
+rcclaim:
+  loading: "<yellow>RaindropCentral에서 받지 못한 물방울 보상을 확인하는 중...</yellow>"
+  claiming_item: "<yellow>RaindropCentral에서 %item_name% 소유권을 주장하는 중...</yellow>"
+  success:
+    claimed: "<green>%item_name%.</green>를 요청하셨습니다."
+    claimed_skill_targeted: "<green>%item_name%를 신청하셨습니다.</green> <gray>쿠키를 마우스 오른쪽 버튼으로 클릭하여 스킬을 선택하세요.</gray>"
+    claimed_job_targeted: "<green>%item_name%를 신청하셨습니다.</green> <gray>작업을 선택하려면 쿠키를 마우스 오른쪽 버튼으로 클릭하세요.</gray>"
+    claimed_activate: "<green>%item_name%를 요청하셨습니다.</green> <gray>쿠키를 마우스 오른쪽 버튼으로 클릭하여 활성화하세요.</gray>"
+    skill_granted: "<green>%skill_name%.</green> <gray>출처: %plugin_name%.</gray>에서 1레벨을 부여했습니다."
+    job_granted: "<green>%job_name%.</green> <gray>출처: %plugin_name%.</gray>에서 1레벨을 부여했습니다."
+    skill_xp_boost_applied: "<green>%skill_name%.</green> <gray>출처: %plugin_name%에 대해 활성화된 +%rate_percent%% 스킬 XP. 기간: %duration_minutes%분.</gray>"
+    skill_xp_boost_refreshed: "<green>%skill_name%.</green> <gray>출처: %plugin_name%에 대한 +%rate_percent%% 스킬 XP가 새로워졌습니다. 기간은 %duration_minutes%분으로 재설정됩니다.</gray>"
+    job_xp_boost_applied: "<green>%job_name%.</green> <gray>소스: %plugin_name%에 대해 활성화된 +%rate_percent%% 작업 XP. 기간: %duration_minutes%분.</gray>"
+    job_xp_boost_refreshed: "<green>%job_name%.</green> <gray>소스: %plugin_name%에 대한 +%rate_percent%% 작업 XP를 새로 고쳤습니다. 기간은 %duration_minutes%분으로 재설정됩니다.</gray>"
+    job_vault_boost_applied: "<green>%job_name%.</green> <gray>출처: %plugin_name%에 대한 +%rate_percent%% 직업 자금을 활성화했습니다. 기간: %duration_minutes%분.</gray>"
+    job_vault_boost_refreshed: "<green>%job_name%.</green> <gray>출처: %plugin_name%에 대한 +%rate_percent%% 작업 자금을 새로 고쳤습니다. 기간은 %duration_minutes%분으로 재설정됩니다.</gray>"
+    double_drop_boost_applied: "<green>활성화된 이중 삭제.</green> <gray>지속 ​​시간: %duration_minutes%분.</gray>"
+    double_drop_boost_refreshed: "<green>새로 고침된 두 배의 삭제.</green> <gray>기간이 %duration_minutes%분으로 재설정됩니다.</gray>"
+    pending_delivery: "<green>배달된 %count% 드롭릿 보상 보류 중.</green>"
+  error:
+    store_disabled: "<red>이 서버는 /rc claim droplets를 비활성화했습니다.</red>"
+    not_connected: "<red>RCore는 드롭릿을 청구하기 전에 RaindropCentral 백엔드에 연결되어야 합니다.</red>"
+    cooldown: "<yellow>/rc claim droplets를 다시 사용하기 전에 %seconds%초를 기다리십시오.</yellow>"
+    not_registered: "<red>귀하의 Minecraft 계정이 RaindropCentral 계정에 연결되어 있지 않습니다.</red>"
+    no_unclaimed: "<yellow>지금은 받지 않은 물방울 보상이 없습니다.</yellow>"
+    api_unavailable: "<red>RaindropCentral는 현재 사용할 수 없습니다: %error%Z</red>"
+    menu_unavailable: "<red>물방울 획득 메뉴는 지금은 사용할 수 없습니다. 나중에 다시 시도해 주세요.</red>"
+    item_disabled: "<red>이 서버는 %item_name%.</red> <gray>항목 ID: %item_code%</gray> 소유권 주장을 비활성화했습니다."
+    unsupported_item: "<red>이 물방울 보상은 아직 이 서버에서 지원되지 않습니다.</red> <gray>아이템 ID: %item_code%</gray>"
+    no_supported_skills: "<red>이 서버에는 현재 이 보상에 대해 지원되는 기술 플러그인이 없습니다.</red>"
+    no_supported_jobs: "<red>이 서버에는 현재 이 보상에 대해 지원되는 작업 플러그인이 없습니다.</red>"
+    inventory_full: "<red>이 보상을 받으려면 최소한 하나의 무료 인벤토리 슬롯이 필요합니다.</red>"
+    claim_in_progress: "<yellow>해당 청구가 이미 진행 중입니다. 백엔드가 응답할 때까지 기다려 주십시오.</yellow>"
+    claim_failed: "<red>방울 보상을 요구하지 못했습니다: %error%</red>"
+    already_claimed: "<yellow>그 물방울 보상은 이미 획득되었습니다.</yellow>"
+    purchase_unavailable: "<red>그 물방울 보상은 더 이상 받을 수 없습니다.</red>"
+    cookie_missing: "<red>인벤토리에서 드롭릿 쿠키를 찾을 수 없습니다.</red>"
+    skill_grant_failed: "<red>%skill_name%.</red>에서 1레벨을 부여하지 못했습니다."
+    job_grant_failed: "<red>%job_name%.</red>에서 1레벨을 부여하지 못했습니다."
+    boost_activation_failed: "<red>%item_name%.</red>를 활성화하지 못했습니다."
+    unsupported_integration: "<red>이 드롭릿 쿠키에 필요한 통합은 현재 사용할 수 없습니다.</red>"
+    boost_expired: "<yellow>드롭 쿠키 부스트가 만료되었습니다.</yellow>"
+
+rc_claim_droplets_ui:
+  title: "청구되지 않은 물방울"
+  page:
+    name: "<yellow>페이지 %page%/%max_page%</yellow>"
+    lore:
+      - "<gray>%items_count% 청구 가능한 항목이 나열되었습니다.</gray>"
+  summary:
+    name: "<gold>청구 대기열</gold>"
+    lore:
+      - "<gray>청구되지 않은 항목: %item_count%</gray>"
+      - "<gray>이 서버에서 지원됨: %supported_count%</gray>"
+      - "<yellow>지원되는 보상을 클릭하여 획득하세요.</yellow>"
+  empty:
+    name: "<red>청구하지 않은 보상 없음</red>"
+    lore:
+      - "<gray>현재 수령하지 않은 물방울 보상이 없습니다.</gray>"
+  entry:
+    supported:
+      name: "<green>%item_name%</green>"
+      lore:
+        - "<gray>항목 ID: %item_code%</gray>"
+        - "<gray>사용: %amount_spent% 방울</gray>"
+        - "<yellow>이 보상을 받으려면 클릭하세요.</yellow>"
+    item_disabled:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>항목 ID: %item_code%</gray>"
+        - "<red>이 서버는 이 보상을 받을 수 없도록 비활성화되었습니다.</red>"
+    unsupported_item:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>항목 ID: %item_code%</gray>"
+        - "<red>이 보상은 이 서버에서 지원되지 않습니다.</red>"
+    no_skills:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>항목 ID: %item_code%</gray>"
+        - "<red>이 보상에는 지원되는 기술 플러그인이 설치되어 있지 않습니다.</red>"
+    no_jobs:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>항목 ID: %item_code%</gray>"
+        - "<red>이 보상에는 지원되는 작업 플러그인이 설치되어 있지 않습니다.</red>"
+
+rc_claim_droplet_skills_ui:
+  title: "기술을 선택하세요"
+  page:
+    name: "<yellow>페이지 %page%/%max_page%</yellow>"
+    lore:
+      - "<gray>%items_count% 스킬 항목이 나열됩니다.</gray>"
+  summary:
+    name: "<gold>스킬 선택</gold>"
+    lore:
+      - "<gray>사용 가능 스킬 : %skill_count%</gray>"
+      - "<yellow>쿠키를 소비하려면 스킬 1개를 선택하세요.</yellow>"
+  empty:
+    name: "<red>사용 가능한 기술 없음</red>"
+    lore:
+      - "<gray>지금은 지원되는 기술이 없습니다.</gray>"
+  entry:
+    name: "<green>%skill_name%</green>"
+    level_lore:
+      - "<gray>플러그인: %plugin_name%</gray>"
+      - "<gray>현재 수준: %current_level%</gray>"
+      - "<yellow>이 스킬의 레벨을 1 올리려면 클릭하세요.</yellow>"
+    boost_lore:
+      - "<gray>플러그인: %plugin_name%</gray>"
+      - "<gray>현재 수준: %current_level%</gray>"
+      - "<gray>부스트: %duration_minutes%분 동안 +%rate_percent%% XP</gray>"
+      - "<yellow>이 스킬 부스트를 활성화하려면 클릭하세요.</yellow>"
+
+rc_claim_droplet_jobs_ui:
+  title: "직업을 선택하세요"
+  page:
+    name: "<yellow>페이지 %page%/%max_page%</yellow>"
+    lore:
+      - "<gray>%items_count% 작업 항목이 나열되었습니다.</gray>"
+  summary:
+    name: "<gold>직업 선택</gold>"
+    lore:
+      - "<gray>사용 가능한 작업: %job_count%</gray>"
+      - "<yellow>쿠키를 사용할 작업 하나를 선택하세요.</yellow>"
+  empty:
+    name: "<red>사용 가능한 채용 정보가 없습니다</red>"
+    lore:
+      - "<gray>현재 지원되는 작업이 없습니다.</gray>"
+  entry:
+    name: "<green>%job_name%</green>"
+    level_lore:
+      - "<gray>플러그인: %plugin_name%</gray>"
+      - "<gray>현재 수준: %current_level%</gray>"
+      - "<yellow>이 직업에서 1레벨을 얻으려면 클릭하세요.</yellow>"
+    xp_boost_lore:
+      - "<gray>플러그인: %plugin_name%</gray>"
+      - "<gray>현재 수준: %current_level%</gray>"
+      - "<gray>부스트: %duration_minutes%분 동안 +%rate_percent%% XP</gray>"
+      - "<yellow>이 작업을 활성화하려면 클릭하세요. XP 부스트.</yellow>"
+    vault_boost_lore:
+      - "<gray>플러그인: %plugin_name%</gray>"
+      - "<gray>현재 수준: %current_level%</gray>"
+      - "<gray>부스트: %duration_minutes%분 동안 +%rate_percent%% 자금</gray>"
+      - "<yellow>이 직업 돈 부스트를 활성화하려면 클릭하세요.</yellow>"
 
 general:
   no_permission: "<red>이 명령어를 사용할 권한이 없습니다.</red>"

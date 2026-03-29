@@ -25,6 +25,7 @@ description = "RDT Free - Free edition of Raindrop Towns"
 dependencies {
     implementation(project(":RDT:rdt-common"))
     implementation(project(":JExCommand"))
+    implementation(project(":RPlatform"))
 
     compileOnly(libs.paper.api)
 
@@ -36,12 +37,11 @@ dependencies {
     compileOnly(libs.bundles.hibernate)
     compileOnly(libs.jehibernate)
     compileOnly(libs.adventure.platform.bukkit)
-    compileOnly(libs.rplatform)
-
     implementation(libs.bundles.jexcellence) {
         isTransitive = false
         exclude(group = "de.jexcellence.hibernate")
         exclude(group = "com.raindropcentral.commands", module = "jexcommand")
+        exclude(group = "com.raindropcentral.platform", module = "rplatform")
     }
     implementation(libs.bundles.jeconfig) { isTransitive = false }
     compileOnly(libs.bundles.inventory)

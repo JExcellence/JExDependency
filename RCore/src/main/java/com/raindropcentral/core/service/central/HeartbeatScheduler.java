@@ -13,12 +13,14 @@
 
 package com.raindropcentral.core.service.central;
 
+import com.raindropcentral.core.config.RCentralConfig;
 import com.raindropcentral.rplatform.RPlatform;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -37,6 +39,7 @@ public class HeartbeatScheduler {
     private final MetricsCollector metricsCollector;
     private final String apiKey;
     private final boolean sharePlayerList;
+    private final Supplier<RCentralConfig.DropletStoreCompatibilitySnapshot> dropletStoreCompatibilitySupplier;
     
     private int consecutiveFailures = 0;
     private boolean isRunning = false;
@@ -49,13 +52,15 @@ public class HeartbeatScheduler {
         final @NotNull RPlatform platform,
         final @NotNull RCentralApiClient apiClient,
         final @NotNull String apiKey,
-        final boolean sharePlayerList
+        final boolean sharePlayerList,
+        final @NotNull Supplier<RCentralConfig.DropletStoreCompatibilitySnapshot> dropletStoreCompatibilitySupplier
     ) {
         this.plugin = plugin;
         this.platform = platform;
         this.apiClient = apiClient;
         this.apiKey = apiKey;
         this.sharePlayerList = sharePlayerList;
+        this.dropletStoreCompatibilitySupplier = dropletStoreCompatibilitySupplier;
         this.metricsCollector = new MetricsCollector();
     }
 
@@ -105,7 +110,8 @@ public class HeartbeatScheduler {
                 metrics.currentPlayers(),
                 metrics.maxPlayers(),
                 metrics.tps(),
-                metrics.playerList()
+                metrics.playerList(),
+                dropletStoreCompatibilitySupplier.get()
             ).thenAccept(response -> {
                 if (response.isSuccess()) {
                     consecutiveFailures = 0;

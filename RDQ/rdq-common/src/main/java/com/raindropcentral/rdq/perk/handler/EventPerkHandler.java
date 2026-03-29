@@ -276,7 +276,7 @@ public class EventPerkHandler {
 		event.setCancelled(true);
 		
 		// Apply effects on next tick to ensure event cancellation is processed
-		plugin.getPlatform().getScheduler().runSync(() -> {
+		plugin.getPlatform().getScheduler().runAtEntity(player, () -> {
 			for (PotionEffect effect : meta.getAllEffects()) {
 				player.addPotionEffect(new PotionEffect(
 						effect.getType(),
@@ -311,7 +311,7 @@ public class EventPerkHandler {
 		event.setCancelled(true);
 		
 		// Apply effects on next tick to ensure event cancellation is processed
-		plugin.getPlatform().getScheduler().runSync(() -> {
+		plugin.getPlatform().getScheduler().runAtEntity(player, () -> {
 			for (PotionEffect effect : meta.getCustomEffects()) {
 				player.addPotionEffect(new PotionEffect(
 						effect.getType(),

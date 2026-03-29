@@ -55,6 +55,7 @@ jobs:
   force-release:
     name: Build And Publish Force Release
     needs: resolve-targets
+    if: ${{ github.ref != 'refs/heads/staging' }}
     runs-on:
       - self-hosted
       - Linux
