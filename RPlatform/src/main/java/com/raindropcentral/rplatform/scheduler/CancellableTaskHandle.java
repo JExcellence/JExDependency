@@ -46,6 +46,9 @@ public interface CancellableTaskHandle {
         return NoOpTaskHandle.INSTANCE;
     }
 
+    /**
+     * No-op task handle that always reports itself as cancelled.
+     */
     enum NoOpTaskHandle implements CancellableTaskHandle {
         INSTANCE;
 
