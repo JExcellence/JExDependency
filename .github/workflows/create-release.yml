@@ -242,11 +242,7 @@ jobs:
       - wait-for-java-tests
     if: ${{ github.ref != 'refs/heads/staging' && needs.detect-version-changes.outputs.has-changes == 'true' }}
     # Build-heavy work is pinned to the self-hosted runner labels below.
-    runs-on:
-      - self-hosted
-      - Linux
-      - X64
-      - RDC
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
