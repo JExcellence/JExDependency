@@ -15,11 +15,7 @@ concurrency:
 jobs:
   verify-google-java-style:
     name: Google Java Style (Java 21)
-    runs-on:
-      - self-hosted
-      - Linux
-      - X64
-      - RDC
+    runs-on: ubuntu-latest
     permissions:
       contents: read
 

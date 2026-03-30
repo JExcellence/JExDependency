@@ -15,11 +15,7 @@ concurrency:
 jobs:
   commit-counter-check:
     name: Validate Commit Counter And Build Numbers
-    runs-on:
-      - self-hosted
-      - Linux
-      - X64
-      - RDC
+    runs-on: ubuntu-latest
     permissions:
       contents: read
 
