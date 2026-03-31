@@ -1,6 +1,6 @@
 package com.raindropcentral.rdq.database.entity.rank;
 
-import com.raindropcentral.rdq.config.utility.IconSection;
+import com.raindropcentral.rplatform.config.icon.IconSection;
 import com.raindropcentral.rdq.database.converter.IconSectionConverter;
 import com.raindropcentral.rplatform.progression.IProgressionNode;
 import de.jexcellence.hibernate.entity.BaseEntity;
@@ -22,11 +22,6 @@ import java.util.stream.Collectors;
  * Each rank has a unique identifier, display keys for localization, a LuckPerms group assignment,
  * tier and weight for ordering, and icon representation. Ranks can be linked to previous and next ranks,
  * forming a progression path within a rank tree.
- * </p>
- *
- * <p>
- * This entity implements {@link IProgressionNode} to support the RPlatform progression system,
- * enabling prerequisite validation and automatic unlocking of dependent ranks.
  * </p>
  *
  * <p>
@@ -243,6 +238,10 @@ public class RRank extends BaseEntity implements IProgressionNode<RRank> {
 		this(identifier, displayNameKey, descriptionKey, assignedLuckPermsGroup, prefixKey, suffixKey, icon, isInitialRank, tier, weight, null);
 	}
 
+	public String getIdentifier() {
+		return this.identifier;
+	}
+
 	public String getDisplayNameKey() {
 		return this.displayNameKey;
 	}
@@ -344,11 +343,23 @@ public class RRank extends BaseEntity implements IProgressionNode<RRank> {
 	public List<String> getPreviousRanks() {
 		return this.previousRanks;
 	}
-	
+
 	public List<String> getNextRanks() {
 		return this.nextRanks;
 	}
-	
+
+	@Override
+	@NotNull
+	public List<String> getPreviousNodeIdentifiers() {
+		return this.previousRanks;
+	}
+
+	@Override
+	@NotNull
+	public List<String> getNextNodeIdentifiers() {
+		return this.nextRanks;
+	}
+
 	public int getVersion() {
 		return version;
 	}
@@ -465,57 +476,6 @@ public class RRank extends BaseEntity implements IProgressionNode<RRank> {
 		
 		return removed;
 	}
-	
-	// ============================================
-	// IProgressionNode Implementation
-	// ============================================
-
-	/**
-	 * Gets the unique identifier for this progression node.
-	 * <p>
-	 * This is used by the RPlatform progression system to identify nodes
-	 * and manage prerequisite relationships.
-	 * </p>
-	 *
-	 * @return the rank identifier
-	 */
-	@Override
-	@NotNull
-	public String getIdentifier() {
-		return this.identifier;
-	}
-
-	/**
-	 * Gets the list of prerequisite node identifiers.
-	 * <p>
-	 * These ranks must be achieved before this rank can be unlocked.
-	 * </p>
-	 *
-	 * @return the list of prerequisite rank identifiers, never null
-	 */
-	@Override
-	@NotNull
-	public List<String> getPreviousNodeIdentifiers() {
-		return this.previousRanks != null ? this.previousRanks : new ArrayList<>();
-	}
-
-	/**
-	 * Gets the list of dependent node identifiers.
-	 * <p>
-	 * These ranks will be unlocked when this rank is achieved.
-	 * </p>
-	 *
-	 * @return the list of dependent rank identifiers, never null
-	 */
-	@Override
-	@NotNull
-	public List<String> getNextNodeIdentifiers() {
-		return this.nextRanks != null ? this.nextRanks : new ArrayList<>();
-	}
-
-	// ============================================
-	// Object Methods
-	// ============================================
 
 	@Override
 	public boolean equals(Object o) {

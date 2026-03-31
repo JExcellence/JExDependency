@@ -1,94 +1,50 @@
-# ============================================================================
-# HUNTER QUEST: Novice Hunter
-# ============================================================================
-# Entry-level hunting quest introducing basic mob hunting.
-# First quest in the hunter progression chain.
-# ============================================================================
-
 identifier: "novice_hunter"
 category: "hunter"
 difficulty: EASY
+enabled: true
+displayOrder: 1
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
 
 icon:
-  material: "BOW"
-  display_name_key: "quest.novice_hunter.name"
-  description_key: "quest.novice_hunter.description"
-  custom_model_data: 4000
-  enchanted: false
+  material: BOW
+  displayNameKey: "quest.novice_hunter.name"
+  descriptionKey: "quest.novice_hunter.description"
 
 tasks:
-  - identifier: "kill_passive_mobs"
-    type: "KILL_MOBS"
-    target: "ANY_PASSIVE"
-    amount: 20
-    icon:
-      material: "COOKED_BEEF"
-      display_name_key: "quest.novice_hunter.task1.name"
-  
-  - identifier: "collect_leather"
-    type: "COLLECT_ITEMS"
-    target: "LEATHER"
-    amount: 10
-    icon:
-      material: "LEATHER"
-      display_name_key: "quest.novice_hunter.task2.name"
-  
-  - identifier: "craft_leather_armor"
-    type: "CRAFT_ITEMS"
-    target: "LEATHER_CHESTPLATE"
-    amount: 1
-    icon:
-      material: "LEATHER_CHESTPLATE"
-      display_name_key: "quest.novice_hunter.task3.name"
+  kill_passive_mobs:
+    orderIndex: 0
+    difficulty: EASY
+    sequential: false
+    requirement:
+      type: KILL_MOBS
+      target: COW
+      amount: 10
+  kill_sheep:
+    orderIndex: 1
+    difficulty: EASY
+    sequential: false
+    requirement:
+      type: KILL_MOBS
+      target: SHEEP
+      amount: 10
 
 rewards:
-  - type: "CURRENCY"
-    currency_id: "coins"
-    amount: 150
-  - type: "EXPERIENCE"
-    amount: 75
-  - type: "ITEM"
-    material: "BOW"
-    amount: 1
-    display_name_key: "item.hunter_bow.name"
-    lore_key: "item.hunter_bow.lore"
-    enchantments:
-      POWER: 1
-
-prerequisites: []
-
-requirements: []
-
-attributes:
-  repeatable: false
-  hidden: false
-  quest_type: "MAIN"
-  time_limit: 0
-  min_level: 1
-  max_concurrent: 1
-  auto_start: false
-  show_in_log: true
-  chain_id: "hunter_chain"
-  chain_order: 1
-
-effects:
-  start_particle: "CRIT"
-  complete_particle: "CRIT_MAGIC"
-  start_sound: "ENTITY_ARROW_SHOOT"
-  complete_sound: "ENTITY_PLAYER_LEVELUP"
-
-failure_conditions:
-  fail_on_death: false
-  fail_on_logout: false
-  fail_on_timeout: false
-
-metadata:
-  author: "RDQ Team"
-  created: "2026-03-16"
-  modified: "2026-03-16"
-  version: "1.0.0"
-  tags:
-    - "hunter"
-    - "beginner"
-    - "combat"
-    - "chain"
+  main_currency:
+    type: CURRENCY
+    currency: coins
+    amount: 150.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 75.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

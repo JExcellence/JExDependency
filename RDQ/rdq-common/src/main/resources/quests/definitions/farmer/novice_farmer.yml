@@ -1,54 +1,50 @@
 identifier: "novice_farmer"
 category: "farmer"
 difficulty: EASY
+enabled: true
+displayOrder: 1
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
+
 icon:
-  material: "WOODEN_HOE"
-  display_name_key: "quest.novice_farmer.name"
-  description_key: "quest.novice_farmer.description"
-  custom_model_data: 6000
+  material: WOODEN_HOE
+  displayNameKey: "quest.novice_farmer.name"
+  descriptionKey: "quest.novice_farmer.description"
+
 tasks:
-  - identifier: "collect_seeds"
-    type: "COLLECT_ITEMS"
-    target: "WHEAT_SEEDS"
-    amount: 64
-    icon:
-      material: "WHEAT_SEEDS"
-      display_name_key: "quest.novice_farmer.task1.name"
-  - identifier: "plant_crops"
-    type: "PLACE_BLOCKS"
-    target: "WHEAT"
-    amount: 100
-    icon:
-      material: "WHEAT"
-      display_name_key: "quest.novice_farmer.task2.name"
-  - identifier: "harvest_wheat"
-    type: "BREAK_BLOCKS"
-    target: "WHEAT"
-    amount: 100
-    icon:
-      material: "WHEAT"
-      display_name_key: "quest.novice_farmer.task3.name"
+  plant_crops:
+    orderIndex: 0
+    difficulty: EASY
+    sequential: false
+    requirement:
+      type: PLACE_BLOCKS
+      target: WHEAT
+      amount: 100
+  harvest_wheat:
+    orderIndex: 1
+    difficulty: EASY
+    sequential: false
+    requirement:
+      type: BREAK_BLOCKS
+      target: WHEAT
+      amount: 100
+
 rewards:
-  - type: "CURRENCY"
-    currency_id: "coins"
-    amount: 150
-  - type: "EXPERIENCE"
-    amount: 75
-  - type: "ITEM"
-    material: "IRON_HOE"
-    amount: 1
-    display_name_key: "item.farmer_hoe.name"
-    lore_key: "item.farmer_hoe.lore"
-    enchantments:
-      EFFICIENCY: 2
-prerequisites: []
-attributes:
-  repeatable: false
-  quest_type: "MAIN"
-  chain_id: "farmer_chain"
-  chain_order: 1
-metadata:
-  author: "RDQ Team"
-  created: "2026-03-16"
-  version: "1.0.0"
-  tags: ["farmer", "beginner", "farming", "chain"]
+  main_currency:
+    type: CURRENCY
+    currency: coins
+    amount: 150.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 75.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

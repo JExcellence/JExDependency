@@ -1,92 +1,50 @@
-# ============================================================================
-# TRADER QUEST: Novice Trader
-# ============================================================================
-# Entry-level trading quest introducing basic commerce mechanics.
-# First quest in the trader progression chain.
-# ============================================================================
-
 identifier: "novice_trader"
 category: "trader"
 difficulty: EASY
+enabled: true
+displayOrder: 1
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
 
 icon:
-  material: "EMERALD"
-  display_name_key: "quest.novice_trader.name"
-  description_key: "quest.novice_trader.description"
-  custom_model_data: 8000
-  enchanted: false
+  material: EMERALD
+  displayNameKey: "quest.novice_trader.name"
+  descriptionKey: "quest.novice_trader.description"
 
 tasks:
-  - identifier: "collect_emeralds"
-    type: "COLLECT_ITEMS"
-    target: "EMERALD"
-    amount: 16
-    icon:
-      material: "EMERALD"
-      display_name_key: "quest.novice_trader.task1.name"
-  
-  - identifier: "trade_with_villagers"
-    type: "TRADE_WITH_VILLAGER"
-    profession: "FARMER"
-    amount: 10
-    icon:
-      material: "WHEAT"
-      display_name_key: "quest.novice_trader.task2.name"
-  
-  - identifier: "collect_gold"
-    type: "COLLECT_ITEMS"
-    target: "GOLD_INGOT"
-    amount: 32
-    icon:
-      material: "GOLD_INGOT"
-      display_name_key: "quest.novice_trader.task3.name"
+  mine_emeralds:
+    orderIndex: 0
+    difficulty: EASY
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: EMERALD_ORE
+      amount: 16
+  mine_gold:
+    orderIndex: 1
+    difficulty: EASY
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: GOLD_ORE
+      amount: 32
 
 rewards:
-  - type: "CURRENCY"
-    currency_id: "coins"
-    amount: 300
-  - type: "EXPERIENCE"
-    amount: 150
-  - type: "ITEM"
-    material: "EMERALD"
-    amount: 8
-    display_name_key: "item.trader_emerald.name"
-    lore_key: "item.trader_emerald.lore"
-
-prerequisites: []
-
-requirements: []
-
-attributes:
-  repeatable: false
-  hidden: false
-  quest_type: "MAIN"
-  time_limit: 0
-  min_level: 1
-  max_concurrent: 1
-  auto_start: false
-  show_in_log: true
-  chain_id: "trader_chain"
-  chain_order: 1
-
-effects:
-  start_particle: "VILLAGER_HAPPY"
-  complete_particle: "HAPPY_VILLAGER"
-  start_sound: "ENTITY_VILLAGER_YES"
-  complete_sound: "ENTITY_PLAYER_LEVELUP"
-
-failure_conditions:
-  fail_on_death: false
-  fail_on_logout: false
-  fail_on_timeout: false
-
-metadata:
-  author: "RDQ Team"
-  created: "2026-03-16"
-  modified: "2026-03-16"
-  version: "1.0.0"
-  tags:
-    - "trader"
-    - "beginner"
-    - "economy"
-    - "chain"
+  main_currency:
+    type: CURRENCY
+    currency: coins
+    amount: 300.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 150.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

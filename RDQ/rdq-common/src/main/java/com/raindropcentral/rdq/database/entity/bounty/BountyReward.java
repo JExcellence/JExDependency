@@ -13,7 +13,7 @@
 
 package com.raindropcentral.rdq.database.entity.bounty;
 
-import com.raindropcentral.rdq.config.utility.IconSection;
+import com.raindropcentral.rplatform.config.icon.IconSection;
 import com.raindropcentral.rdq.database.converter.IconSectionConverter;
 import com.raindropcentral.rplatform.database.converter.RewardConverter;
 import com.raindropcentral.rplatform.reward.AbstractReward;
@@ -79,24 +79,6 @@ public class BountyReward extends BaseEntity {
 
     public @NotNull CompletableFuture<Boolean> grant(@NotNull Player player) {
         return reward.grant(player);
-    }
-
-    /**
-     * Gets the reward instance.
-     *
-     * @return the abstract reward
-     */
-    public AbstractReward getReward() {
-        return reward;
-    }
-
-    /**
-     * Gets the contributor's unique ID.
-     *
-     * @return the contributor UUID, or null if no contributor
-     */
-    public UUID getContributorUniqueId() {
-        return contributorUniqueId;
     }
 
     @Override

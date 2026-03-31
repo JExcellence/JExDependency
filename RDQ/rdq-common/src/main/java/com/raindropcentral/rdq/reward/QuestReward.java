@@ -17,7 +17,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.raindropcentral.rdq.model.quest.QuestStartResult;
 import com.raindropcentral.rdq.service.quest.QuestService;
 import com.raindropcentral.rplatform.reward.AbstractReward;
 import org.bukkit.entity.Player;
@@ -43,7 +42,6 @@ import java.util.logging.Logger;
  *   "action": "START"
  * }
  * </pre>
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0

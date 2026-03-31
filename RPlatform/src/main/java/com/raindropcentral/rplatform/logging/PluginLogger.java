@@ -120,8 +120,9 @@ public final class PluginLogger {
         } catch (Exception e) {
             // If handler initialization fails, activate emergency mode and fall back to standard logging
             activateEmergencyMode("Failed to initialize handlers: " + e.getMessage());
-            plugin.getLogger().log(Level.WARNING, "[PluginLogger] Failed to initialize logging handlers for " + plugin.getName(), e);
-            plugin.getLogger().warning("[PluginLogger] Falling back to standard Java logging");
+            originalErr.println("[PluginLogger] Failed to initialize logging handlers for " + plugin.getName());
+            originalErr.println("[PluginLogger] Falling back to standard Java logging");
+            e.printStackTrace(originalErr);
             
             // Fall back to standard Java logging with parent handlers
             javaLogger.setUseParentHandlers(true);
@@ -145,7 +146,9 @@ public final class PluginLogger {
             // or for the logger to be closed explicitly. We can't reliably hook into plugin disable
             // from here without modifying the plugin's lifecycle.
             
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            // If we can't register the hook, just log a warning
+            originalErr.println("[PluginLogger] Warning: Could not register shutdown hook for " + plugin.getName());
         }
     }
     
@@ -161,7 +164,7 @@ public final class PluginLogger {
                 () -> {
                     try {
                         flush();
-                    } catch (Exception ignored) {
+                    } catch (Exception e) {
                         // Silently ignore flush errors to avoid spam
                         // Emergency mode will be activated if there's a real problem
                     }
@@ -169,7 +172,10 @@ public final class PluginLogger {
                 FLUSH_INTERVAL_TICKS, // Initial delay
                 FLUSH_INTERVAL_TICKS  // Period
             );
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            // If we can't start the flush task, log a warning but continue
+            originalErr.println("[PluginLogger] Warning: Could not start periodic flush task for " + plugin.getName());
+            originalErr.println("[PluginLogger] Logs will only be flushed on explicit flush() or close() calls");
         }
     }
     
@@ -197,7 +203,7 @@ public final class PluginLogger {
     private boolean enterLogging() {
         // If emergency mode is active, always use fallback
         if (emergencyMode.get()) {
-            return true;
+            return false;
         }
         
         int depth = recursionDepth.get();
@@ -205,12 +211,12 @@ public final class PluginLogger {
         // Check if we've exceeded the recursion limit
         if (depth >= MAX_RECURSION_DEPTH) {
             activateEmergencyMode("Recursion depth exceeded (depth=" + depth + ")");
-            return true;
+            return false;
         }
         
         // Increment recursion counter
         recursionDepth.set(depth + 1);
-        return false;
+        return true;
     }
     
     /**
@@ -230,7 +236,11 @@ public final class PluginLogger {
      * @param reason the reason emergency mode was activated
      */
     private void activateEmergencyMode(@NotNull String reason) {
-        emergencyMode.compareAndSet(false, true);
+        // Use compareAndSet to ensure we only log the emergency message once
+        if (emergencyMode.compareAndSet(false, true)) {
+            originalErr.println("[CentralLogger EMERGENCY] " + plugin.getName() + ": " + reason);
+            originalErr.println("[CentralLogger EMERGENCY] Falling back to direct stream output");
+        }
     }
     
     /**
@@ -239,10 +249,13 @@ public final class PluginLogger {
      * @param message the message to log
      */
     public void info(@NotNull String message) {
-
-        if (enterLogging()) {
+        if (message == null) {
+            return;
+        }
+        
+        if (!enterLogging()) {
             // Fallback to original stream
-            plugin.getLogger().info("[" + plugin.getName() + "] " + message);
+            originalOut.println("[" + plugin.getName() + "] " + message);
             return;
         }
         
@@ -250,7 +263,7 @@ public final class PluginLogger {
             javaLogger.info(message);
         } catch (Exception e) {
             activateEmergencyMode("Exception during logging: " + e.getMessage());
-            plugin.getLogger().info("[" + plugin.getName() + "] " + message);
+            originalOut.println("[" + plugin.getName() + "] " + message);
         } finally {
             exitLogging();
         }
@@ -262,10 +275,13 @@ public final class PluginLogger {
      * @param message the message to log
      */
     public void warning(@NotNull String message) {
-
-        if (enterLogging()) {
+        if (message == null) {
+            return;
+        }
+        
+        if (!enterLogging()) {
             // Fallback to original stream
-            plugin.getLogger().warning("[" + plugin.getName() + "] WARNING: " + message);
+            originalErr.println("[" + plugin.getName() + "] WARNING: " + message);
             return;
         }
         
@@ -273,7 +289,7 @@ public final class PluginLogger {
             javaLogger.warning(message);
         } catch (Exception e) {
             activateEmergencyMode("Exception during logging: " + e.getMessage());
-            plugin.getLogger().warning("[" + plugin.getName() + "] WARNING: " + message);
+            originalErr.println("[" + plugin.getName() + "] WARNING: " + message);
         } finally {
             exitLogging();
         }
@@ -285,10 +301,13 @@ public final class PluginLogger {
      * @param message the message to log
      */
     public void severe(@NotNull String message) {
-
-        if (enterLogging()) {
+        if (message == null) {
+            return;
+        }
+        
+        if (!enterLogging()) {
             // Fallback to original stream
-            plugin.getLogger().severe("[" + plugin.getName() + "] SEVERE: " + message);
+            originalErr.println("[" + plugin.getName() + "] SEVERE: " + message);
             return;
         }
         
@@ -296,7 +315,7 @@ public final class PluginLogger {
             javaLogger.severe(message);
         } catch (Exception e) {
             activateEmergencyMode("Exception during logging: " + e.getMessage());
-            plugin.getLogger().severe("[" + plugin.getName() + "] SEVERE: " + message);
+            originalErr.println("[" + plugin.getName() + "] SEVERE: " + message);
         } finally {
             exitLogging();
         }
@@ -308,10 +327,13 @@ public final class PluginLogger {
      * @param message the message to log
      */
     public void debug(@NotNull String message) {
-
-        if (enterLogging()) {
+        if (message == null) {
+            return;
+        }
+        
+        if (!enterLogging()) {
             // Fallback to original stream (debug messages go to stdout)
-            plugin.getLogger().info("[" + plugin.getName() + "] DEBUG: " + message);
+            originalOut.println("[" + plugin.getName() + "] DEBUG: " + message);
             return;
         }
         
@@ -319,7 +341,7 @@ public final class PluginLogger {
             javaLogger.fine(message);
         } catch (Exception e) {
             activateEmergencyMode("Exception during logging: " + e.getMessage());
-            plugin.getLogger().info("[" + plugin.getName() + "] DEBUG: " + message);
+            originalOut.println("[" + plugin.getName() + "] DEBUG: " + message);
         } finally {
             exitLogging();
         }
@@ -335,7 +357,10 @@ public final class PluginLogger {
      * @param args the arguments referenced by the format specifiers
      */
     public void info(@NotNull String format, @NotNull Object... args) {
-
+        if (format == null) {
+            return;
+        }
+        
         try {
             String message = String.format(format, args);
             info(message);
@@ -354,7 +379,10 @@ public final class PluginLogger {
      * @param args the arguments referenced by the format specifiers
      */
     public void warning(@NotNull String format, @NotNull Object... args) {
-
+        if (format == null) {
+            return;
+        }
+        
         try {
             String message = String.format(format, args);
             warning(message);
@@ -373,7 +401,10 @@ public final class PluginLogger {
      * @param args the arguments referenced by the format specifiers
      */
     public void severe(@NotNull String format, @NotNull Object... args) {
-
+        if (format == null) {
+            return;
+        }
+        
         try {
             String message = String.format(format, args);
             severe(message);
@@ -392,7 +423,10 @@ public final class PluginLogger {
      * @param args the arguments referenced by the format specifiers
      */
     public void debug(@NotNull String format, @NotNull Object... args) {
-
+        if (format == null) {
+            return;
+        }
+        
         try {
             String message = String.format(format, args);
             debug(message);
@@ -412,10 +446,13 @@ public final class PluginLogger {
      * @param throwable the exception to log
      */
     public void severe(@NotNull String message, @Nullable Throwable throwable) {
-
-        if (enterLogging()) {
+        if (message == null) {
+            return;
+        }
+        
+        if (!enterLogging()) {
             // Fallback to original stream
-            plugin.getLogger().severe("[" + plugin.getName() + "] SEVERE: " + message);
+            originalErr.println("[" + plugin.getName() + "] SEVERE: " + message);
             if (throwable != null) {
                 throwable.printStackTrace(originalErr);
             }
@@ -430,7 +467,7 @@ public final class PluginLogger {
             }
         } catch (Exception e) {
             activateEmergencyMode("Exception during logging: " + e.getMessage());
-            plugin.getLogger().severe("[" + plugin.getName() + "] SEVERE: " + message);
+            originalErr.println("[" + plugin.getName() + "] SEVERE: " + message);
             if (throwable != null) {
                 throwable.printStackTrace(originalErr);
             }
@@ -446,10 +483,13 @@ public final class PluginLogger {
      * @param throwable the exception to log
      */
     public void warning(@NotNull String message, @Nullable Throwable throwable) {
-
-        if (enterLogging()) {
+        if (message == null) {
+            return;
+        }
+        
+        if (!enterLogging()) {
             // Fallback to original stream
-            plugin.getLogger().warning("[" + plugin.getName() + "] WARNING: " + message);
+            originalErr.println("[" + plugin.getName() + "] WARNING: " + message);
             if (throwable != null) {
                 throwable.printStackTrace(originalErr);
             }
@@ -464,7 +504,7 @@ public final class PluginLogger {
             }
         } catch (Exception e) {
             activateEmergencyMode("Exception during logging: " + e.getMessage());
-            plugin.getLogger().warning("[" + plugin.getName() + "] WARNING: " + message);
+            originalErr.println("[" + plugin.getName() + "] WARNING: " + message);
             if (throwable != null) {
                 throwable.printStackTrace(originalErr);
             }
@@ -482,6 +522,9 @@ public final class PluginLogger {
      * @param level the minimum level for console output
      */
     public void setConsoleLevel(@NotNull Level level) {
+        if (level == null) {
+            throw new NullPointerException("Level cannot be null");
+        }
         if (consoleHandler != null) {
             consoleHandler.setLevel(level);
         }
@@ -494,6 +537,9 @@ public final class PluginLogger {
      * @param level the minimum level for file output
      */
     public void setFileLevel(@NotNull Level level) {
+        if (level == null) {
+            throw new NullPointerException("Level cannot be null");
+        }
         if (fileHandler != null) {
             fileHandler.setLevel(level);
         }

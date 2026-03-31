@@ -106,7 +106,7 @@ public class BountyPlayerInfoView extends BaseView {
 
         render.layoutSlot('P', UnifiedBuilderFactory
             .unifiedHead(targetPlayer)
-            .setDisplayName((net.kyori.adventure.text.Component) this.i18n("target.name", player)
+            .setDisplayName((Component) this.i18n("target.name", player)
                 .withPlaceholder("target_name", targetName)
                 .build().component())
             .setLore(List.of(

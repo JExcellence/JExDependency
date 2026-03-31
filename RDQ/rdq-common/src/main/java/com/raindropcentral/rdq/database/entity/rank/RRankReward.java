@@ -13,7 +13,7 @@
 
 package com.raindropcentral.rdq.database.entity.rank;
 
-import com.raindropcentral.rdq.config.utility.IconSection;
+import com.raindropcentral.rplatform.config.icon.IconSection;
 import com.raindropcentral.rdq.database.converter.IconSectionConverter;
 import com.raindropcentral.rdq.database.entity.reward.BaseReward;
 import de.jexcellence.hibernate.entity.BaseEntity;
@@ -69,15 +69,6 @@ public class RRankReward extends BaseEntity {
      */
     @Column(name = "display_order", nullable = false)
     private int displayOrder = 0;
-
-    /**
-     * Gets the display order for this reward.
-     *
-     * @return the display order
-     */
-    public int getDisplayOrder() {
-        return displayOrder;
-    }
 
     /**
      * Whether this reward should be automatically granted when the rank is achieved.

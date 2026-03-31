@@ -159,9 +159,9 @@ public class QuestRepository extends CachedRepository<Quest, Long, String> {
 	}
 	
 	/**
-	 * Finds all quests in a category with full details eagerly loaded.
+	 * Finds all quests in a category with tasks eagerly loaded.
 	 * <p>
-	 * This method uses JOIN FETCH to load tasks, requirements, and rewards in a single query,
+	 * This method uses JOIN FETCH to load tasks in a single query,
 	 * avoiding N+1 query problems when displaying quest details.
 	 * </p>
 	 *
@@ -176,9 +176,7 @@ public class QuestRepository extends CachedRepository<Quest, Long, String> {
 				return em.createQuery(
 					"SELECT DISTINCT q FROM Quest q " +
 					"LEFT JOIN FETCH q.tasks " +
-					"LEFT JOIN FETCH q.requirements " +
-					"LEFT JOIN FETCH q.rewards " +
-					"WHERE q.category = :category " +
+															"WHERE q.category = :category " +
 					"ORDER BY q.difficulty",
 					Quest.class
 				)
@@ -191,13 +189,11 @@ public class QuestRepository extends CachedRepository<Quest, Long, String> {
 	}
 	
 	/**
-	 * Finds all enabled quests ordered by category and difficulty.
+	 * Finds all enabled quests with their categories and tasks eagerly loaded.
 	 * <p>
-	 * This method is used for displaying all available quests in a structured manner.
-	 * Uses LEFT JOIN FETCH to eagerly load categories, and then explicitly initializes
-	 * the prerequisiteQuestIds ElementCollection while the session is still open, to
-	 * avoid LazyInitializationException when these collections are accessed after the
-	 * session is closed (e.g., during ProgressionValidator initialization).
+	 * This method is used for populating the quest cache on startup. Uses LEFT JOIN FETCH
+	 * to eagerly load category and task associations, avoiding LazyInitializationException
+	 * when these are accessed outside the Hibernate session.
 	 * </p>
 	 *
 	 * @return CompletableFuture containing the list of all enabled quests
@@ -207,23 +203,17 @@ public class QuestRepository extends CachedRepository<Quest, Long, String> {
 		return CompletableFuture.supplyAsync(() -> {
 			EntityManager em = entityManagerFactory.createEntityManager();
 			try {
-				// Load quests with category eagerly (avoids LazyInitializationException in QuestCacheManager)
-				final List<Quest> quests = em.createQuery(
-					"SELECT DISTINCT q FROM Quest q " +
-					"LEFT JOIN FETCH q.category " +
-					"WHERE q.enabled = true " +
-					"ORDER BY q.category.sortOrder, q.difficulty",
-					Quest.class
-				).getResultList();
+				// Load quests with category and tasks eagerly (avoids LazyInitializationException)
+			final List<Quest> quests = em.createQuery(
+				"SELECT DISTINCT q FROM Quest q " +
+				"LEFT JOIN FETCH q.category " +
+				"LEFT JOIN FETCH q.tasks " +
+				"WHERE q.enabled = true " +
+				"ORDER BY q.category.displayOrder, q.difficulty",
+				Quest.class
+			).getResultList();
 
-				// Eagerly initialize the prerequisiteQuestIds ElementCollection for each quest
-				// while the session is still open, preventing LazyInitializationException in
-				// ProgressionValidator (called during initializeQuestSystem).
-				for (final Quest quest : quests) {
-					quest.getPrerequisiteQuestIds().size();
-				}
-
-				return quests;
+			return quests;
 			} finally {
 				em.close();
 			}

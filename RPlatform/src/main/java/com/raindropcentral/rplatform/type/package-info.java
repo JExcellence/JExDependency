@@ -9,7 +9,7 @@
  * <p><strong>Maintaining compatibility</strong>
  * <p>When adding or renaming statistics, update the default maps in the enum and communicate the change to
  * RDQ and RCore so their migrations can seed the new keys. Because the enum also exposes convenience
- * lookups like {@link EStatisticType#getDefaultValuesForCategory(com.raindropcentral.rplatform.type.EStatisticType.StatisticCategory)},
+ * lookups like {@link EStatisticType#getDefaultValuesForCategory(EStatisticType.StatisticCategory)},
  * keep category membership stable to avoid breaking dashboards or analytics jobs.</p>
  */
 package com.raindropcentral.rplatform.type;

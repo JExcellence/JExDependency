@@ -1,48 +1,58 @@
 identifier: "skilled_miner"
 category: "miner"
 difficulty: EASY
+enabled: true
+displayOrder: 2
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
+
 icon:
-  material: "IRON_PICKAXE"
-  display_name_key: "quest.skilled_miner.name"
-  description_key: "quest.skilled_miner.description"
-  custom_model_data: 5001
+  material: IRON_PICKAXE
+  displayNameKey: "quest.skilled_miner.name"
+  descriptionKey: "quest.skilled_miner.description"
+
 tasks:
-  - identifier: "mine_iron"
-    type: "BREAK_BLOCKS"
-    target: "IRON_ORE"
-    amount: 64
-    icon:
-      material: "IRON_ORE"
-      display_name_key: "quest.skilled_miner.task1.name"
-  - identifier: "mine_gold"
-    type: "BREAK_BLOCKS"
-    target: "GOLD_ORE"
-    amount: 32
-    icon:
-      material: "GOLD_ORE"
-      display_name_key: "quest.skilled_miner.task2.name"
-  - identifier: "mine_redstone"
-    type: "BREAK_BLOCKS"
-    target: "REDSTONE_ORE"
-    amount: 48
-    icon:
-      material: "REDSTONE"
-      display_name_key: "quest.skilled_miner.task3.name"
+  mine_iron:
+    orderIndex: 0
+    difficulty: EASY
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: IRON_ORE
+      amount: 64
+  mine_gold:
+    orderIndex: 1
+    difficulty: EASY
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: GOLD_ORE
+      amount: 32
+  mine_redstone:
+    orderIndex: 2
+    difficulty: EASY
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: REDSTONE_ORE
+      amount: 48
+
 rewards:
-  - type: "CURRENCY"
-    currency_id: "coins"
-    amount: 300
-  - type: "EXPERIENCE"
-    amount: 150
-prerequisites:
-  - "novice_miner"
-attributes:
-  repeatable: false
-  quest_type: "MAIN"
-  chain_id: "miner_chain"
-  chain_order: 2
-metadata:
-  author: "RDQ Team"
-  created: "2026-03-16"
-  version: "1.0.0"
-  tags: ["miner", "intermediate", "mining", "chain"]
+  main_currency:
+    type: CURRENCY
+    currency: coins
+    amount: 300.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 150.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

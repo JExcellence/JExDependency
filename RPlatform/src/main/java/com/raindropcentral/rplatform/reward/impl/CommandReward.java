@@ -1,16 +1,3 @@
-/*
- * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
- *
- * This source code is proprietary and confidential to Antimatter Zone LLC.
- * Unauthorized copying, modification, distribution, display, performance,
- * publication, sublicensing, or creation of derivative works is prohibited
- * without prior written permission from Antimatter Zone LLC, except to the
- * extent permitted by applicable United States law.
- *
- * This notice is intended to preserve all rights and remedies available under
- * the laws of the State of Washington and the United States of America.
- */
-
 package com.raindropcentral.rplatform.reward.impl;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -19,23 +6,34 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.raindropcentral.rplatform.reward.AbstractReward;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
- * Represents the CommandReward API type.
+ * Reward that executes a command.
+ * <p>
+ * This reward supports placeholder replacement and can execute commands
+ * as either the player or console. It includes error handling for
+ * command execution failures.
+ * </p>
+ *
+ * @author RaindropCentral
+ * @version 2.0.0
+ * @since TBD
  */
 @JsonTypeName("COMMAND")
 public final class CommandReward extends AbstractReward {
+
+    private static final Logger LOGGER = Logger.getLogger(CommandReward.class.getName());
 
     private final String command;
     private final boolean executeAsPlayer;
     private final long delayTicks;
 
-    /**
-     * Executes CommandReward.
-     */
     @JsonCreator
     public CommandReward(
         @JsonProperty("command") @NotNull String command,
@@ -47,52 +45,52 @@ public final class CommandReward extends AbstractReward {
         this.delayTicks = Math.max(0, delayTicks);
     }
 
-    /**
-     * Gets typeId.
-     */
     @Override
     public @NotNull String getTypeId() {
         return "COMMAND";
     }
 
-    /**
-     * Executes grant.
-     */
     @Override
     public @NotNull CompletableFuture<Boolean> grant(@NotNull Player player) {
-        CompletableFuture<Boolean> future = new CompletableFuture<>();
+        final CompletableFuture<Boolean> future = new CompletableFuture<>();
         
-        String processedCommand = replacePlaceholders(command, player);
+        final String processedCommand = replacePlaceholders(command, player);
         
-        Runnable task = () -> {
+        // Get any plugin for scheduling (use first available)
+        final Plugin plugin = Bukkit.getPluginManager().getPlugins()[0];
+
+        final Runnable task = () -> {
             try {
                 if (executeAsPlayer) {
                     player.performCommand(processedCommand);
+                    LOGGER.fine("Executed command as player " + player.getName() + ": " + processedCommand);
                 } else {
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), processedCommand);
+                    LOGGER.fine("Executed command as console for " + player.getName() + ": " + processedCommand);
                 }
                 future.complete(true);
             } catch (Exception e) {
-                future.completeExceptionally(e);
+                LOGGER.log(Level.WARNING, "Failed to execute command reward: " + processedCommand, e);
+                future.complete(false);
             }
         };
         
         if (delayTicks > 0) {
-            Bukkit.getScheduler().runTaskLater(
-                Bukkit.getPluginManager().getPlugins()[0],
-                task,
-                delayTicks
-            );
+            Bukkit.getScheduler().runTaskLater(plugin, task, delayTicks);
         } else {
-            Bukkit.getScheduler().runTask(
-                Bukkit.getPluginManager().getPlugins()[0],
-                task
-            );
+            Bukkit.getScheduler().runTask(plugin, task);
         }
         
         return future;
     }
 
+    /**
+     * Replaces placeholders in the command string.
+     *
+     * @param input  the command string
+     * @param player the player
+     * @return the processed command
+     */
     private String replacePlaceholders(@NotNull String input, @NotNull Player player) {
         return input
             .replace("{player}", player.getName())
@@ -103,38 +101,23 @@ public final class CommandReward extends AbstractReward {
             .replace("{z}", String.valueOf(player.getLocation().getBlockZ()));
     }
 
-    /**
-     * Gets estimatedValue.
-     */
     @Override
     public double getEstimatedValue() {
         return 0.0;
     }
 
-    /**
-     * Gets command.
-     */
     public String getCommand() {
         return command;
     }
 
-    /**
-     * Returns whether executeAsPlayer.
-     */
     public boolean isExecuteAsPlayer() {
         return executeAsPlayer;
     }
 
-    /**
-     * Gets delayTicks.
-     */
     public long getDelayTicks() {
         return delayTicks;
     }
 
-    /**
-     * Executes validate.
-     */
     @Override
     public void validate() {
         if (command == null || command.trim().isEmpty()) {

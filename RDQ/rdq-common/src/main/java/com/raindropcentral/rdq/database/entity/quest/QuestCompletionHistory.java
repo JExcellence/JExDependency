@@ -1,39 +1,38 @@
 package com.raindropcentral.rdq.database.entity.quest;
 
-import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
 import de.jexcellence.hibernate.entity.BaseEntity;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serial;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Objects;
+import java.util.UUID;
 
 /**
- * Entity representing a historical record of a player's quest completion in the RaindropQuests system.
+ * Entity representing a player's quest completion history.
  * <p>
- * This entity tracks when a player completed a quest, how many times they've completed it,
- * and how long it took. It's used for repeatability tracking, cooldown management, and
- * statistics display.
+ * Tracks how many times a player has completed a quest and when they can
+ * repeat it again (for repeatable quests with cooldowns).
  * </p>
  *
- * <p>
- * Each completion creates a new record, allowing for full history tracking. The most recent
- * completion record is used for cooldown calculations.
- * </p>
- *
- * @author JExcellence
- * @version 2.0.0
- * @since TBD
+ * @author RaindropCentral
+ * @version 1.0.0
  */
+@Getter
+@Setter
 @Entity
 @Table(
-    name = "rdq_quest_completion_history",
-    indexes = {
-        @Index(name = "idx_quest_completion_player_quest", columnList = "player_id, quest_id"),
-        @Index(name = "idx_quest_completion_completed_at", columnList = "completed_at")
-    }
+        name = "rdq_quest_completion_history",
+        indexes = {
+                @Index(name = "idx_quest_completion_player", columnList = "player_id"),
+                @Index(name = "idx_quest_completion_quest", columnList = "quest_identifier"),
+                @Index(name = "idx_quest_completion_player_quest", columnList = "player_id, quest_identifier"),
+                @Index(name = "idx_quest_completion_next_available", columnList = "next_available_at")
+        }
 )
 public class QuestCompletionHistory extends BaseEntity {
     
@@ -41,240 +40,114 @@ public class QuestCompletionHistory extends BaseEntity {
     private static final long serialVersionUID = 1L;
     
     /**
-     * The player who completed the quest.
+     * The player's unique identifier.
      */
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "player_id", nullable = false)
-    private RDQPlayer player;
+    @Column(name = "player_id", nullable = false)
+    private UUID playerId;
     
     /**
-     * The quest that was completed.
+     * The quest identifier.
      */
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "quest_id", nullable = false)
-    private Quest quest;
+    @Column(name = "quest_identifier", nullable = false, length = 64)
+    private String questIdentifier;
     
     /**
-     * When the quest was completed.
+     * Timestamp of the most recent completion.
      */
     @Column(name = "completed_at", nullable = false)
-    private LocalDateTime completedAt;
+    private Instant completedAt;
     
     /**
-     * How many times this player has completed this quest (at the time of this completion).
+     * Total number of times this quest has been completed.
      */
     @Column(name = "completion_count", nullable = false)
-    private int completionCount;
+    private int completionCount = 1;
     
     /**
-     * How long it took to complete the quest in seconds.
+     * Timestamp when this quest becomes available again.
+     * Null if no cooldown or quest is not repeatable.
      */
-    @Column(name = "time_taken_seconds", nullable = false)
-    private long timeTakenSeconds;
+    @Column(name = "next_available_at")
+    private Instant nextAvailableAt;
     
     /**
      * Protected no-argument constructor for JPA.
      */
-    protected QuestCompletionHistory() {}
+    protected QuestCompletionHistory() {
+    }
     
     /**
-     * Constructs a new {@code QuestCompletionHistory} record.
+     * Constructs a new quest completion history entry.
      *
-     * @param player            the player who completed the quest
-     * @param quest             the quest that was completed
-     * @param completedAt       when the quest was completed
-     * @param completionCount   how many times the player has completed this quest
-     * @param timeTakenSeconds  how long it took to complete in seconds
+     * @param playerId         the player's unique identifier
+     * @param questIdentifier  the quest identifier
+     * @param completedAt      when the quest was completed
+     * @param completionCount  the total completion count
+     * @param nextAvailableAt  when the quest becomes available again
      */
     public QuestCompletionHistory(
-        @NotNull final RDQPlayer player,
-        @NotNull final Quest quest,
-        @NotNull final LocalDateTime completedAt,
-        final int completionCount,
-        final long timeTakenSeconds
+            @NotNull final UUID playerId,
+            @NotNull final String questIdentifier,
+            @NotNull final Instant completedAt,
+            final int completionCount,
+            final Instant nextAvailableAt
     ) {
-        this.player = player;
-        this.quest = quest;
+        this.playerId = playerId;
+        this.questIdentifier = questIdentifier;
         this.completedAt = completedAt;
         this.completionCount = completionCount;
-        this.timeTakenSeconds = timeTakenSeconds;
-    }
-
-    /**
-     * Returns the player who completed the quest.
-     *
-     * @return the player
-     */
-    @NotNull
-    public RDQPlayer getPlayer() {
-        return this.player;
-    }
-
-    /**
-     * Gets the player ID who completed the quest.
-     * Convenience method for accessing the player's UUID.
-     *
-     * @return the player's UUID
-     */
-    @NotNull
-    public java.util.UUID getPlayerId() {
-        return this.player.getUniqueId();
-    }
-
-    /**
-     * Gets the quest identifier.
-     * Convenience method for accessing the quest's identifier.
-     *
-     * @return the quest identifier
-     */
-    @NotNull
-    public String getQuestIdentifier() {
-        return this.quest.getIdentifier();
-    }
-
-    /**
-     * Sets the player for this completion record.
-     *
-     * @param player the player
-     */
-    public void setPlayer(@NotNull final RDQPlayer player) {
-        this.player = player;
-    }
-
-    /**
-     * Returns the quest that was completed.
-     *
-     * @return the quest
-     */
-    @NotNull
-    public Quest getQuest() {
-        return this.quest;
-    }
-
-    /**
-     * Sets the quest for this completion record.
-     *
-     * @param quest the quest
-     */
-    public void setQuest(@NotNull final Quest quest) {
-        this.quest = quest;
-    }
-
-    /**
-     * Returns when the quest was completed.
-     *
-     * @return the completion time
-     */
-    @NotNull
-    public LocalDateTime getCompletedAt() {
-        return this.completedAt;
-    }
-
-    /**
-     * Sets when the quest was completed.
-     *
-     * @param completedAt the completion time
-     */
-    public void setCompletedAt(@NotNull final LocalDateTime completedAt) {
-        this.completedAt = completedAt;
-    }
-
-    /**
-     * Returns how many times the player has completed this quest.
-     *
-     * @return the completion count
-     */
-    public int getCompletionCount() {
-        return this.completionCount;
-    }
-
-    /**
-     * Sets the completion count.
-     *
-     * @param completionCount the completion count
-     */
-    public void setCompletionCount(final int completionCount) {
-        this.completionCount = completionCount;
+        this.nextAvailableAt = nextAvailableAt;
     }
     
     /**
-     * Returns how long it took to complete the quest in seconds.
+     * Factory method to create a new completion history entry.
      *
-     * @return the time taken in seconds
+     * @param playerId        the player's unique identifier
+     * @param questIdentifier the quest identifier
+     * @param cooldown        the cooldown duration before the quest can be repeated
+     * @return a new quest completion history instance
      */
-    public long getTimeTakenSeconds() {
-        return this.timeTakenSeconds;
+    public static QuestCompletionHistory create(
+            @NotNull final UUID playerId,
+            @NotNull final String questIdentifier,
+            @NotNull final Duration cooldown
+    ) {
+        final Instant now = Instant.now();
+        final Instant nextAvailable = cooldown.isZero() ? null : now.plus(cooldown);
+        return new QuestCompletionHistory(playerId, questIdentifier, now, 1, nextAvailable);
     }
     
     /**
-     * Sets the time taken to complete the quest.
+     * Checks if this quest can be repeated now.
      *
-     * @param timeTakenSeconds the time taken in seconds
-     */
-    public void setTimeTakenSeconds(final long timeTakenSeconds) {
-        this.timeTakenSeconds = timeTakenSeconds;
-    }
-
-    /**
-     * Checks if the player can repeat this quest based on max completions.
-     *
-     * @return true if the player can repeat the quest, false otherwise
+     * @return true if the cooldown has expired or there is no cooldown, false otherwise
      */
     public boolean canRepeat() {
-        if (!this.quest.isRepeatable()) {
-            return false;
-        }
-
-        int maxCompletions = this.quest.getMaxCompletions();
-        if (maxCompletions <= 0) {
-            return true; // Unlimited repeats
-        }
-
-        return this.completionCount < maxCompletions;
+        return nextAvailableAt == null || Instant.now().isAfter(nextAvailableAt);
     }
     
     /**
-     * Gets the remaining cooldown time in seconds.
+     * Gets the remaining cooldown duration.
      *
-     * @return remaining cooldown seconds, or 0 if no cooldown or cooldown expired
+     * @return the remaining duration, or Duration.ZERO if no cooldown or cooldown expired
      */
-    public long getCooldownRemainingSeconds() {
-        long cooldownSeconds = this.quest.getCooldownSeconds();
-        if (cooldownSeconds <= 0) {
-            return 0;
+    public Duration getRemainingCooldown() {
+        if (canRepeat()) {
+            return Duration.ZERO;
         }
-
-        LocalDateTime cooldownExpires = this.completedAt.plusSeconds(cooldownSeconds);
-        LocalDateTime now = LocalDateTime.now();
-
-        if (now.isAfter(cooldownExpires)) {
-            return 0;
-        }
-
-        return ChronoUnit.SECONDS.between(now, cooldownExpires);
+        final Duration remaining = Duration.between(Instant.now(), nextAvailableAt);
+        return remaining.isNegative() ? Duration.ZERO : remaining;
     }
     
     /**
-     * Checks if the cooldown period has expired.
+     * Records a new completion of this quest.
      *
-     * @return true if cooldown has expired or no cooldown exists, false otherwise
+     * @param cooldown the cooldown duration before the quest can be repeated again
      */
-    public boolean isCooldownExpired() {
-        return getCooldownRemainingSeconds() == 0;
-    }
-
-    /**
-     * Gets when the cooldown will expire.
-     *
-     * @return the cooldown expiration time, or null if no cooldown
-     */
-    public LocalDateTime getCooldownExpiresAt() {
-        long cooldownSeconds = this.quest.getCooldownSeconds();
-        if (cooldownSeconds <= 0) {
-            return null;
-        }
-
-        return this.completedAt.plusSeconds(cooldownSeconds);
+    public void recordCompletion(@NotNull final Duration cooldown) {
+        this.completedAt = Instant.now();
+        this.completionCount++;
+        this.nextAvailableAt = cooldown.isZero() ? null : Instant.now().plus(cooldown);
     }
     
     @Override
@@ -286,15 +159,8 @@ public class QuestCompletionHistory extends BaseEntity {
             return this.getId().equals(that.getId());
         }
         
-        if (this.player != null && that.player != null &&
-                this.quest != null && that.quest != null &&
-                this.completedAt != null && that.completedAt != null) {
-            return this.player.equals(that.player) &&
-                   this.quest.equals(that.quest) &&
-                   this.completedAt.equals(that.completedAt);
-        }
-
-        return false;
+        return playerId != null && playerId.equals(that.playerId) &&
+                questIdentifier != null && questIdentifier.equals(that.questIdentifier);
     }
     
     @Override
@@ -303,22 +169,18 @@ public class QuestCompletionHistory extends BaseEntity {
             return this.getId().hashCode();
         }
         
-        if (this.player != null && this.quest != null && this.completedAt != null) {
-            return Objects.hash(this.player, this.quest, this.completedAt);
-        }
-
-        return System.identityHashCode(this);
+        return Objects.hash(playerId, questIdentifier);
     }
     
     @Override
     public String toString() {
         return "QuestCompletionHistory{" +
                 "id=" + getId() +
-                ", player=" + (player != null ? player.getName() : "null") +
-                ", quest=" + (quest != null ? quest.getIdentifier() : "null") +
-                ", completedAt=" + completedAt +
+                ", playerId=" + playerId +
+                ", questIdentifier='" + questIdentifier + '\'' +
                 ", completionCount=" + completionCount +
-                ", timeTakenSeconds=" + timeTakenSeconds +
+                ", completedAt=" + completedAt +
+                ", nextAvailableAt=" + nextAvailableAt +
                 '}';
     }
 }

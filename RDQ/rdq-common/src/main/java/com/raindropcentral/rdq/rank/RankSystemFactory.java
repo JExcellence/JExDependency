@@ -19,14 +19,12 @@
  import com.raindropcentral.rdq.config.ranks.system.RankSystemSection;
  import com.raindropcentral.rdq.config.requirement.BaseRequirementSection;
  import com.raindropcentral.rdq.config.requirement.BaseRequirementSectionAdapter;
- import com.raindropcentral.rdq.config.utility.IconSection;
  import com.raindropcentral.rdq.config.utility.RewardSection;
+ import com.raindropcentral.rplatform.config.icon.IconSection;
  import com.raindropcentral.rdq.database.entity.rank.*;
  import com.raindropcentral.rdq.database.entity.requirement.BaseRequirement;
  import com.raindropcentral.rdq.database.entity.reward.BaseReward;
- import com.raindropcentral.rdq.rank.progression.RankCompletionTracker;
  import com.raindropcentral.rplatform.logging.CentralLogger;
- import com.raindropcentral.rplatform.progression.ProgressionValidator;
  import com.raindropcentral.rplatform.requirement.AbstractRequirement;
  import com.raindropcentral.rplatform.requirement.config.RequirementFactory;
  import com.raindropcentral.rplatform.reward.AbstractReward;
@@ -116,8 +114,6 @@ public class RankSystemFactory {
             createDefaultRank();
             createRankTrees();
             createRanks();
-
-            validateRankPrerequisites();
 
             establishConnections();
 
@@ -843,6 +839,7 @@ public class RankSystemFactory {
             try {
                 LOGGER.info("Parsing reward '" + key + "' of type: " + section.getType());
 
+                @SuppressWarnings("unchecked")
                 final RewardFactory<RewardSection> rewardFactory = (RewardFactory<RewardSection>) (RewardFactory<?>) RewardFactory.getInstance();
                 AbstractReward abstractReward;
                 
@@ -913,7 +910,7 @@ public class RankSystemFactory {
      * Generates a default icon for a reward based on its type.
      */
     private IconSection generateDefaultIcon(String rewardType, RewardSection section) {
-        IconSection icon = new IconSection(new de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder());
+        IconSection icon = new IconSection(new EvaluationEnvironmentBuilder());
         
         String material = switch (rewardType.toUpperCase()) {
             case "ITEM" -> {
@@ -1077,59 +1074,6 @@ public class RankSystemFactory {
      */
     public boolean isInitialized() {
         return !rankTrees.isEmpty() || defaultRank != null;
-    }
-    
-    /**
-     * Validates rank prerequisites for circular dependencies.
-     * <p>
-     * This method uses the ProgressionValidator to detect circular dependencies
-     * in the rank prerequisite chains. If any cycles are detected, an exception
-     * is thrown and the rank system initialization fails.
-     * </p>
-     *
-     * @throws IllegalStateException if circular dependencies are detected
-     */
-    private void validateRankPrerequisites() {
-        try {
-            LOGGER.info("→ Validating rank prerequisites for circular dependencies...");
-            
-            // Collect all ranks from all trees
-            List<RRank> allRanks = ranks.values().stream()
-                .flatMap(treeRanks -> treeRanks.values().stream())
-                .toList();
-            
-            if (allRanks.isEmpty()) {
-                LOGGER.warning("No ranks found to validate");
-                return;
-            }
-            
-            // Create a temporary completion tracker (not used for validation)
-            RankCompletionTracker tempTracker = new RankCompletionTracker(
-                rdq.getPlayerRankRepository(),
-                rdq.getRankRepository()
-            );
-            
-            // Create validator and validate
-            ProgressionValidator<RRank> validator = new ProgressionValidator<>(
-                tempTracker,
-                allRanks
-            );
-            
-            // This will throw CircularDependencyException if cycles are detected
-            validator.validatePrerequisiteChains();
-            
-            LOGGER.info("  ✓ Rank prerequisite validation passed - no circular dependencies detected");
-            
-        } catch (com.raindropcentral.rplatform.progression.exception.CircularDependencyException e) {
-            LOGGER.log(Level.SEVERE, "Circular dependency detected in rank prerequisites!", e);
-            throw new IllegalStateException(
-                "Invalid rank configuration: Circular dependency detected in prerequisites. " +
-                "Please check your rank configuration files for circular references.", e
-            );
-        } catch (Exception e) {
-            LOGGER.log(Level.WARNING, "Failed to validate rank prerequisites", e);
-            // Don't fail initialization for validation errors
-        }
     }
 
 }

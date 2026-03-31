@@ -1,88 +1,58 @@
-# ============================================================================
-# HUNTER QUEST: Master Hunter
-# ============================================================================
-
 identifier: "master_hunter"
 category: "hunter"
-difficulty: MEDIUM
+difficulty: NORMAL
+enabled: true
+displayOrder: 3
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
 
 icon:
-  material: "DIAMOND_SWORD"
-  display_name_key: "quest.master_hunter.name"
-  description_key: "quest.master_hunter.description"
-  custom_model_data: 4002
-  enchanted: true
+  material: DIAMOND_SWORD
+  displayNameKey: "quest.master_hunter.name"
+  descriptionKey: "quest.master_hunter.description"
 
 tasks:
-  - identifier: "kill_endermen"
-    type: "KILL_MOBS"
-    target: "ENDERMAN"
-    amount: 20
-    icon:
-      material: "ENDER_PEARL"
-      display_name_key: "quest.master_hunter.task1.name"
-  
-  - identifier: "kill_blazes"
-    type: "KILL_MOBS"
-    target: "BLAZE"
-    amount: 15
-    icon:
-      material: "BLAZE_ROD"
-      display_name_key: "quest.master_hunter.task2.name"
-  
-  - identifier: "kill_witches"
-    type: "KILL_MOBS"
-    target: "WITCH"
-    amount: 10
-    icon:
-      material: "GLASS_BOTTLE"
-      display_name_key: "quest.master_hunter.task3.name"
+  kill_endermen:
+    orderIndex: 0
+    difficulty: NORMAL
+    sequential: false
+    requirement:
+      type: KILL_MOBS
+      target: ENDERMAN
+      amount: 20
+  kill_blazes:
+    orderIndex: 1
+    difficulty: NORMAL
+    sequential: false
+    requirement:
+      type: KILL_MOBS
+      target: BLAZE
+      amount: 15
+  kill_witches:
+    orderIndex: 2
+    difficulty: NORMAL
+    sequential: false
+    requirement:
+      type: KILL_MOBS
+      target: WITCH
+      amount: 10
 
 rewards:
-  - type: "CURRENCY"
-    currency_id: "coins"
-    amount: 500
-  - type: "EXPERIENCE"
-    amount: 300
-  - type: "PERK"
-    perk_id: "hunter_strength"
-    duration: 7200
-
-prerequisites:
-  - "skilled_hunter"
-
-requirements: []
-
-attributes:
-  repeatable: false
-  hidden: false
-  quest_type: "MAIN"
-  time_limit: 0
-  min_level: 10
-  max_concurrent: 1
-  auto_start: false
-  show_in_log: true
-  chain_id: "hunter_chain"
-  chain_order: 3
-
-effects:
-  start_particle: "ENCHANT"
-  complete_particle: "TOTEM_OF_UNDYING"
-  start_sound: "BLOCK_ENCHANTMENT_TABLE_USE"
-  complete_sound: "UI_TOAST_CHALLENGE_COMPLETE"
-
-failure_conditions:
-  fail_on_death: false
-  fail_on_logout: false
-  fail_on_timeout: false
-
-metadata:
-  author: "RDQ Team"
-  created: "2026-03-16"
-  modified: "2026-03-16"
-  version: "1.0.0"
-  tags:
-    - "hunter"
-    - "advanced"
-    - "combat"
-    - "chain"
+  main_currency:
+    type: CURRENCY
+    currency: coins
+    amount: 500.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 300.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

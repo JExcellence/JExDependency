@@ -2,7 +2,7 @@ package com.raindropcentral.rdq.quest.progression;
 
 import com.raindropcentral.rdq.cache.quest.PlayerQuestProgressCache;
 import com.raindropcentral.rdq.database.entity.quest.Quest;
-import com.raindropcentral.rdq.database.repository.QuestCompletionHistoryRepository;
+import com.raindropcentral.rdq.database.repository.quest.QuestCompletionHistoryRepository;
 import com.raindropcentral.rplatform.progression.ICompletionTracker;
 import org.jetbrains.annotations.NotNull;
 
@@ -47,7 +47,7 @@ public class QuestCompletionTracker implements ICompletionTracker<Quest> {
         // Check completion history - if any completion exists, the quest has been completed
         return completionRepository.findByPlayer(playerId)
             .thenApply(history -> history.stream()
-                .anyMatch(h -> h.getQuest().getIdentifier().equals(nodeIdentifier)));
+                .anyMatch(h -> h.getQuestIdentifier().equals(nodeIdentifier)));
     }
     
     @Override
@@ -64,7 +64,7 @@ public class QuestCompletionTracker implements ICompletionTracker<Quest> {
     public CompletableFuture<List<String>> getCompletedNodes(@NotNull final UUID playerId) {
         return completionRepository.findByPlayer(playerId)
             .thenApply(history -> history.stream()
-                .map(h -> h.getQuest().getIdentifier())
+                .map(h -> h.getQuestIdentifier())
                 .distinct()
                 .collect(Collectors.toList()));
     }

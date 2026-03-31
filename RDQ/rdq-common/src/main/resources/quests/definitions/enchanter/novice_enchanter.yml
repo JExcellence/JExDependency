@@ -1,92 +1,42 @@
-# ============================================================================
-# ENCHANTER QUEST: Novice Enchanter
-# ============================================================================
-# Entry-level enchanting quest introducing basic enchantment mechanics.
-# First quest in the enchanter progression chain.
-# ============================================================================
-
 identifier: "novice_enchanter"
 category: "enchanter"
 difficulty: EASY
+enabled: true
+displayOrder: 1
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
 
 icon:
-  material: "ENCHANTING_TABLE"
-  display_name_key: "quest.novice_enchanter.name"
-  description_key: "quest.novice_enchanter.description"
-  custom_model_data: 7000
-  enchanted: false
+  material: ENCHANTING_TABLE
+  displayNameKey: "quest.novice_enchanter.name"
+  descriptionKey: "quest.novice_enchanter.description"
 
 tasks:
-  - identifier: "collect_lapis"
-    type: "COLLECT_ITEMS"
-    target: "LAPIS_LAZULI"
-    amount: 64
-    icon:
-      material: "LAPIS_LAZULI"
-      display_name_key: "quest.novice_enchanter.task1.name"
-  
-  - identifier: "craft_table"
-    type: "CRAFT_ITEMS"
-    target: "ENCHANTING_TABLE"
-    amount: 1
-    icon:
-      material: "ENCHANTING_TABLE"
-      display_name_key: "quest.novice_enchanter.task2.name"
-  
-  - identifier: "enchant_items"
-    type: "ENCHANT_ITEM"
-    target: "IRON_SWORD"
-    amount: 5
-    icon:
-      material: "IRON_SWORD"
-      display_name_key: "quest.novice_enchanter.task3.name"
+  collect_lapis:
+    orderIndex: 0
+    difficulty: EASY
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: LAPIS_ORE
+      amount: 64
 
 rewards:
-  - type: "CURRENCY"
-    currency_id: "coins"
-    amount: 250
-  - type: "EXPERIENCE"
-    amount: 150
-  - type: "ITEM"
-    material: "LAPIS_LAZULI"
-    amount: 32
-    display_name_key: "item.enchanter_lapis.name"
-    lore_key: "item.enchanter_lapis.lore"
-
-prerequisites: []
-
-requirements: []
-
-attributes:
-  repeatable: false
-  hidden: false
-  quest_type: "MAIN"
-  time_limit: 0
-  min_level: 1
-  max_concurrent: 1
-  auto_start: false
-  show_in_log: true
-  chain_id: "enchanter_chain"
-  chain_order: 1
-
-effects:
-  start_particle: "ENCHANT"
-  complete_particle: "ENCHANTING_TABLE"
-  start_sound: "BLOCK_ENCHANTMENT_TABLE_USE"
-  complete_sound: "ENTITY_PLAYER_LEVELUP"
-
-failure_conditions:
-  fail_on_death: false
-  fail_on_logout: false
-  fail_on_timeout: false
-
-metadata:
-  author: "RDQ Team"
-  created: "2026-03-16"
-  modified: "2026-03-16"
-  version: "1.0.0"
-  tags:
-    - "enchanter"
-    - "beginner"
-    - "magic"
-    - "chain"
+  main_currency:
+    type: CURRENCY
+    currency: coins
+    amount: 250.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 150.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

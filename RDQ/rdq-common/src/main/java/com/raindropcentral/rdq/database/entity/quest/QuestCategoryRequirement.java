@@ -1,6 +1,6 @@
 package com.raindropcentral.rdq.database.entity.quest;
 
-import com.raindropcentral.rdq.config.utility.IconSection;
+import com.raindropcentral.rplatform.config.icon.IconSection;
 import com.raindropcentral.rdq.database.converter.IconSectionConverter;
 import com.raindropcentral.rdq.database.entity.requirement.BaseRequirement;
 import de.jexcellence.hibernate.entity.BaseEntity;
@@ -84,9 +84,8 @@ public class QuestCategoryRequirement extends BaseEntity {
         this.requirement = requirement;
         this.icon = icon;
         
-        if (category != null) {
-            category.addRequirement(this);
-        }
+        // NOTE: Do NOT call category.addRequirement(this) here!
+        // Hibernate will manage the bidirectional relationship automatically.
     }
     
     /**

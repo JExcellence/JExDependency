@@ -13,6 +13,7 @@
 
 package com.raindropcentral.rplatform.reward.json;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
@@ -51,6 +52,7 @@ public final class RewardParser {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+        mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
         
         // Register ItemStack serializer/deserializer
         final SimpleModule bukkitModule = new SimpleModule("BukkitModule");

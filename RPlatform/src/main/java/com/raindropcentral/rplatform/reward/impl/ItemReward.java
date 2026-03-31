@@ -1,33 +1,35 @@
-/*
- * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
- *
- * This source code is proprietary and confidential to Antimatter Zone LLC.
- * Unauthorized copying, modification, distribution, display, performance,
- * publication, sublicensing, or creation of derivative works is prohibited
- * without prior written permission from Antimatter Zone LLC, except to the
- * extent permitted by applicable United States law.
- *
- * This notice is intended to preserve all rights and remedies available under
- * the laws of the State of Washington and the United States of America.
- */
-
 package com.raindropcentral.rplatform.reward.impl;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.raindropcentral.rplatform.reward.AbstractReward;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
 import java.util.concurrent.CompletableFuture;
+import java.util.logging.Logger;
 
 /**
- * Represents the ItemReward API type.
+ * Reward that grants items to a player.
+ * <p>
+ * This reward handles inventory management, including dropping items
+ * on the ground if the player's inventory is full. It ensures all
+ * operations run on the main thread.
+ * </p>
+ *
+ * @author RaindropCentral
+ * @version 2.0.0
+ * @since TBD
  */
 @JsonTypeName("ITEM")
 public final class ItemReward extends AbstractReward {
+
+    private static final Logger LOGGER = Logger.getLogger(ItemReward.class.getName());
 
     @JsonProperty("item")
     private final ItemStack item;
@@ -35,9 +37,6 @@ public final class ItemReward extends AbstractReward {
     @JsonProperty("amount")
     private final int amount;
 
-    /**
-     * Executes ItemReward.
-     */
     @JsonCreator
     public ItemReward(
         @JsonProperty("item") @NotNull ItemStack item,
@@ -50,48 +49,68 @@ public final class ItemReward extends AbstractReward {
     
     /**
      * Convenience constructor that uses the ItemStack's amount.
+     *
+     * @param item the item to reward
      */
     public ItemReward(@NotNull ItemStack item) {
         this(item, item.getAmount());
     }
 
-    /**
-     * Gets typeId.
-     */
     @Override
     public @NotNull String getTypeId() {
         return "ITEM";
     }
 
-    /**
-     * Executes grant.
-     */
     @Override
     public @NotNull CompletableFuture<Boolean> grant(@NotNull Player player) {
-        return CompletableFuture.supplyAsync(() -> {
-            int remaining = amount;
-            int maxStack = item.getMaxStackSize();
-            
-            while (remaining > 0) {
-                int stackAmount = Math.min(remaining, maxStack);
-                ItemStack stack = item.clone();
-                stack.setAmount(stackAmount);
-                
-                if (player.getInventory().firstEmpty() == -1) {
-                    player.getWorld().dropItem(player.getLocation(), stack);
-                } else {
-                    player.getInventory().addItem(stack);
+        final CompletableFuture<Boolean> future = new CompletableFuture<>();
+
+        // Get any plugin for scheduling (use first available)
+        final Plugin plugin = Bukkit.getPluginManager().getPlugins()[0];
+
+        // Must run on main thread for inventory operations
+        Bukkit.getScheduler().runTask(plugin, () -> {
+            try {
+                int remaining = amount;
+                int maxStack = item.getMaxStackSize();
+                int droppedStacks = 0;
+
+                while (remaining > 0) {
+                    int stackAmount = Math.min(remaining, maxStack);
+                    ItemStack stack = item.clone();
+                    stack.setAmount(stackAmount);
+
+                    // Try to add to inventory
+                    HashMap<Integer, ItemStack> leftover = player.getInventory().addItem(stack);
+
+                    // Drop items that don't fit
+                    if (!leftover.isEmpty()) {
+                        for (ItemStack drop : leftover.values()) {
+                            player.getWorld().dropItem(player.getLocation(), drop);
+                            droppedStacks++;
+                        }
+                    }
+
+                    remaining -= stackAmount;
                 }
-                
-                remaining -= stackAmount;
+
+                if (droppedStacks > 0) {
+                    LOGGER.fine("Granted " + amount + " " + item.getType() + " to " + player.getName() +
+                               " (" + droppedStacks + " stacks dropped on ground)");
+                } else {
+                    LOGGER.fine("Granted " + amount + " " + item.getType() + " to " + player.getName());
+                }
+
+                future.complete(true);
+            } catch (Exception e) {
+                LOGGER.warning("Failed to grant item reward to " + player.getName() + ": " + e.getMessage());
+                future.complete(false);
             }
-            return true;
         });
+
+        return future;
     }
 
-    /**
-     * Gets estimatedValue.
-     */
     @Override
     public double getEstimatedValue() {
         return amount * 1.0;
@@ -99,6 +118,8 @@ public final class ItemReward extends AbstractReward {
 
     /**
      * Gets the item template (always amount 1).
+     *
+     * @return the item template
      */
     public ItemStack getItem() {
         return item.clone();
@@ -106,14 +127,13 @@ public final class ItemReward extends AbstractReward {
 
     /**
      * Gets the actual amount (can exceed max stack size).
+     *
+     * @return the amount
      */
     public int getAmount() {
         return amount;
     }
 
-    /**
-     * Executes validate.
-     */
     @Override
     public void validate() {
         if (item == null || item.getType().isAir()) {

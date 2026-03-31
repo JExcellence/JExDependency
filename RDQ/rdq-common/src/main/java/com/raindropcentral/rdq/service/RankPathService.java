@@ -1,16 +1,3 @@
-/*
- * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
- *
- * This source code is proprietary and confidential to Antimatter Zone LLC.
- * Unauthorized copying, modification, distribution, display, performance,
- * publication, sublicensing, or creation of derivative works is prohibited
- * without prior written permission from Antimatter Zone LLC, except to the
- * extent permitted by applicable United States law.
- *
- * This notice is intended to preserve all rights and remedies available under
- * the laws of the State of Washington and the United States of America.
- */
-
 package com.raindropcentral.rdq.service;
 
 import com.raindropcentral.rdq.RDQ;
@@ -19,10 +6,8 @@ import com.raindropcentral.rdq.database.entity.rank.RPlayerRank;
 import com.raindropcentral.rdq.database.entity.rank.RPlayerRankPath;
 import com.raindropcentral.rdq.database.entity.rank.RRank;
 import com.raindropcentral.rdq.database.entity.rank.RRankTree;
-import com.raindropcentral.rdq.rank.progression.RankCompletionTracker;
 import com.raindropcentral.rdq.view.ranks.interaction.RankProgressionManager;
 import com.raindropcentral.rplatform.logging.CentralLogger;
-import com.raindropcentral.rplatform.progression.ProgressionValidator;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -32,72 +17,15 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- * Service for managing rank path selection and progression.
- * <p>
- * This service integrates with the RPlatform Progression System to provide
- * prerequisite validation and automatic unlocking of dependent ranks.
- * </p>
- *
- * <h2>Integration Points:</h2>
- * <ul>
- *     <li>{@link ProgressionValidator} - For prerequisite validation and unlocking</li>
- *     <li>{@link RankCompletionTracker} - For tracking rank completion</li>
- *     <li>{@link RankProgressionManager} - For legacy rank progression logic</li>
- * </ul>
- *
- * @author RaindropCentral
- * @version 2.0.0
- * @since 1.0.0
- */
 public class RankPathService {
 	
 	private static final Logger LOGGER = Logger.getLogger(RankPathService.class.getName());
 	private final RDQ rdq;
 	private final RankProgressionManager progressionManager;
-	private final ProgressionValidator<RRank> progressionValidator;
-	private final RankCompletionTracker completionTracker;
 
-	/**
-	 * Constructs a new RankPathService with progression system integration.
-	 *
-	 * @param rdq The RDQ plugin instance
-	 * @param progressionValidator The progression validator for prerequisite checking
-	 * @param completionTracker The completion tracker for rank achievement tracking
-	 */
-	public RankPathService(
-		final @NotNull RDQ rdq,
-		final @NotNull ProgressionValidator<RRank> progressionValidator,
-		final @NotNull RankCompletionTracker completionTracker
-	) {
-		this.rdq = rdq;
-		this.progressionManager = new RankProgressionManager(rdq);
-		this.progressionValidator = progressionValidator;
-		this.completionTracker = completionTracker;
-	}
-
-	/**
-	 * Legacy constructor for backward compatibility.
-	 * Creates progression validator and completion tracker internally.
-	 *
-	 * @param rdq The RDQ plugin instance
-	 * @deprecated Use {@link #RankPathService(RDQ, ProgressionValidator, RankCompletionTracker)} instead
-	 */
-	@Deprecated
 	public RankPathService(final @NotNull RDQ rdq) {
 		this.rdq = rdq;
 		this.progressionManager = new RankProgressionManager(rdq);
-		this.completionTracker = new RankCompletionTracker(
-			rdq.getPlayerRankRepository(),
-			rdq.getRankRepository()
-		);
-		// Load all ranks for progression validator
-		// Note: This is a blocking call during initialization
-		List<RRank> allRanks = rdq.getRankRepository().findAllByAttributes(Map.of());
-		this.progressionValidator = new ProgressionValidator<>(
-			completionTracker,
-			allRanks
-		);
 	}
 	
 	/**

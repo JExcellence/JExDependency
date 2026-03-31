@@ -1,96 +1,66 @@
-# ============================================================================
-# BAKER QUEST: Journeyman Baker
-# ============================================================================
-# Intermediate baking quest with more complex recipes.
-# Second quest in the baker progression chain.
-# ============================================================================
-
 identifier: "journeyman_baker"
 category: "baker"
 difficulty: EASY
+enabled: true
+displayOrder: 2
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
 
 icon:
-  material: "CAKE"
-  display_name_key: "quest.journeyman_baker.name"
-  description_key: "quest.journeyman_baker.description"
-  custom_model_data: 3001
-  enchanted: false
+  material: CAKE
+  displayNameKey: "quest.journeyman_baker.name"
+  descriptionKey: "quest.journeyman_baker.description"
 
 tasks:
-  - identifier: "collect_sugar"
-    type: "COLLECT_ITEMS"
-    target: "SUGAR"
-    amount: 32
-    icon:
-      material: "SUGAR"
-      display_name_key: "quest.journeyman_baker.task1.name"
-  
-  - identifier: "collect_eggs"
-    type: "COLLECT_ITEMS"
-    target: "EGG"
-    amount: 16
-    icon:
-      material: "EGG"
-      display_name_key: "quest.journeyman_baker.task2.name"
-  
-  - identifier: "craft_cakes"
-    type: "CRAFT_ITEMS"
-    target: "CAKE"
-    amount: 5
-    icon:
-      material: "CAKE"
-      display_name_key: "quest.journeyman_baker.task3.name"
-  
-  - identifier: "craft_pumpkin_pies"
-    type: "CRAFT_ITEMS"
-    target: "PUMPKIN_PIE"
-    amount: 10
-    icon:
-      material: "PUMPKIN_PIE"
-      display_name_key: "quest.journeyman_baker.task4.name"
+  collect_sugar:
+    orderIndex: 0
+    difficulty: EASY
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: SUGAR_CANE
+      amount: 32
+  collect_eggs:
+    orderIndex: 1
+    difficulty: EASY
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: EGG
+      amount: 16
+  craft_cakes:
+    orderIndex: 2
+    difficulty: EASY
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: CAKE
+      amount: 5
+  craft_pumpkin_pies:
+    orderIndex: 3
+    difficulty: EASY
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: PUMPKIN_PIE
+      amount: 10
 
 rewards:
-  - type: "CURRENCY"
-    currency_id: "coins"
-    amount: 300
-  - type: "EXPERIENCE"
-    amount: 150
-
-prerequisites:
-  - "apprentice_baker"
-
-requirements: []
-
-attributes:
-  repeatable: false
-  hidden: false
-  quest_type: "MAIN"
-  time_limit: 0
-  min_level: 5
-  max_concurrent: 1
-  auto_start: false
-  show_in_log: true
-  chain_id: "baker_chain"
-  chain_order: 2
-
-effects:
-  start_particle: "VILLAGER_HAPPY"
-  complete_particle: "HEART"
-  start_sound: "BLOCK_FURNACE_FIRE_CRACKLE"
-  complete_sound: "ENTITY_PLAYER_LEVELUP"
-
-failure_conditions:
-  fail_on_death: false
-  fail_on_logout: false
-  fail_on_timeout: false
-
-metadata:
-  author: "RDQ Team"
-  created: "2026-03-16"
-  modified: "2026-03-16"
-  version: "1.0.0"
-  tags:
-    - "baker"
-    - "intermediate"
-    - "crafting"
-    - "chain"
+  main_currency:
+    type: CURRENCY
+    currency: coins
+    amount: 300.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 150.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

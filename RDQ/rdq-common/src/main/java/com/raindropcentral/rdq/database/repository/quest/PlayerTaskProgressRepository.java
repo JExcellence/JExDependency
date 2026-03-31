@@ -77,7 +77,7 @@ public class PlayerTaskProgressRepository extends CachedRepository<PlayerTaskPro
             EntityManager em = entityManagerFactory.createEntityManager();
             try {
                 return em.createQuery(
-                    "SELECT t FROM PlayerTaskProgress t WHERE t.questProgress = :questProgress ORDER BY t.task.sortOrder",
+                    "SELECT t FROM PlayerTaskProgress t WHERE t.questProgress = :questProgress ORDER BY t.task.orderIndex",
                     PlayerTaskProgress.class
                 )
                 .setParameter("questProgress", questProgress)
@@ -166,7 +166,7 @@ public class PlayerTaskProgressRepository extends CachedRepository<PlayerTaskPro
                 return em.createQuery(
                     "SELECT t FROM PlayerTaskProgress t " +
                     "WHERE t.questProgress = :questProgress AND t.completed = false " +
-                    "ORDER BY t.task.sortOrder",
+                    "ORDER BY t.task.orderIndex",
                     PlayerTaskProgress.class
                 )
                 .setParameter("questProgress", questProgress)
@@ -231,7 +231,7 @@ public class PlayerTaskProgressRepository extends CachedRepository<PlayerTaskPro
                     "SELECT DISTINCT t FROM PlayerTaskProgress t " +
                     "LEFT JOIN FETCH t.requirementProgress " +
                     "WHERE t.questProgress = :questProgress " +
-                    "ORDER BY t.task.sortOrder",
+                    "ORDER BY t.task.orderIndex",
                     PlayerTaskProgress.class
                 )
                 .setParameter("questProgress", questProgress)

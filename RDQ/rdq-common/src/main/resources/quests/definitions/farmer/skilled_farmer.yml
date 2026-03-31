@@ -1,49 +1,58 @@
 identifier: "skilled_farmer"
 category: "farmer"
 difficulty: EASY
+enabled: true
+displayOrder: 2
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
+
 icon:
-  material: "IRON_HOE"
-  display_name_key: "quest.skilled_farmer.name"
-  description_key: "quest.skilled_farmer.description"
-  custom_model_data: 6001
+  material: IRON_HOE
+  displayNameKey: "quest.skilled_farmer.name"
+  descriptionKey: "quest.skilled_farmer.description"
+
 tasks:
-  - identifier: "harvest_carrots"
-    type: "BREAK_BLOCKS"
-    target: "CARROTS"
-    amount: 128
-    icon:
-      material: "CARROT"
-      display_name_key: "quest.skilled_farmer.task1.name"
-  - identifier: "harvest_potatoes"
-    type: "BREAK_BLOCKS"
-    target: "POTATOES"
-    amount: 128
-    icon:
-      material: "POTATO"
-      display_name_key: "quest.skilled_farmer.task2.name"
-  - identifier: "harvest_beetroot"
-    type: "BREAK_BLOCKS"
-    target: "BEETROOTS"
-    amount: 64
-    icon:
-      material: "BEETROOT"
-      display_name_key: "quest.skilled_farmer.task3.name"
+  harvest_carrots:
+    orderIndex: 0
+    difficulty: EASY
+    sequential: false
+    requirement:
+      type: BREAK_BLOCKS
+      target: CARROTS
+      amount: 128
+  harvest_potatoes:
+    orderIndex: 1
+    difficulty: EASY
+    sequential: false
+    requirement:
+      type: BREAK_BLOCKS
+      target: POTATOES
+      amount: 128
+  harvest_beetroot:
+    orderIndex: 2
+    difficulty: EASY
+    sequential: false
+    requirement:
+      type: BREAK_BLOCKS
+      target: BEETROOTS
+      amount: 64
+
 rewards:
-  - type: "CURRENCY"
-    currency_id: "coins"
-    amount: 300
-  - type: "EXPERIENCE"
-    amount: 150
-prerequisites:
-  - "novice_farmer"
-attributes:
-  repeatable: false
-  quest_type: "MAIN"
-  min_level: 5
-  chain_id: "farmer_chain"
-  chain_order: 2
-metadata:
-  author: "RDQ Team"
-  created: "2026-03-16"
-  version: "1.0.0"
-  tags: ["farmer", "intermediate", "farming", "chain"]
+  main_currency:
+    type: CURRENCY
+    currency: coins
+    amount: 300.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 150.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

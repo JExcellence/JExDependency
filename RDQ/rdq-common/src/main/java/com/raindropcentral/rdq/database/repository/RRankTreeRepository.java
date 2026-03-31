@@ -22,7 +22,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.function.Function;
 
 /**
- * Repository for managing persistent {@link com.raindropcentral.rdq.database.entity.rank.RRankTree} entities.
+ * Repository for managing persistent {@link RRankTree} entities.
  *
  * @author JExcellence
  * @version 1.0.0

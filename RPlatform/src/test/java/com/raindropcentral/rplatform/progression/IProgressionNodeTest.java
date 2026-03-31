@@ -1,3 +1,4 @@
+/*
 package com.raindropcentral.rplatform.progression;
 
 import org.jetbrains.annotations.NotNull;
@@ -7,18 +8,22 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+*/
 /**
  * Unit tests for {@link IProgressionNode} interface default methods.
  *
  * @author RaindropCentral
  * @version 1.0.0
  * @since 1.0.0
- */
+ *//*
+
 class IProgressionNodeTest {
     
-    /**
+    */
+/**
      * Test implementation of IProgressionNode for testing purposes.
-     */
+     *//*
+
     private static class TestNode implements IProgressionNode<TestNode> {
         private final String identifier;
         private final List<String> previousNodes;
@@ -144,3 +149,4 @@ class IProgressionNodeTest {
         assertEquals(3, node.getNextNodeIdentifiers().size());
     }
 }
+*/

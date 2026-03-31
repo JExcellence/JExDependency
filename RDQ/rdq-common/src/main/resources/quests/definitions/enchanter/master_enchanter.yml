@@ -1,102 +1,50 @@
-# ============================================================================
-# ENCHANTER QUEST: Master Enchanter
-# ============================================================================
-# Advanced enchanting quest requiring mastery of enchantment mechanics.
-# Third quest in the enchanter progression chain.
-# ============================================================================
-
 identifier: "master_enchanter"
 category: "enchanter"
-difficulty: MEDIUM
+difficulty: NORMAL
+enabled: true
+displayOrder: 3
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
 
 icon:
-  material: "ENCHANTED_GOLDEN_APPLE"
-  display_name_key: "quest.master_enchanter.name"
-  description_key: "quest.master_enchanter.description"
-  custom_model_data: 7002
-  enchanted: true
+  material: ENCHANTED_GOLDEN_APPLE
+  displayNameKey: "quest.master_enchanter.name"
+  descriptionKey: "quest.master_enchanter.description"
 
 tasks:
-  - identifier: "collect_diamonds"
-    type: "COLLECT_ITEMS"
-    target: "DIAMOND"
-    amount: 32
-    icon:
-      material: "DIAMOND"
-      display_name_key: "quest.master_enchanter.task1.name"
-  
-  - identifier: "enchant_max_level"
-    type: "ENCHANT_ITEM"
-    target: "DIAMOND_SWORD"
-    enchantment: "SHARPNESS"
-    level: 5
-    amount: 1
-    icon:
-      material: "DIAMOND_SWORD"
-      display_name_key: "quest.master_enchanter.task2.name"
-  
-  - identifier: "gain_levels"
-    type: "GAIN_EXPERIENCE"
-    amount: 1500
-    icon:
-      material: "EXPERIENCE_BOTTLE"
-      display_name_key: "quest.master_enchanter.task3.name"
+  collect_diamonds:
+    orderIndex: 0
+    difficulty: NORMAL
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: DIAMOND_ORE
+      amount: 32
+  mine_lapis:
+    orderIndex: 1
+    difficulty: NORMAL
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: LAPIS_ORE
+      amount: 64
 
 rewards:
-  - type: "CURRENCY"
-    currency_id: "coins"
-    amount: 1200
-  - type: "EXPERIENCE"
-    amount: 600
-  - type: "ITEM"
-    material: "ENCHANTED_BOOK"
-    amount: 5
-    display_name_key: "item.master_enchanter_book.name"
-    lore_key: "item.master_enchanter_book.lore"
-    enchantments:
-      SHARPNESS: 5
-      UNBREAKING: 3
-  - type: "PERK"
-    perk_id: "enchanter_luck"
-    duration: 7200
-
-prerequisites:
-  - "skilled_enchanter"
-
-requirements:
-  - type: "LEVEL"
-    level: 15
-
-attributes:
-  repeatable: false
-  hidden: false
-  quest_type: "MAIN"
-  time_limit: 0
-  min_level: 15
-  max_concurrent: 1
-  auto_start: false
-  show_in_log: true
-  chain_id: "enchanter_chain"
-  chain_order: 3
-
-effects:
-  start_particle: "ENCHANT"
-  complete_particle: "FIREWORK"
-  start_sound: "BLOCK_ENCHANTMENT_TABLE_USE"
-  complete_sound: "UI_TOAST_CHALLENGE_COMPLETE"
-
-failure_conditions:
-  fail_on_death: false
-  fail_on_logout: false
-  fail_on_timeout: false
-
-metadata:
-  author: "RDQ Team"
-  created: "2026-03-16"
-  modified: "2026-03-16"
-  version: "1.0.0"
-  tags:
-    - "enchanter"
-    - "advanced"
-    - "magic"
-    - "chain"
+  main_currency:
+    type: CURRENCY
+    currency: coins
+    amount: 1200.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 600.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

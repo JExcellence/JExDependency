@@ -20,8 +20,7 @@ import java.util.logging.Logger;
  * and saves it back to the database on player quit. This provides instant access
  * to quest progress data without database queries during gameplay.
  * </p>
- * 
- * <h3>Design Philosophy</h3>
+ *
  * <ul>
  *   <li>Load all active quest progress on player join</li>
  *   <li>Update progress instantly in memory</li>
@@ -29,7 +28,6 @@ import java.util.logging.Logger;
  *   <li>Auto-save periodically for crash protection (every 5 minutes)</li>
  * </ul>
  *
- * <h3>Thread Safety</h3>
  * <p>
  * This cache uses synchronized lists to prevent ConcurrentModificationException
  * when progress is modified while auto-save is running. All public methods are

@@ -405,21 +405,6 @@ public class RankTreeOverviewView extends APaginatedView<RRankTree> {
 						"currently_active",
 						player
 				).build().component());
-
-				// Show rank count in tree
-				try {
-					final int totalRanks = rankTree.getRanks() != null ? rankTree.getRanks().size() : 0;
-					if (totalRanks > 0) {
-						lore.add(this.i18n(
-								"progress.rank_count",
-								player
-						).withPlaceholder("total", totalRanks).build().component());
-					}
-				} catch (final Exception ignored) {
-					// Progress info is optional
-				}
-
-				lore.add(Component.empty());
 				lore.add(this.i18n(
 						"click_to_preview",
 						player

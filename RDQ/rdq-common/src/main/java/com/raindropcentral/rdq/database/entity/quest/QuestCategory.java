@@ -1,359 +1,173 @@
 package com.raindropcentral.rdq.database.entity.quest;
 
+import com.raindropcentral.rplatform.config.icon.IconSection;
+import com.raindropcentral.rdq.database.converter.IconSectionConverter;
+import de.jexcellence.hibernate.entity.BaseEntity;
 import jakarta.persistence.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import lombok.Getter;
+import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-import java.time.Instant;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 /**
- * Database entity representing a quest category.
+ * Entity representing a quest category.
  * <p>
- * Categories organize quests into logical groups (e.g., "Mining", "Combat", "Daily").
- * Each category can have its own requirements and rewards that apply to all quests within it.
+ * Quest categories group related quests together for organization and navigation.
+ * Each category has a unique identifier, display information, and contains multiple quests.
  * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0
  */
+@Getter
+@Setter
 @Entity
-@Table(name = "rdq_quest_categories", indexes = {
-    @Index(name = "idx_category_identifier", columnList = "identifier", unique = true)
-})
-public class QuestCategory {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, updatable = false)
-    private Long id;
-
-    @Column(name = "identifier", nullable = false, unique = true, length = 100)
+@Table(
+        name = "rdq_quest_category",
+        uniqueConstraints = @UniqueConstraint(columnNames = "identifier"),
+        indexes = {
+                @Index(name = "idx_quest_category_identifier", columnList = "identifier"),
+                @Index(name = "idx_quest_category_enabled", columnList = "enabled"),
+                @Index(name = "idx_quest_category_display_order", columnList = "display_order")
+        }
+)
+public class QuestCategory extends BaseEntity {
+    
+    @Serial
+    private static final long serialVersionUID = 1L;
+    
+    /**
+     * Unique identifier for this category (e.g., "combat", "mining").
+     */
+    @Column(name = "identifier", nullable = false, unique = true, length = 64)
     private String identifier;
-
-    @Column(name = "display_name", nullable = false, length = 255)
-    private String displayName;
-
-    @Column(name = "description", columnDefinition = "TEXT")
-    private String description;
-
-    @Column(name = "icon_material", length = 50)
-    private String iconMaterial;
-
+    
+    /**
+     * The icon representing this category in the UI.
+     * Contains material, display name key, description key, and visual properties.
+     */
+    @Convert(converter = IconSectionConverter.class)
+    @Column(name = "icon", nullable = false, columnDefinition = "LONGTEXT")
+    private IconSection icon;
+    
+    /**
+     * Display order for sorting categories in GUIs.
+     * Lower values appear first.
+     */
+    @Column(name = "display_order", nullable = false)
+    private int displayOrder = 0;
+    
+    /**
+     * Whether this category is enabled and visible to players.
+     */
     @Column(name = "enabled", nullable = false)
-    private boolean enabled;
-
-    @Column(name = "sort_order", nullable = false)
-    private int sortOrder;
-
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
-    @OrderBy("sortOrder ASC")
+    private boolean enabled = true;
+    
+    /**
+     * Quests belonging to this category.
+     */
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Quest> quests = new ArrayList<>();
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<QuestCategoryRequirement> requirements = new ArrayList<>();
-
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<QuestCategoryReward> rewards = new ArrayList<>();
 
-    @CreationTimestamp
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private Instant createdAt;
-
-    @UpdateTimestamp
-    @Column(name = "updated_at", nullable = false)
-    private Instant updatedAt;
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<QuestCategoryRequirement> requirements = new ArrayList<>();
 
     /**
-     * Default constructor for JPA.
+     * Protected no-argument constructor for JPA.
      */
-    public QuestCategory() {
+    protected QuestCategory() {
     }
-
+    
     /**
-     * Creates a new quest category with the specified identifier.
+     * Constructs a new quest category.
      *
-     * @param identifier the unique category identifier
+     * @param identifier the unique identifier
+     * @param icon       the icon section with display information
      */
-    public QuestCategory(@NotNull final String identifier) {
-        this.identifier = Objects.requireNonNull(identifier, "identifier cannot be null");
-        this.enabled = true;
-        this.sortOrder = 0;
+    public QuestCategory(
+            @NotNull final String identifier,
+            @NotNull final IconSection icon
+    ) {
+        this.identifier = identifier;
+        this.icon = icon;
     }
-
+    
     /**
-     * Gets the database ID.
+     * Factory method to create a new quest category.
      *
-     * @return the ID
+     * @param identifier the unique identifier
+     * @param icon       the icon section with display information
+     * @return a new quest category instance
      */
-    @Nullable
-    public Long getId() {
-        return id;
+    public static QuestCategory create(
+            @NotNull final String identifier,
+            @NotNull final IconSection icon
+    ) {
+        return new QuestCategory(identifier, icon);
     }
-
-    /**
-     * Gets the unique category identifier.
-     *
-     * @return the identifier
-     */
-    @NotNull
-    public String getIdentifier() {
-        return identifier;
-    }
-
-    /**
-     * Sets the unique category identifier.
-     *
-     * @param identifier the identifier
-     */
-    public void setIdentifier(@NotNull final String identifier) {
-        this.identifier = Objects.requireNonNull(identifier, "identifier cannot be null");
-    }
-
-    /**
-     * Gets the display name.
-     *
-     * @return the display name
-     */
-    @NotNull
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    /**
-     * Sets the display name.
-     *
-     * @param displayName the display name
-     */
-    public void setDisplayName(@NotNull final String displayName) {
-        this.displayName = Objects.requireNonNull(displayName, "displayName cannot be null");
-    }
-
-    /**
-     * Gets the description.
-     *
-     * @return the description
-     */
-    @Nullable
-    public String getDescription() {
-        return description;
-    }
-
-    /**
-     * Sets the description.
-     *
-     * @param description the description
-     */
-    public void setDescription(@Nullable final String description) {
-        this.description = description;
-    }
-
-    /**
-     * Gets the icon material name.
-     *
-     * @return the icon material
-     */
-    @Nullable
-    public String getIconMaterial() {
-        return iconMaterial;
-    }
-
-    /**
-     * Sets the icon material name.
-     *
-     * @param iconMaterial the icon material
-     */
-    public void setIconMaterial(@Nullable final String iconMaterial) {
-        this.iconMaterial = iconMaterial;
-    }
-
-    /**
-     * Checks if the category is enabled.
-     *
-     * @return true if enabled
-     */
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    /**
-     * Sets whether the category is enabled.
-     *
-     * @param enabled true if enabled
-     */
-    public void setEnabled(final boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    /**
-     * Gets the sort order.
-     *
-     * @return the sort order
-     */
-    public int getSortOrder() {
-        return sortOrder;
-    }
-
-    /**
-     * Sets the sort order.
-     *
-     * @param sortOrder the sort order
-     */
-    public void setSortOrder(final int sortOrder) {
-        this.sortOrder = sortOrder;
-    }
-
-    /**
-     * Gets the display order for progression system compatibility.
-     * <p>
-     * This is an alias for {@link #getSortOrder()} to maintain compatibility
-     * with progression system interfaces.
-     * </p>
-     *
-     * @return the display order (same as sort order)
-     */
-    public int getDisplayOrder() {
-        return sortOrder;
-    }
-
-    /**
-     * Gets the quests in this category.
-     *
-     * @return the quests
-     */
-    @NotNull
-    public List<Quest> getQuests() {
-        return quests;
-    }
-
-    /**
-     * Sets the quests in this category.
-     *
-     * @param quests the quests
-     */
-    public void setQuests(@NotNull final List<Quest> quests) {
-        this.quests = Objects.requireNonNull(quests, "quests cannot be null");
-    }
-
-    /**
-     * Gets the category requirements.
-     *
-     * @return the requirements
-     */
-    @NotNull
-    public List<QuestCategoryRequirement> getRequirements() {
-        return requirements;
-    }
-
-    /**
-     * Sets the category requirements.
-     *
-     * @param requirements the requirements
-     */
-    public void setRequirements(@NotNull final List<QuestCategoryRequirement> requirements) {
-        this.requirements = Objects.requireNonNull(requirements, "requirements cannot be null");
-    }
-
-    /**
-     * Gets the category rewards.
-     *
-     * @return the rewards
-     */
-    @NotNull
-    public List<QuestCategoryReward> getRewards() {
-        return rewards;
-    }
-
-    /**
-     * Sets the category rewards.
-     *
-     * @param rewards the rewards
-     */
-    public void setRewards(@NotNull final List<QuestCategoryReward> rewards) {
-        this.rewards = Objects.requireNonNull(rewards, "rewards cannot be null");
-    }
-
-    /**
-     * Gets the creation timestamp.
-     *
-     * @return the creation timestamp
-     */
-    @NotNull
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
-
-    /**
-     * Gets the last update timestamp.
-     *
-     * @return the update timestamp
-     */
-    @NotNull
-    public Instant getUpdatedAt() {
-        return updatedAt;
-    }
-
-    /**
-     * Adds a requirement to this category.
-     *
-     * @param requirement the requirement to add
-     */
-    public void addRequirement(@NotNull final QuestCategoryRequirement requirement) {
-        Objects.requireNonNull(requirement, "requirement cannot be null");
-        if (!requirements.contains(requirement)) {
-            requirements.add(requirement);
-        }
-    }
-
-    /**
-     * Adds a reward to this category.
-     *
-     * @param reward the reward to add
-     */
-    public void addReward(@NotNull final QuestCategoryReward reward) {
-        Objects.requireNonNull(reward, "reward cannot be null");
-        if (!rewards.contains(reward)) {
-            rewards.add(reward);
-        }
-    }
-
+    
     /**
      * Adds a quest to this category.
      *
      * @param quest the quest to add
      */
     public void addQuest(@NotNull final Quest quest) {
-        Objects.requireNonNull(quest, "quest cannot be null");
-        if (!quests.contains(quest)) {
-            quests.add(quest);
-        }
+        quests.add(quest);
+        quest.setCategory(this);
+    }
+    
+    /**
+     * Removes a quest from this category.
+     *
+     * @param quest the quest to remove
+     */
+    public void removeQuest(@NotNull final Quest quest) {
+        quests.remove(quest);
+        quest.setCategory(null);
+    }
+
+    public void addReward(@NotNull final QuestCategoryReward reward) {
+        rewards.add(reward);
+    }
+
+    public void addRequirement(@NotNull final QuestCategoryRequirement requirement) {
+        requirements.add(requirement);
     }
 
     @Override
-    public boolean equals(final Object o) {
+    public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof QuestCategory)) return false;
-        final QuestCategory that = (QuestCategory) o;
-        return Objects.equals(identifier, that.identifier);
+        if (!(o instanceof QuestCategory that)) return false;
+        
+        if (this.getId() != null && that.getId() != null) {
+            return this.getId().equals(that.getId());
+        }
+        
+        return identifier != null && identifier.equals(that.identifier);
     }
-
+    
     @Override
     public int hashCode() {
+        if (this.getId() != null) {
+            return this.getId().hashCode();
+        }
+        
         return Objects.hash(identifier);
     }
-
+    
     @Override
     public String toString() {
         return "QuestCategory{" +
-                "id=" + id +
+                "id=" + getId() +
                 ", identifier='" + identifier + '\'' +
-                ", displayName='" + displayName + '\'' +
                 ", enabled=" + enabled +
-                ", sortOrder=" + sortOrder +
                 '}';
     }
 }

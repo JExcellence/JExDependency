@@ -1,6 +1,6 @@
 package com.raindropcentral.rdq.database.entity.quest;
 
-import com.raindropcentral.rdq.config.utility.IconSection;
+import com.raindropcentral.rplatform.config.icon.IconSection;
 import com.raindropcentral.rdq.database.converter.IconSectionConverter;
 import com.raindropcentral.rdq.database.entity.reward.BaseReward;
 import de.jexcellence.hibernate.entity.BaseEntity;
@@ -91,9 +91,8 @@ public class QuestCategoryReward extends BaseEntity {
         this.reward = reward;
         this.icon = icon;
         
-        if (category != null) {
-            category.addReward(this);
-        }
+        // NOTE: Do NOT call category.addReward(this) here!
+        // Hibernate will manage the bidirectional relationship automatically.
     }
     
     /**

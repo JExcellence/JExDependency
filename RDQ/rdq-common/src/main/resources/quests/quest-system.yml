@@ -12,10 +12,68 @@
 # ========================================
 # SYSTEM SETTINGS
 # ========================================
+enabled: true
 maxActiveQuests: 5
 enableQuestLog: true
 enableQuestTracking: true
 enableQuestNotifications: true
+
+# ========================================
+# TASK HANDLERS
+# ========================================
+# Configure which task handlers are enabled and their behavior.
+# Disabling unused handlers can improve performance.
+task-handlers:
+  KILL_MOBS:
+    enabled: true
+  COLLECT_ITEMS:
+    enabled: true
+  CRAFT_ITEMS:
+    enabled: true
+  BREAK_BLOCKS:
+    enabled: true
+  PLACE_BLOCKS:
+    enabled: true
+  REACH_LOCATION:
+    enabled: true
+  TRADE_WITH_VILLAGER:
+    enabled: true
+  ENCHANT_ITEM:
+    enabled: true
+  BREED_ANIMALS:
+    enabled: true
+  GAIN_EXPERIENCE:
+    enabled: true
+  FISH_ITEMS:
+    enabled: true
+
+# ========================================
+# REWARDS
+# ========================================
+# Configure reward distribution behavior.
+rewards:
+  # Retry failed currency rewards once before logging error
+  retry-currency: true
+  
+  # Drop items on ground if player inventory is full
+  drop-on-full: true
+  
+  # Continue distributing remaining rewards even if one fails
+  continue-on-error: true
+
+# ========================================
+# PERFORMANCE
+# ========================================
+# Performance optimization settings for quest system.
+performance:
+  # Skip task handler processing for players with no active quests
+  skip-inactive-players: true
+  
+  # Use cached quest data instead of database queries
+  use-cache: true
+  
+  # Maximum time (ms) to spend processing a single event
+  max-processing-time: 5
 
 # ========================================
 # QUEST CATEGORIES

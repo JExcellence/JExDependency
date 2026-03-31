@@ -17,91 +17,106 @@ import de.jexcellence.configmapper.sections.AConfigSection;
 import de.jexcellence.configmapper.sections.CSAlways;
 import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
- * Configuration section for the quest system.
- * <p>
- * Represents the top-level configuration for the entire quest system,
- * including system-wide settings and all quest categories.
- * </p>
+ * Represents the main configuration section for the quest system.
+ * Contains global quest system settings.
  *
- * @author JExcellence
+ * @author RaindropCentral
  * @version 1.0.0
- * @since TBD
  */
 @CSAlways
 public class QuestSystemSection extends AConfigSection {
     
-    /** Maximum number of active quests a player can have simultaneously. */
+    /** Whether the quest system is enabled. */
+    private Boolean enabled;
+    
+    /** Maximum number of active quests per player. */
     private Integer maxActiveQuests;
     
-    /** Whether the quest log feature is enabled. */
-    private Boolean enableQuestLog;
+    /** Whether to auto-save quest progress. */
+    private Boolean autoSave;
     
-    /** Whether quest tracking is enabled. */
-    private Boolean enableQuestTracking;
+    /** Auto-save interval in seconds. */
+    private Integer autoSaveInterval;
     
-    /** Whether quest notifications are enabled. */
-    private Boolean enableQuestNotifications;
+    /** Whether to broadcast quest completions. */
+    private Boolean broadcastCompletions;
     
-    /** Map of category keys to their configuration sections. */
-    private Map<String, QuestCategorySection> categories;
+    /** Whether to show quest notifications. */
+    private Boolean showNotifications;
+    
+    /** Whether to track quest statistics. */
+    private Boolean trackStatistics;
     
     /**
      * Constructs a new QuestSystemSection with the given evaluation environment builder.
      *
      * @param evaluationEnvironmentBuilder the evaluation environment builder
      */
-    public QuestSystemSection(
-        final EvaluationEnvironmentBuilder evaluationEnvironmentBuilder
-    ) {
+    public QuestSystemSection(final EvaluationEnvironmentBuilder evaluationEnvironmentBuilder) {
         super(evaluationEnvironmentBuilder);
     }
     
     /**
-     * Gets the maximum number of active quests a player can have.
+     * Checks if the quest system is enabled.
+     *
+     * @return true if enabled, false otherwise
+     */
+    public Boolean getEnabled() {
+        return this.enabled != null && this.enabled;
+    }
+    
+    /**
+     * Gets the maximum number of active quests per player.
      *
      * @return the max active quests, or 5 if not set
      */
     public Integer getMaxActiveQuests() {
-        return maxActiveQuests == null ? 5 : maxActiveQuests;
+        return this.maxActiveQuests == null ? 5 : this.maxActiveQuests;
     }
     
     /**
-     * Checks if the quest log feature is enabled.
+     * Checks if auto-save is enabled.
      *
-     * @return true if enabled, false otherwise
+     * @return true if auto-save is enabled, false otherwise
      */
-    public Boolean getEnableQuestLog() {
-        return enableQuestLog == null || enableQuestLog;
+    public Boolean getAutoSave() {
+        return this.autoSave != null && this.autoSave;
     }
     
     /**
-     * Checks if quest tracking is enabled.
+     * Gets the auto-save interval in seconds.
      *
-     * @return true if enabled, false otherwise
+     * @return the auto-save interval, or 300 (5 minutes) if not set
      */
-    public Boolean getEnableQuestTracking() {
-        return enableQuestTracking == null || enableQuestTracking;
+    public Integer getAutoSaveInterval() {
+        return this.autoSaveInterval == null ? 300 : this.autoSaveInterval;
     }
     
     /**
-     * Checks if quest notifications are enabled.
+     * Checks if quest completions should be broadcast.
      *
-     * @return true if enabled, false otherwise
+     * @return true if broadcast is enabled, false otherwise
      */
-    public Boolean getEnableQuestNotifications() {
-        return enableQuestNotifications == null || enableQuestNotifications;
+    public Boolean getBroadcastCompletions() {
+        return this.broadcastCompletions != null && this.broadcastCompletions;
     }
     
     /**
-     * Gets the quest categories.
+     * Checks if quest notifications should be shown.
      *
-     * @return the map of category keys to sections, or an empty map if not set
+     * @return true if notifications are enabled, false otherwise
      */
-    public Map<String, QuestCategorySection> getCategories() {
-        return categories == null ? new HashMap<>() : categories;
+    public Boolean getShowNotifications() {
+        return this.showNotifications == null || this.showNotifications;
+    }
+    
+    /**
+     * Checks if quest statistics should be tracked.
+     *
+     * @return true if statistics tracking is enabled, false otherwise
+     */
+    public Boolean getTrackStatistics() {
+        return this.trackStatistics == null || this.trackStatistics;
     }
 }

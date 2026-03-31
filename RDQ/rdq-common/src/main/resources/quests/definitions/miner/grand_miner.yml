@@ -1,52 +1,50 @@
 identifier: "grand_miner"
 category: "miner"
 difficulty: HARD
+enabled: true
+displayOrder: 4
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
+
 icon:
-  material: "NETHERITE_PICKAXE"
-  display_name_key: "quest.grand_miner.name"
-  description_key: "quest.grand_miner.description"
-  custom_model_data: 5003
-  enchanted: true
+  material: NETHERITE_PICKAXE
+  displayNameKey: "quest.grand_miner.name"
+  descriptionKey: "quest.grand_miner.description"
+
 tasks:
-  - identifier: "mine_ancient_debris"
-    type: "BREAK_BLOCKS"
-    target: "ANCIENT_DEBRIS"
-    amount: 16
-    icon:
-      material: "ANCIENT_DEBRIS"
-      display_name_key: "quest.grand_miner.task1.name"
-  - identifier: "mine_obsidian"
-    type: "BREAK_BLOCKS"
-    target: "OBSIDIAN"
-    amount: 64
-    icon:
-      material: "OBSIDIAN"
-      display_name_key: "quest.grand_miner.task2.name"
-  - identifier: "craft_netherite_ingot"
-    type: "CRAFT_ITEMS"
-    target: "NETHERITE_INGOT"
-    amount: 4
-    icon:
-      material: "NETHERITE_INGOT"
-      display_name_key: "quest.grand_miner.task3.name"
+  mine_ancient_debris:
+    orderIndex: 0
+    difficulty: HARD
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: ANCIENT_DEBRIS
+      amount: 16
+  mine_obsidian:
+    orderIndex: 1
+    difficulty: HARD
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: OBSIDIAN
+      amount: 64
+
 rewards:
-  - type: "CURRENCY"
-    currency_id: "coins"
-    amount: 1000
-  - type: "EXPERIENCE"
-    amount: 600
-  - type: "TITLE"
-    title_id: "grand_miner"
-prerequisites:
-  - "master_miner"
-attributes:
-  repeatable: false
-  quest_type: "MAIN"
-  min_level: 20
-  chain_id: "miner_chain"
-  chain_order: 4
-metadata:
-  author: "RDQ Team"
-  created: "2026-03-16"
-  version: "1.0.0"
-  tags: ["miner", "expert", "mining", "chain"]
+  main_currency:
+    type: CURRENCY
+    currency: coins
+    amount: 1000.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 600.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

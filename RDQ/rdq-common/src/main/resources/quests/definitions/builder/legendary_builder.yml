@@ -1,124 +1,58 @@
-# ============================================================================
-# BUILDER QUEST: Legendary Builder
-# ============================================================================
-# Ultimate building challenge requiring mastery of all construction skills.
-# Final quest in the builder progression chain.
-# ============================================================================
-
 identifier: "legendary_builder"
 category: "builder"
-difficulty: EXPERT
+difficulty: EXTREME
+enabled: true
+displayOrder: 5
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
 
 icon:
-  material: "BEACON"
-  display_name_key: "quest.legendary_builder.name"
-  description_key: "quest.legendary_builder.description"
-  custom_model_data: 6004
-  enchanted: true
+  material: BEACON
+  displayNameKey: "quest.legendary_builder.name"
+  descriptionKey: "quest.legendary_builder.description"
 
 tasks:
-  - identifier: "collect_materials"
-    type: "COLLECT_ITEMS"
-    target: "NETHERITE_INGOT"
-    amount: 16
-    icon:
-      material: "NETHERITE_INGOT"
-      display_name_key: "quest.legendary_builder.task1.name"
-  
-  - identifier: "craft_beacon"
-    type: "CRAFT_ITEMS"
-    target: "BEACON"
-    amount: 1
-    icon:
-      material: "BEACON"
-      display_name_key: "quest.legendary_builder.task2.name"
-  
-  - identifier: "build_pyramid"
-    type: "PLACE_BLOCKS"
-    target: "DIAMOND_BLOCK"
-    amount: 164
-    icon:
-      material: "DIAMOND_BLOCK"
-      display_name_key: "quest.legendary_builder.task3.name"
-  
-  - identifier: "place_beacon"
-    type: "PLACE_BLOCKS"
-    target: "BEACON"
-    amount: 1
-    icon:
-      material: "BEACON"
-      display_name_key: "quest.legendary_builder.task4.name"
+  collect_materials:
+    orderIndex: 0
+    difficulty: EXTREME
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: NETHERITE_INGOT
+      amount: 16
+  build_pyramid:
+    orderIndex: 1
+    difficulty: EXTREME
+    sequential: false
+    requirement:
+      type: PLACE_BLOCKS
+      target: DIAMOND_BLOCK
+      amount: 164
+  place_beacon:
+    orderIndex: 2
+    difficulty: EXTREME
+    sequential: true
+    requirement:
+      type: PLACE_BLOCKS
+      target: BEACON
+      amount: 1
 
 rewards:
-  - type: "CURRENCY"
-    currency_id: "coins"
-    amount: 5000
-  - type: "EXPERIENCE"
-    amount: 2000
-  - type: "ITEM"
-    material: "NETHERITE_AXE"
-    amount: 1
-    display_name_key: "item.legendary_builder_axe.name"
-    lore_key: "item.legendary_builder_axe.lore"
-    enchantments:
-      EFFICIENCY: 10
-      UNBREAKING: 10
-      SILK_TOUCH: 1
-      MENDING: 1
-    custom_model_data: 9006
-  - type: "PERK"
-    perk_id: "legendary_builder"
-    duration: 0
-  - type: "TITLE"
-    title_id: "legendary_architect"
-
-prerequisites:
-  - "grand_builder"
-
-requirements:
-  - type: "LEVEL"
-    level: 50
-  - type: "CURRENCY"
-    currency_id: "coins"
-    amount: 10000
-
-attributes:
-  repeatable: false
-  hidden: false
-  quest_type: "CHALLENGE"
-  time_limit: 0
-  min_level: 50
-  max_concurrent: 1
-  auto_start: false
-  show_in_log: true
-  chain_id: "builder_chain"
-  chain_order: 5
-
-effects:
-  start_particle: "DRAGON_BREATH"
-  complete_particle: "END_ROD"
-  start_sound: "BLOCK_BEACON_ACTIVATE"
-  complete_sound: "UI_TOAST_CHALLENGE_COMPLETE"
-  complete_title:
-    title_key: "quest.legendary_builder.complete.title"
-    subtitle_key: "quest.legendary_builder.complete.subtitle"
-    fade_in: 20
-    stay: 100
-    fade_out: 20
-
-failure_conditions:
-  fail_on_death: false
-  fail_on_logout: false
-  fail_on_timeout: false
-
-metadata:
-  author: "RDQ Team"
-  created: "2026-03-16"
-  modified: "2026-03-16"
-  version: "1.0.0"
-  tags:
-    - "builder"
-    - "legendary"
-    - "construction"
-    - "chain"
-    - "challenge"
+  main_currency:
+    type: CURRENCY
+    currency: coins
+    amount: 5000.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 2000.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

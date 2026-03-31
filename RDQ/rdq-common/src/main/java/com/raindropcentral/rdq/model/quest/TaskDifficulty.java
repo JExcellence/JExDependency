@@ -8,6 +8,11 @@ package com.raindropcentral.rdq.model.quest;
  */
 public enum TaskDifficulty {
     /**
+     * Trivial difficulty - extremely easy tasks.
+     */
+    TRIVIAL,
+
+    /**
      * Easy difficulty - simple tasks.
      */
     EASY,
@@ -20,5 +25,10 @@ public enum TaskDifficulty {
     /**
      * Hard difficulty - challenging tasks.
      */
-    HARD
+    HARD,
+
+    /**
+     * Extreme difficulty - nearly impossible tasks.
+     */
+    EXTREME
 }

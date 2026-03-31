@@ -41,7 +41,6 @@ import java.util.logging.Logger;
  *   "taskIdentifier": "kill_zombies"
  * }
  * </pre>
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0

@@ -1,6 +1,6 @@
 package com.raindropcentral.rdq.database.entity.quest;
 
-import com.raindropcentral.rdq.config.utility.IconSection;
+import com.raindropcentral.rplatform.config.icon.IconSection;
 import com.raindropcentral.rdq.database.converter.IconSectionConverter;
 import com.raindropcentral.rdq.database.entity.reward.BaseReward;
 import de.jexcellence.hibernate.entity.BaseEntity;
@@ -97,9 +97,10 @@ public class QuestReward extends BaseEntity {
         this.reward = reward;
         this.icon = icon;
         
-        if (quest != null) {
-            quest.addReward(this);
-        }
+        // NOTE: Do NOT call quest.addReward(this) here!
+        // Hibernate will manage the bidirectional relationship automatically
+        // when this entity is persisted. Calling addReward() would trigger
+        // lazy initialization of the rewards collection outside of a session.
     }
     
     /**

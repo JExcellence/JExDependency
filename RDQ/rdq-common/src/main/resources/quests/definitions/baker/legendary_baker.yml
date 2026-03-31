@@ -1,104 +1,66 @@
-# ============================================================================
-# BAKER QUEST: Legendary Baker
-# ============================================================================
-# Legendary baking quest - ultimate challenge for master bakers.
-# Final quest in the baker progression chain.
-# ============================================================================
-
 identifier: "legendary_baker"
 category: "baker"
-difficulty: EXPERT
+difficulty: EXTREME
+enabled: true
+displayOrder: 5
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
 
 icon:
-  material: "CAKE"
-  display_name_key: "quest.legendary_baker.name"
-  description_key: "quest.legendary_baker.description"
-  custom_model_data: 3004
-  enchanted: true
+  material: CAKE
+  displayNameKey: "quest.legendary_baker.name"
+  descriptionKey: "quest.legendary_baker.description"
 
 tasks:
-  - identifier: "craft_golden_apples"
-    type: "CRAFT_ITEMS"
-    target: "GOLDEN_APPLE"
-    amount: 10
-    icon:
-      material: "GOLDEN_APPLE"
-      display_name_key: "quest.legendary_baker.task1.name"
-  
-  - identifier: "craft_golden_carrots"
-    type: "CRAFT_ITEMS"
-    target: "GOLDEN_CARROT"
-    amount: 64
-    icon:
-      material: "GOLDEN_CARROT"
-      display_name_key: "quest.legendary_baker.task2.name"
-  
-  - identifier: "craft_all_foods"
-    type: "CRAFT_ITEMS"
-    target: "BREAD"
-    amount: 256
-    icon:
-      material: "BREAD"
-      display_name_key: "quest.legendary_baker.task3.name"
-  
-  - identifier: "feed_players"
-    type: "CUSTOM"
-    target: "FEED_PLAYERS"
-    amount: 100
-    icon:
-      material: "COOKED_BEEF"
-      display_name_key: "quest.legendary_baker.task4.name"
+  craft_golden_apples:
+    orderIndex: 0
+    difficulty: EXTREME
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: GOLDEN_APPLE
+      amount: 10
+  craft_golden_carrots:
+    orderIndex: 1
+    difficulty: EXTREME
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: GOLDEN_CARROT
+      amount: 64
+  craft_all_foods:
+    orderIndex: 2
+    difficulty: EXTREME
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: BREAD
+      amount: 256
+  consume_food:
+    orderIndex: 3
+    difficulty: EXTREME
+    sequential: false
+    requirement:
+      type: CONSUME_ITEM
+      target: COOKED_BEEF
+      amount: 100
 
 rewards:
-  - type: "CURRENCY"
-    currency_id: "coins"
-    amount: 5000
-  - type: "EXPERIENCE"
-    amount: 2000
-  - type: "TITLE"
-    title_id: "legendary_baker"
-  - type: "PERK"
-    perk_id: "master_chef"
-    duration: 0
-
-prerequisites:
-  - "grand_baker"
-
-requirements:
-  - type: "LEVEL"
-    level: 30
-
-attributes:
-  repeatable: false
-  hidden: false
-  quest_type: "CHALLENGE"
-  time_limit: 0
-  min_level: 30
-  max_concurrent: 1
-  auto_start: false
-  show_in_log: true
-  chain_id: "baker_chain"
-  chain_order: 5
-
-effects:
-  start_particle: "DRAGON_BREATH"
-  complete_particle: "END_ROD"
-  start_sound: "ENTITY_ENDER_DRAGON_GROWL"
-  complete_sound: "UI_TOAST_CHALLENGE_COMPLETE"
-
-failure_conditions:
-  fail_on_death: false
-  fail_on_logout: false
-  fail_on_timeout: false
-
-metadata:
-  author: "RDQ Team"
-  created: "2026-03-16"
-  modified: "2026-03-16"
-  version: "1.0.0"
-  tags:
-    - "baker"
-    - "legendary"
-    - "crafting"
-    - "chain"
-    - "challenge"
+  main_currency:
+    type: CURRENCY
+    currency: coins
+    amount: 5000.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 2000.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

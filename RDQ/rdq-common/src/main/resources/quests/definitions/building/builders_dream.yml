@@ -1,0 +1,74 @@
+identifier: "builders_dream"
+category: "building"
+difficulty: NORMAL
+enabled: true
+displayOrder: 3
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
+
+icon:
+  material: BRICKS
+  displayNameKey: "quest.builders_dream.name"
+  descriptionKey: "quest.builders_dream.description"
+
+tasks:
+  place_foundation:
+    orderIndex: 0
+    difficulty: EASY
+    sequential: true
+    requirement:
+      type: PLACE_BLOCKS
+      target: BRICKS
+      amount: 50
+    reward:
+      type: CURRENCY
+      currency: raindrops
+      amount: 50.0
+  build_walls:
+    orderIndex: 1
+    difficulty: NORMAL
+    sequential: true
+    requirement:
+      type: PLACE_BLOCKS
+      target: OAK_PLANKS
+      amount: 40
+    reward:
+      type: CURRENCY
+      currency: raindrops
+      amount: 75.0
+  add_windows:
+    orderIndex: 2
+    difficulty: NORMAL
+    sequential: true
+    requirement:
+      type: PLACE_BLOCKS
+      target: GLASS
+      amount: 20
+  complete_roof:
+    orderIndex: 3
+    difficulty: NORMAL
+    sequential: true
+    requirement:
+      type: PLACE_BLOCKS
+      target: OAK_STAIRS
+      amount: 30
+
+rewards:
+  completion_currency:
+    type: CURRENCY
+    currency: raindrops
+    amount: 750.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  completion_xp:
+    type: EXPERIENCE
+    amount: 1500.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

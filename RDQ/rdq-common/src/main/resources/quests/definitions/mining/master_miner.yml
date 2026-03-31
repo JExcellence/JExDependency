@@ -1,0 +1,66 @@
+identifier: "master_miner"
+category: "mining"
+difficulty: NORMAL
+enabled: true
+displayOrder: 2
+repeatable: true
+maxCompletions: 5
+cooldownSeconds: 7200
+timeLimitSeconds: 3600
+
+icon:
+  material: DIAMOND_PICKAXE
+  displayNameKey: "quest.master_miner.name"
+  descriptionKey: "quest.master_miner.description"
+
+tasks:
+  mine_coal:
+    orderIndex: 0
+    difficulty: EASY
+    sequential: true
+    requirement:
+      type: MINE_BLOCKS
+      target: COAL_ORE
+      amount: 32
+    reward:
+      type: CURRENCY
+      currency: raindrops
+      amount: 50.0
+  mine_iron:
+    orderIndex: 1
+    difficulty: NORMAL
+    sequential: true
+    requirement:
+      type: MINE_BLOCKS
+      target: IRON_ORE
+      amount: 16
+    reward:
+      type: CURRENCY
+      currency: raindrops
+      amount: 75.0
+  mine_diamond:
+    orderIndex: 2
+    difficulty: HARD
+    sequential: true
+    requirement:
+      type: MINE_BLOCKS
+      target: DIAMOND_ORE
+      amount: 5
+
+rewards:
+  completion_currency:
+    type: CURRENCY
+    currency: raindrops
+    amount: 500.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  completion_xp:
+    type: EXPERIENCE
+    amount: 1000.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

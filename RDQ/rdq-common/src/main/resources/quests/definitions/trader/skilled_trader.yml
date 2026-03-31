@@ -1,101 +1,50 @@
-# ============================================================================
-# TRADER QUEST: Skilled Trader
-# ============================================================================
-# Intermediate trading quest with more complex commerce tasks.
-# Second quest in the trader progression chain.
-# ============================================================================
-
 identifier: "skilled_trader"
 category: "trader"
 difficulty: EASY
+enabled: true
+displayOrder: 2
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
 
 icon:
-  material: "GOLD_INGOT"
-  display_name_key: "quest.skilled_trader.name"
-  description_key: "quest.skilled_trader.description"
-  custom_model_data: 8001
-  enchanted: false
+  material: GOLD_INGOT
+  displayNameKey: "quest.skilled_trader.name"
+  descriptionKey: "quest.skilled_trader.description"
 
 tasks:
-  - identifier: "trade_librarian"
-    type: "TRADE_WITH_VILLAGER"
-    profession: "LIBRARIAN"
-    amount: 15
-    icon:
-      material: "BOOK"
-      display_name_key: "quest.skilled_trader.task1.name"
-  
-  - identifier: "collect_diamonds"
-    type: "COLLECT_ITEMS"
-    target: "DIAMOND"
-    amount: 16
-    icon:
-      material: "DIAMOND"
-      display_name_key: "quest.skilled_trader.task2.name"
-  
-  - identifier: "trade_toolsmith"
-    type: "TRADE_WITH_VILLAGER"
-    profession: "TOOLSMITH"
-    amount: 10
-    icon:
-      material: "IRON_PICKAXE"
-      display_name_key: "quest.skilled_trader.task3.name"
-  
-  - identifier: "collect_emeralds_advanced"
-    type: "COLLECT_ITEMS"
-    target: "EMERALD"
-    amount: 64
-    icon:
-      material: "EMERALD"
-      display_name_key: "quest.skilled_trader.task4.name"
+  mine_diamonds:
+    orderIndex: 0
+    difficulty: EASY
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: DIAMOND_ORE
+      amount: 16
+  mine_emeralds:
+    orderIndex: 1
+    difficulty: EASY
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: EMERALD_ORE
+      amount: 64
 
 rewards:
-  - type: "CURRENCY"
-    currency_id: "coins"
-    amount: 600
-  - type: "EXPERIENCE"
-    amount: 300
-  - type: "ITEM"
-    material: "EMERALD_BLOCK"
-    amount: 4
-    display_name_key: "item.skilled_trader_emerald.name"
-    lore_key: "item.skilled_trader_emerald.lore"
-
-prerequisites:
-  - "novice_trader"
-
-requirements: []
-
-attributes:
-  repeatable: false
-  hidden: false
-  quest_type: "MAIN"
-  time_limit: 0
-  min_level: 5
-  max_concurrent: 1
-  auto_start: false
-  show_in_log: true
-  chain_id: "trader_chain"
-  chain_order: 2
-
-effects:
-  start_particle: "VILLAGER_HAPPY"
-  complete_particle: "HAPPY_VILLAGER"
-  start_sound: "ENTITY_VILLAGER_YES"
-  complete_sound: "ENTITY_PLAYER_LEVELUP"
-
-failure_conditions:
-  fail_on_death: false
-  fail_on_logout: false
-  fail_on_timeout: false
-
-metadata:
-  author: "RDQ Team"
-  created: "2026-03-16"
-  modified: "2026-03-16"
-  version: "1.0.0"
-  tags:
-    - "trader"
-    - "intermediate"
-    - "economy"
-    - "chain"
+  main_currency:
+    type: CURRENCY
+    currency: coins
+    amount: 600.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 300.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

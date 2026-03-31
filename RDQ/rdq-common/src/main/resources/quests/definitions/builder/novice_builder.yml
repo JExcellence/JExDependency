@@ -1,94 +1,50 @@
-# ============================================================================
-# BUILDER QUEST: Novice Builder
-# ============================================================================
-# Entry-level building quest introducing basic construction.
-# First quest in the builder progression chain.
-# ============================================================================
-
 identifier: "novice_builder"
 category: "builder"
 difficulty: EASY
+enabled: true
+displayOrder: 1
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
 
 icon:
-  material: "OAK_PLANKS"
-  display_name_key: "quest.novice_builder.name"
-  description_key: "quest.novice_builder.description"
-  custom_model_data: 6000
-  enchanted: false
+  material: OAK_PLANKS
+  displayNameKey: "quest.novice_builder.name"
+  descriptionKey: "quest.novice_builder.description"
 
 tasks:
-  - identifier: "collect_wood"
-    type: "COLLECT_ITEMS"
-    target: "OAK_LOG"
-    amount: 64
-    icon:
-      material: "OAK_LOG"
-      display_name_key: "quest.novice_builder.task1.name"
-  
-  - identifier: "craft_planks"
-    type: "CRAFT_ITEMS"
-    target: "OAK_PLANKS"
-    amount: 128
-    icon:
-      material: "OAK_PLANKS"
-      display_name_key: "quest.novice_builder.task2.name"
-  
-  - identifier: "place_blocks"
-    type: "PLACE_BLOCKS"
-    target: "OAK_PLANKS"
-    amount: 100
-    icon:
-      material: "OAK_PLANKS"
-      display_name_key: "quest.novice_builder.task3.name"
+  collect_wood:
+    orderIndex: 0
+    difficulty: EASY
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: OAK_LOG
+      amount: 64
+  place_blocks:
+    orderIndex: 1
+    difficulty: EASY
+    sequential: false
+    requirement:
+      type: PLACE_BLOCKS
+      target: OAK_PLANKS
+      amount: 100
 
 rewards:
-  - type: "CURRENCY"
-    currency_id: "coins"
-    amount: 200
-  - type: "EXPERIENCE"
-    amount: 100
-  - type: "ITEM"
-    material: "STONE_AXE"
-    amount: 1
-    display_name_key: "item.builder_axe.name"
-    lore_key: "item.builder_axe.lore"
-    enchantments:
-      EFFICIENCY: 2
-
-prerequisites: []
-
-requirements: []
-
-attributes:
-  repeatable: false
-  hidden: false
-  quest_type: "MAIN"
-  time_limit: 0
-  min_level: 1
-  max_concurrent: 1
-  auto_start: false
-  show_in_log: true
-  chain_id: "builder_chain"
-  chain_order: 1
-
-effects:
-  start_particle: "VILLAGER_HAPPY"
-  complete_particle: "HAPPY_VILLAGER"
-  start_sound: "BLOCK_WOOD_PLACE"
-  complete_sound: "ENTITY_PLAYER_LEVELUP"
-
-failure_conditions:
-  fail_on_death: false
-  fail_on_logout: false
-  fail_on_timeout: false
-
-metadata:
-  author: "RDQ Team"
-  created: "2026-03-16"
-  modified: "2026-03-16"
-  version: "1.0.0"
-  tags:
-    - "builder"
-    - "beginner"
-    - "construction"
-    - "chain"
+  main_currency:
+    type: CURRENCY
+    currency: coins
+    amount: 200.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 100.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

@@ -37,6 +37,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.util.concurrent.CompletableFuture;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Primary orchestrator for the shared Raindrop platform runtime that binds plugin lifecycle.
@@ -457,16 +459,10 @@ public class RPlatform {
                     false
             );
             File hiberateFile = new File(databaseFolder + "/hibernate.properties");
+            
+            this.entityManagerFactory = new JEHibernate(hiberateFile.getPath()).getEntityManagerFactory();
 
-            try {
-                this.entityManagerFactory = new JEHibernate(hiberateFile.getPath()).getEntityManagerFactory();
-
-                logger.info("Database resources initialized successfully.");
-            } catch (Exception exception) {
-                this.entityManagerFactory = null;
-
-                logger.severe("Database resources initialization failed.", exception);
-            }
+            logger.info("Database resources initialized successfully.");
         }
     }
 }

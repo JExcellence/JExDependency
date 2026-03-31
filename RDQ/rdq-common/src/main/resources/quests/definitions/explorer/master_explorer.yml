@@ -1,51 +1,50 @@
 identifier: "master_explorer"
 category: "explorer"
-difficulty: MEDIUM
+difficulty: NORMAL
+enabled: true
+displayOrder: 3
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
+
 icon:
-  material: "ENDER_EYE"
-  display_name_key: "quest.master_explorer.name"
-  description_key: "quest.master_explorer.description"
-  custom_model_data: 7002
-  enchanted: true
+  material: ENDER_EYE
+  displayNameKey: "quest.master_explorer.name"
+  descriptionKey: "quest.master_explorer.description"
+
 tasks:
-  - identifier: "find_stronghold"
-    type: "REACH_LOCATION"
-    target: "STRONGHOLD"
-    amount: 1
-    icon:
-      material: "END_PORTAL_FRAME"
-      display_name_key: "quest.master_explorer.task1.name"
-  - identifier: "find_nether_fortress"
-    type: "REACH_LOCATION"
-    target: "NETHER_FORTRESS"
-    amount: 1
-    icon:
-      material: "NETHER_BRICKS"
-      display_name_key: "quest.master_explorer.task2.name"
-  - identifier: "travel_far"
-    type: "TRAVEL_DISTANCE"
-    amount: 10000
-    icon:
-      material: "GOLDEN_BOOTS"
-      display_name_key: "quest.master_explorer.task3.name"
+  mine_end_portal_frame:
+    orderIndex: 0
+    difficulty: NORMAL
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: NETHER_BRICKS
+      amount: 128
+  mine_nether_wart:
+    orderIndex: 1
+    difficulty: NORMAL
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: NETHER_WART_BLOCK
+      amount: 64
+
 rewards:
-  - type: "CURRENCY"
-    currency_id: "coins"
-    amount: 500
-  - type: "EXPERIENCE"
-    amount: 300
-  - type: "PERK"
-    perk_id: "swift_travel"
-    duration: 7200
-prerequisites:
-  - "skilled_explorer"
-attributes:
-  repeatable: false
-  quest_type: "MAIN"
-  chain_id: "explorer_chain"
-  chain_order: 3
-metadata:
-  author: "RDQ Team"
-  created: "2026-03-16"
-  version: "1.0.0"
-  tags: ["explorer", "advanced", "exploration", "chain"]
+  main_currency:
+    type: CURRENCY
+    currency: coins
+    amount: 500.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 300.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

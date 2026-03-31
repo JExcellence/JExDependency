@@ -22,8 +22,6 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -42,7 +40,6 @@ import java.util.logging.Logger;
  *   "minCompletions": 1
  * }
  * </pre>
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0

@@ -1,98 +1,46 @@
-# ============================================================================
-# COMBAT QUEST: Combat Basics
-# ============================================================================
-# Entry-level combat quest introducing basic combat mechanics.
-# First quest in the main combat progression chain.
-# ============================================================================
-
 identifier: "combat_basic"
 category: "combat"
 difficulty: EASY
+enabled: true
+displayOrder: 1
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
 
 icon:
-  material: "WOODEN_SWORD"
-  display_name_key: "quest.combat_basic.name"
-  description_key: "quest.combat_basic.description"
-  custom_model_data: 2000
-  enchanted: false
+  material: WOODEN_SWORD
+  displayNameKey: "quest.combat_basic.name"
+  descriptionKey: "quest.combat_basic.description"
 
 tasks:
-  - identifier: "kill_any_mob"
-    type: "KILL_MOBS"
-    target: "ANY"
-    amount: 5
+  kill_any_mob:
+    orderIndex: 0
+    difficulty: EASY
+    sequential: false
     icon:
-      material: "IRON_SWORD"
-      display_name_key: "quest.combat_basic.task1.name"
-  
-  - identifier: "craft_sword"
-    type: "CRAFT_ITEMS"
-    target: "WOODEN_SWORD"
-    amount: 1
-    icon:
-      material: "WOODEN_SWORD"
-      display_name_key: "quest.combat_basic.task2.name"
+      material: ZOMBIE_HEAD
+      displayNameKey: "quest.combat_basic.task.kill_any_mob.name"
+      descriptionKey: "quest.combat_basic.task.kill_any_mob.description"
+    requirement:
+      type: KILL_MOBS
+      target: ZOMBIE
+      amount: 5
 
 rewards:
-  - type: "CURRENCY"
-    currency_id: "coins"
-    amount: 100
-  - type: "EXPERIENCE"
-    amount: 50
-  - type: "ITEM"
-    material: "STONE_SWORD"
-    amount: 1
-    display_name_key: "item.basic_sword.name"
-    lore_key: "item.basic_sword.lore"
-    enchantments:
-      SHARPNESS: 1
-
-prerequisites: []
-
-requirements: []
-
-attributes:
-  repeatable: false
-  hidden: false
-  quest_type: "MAIN"
-  time_limit: 0
-  min_level: 1
-  max_concurrent: 1
-  auto_start: false
-  show_in_log: true
-  chain_id: "combat_main_chain"
-  chain_order: 1
-
-effects:
-  start_particle: "CRIT"
-  complete_particle: "CRIT_MAGIC"
-  start_sound: "ITEM_ARMOR_EQUIP_IRON"
-  complete_sound: "ENTITY_PLAYER_LEVELUP"
-  start_title:
-    title_key: "quest.combat_basic.start.title"
-    subtitle_key: "quest.combat_basic.start.subtitle"
-    fade_in: 10
-    stay: 70
-    fade_out: 20
-  complete_title:
-    title_key: "quest.combat_basic.complete.title"
-    subtitle_key: "quest.combat_basic.complete.subtitle"
-    fade_in: 10
-    stay: 70
-    fade_out: 20
-
-failure_conditions:
-  fail_on_death: false
-  fail_on_logout: false
-  fail_on_timeout: false
-
-metadata:
-  author: "RDQ Team"
-  created: "2026-03-14"
-  modified: "2026-03-14"
-  version: "1.0.0"
-  tags:
-    - "combat"
-    - "beginner"
-    - "tutorial"
-    - "chain"
+  main_currency:
+    type: CURRENCY
+    currencyId: coins
+    amount: 100.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "quest.combat_basic.reward.currency.name"
+      descriptionKey: "quest.combat_basic.reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 50.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "quest.combat_basic.reward.experience.name"
+      descriptionKey: "quest.combat_basic.reward.experience.description"

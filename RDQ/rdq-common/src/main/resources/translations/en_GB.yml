@@ -2205,6 +2205,7 @@ perk:
   combat_heal:
     name: "<gradient:#10b981:#34d399>Combat Heal</gradient>"
     description: "<gradient:#6b7280:#9ca3af>Heal when dealing damage to enemies</gradient>"
+
 quest:
   zombie_slayer:
     name: <gradient:#ef4444:#f87171>Zombie Slayer</gradient>
@@ -2247,99 +2248,7 @@ quest:
         description: Place %amount% oak stair blocks for the roof
 view:
   quest:
-    categories:
-      title: <gradient:#f59e0b:#fbbf24>Quest Categories</gradient>
-    list:
-      title: <gradient:#f59e0b:#fbbf24>%category% Quests</gradient>
-    detail:
-      title: '<gradient:#f59e0b:#fbbf24>Quest: %quest%</gradient>'
-    active:
-      title: <gradient:#f59e0b:#fbbf24>Active Quests</gradient>
-    items:
-      back:
-        name: <gray>Back</gray>
-        lore:
-        - <gray>Return to previous menu</gray>
-      start:
-        name: <green>Start Quest</green>
-        lore:
-        - <gray>Click to start this quest</gray>
-        - ''
-        - <dark_gray>Requirements:</dark_gray>
-        - <dark_gray>- %requirements%</dark_gray>
-      abandon:
-        name: <red>Abandon Quest</red>
-        lore:
-        - <gray>Click to abandon this quest</gray>
-        - ''
-        - '<yellow>Warning: Progress will be lost</yellow>'
-      info:
-        name: <yellow>Quest Info</yellow>
-        lore:
-        - <gray>Click to view quest details</gray>
-      progress:
-        name: <aqua>View Progress</aqua>
-        lore:
-        - <gray>Click to view quest progress</gray>
-        - ''
-        - '<dark_gray>Progress: <white>%progress%%</white></dark_gray>'
-      close:
-        name: <gray>Close</gray>
-        lore:
-        - <gray>Close this menu</gray>
-      quest_item:
-        name: <gradient:#f59e0b:#fbbf24>%quest_name%</gradient>
-        lore:
-        - <gray>%quest_description%</gray>
-        - ''
-        - '<dark_gray>Difficulty: %difficulty%</dark_gray>'
-        - '<dark_gray>Status: %status%</dark_gray>'
-        - '<dark_gray>Tasks: <white>%task_count%</white></dark_gray>'
-        - ''
-        - '%action_hint%'
-      task_item:
-        name: <white>%task_name%</white>
-        lore:
-        - <gray>%task_description%</gray>
-        - ''
-        - '<dark_gray>Progress: <white>%current%/%required%</white></dark_gray>'
-        - '<dark_gray>Status: %status%</dark_gray>'
-    lore:
-      click_to_start: <green>Click to start this quest</green>
-      click_to_view: <yellow>Click to view quest details</yellow>
-      click_to_abandon: <red>Click to abandon this quest</red>
-      already_completed: <green>Already completed</green>
-      requirements_not_met: <red>Requirements not met</red>
-      on_cooldown: '<red>On cooldown: %time%</red>'
-      time_remaining: '<yellow>Time remaining: %time%</yellow>'
-      repeatable: <aqua>Repeatable quest</aqua>
-      one_time: <gray>One-time quest</gray>
-    progress:
-      overall: <yellow>Overall Progress</yellow>
-      percentage: '<gray>Progress: <white>%progress%%</white></gray>'
-      tasks_completed: '<gray>Tasks: <white>%completed%/%total%</white></gray>'
-      time_elapsed: '<gray>Time Elapsed: <white>%time%</white></gray>'
-      time_remaining: '<gray>Time Remaining: <white>%time%</white></gray>'
-    task:
-      progress: '<gray>Progress: <white>%current%/%required%</white></gray>'
-      completed: <green>Completed</green>
-      remaining: '<gray>Remaining: <white>%remaining%</white></gray>'
-      locked: <red>Locked</red>
-      sequential: <yellow>Complete previous tasks first</yellow>
-    rewards:
-      header: <yellow>Rewards</yellow>
-      currency: <gold>%amount% %currency%</gold>
-      experience: <aqua>%amount% Experience</aqua>
-      item: <white>%amount%x %item%</white>
-      perk: '<gradient:#a855f7:#c084fc>Perk: %perk%</gradient>'
-      quest: '<gradient:#f59e0b:#fbbf24>Quest: %quest%</gradient>'
-    requirements:
-      header: <yellow>Requirements</yellow>
-      level: <aqua>Level %level%</aqua>
-      currency: <gold>%amount% %currency%</gold>
-      quest_completion: '<gradient:#f59e0b:#fbbf24>Complete: %quest%</gradient>'
-      rank: '<gradient:#a855f7:#c084fc>Rank: %rank%</gradient>'
-      permission: '<gray>Permission: %permission%</gray>'
+
 difficulty:
   trivial: <gradient:#84cc16:#a3e635>Trivial</gradient>
   easy: <gradient:#10b981:#34d399>Easy</gradient>

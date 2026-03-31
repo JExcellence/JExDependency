@@ -13,7 +13,7 @@
 
 package com.raindropcentral.rdq.config.requirement;
 
-import com.raindropcentral.rdq.config.utility.IconSection;
+import com.raindropcentral.rplatform.config.icon.IconSection;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import de.jexcellence.configmapper.sections.AConfigSection;
 import de.jexcellence.configmapper.sections.CSAlways;
@@ -113,9 +113,12 @@ public class BaseRequirementSection extends AConfigSection {
 	private String currency;
 	private Double amount;
 	private Boolean consumable;
+
+	/** For quest task tracking: target entity/block/item type (e.g. "ZOMBIE", "DIAMOND_ORE", "HOSTILE") */
+	private String target;
 	
 	/** For ITEM: single required item (flat format). */
-	private de.jexcellence.evaluable.section.ItemStackSection requiredItem;
+	private ItemStackSection requiredItem;
 	
 	/**
 	 * Context information for auto-generating keys (set by the factory).
@@ -519,10 +522,19 @@ public class BaseRequirementSection extends AConfigSection {
 	 * @return the requirement type, or "not_defined" if not set
 	 */
 	public String getType() {
-		
+
 		return this.type == null ?
 		       "not_defined" :
 		       this.type;
+	}
+
+	/**
+	 * Gets the target entity/block/item type for quest task tracking.
+	 *
+	 * @return the target type string, or null if not set
+	 */
+	public String getTarget() {
+		return this.target;
 	}
 	
 	/**

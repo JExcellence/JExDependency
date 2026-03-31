@@ -1,110 +1,58 @@
-# ============================================================================
-# MINING QUEST: Novice Miner
-# ============================================================================
-# Introduction to mining. Teaches players basic resource gathering.
-# First quest in the mining progression chain.
-# ============================================================================
-
 identifier: "novice_miner"
 category: "mining"
 difficulty: EASY
+enabled: true
+displayOrder: 1
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
 
 icon:
-  material: "STONE_PICKAXE"
-  display_name_key: "quest.novice_miner.name"
-  description_key: "quest.novice_miner.description"
-  custom_model_data: 4001
-  enchanted: false
+  material: STONE_PICKAXE
+  displayNameKey: "quest.novice_miner.name"
+  descriptionKey: "quest.novice_miner.description"
 
 tasks:
-  - identifier: "break_stone"
-    type: "BREAK_BLOCKS"
-    target: "STONE"
-    amount: 100
+  break_stone:
+    orderIndex: 0
+    difficulty: EASY
+    sequential: false
     icon:
-      material: "STONE"
-      display_name_key: "quest.novice_miner.task1.name"
-  
-  - identifier: "break_coal_ore"
-    type: "BREAK_BLOCKS"
-    target: "COAL_ORE"
-    amount: 20
+      material: STONE
+      displayNameKey: "quest.novice_miner.task.break_stone.name"
+      descriptionKey: "quest.novice_miner.task.break_stone.description"
+    requirement:
+      type: MINE_BLOCKS
+      target: STONE
+      amount: 100
+  break_coal_ore:
+    orderIndex: 1
+    difficulty: EASY
+    sequential: false
     icon:
-      material: "COAL_ORE"
-      display_name_key: "quest.novice_miner.task2.name"
-  
-  - identifier: "collect_coal"
-    type: "COLLECT_ITEMS"
-    target: "COAL"
-    amount: 20
-    consume: false
-    icon:
-      material: "COAL"
-      display_name_key: "quest.novice_miner.task3.name"
+      material: COAL_ORE
+      displayNameKey: "quest.novice_miner.task.break_coal_ore.name"
+      descriptionKey: "quest.novice_miner.task.break_coal_ore.description"
+    requirement:
+      type: MINE_BLOCKS
+      target: COAL_ORE
+      amount: 20
 
 rewards:
-  - type: "CURRENCY"
-    currency_id: "coins"
-    amount: 300
-  - type: "EXPERIENCE"
-    amount: 150
-  - type: "ITEM"
-    material: "IRON_PICKAXE"
-    amount: 1
-    display_name_key: "item.miners_tool.name"
-    lore_key: "item.miners_tool.lore"
-    enchantments:
-      EFFICIENCY: 2
-      UNBREAKING: 1
-    custom_model_data: 4002
-
-prerequisites:
-  - "tutorial_welcome"
-
-requirements: []
-
-attributes:
-  repeatable: false
-  hidden: false
-  quest_type: "MAIN"
-  time_limit: 0
-  min_level: 1
-  max_concurrent: 1
-  auto_start: false
-  show_in_log: true
-  chain_id: "mining_chain"
-  chain_order: 1
-
-effects:
-  start_particle: "BLOCK_CRACK"
-  complete_particle: "ITEM_CRACK"
-  start_sound: "BLOCK_STONE_BREAK"
-  complete_sound: "ENTITY_PLAYER_LEVELUP"
-  start_title:
-    title_key: "quest.novice_miner.start.title"
-    subtitle_key: "quest.novice_miner.start.subtitle"
-    fade_in: 10
-    stay: 70
-    fade_out: 20
-  complete_title:
-    title_key: "quest.novice_miner.complete.title"
-    subtitle_key: "quest.novice_miner.complete.subtitle"
-    fade_in: 10
-    stay: 70
-    fade_out: 20
-
-failure_conditions:
-  fail_on_death: false
-  fail_on_logout: false
-  fail_on_timeout: false
-
-metadata:
-  author: "RDQ Team"
-  created: "2026-03-12"
-  modified: "2026-03-12"
-  version: "1.0.0"
-  tags:
-    - "mining"
-    - "gathering"
-    - "beginner"
-    - "chain"
+  main_currency:
+    type: CURRENCY
+    currency: coins
+    amount: 300.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 150.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

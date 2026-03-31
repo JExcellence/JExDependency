@@ -14,7 +14,7 @@ import java.util.logging.Logger;
  * server crash or unexpected shutdown.
  * </p>
  *
- * <h3>Design Rationale</h3>
+ * <h1>Design Rationale</h1>
  * <ul>
  *   <li>5-minute interval balances safety and performance</li>
  *   <li>Only saves players with changes (dirty flag)</li>

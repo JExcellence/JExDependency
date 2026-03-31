@@ -14,7 +14,7 @@
 package com.raindropcentral.rdq.config.quest;
 
 import com.raindropcentral.rdq.config.requirement.BaseRequirementSection;
-import com.raindropcentral.rdq.config.utility.IconSection;
+import com.raindropcentral.rplatform.config.icon.IconSection;
 import com.raindropcentral.rdq.config.utility.RewardSection;
 import de.jexcellence.configmapper.sections.AConfigSection;
 import de.jexcellence.configmapper.sections.CSAlways;
@@ -22,71 +22,67 @@ import de.jexcellence.configmapper.sections.CSIgnore;
 import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 /**
- * Configuration section for a quest.
- * <p>
- * Represents a single quest within a category, including its difficulty, icon,
- * prerequisites, unlocks, requirements, rewards, and nested tasks. Quests are
- * the primary unit of player progression within the quest system.
- * </p>
+ * Represents a configuration section for a quest.
+ * Contains all properties, requirements, rewards, and tasks for a specific quest.
  *
- * @author JExcellence
+ * @author RaindropCentral
  * @version 1.0.0
- * @since TBD
  */
 @CSAlways
 public class QuestSection extends AConfigSection {
     
-    /** The localization key for the display name of the quest. */
+    /** The unique identifier for this quest. */
+    private String identifier;
+    
+    /** The category this quest belongs to. */
+    private String category;
+    
+    /** The difficulty level of this quest. */
+    private String difficulty;
+    
+    /** Whether this quest is enabled. */
+    private Boolean enabled;
+    
+    /** The display order of this quest within its category. */
+    private Integer displayOrder;
+    
+    /** Whether this quest is repeatable. */
+    private Boolean repeatable;
+    
+    /** Maximum number of completions allowed (-1 for unlimited). */
+    private Integer maxCompletions;
+    
+    /** Cooldown in seconds between completions. */
+    private Integer cooldownSeconds;
+    
+    /** Time limit in seconds (0 for no limit). */
+    private Integer timeLimitSeconds;
+    
+    /** The key for the display name of the quest (for localization). */
     private String displayNameKey;
     
-    /** The localization key for the description of the quest. */
+    /** The key for the description of the quest (for localization). */
     private String descriptionKey;
     
     /** The icon representing this quest. */
     private IconSection icon;
     
-    /** The difficulty level of the quest (EASY, MEDIUM, HARD, EXPERT, MASTER). */
-    private String difficulty;
-    
-    /** Whether this quest is enabled. */
-    private Boolean isEnabled;
-    
-    /** Maximum number of times this quest can be completed (null = unlimited). */
-    private Integer maxCompletions;
-    
-    /** Cooldown in seconds before the quest can be repeated (null = no cooldown). */
-    private Integer cooldownSeconds;
-    
-    /** Time limit in seconds to complete the quest (null = no time limit). */
-    private Integer timeLimitSeconds;
-    
-    /** List of prerequisite quest IDs that must be completed before this quest. */
-    private List<String> prerequisites;
-    
-    /** List of quest IDs that are unlocked when this quest is completed. */
-    private List<String> unlocks;
-    
     /** Map of requirement keys to their configuration sections. */
     private Map<String, BaseRequirementSection> requirements;
-    
-    /** Map of reward keys to their configuration sections. */
-    private Map<String, RewardSection> rewards;
     
     /** Map of task keys to their configuration sections. */
     private Map<String, QuestTaskSection> tasks;
     
-    /** The category ID this quest belongs to (set by parent). */
-    @CSIgnore
-    private String categoryId;
+    /** Map of reward keys to their configuration sections. */
+    private Map<String, RewardSection> rewards;
     
-    /** The quest ID (set by parent). */
+    /** The quest identifier (set during parsing). */
     @CSIgnore
     private String questId;
     
@@ -95,15 +91,12 @@ public class QuestSection extends AConfigSection {
      *
      * @param evaluationEnvironmentBuilder the evaluation environment builder
      */
-    public QuestSection(
-        final EvaluationEnvironmentBuilder evaluationEnvironmentBuilder
-    ) {
+    public QuestSection(final EvaluationEnvironmentBuilder evaluationEnvironmentBuilder) {
         super(evaluationEnvironmentBuilder);
     }
     
     /**
-     * Called after parsing the configuration fields. Sets default localization keys
-     * and processes nested tasks.
+     * Called after parsing the configuration fields. Sets default localization keys if not provided.
      *
      * @param fields the list of fields parsed
      * @throws Exception if an error occurs during post-processing
@@ -112,61 +105,49 @@ public class QuestSection extends AConfigSection {
     public void afterParsing(final List<Field> fields) throws Exception {
         super.afterParsing(fields);
         
-        if (categoryId != null && questId != null) {
-            if (displayNameKey == null) {
-                displayNameKey = "quest." + categoryId + "." + questId + ".name";
+        if (this.questId != null) {
+            if (this.displayNameKey == null) {
+                this.displayNameKey = "quest." + this.questId + ".name";
             }
-            if (descriptionKey == null) {
-                descriptionKey = "quest." + categoryId + "." + questId + ".description";
+            if (this.descriptionKey == null) {
+                this.descriptionKey = "quest." + this.questId + ".description";
             }
-            
-            // Process nested tasks
-            if (tasks != null) {
-                for (Map.Entry<String, QuestTaskSection> entry : tasks.entrySet()) {
-                    QuestTaskSection task = entry.getValue();
-                    task.setCategoryId(categoryId);
-                    task.setQuestId(questId);
-                    task.setTaskId(entry.getKey());
-                    task.afterParsing(new ArrayList<>());
-                }
+        }
+        
+        // Set quest ID for all tasks
+        if (this.tasks != null) {
+            for (Map.Entry<String, QuestTaskSection> entry : this.tasks.entrySet()) {
+                entry.getValue().setQuestId(this.questId);
+                entry.getValue().setTaskId(entry.getKey());
             }
         }
     }
     
     /**
-     * Gets the display name key for this quest.
+     * Gets the unique identifier for this quest.
      *
-     * @return the display name key, or "not_defined" if not set
+     * @return the quest identifier, or a generated one if not set
      */
-    public String getDisplayNameKey() {
-        return displayNameKey == null ? "not_defined" : displayNameKey;
+    public String getIdentifier() {
+        return this.identifier == null ? "not_defined_" + UUID.randomUUID() : this.identifier;
     }
     
     /**
-     * Gets the description key for this quest.
+     * Gets the category this quest belongs to.
      *
-     * @return the description key, or "not_defined" if not set
+     * @return the category, or "general" if not set
      */
-    public String getDescriptionKey() {
-        return descriptionKey == null ? "not_defined" : descriptionKey;
-    }
-    
-    /**
-     * Gets the icon section for this quest.
-     *
-     * @return the icon section, or a new default IconSection if not set
-     */
-    public IconSection getIcon() {
-        return icon == null ? new IconSection(new EvaluationEnvironmentBuilder()) : icon;
+    public String getCategory() {
+        return this.category == null ? "general" : this.category;
     }
     
     /**
      * Gets the difficulty level of this quest.
      *
-     * @return the difficulty, or "MEDIUM" if not set
+     * @return the difficulty, or "EASY" if not set
      */
     public String getDifficulty() {
-        return difficulty == null ? "MEDIUM" : difficulty;
+        return this.difficulty == null ? "EASY" : this.difficulty;
     }
     
     /**
@@ -175,52 +156,79 @@ public class QuestSection extends AConfigSection {
      * @return true if enabled, false otherwise
      */
     public Boolean getEnabled() {
-        return isEnabled != null && isEnabled;
+        return this.enabled != null && this.enabled;
     }
     
     /**
-     * Gets the maximum number of completions for this quest.
+     * Gets the display order of this quest.
      *
-     * @return the max completions, or null if unlimited
+     * @return the display order, or 0 if not set
+     */
+    public Integer getDisplayOrder() {
+        return this.displayOrder == null ? 0 : this.displayOrder;
+    }
+    
+    /**
+     * Checks if this quest is repeatable.
+     *
+     * @return true if repeatable, false otherwise
+     */
+    public Boolean getRepeatable() {
+        return this.repeatable != null && this.repeatable;
+    }
+    
+    /**
+     * Gets the maximum number of completions allowed.
+     *
+     * @return the max completions, or 1 if not set
      */
     public Integer getMaxCompletions() {
-        return maxCompletions;
+        return this.maxCompletions == null ? 1 : this.maxCompletions;
     }
     
     /**
-     * Gets the cooldown in seconds before the quest can be repeated.
+     * Gets the cooldown in seconds between completions.
      *
-     * @return the cooldown in seconds, or null if no cooldown
+     * @return the cooldown seconds, or 0 if not set
      */
     public Integer getCooldownSeconds() {
-        return cooldownSeconds;
+        return this.cooldownSeconds == null ? 0 : this.cooldownSeconds;
     }
     
     /**
-     * Gets the time limit in seconds to complete the quest.
+     * Gets the time limit in seconds.
      *
-     * @return the time limit in seconds, or null if no time limit
+     * @return the time limit seconds, or 0 if not set
      */
     public Integer getTimeLimitSeconds() {
-        return timeLimitSeconds;
+        return this.timeLimitSeconds == null ? 0 : this.timeLimitSeconds;
     }
     
     /**
-     * Gets the list of prerequisite quest IDs.
+     * Gets the display name key for this quest.
      *
-     * @return the list of prerequisite quest IDs, or an empty list if not set
+     * @return the display name key, or "not_defined" if not set
      */
-    public List<String> getPrerequisites() {
-        return prerequisites == null ? new ArrayList<>() : prerequisites;
+    public String getDisplayNameKey() {
+        return this.displayNameKey == null ? "not_defined" : this.displayNameKey;
     }
     
     /**
-     * Gets the list of quest IDs that are unlocked when this quest is completed.
+     * Gets the description key for this quest.
      *
-     * @return the list of unlocked quest IDs, or an empty list if not set
+     * @return the description key, or "not_defined" if not set
      */
-    public List<String> getUnlocks() {
-        return unlocks == null ? new ArrayList<>() : unlocks;
+    public String getDescriptionKey() {
+        return this.descriptionKey == null ? "not_defined" : this.descriptionKey;
+    }
+    
+    /**
+     * Gets the icon section for this quest.
+     *
+     * @return the icon section, or a new default IconSection if not set
+     */
+    public IconSection getIcon() {
+        return this.icon == null ? new IconSection(new EvaluationEnvironmentBuilder()) : this.icon;
     }
     
     /**
@@ -229,16 +237,7 @@ public class QuestSection extends AConfigSection {
      * @return the map of requirement keys to sections, or an empty map if not set
      */
     public Map<String, BaseRequirementSection> getRequirements() {
-        return requirements == null ? new HashMap<>() : requirements;
-    }
-    
-    /**
-     * Gets the rewards for this quest.
-     *
-     * @return the map of reward keys to sections, or an empty map if not set
-     */
-    public Map<String, RewardSection> getRewards() {
-        return rewards == null ? new HashMap<>() : rewards;
+        return this.requirements == null ? new HashMap<>() : this.requirements;
     }
     
     /**
@@ -247,25 +246,16 @@ public class QuestSection extends AConfigSection {
      * @return the map of task keys to sections, or an empty map if not set
      */
     public Map<String, QuestTaskSection> getTasks() {
-        return tasks == null ? new HashMap<>() : tasks;
+        return this.tasks == null ? new HashMap<>() : this.tasks;
     }
     
     /**
-     * Gets the category ID this quest belongs to.
+     * Gets the rewards for this quest.
      *
-     * @return the category ID, or a generated one if not set
+     * @return the map of reward keys to sections, or an empty map if not set
      */
-    public String getCategoryId() {
-        return categoryId == null ? "not_defined_" + UUID.randomUUID() : categoryId;
-    }
-    
-    /**
-     * Sets the category ID this quest belongs to.
-     *
-     * @param categoryId the category ID
-     */
-    public void setCategoryId(final String categoryId) {
-        this.categoryId = categoryId;
+    public Map<String, RewardSection> getRewards() {
+        return this.rewards == null ? new HashMap<>() : this.rewards;
     }
     
     /**
@@ -274,7 +264,7 @@ public class QuestSection extends AConfigSection {
      * @return the quest ID, or a generated one if not set
      */
     public String getQuestId() {
-        return questId == null ? "not_defined_" + UUID.randomUUID() : questId;
+        return this.questId == null ? "not_defined_" + UUID.randomUUID() : this.questId;
     }
     
     /**

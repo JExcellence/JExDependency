@@ -165,7 +165,7 @@ public class RPlayerRankPath extends BaseEntity {
 	public void setCompleted(final boolean completed) {
 		this.isCompleted = completed;
 		if (completed && this.completedAt == null) {
-			this.completedAt = java.time.LocalDateTime.now();
+			this.completedAt = LocalDateTime.now();
 		} else if (!completed) {
 			this.completedAt = null;
 		}

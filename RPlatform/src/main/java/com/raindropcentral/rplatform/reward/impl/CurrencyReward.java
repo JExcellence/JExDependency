@@ -1,43 +1,52 @@
-/*
- * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
- *
- * This source code is proprietary and confidential to Antimatter Zone LLC.
- * Unauthorized copying, modification, distribution, display, performance,
- * publication, sublicensing, or creation of derivative works is prohibited
- * without prior written permission from Antimatter Zone LLC, except to the
- * extent permitted by applicable United States law.
- *
- * This notice is intended to preserve all rights and remedies available under
- * the laws of the State of Washington and the United States of America.
- */
-
 package com.raindropcentral.rplatform.reward.impl;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.raindropcentral.rplatform.economy.JExEconomyBridge;
 import com.raindropcentral.rplatform.reward.AbstractReward;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Represents the CurrencyReward API type.
+ * Reward that grants currency to a player.
+ * <p>
+ * This reward supports both Vault economy and JExEconomy with multiple currency types.
+ * It includes retry logic for transient failures.
+ * </p>
+ *
+ * @author RaindropCentral
+ * @version 2.0.0
+ * @since TBD
  */
 @JsonTypeName("CURRENCY")
 public final class CurrencyReward extends AbstractReward {
 
     private static final Logger LOGGER = Logger.getLogger(CurrencyReward.class.getName());
+    private static final int MAX_RETRIES = 1;
+    private static final long RETRY_DELAY_MS = 100;
+
+    @Nullable
+    private static JExEconomyBridge economyBridge;
 
     private final String currencyId;
     private final double amount;
 
     /**
-     * Executes CurrencyReward.
+     * Sets the JExEconomy bridge for currency operations.
+     *
+     * @param bridge the economy bridge
      */
+    public static void setEconomyBridge(@Nullable final JExEconomyBridge bridge) {
+        economyBridge = bridge;
+    }
+
     @JsonCreator
     public CurrencyReward(
         @JsonProperty("currencyId") @NotNull String currencyId,
@@ -47,29 +56,85 @@ public final class CurrencyReward extends AbstractReward {
         this.amount = amount;
     }
 
-    /**
-     * Gets typeId.
-     */
     @Override
     public @NotNull String getTypeId() {
         return "CURRENCY";
     }
 
-    /**
-     * Executes grant.
-     */
     @Override
     public @NotNull CompletableFuture<Boolean> grant(@NotNull Player player) {
+        return grantWithRetry(player, 0);
+    }
+
+    /**
+     * Grants currency with retry logic.
+     *
+     * @param player  the player
+     * @param attempt the current attempt number
+     * @return a future completing with true if successful
+     */
+    @NotNull
+    private CompletableFuture<Boolean> grantWithRetry(@NotNull final Player player, final int attempt) {
         return CompletableFuture.supplyAsync(() -> {
+            // Try JExEconomy first if available
+            if (economyBridge != null && economyBridge.hasCurrency(currencyId)) {
+                return grantJExEconomy(player);
+            }
+
+            // Fall back to Vault for standard currencies
             if ("vault".equalsIgnoreCase(currencyId) || "money".equalsIgnoreCase(currencyId)) {
                 return grantVaultMoney(player);
             }
             
             LOGGER.warning("Unknown currency type: " + currencyId);
             return false;
+        }).thenCompose(success -> {
+            if (success || attempt >= MAX_RETRIES) {
+                if (success) {
+                    LOGGER.fine("Granted " + amount + " " + currencyId + " to " + player.getName());
+                } else if (attempt >= MAX_RETRIES) {
+                    LOGGER.warning("Failed to grant currency after " + (attempt + 1) + " attempts");
+                }
+                return CompletableFuture.completedFuture(success);
+            }
+
+            // Retry after delay
+            LOGGER.fine("Retrying currency grant (attempt " + (attempt + 2) + ")");
+            return CompletableFuture.supplyAsync(() -> {
+                try {
+                    Thread.sleep(RETRY_DELAY_MS);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+                return null;
+            }).thenCompose(v -> grantWithRetry(player, attempt + 1));
+        }).exceptionally(ex -> {
+            LOGGER.log(Level.SEVERE, "Error granting currency reward", ex);
+            return false;
         });
     }
 
+    /**
+     * Grants currency using JExEconomy.
+     *
+     * @param player the player
+     * @return true if successful
+     */
+    private boolean grantJExEconomy(@NotNull final Player player) {
+        try {
+            return economyBridge.deposit(player, currencyId, amount).join();
+        } catch (Exception e) {
+            LOGGER.log(Level.WARNING, "Failed to grant JExEconomy currency: " + e.getMessage(), e);
+            return false;
+        }
+    }
+
+    /**
+     * Grants currency using Vault economy.
+     *
+     * @param player the player
+     * @return true if successful
+     */
     private boolean grantVaultMoney(@NotNull Player player) {
         try {
             var economyProvider = Bukkit.getServicesManager().getRegistration(
@@ -84,36 +149,24 @@ public final class CurrencyReward extends AbstractReward {
                 return true;
             }
         } catch (Exception e) {
-            LOGGER.warning("Failed to grant Vault currency: " + e.getMessage());
+            LOGGER.log(Level.WARNING, "Failed to grant Vault currency: " + e.getMessage(), e);
         }
         return false;
     }
 
-    /**
-     * Gets estimatedValue.
-     */
     @Override
     public double getEstimatedValue() {
         return amount;
     }
 
-    /**
-     * Gets currencyId.
-     */
     public String getCurrencyId() {
         return currencyId;
     }
 
-    /**
-     * Gets amount.
-     */
     public double getAmount() {
         return amount;
     }
 
-    /**
-     * Executes validate.
-     */
     @Override
     public void validate() {
         if (currencyId == null || currencyId.isEmpty()) {

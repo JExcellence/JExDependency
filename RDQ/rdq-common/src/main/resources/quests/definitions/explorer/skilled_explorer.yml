@@ -1,48 +1,58 @@
 identifier: "skilled_explorer"
 category: "explorer"
 difficulty: EASY
+enabled: true
+displayOrder: 2
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
+
 icon:
-  material: "FILLED_MAP"
-  display_name_key: "quest.skilled_explorer.name"
-  description_key: "quest.skilled_explorer.description"
-  custom_model_data: 7001
+  material: FILLED_MAP
+  displayNameKey: "quest.skilled_explorer.name"
+  descriptionKey: "quest.skilled_explorer.description"
+
 tasks:
-  - identifier: "discover_desert"
-    type: "DISCOVER_BIOME"
-    target: "DESERT"
-    amount: 1
-    icon:
-      material: "SAND"
-      display_name_key: "quest.skilled_explorer.task1.name"
-  - identifier: "discover_ocean"
-    type: "DISCOVER_BIOME"
-    target: "OCEAN"
-    amount: 1
-    icon:
-      material: "WATER_BUCKET"
-      display_name_key: "quest.skilled_explorer.task2.name"
-  - identifier: "discover_mountains"
-    type: "DISCOVER_BIOME"
-    target: "MOUNTAINS"
-    amount: 1
-    icon:
-      material: "STONE"
-      display_name_key: "quest.skilled_explorer.task3.name"
+  mine_desert_materials:
+    orderIndex: 0
+    difficulty: EASY
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: SANDSTONE
+      amount: 64
+  mine_ocean_materials:
+    orderIndex: 1
+    difficulty: EASY
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: CLAY
+      amount: 64
+  mine_mountain_materials:
+    orderIndex: 2
+    difficulty: EASY
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: STONE
+      amount: 256
+
 rewards:
-  - type: "CURRENCY"
-    currency_id: "coins"
-    amount: 300
-  - type: "EXPERIENCE"
-    amount: 150
-prerequisites:
-  - "novice_explorer"
-attributes:
-  repeatable: false
-  quest_type: "MAIN"
-  chain_id: "explorer_chain"
-  chain_order: 2
-metadata:
-  author: "RDQ Team"
-  created: "2026-03-16"
-  version: "1.0.0"
-  tags: ["explorer", "intermediate", "exploration", "chain"]
+  main_currency:
+    type: CURRENCY
+    currency: coins
+    amount: 300.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 150.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

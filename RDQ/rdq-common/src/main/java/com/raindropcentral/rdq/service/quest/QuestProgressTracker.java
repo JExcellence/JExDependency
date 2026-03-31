@@ -14,8 +14,12 @@
 
 package com.raindropcentral.rdq.service.quest;
 
+import com.raindropcentral.rdq.database.entity.quest.QuestTask;
+import com.raindropcentral.rdq.model.quest.ActiveQuest;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
@@ -29,6 +33,7 @@ import java.util.concurrent.CompletableFuture;
  *     <li>Quest completion</li>
  *     <li>Reward distribution</li>
  *     <li>Batch progress processing</li>
+ *     <li>Task handler integration</li>
  * </ul>
  * </p>
  * <p>
@@ -157,4 +162,76 @@ public interface QuestProgressTracker {
      */
     @NotNull
     CompletableFuture<Void> shutdown();
+    
+    /**
+     * Updates task progress for a player with criteria matching.
+     * <p>
+     * This method is designed for task handlers to update progress based on
+     * game events. It will:
+     * <ul>
+     *   <li>Find all active quests for the player</li>
+     *   <li>Filter tasks by the specified task type</li>
+     *   <li>Match tasks against the provided criteria</li>
+     *   <li>Update progress for matching tasks</li>
+     *   <li>Fire TaskCompleteEvent when tasks complete</li>
+     *   <li>Fire QuestCompleteEvent when quests complete</li>
+     * </ul>
+     * </p>
+     *
+     * @param playerId the player's unique identifier
+     * @param taskType the type of task (e.g., "KILL_MOBS", "COLLECT_ITEMS")
+     * @param criteria the criteria to match against task requirements
+     * @param amount   the amount to add to progress
+     * @return a future completing with the list of completed task identifiers
+     */
+    @NotNull
+    CompletableFuture<List<String>> updateTaskProgress(
+            @NotNull UUID playerId,
+            @NotNull String taskType,
+            @NotNull Map<String, Object> criteria,
+            int amount
+    );
+    
+    /**
+     * Gets all active quests for a player that have tasks of a specific type.
+     * <p>
+     * This method is used by task handlers to efficiently find quests that
+     * might be affected by a game event.
+     * </p>
+     *
+     * @param playerId the player's unique identifier
+     * @param taskType the type of task to filter by
+     * @return a future completing with the list of active quests
+     */
+    @NotNull
+    CompletableFuture<List<ActiveQuest>> getActiveQuestsWithTaskType(
+            @NotNull UUID playerId,
+            @NotNull String taskType
+    );
+    
+    /**
+     * Checks if a task matches the given criteria.
+     * <p>
+     * This method parses the task's requirement data and compares it against
+     * the provided criteria. A task matches if:
+     * <ul>
+     *   <li>The task type matches</li>
+     *   <li>All required criteria fields are present and match</li>
+     * </ul>
+     * </p>
+     * <p>
+     * Common criteria keys include:
+     * <ul>
+     *   <li>"entity_type" - For mob kills (e.g., "ZOMBIE")</li>
+     *   <li>"material" - For item collection/crafting (e.g., "DIAMOND")</li>
+     *   <li>"block_type" - For block breaking/placing (e.g., "STONE")</li>
+     *   <li>"world" - For location-based tasks</li>
+     * </ul>
+     * </p>
+     *
+     * @param task     the quest task to check
+     * @param criteria the criteria to match against
+     * @return true if the task matches the criteria
+     */
+    boolean matchesCriteria(@NotNull QuestTask task, @NotNull Map<String, Object> criteria);
 }

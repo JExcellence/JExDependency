@@ -18,6 +18,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.Logger;
 
 /**
  * Manages rank requirement progress, including persistence, validation, and state management.
@@ -301,7 +302,7 @@ public class RankRequirementProgressManager {
 	/**
 	 * Calculates the current progress for a specific requirement.
 	 * <p>
-	 * This method now uses {@link RequirementService#calculateProgress(Player, AbstractRequirement)} (Player, AbstractRequirement)}
+	 * This method now uses {@link RequirementService#checkRequirement(Player, AbstractRequirement)}
 	 * instead of calling requirement methods directly. This ensures that:
 	 * - RequirementCheckEvent is fired
 	 * - Progress is automatically tracked by RankRequirementListener

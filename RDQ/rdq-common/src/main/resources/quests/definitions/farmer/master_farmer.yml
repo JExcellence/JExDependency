@@ -1,53 +1,58 @@
 identifier: "master_farmer"
 category: "farmer"
-difficulty: MEDIUM
+difficulty: NORMAL
+enabled: true
+displayOrder: 3
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
+
 icon:
-  material: "DIAMOND_HOE"
-  display_name_key: "quest.master_farmer.name"
-  description_key: "quest.master_farmer.description"
-  custom_model_data: 6002
-  enchanted: true
+  material: DIAMOND_HOE
+  displayNameKey: "quest.master_farmer.name"
+  descriptionKey: "quest.master_farmer.description"
+
 tasks:
-  - identifier: "breed_cows"
-    type: "BREED_ANIMALS"
-    target: "COW"
-    amount: 20
-    icon:
-      material: "BEEF"
-      display_name_key: "quest.master_farmer.task1.name"
-  - identifier: "breed_pigs"
-    type: "BREED_ANIMALS"
-    target: "PIG"
-    amount: 20
-    icon:
-      material: "PORKCHOP"
-      display_name_key: "quest.master_farmer.task2.name"
-  - identifier: "breed_chickens"
-    type: "BREED_ANIMALS"
-    target: "CHICKEN"
-    amount: 30
-    icon:
-      material: "CHICKEN"
-      display_name_key: "quest.master_farmer.task3.name"
+  kill_cows:
+    orderIndex: 0
+    difficulty: NORMAL
+    sequential: false
+    requirement:
+      type: KILL_MOBS
+      target: COW
+      amount: 20
+  kill_pigs:
+    orderIndex: 1
+    difficulty: NORMAL
+    sequential: false
+    requirement:
+      type: KILL_MOBS
+      target: PIG
+      amount: 20
+  kill_chickens:
+    orderIndex: 2
+    difficulty: NORMAL
+    sequential: false
+    requirement:
+      type: KILL_MOBS
+      target: CHICKEN
+      amount: 30
+
 rewards:
-  - type: "CURRENCY"
-    currency_id: "coins"
-    amount: 500
-  - type: "EXPERIENCE"
-    amount: 300
-  - type: "PERK"
-    perk_id: "green_thumb"
-    duration: 7200
-prerequisites:
-  - "skilled_farmer"
-attributes:
-  repeatable: false
-  quest_type: "MAIN"
-  min_level: 10
-  chain_id: "farmer_chain"
-  chain_order: 3
-metadata:
-  author: "RDQ Team"
-  created: "2026-03-16"
-  version: "1.0.0"
-  tags: ["farmer", "advanced", "farming", "chain"]
+  main_currency:
+    type: CURRENCY
+    currency: coins
+    amount: 500.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 300.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

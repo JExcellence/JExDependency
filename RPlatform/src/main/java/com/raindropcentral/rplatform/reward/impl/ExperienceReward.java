@@ -1,44 +1,49 @@
-/*
- * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
- *
- * This source code is proprietary and confidential to Antimatter Zone LLC.
- * Unauthorized copying, modification, distribution, display, performance,
- * publication, sublicensing, or creation of derivative works is prohibited
- * without prior written permission from Antimatter Zone LLC, except to the
- * extent permitted by applicable United States law.
- *
- * This notice is intended to preserve all rights and remedies available under
- * the laws of the State of Washington and the United States of America.
- */
-
 package com.raindropcentral.rplatform.reward.impl;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.raindropcentral.rplatform.reward.AbstractReward;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.logging.Logger;
 
 /**
- * Represents the ExperienceReward API type.
+ * Reward that grants experience points or levels to a player.
+ * <p>
+ * This reward ensures that experience is granted on the main thread
+ * to comply with Bukkit API requirements.
+ * </p>
+ *
+ * @author RaindropCentral
+ * @version 2.0.0
+ * @since TBD
  */
 public final class ExperienceReward extends AbstractReward {
 
+    private static final Logger LOGGER = Logger.getLogger(ExperienceReward.class.getName());
+
     /**
-     * Represents the ExperienceType API type.
+     * Type of experience to grant.
      */
     public enum ExperienceType {
-        POINTS, LEVELS
+        /**
+         * Experience points (raw XP).
+         */
+        POINTS,
+
+        /**
+         * Experience levels.
+         */
+        LEVELS
     }
 
     private final int amount;
     private final ExperienceType type;
 
-    /**
-     * Executes ExperienceReward.
-     */
     @JsonCreator
     public ExperienceReward(
         @JsonProperty("amount") int amount,
@@ -48,54 +53,51 @@ public final class ExperienceReward extends AbstractReward {
         this.type = type != null ? type : ExperienceType.POINTS;
     }
 
-    /**
-     * Gets typeId.
-     */
     @Override
     public @NotNull String getTypeId() {
         return "EXPERIENCE";
     }
 
-    /**
-     * Executes grant.
-     */
     @Override
     public @NotNull CompletableFuture<Boolean> grant(@NotNull Player player) {
-        return CompletableFuture.supplyAsync(() -> {
-            if (type == ExperienceType.LEVELS) {
-                player.giveExpLevels(amount);
-            } else {
-                player.giveExp(amount);
+        final CompletableFuture<Boolean> future = new CompletableFuture<>();
+
+        // Get any plugin for scheduling (use first available)
+        final Plugin plugin = Bukkit.getPluginManager().getPlugins()[0];
+
+        // Must run on main thread
+        Bukkit.getScheduler().runTask(plugin, () -> {
+            try {
+                if (type == ExperienceType.LEVELS) {
+                    player.giveExpLevels(amount);
+                    LOGGER.fine("Granted " + amount + " experience levels to " + player.getName());
+                } else {
+                    player.giveExp(amount);
+                    LOGGER.fine("Granted " + amount + " experience points to " + player.getName());
+                }
+                future.complete(true);
+            } catch (Exception e) {
+                LOGGER.warning("Failed to grant experience to " + player.getName() + ": " + e.getMessage());
+                future.complete(false);
             }
-            return true;
         });
+
+        return future;
     }
 
-    /**
-     * Gets estimatedValue.
-     */
     @Override
     public double getEstimatedValue() {
         return type == ExperienceType.LEVELS ? amount * 100.0 : amount;
     }
 
-    /**
-     * Gets amount.
-     */
     public int getAmount() {
         return amount;
     }
 
-    /**
-     * Gets experienceType.
-     */
     public ExperienceType getExperienceType() {
         return type;
     }
 
-    /**
-     * Executes validate.
-     */
     @Override
     public void validate() {
         if (amount <= 0) {

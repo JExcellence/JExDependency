@@ -14,67 +14,53 @@
 package com.raindropcentral.rdq.config.quest;
 
 import com.raindropcentral.rdq.config.requirement.BaseRequirementSection;
-import com.raindropcentral.rdq.config.utility.IconSection;
 import com.raindropcentral.rdq.config.utility.RewardSection;
+import com.raindropcentral.rplatform.config.icon.IconSection;
 import de.jexcellence.configmapper.sections.AConfigSection;
 import de.jexcellence.configmapper.sections.CSAlways;
 import de.jexcellence.configmapper.sections.CSIgnore;
 import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
 
 import java.lang.reflect.Field;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 /**
- * Configuration section for a quest task.
- * <p>
- * Represents a single task within a quest, including its type, target amount,
- * requirements, rewards, and display properties. Tasks are the smallest unit
- * of quest progression.
- * </p>
+ * Represents a configuration section for a quest task.
+ * Contains all properties, requirements, and rewards for a specific task within a quest.
  *
- * @author JExcellence
+ * @author RaindropCentral
  * @version 1.0.0
- * @since TBD
  */
 @CSAlways
 public class QuestTaskSection extends AConfigSection {
     
-    /** The localization key for the display name of the task. */
-    private String displayNameKey;
+    /** The unique identifier for this task. */
+    private String identifier;
     
-    /** The localization key for the description of the task. */
-    private String descriptionKey;
-    
-    /** The icon representing this task. */
+    /** The icon configuration for this task. */
     private IconSection icon;
     
-    /** The type of task (KILL, COLLECT, INTERACT, LOCATION, etc.). */
-    private String taskType;
+    /** The order index of this task within the quest. */
+    private Integer orderIndex;
     
-    /** The target amount required to complete this task. */
-    private Integer targetAmount;
+    /** The difficulty level of this task. */
+    private String difficulty;
     
-    /** Whether this task is optional for quest completion. */
-    private Boolean isOptional;
+    /** Whether this task must be completed before the next task can start. */
+    private Boolean sequential;
     
-    /** Map of requirement keys to their configuration sections. */
-    private Map<String, BaseRequirementSection> requirements;
+    /** The requirement that must be met to complete this task. */
+    private BaseRequirementSection requirement;
     
-    /** Map of reward keys to their configuration sections. */
-    private Map<String, RewardSection> rewards;
+    /** The reward given when this task is completed. */
+    private RewardSection reward;
     
-    /** The category ID this task belongs to (set by parent). */
-    @CSIgnore
-    private String categoryId;
-    
-    /** The quest ID this task belongs to (set by parent). */
+    /** The quest ID this task belongs to (set during parsing). */
     @CSIgnore
     private String questId;
     
-    /** The task ID (set by parent). */
+    /** The task ID (set during parsing). */
     @CSIgnore
     private String taskId;
     
@@ -83,9 +69,7 @@ public class QuestTaskSection extends AConfigSection {
      *
      * @param evaluationEnvironmentBuilder the evaluation environment builder
      */
-    public QuestTaskSection(
-        final EvaluationEnvironmentBuilder evaluationEnvironmentBuilder
-    ) {
+    public QuestTaskSection(final EvaluationEnvironmentBuilder evaluationEnvironmentBuilder) {
         super(evaluationEnvironmentBuilder);
     }
     
@@ -99,104 +83,103 @@ public class QuestTaskSection extends AConfigSection {
     public void afterParsing(final List<Field> fields) throws Exception {
         super.afterParsing(fields);
         
-        if (categoryId != null && questId != null && taskId != null) {
-            if (displayNameKey == null) {
-                displayNameKey = "quest." + categoryId + "." + questId + ".task." + taskId + ".name";
+        // Initialize icon if not provided
+        if (this.icon == null) {
+            this.icon = new IconSection(null);
+        }
+        
+        if (this.questId != null && this.taskId != null) {
+            // Set default icon keys if not provided
+            if (this.icon.getDisplayNameKey().equals("not_defined")) {
+                this.icon.setDisplayNameKey("quest." + this.questId + ".task." + this.taskId + ".name");
             }
-            if (descriptionKey == null) {
-                descriptionKey = "quest." + categoryId + "." + questId + ".task." + taskId + ".description";
+            if (this.icon.getDescriptionKey().equals("not_defined")) {
+                this.icon.setDescriptionKey("quest." + this.questId + ".task." + this.taskId + ".description");
             }
         }
     }
     
     /**
-     * Gets the display name key for this task.
+     * Gets the icon configuration for this task.
      *
-     * @return the display name key, or "not_defined" if not set
-     */
-    public String getDisplayNameKey() {
-        return displayNameKey == null ? "not_defined" : displayNameKey;
-    }
-    
-    /**
-     * Gets the description key for this task.
-     *
-     * @return the description key, or "not_defined" if not set
-     */
-    public String getDescriptionKey() {
-        return descriptionKey == null ? "not_defined" : descriptionKey;
-    }
-    
-    /**
-     * Gets the icon section for this task.
-     *
-     * @return the icon section, or a new default IconSection if not set
+     * @return the icon section
      */
     public IconSection getIcon() {
-        return icon == null ? new IconSection(new EvaluationEnvironmentBuilder()) : icon;
+        if (this.icon == null) {
+            this.icon = new IconSection(null);
+            this.icon.setMaterial("PAPER");
+            if (this.questId != null && this.taskId != null) {
+                this.icon.setDisplayNameKey("quest." + this.questId + ".task." + this.taskId + ".name");
+                this.icon.setDescriptionKey("quest." + this.questId + ".task." + this.taskId + ".description");
+            }
+        }
+        return this.icon;
     }
     
     /**
-     * Gets the task type.
+     * Sets the icon configuration for this task.
      *
-     * @return the task type, or "CUSTOM" if not set
+     * @param icon the icon section
      */
-    public String getTaskType() {
-        return taskType == null ? "CUSTOM" : taskType;
+    public void setIcon(final IconSection icon) {
+        this.icon = icon;
+    }
+
+    /**
+     * Gets the unique identifier for this task.
+     * Falls back to {@code taskId} (the map key) if the {@code identifier} field was not set in YAML.
+     *
+     * @return the task identifier
+     */
+    public String getIdentifier() {
+        if (this.identifier != null) return this.identifier;
+        if (this.taskId != null) return this.taskId;
+        return "not_defined_" + UUID.randomUUID();
     }
     
     /**
-     * Gets the target amount for this task.
+     * Gets the order index of this task.
      *
-     * @return the target amount, or 1 if not set
+     * @return the order index, or 0 if not set
      */
-    public Integer getTargetAmount() {
-        return targetAmount == null ? 1 : targetAmount;
+    public Integer getOrderIndex() {
+        return this.orderIndex == null ? 0 : this.orderIndex;
     }
     
     /**
-     * Checks if this task is optional.
+     * Gets the difficulty level of this task.
      *
-     * @return true if optional, false otherwise
+     * @return the difficulty, or "EASY" if not set
      */
-    public Boolean getOptional() {
-        return isOptional != null && isOptional;
+    public String getDifficulty() {
+        return this.difficulty == null ? "EASY" : this.difficulty;
     }
     
     /**
-     * Gets the requirements for this task.
+     * Checks if this task is sequential.
      *
-     * @return the map of requirement keys to sections, or an empty map if not set
+     * @return true if sequential, false otherwise
      */
-    public Map<String, BaseRequirementSection> getRequirements() {
-        return requirements == null ? new HashMap<>() : requirements;
+    public Boolean getSequential() {
+        return this.sequential != null && this.sequential;
     }
     
     /**
-     * Gets the rewards for this task.
+     * Gets the requirement for this task.
      *
-     * @return the map of reward keys to sections, or an empty map if not set
+     * @return the requirement section, or null if not set
      */
-    public Map<String, RewardSection> getRewards() {
-        return rewards == null ? new HashMap<>() : rewards;
+    public BaseRequirementSection getRequirement() {
+        return this.requirement;
     }
     
     /**
-     * Gets the category ID this task belongs to.
+     * Gets the reward for this task.
      *
-     * @return the category ID, or a generated one if not set
+     * @return the reward section, or null if not set
      */
-    public String getCategoryId() {
-        return categoryId == null ? "not_defined_" + UUID.randomUUID() : categoryId;
-    }
-    
-    /**
-     * Sets the category ID this task belongs to.
-     *
-     * @param categoryId the category ID
-     */
-    public void setCategoryId(final String categoryId) {
-        this.categoryId = categoryId;
+    public RewardSection getReward() {
+        return this.reward;
     }
     
     /**
@@ -205,7 +188,7 @@ public class QuestTaskSection extends AConfigSection {
      * @return the quest ID, or a generated one if not set
      */
     public String getQuestId() {
-        return questId == null ? "not_defined_" + UUID.randomUUID() : questId;
+        return this.questId == null ? "not_defined_" + UUID.randomUUID() : this.questId;
     }
     
     /**
@@ -223,7 +206,7 @@ public class QuestTaskSection extends AConfigSection {
      * @return the task ID, or a generated one if not set
      */
     public String getTaskId() {
-        return taskId == null ? "not_defined_" + UUID.randomUUID() : taskId;
+        return this.taskId == null ? "not_defined_" + UUID.randomUUID() : this.taskId;
     }
     
     /**

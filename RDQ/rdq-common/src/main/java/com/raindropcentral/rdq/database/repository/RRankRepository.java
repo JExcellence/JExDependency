@@ -25,27 +25,22 @@ import java.util.concurrent.ExecutorService;
 import java.util.function.Function;
 
 /**
- * Repository for managing persistent {@link com.raindropcentral.rdq.database.entity.rank.RRank} entities.
- * <p>
- * This repository provides cached access to ranks with methods for finding by identifier.
- * </p>
+ * Repository for managing persistent {@link RRank} entities.
  *
  * @author JExcellence
  * @version 1.0.0
  * @since TBD
  */
 public class RRankRepository extends CachedRepository<RRank, Long, String> {
-	
+
 	private final EntityManagerFactory entityManagerFactory;
 	private final ExecutorService executor;
-	
+
 	/**
 	 * Constructs a new {@code RRankRepository} for managing {@link RRank} entities.
 	 *
 	 * @param executor             the {@link ExecutorService} used for executing repository operations asynchronously
 	 * @param entityManagerFactory the {@link EntityManagerFactory} used to create and manage entity managers for persistence operations
-	 * @param entityClass          the entity class
-	 * @param keyExtractor         function to extract the cache key from the entity
 	 */
 	public RRankRepository(
 		final @NotNull ExecutorService executor,
@@ -53,6 +48,7 @@ public class RRankRepository extends CachedRepository<RRank, Long, String> {
 		@NotNull Class<RRank> entityClass,
 		@NotNull Function<RRank, String> keyExtractor
 	) {
+
 		super(
 			executor,
 			entityManagerFactory,
@@ -62,15 +58,12 @@ public class RRankRepository extends CachedRepository<RRank, Long, String> {
 		this.entityManagerFactory = entityManagerFactory;
 		this.executor = executor;
 	}
-	
+
 	/**
 	 * Finds a rank by its unique identifier.
-	 * <p>
-	 * This method is used by the progression system to look up ranks by their identifier.
-	 * </p>
 	 *
 	 * @param identifier the rank identifier
-	 * @return CompletableFuture containing the optional rank
+	 * @return a CompletableFuture containing the optional rank
 	 */
 	@NotNull
 	public CompletableFuture<Optional<RRank>> findByIdentifier(@NotNull final String identifier) {
@@ -83,7 +76,7 @@ public class RRankRepository extends CachedRepository<RRank, Long, String> {
 				)
 				.setParameter("identifier", identifier)
 				.getResultList();
-				
+
 				return results.isEmpty() ? Optional.empty() : Optional.of(results.get(0));
 			} finally {
 				em.close();

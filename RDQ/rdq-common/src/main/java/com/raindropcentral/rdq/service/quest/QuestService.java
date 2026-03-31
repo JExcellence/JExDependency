@@ -209,4 +209,21 @@ public interface QuestService {
             @NotNull UUID playerId,
             @NotNull String questIdentifier
     );
+    
+    /**
+     * Gets comprehensive state information about a quest for a player.
+     * <p>
+     * This includes the quest state, active quest data, completion history,
+     * cooldown information, and missing requirements.
+     * </p>
+     *
+     * @param playerId the player's unique identifier
+     * @param questIdentifier the quest identifier
+     * @return a future completing with the quest state information
+     */
+    @NotNull
+    CompletableFuture<com.raindropcentral.rdq.model.quest.QuestStateInfo> getQuestState(
+            @NotNull UUID playerId,
+            @NotNull String questIdentifier
+    );
 }

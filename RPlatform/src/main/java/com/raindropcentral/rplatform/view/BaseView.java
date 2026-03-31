@@ -754,7 +754,7 @@ public abstract class BaseView extends View {
 			
 			// Fallback to a simple barrier item
 			render
-				.slot(bottomLeftSlot, new org.bukkit.inventory.ItemStack(org.bukkit.Material.BARRIER))
+				.slot(bottomLeftSlot, new ItemStack(Material.BARRIER))
 				.onClick(this::handleBackButtonClick);
 		}
 	}

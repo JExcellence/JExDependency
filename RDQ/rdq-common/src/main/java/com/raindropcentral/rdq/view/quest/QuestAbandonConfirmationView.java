@@ -2,7 +2,6 @@ package com.raindropcentral.rdq.view.quest;
 
 import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.database.entity.quest.Quest;
-import com.raindropcentral.rdq.model.quest.QuestAbandonResult;
 import com.raindropcentral.rdq.service.quest.QuestService;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
@@ -108,7 +107,7 @@ public class QuestAbandonConfirmationView extends BaseView {
     
     private void renderQuestInfo(final @NotNull RenderContext render, final @NotNull Player player, final @NotNull Quest q) {
         render.slot(QUEST_INFO_SLOT).renderWith(() -> {
-            final Component name = new I18n.Builder(q.getDisplayNameKey(), player).build().component();
+            final Component name = new I18n.Builder(q.getIcon().getDisplayNameKey(), player).build().component();
             final List<Component> lore = new I18n.Builder("view.quest.abandon_confirmation.quest_info.lore", player)
                     .withPlaceholder("quest", q.getIdentifier())
                     .build().children();
@@ -160,12 +159,12 @@ public class QuestAbandonConfirmationView extends BaseView {
                 .thenAccept(result -> {
                     if (result.success()) {
                         new I18n.Builder("quest.notification.abandoned", player)
-                                .withPlaceholder("quest", q.getDisplayName())
+                                .withPlaceholder("quest", q.getIdentifier())
                                 .build()
                                 .sendMessage();
                     } else {
                         new I18n.Builder("quest.command.abandon.failed", player)
-                                .withPlaceholder("reason", result.failureReason())
+                                .withPlaceholder("reason", result.getMessage())
                                 .build()
                                 .sendMessage();
                     }

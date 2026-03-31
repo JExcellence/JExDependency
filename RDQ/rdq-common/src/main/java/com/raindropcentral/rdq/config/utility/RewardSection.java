@@ -13,6 +13,7 @@
 
 package com.raindropcentral.rdq.config.utility;
 
+import com.raindropcentral.rplatform.config.icon.IconSection;
 import de.jexcellence.configmapper.sections.AConfigSection;
 import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
 

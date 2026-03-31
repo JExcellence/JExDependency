@@ -8,6 +8,11 @@ package com.raindropcentral.rdq.model.quest;
  */
 public enum QuestDifficulty {
     /**
+     * Trivial difficulty - extremely easy, for tutorials.
+     */
+    TRIVIAL,
+
+    /**
      * Easy difficulty - suitable for beginners.
      */
     EASY,
@@ -25,5 +30,10 @@ public enum QuestDifficulty {
     /**
      * Expert difficulty - extremely challenging.
      */
-    EXPERT
+    EXPERT,
+
+    /**
+     * Extreme difficulty - nearly impossible, for hardcore players.
+     */
+    EXTREME
 }

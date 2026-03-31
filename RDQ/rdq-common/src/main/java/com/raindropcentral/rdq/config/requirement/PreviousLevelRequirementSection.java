@@ -11,7 +11,7 @@
  * the laws of the State of Washington and the United States of America.
  */
 
-//package com.raindropcentral.rdq.config.requirement;
+package com.raindropcentral.rdq.config.requirement;//package com.raindropcentral.rdq.config.requirement;
 //
 //import de.jexcellence.configmapper.sections.CSAlways;
 //import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;

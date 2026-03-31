@@ -13,7 +13,7 @@
 
 package com.raindropcentral.rdq.database.converter;
 
-import com.raindropcentral.rdq.config.utility.IconSection;
+import com.raindropcentral.rplatform.config.icon.IconSection;
 import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;

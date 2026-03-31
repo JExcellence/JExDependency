@@ -426,7 +426,7 @@ public class PlayerTaskProgress extends BaseEntity {
     public String toString() {
         return "PlayerTaskProgress{" +
                 "id=" + getId() +
-                ", task=" + (task != null ? task.getIdentifier() : "null") +
+                ", task=" + (task != null ? task.getTaskIdentifier() : "null") +
                 ", currentProgress=" + currentProgress +
                 ", completed=" + completed +
                 ", progress=" + String.format("%.1f%%", getProgressPercentage()) +

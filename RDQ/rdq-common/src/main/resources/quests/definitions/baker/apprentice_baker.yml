@@ -1,94 +1,58 @@
-# ============================================================================
-# BAKER QUEST: Apprentice Baker
-# ============================================================================
-# Entry-level baking quest introducing basic food crafting.
-# First quest in the baker progression chain.
-# ============================================================================
-
 identifier: "apprentice_baker"
 category: "baker"
 difficulty: EASY
+enabled: true
+displayOrder: 1
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
 
 icon:
-  material: "BREAD"
-  display_name_key: "quest.apprentice_baker.name"
-  description_key: "quest.apprentice_baker.description"
-  custom_model_data: 3000
-  enchanted: false
+  material: BREAD
+  displayNameKey: "quest.apprentice_baker.name"
+  descriptionKey: "quest.apprentice_baker.description"
 
 tasks:
-  - identifier: "collect_wheat"
-    type: "COLLECT_ITEMS"
-    target: "WHEAT"
-    amount: 64
-    icon:
-      material: "WHEAT"
-      display_name_key: "quest.apprentice_baker.task1.name"
-  
-  - identifier: "craft_bread"
-    type: "CRAFT_ITEMS"
-    target: "BREAD"
-    amount: 20
-    icon:
-      material: "BREAD"
-      display_name_key: "quest.apprentice_baker.task2.name"
-  
-  - identifier: "bake_cookies"
-    type: "CRAFT_ITEMS"
-    target: "COOKIE"
-    amount: 16
-    icon:
-      material: "COOKIE"
-      display_name_key: "quest.apprentice_baker.task3.name"
+  collect_wheat:
+    orderIndex: 0
+    difficulty: EASY
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: WHEAT
+      amount: 64
+  craft_bread:
+    orderIndex: 1
+    difficulty: EASY
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: BREAD
+      amount: 20
+  bake_cookies:
+    orderIndex: 2
+    difficulty: EASY
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: COOKIE
+      amount: 16
 
 rewards:
-  - type: "CURRENCY"
-    currency_id: "coins"
-    amount: 150
-  - type: "EXPERIENCE"
-    amount: 75
-  - type: "ITEM"
-    material: "GOLDEN_HOE"
-    amount: 1
-    display_name_key: "item.baker_hoe.name"
-    lore_key: "item.baker_hoe.lore"
-    enchantments:
-      EFFICIENCY: 2
-
-prerequisites: []
-
-requirements: []
-
-attributes:
-  repeatable: false
-  hidden: false
-  quest_type: "MAIN"
-  time_limit: 0
-  min_level: 1
-  max_concurrent: 1
-  auto_start: false
-  show_in_log: true
-  chain_id: "baker_chain"
-  chain_order: 1
-
-effects:
-  start_particle: "VILLAGER_HAPPY"
-  complete_particle: "HEART"
-  start_sound: "BLOCK_FURNACE_FIRE_CRACKLE"
-  complete_sound: "ENTITY_PLAYER_LEVELUP"
-
-failure_conditions:
-  fail_on_death: false
-  fail_on_logout: false
-  fail_on_timeout: false
-
-metadata:
-  author: "RDQ Team"
-  created: "2026-03-16"
-  modified: "2026-03-16"
-  version: "1.0.0"
-  tags:
-    - "baker"
-    - "beginner"
-    - "crafting"
-    - "chain"
+  main_currency:
+    type: CURRENCY
+    currency: coins
+    amount: 150.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 75.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

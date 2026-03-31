@@ -1,102 +1,42 @@
-# ============================================================================
-# COMBAT QUEST: Zombie Hunter I
-# ============================================================================
-# First quest in the Zombie Hunter chain. Introduces combat mechanics.
-# Part of the combat progression system.
-# ============================================================================
-
 identifier: "zombie_hunter_recruit"
 category: "combat"
 difficulty: EASY
+enabled: true
+displayOrder: 1
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
 
 icon:
-  material: "ROTTEN_FLESH"
-  display_name_key: "quest.zombie_hunter_recruit.name"
-  description_key: "quest.zombie_hunter_recruit.description"
-  custom_model_data: 2001
-  enchanted: false
+  material: ROTTEN_FLESH
+  displayNameKey: "quest.zombie_hunter_recruit.name"
+  descriptionKey: "quest.zombie_hunter_recruit.description"
 
 tasks:
-  - identifier: "kill_zombies"
-    type: "KILL_MOBS"
-    target: "ZOMBIE"
-    amount: 10
-    icon:
-      material: "ZOMBIE_HEAD"
-      display_name_key: "quest.zombie_hunter_recruit.task1.name"
-  
-  - identifier: "collect_flesh"
-    type: "COLLECT_ITEMS"
-    target: "ROTTEN_FLESH"
-    amount: 5
-    consume: false
-    icon:
-      material: "ROTTEN_FLESH"
-      display_name_key: "quest.zombie_hunter_recruit.task2.name"
+  kill_zombies:
+    orderIndex: 0
+    difficulty: EASY
+    sequential: false
+    requirement:
+      type: KILL_MOBS
+      target: ZOMBIE
+      amount: 10
 
 rewards:
-  - type: "CURRENCY"
-    currency_id: "coins"
-    amount: 250
-  - type: "EXPERIENCE"
-    amount: 100
-  - type: "ITEM"
-    material: "IRON_SWORD"
-    amount: 1
-    display_name_key: "item.zombie_slayer.name"
-    lore_key: "item.zombie_slayer.lore"
-    enchantments:
-      SHARPNESS: 2
-      SMITE: 1
-    custom_model_data: 3001
-
-prerequisites:
-  - "tutorial_welcome"
-
-requirements: []
-
-attributes:
-  repeatable: false
-  hidden: false
-  quest_type: "MAIN"
-  time_limit: 0
-  min_level: 1
-  max_concurrent: 1
-  auto_start: false
-  show_in_log: true
-  chain_id: "zombie_hunter_chain"
-  chain_order: 1
-
-effects:
-  start_particle: "SMOKE"
-  complete_particle: "FLAME"
-  start_sound: "ENTITY_ZOMBIE_AMBIENT"
-  complete_sound: "ENTITY_ZOMBIE_DEATH"
-  start_title:
-    title_key: "quest.zombie_hunter_recruit.start.title"
-    subtitle_key: "quest.zombie_hunter_recruit.start.subtitle"
-    fade_in: 10
-    stay: 70
-    fade_out: 20
-  complete_title:
-    title_key: "quest.zombie_hunter_recruit.complete.title"
-    subtitle_key: "quest.zombie_hunter_recruit.complete.subtitle"
-    fade_in: 10
-    stay: 70
-    fade_out: 20
-
-failure_conditions:
-  fail_on_death: false
-  fail_on_logout: false
-  fail_on_timeout: false
-
-metadata:
-  author: "RDQ Team"
-  created: "2026-03-12"
-  modified: "2026-03-12"
-  version: "1.0.0"
-  tags:
-    - "combat"
-    - "zombies"
-    - "beginner"
-    - "chain"
+  main_currency:
+    type: CURRENCY
+    currency: coins
+    amount: 250.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 100.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

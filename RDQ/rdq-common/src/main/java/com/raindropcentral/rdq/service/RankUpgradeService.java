@@ -310,7 +310,7 @@ public class RankUpgradeService {
 	) {
 		// Check if player already has a rank in this rank tree
 		return rdq.getPlayerRankRepository().findAllByAttributesAsync(java.util.Map.of(
-			"player.playerId", rdqPlayer.getPlayerId(),
+			"player.playerId", rdqPlayer.getUniqueId(),
 			"rankTree.id", rank.getRankTree().getId()
 		))
 		.thenCompose(existingRanks -> {
@@ -320,7 +320,7 @@ public class RankUpgradeService {
 				existingRank.setCurrentRank(rank);
 				existingRank.setActive(true);
 				
-				LOGGER.fine("Updating existing rank record for player " + rdqPlayer.getPlayerId() + 
+				LOGGER.fine("Updating existing rank record for player " + rdqPlayer.getUniqueId() + 
 					" in rank tree " + rank.getRankTree().getIdentifier());
 				
 				rdq.getPlayerRankRepository().save(existingRank);
@@ -335,7 +335,7 @@ public class RankUpgradeService {
 						true
 					);
 				
-				LOGGER.fine("Creating new rank record for player " + rdqPlayer.getPlayerId() + 
+				LOGGER.fine("Creating new rank record for player " + rdqPlayer.getUniqueId() + 
 					" in rank tree " + rank.getRankTree().getIdentifier());
 				
 				rdq.getPlayerRankRepository().save(newRank);

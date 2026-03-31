@@ -149,7 +149,7 @@ public class SimplePerkCache {
 					// This prevents OptimisticLockException on the Perk entity
 					repository.updatePlayerPerkOnly(perk).join();
 					savedCount++;
-				} catch (jakarta.persistence.OptimisticLockException e) {
+				} catch (OptimisticLockException e) {
 					// Log but continue - this perk was modified elsewhere
 					LOGGER.fine("Optimistic lock on perk " + perk.getPerk().getIdentifier() + 
 							" for player " + playerId + " - entity was updated elsewhere, skipping");

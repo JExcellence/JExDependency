@@ -1,65 +1,58 @@
 identifier: "legendary_miner"
 category: "miner"
-difficulty: EXPERT
+difficulty: EXTREME
+enabled: true
+displayOrder: 5
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
+
 icon:
-  material: "NETHERITE_PICKAXE"
-  display_name_key: "quest.legendary_miner.name"
-  description_key: "quest.legendary_miner.description"
-  custom_model_data: 5004
-  enchanted: true
+  material: NETHERITE_PICKAXE
+  displayNameKey: "quest.legendary_miner.name"
+  descriptionKey: "quest.legendary_miner.description"
+
 tasks:
-  - identifier: "mine_diamonds_bulk"
-    type: "BREAK_BLOCKS"
-    target: "DIAMOND_ORE"
-    amount: 256
-    icon:
-      material: "DIAMOND"
-      display_name_key: "quest.legendary_miner.task1.name"
-  - identifier: "mine_ancient_debris_bulk"
-    type: "BREAK_BLOCKS"
-    target: "ANCIENT_DEBRIS"
-    amount: 64
-    icon:
-      material: "ANCIENT_DEBRIS"
-      display_name_key: "quest.legendary_miner.task2.name"
-  - identifier: "craft_netherite_blocks"
-    type: "CRAFT_ITEMS"
-    target: "NETHERITE_BLOCK"
-    amount: 10
-    icon:
-      material: "NETHERITE_BLOCK"
-      display_name_key: "quest.legendary_miner.task3.name"
-  - identifier: "mine_all_ores"
-    type: "BREAK_BLOCKS"
-    target: "EMERALD_ORE"
-    amount: 64
-    icon:
-      material: "EMERALD"
-      display_name_key: "quest.legendary_miner.task4.name"
+  mine_diamonds_bulk:
+    orderIndex: 0
+    difficulty: EXTREME
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: DIAMOND_ORE
+      amount: 256
+  mine_ancient_debris_bulk:
+    orderIndex: 1
+    difficulty: EXTREME
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: ANCIENT_DEBRIS
+      amount: 64
+  mine_emeralds:
+    orderIndex: 2
+    difficulty: EXTREME
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: EMERALD_ORE
+      amount: 64
+
 rewards:
-  - type: "CURRENCY"
-    currency_id: "coins"
-    amount: 5000
-  - type: "EXPERIENCE"
-    amount: 2000
-  - type: "TITLE"
-    title_id: "legendary_miner"
-  - type: "PERK"
-    perk_id: "master_miner"
-    duration: 0
-prerequisites:
-  - "grand_miner"
-requirements:
-  - type: "LEVEL"
-    level: 30
-attributes:
-  repeatable: false
-  quest_type: "CHALLENGE"
-  min_level: 30
-  chain_id: "miner_chain"
-  chain_order: 5
-metadata:
-  author: "RDQ Team"
-  created: "2026-03-16"
-  version: "1.0.0"
-  tags: ["miner", "legendary", "mining", "chain", "challenge"]
+  main_currency:
+    type: CURRENCY
+    currency: coins
+    amount: 5000.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 2000.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

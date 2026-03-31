@@ -1,51 +1,58 @@
 identifier: "grand_explorer"
 category: "explorer"
 difficulty: HARD
+enabled: true
+displayOrder: 4
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
+
 icon:
-  material: "ELYTRA"
-  display_name_key: "quest.grand_explorer.name"
-  description_key: "quest.grand_explorer.description"
-  custom_model_data: 7003
-  enchanted: true
+  material: ELYTRA
+  displayNameKey: "quest.grand_explorer.name"
+  descriptionKey: "quest.grand_explorer.description"
+
 tasks:
-  - identifier: "find_end_city"
-    type: "REACH_LOCATION"
-    target: "END_CITY"
-    amount: 1
-    icon:
-      material: "PURPUR_BLOCK"
-      display_name_key: "quest.grand_explorer.task1.name"
-  - identifier: "find_ocean_monument"
-    type: "REACH_LOCATION"
-    target: "OCEAN_MONUMENT"
-    amount: 1
-    icon:
-      material: "PRISMARINE"
-      display_name_key: "quest.grand_explorer.task2.name"
-  - identifier: "find_woodland_mansion"
-    type: "REACH_LOCATION"
-    target: "WOODLAND_MANSION"
-    amount: 1
-    icon:
-      material: "DARK_OAK_LOG"
-      display_name_key: "quest.grand_explorer.task3.name"
+  mine_end_stone:
+    orderIndex: 0
+    difficulty: HARD
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: END_STONE
+      amount: 100
+  mine_prismarine:
+    orderIndex: 1
+    difficulty: HARD
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: PRISMARINE
+      amount: 50
+  mine_dark_oak:
+    orderIndex: 2
+    difficulty: HARD
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: DARK_OAK_LOG
+      amount: 64
+
 rewards:
-  - type: "CURRENCY"
-    currency_id: "coins"
-    amount: 1000
-  - type: "EXPERIENCE"
-    amount: 600
-  - type: "TITLE"
-    title_id: "grand_explorer"
-prerequisites:
-  - "master_explorer"
-attributes:
-  repeatable: false
-  quest_type: "MAIN"
-  chain_id: "explorer_chain"
-  chain_order: 4
-metadata:
-  author: "RDQ Team"
-  created: "2026-03-16"
-  version: "1.0.0"
-  tags: ["explorer", "expert", "exploration", "chain"]
+  main_currency:
+    type: CURRENCY
+    currency: coins
+    amount: 1000.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 600.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

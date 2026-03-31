@@ -13,7 +13,6 @@
 
 package com.raindropcentral.rdq.requirement;
 
-import com.raindropcentral.rplatform.requirement.AbstractRequirement;
 import com.raindropcentral.rplatform.requirement.impl.*;
 import com.raindropcentral.rplatform.requirement.validation.RequirementValidator;
 import com.raindropcentral.rplatform.requirement.validation.ValidationRegistry;
@@ -85,7 +84,7 @@ public final class RDQRequirementValidators {
     public static void validateOrThrow(@NotNull String typeId, @NotNull Object requirement) {
         var registry = ValidationRegistry.getInstance();
         
-        if (requirement instanceof AbstractRequirement abstractReq) {
+        if (requirement instanceof com.raindropcentral.rplatform.requirement.AbstractRequirement abstractReq) {
             ValidationResult result = registry.validate(abstractReq);
             if (!result.valid()) {
                 throw new IllegalArgumentException("Invalid " + typeId + " requirement: " + result.getMessage());

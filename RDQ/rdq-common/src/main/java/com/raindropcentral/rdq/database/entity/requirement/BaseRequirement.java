@@ -13,7 +13,7 @@
 
 package com.raindropcentral.rdq.database.entity.requirement;
 
-import com.raindropcentral.rdq.config.utility.IconSection;
+import com.raindropcentral.rplatform.config.icon.IconSection;
 import com.raindropcentral.rdq.database.converter.IconSectionConverter;
 import com.raindropcentral.rdq.database.converter.RequirementConverter;
 import com.raindropcentral.rplatform.requirement.AbstractRequirement;

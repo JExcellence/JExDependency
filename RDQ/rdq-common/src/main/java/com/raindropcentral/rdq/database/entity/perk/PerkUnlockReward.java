@@ -13,7 +13,7 @@
 
 package com.raindropcentral.rdq.database.entity.perk;
 
-import com.raindropcentral.rdq.config.utility.IconSection;
+import com.raindropcentral.rplatform.config.icon.IconSection;
 import com.raindropcentral.rdq.database.converter.IconSectionConverter;
 import com.raindropcentral.rplatform.database.converter.RewardConverter;
 import com.raindropcentral.rplatform.reward.AbstractReward;

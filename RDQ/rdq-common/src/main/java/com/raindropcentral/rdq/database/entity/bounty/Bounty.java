@@ -135,13 +135,4 @@ public class Bounty extends BaseEntity {
         public void expire() {
                 this.active = false;
         }
-
-        /**
-         * Gets the list of rewards for this bounty.
-         *
-         * @return the list of bounty rewards
-         */
-        public List<BountyReward> getRewards() {
-                return rewards;
-        }
 }

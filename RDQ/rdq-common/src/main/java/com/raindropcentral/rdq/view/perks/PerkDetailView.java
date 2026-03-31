@@ -19,12 +19,9 @@ import com.raindropcentral.rdq.database.entity.perk.PerkRequirement;
 import com.raindropcentral.rdq.database.entity.perk.PerkUnlockReward;
 import com.raindropcentral.rdq.database.entity.perk.PlayerPerk;
 import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
-import com.raindropcentral.rdq.database.entity.perk.PerkCategory;
-import com.raindropcentral.rdq.database.entity.perk.PerkType;
 import com.raindropcentral.rdq.perk.PerkActivationService;
 import com.raindropcentral.rdq.perk.PerkManagementService;
 import com.raindropcentral.rdq.perk.PerkRequirementService;
-import com.raindropcentral.rdq.view.perks.util.PerkRequirementCardRenderer;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.reward.AbstractReward;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
@@ -155,8 +152,8 @@ public class PerkDetailView extends BaseView {
 		}
 		
 		final PerkRequirementService requirementService = plugin.getPerkRequirementService();
-		final PerkRequirementCardRenderer cardRenderer =
-				new PerkRequirementCardRenderer(requirementService);
+		final com.raindropcentral.rdq.view.perks.util.PerkRequirementCardRenderer cardRenderer =
+				new com.raindropcentral.rdq.view.perks.util.PerkRequirementCardRenderer(requirementService);
 		
 		for (int i = 0; i < Math.min(REQUIREMENT_SLOTS.length, requirements.size()); i++) {
 			final PerkRequirement requirement = requirements.get(i);
@@ -510,7 +507,7 @@ public class PerkDetailView extends BaseView {
 		}
 	}
 	
-	private @NotNull String formatPerkType(@NotNull final PerkType perkType) {
+	private @NotNull String formatPerkType(@NotNull final com.raindropcentral.rdq.database.entity.perk.PerkType perkType) {
 		return switch (perkType) {
 			case PASSIVE -> "⚡ Passive";
 			case EVENT_TRIGGERED -> "🎯 Event Triggered";
@@ -519,7 +516,7 @@ public class PerkDetailView extends BaseView {
 		};
 	}
 	
-	private @NotNull String formatPerkCategory(@NotNull final PerkCategory category) {
+	private @NotNull String formatPerkCategory(@NotNull final com.raindropcentral.rdq.database.entity.perk.PerkCategory category) {
 		return switch (category) {
 			case COMBAT -> "Combat";
 			case MOVEMENT -> "Movement";

@@ -24,7 +24,6 @@ import com.raindropcentral.rdq.manager.RankRequirementProgressManager.Requiremen
 import com.raindropcentral.rdq.manager.RankRequirementProgressManager.RequirementStatus;
 import com.raindropcentral.rdq.view.ranks.util.RequirementCardRenderer;
 import com.raindropcentral.rdq.view.ranks.util.RequirementProgressRenderer;
-import com.raindropcentral.rdq.view.ranks.util.RewardCardRenderer;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.scheduler.CancellableTaskHandle;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
@@ -711,7 +710,7 @@ public class RankRequirementsJourneyView extends BaseView {
             if (rewards.isEmpty()) {
                 // Show "no rewards" indicator
                 render.slot(REWARD_SLOTS[0])
-                        .renderWith(() -> RewardCardRenderer.createNoRewardsCard(player));
+                        .renderWith(() -> com.raindropcentral.rdq.view.ranks.util.RewardCardRenderer.createNoRewardsCard(player));
                 return;
             }
             
@@ -721,7 +720,7 @@ public class RankRequirementsJourneyView extends BaseView {
                 final int slot = REWARD_SLOTS[i];
                 
                 render.slot(slot)
-                        .renderWith(() -> RewardCardRenderer.createCompactRewardCard(reward, player))
+                        .renderWith(() -> com.raindropcentral.rdq.view.ranks.util.RewardCardRenderer.createCompactRewardCard(reward, player))
                         .onClick(clickContext -> {
                             this.i18n(reward.getReward().getReward().getDescriptionKey(), player).withPlaceholder("reward_type", reward.getReward().getTypeId()).build().sendMessage();
                         });

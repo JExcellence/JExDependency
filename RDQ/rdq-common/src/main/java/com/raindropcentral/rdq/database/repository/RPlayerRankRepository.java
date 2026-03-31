@@ -27,11 +27,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.function.Function;
 
 /**
- * Repository for managing persistent {@link com.raindropcentral.rdq.database.entity.rank.RPlayerRank} entities.
- * <p>
- * This repository provides data access methods for player rank tracking,
- * supporting the RPlatform progression system integration.
- * </p>
+ * Repository for managing persistent {@link RPlayerRank} entities.
  *
  * @author JExcellence
  * @version 1.0.0
@@ -39,147 +35,74 @@ import java.util.function.Function;
  */
 public class RPlayerRankRepository extends CachedRepository<RPlayerRank, Long, Long> {
 	
-	private final EntityManagerFactory entityManagerFactory;
-	private final ExecutorService executor;
-	
 	/**
 	 * Constructs a new {@code RPlayerRankRepository} for managing {@link RPlayerRank} entities.
 	 *
 	 * @param executor             the {@link ExecutorService} used for asynchronous repository operations
 	 * @param entityManagerFactory the {@link EntityManagerFactory} used to create and manage entity managers
-	 * @param entityClass          the entity class
-	 * @param keyExtractor         function to extract the key from an entity
 	 */
+	private final EntityManagerFactory entityManagerFactory;
+	private final ExecutorService executor;
+
 	public RPlayerRankRepository(
 		final @NotNull ExecutorService executor,
 		final @NotNull EntityManagerFactory entityManagerFactory,
 		@NotNull Class<RPlayerRank> entityClass,
 		@NotNull Function<RPlayerRank, Long> keyExtractor
 	) {
-		super(
-			executor,
-			entityManagerFactory,
-			entityClass,
-			keyExtractor
-		);
+		super(executor, entityManagerFactory, entityClass, keyExtractor);
 		this.entityManagerFactory = entityManagerFactory;
 		this.executor = executor;
 	}
-	
-	/**
-	 * Finds a player's rank record by player UUID and rank ID.
-	 * <p>
-	 * This method is used by the progression system to check if a player
-	 * has achieved a specific rank.
-	 * </p>
-	 *
-	 * @param playerId the player UUID
-	 * @param rankId the rank ID
-	 * @return CompletableFuture containing the player rank record if found
-	 */
-	@NotNull
-	public CompletableFuture<Optional<RPlayerRank>> findByPlayerIdAndRankId(
-		@NotNull UUID playerId,
-		@NotNull Long rankId
-	) {
+
+	public CompletableFuture<Boolean> existsByPlayerIdAndRankId(@NotNull final UUID playerId, final Long rankId) {
 		return CompletableFuture.supplyAsync(() -> {
 			EntityManager em = entityManagerFactory.createEntityManager();
 			try {
-				List<RPlayerRank> results = em.createQuery(
-					"SELECT pr FROM RPlayerRank pr " +
-					"WHERE pr.player.playerId = :playerId " +
-					"AND pr.currentRank.id = :rankId",
+				Long count = em.createQuery(
+					"SELECT COUNT(r) FROM RPlayerRank r WHERE r.player.uniqueId = :playerId AND r.currentRank.id = :rankId",
+					Long.class
+				).setParameter("playerId", playerId).setParameter("rankId", rankId).getSingleResult();
+				return count > 0;
+			} finally { em.close(); }
+		}, executor);
+	}
+
+	public CompletableFuture<Optional<RPlayerRank>> findByPlayerIdAndRankId(@NotNull final UUID playerId, final Long rankId) {
+		return CompletableFuture.supplyAsync(() -> {
+			EntityManager em = entityManagerFactory.createEntityManager();
+			try {
+				var results = em.createQuery(
+					"SELECT r FROM RPlayerRank r WHERE r.player.uniqueId = :playerId AND r.currentRank.id = :rankId",
 					RPlayerRank.class
-				)
-				.setParameter("playerId", playerId)
-				.setParameter("rankId", rankId)
-				.getResultList();
-				
+				).setParameter("playerId", playerId).setParameter("rankId", rankId).getResultList();
 				return results.isEmpty() ? Optional.empty() : Optional.of(results.get(0));
-			} finally {
-				em.close();
-			}
+			} finally { em.close(); }
 		}, executor);
 	}
-	
-	/**
-	 * Finds all active rank records for a player.
-	 * <p>
-	 * This returns all ranks the player currently holds across all rank trees.
-	 * Used by the progression system to determine completed ranks.
-	 * </p>
-	 *
-	 * @param playerId the player UUID
-	 * @param isActive whether to find active or inactive ranks
-	 * @return CompletableFuture containing list of player rank records
-	 */
-	@NotNull
-	public CompletableFuture<List<RPlayerRank>> findByPlayerIdAndIsActive(
-		@NotNull UUID playerId,
-		boolean isActive
-	) {
+
+	public CompletableFuture<Optional<RPlayerRank>> findByPlayerIdAndIsActive(@NotNull final UUID playerId, final boolean active) {
+		return CompletableFuture.supplyAsync(() -> {
+			EntityManager em = entityManagerFactory.createEntityManager();
+			try {
+				var results = em.createQuery(
+					"SELECT r FROM RPlayerRank r WHERE r.player.uniqueId = :playerId AND r.isActive = :active",
+					RPlayerRank.class
+				).setParameter("playerId", playerId).setParameter("active", active).getResultList();
+				return results.isEmpty() ? Optional.empty() : Optional.of(results.get(0));
+			} finally { em.close(); }
+		}, executor);
+	}
+
+	public CompletableFuture<List<RPlayerRank>> findByPlayerId(@NotNull final UUID playerId) {
 		return CompletableFuture.supplyAsync(() -> {
 			EntityManager em = entityManagerFactory.createEntityManager();
 			try {
 				return em.createQuery(
-					"SELECT pr FROM RPlayerRank pr " +
-					"WHERE pr.player.playerId = :playerId " +
-					"AND pr.isActive = :isActive",
+					"SELECT r FROM RPlayerRank r WHERE r.player.uniqueId = :playerId",
 					RPlayerRank.class
-				)
-				.setParameter("playerId", playerId)
-				.setParameter("isActive", isActive)
-				.getResultList();
-			} finally {
-				em.close();
-			}
+				).setParameter("playerId", playerId).getResultList();
+			} finally { em.close(); }
 		}, executor);
-	}
-	
-	/**
-	 * Finds all rank records for a player (active and inactive).
-	 * <p>
-	 * This returns the player's rank history across all rank trees.
-	 * </p>
-	 *
-	 * @param playerId the player UUID
-	 * @return CompletableFuture containing list of all player rank records
-	 */
-	@NotNull
-	public CompletableFuture<List<RPlayerRank>> findByPlayerId(@NotNull UUID playerId) {
-		return CompletableFuture.supplyAsync(() -> {
-			EntityManager em = entityManagerFactory.createEntityManager();
-			try {
-				return em.createQuery(
-					"SELECT pr FROM RPlayerRank pr " +
-					"WHERE pr.player.playerId = :playerId",
-					RPlayerRank.class
-				)
-				.setParameter("playerId", playerId)
-				.getResultList();
-			} finally {
-				em.close();
-			}
-		}, executor);
-	}
-	
-	/**
-	 * Checks if a player has achieved a specific rank.
-	 * <p>
-	 * This is a convenience method for the progression system to quickly
-	 * check rank completion status.
-	 * </p>
-	 *
-	 * @param playerId the player UUID
-	 * @param rankId the rank ID
-	 * @return CompletableFuture containing true if player has the rank, false otherwise
-	 */
-	@NotNull
-	public CompletableFuture<Boolean> existsByPlayerIdAndRankId(
-		@NotNull UUID playerId,
-		@NotNull Long rankId
-	) {
-		return findByPlayerIdAndRankId(playerId, rankId)
-			.thenApply(Optional::isPresent);
 	}
 }

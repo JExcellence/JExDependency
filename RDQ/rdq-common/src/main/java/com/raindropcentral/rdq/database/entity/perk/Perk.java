@@ -13,7 +13,7 @@
 
 package com.raindropcentral.rdq.database.entity.perk;
 
-import com.raindropcentral.rdq.config.utility.IconSection;
+import com.raindropcentral.rplatform.config.icon.IconSection;
 import com.raindropcentral.rdq.database.converter.IconSectionConverter;
 import de.jexcellence.hibernate.entity.BaseEntity;
 import jakarta.persistence.*;

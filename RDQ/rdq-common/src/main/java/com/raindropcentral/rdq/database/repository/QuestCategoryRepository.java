@@ -122,7 +122,7 @@ public class QuestCategoryRepository extends CachedRepository<QuestCategory, Lon
 			EntityManager em = entityManagerFactory.createEntityManager();
 			try {
 				return em.createQuery(
-					"SELECT c FROM QuestCategory c ORDER BY c.sortOrder",
+					"SELECT c FROM QuestCategory c ORDER BY c.displayOrder",
 					QuestCategory.class
 				)
 				.getResultList();

@@ -37,7 +37,7 @@ import java.util.Map;
  * <ul>
  *     <li>Displays navigation buttons for Bounties, Perks, Quests, and Ranks.</li>
  *     <li>Displays an Admin button for users with the appropriate permission or operator status.</li>
- *     <li>Uses the {@link com.raindropcentral.rdq.RDQ} plugin instance for context and service access.</li>
+ *     <li>Uses the {@link RDQ} plugin instance for context and service access.</li>
  *     <li>Supports internationalized titles and item names/lore.</li>
  * </ul>
  *

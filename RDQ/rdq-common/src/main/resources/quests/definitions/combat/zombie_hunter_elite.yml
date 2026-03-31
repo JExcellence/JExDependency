@@ -1,128 +1,82 @@
-# ============================================================================
-# COMBAT QUEST: Zombie Hunter III
-# ============================================================================
-# Third quest in the Zombie Hunter chain. Expert-level zombie combat.
-# Requires completion of Zombie Hunter II.
-# ============================================================================
-
 identifier: "zombie_hunter_elite"
 category: "combat"
 difficulty: HARD
+enabled: true
+displayOrder: 3
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
 
 icon:
-  material: "NETHERITE_SWORD"
-  display_name_key: "quest.zombie_hunter_elite.name"
-  description_key: "quest.zombie_hunter_elite.description"
-  custom_model_data: 2003
-  enchanted: true
-  item_flags:
-    - HIDE_ENCHANTS
-    - HIDE_ATTRIBUTES
+  material: NETHERITE_SWORD
+  displayNameKey: "quest.zombie_hunter_elite.name"
+  descriptionKey: "quest.zombie_hunter_elite.description"
 
 tasks:
-  - identifier: "kill_zombies"
-    type: "KILL_MOBS"
-    target: "ZOMBIE"
-    amount: 100
+  kill_zombies:
+    orderIndex: 0
+    difficulty: HARD
+    sequential: false
     icon:
-      material: "ZOMBIE_HEAD"
-      display_name_key: "quest.zombie_hunter_elite.task1.name"
-  
-  - identifier: "kill_husks"
-    type: "KILL_MOBS"
-    target: "HUSK"
-    amount: 50
+      material: ZOMBIE_HEAD
+      displayNameKey: "quest.zombie_hunter_elite.task.kill_zombies.name"
+      descriptionKey: "quest.zombie_hunter_elite.task.kill_zombies.description"
+    requirement:
+      type: KILL_MOBS
+      target: ZOMBIE
+      amount: 100
+  kill_husks:
+    orderIndex: 1
+    difficulty: HARD
+    sequential: false
     icon:
-      material: "SAND"
-      display_name_key: "quest.zombie_hunter_elite.task2.name"
-  
-  - identifier: "kill_drowned"
-    type: "KILL_MOBS"
-    target: "DROWNED"
-    amount: 25
+      material: SAND
+      displayNameKey: "quest.zombie_hunter_elite.task.kill_husks.name"
+      descriptionKey: "quest.zombie_hunter_elite.task.kill_husks.description"
+    requirement:
+      type: KILL_MOBS
+      target: HUSK
+      amount: 50
+  kill_drowned:
+    orderIndex: 2
+    difficulty: HARD
+    sequential: false
     icon:
-      material: "TRIDENT"
-      display_name_key: "quest.zombie_hunter_elite.task3.name"
-  
-  - identifier: "kill_zombie_villagers"
-    type: "KILL_MOBS"
-    target: "ZOMBIE_VILLAGER"
-    amount: 10
+      material: TRIDENT
+      displayNameKey: "quest.zombie_hunter_elite.task.kill_drowned.name"
+      descriptionKey: "quest.zombie_hunter_elite.task.kill_drowned.description"
+    requirement:
+      type: KILL_MOBS
+      target: DROWNED
+      amount: 25
+  kill_zombie_villagers:
+    orderIndex: 3
+    difficulty: HARD
+    sequential: false
     icon:
-      material: "GOLDEN_APPLE"
-      display_name_key: "quest.zombie_hunter_elite.task4.name"
+      material: GOLDEN_APPLE
+      displayNameKey: "quest.zombie_hunter_elite.task.kill_zombie_villagers.name"
+      descriptionKey: "quest.zombie_hunter_elite.task.kill_zombie_villagers.description"
+    requirement:
+      type: KILL_MOBS
+      target: ZOMBIE_VILLAGER
+      amount: 10
 
 rewards:
-  - type: "CURRENCY"
-    currency_id: "coins"
-    amount: 2000
-  - type: "EXPERIENCE"
-    amount: 1000
-  - type: "ITEM"
-    material: "NETHERITE_SWORD"
-    amount: 1
-    display_name_key: "item.zombie_annihilator.name"
-    lore_key: "item.zombie_annihilator.lore"
-    enchantments:
-      SHARPNESS: 5
-      SMITE: 5
-      UNBREAKING: 3
-      LOOTING: 3
-    custom_model_data: 3003
-  - type: "PERK"
-    perk_id: "undead_slayer"
-    duration: 14400
-
-prerequisites:
-  - "zombie_hunter_veteran"
-
-requirements:
-  - type: "LEVEL"
-    level: 15
-
-attributes:
-  repeatable: false
-  hidden: false
-  quest_type: "MAIN"
-  time_limit: 0
-  min_level: 15
-  max_concurrent: 1
-  auto_start: false
-  show_in_log: true
-  chain_id: "zombie_hunter_chain"
-  chain_order: 3
-
-effects:
-  start_particle: "DRAGON_BREATH"
-  complete_particle: "END_ROD"
-  start_sound: "ENTITY_WITHER_AMBIENT"
-  complete_sound: "ENTITY_WITHER_DEATH"
-  start_title:
-    title_key: "quest.zombie_hunter_elite.start.title"
-    subtitle_key: "quest.zombie_hunter_elite.start.subtitle"
-    fade_in: 10
-    stay: 70
-    fade_out: 20
-  complete_title:
-    title_key: "quest.zombie_hunter_elite.complete.title"
-    subtitle_key: "quest.zombie_hunter_elite.complete.subtitle"
-    fade_in: 10
-    stay: 70
-    fade_out: 20
-
-failure_conditions:
-  fail_on_death: false
-  fail_on_logout: false
-  fail_on_timeout: false
-
-metadata:
-  author: "RDQ Team"
-  created: "2026-03-14"
-  modified: "2026-03-14"
-  version: "1.0.0"
-  tags:
-    - "combat"
-    - "zombies"
-    - "expert"
-    - "chain"
-    - "endgame"
+  main_currency:
+    type: CURRENCY
+    currency: coins
+    amount: 2000.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 1000.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"
