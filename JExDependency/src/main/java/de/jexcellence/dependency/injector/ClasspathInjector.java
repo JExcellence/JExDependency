@@ -15,7 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Utility responsible for attaching downloaded JAR files to a target class loader at runtime. The injector keeps track
+ * Utility responsible for attaching downloaded JAR files to a target class loader at runtime. The injector keeps track.
  * of previously injected URLs to prevent duplicates, de-encapsulates modules on first use and exposes guarded methods
  * for both exception-throwing and best-effort injection.
  */
@@ -36,7 +36,7 @@ public class ClasspathInjector {
     }
 
     /**
-     * Injects the provided JAR into the supplied class loader. Module boundaries are opened on the first invocation to
+     * Injects the provided JAR into the supplied class loader. Module boundaries are opened on the first invocation to.
      * ensure reflective access works on modern JVMs.
      *
      * @param classLoader class loader that should gain visibility of the JAR's classes
@@ -70,7 +70,7 @@ public class ClasspathInjector {
     }
 
     /**
-     * Attempts to inject the provided JAR into the supplied class loader while capturing any {@link InjectionException}
+     * Attempts to inject the provided JAR into the supplied class loader while capturing any {@link InjectionException}.
      * as logged warnings.
      *
      * @param classLoader class loader that should gain visibility of the JAR's classes
@@ -89,7 +89,7 @@ public class ClasspathInjector {
     }
 
     /**
-     * Returns an immutable view of the URLs that have been successfully injected during the lifetime of this
+     * Returns an immutable view of the URLs that have been successfully injected during the lifetime of this.
      * injector.
      *
      * @return immutable set of injected URLs

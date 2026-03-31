@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.perk.handler;
 
 import com.raindropcentral.rdq.RDQ;
@@ -31,11 +44,10 @@ import java.util.logging.Logger;
 
 /**
  * Handler for event-triggered and percentage-based perks.
- * <p>
- * This handler manages the registration, processing, and triggering of perks that
+ *
+ * <p>This handler manages the registration, processing, and triggering of perks that
  * activate in response to game events. It handles cooldown checking, trigger chance
  * calculation, and event processing.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -49,6 +61,9 @@ public class EventPerkHandler {
 	private final Map<UUID, Map<String, Set<PlayerPerk>>> registeredPerks = new ConcurrentHashMap<>();
 	private final Map<String, PerkSection> configCache = new ConcurrentHashMap<>();
 	
+	/**
+	 * Executes EventPerkHandler.
+	 */
 	public EventPerkHandler(@NotNull final RDQ plugin) {
 		this.plugin = plugin;
 	}
@@ -261,7 +276,7 @@ public class EventPerkHandler {
 		event.setCancelled(true);
 		
 		// Apply effects on next tick to ensure event cancellation is processed
-		plugin.getPlatform().getScheduler().runSync(() -> {
+		plugin.getPlatform().getScheduler().runAtEntity(player, () -> {
 			for (PotionEffect effect : meta.getAllEffects()) {
 				player.addPotionEffect(new PotionEffect(
 						effect.getType(),
@@ -296,7 +311,7 @@ public class EventPerkHandler {
 		event.setCancelled(true);
 		
 		// Apply effects on next tick to ensure event cancellation is processed
-		plugin.getPlatform().getScheduler().runSync(() -> {
+		plugin.getPlatform().getScheduler().runAtEntity(player, () -> {
 			for (PotionEffect effect : meta.getCustomEffects()) {
 				player.addPotionEffect(new PotionEffect(
 						effect.getType(),
@@ -402,6 +417,9 @@ public class EventPerkHandler {
 		LOGGER.info("Cleared perk config cache");
 	}
 	
+	/**
+	 * Executes cleanupPlayer.
+	 */
 	public void cleanupPlayer(@NotNull final UUID playerUuid) {
 		registeredPerks.remove(playerUuid);
 	}

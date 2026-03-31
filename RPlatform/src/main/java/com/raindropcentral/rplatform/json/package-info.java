@@ -1,8 +1,7 @@
 /**
  * JSON serialization utilities for RPlatform.
- * <p>
- * This package contains Jackson serializers and deserializers for Bukkit-specific types.
- * </p>
+ *
+ * <p>This package contains Jackson serializers and deserializers for Bukkit-specific types.
  *
  * <p><b>Key Classes:</b></p>
  * <ul>

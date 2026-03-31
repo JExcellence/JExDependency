@@ -1,0 +1,272 @@
+name: "Build Release Jars"
+description: "Sets up Java and Gradle, builds project jars in required order, and stages release artifacts for one module."
+
+inputs:
+  java-version:
+    description: "Java version to use"
+    required: false
+    default: "21"
+  target-module:
+    description: "Module to build and stage (RCore, RDQ, RDR, RDS, or RDT)"
+    required: true
+  jeconfig-repository:
+    description: "Owner/repository for JEConfig"
+    required: false
+    default: "Antimatter-Zone/JEConfig"
+  jeconfig-repo-ref:
+    description: "Branch, tag, or commit to use from JEConfig repository"
+    required: false
+    default: "main"
+  jeconfig-token:
+    description: "Token with read access to the JEConfig repository"
+    required: false
+    default: ""
+
+outputs:
+  artifacts-dir:
+    description: "Directory containing the staged release jars"
+    value: ${{ steps.stage-release-artifacts.outputs.artifacts-dir }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Normalize root Gradle wrapper for Linux
+      shell: bash
+      run: |
+        set -euo pipefail
+        sed -i 's/\r$//' ./gradlew
+        chmod +x ./gradlew
+
+    - name: Set up JDK
+      uses: actions/setup-java@v5
+      with:
+        distribution: temurin
+        java-version: ${{ inputs.java-version }}
+
+    - name: Set up Gradle
+      uses: gradle/actions/setup-gradle@v5
+
+    - name: Check out JEConfig (with token)
+      if: ${{ inputs.jeconfig-token != '' }}
+      uses: actions/checkout@v6
+      with:
+        repository: ${{ inputs.jeconfig-repository }}
+        ref: ${{ inputs.jeconfig-repo-ref }}
+        token: ${{ inputs.jeconfig-token }}
+        path: .external/JEConfig
+        persist-credentials: false
+
+    - name: Check out JEConfig (without token)
+      if: ${{ inputs.jeconfig-token == '' }}
+      uses: actions/checkout@v6
+      with:
+        repository: ${{ inputs.jeconfig-repository }}
+        ref: ${{ inputs.jeconfig-repo-ref }}
+        path: .external/JEConfig
+        persist-credentials: false
+
+    - name: Publish JEConfig artifacts to Maven Local
+      shell: bash
+      run: |
+        set -euo pipefail
+        checkout_dir="${GITHUB_WORKSPACE}/.external/JEConfig"
+
+        if [[ ! -d "${checkout_dir}" ]]; then
+          echo "JEConfig checkout directory was not created: ${checkout_dir}" >&2
+          exit 1
+        fi
+
+        pushd "${checkout_dir}" >/dev/null
+        sed -i 's/\r$//' ./gradlew
+        chmod +x ./gradlew
+        ./gradlew --no-daemon publishToMavenLocal
+        popd >/dev/null
+
+    - name: Validate target module version properties
+      shell: bash
+      run: |
+        set -euo pipefail
+        target_module="${{ inputs.target-module }}"
+        normalized_target_module="$(printf '%s' "${target_module}" | tr '[:lower:]' '[:upper:]')"
+
+        case "${normalized_target_module}" in
+          RCORE) version_prefix="rcore" ;;
+          RDQ) version_prefix="rdq" ;;
+          RDR) version_prefix="rdr" ;;
+          RDS) version_prefix="rds" ;;
+          RDT) version_prefix="rdt" ;;
+          *) echo "Unsupported target-module: ${target_module}" >&2; exit 1 ;;
+        esac
+
+        properties_file="${GITHUB_WORKSPACE}/gradle.properties"
+        if [[ ! -f "${properties_file}" ]]; then
+          echo "Missing gradle.properties at ${properties_file}" >&2
+          exit 1
+        fi
+
+        fields=(major minor patch stage build)
+        for field in "${fields[@]}"; do
+          key="${version_prefix}.version.${field}"
+          value="$(grep -E "^${key}=" "${properties_file}" | tail -n 1 | cut -d'=' -f2- | tr -d '\r')"
+          if [[ -z "${value}" ]]; then
+            echo "Missing required version property: ${key}. The release would fall back to an undefined version." >&2
+            exit 1
+          fi
+          if [[ "${value,,}" == "undefined" ]]; then
+            echo "Invalid version property ${key}='${value}'. Undefined fallback versions are not allowed for releases." >&2
+            exit 1
+          fi
+        done
+
+    - name: Build and publish internal modules in required order
+      shell: bash
+      run: |
+        set -euo pipefail
+        target_module="${{ inputs.target-module }}"
+        normalized_target_module="$(printf '%s' "${target_module}" | tr '[:lower:]' '[:upper:]')"
+
+        common_tasks=(
+          "clean"
+          ":JExDependency:clean"
+          ":JExDependency:build"
+          ":JExDependency:publishToMavenLocal"
+          ":JExCommand:clean"
+          ":JExCommand:build"
+          ":JExCommand:publishToMavenLocal"
+          ":JExTranslate:clean"
+          ":JExTranslate:build"
+          ":JExTranslate:publishToMavenLocal"
+          ":RPlatform:clean"
+          ":RPlatform:build"
+          ":RPlatform:publishToMavenLocal"
+          ":JExEconomy:clean"
+          ":JExEconomy:build"
+          ":JExEconomy:publishLocal"
+          ":JExEconomy:publishMavenPublicationToMavenLocal"
+        )
+
+        case "${normalized_target_module}" in
+          RCORE)
+            target_tasks=(":RCore:clean" ":RCore:build" ":RCore:publishLocal")
+            ;;
+          RDQ)
+            target_tasks=(":RCore:clean" ":RCore:build" ":RCore:publishLocal" ":RDQ:clean" ":RDQ:buildAll")
+            ;;
+          RDR)
+            target_tasks=(":RCore:clean" ":RCore:build" ":RCore:publishLocal" ":RDR:clean" ":RDR:buildAll")
+            ;;
+          RDS)
+            target_tasks=(":RCore:clean" ":RCore:build" ":RCore:publishLocal" ":RDS:clean" ":RDS:buildAll")
+            ;;
+          RDT)
+            target_tasks=(":RCore:clean" ":RCore:build" ":RCore:publishLocal" ":RDT:clean" ":RDT:buildAll")
+            ;;
+          *)
+            echo "Unsupported target-module: ${target_module}" >&2
+            exit 1
+            ;;
+        esac
+
+        for task in "${common_tasks[@]}" "${target_tasks[@]}"; do
+          echo "Running Gradle task: ${task}"
+          ./gradlew --no-daemon "${task}"
+        done
+
+    - name: Stage release artifacts
+      id: stage-release-artifacts
+      shell: bash
+      run: |
+        set -euo pipefail
+        shopt -s nullglob
+
+        workspace="${GITHUB_WORKSPACE}"
+        target_module="${{ inputs.target-module }}"
+        normalized_target_module="$(printf '%s' "${target_module}" | tr '[:lower:]' '[:upper:]')"
+        artifacts_dir_relative="release-artifacts"
+        artifacts_dir="${workspace}/${artifacts_dir_relative}"
+
+        rm -rf "${artifacts_dir}"
+        mkdir -p "${artifacts_dir}"
+
+        names=()
+        patterns=()
+        case "${normalized_target_module}" in
+          RCORE)
+            names=("RCore")
+            patterns=("RCore/build/libs/RCore-*.jar")
+            ;;
+          RDQ)
+            names=("RDQ Free" "RDQ Premium")
+            patterns=(
+              "RDQ/rdq-free/build/libs/RDQ-*-Free.jar"
+              "RDQ/rdq-premium/build/libs/RDQ-*-Premium.jar"
+            )
+            ;;
+          RDR)
+            names=("RDR Free" "RDR Premium")
+            patterns=(
+              "RDR/rdr-free/build/libs/RDR-*-Free.jar"
+              "RDR/rdr-premium/build/libs/RDR-*-Premium.jar"
+            )
+            ;;
+          RDS)
+            names=("RDS Free" "RDS Premium")
+            patterns=(
+              "RDS/rds-free/build/libs/RDS-*-Free.jar"
+              "RDS/rds-premium/build/libs/RDS-*-Premium.jar"
+            )
+            ;;
+          RDT)
+            names=("RDT Free" "RDT Premium")
+            patterns=(
+              "RDT/rdt-free/build/libs/RDT-*-Free.jar"
+              "RDT/rdt-premium/build/libs/RDT-*-Premium.jar"
+            )
+            ;;
+          *)
+            echo "Unsupported target-module: ${target_module}" >&2
+            exit 1
+            ;;
+        esac
+
+        for i in "${!names[@]}"; do
+          name="${names[$i]}"
+          pattern="${patterns[$i]}"
+          mapfile -t candidates < <(compgen -G "${workspace}/${pattern}" || true)
+          matches=()
+
+          for candidate in "${candidates[@]}"; do
+            if [[ ! -f "${candidate}" ]]; then
+              continue
+            fi
+            jar_name="$(basename "${candidate}")"
+            if [[ "${jar_name,,}" == *sources* || "${jar_name,,}" == *javadoc* ]]; then
+              continue
+            fi
+            matches+=("${candidate}")
+          done
+
+          if [[ ${#matches[@]} -ne 1 ]]; then
+            echo "Expected exactly one jar for ${name}, found ${#matches[@]}."
+            if [[ ${#matches[@]} -gt 0 ]]; then
+              for file in "${matches[@]}"; do
+                echo " - ${file}"
+              done
+            else
+              echo "Pattern used: ${pattern}"
+            fi
+            exit 1
+          fi
+
+          jar="${matches[0]}"
+          cp "${jar}" "${artifacts_dir}/"
+          echo "Staged ${name}: $(basename "${jar}")"
+        done
+
+        artifact_count="$(find "${artifacts_dir}" -maxdepth 1 -type f -name '*.jar' | wc -l | tr -d '[:space:]')"
+        if [[ "${artifact_count}" != "${#names[@]}" ]]; then
+          echo "Expected ${#names[@]} release jars for ${target_module}, found ${artifact_count}." >&2
+          exit 1
+        fi
+
+        echo "artifacts-dir=${artifacts_dir_relative}" >> "${GITHUB_OUTPUT}"

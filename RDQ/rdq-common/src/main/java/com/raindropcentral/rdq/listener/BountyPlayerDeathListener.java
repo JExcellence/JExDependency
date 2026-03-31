@@ -1,9 +1,21 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.listener;
 
 import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.bounty.claim.ClaimResult;
 import de.jexcellence.jextranslate.i18n.I18n;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -28,10 +40,16 @@ public class BountyPlayerDeathListener implements Listener {
 
     private final RDQ rdq;
 
+    /**
+     * Executes BountyPlayerDeathListener.
+     */
     public BountyPlayerDeathListener(@NotNull RDQ rdq) {
         this.rdq = rdq;
     }
 
+    /**
+     * Executes onPlayerDeath.
+     */
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerDeath(@NotNull PlayerDeathEvent event) {
         var victim = event.getEntity();
@@ -54,10 +72,8 @@ public class BountyPlayerDeathListener implements Listener {
             rdq.getVisualIndicatorManager().removeIndicators(victimUuid);
             
             // Announce the claim
-            rdq.getPlatform().getScheduler().runSync(() -> {
-                announceClaimToWinners(claimResult, victim);
-                announceClaimToBroadcast(claimResult, victim);
-            });
+            rdq.getPlatform().getScheduler().runAtEntity(victim, () -> announceClaimToWinners(claimResult, victim));
+            rdq.getPlatform().getScheduler().runGlobal(() -> announceClaimToBroadcast(claimResult, victim));
 
         }).exceptionally(ex -> {
             LOGGER.log(Level.SEVERE, "Error processing bounty claim for " + victim.getName(), ex);
@@ -69,21 +85,23 @@ public class BountyPlayerDeathListener implements Listener {
         for (var entry : claimResult.winners().entrySet()) {
             var winnerUuid = entry.getKey();
             var proportion = entry.getValue();
-            var winner = Bukkit.getPlayer(winnerUuid);
+            var winner = rdq.getPlugin().getServer().getPlayer(winnerUuid);
 
             if (winner != null && winner.isOnline()) {
-                new I18n.Builder("bounty_listener.bounty_claimed.title", winner)
-                        .includePrefix()
-                        .build().sendMessage();
-                new I18n.Builder("bounty_listener.bounty_claimed.victim", winner)
-                        .withPlaceholder("victim_name", victim.getName())
-                        .build().sendMessage();
-                
-                if (claimResult.getWinnerCount() > 1) {
-                    new I18n.Builder("bounty_listener.bounty_claimed.share", winner)
-                            .withPlaceholder("percentage", String.format("%.1f", proportion * 100))
+                rdq.getPlatform().getScheduler().runAtEntity(winner, () -> {
+                    new I18n.Builder("bounty_listener.bounty_claimed.title", winner)
+                            .includePrefix()
                             .build().sendMessage();
-                }
+                    new I18n.Builder("bounty_listener.bounty_claimed.victim", winner)
+                            .withPlaceholder("victim_name", victim.getName())
+                            .build().sendMessage();
+
+                    if (claimResult.getWinnerCount() > 1) {
+                        new I18n.Builder("bounty_listener.bounty_claimed.share", winner)
+                                .withPlaceholder("percentage", String.format("%.1f", proportion * 100))
+                                .build().sendMessage();
+                    }
+                });
             }
         }
     }
@@ -91,20 +109,20 @@ public class BountyPlayerDeathListener implements Listener {
     private void announceClaimToBroadcast(@NotNull ClaimResult claimResult, @NotNull Player victim) {
         if (claimResult.getWinnerCount() == 1) {
             var winnerUuid = claimResult.winners().keySet().iterator().next();
-            var winner = Bukkit.getPlayer(winnerUuid);
+            var winner = rdq.getPlugin().getServer().getPlayer(winnerUuid);
             var winnerName = winner != null ? winner.getName() : "Someone";
 
             net.kyori.adventure.text.Component broadcastMsg = new I18n.Builder("bounty_listener.bounty_claimed.broadcast", victim)
                     .withPlaceholder("claimer_name", winnerName)
                     .withPlaceholder("victim_name", victim.getName())
                     .build().component();
-            Bukkit.broadcast(broadcastMsg);
+            rdq.getPlugin().getServer().broadcast(broadcastMsg);
         } else {
             net.kyori.adventure.text.Component broadcastMsg = new I18n.Builder("bounty_listener.bounty_claimed.broadcast_multiple", victim)
                     .withPlaceholder("winner_count", String.valueOf(claimResult.getWinnerCount()))
                     .withPlaceholder("victim_name", victim.getName())
                     .build().component();
-            Bukkit.broadcast(broadcastMsg);
+            rdq.getPlugin().getServer().broadcast(broadcastMsg);
         }
     }
 }

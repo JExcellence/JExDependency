@@ -570,6 +570,9 @@ public class VaultMigrationManager {
     }
 
     
+    /**
+     * Represents DetectionResult.
+     */
     public static class DetectionResult {
         private final boolean success;
         private final String providerName;
@@ -586,6 +589,9 @@ public class VaultMigrationManager {
             this.error = error;
         }
         
+        /**
+         * Performs error.
+         */
         public static DetectionResult error(String error) {
             return new DetectionResult(false, null, null, null, error);
         }
@@ -597,6 +603,9 @@ public class VaultMigrationManager {
         public String getError() { return error; }
     }
     
+    /**
+     * Represents MigrationStats.
+     */
     public static class MigrationStats {
         private boolean success = false;
         private int totalPlayers = 0;
@@ -622,6 +631,9 @@ public class VaultMigrationManager {
         public void incrementFailed() { this.failedPlayers++; }
         
         public BigDecimal getTotalBalance() { return totalBalance; }
+        /**
+         * Performs addToTotalBalance.
+         */
         public void addToTotalBalance(BigDecimal amount) {
             this.totalBalance = this.totalBalance.add(amount);
         }
@@ -630,6 +642,9 @@ public class VaultMigrationManager {
         public void addError(String error) { this.errors.add(error); }
     }
     
+    /**
+     * Represents MigrationResult.
+     */
     public static class MigrationResult {
         private final boolean success;
         private final String sourceProvider;
@@ -643,6 +658,9 @@ public class VaultMigrationManager {
             this.errorMessage = errorMessage;
         }
         
+        /**
+         * Performs error.
+         */
         public static MigrationResult error(String error) {
             return new MigrationResult(false, null, null, error);
         }
@@ -653,6 +671,9 @@ public class VaultMigrationManager {
         public String getErrorMessage() { return errorMessage; }
     }
 
+    /**
+     * Represents EconomyMigrator.
+     */
     public interface EconomyMigrator {
         /**
          * Performs any plugin-specific migration logic.

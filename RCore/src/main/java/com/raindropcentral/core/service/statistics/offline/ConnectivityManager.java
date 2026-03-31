@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.core.service.statistics.offline;
 
 import com.raindropcentral.core.service.central.RCentralApiClient;
@@ -27,10 +40,10 @@ public class ConnectivityManager {
 
     private static final Logger LOGGER = CentralLogger.getLoggerByName("RCore");
 
-    /** Number of consecutive failures before switching to offline mode */
+/** Represents this API member. */
     private static final int FAILURE_THRESHOLD = 3;
 
-    /** Probe interval in seconds during offline mode */
+/** Represents this API member. */
     private static final int PROBE_INTERVAL_SECONDS = 30;
 
     private final RCentralApiClient apiClient;
@@ -43,6 +56,9 @@ public class ConnectivityManager {
     private ScheduledFuture<?> probeTask;
     private Consumer<Boolean> connectivityListener;
 
+    /**
+     * Executes ConnectivityManager.
+     */
     public ConnectivityManager(
         final @NotNull RCentralApiClient apiClient,
         final @NotNull String apiKey,

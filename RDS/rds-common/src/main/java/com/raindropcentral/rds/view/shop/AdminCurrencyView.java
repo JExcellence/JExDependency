@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rds.view.shop;
 
 import java.lang.reflect.Constructor;
@@ -32,8 +45,8 @@ import com.raindropcentral.rplatform.view.APaginatedView;
 
 /**
  * Renders the admin currency management view for RDS.
- * <p>
- * This view lists detected currencies from Vault and JExEconomy, and exposes
+ *
+ * <p>This view lists detected currencies from Vault and JExEconomy, and exposes
  * an action to create the default {@code raindrops} currency when JExEconomy
  * is available.
  *

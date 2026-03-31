@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.core.service.statistics.delivery;
 
 import com.raindropcentral.core.service.statistics.config.StatisticsDeliveryConfig;
@@ -43,6 +56,9 @@ public class StatisticsDeliveryEngine {
     // Delivery callback for actual transmission
     private DeliveryCallback deliveryCallback;
 
+    /**
+     * Executes StatisticsDeliveryEngine.
+     */
     public StatisticsDeliveryEngine(
         final @NotNull RateLimiter rateLimiter,
         final @NotNull RetryHandler retryHandler,
@@ -259,9 +275,18 @@ public class StatisticsDeliveryEngine {
             .receipt(b.receipt() != null ? b.receipt() : a.receipt())
             .build();
     }
+/**
+ * Executes method.
+ */
+/**
+ * Executes this member.
+ */
 
     // ==================== Metrics ====================
 
+    /**
+     * Gets metrics.
+     */
     public DeliveryMetrics getMetrics() {
         long total = totalDeliveries.get();
         long successful = successfulDeliveries.get();
@@ -270,15 +295,24 @@ public class StatisticsDeliveryEngine {
 
         return new DeliveryMetrics(
             total,
+            /**
+             * Executes method.
+             */
             successful,
             failed,
             totalStatisticsDelivered.get(),
+            /**
+             * Executes get.
+             */
             totalBytesTransmitted.get(),
             avgLatency,
             total > 0 ? (double) successful / total : 1.0
         );
     }
 
+    /**
+     * Executes resetMetrics.
+     */
     public void resetMetrics() {
         totalDeliveries.set(0);
         successfulDeliveries.set(0);
@@ -297,6 +331,9 @@ public class StatisticsDeliveryEngine {
         long failedDeliveries,
         long totalStatisticsDelivered,
         long totalBytesTransmitted,
+        /**
+         * Executes this member.
+         */
         long averageLatencyMs,
         double successRate
     ) {}
@@ -306,6 +343,9 @@ public class StatisticsDeliveryEngine {
      */
     @FunctionalInterface
     public interface DeliveryCallback {
+        /**
+         * Performs deliver.
+         */
         CompletableFuture<DeliveryReceipt> deliver(
             BatchPayload batch,
             PayloadCompressor.CompressionResult compressionResult

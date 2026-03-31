@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rplatform.config.permission;
 
 import com.raindropcentral.rplatform.config.DurationSection;
@@ -11,12 +24,11 @@ import java.util.Set;
 
 /**
  * Configuration section that maps permissions to effect durations by leveraging {@link DurationSection}.
- * <p>
- * Administrators can combine structured duration keys with free-form strings to describe how long a
+ *
+ * <p>Administrators can combine structured duration keys with free-form strings to describe how long a
  * perk lasts for each permission tier. Optional minimum and maximum bounds ensure durations remain
  * within acceptable limits while the resolver selects the longest applicable duration when multiple
  * permissions apply.
- * </p>
  *
  * @author JExcellence
  * @since 1.0.0
@@ -174,7 +186,7 @@ public class PermissionDurationSection extends APermissionBasedSection<Long> {
     }
 
     /**
-     * Generates a formatted duration string for the supplied player, prioritizing configured
+     * Generates a formatted duration string for the supplied player, prioritizing configured.
      * {@link DurationSection} formatting when available.
      *
      * @param player player whose permissions should be evaluated

@@ -28,6 +28,9 @@ description = "Core plugin providing shared functionality for Raindrop plugins"
 
 dependencies {
     compileOnly(libs.paper.api)
+    implementation(project(":RPlatform"))
+    compileOnly("com.velocitypowered:velocity-api:3.4.0")
+    annotationProcessor("com.velocitypowered:velocity-api:3.4.0")
 
     // Adventure APIs (core APIs are compileOnly as Paper provides them)
     compileOnly(libs.adventure.api)
@@ -61,12 +64,23 @@ dependencies {
 
     implementation(libs.bundles.jexcellence) {
         exclude(group = "de.jexcellence.hibernate")
+        exclude(group = "com.raindropcentral.platform", module = "rplatform")
         isTransitive = false
     }
     implementation(libs.bundles.jeconfig) { isTransitive = false }
-    implementation(libs.bundles.inventory) { isTransitive = false }
+    // InventoryFramework is provided at runtime through JExDependency/Paper loader.
+    // Packaging a second relocated copy into RCore splits class ownership and breaks ViewFrame feature installation.
+    compileOnly(libs.bundles.inventory)
 
     compileOnly(libs.jexeconomy)
+
+    testImplementation(platform(libs.junit.bom))
+    testImplementation(libs.junit.jupiter.api)
+    testRuntimeOnly(libs.junit.jupiter.engine)
+    testRuntimeOnly(libs.junit.platform.launcher)
+    testImplementation(project(":RPlatform"))
+    testImplementation(libs.paper.api)
+    testCompileOnly(libs.jackson.annotations)
 }
 
 tasks.processResources {
@@ -77,7 +91,7 @@ tasks.processResources {
         "apiVersion" to "1.21"
     )
     inputs.properties(props)
-    filesMatching(listOf("plugin.yml", "paper-plugin.yml")) {
+    filesMatching(listOf("plugin.yml", "paper-plugin.yml", "velocity-plugin.json")) {
         expand(props)
     }
 }
@@ -99,6 +113,10 @@ tasks.named("build") {
 
 tasks.named<Jar>("jar") {
     enabled = false
+}
+
+tasks.withType<Test>().configureEach {
+    useJUnitPlatform()
 }
 
 publishing {

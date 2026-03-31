@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.database.entity.rank;
 
 import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
@@ -10,12 +23,11 @@ import java.time.LocalDateTime;
 
 /**
  * Entity representing the association between a player and their selected rank path (rank tree).
- * <p>
- * This entity tracks which rank tree paths a player has selected and which one is currently active.
+ *
+ * <p>This entity tracks which rank tree paths a player has selected and which one is currently active.
  * Players can have multiple rank path records (one per rank tree they've interacted with),
  * but only one can be active at a time. Players start with no rank paths and must choose
  * their first progression path when they access the rank system.
- * </p>
  *
  * @author JExcellence
  * @version 1.1.0
@@ -26,6 +38,9 @@ import java.time.LocalDateTime;
 		name = "r_player_rank_path",
 		uniqueConstraints = @UniqueConstraint(columnNames = {"player_id", "rank_tree_id"})
 )
+/**
+ * Represents the RPlayerRankPath API type.
+ */
 @Getter
 public class RPlayerRankPath extends BaseEntity {
 
@@ -156,6 +171,9 @@ public class RPlayerRankPath extends BaseEntity {
 		}
 	}
 
+	/**
+	 * Sets active.
+	 */
 	public void setActive(boolean active) {
 		isActive = active;
 	}
@@ -177,6 +195,9 @@ public class RPlayerRankPath extends BaseEntity {
 				this.getCreatedAt().isAfter(LocalDateTime.now().minusHours(1));
 	}
 
+	/**
+	 * Executes toString.
+	 */
 	@Override
 	public String toString() {
 		return "RDQPlayerRankPath{" +

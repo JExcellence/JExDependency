@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.view.perks;
 
 import com.raindropcentral.rdq.RDQ;
@@ -34,6 +47,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+/**
+ * Represents the PerkDetailView API type.
+ */
 public class PerkDetailView extends BaseView {
 	
 	private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
@@ -50,6 +66,9 @@ public class PerkDetailView extends BaseView {
 	private static final int TOGGLE_BUTTON_SLOT = 40;
 	private static final int DISABLE_BUTTON_SLOT = 42;
 	
+	/**
+	 * Executes PerkDetailView.
+	 */
 	public PerkDetailView() {
 		super(PerkOverviewView.class);
 	}
@@ -65,6 +84,9 @@ public class PerkDetailView extends BaseView {
 		return Map.of("perk_name", perk != null ? perk.getIdentifier() : "Unknown");
 	}
 	
+	/**
+	 * Executes onFirstRender.
+	 */
 	@Override
 	public void onFirstRender(final @NotNull RenderContext render, final @NotNull Player player) {
 		final Perk perk = targetPerk.get(render);

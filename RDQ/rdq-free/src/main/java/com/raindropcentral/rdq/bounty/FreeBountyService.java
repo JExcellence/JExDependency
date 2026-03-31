@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.bounty;
 
 import com.raindropcentral.rdq.database.entity.bounty.Bounty;
@@ -69,6 +82,9 @@ public class FreeBountyService implements IBountyService {
         return instance;
     }
 
+    /**
+     * Executes findAll.
+     */
     @Override
     public CompletableFuture<List<Bounty>> findAll(int page, int pageSize) {
         return CompletableFuture.supplyAsync(() -> {
@@ -83,6 +99,9 @@ public class FreeBountyService implements IBountyService {
         });
     }
 
+    /**
+     * Executes findPlayerBounty.
+     */
     @Override
     public CompletableFuture<Bounty> findPlayerBounty(@NotNull UUID uniqueId) {
         return CompletableFuture.supplyAsync(() -> 
@@ -93,6 +112,9 @@ public class FreeBountyService implements IBountyService {
         );
     }
 
+    /**
+     * Executes findBountiesByCommissioner.
+     */
     @Override
     public CompletableFuture<List<Bounty>> findBountiesByCommissioner(@NotNull UUID commissionerUniqueId) {
         return CompletableFuture.supplyAsync(() -> 
@@ -102,6 +124,9 @@ public class FreeBountyService implements IBountyService {
         );
     }
 
+    /**
+     * Executes create.
+     */
     @Override
     public CompletableFuture<Bounty> create(
             @NotNull UUID targetUniqueId,
@@ -110,6 +135,9 @@ public class FreeBountyService implements IBountyService {
         return create(targetUniqueId, commissionerUniqueId, new ArrayList<>());
     }
 
+    /**
+     * Executes create.
+     */
     @Override
     public CompletableFuture<Bounty> create(
             @NotNull UUID targetUniqueId,
@@ -141,11 +169,17 @@ public class FreeBountyService implements IBountyService {
         });
     }
 
+    /**
+     * Executes update.
+     */
     @Override
     public CompletableFuture<Bounty> update(@NotNull Bounty bounty) {
         return CompletableFuture.supplyAsync(() -> bounty);
     }
 
+    /**
+     * Executes delete.
+     */
     @Override
     public CompletableFuture<Boolean> delete(@NotNull Bounty bounty) {
         return CompletableFuture.supplyAsync(() -> {
@@ -153,47 +187,74 @@ public class FreeBountyService implements IBountyService {
         });
     }
 
+    /**
+     * Gets totalBounties.
+     */
     @Override
     public CompletableFuture<Integer> getTotalBounties() {
         return CompletableFuture.completedFuture(mockBounties.size());
     }
 
+    /**
+     * Gets bountyHunter.
+     */
     @Override
     public CompletableFuture<BountyHunter> getBountyHunter(@NotNull RDQPlayer player) {
         return CompletableFuture.supplyAsync(() -> null);
     }
 
+    /**
+     * Gets topHunters.
+     */
     @Override
     public CompletableFuture<List<BountyHunter>> getTopHunters(int limit, @NotNull String orderBy) {
         return CompletableFuture.supplyAsync(ArrayList::new);
     }
 
+    /**
+     * Executes claim.
+     */
     @Override
     public CompletableFuture<BountyHunter> claim(@NotNull RDQPlayer player, double rewardValue) {
         return CompletableFuture.supplyAsync(() -> null);
     }
 
+    /**
+     * Gets hunterLevel.
+     */
     @Override
     public CompletableFuture<Integer> getHunterLevel(@NotNull UUID uniqueId) {
         return CompletableFuture.completedFuture(FREE_HUNTER_LEVEL);
     }
 
+    /**
+     * Returns whether premium.
+     */
     @Override
     public boolean isPremium() {
         return false;
     }
 
+    /**
+     * Executes canCreateBounty.
+     */
     @Override
     public boolean canCreateBounty(@NotNull Player player) {
         var playerBounties = mockBounties.stream().filter(b -> b.getCommissionerUniqueId().equals(player.getUniqueId())).count();
         return playerBounties < MAX_BOUNTIES_PER_COMMISSIONER;
     }
 
+    /**
+     * Gets maxBountiesPerCommissioner.
+     */
     @Override
     public int getMaxBountiesPerCommissioner() {
         return MAX_BOUNTIES_PER_COMMISSIONER;
     }
 
+    /**
+     * Gets maxBountyRewardsPerTarget.
+     */
     @Override
     public int getMaxBountyRewardsPerTarget() {
         return MAX_REWARDS_PER_BOUNTY;

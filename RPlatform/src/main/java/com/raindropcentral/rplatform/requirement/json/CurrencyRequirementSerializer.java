@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rplatform.requirement.json;
 
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -15,10 +28,16 @@ import java.io.IOException;
  */
 public class CurrencyRequirementSerializer extends StdSerializer<CurrencyRequirement> {
 
+    /**
+     * Executes CurrencyRequirementSerializer.
+     */
     public CurrencyRequirementSerializer() {
         super(CurrencyRequirement.class);
     }
 
+    /**
+     * Executes serialize.
+     */
     @Override
     public void serialize(CurrencyRequirement requirement, JsonGenerator gen, SerializerProvider provider) 
             throws IOException {
@@ -30,6 +49,9 @@ public class CurrencyRequirementSerializer extends StdSerializer<CurrencyRequire
         gen.writeEndObject();
     }
 
+    /**
+     * Executes serializeWithType.
+     */
     @Override
     public void serializeWithType(CurrencyRequirement requirement, JsonGenerator gen, 
                                    SerializerProvider provider, TypeSerializer typeSer) throws IOException {

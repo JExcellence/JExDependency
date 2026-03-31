@@ -1,4 +1,17 @@
 /*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
+/*
 package com.raindropcentral.rdq.utility.forge;
 
 import com.raindropcentral.rdq.utility.CooldownManager;
@@ -24,9 +37,8 @@ import java.util.*;
  * at a given location matches a predefined blueprint of blocks and materials. It also handles cooldowns
  * to prevent repeated checks, visualizes the structure for the player, and provides detailed feedback
  * on missing or incorrect blocks using localized messages.
- * </p>
  *
- * <h2>Usage</h2>
+ * <p><strong>Usage</strong>
  * <ul>
  *   <li>Instantiate this class to manage structure verification for a specific blueprint.</li>
  *   <li>Call {@link #checkStructure(Player, Block)} when a player interacts with a block to verify the structure.</li>
@@ -34,7 +46,7 @@ import java.util.*;
  *   <li>Cooldowns are managed per structure location to prevent spam.</li>
  * </ul>
  *
- * <h2>Feedback</h2>
+ * <p><strong>Feedback</strong>
  * <ul>
  *   <li>Correct blocks are visualized with lime particles; incorrect blocks with red particles.</li>
  *   <li>Players receive detailed messages about missing or incorrect blocks, as well as cooldown status.</li>
@@ -85,7 +97,6 @@ public class ForgeStructureVerifier {
      * If the structure matches, a cooldown is set for the location and a success message is sent.
      * If not, the player receives detailed feedback about each incorrect or missing block.
      * Visual feedback is provided using particles for both correct and incorrect blocks.
-     * </p>
      *
      * @param player       The player to send feedback and visualization to.
      * @param clickedBlock The block that was clicked and serves as the reference point for the structure check.
@@ -178,7 +189,6 @@ public class ForgeStructureVerifier {
      * <p>
      * The blueprint maps relative {@link Vector} positions to required {@link Material}s.
      * This method defines the shape and composition of the forge structure.
-     * </p>
      *
      * @return An unmodifiable map representing the forge blueprint.
      *//*

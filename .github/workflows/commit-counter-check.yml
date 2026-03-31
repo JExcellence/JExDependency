@@ -1,0 +1,180 @@
+name: Commit Counter Check
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+concurrency:
+  group: commit-counter-check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  commit-counter-check:
+    name: Validate Commit Counter And Build Numbers
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+
+      - name: Validate commit counter and module build numbers
+        shell: pwsh
+        run: |
+          Set-StrictMode -Version Latest
+          $ErrorActionPreference = 'Stop'
+
+          function TryGet-PropertyValue {
+              param(
+                  [Parameter(Mandatory = $true)][string]$Content,
+                  [Parameter(Mandatory = $true)][string]$Key,
+                  [Parameter(Mandatory = $true)][ref]$OutValue
+              )
+
+              $escapedKey = [Regex]::Escape($Key)
+              $match = [Regex]::Match($Content, "(?m)^$escapedKey=(.*)$")
+              if (-not $match.Success) {
+                  return $false
+              }
+
+              $OutValue.Value = $match.Groups[1].Value.Trim()
+              return $true
+          }
+
+          function Get-IntegerProperty {
+              param(
+                  [Parameter(Mandatory = $true)][string]$Content,
+                  [Parameter(Mandatory = $true)][string]$Key
+              )
+
+              $value = ""
+              if (-not (TryGet-PropertyValue -Content $Content -Key $Key -OutValue ([ref]$value))) {
+                  throw "Missing property in gradle.properties: $Key"
+              }
+
+              $parsedValue = 0
+              if (-not [int]::TryParse($value, [ref]$parsedValue)) {
+                  throw "Property '$Key' must be an integer but was '$value'."
+              }
+
+              return $parsedValue
+          }
+
+          git rev-parse --verify HEAD^ | Out-Null
+          if ($LASTEXITCODE -ne 0) {
+              Write-Host "No parent commit available. Skipping commit counter validation."
+              exit 0
+          }
+
+          git cat-file -e "HEAD^:gradle.properties" 2>$null
+          if ($LASTEXITCODE -ne 0) {
+              Write-Host "Parent commit does not contain gradle.properties. Skipping validation."
+              exit 0
+          }
+
+          $previousProperties = ((git show "HEAD^:gradle.properties") -join "`n")
+          $currentProperties = Get-Content -Path "gradle.properties" -Raw
+
+          $currentCommit = Get-IntegerProperty -Content $currentProperties -Key "commit"
+
+          $previousCommitRaw = ""
+          if (-not (TryGet-PropertyValue -Content $previousProperties -Key "commit" -OutValue ([ref]$previousCommitRaw))) {
+              Write-Host "Previous gradle.properties has no commit property. Baseline introduction detected; skipping validation."
+              exit 0
+          }
+
+          $previousCommit = 0
+          if (-not [int]::TryParse($previousCommitRaw, [ref]$previousCommit)) {
+              throw "Property 'commit' in previous gradle.properties must be an integer but was '$previousCommitRaw'."
+          }
+
+          if ($currentCommit -lt $previousCommit) {
+              throw "commit cannot be lowered (HEAD^=$previousCommit, HEAD=$currentCommit)."
+          }
+
+          $delta = $currentCommit - $previousCommit
+          Write-Host "commit delta: $previousCommit -> $currentCommit (delta=$delta)"
+
+          $commitHashes = @()
+          if ($delta -gt 0) {
+              $commitHashes = @(git rev-list "--max-count=$delta" "HEAD^")
+              if ($commitHashes.Count -lt $delta) {
+                  throw "commit increased by $delta, but only $($commitHashes.Count) commits are available from HEAD^ history."
+              }
+          }
+
+          $changedFilesByCommit = @{}
+          foreach ($hash in $commitHashes) {
+              $changedFiles = @(git show --pretty=format: --name-only --first-parent $hash)
+              $normalizedChangedFiles = @()
+              foreach ($filePath in $changedFiles) {
+                  $trimmedPath = $filePath.Trim()
+                  if ($trimmedPath.Length -gt 0) {
+                      $normalizedChangedFiles += $trimmedPath
+                  }
+              }
+              $changedFilesByCommit[$hash] = $normalizedChangedFiles
+          }
+
+          $modules = @(
+              @{ Name = "RCore"; Directory = "RCore"; BuildKey = "rcore.version.build" },
+              @{ Name = "RDQ"; Directory = "RDQ"; BuildKey = "rdq.version.build" },
+              @{ Name = "RDR"; Directory = "RDR"; BuildKey = "rdr.version.build" },
+              @{ Name = "RDS"; Directory = "RDS"; BuildKey = "rds.version.build" },
+              @{ Name = "RDT"; Directory = "RDT"; BuildKey = "rdt.version.build" }
+          )
+
+          $errors = New-Object System.Collections.Generic.List[string]
+          $summaryLines = New-Object System.Collections.Generic.List[string]
+
+          foreach ($module in $modules) {
+              $previousBuild = Get-IntegerProperty -Content $previousProperties -Key $module.BuildKey
+              $currentBuild = Get-IntegerProperty -Content $currentProperties -Key $module.BuildKey
+
+              $affectedCommitCount = 0
+              foreach ($hash in $commitHashes) {
+                  $changedFiles = $changedFilesByCommit[$hash]
+                  $hasModuleChange = $false
+                  foreach ($changedFile in $changedFiles) {
+                      if ($changedFile -eq $module.Directory -or $changedFile.StartsWith("$($module.Directory)/", [StringComparison]::Ordinal)) {
+                          $hasModuleChange = $true
+                          break
+                      }
+                  }
+                  if ($hasModuleChange) {
+                      $affectedCommitCount++
+                  }
+              }
+
+              $expectedBuild = $previousBuild + $affectedCommitCount
+              if ($currentBuild -ne $expectedBuild) {
+                  $errors.Add(
+                      "$($module.Name): expected $($module.BuildKey)=$expectedBuild, found $currentBuild (previous=$previousBuild, affectedCommits=$affectedCommitCount)."
+                  )
+              }
+
+              $summaryLines.Add(
+                  "$($module.Name): $($module.BuildKey) $previousBuild -> $currentBuild (expected $expectedBuild, affectedCommits=$affectedCommitCount)"
+              )
+          }
+
+          foreach ($line in $summaryLines) {
+              Write-Host $line
+          }
+
+          if ($errors.Count -gt 0) {
+              foreach ($errorLine in $errors) {
+                  Write-Error $errorLine
+              }
+              throw "gradle.properties build numbers are inconsistent with commit counter delta."
+          }
+
+          Write-Host "Commit counter and module build numbers are consistent."

@@ -4,7 +4,7 @@ import de.jexcellence.dependency.model.DependencyCoordinate;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Enumeration of Maven repositories queried when downloading dependencies. Each constant describes a commonly used
+ * Enumeration of Maven repositories queried when downloading dependencies. Each constant describes a commonly used.
  * repository within the Raindrop ecosystem.
  */
 public enum RepositoryType {

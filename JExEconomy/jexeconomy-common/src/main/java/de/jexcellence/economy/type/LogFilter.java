@@ -13,11 +13,10 @@ import java.util.UUID;
 
 /**
  * Helper class for managing currency log filtering criteria.
- * <p>
- * This class encapsulates all possible filter options for currency logs,
+ *
+ * <p>This class encapsulates all possible filter options for currency logs,
  * providing a clean interface for building database queries and displaying
  * active filter information to users.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.1
@@ -90,51 +89,110 @@ public class LogFilter {
             this.filter = new LogFilter();
         }
 
+        /**
+         * Filters by player UUID.
+         *
+         * @param playerUuid player UUID criterion
+         * @return this builder
+         */
         public @NotNull Builder withPlayerUuid(@Nullable UUID playerUuid) {
             this.filter.playerUuid = playerUuid;
             return this;
         }
 
+        /**
+         * Filters by currency identifier.
+         *
+         * @param currencyId currency id criterion
+         * @return this builder
+         */
         public @NotNull Builder withCurrencyId(@Nullable Long currencyId) {
             this.filter.currencyId = currencyId;
             return this;
         }
 
+        /**
+         * Filters by log type.
+         *
+         * @param logType log type criterion
+         * @return this builder
+         */
         public @NotNull Builder withLogType(@Nullable ELogType logType) {
             this.filter.logType = logType;
             return this;
         }
 
+        /**
+         * Filters by log level.
+         *
+         * @param logLevel log level criterion
+         * @return this builder
+         */
         public @NotNull Builder withLogLevel(@Nullable ELogLevel logLevel) {
             this.filter.logLevel = logLevel;
             return this;
         }
 
+        /**
+         * Filters by operation type.
+         *
+         * @param operationType operation type criterion
+         * @return this builder
+         */
         public @NotNull Builder withOperationType(@Nullable EChangeType operationType) {
             this.filter.operationType = operationType;
             return this;
         }
 
+        /**
+         * Filters by start timestamp.
+         *
+         * @param dateFrom lower bound timestamp
+         * @return this builder
+         */
         public @NotNull Builder withDateFrom(@Nullable LocalDateTime dateFrom) {
             this.filter.dateFrom = dateFrom;
             return this;
         }
 
+        /**
+         * Filters by end timestamp.
+         *
+         * @param dateTo upper bound timestamp
+         * @return this builder
+         */
         public @NotNull Builder withDateTo(@Nullable LocalDateTime dateTo) {
             this.filter.dateTo = dateTo;
             return this;
         }
 
+        /**
+         * Filters by successful state.
+         *
+         * @param successOnly success criterion
+         * @return this builder
+         */
         public @NotNull Builder withSuccessOnly(@Nullable Boolean successOnly) {
             this.filter.successOnly = successOnly;
             return this;
         }
 
+        /**
+         * Filters by initiator UUID.
+         *
+         * @param initiatorUuid initiator criterion
+         * @return this builder
+         */
         public @NotNull Builder withInitiatorUuid(@Nullable UUID initiatorUuid) {
             this.filter.initiatorUuid = initiatorUuid;
             return this;
         }
 
+        /**
+         * Builds the filter snapshot.
+         *
+         * @return new immutable filter copy
+         */
         public @NotNull LogFilter build() {
             LogFilter result = new LogFilter();
             result.playerUuid = this.filter.playerUuid;
@@ -150,46 +208,76 @@ public class LogFilter {
         }
     }
 
+    /**
+     * Sets playerUuid.
+     */
     public @NotNull LogFilter setPlayerUuid(@Nullable UUID playerUuid) {
         this.playerUuid = playerUuid;
         return this;
     }
 
+    /**
+     * Sets the target currency id.
+     *
+     * @param currencyId currency identifier
+     * @return this filter instance
+     */
     public @NotNull LogFilter setCurrencyId(@Nullable Long currencyId) {
         this.currencyId = currencyId;
         return this;
     }
 
+    /**
+     * Sets logType.
+     */
     public @NotNull LogFilter setLogType(@Nullable ELogType logType) {
         this.logType = logType;
         return this;
     }
 
+    /**
+     * Sets logLevel.
+     */
     public @NotNull LogFilter setLogLevel(@Nullable ELogLevel logLevel) {
         this.logLevel = logLevel;
         return this;
     }
 
+    /**
+     * Sets operationType.
+     */
     public @NotNull LogFilter setOperationType(@Nullable EChangeType operationType) {
         this.operationType = operationType;
         return this;
     }
 
+    /**
+     * Sets dateFrom.
+     */
     public @NotNull LogFilter setDateFrom(@Nullable LocalDateTime dateFrom) {
         this.dateFrom = dateFrom;
         return this;
     }
 
+    /**
+     * Sets dateTo.
+     */
     public @NotNull LogFilter setDateTo(@Nullable LocalDateTime dateTo) {
         this.dateTo = dateTo;
         return this;
     }
 
+    /**
+     * Sets successOnly.
+     */
     public @NotNull LogFilter setSuccessOnly(@Nullable Boolean successOnly) {
         this.successOnly = successOnly;
         return this;
     }
 
+    /**
+     * Sets initiatorUuid.
+     */
     public @NotNull LogFilter setInitiatorUuid(@Nullable UUID initiatorUuid) {
         this.initiatorUuid = initiatorUuid;
         return this;

@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.core.service.statistics.command;
 
 import com.raindropcentral.core.service.statistics.StatisticsDeliveryService;
@@ -32,10 +45,16 @@ public class StatisticsDeliveryCommand implements CommandExecutor, TabCompleter 
     private final StatisticsDeliveryService service;
     private boolean diagnosticMode = false;
 
+    /**
+     * Executes StatisticsDeliveryCommand.
+     */
     public StatisticsDeliveryCommand(final @NotNull StatisticsDeliveryService service) {
         this.service = service;
     }
 
+    /**
+     * Executes onCommand.
+     */
     @Override
     public boolean onCommand(
         @NotNull CommandSender sender,
@@ -191,6 +210,9 @@ public class StatisticsDeliveryCommand implements CommandExecutor, TabCompleter 
         return String.format("%.1f GB", bytes / (1024.0 * 1024 * 1024));
     }
 
+    /**
+     * Executes onTabComplete.
+     */
     @Override
     public @Nullable List<String> onTabComplete(
         @NotNull CommandSender sender,

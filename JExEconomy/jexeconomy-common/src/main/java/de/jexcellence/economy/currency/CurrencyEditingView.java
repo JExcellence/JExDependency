@@ -18,13 +18,12 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * Paginated view for selecting a currency to edit.
- * <p>
- * This view displays all available currencies in a paginated format, allowing
+ *
+ * <p>This view displays all available currencies in a paginated format, allowing
  * administrators to select which currency they want to edit. Each currency entry
  * shows basic information and can be clicked to open the currency editing interface.
- * </p>
  *
- * <h3>Key Features:</h3>
+ * <p><strong>Key Features:</strong>
  * <ul>
  *   <li><strong>Currency Selection:</strong> Click-to-select interface for currency editing</li>
  *   <li><strong>Paginated Display:</strong> Efficiently handles large numbers of currencies</li>
@@ -32,11 +31,10 @@ import java.util.concurrent.CompletableFuture;
  *   <li><strong>Visual Representation:</strong> Uses currency icons for immediate recognition</li>
  * </ul>
  *
- * <h3>Navigation Flow:</h3>
- * <p>
- * Users navigate from the currencies action overview to this view to select a currency
+ * <p><strong>Navigation Flow:</strong>
+ *
+ * <p>Users navigate from the currencies action overview to this view to select a currency
  * to edit, then proceed to the currency properties editing interface.
- * </p>
  *
  * @author JExcellence
  * @see APaginatedView
@@ -53,10 +51,9 @@ public class CurrencyEditingView extends APaginatedView<Currency> {
 	
 	/**
 	 * Constructs a new {@code CurrencyEditingView} with the currencies action overview as parent.
-	 * <p>
-	 * The view will display all available currencies for selection and provide
+ *
+ * <p>The view will display all available currencies for selection and provide
 	 * navigation back to the currencies action overview when closed.
-	 * </p>
 	 */
 	public CurrencyEditingView() {
 		super(CurrenciesActionOverviewView.class);
@@ -64,10 +61,9 @@ public class CurrencyEditingView extends APaginatedView<Currency> {
 	
 	/**
 	 * Returns the internationalization key for this view.
-	 * <p>
-	 * This key is used to load localized strings for the currency editing selection
+ *
+ * <p>This key is used to load localized strings for the currency editing selection
 	 * interface, including titles, labels, and formatting templates.
-	 * </p>
 	 *
 	 * @return the i18n key for the currency editing selection UI
 	 */
@@ -78,10 +74,9 @@ public class CurrencyEditingView extends APaginatedView<Currency> {
 	
 	/**
 	 * Provides the asynchronous data source for the currencies pagination.
-	 * <p>
-	 * This method retrieves all available currencies from the repository with pagination
+ *
+ * <p>This method retrieves all available currencies from the repository with pagination
 	 * support. The results are limited to 128 currencies to optimize performance.
-	 * </p>
 	 *
 	 * @param renderContext the current rendering context, must not be null
 	 * @return a future containing the list of currencies for pagination
@@ -98,11 +93,10 @@ public class CurrencyEditingView extends APaginatedView<Currency> {
 	
 	/**
 	 * Renders a single currency entry in the pagination view.
-	 * <p>
-	 * This method creates a visual representation of a currency including its icon,
+ *
+ * <p>This method creates a visual representation of a currency including its icon,
 	 * name, symbol, and additional metadata. The entry is interactive and allows
 	 * administrators to click through to the currency properties editing view.
-	 * </p>
 	 *
 	 * @param renderContext the current rendering context, must not be null
 	 * @param itemBuilder the item component builder for creating the display item, must not be null
@@ -180,10 +174,9 @@ public class CurrencyEditingView extends APaginatedView<Currency> {
 	
 	/**
 	 * Defines the layout structure for the currency editing selection view.
-	 * <p>
-	 * The layout provides a clean, organized display with currency entries in the center
+ *
+ * <p>The layout provides a clean, organized display with currency entries in the center
 	 * and navigation controls below.
-	 * </p>
 	 *
 	 * @return the layout pattern as a string array, never null
 	 */
@@ -199,10 +192,9 @@ public class CurrencyEditingView extends APaginatedView<Currency> {
 	
 	/**
 	 * Handles additional rendering logic specific to the currency editing selection view.
-	 * <p>
-	 * Currently, no additional rendering is required for the currency editing selection,
+ *
+ * <p>Currently, no additional rendering is required for the currency editing selection,
 	 * as all necessary elements are handled by the pagination system.
-	 * </p>
 	 *
 	 * @param renderContext the current rendering context, must not be null
 	 * @param contextPlayer the player viewing the interface, must not be null

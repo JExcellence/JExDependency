@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.config.ranks.ranktree;
 
 import com.raindropcentral.rdq.config.ranks.rank.RankSection;
@@ -19,16 +32,14 @@ import java.util.logging.Logger;
 
 /**
  * Represents a configuration section for a rank tree in the rank progression system.
- * <p>
- * A rank tree is a collection of ranks that players can progress through, possibly with prerequisites,
+ *
+ * <p>A rank tree is a collection of ranks that players can progress through, possibly with prerequisites,
  * connections to other trees, and cross-tree progression rules. This class encapsulates all configuration
  * options for a single rank tree, including display properties, requirements, icon, and the ranks it contains.
- * </p>
  *
- * <p>
- * Each field is mapped from configuration and provides sensible defaults if not set.
+ *
+ * <p>Each field is mapped from configuration and provides sensible defaults if not set.
  * Display name and description keys are automatically generated if not provided.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -301,10 +312,16 @@ public class RankTreeSection extends AConfigSection {
 		return this.prerequisiteRankTrees == null ? new ArrayList<>() : this.prerequisiteRankTrees;
 	}
 	
+	/**
+	 * Sets minimumRankTreesToBeDone.
+	 */
 	public void setMinimumRankTreesToBeDone(final Integer minimumRankTreesToBeDone) {
 		this.minimumRankTreesToBeDone = minimumRankTreesToBeDone;
 	}
 	
+	/**
+	 * Gets unlockedRankTrees.
+	 */
 	public List<String> getUnlockedRankTrees() {
 		return this.unlockedRankTrees == null ? new ArrayList<>() : this.unlockedRankTrees;
 	}

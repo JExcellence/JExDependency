@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.core.service.statistics.queue;
 
 import com.raindropcentral.rplatform.type.EStatisticType.StatisticDataType;
@@ -90,46 +103,73 @@ public record QueuedStatistic(
         private boolean isDelta = false;
         private String sourcePlugin = "RCore";
 
+        /**
+         * Performs playerUuid.
+         */
         public Builder playerUuid(final @NotNull UUID playerUuid) {
             this.playerUuid = playerUuid;
             return this;
         }
 
+        /**
+         * Performs statisticKey.
+         */
         public Builder statisticKey(final @NotNull String statisticKey) {
             this.statisticKey = statisticKey;
             return this;
         }
 
+        /**
+         * Performs value.
+         */
         public Builder value(final @NotNull Object value) {
             this.value = value;
             return this;
         }
 
+        /**
+         * Performs dataType.
+         */
         public Builder dataType(final @NotNull StatisticDataType dataType) {
             this.dataType = dataType;
             return this;
         }
 
+        /**
+         * Performs collectionTimestamp.
+         */
         public Builder collectionTimestamp(final long collectionTimestamp) {
             this.collectionTimestamp = collectionTimestamp;
             return this;
         }
 
+        /**
+         * Performs priority.
+         */
         public Builder priority(final @NotNull DeliveryPriority priority) {
             this.priority = priority;
             return this;
         }
 
+        /**
+         * Returns whether delta.
+         */
         public Builder isDelta(final boolean isDelta) {
             this.isDelta = isDelta;
             return this;
         }
 
+        /**
+         * Performs sourcePlugin.
+         */
         public Builder sourcePlugin(final @NotNull String sourcePlugin) {
             this.sourcePlugin = sourcePlugin;
             return this;
         }
 
+        /**
+         * Performs build.
+         */
         public QueuedStatistic build() {
             return new QueuedStatistic(
                 playerUuid, statisticKey, value, dataType,

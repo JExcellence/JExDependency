@@ -1,0 +1,280 @@
+name: Create Release
+
+on:
+  push:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+concurrency:
+  group: create-release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  # Keep lightweight coordination on GitHub-hosted runners so a single
+  # self-hosted builder is not blocked by orchestration/polling jobs.
+  detect-version-changes:
+    name: Detect Version Changes
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      has-changes: ${{ steps.detect.outputs.has-changes }}
+      matrix: ${{ steps.detect.outputs.matrix }}
+      reason: ${{ steps.detect.outputs.reason }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Detect changed module versions
+        id: detect
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          safe_output() {
+            local key="$1"
+            local value="$2"
+            value="$(printf '%s' "${value}" | tr -d '\r\n')"
+            printf '%s=%s\n' "${key}" "${value}" >> "${GITHUB_OUTPUT}"
+          }
+
+          before_sha="${{ github.event.before }}"
+          after_sha="${{ github.sha }}"
+          zero_sha="0000000000000000000000000000000000000000"
+
+          if [[ "${before_sha}" == "${zero_sha}" ]]; then
+            if git rev-parse "${after_sha}^" >/dev/null 2>&1; then
+              diff_text="$(git diff --unified=0 "${after_sha}^" "${after_sha}" -- gradle.properties || true)"
+            else
+              diff_text="$(git show --unified=0 "${after_sha}" -- gradle.properties || true)"
+            fi
+          else
+            if git cat-file -e "${before_sha}^{commit}" 2>/dev/null; then
+              diff_text="$(git diff --unified=0 "${before_sha}" "${after_sha}" -- gradle.properties || true)"
+            elif git rev-parse "${after_sha}^" >/dev/null 2>&1; then
+              diff_text="$(git diff --unified=0 "${after_sha}^" "${after_sha}" -- gradle.properties || true)"
+            else
+              diff_text="$(git show --unified=0 "${after_sha}" -- gradle.properties || true)"
+            fi
+          fi
+
+          if [[ -z "${diff_text}" ]]; then
+            echo "No gradle.properties changes detected in this push."
+            safe_output "has-changes" "false"
+            safe_output "matrix" "[]"
+            safe_output "reason" "no-gradle-properties-change"
+            exit 0
+          fi
+
+          version_diff="$(printf '%s\n' "${diff_text}" | grep -E '^[+-](rcore|rdq|rdr|rds|rdt)\.version\.(major|minor|patch|stage|build)=' || true)"
+
+          if [[ -z "${version_diff}" ]]; then
+            echo "No module version keys changed in gradle.properties."
+            safe_output "has-changes" "false"
+            safe_output "matrix" "[]"
+            safe_output "reason" "no-version-key-change"
+            exit 0
+          fi
+
+          get_prop() {
+            local key="$1"
+            local value
+            value="$(grep -E "^${key}=" gradle.properties | tail -n 1 | cut -d'=' -f2- | tr -d '\r')"
+            if [[ -z "${value}" ]]; then
+              echo "Missing expected property: ${key}" >&2
+              exit 1
+            fi
+            if [[ "${value,,}" == "undefined" ]]; then
+              echo "Property ${key} resolved to undefined, which is not allowed for releases." >&2
+              exit 1
+            fi
+            printf '%s' "${value}"
+          }
+
+          changed_prefixes=()
+          for prefix in rcore rdq rdr rds rdt; do
+            if printf '%s\n' "${version_diff}" | grep -qE "^[+-]${prefix}\.version\.(major|minor|patch|stage|build)="; then
+              changed_prefixes+=("${prefix}")
+            fi
+          done
+
+          if [[ ${#changed_prefixes[@]} -eq 0 ]]; then
+            echo "No tracked module version keys changed in gradle.properties."
+            safe_output "has-changes" "false"
+            safe_output "matrix" "[]"
+            safe_output "reason" "no-tracked-module-change"
+            exit 0
+          fi
+
+          matrix='[]'
+          for prefix in "${changed_prefixes[@]}"; do
+            major="$(get_prop "${prefix}.version.major")"
+            minor="$(get_prop "${prefix}.version.minor")"
+            patch="$(get_prop "${prefix}.version.patch")"
+            stage="$(get_prop "${prefix}.version.stage")"
+            build="$(get_prop "${prefix}.version.build")"
+            version="${major}.${minor}.${patch}-${stage}-Build-${build}"
+            normalized_version="$(printf '%s' "${version}" | tr '[:upper:]' '[:lower:]' | tr -cs 'a-z0-9.-' '-')"
+
+            case "${prefix}" in
+              rcore) module="RCore" ;;
+              rdq) module="RDQ" ;;
+              rdr) module="RDR" ;;
+              rds) module="RDS" ;;
+              rdt) module="RDT" ;;
+              *) echo "Unsupported module prefix: ${prefix}" >&2; exit 1 ;;
+            esac
+
+            tag="${prefix}-${normalized_version}"
+            release_name="${module} ${version}"
+            matrix="$(jq -c \
+              --arg module "${module}" \
+              --arg tag "${tag}" \
+              --arg release_name "${release_name}" \
+              '. + [{module: $module, tag: $tag, release_name: $release_name}]' <<< "${matrix}")"
+          done
+
+          # Defensive normalization for GitHub output command format.
+          matrix="$(printf '%s' "${matrix}" | tr -d '\r\n')"
+
+          echo "Changed modules matrix: ${matrix}"
+          safe_output "has-changes" "true"
+          safe_output "matrix" "${matrix}"
+          safe_output "reason" "version-change"
+
+  wait-for-java-tests:
+    name: Wait For Java Tests
+    needs: detect-version-changes
+    if: ${{ needs.detect-version-changes.outputs.has-changes == 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      actions: read
+      contents: read
+    steps:
+      - name: Wait for CI Java Tests workflow success
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const workflowId = "java-tests.yml";
+            const headSha = context.sha;
+            const maxAttempts = 120;
+            const delayMs = 15000;
+
+            const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+            for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+              const response = await github.rest.actions.listWorkflowRuns({
+                owner,
+                repo,
+                workflow_id: workflowId,
+                event: "push",
+                head_sha: headSha,
+                per_page: 20
+              });
+
+              const run = response.data.workflow_runs.find((candidate) => candidate.head_sha === headSha);
+
+              if (!run) {
+                core.info(`Attempt ${attempt}/${maxAttempts}: CI Java Tests run not found yet for ${headSha}.`);
+                await sleep(delayMs);
+                continue;
+              }
+
+              core.info(`Attempt ${attempt}/${maxAttempts}: Found run ${run.id} with status=${run.status}, conclusion=${run.conclusion}.`);
+
+              if (run.status !== "completed") {
+                await sleep(delayMs);
+                continue;
+              }
+
+              if (run.conclusion !== "success") {
+                core.setFailed(`CI Java Tests did not succeed for ${headSha}. Conclusion: ${run.conclusion}`);
+                return;
+              }
+
+              core.info(`CI Java Tests succeeded for ${headSha}.`);
+              return;
+            }
+
+            core.setFailed(`Timed out waiting for CI Java Tests to complete for ${headSha}.`);
+
+  no-release-feedback:
+    name: No Release Needed
+    needs: detect-version-changes
+    if: ${{ needs.detect-version-changes.outputs.has-changes == 'false' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Explain why release was skipped
+        shell: bash
+        run: |
+          reason="${{ needs.detect-version-changes.outputs.reason }}"
+          case "${reason}" in
+            no-gradle-properties-change)
+              message="Skipped: no changes to gradle.properties were detected in this push."
+              ;;
+            no-version-key-change)
+              message="Skipped: gradle.properties changed, but no module version keys (major/minor/patch/stage/build) changed."
+              ;;
+            no-tracked-module-change)
+              message="Skipped: version changes did not match tracked modules (rcore, rdq, rdr, rds, rdt)."
+              ;;
+            *)
+              message="Skipped: no releasable version change detected."
+              ;;
+          esac
+
+          echo "${message}"
+          {
+            echo "### Create Release Skipped"
+            echo "${message}"
+          } >> "${GITHUB_STEP_SUMMARY}"
+
+  create-release:
+    name: Build And Publish Module Release
+    needs:
+      - detect-version-changes
+      - wait-for-java-tests
+    if: ${{ github.ref != 'refs/heads/staging' && needs.detect-version-changes.outputs.has-changes == 'true' }}
+    # Build-heavy work is pinned to the self-hosted runner labels below.
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJson(needs.detect-version-changes.outputs.matrix) }}
+    permissions:
+      contents: write
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Build release jars for changed module
+        id: build-release
+        uses: ./.github/actions/build-release-jars
+        with:
+          java-version: "21"
+          target-module: ${{ matrix.module }}
+          jeconfig-token: ${{ secrets.JECONFIG_READ_TOKEN || github.token }}
+
+      - name: Upload jars to workflow artifacts
+        uses: actions/upload-artifact@v6
+        with:
+          name: release-jars-${{ matrix.module }}-${{ matrix.tag }}
+          path: ${{ steps.build-release.outputs.artifacts-dir }}/*.jar
+          if-no-files-found: error
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ matrix.tag }}
+          target_commitish: ${{ github.sha }}
+          name: ${{ matrix.release_name }}
+          generate_release_notes: true
+          files: |
+            ${{ steps.build-release.outputs.artifacts-dir }}/*.jar
+          fail_on_unmatched_files: true

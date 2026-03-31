@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rplatform.reward.impl;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -10,6 +23,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * Represents the CommandReward API type.
+ */
 @JsonTypeName("COMMAND")
 public final class CommandReward extends AbstractReward {
 
@@ -17,6 +33,9 @@ public final class CommandReward extends AbstractReward {
     private final boolean executeAsPlayer;
     private final long delayTicks;
 
+    /**
+     * Executes CommandReward.
+     */
     @JsonCreator
     public CommandReward(
         @JsonProperty("command") @NotNull String command,
@@ -28,11 +47,17 @@ public final class CommandReward extends AbstractReward {
         this.delayTicks = Math.max(0, delayTicks);
     }
 
+    /**
+     * Gets typeId.
+     */
     @Override
     public @NotNull String getTypeId() {
         return "COMMAND";
     }
 
+    /**
+     * Executes grant.
+     */
     @Override
     public @NotNull CompletableFuture<Boolean> grant(@NotNull Player player) {
         CompletableFuture<Boolean> future = new CompletableFuture<>();
@@ -78,23 +103,38 @@ public final class CommandReward extends AbstractReward {
             .replace("{z}", String.valueOf(player.getLocation().getBlockZ()));
     }
 
+    /**
+     * Gets estimatedValue.
+     */
     @Override
     public double getEstimatedValue() {
         return 0.0;
     }
 
+    /**
+     * Gets command.
+     */
     public String getCommand() {
         return command;
     }
 
+    /**
+     * Returns whether executeAsPlayer.
+     */
     public boolean isExecuteAsPlayer() {
         return executeAsPlayer;
     }
 
+    /**
+     * Gets delayTicks.
+     */
     public long getDelayTicks() {
         return delayTicks;
     }
 
+    /**
+     * Executes validate.
+     */
     @Override
     public void validate() {
         if (command == null || command.trim().isEmpty()) {

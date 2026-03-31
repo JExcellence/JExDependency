@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rplatform.service;
 
 import org.bukkit.Bukkit;
@@ -15,10 +28,10 @@ import java.util.function.Consumer;
 import java.util.logging.Logger;
 
 /**
- * Registry of services discovered either through Bukkit's {@link org.bukkit.plugin.ServicesManager}
+ * Registry of services discovered either through Bukkit's {@link org.bukkit.plugin.ServicesManager}.
  * or loaded reflectively from another plugin's class loader.
- * <p>
- * Instances are thread-safe courtesy of the underlying {@link ConcurrentHashMap} and the
+ *
+ * <p>Instances are thread-safe courtesy of the underlying {@link ConcurrentHashMap} and the
  * asynchronous loading workflow employed by {@link ServiceRegistrationBuilder#load()}.
  * Logging occurs through {@link Logger} at {@code INFO} or {@code WARNING} levels to report
  * registration events and missing required services. Retry attempts performed during discovery
@@ -62,10 +75,17 @@ public class ServiceRegistry {
         return new ServiceRegistrationBuilder<>(this, serviceClass);
     }
 
+    /**
+     * Begin constructing a registration for a service using its fully qualified class name.
+     *
+     * @param serviceClass fully qualified service class name
+     * @param <T> service type
+     * @return builder capable of loading and caching the resolved service instance
+     * @throws RuntimeException when the class cannot be loaded
+     */
     public <T> @NotNull ServiceRegistrationBuilder<T> register(final @NotNull String serviceClass) {
         try {
-            Class<T> clazz = (Class<T>) Class.forName(serviceClass);
-            return new ServiceRegistrationBuilder<>(this, clazz);
+            return new ServiceRegistrationBuilder<>(this, castServiceClass(Class.forName(serviceClass)));
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -127,6 +147,23 @@ public class ServiceRegistry {
     }
 
     /**
+     * Binds a concrete service instance directly into the registry cache.
+     *
+     * <p>This is used for services created inside the current plugin runtime that should be
+     * discoverable through the shared platform registry without going through Bukkit's global
+     * service manager.</p>
+     *
+     * @param serviceClass service type used as the cache key
+     * @param service service instance to expose
+     * @param <T> service type
+     * @return the bound service instance
+     */
+    public <T> @NotNull T bind(final @NotNull Class<T> serviceClass, final @NotNull T service) {
+        registerService(serviceClass.getName(), service);
+        return service;
+    }
+
+    /**
      * Store a resolved service within the registry cache.
      *
      * @param key     fully qualified class name used to identify the service
@@ -164,11 +201,16 @@ public class ServiceRegistry {
         }
     }
 
+    @SuppressWarnings("unchecked")
+    private static <T> @NotNull Class<T> castServiceClass(final @NotNull Class<?> serviceClass) {
+        return (Class<T>) serviceClass;
+    }
+
     /**
-     * Builder that orchestrates asynchronous service discovery with retry semantics and
+     * Builder that orchestrates asynchronous service discovery with retry semantics and.
      * optional success or failure callbacks.
-     * <p>
-     * Instances are not thread-safe; share a builder per service registration sequence and
+ *
+ * <p>Instances are not thread-safe; share a builder per service registration sequence and
      * use the produced {@link CompletableFuture} for synchronization.
      *
      * @param <T> service type resolved by the builder

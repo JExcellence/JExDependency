@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.config.requirement;
 
 import com.raindropcentral.rplatform.logging.CentralLogger;
@@ -20,10 +33,9 @@ import java.util.logging.Logger;
 
 /**
  * Adapter that converts BaseRequirementSection to AbstractRequirement.
- * <p>
- * This adapter bridges the RDQ config system with the RPlatform requirement system,
+ *
+ * <p>This adapter bridges the RDQ config system with the RPlatform requirement system,
  * allowing BaseRequirementSection instances to be converted to AbstractRequirement.
- * </p>
  */
 public class BaseRequirementSectionAdapter implements RequirementSectionAdapter<BaseRequirementSection> {
 
@@ -32,11 +44,17 @@ public class BaseRequirementSectionAdapter implements RequirementSectionAdapter<
 
     private BaseRequirementSectionAdapter() {}
 
+    /**
+     * Gets instance.
+     */
     @NotNull
     public static BaseRequirementSectionAdapter getInstance() {
         return INSTANCE;
     }
 
+    /**
+     * Executes convert.
+     */
     @Override
     @Nullable
     public AbstractRequirement convert(@NotNull BaseRequirementSection section, @Nullable Map<String, Object> context) {

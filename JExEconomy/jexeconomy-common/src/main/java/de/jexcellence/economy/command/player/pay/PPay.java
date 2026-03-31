@@ -19,16 +19,15 @@ import java.util.stream.Collectors;
 
 /**
  * Player command for transferring currency to other players.
- * <p>
- * This command allows players to pay other players using configured currencies.
+ *
+ * <p>This command allows players to pay other players using configured currencies.
  * Administrators can configure which currencies are allowed for payments and
  * set minimum/maximum transaction limits.
- * </p>
  *
- * <h3>Command Usage:</h3>
+ * <p><strong>Command Usage:</strong>
  * <pre>/pay &lt;currency&gt; &lt;player&gt; &lt;amount&gt;</pre>
  *
- * <h3>Features:</h3>
+ * <p><strong>Features:</strong>
  * <ul>
  *   <li>Currency whitelist support - only allowed currencies can be paid</li>
  *   <li>Configurable min/max transaction amounts</li>

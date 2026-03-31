@@ -1,5 +1,5 @@
 /**
- * Centralized factory and contracts that select the correct item builder implementation for
+ * Centralized factory and contracts that select the correct item builder implementation for.
  * the active server environment.
  *
  * <p>{@link com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory} inspects the

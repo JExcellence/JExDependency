@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
  package com.raindropcentral.rdq.rank;
 
  import com.raindropcentral.rdq.RDQ;
@@ -33,14 +46,13 @@
 
 /**
  * Factory responsible for loading, constructing, and validating the rank system from configuration files.
- * <p>
- * Simplified version with proper entity lifecycle management to avoid OptimisticLockException.
+ *
+ * <p>Simplified version with proper entity lifecycle management to avoid OptimisticLockException.
  * Key improvements:
  * - Single-pass entity creation and updates
  * - Fresh entity fetches before each modification
  * - Proper transaction boundaries
  * - Reduced complexity and duplicate code
- * </p>
  *
  * @author JExcellence
  * @version 3.0.0
@@ -70,6 +82,9 @@ public class RankSystemFactory {
     private final Map<String, Map<String, RRank>> ranks = new HashMap<>();
     private RRank defaultRank;
 
+    /**
+     * Executes RankSystemFactory.
+     */
     public RankSystemFactory(@NotNull RDQ rdq) {
         this.rdq = rdq;
         this.requirementFactory = RequirementFactory.getInstance();
@@ -1034,20 +1049,32 @@ public class RankSystemFactory {
     }
 
 
+    /**
+     * Gets rankTrees.
+     */
     public Map<String, RRankTree> getRankTrees() {
         return Map.copyOf(rankTrees);
     }
 
+    /**
+     * Gets ranks.
+     */
     public Map<String, Map<String, RRank>> getRanks() {
         return ranks.entrySet().stream()
             .collect(Collectors.toMap(Map.Entry::getKey, e -> Map.copyOf(e.getValue())));
     }
 
+    /**
+     * Gets defaultRank.
+     */
     @Nullable
     public RRank getDefaultRank() {
         return defaultRank;
     }
 
+    /**
+     * Returns whether initialized.
+     */
     public boolean isInitialized() {
         return !rankTrees.isEmpty() || defaultRank != null;
     }

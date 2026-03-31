@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.type;
 
 import org.bukkit.Material;
@@ -5,8 +18,8 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Enumeration defining the different states a perk can be in for a player.
- * <p>
- * This enum represents the relationship between a player and a perk:
+ *
+ * <p>This enum represents the relationship between a player and a perk:
  * <ul>
  *     <li>{@link #LOCKED} - Player has not unlocked this perk yet</li>
  *     <li>{@link #AVAILABLE} - Player has unlocked the perk but it's not currently active</li>
@@ -14,7 +27,6 @@ import org.jetbrains.annotations.NotNull;
  *     <li>{@link #COOLDOWN} - Player has the perk but it's on cooldown</li>
  *     <li>{@link #DISABLED} - Perk is globally disabled by administrators</li>
  * </ul>
- * </p>
  *
  * @author ItsRainingHP
  * @version 1.0.0

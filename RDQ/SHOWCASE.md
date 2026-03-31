@@ -1,4 +1,4 @@
-# RDQ Showcase
+# RDQ (RaindropQuests)
 
 RDQ (RaindropQuests) is a modern Minecraft progression plugin for Paper, Spigot, and Folia servers that combines **Quests**, **Perks**, **Ranks**, and **Bounties** into one connected gameplay system.
 

@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rplatform.view;
 
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
@@ -19,7 +32,7 @@ import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * Concrete {@link APaginatedView} implementation that presents a searchable roster of offline
+ * Concrete {@link APaginatedView} implementation that presents a searchable roster of offline.
  * players using player head avatars for selection.
  *
  * <p>The view relies on translation keys rooted at {@code paginated_player_ui} for row labelling
@@ -46,7 +59,7 @@ public class PaginatedPlayerView extends APaginatedView<OfflinePlayer> {
     }
 
     /**
-     * Overrides the default back handling to pop the Inventory Framework context stack while
+     * Overrides the default back handling to pop the Inventory Framework context stack while.
      * preserving initial data such as previously selected players.
      *
      * @param clickContext the click context supplied when the return head is activated
@@ -70,7 +83,7 @@ public class PaginatedPlayerView extends APaginatedView<OfflinePlayer> {
     }
 
     /**
-     * Renders each offline player as a localized head item with click-through behaviour that stores
+     * Renders each offline player as a localized head item with click-through behaviour that stores.
      * the selected player back into the view's initial data payload.
      *
      * @param context the render context providing player information
@@ -108,7 +121,7 @@ public class PaginatedPlayerView extends APaginatedView<OfflinePlayer> {
     }
 
     /**
-     * Invoked after pagination chrome renders; currently a no-op hook reserved for future
+     * Invoked after pagination chrome renders; currently a no-op hook reserved for future.
      * embellishments such as filtering controls.
      *
      * @param render the render context for slot management

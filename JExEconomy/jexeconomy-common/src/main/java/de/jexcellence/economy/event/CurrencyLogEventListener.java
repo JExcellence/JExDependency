@@ -14,11 +14,10 @@ import java.util.logging.Logger;
 
 /**
  * Event listener responsible for handling currency-related events and logging them to the database.
- * <p>
- * This listener maintains the separation of concerns by handling all database logging operations
+ *
+ * <p>This listener maintains the separation of concerns by handling all database logging operations
  * for currency events fired by the CurrencyAdapter. It ensures that all significant currency
  * operations are properly logged for auditing, monitoring, and debugging purposes.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -44,10 +43,9 @@ public class CurrencyLogEventListener implements Listener {
     
     /**
      * Handles balance change events (before the change occurs).
-     * <p>
-     * This method logs attempted balance changes, including cancelled operations.
+ *
+ * <p>This method logs attempted balance changes, including cancelled operations.
      * It provides a complete audit trail of all balance change attempts.
-     * </p>
      *
      * @param event the balance change event
      */
@@ -80,10 +78,9 @@ public class CurrencyLogEventListener implements Listener {
     
     /**
      * Handles balance changed events (after the change has occurred).
-     * <p>
-     * This method logs successful balance changes with the final balance amounts.
+ *
+ * <p>This method logs successful balance changes with the final balance amounts.
      * It provides confirmation that the database operations completed successfully.
-     * </p>
      *
      * @param event the balance changed event
      */

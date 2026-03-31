@@ -10,21 +10,20 @@ import java.util.List;
 
 /**
  * Placeholder expansion for currency-related placeholders in the JExEconomy system.
- * <p>
- * This class integrates with the platform's placeholder system to provide dynamic
+ *
+ * <p>This class integrates with the platform's placeholder system to provide dynamic
  * currency and player balance information for use in chat, scoreboards, and other
  * placeholder-aware components. It delegates placeholder resolution to
  * {@link CurrencyPlaceholderUtil} and defines the supported placeholder formats.
- * </p>
  *
- * <h3>Supported Placeholder Categories:</h3>
+ * <p><strong>Supported Placeholder Categories:</strong>
  * <ul>
  *   <li><strong>Currency Information:</strong> Basic currency metadata and formatting</li>
  *   <li><strong>Player Balances:</strong> Raw balance amounts with various formatting options</li>
  *   <li><strong>Formatted Balances:</strong> Complete balance strings with currency symbols and formatting</li>
  * </ul>
  *
- * <h3>Supported Placeholder Formats:</h3>
+ * <p><strong>Supported Placeholder Formats:</strong>
  * <ul>
  *   <li><code>currency_&lt;currency&gt;_name</code> - The name/identifier of a currency</li>
  *   <li><code>currency_&lt;currency&gt;_symbol</code> - The symbol of a currency</li>
@@ -39,7 +38,7 @@ import java.util.List;
  *   <li><code>player_formatted_currency_&lt;currency&gt;_amount-rounded-dots</code> - The player's formatted rounded balance with locale dots</li>
  * </ul>
  *
- * <h3>Usage Example:</h3>
+ * <p><strong>Usage Example:</strong>
  * <pre>{@code
  * // In chat or scoreboard configuration:
  * "Your gold balance: %jexeconomy_player_formatted_currency_gold_amount%"
@@ -58,11 +57,10 @@ public class Placeholder extends AbstractPlaceholderExpansion {
 
     /**
      * Constructs a new {@code Placeholder} expansion for the given currency plugin.
-     * <p>
-     * Initializes the placeholder expansion with the platform abstraction layer and
+ *
+ * <p>Initializes the placeholder expansion with the platform abstraction layer and
      * creates a {@link CurrencyPlaceholderUtil} instance for handling placeholder resolution.
      * The expansion will be automatically registered with the platform's placeholder system.
-     * </p>
      *
      * @param jexEconomyImpl the main JExEconomy plugin instance, must not be null
      * @throws IllegalArgumentException if the plugin instance is null
@@ -76,13 +74,12 @@ public class Placeholder extends AbstractPlaceholderExpansion {
 
     /**
      * Defines the list of supported placeholder formats for this expansion.
-     * <p>
-     * This method returns a comprehensive list of all placeholder patterns supported
+ *
+ * <p>This method returns a comprehensive list of all placeholder patterns supported
      * by the currency system. The placeholders are organized into three main categories:
      * currency information, player balances, and formatted balances.
-     * </p>
      *
-     * <h3>Placeholder Categories:</h3>
+     * <p><strong>Placeholder Categories:</strong>
      * <ul>
      *   <li><strong>Currency Info:</strong> Basic currency metadata (name, symbol, prefix, suffix)</li>
      *   <li><strong>Player Currency:</strong> Raw balance amounts with formatting options</li>
@@ -110,25 +107,23 @@ public class Placeholder extends AbstractPlaceholderExpansion {
 
     /**
      * Resolves a placeholder for a given player and parameter string.
-     * <p>
-     * This method serves as the main entry point for placeholder resolution within the
+ *
+ * <p>This method serves as the main entry point for placeholder resolution within the
      * platform's placeholder system. It validates the input parameters and delegates
      * the actual resolution to {@link CurrencyPlaceholderUtil} for supported placeholder formats.
-     * </p>
      *
-     * <h3>Supported Placeholder Prefixes:</h3>
+     * <p><strong>Supported Placeholder Prefixes:</strong>
      * <ul>
      *   <li><code>currency_</code> - Currency information placeholders</li>
      *   <li><code>player_currency_</code> - Raw player balance placeholders</li>
      *   <li><code>player_formatted_currency_</code> - Formatted player balance placeholders</li>
      * </ul>
      *
-     * <h3>Error Handling:</h3>
-     * <p>
-     * If the player is null or the placeholder parameters don't match any supported
+     * <p><strong>Error Handling:</strong>
+ *
+ * <p>If the player is null or the placeholder parameters don't match any supported
      * format, an empty string is returned to indicate that the placeholder is not
      * handled by this expansion.
-     * </p>
      *
      * @param player the player for whom the placeholder is being resolved, can be null
      * @param params the placeholder parameter string, must not be null

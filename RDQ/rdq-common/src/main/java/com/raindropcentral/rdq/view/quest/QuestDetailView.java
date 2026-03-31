@@ -101,16 +101,16 @@ public class QuestDetailView extends BaseView {
 		
 		// Render quest info at top (with overall progress if active)
 		renderQuestInfo(render, player, q, plugin);
-		
+
 		// Render requirements section
 		renderRequirements(render, player, q);
-		
+
 		// Render tasks section
 		renderTasks(render, player, q, plugin);
-		
+
 		// Render rewards section
 		renderRewards(render, player, q);
-		
+
 		// Render action buttons based on quest status
 		renderQuestStatus(render, player, q, plugin);
 	}
@@ -243,11 +243,11 @@ public class QuestDetailView extends BaseView {
 			final @NotNull Quest q
 	) {
 		final List<QuestRequirement> requirements = q.getRequirements();
-		
+
 		for (int i = 0; i < REQUIREMENT_SLOTS.length && i < requirements.size(); i++) {
 			final QuestRequirement requirement = requirements.get(i);
 			final int slot = REQUIREMENT_SLOTS[i];
-			
+
 			render.slot(slot).renderWith(() -> {
 				final boolean isMet = requirement.isMet(player);
 				final Material material = Material.valueOf(requirement.getIcon().getMaterial().toUpperCase());
@@ -256,13 +256,13 @@ public class QuestDetailView extends BaseView {
 				final List<Component> lore = new ArrayList<>();
 				lore.addAll(new I18n.Builder(requirement.getIcon().getDescriptionKey(), player).build().children());
 				lore.add(Component.empty());
-				
+
 				// Add status
 				if (isMet) {
 					lore.add(i18n("requirement.met", player).build().component());
 				} else {
 					lore.add(i18n("requirement.not_met", player).build().component());
-					
+
 					// Add progress if available
 					final double progress = requirement.calculateProgress(player);
 					if (progress > 0 && progress < 1.0) {
@@ -272,20 +272,20 @@ public class QuestDetailView extends BaseView {
 								.component());
 					}
 				}
-				
+
 				return UnifiedBuilderFactory.item(material)
 						.setName(name)
 						.setLore(lore)
 						.build();
 			});
 		}
-		
+
 		// Fill empty requirement slots
 		for (int i = requirements.size(); i < REQUIREMENT_SLOTS.length; i++) {
 			render.slot(REQUIREMENT_SLOTS[i]).renderWith(() -> createFillItem(player));
 		}
 	}
-	
+
 	private void renderTasks(
 			final @NotNull RenderContext render,
 			final @NotNull Player player,
@@ -329,7 +329,7 @@ public class QuestDetailView extends BaseView {
 			final QuestTask task = tasks.get(i);
 			final int slot = TASK_SLOTS[i];
 			final int taskNumber = i + 1;
-			
+
 			render.slot(slot).renderWith(() -> {
 				final Component name = new I18n.Builder("quest." + task.getQuest().getIdentifier() + ".task" + taskNumber + ".name", player)
 						.build()
@@ -342,11 +342,11 @@ public class QuestDetailView extends BaseView {
 						.withPlaceholder("difficulty", task.getDifficulty().name())
 						.build()
 						.component());
-				
+
 				if (task.isOptional()) {
 					lore.add(i18n("task.optional", player).build().component());
 				}
-				
+
 				return UnifiedBuilderFactory.item(Material.PAPER)
 						.setName(name)
 						.setLore(lore)
@@ -504,18 +504,18 @@ public class QuestDetailView extends BaseView {
 
 		return Component.text(color + filled + "<gray>" + empty);
 	}
-	
+
 	private void renderRewards(
 			final @NotNull RenderContext render,
 			final @NotNull Player player,
 			final @NotNull Quest q
 	) {
 		final List<QuestReward> rewards = q.getRewards();
-		
+
 		for (int i = 0; i < REWARD_SLOTS.length && i < rewards.size(); i++) {
 			final QuestReward reward = rewards.get(i);
 			final int slot = REWARD_SLOTS[i];
-			
+
 			render.slot(slot).renderWith(() -> {
 				final Material material = Material.valueOf(reward.getIcon().getMaterial().toUpperCase());
 				final Component name = new I18n.Builder(reward.getIcon().getDisplayNameKey(), player).build().component();
@@ -523,7 +523,7 @@ public class QuestDetailView extends BaseView {
 				final List<Component> lore = new ArrayList<>();
 				lore.addAll(new I18n.Builder(reward.getIcon().getDescriptionKey(), player).build().children());
 				lore.add(Component.empty());
-				
+
 				// Add estimated value
 				final double value = reward.getEstimatedValue();
 				if (value > 0) {
@@ -539,13 +539,13 @@ public class QuestDetailView extends BaseView {
 						.build();
 			});
 		}
-		
+
 		// Fill empty reward slots
 		for (int i = rewards.size(); i < REWARD_SLOTS.length; i++) {
 			render.slot(REWARD_SLOTS[i]).renderWith(() -> createFillItem(player));
 		}
 	}
-	
+
 	private void renderQuestStatus(
 			final @NotNull RenderContext render,
 			final @NotNull Player player,
@@ -553,7 +553,7 @@ public class QuestDetailView extends BaseView {
 			final @NotNull RDQ plugin
 	) {
 		final QuestService questService = plugin.getQuestService();
-		
+
 		questService.isQuestActive(player.getUniqueId(), q.getIdentifier())
 				.thenAccept(isActive -> {
 					if (isActive) {
@@ -575,14 +575,14 @@ public class QuestDetailView extends BaseView {
 			final @NotNull RDQ plugin
 	) {
 		final QuestService questService = plugin.getQuestService();
-		
+
 		questService.canStartQuest(player.getUniqueId(), q.getIdentifier())
 				.thenAccept(result -> {
 					if (result.success()) {
 						render.slot(START_BUTTON_SLOT).renderWith(() -> {
 							final Component name = i18n("items.start.name", player).build().component();
 							final List<Component> lore = i18n("items.start.lore", player).build().children();
-							
+
 							return UnifiedBuilderFactory.item(Material.LIME_DYE)
 									.setName(name)
 									.setLore(lore)
@@ -597,7 +597,7 @@ public class QuestDetailView extends BaseView {
 											.build()
 											.component()
 							);
-							
+
 							return UnifiedBuilderFactory.item(Material.BARRIER)
 									.setName(name)
 									.setLore(lore)
@@ -626,7 +626,7 @@ public class QuestDetailView extends BaseView {
 					.build();
 		}).onClick(click -> handleAbandonQuest(click, q));
 	}
-	
+
 	private void handleStartQuest(
 			final @NotNull SlotClickContext click,
 			final @NotNull Quest q

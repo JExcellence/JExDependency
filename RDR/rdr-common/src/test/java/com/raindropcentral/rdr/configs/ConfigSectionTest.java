@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdr.configs;
 
 import java.io.IOException;
@@ -51,6 +64,10 @@ class ConfigSectionTest {
         assertEquals(20L, section.getTradePollIntervalTicks());
         assertEquals(9, section.getTradeMaxOfferSlots());
         assertEquals(5L, section.getTradeInviteCooldownSeconds());
+        assertFalse(section.isProxyEnabled());
+        assertFalse(section.isTradeProxyPresenceEnabled());
+        assertFalse(section.isTradeProxyJoinActionEnabled());
+        assertEquals("", section.getProxyServerRouteId());
         assertFalse(section.isTradeTaxationEnabled());
         assertEquals(ConfigSection.TradeTaxMode.FLAT, section.getTradeTaxationCurrencies().get("vault").mode());
         assertEquals(0.0D, section.getTradeTaxationCurrencies().get("vault").flatAmount());
@@ -263,6 +280,30 @@ class ConfigSectionTest {
         assertEquals(40L, section.getTradePollIntervalTicks());
         assertEquals(12, section.getTradeMaxOfferSlots());
         assertEquals(0L, section.getTradeInviteCooldownSeconds());
+    }
+
+    @Test
+    void readsProxySettingsAndTradeProxyToggles(final @TempDir Path tempDir) throws IOException {
+        final Path configFile = tempDir.resolve("config.yml");
+        Files.writeString(configFile, """
+            starting_storages: 1
+            max_storages: 2
+            max_hotkeys: 9
+            proxy:
+              enabled: true
+              server_route_id: "alpha"
+            trade:
+              proxy:
+                presence_enabled: true
+                join_partner_action_enabled: true
+            """);
+
+        final ConfigSection section = ConfigSection.fromFile(configFile.toFile());
+
+        assertTrue(section.isProxyEnabled());
+        assertEquals("alpha", section.getProxyServerRouteId());
+        assertTrue(section.isTradeProxyPresenceEnabled());
+        assertTrue(section.isTradeProxyJoinActionEnabled());
     }
 
     @Test

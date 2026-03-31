@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rplatform.database.converter;
 
 import com.raindropcentral.rplatform.reward.AbstractReward;
@@ -8,20 +21,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * JPA {@link AttributeConverter} for converting {@link AbstractReward} objects
+ * JPA {@link AttributeConverter} for converting {@link AbstractReward} objects.
  * to and from their JSON string representations for database storage.
- * <p>
- * This converter uses {@link RewardParser} for serialization with support for
+ *
+ * <p>This converter uses {@link RewardParser} for serialization with support for
  * Bukkit ItemStack serialization.
- * </p>
- * <p>
- * Note: autoApply is set to false to avoid automatic application to all AbstractReward fields.
+ *
+ * <p>Note: autoApply is set to false to avoid automatic application to all AbstractReward fields.
  * Each entity must explicitly specify @Convert(converter = RewardConverter.class) on the field.
- * </p>
- * <p>
- * The converted AbstractReward objects are treated as immutable to avoid unnecessary deep copying
+ *
+ * <p>The converted AbstractReward objects are treated as immutable to avoid unnecessary deep copying
  * during Hibernate merge operations.
- * </p>
  */
 @Converter(autoApply = false)
 public class RewardConverter implements AttributeConverter<AbstractReward, String> {
@@ -32,6 +42,9 @@ public class RewardConverter implements AttributeConverter<AbstractReward, Strin
     private static volatile boolean parserReady = false;
     private static final Object INIT_LOCK = new Object();
 
+    /**
+     * Executes convertToDatabaseColumn.
+     */
     @Override
     public String convertToDatabaseColumn(AbstractReward attribute) {
         if (attribute == null) {
@@ -50,6 +63,9 @@ public class RewardConverter implements AttributeConverter<AbstractReward, Strin
         }
     }
 
+    /**
+     * Executes convertToEntityAttribute.
+     */
     @Override
     public AbstractReward convertToEntityAttribute(String dbData) {
         if (dbData == null || dbData.trim().isEmpty()) {

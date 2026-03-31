@@ -19,14 +19,13 @@ import java.util.function.Predicate;
 
 /**
  * Primary command handler for player-initiated currency management operations.
- * <p>
- * This class serves as the main entry point for players to interact with the currency system
+ *
+ * <p>This class serves as the main entry point for players to interact with the currency system
  * through a graphical user interface. When executed, it opens the currency management GUI
  * where players can perform all currency-related operations including creation, editing,
  * viewing, and deletion (with appropriate permissions).
- * </p>
  *
- * <h3>GUI-Based Operations:</h3>
+ * <p><strong>GUI-Based Operations:</strong>
  * <ul>
  *   <li><strong>Currency Creation:</strong> Create new currencies through anvil GUI</li>
  *   <li><strong>Currency Editing:</strong> Edit existing currency properties (coming soon)</li>
@@ -35,19 +34,17 @@ import java.util.function.Predicate;
  *   <li><strong>Balance Reset:</strong> Reset currency balances for all players</li>
  * </ul>
  *
- * <h3>Permission Integration:</h3>
- * <p>
- * The command system integrates with the {@link ECurrenciesPermission} framework to ensure
+ * <p><strong>Permission Integration:</strong>
+ *
+ * <p>The command system integrates with the {@link ECurrenciesPermission} framework to ensure
  * that only authorized users can access the GUI. Individual operations within the GUI
  * perform their own permission checks as needed.
- * </p>
  *
- * <h3>User Interface Integration:</h3>
- * <p>
- * The command opens the {@link CurrenciesActionOverviewView} which provides an intuitive
+ * <p><strong>User Interface Integration:</strong>
+ *
+ * <p>The command opens the {@link CurrenciesActionOverviewView} which provides an intuitive
  * graphical interface for all currency management operations, eliminating the need for
  * complex command-line syntax.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -61,11 +58,10 @@ public class PCurrencies extends PlayerCommand {
 	
 	/**
 	 * The main JExEconomy plugin instance providing access to core services and repositories.
-	 * <p>
-	 * This instance serves as the primary gateway to the plugin's infrastructure,
+ *
+ * <p>This instance serves as the primary gateway to the plugin's infrastructure,
 	 * including database repositories, service adapters, executor services, and
 	 * user interface frameworks required for currency operations.
-	 * </p>
 	 */
         private static final int DEFAULT_PAGE_SIZE = 10;
 
@@ -74,13 +70,12 @@ public class PCurrencies extends PlayerCommand {
 	
 	/**
 	 * Constructs a new player currency command handler with the specified configuration and plugin instance.
-	 * <p>
-	 * This constructor initializes the command handler with the necessary dependencies to
+ *
+ * <p>This constructor initializes the command handler with the necessary dependencies to
 	 * open the currency management GUI. It establishes connections to the plugin's
 	 * infrastructure for accessing the view framework.
-	 * </p>
 	 *
-	 * <h3>Initialization Process:</h3>
+	 * <p><strong>Initialization Process:</strong>
 	 * <ul>
 	 *   <li>Registers the command with the parent command framework</li>
 	 *   <li>Establishes connection to the JExEconomy plugin instance</li>
@@ -102,25 +97,23 @@ public class PCurrencies extends PlayerCommand {
 	
 	/**
 	 * Handles the execution of currency commands initiated by players.
-	 * <p>
-	 * This method serves as the primary entry point for currency command operations.
+ *
+ * <p>This method serves as the primary entry point for currency command operations.
 	 * It performs permission validation and opens the graphical user interface
 	 * for currency management. All currency operations are now handled through
 	 * the GUI interface for a more intuitive user experience.
-	 * </p>
 	 *
-	 * <h3>Execution Flow:</h3>
+	 * <p><strong>Execution Flow:</strong>
 	 * <ol>
 	 *   <li>Validates base currency command permissions</li>
 	 *   <li>Opens the currency management GUI interface</li>
 	 * </ol>
 	 *
-	 * <h3>Permission Validation:</h3>
-	 * <p>
-	 * The command requires the base currencies permission to access the GUI.
+	 * <p><strong>Permission Validation:</strong>
+ *
+ * <p>The command requires the base currencies permission to access the GUI.
 	 * Individual operations within the GUI will perform their own permission
 	 * checks as needed.
-	 * </p>
 	 *
 	 * @param player the player executing the currency command, must not be null
 	 * @param commandLabel the command label used to invoke this command, must not be null
@@ -176,11 +169,10 @@ public class PCurrencies extends PlayerCommand {
 
 	/**
 	 * Provides tab completion for the currency command.
-	 * <p>
-	 * Since this command only opens a GUI interface, no tab completion
+ *
+ * <p>Since this command only opens a GUI interface, no tab completion
 	 * suggestions are provided. All operations are handled through the
 	 * graphical user interface.
-	 * </p>
 	 *
 	 * @param tabCompletionRequestingPlayer the player requesting tab completion, must not be null
 	 * @param commandLabel the command label being completed, must not be null

@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.bounty.type;
 
 import org.bukkit.Bukkit;
@@ -14,6 +27,9 @@ public enum EClaimMode {
      * The player who dealt the final blow receives the full bounty.
      */
     LAST_HIT {
+        /**
+         * Executes determineWinner.
+         */
         @Override
         public OfflinePlayer determineWinner(Map<UUID, Double> damageMap, OfflinePlayer lastHitter) {
             return lastHitter;
@@ -24,6 +40,9 @@ public enum EClaimMode {
      * The player who dealt the most damage within the tracking window receives the bounty.
      */
     MOST_DAMAGE {
+        /**
+         * Executes determineWinner.
+         */
         @Override
         public OfflinePlayer determineWinner(Map<UUID, Double> damageMap, OfflinePlayer lastHitter) {
             return damageMap.entrySet().stream()
@@ -37,6 +56,9 @@ public enum EClaimMode {
      * The bounty is split proportionally among all damage dealers.
      */
     DAMAGE_SPLIT {
+        /**
+         * Executes determineWinner.
+         */
         @Override
         public OfflinePlayer determineWinner(Map<UUID, Double> damageMap, OfflinePlayer lastHitter) {
             // For DAMAGE_SPLIT, we return null to indicate multiple winners
@@ -54,6 +76,9 @@ public enum EClaimMode {
      */
     public abstract OfflinePlayer determineWinner(Map<UUID, Double> damageMap, OfflinePlayer lastHitter);
 
+    /**
+     * Executes of.
+     */
     public static EClaimMode of(String value) {
         try  {
             return EClaimMode.valueOf(value);

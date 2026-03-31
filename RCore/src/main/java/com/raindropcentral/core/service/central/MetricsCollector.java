@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.core.service.central;
 
 import org.bukkit.Bukkit;
@@ -75,6 +88,16 @@ public class MetricsCollector {
             .collect(Collectors.joining(","));
     }
 
+    /**
+     * Snapshot of server metrics collected for API transmission.
+     *
+     * @param currentPlayers current online player count
+     * @param maxPlayers configured maximum player count
+     * @param tps measured ticks per second
+     * @param serverVersion server software version string
+     * @param memory memory usage snapshot
+     * @param playerList comma-separated player names when included
+     */
     public record ServerMetrics(
         int currentPlayers,
         int maxPlayers,
@@ -84,10 +107,21 @@ public class MetricsCollector {
         String playerList
     ) {}
 
+    /**
+     * Memory usage snapshot in megabytes.
+     *
+     * @param usedMb used heap memory in megabytes
+     * @param maxMb maximum heap memory in megabytes
+     */
     public record MemoryInfo(
         long usedMb,
         long maxMb
     ) {
+        /**
+         * Returns used heap percentage.
+         *
+         * @return heap usage percent, or {@code 0} when max memory is unavailable
+         */
         public int usagePercent() {
             return maxMb > 0 ? (int) ((usedMb * 100) / maxMb) : 0;
         }

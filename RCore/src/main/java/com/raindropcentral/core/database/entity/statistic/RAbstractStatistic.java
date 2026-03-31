@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.core.database.entity.statistic;
 
 import de.jexcellence.hibernate.entity.BaseEntity;
@@ -9,7 +22,7 @@ import java.io.Serial;
 import java.util.Objects;
 
 /**
- * Base class for persisted statistic values stored in {@code r_statistic} via single-table
+ * Base class for persisted statistic values stored in {@code r_statistic} via single-table.
  * inheritance. Each subclass selects a discriminator value stored in the
  * {@code statistic_type} column, enabling Hibernate to materialize concrete implementations
  * while sharing identifier, plugin, and association management concerns.
@@ -24,8 +37,8 @@ import java.util.Objects;
  * avoid loading the owning aggregate when querying statistics in isolation. Callers updating
  * bidirectional links must use {@link #setPlayerStatistic(RPlayerStatistic)} (and the
  * corresponding helper on {@link RPlayerStatistic}) to keep both sides aligned.</p>
- * <p>
- * Subclasses should log significant lifecycle events through
+ *
+ * <p>Subclasses should log significant lifecycle events through
  * {@link com.raindropcentral.rplatform.logging.CentralLogger CentralLogger}: attaching or detaching
  * from an aggregate, mutating a value, or encountering validation failures. Value mutations should
  * be announced prior to committing so audit trails can reconstruct progression, while errors should
@@ -43,13 +56,16 @@ import java.util.Objects;
     name = "r_statistic",
     uniqueConstraints = @UniqueConstraint(columnNames = {"identifier", "player_statistic_id"})
 )
+/**
+ * Represents the RAbstractStatistic API type.
+ */
 public abstract class RAbstractStatistic extends BaseEntity {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
     /**
-     * Column mapping for the logical statistic identifier. Combined with the
+     * Column mapping for the logical statistic identifier. Combined with the.
      * {@code player_statistic_id} foreign key to enforce per-player uniqueness and power the
      * {@link #matches(String, String)} predicate.
      */
@@ -57,7 +73,7 @@ public abstract class RAbstractStatistic extends BaseEntity {
     protected String identifier;
 
     /**
-     * Column mapping for the owning plugin namespace. The namespace partitions statistics across
+     * Column mapping for the owning plugin namespace. The namespace partitions statistics across.
      * modules, allowing scheduled clean-up routines to scope deletions or recalculations to a
      * specific provider.
      */
@@ -65,7 +81,7 @@ public abstract class RAbstractStatistic extends BaseEntity {
     private String plugin;
 
     /**
-     * Owning aggregate relation configured through {@code player_statistic_id}. The association is
+     * Owning aggregate relation configured through {@code player_statistic_id}. The association is.
      * lazy to reduce fetch overhead when materializing statistics independently, and should be set
      * alongside the inverse collection on {@link RPlayerStatistic} to maintain consistency.
      */
@@ -79,7 +95,7 @@ public abstract class RAbstractStatistic extends BaseEntity {
     protected RAbstractStatistic() {}
 
     /**
-     * Creates a statistic with the required identifier and plugin metadata. Subclasses are
+     * Creates a statistic with the required identifier and plugin metadata. Subclasses are.
      * expected to populate their discriminator-specific state immediately after invoking this
      * constructor.
      *
@@ -92,7 +108,7 @@ public abstract class RAbstractStatistic extends BaseEntity {
     }
 
     /**
-     * Retrieves the stored statistic value. Implementations must return immutable data or a
+     * Retrieves the stored statistic value. Implementations must return immutable data or a.
      * defensive copy when exposing mutable types to avoid shared state across transactions or
      * threads.
      *
@@ -119,7 +135,7 @@ public abstract class RAbstractStatistic extends BaseEntity {
     }
 
     /**
-     * Provides the owning aggregate, which may be {@code null} when the entity is detached,
+     * Provides the owning aggregate, which may be {@code null} when the entity is detached,.
      * prior to association, or has been intentionally orphaned for reassignment.
      *
      * @return owning {@link RPlayerStatistic} aggregate or {@code null}
@@ -129,7 +145,7 @@ public abstract class RAbstractStatistic extends BaseEntity {
     }
 
     /**
-     * Sets the owning aggregate reference. Typically invoked by aggregate helper methods to
+     * Sets the owning aggregate reference. Typically invoked by aggregate helper methods to.
      * maintain bidirectional consistency and enforce the unique constraint described in the class
      * documentation.
      *
@@ -140,7 +156,7 @@ public abstract class RAbstractStatistic extends BaseEntity {
     }
 
     /**
-     * Checks whether this statistic matches the provided identifier and plugin pair. Both
+     * Checks whether this statistic matches the provided identifier and plugin pair. Both.
      * arguments are required to be non-null and correspond to the same semantics as
      * {@link #getIdentifier()} and {@link #getPlugin()}.
      *

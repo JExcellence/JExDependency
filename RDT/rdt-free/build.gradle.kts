@@ -9,13 +9,23 @@ dependenciesYml {
     generateSpigotVariant.set(true)
 }
 
+val versionMajor: String by project.rootProject.extra { findProperty("rdt.version.major")?.toString() ?: "undefined" }
+val versionMinor: String by project.rootProject.extra { findProperty("rdt.version.minor")?.toString() ?: "undefined" }
+val versionPatch: String by project.rootProject.extra { findProperty("rdt.version.patch")?.toString() ?: "undefined" }
+val versionStage: String by project.rootProject.extra { findProperty("rdt.version.stage")?.toString() ?: "undefined" }
+val versionBuild: String by project.rootProject.extra { findProperty("rdt.version.build")?.toString() ?: "undefined" }
+
+val rdtVersion = "$versionMajor.$versionMinor.$versionPatch-$versionStage-Build-$versionBuild"
+
+
 group = "com.raindropcentral.rdt"
-version = "1.0.0"
+version = rdtVersion
 description = "RDT Free - Free edition of Raindrop Towns"
 
 dependencies {
     implementation(project(":RDT:rdt-common"))
     implementation(project(":JExCommand"))
+    implementation(project(":RPlatform"))
 
     compileOnly(libs.paper.api)
 
@@ -27,12 +37,11 @@ dependencies {
     compileOnly(libs.bundles.hibernate)
     compileOnly(libs.jehibernate)
     compileOnly(libs.adventure.platform.bukkit)
-    compileOnly(libs.rplatform)
-
     implementation(libs.bundles.jexcellence) {
         isTransitive = false
         exclude(group = "de.jexcellence.hibernate")
         exclude(group = "com.raindropcentral.commands", module = "jexcommand")
+        exclude(group = "com.raindropcentral.platform", module = "rplatform")
     }
     implementation(libs.bundles.jeconfig) { isTransitive = false }
     compileOnly(libs.bundles.inventory)
@@ -65,7 +74,7 @@ tasks.test {
 
 tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
     archiveBaseName.set("RDT")
-    archiveVersion.set(project.version.toString())
+    archiveVersion.set(rdtVersion)
     archiveClassifier.set("Free")
 
     relocate("tools.jackson", "com.raindropcentral.remapped.tools.jackson")

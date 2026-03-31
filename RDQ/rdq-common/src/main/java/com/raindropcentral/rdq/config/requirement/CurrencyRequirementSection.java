@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.config.requirement;
 
 import de.jexcellence.configmapper.sections.AConfigSection;
@@ -9,10 +22,9 @@ import java.util.Map;
 
 /**
  * Configuration section for currency-based requirements.
- * <p>
- * This section handles all configuration options specific to CurrencyRequirement,
+ *
+ * <p>This section handles all configuration options specific to CurrencyRequirement,
  * including required currencies, amounts, and consumption settings.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -74,10 +86,16 @@ public class CurrencyRequirementSection extends AConfigSection {
 		super(evaluationEnvironmentBuilder);
 	}
 	
+	/**
+	 * Gets consumeOnComplete.
+	 */
 	public Boolean getConsumeOnComplete() {
 		return this.consumeOnComplete != null ? this.consumeOnComplete : true;
 	}
 	
+	/**
+	 * Gets currencyPlugin.
+	 */
 	public String getCurrencyPlugin() {
 		return this.currencyPlugin != null ? this.currencyPlugin : "vault";
 	}

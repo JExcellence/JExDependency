@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rplatform.integration.geyser;
 
 import com.raindropcentral.rplatform.service.ServiceRegistry;
@@ -15,18 +28,16 @@ import java.util.logging.Logger;
 
 /**
  * Service for detecting and interacting with Bedrock Edition players via Floodgate/Geyser.
- * <p>
- * This service provides a clean, non-static API for Bedrock player detection that can be
+ *
+ * <p>This service provides a clean, non-static API for Bedrock player detection that can be
  * registered with the {@link ServiceRegistry} and injected into consuming plugins.
- * </p>
- * <p>
- * Supports multiple detection methods:
+ *
+ * <p>Supports multiple detection methods:
  * <ul>
  *   <li>Floodgate API via ServiceRegistry (preferred)</li>
  *   <li>Direct Floodgate API class loading (fallback)</li>
  *   <li>UUID prefix detection (last resort - checks for Floodgate UUID prefix)</li>
  * </ul>
- * </p>
  *
  * @author JExcellence
  * @version 1.2.0
@@ -193,10 +204,9 @@ public class GeyserService {
 
     /**
      * Checks if a UUID has the Floodgate prefix (starts with 00000000).
-     * <p>
-     * Floodgate assigns UUIDs with version 0 to Bedrock players, which always
+ *
+ * <p>Floodgate assigns UUIDs with version 0 to Bedrock players, which always
      * start with "00000000-" in string form.
-     * </p>
      *
      * @param uuid the UUID to check
      * @return true if the UUID has the Floodgate prefix

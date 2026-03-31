@@ -22,13 +22,12 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * Paginated view for displaying currency leaderboard rankings.
- * <p>
- * This view shows the top players with the highest balances for a specific currency,
+ *
+ * <p>This view shows the top players with the highest balances for a specific currency,
  * sorted in descending order by balance amount. It provides detailed information about
  * each player's balance, their ranking position, and visual indicators for top performers.
- * </p>
  *
- * <h3>Key Features:</h3>
+ * <p><strong>Key Features:</strong>
  * <ul>
  *   <li><strong>Real-time Rankings:</strong> Displays current player balances sorted by amount</li>
  *   <li><strong>Visual Hierarchy:</strong> Special materials and colors for top 3 positions</li>
@@ -37,7 +36,7 @@ import java.util.concurrent.CompletableFuture;
  *   <li><strong>Currency Integration:</strong> Displays currency-specific formatting and symbols</li>
  * </ul>
  *
- * <h3>Ranking System:</h3>
+ * <p><strong>Ranking System:</strong>
  * <ul>
  *   <li><strong>1st Place:</strong> Diamond block with gold gradient color</li>
  *   <li><strong>2nd Place:</strong> Gold block with silver gradient color</li>
@@ -45,12 +44,11 @@ import java.util.concurrent.CompletableFuture;
  *   <li><strong>Other Ranks:</strong> Player head with white color</li>
  * </ul>
  *
- * <h3>Layout Structure:</h3>
- * <p>
- * The view uses a custom layout with currency information at the top and paginated
+ * <p><strong>Layout Structure:</strong>
+ *
+ * <p>The view uses a custom layout with currency information at the top and paginated
  * player entries in the center. Navigation controls are provided at the bottom
  * for moving between pages of results.
- * </p>
  *
  * @author JExcellence
  * @see APaginatedView
@@ -76,10 +74,9 @@ public class CurrencyLeaderboardView extends APaginatedView<UserCurrency> {
 	
 	/**
 	 * Constructs a new {@code CurrencyLeaderboardView} with the currency detail view as parent.
-	 * <p>
-	 * The view will display leaderboard rankings for a specific currency and provide
+ *
+ * <p>The view will display leaderboard rankings for a specific currency and provide
 	 * navigation back to the currency detail view when closed.
-	 * </p>
 	 */
 	public CurrencyLeaderboardView() {
 		super(CurrencyDetailView.class);
@@ -87,10 +84,9 @@ public class CurrencyLeaderboardView extends APaginatedView<UserCurrency> {
 	
 	/**
 	 * Returns the internationalization key for this view.
-	 * <p>
-	 * This key is used to load localized strings for the leaderboard interface,
+ *
+ * <p>This key is used to load localized strings for the leaderboard interface,
 	 * including titles, labels, and formatting templates.
-	 * </p>
 	 *
 	 * @return the i18n key for the currency leaderboard UI
 	 */
@@ -101,13 +97,12 @@ public class CurrencyLeaderboardView extends APaginatedView<UserCurrency> {
 	
 	/**
 	 * Provides the asynchronous data source for the leaderboard pagination.
-	 * <p>
-	 * This method retrieves the top players for the specified currency, filters out
+ *
+ * <p>This method retrieves the top players for the specified currency, filters out
 	 * players with zero balances, and sorts them in descending order by balance amount.
 	 * The results are limited to the top 25 players to optimize performance.
-	 * </p>
 	 *
-	 * <h3>Data Processing:</h3>
+	 * <p><strong>Data Processing:</strong>
 	 * <ol>
 	 *   <li>Fetch top 25 players for the currency from the repository</li>
 	 *   <li>Filter out players with zero or negative balances</li>
@@ -141,13 +136,12 @@ public class CurrencyLeaderboardView extends APaginatedView<UserCurrency> {
 	
 	/**
 	 * Renders a single leaderboard entry for a player's currency balance.
-	 * <p>
-	 * This method creates a visual representation of a player's ranking, including
+ *
+ * <p>This method creates a visual representation of a player's ranking, including
 	 * their position, name, balance, and appropriate visual styling based on their rank.
 	 * Top 3 players receive special positioning and materials for visual emphasis.
-	 * </p>
 	 *
-	 * <h3>Rendering Features:</h3>
+	 * <p><strong>Rendering Features:</strong>
 	 * <ul>
 	 *   <li>Rank-based material selection (diamond, gold, iron, or player head)</li>
 	 *   <li>Color-coded rank indicators with gradient effects</li>
@@ -245,13 +239,12 @@ public class CurrencyLeaderboardView extends APaginatedView<UserCurrency> {
 	
 	/**
 	 * Defines the layout structure for the leaderboard view.
-	 * <p>
-	 * The layout provides a centered area for displaying player entries with
+ *
+ * <p>The layout provides a centered area for displaying player entries with
 	 * navigation controls at the bottom. The 'O' characters represent pagination
 	 * slots where player entries will be displayed.
-	 * </p>
 	 *
-	 * <h3>Layout Structure:</h3>
+	 * <p><strong>Layout Structure:</strong>
 	 * <ul>
 	 *   <li><strong>Rows 1-3:</strong> Empty space for visual separation</li>
 	 *   <li><strong>Rows 4-5:</strong> Pagination content area (marked with 'O')</li>
@@ -274,13 +267,12 @@ public class CurrencyLeaderboardView extends APaginatedView<UserCurrency> {
 	
 	/**
 	 * Handles additional rendering logic specific to the leaderboard view.
-	 * <p>
-	 * This method renders the currency information display at the top of the interface,
+ *
+ * <p>This method renders the currency information display at the top of the interface,
 	 * showing the currency icon, name, and symbol. This provides context for which
 	 * currency's leaderboard is being displayed.
-	 * </p>
 	 *
-	 * <h3>Currency Information Display:</h3>
+	 * <p><strong>Currency Information Display:</strong>
 	 * <ul>
 	 *   <li>Currency icon as the display material</li>
 	 *   <li>Currency identifier and symbol in the name</li>
@@ -337,13 +329,12 @@ public class CurrencyLeaderboardView extends APaginatedView<UserCurrency> {
 	
 	/**
 	 * Determines the appropriate material for displaying a player's rank.
-	 * <p>
-	 * This method provides visual hierarchy by assigning different materials
+ *
+ * <p>This method provides visual hierarchy by assigning different materials
 	 * based on the player's ranking position. The top 3 positions receive
 	 * special block materials, while other positions use player heads.
-	 * </p>
 	 *
-	 * <h3>Material Mapping:</h3>
+	 * <p><strong>Material Mapping:</strong>
 	 * <ul>
 	 *   <li><strong>1st Place:</strong> Diamond Block (most prestigious)</li>
 	 *   <li><strong>2nd Place:</strong> Gold Block (second tier)</li>
@@ -367,13 +358,12 @@ public class CurrencyLeaderboardView extends APaginatedView<UserCurrency> {
 	
 	/**
 	 * Determines the appropriate color code for displaying a player's rank.
-	 * <p>
-	 * This method provides visual distinction through color coding, using
+ *
+ * <p>This method provides visual distinction through color coding, using
 	 * gradient effects for the top 3 positions and standard white for others.
 	 * The colors complement the material choices for enhanced visual hierarchy.
-	 * </p>
 	 *
-	 * <h3>Color Mapping:</h3>
+	 * <p><strong>Color Mapping:</strong>
 	 * <ul>
 	 *   <li><strong>1st Place:</strong> Gold gradient (prestigious and eye-catching)</li>
 	 *   <li><strong>2nd Place:</strong> Silver gradient (elegant second place)</li>
@@ -397,18 +387,16 @@ public class CurrencyLeaderboardView extends APaginatedView<UserCurrency> {
 	
 	/**
 	 * Formats a balance amount with the currency's prefix, symbol, and suffix.
-	 * <p>
-	 * This method creates a complete currency representation by combining the
+ *
+ * <p>This method creates a complete currency representation by combining the
 	 * formatted amount with all currency display elements. The result provides
 	 * a consistent and professional appearance for balance displays.
-	 * </p>
 	 *
-	 * <h3>Format Structure:</h3>
-	 * <p>
-	 * The returned string follows the pattern: <code>prefix + formatted_amount + " " + symbol + suffix</code>
-	 * </p>
+	 * <p><strong>Format Structure:</strong>
+ *
+ * <p>The returned string follows the pattern: <code>prefix + formatted_amount + " " + symbol + suffix</code>
 	 *
-	 * <h3>Example Output:</h3>
+	 * <p><strong>Example Output:</strong>
 	 * <ul>
 	 *   <li>Input: 1234.56, Currency with prefix="$", symbol="USD", suffix=""</li>
 	 *   <li>Output: "$1,234.56 USD"</li>

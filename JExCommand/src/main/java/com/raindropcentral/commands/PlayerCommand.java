@@ -18,10 +18,10 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Base command implementation that restricts execution to player senders and provides
+ * Base command implementation that restricts execution to player senders and provides.
  * helper hooks for permission checks and tab completion routing.
- * <p>
- * The {@link CommandFactory} supplies the associated {@link ACommandSection} so player-only commands inherit edition
+ *
+ * <p>The {@link CommandFactory} supplies the associated {@link ACommandSection} so player-only commands inherit edition
  * gating rules (for example, premium-exclusive handlers) and localized responses when permissions fail or arguments are
  * invalid. Implementations should keep logic lightweight because invocations occur on the synchronous Bukkit thread.
  *
@@ -66,7 +66,7 @@ public abstract class PlayerCommand extends BukkitCommand {
         );
 
         /**
-         * Ensures the sender is a {@link Player} before delegating to
+         * Ensures the sender is a {@link Player} before delegating to.
          * {@link #onPlayerInvocation(Player, String, String[])}.
          * Behaviour: provides edition-aware error messaging through the base {@link BukkitCommand} when non-player
          * contexts attempt to run the command. Failure modes: raises {@link CommandError} to inform the sender.
@@ -96,7 +96,7 @@ public abstract class PlayerCommand extends BukkitCommand {
 	}
 	
         /**
-         * Restricts tab completion to player senders and forwards the request to
+         * Restricts tab completion to player senders and forwards the request to.
          * {@link #onPlayerTabCompletion(Player, String, String[])} when applicable.
          * Behaviour: enforces edition gating and localization by returning empty suggestions for non-player contexts.
          * Failure modes: none; non-player senders receive an immutable empty list. Asynchronous considerations: invoked
@@ -123,7 +123,7 @@ public abstract class PlayerCommand extends BukkitCommand {
 	}
 	
         /**
-         * Evaluates the supplied permission node against the player and sends a localized missing
+         * Evaluates the supplied permission node against the player and sends a localized missing.
          * permission message when access should be denied.
          * Behaviour: taps into {@link PermissionsSection} so localization hooks communicate edition-specific messaging
          * when access is blocked. Failure modes: returns {@code true} when the player lacks permission and triggers a

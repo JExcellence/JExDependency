@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.perk.handler;
 
 import com.raindropcentral.rdq.RDQ;
@@ -12,23 +25,22 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  * Handler for potion effect perks.
- * <p>
- * This handler manages the application, removal, and continuous refresh of potion effects
+ *
+ * <p>This handler manages the application, removal, and continuous refresh of potion effects
  * for passive perks. It maintains a scheduled task that refreshes potion effects to ensure
  * they remain active while the perk is enabled.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -46,8 +58,9 @@ public class PotionPerkHandler {
 	// Track active potion perks by player UUID
 	private final Map<UUID, Map<Long, PlayerPerk>> activePlayerPerks = new ConcurrentHashMap<>();
 	
-	// Scheduled task for refreshing potion effects
-	private BukkitTask refreshTask;
+	// Track the active refresh scheduler generation because the platform scheduler does not expose task handles
+	private final AtomicLong refreshTaskGeneration = new AtomicLong();
+	private volatile boolean refreshTaskRunning;
 	
 	/**
 	 * Constructs a new PotionPerkHandler.
@@ -117,7 +130,7 @@ public class PotionPerkHandler {
 		);
 		
 		// Apply potion effect on main thread (Bukkit requirement)
-		Bukkit.getScheduler().runTask(plugin.getPlugin(), () -> {
+		plugin.getPlatform().getScheduler().runAtEntity(player, () -> {
 			player.addPotionEffect(potionEffect);
 		});
 		
@@ -177,7 +190,7 @@ public class PotionPerkHandler {
 		}
 		
 		// Remove the potion effect on main thread (Bukkit requirement)
-		Bukkit.getScheduler().runTask(plugin.getPlugin(), () -> {
+		plugin.getPlatform().getScheduler().runAtEntity(player, () -> {
 			player.removePotionEffect(effectType);
 		});
 		
@@ -217,12 +230,18 @@ public class PotionPerkHandler {
 	 * This task runs periodically to refresh all active potion effects.
 	 */
 	public void startRefreshTask() {
-		if (refreshTask != null && !refreshTask.isCancelled()) {
+		if (refreshTaskRunning) {
 			LOGGER.warning("Refresh task is already running");
 			return;
 		}
-		
-		refreshTask = Bukkit.getScheduler().runTaskTimer(plugin.getPlugin(), () -> {
+
+		refreshTaskRunning = true;
+		final long generation = refreshTaskGeneration.incrementAndGet();
+		this.plugin.getPlatform().getScheduler().runRepeating(() -> {
+			if (!this.refreshTaskRunning || this.refreshTaskGeneration.get() != generation) {
+				return;
+			}
+
 			// Iterate through all active player perks
 			activePlayerPerks.forEach((playerUuid, perks) -> {
 				Player player = Bukkit.getPlayer(playerUuid);
@@ -243,7 +262,7 @@ public class PotionPerkHandler {
 				});
 			});
 		}, REFRESH_INTERVAL_TICKS, REFRESH_INTERVAL_TICKS);
-		
+
 		LOGGER.info("Started potion effect refresh task (interval: " + REFRESH_INTERVAL_TICKS + " ticks)");
 	}
 	
@@ -251,11 +270,13 @@ public class PotionPerkHandler {
 	 * Stops the scheduled task for continuous effect refresh.
 	 */
 	public void stopRefreshTask() {
-		if (refreshTask != null && !refreshTask.isCancelled()) {
-			refreshTask.cancel();
-			refreshTask = null;
-			LOGGER.info("Stopped potion effect refresh task");
+		if (!this.refreshTaskRunning) {
+			return;
 		}
+
+		this.refreshTaskRunning = false;
+		this.refreshTaskGeneration.incrementAndGet();
+		LOGGER.info("Stopped potion effect refresh task");
 	}
 	
 	/**

@@ -1,5 +1,19 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.perk;
 
+import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.database.entity.perk.Perk;
 import com.raindropcentral.rdq.database.entity.perk.PerkRequirement;
 import com.raindropcentral.rdq.database.entity.perk.PerkUnlockReward;
@@ -20,14 +34,13 @@ import java.util.stream.Collectors;
 
 /**
  * Service for checking perk requirements, tracking progress, and handling perk unlocks.
- * <p>
- * This service handles:
+ *
+ * <p>This service handles:
  * - Checking if all requirements for a perk are met
  * - Calculating progress for individual requirements
  * - Calculating overall progress for a perk
  * - Attempting to unlock perks when requirements are met
  * - Granting unlock rewards
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -36,6 +49,7 @@ public class PerkRequirementService {
     
     private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
     
+    private final RDQ plugin;
     private final PerkManagementService perkManagementService;
     private final RequirementService requirementService;
     
@@ -45,8 +59,10 @@ public class PerkRequirementService {
      * @param perkManagementService the perk management service
      */
     public PerkRequirementService(
+            @NotNull final RDQ plugin,
             @NotNull final PerkManagementService perkManagementService
     ) {
+        this.plugin = plugin;
         this.perkManagementService = perkManagementService;
         this.requirementService = RequirementService.getInstance();
     }
@@ -227,15 +243,14 @@ public class PerkRequirementService {
     
     /**
      * Attempts to unlock a perk for a player.
-     * <p>
-     * This method:
+ *
+ * <p>This method:
      * 1. Checks if the player already has the perk unlocked
      * 2. Verifies all requirements are met
      * 3. Consumes requirement resources
      * 4. Grants the perk to the player
      * 5. Grants unlock rewards
      * 6. Sends a notification to the player
-     * </p>
      *
      * @param player the player attempting to unlock the perk
      * @param rdqPlayer the RDQPlayer entity
@@ -281,8 +296,8 @@ public class PerkRequirementService {
                 
                 // Run consumption synchronously on main thread
                 CompletableFuture<Boolean> consumptionFuture = new CompletableFuture<>();
-                org.bukkit.Bukkit.getScheduler().runTask(
-                        org.bukkit.Bukkit.getPluginManager().getPlugin("RDQ"),
+                plugin.getPlatform().getScheduler().runAtEntity(
+                        player,
                         () -> {
                             try {
                                 for (PerkRequirement perkRequirement : sortedRequirements) {
@@ -430,11 +445,11 @@ public class PerkRequirementService {
             final String nameKey = perk.getIcon().getDisplayNameKey();
             
             // Send notification message
-            new I18n.Builder("reward.perk.unlocked", player)
+            plugin.getPlatform().getScheduler().runAtEntity(player, () -> new I18n.Builder("reward.perk.unlocked", player)
                     .includePrefix()
                     .withPlaceholder("perk", nameKey != null ? nameKey : perk.getIdentifier())
                     .build()
-                    .sendMessage();
+                    .sendMessage());
             
             LOGGER.log(Level.FINE, "Sent unlock notification to player {0} for perk {1}", 
                     new Object[]{player.getName(), perk.getIdentifier()});
@@ -456,6 +471,9 @@ public class PerkRequirementService {
         private final String messageKey;
         private final PlayerPerk playerPerk;
         
+        /**
+         * Executes UnlockResult.
+         */
         public UnlockResult(
                 final boolean success,
                 @NotNull final UnlockResultType resultType,
@@ -468,18 +486,30 @@ public class PerkRequirementService {
             this.playerPerk = playerPerk;
         }
         
+        /**
+         * Returns whether success.
+         */
         public boolean isSuccess() {
             return success;
         }
         
+        /**
+         * Gets resultType.
+         */
         public UnlockResultType getResultType() {
             return resultType;
         }
         
+        /**
+         * Gets messageKey.
+         */
         public String getMessageKey() {
             return messageKey;
         }
         
+        /**
+         * Gets playerPerk.
+         */
         public PlayerPerk getPlayerPerk() {
             return playerPerk;
         }
@@ -496,6 +526,9 @@ public class PerkRequirementService {
                     .sendMessage();
         }
         
+        /**
+         * Executes toString.
+         */
         @Override
         public String toString() {
             return "UnlockResult{" +

@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rplatform.config.permission;
 
 import de.jexcellence.configmapper.sections.CSAlways;
@@ -10,12 +23,11 @@ import java.util.Set;
 
 /**
  * Configuration section that maps permissions to cooldown durations expressed in seconds.
- * <p>
- * Each permission can define its own cooldown override while a default value ensures fallbacks for
+ *
+ * <p>Each permission can define its own cooldown override while a default value ensures fallbacks for
  * players without specific permissions. The section selects the smallest positive cooldown (or zero
  * for no cooldown) when multiple permissions apply, supporting fast-track permissions that reduce or
  * remove cooldowns entirely.
- * </p>
  *
  * @author JExcellence
  * @since 1.0.0

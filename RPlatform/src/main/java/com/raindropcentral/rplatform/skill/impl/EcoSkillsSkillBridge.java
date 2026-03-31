@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rplatform.skill.impl;
 
 import org.bukkit.entity.Player;
@@ -46,16 +59,25 @@ public final class EcoSkillsSkillBridge extends AbstractReflectionSkillBridge {
     public EcoSkillsSkillBridge() {
     }
 
+    /**
+     * Gets integrationId.
+     */
     @Override
     public @NotNull String getIntegrationId() {
         return INTEGRATION_ID;
     }
 
+    /**
+     * Gets pluginName.
+     */
     @Override
     public @NotNull String getPluginName() {
         return PLUGIN_NAME;
     }
 
+    /**
+     * Returns whether available.
+     */
     @Override
     public boolean isAvailable() {
         final Plugin installedPlugin = resolvePlugin(PLUGIN_NAME, "EcoSkills");
@@ -74,6 +96,9 @@ public final class EcoSkillsSkillBridge extends AbstractReflectionSkillBridge {
         return this.api != null;
     }
 
+    /**
+     * Gets skillLevel.
+     */
     @Override
     public double getSkillLevel(@NotNull Player player, @NotNull String skillId) {
         if (!isAvailable() || skillId.isBlank()) {

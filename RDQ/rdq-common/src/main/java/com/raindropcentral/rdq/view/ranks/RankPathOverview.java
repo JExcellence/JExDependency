@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.view.ranks;
 
 
@@ -33,20 +46,18 @@ import java.util.stream.Collectors;
 
 /**
  * GUI view for displaying the progression path of ranks within a specific {@link RRankTree}.
- * <p>
- * This view visualizes the hierarchy and connections between ranks, allowing players to
+ *
+ * <p>This view visualizes the hierarchy and connections between ranks, allowing players to
  * navigate, inspect, and interact with their progression. It supports grid-based navigation,
  * dynamic rendering of rank nodes and connections, and contextual actions based on the player's
  * current rank status.
- * </p>
  *
- * <p>
- * Performance optimizations:
+ *
+ * <p>Performance optimizations:
  * - Pre-loads all rank data and player progress on initialization
  * - Caches rank hierarchy and status information
  * - Only updates UI state on navigation, no database queries
  * - Refreshes cached data only when rank interactions occur
- * </p>
  *
  * @author ItsRainingHP
  * @version 2.1.0
@@ -97,6 +108,9 @@ public class RankPathOverview extends BaseView {
 
     private RankRequirementProgressManager progressManager;
 
+    /**
+     * Executes RankPathOverview.
+     */
     public RankPathOverview() {
 
         super();
@@ -150,6 +164,9 @@ public class RankPathOverview extends BaseView {
         }
     }
 
+    /**
+     * Executes onResume.
+     */
     @Override
     public void onResume(
             @NotNull final Context origin,
@@ -194,6 +211,9 @@ public class RankPathOverview extends BaseView {
         }
     }
 
+    /**
+     * Executes onFirstRender.
+     */
     @Override
     public void onFirstRender(
             final @NotNull RenderContext renderContext,
@@ -3827,6 +3847,9 @@ public class RankPathOverview extends BaseView {
         public final List<RankNode> children = new ArrayList<>();
         public final List<RankNode> parents = new ArrayList<>();
 
+        /**
+         * Executes RankNode.
+         */
         public RankNode(final @NotNull RRank rank) {
 
             this.rank = rank;
@@ -3839,6 +3862,9 @@ public class RankPathOverview extends BaseView {
         public final int x;
         public final int y;
 
+        /**
+         * Executes GridPosition.
+         */
         public GridPosition(
                 final int x,
                 final int y
@@ -3848,6 +3874,9 @@ public class RankPathOverview extends BaseView {
             this.y = y;
         }
 
+        /**
+         * Executes equals.
+         */
         @Override
         public boolean equals(final Object obj) {
 
@@ -3859,6 +3888,9 @@ public class RankPathOverview extends BaseView {
             return this.x == that.x && this.y == that.y;
         }
 
+        /**
+         * Returns whether hCode.
+         */
         @Override
         public int hashCode() {
 
@@ -3868,6 +3900,9 @@ public class RankPathOverview extends BaseView {
             );
         }
 
+        /**
+         * Executes toString.
+         */
         @Override
         public String toString() {
 

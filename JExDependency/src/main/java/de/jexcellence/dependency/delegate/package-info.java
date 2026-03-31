@@ -1,16 +1,16 @@
 /**
- * Defines the delegation layer that bridges Bukkit's {@link org.bukkit.plugin.java.JavaPlugin}
+ * Defines the delegation layer that bridges Bukkit's {@link org.bukkit.plugin.java.JavaPlugin}.
  * lifecycle with the modular services shipped in the RaindropCentral distribution.
- * <p>
- * The {@link de.jexcellence.dependency.delegate.PluginDelegate} contract mirrors the
+ *
+ * <p>The {@link de.jexcellence.dependency.delegate.PluginDelegate} contract mirrors the
  * {@code onLoad}, {@code onEnable}, and {@code onDisable} callbacks exposed by Bukkit while
  * surfacing the backing plugin instance for dependency management tasks. Implementations are
  * expected to orchestrate dependency bootstrap through
  * {@link de.jexcellence.dependency.JEDependency}, wire service singletons, and shield the primary
  * plugin class from edition-specific logic.
  * </p>
- * <p>
- * {@link de.jexcellence.dependency.delegate.AbstractPluginDelegate} supplies a shared base that
+ *
+ * <p>{@link de.jexcellence.dependency.delegate.AbstractPluginDelegate} supplies a shared base that
  * exposes frequently used helpers (configuration access, {@link org.bukkit.Server},
  * {@link org.bukkit.plugin.PluginManager}, and {@link java.util.logging.Logger}) and enforces
  * consistent interaction with the Paper plugin loader handshake. Production plugins such as the

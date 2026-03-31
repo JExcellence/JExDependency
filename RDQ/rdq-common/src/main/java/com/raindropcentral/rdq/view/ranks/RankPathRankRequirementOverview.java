@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.view.ranks;
 
 
@@ -36,14 +49,13 @@ import java.util.logging.Logger;
 
 /**
  * GUI view for displaying the upgrade requirements of a specific rank.
- * <p>
- * This paginated view shows all requirements needed to upgrade to a rank,
+ *
+ * <p>This paginated view shows all requirements needed to upgrade to a rank,
  * including the current progress for each requirement. Players can interact
  * with requirements to complete them and track their progress.
- * </p>
  *
- * <p>
- * Features:
+ *
+ * <p>Features:
  * - Paginated display of rank upgrade requirements
  * - Real-time progress tracking for each requirement
  * - Visual indicators for completion status
@@ -51,7 +63,6 @@ import java.util.logging.Logger;
  * - Persistent progress tracking via RankRequirementProgressManager
  * - Prevention of over-completion
  * - Automatic rank progression when all requirements completed
- * </p>
  *
  * @author ItsRainingHP
  * @version 2.1.0
@@ -69,6 +80,9 @@ public class RankPathRankRequirementOverview extends APaginatedView<RRankUpgrade
 	
 	private RankRequirementProgressManager progressManager;
 	
+	/**
+	 * Executes RankPathRankRequirementOverview.
+	 */
 	public RankPathRankRequirementOverview() {
 		super(RankPathOverview.class);
 	}
@@ -213,7 +227,7 @@ public class RankPathRankRequirementOverview extends APaginatedView<RRankUpgrade
 	}
 	
 	/**
-	 * Called when the view becomes active again (e.g., when returning from another view)
+	 * Called when the view becomes active again (e.g., when returning from another view).
 	 */
 	@Override
 	public void onResume(
@@ -238,6 +252,9 @@ public class RankPathRankRequirementOverview extends APaginatedView<RRankUpgrade
 		}
 	}
 	
+	/**
+	 * Executes onClick.
+	 */
 	@Override
 	public void onClick(
 		final @NotNull SlotClickContext click
@@ -464,7 +481,7 @@ public class RankPathRankRequirementOverview extends APaginatedView<RRankUpgrade
 	}
 	
 	/**
-	 * Enhanced left-click handler that properly manages completion state and rank progression
+	 * Enhanced left-click handler that properly manages completion state and rank progression.
 	 */
 	private void handleLeftClick(
 		final @NotNull SlotClickContext clickContext,
@@ -520,7 +537,7 @@ public class RankPathRankRequirementOverview extends APaginatedView<RRankUpgrade
 	}
 	
 	/**
-	 * NEW METHOD: Processes the actual rank progression when all requirements are completed
+	 * NEW METHOD: Processes the actual rank progression when all requirements are completed.
 	 */
 	private void processRankProgression(
 		final @NotNull SlotClickContext clickContext,
@@ -560,7 +577,7 @@ public class RankPathRankRequirementOverview extends APaginatedView<RRankUpgrade
 	}
 	
 	/**
-	 * NEW METHOD: Updates the player's rank in the database
+	 * NEW METHOD: Updates the player's rank in the database.
 	 */
 	private void updatePlayerRankInDatabase(
 		final @NotNull RDQ plugin,
@@ -596,7 +613,7 @@ public class RankPathRankRequirementOverview extends APaginatedView<RRankUpgrade
 	}
 	
 	/**
-	 * NEW METHOD: Updates LuckPerms group if available
+	 * NEW METHOD: Updates LuckPerms group if available.
 	 */
 	private void updateLuckPermsGroup(
 		final @NotNull RDQ plugin,
@@ -616,23 +633,26 @@ public class RankPathRankRequirementOverview extends APaginatedView<RRankUpgrade
 	}
 	
 	/**
-	 * Schedules a return to the parent view after a delay with updated data
+	 * Schedules a return to the parent view after a delay with updated data.
 	 */
 	private void scheduleReturnToParent(final @NotNull SlotClickContext clickContext, final @NotNull Map<String, Object> updatedData, final long delayMs) {
 		final RDQ rdq = this.rdq.get(clickContext);
 		
-		Bukkit.getServer().getScheduler().runTaskLater(rdq.getPlugin(), () -> {
-			try {
-				clickContext.openForPlayer(RankPathOverview.class, updatedData);
-			} catch (Exception exception) {
-				LOGGER.log(Level.WARNING, "Failed to return to parent view", exception);
-				clickContext.getPlayer().closeInventory();
-			}
-		}, delayMs / 50L);
+		rdq.getPlatform().getScheduler().runDelayed(() ->
+				rdq.getPlatform().getScheduler().runAtEntity(clickContext.getPlayer(), () -> {
+					try {
+						clickContext.openForPlayer(RankPathOverview.class, updatedData);
+					} catch (Exception exception) {
+						LOGGER.log(Level.WARNING, "Failed to return to parent view", exception);
+						clickContext.getPlayer().closeInventory();
+					}
+				}),
+			delayMs / 50L
+		);
 	}
 	
 	/**
-	 * Enhanced close handler that ensures parent view knows about completion
+	 * Enhanced close handler that ensures parent view knows about completion.
 	 */
 	@Override
 	public void onClose(final @NotNull CloseContext close) {

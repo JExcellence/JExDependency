@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.config.utility;
 
 import de.jexcellence.configmapper.sections.AConfigSection;
@@ -14,17 +27,15 @@ import java.util.Map;
 
 /**
  * Represents a comprehensive configuration section for requirements within the RaindropQuests system.
- * <p>
- * This section supports all requirement types (ITEM, CURRENCY, EXPERIENCE_LEVEL, PERMISSION, LOCATION, 
+ *
+ * <p>This section supports all requirement types (ITEM, CURRENCY, EXPERIENCE_LEVEL, PERMISSION, LOCATION, 
  * PLAYTIME, COMPOSITE, CHOICE) and provides flexible configuration options for complex requirement 
  * structures including items, currencies, composite requirements, choice requirements, and 
  * plugin-specific requirements.
- * </p>
- * <p>
- * The section follows a hierarchical structure where the base requirement type determines which
+ *
+ * <p>The section follows a hierarchical structure where the base requirement type determines which
  * sub-configuration sections are relevant and used during requirement parsing.
  * Variable names must match exactly with YAML configuration keys for proper config mapping.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -33,7 +44,7 @@ import java.util.Map;
 public class RequirementSection extends AConfigSection {
 
 	/**
-	 * The type of requirement. Must be one of: ITEM, CURRENCY, EXPERIENCE_LEVEL, PERMISSION, 
+	 * The type of requirement. Must be one of: ITEM, CURRENCY, EXPERIENCE_LEVEL, PERMISSION,.
 	 * LOCATION, PLAYTIME, COMPOSITE, CHOICE.
 	 * YAML key: "type"
 	 */
@@ -517,6 +528,9 @@ public class RequirementSection extends AConfigSection {
 		       "ITEM";
 	}
 	
+	/**
+	 * Gets icon.
+	 */
 	public IconSection getIcon() {
 		
 		return this.icon != null ?

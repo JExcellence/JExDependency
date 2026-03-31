@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.core.database.repository;
 
 import com.raindropcentral.core.database.entity.central.RCentralServer;
@@ -17,8 +30,8 @@ import java.util.function.Function;
 
 /**
  * Repository for managing RPlayerInventory entities.
- * <p>
- * Handles persistence and retrieval of player inventory snapshots with server-scoped filtering.
+ *
+ * <p>Handles persistence and retrieval of player inventory snapshots with server-scoped filtering.
  * All inventory operations should filter by both player and server to ensure proper isolation
  * between different servers.
  * </p>
@@ -47,8 +60,8 @@ public class RPlayerInventoryRepository extends CachedRepository<RPlayerInventor
 
     /**
      * Finds all inventory snapshots for a specific player and server.
-     * <p>
-     * Returns only inventories that match both the player and server criteria,
+ *
+ * <p>Returns only inventories that match both the player and server criteria,
      * ensuring proper isolation between different servers.
      * </p>
      *
@@ -69,8 +82,8 @@ public class RPlayerInventoryRepository extends CachedRepository<RPlayerInventor
 
     /**
      * Finds the most recent inventory snapshot for a player on a specific server.
-     * <p>
-     * Useful for restoring a player's inventory when they join a server.
+ *
+ * <p>Useful for restoring a player's inventory when they join a server.
      * </p>
      *
      * @param player the player to find inventory for
@@ -90,8 +103,8 @@ public class RPlayerInventoryRepository extends CachedRepository<RPlayerInventor
 
     /**
      * Finds all inventory snapshots for a specific player across all servers.
-     * <p>
-     * Useful for administrative purposes or cross-server inventory management.
+ *
+ * <p>Useful for administrative purposes or cross-server inventory management.
      * </p>
      *
      * @param player the player to find inventories for
@@ -104,8 +117,8 @@ public class RPlayerInventoryRepository extends CachedRepository<RPlayerInventor
 
     /**
      * Finds all inventory snapshots for a specific server.
-     * <p>
-     * Useful for server-wide inventory management or backups.
+ *
+ * <p>Useful for server-wide inventory management or backups.
      * </p>
      *
      * @param server the server to find inventories for
@@ -118,8 +131,8 @@ public class RPlayerInventoryRepository extends CachedRepository<RPlayerInventor
 
     /**
      * Deletes all inventory snapshots for a specific player and server.
-     * <p>
-     * Useful for clearing a player's inventory data on a specific server.
+ *
+ * <p>Useful for clearing a player's inventory data on a specific server.
      * </p>
      *
      * @param player the player whose inventories should be deleted

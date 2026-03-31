@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.perk;
 
 import com.raindropcentral.rdq.database.entity.perk.Perk;
@@ -34,6 +47,9 @@ public class PerkManagementService {
 	private final int maxEnabledPerksPerPlayer;
 	private SimplePerkCache cache;
 	
+	/**
+	 * Executes PerkManagementService.
+	 */
 	public PerkManagementService(
 			@NotNull final PerkRepository perkRepository,
 			@NotNull final PlayerPerkRepository playerPerkRepository,
@@ -44,10 +60,16 @@ public class PerkManagementService {
 		this.maxEnabledPerksPerPlayer = maxEnabledPerksPerPlayer;
 	}
 	
+	/**
+	 * Sets cache.
+	 */
 	public void setCache(@NotNull final SimplePerkCache cache) {
 		this.cache = cache;
 	}
 	
+	/**
+	 * Executes grantPerk.
+	 */
 	public CompletableFuture<PlayerPerk> grantPerk(
 			@NotNull final RDQPlayer player,
 			@NotNull final Perk perk,
@@ -109,6 +131,9 @@ public class PerkManagementService {
 		return saved;
 	}
 	
+	/**
+	 * Executes revokePerk.
+	 */
 	public CompletableFuture<Boolean> revokePerk(
 			@NotNull final RDQPlayer player,
 			@NotNull final Perk perk
@@ -133,6 +158,9 @@ public class PerkManagementService {
 		});
 	}
 	
+	/**
+	 * Executes enablePerk.
+	 */
 	public boolean enablePerk(@NotNull final RDQPlayer player, @NotNull final Perk perk) {
 		if (!isCacheLoaded(player)) {
 			LOGGER.log(Level.WARNING, "Cache not loaded for {0}, attempting to load now", player.getPlayerName());
@@ -162,6 +190,9 @@ public class PerkManagementService {
 		return true;
 	}
 	
+	/**
+	 * Executes disablePerk.
+	 */
 	public boolean disablePerk(@NotNull final RDQPlayer player, @NotNull final Perk perk) {
 		if (!isCacheLoaded(player)) {
 			LOGGER.log(Level.WARNING, "Cache not loaded for {0}, attempting to load now", player.getPlayerName());
@@ -185,6 +216,9 @@ public class PerkManagementService {
 		return true;
 	}
 	
+	/**
+	 * Executes togglePerk.
+	 */
 	public boolean togglePerk(@NotNull final RDQPlayer player, @NotNull final Perk perk) {
 		if (!isCacheLoaded(player)) {
 			return false;
@@ -198,6 +232,9 @@ public class PerkManagementService {
 		return playerPerk.isEnabled() ? disablePerk(player, perk) : enablePerk(player, perk);
 	}
 	
+	/**
+	 * Returns whether unlocked.
+	 */
 	public boolean hasUnlocked(@NotNull final RDQPlayer player, @NotNull final Perk perk) {
 		if (isCacheLoaded(player)) {
 			PlayerPerk playerPerk = cache.getPerk(player.getUniqueId(), perk.getId());
@@ -209,6 +246,9 @@ public class PerkManagementService {
 				.orElse(false);
 	}
 	
+	/**
+	 * Gets unlockedPerks.
+	 */
 	@NotNull
 	public List<PlayerPerk> getUnlockedPerks(@NotNull final RDQPlayer player) {
 		if (isCacheLoaded(player)) {
@@ -222,6 +262,9 @@ public class PerkManagementService {
 				.collect(Collectors.toList());
 	}
 	
+	/**
+	 * Gets enabledPerks.
+	 */
 	@NotNull
 	public List<PlayerPerk> getEnabledPerks(@NotNull final RDQPlayer player) {
 		if (isCacheLoaded(player)) {
@@ -235,6 +278,9 @@ public class PerkManagementService {
 				.collect(Collectors.toList());
 	}
 	
+	/**
+	 * Gets activePerks.
+	 */
 	@NotNull
 	public List<PlayerPerk> getActivePerks(@NotNull final RDQPlayer player) {
 		if (isCacheLoaded(player)) {
@@ -248,6 +294,9 @@ public class PerkManagementService {
 				.collect(Collectors.toList());
 	}
 	
+	/**
+	 * Gets playerPerk.
+	 */
 	@NotNull
 	public Optional<PlayerPerk> getPlayerPerk(@NotNull final RDQPlayer player, @NotNull final Perk perk) {
 		if (isCacheLoaded(player)) {
@@ -257,22 +306,37 @@ public class PerkManagementService {
 		return playerPerkRepository.findByAttributes(Map.of("player", player, "perk", perk));
 	}
 	
+	/**
+	 * Gets enabledPerkCount.
+	 */
 	public int getEnabledPerkCount(@NotNull final RDQPlayer player) {
 		return getEnabledPerks(player).size();
 	}
 	
+	/**
+	 * Executes canEnableAnotherPerk.
+	 */
 	public boolean canEnableAnotherPerk(@NotNull final RDQPlayer player) {
 		return getEnabledPerkCount(player) < maxEnabledPerksPerPlayer;
 	}
 	
+	/**
+	 * Gets remainingPerkSlots.
+	 */
 	public int getRemainingPerkSlots(@NotNull final RDQPlayer player) {
 		return Math.max(0, maxEnabledPerksPerPlayer - getEnabledPerkCount(player));
 	}
 	
+	/**
+	 * Gets maxEnabledPerks.
+	 */
 	public int getMaxEnabledPerks() {
 		return maxEnabledPerksPerPlayer;
 	}
 	
+	/**
+	 * Gets availablePerks.
+	 */
 	@NotNull
 	public List<Perk> getAvailablePerks(@Nullable final PerkCategory category) {
 		if (category == null) {
@@ -284,6 +348,9 @@ public class PerkManagementService {
 				.collect(Collectors.toList());
 	}
 	
+	/**
+	 * Gets availablePerksAsync.
+	 */
 	@NotNull
 	public CompletableFuture<List<Perk>> getAvailablePerksAsync(@Nullable final PerkCategory category) {
 		return CompletableFuture.supplyAsync(() -> getAvailablePerks(category));

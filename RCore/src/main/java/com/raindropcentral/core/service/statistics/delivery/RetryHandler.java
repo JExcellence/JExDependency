@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.core.service.statistics.delivery;
 
 import com.raindropcentral.core.service.statistics.config.StatisticsDeliveryConfig;
@@ -27,12 +40,18 @@ public class RetryHandler {
     private final long initialBackoffMs;
     private final long maxBackoffMs;
 
+    /**
+     * Executes RetryHandler.
+     */
     public RetryHandler(final int maxRetries, final long initialBackoffMs, final long maxBackoffMs) {
         this.maxRetries = maxRetries;
         this.initialBackoffMs = initialBackoffMs;
         this.maxBackoffMs = maxBackoffMs;
     }
 
+    /**
+     * Executes RetryHandler.
+     */
     public RetryHandler(final @NotNull StatisticsDeliveryConfig config) {
         this(config.getMaxRetries(), config.getInitialBackoffMs(), config.getMaxBackoffMs());
     }
@@ -143,11 +162,17 @@ public class RetryHandler {
     public static class DeliveryException extends RuntimeException {
         private final int statusCode;
 
+        /**
+         * Executes DeliveryException.
+         */
         public DeliveryException(final int statusCode, final String message) {
             super(message);
             this.statusCode = statusCode;
         }
 
+        /**
+         * Gets statusCode.
+         */
         public int getStatusCode() {
             return statusCode;
         }

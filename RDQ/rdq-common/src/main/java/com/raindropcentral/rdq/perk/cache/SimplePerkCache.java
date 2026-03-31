@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.perk.cache;
 
 import com.raindropcentral.rdq.database.entity.perk.PlayerPerk;
@@ -15,13 +28,12 @@ import java.util.logging.Logger;
 
 /**
  * Simple in-memory cache for player perks.
- * <p>
- * This cache loads all player perks on join, stores them in memory,
+ *
+ * <p>This cache loads all player perks on join, stores them in memory,
  * and saves them back to the database on leave. This provides instant
  * access to perk data without database queries.
- * </p>
  * 
- * <h3>Design Philosophy</h3>
+ * <p><strong>Design Philosophy</strong>
  * <ul>
  *   <li>Load all perks on player join</li>
  *   <li>Toggle enabled/disabled instantly in memory</li>
@@ -39,17 +51,17 @@ public class SimplePerkCache {
 	private final PlayerPerkRepository repository;
 	
 	/**
-	 * Cache of player perks: UUID -> List of PlayerPerks
+	 * Cache of player perks: UUID -> List of PlayerPerks.
 	 */
 	private final ConcurrentHashMap<UUID, List<PlayerPerk>> cache;
 	
 	/**
-	 * Set of players with unsaved changes
+	 * Set of players with unsaved changes.
 	 */
 	private final Set<UUID> dirtyPlayers;
 	
 	/**
-	 * Whether to log performance metrics
+	 * Whether to log performance metrics.
 	 */
 	private final boolean logPerformance;
 	

@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rplatform.reward.config;
 
 import com.raindropcentral.rplatform.reward.AbstractReward;
@@ -12,6 +25,9 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.logging.Logger;
 
+/**
+ * Represents the RewardFactory API type.
+ */
 public final class RewardFactory<T> {
 
     private static final Logger LOGGER = Logger.getLogger(RewardFactory.class.getName());
@@ -24,10 +40,16 @@ public final class RewardFactory<T> {
         registerDefaultConverters();
     }
 
+    /**
+     * Gets instance.
+     */
     public static RewardFactory<Map<String, Object>> getInstance() {
         return INSTANCE;
     }
 
+    /**
+     * Executes registerConverter.
+     */
     public void registerConverter(
         @NotNull String type,
         @NotNull Function<Map<String, Object>, AbstractReward> converter
@@ -35,14 +57,23 @@ public final class RewardFactory<T> {
         converters.put(type.toUpperCase(), converter);
     }
 
+    /**
+     * Executes unregisterConverter.
+     */
     public void unregisterConverter(@NotNull String type) {
         converters.remove(type.toUpperCase());
     }
 
+    /**
+     * Returns whether converter.
+     */
     public boolean hasConverter(@NotNull String type) {
         return converters.containsKey(type.toUpperCase());
     }
 
+    /**
+     * Executes registerSectionAdapter.
+     */
     public <S> void registerSectionAdapter(
         @NotNull Class<S> sectionClass,
         @NotNull RewardSectionAdapter<S> adapter
@@ -50,15 +81,24 @@ public final class RewardFactory<T> {
         sectionAdapters.put(sectionClass, adapter);
     }
 
+    /**
+     * Executes unregisterSectionAdapter.
+     */
     public void unregisterSectionAdapter(@NotNull Class<?> sectionClass) {
         sectionAdapters.remove(sectionClass);
     }
 
+    /**
+     * Gets sectionAdapter.
+     */
     @SuppressWarnings("unchecked")
     public <S> RewardSectionAdapter<S> getSectionAdapter(@NotNull Class<S> sectionClass) {
         return (RewardSectionAdapter<S>) sectionAdapters.get(sectionClass);
     }
 
+    /**
+     * Executes fromMap.
+     */
     public AbstractReward fromMap(@NotNull Map<String, Object> config) {
         String type = getString(config, "type", null);
         if (type == null) {
@@ -73,6 +113,9 @@ public final class RewardFactory<T> {
         return converter.apply(config);
     }
 
+    /**
+     * Executes tryFromMap.
+     */
     public Optional<AbstractReward> tryFromMap(@NotNull Map<String, Object> config) {
         try {
             return Optional.of(fromMap(config));
@@ -82,10 +125,16 @@ public final class RewardFactory<T> {
         }
     }
 
+    /**
+     * Executes fromSection.
+     */
     public AbstractReward fromSection(@NotNull T section) {
         return fromSection(section, null);
     }
 
+    /**
+     * Executes fromSection.
+     */
     @SuppressWarnings("unchecked")
     public AbstractReward fromSection(@NotNull T section, @Nullable Map<String, Object> context) {
         Class<?> sectionClass = section.getClass();
@@ -112,10 +161,16 @@ public final class RewardFactory<T> {
         return reward;
     }
 
+    /**
+     * Executes tryFromSection.
+     */
     public Optional<AbstractReward> tryFromSection(@NotNull T section) {
         return tryFromSection(section, null);
     }
 
+    /**
+     * Executes tryFromSection.
+     */
     public Optional<AbstractReward> tryFromSection(@NotNull T section, @Nullable Map<String, Object> context) {
         try {
             return Optional.of(fromSection(section, context));
@@ -125,10 +180,16 @@ public final class RewardFactory<T> {
         }
     }
 
+    /**
+     * Executes parseRewards.
+     */
     public List<AbstractReward> parseRewards(@NotNull Map<String, T> sections) {
         return parseRewards(sections, null);
     }
 
+    /**
+     * Executes parseRewards.
+     */
     public List<AbstractReward> parseRewards(
         @NotNull Map<String, T> sections,
         @Nullable Map<String, Object> context
@@ -140,6 +201,9 @@ public final class RewardFactory<T> {
         return rewards;
     }
 
+    /**
+     * Gets registeredTypes.
+     */
     public Set<String> getRegisteredTypes() {
         return Set.copyOf(converters.keySet());
     }

@@ -13,7 +13,7 @@ import java.lang.reflect.Method;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * Entry point for plugins to bootstrap the runtime dependency system. The class coordinates YAML discovery,
+ * Entry point for plugins to bootstrap the runtime dependency system. The class coordinates YAML discovery,.
  * repository downloads, optional remapping and classpath injection while keeping behaviour consistent with the Paper
  * plugin loader. All invocations log progress to the hosting {@link JavaPlugin}'s logger so operators can follow the
  * bootstrap sequence.
@@ -25,7 +25,7 @@ public class JEDependency {
      */
     private static final String REMAPPING_MANAGER_CLASS = "de.jexcellence.dependency.remapper.RemappingDependencyManager";
     /**
-     * System property controlling whether the remapping pipeline should be activated. Supported values mirror the
+     * System property controlling whether the remapping pipeline should be activated. Supported values mirror the.
      * Paper loader ("auto", "true", "false", and common synonyms).
      */
     private static final String REMAP_PROPERTY = "jedependency.remap";
@@ -70,7 +70,7 @@ public class JEDependency {
     }
 
     /**
-     * Initializes the dependency system synchronously while forcing the remapping pipeline. Use this when the plugin
+     * Initializes the dependency system synchronously while forcing the remapping pipeline. Use this when the plugin.
      * must guarantee relocations even if {@code -Djedependency.remap} is unset or evaluates to {@code false}.
      *
      * @param plugin       owning plugin providing the logger and data directory
@@ -84,7 +84,7 @@ public class JEDependency {
     }
 
     /**
-     * Initializes the dependency system synchronously while forcing the remapping pipeline and allowing for additional
+     * Initializes the dependency system synchronously while forcing the remapping pipeline and allowing for additional.
      * dependency coordinates.
      *
      * @param plugin                  owning plugin providing the logger and data directory
@@ -137,7 +137,7 @@ public class JEDependency {
     }
 
     /**
-     * Determines the server distribution currently running so the dependency system can align logging and loader
+     * Determines the server distribution currently running so the dependency system can align logging and loader.
      * expectations (e.g. whether the Paper plugin loader pre-downloaded libraries).
      *
      * @return human-readable server type string for logging purposes
@@ -155,7 +155,7 @@ public class JEDependency {
     }
 
     /**
-     * Checks whether the runtime includes Paper-specific configuration classes, indicating Paper or a derivative build
+     * Checks whether the runtime includes Paper-specific configuration classes, indicating Paper or a derivative build.
      * is in use. This allows the loader to favour Paper dependency sets when both Paper and Spigot descriptors exist.
      *
      * @return {@code true} if Paper classes are present, {@code false} otherwise
@@ -323,7 +323,7 @@ public class JEDependency {
     }
 
     /**
-     * Resolves whether remapping should be enabled based on the {@link #REMAP_PROPERTY} system property. The method
+     * Resolves whether remapping should be enabled based on the {@link #REMAP_PROPERTY} system property. The method.
      * recognises common boolean synonyms for user convenience.
      *
      * @return {@code true} if remapping is explicitly requested, {@code false} otherwise

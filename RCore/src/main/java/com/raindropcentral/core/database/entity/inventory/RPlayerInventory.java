@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.core.database.entity.inventory;
 
 import com.raindropcentral.core.database.entity.central.RCentralServer;
@@ -19,7 +32,7 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * Captures a serialized snapshot of a player's inventory state for a given server
+ * Captures a serialized snapshot of a player's inventory state for a given server.
  * in the {@code r_player_inventory} table. Each row references both the owning
  * {@link RPlayer} and the {@link RCentralServer} that produced the snapshot, enabling
  * server-scoped inventory restores and auditing. Item stacks are converted via
@@ -28,8 +41,8 @@ import java.util.Objects;
  * <p>Construction should occur on synchronous threads interacting with Bukkit
  * APIs, while persistence and retrieval are delegated to repository executors to
  * avoid blocking scheduler threads.</p>
- * <p>
- * Snapshot creation, replay, and deletion should generate audit trails through
+ *
+ * <p>Snapshot creation, replay, and deletion should generate audit trails through
  * {@link CentralLogger CentralLogger}. Emit debug logs for
  * cache misses that require reloading inventory blobs, info logs when capturing or restoring a
  * snapshot for a player/server pair, and warnings when snapshot data is skipped (for example,
@@ -68,7 +81,7 @@ public class RPlayerInventory extends BaseEntity {
     private RCentralServer rCentralServer;
 
     /**
-     * Serialized hotbar and main inventory contents stored as a slot-indexed map in
+     * Serialized hotbar and main inventory contents stored as a slot-indexed map in.
      * {@code inventory}. The {@link ItemStackSlotMapConverter} handles byte-array encoding
      * for database storage.
      */
@@ -77,7 +90,7 @@ public class RPlayerInventory extends BaseEntity {
     private Map<Integer, ItemStack> inventory = new HashMap<>();
 
     /**
-     * Serialized armor slots persisted to the {@code armor_contents} column. Empty maps
+     * Serialized armor slots persisted to the {@code armor_contents} column. Empty maps.
      * are stored instead of {@code null} values to simplify merge semantics.
      */
     @Convert(converter = ItemStackSlotMapConverter.class)
@@ -85,7 +98,7 @@ public class RPlayerInventory extends BaseEntity {
     private Map<Integer, ItemStack> armor = new HashMap<>();
 
     /**
-     * Serialized ender chest contents mapped to the {@code enderchest} column. Values are
+     * Serialized ender chest contents mapped to the {@code enderchest} column. Values are.
      * lazily copied to prevent shared mutable state when applied back to Bukkit players.
      */
     @Convert(converter = ItemStackSlotMapConverter.class)
@@ -98,7 +111,7 @@ public class RPlayerInventory extends BaseEntity {
     protected RPlayerInventory() {}
 
     /**
-     * Builds a snapshot from a live Bukkit {@link Player}. Item stacks are cloned to avoid
+     * Builds a snapshot from a live Bukkit {@link Player}. Item stacks are cloned to avoid.
      * concurrent modification when persisted asynchronously.
      *
      * @param rCentralServer owning server context used to scope the snapshot
@@ -138,7 +151,7 @@ public class RPlayerInventory extends BaseEntity {
     }
 
     /**
-     * Reassigns the owning player, useful when merging detached entities. The foreign key
+     * Reassigns the owning player, useful when merging detached entities. The foreign key.
      * will be updated on the next flush.
      *
      * @param rPlayer new owning player reference
@@ -166,7 +179,7 @@ public class RPlayerInventory extends BaseEntity {
     }
 
     /**
-     * Exposes the stored hotbar and inventory contents as an immutable copy to prevent
+     * Exposes the stored hotbar and inventory contents as an immutable copy to prevent.
      * direct mutation of the persistence-managed map.
      *
      * @return copy of slot-indexed inventory contents
@@ -176,7 +189,7 @@ public class RPlayerInventory extends BaseEntity {
     }
 
     /**
-     * Replaces the stored inventory contents. Callers should ensure items were cloned
+     * Replaces the stored inventory contents. Callers should ensure items were cloned.
      * prior to invocation when called from asynchronous contexts.
      *
      * @param inventory new inventory map to persist
@@ -225,7 +238,7 @@ public class RPlayerInventory extends BaseEntity {
     }
 
     /**
-     * Applies the stored snapshot to a live player. Should be invoked on the main server
+     * Applies the stored snapshot to a live player. Should be invoked on the main server.
      * thread to comply with Bukkit inventory threading rules.
      *
      * @param player target Bukkit player receiving the snapshot
@@ -245,7 +258,7 @@ public class RPlayerInventory extends BaseEntity {
     }
 
     /**
-     * Refreshes the stored snapshot from a live player. Invoke on synchronous threads to
+     * Refreshes the stored snapshot from a live player. Invoke on synchronous threads to.
      * avoid concurrency issues with Bukkit inventory APIs.
      *
      * @param player player to read state from
@@ -259,7 +272,7 @@ public class RPlayerInventory extends BaseEntity {
     }
 
     /**
-     * Calculates the total number of persisted slot entries across inventory, armor,
+     * Calculates the total number of persisted slot entries across inventory, armor,.
      * and ender chest collections.
      *
      * @return combined slot count
@@ -269,7 +282,7 @@ public class RPlayerInventory extends BaseEntity {
     }
 
     /**
-     * Indicates whether all stored collections are empty. Useful to skip unnecessary
+     * Indicates whether all stored collections are empty. Useful to skip unnecessary.
      * persistence for players without items.
      *
      * @return {@code true} when no items are stored
@@ -279,7 +292,7 @@ public class RPlayerInventory extends BaseEntity {
     }
 
     /**
-     * Logs when a player is in creative mode and inventory persistence is skipped. Invoke from
+     * Logs when a player is in creative mode and inventory persistence is skipped. Invoke from.
      * the primary server thread where inventory snapshots are generated to preserve Bukkit's
      * threading guarantees; the method itself performs only synchronous logging.
      *
@@ -291,7 +304,7 @@ public class RPlayerInventory extends BaseEntity {
     }
 
     /**
-     * Converts an array of Bukkit {@link ItemStack} objects to a sparse slot-index map. Callers must
+     * Converts an array of Bukkit {@link ItemStack} objects to a sparse slot-index map. Callers must.
      * supply arrays obtained on synchronous threads to avoid violating Bukkit's inventory access
      * rules. Each {@link ItemStack} is cloned to decouple the persisted state from live objects
      * that may be mutated on other threads.
@@ -313,7 +326,7 @@ public class RPlayerInventory extends BaseEntity {
     }
 
     /**
-     * Reconstructs an {@link ItemStack} array from a sparse slot-index map. The provided map should
+     * Reconstructs an {@link ItemStack} array from a sparse slot-index map. The provided map should.
      * contain cloned entries if cross-thread usage is expected; this helper does not perform
      * defensive copying and returns direct references for performance reasons.
      *
@@ -335,7 +348,7 @@ public class RPlayerInventory extends BaseEntity {
     }
 
     /**
-     * Produces a concise textual representation of the snapshot for logging or debugging. Safe to
+     * Produces a concise textual representation of the snapshot for logging or debugging. Safe to.
      * call from any thread as it only accesses immutable identifiers and cached counts, avoiding
      * interaction with live Bukkit state.
      *

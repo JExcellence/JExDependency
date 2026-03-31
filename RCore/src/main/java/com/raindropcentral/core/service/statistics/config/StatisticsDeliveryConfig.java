@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.core.service.statistics.config;
 
 import com.raindropcentral.rplatform.type.EStatisticType.StatisticCategory;
@@ -302,39 +315,132 @@ public class StatisticsDeliveryConfig {
 
     // ==================== Getters ====================
 
+    /**
+     * Returns whether enabled.
+     */
     public boolean isEnabled() { return enabled; }
+    /**
+     * Returns whether diagnosticMode.
+     */
     public boolean isDiagnosticMode() { return diagnosticMode; }
+    /**
+     * Gets deliveryIntervalSeconds.
+     */
     public int getDeliveryIntervalSeconds() { return deliveryIntervalSeconds; }
+    /**
+     * Gets nativeStatCollectionIntervalSeconds.
+     */
     public int getNativeStatCollectionIntervalSeconds() { return nativeStatCollectionIntervalSeconds; }
+    /**
+     * Gets maxQueueSize.
+     */
     public int getMaxQueueSize() { return maxQueueSize; }
+    /**
+     * Gets backpressureWarningThreshold.
+     */
     public int getBackpressureWarningThreshold() { return backpressureWarningThreshold; }
+    /**
+     * Gets backpressureCriticalThreshold.
+     */
     public int getBackpressureCriticalThreshold() { return backpressureCriticalThreshold; }
+    /**
+     * Gets persistenceIntervalSeconds.
+     */
     public int getPersistenceIntervalSeconds() { return persistenceIntervalSeconds; }
+    /**
+     * Gets maxBatchSizeHighPriority.
+     */
     public int getMaxBatchSizeHighPriority() { return maxBatchSizeHighPriority; }
+    /**
+     * Gets maxBatchSizeNormal.
+     */
     public int getMaxBatchSizeNormal() { return maxBatchSizeNormal; }
+    /**
+     * Gets compressionThresholdBytes.
+     */
     public int getCompressionThresholdBytes() { return compressionThresholdBytes; }
+    /**
+     * Gets maxRequestsPerMinute.
+     */
     public int getMaxRequestsPerMinute() { return maxRequestsPerMinute; }
+    /**
+     * Gets maxRetries.
+     */
     public int getMaxRetries() { return maxRetries; }
+    /**
+     * Gets initialBackoffMs.
+     */
     public long getInitialBackoffMs() { return initialBackoffMs; }
+    /**
+     * Gets maxBackoffMs.
+     */
     public long getMaxBackoffMs() { return maxBackoffMs; }
+    /**
+     * Gets enabledCategories.
+     */
     public Set<StatisticCategory> getEnabledCategories() { return enabledCategories; }
+    /**
+     * Gets excludedStatisticKeys.
+     */
     public Set<String> getExcludedStatisticKeys() { return excludedStatisticKeys; }
+    /**
+     * Gets includedStatisticKeys.
+     */
     public Set<String> getIncludedStatisticKeys() { return includedStatisticKeys; }
+    /**
+     * Gets excludePatterns.
+     */
     public List<Pattern> getExcludePatterns() { return excludePatterns; }
+    /**
+     * Gets includePatterns.
+     */
     public List<Pattern> getIncludePatterns() { return includePatterns; }
+    /**
+     * Returns whether collectNativeStatistics.
+     */
     public boolean isCollectNativeStatistics() { return collectNativeStatistics; }
     public boolean isCollectBlockStatistics() { return collectBlockStatistics; }
     public boolean isCollectItemStatistics() { return collectItemStatistics; }
     public boolean isCollectMobStatistics() { return collectMobStatistics; }
+    /**
+     * Returns whether collectTravelStatistics.
+     */
     public boolean isCollectTravelStatistics() { return collectTravelStatistics; }
+    /**
+     * Returns whether collectGeneralStatistics.
+     */
     public boolean isCollectGeneralStatistics() { return collectGeneralStatistics; }
+    /**
+     * Gets significantChangeThresholdPercent.
+     */
     public double getSignificantChangeThresholdPercent() { return significantChangeThresholdPercent; }
+    /**
+     * Gets economyTransactionThreshold.
+     */
     public double getEconomyTransactionThreshold() { return economyTransactionThreshold; }
+    /**
+     * Gets eventConsolidationWindowMs.
+     */
     public int getEventConsolidationWindowMs() { return eventConsolidationWindowMs; }
+    /**
+     * Returns whether enableCrossServerSync.
+     */
     public boolean isEnableCrossServerSync() { return enableCrossServerSync; }
+    /**
+     * Gets cacheValidityMs.
+     */
     public long getCacheValidityMs() { return cacheValidityMs; }
+    /**
+     * Gets defaultConflictStrategy.
+     */
     public ConflictStrategy getDefaultConflictStrategy() { return defaultConflictStrategy; }
+    /**
+     * Returns whether signPayloads.
+     */
     public boolean isSignPayloads() { return signPayloads; }
+    /**
+     * Returns whether encryptSensitiveData.
+     */
     public boolean isEncryptSensitiveData() { return encryptSensitiveData; }
 
     /**
@@ -386,17 +492,17 @@ public class StatisticsDeliveryConfig {
      * Conflict resolution strategies for cross-server synchronization.
      */
     public enum ConflictStrategy {
-        /** Most recent timestamp wins */
+        /** Most recent timestamp wins. */
         LATEST_WINS,
-        /** Highest numeric value wins */
+        /** Highest numeric value wins. */
         HIGHEST_WINS,
-        /** Lowest numeric value wins */
+        /** Lowest numeric value wins. */
         LOWEST_WINS,
-        /** Values are summed together */
+        /** Values are summed together. */
         SUM_MERGE,
-        /** Local value always wins */
+        /** Local value always wins. */
         LOCAL_WINS,
-        /** Remote value always wins */
+        /** Remote value always wins. */
         REMOTE_WINS
     }
 }

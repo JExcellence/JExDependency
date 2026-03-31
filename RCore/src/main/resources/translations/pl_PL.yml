@@ -3,13 +3,14 @@
 prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
 
 rcconnect:
-  usage: "<gray>Uzycie: /rcconnect <api-key></gray>"
+  usage: "<gray>Użycie: /rc <connect &lt;api-key&gt;|disconnect|claim droplets></gray>"
+  usage_no_claim: "<gray>Użycie: /rc <connect &lt;api-key&gt;|disconnect></gray>"
   connecting: "<yellow>Laczenie z RaindropCentral...</yellow>"
   success: "<green>Pomyslnie polaczono z RaindropCentral!</green> <gray>Serwer wysyla teraz heartbeaty.</gray>"
   error:
     invalid_key: "<red>Nieprawidlowy format klucza API. Klucze API powinny miec 32-128 znakow alfanumerycznych.</red>"
     uuid_mismatch: "<red>Ten klucz API nalezy do innego konta Minecraft.</red>"
-    already_connected: "<yellow>Serwer jest juz polaczony.</yellow> <gray>Najpierw uzyj /rcdisconnect.</gray>"
+    already_connected: "<yellow>Serwer jest już podłączony.</yellow> <gray>Użyj najpierw /rc disconnect.</gray>"
     network: "<red>Blad sieci: %error%</red>"
 
 rcdisconnect:
@@ -19,6 +20,152 @@ rcdisconnect:
     not_connected: "<red>Serwer nie jest polaczony z RaindropCentral.</red>"
     failed: "<red>Nie udalo sie rozlaczyc. Sprobuj ponownie.</red>"
     network: "<red>Blad sieci: %error%</red>"
+
+rcclaim:
+  loading: "<yellow>Sprawdzanie RaindropCentral pod kątem nieodebranych nagród w postaci kropelek...</yellow>"
+  claiming_item: "<yellow>Odbieranie %item_name% z RaindropCentral...</yellow>"
+  success:
+    claimed: "<green>Zgłosiłeś %item_name%.</green>"
+    claimed_skill_targeted: "<green>Odebrałeś %item_name%.</green> <gray>Kliknij plik cookie prawym przyciskiem myszy, aby wybrać umiejętność.</gray>"
+    claimed_job_targeted: "<green>Zgłosiłeś %item_name%.</green> <gray>Kliknij plik cookie prawym przyciskiem myszy, aby wybrać pracę.</gray>"
+    claimed_activate: "<green>Zgłosiłeś %item_name%.</green> <gray>Kliknij plik cookie prawym przyciskiem myszy, aby go aktywować.</gray>"
+    skill_granted: "<green>Przyznano 1 poziom w %skill_name%.</green> <gray>Źródło: %plugin_name%.</gray>"
+    job_granted: "<green>Przyznano 1 poziom w %job_name%.</green> <gray>Źródło: %plugin_name%.</gray>"
+    skill_xp_boost_applied: "<green>Aktywowano +%rate_percent%% umiejętności XP dla %skill_name%.</green> <gray>Źródło: %plugin_name%. Czas trwania: %duration_minutes% minuty.</gray>"
+    skill_xp_boost_refreshed: "<green>Odświeżone +%rate_percent%% umiejętności XP dla %skill_name%.</green> <gray>Źródło: %plugin_name%. Czas trwania zresetowany do %duration_minutes% minut.</gray>"
+    job_xp_boost_applied: "<green>Aktywowano +%rate_percent%% zadanie XP dla %job_name%.</green> <gray>Źródło: %plugin_name%. Czas trwania: %duration_minutes% minuty.</gray>"
+    job_xp_boost_refreshed: "<green>Odświeżone +%rate_percent%% zadanie XP dla %job_name%.</green> <gray>Źródło: %plugin_name%. Czas trwania zresetowany do %duration_minutes% minut.</gray>"
+    job_vault_boost_applied: "<green>Aktywowano +%rate_percent%% pieniądze za pracę dla %job_name%.</green> <gray>Źródło: %plugin_name%. Czas trwania: %duration_minutes% minuty.</gray>"
+    job_vault_boost_refreshed: "<green>Odświeżone +%rate_percent%% pieniądze za pracę dla %job_name%.</green> <gray>Źródło: %plugin_name%. Czas trwania zresetowany do %duration_minutes% minut.</gray>"
+    double_drop_boost_applied: "<green>Aktywowane podwójne zrzuty.</green> <gray>Czas trwania: %duration_minutes% minuty.</gray>"
+    double_drop_boost_refreshed: "<green>Odświeżone podwójne krople.</green> <gray>Czas trwania zresetowany do %duration_minutes% minut.</gray>"
+    pending_delivery: "<green>Dostarczono %count% oczekujące nagrody w postaci kropelek.</green>"
+  error:
+    store_disabled: "<red>Ten serwer wyłączył /rc claim droplets.</red>"
+    not_connected: "Aby móc odebrać kropelki, <red>RCore musi być podłączony do backendu RaindropCentral.</red>"
+    cooldown: "<yellow>Odczekaj %seconds% sekundy przed ponownym użyciem /rc claim droplets.</yellow>"
+    not_registered: "<red>YTwoje konto Minecraft nie jest powiązane z kontem RaindropCentral.</red>"
+    no_unclaimed: "<yellow>Nie masz w tej chwili żadnych nieodebranych nagród w postaci kropel.</yellow>"
+    api_unavailable: "<red>RaindropCentral jest obecnie niedostępny: %error%</red>"
+    menu_unavailable: "<red>Menu odbioru kropel jest obecnie niedostępne. Spróbuj ponownie później.</red>"
+    item_disabled: "<red>Ten serwer wyłączył możliwość zgłaszania roszczeń %item_name%.</red> <gray>Identyfikator przedmiotu: %item_code%</gray>"
+    unsupported_item: "<red>Ta nagroda w postaci kropel nie jest jeszcze obsługiwana na tym serwerze.</red> <gray>Identyfikator przedmiotu: %item_code%</gray>"
+    no_supported_skills: "<red>Na tym serwerze nie ma obecnie obsługiwanej wtyczki umiejętności dla tej nagrody.</red>"
+    no_supported_jobs: "<red>Na tym serwerze nie ma obecnie obsługiwanej wtyczki zadań dla tej nagrody.</red>"
+    inventory_full: "<red>Musisz mieć co najmniej jedno wolne miejsce w ekwipunku, zanim odbierzesz tę nagrodę.</red>"
+    claim_in_progress: "<yellow>To roszczenie jest już w toku. Poczekaj na odpowiedź backendu.</yellow>"
+    claim_failed: "<red> Nie udało się odebrać nagrody w postaci kropelek: %error%</red>"
+    already_claimed: "<yellow>Ta nagroda w postaci kropel została już odebrana.</yellow>"
+    purchase_unavailable: "<red>Nie można już odebrać tej nagrody w postaci kropel.</red>"
+    cookie_missing: "<red>Nie można znaleźć pliku cookie w postaci kropelki w Twoim ekwipunku.</red>"
+    skill_grant_failed: "<red>Nie udało się przyznać 1 poziomu w %skill_name%.</red>"
+    job_grant_failed: "<red>Nie udało się przyznać 1 poziomu w %job_name%.</red>"
+    boost_activation_failed: "<red>Nie udało się aktywować %item_name%.</red>"
+    unsupported_integration: "<red>Wymagana integracja dla tego pliku cookie typu droplet nie jest obecnie dostępna.</red>"
+    boost_expired: "<yellow>To wzmocnienie pliku cookie w formie kropel wygasło.</yellow>"
+
+rc_claim_droplets_ui:
+  title: "Nieodebrane kropelki"
+  page:
+    name: "<yellow>Strona %page%/%max_page%</yellow>"
+    lore:
+      - "<gray>%items_count% wymienione wpisy, które można zgłosić.</gray>"
+  summary:
+    name: "<gold>Kolejka roszczeń</gold>"
+    lore:
+      - "<gray>UNieodebrane wpisy: %item_count%</gray>"
+      - "<gray>Obsługiwane na tym serwerze: %supported_count%</gray>"
+      - "<yellow>Kliknij obsługiwaną nagrodę, aby ją odebrać.</yellow>"
+  empty:
+    name: "<red>Brak nieodebranych nagród</red>"
+    lore:
+      - "<gray>Obecnie nie masz żadnych nieodebranych nagród w postaci kropel.</gray>"
+  entry:
+    supported:
+      name: "<green>%item_name%</green>"
+      lore:
+        - "<gray>Identyfikator przedmiotu: %item_code%</gray>"
+        - "<gray>Wydane: %amount_spent% kropelki</gray>"
+        - "<yellow>Kliknij, aby odebrać tę nagrodę.</yellow>"
+    item_disabled:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>Identyfikator przedmiotu: %item_code%</gray>"
+        - "<red>Ten serwer wyłączył możliwość odbioru tej nagrody.</red>"
+    unsupported_item:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>Identyfikator przedmiotu: %item_code%</gray>"
+        - "<red>Ta nagroda nie jest obsługiwana na tym serwerze.</red>"
+    no_skills:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>Identyfikator przedmiotu: %item_code%</gray>"
+        - "<red> Dla tej nagrody nie jest zainstalowana żadna obsługiwana wtyczka umiejętności.</red>"
+    no_jobs:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>Identyfikator przedmiotu: %item_code%</gray>"
+        - "<red> Dla tej nagrody nie jest zainstalowana żadna obsługiwana wtyczka zadań.</red>"
+
+rc_claim_droplet_skills_ui:
+  title: "Wybierz umiejętność"
+  page:
+    name: "<yellow>Strona %page%/%max_page%</yellow>"
+    lore:
+      - "<gray>%items_count% wymienione wpisy umiejętności.</gray>"
+  summary:
+    name: "<gold>Wybór umiejętności</gold>"
+    lore:
+      - "<gray>ADostępne umiejętności: %skill_count%</gray>"
+      - "<yellow>Wybierz jedną umiejętność, aby zjeść ciasteczko.</yellow>"
+  empty:
+    name: "<red>Brak dostępnych umiejętności</red>"
+    lore:
+      - "<gray>Żadne obsługiwane umiejętności nie są obecnie dostępne.</gray>"
+  entry:
+    name: "<green>%skill_name%</green>"
+    level_lore:
+      - "<gray>Wtyczka: %plugin_name%</gray>"
+      - "<gray>Aktualny poziom: %current_level%</gray>"
+      - "<yellow>Kliknij, aby zyskać 1 poziom tej umiejętności.</yellow>"
+    boost_lore:
+      - "<gray>Wtyczka: %plugin_name%</gray>"
+      - "<gray>Aktualny poziom: %current_level%</gray>"
+      - "<gray>Boost: +%rate_percent%% XP przez %duration_minutes% minuty </gray>"
+      - "<yellow>Kliknij, aby aktywować to wzmocnienie umiejętności.</yellow>"
+
+rc_claim_droplet_jobs_ui:
+  title: "Wybierz pracę"
+  page:
+    name: "<yellow>Strona %page%/%max_page%</yellow>"
+    lore:
+      - "<gray>%items_count% na liście pozycji stanowisk.</gray>"
+  summary:
+    name: "<gold>Wybór stanowiska</gold>"
+    lore:
+      - "<gray>Adostępne oferty pracy: %job_count%</gray>"
+      - "<yellow>Wybierz jedno zadanie do wykorzystania pliku cookie.</yellow>"
+  empty:
+    name: "<red>Brak dostępnych ofert pracy</red>"
+    lore:
+      - "<gray>W tej chwili nie są dostępne żadne obsługiwane zadania.</gray>"
+  entry:
+    name: "<green>%job_name%</green>"
+    level_lore:
+      - "<gray>Wtyczka: %plugin_name%</gray>"
+      - "<gray>Aktualny poziom: %current_level%</gray>"
+      - "<yellow>Kliknij, aby zyskać 1 poziom w tej pracy.</yellow>"
+    xp_boost_lore:
+      - "<gray>Wtyczka: %plugin_name%</gray>"
+      - "<gray>Aktualny poziom: %current_level%</gray>"
+      - "<gray>Boost: +%rate_percent%% XP przez %duration_minutes% minuty </gray>"
+      - "<yellow>Kliknij, aby aktywować premię XP dla tej pracy.</yellow>"
+    vault_boost_lore:
+      - "<gray>Wtyczka: %plugin_name%</gray>"
+      - "<gray>Aktualny poziom: %current_level%</gray>"
+      - "<gray>Boost: +%rate_percent%% pieniądze za %duration_minutes% minuty </gray>"
+      - "<yellow>Kliknij, aby aktywować zastrzyk pieniędzy za tę pracę.</yellow>"
 
 general:
   no_permission: "<red>Nie masz uprawnien do uzycia tej komendy.</red>"

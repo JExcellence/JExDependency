@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.core.service.statistics.delivery;
 
 import org.jetbrains.annotations.NotNull;
@@ -78,7 +91,13 @@ public record DeliveryResult(
     }
 
     // Legacy compatibility methods
+    /**
+     * Executes deliveredCount.
+     */
     public int deliveredCount() { return statisticsDelivered; }
+    /**
+     * Executes failedCount.
+     */
     public int failedCount() { return statisticsFailed; }
 
     /**
@@ -180,16 +199,52 @@ public record DeliveryResult(
         private boolean rateLimited = false;
         private long retryAfterMs = 0;
 
+        /**
+         * Executes success.
+         */
         public Builder success(boolean success) { this.success = success; return this; }
+        /**
+         * Executes method.
+         */
+        /**
+         * Executes this member.
+         */
+        /**
+         * Executes batchId.
+         */
         public Builder batchId(String batchId) { this.batchId = batchId; return this; }
+        /**
+         * Executes statisticsDelivered.
+         */
         public Builder statisticsDelivered(int count) { this.statisticsDelivered = count; return this; }
+        /**
+         * Executes statisticsFailed.
+         */
         public Builder statisticsFailed(int count) { this.statisticsFailed = count; return this; }
+        /**
+         * Executes errorMessage.
+         */
         public Builder errorMessage(String msg) { this.errorMessage = msg; return this; }
+        /**
+         * Executes receipt.
+         */
         public Builder receipt(DeliveryReceipt receipt) { this.receipt = receipt; return this; }
+        /**
+         * Executes latencyMs.
+         */
         public Builder latencyMs(long ms) { this.latencyMs = ms; return this; }
+        /**
+         * Executes rateLimited.
+         */
         public Builder rateLimited(boolean limited) { this.rateLimited = limited; return this; }
+        /**
+         * Executes retryAfterMs.
+         */
         public Builder retryAfterMs(long ms) { this.retryAfterMs = ms; return this; }
 
+        /**
+         * Executes build.
+         */
         public DeliveryResult build() {
             return new DeliveryResult(success, batchId, statisticsDelivered, statisticsFailed,
                 errorMessage, receipt, latencyMs, rateLimited, retryAfterMs);

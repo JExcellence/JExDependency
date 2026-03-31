@@ -99,7 +99,7 @@ public class QuestCompletionHistory extends BaseEntity {
         this.completionCount = completionCount;
         this.timeTakenSeconds = timeTakenSeconds;
     }
-    
+
     /**
      * Returns the player who completed the quest.
      *
@@ -131,7 +131,7 @@ public class QuestCompletionHistory extends BaseEntity {
     public String getQuestIdentifier() {
         return this.quest.getIdentifier();
     }
-    
+
     /**
      * Sets the player for this completion record.
      *
@@ -140,7 +140,7 @@ public class QuestCompletionHistory extends BaseEntity {
     public void setPlayer(@NotNull final RDQPlayer player) {
         this.player = player;
     }
-    
+
     /**
      * Returns the quest that was completed.
      *
@@ -150,7 +150,7 @@ public class QuestCompletionHistory extends BaseEntity {
     public Quest getQuest() {
         return this.quest;
     }
-    
+
     /**
      * Sets the quest for this completion record.
      *
@@ -159,7 +159,7 @@ public class QuestCompletionHistory extends BaseEntity {
     public void setQuest(@NotNull final Quest quest) {
         this.quest = quest;
     }
-    
+
     /**
      * Returns when the quest was completed.
      *
@@ -169,7 +169,7 @@ public class QuestCompletionHistory extends BaseEntity {
     public LocalDateTime getCompletedAt() {
         return this.completedAt;
     }
-    
+
     /**
      * Sets when the quest was completed.
      *
@@ -178,7 +178,7 @@ public class QuestCompletionHistory extends BaseEntity {
     public void setCompletedAt(@NotNull final LocalDateTime completedAt) {
         this.completedAt = completedAt;
     }
-    
+
     /**
      * Returns how many times the player has completed this quest.
      *
@@ -187,7 +187,7 @@ public class QuestCompletionHistory extends BaseEntity {
     public int getCompletionCount() {
         return this.completionCount;
     }
-    
+
     /**
      * Sets the completion count.
      *
@@ -214,7 +214,7 @@ public class QuestCompletionHistory extends BaseEntity {
     public void setTimeTakenSeconds(final long timeTakenSeconds) {
         this.timeTakenSeconds = timeTakenSeconds;
     }
-    
+
     /**
      * Checks if the player can repeat this quest based on max completions.
      *
@@ -224,12 +224,12 @@ public class QuestCompletionHistory extends BaseEntity {
         if (!this.quest.isRepeatable()) {
             return false;
         }
-        
+
         int maxCompletions = this.quest.getMaxCompletions();
         if (maxCompletions <= 0) {
             return true; // Unlimited repeats
         }
-        
+
         return this.completionCount < maxCompletions;
     }
     
@@ -243,14 +243,14 @@ public class QuestCompletionHistory extends BaseEntity {
         if (cooldownSeconds <= 0) {
             return 0;
         }
-        
+
         LocalDateTime cooldownExpires = this.completedAt.plusSeconds(cooldownSeconds);
         LocalDateTime now = LocalDateTime.now();
-        
+
         if (now.isAfter(cooldownExpires)) {
             return 0;
         }
-        
+
         return ChronoUnit.SECONDS.between(now, cooldownExpires);
     }
     
@@ -262,7 +262,7 @@ public class QuestCompletionHistory extends BaseEntity {
     public boolean isCooldownExpired() {
         return getCooldownRemainingSeconds() == 0;
     }
-    
+
     /**
      * Gets when the cooldown will expire.
      *
@@ -273,7 +273,7 @@ public class QuestCompletionHistory extends BaseEntity {
         if (cooldownSeconds <= 0) {
             return null;
         }
-        
+
         return this.completedAt.plusSeconds(cooldownSeconds);
     }
     
@@ -289,11 +289,11 @@ public class QuestCompletionHistory extends BaseEntity {
         if (this.player != null && that.player != null &&
                 this.quest != null && that.quest != null &&
                 this.completedAt != null && that.completedAt != null) {
-            return this.player.equals(that.player) && 
-                   this.quest.equals(that.quest) && 
+            return this.player.equals(that.player) &&
+                   this.quest.equals(that.quest) &&
                    this.completedAt.equals(that.completedAt);
         }
-        
+
         return false;
     }
     
@@ -306,7 +306,7 @@ public class QuestCompletionHistory extends BaseEntity {
         if (this.player != null && this.quest != null && this.completedAt != null) {
             return Objects.hash(this.player, this.quest, this.completedAt);
         }
-        
+
         return System.identityHashCode(this);
     }
     

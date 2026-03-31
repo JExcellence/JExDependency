@@ -19,13 +19,12 @@ import java.util.Map;
 
 /**
  * Anvil view for configuring a currency's suffix text.
- * <p>
- * This view provides an interactive interface for players to input and validate
+ *
+ * <p>This view provides an interactive interface for players to input and validate
  * a new suffix for a currency. The suffix is displayed after currency amounts
  * in user interfaces and provides additional context or unit information.
- * </p>
  *
- * <h3>Key Features:</h3>
+ * <p><strong>Key Features:</strong>
  * <ul>
  *   <li><strong>Length Validation:</strong> Ensures suffixes don't exceed maximum length</li>
  *   <li><strong>Optional Input:</strong> Allows empty suffixes for currencies without suffix formatting</li>
@@ -33,14 +32,14 @@ import java.util.Map;
  *   <li><strong>Current Value Display:</strong> Shows the existing suffix for reference</li>
  * </ul>
  *
- * <h3>Validation Rules:</h3>
+ * <p><strong>Validation Rules:</strong>
  * <ul>
  *   <li><strong>Length:</strong> Must not exceed 16 characters</li>
  *   <li><strong>Content:</strong> Any characters are allowed including spaces and symbols</li>
  *   <li><strong>Empty Values:</strong> Empty strings are valid and represent no suffix</li>
  * </ul>
  *
- * <h3>Usage Examples:</h3>
+ * <p><strong>Usage Examples:</strong>
  * <ul>
  *   <li><strong>Unit Indicators:</strong> " coins", " points", " gems" for currency units</li>
  *   <li><strong>Contextual:</strong> " (available)", " remaining", " earned" for status information</li>
@@ -71,10 +70,9 @@ public class CurrencySuffixAnvilView extends AbstractAnvilView {
 	
 	/**
 	 * Constructs a new {@code CurrencySuffixAnvilView} with the currencies action overview as parent.
-	 * <p>
-	 * The view will return to the currencies action overview when the suffix configuration
+ *
+ * <p>The view will return to the currencies action overview when the suffix configuration
 	 * is completed or cancelled.
-	 * </p>
 	 */
 	public CurrencySuffixAnvilView() {
 		super(CurrenciesActionOverviewView.class);
@@ -82,10 +80,9 @@ public class CurrencySuffixAnvilView extends AbstractAnvilView {
 	
 	/**
 	 * Returns the internationalization key for this view.
-	 * <p>
-	 * This key is used to load localized strings for the currency suffix configuration
+ *
+ * <p>This key is used to load localized strings for the currency suffix configuration
 	 * interface, including titles, labels, and error messages.
-	 * </p>
 	 *
 	 * @return the i18n key for the currency suffix anvil UI
 	 */
@@ -96,13 +93,12 @@ public class CurrencySuffixAnvilView extends AbstractAnvilView {
 	
 	/**
 	 * Processes the user input to set the currency's suffix.
-	 * <p>
-	 * This method validates the input suffix and updates the currency's
+ *
+ * <p>This method validates the input suffix and updates the currency's
 	 * suffix property. If no currency exists, a new currency instance is created
 	 * with the specified suffix.
-	 * </p>
 	 *
-	 * <h3>Processing Steps:</h3>
+	 * <p><strong>Processing Steps:</strong>
 	 * <ol>
 	 *   <li>Check if a currency instance exists</li>
 	 *   <li>Update existing currency or create new one with the suffix</li>
@@ -138,13 +134,12 @@ public class CurrencySuffixAnvilView extends AbstractAnvilView {
 	
 	/**
 	 * Provides title placeholders for dynamic title generation.
-	 * <p>
-	 * This method returns placeholders that can be used in the view's title
+ *
+ * <p>This method returns placeholders that can be used in the view's title
 	 * to display contextual information such as the current suffix
 	 * and currency identifier.
-	 * </p>
 	 *
-	 * <h3>Available Placeholders:</h3>
+	 * <p><strong>Available Placeholders:</strong>
 	 * <ul>
 	 *   <li><strong>current_suffix:</strong> The current suffix text or empty string</li>
 	 *   <li><strong>identifier:</strong> The currency identifier or "New Currency"</li>
@@ -183,10 +178,9 @@ public class CurrencySuffixAnvilView extends AbstractAnvilView {
 	
 	/**
 	 * Provides the initial input text for the anvil interface.
-	 * <p>
-	 * This method returns the current suffix if available,
+ *
+ * <p>This method returns the current suffix if available,
 	 * or falls back to the default behavior if no suffix exists.
-	 * </p>
 	 *
 	 * @param openContext the context when the view is opened, must not be null
 	 * @return the initial input text, never null
@@ -209,13 +203,12 @@ public class CurrencySuffixAnvilView extends AbstractAnvilView {
 	
 	/**
 	 * Validates the user input for suffix length requirements.
-	 * <p>
-	 * This method ensures the input suffix meets the length requirements.
+ *
+ * <p>This method ensures the input suffix meets the length requirements.
 	 * Empty suffixes are considered valid as they represent currencies
 	 * without suffix formatting.
-	 * </p>
 	 *
-	 * <h3>Validation Criteria:</h3>
+	 * <p><strong>Validation Criteria:</strong>
 	 * <ul>
 	 *   <li>Length must not exceed the maximum allowed characters</li>
 	 *   <li>Empty strings are valid</li>
@@ -236,10 +229,9 @@ public class CurrencySuffixAnvilView extends AbstractAnvilView {
 	
 	/**
 	 * Configures the first slot (input slot) with appropriate visual elements.
-	 * <p>
-	 * This method sets up the input slot with a paper icon and localized
+ *
+ * <p>This method sets up the input slot with a paper icon and localized
 	 * text to guide the user in entering a valid suffix.
-	 * </p>
 	 *
 	 * @param renderContext the rendering context, must not be null
 	 * @param contextPlayer the player viewing the interface, must not be null
@@ -273,13 +265,12 @@ public class CurrencySuffixAnvilView extends AbstractAnvilView {
 	
 	/**
 	 * Handles validation failure scenarios with specific error messages.
-	 * <p>
-	 * This method provides detailed error feedback based on the specific
+ *
+ * <p>This method provides detailed error feedback based on the specific
 	 * validation failure, helping users understand what went wrong and
 	 * how to correct their input.
-	 * </p>
 	 *
-	 * <h3>Error Categories:</h3>
+	 * <p><strong>Error Categories:</strong>
 	 * <ul>
 	 *   <li><strong>Too Long:</strong> Suffix exceeds maximum length</li>
 	 *   <li><strong>General:</strong> Other validation failures</li>
@@ -324,11 +315,10 @@ public class CurrencySuffixAnvilView extends AbstractAnvilView {
 	
 	/**
 	 * Prepares the result data to pass back to the parent view.
-	 * <p>
-	 * This method extends the base result preparation by adding the plugin
+ *
+ * <p>This method extends the base result preparation by adding the plugin
 	 * instance and updated currency to the result data, ensuring the parent
 	 * view has all necessary information to continue the workflow.
-	 * </p>
 	 *
 	 * @param processingResult the result from input processing, can be null
 	 * @param originalInput the user's original input, must not be null

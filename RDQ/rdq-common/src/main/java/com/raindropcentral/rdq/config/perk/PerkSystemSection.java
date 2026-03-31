@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.config.perk;
 
 import com.raindropcentral.rdq.config.ranks.system.NotificationTypeSection;
@@ -13,11 +26,10 @@ import java.util.logging.Logger;
 
 /**
  * Configuration section for global perk system settings.
- * <p>
- * This section handles system-wide perk configuration including enable/disable,
+ *
+ * <p>This section handles system-wide perk configuration including enable/disable,
  * player limits, cooldown multipliers, UI settings, notifications, and integration settings.
  * Default values are provided for all fields if not set.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -203,76 +215,127 @@ public class PerkSystemSection extends AConfigSection {
 	
 	// ==================== Getters ====================
 	
+	/**
+	 * Gets enabled.
+	 */
 	public Boolean getEnabled() {
 		return enabled == null || enabled;
 	}
 	
+	/**
+	 * Gets maxEnabledPerksPerPlayer.
+	 */
 	public Integer getMaxEnabledPerksPerPlayer() {
 		return maxEnabledPerksPerPlayer == null ? 5 : maxEnabledPerksPerPlayer;
 	}
 	
+	/**
+	 * Gets cooldownMultiplier.
+	 */
 	public Double getCooldownMultiplier() {
 		return cooldownMultiplier == null ? 1.0 : cooldownMultiplier;
 	}
 	
+	/**
+	 * Gets perksPerPage.
+	 */
 	public Integer getPerksPerPage() {
 		return perksPerPage == null ? 28 : perksPerPage;
 	}
 	
+	/**
+	 * Gets showLockedPerks.
+	 */
 	public Boolean getShowLockedPerks() {
 		return showLockedPerks == null || showLockedPerks;
 	}
 	
+	/**
+	 * Gets showRequirementProgress.
+	 */
 	public Boolean getShowRequirementProgress() {
 		return showRequirementProgress == null || showRequirementProgress;
 	}
 	
+	/**
+	 * Gets unlockNotification.
+	 */
 	public NotificationTypeSection getUnlockNotification() {
 		return unlockNotification == null ? 
 			new NotificationTypeSection(new EvaluationEnvironmentBuilder()) : 
 			unlockNotification;
 	}
 	
+	/**
+	 * Gets activationNotification.
+	 */
 	public NotificationTypeSection getActivationNotification() {
 		return activationNotification == null ? 
 			new NotificationTypeSection(new EvaluationEnvironmentBuilder()) : 
 			activationNotification;
 	}
 	
+	/**
+	 * Gets cooldownNotification.
+	 */
 	public NotificationTypeSection getCooldownNotification() {
 		return cooldownNotification == null ? 
 			new NotificationTypeSection(new EvaluationEnvironmentBuilder()) : 
 			cooldownNotification;
 	}
 	
+	/**
+	 * Gets enablePerkRewards.
+	 */
 	public Boolean getEnablePerkRewards() {
 		return enablePerkRewards == null || enablePerkRewards;
 	}
 	
+	/**
+	 * Gets enableAutoActivation.
+	 */
 	public Boolean getEnableAutoActivation() {
 		return enableAutoActivation != null && enableAutoActivation;
 	}
 	
+	/**
+	 * Gets cacheEnabled.
+	 */
 	public Boolean getCacheEnabled() {
 		return cacheEnabled == null || cacheEnabled;
 	}
 	
+	/**
+	 * Gets cacheMaxRetries.
+	 */
 	public Integer getCacheMaxRetries() {
 		return cacheMaxRetries == null ? 3 : cacheMaxRetries;
 	}
 	
+	/**
+	 * Gets cacheRetryDelayMs.
+	 */
 	public Long getCacheRetryDelayMs() {
 		return cacheRetryDelayMs == null ? 100L : cacheRetryDelayMs;
 	}
 	
+	/**
+	 * Gets cacheSaveTimeoutSeconds.
+	 */
 	public Integer getCacheSaveTimeoutSeconds() {
 		return cacheSaveTimeoutSeconds == null ? 10 : cacheSaveTimeoutSeconds;
 	}
 	
+	/**
+	 * Gets cacheLogPerformance.
+	 */
 	public Boolean getCacheLogPerformance() {
 		return cacheLogPerformance == null || cacheLogPerformance;
 	}
 	
+	/**
+	 * Gets cachePerformanceThresholdMs.
+	 */
 	public Long getCachePerformanceThresholdMs() {
 		return cachePerformanceThresholdMs == null ? 500L : cachePerformanceThresholdMs;
 	}

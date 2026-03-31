@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.core.service.central;
 
 import com.raindropcentral.core.config.RCentralConfig;
@@ -13,6 +26,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HexFormat;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Logger;
@@ -33,6 +47,9 @@ public class RCentralService {
     private RCentralServer serverEntity;
     private HeartbeatScheduler heartbeatScheduler;
 
+    /**
+     * Executes RCentralService.
+     */
     public RCentralService(final @NotNull Plugin plugin, final @NotNull RPlatform platform) {
         this.plugin = plugin;
         this.platform = platform;
@@ -84,8 +101,18 @@ public class RCentralService {
         var serverVersion = Bukkit.getVersion();
         var pluginVersion = plugin.getPluginMeta().getVersion();
         var maxPlayers = Bukkit.getMaxPlayers();
+        var compatibilitySnapshot = rcentralConfig.getDropletStoreCompatibilitySnapshot();
 
-        return apiClient.connectServer(apiKey, serverUuid.toString(), serverVersion, pluginVersion, playerUuid, playerName, maxPlayers)
+        return apiClient.connectServer(
+                        apiKey,
+                        serverUuid.toString(),
+                        serverVersion,
+                        pluginVersion,
+                        playerUuid,
+                        playerName,
+                        maxPlayers,
+                        compatibilitySnapshot
+                )
                 .thenApply(response -> {
                     if (response.isSuccess()) {
                         config.set("connection.api-key", apiKey);
@@ -112,12 +139,36 @@ public class RCentralService {
                         LOGGER.warning("Connection failed: " + errorMsg);
                         return new ConnectionResult(false, errorMsg, errorCode);
                     }
+                /**
+                 * Executes method.
+                 */
+                /**
+                 * Executes this member.
+                 */
                 });
     }
 
+    /**
+     * Disconnects from RaindropCentral by using the configured API key.
+     *
+     * @return asynchronous result indicating whether disconnect succeeded
+     */
     public CompletableFuture<Boolean> disconnect() {
         var apiKey = config.getString("connection.api-key");
         if (apiKey == null) {
+            return CompletableFuture.completedFuture(false);
+        }
+        return disconnect(apiKey);
+    }
+
+    /**
+     * Disconnects from RaindropCentral using a provided API key.
+     *
+     * @param apiKey API key that must match the stored connection key
+     * @return asynchronous result indicating whether disconnect succeeded
+     */
+    public CompletableFuture<Boolean> disconnect(final @NotNull String apiKey) {
+        if (!matchesStoredApiKey(apiKey)) {
             return CompletableFuture.completedFuture(false);
         }
 
@@ -139,10 +190,27 @@ public class RCentralService {
                 });
     }
 
+    /**
+     * Verifies whether the provided API key matches the currently connected server key.
+     *
+     * @param apiKey API key provided by the command sender
+     * @return {@code true} when the key matches the stored key, otherwise {@code false}
+     */
+    public boolean matchesStoredApiKey(final @NotNull String apiKey) {
+        var configuredApiKey = config.getString("connection.api-key");
+        return configuredApiKey != null && configuredApiKey.equals(apiKey);
+    }
+
+    /**
+     * Returns whether connected.
+     */
     public boolean isConnected() {
         return serverEntity != null && serverEntity.isConnected();
     }
 
+    /**
+     * Gets serverUuid.
+     */
     public UUID getServerUuid() {
         return serverUuid;
     }
@@ -199,12 +267,22 @@ public class RCentralService {
         var serverVersion = Bukkit.getVersion();
         var pluginVersion = plugin.getPluginMeta().getVersion();
         var maxPlayers = Bukkit.getMaxPlayers();
+        var compatibilitySnapshot = rcentralConfig.getDropletStoreCompatibilitySnapshot();
         
         // Retrieve stored player info from last successful connection
         var minecraftUuid = config.getString("connection.minecraft-uuid");
         var minecraftUsername = config.getString("connection.minecraft-username");
 
-        apiClient.wakeupServer(apiKey, serverUuid.toString(), serverVersion, pluginVersion, maxPlayers, minecraftUuid, minecraftUsername)
+        apiClient.wakeupServer(
+                        apiKey,
+                        serverUuid.toString(),
+                        serverVersion,
+                        pluginVersion,
+                        maxPlayers,
+                        minecraftUuid,
+                        minecraftUsername,
+                        compatibilitySnapshot
+                )
                 .thenAccept(response -> {
                     if (response.isSuccess()) {
                         LOGGER.info("Wakeup ping sent successfully - server marked as online");
@@ -218,8 +296,8 @@ public class RCentralService {
                         
                         startHeartbeat(apiKey);
                     } else {
-                        LOGGER.warning("Wakeup ping failed: " + response.statusCode() + 
-                                " - Server will need manual reconnection via /rcconnect");
+                        LOGGER.warning("Wakeup ping failed: " + response.statusCode() +
+                                " - Server will need manual reconnection via /rc connect <api-key>");
                         if (response.statusCode() == 401 || response.statusCode() == 403) {
                             config.set("connection.api-key", null);
                             plugin.saveConfig();
@@ -239,7 +317,14 @@ public class RCentralService {
         }
 
         var sharePlayerList = config.getBoolean("privacy.share-player-list", true);
-        heartbeatScheduler = new HeartbeatScheduler(plugin, platform, apiClient, apiKey, sharePlayerList);
+        heartbeatScheduler = new HeartbeatScheduler(
+                plugin,
+                platform,
+                apiClient,
+                apiKey,
+                sharePlayerList,
+                this::getDropletStoreCompatibilitySnapshot
+        );
         heartbeatScheduler.start();
     }
 
@@ -272,6 +357,9 @@ public class RCentralService {
     private String parseErrorMessage(final RCentralApiClient.ApiResponse response) {
         if (response.error() != null) {
             return response.error();
+        /**
+         * Represents the type API type.
+         */
         }
 
         return switch (response.statusCode()) {
@@ -284,6 +372,9 @@ public class RCentralService {
         };
     }
 
+    /**
+     * Represents the ConnectionResult API type.
+     */
     public record ConnectionResult(boolean success, String errorMessage, String errorCode) {}
 
     // ==================== Getters for Statistics Delivery ====================
@@ -304,5 +395,73 @@ public class RCentralService {
      */
     public String getApiKey() {
         return config.getString("connection.api-key");
+    }
+
+    /**
+     * Checks whether droplet-store claiming is enabled for this server.
+     *
+     * @return {@code true} when `/rc claim droplets` should be available
+     */
+    public boolean isDropletStoreEnabled() {
+        return this.rcentralConfig.isDropletsStoreEnabled();
+    }
+
+    /**
+     * Gets the effective droplet-store compatibility snapshot used for backend reporting.
+     *
+     * @return current compatibility snapshot derived from rcentral.yml
+     */
+    public @NotNull RCentralConfig.DropletStoreCompatibilitySnapshot getDropletStoreCompatibilitySnapshot() {
+        return this.rcentralConfig.getDropletStoreCompatibilitySnapshot();
+    }
+
+    /**
+     * Checks whether one supported droplet-store reward is enabled.
+     *
+     * @param itemCode backend item code
+     * @return {@code true} when claiming is allowed for that reward
+     */
+    public boolean isDropletStoreRewardEnabled(final @NotNull String itemCode) {
+        return this.rcentralConfig.isDropletStoreRewardEnabled(itemCode);
+    }
+
+    /**
+     * Fetches unclaimed droplet-store purchases for a player linked to RaindropCentral.
+     *
+     * @param playerUuid player UUID to look up
+     * @return asynchronous parsed API response
+     */
+    public CompletableFuture<RCentralApiClient.ParsedApiResponse<List<RCentralApiClient.DropletStorePurchaseData>>> getUnclaimedDropletPurchases(
+            final @NotNull UUID playerUuid
+    ) {
+        final String apiKey = this.getApiKey();
+        if (apiKey == null || !this.isConnected()) {
+            return CompletableFuture.completedFuture(
+                    new RCentralApiClient.ParsedApiResponse<>(0, null, "Server is not connected to RaindropCentral.", "Not connected")
+            );
+        }
+
+        return this.apiClient.getUnclaimedDropletPurchases(apiKey, playerUuid);
+    }
+
+    /**
+     * Claims a droplet-store purchase for a linked player.
+     *
+     * @param playerUuid player UUID to identify the linked account
+     * @param purchaseId purchase identifier to claim
+     * @return asynchronous parsed API response
+     */
+    public CompletableFuture<RCentralApiClient.ParsedApiResponse<RCentralApiClient.DropletStorePurchaseData>> claimDropletPurchase(
+            final @NotNull UUID playerUuid,
+            final long purchaseId
+    ) {
+        final String apiKey = this.getApiKey();
+        if (apiKey == null || !this.isConnected()) {
+            return CompletableFuture.completedFuture(
+                    new RCentralApiClient.ParsedApiResponse<>(0, null, "Server is not connected to RaindropCentral.", "Not connected")
+            );
+        }
+
+        return this.apiClient.claimDropletPurchase(apiKey, playerUuid, purchaseId);
     }
 }

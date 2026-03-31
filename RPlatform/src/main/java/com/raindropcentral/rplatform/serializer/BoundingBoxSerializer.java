@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rplatform.serializer;
 
 import org.bukkit.util.BoundingBox;
@@ -5,7 +18,7 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Serializes and deserializes {@link BoundingBox} instances to a simple comma separated format
+ * Serializes and deserializes {@link BoundingBox} instances to a simple comma separated format.
  * understood by the RDC persistence layer.
  *
  * <p>The serializer expects six numeric components describing the minimum and maximum corners of
@@ -18,7 +31,7 @@ import org.jetbrains.annotations.NotNull;
 public class BoundingBoxSerializer {
 
     /**
-     * Comma delimiter separating the min and max components in the serialized bounding box
+     * Comma delimiter separating the min and max components in the serialized bounding box.
      * representation.
      */
     private static final String DELIMITER = ",";

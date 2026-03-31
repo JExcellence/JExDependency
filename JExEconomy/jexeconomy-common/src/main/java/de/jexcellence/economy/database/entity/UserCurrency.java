@@ -9,15 +9,13 @@ import java.util.Objects;
 
 /**
  * Entity representing the association between a user (player) and a currency, including the user's balance.
- * <p>
- * This entity is mapped to the {@code join_p_player_currency} table in the database and models
- * the many-to-many relationship between users and currencies, with an additional balance field.
- * </p>
  *
- * <p>
- * Example usages include tracking how much of each currency a player owns, performing deposits and withdrawals,
+ * <p>This entity is mapped to the {@code join_p_player_currency} table in the database and models
+ * the many-to-many relationship between users and currencies, with an additional balance field.
+ *
+ *
+ * <p>Example usages include tracking how much of each currency a player owns, performing deposits and withdrawals,
  * and managing player balances for different currencies in the system.
- * </p>
  *
  * @author JExcellence
  */
@@ -202,9 +200,8 @@ public class UserCurrency extends BaseEntity {
 	
 	/**
 	 * Withdraws the specified amount from the user's balance for this currency.
-	 * <p>
-	 * The withdrawal will only occur if the current balance is sufficient.
-	 * </p>
+ *
+ * <p>The withdrawal will only occur if the current balance is sufficient.
 	 *
 	 * @param withdrawalAmount the amount to withdraw, must not be null and must be positive
 	 * @return {@code true} if the withdrawal was successful, otherwise {@code false}
@@ -259,9 +256,8 @@ public class UserCurrency extends BaseEntity {
 	
 	/**
 	 * Checks if this user currency is equal to another object.
-	 * <p>
-	 * Two UserCurrency entities are considered equal if they have the same player and currency.
-	 * </p>
+ *
+ * <p>Two UserCurrency entities are considered equal if they have the same player and currency.
 	 *
 	 * @param comparisonObject the object to compare with, can be null
 	 * @return {@code true} if the objects are equal, otherwise {@code false}

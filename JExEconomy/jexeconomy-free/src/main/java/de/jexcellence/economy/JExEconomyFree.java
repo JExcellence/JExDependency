@@ -5,10 +5,16 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Level;
 
+/**
+ * Represents the JExEconomyFree API type.
+ */
 public final class JExEconomyFree extends JavaPlugin {
 
     private JExEconomyFreeImpl implementation;
 
+    /**
+     * Executes onLoad.
+     */
     @Override
     public void onLoad() {
         try {
@@ -21,6 +27,9 @@ public final class JExEconomyFree extends JavaPlugin {
         }
     }
 
+    /**
+     * Executes onEnable.
+     */
     @Override
     public void onEnable() {
         if (this.implementation != null) {
@@ -28,6 +37,9 @@ public final class JExEconomyFree extends JavaPlugin {
         }
     }
 
+    /**
+     * Executes onDisable.
+     */
     @Override
     public void onDisable() {
         if (this.implementation != null) {
@@ -35,6 +47,9 @@ public final class JExEconomyFree extends JavaPlugin {
         }
     }
 
+    /**
+     * Gets impl.
+     */
     public JExEconomyFreeImpl getImpl() {
         return this.implementation;
     }

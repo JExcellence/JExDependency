@@ -1,11 +1,26 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.core.service.central;
 
+import com.raindropcentral.core.config.RCentralConfig;
 import com.raindropcentral.rplatform.RPlatform;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,22 +39,28 @@ public class HeartbeatScheduler {
     private final MetricsCollector metricsCollector;
     private final String apiKey;
     private final boolean sharePlayerList;
+    private final Supplier<RCentralConfig.DropletStoreCompatibilitySnapshot> dropletStoreCompatibilitySupplier;
     
     private int consecutiveFailures = 0;
     private boolean isRunning = false;
 
+    /**
+     * Executes HeartbeatScheduler.
+     */
     public HeartbeatScheduler(
         final @NotNull Plugin plugin,
         final @NotNull RPlatform platform,
         final @NotNull RCentralApiClient apiClient,
         final @NotNull String apiKey,
-        final boolean sharePlayerList
+        final boolean sharePlayerList,
+        final @NotNull Supplier<RCentralConfig.DropletStoreCompatibilitySnapshot> dropletStoreCompatibilitySupplier
     ) {
         this.plugin = plugin;
         this.platform = platform;
         this.apiClient = apiClient;
         this.apiKey = apiKey;
         this.sharePlayerList = sharePlayerList;
+        this.dropletStoreCompatibilitySupplier = dropletStoreCompatibilitySupplier;
         this.metricsCollector = new MetricsCollector();
     }
 
@@ -89,7 +110,8 @@ public class HeartbeatScheduler {
                 metrics.currentPlayers(),
                 metrics.maxPlayers(),
                 metrics.tps(),
-                metrics.playerList()
+                metrics.playerList(),
+                dropletStoreCompatibilitySupplier.get()
             ).thenAccept(response -> {
                 if (response.isSuccess()) {
                     consecutiveFailures = 0;
@@ -140,10 +162,16 @@ public class HeartbeatScheduler {
         }
     }
 
+    /**
+     * Returns whether running.
+     */
     public boolean isRunning() {
         return isRunning;
     }
 
+    /**
+     * Gets consecutiveFailures.
+     */
     public int getConsecutiveFailures() {
         return consecutiveFailures;
     }

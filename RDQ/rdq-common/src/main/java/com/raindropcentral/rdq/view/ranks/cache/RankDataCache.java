@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.view.ranks.cache;
 
 import com.raindropcentral.rdq.RDQ;
@@ -96,26 +109,44 @@ public class RankDataCache {
 	}
 	
 	// Getters for cached data
+	/**
+	 * Gets rankHierarchy.
+	 */
 	public @NotNull Map<String, RankNode> getRankHierarchy() {
 		return new HashMap<>(this.cachedRankHierarchy);
 	}
 	
+	/**
+	 * Gets worldPositions.
+	 */
 	public @NotNull Map<String, GridPosition> getWorldPositions() {
 		return new HashMap<>(this.cachedWorldPositions);
 	}
 	
+	/**
+	 * Gets rankStatuses.
+	 */
 	public @NotNull Map<String, ERankStatus> getRankStatuses() {
 		return new HashMap<>(this.cachedRankStatuses);
 	}
 	
+	/**
+	 * Gets ownedRanks.
+	 */
 	public @NotNull Set<String> getOwnedRanks() {
 		return new HashSet<>(this.cachedOwnedRanks);
 	}
 	
+	/**
+	 * Gets inProgressRanks.
+	 */
 	public @NotNull Set<String> getInProgressRanks() {
 		return new HashSet<>(this.cachedInProgressRanks);
 	}
 	
+	/**
+	 * Gets lastRefreshTimestamp.
+	 */
 	public long getLastRefreshTimestamp() {
 		return this.lastRefreshTimestamp;
 	}

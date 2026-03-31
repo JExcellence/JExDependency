@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.config.ranks.system;
 
 import de.jexcellence.configmapper.sections.AConfigSection;
@@ -6,8 +19,8 @@ import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
 
 /**
  * Represents the configuration section for a specific notification type in the rank system.
- * <p>
- * This class encapsulates settings related to how notifications are displayed and delivered,
+ *
+ * <p>This class encapsulates settings related to how notifications are displayed and delivered,
  * such as enabling/disabling, broadcast options, display methods (title, action bar),
  * translation keys for text, and sound type. Default values are provided for all fields if unset.
  *

@@ -1,0 +1,102 @@
+name: "Verify Google Java Style"
+description: "Sets up Java/Gradle, publishes required local artifacts in dependency order, and runs Google Java style verification."
+
+inputs:
+  java-version:
+    description: "Java version to use"
+    required: false
+    default: "21"
+  jeconfig-repository:
+    description: "Owner/repository for JEConfig"
+    required: false
+    default: "Antimatter-Zone/JEConfig"
+  jeconfig-repo-ref:
+    description: "Branch, tag, or commit to use from JEConfig repository"
+    required: false
+    default: "main"
+  jeconfig-token:
+    description: "Token with read access to the JEConfig repository"
+    required: false
+    default: ""
+
+runs:
+  using: "composite"
+  steps:
+    - name: Normalize root Gradle wrapper for Linux
+      shell: bash
+      run: |
+        set -euo pipefail
+        sed -i 's/\r$//' ./gradlew
+        chmod +x ./gradlew
+
+    - name: Set up JDK
+      uses: actions/setup-java@v5
+      with:
+        distribution: temurin
+        java-version: ${{ inputs.java-version }}
+
+    - name: Set up Gradle
+      uses: gradle/actions/setup-gradle@v5
+
+    - name: Check out JEConfig (with token)
+      if: ${{ inputs.jeconfig-token != '' }}
+      uses: actions/checkout@v6
+      with:
+        repository: ${{ inputs.jeconfig-repository }}
+        ref: ${{ inputs.jeconfig-repo-ref }}
+        token: ${{ inputs.jeconfig-token }}
+        path: .external/JEConfig
+        persist-credentials: false
+
+    - name: Check out JEConfig (without token)
+      if: ${{ inputs.jeconfig-token == '' }}
+      uses: actions/checkout@v6
+      with:
+        repository: ${{ inputs.jeconfig-repository }}
+        ref: ${{ inputs.jeconfig-repo-ref }}
+        path: .external/JEConfig
+        persist-credentials: false
+
+    - name: Publish JEConfig artifacts to Maven Local
+      shell: bash
+      run: |
+        set -euo pipefail
+        checkout_dir="${GITHUB_WORKSPACE}/.external/JEConfig"
+
+        if [[ ! -d "${checkout_dir}" ]]; then
+          echo "JEConfig checkout directory was not created: ${checkout_dir}" >&2
+          exit 1
+        fi
+
+        pushd "${checkout_dir}" >/dev/null
+        sed -i 's/\r$//' ./gradlew
+        chmod +x ./gradlew
+        ./gradlew --no-daemon publishToMavenLocal
+        popd >/dev/null
+
+    - name: Publish internal prerequisites to Maven Local in dependency order
+      shell: bash
+      run: |
+        set -euo pipefail
+
+        tasks=(
+          "clean"
+          ":JExDependency:publishToMavenLocal"
+          ":JExCommand:publishToMavenLocal"
+          ":JExTranslate:publishToMavenLocal"
+          ":RPlatform:publishToMavenLocal"
+          ":JExEconomy:publishLocal"
+          ":JExEconomy:publishMavenPublicationToMavenLocal"
+          ":RCore:publishLocal"
+        )
+
+        for task in "${tasks[@]}"; do
+          echo "Running Gradle task: ${task}"
+          ./gradlew --no-daemon "${task}"
+        done
+
+    - name: Verify Google Java style
+      shell: bash
+      run: |
+        set -euo pipefail
+        ./gradlew --no-daemon verifyGoogleJavaStyle

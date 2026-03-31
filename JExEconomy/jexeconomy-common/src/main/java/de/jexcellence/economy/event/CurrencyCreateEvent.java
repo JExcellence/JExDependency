@@ -55,12 +55,18 @@ public class CurrencyCreateEvent extends CurrencyEvent implements Cancellable {
         this.cancelReason = reason;
     }
     
+    /**
+     * Returns whether cancelled.
+     */
     @Override
     public boolean isCancelled() {
         
         return this.cancelled;
     }
     
+    /**
+     * Sets cancelled.
+     */
     @Override
     public void setCancelled(boolean cancelled) {
         
@@ -78,6 +84,9 @@ public class CurrencyCreateEvent extends CurrencyEvent implements Cancellable {
         this.cancelReason = reason;
     }
     
+    /**
+     * Gets handlers.
+     */
     @NotNull
     @Override
     public HandlerList getHandlers() {
@@ -85,6 +94,9 @@ public class CurrencyCreateEvent extends CurrencyEvent implements Cancellable {
         return HANDLERS;
     }
     
+    /**
+     * Gets handlerList.
+     */
     @NotNull
     public static HandlerList getHandlerList() {
         

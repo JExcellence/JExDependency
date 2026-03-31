@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rplatform.serializer;
 
 import org.bukkit.Bukkit;
@@ -7,7 +20,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Converts Bukkit {@link Location} instances to and from a comma separated textual representation
+ * Converts Bukkit {@link Location} instances to and from a comma separated textual representation.
  * suitable for configuration storage.
  *
  * <p>Serialized locations store the world name, coordinates and orientation in a fixed order to
@@ -30,7 +43,7 @@ public class LocationSerializer {
     private static final int EXPECTED_PARTS = 6;
 
     /**
-     * Parses a location from a comma separated string in the form
+     * Parses a location from a comma separated string in the form.
      * {@code world,x,y,z,yaw,pitch}.
      *
      * <p>World lookup failures, incorrect part counts, or number parsing issues fall back to the
@@ -66,7 +79,7 @@ public class LocationSerializer {
     }
 
     /**
-     * Converts a {@link Location} to a comma separated string following the
+     * Converts a {@link Location} to a comma separated string following the.
      * {@code world,x,y,z,yaw,pitch} schema.
      *
      * <p>An {@link IllegalArgumentException} is thrown when the source location has a {@code null}

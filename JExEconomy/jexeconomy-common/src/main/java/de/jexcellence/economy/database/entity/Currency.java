@@ -14,14 +14,13 @@ import java.util.Objects;
 
 /**
  * JPA entity representing a currency within the JExEconomy system.
- * <p>
- * This entity encapsulates all properties and behaviors of a currency, including its
+ *
+ * <p>This entity encapsulates all properties and behaviors of a currency, including its
  * unique identification, display formatting, and visual representation. Each currency
  * serves as a fundamental unit of economic exchange within the plugin ecosystem,
  * supporting complex economic systems and player interactions.
- * </p>
  *
- * <h3>Core Properties:</h3>
+ * <p><strong>Core Properties:</strong>
  * <ul>
  *   <li><strong>Identifier:</strong> Unique string identifier for programmatic reference</li>
  *   <li><strong>Symbol:</strong> Visual symbol for display in user interfaces</li>
@@ -30,21 +29,20 @@ import java.util.Objects;
  *   <li><strong>Icon:</strong> Material representation for graphical interfaces</li>
  * </ul>
  *
- * <h3>Database Mapping:</h3>
- * <p>
- * This entity is mapped to the {@code p_currency} table in the database, with
+ * <p><strong>Database Mapping:</strong>
+ *
+ * <p>This entity is mapped to the {@code p_currency} table in the database, with
  * appropriate constraints and indexing for optimal performance. The identifier
  * field is unique and serves as the natural key for currency lookups.
- * </p>
  *
- * <h3>Usage Examples:</h3>
+ * <p><strong>Usage Examples:</strong>
  * <ul>
  *   <li><strong>Traditional Currencies:</strong> Coins, dollars, euros with standard symbols</li>
  *   <li><strong>Game-Specific Currencies:</strong> Gems, tokens, points with custom formatting</li>
  *   <li><strong>Specialized Currencies:</strong> Experience points, reputation, karma with unique displays</li>
  * </ul>
  *
- * <h3>Design Principles:</h3>
+ * <p><strong>Design Principles:</strong>
  * <ul>
  *   <li><strong>Immutability:</strong> Core properties should be modified through controlled methods</li>
  *   <li><strong>Validation:</strong> All setters include appropriate validation logic</li>
@@ -64,14 +62,13 @@ public class Currency extends BaseEntity {
 	
 	/**
 	 * The prefix text displayed before currency amounts in user interfaces.
-	 * <p>
-	 * This field allows for flexible currency formatting, supporting traditional
+ *
+ * <p>This field allows for flexible currency formatting, supporting traditional
 	 * currency symbols (e.g., "$", "€") as well as custom text prefixes
 	 * (e.g., "Gold: ", "Credits: "). The prefix is optional and can be null
 	 * or empty for currencies that don't require prefix formatting.
-	 * </p>
 	 *
-	 * <h3>Usage Examples:</h3>
+	 * <p><strong>Usage Examples:</strong>
 	 * <ul>
 	 *   <li><strong>Traditional:</strong> "$" for dollar amounts</li>
 	 *   <li><strong>Descriptive:</strong> "Gold: " for gold currency</li>
@@ -83,14 +80,13 @@ public class Currency extends BaseEntity {
 	
 	/**
 	 * The suffix text displayed after currency amounts in user interfaces.
-	 * <p>
-	 * This field complements the prefix to provide complete currency formatting
+ *
+ * <p>This field complements the prefix to provide complete currency formatting
 	 * flexibility. Suffixes are commonly used for unit indicators, pluralization,
 	 * or additional context information. Like prefixes, suffixes are optional
 	 * and can be null or empty when not needed.
-	 * </p>
 	 *
-	 * <h3>Usage Examples:</h3>
+	 * <p><strong>Usage Examples:</strong>
 	 * <ul>
 	 *   <li><strong>Unit Indicators:</strong> " coins", " points", " gems"</li>
 	 *   <li><strong>Contextual:</strong> " (available)", " remaining"</li>
@@ -102,14 +98,13 @@ public class Currency extends BaseEntity {
 	
 	/**
 	 * The unique identifier for this currency within the system.
-	 * <p>
-	 * This field serves as the primary means of programmatic currency identification
+ *
+ * <p>This field serves as the primary means of programmatic currency identification
 	 * and must be unique across all currencies in the system. The identifier is
 	 * used in commands, configuration files, API calls, and database relationships.
 	 * It should be descriptive yet concise, following consistent naming conventions.
-	 * </p>
 	 *
-	 * <h3>Naming Guidelines:</h3>
+	 * <p><strong>Naming Guidelines:</strong>
 	 * <ul>
 	 *   <li><strong>Descriptive:</strong> Clearly indicates the currency type</li>
 	 *   <li><strong>Consistent:</strong> Follows established naming patterns</li>
@@ -126,14 +121,13 @@ public class Currency extends BaseEntity {
 	
 	/**
 	 * The visual symbol representing this currency in user interfaces.
-	 * <p>
-	 * This field defines the primary visual representation of the currency,
+ *
+ * <p>This field defines the primary visual representation of the currency,
 	 * typically a single character or short string that immediately identifies
 	 * the currency type. Symbols should be recognizable, culturally appropriate,
 	 * and compatible with the game's visual design language.
-	 * </p>
 	 *
-	 * <h3>Symbol Categories:</h3>
+	 * <p><strong>Symbol Categories:</strong>
 	 * <ul>
 	 *   <li><strong>Traditional:</strong> $, €, £, ¥ for real-world currency parallels</li>
 	 *   <li><strong>Gaming:</strong> ★, ♦, ⚡ for game-specific currencies</li>
@@ -149,14 +143,13 @@ public class Currency extends BaseEntity {
 	
 	/**
 	 * The Material icon used to represent this currency in graphical user interfaces.
-	 * <p>
-	 * This field provides a Minecraft Material that serves as the visual icon
+ *
+ * <p>This field provides a Minecraft Material that serves as the visual icon
 	 * for the currency in inventory-based interfaces, GUI menus, and other
 	 * graphical representations. The Material is converted to and from string
 	 * format for database storage using the BasicMaterialConverter.
-	 * </p>
 	 *
-	 * <h3>Icon Selection Guidelines:</h3>
+	 * <p><strong>Icon Selection Guidelines:</strong>
 	 * <ul>
 	 *   <li><strong>Thematic Relevance:</strong> Should visually represent the currency concept</li>
 	 *   <li><strong>Visual Clarity:</strong> Must be easily recognizable in small interface elements</li>
@@ -174,12 +167,11 @@ public class Currency extends BaseEntity {
 	
 	/**
 	 * Protected no-argument constructor required by JPA/Hibernate for entity instantiation.
-	 * <p>
-	 * This constructor is used exclusively by the persistence framework during
+ *
+ * <p>This constructor is used exclusively by the persistence framework during
 	 * entity loading and should not be called directly by application code.
 	 * All fields will be initialized to their default values and subsequently
 	 * populated by the persistence framework.
-	 * </p>
 	 */
         protected Currency() {
                 // JPA/Hibernate requires a no-argument constructor for entity instantiation
@@ -191,21 +183,20 @@ public class Currency extends BaseEntity {
 	
 	/**
 	 * Constructs a new Currency entity with complete property specification.
-	 * <p>
-	 * This constructor creates a fully-configured currency entity with all
+ *
+ * <p>This constructor creates a fully-configured currency entity with all
 	 * display properties and visual elements specified. It performs basic
 	 * validation to ensure that required fields are not null and that the
 	 * currency is in a valid state upon creation.
-	 * </p>
 	 *
-	 * <h3>Parameter Validation:</h3>
+	 * <p><strong>Parameter Validation:</strong>
 	 * <ul>
 	 *   <li>All parameters are validated for null values</li>
 	 *   <li>Identifier uniqueness is enforced at the database level</li>
 	 *   <li>Symbol and icon must be valid for display purposes</li>
 	 * </ul>
 	 *
-	 * <h3>Usage Example:</h3>
+	 * <p><strong>Usage Example:</strong>
 	 * <pre>{@code
 	 * Currency goldCurrency = new Currency(
 	 *     "Gold: ",           // prefix
@@ -240,14 +231,13 @@ public class Currency extends BaseEntity {
 	
 	/**
 	 * Constructs a new Currency entity with minimal configuration using default values.
-	 * <p>
-	 * This convenience constructor creates a currency with only the identifier
+ *
+ * <p>This convenience constructor creates a currency with only the identifier
 	 * specified, using sensible defaults for all other properties. This is
 	 * useful for rapid prototyping or when detailed formatting is not immediately
 	 * required and can be configured later through setter methods.
-	 * </p>
 	 *
-	 * <h3>Default Values:</h3>
+	 * <p><strong>Default Values:</strong>
 	 * <ul>
 	 *   <li><strong>Prefix:</strong> Empty string (no prefix)</li>
 	 *   <li><strong>Suffix:</strong> Empty string (no suffix)</li>
@@ -255,7 +245,7 @@ public class Currency extends BaseEntity {
 	 *   <li><strong>Icon:</strong> GOLD_INGOT (standard currency representation)</li>
 	 * </ul>
 	 *
-	 * <h3>Usage Example:</h3>
+	 * <p><strong>Usage Example:</strong>
 	 * <pre>{@code
 	 * Currency basicCurrency = new Currency("gems");
 	 * basicCurrency.setSymbol("💎");
@@ -277,12 +267,11 @@ public class Currency extends BaseEntity {
 	
 	/**
 	 * Retrieves the prefix text displayed before currency amounts.
-	 * <p>
-	 * This method returns the current prefix configuration for the currency,
+ *
+ * <p>This method returns the current prefix configuration for the currency,
 	 * which may be an empty string if no prefix is configured. The prefix
 	 * is used in conjunction with the suffix to provide complete currency
 	 * formatting in user interfaces.
-	 * </p>
 	 *
 	 * @return the currency prefix string, may be empty but never null
 	 */
@@ -295,14 +284,13 @@ public class Currency extends BaseEntity {
 	
 	/**
 	 * Updates the prefix text displayed before currency amounts.
-	 * <p>
-	 * This method allows modification of the currency's prefix formatting.
+ *
+ * <p>This method allows modification of the currency's prefix formatting.
 	 * The prefix will be displayed before all currency amounts in user
 	 * interfaces and should be chosen to provide clear context and
 	 * professional appearance.
-	 * </p>
 	 *
-	 * <h3>Validation:</h3>
+	 * <p><strong>Validation:</strong>
 	 * <ul>
 	 *   <li>Null values are converted to empty strings for consistency</li>
 	 *   <li>No length restrictions are enforced, but reasonable lengths are recommended</li>
@@ -317,12 +305,11 @@ public class Currency extends BaseEntity {
 	
 	/**
 	 * Retrieves the suffix text displayed after currency amounts.
-	 * <p>
-	 * This method returns the current suffix configuration for the currency,
+ *
+ * <p>This method returns the current suffix configuration for the currency,
 	 * which may be an empty string if no suffix is configured. The suffix
 	 * complements the prefix to provide complete currency formatting and
 	 * often includes unit indicators or contextual information.
-	 * </p>
 	 *
 	 * @return the currency suffix string, may be empty but never null
 	 */
@@ -335,14 +322,13 @@ public class Currency extends BaseEntity {
 	
 	/**
 	 * Updates the suffix text displayed after currency amounts.
-	 * <p>
-	 * This method allows modification of the currency's suffix formatting.
+ *
+ * <p>This method allows modification of the currency's suffix formatting.
 	 * The suffix will be displayed after all currency amounts in user
 	 * interfaces and is commonly used for unit indicators, pluralization,
 	 * or additional context.
-	 * </p>
 	 *
-	 * <h3>Validation:</h3>
+	 * <p><strong>Validation:</strong>
 	 * <ul>
 	 *   <li>Null values are converted to empty strings for consistency</li>
 	 *   <li>No length restrictions are enforced, but reasonable lengths are recommended</li>
@@ -359,12 +345,11 @@ public class Currency extends BaseEntity {
 	
 	/**
 	 * Retrieves the unique identifier for this currency.
-	 * <p>
-	 * This method returns the currency's unique identifier, which serves as
+ *
+ * <p>This method returns the currency's unique identifier, which serves as
 	 * the primary means of programmatic reference throughout the system.
 	 * The identifier is used in commands, configuration files, API calls,
 	 * and database relationships.
-	 * </p>
 	 *
 	 * @return the currency's unique identifier string, never null
 	 */
@@ -374,14 +359,13 @@ public class Currency extends BaseEntity {
 	
 	/**
 	 * Updates the unique identifier for this currency.
-	 * <p>
-	 * This method allows modification of the currency's identifier, though
+ *
+ * <p>This method allows modification of the currency's identifier, though
 	 * such changes should be made carefully as they may affect existing
 	 * references, commands, and data relationships. The new identifier
 	 * must be unique across all currencies in the system.
-	 * </p>
 	 *
-	 * <h3>Important Considerations:</h3>
+	 * <p><strong>Important Considerations:</strong>
 	 * <ul>
 	 *   <li>Changing identifiers may break existing references</li>
 	 *   <li>Database uniqueness constraints will be enforced</li>
@@ -402,12 +386,11 @@ public class Currency extends BaseEntity {
 	
 	/**
 	 * Retrieves the visual symbol representing this currency.
-	 * <p>
-	 * This method returns the currency's visual symbol, which provides
+ *
+ * <p>This method returns the currency's visual symbol, which provides
 	 * immediate visual identification in user interfaces. The symbol
 	 * should be recognizable and appropriate for the currency's context
 	 * and target audience.
-	 * </p>
 	 *
 	 * @return the currency's visual symbol string, never null
 	 */
@@ -419,14 +402,13 @@ public class Currency extends BaseEntity {
 	
 	/**
 	 * Updates the visual symbol representing this currency.
-	 * <p>
-	 * This method allows modification of the currency's visual symbol.
+ *
+ * <p>This method allows modification of the currency's visual symbol.
 	 * The symbol should be chosen for clarity, cultural appropriateness,
 	 * and compatibility with the target display environment. Unicode
 	 * symbols are supported for diverse representation options.
-	 * </p>
 	 *
-	 * <h3>Symbol Guidelines:</h3>
+	 * <p><strong>Symbol Guidelines:</strong>
 	 * <ul>
 	 *   <li>Should be visually distinct and recognizable</li>
 	 *   <li>Must be compatible with target display systems</li>
@@ -442,12 +424,11 @@ public class Currency extends BaseEntity {
 	
 	/**
 	 * Retrieves the Material icon used for graphical representation of this currency.
-	 * <p>
-	 * This method returns the Minecraft Material that serves as the visual
+ *
+ * <p>This method returns the Minecraft Material that serves as the visual
 	 * icon for the currency in inventory-based interfaces, GUI menus, and
 	 * other graphical representations. The Material provides a familiar
 	 * visual reference for players.
-	 * </p>
 	 *
 	 * @return the Material icon for this currency, never null
 	 */
@@ -457,14 +438,13 @@ public class Currency extends BaseEntity {
 	
 	/**
 	 * Updates the Material icon used for graphical representation of this currency.
-	 * <p>
-	 * This method allows modification of the currency's graphical icon.
+ *
+ * <p>This method allows modification of the currency's graphical icon.
 	 * The Material should be chosen for thematic relevance, visual clarity,
 	 * and consistency with the overall system design. The Material must
 	 * be valid for the target Minecraft version.
-	 * </p>
 	 *
-	 * <h3>Icon Selection Guidelines:</h3>
+	 * <p><strong>Icon Selection Guidelines:</strong>
 	 * <ul>
 	 *   <li>Should thematically represent the currency concept</li>
 	 *   <li>Must be visually clear in small interface elements</li>
@@ -506,16 +486,34 @@ public class Currency extends BaseEntity {
                 private Builder() {
                 }
 
+                /**
+                 * Sets the display prefix.
+                 *
+                 * @param newPrefix prefix text
+                 * @return this builder
+                 */
                 public @NotNull Builder prefix(final @Nullable String newPrefix) {
                         this.prefix = sanitizeText(newPrefix);
                         return this;
                 }
 
+                /**
+                 * Sets the display suffix.
+                 *
+                 * @param newSuffix suffix text
+                 * @return this builder
+                 */
                 public @NotNull Builder suffix(final @Nullable String newSuffix) {
                         this.suffix = sanitizeText(newSuffix);
                         return this;
                 }
 
+                /**
+                 * Sets the unique identifier.
+                 *
+                 * @param newIdentifier identifier text
+                 * @return this builder
+                 */
                 public @NotNull Builder identifier(final @NotNull String newIdentifier) {
                         if (newIdentifier == null) {
                                 throw new IllegalArgumentException("Currency identifier must not be null");
@@ -525,11 +523,23 @@ public class Currency extends BaseEntity {
                         return this;
                 }
 
+                /**
+                 * Sets the display symbol.
+                 *
+                 * @param newSymbol symbol text
+                 * @return this builder
+                 */
                 public @NotNull Builder symbol(final @Nullable String newSymbol) {
                         this.symbol = sanitizeText(newSymbol);
                         return this;
                 }
 
+                /**
+                 * Sets the display icon.
+                 *
+                 * @param newIcon icon material
+                 * @return this builder
+                 */
                 public @NotNull Builder icon(final @NotNull Material newIcon) {
                         if (newIcon == null) {
                                 throw new IllegalArgumentException("Currency icon must not be null");
@@ -539,6 +549,11 @@ public class Currency extends BaseEntity {
                         return this;
                 }
 
+                /**
+                 * Builds a new immutable {@link Currency} instance.
+                 *
+                 * @return created currency
+                 */
                 public @NotNull Currency build() {
                         if (this.identifier == null) {
                                 throw new IllegalStateException("Currency identifier must be provided before building");
@@ -556,14 +571,13 @@ public class Currency extends BaseEntity {
 	
 	/**
 	 * Determines whether this currency is equal to another object.
-	 * <p>
-	 * Two Currency entities are considered equal if they have the same unique
+ *
+ * <p>Two Currency entities are considered equal if they have the same unique
 	 * identifier. This equality contract ensures that currencies with the same
 	 * identifier are treated as the same entity regardless of other property
 	 * differences, which is appropriate for entity comparison.
-	 * </p>
 	 *
-	 * <h3>Equality Contract:</h3>
+	 * <p><strong>Equality Contract:</strong>
 	 * <ul>
 	 *   <li><strong>Reflexive:</strong> x.equals(x) returns true</li>
 	 *   <li><strong>Symmetric:</strong> x.equals(y) returns true if and only if y.equals(x) returns true</li>
@@ -599,14 +613,13 @@ public class Currency extends BaseEntity {
 	
 	/**
 	 * Generates a hash code for this currency based on its unique identifier.
-	 * <p>
-	 * This method returns a hash code value that is consistent with the equals
+ *
+ * <p>This method returns a hash code value that is consistent with the equals
 	 * method, ensuring that equal currencies have equal hash codes. The hash
 	 * code is based solely on the unique identifier to maintain consistency
 	 * with the equality contract.
-	 * </p>
 	 *
-	 * <h3>Hash Code Contract:</h3>
+	 * <p><strong>Hash Code Contract:</strong>
 	 * <ul>
 	 *   <li>If two objects are equal according to equals(), they must have the same hash code</li>
 	 *   <li>Hash code should remain consistent during object lifetime</li>
@@ -623,18 +636,16 @@ public class Currency extends BaseEntity {
 	
 	/**
 	 * Returns a string representation of this currency for debugging and logging purposes.
-	 * <p>
-	 * This method provides a comprehensive string representation that includes
+ *
+ * <p>This method provides a comprehensive string representation that includes
 	 * all significant properties of the currency. The format is designed to be
 	 * informative for debugging while remaining readable and concise.
-	 * </p>
 	 *
-	 * <h3>String Format:</h3>
-	 * <p>
-	 * The returned string includes the currency identifier, symbol, prefix, suffix,
+	 * <p><strong>String Format:</strong>
+ *
+ * <p>The returned string includes the currency identifier, symbol, prefix, suffix,
 	 * and icon in a structured format that clearly identifies each property and
 	 * its current value.
-	 * </p>
 	 *
 	 * @return a detailed string representation of this currency
 	 */

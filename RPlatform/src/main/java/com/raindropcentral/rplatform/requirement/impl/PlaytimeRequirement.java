@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rplatform.requirement.impl;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -17,6 +30,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
+/**
+ * Represents the PlaytimeRequirement API type.
+ */
 public final class PlaytimeRequirement extends AbstractRequirement {
 
     private static final Logger LOGGER = Logger.getLogger(PlaytimeRequirement.class.getName());
@@ -36,10 +52,16 @@ public final class PlaytimeRequirement extends AbstractRequirement {
     @JsonIgnore
     private transient final Map<String, World> worldCache = new ConcurrentHashMap<>();
 
+    /**
+     * Executes PlaytimeRequirement.
+     */
     public PlaytimeRequirement(long requiredPlaytimeSeconds) {
         this(requiredPlaytimeSeconds, null, true, null);
     }
 
+    /**
+     * Executes PlaytimeRequirement.
+     */
     @JsonCreator
     public PlaytimeRequirement(@JsonProperty("requiredPlaytimeSeconds") long requiredPlaytimeSeconds,
                               @JsonProperty("worldPlaytimeRequirements") @Nullable Map<String, Long> worldPlaytimeRequirements,
@@ -59,12 +81,18 @@ public final class PlaytimeRequirement extends AbstractRequirement {
         }
     }
 
+    /**
+     * Returns whether met.
+     */
     @Override
     public boolean isMet(@NotNull Player player) {
         if (useTotalPlaytime) return getTotalPlaytimeSeconds(player) >= requiredPlaytimeSeconds;
         else return checkWorldPlaytimeRequirements(player);
     }
 
+    /**
+     * Executes calculateProgress.
+     */
     @Override
     public double calculateProgress(@NotNull Player player) {
         if (useTotalPlaytime) {
@@ -75,18 +103,30 @@ public final class PlaytimeRequirement extends AbstractRequirement {
         }
     }
 
+    /**
+     * Executes consume.
+     */
     @Override
     public void consume(@NotNull Player player) {}
 
+    /**
+     * Gets descriptionKey.
+     */
     @Override
     @NotNull
     public String getDescriptionKey() { return "requirement.playtime"; }
 
+    /**
+     * Gets totalPlaytimeSeconds.
+     */
     @JsonIgnore
     public long getTotalPlaytimeSeconds(@NotNull Player player) {
         return player.getStatistic(Statistic.PLAY_ONE_MINUTE) / 20;
     }
 
+    /**
+     * Gets worldPlaytimeSeconds.
+     */
     @JsonIgnore
     public long getWorldPlaytimeSeconds(@NotNull Player player, @NotNull String worldName) {
         var world = getCachedWorld(worldName);
@@ -96,25 +136,49 @@ public final class PlaytimeRequirement extends AbstractRequirement {
         } catch (Exception e) { return 0; }
     }
 
+    /**
+     * Gets requiredPlaytimeSeconds.
+     */
     public long getRequiredPlaytimeSeconds() { return requiredPlaytimeSeconds; }
 
+    /**
+     * Gets requiredPlaytimeMinutes.
+     */
     @JsonIgnore
     public long getRequiredPlaytimeMinutes() { return TimeUnit.SECONDS.toMinutes(requiredPlaytimeSeconds); }
 
+    /**
+     * Gets requiredPlaytimeHours.
+     */
     @JsonIgnore
     public long getRequiredPlaytimeHours() { return TimeUnit.SECONDS.toHours(requiredPlaytimeSeconds); }
 
+    /**
+     * Gets requiredPlaytimeDays.
+     */
     @JsonIgnore
     public long getRequiredPlaytimeDays() { return TimeUnit.SECONDS.toDays(requiredPlaytimeSeconds); }
 
+    /**
+     * Gets worldPlaytimeRequirements.
+     */
     @NotNull
     public Map<String, Long> getWorldPlaytimeRequirements() { return new HashMap<>(worldPlaytimeRequirements); }
 
+    /**
+     * Returns whether useTotalPlaytime.
+     */
     public boolean isUseTotalPlaytime() { return useTotalPlaytime; }
 
+    /**
+     * Gets description.
+     */
     @Nullable
     public String getDescription() { return description; }
 
+    /**
+     * Gets formattedRequiredPlaytime.
+     */
     @JsonIgnore
     @NotNull
     public String getFormattedRequiredPlaytime() {
@@ -122,6 +186,9 @@ public final class PlaytimeRequirement extends AbstractRequirement {
         return formatDuration(this.requiredPlaytimeSeconds);
     }
 
+    /**
+     * Gets formattedCurrentPlaytime.
+     */
     @JsonIgnore
     @NotNull
     public String getFormattedCurrentPlaytime(final @NotNull Player player) {
@@ -129,6 +196,9 @@ public final class PlaytimeRequirement extends AbstractRequirement {
         return formatDuration(getTotalPlaytimeSeconds(player));
     }
 
+    /**
+     * Executes formatDuration.
+     */
     @JsonIgnore
     @NotNull
     public static String formatDuration(final long seconds) {
@@ -146,6 +216,9 @@ public final class PlaytimeRequirement extends AbstractRequirement {
         return sb.toString().trim();
     }
 
+    /**
+     * Executes validate.
+     */
     @JsonIgnore
     public void validate() {
         if (this.requiredPlaytimeSeconds < 0) throw new IllegalStateException("Required playtime cannot be negative.");

@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.core.service.central;
 
 import com.raindropcentral.core.database.entity.central.RCentralServer;
@@ -11,8 +24,8 @@ import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Service for tracking metrics related to server authentication and heartbeats.
- * <p>
- * Provides counters and statistics for monitoring the health and performance of
+ *
+ * <p>Provides counters and statistics for monitoring the health and performance of
  * the RaindropCentral integration. Metrics are tracked in-memory and can be
  * exported for monitoring systems.
  * </p>
@@ -144,8 +157,8 @@ public class MetricsTrackingService {
 
     /**
      * Resets all metrics counters.
-     * <p>
-     * Useful for periodic metric resets or testing.
+ *
+ * <p>Useful for periodic metric resets or testing.
      * </p>
      */
     public void resetMetrics() {

@@ -51,7 +51,7 @@ public class Deencapsulation {
     }
 
     /**
-     * Creates a privileged {@link MethodHandles.Lookup} with full access rights for the supplied class. This lookup is
+     * Creates a privileged {@link MethodHandles.Lookup} with full access rights for the supplied class. This lookup is.
      * used to call otherwise inaccessible module APIs when adjusting module openness.
      *
      * @param lookupClass class for which the privileged lookup should be created
@@ -75,7 +75,7 @@ public class Deencapsulation {
     }
 
     /**
-     * Attempts to close any packages previously opened via {@link #deencapsulate(Class)}. This is a best-effort
+     * Attempts to close any packages previously opened via {@link #deencapsulate(Class)}. This is a best-effort.
      * operation and may silently ignore failures for packages that cannot be closed again.
      */
     public static void closeOpenedPackages() {

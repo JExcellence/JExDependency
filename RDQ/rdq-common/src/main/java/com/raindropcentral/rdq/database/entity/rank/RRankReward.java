@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.database.entity.rank;
 
 import com.raindropcentral.rdq.config.utility.IconSection;
@@ -16,15 +29,13 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * Entity representing a single reward for a {@link RRank} in the RaindropQuests system.
- * <p>
- * This entity encapsulates a single {@link BaseReward} that is granted when achieving the associated rank.
- * It also includes an icon for visual representation and display order.
- * </p>
  *
- * <p>
- * Multiple instances of this entity can exist for a single rank, representing different rewards
+ * <p>This entity encapsulates a single {@link BaseReward} that is granted when achieving the associated rank.
+ * It also includes an icon for visual representation and display order.
+ *
+ *
+ * <p>Multiple instances of this entity can exist for a single rank, representing different rewards
  * that are granted when the rank is achieved.
- * </p>
  */
 @Setter
 @Getter
@@ -153,6 +164,9 @@ public class RRankReward extends BaseEntity {
         return this.reward.getEstimatedValue();
     }
 
+    /**
+     * Executes equals.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -172,6 +186,9 @@ public class RRankReward extends BaseEntity {
         return false;
     }
 
+    /**
+     * Returns whether hCode.
+     */
     @Override
     public int hashCode() {
         if (this.getId() != null) {

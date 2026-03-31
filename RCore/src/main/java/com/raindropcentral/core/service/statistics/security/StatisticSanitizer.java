@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.core.service.statistics.security;
 
 import com.raindropcentral.rplatform.logging.CentralLogger;
@@ -19,23 +32,18 @@ public class StatisticSanitizer {
 
     private static final Logger LOGGER = CentralLogger.getLoggerByName("RCore");
 
-    /** Pattern for valid statistic keys: alphanumeric, underscores, dots, hyphens */
     private static final Pattern VALID_KEY_PATTERN = Pattern.compile("^[a-zA-Z0-9_.\\-:]+$");
 
-    /** Maximum key length */
     private static final int MAX_KEY_LENGTH = 128;
 
-    /** Maximum string value length */
     private static final int MAX_VALUE_LENGTH = 4096;
 
-    /** Dangerous patterns to remove from string values */
     private static final Set<String> DANGEROUS_PATTERNS = Set.of(
         "<script", "</script>", "javascript:", "data:", "vbscript:",
         "onclick", "onerror", "onload", "onmouseover",
         "expression(", "eval(", "document.", "window."
     );
 
-    /** SQL injection patterns */
     private static final Pattern SQL_INJECTION_PATTERN = Pattern.compile(
         "(?i)(\\b(SELECT|INSERT|UPDATE|DELETE|DROP|UNION|ALTER|CREATE|TRUNCATE)\\b.*\\b(FROM|INTO|TABLE|WHERE)\\b)"
     );
@@ -199,10 +207,16 @@ public class StatisticSanitizer {
         @Nullable Object sanitizedValue,
         @Nullable String warning
     ) {
+        /**
+         * Performs valid.
+         */
         public static SanitizationResult valid(String key, Object value) {
             return new SanitizationResult(true, key, value, null);
         }
 
+        /**
+         * Performs invalid.
+         */
         public static SanitizationResult invalid(String warning) {
             return new SanitizationResult(false, null, null, warning);
         }

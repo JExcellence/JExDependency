@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rplatform.requirement.config;
 
 import com.raindropcentral.rplatform.requirement.AbstractRequirement;
@@ -14,11 +27,10 @@ import java.util.logging.Logger;
 
 /**
  * Factory for creating AbstractRequirement instances from configuration data.
- * <p>
- * This factory provides a centralized, extensible way to create requirements from
+ *
+ * <p>This factory provides a centralized, extensible way to create requirements from
  * various configuration formats. Plugins can register custom converters for their
  * own requirement types.
- * </p>
  *
  * <p><b>Usage:</b></p>
  * <pre>{@code
@@ -53,6 +65,9 @@ public final class RequirementFactory {
         registerDefaultConverters();
     }
 
+    /**
+     * Gets instance.
+     */
     @NotNull
     public static RequirementFactory getInstance() {
         return INSTANCE;
@@ -85,10 +100,9 @@ public final class RequirementFactory {
 
     /**
      * Registers a section adapter for a specific config section class.
-     * <p>
-     * Section adapters allow plugins to convert their custom config section types
+ *
+ * <p>Section adapters allow plugins to convert their custom config section types
      * directly to AbstractRequirement instances.
-     * </p>
      * 
      * <p><b>Note:</b> Duplicate registrations are ignored to prevent infinite loops
      * and CPU spikes during initialization.</p>
@@ -572,7 +586,7 @@ public final class RequirementFactory {
     }
 
     /**
-     * Backward compatibility: Convert old JOBS format to new PLUGIN format
+     * Backward compatibility: Convert old JOBS format to new PLUGIN format.
      */
     private PluginRequirement createJobsRequirementCompat(Map<String, Object> config) {
         String pluginStr = getString(config, "jobPlugin", "auto");
@@ -597,7 +611,7 @@ public final class RequirementFactory {
     }
 
     /**
-     * Backward compatibility: Convert old SKILLS format to new PLUGIN format
+     * Backward compatibility: Convert old SKILLS format to new PLUGIN format.
      */
     private PluginRequirement createSkillsRequirementCompat(Map<String, Object> config) {
         String pluginStr = getString(config, "skillPlugin", "auto");

@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.listener;
 
 import com.raindropcentral.rdq.RDQ;
@@ -32,11 +45,17 @@ public class RankRequirementListener implements Listener {
     private final RDQ rdq;
     private final RequirementService requirementService;
 
+    /**
+     * Executes RankRequirementListener.
+     */
     public RankRequirementListener(@NotNull RDQ rdq) {
         this.rdq = rdq;
         this.requirementService = RequirementService.getInstance();
     }
 
+    /**
+     * Executes onRequirementCheck.
+     */
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onRequirementCheck(@NotNull RequirementCheckEvent event) {
         Player player = event.getPlayer();
@@ -52,6 +71,9 @@ public class RankRequirementListener implements Listener {
         });
     }
 
+    /**
+     * Executes onRequirementMet.
+     */
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onRequirementMet(@NotNull RequirementMetEvent event) {
         Player player = event.getPlayer();
@@ -89,6 +111,9 @@ public class RankRequirementListener implements Listener {
         });
     }
 
+    /**
+     * Executes onRequirementConsume.
+     */
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onRequirementConsume(@NotNull RequirementConsumeEvent event) {
         LOGGER.info("Requirement consumed for " + event.getPlayer().getName() + ": " + 
@@ -216,7 +241,7 @@ public class RankRequirementListener implements Listener {
                 LOGGER.info("Player " + player.getName() + " has met all requirements for rank: " + 
                             currentRank.getIdentifier());
                 
-                Bukkit.getScheduler().runTask(rdq.getPlugin(), () -> {
+                rdq.getPlatform().getScheduler().runAtEntity(player, () -> {
                     if (player.isOnline()) {
                         // Send translated rank-up notification
                         new I18n.Builder("rank.messages.requirements_complete", player)

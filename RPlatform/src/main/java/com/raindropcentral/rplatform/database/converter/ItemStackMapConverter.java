@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rplatform.database.converter;
 
 import jakarta.persistence.AttributeConverter;
@@ -12,7 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Stores {@link Map} entries of string keys to {@link ItemStack} values using a delimiter-safe Base64 format
+ * Stores {@link Map} entries of string keys to {@link ItemStack} values using a delimiter-safe Base64 format.
  * and restores them for entity hydration.
  *
  * <p>Each key is encoded as UTF-8 before applying Base64 and combined with the value payload using

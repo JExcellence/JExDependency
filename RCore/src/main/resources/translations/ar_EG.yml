@@ -3,13 +3,14 @@
 prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
 
 rcconnect:
-  usage: "<gray>الاستخدام: /rcconnect <api-key></gray>"
+  usage: "<gray>الاستعمال: /rc <connect &lt;api-key&gt;|disconnect|claim droplets></gray>"
+  usage_no_claim: "<gray>الاستعمال: /rc <connect &lt;api-key&gt;|disconnect></gray>"
   connecting: "<yellow>جاري الاتصال بـ RaindropCentral...</yellow>"
   success: "<green>تم الاتصال بـ RaindropCentral بنجاح!</green> <gray>السيرفر بيبعت نبضات دلوقتي.</gray>"
   error:
     invalid_key: "<red>صيغة مفتاح الـ API غير صحيحة. لازم مفتاح الـ API يكون من 32 إلى 128 حرف أو رقم.</red>"
     uuid_mismatch: "<red>مفتاح الـ API ده تابع لحساب Minecraft مختلف.</red>"
-    already_connected: "<yellow>السيرفر متصل بالفعل.</yellow> <gray>استخدم /rcdisconnect الأول.</gray>"
+    already_connected: "<yellow>الخادم متصل بالفعل.</yellow> <gray>استخدم /rc disconnect أولاً.</gray>"
     network: "<red>خطأ في الشبكة: %error%</red>"
 
 rcdisconnect:
@@ -19,6 +20,152 @@ rcdisconnect:
     not_connected: "<red>السيرفر مش متصل بـ RaindropCentral.</red>"
     failed: "<red>فشل قطع الاتصال. حاول تاني.</red>"
     network: "<red>خطأ في الشبكة: %error%</red>"
+
+rcclaim:
+  loading: "<yellow>التحقق من RaindropCentral بحثًا عن مكافآت القطرات غير المطالب بها...</yellow>"
+  claiming_item: "<yellow> المطالبة بـ %item_name% من RaindropCentral...</yellow>"
+  success:
+    claimed: "<green>لقد طالبت بـ %item_name%.</green>"
+    claimed_skill_targeted: "<green> لقد طالبت بـ %item_name%.</green> <gray> انقر بزر الماوس الأيمن فوق ملف تعريف الارتباط لاختيار مهارة.</gray>"
+    claimed_job_targeted: "<green> لقد طالبت بـ %item_name%.</green> <gray> انقر بزر الماوس الأيمن فوق ملف تعريف الارتباط لاختيار وظيفة.</gray>"
+    claimed_activate: "<green> لقد طالبت بـ %item_name%.</green> <gray> انقر بزر الماوس الأيمن فوق ملف تعريف الارتباط لتنشيطه.</gray>"
+    skill_granted: "<green>تم منح المستوى الأول في %skill_name%.</green> <gray>المصدر: %plugin_name%.</gray>"
+    job_granted: "<green>تم منح المستوى الأول في %job_name%.</green> <gray>المصدر: %plugin_name%.</gray>"
+    skill_xp_boost_applied: "<green> تم تنشيط +%rate_percent%% مهارة XP لـ %skill_name%.</green> <gray> المصدر: %plugin_name%. المدة: %duration_minutes% دقيقة (دقائق).</gray>"
+    skill_xp_boost_refreshed: "<green>تحديث +%rate_percent%% مهارة XP لـ %skill_name%.</green> <gray>المصدر: %plugin_name%. تم إعادة تعيين المدة إلى دقيقة (دقائق) %duration_minutes%.</gray>"
+    job_xp_boost_applied: "<green> تم تنشيط + %rate_percent%% XP لوظيفة %job_name%.</green> <gray> المصدر: %plugin_name%. المدة: %duration_minutes% دقيقة (دقائق).</gray>"
+    job_xp_boost_refreshed: "<green>تحديث +%rate_percent%% XP لوظيفة %job_name%.</green> <gray>المصدر: %plugin_name%. تم إعادة تعيين المدة إلى دقيقة (دقائق) %duration_minutes%.</gray>"
+    job_vault_boost_applied: "<green>Activated +%rate_percent%% أموال الوظيفة لـ %job_name%.</green> <gray>المصدر: %plugin_name%. المدة: %duration_minutes% دقيقة (دقائق).</gray>"
+    job_vault_boost_refreshed: "<green>تم تحديث +%rate_percent%% أموال الوظيفة لـ %job_name%.</green> <gray>المصدر: %plugin_name%. تم إعادة تعيين المدة إلى دقيقة (دقائق) %duration_minutes%.</gray>"
+    double_drop_boost_applied: "<green> قطرات مزدوجة نشطة.</green> <gray>المدة: %duration_minutes% دقيقة (دقائق).</gray>"
+    double_drop_boost_refreshed: "<green> قطرات مزدوجة منتعشة.</green> <gray> إعادة تعيين المدة إلى %duration_minutes% دقيقة (دقائق).</gray>"
+    pending_delivery: "<green>تم تسليم %count% لمكافأة (مكافآت) القطرات المعلقة.</green>"
+  error:
+    store_disabled: "<red> لقد قام هذا الخادم بتعطيل /rc claim droplets.</red>"
+    not_connected: "يجب أن تكون <red>RCore متصلة بالواجهة الخلفية RaindropCentral قبل أن تتمكن من المطالبة بالقطرات.</red>"
+    cooldown: "<yellow>يرجى الانتظار %seconds% ثانية (ثواني) قبل استخدام /rc claim droplets مرة أخرى.</yellow>"
+    not_registered: "<red>حسابك Minecraft غير مرتبط بحساب RaindropCentral.</red>"
+    no_unclaimed: "<yellow> ليس لديك أي مكافآت قطرات لم يطالب بها أحد في الوقت الحالي.</yellow>"
+    api_unavailable: "<red>RaindropCentral غير متاح الآن: %error%</red>"
+    menu_unavailable: "<red>قائمة المطالبة بالقطرات غير متاحة الآن. يرجى المحاولة مرة أخرى لاحقًا.</red>"
+    item_disabled: "<red> لقد قام هذا الخادم بتعطيل المطالبة بـ %item_name%.</red> <gray> معرف العنصر: %item_code%</gray>"
+    unsupported_item: "<red> هذه المكافأة الصغيرة غير مدعومة على هذا الخادم حتى الآن. </red> <gray> معرف العنصر: %item_code%</gray>"
+    no_supported_skills: "<red> لا يحتوي هذا الخادم حاليًا على مكون إضافي مدعوم للمهارات لهذه المكافأة.</red>"
+    no_supported_jobs: "<red> لا يحتوي هذا الخادم حاليًا على مكون إضافي مدعوم للمهام لهذه المكافأة.</red>"
+    inventory_full: "<red>تحتاج إلى فتحة مخزون مجانية واحدة على الأقل قبل المطالبة بهذه المكافأة.</red>"
+    claim_in_progress: "<yellow>هذه المطالبة قيد التقدم بالفعل. يرجى الانتظار حتى تستجيب الواجهة الخلفية.</yellow>"
+    claim_failed: "<red> فشل في المطالبة بمكافأة القطرات: %error%</red>"
+    already_claimed: "<yellow> لقد تم بالفعل المطالبة بمكافأة القطرات هذه.</yellow>"
+    purchase_unavailable: "<red>لم تعد هذه المكافأة متاحة للمطالبة بها.</red>"
+    cookie_missing: "<red>تعذر العثور على ملف تعريف الارتباط الصغير في مخزونك.</red>"
+    skill_grant_failed: "<red>فشل في منح مستوى واحد في %skill_name%.</red>"
+    job_grant_failed: "<red>فشل في منح مستوى واحد في %job_name%.</red>"
+    boost_activation_failed: "<red>فشل في تفعيل %item_name%.</red>"
+    unsupported_integration: "<red> التكامل المطلوب لملف تعريف الارتباط هذا غير متوفر حاليًا.</red>"
+    boost_expired: "<yellow> انتهت صلاحية دفعة ملفات تعريف الارتباط هذه.</yellow>"
+
+rc_claim_droplets_ui:
+  title: "قطرات لم يطالب بها أحد"
+  page:
+    name: "<yellow>الصفحة %page%/%max_page%</yellow>"
+    lore:
+      - "تم إدراج الإدخالات القابلة للمطالبة <gray>%items_count%.</gray>"
+  summary:
+    name: "<gold>قائمة انتظار المطالبة</gold>"
+    lore:
+      - "<gray> الإدخالات غير المطالب بها: %item_count%</gray>"
+      - "<gray> مدعوم على هذا الخادم: %supported_count%</gray>"
+      - "<yellow>انقر فوق المكافأة المدعومة للمطالبة بها.</yellow>"
+  empty:
+    name: "<red>لا توجد مكافآت لم تتم المطالبة بها</red>"
+    lore:
+      - "<gray>ليس لديك حاليًا أي مكافآت صغيرة لم يطالب بها أحد.</gray>"
+  entry:
+    supported:
+      name: "<green>%item_name%</green>"
+      lore:
+        - "<gray> معرف العنصر: %item_code%</gray>"
+        - "<gray>المنفقة: قطرات %amount_spent%</gray>"
+        - "<yellow>انقر للحصول على هذه المكافأة.</yellow>"
+    item_disabled:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray> معرف العنصر: %item_code%</gray>"
+        - "<red> لقد قام هذا الخادم بتعطيل المطالبة بهذه المكافأة.</red>"
+    unsupported_item:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray> معرف العنصر: %item_code%</gray>"
+        - "<red>هذه المكافأة غير مدعومة على هذا الخادم.</red>"
+    no_skills:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray> معرف العنصر: %item_code%</gray>"
+        - "<red> لم يتم تثبيت أي مكون إضافي للمهارات مدعوم لهذه المكافأة.</red>"
+    no_jobs:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray> معرف العنصر: %item_code%</gray>"
+        - "<red> لم يتم تثبيت أي ملحق وظائف مدعوم لهذه المكافأة.</red>"
+
+rc_claim_droplet_skills_ui:
+  title: "اختر مهارة"
+  page:
+    name: "<yellow>الصفحة %page%/%max_page%</yellow>"
+    lore:
+      - "<gray>%items_count% تم إدراج إدخالات المهارات.</gray>"
+  summary:
+    name: "<gold>اختيار المهارة</gold>"
+    lore:
+      - "<gray> المهارات المتاحة: %skill_count%</gray>"
+      - "<yellow>اختر مهارة واحدة لاستهلاك ملف تعريف الارتباط.</yellow>"
+  empty:
+    name: "<red>لا توجد مهارات متاحة</red>"
+    lore:
+      - "<gray> لا توجد مهارات مدعومة متاحة الآن.</gray>"
+  entry:
+    name: "<green>%skill_name%</green>"
+    level_lore:
+      - "<gray>البرنامج المساعد: %plugin_name%</gray>"
+      - "<gray>المستوى الحالي: %current_level%</gray>"
+      - "<yellow>انقر للحصول على مستوى واحد في هذه المهارة.</yellow>"
+    boost_lore:
+      - "<gray>البرنامج المساعد: %plugin_name%</gray>"
+      - "<gray>المستوى الحالي: %current_level%</gray>"
+      - "<gray>Boost: + %rate_percent%% XP لـ %duration_minutes% دقيقة (دقائق) </gray>"
+      - "<yellow> انقر لتفعيل تعزيز المهارات هذا.</yellow>"
+
+rc_claim_droplet_jobs_ui:
+  title: "اختر وظيفة"
+  page:
+    name: "<yellow>الصفحة %page%/%max_page%</yellow>"
+    lore:
+      - "تم إدراج إدخالات الوظائف <gray>%items_count%.</gray>"
+  summary:
+    name: "<gold>اختيار الوظيفة</gold>"
+    lore:
+      - "<gray> الوظائف المتاحة: %job_count%</gray>"
+      - "<yellow>اختر مهمة واحدة لاستهلاك ملف تعريف الارتباط.</yellow>"
+  empty:
+    name: "<red> لا توجد وظائف متاحة </red>"
+    lore:
+      - "<gray> لا توجد وظائف مدعومة متاحة الآن.</gray>"
+  entry:
+    name: "<green>%job_name%</green>"
+    level_lore:
+      - "<gray>البرنامج المساعد: %plugin_name%</gray>"
+      - "<gray>المستوى الحالي: %current_level%</gray>"
+      - "<yellow>انقر للحصول على مستوى واحد في هذه الوظيفة.</yellow>"
+    xp_boost_lore:
+      - "<gray>البرنامج المساعد: %plugin_name%</gray>"
+      - "<gray>المستوى الحالي: %current_level%</gray>"
+      - "<gray>Boost: + %rate_percent%% XP لـ %duration_minutes% دقيقة (دقائق) </gray>"
+      - "<yellow>انقر لتنشيط هذه المهمة XP Boost.</yellow>"
+    vault_boost_lore:
+      - "<gray>البرنامج المساعد: %plugin_name%</gray>"
+      - "<gray>المستوى الحالي: %current_level%</gray>"
+      - "<gray>Boost: +%rate_percent%% أموال مقابل %duration_minutes% دقيقة (دقائق) </gray>"
+      - "<yellow>انقر لتفعيل هذه الزيادة المالية للوظيفة.</yellow>"
 
 general:
   no_permission: "<red>ما عندكش صلاحية تستخدم الأمر ده.</red>"

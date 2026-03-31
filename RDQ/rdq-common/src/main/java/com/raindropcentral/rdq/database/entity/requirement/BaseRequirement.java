@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.database.entity.requirement;
 
 import com.raindropcentral.rdq.config.utility.IconSection;
@@ -17,10 +30,9 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Entity representing a requirement in the RaindropQuests system.
- * <p>
- * This entity encapsulates an {@link AbstractRequirement} from RPlatform and its visual icon,
+ *
+ * <p>This entity encapsulates an {@link AbstractRequirement} from RPlatform and its visual icon,
  * providing convenience methods for requirement evaluation, progress calculation, and resource consumption.
- * </p>
  */
 @Entity
 @Table(name = "r_requirement")
@@ -57,6 +69,9 @@ public class BaseRequirement extends BaseEntity {
     protected BaseRequirement() {
     }
 
+    /**
+     * Executes BaseRequirement.
+     */
     public BaseRequirement(
             @NotNull AbstractRequirement requirement,
             @NotNull IconSection icon
@@ -66,18 +81,30 @@ public class BaseRequirement extends BaseEntity {
         this.icon = icon;
     }
 
+    /**
+     * Returns whether met.
+     */
     public boolean isMet(@NotNull Player player) {
         return requirement.isMet(player);
     }
 
+    /**
+     * Executes calculateProgress.
+     */
     public double calculateProgress(@NotNull Player player) {
         return requirement.calculateProgress(player);
     }
 
+    /**
+     * Executes consume.
+     */
     public void consume(@NotNull Player player) {
         requirement.consume(player);
     }
 
+    /**
+     * Gets typeId.
+     */
     public String getTypeId() {
         return requirement.getTypeId();
     }

@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdr.view;
 
 import java.util.ArrayList;
@@ -87,7 +100,7 @@ public class TradeTargetSelectView extends BaseView {
         final RDR plugin = this.rdr.get(render);
         final TradeService tradeService = plugin.getTradeService();
         final List<TargetEntry> targets = tradeService == null
-            ? this.findLocalTargets(player)
+            ? this.findLocalTargets(player, plugin)
             : this.findTargets(player, tradeService);
 
         render.layoutSlot('s', this.createSummaryItem(player, targets.size()));
@@ -168,20 +181,35 @@ public class TradeTargetSelectView extends BaseView {
         final @NotNull TradeService tradeService
     ) {
         final List<TargetEntry> targets = new ArrayList<>();
-        for (final UUID targetUuid : tradeService.findTradeTargetUuids(viewer.getUniqueId(), ENTRY_SLOTS.length)) {
-            targets.add(new TargetEntry(targetUuid, this.resolvePlayerName(targetUuid)));
+        for (final TradeService.TradeTargetSnapshot targetSnapshot
+            : tradeService.findTradeTargets(viewer.getUniqueId(), ENTRY_SLOTS.length)) {
+            targets.add(new TargetEntry(
+                targetSnapshot.targetUuid(),
+                targetSnapshot.targetName(),
+                targetSnapshot.presenceState(),
+                targetSnapshot.serverId()
+            ));
         }
         targets.sort(Comparator.comparing(TargetEntry::name, String.CASE_INSENSITIVE_ORDER));
         return targets;
     }
 
-    private @NotNull List<TargetEntry> findLocalTargets(final @NotNull Player viewer) {
+    private @NotNull List<TargetEntry> findLocalTargets(
+        final @NotNull Player viewer,
+        final @NotNull RDR plugin
+    ) {
         final List<TargetEntry> targets = new ArrayList<>();
+        final String localServerRouteId = plugin.getServerRouteId();
         for (final Player onlinePlayer : Bukkit.getOnlinePlayers()) {
             if (onlinePlayer == null || onlinePlayer.getUniqueId().equals(viewer.getUniqueId())) {
                 continue;
             }
-            targets.add(new TargetEntry(onlinePlayer.getUniqueId(), onlinePlayer.getName()));
+            targets.add(new TargetEntry(
+                onlinePlayer.getUniqueId(),
+                onlinePlayer.getName(),
+                TradeService.PresenceState.LOCAL_ONLINE,
+                localServerRouteId
+            ));
         }
         targets.sort(Comparator.comparing(TargetEntry::name, String.CASE_INSENSITIVE_ORDER));
         return targets;
@@ -211,7 +239,11 @@ public class TradeTargetSelectView extends BaseView {
                 .build()
                 .component())
             .setLore(this.i18n("entry.lore", viewer)
-                .withPlaceholder("target", target.name())
+                .withPlaceholders(Map.of(
+                    "target", target.name(),
+                    "presence_state", this.resolvePresenceStateLabel(target.presenceState()),
+                    "server_id", this.normalizeServerIdForUi(target.serverId())
+                ))
                 .build()
                 .children())
             .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
@@ -235,9 +267,23 @@ public class TradeTargetSelectView extends BaseView {
         return offlinePlayer.getName() == null ? playerUuid.toString() : offlinePlayer.getName();
     }
 
+    private @NotNull String resolvePresenceStateLabel(final @NotNull TradeService.PresenceState presenceState) {
+        return switch (presenceState) {
+            case LOCAL_ONLINE -> "Local Online";
+            case REMOTE_ONLINE -> "Remote Online";
+            case OFFLINE -> "Offline";
+        };
+    }
+
+    private @NotNull String normalizeServerIdForUi(final @NotNull String serverId) {
+        return serverId == null || serverId.isBlank() ? "offline" : serverId;
+    }
+
     private record TargetEntry(
         UUID uuid,
-        String name
+        String name,
+        TradeService.PresenceState presenceState,
+        String serverId
     ) {
     }
 }

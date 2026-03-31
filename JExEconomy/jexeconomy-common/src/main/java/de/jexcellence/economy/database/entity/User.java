@@ -13,15 +13,13 @@ import java.util.UUID;
 
 /**
  * Entity representing a user (player) in the currency system.
- * <p>
- * Each user is uniquely identified by their UUID and stores their current player name.
- * This entity is mapped to the {@code p_player} table in the database.
- * </p>
  *
- * <p>
- * Example usages include tracking player balances, associating currencies with players,
+ * <p>Each user is uniquely identified by their UUID and stores their current player name.
+ * This entity is mapped to the {@code p_player} table in the database.
+ *
+ *
+ * <p>Example usages include tracking player balances, associating currencies with players,
  * and managing player-related data in the system.
- * </p>
  *
  * @author JExcellence
  */
@@ -153,9 +151,8 @@ public class User extends BaseEntity {
 	
 	/**
 	 * Checks if this user is equal to another object.
-	 * <p>
-	 * Two users are considered equal if their UUIDs are equal.
-	 * </p>
+ *
+ * <p>Two users are considered equal if their UUIDs are equal.
 	 *
 	 * @param otherObject the object to compare with, can be null
 	 * @return {@code true} if the objects are equal, otherwise {@code false}

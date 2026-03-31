@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rplatform.job;
 
 import com.raindropcentral.rplatform.job.impl.EcoJobsJobBridge;
@@ -6,6 +19,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -53,6 +67,17 @@ public interface JobBridge {
     boolean isAvailable();
 
     /**
+     * Lists jobs currently exposed by the bridged plugin for the supplied player context.
+     *
+     * @param player player opening the job picker
+     * @return immutable list of available jobs
+     * @throws NullPointerException if {@code player} is {@code null}
+     */
+    default @NotNull List<JobDescriptor> getAvailableJobs(@NotNull Player player) {
+        return List.of();
+    }
+
+    /**
      * Resolves a player's level for a specific job.
      *
      * @param player player to inspect
@@ -94,6 +119,22 @@ public interface JobBridge {
      * @throws NullPointerException if {@code player} or {@code jobId} is {@code null}
      */
     default boolean consumeJobLevel(@NotNull Player player, @NotNull String jobId, double amount) {
+        return false;
+    }
+
+    /**
+     * Adds one or more levels to a player job.
+     *
+     * <p>Write support is optional. Bridges should return {@code false} when the external API does
+     * not provide a safe additive level grant path.</p>
+     *
+     * @param player player to modify
+     * @param jobId job identifier to add levels to
+     * @param amount number of levels to add
+     * @return {@code true} when the level grant succeeds
+     * @throws NullPointerException if {@code player} or {@code jobId} is {@code null}
+     */
+    default boolean addJobLevels(@NotNull Player player, @NotNull String jobId, int amount) {
         return false;
     }
 
@@ -154,5 +195,36 @@ public interface JobBridge {
      */
     static @NotNull List<JobBridge> getDefaultBridges() {
         return DEFAULT_BRIDGES;
+    }
+
+    /**
+     * Returns all available job bridges in discovery order.
+     *
+     * @return immutable list of available bridges
+     */
+    static @NotNull List<JobBridge> getAvailableBridges() {
+        final List<JobBridge> availableBridges = new ArrayList<>();
+        for (final JobBridge bridge : DEFAULT_BRIDGES) {
+            if (bridge.isAvailable()) {
+                availableBridges.add(bridge);
+            }
+        }
+        return List.copyOf(availableBridges);
+    }
+
+    /**
+     * Immutable job descriptor used by claim-cookie job pickers.
+     *
+     * @param integrationId normalized bridge integration identifier
+     * @param pluginName plugin name backing the job
+     * @param jobId normalized job identifier
+     * @param displayName user-facing job label
+     */
+    record JobDescriptor(
+            @NotNull String integrationId,
+            @NotNull String pluginName,
+            @NotNull String jobId,
+            @NotNull String displayName
+    ) {
     }
 }

@@ -1,4 +1,4 @@
-# RCore Showcase
+# RCore
 
 RCore is the **free core dependency plugin** for the [RaindropCentral](<https://raindropcentral.com>) stack.  
 It powers shared systems for **[RDQ (RaindropQuests)](<https://raindropcentral.com/products/rdq-free>)**, **[RDR (RaindropReserve)](<https://raindropcentral.com/products/rdr-free>)**, and **[RDS (RaindropShops)](<https://raindropcentral.com/products/rds-free>)**.
@@ -105,13 +105,8 @@ RCore is mostly infrastructure, but it includes connection commands for Raindrop
 
 | Command | Description | Permission |
 |---|---|---|
-| `/rcconnect <api-key>` | Connect this server to RaindropCentral | `rcore.central.connect` |
-| `/rcdisconnect` | Disconnect this server from RaindropCentral | `rcore.central.disconnect` |
-
-Aliases:
-
-- `/rclink` for `/rcconnect`
-- `/rcunlink` for `/rcdisconnect`
+| `/rc connect <api-key>` | Connect this server to RaindropCentral | `rcore.central.connect` |
+| `/rc disconnect <api-key>` | Disconnect this server from RaindropCentral | `rcore.central.disconnect` |
 
 ## Permissions
 

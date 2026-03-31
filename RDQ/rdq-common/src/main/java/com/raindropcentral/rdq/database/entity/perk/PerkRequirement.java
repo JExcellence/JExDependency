@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.database.entity.perk;
 
 import com.raindropcentral.rdq.config.utility.IconSection;
@@ -16,10 +29,9 @@ import java.util.Objects;
 
 /**
  * Entity representing a requirement that must be met to unlock a perk.
- * <p>
- * This entity encapsulates an {@link AbstractRequirement} from RPlatform and its visual icon,
+ *
+ * <p>This entity encapsulates an {@link AbstractRequirement} from RPlatform and its visual icon,
  * providing convenience methods for requirement evaluation and progress calculation.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -138,6 +150,9 @@ public class PerkRequirement extends BaseEntity {
         return requirement.getDescriptionKey();
     }
 
+    /**
+     * Executes equals.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -152,6 +167,9 @@ public class PerkRequirement extends BaseEntity {
                 displayOrder == that.displayOrder;
     }
 
+    /**
+     * Returns whether hCode.
+     */
     @Override
     public int hashCode() {
         if (this.getId() != null) {
@@ -161,6 +179,9 @@ public class PerkRequirement extends BaseEntity {
         return Objects.hash(perk, requirement, displayOrder);
     }
 
+    /**
+     * Executes toString.
+     */
     @Override
     public String toString() {
         return "PerkRequirement{" +

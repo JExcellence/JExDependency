@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rplatform.reward.json;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,6 +23,9 @@ import com.raindropcentral.rplatform.reward.RewardRegistry;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Represents the RewardParser API type.
+ */
 public final class RewardParser {
 
     private static ObjectMapper objectMapper;
@@ -17,6 +33,9 @@ public final class RewardParser {
 
     private RewardParser() {}
 
+    /**
+     * Gets objectMapper.
+     */
     public static ObjectMapper getObjectMapper() {
         if (objectMapper == null) {
             synchronized (MAPPER_LOCK) {
@@ -44,6 +63,9 @@ public final class RewardParser {
         return mapper;
     }
 
+    /**
+     * Executes parse.
+     */
     public static AbstractReward parse(@NotNull final String json) {
         try {
             return getObjectMapper().readValue(json, AbstractReward.class);
@@ -52,6 +74,9 @@ public final class RewardParser {
         }
     }
 
+    /**
+     * Executes serialize.
+     */
     public static String serialize(@NotNull final AbstractReward reward) {
         try {
             return getObjectMapper().writeValueAsString(reward);
@@ -60,6 +85,9 @@ public final class RewardParser {
         }
     }
 
+    /**
+     * Executes resetMapper.
+     */
     public static void resetMapper() {
         objectMapper = null;
     }

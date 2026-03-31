@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rds.service.shop;
 
 import com.raindropcentral.rds.RDS;
@@ -25,6 +38,9 @@ public final class AdminShopStockSupport {
     private AdminShopStockSupport() {
     }
 
+    /**
+     * Returns whether unlimitedAdminStock.
+     */
     public static boolean isUnlimitedAdminStock(
             final @NotNull Shop shop,
             final @NotNull ShopItem item
@@ -32,6 +48,9 @@ public final class AdminShopStockSupport {
         return shop.isAdminShop() && !item.hasAdminStockLimit();
     }
 
+    /**
+     * Executes usesLimitedAdminStock.
+     */
     public static boolean usesLimitedAdminStock(
             final @NotNull Shop shop,
             final @NotNull ShopItem item
@@ -39,6 +58,9 @@ public final class AdminShopStockSupport {
         return shop.isAdminShop() && item.hasAdminStockLimit();
     }
 
+    /**
+     * Gets visibleStockAmount.
+     */
     public static int getVisibleStockAmount(
             final @NotNull Shop shop,
             final @NotNull ShopItem item
@@ -50,6 +72,9 @@ public final class AdminShopStockSupport {
         return item.getAmount();
     }
 
+    /**
+     * Executes configureStockLimit.
+     */
     public static @NotNull ShopItem configureStockLimit(
             final @NotNull RDS plugin,
             final @NotNull ShopItem item,
@@ -72,6 +97,9 @@ public final class AdminShopStockSupport {
         );
     }
 
+    /**
+     * Executes configureResetTimer.
+     */
     public static @NotNull ShopItem configureResetTimer(
             final @NotNull RDS plugin,
             final @NotNull ShopItem item,
@@ -88,6 +116,9 @@ public final class AdminShopStockSupport {
         );
     }
 
+    /**
+     * Executes consumeLimitedStock.
+     */
     public static @NotNull ShopItem consumeLimitedStock(
             final @NotNull RDS plugin,
             final @NotNull ShopItem item,
@@ -108,6 +139,9 @@ public final class AdminShopStockSupport {
         );
     }
 
+    /**
+     * Executes applyRestock.
+     */
     public static boolean applyRestock(
             final @NotNull RDS plugin,
             final @NotNull Shop shop
@@ -138,6 +172,9 @@ public final class AdminShopStockSupport {
         return changed;
     }
 
+    /**
+     * Executes applyRestock.
+     */
     public static @NotNull ShopItem applyRestock(
             final @NotNull RDS plugin,
             final @NotNull ShopItem item
@@ -153,6 +190,9 @@ public final class AdminShopStockSupport {
         };
     }
 
+    /**
+     * Executes resolveReferenceTimeForMode.
+     */
     public static long resolveReferenceTimeForMode(
             final @NotNull AdminShopSection config,
             final @NotNull AdminShopRestockMode restockMode
@@ -162,6 +202,9 @@ public final class AdminShopStockSupport {
                 : System.currentTimeMillis();
     }
 
+    /**
+     * Executes countVisibleStock.
+     */
     public static int countVisibleStock(
             final @NotNull Shop shop
     ) {

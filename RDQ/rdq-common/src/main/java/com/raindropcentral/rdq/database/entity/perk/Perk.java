@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.database.entity.perk;
 
 import com.raindropcentral.rdq.config.utility.IconSection;
@@ -18,10 +31,9 @@ import java.util.Set;
 
 /**
  * Entity representing a perk definition in the RaindropQuests system.
- * <p>
- * This entity stores the configuration and metadata for a perk that players can unlock and activate.
+ *
+ * <p>This entity stores the configuration and metadata for a perk that players can unlock and activate.
  * It includes the perk's type, category, requirements, unlock rewards, and effect configuration.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -177,6 +189,9 @@ public class Perk extends BaseEntity {
         reward.setPerk(null);
     }
 
+    /**
+     * Executes equals.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -189,6 +204,9 @@ public class Perk extends BaseEntity {
         return identifier != null && identifier.equals(that.identifier);
     }
 
+    /**
+     * Returns whether hCode.
+     */
     @Override
     public int hashCode() {
         if (this.getId() != null) {
@@ -198,6 +216,9 @@ public class Perk extends BaseEntity {
         return identifier != null ? identifier.hashCode() : System.identityHashCode(this);
     }
 
+    /**
+     * Executes toString.
+     */
     @Override
     public String toString() {
         return "Perk{" +

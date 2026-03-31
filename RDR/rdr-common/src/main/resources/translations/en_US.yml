@@ -1049,6 +1049,8 @@ trade_target_select_ui:
     name: "<gradient:#38bdf8:#60a5fa>[Invite]</gradient> <white>{target}</white>"
     lore:
       - "<gray>Send a persisted trade invite to</gray> <white>{target}</white><gray>.</gray>"
+      - "<gray>Presence:</gray> <white>{presence_state}</white>"
+      - "<gray>Server:</gray> <white>{server_id}</white>"
       - "<yellow>Click to invite this player.</yellow>"
   empty:
     name: "<gradient:#ef4444:#f87171>[X] No Targets Found</gradient>"
@@ -1067,8 +1069,11 @@ trade_current_ui:
     lore:
       - "<gray>Counterparty:</gray> <white>{counterparty}</white>"
       - "<gray>Status:</gray> <white>{status}</white>"
+      - "<gray>Presence:</gray> <white>{counterparty_presence}</white>"
+      - "<gray>Server:</gray> <white>{counterparty_server}</white>"
       - "<gray>Trade UUID:</gray> <white>{trade_uuid}</white>"
       - "<yellow>Click to open this trade session.</yellow>"
+      - "<yellow>Right-click to join your partner server.</yellow>"
   actions:
     inbox:
       name: "<gradient:#f59e0b:#f97316>[Inbox] Claims & Requests</gradient>"
@@ -1101,8 +1106,11 @@ trade_inbox_ui:
       name: "<gradient:#38bdf8:#60a5fa>[Invite]</gradient> <white>{from}</white>"
       lore:
         - "<gray>From:</gray> <white>{from}</white>"
+        - "<gray>Presence:</gray> <white>{from_presence}</white>"
+        - "<gray>Server:</gray> <white>{from_server}</white>"
         - "<gray>Trade UUID:</gray> <white>{trade_uuid}</white>"
         - "<yellow>Click to open this trade session.</yellow>"
+        - "<yellow>Right-click to join sender server.</yellow>"
     delivery:
       name: "<gradient:#22c55e:#86efac>[Claim]</gradient> <white>{trade_uuid}</white>"
       lore:
@@ -1123,6 +1131,8 @@ trade_session_ui:
       - "<gray>Status:</gray> <white>{status}</white>"
       - "<gray>Trade UUID:</gray> <white>{trade_uuid}</white>"
       - "<gray>Revision:</gray> <white>{revision}</white>"
+      - "<gray>Your Presence:</gray> <white>{self_presence}</white> <gray>on</gray> <white>{self_server}</white>"
+      - "<gray>Partner Presence:</gray> <white>{partner_presence}</white> <gray>on</gray> <white>{partner_server}</white>"
       - "<gray>Your Vault offer:</gray> <white>{self_vault}</white>"
       - "<gray>Partner Vault offer:</gray> <white>{partner_vault}</white>"
       - "<gray>Your currencies:</gray> <white>{self_currency_count}</white> <gray>(total:</gray> <white>{self_currency_total}</white><gray>)</gray>"
@@ -1162,6 +1172,12 @@ trade_session_ui:
       lore:
         - "<gray>Choose add/remove for Vault or JExEconomy currencies.</gray>"
         - "<yellow>Click to open currency selector.</yellow>"
+    join_partner:
+      name: "<gradient:#22c55e:#86efac>[Portal] Join Partner Server</gradient>"
+      lore:
+        - "<gray>Partner presence:</gray> <white>{presence}</white>"
+        - "<gray>Destination server:</gray> <white>{server}</white>"
+        - "<yellow>Click to request proxy transfer.</yellow>"
     ready_lock:
       name: "<gradient:#22c55e:#86efac>[Ready] Lock Offer</gradient>"
       lore:
@@ -1252,6 +1268,9 @@ trade:
     invalid_state: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>This action is not valid for the current trade state.</gray>"
     stale: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Trade data changed on another server. Refreshing session.</gray>"
     expired: "<gradient:#ef4444:#f87171>[Expired]</gradient> <gray>That trade invite already expired.</gray>"
+    join_partner_routing: "<gradient:#38bdf8:#7dd3fc>🧭 Routing you to partner server <white>{server}</white><gray>...</gray></gradient>"
+    join_partner_already_here: "<gradient:#22c55e:#86efac>✓ You are already on server <white>{server}</white><gray>.</gray></gradient>"
+    join_partner_unavailable: "<gradient:#ef4444:#f87171>⚠ Could not route to partner server <white>{server}</white><gray>.</gray></gradient>"
 
 storage:
   message:

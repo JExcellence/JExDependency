@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rplatform;
 
 import com.raindropcentral.rplatform.api.PlatformAPI;
@@ -10,6 +23,8 @@ import com.raindropcentral.rplatform.logging.PluginLogger;
 import com.raindropcentral.rplatform.metrics.BStatsMetrics;
 import com.raindropcentral.rplatform.metrics.MetricsManager;
 import com.raindropcentral.rplatform.placeholder.PlaceholderManager;
+import com.raindropcentral.rplatform.proxy.NoOpProxyService;
+import com.raindropcentral.rplatform.proxy.ProxyService;
 import com.raindropcentral.rplatform.requirement.BuiltInRequirementProvider;
 import com.raindropcentral.rplatform.scheduler.ISchedulerAdapter;
 import com.raindropcentral.rplatform.service.ServiceRegistry;
@@ -24,7 +39,7 @@ import java.io.File;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * Primary orchestrator for the shared Raindrop platform runtime that binds plugin lifecycle
+ * Primary orchestrator for the shared Raindrop platform runtime that binds plugin lifecycle.
  * components, manages async initialization, and exposes integrations such as metrics,
  * placeholders, and database resources.
  *
@@ -46,25 +61,25 @@ public class RPlatform {
     private static RPlatform instance;
 
     /**
-     * Hosting {@link JavaPlugin} providing lifecycle hooks, configuration paths, and scheduler
+     * Hosting {@link JavaPlugin} providing lifecycle hooks, configuration paths, and scheduler.
      * access for the platform.
      */
     private final JavaPlugin plugin;
 
     /**
-     * Platform type resolved from the running environment used to tailor integrations such as
+     * Platform type resolved from the running environment used to tailor integrations such as.
      * scheduler adapters and metrics exporters.
      */
     private final PlatformType platformType;
 
     /**
-     * Abstraction over Bukkit/Folia APIs enabling shared command registration, task scheduling, and
+     * Abstraction over Bukkit/Folia APIs enabling shared command registration, task scheduling, and.
      * shutdown behaviour.
      */
     private final PlatformAPI platformAPI;
 
     /**
-     * Scheduler adapter that runs asynchronous tasks using an implementation suitable for the
+     * Scheduler adapter that runs asynchronous tasks using an implementation suitable for the.
      * detected {@link PlatformType}.
      */
     private final ISchedulerAdapter scheduler;
@@ -75,10 +90,14 @@ public class RPlatform {
     private final ServiceRegistry serviceRegistry;
 
     /**
-     * Platform-aware logger emitting lifecycle and diagnostic messages for both initialization and
+     * Platform-aware logger emitting lifecycle and diagnostic messages for both initialization and.
      * shutdown sequences.
      */
     private final PluginLogger logger;
+    /**
+     * Proxy bridge used by network-aware modules when a proxy coordinator is available.
+     */
+    private ProxyService proxyService;
 
     /**
      * Handles command updates for JEx command framework integrations once initialization completes.
@@ -121,7 +140,7 @@ public class RPlatform {
     private boolean initialized;
 
     /**
-     * Creates a new platform orchestrator bound to the provided plugin and resolves the environment
+     * Creates a new platform orchestrator bound to the provided plugin and resolves the environment.
      * specific adapters required for initialization.
      *
      * @param plugin plugin instance that owns the platform runtime and supplies configuration paths
@@ -134,6 +153,7 @@ public class RPlatform {
         this.scheduler = ISchedulerAdapter.create(plugin, platformType);
         this.serviceRegistry = new ServiceRegistry();
         this.logger = CentralLogger.getLogger(plugin);
+        this.proxyService = NoOpProxyService.createDefault();
         this.premiumVersion = false;
         this.initialized = false;
         
@@ -142,8 +162,13 @@ public class RPlatform {
     }
 
     /**
-     * Asynchronously initializes translation, command, and database resources required by the
+     * Asynchronously initializes translation, command, and database resources required by the.
      * platform. Subsequent invocations no-op once initialization finishes.
+     *
+     * <p>Lightweight registry and helper setup runs immediately during plugin enable while blocking
+     * database bootstrap is dispatched through the scheduler's asynchronous executor. Translation
+     * resources are then loaded via their own asynchronous pipeline so Folia region threads never
+     * perform JDBC startup work.</p>
      *
      * @return a future that completes when asynchronous resource setup finishes or immediately when
      *         initialization has already been performed
@@ -152,27 +177,27 @@ public class RPlatform {
         if (initialized) {
             return CompletableFuture.completedFuture(null);
         }
-        logger.info("Preparing Async translation task");
-        return CompletableFuture.runAsync(() -> {
-            logger.info("Initializing RPlatform for " + platformType.name());
+        logger.info("Preparing platform initialization task");
+        logger.info("Initializing RPlatform for " + platformType.name());
 
-            // Initialize requirement system first
-            logger.info("Initializing requirement system...");
-            BuiltInRequirementProvider.initialize();
-            logger.info("Requirement system initialized");
+        // Initialize requirement system first
+        logger.info("Initializing requirement system...");
+        BuiltInRequirementProvider.initialize();
+        logger.info("Requirement system initialized");
 
+        translationManager = TranslationManager.builder(plugin)
+                .defaultLocale("en_US").supportedLocales("de_DE", "en_US")
+                .enableMetrics(true)
+                .build();
+
+        commandUpdater = new CommandUpdater(plugin);
+
+        return this.scheduler.runAsyncFuture(() -> {
             this.initializeDatabaseResources();
 
-            translationManager = TranslationManager.builder(plugin)
-                    .defaultLocale("en_US").supportedLocales("de_DE", "en_US")
-                    .enableMetrics(true)
-                    .build();
-            
-            commandUpdater = new CommandUpdater(plugin);
-            
             logger.info("RPlatform initialized successfully");
             initialized = true;
-        }, scheduler::runAsync).thenCompose(v -> {
+        }).thenCompose(v -> {
             // Initialize translations after platform setup - must be awaited
             logger.info("Initializing translation system...");
             return translationManager.initialize().thenRun(() -> {
@@ -189,10 +214,9 @@ public class RPlatform {
 
     /**
      * Initializes Geyser/Floodgate integration for Bedrock player detection.
-     * <p>
-     * This method should be called during plugin initialization if Bedrock support is desired.
+ *
+ * <p>This method should be called during plugin initialization if Bedrock support is desired.
      * The service will gracefully handle missing Floodgate installations.
-     * </p>
      */
     public void initializeGeyser() {
         if (geyserService == null) {
@@ -204,7 +228,7 @@ public class RPlatform {
     }
 
     /**
-     * Initializes metrics collection through the {@link MetricsManager} when provided a valid
+     * Initializes metrics collection through the {@link MetricsManager} when provided a valid.
      * service identifier.
      *
      * @param serviceId bStats service identifier; values less than or equal to zero are ignored to
@@ -229,7 +253,7 @@ public class RPlatform {
     }
 
     /**
-     * Sets up PlaceholderAPI integration by registering the platform's placeholders under the given
+     * Sets up PlaceholderAPI integration by registering the platform's placeholders under the given.
      * identifier. Subsequent calls are ignored once registration occurs.
      *
      * @param identifier PlaceholderAPI identifier namespace used when registering expansions
@@ -243,7 +267,7 @@ public class RPlatform {
     }
 
     /**
-     * Detects whether the premium platform build is available by checking for a marker resource on
+     * Detects whether the premium platform build is available by checking for a marker resource on.
      * the supplied class loader.
      *
      * @param resourceClass class whose class loader should contain the premium marker resource
@@ -257,7 +281,7 @@ public class RPlatform {
     }
 
     /**
-     * Shuts down platform integrations by unregistering placeholders, closing API adapters, and
+     * Shuts down platform integrations by unregistering placeholders, closing API adapters, and.
      * releasing logging resources.
      */
     public void shutdown() {
@@ -338,6 +362,27 @@ public class RPlatform {
     }
 
     /**
+     * Returns the currently configured proxy bridge.
+     *
+     * @return active proxy bridge implementation
+     */
+    public @NotNull ProxyService getProxyService() {
+        return this.proxyService;
+    }
+
+    /**
+     * Replaces the active proxy bridge implementation.
+     *
+     * <p>Passing {@code null} restores the local no-op bridge so standalone Paper installs remain
+     * functional.</p>
+     *
+     * @param proxyService replacement proxy bridge, or {@code null} for no-op fallback
+     */
+    public void setProxyService(final @Nullable ProxyService proxyService) {
+        this.proxyService = proxyService == null ? NoOpProxyService.createDefault() : proxyService;
+    }
+
+    /**
      * Gives access to the command updater once initialization completes.
      *
      * @return command updater used for managing JEx command refreshes
@@ -394,7 +439,7 @@ public class RPlatform {
     }
 
     /**
-     * Creates the database directory, copies the bundled Hibernate configuration, and builds the
+     * Creates the database directory, copies the bundled Hibernate configuration, and builds the.
      * {@link EntityManagerFactory} used by platform modules.
      *
      * <p>The method writes files within the plugin data folder and may throw unchecked exceptions

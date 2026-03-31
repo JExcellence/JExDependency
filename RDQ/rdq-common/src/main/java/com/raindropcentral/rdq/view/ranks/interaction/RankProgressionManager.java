@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.view.ranks.interaction;
 
 
@@ -23,7 +36,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Manages rank progression operations including starting progression,
+ * Manages rank progression operations including starting progression,.
  * checking completion, handling rank redemption, and automatic rank assignment.
  *
  * Refactored to follow the working pattern from RankPathOverview with:
@@ -39,6 +52,9 @@ public class RankProgressionManager {
 	private final RDQ rdq;
 	private final RankUpgradeProgressService rankUpgradeProgressService;
 	
+	/**
+	 * Executes RankProgressionManager.
+	 */
 	public RankProgressionManager(final @NotNull RDQ rdq) {
 		this.rdq = rdq;
 		this.rankUpgradeProgressService = new RankUpgradeProgressService(this.rdq);
@@ -621,7 +637,7 @@ public class RankProgressionManager {
 			}
 			
 			// Fire custom event - RankRewardListener will handle the rewards
-			Bukkit.getScheduler().runTask(this.rdq.getPlugin(), () -> {
+			this.rdq.getPlatform().getScheduler().runAtEntity(player, () -> {
 				final RankAssignedEvent event = new RankAssignedEvent(player, rdqPlayer, rank);
 				Bukkit.getPluginManager().callEvent(event);
 			});

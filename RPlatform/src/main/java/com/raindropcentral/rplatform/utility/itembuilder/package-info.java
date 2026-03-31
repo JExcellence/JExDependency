@@ -1,5 +1,5 @@
 /**
- * Fluent item builder implementations that bridge Adventure components with legacy Bukkit
+ * Fluent item builder implementations that bridge Adventure components with legacy Bukkit.
  * metadata APIs.
  *
  * <p>The {@link com.raindropcentral.rplatform.utility.itembuilder.AItemBuilder} hierarchy

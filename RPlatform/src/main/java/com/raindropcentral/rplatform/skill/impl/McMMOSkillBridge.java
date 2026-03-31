@@ -1,10 +1,27 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rplatform.skill.impl;
 
+import com.raindropcentral.rplatform.skill.SkillBridge;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -46,16 +63,19 @@ public final class McMMOSkillBridge extends AbstractReflectionSkillBridge {
     public McMMOSkillBridge() {
     }
 
+    /** {@inheritDoc} */
     @Override
     public @NotNull String getIntegrationId() {
         return INTEGRATION_ID;
     }
 
+    /** {@inheritDoc} */
     @Override
     public @NotNull String getPluginName() {
         return PLUGIN_NAME;
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isAvailable() {
         final Plugin installedPlugin = resolvePlugin(PLUGIN_NAME, "mcMMO");
@@ -79,6 +99,7 @@ public final class McMMOSkillBridge extends AbstractReflectionSkillBridge {
         return this.experienceApiClass != null && this.skillTypeClass != null;
     }
 
+    /** {@inheritDoc} */
     @Override
     public double getSkillLevel(@NotNull Player player, @NotNull String skillId) {
         if (!isAvailable() || skillId.isBlank()) {
@@ -140,6 +161,59 @@ public final class McMMOSkillBridge extends AbstractReflectionSkillBridge {
         }
     }
 
+    @Override
+    public @NotNull List<SkillBridge.SkillDescriptor> getAvailableSkills(@NotNull Player player) {
+        if (!isAvailable() || this.skillTypeClass == null) {
+            return List.of();
+        }
+
+        final Object[] constants = this.skillTypeClass.getEnumConstants();
+        if (constants == null || constants.length == 0) {
+            return List.of();
+        }
+
+        final List<SkillBridge.SkillDescriptor> skills = new ArrayList<>();
+        for (final Object constant : constants) {
+            if (constant == null) {
+                continue;
+            }
+
+            final String skillId = constant.toString();
+            skills.add(new SkillBridge.SkillDescriptor(
+                    this.getIntegrationId(),
+                    this.getPluginName(),
+                    skillId,
+                    titleCase(skillId)
+            ));
+        }
+
+        return skills.stream()
+                .sorted(Comparator.comparing(SkillBridge.SkillDescriptor::displayName, String.CASE_INSENSITIVE_ORDER))
+                .toList();
+    }
+
+    @Override
+    public boolean addSkillLevels(@NotNull Player player, @NotNull String skillId, int amount) {
+        if (!isAvailable() || skillId.isBlank() || amount <= 0) {
+            return false;
+        }
+
+        try {
+            final String trimmedSkillId = skillId.trim();
+            final double previousLevel = getSkillLevel(player, trimmedSkillId);
+            final Object resolvedSkillType = resolveEnumConstant(this.skillTypeClass, trimmedSkillId);
+            final Object user = resolveMcMMOUser(player);
+
+            if (this.tryAddLevels(player, user, resolvedSkillType, trimmedSkillId, amount)) {
+                return getSkillLevel(player, trimmedSkillId) >= previousLevel + amount;
+            }
+        } catch (Exception exception) {
+            LOGGER.log(Level.FINE, "Failed to add mcMMO levels for " + player.getName(), exception);
+        }
+
+        return false;
+    }
+
     private @Nullable Object resolveMcMMOUser(final @NotNull Player player) {
         if (this.userManagerClass == null) {
             return null;
@@ -150,6 +224,44 @@ public final class McMMOSkillBridge extends AbstractReflectionSkillBridge {
             invokeStaticOptional(this.userManagerClass, "getPlayer", player.getUniqueId()),
             invokeStaticOptional(this.userManagerClass, "getOfflinePlayer", player.getUniqueId())
         );
+    }
+
+    private boolean tryAddLevels(
+            final @NotNull Player player,
+            final @Nullable Object user,
+            final @Nullable Object resolvedSkillType,
+            final @NotNull String skillId,
+            final int amount
+    ) {
+        final List<InvocationAttempt> attempts = new ArrayList<>();
+        if (resolvedSkillType != null) {
+            attempts.add(invokeStaticOptionalAttempt(this.experienceApiClass, "addLevels", player, resolvedSkillType, amount));
+            attempts.add(invokeStaticOptionalAttempt(this.experienceApiClass, "addLevel", player, resolvedSkillType, amount));
+            attempts.add(invokeStaticOptionalAttempt(this.experienceApiClass, "addLevels", player.getUniqueId(), resolvedSkillType, amount));
+            attempts.add(invokeStaticOptionalAttempt(this.experienceApiClass, "addLevel", player.getUniqueId(), resolvedSkillType, amount));
+            attempts.add(invokeOptionalAttempt(user, "addLevels", resolvedSkillType, amount));
+            attempts.add(invokeOptionalAttempt(user, "addLevel", resolvedSkillType, amount));
+        }
+
+        attempts.add(invokeStaticOptionalAttempt(this.experienceApiClass, "addLevels", player, skillId, amount));
+        attempts.add(invokeStaticOptionalAttempt(this.experienceApiClass, "addLevel", player, skillId, amount));
+        attempts.add(invokeStaticOptionalAttempt(this.experienceApiClass, "addLevels", player.getUniqueId(), skillId, amount));
+        attempts.add(invokeStaticOptionalAttempt(this.experienceApiClass, "addLevel", player.getUniqueId(), skillId, amount));
+        attempts.add(invokeOptionalAttempt(user, "addLevels", skillId, amount));
+        attempts.add(invokeOptionalAttempt(user, "addLevel", skillId, amount));
+
+        for (final InvocationAttempt attempt : attempts) {
+            if (!attempt.invoked()) {
+                continue;
+            }
+            final Boolean booleanResult = asBoolean(attempt.value());
+            if (booleanResult != null) {
+                return booleanResult;
+            }
+            return true;
+        }
+
+        return false;
     }
 
     private @Nullable Class<?> resolveClass(final @NotNull Plugin installedPlugin, final @NotNull String[] candidates) {

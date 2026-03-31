@@ -26,7 +26,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Remaps package prefixes for classes and resources contained within a JAR. The implementation preserves manifests,
+ * Remaps package prefixes for classes and resources contained within a JAR. The implementation preserves manifests,.
  * rewrites {@code META-INF/services} descriptors, supports multi-release layouts and strips signature files that become
  * invalid once content is modified. It is used by both the Paper loader and legacy remapping manager to relocate
  * third-party dependencies into plugin-specific namespaces.
@@ -38,7 +38,7 @@ public class PackageRemapper {
     private final Map<String, String> packageMappings = new LinkedHashMap<>();
 
     /**
-     * Registers a relocation from the supplied original package to the target package. Package names are normalised and
+     * Registers a relocation from the supplied original package to the target package. Package names are normalised and.
      * empty/self-mapping values are ignored.
      *
      * @param originalPackage source package to relocate (dot notation)
@@ -63,7 +63,7 @@ public class PackageRemapper {
     }
 
     /**
-     * Applies registered relocations to the input jar and writes the transformed jar to {@code outputJar}. When no
+     * Applies registered relocations to the input jar and writes the transformed jar to {@code outputJar}. When no.
      * relocations are registered the method performs a verbatim copy while still stripping invalid signature files.
      *
      * @param inputJar   path to the jar that should be remapped
@@ -377,6 +377,9 @@ public class PackageRemapper {
                     ));
         }
 
+        /**
+         * Executes map.
+         */
         @Override
         public String map(final String internalName) {
             if (internalName == null) return null;
@@ -387,6 +390,9 @@ public class PackageRemapper {
             return relocateInternal(internalName);
         }
 
+        /**
+         * Executes mapPackageName.
+         */
         @Override
         public String mapPackageName(final String name) {
             if (name == null) return null;

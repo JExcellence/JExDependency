@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rplatform.requirement.impl;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -15,6 +28,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Represents the LocationRequirement API type.
+ */
 public final class LocationRequirement extends AbstractRequirement {
 
     private static final Logger LOGGER = Logger.getLogger(LocationRequirement.class.getName());
@@ -40,14 +56,23 @@ public final class LocationRequirement extends AbstractRequirement {
     @JsonIgnore
     private transient volatile World cachedWorld;
 
+    /**
+     * Executes LocationRequirement.
+     */
     public LocationRequirement(@NotNull String requiredWorld, double x, double y, double z, double requiredDistance) {
         this(requiredWorld, null, new Coordinates(x, y, z), requiredDistance, null);
     }
 
+    /**
+     * Executes LocationRequirement.
+     */
     public LocationRequirement(@NotNull String requiredWorld, @NotNull String requiredRegion) {
         this(requiredWorld, requiredRegion, null, 0.0, null);
     }
 
+    /**
+     * Executes LocationRequirement.
+     */
     @JsonCreator
     public LocationRequirement(@JsonProperty("requiredWorld") @Nullable String requiredWorld,
                               @JsonProperty("requiredRegion") @Nullable String requiredRegion,
@@ -76,6 +101,9 @@ public final class LocationRequirement extends AbstractRequirement {
         this.description = description;
     }
 
+    /**
+     * Returns whether met.
+     */
     @Override
     public boolean isMet(@NotNull Player player) {
         var playerLocation = player.getLocation();
@@ -93,6 +121,9 @@ public final class LocationRequirement extends AbstractRequirement {
         return true;
     }
 
+    /**
+     * Executes calculateProgress.
+     */
     @Override
     public double calculateProgress(@NotNull Player player) {
         var playerLocation = player.getLocation();
@@ -117,27 +148,51 @@ public final class LocationRequirement extends AbstractRequirement {
         return Math.max(0.0, Math.min(1.0, progress));
     }
 
+    /**
+     * Executes consume.
+     */
     @Override
     public void consume(@NotNull Player player) {}
 
+    /**
+     * Gets descriptionKey.
+     */
     @Override
     @NotNull
     public String getDescriptionKey() { return "requirement.location"; }
 
+    /**
+     * Gets requiredWorld.
+     */
     @Nullable
     public String getRequiredWorld() { return this.requiredWorld; }
 
+    /**
+     * Gets requiredRegion.
+     */
     @Nullable
     public String getRequiredRegion() { return this.requiredRegion; }
 
+    /**
+     * Gets requiredCoordinates.
+     */
     @Nullable
     public Coordinates getRequiredCoordinates() { return this.requiredCoordinates; }
 
+    /**
+     * Gets requiredDistance.
+     */
     public double getRequiredDistance() { return this.requiredDistance; }
 
+    /**
+     * Gets description.
+     */
     @Nullable
     public String getDescription() { return this.description; }
 
+    /**
+     * Gets currentDistance.
+     */
     @JsonIgnore
     public double getCurrentDistance(final @NotNull Player player) {
         if (this.requiredCoordinates == null) return -1.0;
@@ -147,21 +202,33 @@ public final class LocationRequirement extends AbstractRequirement {
         return playerLocation.distance(targetLocation);
     }
 
+    /**
+     * Returns whether inCorrectWorld.
+     */
     @JsonIgnore
     public boolean isInCorrectWorld(final @NotNull Player player) {
         return this.requiredWorld == null || this.requiredWorld.equals(player.getWorld().getName());
     }
 
+    /**
+     * Returns whether withinDistance.
+     */
     @JsonIgnore
     public boolean isWithinDistance(final @NotNull Player player) {
         return this.requiredCoordinates == null || this.getCurrentDistance(player) <= this.requiredDistance;
     }
 
+    /**
+     * Returns whether inCorrectRegion.
+     */
     @JsonIgnore
     public boolean isInCorrectRegion(final @NotNull Player player) {
         return this.requiredRegion == null || this.isInRegion(player.getLocation(), this.requiredRegion);
     }
 
+    /**
+     * Gets formattedStatus.
+     */
     @JsonIgnore
     @NotNull
     public String getFormattedStatus(final @NotNull Player player) {
@@ -184,6 +251,9 @@ public final class LocationRequirement extends AbstractRequirement {
         return status.toString();
     }
 
+    /**
+     * Executes validate.
+     */
     @JsonIgnore
     public void validate() {
         if (this.requiredWorld == null && this.requiredRegion == null && this.requiredCoordinates == null)
@@ -222,6 +292,9 @@ public final class LocationRequirement extends AbstractRequirement {
         return false;
     }
 
+    /**
+     * Represents the Coordinates API type.
+     */
     public static final class Coordinates {
         @JsonProperty("x")
         private final double x;
@@ -230,6 +303,9 @@ public final class LocationRequirement extends AbstractRequirement {
         @JsonProperty("z")
         private final double z;
 
+        /**
+         * Executes Coordinates.
+         */
         @JsonCreator
         public Coordinates(@JsonProperty("x") final double x, @JsonProperty("y") final double y, @JsonProperty("z") final double z) {
             this.x = x;
@@ -237,10 +313,22 @@ public final class LocationRequirement extends AbstractRequirement {
             this.z = z;
         }
 
+        /**
+         * Gets x.
+         */
         public double getX() { return this.x; }
+        /**
+         * Gets y.
+         */
         public double getY() { return this.y; }
+        /**
+         * Gets z.
+         */
         public double getZ() { return this.z; }
 
+        /**
+         * Executes toString.
+         */
         @Override
         public String toString() { return String.format("(%.1f, %.1f, %.1f)", this.x, this.y, this.z); }
     }

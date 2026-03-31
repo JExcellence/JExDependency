@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rds.database.entity;
 
 import de.jexcellence.hibernate.entity.BaseEntity;
@@ -32,6 +45,9 @@ import org.jetbrains.annotations.NotNull;
         "unused",
         "JpaDataSourceORMInspection"
 })
+/**
+ * Represents the Bank API type.
+ */
 public class Bank extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
@@ -73,6 +89,9 @@ public class Bank extends BaseEntity {
         return this.shop;
     }
 
+    /**
+     * Sets shop.
+     */
     public void setShop(
             final @NotNull Shop shop
     ) {
@@ -97,12 +116,18 @@ public class Bank extends BaseEntity {
         return this.amount;
     }
 
+    /**
+     * Executes matchesCurrencyType.
+     */
     public boolean matchesCurrencyType(
             final @NotNull String currencyType
     ) {
         return this.currency_type.equalsIgnoreCase(currencyType.trim());
     }
 
+    /**
+     * Executes deposit.
+     */
     public double deposit(
             final double depositAmount
     ) {
@@ -114,6 +139,9 @@ public class Bank extends BaseEntity {
         return this.amount;
     }
 
+    /**
+     * Executes withdraw.
+     */
     public double withdraw(
             final double withdrawAmount
     ) {

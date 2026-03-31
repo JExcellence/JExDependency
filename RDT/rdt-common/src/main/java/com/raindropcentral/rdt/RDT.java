@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdt;
 
 import com.raindropcentral.commands.CommandFactory;
@@ -7,34 +20,52 @@ import com.raindropcentral.rdt.database.entity.RTown;
 import com.raindropcentral.rdt.database.repository.RRDTPlayer;
 import com.raindropcentral.rdt.database.repository.RRTown;
 import com.raindropcentral.rdt.factory.BossBarFactory;
-import com.raindropcentral.rdt.factory.IRSFactory;
 import com.raindropcentral.rdt.service.TownService;
+import com.raindropcentral.rdt.service.TownSpawnService;
 import com.raindropcentral.rdt.view.main.MainOverviewView;
+import com.raindropcentral.rdt.view.town.ChunkClaimView;
+import com.raindropcentral.rdt.view.town.CreateTownAnvilView;
+import com.raindropcentral.rdt.view.town.RoleAssignmentPlayerPermissionView;
+import com.raindropcentral.rdt.view.town.RoleCreateNameAnvilView;
+import com.raindropcentral.rdt.view.town.RoleCreateAnvilView;
+import com.raindropcentral.rdt.view.town.RolePermissionView;
+import com.raindropcentral.rdt.view.town.RolePlayerPermissionView;
+import com.raindropcentral.rdt.view.town.RolesOverviewView;
+import com.raindropcentral.rdt.view.town.ServerTownsJoinView;
 import com.raindropcentral.rdt.view.town.ServerTownsOverviewView;
+import com.raindropcentral.rdt.view.town.TownBankView;
+import com.raindropcentral.rdt.view.town.TownChunkTypeView;
+import com.raindropcentral.rdt.view.town.TownChunkView;
+import com.raindropcentral.rdt.view.town.TownInfoView;
+import com.raindropcentral.rdt.view.town.TownInvitePlayerView;
+import com.raindropcentral.rdt.view.town.TownLevelUpRequirementsView;
+import com.raindropcentral.rdt.view.town.TownLevelUpRewardsView;
+import com.raindropcentral.rdt.view.town.TownLevelUpView;
 import com.raindropcentral.rdt.view.town.TownOverviewView;
+import com.raindropcentral.rdt.view.town.TownPendingJoinView;
+import com.raindropcentral.rdt.view.town.TownProtectionsView;
+import com.raindropcentral.rplatform.proxy.NoOpProxyService;
+import com.raindropcentral.rplatform.proxy.ProxyActionResult;
+import com.raindropcentral.rplatform.proxy.ProxyService;
 import com.raindropcentral.rplatform.RPlatform;
-import com.raindropcentral.rplatform.api.PlatformAPIFactory;
 import com.raindropcentral.rplatform.api.PlatformType;
 import com.raindropcentral.rplatform.scheduler.ISchedulerAdapter;
 import com.raindropcentral.rplatform.service.ServiceRegistry;
-import de.jexcellence.hibernate.JEHibernate;
 import jakarta.persistence.EntityManagerFactory;
 import me.devnatan.inventoryframework.AnvilInputFeature;
 import me.devnatan.inventoryframework.ViewFrame;
 import org.bukkit.Server;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jspecify.annotations.NonNull;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
+import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.CompletableFuture;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -45,7 +76,7 @@ import java.util.logging.Logger;
  *
  * @author ItsRainingHP
  * @since 1.0.0
- * @version 1.0.0
+ * @version 1.0.10
  */
 @SuppressWarnings({"unused", "FieldCanBeLocal"})
 public class RDT {
@@ -65,7 +96,9 @@ public class RDT {
     private BossBarFactory bossBarFactory;
     private ISchedulerAdapter scheduler;
     private PlatformType platformType;
-    private IRSFactory irsFactory;
+    private ProxyService proxyService;
+    private TownSpawnService townSpawnService;
+    private volatile CompletableFuture<Void> enableFuture;
 
     private Object economyInstance;
     private ViewFrame viewFrame;
@@ -101,32 +134,36 @@ public class RDT {
      * Initializes repositories, views, and runtime services.
      */
     public void onEnable() {
-        this.getLogger().info("Enabling RDT (" + this.edition + ") Edition");
-        this.platform.initialize();
-        this.platformType = PlatformAPIFactory.detectPlatformType();
-        this.scheduler = this.platform.getScheduler();
-        this.executor = Executors.newFixedThreadPool(4);
-        this.ensureDefaultConfigFile();
-
-        try {
-            this.initializeHibernate();
-            this.initializeRepositories();
-            this.getLogger().info("Hibernate initialized");
-        } catch (final Exception exception) {
-            this.getLogger().warning("Failed to initialize RDT persistence: " + exception.getMessage());
-            this.onDisable();
+        if (this.enableFuture != null && !this.enableFuture.isDone()) {
+            this.getLogger().warning("Enable sequence already in progress for RDT (" + this.edition + ")");
             return;
         }
 
-        this.getLogger().info("Connecting to economy");
-        this.initializePlugins();
-        this.initializeCommands();
-        this.initializeViews();
-        this.bossBarFactory = new BossBarFactory(this);
-        // NO TAXATION WITHOUT REPRESENTATION
-        this.irsFactory = new IRSFactory(this);
-        // Initiate async tasks for each town since last taxation stored in town db
-        this.irsFactory.runAll();
+        this.getLogger().info("Enabling RDT (" + this.edition + ") Edition");
+        this.enableFuture = this.platform.initialize()
+                .thenCompose(ignored -> this.runSync(() -> {
+                    this.entityManagerFactory = this.requireEntityManagerFactory();
+                    this.platformType = this.platform.getPlatformType();
+                    this.scheduler = this.platform.getScheduler();
+                    this.initializeProxyService();
+                    this.townSpawnService = new TownSpawnService(this);
+                    this.ensureDefaultConfigFile();
+                    this.initializeRepositories();
+                    this.getLogger().info("Persistence initialized via RPlatform");
+                    this.getLogger().info("Connecting to economy");
+                    this.initializePlugins();
+                    this.initializeCommands();
+                    this.initializeViews();
+                    this.bossBarFactory = new BossBarFactory(this);
+                    this.getLogger().info("RDT (" + this.edition + ") Edition enabled successfully");
+                }))
+                .exceptionally(throwable -> {
+                    this.runSync(() -> {
+                        this.getLogger().log(Level.SEVERE, "Failed to initialize RDT (" + this.edition + ")", throwable);
+                        this.plugin.getServer().getPluginManager().disablePlugin(this.plugin);
+                    });
+                    return null;
+                });
     }
 
     /**
@@ -134,6 +171,10 @@ public class RDT {
      */
     public void onDisable() {
         this.getLogger().info("Disabling RDT (" + this.edition + "): closing Hibernate");
+        if (this.proxyService != null) {
+            this.proxyService.unregisterActionHandler("rdt", "town_spawn_arrival");
+        }
+        this.townSpawnService = null;
 
         if (this.executor != null) {
             this.executor.shutdownNow();
@@ -262,41 +303,30 @@ public class RDT {
                 this.executor,
                 this.entityManagerFactory,
                 RTown.class,
-                RTown::getIdentifier
+                RTown::getIdentifier,
+                this.getServerRouteId()
         );
     }
 
-    @SuppressWarnings("resource")
-    private void initializeHibernate() throws IOException {
-        final File file = this.getHibernateFile();
-
-        if (!file.exists()) {
-            try (InputStream in = this.plugin.getResource("database/hibernate.properties")) {
-                if (in == null) {
-                    throw new IOException("Missing resource com.raindropcentral.rdt.database/hibernate.properties");
-                }
-                Files.copy(in, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
-            }
+    private @NotNull EntityManagerFactory requireEntityManagerFactory() {
+        final EntityManagerFactory factory = this.platform.getEntityManagerFactory();
+        if (factory == null) {
+            throw new IllegalStateException("RPlatform did not initialize the entity manager factory.");
         }
-
-        this.entityManagerFactory =
-                new JEHibernate(file.getAbsolutePath())
-                        .getEntityManagerFactory();
+        return factory;
     }
 
-    @Contract(" -> new")
-    private @NonNull File getHibernateFile() throws IOException {
-        final File data = this.plugin.getDataFolder();
-        if (!data.exists() && !data.mkdirs()) {
-            throw new IOException("Could not create data folder");
-        }
-
-        final File db = new File(data, "database");
-        if (!db.exists() && !db.mkdirs()) {
-            throw new IOException("Could not create com.raindropcentral.rdt.database folder");
-        }
-
-        return new File(db, "hibernate.properties");
+    private @NotNull CompletableFuture<Void> runSync(final @NotNull Runnable task) {
+        final CompletableFuture<Void> future = new CompletableFuture<>();
+        this.platform.getScheduler().runSync(() -> {
+            try {
+                task.run();
+                future.complete(null);
+            } catch (final Throwable throwable) {
+                future.completeExceptionally(throwable);
+            }
+        });
+        return future;
     }
 
     private void initializeViews() {
@@ -305,71 +335,191 @@ public class RDT {
                 .install(AnvilInputFeature.AnvilInput)
                 .with(
                         new MainOverviewView(),
+                        new CreateTownAnvilView(),
+                        new RoleCreateAnvilView(),
+                        new RoleCreateNameAnvilView(),
+                        new RolePermissionView(),
+                        new RoleAssignmentPlayerPermissionView(),
+                        new RolePlayerPermissionView(),
+                        new RolesOverviewView(),
+                        new ServerTownsJoinView(),
                         new ServerTownsOverviewView(),
+                        new ChunkClaimView(),
+                        new TownInvitePlayerView(),
+                        new TownPendingJoinView(),
+                        new TownInfoView(),
+                        new TownChunkView(),
+                        new TownChunkTypeView(),
+                        new TownProtectionsView(),
+                        new TownBankView(),
+                        new TownLevelUpView(),
+                        new TownLevelUpRequirementsView(),
+                        new TownLevelUpRewardsView(),
                         new TownOverviewView()
                 )
                 .disableMetrics();
         this.viewFrame = frame.register();
     }
 
+    
+    /**
+     * Gets eco. Executes this member.
+     */
     public @Nullable net.milkbowl.vault.economy.Economy getEco() {
         if (this.economyInstance == null) return null;
         return (net.milkbowl.vault.economy.Economy) this.economyInstance;
     }
 
+    /**
+     * Gets plugin.
+     */
     public @NotNull JavaPlugin getPlugin() {
         return this.plugin;
     }
 
+    /**
+     * Gets logger.
+     */
     public @NotNull Logger getLogger() {
         return this.plugin.getLogger();
     }
 
+    /**
+     * Gets server.
+     */
     public @NotNull Server getServer() {
         return this.plugin.getServer();
     }
 
+    /**
+     * Gets executor.
+     */
     public @Nullable ExecutorService getExecutor() {
         return this.executor;
     }
 
+    /**
+     * Gets platform.
+     */
     public @Nullable RPlatform getPlatform() {
         return this.platform;
     }
 
+    /**
+     * Gets entityManagerFactory.
+     */
     public @Nullable EntityManagerFactory getEntityManagerFactory() {
         return this.entityManagerFactory;
     }
 
+    /**
+     * Gets townRepository.
+     */
     public @Nullable RRTown getTownRepository() {
         return this.townRepository;
     }
 
+    /**
+     * Gets playerRepository.
+     */
     public @Nullable RRDTPlayer getPlayerRepository() {
         return this.playerRepository;
     }
 
+    /**
+     * Gets bossBarFactory.
+     */
     public @Nullable BossBarFactory getBossBarFactory() {
         return this.bossBarFactory;
     }
 
+    /**
+     * Gets scheduler.
+     */
     public @Nullable ISchedulerAdapter getScheduler() {
         return this.scheduler;
     }
 
+    /**
+     * Gets platformType.
+     */
     public @Nullable PlatformType getPlatformType() {
         return this.platformType;
     }
 
-    public @Nullable IRSFactory getIrsFactory() {
-        return this.irsFactory;
-    }
-
+    /**
+     * Gets economyInstance.
+     */
     public @Nullable Object getEconomyInstance() {
         return this.economyInstance;
     }
 
+    /**
+     * Gets viewFrame.
+     */
     public @Nullable ViewFrame getViewFrame() {
         return this.viewFrame;
+    }
+
+    /**
+     * Returns the active proxy service bridge.
+     *
+     * @return proxy service bridge
+     */
+    public @NotNull ProxyService getProxyService() {
+        if (this.proxyService == null) {
+            this.proxyService = NoOpProxyService.createDefault();
+        }
+        return this.proxyService;
+    }
+
+    /**
+     * Returns the town-spawn flow service.
+     *
+     * @return town-spawn service, or {@code null} before enable completes
+     */
+    public @Nullable TownSpawnService getTownSpawnService() {
+        return this.townSpawnService;
+    }
+
+    /**
+     * Returns the configured authoritative route ID for this server.
+     *
+     * @return server route identifier
+     */
+    public @NotNull String getServerRouteId() {
+        final String configuredRouteId = this.getDefaultConfig().getProxyServerRouteId();
+        if (!configuredRouteId.isBlank()) {
+            return configuredRouteId;
+        }
+        final String serverName = this.getServer().getName();
+        if (serverName == null || serverName.isBlank()) {
+            return "server";
+        }
+        return serverName.trim().toLowerCase(Locale.ROOT);
+    }
+
+    private void initializeProxyService() {
+        final ProxyService registeredProxyService =
+                this.getServer().getServicesManager().load(ProxyService.class);
+        if (registeredProxyService != null) {
+            this.proxyService = registeredProxyService;
+            this.getLogger().info("ProxyService bridge detected via Bukkit ServicesManager.");
+            return;
+        }
+
+        if (this.platform != null && this.platform.getProxyService() != null) {
+            this.proxyService = this.platform.getProxyService();
+        } else {
+            this.proxyService = NoOpProxyService.createDefault();
+        }
+
+        this.proxyService.registerActionHandler(
+            TownSpawnService.MODULE_ID,
+            TownSpawnService.TOWN_SPAWN_ARRIVAL_ACTION,
+            envelope -> CompletableFuture.completedFuture(
+                ProxyActionResult.success("Town-spawn arrival handler registered.")
+            )
+        );
     }
 }

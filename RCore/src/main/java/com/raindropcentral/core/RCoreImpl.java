@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.core;
 
 import com.raindropcentral.commands.CommandFactory;
@@ -8,22 +21,38 @@ import com.raindropcentral.core.database.entity.player.RPlayer;
 import com.raindropcentral.core.database.entity.statistic.RAbstractStatistic;
 import com.raindropcentral.core.database.entity.statistic.RPlayerStatistic;
 import com.raindropcentral.core.database.repository.*;
+import com.raindropcentral.core.proxy.ProxyHostConfig;
+import com.raindropcentral.core.proxy.RCorePaperProxyBridge;
+import com.raindropcentral.core.proxy.RCoreProxyCoordinator;
 import com.raindropcentral.core.service.RCoreService;
+import com.raindropcentral.core.service.central.DropletClaimService;
 import com.raindropcentral.core.service.central.RCentralService;
+import com.raindropcentral.core.service.central.cookie.ActiveCookieBoostService;
 import com.raindropcentral.core.service.statistics.StatisticsDeliveryService;
 import com.raindropcentral.core.service.statistics.StatisticsDeliveryServiceFactory;
+import com.raindropcentral.core.view.DropletClaimsView;
+import com.raindropcentral.core.view.DropletJobSelectionView;
+import com.raindropcentral.core.view.DropletSkillSelectionView;
+import com.raindropcentral.rplatform.cookie.CookieBoostIntegrationRegistrar;
+import com.raindropcentral.rplatform.cookie.CookieBoostLookup;
 import com.raindropcentral.rplatform.RPlatform;
 import com.raindropcentral.rplatform.api.PlatformType;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.metrics.BStatsMetrics;
+import com.raindropcentral.rplatform.proxy.ProxyService;
 import de.jexcellence.dependency.delegate.AbstractPluginDelegate;
 import de.jexcellence.hibernate.repository.InjectRepository;
 import de.jexcellence.hibernate.repository.RepositoryManager;
 import jakarta.persistence.EntityManagerFactory;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.ServicePriority;
 import org.jetbrains.annotations.NotNull;
+import me.devnatan.inventoryframework.AnvilInputFeature;
+import me.devnatan.inventoryframework.ViewFrame;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -62,26 +91,26 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
     private static final int METRICS_SERVICE_ID = 25809;
 
     /**
-     * Logger emitting lifecycle and repository wiring information through the shared
+     * Logger emitting lifecycle and repository wiring information through the shared.
      * {@link CentralLogger} infrastructure.
      */
     private static Logger LOGGER;
 
     /**
-     * Executor backing asynchronous repository access and other background tasks. Created
+     * Executor backing asynchronous repository access and other background tasks. Created.
      * during construction and shut down in {@link #onDisable()} to avoid leaking virtual threads.
      */
     private final ExecutorService executor;
 
     /**
-     * Snapshot of optional plugin integrations detected during {@link #initializePlugins()}. The
+     * Snapshot of optional plugin integrations detected during {@link #initializePlugins()}. The.
      * map is mutated only on the main thread while bootstrapping and exposed as an immutable copy
      * for diagnostics.
      */
     private final Map<String, Boolean> enabledSupportedPlugins;
 
     /**
-     * Guard future tracking the asynchronous enable pipeline so duplicate invocations can be
+     * Guard future tracking the asynchronous enable pipeline so duplicate invocations can be.
      * rejected and so failure paths can cancel pending stages.
      */
     private volatile CompletableFuture<Void> enableFuture;
@@ -100,14 +129,19 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
      * RaindropCentral connection service for managing platform integration.
      */
     private RCentralService rCentralService;
+    private DropletClaimService dropletClaimService;
+    private ActiveCookieBoostService activeCookieBoostService;
 
     /**
      * Statistics delivery service for transmitting player statistics to RaindropCentral.
      */
     private StatisticsDeliveryService statisticsDeliveryService;
     private BStatsMetrics metrics;
+    private ViewFrame viewFrame;
 
     private RCoreAdapter rCoreAdapter;
+    private RCorePaperProxyBridge proxyBridge;
+    private RCoreProxyCoordinator proxyCoordinator;
 
     @InjectRepository
     private RPlayerRepository playerRepository;
@@ -157,6 +191,7 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
 
         this.enableFuture = this.platform.initialize()
                 .thenCompose(v -> runSync(() -> {
+                    initializeProxyBridge();
                     rCoreAdapter = new RCoreAdapter(this);
                     registerServices();
 
@@ -188,6 +223,16 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
      */
     @Override
     public void onDisable() {
+        if (this.proxyBridge != null) {
+            this.proxyBridge.shutdown();
+            this.proxyBridge = null;
+        }
+        this.proxyCoordinator = null;
+        if (this.platform != null) {
+            this.platform.setProxyService(null);
+        }
+        Bukkit.getServicesManager().unregisterAll(this.getPlugin());
+
         // Shutdown statistics delivery service first to flush pending statistics
         StatisticsDeliveryServiceFactory.shutdown(this.statisticsDeliveryService);
 
@@ -201,7 +246,7 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
     }
 
     /**
-     * Returns the shared platform facade which exposes dependency injection, metrics, and
+     * Returns the shared platform facade which exposes dependency injection, metrics, and.
      * persistence utilities.
      *
      * @return the initialized platform instance
@@ -229,7 +274,7 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
     }
 
     /**
-     * Attempts a graceful executor shutdown from {@link #onDisable()} before interrupting outstanding
+     * Attempts a graceful executor shutdown from {@link #onDisable()} before interrupting outstanding.
      * tasks.
      *
      * <p>The method waits up to ten seconds for tasks to finish and logs whenever a forced shutdown
@@ -259,20 +304,86 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
                     getPlugin(),
                     ServicePriority.Normal
             );
-            LOGGER.info("Registered CurrencyAdapter service");
+            LOGGER.info("Registered RCoreAdapter service");
         }
+
+        if (this.proxyBridge != null) {
+            Bukkit.getServer().getServicesManager().register(
+                ProxyService.class,
+                this.proxyBridge,
+                getPlugin(),
+                ServicePriority.High
+            );
+            LOGGER.info("Registered ProxyService bridge");
+        }
+    }
+
+    private void initializeProxyBridge() {
+        if (this.proxyBridge != null) {
+            return;
+        }
+
+        this.proxyCoordinator = new RCoreProxyCoordinator(loadProxyHostConfig());
+        this.proxyBridge = new RCorePaperProxyBridge(this.getPlugin(), this.proxyCoordinator);
+        if (this.platform != null) {
+            this.platform.setProxyService(this.proxyBridge);
+        }
+    }
+
+    private @NotNull ProxyHostConfig loadProxyHostConfig() {
+        final File proxyDirectory = new File(this.getPlugin().getDataFolder(), "proxy");
+        if (!proxyDirectory.exists() && !proxyDirectory.mkdirs()) {
+            LOGGER.warning("Could not create proxy config folder; using defaults.");
+            return ProxyHostConfig.defaults(this.getPlugin().getServer().getName().toLowerCase(Locale.ROOT));
+        }
+
+        final File proxyConfigFile = new File(proxyDirectory, "proxy.yml");
+        if (!proxyConfigFile.exists()) {
+            this.getPlugin().saveResource("proxy/proxy.yml", false);
+        }
+
+        final YamlConfiguration configuration = YamlConfiguration.loadConfiguration(proxyConfigFile);
+        final String defaultRouteId = this.getPlugin().getServer().getName().toLowerCase(Locale.ROOT);
+        final String channelName = configuration.getString("channel_name", "raindrop:proxy");
+        final int protocolVersion = configuration.getInt("protocol_version", 1);
+        final long requestTimeoutMillis = configuration.getLong("request_timeout_millis", 5_000L);
+        final long tokenTtlMillis = configuration.getLong("token_ttl_millis", 120_000L);
+        final String serverRouteId = configuration.getString("server_route_id", defaultRouteId);
+        final Map<String, String> routeAliases = new HashMap<>();
+        final ConfigurationSection aliasSection = configuration.getConfigurationSection("route_aliases");
+        if (aliasSection != null) {
+            for (final String key : aliasSection.getKeys(false)) {
+                final String value = aliasSection.getString(key);
+                if (value != null && !value.isBlank()) {
+                    routeAliases.put(key, value);
+                }
+            }
+        }
+
+        return new ProxyHostConfig(
+            channelName,
+            protocolVersion,
+            requestTimeoutMillis,
+            tokenTtlMillis,
+            serverRouteId,
+            routeAliases
+        );
     }
 
     /**
      * Initializes RCentralService and registers commands/listeners through the shared command factory.
-     * <p>
-     * Creates the RCentralService first so it can be injected into commands that need it.
+ *
+ * <p>Creates the RCentralService first so it can be injected into commands that need it.
      * Passes this implementation instance as context so commands can access services through
      * dependency injection.
      * </p>
      */
     private void initializeComponents() {
         this.rCentralService = new RCentralService(this.getPlugin(), this.platform);
+        this.activeCookieBoostService = new ActiveCookieBoostService(this);
+        this.platform.getServiceRegistry().bind(CookieBoostLookup.class, this.activeCookieBoostService);
+        CookieBoostIntegrationRegistrar.register(this.getPlugin(), this.activeCookieBoostService);
+        this.dropletClaimService = new DropletClaimService(this);
 
         // Initialize statistics delivery service
         this.statisticsDeliveryService = StatisticsDeliveryServiceFactory.create(
@@ -280,8 +391,24 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
         );
         StatisticsDeliveryServiceFactory.initialize(this.statisticsDeliveryService);
 
+        this.initializeViews();
+        this.activeCookieBoostService.hydrateOnlinePlayers();
+
         var commandFactory = new CommandFactory(this.getPlugin(), this);
         commandFactory.registerAllCommandsAndListeners();
+    }
+
+    private void initializeViews() {
+        final ViewFrame frame = ViewFrame
+                .create(this.getPlugin())
+                .install(AnvilInputFeature.AnvilInput)
+                .with(
+                        new DropletClaimsView(),
+                        new DropletSkillSelectionView(),
+                        new DropletJobSelectionView()
+                )
+                .disableMetrics();
+        this.viewFrame = frame.register();
     }
     
     /**
@@ -329,7 +456,7 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
      */
     private void initializePlugins() {
         final List<String> supportedPlugins = List.of(
-                "Aura", "ChestSort", "CMI", "DiscordSRV", "EcoJobs",
+                "Aura", "AuraSkills", "ChestSort", "CMI", "DiscordSRV", "EcoJobs",
                 "EssentialsChat", "EssentialsDiscord", "EssentialsSpawn",
                 "Jobs", "mcMMO", "MysticMobs", "ProtocolLib", "RDR",
                 "Towny", "TownyChat"
@@ -373,7 +500,7 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
     }
 
     /**
-     * Schedules the provided runnable on the Bukkit main thread and exposes its completion as a
+     * Schedules the provided runnable on the Bukkit main thread and exposes its completion as a.
      * future.
      *
      * <p>Errors thrown by the runnable complete the returned future exceptionally so the enable
@@ -420,26 +547,56 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
         ===============================================================================================
         """;
 
+    /**
+     * Returns the executor used for asynchronous repository and startup work.
+     *
+     * @return plugin-scoped executor service
+     */
     public ExecutorService getExecutor() {
         return executor;
     }
 
+    /**
+     * Returns the in-flight enable future, if startup has begun.
+     *
+     * @return enable pipeline future, or {@code null} when enable has not started
+     */
     public CompletableFuture<Void> getEnableFuture() {
         return enableFuture;
     }
 
+    /**
+     * Returns the adapter-backed core service published to Bukkit's service registry.
+     *
+     * @return registered RCore service handle, or {@code null} when services are not registered yet
+     */
     public RCoreService getrCoreService() {
         return rCoreService;
     }
 
+    /**
+     * Returns the active RaindropCentral connection service.
+     *
+     * @return central service instance, or {@code null} before component initialization
+     */
     public RCentralService getrCentralService() {
         return rCentralService;
     }
 
+    /**
+     * Returns the adapter exposed to other plugins through Bukkit services.
+     *
+     * @return RCore adapter, or {@code null} before registration
+     */
     public RCoreAdapter getrCoreAdapter() {
         return rCoreAdapter;
     }
 
+    /**
+     * Returns the player repository injected during repository initialization.
+     *
+     * @return player repository, or {@code null} until repositories are wired
+     */
     public RPlayerRepository getPlayerRepository() {
         return playerRepository;
     }
@@ -451,5 +608,32 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
      */
     public StatisticsDeliveryService getStatisticsDeliveryService() {
         return statisticsDeliveryService;
+    }
+
+    /**
+     * Provides access to the droplet claim flow service.
+     *
+     * @return droplet claim service
+     */
+    public @NotNull DropletClaimService getDropletClaimService() {
+        return this.dropletClaimService;
+    }
+
+    /**
+     * Provides access to the active droplet boost runtime service.
+     *
+     * @return boost lookup and persistence service
+     */
+    public @NotNull ActiveCookieBoostService getActiveCookieBoostService() {
+        return this.activeCookieBoostService;
+    }
+
+    /**
+     * Provides access to the registered inventory view frame.
+     *
+     * @return inventory view frame, or {@code null} when unavailable
+     */
+    public ViewFrame getViewFrame() {
+        return this.viewFrame;
     }
 }

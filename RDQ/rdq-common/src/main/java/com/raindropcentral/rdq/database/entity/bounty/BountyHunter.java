@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.database.entity.bounty;
 
 import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
@@ -9,6 +22,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.Serial;
 
+/**
+ * Tracks bounty-claim statistics for a player.
+ */
 @Entity
 @Table(
         name = "r_bounty_hunter",
@@ -43,19 +59,31 @@ public class BountyHunter extends BaseEntity {
 
     protected BountyHunter() {}
 
+    /**
+     * Executes BountyHunter.
+     */
     public BountyHunter(final @NotNull RDQPlayer player) {
         this.player = player;
     }
 
+    /**
+     * Executes recordClaim.
+     */
     public void recordClaim(final double rewardValue) {
         incrementBountiesClaimed();
         addRewardValue(rewardValue);
     }
 
+    /**
+     * Executes incrementBountiesClaimed.
+     */
     public void incrementBountiesClaimed() {
         this.bountiesClaimed++;
     }
 
+    /**
+     * Executes addRewardValue.
+     */
     public void addRewardValue(final double value) {
         if (value > 0) {
             this.totalRewardValue += value;

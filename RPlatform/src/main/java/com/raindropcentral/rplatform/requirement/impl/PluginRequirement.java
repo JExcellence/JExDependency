@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rplatform.requirement.impl;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -20,8 +33,8 @@ import java.util.logging.Logger;
 /**
  * Generic requirement for external plugin integrations.
  * Supports any plugin through the PluginIntegrationBridge system.
- * <p>
- * Examples:
+ *
+ * <p>Examples:
  * - Skills: {"plugin": "ecoskills", "values": {"mining": 50, "combat": 30}}
  * - Jobs: {"plugin": "jobsreborn", "values": {"miner": 10}}
  * - Economy: {"plugin": "vault", "values": {"balance": 1000}}
@@ -53,14 +66,14 @@ public class PluginRequirement extends AbstractRequirement {
 	private transient PluginIntegrationBridge bridge;
 	
 	/**
-	 * Simple constructor for single value
+	 * Simple constructor for single value.
 	 */
 	public PluginRequirement(@NotNull String pluginIntegrationId, @NotNull String key, double value) {
 		this(pluginIntegrationId, null, Map.of(key, value), false, null);
 	}
 	
 	/**
-	 * Full constructor
+	 * Full constructor.
 	 */
 	@JsonCreator
 	public PluginRequirement(
@@ -98,6 +111,9 @@ public class PluginRequirement extends AbstractRequirement {
 		this.description = description;
 	}
 	
+	/**
+	 * Returns whether met.
+	 */
 	@Override
 	public boolean isMet(@NotNull Player player) {
 		final PluginIntegrationBridge bridge = getBridge();
@@ -116,6 +132,9 @@ public class PluginRequirement extends AbstractRequirement {
 		return true;
 	}
 	
+	/**
+	 * Executes calculateProgress.
+	 */
 	@Override
 	public double calculateProgress(@NotNull Player player) {
 		final PluginIntegrationBridge bridge = getBridge();
@@ -139,6 +158,9 @@ public class PluginRequirement extends AbstractRequirement {
 		return Math.min(1.0, totalProgress / requiredValues.size());
 	}
 	
+	/**
+	 * Executes consume.
+	 */
 	@Override
 	public void consume(@NotNull Player player) {
 		if (!consumable) {
@@ -160,6 +182,9 @@ public class PluginRequirement extends AbstractRequirement {
 		}
 	}
 	
+	/**
+	 * Gets descriptionKey.
+	 */
 	@Override
 	@NotNull
 	public String getDescriptionKey() {
@@ -169,32 +194,47 @@ public class PluginRequirement extends AbstractRequirement {
 		return "requirement.plugin." + pluginIntegrationId;
 	}
 	
+	/**
+	 * Gets pluginIntegrationId.
+	 */
 	@NotNull
 	public String getPluginIntegrationId() {
 		return pluginIntegrationId;
 	}
 	
+	/**
+	 * Gets category.
+	 */
 	@Nullable
 	public String getCategory() {
 		return category;
 	}
 	
+	/**
+	 * Gets requiredValues.
+	 */
 	@NotNull
 	public Map<String, Double> getRequiredValues() {
 		return Collections.unmodifiableMap(requiredValues);
 	}
 	
+	/**
+	 * Returns whether consumable.
+	 */
 	public boolean isConsumable() {
 		return consumable;
 	}
 	
+	/**
+	 * Gets description.
+	 */
 	@Nullable
 	public String getDescription() {
 		return description;
 	}
 	
 	/**
-	 * Gets current values for all required keys
+	 * Gets current values for all required keys.
 	 */
 	@JsonIgnore
 	@NotNull
@@ -209,7 +249,7 @@ public class PluginRequirement extends AbstractRequirement {
 	}
 	
 	/**
-	 * Gets the bridge for this requirement, with auto-detection fallback
+	 * Gets the bridge for this requirement, with auto-detection fallback.
 	 */
 	@Nullable
 	private PluginIntegrationBridge getBridge() {
@@ -233,7 +273,7 @@ public class PluginRequirement extends AbstractRequirement {
 	}
 	
 	/**
-	 * Validates this requirement
+	 * Validates this requirement.
 	 */
 	@JsonIgnore
 	public void validate() {

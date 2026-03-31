@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.rank;
 
 import com.raindropcentral.rdq.RDQ;
@@ -67,50 +80,77 @@ public class PremiumRankSystemService implements IRankSystemService {
         return instance;
     }
 
+    /**
+     * Returns whether premium.
+     */
     @Override
     public boolean isPremium() {
         return true;
     }
 
+    /**
+     * Gets maxAbsolvableRankTrees.
+     */
     @Override
     public int getMaxAbsolvableRankTrees() {
         return UNLIMITED;
     }
 
+    /**
+     * Gets maxRanksPerTree.
+     */
     @Override
     public int getMaxRanksPerTree() {
         return UNLIMITED;
     }
 
+    /**
+     * Gets maxActiveRankPaths.
+     */
     @Override
     public int getMaxActiveRankPaths() {
         return UNLIMITED;
     }
 
+    /**
+     * Executes canStartNewRankTree.
+     */
     @Override
     public boolean canStartNewRankTree(@NotNull RDQPlayer player) {
         // Premium: Always allowed
         return true;
     }
 
+    /**
+     * Executes canProgressToRank.
+     */
     @Override
     public boolean canProgressToRank(@NotNull RDQPlayer player, @NotNull RRank rank) {
         // Premium: Always allowed (other prerequisites still apply)
         return true;
     }
 
+    /**
+     * Returns whether previewOnly.
+     */
     @Override
     public boolean isPreviewOnly(@NotNull RDQPlayer player, @NotNull RRankTree rankTree) {
         // Premium: Nothing is preview-only
         return false;
     }
 
+    /**
+     * Returns whether rankBeyondLimit.
+     */
     @Override
     public boolean isRankBeyondLimit(@NotNull RRank rank, @NotNull RRankTree rankTree) {
         // Premium: No rank limits
         return false;
     }
 
+    /**
+     * Gets absolvedRankTreeCount.
+     */
     @Override
     public int getAbsolvedRankTreeCount(@NotNull RDQPlayer player) {
         // Premium doesn't need to track this for limits, but return actual count for stats
@@ -132,6 +172,9 @@ public class PremiumRankSystemService implements IRankSystemService {
         }
     }
 
+    /**
+     * Gets activeRankPathCount.
+     */
     @Override
     public int getActiveRankPathCount(@NotNull RDQPlayer player) {
         try {
@@ -150,6 +193,9 @@ public class PremiumRankSystemService implements IRankSystemService {
         }
     }
 
+    /**
+     * Gets restrictionMessageKey.
+     */
     @Override
     public @NotNull String getRestrictionMessageKey(@NotNull RankRestrictionType restrictionType) {
         // Premium has no restrictions, but return a key just in case

@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdt.database.repository;
 
 import com.raindropcentral.rdt.database.entity.RDTPlayer;
@@ -12,14 +25,17 @@ import java.util.function.Function;
 
 /**
  * Cached repository for {@link RDTPlayer} entities.
- * <p>
- * Provides CRUD operations and a convenience finder for locating a player by UUID.
+ *
+ * <p>Provides CRUD operations and a convenience finder for locating a player by UUID.
  * Use off the main server thread for blocking calls.
  */
 @SuppressWarnings({
         "unused",
         "FieldCanBeLocal"
 })
+/**
+ * Represents the RRDTPlayer API type.
+ */
 public class RRDTPlayer extends CachedRepository<RDTPlayer, Long, UUID> {
     // Keep a reference to the EntityManagerFactory for custom ad-hoc queries
     private final EntityManagerFactory emf;

@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.permissions;
 
 import com.raindropcentral.rdq.RDQ;
@@ -17,18 +30,17 @@ import java.util.logging.Logger;
 
 /**
  * Manages loading, querying, and assigning plugin permission sets.
- * <p>
- * This service is responsible for:
+ *
+ * <p>This service is responsible for:
  * <ul>
  *     <li>Loading permission groupings from a YAML configuration file ({@code /permissions/permissions.yml})</li>
  *     <li>Providing access to parsed permission sets for assigning or displaying</li>
  *     <li>Adding permission sets to players, with dependency validation for the required service/plugin</li>
  *     <li>Sending appropriate, localized messages if dependencies are missing</li>
  * </ul>
- * <p>
- * <b>Integration:</b> Designed for plugin use as a single point of permission set logic and assignment.
+ *
+ * <p><b>Integration:</b> Designed for plugin use as a single point of permission set logic and assignment.
  * Integrates with RCoreImpl's LuckPermsService, supports dependency-checked sets, and uses I18n for messages.
- * </p>
  *
  * <p><b>Configuration expected at:</b> <code>/permissions/permissions.yml</code> in plugin resources.</p>
  *
@@ -95,8 +107,8 @@ public class PermissionsService {
 
     /**
 	 * Assigns a set of permissions to a player, optionally gating by the presence of a service/plugin.
-	 * <p>
-	 * If {@code check} is true, validates the required service before proceeding.
+ *
+ * <p>If {@code check} is true, validates the required service before proceeding.
 	 * If dependency is missing, informs the player of the missing requirement.
 	 * Integrates (if present) with LuckPermsService for permission assignment.
 	 *
@@ -145,8 +157,8 @@ public class PermissionsService {
 	
 	/**
 	 * Assigns a set of permissions to a player, optionally gating by the presence of a service/plugin.
-	 * <p>
-	 * If {@code check} is true, validates the required service before proceeding.
+ *
+ * <p>If {@code check} is true, validates the required service before proceeding.
 	 * If dependency is missing, informs the player of the missing requirement.
 	 * Integrates (if present) with LuckPermsService for permission assignment.
 	 *
@@ -189,11 +201,10 @@ public class PermissionsService {
 	
 	/**
 	 * Assigns all loaded permission sets to the specified player.
-	 * <p>
-	 * Iterates through every permission group defined in the configuration and assigns
+ *
+ * <p>Iterates through every permission group defined in the configuration and assigns
 	 * each set of permissions to the player using the LuckPerms service, if available.
 	 * Dependency on LuckPerms is checked for each assignment.
-	 * </p>
 	 *
 	 * @param player the player to whom all permission sets will be assigned
 	 */
@@ -213,11 +224,10 @@ public class PermissionsService {
 	
 	/**
 	 * Assigns all loaded permission sets globally (e.g., to groups or the server).
-	 * <p>
-	 * Iterates through every permission group defined in the configuration and assigns
+ *
+ * <p>Iterates through every permission group defined in the configuration and assigns
 	 * each set of permissions using the LuckPerms service, if available.
 	 * Dependency on LuckPerms is checked for each assignment.
-	 * </p>
 	 */
 	public void addAllPermissionSets() {
 		this.permissions.forEach((permission, value) -> {

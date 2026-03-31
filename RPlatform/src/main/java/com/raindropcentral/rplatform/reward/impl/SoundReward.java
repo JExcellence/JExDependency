@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rplatform.reward.impl;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -18,6 +31,9 @@ public final class SoundReward extends AbstractReward {
     private final float volume;
     private final float pitch;
 
+    /**
+     * Executes SoundReward.
+     */
     @JsonCreator
     public SoundReward(
         @JsonProperty("sound") @NotNull Sound sound,
@@ -29,11 +45,17 @@ public final class SoundReward extends AbstractReward {
         this.pitch = Math.max(0.5f, Math.min(2.0f, pitch));
     }
 
+    /**
+     * Gets typeId.
+     */
     @Override
     public @NotNull String getTypeId() {
         return "SOUND";
     }
 
+    /**
+     * Executes grant.
+     */
     @Override
     public @NotNull CompletableFuture<Boolean> grant(@NotNull Player player) {
         return CompletableFuture.supplyAsync(() -> {
@@ -46,23 +68,38 @@ public final class SoundReward extends AbstractReward {
         });
     }
 
+    /**
+     * Gets estimatedValue.
+     */
     @Override
     public double getEstimatedValue() {
         return 0.0;
     }
 
+    /**
+     * Gets sound.
+     */
     public Sound getSound() {
         return sound;
     }
 
+    /**
+     * Gets volume.
+     */
     public float getVolume() {
         return volume;
     }
 
+    /**
+     * Gets pitch.
+     */
     public float getPitch() {
         return pitch;
     }
 
+    /**
+     * Executes validate.
+     */
     @Override
     public void validate() {
         if (sound == null) {

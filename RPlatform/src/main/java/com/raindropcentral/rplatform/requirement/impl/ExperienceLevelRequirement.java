@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rplatform.requirement.impl;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -8,8 +21,14 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * Represents the ExperienceLevelRequirement API type.
+ */
 public final class ExperienceLevelRequirement extends AbstractRequirement {
 
+    /**
+     * Represents the ExperienceType API type.
+     */
     public enum ExperienceType {
         LEVEL,
         POINTS
@@ -27,14 +46,23 @@ public final class ExperienceLevelRequirement extends AbstractRequirement {
     @JsonProperty("description")
     private final String description;
 
+    /**
+     * Executes ExperienceLevelRequirement.
+     */
     public ExperienceLevelRequirement(int requiredLevel) {
         this(requiredLevel, ExperienceType.LEVEL, true, null);
     }
 
+    /**
+     * Executes ExperienceLevelRequirement.
+     */
     public ExperienceLevelRequirement(int requiredLevel, @NotNull ExperienceType experienceType) {
         this(requiredLevel, experienceType, true, null);
     }
 
+    /**
+     * Executes ExperienceLevelRequirement.
+     */
     @JsonCreator
     public ExperienceLevelRequirement(@JsonProperty("requiredLevel") int requiredLevel,
                                      @JsonProperty("experienceType") @Nullable ExperienceType experienceType,
@@ -52,6 +80,9 @@ public final class ExperienceLevelRequirement extends AbstractRequirement {
         this.description = description;
     }
 
+    /**
+     * Returns whether met.
+     */
     @Override
     public boolean isMet(@NotNull Player player) {
         return switch (experienceType) {
@@ -60,6 +91,9 @@ public final class ExperienceLevelRequirement extends AbstractRequirement {
         };
     }
 
+    /**
+     * Executes calculateProgress.
+     */
     @Override
     public double calculateProgress(@NotNull Player player) {
         if (requiredLevel <= 0) {
@@ -75,6 +109,9 @@ public final class ExperienceLevelRequirement extends AbstractRequirement {
         return Math.max(0.0, Math.min(1.0, progress));
     }
 
+    /**
+     * Executes consume.
+     */
     @Override
     public void consume(@NotNull Player player) {
         if (!consumeOnComplete) return;
@@ -99,6 +136,9 @@ public final class ExperienceLevelRequirement extends AbstractRequirement {
         }
     }
 
+    /**
+     * Gets descriptionKey.
+     */
     @Override
     @NotNull
     public String getDescriptionKey() {
@@ -108,11 +148,20 @@ public final class ExperienceLevelRequirement extends AbstractRequirement {
         };
     }
 
+    /**
+     * Gets requiredLevel.
+     */
     public int getRequiredLevel() { return requiredLevel; }
+    /**
+     * Returns whether consumeOnComplete.
+     */
     @NotNull public ExperienceType getExperienceType() { return experienceType; }
     public boolean isConsumeOnComplete() { return consumeOnComplete; }
     @Nullable public String getDescription() { return description; }
 
+    /**
+     * Gets currentExperience.
+     */
     @JsonIgnore
     public int getCurrentExperience(@NotNull Player player) {
         return switch (experienceType) {
@@ -121,18 +170,30 @@ public final class ExperienceLevelRequirement extends AbstractRequirement {
         };
     }
 
+    /**
+     * Gets shortage.
+     */
     @JsonIgnore
     public int getShortage(@NotNull Player player) {
         var current = getCurrentExperience(player);
         return Math.max(0, requiredLevel - current);
     }
 
+    /**
+     * Returns whether levelBased.
+     */
     @JsonIgnore
     public boolean isLevelBased() { return experienceType == ExperienceType.LEVEL; }
 
+    /**
+     * Returns whether pointsBased.
+     */
     @JsonIgnore
     public boolean isPointsBased() { return experienceType == ExperienceType.POINTS; }
 
+    /**
+     * Executes validate.
+     */
     @JsonIgnore
     public void validate() {
         if (requiredLevel < 0) {
@@ -143,6 +204,9 @@ public final class ExperienceLevelRequirement extends AbstractRequirement {
         }
     }
 
+    /**
+     * Executes fromString.
+     */
     @JsonIgnore
     @NotNull
     public static ExperienceLevelRequirement fromString(int requiredLevel, @NotNull String experienceTypeString, boolean consumeOnComplete) {

@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdr.database.repository;
 
 import java.nio.ByteBuffer;
@@ -445,6 +458,28 @@ public class RRTradeSession extends BaseRepository<RTradeSession, Long> {
         );
     }
 
+    /**
+     * Refreshes participant server snapshots for one trade session.
+     *
+     * @param tradeUuid trade UUID to update
+     * @param initiatorServerId initiator last-known server route ID
+     * @param partnerServerId partner last-known server route ID
+     * @param originServerId optional origin server route ID
+     * @return async flag indicating whether the session row existed
+     * @throws NullPointerException if any required argument is {@code null}
+     */
+    public @NotNull CompletableFuture<Boolean> refreshParticipantServerSnapshotsAsync(
+        final @NotNull UUID tradeUuid,
+        final @NotNull String initiatorServerId,
+        final @NotNull String partnerServerId,
+        final @Nullable String originServerId
+    ) {
+        return CompletableFuture.supplyAsync(
+            () -> this.refreshParticipantServerSnapshots(tradeUuid, initiatorServerId, partnerServerId, originServerId),
+            getExecutorService()
+        );
+    }
+
     private @NotNull InviteCreateResult createInvite(
         final @NotNull UUID initiatorUuid,
         final @NotNull UUID partnerUuid,
@@ -702,6 +737,35 @@ public class RRTradeSession extends BaseRepository<RTradeSession, Long> {
             session.clearReadyFlags();
             session.clearEscrowPayload();
             return CompletionResult.COMPLETED;
+        });
+    }
+
+    private boolean refreshParticipantServerSnapshots(
+        final @NotNull UUID tradeUuid,
+        final @NotNull String initiatorServerId,
+        final @NotNull String partnerServerId,
+        final @Nullable String originServerId
+    ) {
+        final UUID validatedTradeUuid = Objects.requireNonNull(tradeUuid, "tradeUuid cannot be null");
+        final String validatedInitiatorServerId = Objects.requireNonNull(
+            initiatorServerId,
+            "initiatorServerId cannot be null"
+        );
+        final String validatedPartnerServerId = Objects.requireNonNull(
+            partnerServerId,
+            "partnerServerId cannot be null"
+        );
+        return this.executeInTransaction(entityManager -> {
+            final RTradeSession session = this.findTradeForUpdate(entityManager, validatedTradeUuid);
+            if (session == null) {
+                return false;
+            }
+            session.refreshParticipantServerSnapshots(
+                validatedInitiatorServerId,
+                validatedPartnerServerId,
+                originServerId
+            );
+            return true;
         });
     }
 

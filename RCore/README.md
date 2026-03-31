@@ -239,6 +239,29 @@ If upgrading from the old RCore-Free or RCore-Premium:
 
 See [MIGRATION_GUIDE.md](MIGRATION_GUIDE.md) for detailed instructions.
 
+### Key Configuration Files
+
+- `plugins/RCore/database/hibernate.properties`
+- `plugins/RCore/rcentral/rcentral.yml`
+- `plugins/RCore/statistics-delivery-config.yml`
+
+## Commands
+
+RCore is mostly infrastructure, but it includes connection commands for RaindropCentral integration:
+
+| Command | Description | Permission |
+|---|---|---|
+| `/rc connect <api-key>` | Connect this server to RaindropCentral | `rcore.central.connect` |
+| `/rc disconnect <api-key>` | Disconnect this server from RaindropCentral | `rcore.central.disconnect` |
+
+## Permissions
+
+| Node | Purpose |
+|---|---|
+| `rcore.central.connect` | Allows connecting server to RaindropCentral |
+| `rcore.central.disconnect` | Allows disconnecting server from RaindropCentral |
+
+
 ## Troubleshooting
 
 ### Plugin Won't Load

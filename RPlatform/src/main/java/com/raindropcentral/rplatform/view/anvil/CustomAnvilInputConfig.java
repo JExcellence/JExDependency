@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rplatform.view.anvil;
 
 import org.jetbrains.annotations.Contract;
@@ -7,7 +20,7 @@ import java.util.Map;
 import java.util.function.UnaryOperator;
 
 /**
- * Configuration record for {@link CustomAnvilInput} describing initial text, lifecycle behaviour,
+ * Configuration record for {@link CustomAnvilInput} describing initial text, lifecycle behaviour,.
  * and transformation hooks for player input.
  *
  * <p>The config aligns with translation-driven workflows by allowing callers to inject default
@@ -79,7 +92,7 @@ public class CustomAnvilInputConfig {
     }
 
     /**
-     * Configures the view to close immediately when the player interacts with the item placed
+     * Configures the view to close immediately when the player interacts with the item placed.
      * at container's {@link me.devnatan.inventoryframework.ViewType#getResultSlots() first result slot}.
      *
      * @return This anvil input feature config.
@@ -104,8 +117,8 @@ public class CustomAnvilInputConfig {
 
     /**
      * Setups a handler that can be used to transform the input provided by the player.
-     * <p>
-     * Note that it's not called immediately, only when view is closed or the player interacts with
+ *
+ * <p>Note that it's not called immediately, only when view is closed or the player interacts with
      * the item placed at container's {@link me.devnatan.inventoryframework.ViewType#getResultSlots() first result slot}.
      *
      * @param inputChangeHandler The input change handler.

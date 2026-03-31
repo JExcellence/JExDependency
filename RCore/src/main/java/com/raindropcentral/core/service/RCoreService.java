@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.core.service;
 
 import com.raindropcentral.core.database.entity.player.RPlayer;
@@ -11,7 +24,7 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * Public contract that exposes asynchronous player and statistic operations backed by the RCore
+ * Public contract that exposes asynchronous player and statistic operations backed by the RCore.
  * persistence layer.
  *
  * <p>Implementations execute work on the executor provided by the active {@code RCoreBackend} and
@@ -313,7 +326,7 @@ public interface RCoreService {
     );
 
     /**
-     * Counts the number of statistics belonging to the supplied plugin namespace for the player
+     * Counts the number of statistics belonging to the supplied plugin namespace for the player.
      * identified by {@link UUID}.
      *
      * <p>The count executes asynchronously on the backend executor. If datastore queries fail, the
@@ -328,7 +341,7 @@ public interface RCoreService {
     CompletableFuture<Long> getStatisticCountForPluginAsync(@NotNull UUID uniqueId, @NotNull String plugin);
 
     /**
-     * Counts the number of statistics belonging to the supplied plugin namespace for the player
+     * Counts the number of statistics belonging to the supplied plugin namespace for the player.
      * referenced by {@link OfflinePlayer}.
      *
      * <p>This overload resolves the player identifier and delegates to

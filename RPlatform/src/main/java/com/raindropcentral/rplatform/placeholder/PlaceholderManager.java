@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rplatform.placeholder;
 
 import org.bukkit.Bukkit;
@@ -49,7 +62,7 @@ public class PlaceholderManager {
     }
 
     /**
-     * Registers the PlaceholderAPI expansion when available and not yet registered. The method
+     * Registers the PlaceholderAPI expansion when available and not yet registered. The method.
      * aborts when PlaceholderAPI is missing, preventing reflective calls, and logs both successful
      * and failed registration attempts. On success the {@link #registered} flag is set to
      * {@code true}.
@@ -78,7 +91,7 @@ public class PlaceholderManager {
     }
 
     /**
-     * Unregisters the PlaceholderAPI expansion only when previously registered. Failures during
+     * Unregisters the PlaceholderAPI expansion only when previously registered. Failures during.
      * reflection are logged while leaving the {@link #registered} flag unchanged when deregistration
      * cannot be completed.
      */

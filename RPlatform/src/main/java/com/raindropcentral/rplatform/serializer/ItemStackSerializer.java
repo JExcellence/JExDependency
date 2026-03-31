@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rplatform.serializer;
 
 import org.bukkit.Material;
@@ -13,7 +26,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 /**
- * Handles binary and Base64 serialization of {@link ItemStack} instances and arrays for storage or
+ * Handles binary and Base64 serialization of {@link ItemStack} instances and arrays for storage or.
  * transmission across the RDC platform.
  *
  * <p>The serializer relies on Bukkit's {@link BukkitObjectOutputStream} and corresponding input
@@ -69,7 +82,7 @@ public class ItemStackSerializer {
     }
 
     /**
-     * Serializes an array of item stacks by writing the array length followed by each normalized
+     * Serializes an array of item stacks by writing the array length followed by each normalized.
      * element to a Bukkit object stream.
      *
      * <p>{@code null} arrays are treated as empty collections and {@code null} elements are replaced
@@ -98,7 +111,7 @@ public class ItemStackSerializer {
     }
 
     /**
-     * Deserializes an array of {@link ItemStack ItemStacks} previously created by
+     * Deserializes an array of {@link ItemStack ItemStacks} previously created by.
      * {@link #serializeArray(ItemStack[])}.
      *
      * <p>Any failure to read the declared length or individual elements results in an
@@ -142,7 +155,7 @@ public class ItemStackSerializer {
     }
 
     /**
-     * Decodes a Base64 representation produced by {@link #toBase64(ItemStack)} and deserializes it
+     * Decodes a Base64 representation produced by {@link #toBase64(ItemStack)} and deserializes it.
      * into an {@link ItemStack}.
      *
      * <p>Malformed Base64 or deserialization errors result in an {@link IllegalStateException}.</p>
@@ -176,7 +189,7 @@ public class ItemStackSerializer {
     }
 
     /**
-     * Decodes a Base64 string produced by {@link #arrayToBase64(ItemStack[])} back into an array of
+     * Decodes a Base64 string produced by {@link #arrayToBase64(ItemStack[])} back into an array of.
      * stacks.
      *
      * <p>Any decoding or deserialization problem surfaces as an {@link IllegalStateException}.</p>

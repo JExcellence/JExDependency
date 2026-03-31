@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.core.service.statistics.delivery;
 
 /**
@@ -67,21 +80,66 @@ public record ServerMetrics(
         private int entityCount = 0;
         private int tileEntityCount = 0;
 
+        /**
+         * Executes tps1m.
+         */
         public Builder tps1m(double tps1m) { this.tps1m = tps1m; return this; }
+        /**
+         * Executes tps5m.
+         */
         public Builder tps5m(double tps5m) { this.tps5m = tps5m; return this; }
+        /**
+         * Executes tps15m.
+         */
         public Builder tps15m(double tps15m) { this.tps15m = tps15m; return this; }
+        /**
+         * Executes heapUsed.
+         */
         public Builder heapUsed(long heapUsed) { this.heapUsed = heapUsed; return this; }
+        /**
+         * Executes heapMax.
+         */
         public Builder heapMax(long heapMax) { this.heapMax = heapMax; return this; }
+        /**
+         * Executes nonHeapUsed.
+         */
         public Builder nonHeapUsed(long nonHeapUsed) { this.nonHeapUsed = nonHeapUsed; return this; }
+        /**
+         * Executes cpuUsage.
+         */
         public Builder cpuUsage(double cpuUsage) { this.cpuUsage = cpuUsage; return this; }
+        /**
+         * Executes onlinePlayers.
+         */
         public Builder onlinePlayers(int onlinePlayers) { this.onlinePlayers = onlinePlayers; return this; }
+        /**
+         * Executes maxPlayers.
+         */
         public Builder maxPlayers(int maxPlayers) { this.maxPlayers = maxPlayers; return this; }
+        /**
+         * Executes uptimeMs.
+         */
         public Builder uptimeMs(long uptimeMs) { this.uptimeMs = uptimeMs; return this; }
+        /**
+         * Executes worldCount.
+         */
         public Builder worldCount(int worldCount) { this.worldCount = worldCount; return this; }
+        /**
+         * Executes loadedChunks.
+         */
         public Builder loadedChunks(int loadedChunks) { this.loadedChunks = loadedChunks; return this; }
+        /**
+         * Executes entityCount.
+         */
         public Builder entityCount(int entityCount) { this.entityCount = entityCount; return this; }
+        /**
+         * Executes tileEntityCount.
+         */
         public Builder tileEntityCount(int tileEntityCount) { this.tileEntityCount = tileEntityCount; return this; }
 
+        /**
+         * Executes build.
+         */
         public ServerMetrics build() {
             return new ServerMetrics(
                 tps1m, tps5m, tps15m, heapUsed, heapMax, nonHeapUsed,

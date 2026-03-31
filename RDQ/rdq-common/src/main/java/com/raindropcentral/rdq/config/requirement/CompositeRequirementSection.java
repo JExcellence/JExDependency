@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.config.requirement;
 
 import de.jexcellence.configmapper.sections.AConfigSection;
@@ -11,10 +24,9 @@ import java.util.Map;
 
 /**
  * Configuration section for composite requirements.
- * <p>
- * This section handles all configuration options specific to CompositeRequirement,
+ *
+ * <p>This section handles all configuration options specific to CompositeRequirement,
  * including sub-requirements, logical operators, and minimum required counts.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -84,10 +96,16 @@ public class CompositeRequirementSection extends AConfigSection {
 	}
 	
 	
+	/**
+	 * Gets description.
+	 */
 	public String getDescription() {
 		return this.description;
 	}
 	
+	/**
+	 * Gets allowPartialProgress.
+	 */
 	public Boolean getAllowPartialProgress() {
 		return this.allowPartialProgress != null ? this.allowPartialProgress : true;
 	}

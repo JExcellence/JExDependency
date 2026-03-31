@@ -19,14 +19,13 @@ import java.util.stream.Collectors;
 
 /**
  * Comprehensive command handler for currency management operations within the JExEconomy system.
- * <p>
- * This class provides a complete command-line interface for currency administration, offering
+ *
+ * <p>This class provides a complete command-line interface for currency administration, offering
  * functionality for creating, deleting, editing, listing, and displaying detailed information
  * about currencies. It serves as the primary interface between player commands and the
  * underlying currency management system.
- * </p>
  *
- * <h3>Supported Operations:</h3>
+ * <p><strong>Supported Operations:</strong>
  * <ul>
  *   <li><strong>Currency Creation:</strong> Create new currencies with customizable properties</li>
  *   <li><strong>Currency Deletion:</strong> Remove existing currencies from the system</li>
@@ -36,7 +35,7 @@ import java.util.stream.Collectors;
  *   <li><strong>Tab Completion:</strong> Provide intelligent auto-completion for currency identifiers and fields</li>
  * </ul>
  *
- * <h3>Design Principles:</h3>
+ * <p><strong>Design Principles:</strong>
  * <ul>
  *   <li><strong>Asynchronous Operations:</strong> All database operations execute on background threads</li>
  *   <li><strong>Internationalization:</strong> All user feedback uses the modern Polyglot API localization system</li>
@@ -45,7 +44,7 @@ import java.util.stream.Collectors;
  *   <li><strong>User Experience:</strong> Clear feedback messages and helpful usage information</li>
  * </ul>
  *
- * <h3>Integration Points:</h3>
+ * <p><strong>Integration Points:</strong>
  * <ul>
  *   <li>Integrates with JExEconomy plugin repositories for data persistence</li>
  *   <li>Uses CurrencyAdapter for standardized currency operations</li>
@@ -53,7 +52,7 @@ import java.util.stream.Collectors;
  *   <li>Provides tab completion support for enhanced user experience</li>
  * </ul>
  *
- * <h3>Security Considerations:</h3>
+ * <p><strong>Security Considerations:</strong>
  * <ul>
  *   <li>All operations validate currency existence before modification</li>
  *   <li>Identifier uniqueness is enforced during creation and editing</li>
@@ -71,21 +70,19 @@ public class CurrencyCommandHandler {
 
 	/**
 	 * Reference to the main JExEconomy plugin instance.
-	 * <p>
-	 * Provides access to currency repositories, adapter services, executor services,
+ *
+ * <p>Provides access to currency repositories, adapter services, executor services,
 	 * and other plugin infrastructure required for executing currency management
 	 * operations and maintaining data consistency.
-	 * </p>
 	 */
 	private final JExEconomy jexEconomyImpl;
 
 	/**
 	 * Constructs a new currency command handler with access to the plugin infrastructure.
-	 * <p>
-	 * Initializes the handler with the necessary dependencies to perform currency
+ *
+ * <p>Initializes the handler with the necessary dependencies to perform currency
 	 * management operations, including access to repositories, adapters, and
 	 * executor services for asynchronous operations.
-	 * </p>
 	 *
 	 * @param jexEconomyImpl the main JExEconomy plugin instance providing access to services, must not be null
 	 * @throws IllegalArgumentException if jexEconomyImpl is null
@@ -96,13 +93,12 @@ public class CurrencyCommandHandler {
 
 	/**
 	 * Handles the creation of a new currency with comprehensive validation and account initialization.
-	 * <p>
-	 * This method creates a new currency entity with the specified parameters and automatically
+ *
+ * <p>This method creates a new currency entity with the specified parameters and automatically
 	 * initializes player accounts for all existing users. The operation includes validation
 	 * to prevent duplicate currency identifiers and provides detailed feedback to the user.
-	 * </p>
 	 *
-	 * <h3>Operation Flow:</h3>
+	 * <p><strong>Operation Flow:</strong>
 	 * <ol>
 	 *   <li>Validates command arguments and parameter count</li>
 	 *   <li>Checks for existing currency with the same identifier</li>
@@ -111,7 +107,7 @@ public class CurrencyCommandHandler {
 	 *   <li>Provides success/failure feedback to the user</li>
 	 * </ol>
 	 *
-	 * <h3>Parameter Requirements:</h3>
+	 * <p><strong>Parameter Requirements:</strong>
 	 * <ul>
 	 *   <li><strong>args[1]:</strong> Currency identifier (required, must be unique)</li>
 	 *   <li><strong>args[2]:</strong> Currency symbol (required)</li>
@@ -161,13 +157,12 @@ public class CurrencyCommandHandler {
 
 	/**
 	 * Handles the deletion of an existing currency with validation and confirmation.
-	 * <p>
-	 * This method removes a currency from the system after validating its existence.
+ *
+ * <p>This method removes a currency from the system after validating its existence.
 	 * The operation includes comprehensive error handling and provides clear feedback
 	 * about the success or failure of the deletion operation.
-	 * </p>
 	 *
-	 * <h3>Operation Flow:</h3>
+	 * <p><strong>Operation Flow:</strong>
 	 * <ol>
 	 *   <li>Validates command arguments and parameter count</li>
 	 *   <li>Verifies currency exists in the system</li>
@@ -176,7 +171,7 @@ public class CurrencyCommandHandler {
 	 *   <li>Provides success/failure feedback to the user</li>
 	 * </ol>
 	 *
-	 * <h3>Parameter Requirements:</h3>
+	 * <p><strong>Parameter Requirements:</strong>
 	 * <ul>
 	 *   <li><strong>args[1]:</strong> Currency identifier (required, must exist)</li>
 	 * </ul>
@@ -214,13 +209,12 @@ public class CurrencyCommandHandler {
 
 	/**
 	 * Lists all available currencies with their properties and statistics.
-	 * <p>
-	 * This method retrieves all currencies from the database and displays them
+ *
+ * <p>This method retrieves all currencies from the database and displays them
 	 * in a formatted list with comprehensive information about each currency.
 	 * If no currencies exist, it provides appropriate feedback to the user.
-	 * </p>
 	 *
-	 * <h3>Display Information:</h3>
+	 * <p><strong>Display Information:</strong>
 	 * <ul>
 	 *   <li>Currency identifier and symbol</li>
 	 *   <li>Prefix and suffix formatting</li>
@@ -239,10 +233,9 @@ public class CurrencyCommandHandler {
 
         /**
          * Lists currencies for the given player using the provided query options.
-         * <p>
-         * This overload allows callers to customize pagination, sorting, and filtering behaviour while
+ *
+ * <p>This overload allows callers to customize pagination, sorting, and filtering behaviour while
          * still delegating the asynchronous retrieval and message formatting to the handler.
-         * </p>
          *
          * @param commandExecutingPlayer the player requesting the currency list, must not be null
          * @param listQuery the configuration describing pagination, sorting, and filtering options, must not be null
@@ -295,13 +288,12 @@ public class CurrencyCommandHandler {
 
 	/**
 	 * Edits a specific field of an existing currency with validation and persistence.
-	 * <p>
-	 * This method allows modification of currency properties including symbol, prefix,
+ *
+ * <p>This method allows modification of currency properties including symbol, prefix,
 	 * suffix, and identifier. It includes comprehensive validation to ensure data
 	 * integrity and prevent conflicts with existing currencies.
-	 * </p>
 	 *
-	 * <h3>Editable Fields:</h3>
+	 * <p><strong>Editable Fields:</strong>
 	 * <ul>
 	 *   <li><strong>symbol:</strong> The currency symbol displayed in transactions</li>
 	 *   <li><strong>prefix:</strong> Text displayed before currency amounts</li>
@@ -309,7 +301,7 @@ public class CurrencyCommandHandler {
 	 *   <li><strong>identifier:</strong> Unique currency identifier (validated for uniqueness)</li>
 	 * </ul>
 	 *
-	 * <h3>Parameter Requirements:</h3>
+	 * <p><strong>Parameter Requirements:</strong>
 	 * <ul>
 	 *   <li><strong>args[1]:</strong> Currency identifier (required, must exist)</li>
 	 *   <li><strong>args[2]:</strong> Field name to edit (required, must be valid)</li>
@@ -357,13 +349,12 @@ public class CurrencyCommandHandler {
 
 	/**
 	 * Shows detailed information about a specific currency including all properties.
-	 * <p>
-	 * This method retrieves and displays comprehensive information about a currency,
+ *
+ * <p>This method retrieves and displays comprehensive information about a currency,
 	 * including its identifier, symbol, prefix, suffix, and other relevant details.
 	 * The information is formatted for easy reading and understanding.
-	 * </p>
 	 *
-	 * <h3>Displayed Information:</h3>
+	 * <p><strong>Displayed Information:</strong>
 	 * <ul>
 	 *   <li>Currency identifier and symbol</li>
 	 *   <li>Prefix and suffix formatting strings</li>
@@ -371,7 +362,7 @@ public class CurrencyCommandHandler {
 	 *   <li>Usage statistics and player account information</li>
 	 * </ul>
 	 *
-	 * <h3>Parameter Requirements:</h3>
+	 * <p><strong>Parameter Requirements:</strong>
 	 * <ul>
 	 *   <li><strong>args[1]:</strong> Currency identifier (required, must exist)</li>
 	 * </ul>
@@ -413,11 +404,10 @@ public class CurrencyCommandHandler {
 
 	/**
 	 * Retrieves a list of all available currency identifiers for tab completion support.
-	 * <p>
-	 * This method provides asynchronous access to currency identifiers for use in
+ *
+ * <p>This method provides asynchronous access to currency identifiers for use in
 	 * command tab completion, improving the user experience by offering intelligent
 	 * auto-completion suggestions based on existing currencies in the system.
-	 * </p>
 	 *
 	 * @return a CompletableFuture containing a list of currency identifiers for tab completion
 	 */
@@ -433,11 +423,10 @@ public class CurrencyCommandHandler {
 
 	/**
 	 * Retrieves a list of editable currency fields for tab completion support.
-	 * <p>
-	 * This method provides a static list of field names that can be edited through
+ *
+ * <p>This method provides a static list of field names that can be edited through
 	 * the currency edit command, supporting tab completion for improved user experience
 	 * and reduced command errors.
-	 * </p>
 	 *
 	 * @return a list of editable field names for tab completion
 	 */
@@ -452,11 +441,10 @@ public class CurrencyCommandHandler {
 
 	/**
 	 * Executes the actual currency creation process with account initialization.
-	 * <p>
-	 * This private method handles the core currency creation logic, including
+ *
+ * <p>This private method handles the core currency creation logic, including
 	 * entity creation, database persistence, and automatic player account
 	 * initialization for all existing users in the system.
-	 * </p>
 	 *
 	 * @param commandExecutingPlayer the player executing the command, must not be null
 	 * @param currencyIdentifier the unique identifier for the new currency, must not be null
@@ -499,11 +487,10 @@ public class CurrencyCommandHandler {
 
 	/**
 	 * Initializes player accounts for a newly created currency.
-	 * <p>
-	 * This private method creates UserCurrency entities for all existing users
+ *
+ * <p>This private method creates UserCurrency entities for all existing users
 	 * when a new currency is added to the system, ensuring that all players
 	 * have accounts for the new currency with zero initial balance.
-	 * </p>
 	 *
 	 * @param commandExecutingPlayer the player who created the currency, must not be null
 	 * @param newCurrencyEntity the newly created currency entity, must not be null
@@ -535,10 +522,9 @@ public class CurrencyCommandHandler {
 
 	/**
 	 * Executes the actual currency deletion process with database cleanup.
-	 * <p>
-	 * This private method handles the core currency deletion logic, including
+ *
+ * <p>This private method handles the core currency deletion logic, including
 	 * entity lookup, database removal, and appropriate success/failure feedback.
-	 * </p>
 	 *
 	 * @param commandExecutingPlayer the player executing the deletion command, must not be null
 	 * @param currencyIdentifier the identifier of the currency to delete, must not be null
@@ -573,11 +559,10 @@ public class CurrencyCommandHandler {
 
 	/**
 	 * Executes the currency field editing process with validation and persistence.
-	 * <p>
-	 * This private method handles the core field editing logic, including
+ *
+ * <p>This private method handles the core field editing logic, including
 	 * field validation, value assignment, uniqueness checking for identifiers,
 	 * and database persistence of changes.
-	 * </p>
 	 *
 	 * @param commandExecutingPlayer the player executing the edit command, must not be null
 	 * @param currencyIdentifier the identifier of the currency to edit, must not be null
@@ -629,10 +614,9 @@ public class CurrencyCommandHandler {
 
 	/**
 	 * Updates a specific field of a currency entity with validation.
-	 * <p>
-	 * This private method handles the actual field modification logic,
+ *
+ * <p>This private method handles the actual field modification logic,
 	 * including validation for identifier uniqueness and field existence.
-	 * </p>
 	 *
 	 * @param currencyEntity the currency entity to modify, must not be null
 	 * @param fieldName the name of the field to update, must not be null
@@ -679,10 +663,9 @@ public class CurrencyCommandHandler {
 
 	/**
 	 * Sends currency list header message with count information.
-	 * <p>
-	 * This private method sends a formatted header message displaying
+ *
+ * <p>This private method sends a formatted header message displaying
 	 * the total number of available currencies in the system.
-	 * </p>
 	 *
 	 * @param targetPlayer the player to send the message to, must not be null
 	 * @param currencyCount the total number of currencies available
@@ -699,10 +682,9 @@ public class CurrencyCommandHandler {
 
 	/**
 	 * Sends individual currency list entries with detailed information.
-	 * <p>
-	 * This private method iterates through the currency list and sends
+ *
+ * <p>This private method iterates through the currency list and sends
 	 * formatted entries displaying each currency's properties.
-	 * </p>
 	 *
 	 * @param targetPlayer the player to send the entries to, must not be null
 	 * @param currencyList the list of currencies to display, must not be null
@@ -724,10 +706,9 @@ public class CurrencyCommandHandler {
 
 	/**
 	 * Sends comprehensive currency information display to the player.
-	 * <p>
-	 * This private method formats and sends detailed information about
+ *
+ * <p>This private method formats and sends detailed information about
 	 * a specific currency, including all its properties and configuration.
-	 * </p>
 	 *
 	 * @param targetPlayer the player to send the information to, must not be null
 	 * @param currencyEntity the currency entity to display information for, must not be null
@@ -753,10 +734,9 @@ public class CurrencyCommandHandler {
 
 	/**
 	 * Sends a usage message to the player for command syntax guidance.
-	 * <p>
-	 * This private method provides standardized usage information to help
+ *
+ * <p>This private method provides standardized usage information to help
 	 * players understand the correct syntax for currency commands.
-	 * </p>
 	 *
 	 * @param targetPlayer the player to send the usage message to, must not be null
 	 * @param usageSyntax the usage syntax string to display, must not be null
@@ -773,10 +753,9 @@ public class CurrencyCommandHandler {
 
 	/**
 	 * Sends information about editable currency fields to the player.
-	 * <p>
-	 * This private method provides guidance about which fields can be
+ *
+ * <p>This private method provides guidance about which fields can be
 	 * modified through the currency edit command.
-	 * </p>
 	 *
 	 * @param targetPlayer the player to send the fields information to, must not be null
 	 */
@@ -788,10 +767,9 @@ public class CurrencyCommandHandler {
 
 	/**
 	 * Sends currency already exists error message to the player.
-	 * <p>
-	 * This private method notifies the player when attempting to create
+ *
+ * <p>This private method notifies the player when attempting to create
 	 * a currency with an identifier that already exists in the system.
-	 * </p>
 	 *
 	 * @param targetPlayer the player to send the error message to, must not be null
 	 * @param currencyIdentifier the identifier that already exists, must not be null
@@ -808,10 +786,9 @@ public class CurrencyCommandHandler {
 
 	/**
 	 * Sends currency not found error message to the player.
-	 * <p>
-	 * This private method notifies the player when attempting to operate
+ *
+ * <p>This private method notifies the player when attempting to operate
 	 * on a currency that doesn't exist in the system.
-	 * </p>
 	 *
 	 * @param targetPlayer the player to send the error message to, must not be null
 	 * @param currencyIdentifier the identifier that was not found, must not be null
@@ -828,10 +805,9 @@ public class CurrencyCommandHandler {
 
 	/**
 	 * Sends empty currency list message to the player.
-	 * <p>
-	 * This private method notifies the player when no currencies
+ *
+ * <p>This private method notifies the player when no currencies
 	 * exist in the system during a list operation.
-	 * </p>
 	 *
 	 * @param targetPlayer the player to send the message to, must not be null
 	 */
@@ -874,6 +850,15 @@ public class CurrencyCommandHandler {
                         Objects.requireNonNull(filter, "filter");
                 }
 
+                /**
+                 * Executes method.
+                 */
+                /**
+                 * Executes this member.
+                 */
+                /**
+                 * Executes defaultQuery.
+                 */
                 public static CurrencyListQuery defaultQuery() {
                         return new CurrencyListQuery(
                                 1,
@@ -886,10 +871,9 @@ public class CurrencyCommandHandler {
 
 	/**
 	 * Sends currency creation success message to the player.
-	 * <p>
-	 * This private method confirms successful currency creation
+ *
+ * <p>This private method confirms successful currency creation
 	 * with the specified identifier.
-	 * </p>
 	 *
 	 * @param targetPlayer the player to send the success message to, must not be null
 	 * @param currencyIdentifier the identifier of the created currency, must not be null
@@ -906,10 +890,9 @@ public class CurrencyCommandHandler {
 
 	/**
 	 * Sends currency creation failed message to the player.
-	 * <p>
-	 * This private method notifies the player when currency
+ *
+ * <p>This private method notifies the player when currency
 	 * creation fails due to system errors.
-	 * </p>
 	 *
 	 * @param targetPlayer the player to send the error message to, must not be null
 	 */
@@ -921,10 +904,9 @@ public class CurrencyCommandHandler {
 
 	/**
 	 * Sends player accounts created confirmation message.
-	 * <p>
-	 * This private method confirms that player accounts have been
+ *
+ * <p>This private method confirms that player accounts have been
 	 * successfully created for a new currency.
-	 * </p>
 	 *
 	 * @param targetPlayer the player to send the confirmation to, must not be null
 	 * @param playerCount the number of player accounts created
@@ -944,10 +926,9 @@ public class CurrencyCommandHandler {
 
 	/**
 	 * Sends currency deletion success message to the player.
-	 * <p>
-	 * This private method confirms successful currency deletion
+ *
+ * <p>This private method confirms successful currency deletion
 	 * with the specified identifier.
-	 * </p>
 	 *
 	 * @param targetPlayer the player to send the success message to, must not be null
 	 * @param currencyIdentifier the identifier of the deleted currency, must not be null
@@ -964,10 +945,9 @@ public class CurrencyCommandHandler {
 
 	/**
 	 * Sends currency deletion failed message to the player.
-	 * <p>
-	 * This private method notifies the player when currency
+ *
+ * <p>This private method notifies the player when currency
 	 * deletion fails due to system errors.
-	 * </p>
 	 *
 	 * @param targetPlayer the player to send the error message to, must not be null
 	 */
@@ -979,10 +959,9 @@ public class CurrencyCommandHandler {
 
 	/**
 	 * Sends currency edit success message to the player.
-	 * <p>
-	 * This private method confirms successful currency field
+ *
+ * <p>This private method confirms successful currency field
 	 * modification with details about the change.
-	 * </p>
 	 *
 	 * @param targetPlayer the player to send the success message to, must not be null
 	 * @param currencyIdentifier the identifier of the edited currency, must not be null
@@ -1005,10 +984,9 @@ public class CurrencyCommandHandler {
 
 	/**
 	 * Sends currency edit failed message to the player.
-	 * <p>
-	 * This private method notifies the player when currency
+ *
+ * <p>This private method notifies the player when currency
 	 * editing fails due to validation or system errors.
-	 * </p>
 	 *
 	 * @param targetPlayer the player to send the error message to, must not be null
 	 */

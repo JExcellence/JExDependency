@@ -1,0 +1,11 @@
+{
+  "id": "rcore",
+  "name": "RCore",
+  "version": "${version}",
+  "description": "${description}",
+  "authors": [
+    "ItsRainingHP",
+    "JExcellence"
+  ],
+  "main": "com.raindropcentral.core.velocity.RCoreVelocityBootstrap"
+}

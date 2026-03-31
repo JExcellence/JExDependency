@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rplatform.serializer;
 
 import com.fasterxml.jackson.core.JsonParser;
@@ -13,17 +26,15 @@ import java.util.*;
 
 /**
  * Custom deserializer for Bukkit {@link ItemStack} objects.
- * <p>
- * This class reconstructs {@code ItemStack} objects from their JSON representation,
+ *
+ * <p>This class reconstructs {@code ItemStack} objects from their JSON representation,
  * supporting both binary serialization (complete metadata preservation) and 
  * Map serialization (fallback compatibility).
- * </p>
  *
- * <p>
- * Handles two serialization formats:
+ *
+ * <p>Handles two serialization formats:
  * 1. Binary format: Complete Bukkit serialization preserving ALL metadata
  * 2. Map format: Bukkit's Map serialization for compatibility
- * </p>
  *
  * @author JExcellence
  * @version 2.0.0
@@ -31,16 +42,18 @@ import java.util.*;
  */
 public class ItemStackJSONDeserializer extends StdDeserializer<ItemStack> {
 
+    /**
+     * Executes ItemStackJSONDeserializer.
+     */
     public ItemStackJSONDeserializer() {
         super(ItemStack.class);
     }
 
     /**
      * Deserializes a JSON representation into an {@link ItemStack} object.
-     * <p>
-     * Supports both binary and map serialization formats for maximum compatibility
+ *
+ * <p>Supports both binary and map serialization formats for maximum compatibility
      * and complete metadata preservation.
-     * </p>
      *
      * @param jsonParser             the JSON parser
      * @param deserializationContext the deserialization context

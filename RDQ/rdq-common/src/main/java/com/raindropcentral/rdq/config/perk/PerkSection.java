@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.config.perk;
 
 import com.raindropcentral.rdq.config.requirement.BaseRequirementSection;
@@ -17,11 +30,10 @@ import java.util.logging.Logger;
 
 /**
  * Configuration section for perk definitions.
- * <p>
- * This section handles the complete perk configuration including identifier, type, category,
+ *
+ * <p>This section handles the complete perk configuration including identifier, type, category,
  * requirements, unlock rewards, and effect configuration. Display name and description keys
  * are automatically generated if not provided.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -197,38 +209,65 @@ public class PerkSection extends AConfigSection {
 	
 	// ==================== Getters ====================
 	
+	/**
+	 * Gets identifier.
+	 */
 	public String getIdentifier() {
 		return identifier;
 	}
 	
+	/**
+	 * Gets perkType.
+	 */
 	public String getPerkType() {
 		return perkType == null ? "PASSIVE" : perkType;
 	}
 	
+	/**
+	 * Gets category.
+	 */
 	public String getCategory() {
 		return category == null ? "UTILITY" : category;
 	}
 	
+	/**
+	 * Gets enabled.
+	 */
 	public Boolean getEnabled() {
 		return enabled == null || enabled;
 	}
 	
+	/**
+	 * Gets displayOrder.
+	 */
 	public Integer getDisplayOrder() {
 		return displayOrder == null ? 0 : displayOrder;
 	}
 	
+	/**
+	 * Gets icon.
+	 */
 	public IconSection getIcon() {
 		return icon == null ? new IconSection(new EvaluationEnvironmentBuilder()) : icon;
 	}
 	
+	/**
+	 * Gets requirements.
+	 */
 	public Map<String, BaseRequirementSection> getRequirements() {
 		return requirements == null ? new HashMap<>() : requirements;
 	}
 	
+	/**
+	 * Gets unlockRewards.
+	 */
 	public Map<String, RewardSection> getUnlockRewards() {
 		return unlockRewards == null ? new HashMap<>() : unlockRewards;
 	}
 	
+	/**
+	 * Gets effect.
+	 */
 	public PerkEffectSection getEffect() {
 		return effect == null ? new PerkEffectSection(new EvaluationEnvironmentBuilder()) : effect;
 	}

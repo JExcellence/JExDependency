@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.core.service.statistics.delivery;
 
 import com.google.gson.Gson;
@@ -22,21 +35,30 @@ public class PayloadCompressor {
 
     private static final Logger LOGGER = CentralLogger.getLoggerByName("RCore");
 
-    /** Default compression threshold in bytes (5KB) */
+/** Represents this API member. */
     private static final int DEFAULT_COMPRESSION_THRESHOLD = 5 * 1024;
 
     private final Gson gson;
     private final int compressionThreshold;
 
+    /**
+     * Executes PayloadCompressor.
+     */
     public PayloadCompressor() {
         this(DEFAULT_COMPRESSION_THRESHOLD);
     }
 
+    /**
+     * Executes PayloadCompressor.
+     */
     public PayloadCompressor(final int compressionThreshold) {
         this.gson = new GsonBuilder().create();
         this.compressionThreshold = compressionThreshold;
     }
 
+    /**
+     * Executes PayloadCompressor.
+     */
     public PayloadCompressor(final @NotNull com.raindropcentral.core.service.statistics.config.StatisticsDeliveryConfig config) {
         this.gson = new GsonBuilder().create();
         this.compressionThreshold = config.getCompressionThresholdBytes();

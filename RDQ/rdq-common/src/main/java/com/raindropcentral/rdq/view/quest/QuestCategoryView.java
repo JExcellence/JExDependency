@@ -38,7 +38,7 @@ public class QuestCategoryView extends APaginatedView<QuestCategory> {
 	private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
 	
 	private final State<RDQ> rdq = initialState("plugin");
-	
+
 	public QuestCategoryView() {
 		super();
 	}
@@ -62,18 +62,18 @@ public class QuestCategoryView extends APaginatedView<QuestCategory> {
 	@Override
 	protected CompletableFuture<List<QuestCategory>> getAsyncPaginationSource(final @NotNull Context context) {
 		LOGGER.info("Loading quest categories from cache...");
-		
+
 		final RDQ plugin = rdq.get(context);
-		
+
 		// Get categories from cache manager (instant access)
 		final List<QuestCategory> categories = plugin.getQuestCacheManager().getAllCategories();
-		
+
 		LOGGER.info("Loaded " + categories.size() + " categories from cache");
-		
+
 		// Return instantly as CompletableFuture
 		return CompletableFuture.completedFuture(categories);
 	}
-	
+
 	@Override
 	protected void renderEntry(
 			final @NotNull Context context,
@@ -122,7 +122,7 @@ public class QuestCategoryView extends APaginatedView<QuestCategory> {
 	protected void onPaginatedRender(final @NotNull RenderContext render, final @NotNull Player player) {
 		// No additional UI elements needed for category view
 	}
-	
+
 	private void handleCategoryClick(
 			final @NotNull SlotClickContext click,
 			final @NotNull QuestCategory category

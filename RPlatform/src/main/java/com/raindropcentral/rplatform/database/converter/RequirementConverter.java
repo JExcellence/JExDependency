@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rplatform.database.converter;
 
 import com.raindropcentral.rplatform.requirement.AbstractRequirement;
@@ -11,16 +24,15 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 
 /**
- * JPA {@link AttributeConverter} for converting {@link AbstractRequirement} objects
+ * JPA {@link AttributeConverter} for converting {@link AbstractRequirement} objects.
  * to and from their JSON string representations for database storage.
- * <p>
- * This converter uses {@link RequirementParser} for serialization, which supports:
+ *
+ * <p>This converter uses {@link RequirementParser} for serialization, which supports:
  * <ul>
  *   <li>Polymorphic requirement types via {@link com.raindropcentral.rplatform.requirement.json.RequirementMixin}</li>
  *   <li>Plugin-registered custom requirement types via {@link RequirementRegistry}</li>
  *   <li>Bukkit-specific types like ItemStack</li>
  * </ul>
- * </p>
  */
 @Converter(autoApply = true)
 public class RequirementConverter implements AttributeConverter<AbstractRequirement, String> {

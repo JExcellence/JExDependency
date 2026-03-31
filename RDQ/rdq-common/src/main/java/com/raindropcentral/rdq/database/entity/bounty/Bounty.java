@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.database.entity.bounty;
 
 import de.jexcellence.hibernate.entity.BaseEntity;
@@ -10,6 +23,9 @@ import java.io.Serial;
 import java.time.LocalDateTime;
 import java.util.*;
 
+/**
+ * Stores a bounty contract and its attached rewards.
+ */
 @Entity
 @Table(
         name = "r_bounty",
@@ -59,12 +75,18 @@ public class Bounty extends BaseEntity {
 
         protected Bounty() {}
 
+        /**
+         * Executes Bounty.
+         */
         public Bounty(@NotNull UUID targetUniqueId, @NotNull UUID commissionerUniqueId) {
                 this.targetUniqueId = targetUniqueId;
                 this.commissionerUniqueId = commissionerUniqueId;
                 this.expiresAt = null; //expires never
         }
 
+        /**
+         * Executes Bounty.
+         */
         public Bounty(
                 @NotNull UUID targetUniqueId,
                 @NotNull UUID commissionerUniqueId,
@@ -74,19 +96,31 @@ public class Bounty extends BaseEntity {
                 this.rewards = rewards;
         }
 
+        /**
+         * Executes addReward.
+         */
         public void addReward(@NotNull BountyReward rewardItem) {
 
                 rewards.add(rewardItem);
         }
 
+        /**
+         * Returns whether claimed.
+         */
         public boolean isClaimed() {
                 return claimedBy != null;
         }
 
+        /**
+         * Returns whether expired.
+         */
         public boolean isExpired() {
                 return expiresAt != null && LocalDateTime.now().isAfter(expiresAt);
         }
 
+        /**
+         * Executes claim.
+         */
         public void claim(
                 @NotNull UUID claimedBy
         ) {
@@ -95,6 +129,9 @@ public class Bounty extends BaseEntity {
                 this.active = false;
         }
 
+        /**
+         * Executes expire.
+         */
         public void expire() {
                 this.active = false;
         }

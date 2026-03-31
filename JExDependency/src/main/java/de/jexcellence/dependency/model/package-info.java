@@ -1,5 +1,5 @@
 /**
- * Data Transfer Objects that represent dependency coordinates, download results, and processing summaries
+ * Data Transfer Objects that represent dependency coordinates, download results, and processing summaries.
  * for the JExDependency runtime loader.
  *
  * <p>The {@link de.jexcellence.dependency.loader.YamlDependencyLoader} parses {@code dependencies.yml}

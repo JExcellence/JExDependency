@@ -16,7 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Loads dependency coordinate strings from YAML descriptors bundled alongside plugins or within their jars. The loader
+ * Loads dependency coordinate strings from YAML descriptors bundled alongside plugins or within their jars. The loader.
  * honours server-specific overrides (Paper vs Spigot) and parses simple list-style YAML without requiring additional
  * libraries during bootstrap.
  */
@@ -43,7 +43,7 @@ public class YamlDependencyLoader {
     }
 
     /**
-     * Loads dependency coordinates from YAML resources bundled alongside the provided anchor class. Server-specific
+     * Loads dependency coordinates from YAML resources bundled alongside the provided anchor class. Server-specific.
      * YAML files are preferred when available and fall back to a generic descriptor.
      *
      * @param anchorClass class whose class loader will be used to resolve the YAML resources
@@ -71,7 +71,7 @@ public class YamlDependencyLoader {
     }
 
     /**
-     * Loads dependency coordinates from YAML resources packaged inside the given plugin jar. The method first attempts
+     * Loads dependency coordinates from YAML resources packaged inside the given plugin jar. The method first attempts.
      * server-specific descriptors before falling back to the generic descriptor.
      *
      * @param jarPath path to the plugin jar to inspect

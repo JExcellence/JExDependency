@@ -4,9 +4,9 @@ commands:
     description: 'RDTImpl Commands'
     aliases:
       - rt
-    usage: 'rt <create | help>'
+    usage: 'rt <help | main | town | spawn>'
     argumentUsages:
-      1$: 'lut["prefix"] & "&7/" & alias & "&c<rt <create | help>"'
+      1$: 'lut["prefix"] & "&7/" & alias & " &c<help | main | town | spawn>"'
     errorMessages:
       malformedEnum$: |
         lut["prefix"] & "&7The value &c" & value & " &7is not one of (" &
@@ -24,9 +24,11 @@ commands:
     permissions:
       missingMessage$: 'lut["prefix"] & "You\sre lacking the permission: " & permission'
       nodes:
-        command: 'raindroptown.command'
-        commandCreate: 'raindroptown.command.create'
-        commandHelp: 'raindroptown.command.help'
+        command: 'raindroptowns.command'
+        mainCommand: 'raindroptowns.command.main'
+        townCommand: 'raindroptowns.command.town'
+        spawnCommand: 'raindroptowns.command.spawn'
+        helpCommand: 'raindroptowns.command.help'
 
 lut:
-  prefix: '&8[&1Admin&8] &7'
+  prefix: '&8[&9RDT&8] &7'

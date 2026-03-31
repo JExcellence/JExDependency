@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.bounty;
 
 import org.jetbrains.annotations.NotNull;
@@ -26,6 +39,9 @@ public class DamageTracker {
     private final Map<UUID, List<DamageEvent>> damageMap = new ConcurrentHashMap<>();
     private final long trackingWindowMs;
 
+    /**
+     * Executes DamageTracker.
+     */
     public DamageTracker(long trackingWindowMs) {
         if (trackingWindowMs <= 0) {
             throw new IllegalArgumentException("Tracking window must be positive");
@@ -33,6 +49,9 @@ public class DamageTracker {
         this.trackingWindowMs = trackingWindowMs;
     }
 
+    /**
+     * Executes recordDamage.
+     */
     public void recordDamage(@NotNull UUID victimUuid, @NotNull UUID attackerUuid, double damage) {
         if (damage <= 0) {
             return; // Ignore non-positive damage
@@ -42,6 +61,9 @@ public class DamageTracker {
         damageMap.computeIfAbsent(victimUuid, k -> new ArrayList<>()).add(event);
     }
 
+    /**
+     * Gets damageMap.
+     */
     public @NotNull Map<UUID, Double> getDamageMap(@NotNull UUID victimUuid) {
         List<DamageEvent> events = damageMap.get(victimUuid);
         if (events == null || events.isEmpty()) {
@@ -58,16 +80,25 @@ public class DamageTracker {
                 ));
     }
 
+    /**
+     * Gets totalDamage.
+     */
     public double getTotalDamage(@NotNull UUID victimUuid) {
         return getDamageMap(victimUuid).values().stream()
                 .mapToDouble(Double::doubleValue)
                 .sum();
     }
 
+    /**
+     * Executes clearDamage.
+     */
     public void clearDamage(@NotNull UUID victimUuid) {
         damageMap.remove(victimUuid);
     }
 
+    /**
+     * Executes cleanupExpiredRecords.
+     */
     public void cleanupExpiredRecords() {
         Instant cutoff = Instant.now().minusMillis(trackingWindowMs);
 
@@ -78,6 +109,9 @@ public class DamageTracker {
         });
     }
 
+    /**
+     * Gets trackedVictimCount.
+     */
     public int getTrackedVictimCount() {
         return damageMap.size();
     }

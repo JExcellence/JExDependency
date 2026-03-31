@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.listener;
 
 import com.raindropcentral.rdq.RDQ;
@@ -28,10 +41,16 @@ public class BountyPlayerJoinListener implements Listener {
 
     private final RDQ rdq;
 
+    /**
+     * Executes BountyPlayerJoinListener.
+     */
     public BountyPlayerJoinListener(@NotNull RDQ rdq) {
         this.rdq = rdq;
     }
 
+    /**
+     * Executes onPlayerJoin.
+     */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerJoin(@NotNull PlayerJoinEvent event) {
         var player = event.getPlayer();
@@ -43,12 +62,12 @@ public class BountyPlayerJoinListener implements Listener {
             if (bounty != null && bounty.isActive()) {
                 LOGGER.info("Found active bounty immediately for " + player.getName() + " (ID: " + bounty.getId() + ")");
 
-                rdq.getPlatform().getScheduler().runDelayed(() -> {
+                runDelayedAtPlayer(player, 20L, () -> {
                     if (player.isOnline()) {
                         applyVisualIndicators(player, bounty);
                         notifyPlayerOfBounty(player, bounty);
                     }
-                }, 20L);
+                });
                 
                 return;
             }
@@ -70,18 +89,18 @@ public class BountyPlayerJoinListener implements Listener {
             if (!player.isOnline()) {
                 return;
             }
-            
+
             rdq.getBountyFactory().getBountyAsync(player.getUniqueId()).thenAccept(bounty -> {
                 if (bounty == null) {
                     scheduleVisualIndicatorCheck(player, attempt + 1);
                     return;
                 }
-                
+
                 if (!bounty.isActive()) {
                     return;
                 }
 
-                rdq.getPlatform().getScheduler().runSync(() -> {
+                rdq.getPlatform().getScheduler().runAtEntity(player, () -> {
                     if (player.isOnline()) {
                         applyVisualIndicators(player, bounty);
 
@@ -96,7 +115,7 @@ public class BountyPlayerJoinListener implements Listener {
                 scheduleVisualIndicatorCheck(player, attempt + 1);
                 return null;
             });
-            
+
         }, delay);
     }
 
@@ -108,21 +127,32 @@ public class BountyPlayerJoinListener implements Listener {
                 rdq.getVisualIndicatorManager().forceRefreshIndicators(player);
             }
 
-            rdq.getPlatform().getScheduler().runDelayed(() -> {
+            runDelayedAtPlayer(player, 40L, () -> {
                 if (player.isOnline()) {
                     rdq.getVisualIndicatorManager().forceRefreshIndicators(player);
                     LOGGER.info("Reapplied visual indicators to " + player.getName() + " (second attempt)");
                 }
-            }, 40L);
+            });
             
-            rdq.getPlatform().getScheduler().runDelayed(() -> {
+            runDelayedAtPlayer(player, 100L, () -> {
                 if (player.isOnline()) {
                     rdq.getVisualIndicatorManager().forceRefreshIndicators(player);
                 }
-            }, 100L);
+            });
         } catch (Exception e) {
             LOGGER.log(Level.WARNING, "Failed to apply visual indicators to " + player.getName(), e);
         }
+    }
+
+    private void runDelayedAtPlayer(
+            final @NotNull Player player,
+            final long delayTicks,
+            final @NotNull Runnable task
+    ) {
+        rdq.getPlatform().getScheduler().runDelayed(
+                () -> rdq.getPlatform().getScheduler().runAtEntity(player, task),
+                delayTicks
+        );
     }
 
     private void notifyPlayerOfBounty(@NotNull Player player, @NotNull Bounty bounty) {

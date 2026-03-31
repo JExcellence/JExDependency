@@ -3,13 +3,14 @@
 prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
 
 rcconnect:
-  usage: "<gray>Cách dùng: /rcconnect <api-key></gray>"
+  usage: "<gray>Cách sử dụng: /rc <connect &lt;api-key&gt;|disconnect|claim droplets></gray>"
+  usage_no_claim: "<gray>Cách sử dụng: /rc <connect &lt;api-key&gt;|disconnect></gray>"
   connecting: "<yellow>Đang kết nối tới RaindropCentral...</yellow>"
   success: "<green>Đã kết nối thành công tới RaindropCentral!</green> <gray>Máy chủ hiện đang gửi tín hiệu heartbeat.</gray>"
   error:
     invalid_key: "<red>Định dạng khóa API không hợp lệ. Khóa API phải gồm 32-128 ký tự chữ và số.</red>"
     uuid_mismatch: "<red>Khóa API này thuộc về một tài khoản Minecraft khác.</red>"
-    already_connected: "<yellow>Máy chủ đã được kết nối.</yellow> <gray>Hãy dùng /rcdisconnect trước.</gray>"
+    already_connected: "<yellow>Máy chủ đã được kết nối.</yellow> <gray>Sử dụng /rc disconnect trước.</gray>"
     network: "<red>Lỗi mạng: %error%</red>"
 
 rcdisconnect:
@@ -19,6 +20,152 @@ rcdisconnect:
     not_connected: "<red>Máy chủ chưa được kết nối tới RaindropCentral.</red>"
     failed: "<red>Không thể ngắt kết nối. Vui lòng thử lại.</red>"
     network: "<red>Lỗi mạng: %error%</red>"
+
+rcclaim:
+  loading: "<yellow>Đang kiểm tra RaindropCentral để nhận phần thưởng nhỏ chưa được nhận...</yellow>"
+  claiming_item: "<yellow>Đòi %item_name% từ RaindropCentral...</yellow>"
+  success:
+    claimed: "<green>Bạn đã yêu cầu %item_name%.</green>"
+    claimed_skill_targeted: "<green>Bạn đã nhận được %item_name%.</green> <gray>Nhấp chuột phải vào cookie để chọn kỹ năng.</gray>"
+    claimed_job_targeted: "<green>Bạn đã yêu cầu %item_name%.</green> <gray>Nhấp chuột phải vào cookie để chọn công việc.</gray>"
+    claimed_activate: "<green>Bạn đã yêu cầu %item_name%.</green> <gray>Nhấp chuột phải vào cookie để kích hoạt nó.</gray>"
+    skill_granted: "<green>Được cấp 1 cấp trong %skill_name%.</green> <gray>Nguồn: %plugin_name%.</gray>"
+    job_granted: "<green>Được cấp 1 cấp trong %job_name%.</green> <gray>Nguồn: %plugin_name%.</gray>"
+    skill_xp_boost_applied: "<green>Đã kích hoạt +%rate_percent%% kỹ năng XP cho %skill_name%.</green> <gray>Nguồn: %plugin_name%. Thời lượng: %duration_minutes% phút.</gray>"
+    skill_xp_boost_refreshed: "<green>Refreshed +%rate_percent%% kỹ năng XP cho %skill_name%.</green> <gray>Nguồn: %plugin_name%. Đặt lại thời lượng về %duration_minutes% phút.</gray>"
+    job_xp_boost_applied: "<green>Đã kích hoạt +%rate_percent%% công việc XP cho %job_name%.</green> <gray>Nguồn: %plugin_name%. Thời lượng: %duration_minutes% phút.</gray>"
+    job_xp_boost_refreshed: "<green>Refreshed +%rate_percent%% job XP cho %job_name%.</green> <gray>Nguồn: %plugin_name%. Đặt lại thời lượng về %duration_minutes% phút.</gray>"
+    job_vault_boost_applied: "<green>Đã kích hoạt +%rate_percent%% tiền công việc cho %job_name%.</green> <gray>Nguồn: %plugin_name%. Thời lượng: %duration_minutes% phút.</gray>"
+    job_vault_boost_refreshed: "<green>Refreshed +%rate_percent%% tiền công việc cho %job_name%.</green> <gray>Nguồn: %plugin_name%. Đặt lại thời lượng về %duration_minutes% phút.</gray>"
+    double_drop_boost_applied: "<green>Đã kích hoạt hai lần giảm.</green> <gray>Duration: %duration_minutes% phút.</gray>"
+    double_drop_boost_refreshed: "<green>Giảm hai lần được làm mới.</green> <gray>D Đặt lại thời gian thành %duration_minutes% phút.</gray>"
+    pending_delivery: "<green>DĐã phân phối %count% đang chờ phần thưởng nhỏ giọt.</green>"
+  error:
+    store_disabled: "<red>Máy chủ này đã tắt /rc claim droplets.</red>"
+    not_connected: "<red>RCore phải được kết nối với phần phụ trợ RaindropCentral trước khi bạn có thể yêu cầu các giọt.</red>"
+    cooldown: "<yellow>Vui lòng đợi %seconds% giây trước khi sử dụng lại /rc claim droplets.</yellow>"
+    not_registered: "<red>Tài khoản Minecraft của bạn không được liên kết với tài khoản RaindropCentral.</red>"
+    no_unclaimed: "<yellow>Bạn hiện không có bất kỳ phần thưởng nhỏ nào chưa được nhận.</yellow>"
+    api_unavailable: "<red>RaindropCentral hiện không khả dụng: %error%</red>"
+    menu_unavailable: "<red>Hiện không có menu xác nhận giọt nhỏ. Vui lòng thử lại sau.</red>"
+    item_disabled: "<red>Máy chủ này đã vô hiệu hóa việc xác nhận %item_name%.</red> <gray>Item ID: %item_code%</gray>"
+    unsupported_item: "<red>Phần thưởng nhỏ này chưa được hỗ trợ trên máy chủ này.</red> <gray>ID vật phẩm: %item_code%</gray>"
+    no_supported_skills: "<red>Máy chủ này hiện không có plugin kỹ năng được hỗ trợ cho phần thưởng này.</red>"
+    no_supported_jobs: "<red>Máy chủ này hiện không có plugin công việc được hỗ trợ cho phần thưởng này.</red>"
+    inventory_full: "<red>Bạn cần ít nhất một ô kho đồ miễn phí trước khi nhận phần thưởng này.</red>"
+    claim_in_progress: "<yellow>Xác nhận quyền sở hữu đó đã được tiến hành. Vui lòng đợi phần phụ trợ phản hồi.</yellow>"
+    claim_failed: "<red>Không thể nhận phần thưởng nhỏ đó: %error%</red>"
+    already_claimed: "<yellow>Phần thưởng nhỏ đó đã được nhận.</yellow>"
+    purchase_unavailable: "<red>Phần thưởng nhỏ đó không còn có thể nhận được nữa.</red>"
+    cookie_missing: "<red>Không thể tìm thấy cookie nhỏ trong kho của bạn.</red>"
+    skill_grant_failed: "<red>Không thể cấp 1 cấp trong %skill_name%.</red>"
+    job_grant_failed: "<red>Không thể cấp 1 cấp trong %job_name%.</red>"
+    boost_activation_failed: "<red>Không thể kích hoạt %item_name%.</red>"
+    unsupported_integration: "<red>Sự tích hợp bắt buộc cho cookie nhỏ này hiện không khả dụng.</red>"
+    boost_expired: "<yellow>Việc tăng cường cookie nhỏ giọt đó đã hết hạn.</yellow>"
+
+rc_claim_droplets_ui:
+  title: "Những giọt không có người nhận"
+  page:
+    name: "<yellow>Trang %page%/%max_page%</yellow>"
+    lore:
+      - "<gray>%items_count% các mục có thể xác nhận quyền sở hữu được liệt kê.</gray>"
+  summary:
+    name: "<gold>Xếp hàng yêu cầu</gold>"
+    lore:
+      - "<gray>Mục chưa được xác nhận: %item_count%</gray>"
+      - "<gray>Được hỗ trợ trên máy chủ này: %supported_count%</gray>"
+      - "<yellow>Nhấp vào phần thưởng được hỗ trợ để nhận nó.</yellow>"
+  empty:
+    name: "<red>Không có phần thưởng chưa được nhận</red>"
+    lore:
+      - "<gray>Bạn hiện không có bất kỳ phần thưởng nhỏ nào chưa được nhận.</gray>"
+  entry:
+    supported:
+      name: "<green>%item_name%</green>"
+      lore:
+        - "<gray>ID mặt hàng: %item_code%</gray>"
+        - "<gray>Đã tiêu: %amount_spent% giọt</gray>"
+        - "<yellow>Nhấp để nhận phần thưởng này.</yellow>"
+    item_disabled:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>ID mặt hàng: %item_code%</gray>"
+        - "<red>Máy chủ này đã vô hiệu hóa việc nhận phần thưởng này.</red>"
+    unsupported_item:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>ID mặt hàng: %item_code%</gray>"
+        - "<red>Phần thưởng này không được hỗ trợ trên máy chủ này.</red>"
+    no_skills:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>ID mặt hàng: %item_code%</gray>"
+        - "<red>Không có plugin kỹ năng hỗ trợ nào được cài đặt cho phần thưởng này.</red>"
+    no_jobs:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>ID mặt hàng: %item_code%</gray>"
+        - "<red>Không có plugin công việc được hỗ trợ nào được cài đặt cho phần thưởng này.</red>"
+
+rc_claim_droplet_skills_ui:
+  title: "Chọn một kỹ năng"
+  page:
+    name: "<yellow>Trang %page%/%max_page%</yellow>"
+    lore:
+      - "Các mục kỹ năng <gray>%items_count% được liệt kê.</gray>"
+  summary:
+    name: "<gold>Lựa chọn kỹ năng</gold>"
+    lore:
+      - "<gray>Các kỹ năng có sẵn: %skill_count%</gray>"
+      - "<yellow>Chọn một kỹ năng để sử dụng cookie.</yellow>"
+  empty:
+    name: "<red>Không có kỹ năng nào</red>"
+    lore:
+      - "<gray>Hiện không có kỹ năng hỗ trợ nào.</gray>"
+  entry:
+    name: "<green>%skill_name%</green>"
+    level_lore:
+      - "<gray>Plugin: %plugin_name%</gray>"
+      - "<gray>Cấp độ hiện tại: %current_level%</gray>"
+      - "<yellow>Click để tăng 1 cấp cho kỹ năng này.</yellow>"
+    boost_lore:
+      - "<gray>Plugin: %plugin_name%</gray>"
+      - "<gray>Cấp độ hiện tại: %current_level%</gray>"
+      - "<gray>Boost: +%rate_percent%% XP cho %duration_minutes% phút</gray>"
+      - "<yellow>Click để kích hoạt kỹ năng tăng cường này.</yellow>"
+
+rc_claim_droplet_jobs_ui:
+  title: "Chọn một công việc"
+  page:
+    name: "<yellow>Trang %page%/%max_page%</yellow>"
+    lore:
+      - "Các mục công việc <gray>%items_count% được liệt kê.</gray>"
+  summary:
+    name: "<gold>Lựa chọn công việc</gold>"
+    lore:
+      - "<gray>Việc làm đang có: %job_count%</gray>"
+      - "<yellow>Chọn một công việc để sử dụng cookie.</yellow>"
+  empty:
+    name: "<red>Không có việc làm</red>"
+    lore:
+      - "<gray>Hiện không có công việc được hỗ trợ nào.</gray>"
+  entry:
+    name: "<green>%job_name%</green>"
+    level_lore:
+      - "<gray>Plugin: %plugin_name%</gray>"
+      - "<gray>Cấp độ hiện tại: %current_level%</gray>"
+      - "<yellow>Click để tăng 1 cấp trong công việc này.</yellow>"
+    xp_boost_lore:
+      - "<gray>Plugin: %plugin_name%</gray>"
+      - "<gray>Cấp độ hiện tại: %current_level%</gray>"
+      - "<gray>Boost: +%rate_percent%% XP cho %duration_minutes% phút</gray>"
+      - "<yellow>Click để kích hoạt công việc này XP boost.</yellow>"
+    vault_boost_lore:
+      - "<gray>Plugin: %plugin_name%</gray>"
+      - "<gray>Cấp độ hiện tại: %current_level%</gray>"
+      - "<gray>Boost: +%rate_percent%% tiền cho %duration_minutes% phút</gray>"
+      - "<yellow>Click để kích hoạt công việc tăng tiền này.</yellow>"
 
 general:
   no_permission: "<red>Bạn không có quyền sử dụng lệnh này.</red>"

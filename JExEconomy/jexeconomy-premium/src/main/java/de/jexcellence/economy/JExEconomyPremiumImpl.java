@@ -7,6 +7,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Represents the JExEconomyPremiumImpl API type.
+ */
 public final class JExEconomyPremiumImpl extends AbstractPluginDelegate<JExEconomyPremium> {
 
     private static final Logger LOGGER = Logger.getLogger(JExEconomyPremiumImpl.class.getName());
@@ -14,10 +17,16 @@ public final class JExEconomyPremiumImpl extends AbstractPluginDelegate<JExEcono
 
     private JExEconomy economy;
 
+    /**
+     * Executes JExEconomyPremiumImpl.
+     */
     public JExEconomyPremiumImpl(final @NotNull JExEconomyPremium plugin) {
         super(plugin);
     }
 
+    /**
+     * Executes onLoad.
+     */
     @Override
     public void onLoad() {
         try {
@@ -46,6 +55,9 @@ public final class JExEconomyPremiumImpl extends AbstractPluginDelegate<JExEcono
         }
     }
 
+    /**
+     * Executes onEnable.
+     */
     @Override
     public void onEnable() {
         if (this.economy == null) {
@@ -56,6 +68,9 @@ public final class JExEconomyPremiumImpl extends AbstractPluginDelegate<JExEcono
         this.economy.onEnable();
     }
 
+    /**
+     * Executes onDisable.
+     */
     @Override
     public void onDisable() {
         try {

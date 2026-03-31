@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rplatform.view;
 
 import com.raindropcentral.rplatform.logging.CentralLogger;
@@ -23,7 +36,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Modal confirmation dialog implementing a two-column accept/decline pattern with localized glass
+ * Modal confirmation dialog implementing a two-column accept/decline pattern with localized glass.
  * panes and shared navigation from {@link BaseView}.
  *
  * <p>The view derives its translations from dynamically provided keys, enabling per-use messaging
@@ -40,7 +53,7 @@ public class ConfirmationView extends BaseView {
      */
     private final State<String> customKey = initialState("key");
     /**
-     * Captures the initial data map supplied when opening the dialog so it can be merged back on
+     * Captures the initial data map supplied when opening the dialog so it can be merged back on.
      * completion.
      */
     private final State<Map<String, Object>> initialData = initialState("initialData");
@@ -49,6 +62,9 @@ public class ConfirmationView extends BaseView {
      */
     private final State<Consumer<Boolean>> callback = initialState("callback");
 
+    /**
+     * Executes ConfirmationView.
+     */
     public ConfirmationView() {
         super();
     }
@@ -81,7 +97,7 @@ public class ConfirmationView extends BaseView {
     }
 
     /**
-     * Applies the localized title based on the configured key, falling back to the superclass
+     * Applies the localized title based on the configured key, falling back to the superclass.
      * when none is supplied.
      *
      * @param open the open context containing player details and initial state
@@ -104,7 +120,7 @@ public class ConfirmationView extends BaseView {
     }
 
     /**
-     * Returns {@code false} confirmation to the caller and triggers the optional callback when
+     * Returns {@code false} confirmation to the caller and triggers the optional callback when.
      * the navigation head is selected.
      *
      * @param clickContext the click context provided by Inventory Framework
@@ -127,7 +143,7 @@ public class ConfirmationView extends BaseView {
     }
 
     /**
-     * Lays out the confirm (green) and cancel (red) panes with localized lore prior to user
+     * Lays out the confirm (green) and cancel (red) panes with localized lore prior to user.
      * interaction.
      *
      * @param render the render context used to register slot handlers

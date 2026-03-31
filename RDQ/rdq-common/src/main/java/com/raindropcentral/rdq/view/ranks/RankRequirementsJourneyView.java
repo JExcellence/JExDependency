@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
  package com.raindropcentral.rdq.view.ranks;
 
 import com.raindropcentral.rdq.RDQ;
@@ -13,6 +26,7 @@ import com.raindropcentral.rdq.view.ranks.util.RequirementCardRenderer;
 import com.raindropcentral.rdq.view.ranks.util.RequirementProgressRenderer;
 import com.raindropcentral.rdq.view.ranks.util.RewardCardRenderer;
 import com.raindropcentral.rplatform.logging.CentralLogger;
+import com.raindropcentral.rplatform.scheduler.CancellableTaskHandle;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import com.raindropcentral.rplatform.view.BaseView;
 import me.devnatan.inventoryframework.context.Context;
@@ -26,7 +40,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -55,7 +68,7 @@ public class RankRequirementsJourneyView extends BaseView {
     private final MutableState<Boolean> pulseState = mutableState(false);
     
     // Pulsing animation task
-    private BukkitRunnable pulseTask;
+    private CancellableTaskHandle pulseTask;
 
     // Layout constants
     private static final int BACK_SLOT = 0;
@@ -80,6 +93,9 @@ public class RankRequirementsJourneyView extends BaseView {
     private RequirementProgressRenderer progressRenderer;
     private RequirementCardRenderer cardRenderer;
 
+    /**
+     * Executes RankRequirementsJourneyView.
+     */
     public RankRequirementsJourneyView() {
         super(RankPathOverview.class);
     }
@@ -142,6 +158,9 @@ public class RankRequirementsJourneyView extends BaseView {
         }
     }
 
+    /**
+     * Executes onFirstRender.
+     */
     @Override
     public void onFirstRender(final @NotNull RenderContext render, final @NotNull Player player) {
         try {
@@ -571,18 +590,14 @@ public class RankRequirementsJourneyView extends BaseView {
         }
         
         // Schedule restoration after 500ms (10 ticks)
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                // Restore original items or clear the slot
-                for (final int slot : validSurroundingSlots) {
-                    final ItemStack original = originalItems.get(slot);
-                    inventory.setItem(slot, original);
-                }
-                // Trigger a full update to ensure proper rendering
-                ctx.update();
-            }
-        }.runTaskLater(rdqPlugin.getPlugin(), 10L);
+        rdqPlugin.getPlatform().getScheduler().runDelayed(() ->
+                rdqPlugin.getPlatform().getScheduler().runAtEntity(player, () -> {
+                    for (final int slot : validSurroundingSlots) {
+                        final ItemStack original = originalItems.get(slot);
+                        inventory.setItem(slot, original);
+                    }
+                    ctx.update();
+                }), 10L);
     }
 
     /**
@@ -593,22 +608,15 @@ public class RankRequirementsJourneyView extends BaseView {
         // Cancel any existing pulse task
         stopPulseAnimation();
         
-        this.pulseTask = new BukkitRunnable() {
-            @Override
-            public void run() {
-                try {
-                    // Toggle pulse state
-                    final boolean currentState = pulseState.get(render);
-                    pulseState.set(!currentState, render);
-                } catch (final Exception e) {
-                    // View may have been closed, cancel the task
-                    this.cancel();
-                }
-            }
-        };
-        
-        // Run every 10 ticks (500ms) for pulsing effect
-        this.pulseTask.runTaskTimer(plugin.getPlugin(), 10L, 10L);
+        this.pulseTask = plugin.getPlatform().getScheduler().runRepeating(() ->
+                plugin.getPlatform().getScheduler().runAtEntity(render.getPlayer(), () -> {
+                    try {
+                        final boolean currentState = pulseState.get(render);
+                        pulseState.set(!currentState, render);
+                    } catch (final Exception e) {
+                        stopPulseAnimation();
+                    }
+                }), 10L, 10L);
     }
     
     /**
@@ -616,11 +624,7 @@ public class RankRequirementsJourneyView extends BaseView {
      */
     private void stopPulseAnimation() {
         if (this.pulseTask != null) {
-            try {
-                this.pulseTask.cancel();
-            } catch (final IllegalStateException ignored) {
-                // Task was already cancelled
-            }
+            this.pulseTask.cancel();
             this.pulseTask = null;
         }
     }

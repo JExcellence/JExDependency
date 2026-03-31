@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.core.service.statistics.monitoring;
 
 import com.raindropcentral.core.service.statistics.queue.BackpressureLevel;
@@ -83,13 +96,34 @@ public record QueueStatistics(
         private double capacityUsed = 0.0;
         private int persistedCount = 0;
 
+        /**
+         * Executes sizeByPriority.
+         */
         public Builder sizeByPriority(Map<DeliveryPriority, Integer> map) { this.sizeByPriority = map; return this; }
+        /**
+         * Executes totalSize.
+         */
         public Builder totalSize(int size) { this.totalSize = size; return this; }
+        /**
+         * Executes oldestEntryAgeMs.
+         */
         public Builder oldestEntryAgeMs(long age) { this.oldestEntryAgeMs = age; return this; }
+        /**
+         * Executes backpressureLevel.
+         */
         public Builder backpressureLevel(BackpressureLevel level) { this.backpressureLevel = level; return this; }
+        /**
+         * Executes capacityUsed.
+         */
         public Builder capacityUsed(double used) { this.capacityUsed = used; return this; }
+        /**
+         * Executes persistedCount.
+         */
         public Builder persistedCount(int count) { this.persistedCount = count; return this; }
 
+        /**
+         * Executes build.
+         */
         public QueueStatistics build() {
             return new QueueStatistics(
                 sizeByPriority, totalSize, oldestEntryAgeMs,

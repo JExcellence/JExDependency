@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.core.service.statistics;
 
 import com.raindropcentral.core.service.central.RCentralApiClient;
@@ -74,6 +87,9 @@ public class StatisticsDeliveryService {
     private final AtomicBoolean running = new AtomicBoolean(false);
     private final AtomicBoolean paused = new AtomicBoolean(false);
 
+    /**
+     * Executes StatisticsDeliveryService.
+     */
     public StatisticsDeliveryService(
         final @NotNull Plugin plugin,
         final @NotNull StatisticsDeliveryConfig config,
@@ -371,10 +387,28 @@ public class StatisticsDeliveryService {
 
     // ==================== Getters ====================
 
+    /**
+     * Gets queueManager.
+     */
     public StatisticsQueueManager getQueueManager() { return queueManager; }
+    /**
+     * Gets deliveryEngine.
+     */
     public StatisticsDeliveryEngine getDeliveryEngine() { return deliveryEngine; }
+    /**
+     * Gets aggregator.
+     */
     public StatisticsAggregator getAggregator() { return aggregator; }
+    /**
+     * Gets syncManager.
+     */
     public CrossServerSyncManager getSyncManager() { return syncManager; }
+    /**
+     * Gets eventCollector.
+     */
     public EventDrivenCollector getEventCollector() { return eventCollector; }
+    /**
+     * Gets config.
+     */
     public StatisticsDeliveryConfig getConfig() { return config; }
 }

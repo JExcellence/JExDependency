@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdr.database.entity;
 
 import java.io.IOException;
@@ -51,11 +64,16 @@ import com.raindropcentral.rplatform.database.converter.UUIDConverter;
         )
     }
 )
+/**
+ * Represents the RTradeSession API type.
+ */
 public class RTradeSession extends BaseEntity {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RTradeSession.class);
     private static final TypeReference<Map<String, Double>> CURRENCY_TYPE = new TypeReference<>() {};
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    private static final String OFFLINE_SERVER_ID = "offline";
+    private static final String UNKNOWN_SERVER_ID = "unknown";
 
     @Convert(converter = UUIDConverter.class)
     @Column(name = "trade_uuid", nullable = false, unique = true)
@@ -103,6 +121,15 @@ public class RTradeSession extends BaseEntity {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
+    @Column(name = "initiator_last_known_server_id", nullable = false, length = 64)
+    private String initiatorLastKnownServerId = OFFLINE_SERVER_ID;
+
+    @Column(name = "partner_last_known_server_id", nullable = false, length = 64)
+    private String partnerLastKnownServerId = OFFLINE_SERVER_ID;
+
+    @Column(name = "origin_server_id", nullable = false, length = 64)
+    private String originServerId = UNKNOWN_SERVER_ID;
+
     /**
      * Creates a new invited trade session.
      *
@@ -135,6 +162,9 @@ public class RTradeSession extends BaseEntity {
         this.partnerReady = false;
         this.inviteExpiresAt = Objects.requireNonNull(inviteExpiresAt, "inviteExpiresAt cannot be null");
         this.updatedAt = LocalDateTime.now();
+        this.initiatorLastKnownServerId = OFFLINE_SERVER_ID;
+        this.partnerLastKnownServerId = OFFLINE_SERVER_ID;
+        this.originServerId = UNKNOWN_SERVER_ID;
     }
 
     /**
@@ -343,6 +373,108 @@ public class RTradeSession extends BaseEntity {
      */
     public @NotNull LocalDateTime getUpdatedAt() {
         return this.updatedAt;
+    }
+
+    /**
+     * Returns the initiator's last-known server snapshot.
+     *
+     * @return normalized initiator last-known server route ID
+     */
+    public @NotNull String getInitiatorLastKnownServerId() {
+        return normalizeServerId(this.initiatorLastKnownServerId, OFFLINE_SERVER_ID);
+    }
+
+    /**
+     * Returns the partner's last-known server snapshot.
+     *
+     * @return normalized partner last-known server route ID
+     */
+    public @NotNull String getPartnerLastKnownServerId() {
+        return normalizeServerId(this.partnerLastKnownServerId, OFFLINE_SERVER_ID);
+    }
+
+    /**
+     * Returns the server route where this trade was originally created.
+     *
+     * @return normalized origin server route ID
+     */
+    public @NotNull String getOriginServerId() {
+        return normalizeServerId(this.originServerId, UNKNOWN_SERVER_ID);
+    }
+
+    /**
+     * Returns one participant's last-known server snapshot.
+     *
+     * @param participantUuid participant UUID
+     * @return normalized last-known server route ID
+     * @throws NullPointerException if {@code participantUuid} is {@code null}
+     * @throws IllegalArgumentException if the participant is not part of this session
+     */
+    public @NotNull String getLastKnownServerIdForParticipant(final @NotNull UUID participantUuid) {
+        final UUID validatedParticipantUuid = Objects.requireNonNull(participantUuid, "participantUuid cannot be null");
+        if (!this.hasParticipant(validatedParticipantUuid)) {
+            throw new IllegalArgumentException("participant does not belong to this trade session");
+        }
+        return this.isInitiator(validatedParticipantUuid)
+            ? this.getInitiatorLastKnownServerId()
+            : this.getPartnerLastKnownServerId();
+    }
+
+    /**
+     * Sets one participant's last-known server snapshot.
+     *
+     * @param participantUuid participant UUID
+     * @param serverId replacement server route ID
+     * @throws NullPointerException if {@code participantUuid} is {@code null}
+     * @throws IllegalArgumentException if the participant is not part of this session
+     */
+    public void setLastKnownServerIdForParticipant(
+        final @NotNull UUID participantUuid,
+        final @Nullable String serverId
+    ) {
+        final UUID validatedParticipantUuid = Objects.requireNonNull(participantUuid, "participantUuid cannot be null");
+        if (!this.hasParticipant(validatedParticipantUuid)) {
+            throw new IllegalArgumentException("participant does not belong to this trade session");
+        }
+
+        if (this.isInitiator(validatedParticipantUuid)) {
+            this.initiatorLastKnownServerId = normalizeServerId(serverId, OFFLINE_SERVER_ID);
+        } else {
+            this.partnerLastKnownServerId = normalizeServerId(serverId, OFFLINE_SERVER_ID);
+        }
+        this.touch();
+    }
+
+    /**
+     * Sets the origin server route ID.
+     *
+     * @param originServerId replacement origin server route ID
+     */
+    public void setOriginServerId(final @Nullable String originServerId) {
+        this.originServerId = normalizeServerId(originServerId, UNKNOWN_SERVER_ID);
+        this.touch();
+    }
+
+    /**
+     * Refreshes both participant last-known server snapshots and optionally updates origin metadata.
+     *
+     * @param initiatorServerId initiator server snapshot
+     * @param partnerServerId partner server snapshot
+     * @param originServerId optional origin server snapshot
+     */
+    public void refreshParticipantServerSnapshots(
+        final @Nullable String initiatorServerId,
+        final @Nullable String partnerServerId,
+        final @Nullable String originServerId
+    ) {
+        this.initiatorLastKnownServerId = normalizeServerId(initiatorServerId, OFFLINE_SERVER_ID);
+        this.partnerLastKnownServerId = normalizeServerId(partnerServerId, OFFLINE_SERVER_ID);
+        if (originServerId != null && !originServerId.isBlank()) {
+            this.originServerId = normalizeServerId(originServerId, UNKNOWN_SERVER_ID);
+        } else if (this.originServerId == null || this.originServerId.isBlank()) {
+            this.originServerId = UNKNOWN_SERVER_ID;
+        }
+        this.touch();
     }
 
     /**
@@ -559,6 +691,8 @@ public class RTradeSession extends BaseEntity {
         this.touch();
     }
     
+    @PrePersist
+    @PreUpdate
     private void beforePersist() {
         this.touch();
     }
@@ -627,5 +761,15 @@ public class RTradeSession extends BaseEntity {
             normalized.put(currencyId, amount);
         }
         return normalized;
+    }
+
+    private static @NotNull String normalizeServerId(
+        final @Nullable String serverId,
+        final @NotNull String fallback
+    ) {
+        if (serverId == null || serverId.isBlank()) {
+            return fallback;
+        }
+        return serverId.trim();
     }
 }

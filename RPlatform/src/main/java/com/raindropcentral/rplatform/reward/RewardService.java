@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rplatform.reward;
 
 import com.raindropcentral.rplatform.reward.event.RewardFailedEvent;
@@ -14,6 +27,9 @@ import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Represents the RewardService API type.
+ */
 public final class RewardService {
 
     private static final Logger LOGGER = Logger.getLogger(RewardService.class.getName());
@@ -24,10 +40,16 @@ public final class RewardService {
 
     private RewardService() {}
 
+    /**
+     * Gets instance.
+     */
     public static RewardService getInstance() {
         return INSTANCE;
     }
 
+    /**
+     * Executes grant.
+     */
     public @NotNull CompletableFuture<Boolean> grant(@NotNull Player player, @NotNull AbstractReward reward) {
         if (!lifecycleRegistry.executeBeforeGrant(player, reward)) {
             return CompletableFuture.completedFuture(false);
@@ -66,6 +88,9 @@ public final class RewardService {
         });
     }
 
+    /**
+     * Executes grantAll.
+     */
     public @NotNull CompletableFuture<Boolean> grantAll(@NotNull Player player, @NotNull List<AbstractReward> rewards) {
         if (rewards.isEmpty()) {
             return CompletableFuture.completedFuture(true);
@@ -86,6 +111,9 @@ public final class RewardService {
             });
     }
 
+    /**
+     * Executes calculateTotalValue.
+     */
     public double calculateTotalValue(@NotNull List<AbstractReward> rewards) {
         return rewards.stream()
             .mapToDouble(AbstractReward::getEstimatedValue)

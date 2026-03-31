@@ -9,21 +9,22 @@ dependenciesYml {
     generateSpigotVariant.set(true)
 }
 
-val versionMajor: String by project.rootProject.extra { findProperty("rdr.version.major")?.toString() ?: "5" }
-val versionMinor: String by project.rootProject.extra { findProperty("rdr.version.minor")?.toString() ?: "0" }
-val versionPatch: String by project.rootProject.extra { findProperty("rdr.version.patch")?.toString() ?: "0" }
-val versionStage: String by project.rootProject.extra { findProperty("rdr.version.stage")?.toString() ?: "Alpha" }
-val versionBuild: String by project.rootProject.extra { findProperty("rdr.version.build")?.toString() ?: "1" }
+val versionMajor: String by project.rootProject.extra { findProperty("rdr.version.major")?.toString() ?: "undefined" }
+val versionMinor: String by project.rootProject.extra { findProperty("rdr.version.minor")?.toString() ?: "undefined" }
+val versionPatch: String by project.rootProject.extra { findProperty("rdr.version.patch")?.toString() ?: "undefined" }
+val versionStage: String by project.rootProject.extra { findProperty("rdr.version.stage")?.toString() ?: "undefined" }
+val versionBuild: String by project.rootProject.extra { findProperty("rdr.version.build")?.toString() ?: "undefined" }
 
 val rdrVersion = "$versionMajor.$versionMinor.$versionPatch-$versionStage-Build-$versionBuild"
 
 group = "com.raindropcentral.rdr"
-version = "5.0.0"
+version = rdrVersion
 description = "RDR Premium - Premium edition of Raindrop Distributed Resources"
 
 dependencies {
     implementation(project(":RDR:rdr-common"))
     implementation(project(":JExCommand"))
+    implementation(project(":RPlatform"))
 
     compileOnly(libs.paper.api)
 
@@ -35,12 +36,11 @@ dependencies {
     compileOnly(libs.bundles.hibernate)
     compileOnly(libs.jehibernate)
     compileOnly(libs.adventure.platform.bukkit)
-    compileOnly(libs.rplatform)
-
     implementation(libs.bundles.jexcellence) {
         isTransitive = false
         exclude(group = "de.jexcellence.hibernate")
         exclude(group = "com.raindropcentral.commands", module = "jexcommand")
+        exclude(group = "com.raindropcentral.platform", module = "rplatform")
     }
     implementation(libs.bundles.jeconfig) { isTransitive = false }
     compileOnly(libs.bundles.inventory)

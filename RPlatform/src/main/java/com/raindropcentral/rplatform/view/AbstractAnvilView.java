@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rplatform.view;
 
 import com.raindropcentral.rplatform.logging.CentralLogger;
@@ -27,7 +40,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Template-method foundation for anvil-based workflows that render confirmation-style inputs using
+ * Template-method foundation for anvil-based workflows that render confirmation-style inputs using.
  * Inventory Framework's {@link AnvilInput} support.
  *
  * <p>The view coordinates translation keys scoped to the supplied base key, interacts with
@@ -108,7 +121,7 @@ public abstract class AbstractAnvilView extends View {
   
   
   /**
-   * Resolves the translation key used for the anvil title by appending {@code .title} to the base
+   * Resolves the translation key used for the anvil title by appending {@code .title} to the base.
    * key. Subclasses may override to point at bespoke translation buckets.
    *
    * @return the fully qualified translation key for the title component
@@ -156,6 +169,7 @@ public abstract class AbstractAnvilView extends View {
   }
   
   /**
+    * Documents this API member.
    * @return Error message key for invalid input
    */
   protected String getValidationErrorKey() {
@@ -327,7 +341,7 @@ public abstract class AbstractAnvilView extends View {
   }
 
   /**
-   * Applies localized titles using Adventure components on Paper and serialized strings on legacy
+   * Applies localized titles using Adventure components on Paper and serialized strings on legacy.
    * servers.
    *
    * @param open the open context describing the player and container configuration
@@ -355,7 +369,7 @@ public abstract class AbstractAnvilView extends View {
   
   
   /**
-   * Draws the base slot arrangement including initial, middle, and result slots before delegating
+   * Draws the base slot arrangement including initial, middle, and result slots before delegating.
    * to user input handling.
    *
    * @param render the render context provided on first paint

@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.perk;
 
 import com.google.gson.Gson;
@@ -13,6 +26,7 @@ import com.raindropcentral.rdq.perk.handler.EventPerkHandler;
 import com.raindropcentral.rdq.perk.handler.PotionPerkHandler;
 import com.raindropcentral.rdq.perk.handler.SpecialPerkHandler;
 import com.raindropcentral.rplatform.logging.CentralLogger;
+import com.raindropcentral.rplatform.scheduler.CancellableTaskHandle;
 import lombok.Getter;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -26,13 +40,12 @@ import java.util.logging.Logger;
 
 /**
  * Service for managing perk activation, deactivation, and lifecycle.
- * <p>
- * This service handles:
+ *
+ * <p>This service handles:
  * - Activating and deactivating perk effects
  * - Managing cooldowns
  * - Handling player login/logout lifecycle
  * - Processing game events for event-triggered perks
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -61,8 +74,8 @@ public class PerkActivationService {
     private final Map<java.util.UUID, List<PlayerPerk>> activePerksCache = new ConcurrentHashMap<>();
     
     // Scheduled tasks
-    private org.bukkit.scheduler.BukkitTask cooldownCleanupTask;
-    private org.bukkit.scheduler.BukkitTask autoSaveTask;
+    private CancellableTaskHandle cooldownCleanupTask;
+    private CancellableTaskHandle autoSaveTask;
     
     /**
      * Constructs a new PerkActivationService.
@@ -761,8 +774,7 @@ public class PerkActivationService {
         }
         
         // Run every 5 minutes (6000 ticks)
-        autoSaveTask = org.bukkit.Bukkit.getScheduler().runTaskTimerAsynchronously(
-                plugin.getPlugin(),
+        autoSaveTask = plugin.getPlatform().getScheduler().runRepeatingAsync(
                 () -> {
                     try {
                         LOGGER.fine("Running auto-save task...");
@@ -801,8 +813,7 @@ public class PerkActivationService {
             return;
         }
         
-        cooldownCleanupTask = org.bukkit.Bukkit.getScheduler().runTaskTimerAsynchronously(
-                plugin.getPlugin(),
+        cooldownCleanupTask = plugin.getPlatform().getScheduler().runRepeatingAsync(
                 () -> {
                     try {
                         // Find all player perks with expired cooldowns

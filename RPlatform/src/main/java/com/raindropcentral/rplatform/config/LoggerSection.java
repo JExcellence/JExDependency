@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rplatform.config;
 
 import de.jexcellence.configmapper.sections.AConfigSection;
@@ -10,11 +23,10 @@ import java.util.Map;
 
 /**
  * Configuration section that describes how the platform bootstraps logging categories.
- * <p>
- * It allows administrators to control the default log level, override categories, and toggle
+ *
+ * <p>It allows administrators to control the default log level, override categories, and toggle
  * auxiliary logging behaviours such as debug mode or console forwarding. The values are read during
  * platform start-up and applied to the plugin logger hierarchy.
- * </p>
  *
  * @author JExcellence
  * @since 1.0.0
@@ -45,7 +57,7 @@ public class LoggerSection extends AConfigSection {
     private Boolean consoleLogging;
 
     /**
-     * Creates the logging configuration section using the supplied evaluation environment so that
+     * Creates the logging configuration section using the supplied evaluation environment so that.
      * any embedded expressions resolve consistently with other sections.
      *
      * @param baseEnvironment environment builder backing the config mapper
@@ -55,7 +67,7 @@ public class LoggerSection extends AConfigSection {
     }
 
     /**
-     * Resolves the default log level. When no value is configured the platform falls back to
+     * Resolves the default log level. When no value is configured the platform falls back to.
      * {@code INFO} to avoid excessive logging noise.
      *
      * @return configured default level or {@code INFO}
@@ -65,7 +77,7 @@ public class LoggerSection extends AConfigSection {
     }
 
     /**
-     * Returns a copy of the logger override map so callers can mutate the result without affecting
+     * Returns a copy of the logger override map so callers can mutate the result without affecting.
      * the underlying configuration state.
      *
      * @return map of logger categories to level strings; defaults to recommended platform settings

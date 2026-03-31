@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rplatform.api.impl;
 
 import com.destroystokyo.paper.profile.PlayerProfile;
@@ -24,7 +37,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 /**
- * Paper {@link PlatformAPI} implementation leveraging the platform's Adventure and profile APIs
+ * Paper {@link PlatformAPI} implementation leveraging the platform's Adventure and profile APIs.
  * while delegating scheduling to the shared adapter.
  *
  * <p><strong>Threading:</strong> Public callers must follow the {@link PlatformAPI} guidance by
@@ -80,7 +93,7 @@ public final class PaperPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * <p><strong>Usage:</strong> Identifies this adapter as {@link PlatformType#PAPER}.</p>
      *
@@ -92,7 +105,7 @@ public final class PaperPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * <p><strong>Usage:</strong> Returns {@code true} because Paper fully supports Adventure.</p>
      *
@@ -104,7 +117,7 @@ public final class PaperPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * <p><strong>Usage:</strong> Paper lacks Folia's regionized scheduler so this remains
      * {@code false}.</p>
@@ -117,7 +130,7 @@ public final class PaperPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * <p><strong>Usage:</strong> Currently a no-op since Paper requires no explicit shutdown.</p>
      */
@@ -127,7 +140,7 @@ public final class PaperPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * @param player  the message recipient
      * @param message the Adventure component to deliver
@@ -138,7 +151,7 @@ public final class PaperPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * @param player   the message recipient
      * @param messages ordered list of components to send
@@ -151,7 +164,7 @@ public final class PaperPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * @param player  the action bar recipient
      * @param message the component to display
@@ -162,7 +175,7 @@ public final class PaperPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * @param player       the target player
      * @param title        title component
@@ -187,7 +200,7 @@ public final class PaperPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * @param player the player whose name is requested
      * @return the Adventure display name
@@ -198,7 +211,7 @@ public final class PaperPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * @param player      the player to mutate
      * @param displayName the new display name component
@@ -209,7 +222,7 @@ public final class PaperPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * @param itemStack the item to inspect
      * @return optional display name component
@@ -222,7 +235,7 @@ public final class PaperPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * @param itemStack   the item to modify
      * @param displayName the component to apply or {@code null}
@@ -239,7 +252,7 @@ public final class PaperPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * @param itemStack the item whose lore is read
      * @return immutable list of lore components
@@ -253,7 +266,7 @@ public final class PaperPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * @param itemStack the item to mutate
      * @param lore      lore components to apply
@@ -270,7 +283,7 @@ public final class PaperPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * @param player the source player or {@code null}
      * @return a new player head item stack
@@ -288,7 +301,7 @@ public final class PaperPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * @param offlinePlayer the offline profile or {@code null}
      * @return a new player head item stack
@@ -307,7 +320,7 @@ public final class PaperPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * @param uuid        profile UUID used for the synthetic head
      * @param textureData base64 texture payload
@@ -319,7 +332,7 @@ public final class PaperPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * @param uuid         profile UUID used for the synthetic head
      * @param textureData  base64 texture payload
@@ -343,7 +356,7 @@ public final class PaperPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * @param skull       the skull to mutate
      * @param uuid        profile UUID used for the texture
@@ -366,7 +379,7 @@ public final class PaperPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * @return Bukkit-provided version string
      */
@@ -376,7 +389,7 @@ public final class PaperPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * @return Paper scheduler adapter
      */

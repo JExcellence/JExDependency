@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.view.bounty;
 
 import com.raindropcentral.rdq.RDQ;
@@ -26,6 +39,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * Represents the BountyRewardView API type.
+ */
 public class BountyRewardView extends APaginatedView<BountyReward> {
 	
 	private final State<RDQ>                                rdq              = initialState("plugin");
@@ -36,6 +52,9 @@ public class BountyRewardView extends APaginatedView<BountyReward> {
 	
 	private boolean isReturning;
 	
+	/**
+	 * Executes BountyRewardView.
+	 */
 	public BountyRewardView() {
 		super(BountyCreationView.class);
 	}
@@ -268,6 +287,9 @@ public class BountyRewardView extends APaginatedView<BountyReward> {
 			});
 	}
 	
+	/**
+	 * Executes onClick.
+	 */
 	@Override
 	public void onClick(
 		final @NotNull SlotClickContext click
@@ -288,6 +310,9 @@ public class BountyRewardView extends APaginatedView<BountyReward> {
 		}
 	}
 	
+	/**
+	 * Executes onClose.
+	 */
 	@Override
 	public void onClose(
 		final @NotNull CloseContext close

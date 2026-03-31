@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rplatform.reward.metrics;
 
 import org.jetbrains.annotations.NotNull;
@@ -7,6 +20,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.LongAdder;
 
+/**
+ * Represents the RewardMetrics API type.
+ */
 public final class RewardMetrics {
 
     private static final RewardMetrics INSTANCE = new RewardMetrics();
@@ -19,10 +35,16 @@ public final class RewardMetrics {
 
     private RewardMetrics() {}
 
+    /**
+     * Gets instance.
+     */
     public static RewardMetrics getInstance() {
         return INSTANCE;
     }
 
+    /**
+     * Executes recordGrant.
+     */
     public void recordGrant(@NotNull String typeId, long durationNanos, boolean success) {
         totalGrants.increment();
         totalDurationNanos.addAndGet(durationNanos);
@@ -36,6 +58,9 @@ public final class RewardMetrics {
         getOrCreateMetrics(typeId).recordGrant(durationNanos, success);
     }
 
+    /**
+     * Executes recordGrant.
+     */
     public void recordGrant(long durationNanos, boolean success) {
         totalGrants.increment();
         totalDurationNanos.addAndGet(durationNanos);
@@ -47,11 +72,17 @@ public final class RewardMetrics {
         }
     }
 
+    /**
+     * Executes recordError.
+     */
     public void recordError(@NotNull String typeId) {
         totalFailures.increment();
         getOrCreateMetrics(typeId).recordError();
     }
 
+    /**
+     * Executes recordError.
+     */
     public void recordError() {
         totalFailures.increment();
     }
@@ -60,36 +91,60 @@ public final class RewardMetrics {
         return typeMetrics.computeIfAbsent(typeId, k -> new TypeMetrics());
     }
 
+    /**
+     * Gets metrics.
+     */
     public TypeMetrics getMetrics(@NotNull String typeId) {
         return typeMetrics.getOrDefault(typeId, new TypeMetrics());
     }
 
+    /**
+     * Gets allMetrics.
+     */
     public Map<String, TypeMetrics> getAllMetrics() {
         return Map.copyOf(typeMetrics);
     }
 
+    /**
+     * Gets totalGrants.
+     */
     public long getTotalGrants() {
         return totalGrants.sum();
     }
 
+    /**
+     * Gets totalSuccesses.
+     */
     public long getTotalSuccesses() {
         return totalSuccesses.sum();
     }
 
+    /**
+     * Gets totalFailures.
+     */
     public long getTotalFailures() {
         return totalFailures.sum();
     }
 
+    /**
+     * Gets successRate.
+     */
     public double getSuccessRate() {
         long total = getTotalGrants();
         return total > 0 ? (double) getTotalSuccesses() / total : 0.0;
     }
 
+    /**
+     * Gets averageGrantTimeMs.
+     */
     public double getAverageGrantTimeMs() {
         long total = getTotalGrants();
         return total > 0 ? totalDurationNanos.get() / 1_000_000.0 / total : 0.0;
     }
 
+    /**
+     * Executes reset.
+     */
     public void reset() {
         typeMetrics.clear();
         totalGrants.reset();
@@ -98,6 +153,9 @@ public final class RewardMetrics {
         totalDurationNanos.set(0);
     }
 
+    /**
+     * Executes toString.
+     */
     @Override
     public String toString() {
         return String.format(
@@ -110,6 +168,9 @@ public final class RewardMetrics {
         );
     }
 
+    /**
+     * Represents the TypeMetrics API type.
+     */
     public static class TypeMetrics {
         private final LongAdder grantCount = new LongAdder();
         private final LongAdder successCount = new LongAdder();
@@ -128,23 +189,38 @@ public final class RewardMetrics {
             errorCount.increment();
         }
 
+        /**
+         * Gets grantCount.
+         */
         public long getGrantCount() {
             return grantCount.sum();
         }
 
+        /**
+         * Gets successCount.
+         */
         public long getSuccessCount() {
             return successCount.sum();
         }
 
+        /**
+         * Gets errorCount.
+         */
         public long getErrorCount() {
             return errorCount.sum();
         }
 
+        /**
+         * Gets successRate.
+         */
         public double getSuccessRate() {
             long total = getGrantCount();
             return total > 0 ? (double) getSuccessCount() / total : 0.0;
         }
 
+        /**
+         * Gets averageGrantTimeMs.
+         */
         public double getAverageGrantTimeMs() {
             long total = getGrantCount();
             return total > 0 ? totalDurationNanos.get() / 1_000_000.0 / total : 0.0;

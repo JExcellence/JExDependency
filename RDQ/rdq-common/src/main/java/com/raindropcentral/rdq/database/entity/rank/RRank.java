@@ -242,7 +242,7 @@ public class RRank extends BaseEntity implements IProgressionNode<RRank> {
 	) {
 		this(identifier, displayNameKey, descriptionKey, assignedLuckPermsGroup, prefixKey, suffixKey, icon, isInitialRank, tier, weight, null);
 	}
-	
+
 	public String getDisplayNameKey() {
 		return this.displayNameKey;
 	}
@@ -469,7 +469,7 @@ public class RRank extends BaseEntity implements IProgressionNode<RRank> {
 	// ============================================
 	// IProgressionNode Implementation
 	// ============================================
-	
+
 	/**
 	 * Gets the unique identifier for this progression node.
 	 * <p>
@@ -484,7 +484,7 @@ public class RRank extends BaseEntity implements IProgressionNode<RRank> {
 	public String getIdentifier() {
 		return this.identifier;
 	}
-	
+
 	/**
 	 * Gets the list of prerequisite node identifiers.
 	 * <p>
@@ -498,7 +498,7 @@ public class RRank extends BaseEntity implements IProgressionNode<RRank> {
 	public List<String> getPreviousNodeIdentifiers() {
 		return this.previousRanks != null ? this.previousRanks : new ArrayList<>();
 	}
-	
+
 	/**
 	 * Gets the list of dependent node identifiers.
 	 * <p>
@@ -512,11 +512,11 @@ public class RRank extends BaseEntity implements IProgressionNode<RRank> {
 	public List<String> getNextNodeIdentifiers() {
 		return this.nextRanks != null ? this.nextRanks : new ArrayList<>();
 	}
-	
+
 	// ============================================
 	// Object Methods
 	// ============================================
-	
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;

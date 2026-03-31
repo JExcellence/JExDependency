@@ -1,3 +1,6 @@
+import org.gradle.api.GradleException
+import org.gradle.api.Project
+
 plugins {
     base
 }
@@ -10,6 +13,89 @@ allprojects {
         mavenCentral()
         mavenLocal()
     }
+}
+
+data class ModuleBuildConfig(
+    val name: String,
+    val directory: String,
+    val buildPropertyKey: String,
+)
+
+val trackedModuleBuilds = listOf(
+    ModuleBuildConfig("RCore", "RCore", "rcore.version.build"),
+    ModuleBuildConfig("RDQ", "RDQ", "rdq.version.build"),
+    ModuleBuildConfig("RDR", "RDR", "rdr.version.build"),
+    ModuleBuildConfig("RDS", "RDS", "rds.version.build"),
+    ModuleBuildConfig("RDT", "RDT", "rdt.version.build"),
+)
+
+fun parseSimpleProperties(content: String): Map<String, String> {
+    val properties = linkedMapOf<String, String>()
+    content.lineSequence().forEach { rawLine ->
+        val line = rawLine.trim()
+        if (line.isEmpty() || line.startsWith("#")) {
+            return@forEach
+        }
+
+        val separatorIndex = rawLine.indexOf('=')
+        if (separatorIndex <= 0) {
+            return@forEach
+        }
+
+        val key = rawLine.substring(0, separatorIndex).trim()
+        val value = rawLine.substring(separatorIndex + 1).trim()
+        properties[key] = value
+    }
+    return properties
+}
+
+fun updateSimplePropertiesFile(file: File, updates: Map<String, String>) {
+    val remainingUpdates = updates.toMutableMap()
+    val updatedLines = file.readLines().map { rawLine ->
+        val trimmed = rawLine.trim()
+        if (trimmed.isEmpty() || trimmed.startsWith("#")) {
+            return@map rawLine
+        }
+
+        val separatorIndex = rawLine.indexOf('=')
+        if (separatorIndex <= 0) {
+            return@map rawLine
+        }
+
+        val key = rawLine.substring(0, separatorIndex).trim()
+        val newValue = remainingUpdates.remove(key) ?: return@map rawLine
+        "$key=$newValue"
+    }.toMutableList()
+
+    if (remainingUpdates.isNotEmpty()) {
+        if (updatedLines.isNotEmpty() && updatedLines.last().isNotBlank()) {
+            updatedLines.add("")
+        }
+        remainingUpdates.forEach { (key, value) ->
+            updatedLines.add("$key=$value")
+        }
+    }
+
+    val newline = System.lineSeparator()
+    file.writeText(updatedLines.joinToString(newline, postfix = newline))
+}
+
+fun Project.runGitCommand(vararg args: String): String {
+    val process = ProcessBuilder(listOf("git", *args))
+        .directory(rootProject.projectDir)
+        .redirectErrorStream(true)
+        .start()
+    val output = process.inputStream.bufferedReader(Charsets.UTF_8).use { it.readText() }.trim()
+    val exitCode = process.waitFor()
+
+    if (exitCode != 0) {
+        throw GradleException(
+            "Git command failed: git ${args.joinToString(" ")}" +
+                if (output.isBlank()) "" else "\n$output"
+        )
+    }
+
+    return output
 }
 
 // ========================================================================
@@ -55,6 +141,7 @@ tasks.register("buildAll") {
     description = "Builds all modules in correct dependency order"
     
     dependsOn(
+        ":syncBuildNumbersFromCommitCounter",
         ":publishDependencies",
         ":RDQ:buildAll",
         ":RDR:buildAll",
@@ -69,11 +156,11 @@ tasks.register("buildAll") {
     tasks.findByPath(":RDT:buildAll")?.mustRunAfter(":publishDependencies")
     
     doLast {
-        val major = findProperty("rdq.version.major") ?: "6"
-        val minor = findProperty("rdq.version.minor") ?: "0"
-        val patch = findProperty("rdq.version.patch") ?: "0"
-        val stage = findProperty("rdq.version.stage") ?: "Alpha"
-        val build = findProperty("rdq.version.build") ?: "1"
+        val major = findProperty("rdq.version.major") ?: "Undefined"
+        val minor = findProperty("rdq.version.minor") ?: "Undefined"
+        val patch = findProperty("rdq.version.patch") ?: "Undefined"
+        val stage = findProperty("rdq.version.stage") ?: "Undefined"
+        val build = findProperty("rdq.version.build") ?: "Undefined"
         val rdqVersion = "$major.$minor.$patch-$stage-Build-$build"
         
         println("========================================================================")
@@ -151,6 +238,146 @@ tasks.register("publishAllToMavenLocal") {
     description = "Publishes all library modules to Maven Local"
     
     dependsOn(":publishDependencies")
+}
+
+/**
+ * Validates that the commit counter in gradle.properties never decreases.
+ */
+tasks.register("validateCommitCounter") {
+    group = "verification"
+    description = "Validates that gradle.properties commit is not lower than HEAD"
+
+    doLast {
+        val propsFile = file("gradle.properties")
+        val currentProperties = parseSimpleProperties(propsFile.readText())
+        val currentCommit = currentProperties["commit"]?.toIntOrNull()
+            ?: throw GradleException("Missing or invalid integer property: commit")
+
+        val committedProperties = runCatching {
+            parseSimpleProperties(runGitCommand("show", "HEAD:gradle.properties"))
+        }.getOrDefault(emptyMap())
+
+        val committedCommit = committedProperties["commit"]?.toIntOrNull() ?: return@doLast
+        if (currentCommit < committedCommit) {
+            throw GradleException(
+                "commit cannot be lowered (HEAD=$committedCommit, current=$currentCommit)."
+            )
+        }
+    }
+}
+
+/**
+ * Synchronizes module build numbers when the commit counter increases.
+ *
+ * This task only updates:
+ * - rcore.version.build
+ * - rdq.version.build
+ * - rdr.version.build
+ * - rds.version.build
+ * - rdt.version.build
+ */
+tasks.register("syncBuildNumbersFromCommitCounter") {
+    group = "versioning"
+    description = "Updates module build numbers from the commit counter delta"
+
+    doLast {
+        val propsFile = file("gradle.properties")
+        val currentProperties = parseSimpleProperties(propsFile.readText())
+        val currentCommit = currentProperties["commit"]?.toIntOrNull()
+            ?: throw GradleException("Missing or invalid integer property: commit")
+
+        val committedProperties = runCatching {
+            parseSimpleProperties(runGitCommand("show", "HEAD:gradle.properties"))
+        }.getOrDefault(emptyMap())
+
+        val committedCommit = committedProperties["commit"]?.toIntOrNull()
+        if (committedCommit == null) {
+            println("No committed commit baseline found; skipping module build sync.")
+            return@doLast
+        }
+
+        if (currentCommit < committedCommit) {
+            throw GradleException(
+                "commit cannot be lowered (HEAD=$committedCommit, current=$currentCommit)."
+            )
+        }
+
+        if (currentCommit == committedCommit) {
+            println("commit unchanged ($currentCommit); module build numbers were not modified.")
+            return@doLast
+        }
+
+        val delta = currentCommit - committedCommit
+        val commitHashes = runGitCommand("rev-list", "--max-count=$delta", "HEAD")
+            .lineSequence()
+            .map(String::trim)
+            .filter(String::isNotEmpty)
+            .toList()
+
+        if (commitHashes.size < delta) {
+            throw GradleException(
+                "commit increased by $delta, but only ${commitHashes.size} commits are available in HEAD history."
+            )
+        }
+
+        val changedFilesByCommit = commitHashes.associateWith { hash ->
+            runGitCommand("show", "--pretty=format:", "--name-only", "--first-parent", hash)
+                .lineSequence()
+                .map(String::trim)
+                .filter(String::isNotEmpty)
+                .toSet()
+        }
+
+        val updates = linkedMapOf<String, String>()
+        val summaryLines = mutableListOf<String>()
+
+        trackedModuleBuilds.forEach { module ->
+            val committedBuild = committedProperties[module.buildPropertyKey]?.toIntOrNull()
+                ?: throw GradleException("Missing or invalid integer property in HEAD: ${module.buildPropertyKey}")
+
+            val affectedCommitCount = changedFilesByCommit.count { (_, changedFiles) ->
+                changedFiles.any { filePath ->
+                    filePath == module.directory || filePath.startsWith("${module.directory}/")
+                }
+            }
+
+            val newBuild = committedBuild + affectedCommitCount
+            updates[module.buildPropertyKey] = newBuild.toString()
+            summaryLines.add(
+                "${module.name}: ${module.buildPropertyKey} $committedBuild -> $newBuild (+$affectedCommitCount)"
+            )
+        }
+
+        updateSimplePropertiesFile(propsFile, updates)
+
+        println("========================================================================")
+        println("commit advanced: $committedCommit -> $currentCommit (delta=$delta)")
+        summaryLines.forEach { println("  $it") }
+        println("========================================================================")
+    }
+}
+
+tasks.named("check") {
+    dependsOn("validateCommitCounter")
+}
+
+/**
+ * Configures Git to use the repository hooks in scripts/git-hooks.
+ */
+tasks.register("installGitHooks") {
+    group = "versioning"
+    description = "Configures core.hooksPath to use scripts/git-hooks"
+
+    doLast {
+        val hookFile = file("scripts/git-hooks/pre-commit")
+        if (!hookFile.exists()) {
+            throw GradleException("Missing hook file: ${hookFile.path}")
+        }
+
+        hookFile.setExecutable(true)
+        runGitCommand("config", "core.hooksPath", "scripts/git-hooks")
+        println("Configured core.hooksPath to scripts/git-hooks")
+    }
 }
 
 /**

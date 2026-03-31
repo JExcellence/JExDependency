@@ -14,13 +14,12 @@ import java.util.UUID;
 
 /**
  * Entity representing a log entry for currency-related operations and events.
- * <p>
- * This entity provides comprehensive logging capabilities for all currency operations,
+ *
+ * <p>This entity provides comprehensive logging capabilities for all currency operations,
  * including balance changes, currency management, system events, and error tracking.
  * It serves as an audit trail and analytics foundation for the currency system.
- * </p>
  *
- * <h3>Log Categories:</h3>
+ * <p><strong>Log Categories:</strong>
  * <ul>
  *   <li><strong>Transaction Logs:</strong> Balance changes, deposits, withdrawals, transfers</li>
  *   <li><strong>Management Logs:</strong> Currency creation, deletion, configuration changes</li>
@@ -29,11 +28,10 @@ import java.util.UUID;
  *   <li><strong>Audit Logs:</strong> Administrative actions, permission checks, security events</li>
  * </ul>
  *
- * <h3>Database Mapping:</h3>
- * <p>
- * This entity is mapped to the {@code p_currency_log} table with appropriate
+ * <p><strong>Database Mapping:</strong>
+ *
+ * <p>This entity is mapped to the {@code p_currency_log} table with appropriate
  * indexes for efficient querying by timestamp, player, currency, and log type.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -50,6 +48,9 @@ import java.util.UUID;
         @Index(name = "idx_currency_log_operation", columnList = "operation_type")
     }
 )
+/**
+ * Represents the CurrencyLog API type.
+ */
 @Entity
 public class CurrencyLog extends BaseEntity {
     
@@ -289,87 +290,144 @@ public class CurrencyLog extends BaseEntity {
         this.reason = reason;
     }
     
+    /**
+     * Gets timestamp.
+     */
     @NotNull
     public LocalDateTime getTimestamp() {
         return timestamp;
     }
     
+    /**
+     * Sets timestamp.
+     */
     public void setTimestamp(@NotNull LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
     
+    /**
+     * Gets logType.
+     */
     @NotNull
     public ELogType getLogType() {
         return logType;
     }
     
+    /**
+     * Sets logType.
+     */
     public void setLogType(@NotNull ELogType logType) {
         this.logType = logType;
     }
     
+    /**
+     * Gets logLevel.
+     */
     @NotNull
     public ELogLevel getLogLevel() {
         return logLevel;
     }
     
+    /**
+     * Sets logLevel.
+     */
     public void setLogLevel(@NotNull ELogLevel logLevel) {
         this.logLevel = logLevel;
     }
     
+    /**
+     * Gets playerUuid.
+     */
     @Nullable
     public UUID getPlayerUuid() {
         return playerUuid;
     }
     
+    /**
+     * Sets playerUuid.
+     */
     public void setPlayerUuid(@Nullable UUID playerUuid) {
         this.playerUuid = playerUuid;
     }
     
+    /**
+     * Gets playerName.
+     */
     @Nullable
     public String getPlayerName() {
         return playerName;
     }
     
+    /**
+     * Sets playerName.
+     */
     public void setPlayerName(@Nullable String playerName) {
         this.playerName = playerName;
     }
     
+    /**
+     * Gets initiatorUuid.
+     */
     @Nullable
     public UUID getInitiatorUuid() {
         return initiatorUuid;
     }
     
+    /**
+     * Sets initiatorUuid.
+     */
     public void setInitiatorUuid(@Nullable UUID initiatorUuid) {
         this.initiatorUuid = initiatorUuid;
     }
     
+    /**
+     * Gets initiatorName.
+     */
     @Nullable
     public String getInitiatorName() {
         return initiatorName;
     }
     
+    /**
+     * Sets initiatorName.
+     */
     public void setInitiatorName(@Nullable String initiatorName) {
         this.initiatorName = initiatorName;
     }
     
+    /**
+     * Gets currency.
+     */
     @Nullable
     public Currency getCurrency() {
         return currency;
     }
     
+    /**
+     * Sets currency.
+     */
     public void setCurrency(@Nullable Currency currency) {
         this.currency = currency;
     }
     
+    /**
+     * Gets operationType.
+     */
     @Nullable
     public EChangeType getOperationType() {
         return operationType;
     }
     
+    /**
+     * Sets operationType.
+     */
     public void setOperationType(@Nullable EChangeType operationType) {
         this.operationType = operationType;
     }
     
+    /**
+     * Gets oldBalance.
+     */
     @Nullable
     public Double getOldBalance() {
         return oldBalance;
@@ -379,64 +437,106 @@ public class CurrencyLog extends BaseEntity {
         this.oldBalance = oldBalance;
     }
     
+    /**
+     * Gets newBalance.
+     */
     @Nullable
     public Double getNewBalance() {
         return newBalance;
     }
     
+    /**
+     * Sets newBalance.
+     */
     public void setNewBalance(@Nullable Double newBalance) {
         this.newBalance = newBalance;
     }
     
+    /**
+     * Gets amount.
+     */
     @Nullable
     public Double getAmount() {
         return amount;
     }
     
+    /**
+     * Sets amount.
+     */
     public void setAmount(@Nullable Double amount) {
         this.amount = amount;
     }
     
+    /**
+     * Gets description.
+     */
     @NotNull
     public String getDescription() {
         return description;
     }
     
+    /**
+     * Sets description.
+     */
     public void setDescription(@NotNull String description) {
         this.description = description;
     }
     
+    /**
+     * Gets details.
+     */
     @Nullable
     public String getDetails() {
         return details;
     }
     
+    /**
+     * Sets details.
+     */
     public void setDetails(@Nullable String details) {
         this.details = details;
     }
     
+    /**
+     * Gets reason.
+     */
     @Nullable
     public String getReason() {
         return reason;
     }
     
+    /**
+     * Sets reason.
+     */
     public void setReason(@Nullable String reason) {
         this.reason = reason;
     }
     
+    /**
+     * Returns whether success.
+     */
     public boolean isSuccess() {
         return success;
     }
     
+    /**
+     * Sets success.
+     */
     public void setSuccess(boolean success) {
         this.success = success;
     }
     
+    /**
+     * Gets errorMessage.
+     */
     @Nullable
     public String getErrorMessage() {
         return errorMessage;
     }
     
+    /**
+     * Sets errorMessage.
+     */
     public void setErrorMessage(@Nullable String errorMessage) {
         this.errorMessage = errorMessage;
         if (errorMessage != null) {
@@ -444,20 +544,32 @@ public class CurrencyLog extends BaseEntity {
         }
     }
     
+    /**
+     * Gets ipAddress.
+     */
     @Nullable
     public String getIpAddress() {
         return ipAddress;
     }
     
+    /**
+     * Sets ipAddress.
+     */
     public void setIpAddress(@Nullable String ipAddress) {
         this.ipAddress = ipAddress;
     }
     
+    /**
+     * Gets metadata.
+     */
     @Nullable
     public String getMetadata() {
         return metadata;
     }
     
+    /**
+     * Sets metadata.
+     */
     public void setMetadata(@Nullable String metadata) {
         this.metadata = metadata;
     }
@@ -513,6 +625,9 @@ public class CurrencyLog extends BaseEntity {
         return Objects.equals(getId(), that.getId());
     }
     
+    /**
+     * Returns whether hCode.
+     */
     @Override
     public int hashCode() {
         return Objects.hash(getId());

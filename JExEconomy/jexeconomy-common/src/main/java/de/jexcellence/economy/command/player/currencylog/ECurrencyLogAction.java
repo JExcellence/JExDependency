@@ -10,13 +10,12 @@ import java.util.Locale;
 import java.util.Optional;
 
 /**
- * Enumerates the supported sub-commands for the {@code /pcurrencylog} command and
+ * Enumerates the supported sub-commands for the {@code /pcurrencylog} command and.
  * exposes structured metadata used by help generation, tab completion, and
  * permission validation.
  *
- * <p>
- * Each action provides:
- * </p>
+ *
+ * <p>Each action provides:
  * <ul>
  *     <li>A canonical command keyword used during parsing</li>
  *     <li>A translation key that documents the usage description</li>
@@ -24,11 +23,10 @@ import java.util.Optional;
  *     <li>An optional permission node when elevated privileges are required</li>
  * </ul>
  *
- * <p>
- * Helper methods offer convenient lookups from user supplied input and enable
+ *
+ * <p>Helper methods offer convenient lookups from user supplied input and enable
  * consumers to align command output with localisation files and configuration
  * metadata.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -103,26 +101,51 @@ public enum ECurrencyLogAction {
         this.requiredPermissionNode = requiredPermissionNode;
     }
 
+    /**
+     * Gets commandKeyword.
+     */
     public @NotNull String getCommandKeyword() {
         return this.commandKeyword;
     }
 
+    /**
+     * Gets usageTranslationKey.
+     */
     public @NotNull String getUsageTranslationKey() {
         return this.usageTranslationKey;
     }
 
+    /**
+     * Returns the ordered argument names required by this action.
+     *
+     * @return immutable list of required argument names
+     */
     public @NotNull List<String> getRequiredArguments() {
         return this.requiredArguments;
     }
 
+    /**
+     * Gets requiredPermissionNode.
+     */
     public @NotNull Optional<String> getRequiredPermissionNode() {
         return Optional.ofNullable(this.requiredPermissionNode);
     }
 
+    /**
+     * Returns whether this action requires an additional permission node.
+     *
+     * @return {@code true} when a permission node is configured
+     */
     public boolean requiresAdditionalPermission() {
         return this.requiredPermissionNode != null;
     }
 
+    /**
+     * Resolves an action from a user-provided command keyword.
+     *
+     * @param keyword user input keyword
+     * @return matching action when found
+     */
     public static @NotNull Optional<ECurrencyLogAction> fromCommandKeyword(final @Nullable String keyword) {
         if (keyword == null || keyword.trim().isEmpty()) {
             return Optional.empty();

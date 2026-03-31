@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rplatform.api.luckperms;
 
 import com.raindropcentral.rplatform.RPlatform;
@@ -23,16 +36,25 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+/**
+ * Represents the LuckPermsService API type.
+ */
 @SuppressWarnings("unused")
 public class LuckPermsService {
 	
 	private static final Logger    LOGGER = Logger.getLogger(LuckPermsService.class.getName());
 	private final        RPlatform platform;
 	
+	/**
+	 * Executes LuckPermsService.
+	 */
 	public LuckPermsService(final @NotNull RPlatform platform) {
 		this.platform = platform;
 	}
 	
+	/**
+	 * Gets luckPermsUser.
+	 */
 	@Nullable
 	public User getLuckPermsUser(final @NotNull UUID uuid) {
 		if (Bukkit.getPlayer(uuid) == null) {
@@ -41,6 +63,9 @@ public class LuckPermsService {
 		return this.get().getUserManager().getUser(uuid);
 	}
 	
+	/**
+	 * Gets luckPermsUser.
+	 */
 	@Nullable
 	public User getLuckPermsUser(final @NotNull OfflinePlayer offlinePlayer) {
 		final UserManager userManager = this.get().getUserManager();
@@ -52,6 +77,9 @@ public class LuckPermsService {
 		}
 	}
 	
+	/**
+	 * Gets prefix.
+	 */
 	@NotNull
 	public String getPrefix(final @NotNull UUID uuid) {
 		final User user = getLuckPermsUser(uuid);
@@ -68,6 +96,9 @@ public class LuckPermsService {
 		return "";
 	}
 	
+	/**
+	 * Gets suffix.
+	 */
 	@NotNull
 	public String getSuffix(final @NotNull UUID uuid) {
 		final User user = getLuckPermsUser(uuid);
@@ -84,6 +115,9 @@ public class LuckPermsService {
 		return "";
 	}
 	
+	/**
+	 * Executes applyRank.
+	 */
 	public void applyRank(final @NotNull UUID uuid, final @NotNull String group) {
 		checkArguments(uuid, group);
 		final User            user = requireUser(uuid);
@@ -92,6 +126,9 @@ public class LuckPermsService {
 		saveUserAsync(user);
 	}
 	
+	/**
+	 * Executes removeRank.
+	 */
 	public void removeRank(final @NotNull UUID uuid, final @NotNull String group) {
 		checkArguments(uuid, group);
 		final User user = requireUser(uuid);
@@ -166,24 +203,36 @@ public class LuckPermsService {
 			.thenApply(Optional::isPresent);
 	}
 	
+	/**
+	 * Gets playerGroups.
+	 */
 	@NotNull
 	public Set<String> getPlayerGroups(final @NotNull Player player) {
 		final User user = requireUser(player.getUniqueId());
 		return getGroupNamesFromUser(user);
 	}
 	
+	/**
+	 * Gets playerGroups.
+	 */
 	@NotNull
 	public Set<String> getPlayerGroups(final @NotNull OfflinePlayer player) {
 		final User user = requireUser(player);
 		return getGroupNamesFromUser(user);
 	}
 	
+	/**
+	 * Gets playerGroupsCollection.
+	 */
 	@NotNull
 	@Deprecated
 	public Collection<String> getPlayerGroupsCollection(final @NotNull Player player) {
 		return getPlayerGroups(player);
 	}
 	
+	/**
+	 * Returns whether permissionAsync.
+	 */
 	@NotNull
 	public CompletableFuture<Boolean> hasPermissionAsync(final @NotNull OfflinePlayer player, final @NotNull String permission) {
 		return this.get().getUserManager()
@@ -203,6 +252,9 @@ public class LuckPermsService {
 		           });
 	}
 	
+	/**
+	 * Gets permissions.
+	 */
 	@NotNull
 	public List<String> getPermissions(final @NotNull OfflinePlayer player) {
 		final User user = requireUser(player);
@@ -217,6 +269,9 @@ public class LuckPermsService {
 		           .toList();
 	}
 	
+	/**
+	 * Returns whether group.
+	 */
 	public boolean hasGroup(final @NotNull Player player, final @NotNull String group) {
 		if (group.isBlank()) {
 			return false;
@@ -224,6 +279,9 @@ public class LuckPermsService {
 		return getPlayerGroups(player).contains(group.toLowerCase(Locale.ENGLISH));
 	}
 	
+	/**
+	 * Returns whether group.
+	 */
 	public boolean hasGroup(final @NotNull OfflinePlayer player, final @NotNull String group) {
 		if (group.isBlank()) {
 			return false;
@@ -231,6 +289,9 @@ public class LuckPermsService {
 		return getPlayerGroups(player).contains(group.toLowerCase(Locale.ENGLISH));
 	}
 	
+	/**
+	 * Executes createOrUpdateGroups.
+	 */
 	public int createOrUpdateGroups(final @NotNull Map<String, List<IRank>> ranks) throws ExecutionException, InterruptedException {
 		final Set<Group> currentGroups = this.get().getGroupManager().getLoadedGroups();
 		final int currentGroupCount = currentGroups.size();
@@ -275,6 +336,9 @@ public class LuckPermsService {
 		return (newCount == currentGroupCount ? 0 : newCount - currentGroupCount);
 	}
 	
+	/**
+	 * Executes checkGroupsExist.
+	 */
 	public boolean checkGroupsExist(final @NotNull Map<String, IRank> ranks) {
 		final Set<String> currentGroupNamesLower = this.get().getGroupManager().getLoadedGroups().stream()
 		                                               .map(g -> g.getName().toLowerCase(Locale.ENGLISH))
@@ -289,18 +353,30 @@ public class LuckPermsService {
 		return true;
 	}
 	
+	/**
+	 * Sets playerPrefix.
+	 */
 	public void setPlayerPrefix(final @NotNull Player player, final @NotNull String prefix, final int priority) {
 		setPlayerMeta(player, prefix, priority, true);
 	}
 	
+	/**
+	 * Sets playerSuffix.
+	 */
 	public void setPlayerSuffix(final @NotNull Player player, final @NotNull String suffix, final int priority) {
 		setPlayerMeta(player, suffix, priority, false);
 	}
 	
+	/**
+	 * Executes removePlayerPrefix.
+	 */
 	public void removePlayerPrefix(final @NotNull Player player, final int priority) {
 		removePlayerMeta(player, priority, true);
 	}
 	
+	/**
+	 * Executes removePlayerSuffix.
+	 */
 	public void removePlayerSuffix(final @NotNull Player player, final int priority) {
 		removePlayerMeta(player, priority, false);
 	}

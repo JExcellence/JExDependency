@@ -32,9 +32,9 @@ junit-platform = "1.10.2"
 # Internal libraries
 jexcommand = "1.0.0"
 rplatform = "2.0.0"
-jeconfig-evaluable = "1.0.0"
-jeconfig-gpeee = "1.0.0"
-jeconfig-mapper = "1.0.0"
+jeconfig-evaluable = "1.0.1"
+jeconfig-gpeee = "1.0.1"
+jeconfig-mapper = "1.0.1"
 jetranslate = "3.0.0"
 jehibernate = "1.1.0"
 jedependency = "2.0.0"
@@ -138,4 +138,4 @@ hibernate = [
 ]
 
 [plugins]
-shadow = { id = "com.gradleup.shadow", version = "8.3.6" }
+shadow = { id = "com.gradleup.shadow", version = "9.4.0" }

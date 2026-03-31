@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.core.service.statistics.collector;
 
 import com.raindropcentral.core.database.entity.statistic.RAbstractStatistic;
@@ -322,8 +335,8 @@ public class PlayerStatisticCollector {
 
     /**
      * Normalizes a statistic value by converting temporal types to epoch milliseconds.
-     * <p>
-     * This ensures that timestamps are stored as Long values rather than
+ *
+ * <p>This ensures that timestamps are stored as Long values rather than
      * LocalDateTime or Instant objects, which would be serialized as ISO strings
      * and cause parsing issues.
      * </p>

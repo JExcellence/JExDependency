@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.view.quest;
 
 import com.raindropcentral.rdq.RDQ;
@@ -73,12 +86,12 @@ public class QuestListView extends APaginatedView<Quest> {
 		}
 		
 		LOGGER.info("Loading quests for category: " + cat.getIdentifier());
-		
+
 		// Get quests from cache manager (instant access)
 		final List<Quest> quests = plugin.getQuestCacheManager().getQuestsByCategory(cat.getIdentifier());
-		
+
 		LOGGER.info("Loaded " + quests.size() + " quests from cache");
-		
+
 		// Return instantly as CompletableFuture
 		return CompletableFuture.completedFuture(quests);
 	}
@@ -171,7 +184,7 @@ public class QuestListView extends APaginatedView<Quest> {
 		if (description != null && !description.isBlank()) {
 			return Component.text("§7" + description);
 		}
-		
+
 		// Fallback to estimated value
 		double value = reward.getEstimatedValue();
 		if (value > 0) {
@@ -180,10 +193,10 @@ public class QuestListView extends APaginatedView<Quest> {
 					.build()
 					.component();
 		}
-		
+
 		return Component.text("§7Reward");
 	}
-	
+
 	@Override
 	protected void onPaginatedRender(final @NotNull RenderContext render, final @NotNull Player player) {
 		// Additional UI elements can be added here if needed

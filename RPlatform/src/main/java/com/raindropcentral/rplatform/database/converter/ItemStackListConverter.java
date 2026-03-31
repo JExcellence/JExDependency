@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rplatform.database.converter;
 
 import jakarta.persistence.AttributeConverter;
@@ -12,7 +25,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Persists collections of {@link ItemStack} values as a semicolon-delimited Base64 payload and restores them
+ * Persists collections of {@link ItemStack} values as a semicolon-delimited Base64 payload and restores them.
  * for entity hydration.
  *
  * <p>Each non-empty stack is encoded via {@link ItemStack#serializeAsBytes()} and Base64 while empty or

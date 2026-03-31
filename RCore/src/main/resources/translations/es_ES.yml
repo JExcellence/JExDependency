@@ -3,13 +3,14 @@
 prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
 
 rcconnect:
-  usage: "<gray>Uso: /rcconnect <api-key></gray>"
+  usage: "<gray>Uso: /rc <connect &lt;api-key&gt;|disconnect|claim droplets></gray>"
+  usage_no_claim: "<gray>Uso: /rc <connect &lt;api-key&gt;|disconnect></gray>"
   connecting: "<yellow>Conectando con RaindropCentral...</yellow>"
   success: "<green>Conexion con RaindropCentral completada correctamente.</green> <gray>El servidor ahora esta enviando heartbeats.</gray>"
   error:
     invalid_key: "<red>Formato de clave API invalido. Las claves API deben tener entre 32 y 128 caracteres alfanumericos.</red>"
     uuid_mismatch: "<red>Esta clave API pertenece a una cuenta de Minecraft diferente.</red>"
-    already_connected: "<yellow>El servidor ya esta conectado.</yellow> <gray>Usa /rcdisconnect primero.</gray>"
+    already_connected: "<yellow>El servidor ya está conectado.</yellow> <gray>Use /rc disconnect primero.</gray>"
     network: "<red>Error de red: %error%</red>"
 
 rcdisconnect:
@@ -19,6 +20,152 @@ rcdisconnect:
     not_connected: "<red>El servidor no esta conectado a RaindropCentral.</red>"
     failed: "<red>No se pudo desconectar. Intentalo de nuevo.</red>"
     network: "<red>Error de red: %error%</red>"
+
+rcclaim:
+  loading: "<yellow>Comprobando RaindropCentral en busca de recompensas de gotas no reclamadas...</yellow>"
+  claiming_item: "<yellow>Reclamando %item_name% de RaindropCentral...</yellow>"
+  success:
+    claimed: "<green>Reclamaste %item_name%.</green>"
+    claimed_skill_targeted: "<green>Reclamaste %item_name%.</green> <gray>Haz clic derecho en la cookie para elegir una habilidad.</gray>"
+    claimed_job_targeted: "<green>Reclamaste %item_name%.</green> <gray>Haz clic derecho en la cookie para elegir un trabajo.</gray>"
+    claimed_activate: "<green>Reclamaste %item_name%.</green> <gray>Haz clic derecho en la cookie para activarla.</gray>"
+    skill_granted: "<green>Obtuvo 1 nivel en %skill_name%.</green> <gray>Fuente: %plugin_name%.</gray>"
+    job_granted: "<green>Obtuvo 1 nivel en %job_name%.</green> <gray>Fuente: %plugin_name%.</gray>"
+    skill_xp_boost_applied: "<green>Activado +%rate_percent%% XP de habilidad para %skill_name%.</green> <gray>Fuente: %plugin_name%. Duración: %duration_minutes% minuto(s).</gray>"
+    skill_xp_boost_refreshed: "<green> XP de habilidad + %rate_percent%% actualizado para %skill_name%.</green> <gray> Fuente: %plugin_name%. Duración restablecida a %duration_minutes% minuto(s).</gray>"
+    job_xp_boost_applied: "<green>Activado +%rate_percent%% XP de trabajo para %job_name%.</green> <gray>Fuente: %plugin_name%. Duración: %duration_minutes% minuto(s).</gray>"
+    job_xp_boost_refreshed: "<green> XP de trabajo +%rate_percent%% actualizado para %job_name%.</green> <gray>Fuente: %plugin_name%. Duración restablecida a %duration_minutes% minuto(s).</gray>"
+    job_vault_boost_applied: "<green>Activado +%rate_percent%% dinero del trabajo para %job_name%.</green> <gray>Fuente: %plugin_name%. Duración: %duration_minutes% minuto(s).</gray>"
+    job_vault_boost_refreshed: "<green>Renovado +%rate_percent%% dinero del trabajo para %job_name%.</green> <gray>Fuente: %plugin_name%. Duración restablecida a %duration_minutes% minuto(s).</gray>"
+    double_drop_boost_applied: "<green>Gotas dobles activadas.</green> <gray>Duración: %duration_minutes% minuto(s).</gray>"
+    double_drop_boost_refreshed: "<green>Gotas dobles actualizadas.</green> <gray>Duración restablecida a %duration_minutes% minuto(s).</gray>"
+    pending_delivery: "<green>Entregada(s) %count% recompensa(s) de gotas pendientes.</green>"
+  error:
+    store_disabled: "<red>Este servidor ha deshabilitado /rc claim droplets.</red>"
+    not_connected: "<red>RCore debe estar conectado al backend RaindropCentral antes de poder reclamar droplets.</red>"
+    cooldown: "<yellow>Espere %seconds% segundo(s) antes de volver a utilizar /rc claim droplets.</yellow>"
+    not_registered: "<red>Su cuenta Minecraft no está vinculada a una cuenta RaindropCentral.</red>"
+    no_unclaimed: "<yellow>No tienes ninguna recompensa de gotas no reclamada en este momento.</yellow>"
+    api_unavailable: "<red>RaindropCentral no está disponible en este momento: %error%</red>"
+    menu_unavailable: "<red>El menú de reclamo de droplet no está disponible en este momento. Inténtelo de nuevo más tarde.</red>"
+    item_disabled: "<red>Este servidor ha deshabilitado el reclamo %item_name%.</red> <gray>ID del artículo: %item_code%</gray>"
+    unsupported_item: "<red>Esta recompensa de gota aún no es compatible con este servidor.</red> <gray>ID del artículo: %item_code%</gray>"
+    no_supported_skills: "<red>Este servidor no tiene actualmente un complemento de habilidades compatible para esta recompensa.</red>"
+    no_supported_jobs: "<red>Este servidor no tiene actualmente un complemento de trabajos compatible para esta recompensa.</red>"
+    inventory_full: "<red>Necesitas al menos un espacio de inventario libre antes de reclamar esta recompensa.</red>"
+    claim_in_progress: "<yellow>Ese reclamo ya está en progreso. Espere a que el servidor responda.</yellow>"
+    claim_failed: "<red>No se pudo reclamar esa recompensa de gota: %error%</red>"
+    already_claimed: "<yellow>Esa recompensa de gota ya ha sido reclamada.</yellow>"
+    purchase_unavailable: "<red>Esa recompensa en forma de gota ya no se puede reclamar.</red>"
+    cookie_missing: "<red>La cookie droplet no se pudo encontrar en su inventario.</red>"
+    skill_grant_failed: "<red>No se pudo otorgar 1 nivel en %skill_name%.</red>"
+    job_grant_failed: "<red>No se pudo otorgar 1 nivel en %job_name%.</red>"
+    boost_activation_failed: "<red>Error al activar %item_name%.</red>"
+    unsupported_integration: "<red>La integración requerida para esta cookie droplet no está disponible en este momento.</red>"
+    boost_expired: "<yellow>Ese impulso de cookie de gota ha caducado.</yellow>"
+
+rc_claim_droplets_ui:
+  title: "Gotitas no reclamadas"
+  page:
+    name: "<yellow>Página %page%/%max_page%</yellow>"
+    lore:
+      - "<gray>%items_count% entradas reclamables enumeradas.</gray>"
+  summary:
+    name: "<gold>Cola de reclamaciones</gold>"
+    lore:
+      - "<gray>Uentradas no reclamadas: %item_count%</gray>"
+      - "<gray>Compatible con este servidor: %supported_count%</gray>"
+      - "<yellow>Haga clic en una recompensa admitida para reclamarla.</yellow>"
+  empty:
+    name: "<red>No hay recompensas no reclamadas</red>"
+    lore:
+      - "<gray>Actualmente no tienes recompensas de gotas no reclamadas.</gray>"
+  entry:
+    supported:
+      name: "<green>%item_name%</green>"
+      lore:
+        - "<gray>ID del artículo: %item_code%</gray>"
+        - "<gray>Gastado: %amount_spent% gotitas</gray>"
+        - "<yellow>Haz clic para reclamar esta recompensa.</yellow>"
+    item_disabled:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>ID del artículo: %item_code%</gray>"
+        - "<red>Este servidor ha inhabilitado el reclamo de esta recompensa.</red>"
+    unsupported_item:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>ID del artículo: %item_code%</gray>"
+        - "<red>Esta recompensa no es compatible con este servidor.</red>"
+    no_skills:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>ID del artículo: %item_code%</gray>"
+        - "<red>No hay ningún complemento de habilidades compatible instalado para esta recompensa.</red>"
+    no_jobs:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>ID del artículo: %item_code%</gray>"
+        - "<red>No hay instalado ningún complemento de trabajos admitidos para esta recompensa.</red>"
+
+rc_claim_droplet_skills_ui:
+  title: "Elige una habilidad"
+  page:
+    name: "<yellow>Página %page%/%max_page%</yellow>"
+    lore:
+      - "<gray>%items_count% entradas de habilidades enumeradas.</gray>"
+  summary:
+    name: "<gold>Selección de habilidades</gold>"
+    lore:
+      - "<gray>Ahabilidades disponibles: %skill_count%</gray>"
+      - "<yellow>Elige una habilidad para consumir la cookie.</yellow>"
+  empty:
+    name: "<red>No hay habilidades disponibles</red>"
+    lore:
+      - "<gray>No hay habilidades admitidas disponibles en este momento.</gray>"
+  entry:
+    name: "<green>%skill_name%</green>"
+    level_lore:
+      - "<gray>Complemento: %plugin_name%</gray>"
+      - "<gray>Nivel actual: %current_level%</gray>"
+      - "<yellow>Haz clic para ganar 1 nivel en esta habilidad.</yellow>"
+    boost_lore:
+      - "<gray>Complemento: %plugin_name%</gray>"
+      - "<gray>Nivel actual: %current_level%</gray>"
+      - "<gray>Boost: +%rate_percent%% XP para %duration_minutes% minuto(s)</gray>"
+      - "<yellow>Haz clic para activar este aumento de habilidad.</yellow>"
+
+rc_claim_droplet_jobs_ui:
+  title: "Elige un trabajo"
+  page:
+    name: "<yellow>Página %page%/%max_page%</yellow>"
+    lore:
+      - "<gray>%items_count% entradas de trabajo enumeradas.</gray>"
+  summary:
+    name: "<gold>Selección de Trabajo</gold>"
+    lore:
+      - "<gray>Atrabajos disponibles: %job_count%</gray>"
+      - "<yellow>Elija un trabajo para consumir la cookie.</yellow>"
+  empty:
+    name: "<red>No hay trabajos disponibles</red>"
+    lore:
+      - "<gray>No hay trabajos compatibles disponibles en este momento.</gray>"
+  entry:
+    name: "<green>%job_name%</green>"
+    level_lore:
+      - "<gray>Complemento: %plugin_name%</gray>"
+      - "<gray>Nivel actual: %current_level%</gray>"
+      - "<yellow>Haz clic para ganar 1 nivel en este trabajo.</yellow>"
+    xp_boost_lore:
+      - "<gray>Complemento: %plugin_name%</gray>"
+      - "<gray>Nivel actual: %current_level%</gray>"
+      - "<gray>Boost: +%rate_percent%% XP para %duration_minutes% minuto(s)</gray>"
+      - "<yellow>Haga clic para activar este aumento de XP de trabajo.</yellow>"
+    vault_boost_lore:
+      - "<gray>Complemento: %plugin_name%</gray>"
+      - "<gray>Nivel actual: %current_level%</gray>"
+      - "<gray>Boost: +%rate_percent%% dinero por minuto(s) %duration_minutes%</gray>"
+      - "<yellow>Haga clic para activar este aumento de dinero laboral.</yellow>"
 
 general:
   no_permission: "<red>No tienes permiso para usar este comando.</red>"

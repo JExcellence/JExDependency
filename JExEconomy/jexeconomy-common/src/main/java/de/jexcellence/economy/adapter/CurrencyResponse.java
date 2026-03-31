@@ -7,14 +7,13 @@ import java.util.Objects;
 
 /**
  * Immutable response object representing the result of a currency operation within the JExEconomy system.
- * <p>
- * This record encapsulates all relevant information about a currency transaction or operation,
+ *
+ * <p>This record encapsulates all relevant information about a currency transaction or operation,
  * including the amount involved, resulting balance, operation status, and any error details.
  * It serves as a standardized response format for all currency adapter operations, providing
  * consistent feedback to calling code about the success or failure of requested operations.
- * </p>
  *
- * <h3>Design Principles:</h3>
+ * <p><strong>Design Principles:</strong>
  * <ul>
  *   <li><strong>Immutability:</strong> All fields are final and cannot be modified after creation</li>
  *   <li><strong>Type Safety:</strong> Uses enum for operation status to prevent invalid states</li>
@@ -22,14 +21,13 @@ import java.util.Objects;
  *   <li><strong>Error Handling:</strong> Provides detailed error messages for failed operations</li>
  * </ul>
  *
- * <h3>Usage Patterns:</h3>
- * <p>
- * This response object is returned by all currency operations in the {@link ICurrencyAdapter}
+ * <p><strong>Usage Patterns:</strong>
+ *
+ * <p>This response object is returned by all currency operations in the {@link ICurrencyAdapter}
  * interface. Calling code should always check the {@link #isTransactionSuccessful()} method
  * before proceeding with the assumption that an operation completed successfully.
- * </p>
  *
- * <h3>Response Types:</h3>
+ * <p><strong>Response Types:</strong>
  * <ul>
  *   <li><strong>SUCCESS:</strong> Operation completed successfully with expected results</li>
  *   <li><strong>FAILURE:</strong> Operation failed due to validation, insufficient funds, or other business logic</li>
@@ -56,13 +54,12 @@ public record CurrencyResponse(
 	
 	/**
 	 * Compact constructor for CurrencyResponse with validation and normalization.
-	 * <p>
-	 * This constructor validates the input parameters and ensures the response object
+ *
+ * <p>This constructor validates the input parameters and ensures the response object
 	 * is in a consistent state. It performs null checks on required fields and
 	 * normalizes the error message based on the operation status.
-	 * </p>
 	 *
-	 * <h3>Validation Rules:</h3>
+	 * <p><strong>Validation Rules:</strong>
 	 * <ul>
 	 *   <li>Operation status must not be null</li>
 	 *   <li>Error message is normalized based on operation status</li>
@@ -95,21 +92,20 @@ public record CurrencyResponse(
 	
 	/**
 	 * Determines whether the currency operation completed successfully.
-	 * <p>
-	 * This method provides a convenient way to check if an operation succeeded
+ *
+ * <p>This method provides a convenient way to check if an operation succeeded
 	 * without having to directly compare the operation status enum. It should
 	 * be used by all calling code to determine if the operation results are
 	 * valid and can be trusted.
-	 * </p>
 	 *
-	 * <h3>Success Criteria:</h3>
+	 * <p><strong>Success Criteria:</strong>
 	 * <ul>
 	 *   <li>Operation status must be {@link ResponseType#SUCCESS}</li>
 	 *   <li>No error message should be present</li>
 	 *   <li>Transaction amount and resulting balance should be valid</li>
 	 * </ul>
 	 *
-	 * <h3>Usage Example:</h3>
+	 * <p><strong>Usage Example:</strong>
 	 * <pre>{@code
 	 * CurrencyResponse response = adapter.deposit(player, currency, 100.0).join();
 	 * if (response.isTransactionSuccessful()) {
@@ -129,13 +125,12 @@ public record CurrencyResponse(
 	
 	/**
 	 * Determines whether the currency operation failed due to an error.
-	 * <p>
-	 * This method provides a convenient way to check if an operation failed
+ *
+ * <p>This method provides a convenient way to check if an operation failed
 	 * and requires error handling. Failed operations typically include validation
 	 * errors, insufficient funds, database errors, or other business logic failures.
-	 * </p>
 	 *
-	 * <h3>Failure Indicators:</h3>
+	 * <p><strong>Failure Indicators:</strong>
 	 * <ul>
 	 *   <li>Operation status is {@link ResponseType#FAILURE}</li>
 	 *   <li>Error message should be present and descriptive</li>
@@ -150,14 +145,13 @@ public record CurrencyResponse(
 	
 	/**
 	 * Determines whether the requested operation is not implemented.
-	 * <p>
-	 * This method checks if the operation was not performed because the
+ *
+ * <p>This method checks if the operation was not performed because the
 	 * functionality is not implemented in the current adapter version.
 	 * This is useful for maintaining backward compatibility and graceful
 	 * degradation when new features are added.
-	 * </p>
 	 *
-	 * <h3>Not Implemented Scenarios:</h3>
+	 * <p><strong>Not Implemented Scenarios:</strong>
 	 * <ul>
 	 *   <li>Feature is planned but not yet developed</li>
 	 *   <li>Operation is not supported by the underlying system</li>
@@ -172,13 +166,12 @@ public record CurrencyResponse(
 	
 	/**
 	 * Creates a successful response with the specified transaction details.
-	 * <p>
-	 * This factory method provides a convenient way to create successful response
+ *
+ * <p>This factory method provides a convenient way to create successful response
 	 * objects without having to specify all parameters. It automatically sets
 	 * the operation status to SUCCESS and ensures no error message is included.
-	 * </p>
 	 *
-	 * <h3>Use Cases:</h3>
+	 * <p><strong>Use Cases:</strong>
 	 * <ul>
 	 *   <li>Successful deposit operations</li>
 	 *   <li>Successful withdrawal operations</li>
@@ -204,13 +197,12 @@ public record CurrencyResponse(
 	
 	/**
 	 * Creates a failure response with the specified error details.
-	 * <p>
-	 * This factory method provides a convenient way to create failure response
+ *
+ * <p>This factory method provides a convenient way to create failure response
 	 * objects when operations cannot be completed. It automatically sets the
 	 * operation status to FAILURE and includes the provided error message.
-	 * </p>
 	 *
-	 * <h3>Common Failure Scenarios:</h3>
+	 * <p><strong>Common Failure Scenarios:</strong>
 	 * <ul>
 	 *   <li>Insufficient funds for withdrawal</li>
 	 *   <li>Invalid currency or player data</li>
@@ -252,13 +244,12 @@ public record CurrencyResponse(
 	
 	/**
 	 * Creates a not-implemented response for unsupported operations.
-	 * <p>
-	 * This factory method creates response objects for operations that are not
+ *
+ * <p>This factory method creates response objects for operations that are not
 	 * yet implemented or not supported by the current adapter version. It helps
 	 * maintain API compatibility while indicating that functionality is unavailable.
-	 * </p>
 	 *
-	 * <h3>Usage Scenarios:</h3>
+	 * <p><strong>Usage Scenarios:</strong>
 	 * <ul>
 	 *   <li>New features not yet implemented</li>
 	 *   <li>Operations disabled by configuration</li>
@@ -290,20 +281,22 @@ public record CurrencyResponse(
 		);
 	}
 	
+	/**
+	 * Returns whether success.
+	 */
 	public boolean isSuccess() {
 		return operationStatus == ResponseType.SUCCESS;
 	}
 	
 	/**
 	 * Enumeration defining the possible outcomes of currency operations.
-	 * <p>
-	 * This enum provides a type-safe way to indicate the status of currency operations,
+ *
+ * <p>This enum provides a type-safe way to indicate the status of currency operations,
 	 * ensuring that only valid states can be represented in response objects. Each
 	 * value has specific semantics that should be understood by both implementers
 	 * and consumers of the currency adapter API.
-	 * </p>
 	 *
-	 * <h3>Status Meanings:</h3>
+	 * <p><strong>Status Meanings:</strong>
 	 * <ul>
 	 *   <li><strong>SUCCESS:</strong> Operation completed as requested without errors</li>
 	 *   <li><strong>FAILURE:</strong> Operation could not be completed due to an error condition</li>
@@ -316,34 +309,31 @@ public record CurrencyResponse(
 		
 		/**
 		 * Indicates that the currency operation completed successfully.
-		 * <p>
-		 * When this status is returned, the operation has been fully processed
+ *
+ * <p>When this status is returned, the operation has been fully processed
 		 * and the resulting balance and transaction amount reflect the actual
 		 * changes made to the player's account. No error message should be
 		 * present in responses with this status.
-		 * </p>
 		 */
 		SUCCESS,
 		
 		/**
 		 * Indicates that the currency operation failed to complete.
-		 * <p>
-		 * This status is used when an operation cannot be completed due to
+ *
+ * <p>This status is used when an operation cannot be completed due to
 		 * validation errors, insufficient funds, database issues, or other
 		 * business logic failures. Responses with this status should always
 		 * include a descriptive error message explaining the failure reason.
-		 * </p>
 		 */
 		FAILURE,
 		
 		/**
 		 * Indicates that the requested operation is not implemented.
-		 * <p>
-		 * This status is used for operations that are defined in the API but
+ *
+ * <p>This status is used for operations that are defined in the API but
 		 * not yet implemented in the current adapter version. It allows for
 		 * graceful handling of unsupported functionality and helps maintain
 		 * backward compatibility during development.
-		 * </p>
 		 */
 		NOT_IMPLEMENTED
 	}

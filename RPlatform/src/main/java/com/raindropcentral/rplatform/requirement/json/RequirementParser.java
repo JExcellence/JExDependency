@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rplatform.requirement.json;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,10 +29,9 @@ import java.util.logging.Logger;
 
 /**
  * Utility class for serializing and deserializing {@link AbstractRequirement} objects to and from JSON.
- * <p>
- * This class provides static methods to convert between JSON strings and {@link AbstractRequirement} instances,
+ *
+ * <p>This class provides static methods to convert between JSON strings and {@link AbstractRequirement} instances,
  * supporting polymorphic deserialization based on the "type" field and handling Bukkit-specific types such as {@link ItemStack}.
- * </p>
  */
 public final class RequirementParser {
 
@@ -107,9 +119,8 @@ public final class RequirementParser {
 
     /**
      * Resets the cached ObjectMapper, forcing recreation on next use.
-     * <p>
-     * Call this after registering new requirement types to ensure they are included.
-     * </p>
+ *
+ * <p>Call this after registering new requirement types to ensure they are included.
      */
     public static void resetMapper() {
         synchronized (RequirementParser.class) {

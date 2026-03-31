@@ -1,8 +1,22 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.core.listener;
 
 import com.raindropcentral.core.RCore;
 import com.raindropcentral.core.database.entity.player.RPlayer;
 import com.raindropcentral.core.database.repository.RPlayerRepository;
+import com.raindropcentral.core.service.central.DropletClaimService;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -15,46 +29,41 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Listener for managing player entities in the local database.
- * <p>
- * Creates or updates RPlayer entities when players join, and updates last seen
- * timestamp when they leave. This maintains local player data for plugin features.
- * </p>
+ * Maintains local player state as players join and leave the server.
  *
- * @author JExcellence
- * @since 1.0.0
- * @version 2.0.0
+ * <p>Besides refreshing the persisted {@link RPlayer} aggregate, the listener also delivers any
+ * queued droplet rewards and rehydrates active timed cookie boosts when players reconnect.</p>
  */
 public class PlayerJoinLeaveListener implements Listener {
 
     private static final Logger LOGGER = CentralLogger.getLoggerByName("RCore");
 
     private final RCore core;
+    private final DropletClaimService dropletClaimService;
 
     private RPlayerRepository playerRepository;
 
     /**
-     * Constructs a new PlayerJoinLeaveListener.
+     * Creates the listener bound to the active {@link RCore} plugin instance.
      *
-     * @throws NullPointerException if context is null
+     * @param core plugin context used to resolve repositories and droplet services
      */
     public PlayerJoinLeaveListener(final @NotNull RCore core) {
         this.core = core;
         this.playerRepository = this.core.getImpl().getPlayerRepository();
+        this.dropletClaimService = this.core.getImpl().getDropletClaimService();
     }
 
     /**
-     * Handles player join events to create/update player entities in local database.
-     * <p>
-     * Always creates or updates the RPlayer entity with current player information.
-     * This maintains accurate local player data for plugin features.
-     * </p>
+     * Delivers queued rewards, restores active boosts, and upserts the local player aggregate.
      *
      * @param event the player join event
      */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerJoin(final @NotNull PlayerJoinEvent event) {
         var player = event.getPlayer();
+        this.dropletClaimService.deliverPendingRewards(player);
+        this.core.getImpl().getActiveCookieBoostService().hydratePlayer(player);
 
         playerRepository.findByUuidAsync(player.getUniqueId())
                 .thenCompose(existingPlayer -> {
@@ -77,16 +86,14 @@ public class PlayerJoinLeaveListener implements Listener {
     }
 
     /**
-     * Handles player quit events to update the last seen timestamp.
-     * <p>
-     * Updates the player's lastSeen timestamp in the local database when they leave.
-     * </p>
+     * Clears runtime boost cache entries and records the player's latest seen timestamp.
      *
      * @param event the player quit event
      */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerQuit(final @NotNull PlayerQuitEvent event) {
         var player = event.getPlayer();
+        this.core.getImpl().getActiveCookieBoostService().removePlayerCache(player.getUniqueId());
 
         playerRepository.findByUuidAsync(player.getUniqueId())
                 .thenCompose(rPlayer -> rPlayer

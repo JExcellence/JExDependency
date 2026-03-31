@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.listener;
 
 import com.raindropcentral.rdq.RDQ;
@@ -6,7 +19,6 @@ import com.raindropcentral.rdq.database.entity.rank.RRankReward;
 import com.raindropcentral.rdq.event.RankAssignedEvent;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.reward.RewardService;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -29,11 +41,17 @@ public class RankRewardListener implements Listener {
 	private final RDQ rdq;
 	private final RewardService rewardService;
 
+	/**
+	 * Executes RankRewardListener.
+	 */
 	public RankRewardListener(final @NotNull RDQ rdq) {
 		this.rdq = rdq;
 		this.rewardService = RewardService.getInstance();
 	}
 
+	/**
+	 * Executes onRankAssigned.
+	 */
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onRankAssigned(final @NotNull RankAssignedEvent event) {
 		final Player player = event.getPlayer();
@@ -50,7 +68,7 @@ public class RankRewardListener implements Listener {
 				
 				for (final RRankReward rankReward : rewards) {
 					if (rankReward.isAutoGrant()) {
-						Bukkit.getScheduler().runTask(this.rdq.getPlugin(), () -> {
+						this.rdq.getPlatform().getScheduler().runAtEntity(player, () -> {
 							this.rewardService.grant(player, rankReward.getReward().getReward())
 								.thenAccept(success -> {
 									if (success) {

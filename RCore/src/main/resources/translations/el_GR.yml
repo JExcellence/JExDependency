@@ -3,13 +3,14 @@
 prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
 
 rcconnect:
-  usage: "<gray>Χρήση: /rcconnect <api-key></gray>"
+  usage: "<gray>Χρήση: /rc <connect &lt;api-key&gt;|disconnect|claim droplets></gray>"
+  usage_no_claim: "<gray>Χρήση: /rc <connect &lt;api-key&gt;|disconnect></gray>"
   connecting: "<yellow>Σύνδεση με το RaindropCentral...</yellow>"
   success: "<green>Η σύνδεση με το RaindropCentral ολοκληρώθηκε με επιτυχία!</green> <gray>Ο διακομιστής στέλνει πλέον heartbeat σήματα.</gray>"
   error:
     invalid_key: "<red>Μη έγκυρη μορφή κλειδιού API. Τα κλειδιά API πρέπει να έχουν 32-128 αλφαριθμητικούς χαρακτήρες.</red>"
     uuid_mismatch: "<red>Αυτό το κλειδί API ανήκει σε διαφορετικό λογαριασμό Minecraft.</red>"
-    already_connected: "<yellow>Ο διακομιστής είναι ήδη συνδεδεμένος.</yellow> <gray>Χρησιμοποιήστε πρώτα το /rcdisconnect.</gray>"
+    already_connected: "Ο διακομιστής <yellow> είναι ήδη συνδεδεμένος.</yellow> <gray>Χρησιμοποιήστε πρώτα το /rc disconnect.</gray>"
     network: "<red>Σφάλμα δικτύου: %error%</red>"
 
 rcdisconnect:
@@ -19,6 +20,152 @@ rcdisconnect:
     not_connected: "<red>Ο διακομιστής δεν είναι συνδεδεμένος με το RaindropCentral.</red>"
     failed: "<red>Η αποσύνδεση απέτυχε. Παρακαλώ δοκιμάστε ξανά.</red>"
     network: "<red>Σφάλμα δικτύου: %error%</red>"
+
+rcclaim:
+  loading: "<yellow>Έλεγχος RaindropCentral για ανταμοιβές σταγονιδίων που δεν έχουν ζητηθεί...</yellow>"
+  claiming_item: "<yellow>Διεκδίκηση %item_name% από RaindropCentral...</yellow>"
+  success:
+    claimed: "<green> Υποβάλατε αξίωση για %item_name%.</green>"
+    claimed_skill_targeted: "<green> Διεκδικήσατε %item_name%.</green> <gray> Κάντε δεξί κλικ στο cookie για να επιλέξετε μια ικανότητα.</gray>"
+    claimed_job_targeted: "<green> Υποβάλατε αξίωση %item_name%.</green> <gray> Κάντε δεξί κλικ στο cookie για να επιλέξετε μια εργασία.</gray>"
+    claimed_activate: "<green> Διεκδικήσατε %item_name%.</green> <gray> Κάντε δεξί κλικ στο cookie για να το ενεργοποιήσετε.</gray>"
+    skill_granted: "<green>Χορηγήθηκε 1 επίπεδο στο %skill_name%.</green> <gray>Πηγή: %plugin_name%.</gray>"
+    job_granted: "<green>Χορηγήθηκε 1 επίπεδο στο %job_name%.</green> <gray>Πηγή: %plugin_name%.</gray>"
+    skill_xp_boost_applied: "<green>Aενεργοποιημένο +%rate_percent%% skill XP για %skill_name%.</green> <gray>Πηγή: %plugin_name%. Διάρκεια: %duration_minutes% λεπτό(α).</gray>"
+    skill_xp_boost_refreshed: "<green>Ανανέωση +%rate_percent%% ικανότητα XP για %skill_name%.</green> <gray>Πηγή: %plugin_name%. Επαναφορά διάρκειας σε %duration_minutes% λεπτά.</gray>"
+    job_xp_boost_applied: "<green>AΕνεργοποιημένη +%rate_percent%% εργασία XP για %job_name%.</green> <gray>Πηγή: %plugin_name%. Διάρκεια: %duration_minutes% λεπτό(α).</gray>"
+    job_xp_boost_refreshed: "<green>Ανανέωση +%rate_percent%% εργασία XP για %job_name%.</green> <gray>Πηγή: %plugin_name%. Επαναφορά διάρκειας σε %duration_minutes% λεπτά.</gray>"
+    job_vault_boost_applied: "<green>Aενεργοποιημένα +%rate_percent%% χρήματα εργασίας για %job_name%.</green> <gray>Πηγή: %plugin_name%. Διάρκεια: %duration_minutes% λεπτό(α).</gray>"
+    job_vault_boost_refreshed: "<green>Ανανέωση +%rate_percent%% χρήματα εργασίας για %job_name%.</green> <gray>Πηγή: %plugin_name%. Επαναφορά διάρκειας σε %duration_minutes% λεπτά.</gray>"
+    double_drop_boost_applied: "<green>AΕνεργοποιημένες διπλές πτώσεις.</green> <gray>Διάρκεια: %duration_minutes% λεπτά.</gray>"
+    double_drop_boost_refreshed: "<green>Ανανεωμένες διπλές σταγόνες.</green> <gray>Επαναφορά διάρκειας σε %duration_minutes% λεπτά.</gray>"
+    pending_delivery: "<green>Παραδόθηκε %count% ανταμοιβή(ες) σε εκκρεμότητα.</green>"
+  error:
+    store_disabled: "<red>Αυτός ο διακομιστής έχει απενεργοποιήσει το /rc claim droplets.</red>"
+    not_connected: "Το <red>RCore πρέπει να συνδεθεί στο backend RaindropCentral για να μπορέσετε να διεκδικήσετε σταγονίδια.</red>"
+    cooldown: "<yellow>Παρακαλώ περιμένετε %seconds% δευτερόλεπτο(α) πριν χρησιμοποιήσετε ξανά το /rc claim droplets.</yellow>"
+    not_registered: "<red>Ο λογαριασμός σας Minecraft δεν είναι συνδεδεμένος με λογαριασμό RaindropCentral.</red>"
+    no_unclaimed: "<yellow> Δεν έχετε καμία αζήτητη ανταμοιβή σταγονιδίων αυτήν τη στιγμή.</yellow>"
+    api_unavailable: "Το <red>RaindropCentral δεν είναι διαθέσιμο αυτήν τη στιγμή: %error%</red>"
+    menu_unavailable: "<red>Το μενού αξίωσης σταγονιδίων δεν είναι διαθέσιμο αυτήν τη στιγμή. Δοκιμάστε ξανά αργότερα.</red>"
+    item_disabled: "<red>Αυτός ο διακομιστής έχει απενεργοποιήσει την αξίωση %item_name%.</red> <gray>Item ID: %item_code%</gray>"
+    unsupported_item: "<red>Αυτή η ανταμοιβή σταγονιδίων δεν υποστηρίζεται ακόμη σε αυτόν τον διακομιστή.</red> <gray>Item ID: %item_code%</gray>"
+    no_supported_skills: "<red>Αυτός ο διακομιστής δεν διαθέτει επί του παρόντος υποστηριζόμενη προσθήκη δεξιοτήτων για αυτήν την ανταμοιβή.</red>"
+    no_supported_jobs: "<red>Αυτός ο διακομιστής δεν διαθέτει επί του παρόντος υποστηριζόμενη προσθήκη εργασιών για αυτήν την ανταμοιβή.</red>"
+    inventory_full: "<red>Χρειάζεστε τουλάχιστον ένα δωρεάν slot αποθέματος πριν διεκδικήσετε αυτήν την ανταμοιβή.</red>"
+    claim_in_progress: "<yellow>Αυτή η αξίωση είναι ήδη σε εξέλιξη. Περιμένετε να απαντήσει το backend.</yellow>"
+    claim_failed: "<red>Απέτυχε η διεκδίκηση αυτής της ανταμοιβής σταγονιδίων: %error%</red>"
+    already_claimed: "<yellow>Αυτή η ανταμοιβή σταγονιδίων έχει ήδη διεκδικηθεί.</yellow>"
+    purchase_unavailable: "<red>Αυτή η ανταμοιβή σταγονιδίων δεν είναι πλέον διαθέσιμη για αξίωση.</red>"
+    cookie_missing: "<red>Δεν ήταν δυνατή η εύρεση του cookie σταγονιδίων στο απόθεμά σας.</red>"
+    skill_grant_failed: "<red>Απέτυχε η χορήγηση 1 επιπέδου στο %skill_name%.</red>"
+    job_grant_failed: "<red>Απέτυχε η χορήγηση 1 επιπέδου στο %job_name%.</red>"
+    boost_activation_failed: "<red>Απέτυχε η ενεργοποίηση %item_name%.</red>"
+    unsupported_integration: "<red>Η απαιτούμενη ενσωμάτωση για αυτό το cookie σταγονιδίων δεν είναι διαθέσιμη αυτήν τη στιγμή.</red>"
+    boost_expired: "<yellow>Αυτή η ενίσχυση cookie σταγονιδίων έχει λήξει.</yellow>"
+
+rc_claim_droplets_ui:
+  title: "Αζήτητα σταγονίδια"
+  page:
+    name: "<yellow>Σελίδα %page%/%max_page%</yellow>"
+    lore:
+      - "<gray>%items_count% καταχωρίσεις με δυνατότητα αξίωσης παρατίθενται.</gray>"
+  summary:
+    name: "<gold>Ουρά αξίωσης</gold>"
+    lore:
+      - "<gray> Μη διεκδικημένες καταχωρήσεις: %item_count%</gray>"
+      - "<gray>Υποστηρίζεται σε αυτόν τον διακομιστή: %supported_count%</gray>"
+      - "<yellow>Κάντε κλικ σε μια υποστηριζόμενη ανταμοιβή για να τη διεκδικήσετε.</yellow>"
+  empty:
+    name: "<red> Χωρίς αζήτητες ανταμοιβές</red>"
+    lore:
+      - "<gray> Αυτήν τη στιγμή δεν έχετε αζήτητες ανταμοιβές σταγονιδίων.</gray>"
+  entry:
+    supported:
+      name: "<green>%item_name%</green>"
+      lore:
+        - "<gray>Iστοιχείο: %item_code%</gray>"
+        - "<gray>Spent: %amount_spent% σταγονίδια</gray>"
+        - "<yellow>Κάντε κλικ για να διεκδικήσετε αυτήν την ανταμοιβή.</yellow>"
+    item_disabled:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>Iστοιχείο: %item_code%</gray>"
+        - "<red>Αυτός ο διακομιστής έχει απενεργοποιήσει τη διεκδίκηση αυτής της ανταμοιβής.</red>"
+    unsupported_item:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>Iστοιχείο: %item_code%</gray>"
+        - "<red>Αυτή η ανταμοιβή δεν υποστηρίζεται σε αυτόν τον διακομιστή.</red>"
+    no_skills:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>Iστοιχείο: %item_code%</gray>"
+        - "<red>Δεν έχει εγκατασταθεί καμία υποστηριζόμενη προσθήκη δεξιοτήτων για αυτήν την ανταμοιβή.</red>"
+    no_jobs:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>Iστοιχείο: %item_code%</gray>"
+        - "<red> Δεν έχει εγκατασταθεί καμία υποστηριζόμενη προσθήκη εργασιών για αυτήν την ανταμοιβή.</red>"
+
+rc_claim_droplet_skills_ui:
+  title: "Επιλέξτε μια δεξιότητα"
+  page:
+    name: "<yellow>Σελίδα %page%/%max_page%</yellow>"
+    lore:
+      - "<gray>%items_count% καταχωρήσεις δεξιοτήτων στη λίστα.</gray>"
+  summary:
+    name: "<gold> Επιλογή δεξιοτήτων</gold>"
+    lore:
+      - "<gray>AΔιαθέσιμες δεξιότητες: %skill_count%</gray>"
+      - "<yellow>Επιλέξτε μία ικανότητα για να καταναλώσετε το cookie.</yellow>"
+  empty:
+    name: "<red>Δεν υπάρχουν διαθέσιμες δεξιότητες</red>"
+    lore:
+      - "<gray> Δεν υπάρχουν διαθέσιμες υποστηριζόμενες δεξιότητες αυτήν τη στιγμή.</gray>"
+  entry:
+    name: "<green>%skill_name%</green>"
+    level_lore:
+      - "<gray>Plugin: %plugin_name%</gray>"
+      - "<gray>Τρέχον επίπεδο: %current_level%</gray>"
+      - "<yellow>Κάντε κλικ για να κερδίσετε 1 επίπεδο σε αυτήν την ικανότητα.</yellow>"
+    boost_lore:
+      - "<gray>Plugin: %plugin_name%</gray>"
+      - "<gray>Τρέχον επίπεδο: %current_level%</gray>"
+      - "<gray>Boost: +%rate_percent%% XP για %duration_minutes% λεπτά </gray>"
+      - "<yellow>Κάντε κλικ για να ενεργοποιήσετε αυτήν την ενίσχυση δεξιοτήτων.</yellow>"
+
+rc_claim_droplet_jobs_ui:
+  title: "Επιλέξτε μια εργασία"
+  page:
+    name: "<yellow>Σελίδα %page%/%max_page%</yellow>"
+    lore:
+      - "<gray>%items_count% καταχωρήσεις εργασιών στη λίστα.</gray>"
+  summary:
+    name: "<gold>Επιλογή εργασίας</gold>"
+    lore:
+      - "<gray>AΔιαθέσιμες εργασίες: %job_count%</gray>"
+      - "<yellow>Επιλέξτε μία εργασία για να καταναλώσετε το cookie.</yellow>"
+  empty:
+    name: "<red>Δεν υπάρχουν διαθέσιμες θέσεις εργασίας</red>"
+    lore:
+      - "<gray> Δεν υπάρχουν διαθέσιμες υποστηριζόμενες εργασίες αυτήν τη στιγμή.</gray>"
+  entry:
+    name: "<green>%job_name%</green>"
+    level_lore:
+      - "<gray>Plugin: %plugin_name%</gray>"
+      - "<gray>Τρέχον επίπεδο: %current_level%</gray>"
+      - "<yellow>Κάντε κλικ για να κερδίσετε 1 επίπεδο σε αυτήν την εργασία.</yellow>"
+    xp_boost_lore:
+      - "<gray>Plugin: %plugin_name%</gray>"
+      - "<gray>Τρέχον επίπεδο: %current_level%</gray>"
+      - "<gray>Boost: +%rate_percent%% XP για %duration_minutes% λεπτά </gray>"
+      - "<yellow>Κάντε κλικ για να ενεργοποιήσετε αυτήν την εργασία XP boost.</yellow>"
+    vault_boost_lore:
+      - "<gray>Plugin: %plugin_name%</gray>"
+      - "<gray>Τρέχον επίπεδο: %current_level%</gray>"
+      - "<gray>Boost: +%rate_percent%% χρήματα για %duration_minutes% λεπτά </gray>"
+      - "<yellow>Κάντε κλικ για να ενεργοποιήσετε αυτήν την ενίσχυση χρημάτων εργασίας.</yellow>"
 
 general:
   no_permission: "<red>Δεν έχετε άδεια να χρησιμοποιήσετε αυτή την εντολή.</red>"

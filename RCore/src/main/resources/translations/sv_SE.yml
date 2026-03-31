@@ -3,13 +3,14 @@
 prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
 
 rcconnect:
-  usage: "<gray>Anvandning: /rcconnect <api-key></gray>"
+  usage: "<gray>Användning: /rc <connect &lt;api-key&gt;|disconnect|claim droplets></gray>"
+  usage_no_claim: "<gray>Användning: /rc <connect &lt;api-key&gt;|disconnect></gray>"
   connecting: "<yellow>Ansluter till RaindropCentral...</yellow>"
   success: "<green>Anslutning till RaindropCentral lyckades!</green> <gray>Servern skickar nu heartbeats.</gray>"
   error:
     invalid_key: "<red>Ogiltigt API-nyckelformat. API-nycklar ska vara 32-128 alfanumeriska tecken.</red>"
     uuid_mismatch: "<red>Denna API-nyckel tillhor ett annat Minecraft-konto.</red>"
-    already_connected: "<yellow>Servern ar redan ansluten.</yellow> <gray>Anvand /rcdisconnect forst.</gray>"
+    already_connected: "<yellow>Server är redan ansluten.</yellow> <gray>Använd /rc disconnect först.</gray>"
     network: "<red>Natverksfel: %error%</red>"
 
 rcdisconnect:
@@ -19,6 +20,152 @@ rcdisconnect:
     not_connected: "<red>Servern ar inte ansluten till RaindropCentral.</red>"
     failed: "<red>Kunde inte koppla fran. Forsok igen.</red>"
     network: "<red>Natverksfel: %error%</red>"
+
+rcclaim:
+  loading: "<yellow> Kontrollerar RaindropCentral för outtagna droppbelöningar...</yellow>"
+  claiming_item: "<yellow> Anspråk på %item_name% från RaindropCentral...</yellow>"
+  success:
+    claimed: "<green>Du gjorde anspråk på %item_name%.</green>"
+    claimed_skill_targeted: "<green>Du gjorde anspråk på %item_name%.</green> <gray>Högerklicka på cookien för att välja en färdighet.</gray>"
+    claimed_job_targeted: "<green>Du gjorde anspråk på %item_name%.</green> <gray>Högerklicka på cookien för att välja ett jobb.</gray>"
+    claimed_activate: "<green>Du gjorde anspråk på %item_name%.</green> <gray>Högerklicka på cookien för att aktivera den.</gray>"
+    skill_granted: "<green>Beviljad 1 nivå i %skill_name%.</green> <gray>Källa: %plugin_name%.</gray>"
+    job_granted: "<green>Beviljad 1 nivå i %job_name%.</green> <gray>Källa: %plugin_name%.</gray>"
+    skill_xp_boost_applied: "<green>Aaktiverad +%rate_percent%% färdighet XP för %skill_name%.</green> <gray>Källa: %plugin_name%. Längd: %duration_minutes% minut(er).</gray>"
+    skill_xp_boost_refreshed: "<green>Refreshed +%rate_percent%% färdighet XP för %skill_name%.</green> <gray>Källa: %plugin_name%. Längd återställd till %duration_minutes% minut(er).</gray>"
+    job_xp_boost_applied: "<green>Aaktiverat +%rate_percent%% jobb XP för %job_name%.</green> <gray>Källa: %plugin_name%. Längd: %duration_minutes% minut(er).</gray>"
+    job_xp_boost_refreshed: "<green>Refreshed +%rate_percent%% jobb XP för %job_name%.</green> <gray>Källa: %plugin_name%. Längd återställd till %duration_minutes% minut(er).</gray>"
+    job_vault_boost_applied: "<green>Aaktiverade +%rate_percent%% jobbpengar för %job_name%.</green> <gray>Källa: %plugin_name%. Längd: %duration_minutes% minut(er).</gray>"
+    job_vault_boost_refreshed: "<green>Refreshed +%rate_percent%% jobbpengar för %job_name%.</green> <gray>Källa: %plugin_name%. Längd återställd till %duration_minutes% minut(er).</gray>"
+    double_drop_boost_applied: "<green>Aaktiverade dubbla droppar.</green> <gray>Längd: %duration_minutes% minut(er).</gray>"
+    double_drop_boost_refreshed: "<green>Uppdaterade dubbla droppar.</green> <gray>Duration återställd till %duration_minutes% minut(er).</gray>"
+    pending_delivery: "<green> Levereras %count% i väntan på droppbelöning(er).</green>"
+  error:
+    store_disabled: "<red>Den här servern har inaktiverat /rc claim droplets.</red>"
+    not_connected: "<red>RCore måste vara ansluten till RaindropCentral backend innan du kan göra anspråk på droppar.</red>"
+    cooldown: "<yellow>Vänta %seconds% sekund(er) innan du använder /rc claim droplets igen.</yellow>"
+    not_registered: "<red>Ditt Minecraft-konto är inte kopplat till ett RaindropCentral-konto.</red>"
+    no_unclaimed: "<yellow>Du har inga outtagna droppbelöningar just nu.</yellow>"
+    api_unavailable: "<red>RaindropCentral är inte tillgänglig just nu: %error%</red>"
+    menu_unavailable: "<red>Droplet claim-menyn är inte tillgänglig just nu. Försök igen senare.</red>"
+    item_disabled: "<red>Den här servern har inaktiverat anspråk på %item_name%.</red> <gray>Artikel-ID: %item_code%</gray>"
+    unsupported_item: "<red>Denna droppbelöning stöds inte på den här servern ännu.</red> <gray>Artikel-ID: %item_code%</gray>"
+    no_supported_skills: "<red>Denna server har för närvarande inte ett färdighetsplugin som stöds för denna belöning.</red>"
+    no_supported_jobs: "<red>Den här servern har för närvarande inget stöd för jobbplugin för denna belöning.</red>"
+    inventory_full: "<red>Du behöver minst en gratis lagerplats innan du kan göra anspråk på denna belöning.</red>"
+    claim_in_progress: "<yellow> Det anspråket pågår redan. Vänta tills backend svarar.</yellow>"
+    claim_failed: "<red> Det gick inte att göra anspråk på den droppbelöningen: %error%</red>"
+    already_claimed: "<yellow>Den droppbelöning har redan gjorts anspråk på.</yellow>"
+    purchase_unavailable: "<red>Den droppbelöning är inte längre tillgänglig att göra anspråk på.</red>"
+    cookie_missing: "<red>Droplet-cookien kunde inte hittas i ditt lager.</red>"
+    skill_grant_failed: "<red> Det gick inte att bevilja 1 nivå i %skill_name%.</red>"
+    job_grant_failed: "<red> Det gick inte att bevilja 1 nivå i %job_name%.</red>"
+    boost_activation_failed: "<red> Det gick inte att aktivera %item_name%.</red>"
+    unsupported_integration: "<red>Den nödvändiga integrationen för denna droplet-cookie är inte tillgänglig just nu.</red>"
+    boost_expired: "<yellow>Den droplet cookie-boost har gått ut.</yellow>"
+
+rc_claim_droplets_ui:
+  title: "Outtagna droppar"
+  page:
+    name: "<yellow>Sida %page%/%max_page%</yellow>"
+    lore:
+      - "<gray>%items_count% anspråkbara poster listade.</gray>"
+  summary:
+    name: "<gold>Inlösningskö</gold>"
+    lore:
+      - "<gray>Outtagna poster: %item_count%</gray>"
+      - "<gray>Stöds på denna server: %supported_count%</gray>"
+      - "<yellow>Klicka på en belöning som stöds för att göra anspråk på den.</yellow>"
+  empty:
+    name: "<red>Inga outtagna belöningar</red>"
+    lore:
+      - "<gray>Du har för närvarande inga outtagna droplet-belöningar.</gray>"
+  entry:
+    supported:
+      name: "<green>%item_name%</green>"
+      lore:
+        - "<gray>Artikel-ID: %item_code%</gray>"
+        - "<gray>Förbrukat: %amount_spent% droppar</gray>"
+        - "<yellow>Klicka för att göra anspråk på denna belöning.</yellow>"
+    item_disabled:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>Artikel-ID: %item_code%</gray>"
+        - "<red>Den här servern har inaktiverat anspråk på denna belöning.</red>"
+    unsupported_item:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>Artikel-ID: %item_code%</gray>"
+        - "<red>Denna belöning stöds inte på den här servern.</red>"
+    no_skills:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>Artikel-ID: %item_code%</gray>"
+        - "<red>Inget färdighetsplugin som stöds har installerats för denna belöning.</red>"
+    no_jobs:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>Artikel-ID: %item_code%</gray>"
+        - "<red>Inget jobbplugin som stöds har installerats för denna belöning.</red>"
+
+rc_claim_droplet_skills_ui:
+  title: "Välj en färdighet"
+  page:
+    name: "<yellow>Sida %page%/%max_page%</yellow>"
+    lore:
+      - "<gray>%items_count% färdighetsposter listade.</gray>"
+  summary:
+    name: "<gold>Färdighetsval</gold>"
+    lore:
+      - "<gray>ATillgängliga färdigheter: %skill_count%</gray>"
+      - "<yellow>Välj en färdighet för att konsumera kakan.</yellow>"
+  empty:
+    name: "<red>Inga färdigheter tillgängliga</red>"
+    lore:
+      - "<gray>Inga stödda färdigheter är tillgängliga just nu.</gray>"
+  entry:
+    name: "<green>%skill_name%</green>"
+    level_lore:
+      - "<gray>Plugin: %plugin_name%</gray>"
+      - "<gray>Aktuell nivå: %current_level%</gray>"
+      - "<yellow>Klicka för att få 1 nivå i denna färdighet.</yellow>"
+    boost_lore:
+      - "<gray>Plugin: %plugin_name%</gray>"
+      - "<gray>Aktuell nivå: %current_level%</gray>"
+      - "<gray>Boost: +%rate_percent%% XP för %duration_minutes% minut(er)</gray>"
+      - "<yellow>Klicka för att aktivera denna färdighetsboost.</yellow>"
+
+rc_claim_droplet_jobs_ui:
+  title: "Välj ett jobb"
+  page:
+    name: "<yellow>Sida %page%/%max_page%</yellow>"
+    lore:
+      - "<gray>%items_count% listade jobbposter.</gray>"
+  summary:
+    name: "<gold>Jobbval</gold>"
+    lore:
+      - "<gray>ATillgängliga jobb: %job_count%</gray>"
+      - "<yellow>Välj ett jobb för att konsumera kakan.</yellow>"
+  empty:
+    name: "<red>Inga jobb tillgängliga</red>"
+    lore:
+      - "<gray>Inga jobb som stöds är tillgängliga just nu.</gray>"
+  entry:
+    name: "<green>%job_name%</green>"
+    level_lore:
+      - "<gray>Plugin: %plugin_name%</gray>"
+      - "<gray>Aktuell nivå: %current_level%</gray>"
+      - "<yellow>Klicka för att få 1 nivå i det här jobbet.</yellow>"
+    xp_boost_lore:
+      - "<gray>Plugin: %plugin_name%</gray>"
+      - "<gray>Aktuell nivå: %current_level%</gray>"
+      - "<gray>Boost: +%rate_percent%% XP för %duration_minutes% minut(er)</gray>"
+      - "<yellow>Klicka för att aktivera detta jobb XP boost.</yellow>"
+    vault_boost_lore:
+      - "<gray>Plugin: %plugin_name%</gray>"
+      - "<gray>Aktuell nivå: %current_level%</gray>"
+      - "<gray>Boost: +%rate_percent%% pengar för %duration_minutes% minut(er)</gray>"
+      - "<yellow>Klicka för att aktivera denna jobbpengarökning.</yellow>"
 
 general:
   no_permission: "<red>Du har inte behorighet att anvanda detta kommando.</red>"

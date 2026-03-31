@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.core.database.entity.statistic;
 
 import com.raindropcentral.core.database.entity.central.RCentralServer;
@@ -15,15 +28,15 @@ import java.util.Set;
 
 /**
  * Root aggregate for player statistic values persisted in {@code r_player_statistic}.
- * <p>
- * Each instance maintains a one-to-one relationship with {@link RPlayer} and owns a
+ *
+ * <p>Each instance maintains a one-to-one relationship with {@link RPlayer} and owns a
  * collection of {@link RAbstractStatistic} rows stored in the {@code r_statistic}
  * table via a join column. Repository operations execute on dedicated executors,
  * so callers should avoid mutating the entity from asynchronous contexts without
  * proper synchronization.
  * </p>
- * <p>
- * Statistic materialization, replacements, and removals should be paired with
+ *
+ * <p>Statistic materialization, replacements, and removals should be paired with
  * {@link com.raindropcentral.rplatform.logging.CentralLogger CentralLogger} entries. Emit debug
  * logs whenever a statistic is lazily loaded due to a cache miss, and use info logs when
  * aggregates are first created or when bulk refresh operations replace the statistic set. Any
@@ -44,7 +57,7 @@ public class RPlayerStatistic extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**
-     * Back-reference to the owning {@link RPlayer}. Hibernate manages the mapped-by side
+     * Back-reference to the owning {@link RPlayer}. Hibernate manages the mapped-by side.
      * so the foreign key resides on the {@code r_player} table.
      */
     @OneToOne(mappedBy = "playerStatistic")
@@ -59,7 +72,7 @@ public class RPlayerStatistic extends BaseEntity {
     private RCentralServer rCentralServer;
 
     /**
-     * Aggregated statistic values. Stored in {@code r_statistic} with a non-null
+     * Aggregated statistic values. Stored in {@code r_statistic} with a non-null.
      * {@code player_statistic_id} foreign key and constrained by (identifier, player_statistic_id).
      */
     @OneToMany(
@@ -121,7 +134,7 @@ public class RPlayerStatistic extends BaseEntity {
     }
 
     /**
-     * Returns an immutable view of all persisted statistics to prevent accidental
+     * Returns an immutable view of all persisted statistics to prevent accidental.
      * mutation outside managed transactional scopes.
      *
      * @return read-only set of statistics
@@ -131,7 +144,7 @@ public class RPlayerStatistic extends BaseEntity {
     }
 
     /**
-     * Internal accessor exposing the mutable Hibernate-managed statistics set. Use with
+     * Internal accessor exposing the mutable Hibernate-managed statistics set. Use with.
      * caution inside transactional boundaries to allow dirty tracking.
      *
      * @return mutable statistic set managed by Hibernate
@@ -209,7 +222,7 @@ public class RPlayerStatistic extends BaseEntity {
     }
 
     /**
-     * Checks for a statistic with the given identifier regardless of plugin namespace,
+     * Checks for a statistic with the given identifier regardless of plugin namespace,.
      * mirroring the unique constraint enforced by the database schema.
      *
      * @param identifier statistic identifier to probe
@@ -239,7 +252,7 @@ public class RPlayerStatistic extends BaseEntity {
     }
 
     /**
-     * Removes any statistic with the given identifier, ignoring plugin namespace. Useful
+     * Removes any statistic with the given identifier, ignoring plugin namespace. Useful.
      * when re-seeding values where identifier uniqueness must be preserved. Operates on the
      * Hibernate-managed collection and therefore must execute on the thread that owns the
      * surrounding transaction to avoid concurrent modification hazards.
@@ -254,7 +267,7 @@ public class RPlayerStatistic extends BaseEntity {
     }
 
     /**
-     * Counts statistics owned by the specified plugin. This method performs a snapshot read
+     * Counts statistics owned by the specified plugin. This method performs a snapshot read.
      * over the managed collection and should be invoked only while holding the persistence
      * context lock (typically within a single-threaded transaction) to guarantee deterministic
      * results.
@@ -271,7 +284,7 @@ public class RPlayerStatistic extends BaseEntity {
     }
 
     /**
-     * Provides the current size of the managed statistic set. Callers should avoid invoking
+     * Provides the current size of the managed statistic set. Callers should avoid invoking.
      * this from parallel threads because the underlying {@link HashSet} is not thread-safe
      * and Hibernate tracks changes on the owning session thread.
      *
@@ -282,7 +295,7 @@ public class RPlayerStatistic extends BaseEntity {
     }
 
     /**
-     * Presents a concise textual representation for logging and debugging. The method performs
+     * Presents a concise textual representation for logging and debugging. The method performs.
      * only read access on entity state and therefore should be invoked from threads that already
      * own the entity to prevent visibility issues on lazily loaded associations.
      *

@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rplatform.requirement.async;
 
 import com.raindropcentral.rplatform.requirement.AbstractRequirement;
@@ -13,9 +26,8 @@ import java.util.stream.Collectors;
 
 /**
  * Async extension of RequirementService for high-performance batch operations.
- * <p>
- * Provides parallel execution for multiple requirements with proper error handling.
- * </p>
+ *
+ * <p>Provides parallel execution for multiple requirements with proper error handling.
  */
 public final class AsyncRequirementService {
 
@@ -25,6 +37,9 @@ public final class AsyncRequirementService {
 
     private AsyncRequirementService() {}
 
+    /**
+     * Gets instance.
+     */
     @NotNull
     public static AsyncRequirementService getInstance() {
         return INSTANCE;
@@ -32,6 +47,9 @@ public final class AsyncRequirementService {
 
     // ==================== Single Requirement Async ====================
 
+    /**
+     * Returns whether metAsync.
+     */
     @NotNull
     public CompletableFuture<Boolean> isMetAsync(@NotNull Player player, @NotNull AbstractRequirement requirement) {
         if (requirement instanceof AsyncRequirement async) {
@@ -40,6 +58,9 @@ public final class AsyncRequirementService {
         return CompletableFuture.supplyAsync(() -> syncService.isMet(player, requirement), executor);
     }
 
+    /**
+     * Executes calculateProgressAsync.
+     */
     @NotNull
     public CompletableFuture<Double> calculateProgressAsync(@NotNull Player player, @NotNull AbstractRequirement requirement) {
         if (requirement instanceof AsyncRequirement async) {
@@ -48,6 +69,9 @@ public final class AsyncRequirementService {
         return CompletableFuture.supplyAsync(() -> syncService.calculateProgress(player, requirement), executor);
     }
 
+    /**
+     * Executes consumeAsync.
+     */
     @NotNull
     public CompletableFuture<Void> consumeAsync(@NotNull Player player, @NotNull AbstractRequirement requirement) {
         if (requirement instanceof AsyncRequirement async) {
@@ -125,6 +149,9 @@ public final class AsyncRequirementService {
                 (met, progress) -> new RequirementResult(requirement, met, progress));
     }
 
+    /**
+     * Represents the RequirementResult API type.
+     */
     public record RequirementResult(
         @NotNull AbstractRequirement requirement,
         boolean met,

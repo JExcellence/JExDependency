@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdr.view;
 
 import java.util.Map;
@@ -168,11 +181,35 @@ public class TradeSessionView extends BaseView {
         final Map<String, Double> partnerCurrency = counterpartyUuid == null
             ? Map.of()
             : session.getOfferCurrencyForParticipant(counterpartyUuid);
+        final String localServerRouteId = plugin.getServerRouteId();
+        final String selfServerId = this.normalizeServerIdForUi(session.getLastKnownServerIdForParticipant(playerUuid));
+        final String partnerServerId = counterpartyUuid == null
+            ? "offline"
+            : this.normalizeServerIdForUi(session.getLastKnownServerIdForParticipant(counterpartyUuid));
 
         final int slotCount = Math.min(this.rdr.get(render).getDefaultConfig().getTradeMaxOfferSlots(), SELF_OFFER_SLOTS.length);
-        render.layoutSlot('s', this.createSummaryItem(player, session, selfCurrency, partnerCurrency));
+        render.layoutSlot(
+            's',
+            this.createSummaryItem(
+                player,
+                session,
+                selfCurrency,
+                partnerCurrency,
+                selfServerId,
+                partnerServerId,
+                localServerRouteId
+            )
+        );
         this.renderOfferSlots(render, player, plugin, tradeService, session, selfOffers, partnerOffers, slotCount);
-        this.renderActionButtons(render, player, plugin, tradeService, session);
+        this.renderActionButtons(
+            render,
+            player,
+            plugin,
+            tradeService,
+            session,
+            counterpartyUuid,
+            partnerServerId
+        );
     }
 
     /**
@@ -255,7 +292,19 @@ public class TradeSessionView extends BaseView {
                         this.createEmptyOfferItem(clickContext.getPlayer(), true, offerSlot)
                     );
                 }
-                this.handleResultAndRefresh(clickContext.getPlayer(), plugin, session.getTradeUuid(), result);
+                final boolean liveRefreshTriggered = this.triggerLiveTradeSessionRefresh(
+                    plugin,
+                    session,
+                    clickContext.getPlayer().getUniqueId(),
+                    result
+                );
+                this.handleResultAndRefresh(
+                    clickContext.getPlayer(),
+                    plugin,
+                    session.getTradeUuid(),
+                    result,
+                    liveRefreshTriggered
+                );
             }));
     }
 
@@ -301,7 +350,19 @@ public class TradeSessionView extends BaseView {
                                         this.createEmptyOfferItem(player, true, offerIndex)
                                     );
                                 }
-                                this.handleResultAndRefresh(player, plugin, session.getTradeUuid(), result);
+                                final boolean liveRefreshTriggered = this.triggerLiveTradeSessionRefresh(
+                                    plugin,
+                                    session,
+                                    player.getUniqueId(),
+                                    result
+                                );
+                                this.handleResultAndRefresh(
+                                    player,
+                                    plugin,
+                                    session.getTradeUuid(),
+                                    result,
+                                    liveRefreshTriggered
+                                );
                             }));
                         return;
                     }
@@ -332,7 +393,19 @@ public class TradeSessionView extends BaseView {
                                     this.createEmptyOfferItem(player, true, offerIndex)
                                 );
                             }
-                            this.handleResultAndRefresh(player, plugin, session.getTradeUuid(), result);
+                            final boolean liveRefreshTriggered = this.triggerLiveTradeSessionRefresh(
+                                plugin,
+                                session,
+                                player.getUniqueId(),
+                                result
+                            );
+                            this.handleResultAndRefresh(
+                                player,
+                                plugin,
+                                session.getTradeUuid(),
+                                result,
+                                liveRefreshTriggered
+                            );
                         }));
                 });
 
@@ -350,7 +423,9 @@ public class TradeSessionView extends BaseView {
         final @NotNull Player player,
         final @NotNull RDR plugin,
         final @NotNull TradeService tradeService,
-        final @NotNull RTradeSession session
+        final @NotNull RTradeSession session,
+        final @Nullable UUID counterpartyUuid,
+        final @NotNull String counterpartyServerId
     ) {
         render.slot(47, this.createCurrencyMenuButton(player))
             .onClick(clickContext -> {
@@ -405,6 +480,23 @@ public class TradeSessionView extends BaseView {
                 });
         }
 
+        render.slot(51, this.createJoinPartnerServerButton(player, counterpartyServerId, plugin.getServerRouteId()))
+            .onClick(clickContext -> {
+                clickContext.setCancelled(true);
+                if (counterpartyUuid == null) {
+                    this.sendSessionResultMessage(player, TradeService.SessionResult.MISSING);
+                    return;
+                }
+                tradeService.requestJoinPartnerServer(player, session.getTradeUuid())
+                    .thenAccept(response -> plugin.getScheduler().runSync(() -> {
+                        this.sendJoinPartnerResultMessage(player, response);
+                        clickContext.openForPlayer(
+                            TradeSessionView.class,
+                            Map.of("plugin", plugin, "trade_uuid", session.getTradeUuid())
+                        );
+                    }));
+            });
+
         render.slot(53, this.createCancelButton(player))
             .onClick(clickContext -> {
                 clickContext.setCancelled(true);
@@ -421,6 +513,16 @@ public class TradeSessionView extends BaseView {
         final @NotNull UUID tradeUuid,
         final @NotNull TradeService.SessionResult result
     ) {
+        this.handleResultAndRefresh(player, plugin, tradeUuid, result, false);
+    }
+
+    private void handleResultAndRefresh(
+        final @NotNull Player player,
+        final @NotNull RDR plugin,
+        final @NotNull UUID tradeUuid,
+        final @NotNull TradeService.SessionResult result,
+        final boolean liveRefreshTriggered
+    ) {
         this.pendingCompletionActors.remove(player.getUniqueId());
         this.sendSessionResultMessage(player, result);
         if (!player.isOnline()) {
@@ -431,7 +533,24 @@ public class TradeSessionView extends BaseView {
             this.openTradeHubNextTick(player, plugin);
             return;
         }
+        if (liveRefreshTriggered && result == TradeService.SessionResult.SUCCESS) {
+            return;
+        }
         this.openTradeSessionNextTick(player, plugin, tradeUuid);
+    }
+
+    private boolean triggerLiveTradeSessionRefresh(
+        final @NotNull RDR plugin,
+        final @NotNull RTradeSession session,
+        final @NotNull UUID actorUuid,
+        final @NotNull TradeService.SessionResult result
+    ) {
+        if (result != TradeService.SessionResult.SUCCESS) {
+            return false;
+        }
+
+        final TradeInboxPollService pollService = plugin.getTradeInboxPollService();
+        return pollService != null && pollService.publishLiveTradeSessionRefresh(session, actorUuid);
     }
 
     private void sendSessionResultMessage(
@@ -455,26 +574,52 @@ public class TradeSessionView extends BaseView {
         new I18n.Builder(key, player).build().sendMessage();
     }
 
+    private void sendJoinPartnerResultMessage(
+        final @NotNull Player player,
+        final @NotNull TradeService.JoinPartnerResponse response
+    ) {
+        final String key = switch (response.result()) {
+            case ROUTING -> "trade.message.join_partner_routing";
+            case ALREADY_ON_SERVER -> "trade.message.join_partner_already_here";
+            case MISSING -> "trade.message.missing";
+            case FORBIDDEN -> "trade.message.forbidden";
+            case PARTNER_UNAVAILABLE -> "trade.message.join_partner_unavailable";
+            case UNAVAILABLE -> "trade.message.unavailable";
+        };
+        new I18n.Builder(key, player)
+            .withPlaceholder("server", this.normalizeServerIdForUi(response.serverId()))
+            .build()
+            .sendMessage();
+    }
+
     private @NotNull ItemStack createSummaryItem(
         final @NotNull Player player,
         final @NotNull RTradeSession session,
         final @NotNull Map<String, Double> selfCurrency,
-        final @NotNull Map<String, Double> partnerCurrency
+        final @NotNull Map<String, Double> partnerCurrency,
+        final @NotNull String selfServerId,
+        final @NotNull String partnerServerId,
+        final @NotNull String localServerRouteId
     ) {
+        final Map<String, Object> placeholders = new java.util.LinkedHashMap<>();
+        placeholders.put("status", this.resolveStatusDisplay(session.getStatus()));
+        placeholders.put("trade_uuid", session.getTradeUuid());
+        placeholders.put("revision", session.getRevision());
+        placeholders.put("self_vault", selfCurrency.getOrDefault("vault", 0.0D));
+        placeholders.put("partner_vault", partnerCurrency.getOrDefault("vault", 0.0D));
+        placeholders.put("self_currency_count", selfCurrency.size());
+        placeholders.put("partner_currency_count", partnerCurrency.size());
+        placeholders.put("self_currency_total", formatCurrencyTotal(selfCurrency));
+        placeholders.put("partner_currency_total", formatCurrencyTotal(partnerCurrency));
+        placeholders.put("self_server", selfServerId);
+        placeholders.put("partner_server", partnerServerId);
+        placeholders.put("self_presence", this.resolvePresenceStateLabel(selfServerId, localServerRouteId));
+        placeholders.put("partner_presence", this.resolvePresenceStateLabel(partnerServerId, localServerRouteId));
+
         return UnifiedBuilderFactory.item(Material.WRITABLE_BOOK)
             .setName(this.i18n("summary.name", player).build().component())
             .setLore(this.i18n("summary.lore", player)
-                .withPlaceholders(Map.of(
-                    "status", this.resolveStatusDisplay(session.getStatus()),
-                    "trade_uuid", session.getTradeUuid(),
-                    "revision", session.getRevision(),
-                    "self_vault", selfCurrency.getOrDefault("vault", 0.0D),
-                    "partner_vault", partnerCurrency.getOrDefault("vault", 0.0D),
-                    "self_currency_count", selfCurrency.size(),
-                    "partner_currency_count", partnerCurrency.size(),
-                    "self_currency_total", formatCurrencyTotal(selfCurrency),
-                    "partner_currency_total", formatCurrencyTotal(partnerCurrency)
-                ))
+                .withPlaceholders(placeholders)
                 .build()
                 .children())
             .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
@@ -513,6 +658,28 @@ public class TradeSessionView extends BaseView {
         return UnifiedBuilderFactory.item(Material.EMERALD)
             .setName(this.i18n("actions.currency_manage_secondary.name", player).build().component())
             .setLore(this.i18n("actions.currency_manage_secondary.lore", player).build().children())
+            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+            .build();
+    }
+
+    private @NotNull ItemStack createJoinPartnerServerButton(
+        final @NotNull Player player,
+        final @NotNull String partnerServerId,
+        final @NotNull String localServerRouteId
+    ) {
+        final String normalizedServerId = this.normalizeServerIdForUi(partnerServerId);
+        final Material material = "offline".equalsIgnoreCase(normalizedServerId)
+            ? Material.GRAY_DYE
+            : Material.ENDER_PEARL;
+        return UnifiedBuilderFactory.item(material)
+            .setName(this.i18n("actions.join_partner.name", player).build().component())
+            .setLore(this.i18n("actions.join_partner.lore", player)
+                .withPlaceholders(Map.of(
+                    "server", normalizedServerId,
+                    "presence", this.resolvePresenceStateLabel(normalizedServerId, localServerRouteId)
+                ))
+                .build()
+                .children())
             .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
             .build();
     }
@@ -625,6 +792,26 @@ public class TradeSessionView extends BaseView {
 
     private @NotNull String resolveAcceptanceState(final boolean accepted) {
         return accepted ? "Accepted" : "Waiting";
+    }
+
+    private @NotNull String resolvePresenceStateLabel(
+        final @NotNull String serverId,
+        final @NotNull String localServerRouteId
+    ) {
+        if ("offline".equalsIgnoreCase(serverId)) {
+            return "Offline";
+        }
+        if (serverId.equalsIgnoreCase(localServerRouteId)) {
+            return "Local Online";
+        }
+        return "Remote Online";
+    }
+
+    private @NotNull String normalizeServerIdForUi(final @NotNull String serverId) {
+        if (serverId == null || serverId.isBlank()) {
+            return "offline";
+        }
+        return serverId;
     }
 
     private void updateActionButtonMaterial(

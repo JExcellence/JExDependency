@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.config.requirement;
 
 import com.raindropcentral.rdq.config.utility.IconSection;
@@ -16,11 +29,10 @@ import java.util.logging.Logger;
 
 /**
  * Base configuration section for all requirement types in the rank progression system.
- * <p>
- * This section serves as a polymorphic container that can hold any type of requirement
+ *
+ * <p>This section serves as a polymorphic container that can hold any type of requirement
  * (item, currency, experience, etc.) along with common properties like display order and icon.
  * Display name and description keys are automatically generated if not provided.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -67,42 +79,42 @@ public class BaseRequirementSection extends AConfigSection {
 	// These allow YAML like: type: "COMPOSITE", operator: "AND", requirements: [...]
 	// instead of requiring: compositeRequirement: { operator: "AND", requirements: [...] }
 	
-	/** For COMPOSITE/CHOICE: logical operator (AND, OR, XOR, MINIMUM) */
+	/** For COMPOSITE/CHOICE: logical operator (AND, OR, XOR, MINIMUM). */
 	private String operator;
 	
-	/** For COMPOSITE/CHOICE: list of sub-requirements */
+	/** For COMPOSITE/CHOICE: list of sub-requirements. */
 	private List<BaseRequirementSection> requirements;
 	
-	/** For COMPOSITE/CHOICE: list of choices */
+	/** For COMPOSITE/CHOICE: list of choices. */
 	private List<BaseRequirementSection> choices;
 	
-	/** For COMPOSITE/CHOICE: minimum required count */
+	/** For COMPOSITE/CHOICE: minimum required count. */
 	private Integer minimumRequired;
 	
-	/** For COMPOSITE/CHOICE: minimum choices required (alias) */
+	/** For COMPOSITE/CHOICE: minimum choices required (alias). */
 	private Integer minimumChoicesRequired;
 	
-	/** For COMPOSITE/CHOICE: maximum required count */
+	/** For COMPOSITE/CHOICE: maximum required count. */
 	private Integer maximumRequired;
 	
-	/** For COMPOSITE/CHOICE: allow partial progress */
+	/** For COMPOSITE/CHOICE: allow partial progress. */
 	private Boolean allowPartialProgress;
 	
-	/** For CHOICE: mutually exclusive choices */
+	/** For CHOICE: mutually exclusive choices. */
 	private Boolean mutuallyExclusive;
 	
-	/** For CHOICE: allow changing choice */
+	/** For CHOICE: allow changing choice. */
 	private Boolean allowChoiceChange;
 	
-	/** For EXPERIENCE_LEVEL: required level (flat format) */
+	/** For EXPERIENCE_LEVEL: required level (flat format). */
 	private Integer level;
 	
-	/** For CURRENCY: flat currency fields (YAML: currency, amount, consumable) */
+	/** For CURRENCY: flat currency fields (YAML: currency, amount, consumable). */
 	private String currency;
 	private Double amount;
 	private Boolean consumable;
 	
-	/** For ITEM: single required item (flat format) */
+	/** For ITEM: single required item (flat format). */
 	private de.jexcellence.evaluable.section.ItemStackSection requiredItem;
 	
 	/**
@@ -537,6 +549,9 @@ public class BaseRequirementSection extends AConfigSection {
 		       this.icon;
 	}
 	
+	/**
+	 * Gets itemRequirement.
+	 */
 	public ItemRequirementSection getItemRequirement() {
 		
 		return this.itemRequirement == null ?
@@ -544,10 +559,16 @@ public class BaseRequirementSection extends AConfigSection {
 		       this.itemRequirement;
 	}
 	
+	/**
+	 * Gets currencyRequirement.
+	 */
 	public CurrencyRequirementSection getCurrencyRequirement() {
 		return this.currencyRequirement;
 	}
 	
+	/**
+	 * Gets experienceRequirement.
+	 */
 	public ExperienceLevelRequirementSection getExperienceRequirement() {
 		
 		return this.experienceRequirement == null ?
@@ -555,6 +576,9 @@ public class BaseRequirementSection extends AConfigSection {
 		       this.experienceRequirement;
 	}
 	
+	/**
+	 * Gets playtimeRequirement.
+	 */
 	public PlaytimeRequirementSection getPlaytimeRequirement() {
 		
 		return this.playtimeRequirement == null ?
@@ -562,6 +586,9 @@ public class BaseRequirementSection extends AConfigSection {
 		       this.playtimeRequirement;
 	}
 	
+	/**
+	 * Gets permissionRequirement.
+	 */
 	public PermissionRequirementSection getPermissionRequirement() {
 		
 		return this.permissionRequirement == null ?
@@ -569,6 +596,9 @@ public class BaseRequirementSection extends AConfigSection {
 		       this.permissionRequirement;
 	}
 	
+	/**
+	 * Gets locationRequirement.
+	 */
 	public LocationRequirementSection getLocationRequirement() {
 		
 		return this.locationRequirement == null ?
@@ -576,6 +606,9 @@ public class BaseRequirementSection extends AConfigSection {
 		       this.locationRequirement;
 	}
 	
+	/**
+	 * Gets compositeRequirement.
+	 */
 	public CompositeRequirementSection getCompositeRequirement() {
 		
 		return this.compositeRequirement == null ?
@@ -583,6 +616,9 @@ public class BaseRequirementSection extends AConfigSection {
 		       this.compositeRequirement;
 	}
 	
+	/**
+	 * Gets choiceRequirement.
+	 */
 	public ChoiceRequirementSection getChoiceRequirement() {
 		
 		return this.choiceRequirement == null ?
@@ -590,6 +626,9 @@ public class BaseRequirementSection extends AConfigSection {
 		       this.choiceRequirement;
 	}
 	
+	/**
+	 * Gets achievementRequirement.
+	 */
 	public AchievementRequirementSection getAchievementRequirement() {
 		
 		return this.achievementRequirement == null ?
@@ -597,6 +636,9 @@ public class BaseRequirementSection extends AConfigSection {
 		       this.achievementRequirement;
 	}
 	
+	/**
+	 * Gets skillRequirement.
+	 */
 	public SkillRequirementSection getSkillRequirement() {
 		
 		return this.skillRequirement == null ?
@@ -604,6 +646,9 @@ public class BaseRequirementSection extends AConfigSection {
 		       this.skillRequirement;
 	}
 	
+	/**
+	 * Gets jobRequirement.
+	 */
 	public JobRequirementSection getJobRequirement() {
 		
 		return this.jobRequirement == null ?
@@ -611,6 +656,9 @@ public class BaseRequirementSection extends AConfigSection {
 		       this.jobRequirement;
 	}
 	
+	/**
+	 * Gets timeBasedRequirement.
+	 */
 	public TimeBasedRequirementSection getTimeBasedRequirement() {
 		
 		return this.timeBasedRequirement == null ?
@@ -626,11 +674,17 @@ public class BaseRequirementSection extends AConfigSection {
 		return this.rankTreeName;
 	}
 	
+	/**
+	 * Gets rankName.
+	 */
 	public String getRankName() {
 		
 		return this.rankName;
 	}
 	
+	/**
+	 * Gets requirementKey.
+	 */
 	public String getRequirementKey() {
 		
 		return this.requirementKey;

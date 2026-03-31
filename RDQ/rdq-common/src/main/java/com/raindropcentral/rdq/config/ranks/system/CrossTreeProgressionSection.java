@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.config.ranks.system;
 
 import de.jexcellence.configmapper.sections.AConfigSection;
@@ -9,8 +22,8 @@ import java.util.List;
 
 /**
  * Configuration section for cross-tree rank progression settings.
- * <p>
- * This section controls whether players can switch between rank trees, the conditions and costs for switching,
+ *
+ * <p>This section controls whether players can switch between rank trees, the conditions and costs for switching,
  * and any cooldowns or restrictions that apply. Used in the context of rank progression systems where multiple
  * rank trees exist and players may want to move between them.
  *

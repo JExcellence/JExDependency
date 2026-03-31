@@ -9,11 +9,11 @@ dependenciesYml {
     generateSpigotVariant.set(true)
 }
 
-val versionMajor: String by project.rootProject.extra { findProperty("rdq.version.major")?.toString() ?: "6" }
-val versionMinor: String by project.rootProject.extra { findProperty("rdq.version.minor")?.toString() ?: "0" }
-val versionPatch: String by project.rootProject.extra { findProperty("rdq.version.patch")?.toString() ?: "0" }
-val versionStage: String by project.rootProject.extra { findProperty("rdq.version.stage")?.toString() ?: "Alpha" }
-val versionBuild: String by project.rootProject.extra { findProperty("rdq.version.build")?.toString() ?: "4" }
+val versionMajor: String by project.rootProject.extra { findProperty("rdq.version.major")?.toString() ?: "undefined" }
+val versionMinor: String by project.rootProject.extra { findProperty("rdq.version.minor")?.toString() ?: "undefined" }
+val versionPatch: String by project.rootProject.extra { findProperty("rdq.version.patch")?.toString() ?: "undefined" }
+val versionStage: String by project.rootProject.extra { findProperty("rdq.version.stage")?.toString() ?: "undefined" }
+val versionBuild: String by project.rootProject.extra { findProperty("rdq.version.build")?.toString() ?: "undefined" }
 
 val rdqVersion = "$versionMajor.$versionMinor.$versionPatch-$versionStage-Build-$versionBuild"
 
@@ -24,6 +24,7 @@ description = "RDQ Premium - Premium edition of RaindropQuests"
 dependencies {
     implementation(project(":RDQ:rdq-common"))
     implementation(project(":JExCommand"))
+    implementation(project(":RPlatform"))
 
     compileOnly(libs.paper.api)
 
@@ -65,6 +66,7 @@ dependencies {
     implementation(libs.bundles.jexcellence) {
         exclude(group = "de.jexcellence.hibernate")
         exclude(group = "com.raindropcentral.commands", module = "jexcommand")
+        exclude(group = "com.raindropcentral.platform", module = "rplatform")
         isTransitive = false
     }
     implementation(libs.bundles.jeconfig) { isTransitive = false }

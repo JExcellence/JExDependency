@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.type;
 
 import org.bukkit.Material;
@@ -5,8 +18,8 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Enumeration defining different categories of perks for organization and filtering.
- * <p>
- * This enum categorizes perks based on their functionality and theme:
+ *
+ * <p>This enum categorizes perks based on their functionality and theme:
  * <ul>
  *     <li>{@link #COMBAT} - Combat-related perks (damage, defense, weapons)</li>
  *     <li>{@link #MOVEMENT} - Movement and mobility perks (speed, flight, teleportation)</li>
@@ -17,7 +30,6 @@ import org.jetbrains.annotations.NotNull;
  *     <li>{@link #COSMETIC} - Cosmetic and visual perks (particles, titles, appearances)</li>
  *     <li>{@link #SPECIAL} - Special or unique perks that don't fit other categories</li>
  * </ul>
- * </p>
  *
  * @author ItsRainingHP
  * @version 1.0.0

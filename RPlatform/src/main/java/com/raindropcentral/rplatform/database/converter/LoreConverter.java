@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rplatform.database.converter;
 
 import jakarta.persistence.AttributeConverter;
@@ -11,7 +24,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Converts item lore {@link List lists} to a semicolon-delimited Base64 string for persistence and rebuilds
+ * Converts item lore {@link List lists} to a semicolon-delimited Base64 string for persistence and rebuilds.
  * them during entity hydration.
  *
  * <p>Every line is encoded as UTF-8 bytes before applying Base64, preserving {@code null} entries as empty

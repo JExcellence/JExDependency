@@ -3,13 +3,14 @@
 prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
 
 rcconnect:
-  usage: "<gray>Kullanim: /rcconnect <api-key></gray>"
+  usage: "<gray>Kullanım: /rc <connect &lt;api-key&gt;|disconnect|claim droplets></gray>"
+  usage_no_claim: "<gray>Kullanım: /rc <connect &lt;api-key&gt;|disconnect></gray>"
   connecting: "<yellow>RaindropCentral'a baglaniliyor...</yellow>"
   success: "<green>RaindropCentral'a basariyla baglanildi!</green> <gray>Sunucu artik heartbeat gonderiyor.</gray>"
   error:
     invalid_key: "<red>Gecersiz API anahtari bicimi. API anahtarlari 32-128 alfanumerik karakter olmali.</red>"
     uuid_mismatch: "<red>Bu API anahtari farkli bir Minecraft hesabina ait.</red>"
-    already_connected: "<yellow>Sunucu zaten bagli.</yellow> <gray>Once /rcdisconnect kullanin.</gray>"
+    already_connected: "<yellow>Sunucu zaten bağlı.</yellow> <gray>Önce /rc disconnect'yi kullanın.</gray>"
     network: "<red>Ag hatasi: %error%</red>"
 
 rcdisconnect:
@@ -19,6 +20,152 @@ rcdisconnect:
     not_connected: "<red>Sunucu RaindropCentral'a bagli degil.</red>"
     failed: "<red>Baglanti kesilemedi. Lutfen tekrar deneyin.</red>"
     network: "<red>Ag hatasi: %error%</red>"
+
+rcclaim:
+  loading: "<yellow>Hazırlanmayan damlacık ödülleri için RaindropCentral kontrol ediliyor...</yellow>"
+  claiming_item: "<yellow>RaindropCentral'den %item_name% talebinde bulunuluyor...</yellow>"
+  success:
+    claimed: "<green>%item_name%'yi talep ettiniz.</green>"
+    claimed_skill_targeted: "<green>%item_name%'yi talep ettiniz.</green> <gray>Bir beceri seçmek için çereze sağ tıklayın.</gray>"
+    claimed_job_targeted: "<green>%item_name%'yi talep ettiniz.</green> <gray>Bir iş seçmek için çereze sağ tıklayın.</gray>"
+    claimed_activate: "<green>%item_name%'yi talep ettiniz.</green> <gray>Etkinleştirmek için çereze sağ tıklayın.</gray>"
+    skill_granted: "<green>%skill_name%'de 1 seviye verildi.</green> <gray>Kaynak: %plugin_name%.</gray>"
+    job_granted: "<green>%job_name%'de 1 seviye verildi.</green> <gray>Kaynak: %plugin_name%.</gray>"
+    skill_xp_boost_applied: "<green>%skill_name% için +%rate_percent%% beceri XP'si etkinleştirildi.</green> <gray>Kaynak: %plugin_name%. Süre: %duration_minutes% dakika(lar).</gray>"
+    skill_xp_boost_refreshed: "<green>%skill_name% için yenilenmiş +%rate_percent%% beceri XP'si.</green> <gray>Kaynak: %plugin_name%. Süre %duration_minutes% dakikaya sıfırlandı.</gray>"
+    job_xp_boost_applied: "<green>%job_name% için +%rate_percent%% iş XP'si etkinleştirildi.</green> <gray>Kaynak: %plugin_name%. Süre: %duration_minutes% dakika(lar).</gray>"
+    job_xp_boost_refreshed: "<green>%job_name% için yenilenmiş +%rate_percent%% iş XP'si.</green> <gray>Kaynak: %plugin_name%. Süre %duration_minutes% dakikaya sıfırlandı.</gray>"
+    job_vault_boost_applied: "<green>%job_name% için +%rate_percent%% iş parası etkinleştirildi.</green> <gray>Kaynak: %plugin_name%. Süre: %duration_minutes% dakika(lar).</gray>"
+    job_vault_boost_refreshed: "<green>%job_name% için +%rate_percent%% iş parası yenilendi.</green> <gray>Kaynak: %plugin_name%. Süre %duration_minutes% dakikaya sıfırlandı.</gray>"
+    double_drop_boost_applied: "<green>Çift düşme etkinleştirildi.</green> <gray>Süre: %duration_minutes% dakika(lar).</gray>"
+    double_drop_boost_refreshed: "<green>Yenilenmiş çift damla.</green> <gray>Süre %duration_minutes% dakikaya sıfırlandı.</gray>"
+    pending_delivery: "<green>%count% beklemede olan damlacık ödülleri teslim edildi.</green>"
+  error:
+    store_disabled: "<red>Bu sunucu /rc claim droplets'yi devre dışı bıraktı.</red>"
+    not_connected: "Damlacıkları talep edebilmeniz için <red>RCore'nin RaindropCentral arka ucuna bağlanması gerekir.</red>"
+    cooldown: "<yellow>/rc claim droplets'yi tekrar kullanmadan önce lütfen %seconds% saniye bekleyin.</yellow>"
+    not_registered: "<red>Minecraft hesabınız bir RaindropCentral hesabına bağlı değil.</red>"
+    no_unclaimed: "<yellow>Şu anda talep edilmemiş herhangi bir damlacık ödülünüz yok.</yellow>"
+    api_unavailable: "<red>RaindropCentral şu anda kullanılamıyor: %error%</red>"
+    menu_unavailable: "<red>Damlacık talebi menüsü şu anda kullanılamıyor. Lütfen daha sonra tekrar deneyin.</red>"
+    item_disabled: "<red>Bu sunucu %item_name% talebinde bulunmayı devre dışı bıraktı.</red> <gray>Öğe Kimliği: %item_code%</gray>"
+    unsupported_item: "<red>Bu damlacık ödülü henüz bu sunucuda desteklenmiyor.</red> <gray>Öğe Kimliği: %item_code%</gray>"
+    no_supported_skills: "<red>Bu sunucu şu anda bu ödül için desteklenen bir beceri eklentisine sahip değil.</red>"
+    no_supported_jobs: "<red>Bu sunucuda şu anda bu ödül için desteklenen bir iş eklentisi yok.</red>"
+    inventory_full: "<red>Bu ödülü almadan önce en az bir adet boş envanter slotuna ihtiyacınız var.</red>"
+    claim_in_progress: "<yellow>Bu iddia zaten devam ediyor. Lütfen arka ucun yanıt vermesini bekleyin.</yellow>"
+    claim_failed: "<red>Şu damlacık ödülünü talep edemedik: %error%</red>"
+    already_claimed: "<yellow>Bu damlacık ödülü zaten talep edildi.</yellow>"
+    purchase_unavailable: "<red>Bu damlacık ödülünü artık talep etmek mümkün değil.</red>"
+    cookie_missing: "<red>Damlacık çerezi envanterinizde bulunamadı.</red>"
+    skill_grant_failed: "<red>%skill_name%.</red>'de 1 seviye verilemedi"
+    job_grant_failed: "<red>%job_name%.</red>'de 1 seviye verilemedi"
+    boost_activation_failed: "<red>%item_name%.</red> etkinleştirilemedi"
+    unsupported_integration: "<red>Bu damlacık çerezi için gerekli entegrasyon şu anda mevcut değil.</red>"
+    boost_expired: "<yellow>Bu damlacık çerez desteğinin süresi doldu.</yellow>"
+
+rc_claim_droplets_ui:
+  title: "Sahipsiz Damlacıklar"
+  page:
+    name: "<yellow>Sayfa %page%/%max_page%</yellow>"
+    lore:
+      - "<gray>%items_count% talep edilebilir girişler listelendi.</gray>"
+  summary:
+    name: "<gold>Talep Kuyruğu</gold>"
+    lore:
+      - "<gray>Talep edilmemiş girdiler: %item_count%</gray>"
+      - "<gray>Bu sunucuda desteklenir: %supported_count%</gray>"
+      - "<yellow>Desteklenen bir ödülü almak için tıklayın.</yellow>"
+  empty:
+    name: "<red>Talep Edilmemiş Ödül Yok</red>"
+    lore:
+      - "<gray>Şu anda talep edilmemiş herhangi bir damlacık ödülünüz yok.</gray>"
+  entry:
+    supported:
+      name: "<green>%item_name%</green>"
+      lore:
+        - "<gray>Öğe Kimliği: %item_code%</gray>"
+        - "<gray>Harcanan: %amount_spent% damlacıkları</gray>"
+        - "<yellow>Bu ödülü almak için tıklayın.</yellow>"
+    item_disabled:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>Öğe Kimliği: %item_code%</gray>"
+        - "<red>Bu sunucu bu ödülü almayı devre dışı bıraktı.</red>"
+    unsupported_item:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>Öğe Kimliği: %item_code%</gray>"
+        - "<red>Bu ödül bu sunucuda desteklenmiyor.</red>"
+    no_skills:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>Öğe Kimliği: %item_code%</gray>"
+        - "<red>Bu ödül için desteklenen beceri eklentisi yüklü değil.</red>"
+    no_jobs:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>Öğe Kimliği: %item_code%</gray>"
+        - "<red>Bu ödül için desteklenen iş eklentisi yüklü değil.</red>"
+
+rc_claim_droplet_skills_ui:
+  title: "Bir Beceri Seçin"
+  page:
+    name: "<yellow>Sayfa %page%/%max_page%</yellow>"
+    lore:
+      - "<gray>%items_count% beceri girişleri listelenmiştir.</gray>"
+  summary:
+    name: "<gold>Beceri Seçimi</gold>"
+    lore:
+      - "<gray>Mevcut beceriler: %skill_count%</gray>"
+      - "<yellow>Çerezleri tüketmek için bir beceri seçin.</yellow>"
+  empty:
+    name: "<red>Mevcut Beceri Yok</red>"
+    lore:
+      - "<gray>Şu anda desteklenen beceri yok.</gray>"
+  entry:
+    name: "<green>%skill_name%</green>"
+    level_lore:
+      - "<gray>Eklenti: %plugin_name%</gray>"
+      - "<gray>Mevcut seviye: %current_level%</gray>"
+      - "<yellow>Bu beceride 1 seviye kazanmak için tıklayın.</yellow>"
+    boost_lore:
+      - "<gray>Eklenti: %plugin_name%</gray>"
+      - "<gray>Mevcut seviye: %current_level%</gray>"
+      - "<gray>Arttırma: %duration_minutes% dakika için +%rate_percent%% XP</gray>"
+      - "<yellow>Bu beceri güçlendirmeyi etkinleştirmek için tıklayın.</yellow>"
+
+rc_claim_droplet_jobs_ui:
+  title: "Bir İş Seçin"
+  page:
+    name: "<yellow>Sayfa %page%/%max_page%</yellow>"
+    lore:
+      - "<gray>%items_count% iş girişleri listelendi.</gray>"
+  summary:
+    name: "<gold>İş Seçimi</gold>"
+    lore:
+      - "<gray>Mevcut işler: %job_count%</gray>"
+      - "<yellow>Çerezleri kullanmak için bir iş seçin.</yellow>"
+  empty:
+    name: "<red>Mevcut İş Yok</red>"
+    lore:
+      - "<gray>Şu anda desteklenen iş yok.</gray>"
+  entry:
+    name: "<green>%job_name%</green>"
+    level_lore:
+      - "<gray>Eklenti: %plugin_name%</gray>"
+      - "<gray>Mevcut seviye: %current_level%</gray>"
+      - "<yellow>Bu işte 1 seviye kazanmak için tıklayın.</yellow>"
+    xp_boost_lore:
+      - "<gray>Eklenti: %plugin_name%</gray>"
+      - "<gray>Mevcut seviye: %current_level%</gray>"
+      - "<gray>Arttırma: %duration_minutes% dakika için +%rate_percent%% XP</gray>"
+      - "<yellow>Bu işi XP artırmayı etkinleştirmek için tıklayın.</yellow>"
+    vault_boost_lore:
+      - "<gray>Eklenti: %plugin_name%</gray>"
+      - "<gray>Mevcut seviye: %current_level%</gray>"
+      - "<gray>Boost: %duration_minutes% dakika için +%rate_percent%% para</gray>"
+      - "<yellow>Bu işi para artırmayı etkinleştirmek için tıklayın.</yellow>"
 
 general:
   no_permission: "<red>Bu komutu kullanma izniniz yok.</red>"

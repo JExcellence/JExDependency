@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.view.main;
 
 import com.raindropcentral.rdq.RDQ;
@@ -16,11 +29,10 @@ import java.util.Map;
 
 /**
  * Main overview GUI for RaindropQuests.
- * <p>
- * This view serves as the primary menu for players, providing navigation to all major subsystems
+ *
+ * <p>This view serves as the primary menu for players, providing navigation to all major subsystems
  * of the plugin, including bounties, perks, quests, ranks, and (for authorized users) admin controls.
  * It leverages InventoryFramework for GUI management and R18n for internationalized messages.
- * </p>
  *
  * <ul>
  *     <li>Displays navigation buttons for Bounties, Perks, Quests, and Ranks.</li>
@@ -52,6 +64,9 @@ public class MainOverviewView extends BaseView {
         return 1;
     }
     
+    /**
+     * Executes onFirstRender.
+     */
     @Override
     public void onFirstRender(
         final @NotNull RenderContext render,
@@ -83,10 +98,9 @@ public class MainOverviewView extends BaseView {
     
     /**
      * Initializes the Admin Overview button.
-     * <p>
-     * Only visible to players with the "raindropquests.command.admin" permission or operator status.
+ *
+ * <p>Only visible to players with the "raindropquests.command.admin" permission or operator status.
      * Opens the {@link AdminOverviewView} when clicked.
-     * </p>
      *
      * @param context The render context for the current inventory.
      * @param player  The player viewing the GUI.
@@ -266,9 +280,8 @@ public class MainOverviewView extends BaseView {
     
     /**
      * Initializes the button for opening the Ranks Overview view in the main overview GUI.
-     * <p>
-     * Sets the button's item, name, and lore using internationalized messages,
-     * </p>
+ *
+ * <p>Sets the button's item, name, and lore using internationalized messages,
      *
      * @param context The render context containing inventory and view information.
      * @param player  The player for whom the button is being initialized.

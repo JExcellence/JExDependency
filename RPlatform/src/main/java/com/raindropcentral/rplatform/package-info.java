@@ -19,7 +19,7 @@
  * future finishes so both services can observe the translation manager, command updater, and database
  * infrastructure that the main initialize routine provides.</p>
  *
- * <h2>Subpackage index</h2>
+ * <p><strong>Subpackage index</strong>
  * <ul>
  *     <li>{@link com.raindropcentral.rplatform.api api} – Platform detection and API wrappers.</li>
  *     <li>{@link com.raindropcentral.rplatform.config config} – Configuration adapters and helpers.</li>

@@ -52,11 +52,9 @@ dependencies {
     compileOnly(libs.jackson.jsr310)
     compileOnly(libs.java.uuid)
     compileOnly(libs.xseries)
-    compileOnly(project(":JExCommand"))
 
     compileOnly(libs.bundles.jexcellence) {
         exclude(group = "de.jexcellence.hibernate")
-        exclude(group = "com.raindropcentral.commands", module = "jexcommand")
         isTransitive = false
     }
     compileOnly(project(":RCore"))

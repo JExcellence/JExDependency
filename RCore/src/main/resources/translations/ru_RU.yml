@@ -3,13 +3,14 @@
 prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
 
 rcconnect:
-  usage: "<gray>Использование: /rcconnect <api-key></gray>"
+  usage: "<gray>Использование: /rc <connect &lt;api-key&gt;|disconnect|claim droplets></gray>"
+  usage_no_claim: "<gray>Использование: /rc <connect &lt;api-key&gt;|disconnect></gray>"
   connecting: "<yellow>Подключение к RaindropCentral...</yellow>"
   success: "<green>Успешно подключено к RaindropCentral!</green> <gray>Сервер теперь отправляет heartbeats.</gray>"
   error:
     invalid_key: "<red>Неверный формат API-ключа. API-ключи должны содержать 32-128 буквенно-цифровых символов.</red>"
     uuid_mismatch: "<red>Этот API-ключ принадлежит другой учетной записи Minecraft.</red>"
-    already_connected: "<yellow>Сервер уже подключен.</yellow> <gray>Сначала используйте /rcdisconnect.</gray>"
+    already_connected: "<yellow>Сервер уже подключен. </yellow> <gray>Сначала используйте /rc disconnect. </gray>"
     network: "<red>Ошибка сети: %error%</red>"
 
 rcdisconnect:
@@ -19,6 +20,152 @@ rcdisconnect:
     not_connected: "<red>Сервер не подключен к RaindropCentral.</red>"
     failed: "<red>Не удалось отключиться. Пожалуйста, попробуйте снова.</red>"
     network: "<red>Ошибка сети: %error%</red>"
+
+rcclaim:
+  loading: "<yellow>Проверка RaindropCentral на предмет невостребованных наград... </yellow>"
+  claiming_item: "<yellow>Утверждение %item_name% от RaindropCentral...</yellow>"
+  success:
+    claimed: "<green>Вы заявили права на %item_name%.</green>"
+    claimed_skill_targeted: "<green>Вы заявили права на %item_name%.</green> <gray>Нажмите правой кнопкой мыши на файл cookie, чтобы выбрать навык.</gray>"
+    claimed_job_targeted: "<green>Вы заявили права на %item_name%.</green> <gray>Нажмите правой кнопкой мыши на файл cookie, чтобы выбрать вакансию.</gray>"
+    claimed_activate: "<green>Вы заявили права на %item_name%.</green> <gray>Нажмите правой кнопкой мыши на файл cookie, чтобы активировать его.</gray>"
+    skill_granted: "<green>Предоставлен 1 уровень в %skill_name%.</green> <gray>Источник: %plugin_name%.</gray>"
+    job_granted: "<green>Предоставлен 1 уровень в %job_name%.</green> <gray>Источник: %plugin_name%.</gray>"
+    skill_xp_boost_applied: "<green>Активирован +%rate_percent%% Опыт навыка для %skill_name%.</green> <gray>Источник: %plugin_name%. Продолжительность: %duration_minutes% минут.</gray>"
+    skill_xp_boost_refreshed: "<green>Обновлен +%rate_percent%% опыт навыков для %skill_name%.</green> <gray>Источник: %plugin_name%. Продолжительность сбрасывается до %duration_minutes% минут.</gray>"
+    job_xp_boost_applied: "<green>Активирован +%rate_percent%% опыт задания для %job_name%.</green> <gray>Источник: %plugin_name%. Продолжительность: %duration_minutes% минут.</gray>"
+    job_xp_boost_refreshed: "<green>Обновлен +%rate_percent%% опыт задания для %job_name%.</green> <gray>Источник: %plugin_name%. Продолжительность сбрасывается до %duration_minutes% минут.</gray>"
+    job_vault_boost_applied: "<green>Активированы +%rate_percent%% деньги на работу для %job_name%.</green> <gray>Источник: %plugin_name%. Продолжительность: %duration_minutes% минут.</gray>"
+    job_vault_boost_refreshed: "<green>Обновлены +%rate_percent%% деньги на работу для %job_name%.</green> <gray>Источник: %plugin_name%. Продолжительность сбрасывается до %duration_minutes% минут.</gray>"
+    double_drop_boost_applied: "<green>Активированные двойные капли.</green> <gray>Продолжительность: %duration_minutes% минута(ы).</gray>"
+    double_drop_boost_refreshed: "<green>Обновлены двойные капли. </green> <gray>Продолжительность сбрасывается до %duration_minutes% минут.</gray>"
+    pending_delivery: "<green>Доставлено %count% в ожидании вознаграждения(ов).</green>"
+  error:
+    store_disabled: "<red>Этот сервер отключил /rc claim droplets.</red>"
+    not_connected: "<red>RCore должен быть подключен к серверной части RaindropCentral, прежде чем вы сможете требовать капли. </red>"
+    cooldown: "<yellow>Пожалуйста, подождите %seconds% секунд, прежде чем снова использовать /rc claim droplets. </yellow>"
+    not_registered: "<red>Ваша учетная запись Minecraft не связана с учетной записью RaindropCentral.</red>"
+    no_unclaimed: "<yellow>На данный момент у вас нет невостребованных наград.</yellow>"
+    api_unavailable: "<red>RaindropCentral сейчас недоступен: %error%</red>"
+    menu_unavailable: "<red>Меню претензий на дроплет сейчас недоступно. Пожалуйста, повторите попытку позже.</red>"
+    item_disabled: "<red>Этот сервер отключил заявку на %item_name%.</red> <gray>Идентификатор элемента: %item_code%</gray>"
+    unsupported_item: "<red>Эта награда в виде капель еще не поддерживается на этом сервере. </red> <gray>Идентификатор элемента: %item_code%</gray>"
+    no_supported_skills: "<red>На данный момент на этом сервере нет поддерживаемого плагина навыков для этой награды.</red>"
+    no_supported_jobs: "<red>На данный момент на этом сервере нет поддерживаемого плагина заданий для этой награды.</red>"
+    inventory_full: "<red>Чтобы получить эту награду, вам понадобится хотя бы один свободный слот в инвентаре. </red>"
+    claim_in_progress: "<yellow>Эта претензия уже рассматривается. Пожалуйста, подождите, пока серверная часть ответит. </yellow>"
+    claim_failed: "<red>Не удалось получить награду в виде капли: %error%</red>"
+    already_claimed: "<yellow>Эта награда уже получена. </yellow>"
+    purchase_unavailable: "<red>Эту награду в виде капли больше невозможно получить. </red>"
+    cookie_missing: "<red>Не удалось найти файл cookie в вашем инвентаре.</red>"
+    skill_grant_failed: "<red>Не удалось предоставить 1 уровень в %skill_name%.</red>"
+    job_grant_failed: "<red>Не удалось предоставить 1 уровень в %job_name%.</red>"
+    boost_activation_failed: "<red>Не удалось активировать %item_name%.</red>"
+    unsupported_integration: "<red>Необходимая интеграция для этого файла cookie в настоящее время недоступна.</red>"
+    boost_expired: "<yellow> Срок действия поддержки дроплет-cookie истек. </yellow>"
+
+rc_claim_droplets_ui:
+  title: "Невостребованные капли"
+  page:
+    name: "<yellow>Страница %page%/%max_page%</yellow>"
+    lore:
+      - "<gray>%items_count% перечислены записи, на которые можно претендовать. </gray>"
+  summary:
+    name: "<gold>Очередь заявок</gold>"
+    lore:
+      - "<gray>Невостребованные записи: %item_count%</gray>"
+      - "<gray>Поддерживается на этом сервере: %supported_count%</gray>"
+      - "<yellow>Нажмите поддерживаемую награду, чтобы получить ее.</yellow>"
+  empty:
+    name: "<red>Нет невостребованных наград</red>"
+    lore:
+      - "<gray>В настоящее время у вас нет невостребованных наград.</gray>"
+  entry:
+    supported:
+      name: "<green>%item_name%</green>"
+      lore:
+        - "<gray>Идентификатор элемента: %item_code%</gray>"
+        - "<gray>Потрачено: капли %amount_spent%</gray>"
+        - "<yellow>Нажмите, чтобы получить эту награду.</yellow>"
+    item_disabled:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>Идентификатор элемента: %item_code%</gray>"
+        - "<red>Этот сервер отключил получение этой награды.</red>"
+    unsupported_item:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>Идентификатор элемента: %item_code%</gray>"
+        - "<red>Эта награда не поддерживается на этом сервере.</red>"
+    no_skills:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>Идентификатор элемента: %item_code%</gray>"
+        - "<red>Для этой награды не установлен плагин поддерживаемых навыков. </red>"
+    no_jobs:
+      name: "<red>%item_name%</red>"
+      lore:
+        - "<gray>Идентификатор элемента: %item_code%</gray>"
+        - "<red>Для этой награды не установлен поддерживаемый плагин вакансий. </red>"
+
+rc_claim_droplet_skills_ui:
+  title: "Выберите навык"
+  page:
+    name: "<yellow>Страница %page%/%max_page%</yellow>"
+    lore:
+      - "<gray>%items_count% перечислены записи навыков. </gray>"
+  summary:
+    name: "<gold>Выбор навыка</gold>"
+    lore:
+      - "<gray>Доступные навыки: %skill_count%</gray>"
+      - "<yellow>Выберите одно умение, чтобы использовать печенье.</yellow>"
+  empty:
+    name: "<red>Нет доступных навыков</red>"
+    lore:
+      - "<gray>На данный момент поддерживаемые навыки недоступны.</gray>"
+  entry:
+    name: "<green>%skill_name%</green>"
+    level_lore:
+      - "<gray>Плагин: %plugin_name%</gray>"
+      - "<gray>Текущий уровень: %current_level%</gray>"
+      - "<yellow>Нажмите, чтобы получить 1 уровень этого навыка.</yellow>"
+    boost_lore:
+      - "<gray>Плагин: %plugin_name%</gray>"
+      - "<gray>Текущий уровень: %current_level%</gray>"
+      - "<gray>Boost: +%rate_percent%% XP за %duration_minutes% минут </gray>"
+      - "<yellow>Нажмите, чтобы активировать это повышение навыка.</yellow>"
+
+rc_claim_droplet_jobs_ui:
+  title: "Выбрать работу"
+  page:
+    name: "<yellow>Страница %page%/%max_page%</yellow>"
+    lore:
+      - "<gray>%items_count% перечислены записи о заданиях.</gray>"
+  summary:
+    name: "<gold>Выбор вакансии</gold>"
+    lore:
+      - "<gray>Доступные вакансии: %job_count%</gray>"
+      - "<yellow>Выберите одно задание для использования файла cookie.</yellow>"
+  empty:
+    name: "<red>Вакансий нет</red>"
+    lore:
+      - "<gray>На данный момент поддерживаемых заданий нет.</gray>"
+  entry:
+    name: "<green>%job_name%</green>"
+    level_lore:
+      - "<gray>Плагин: %plugin_name%</gray>"
+      - "<gray>Текущий уровень: %current_level%</gray>"
+      - "<yellow>Нажмите, чтобы получить 1 уровень в этом задании.</yellow>"
+    xp_boost_lore:
+      - "<gray>Плагин: %plugin_name%</gray>"
+      - "<gray>Текущий уровень: %current_level%</gray>"
+      - "<gray>Boost: +%rate_percent%% XP за %duration_minutes% минут </gray>"
+      - "<yellow>Нажмите, чтобы активировать повышение опыта для этого задания.</yellow>"
+    vault_boost_lore:
+      - "<gray>Плагин: %plugin_name%</gray>"
+      - "<gray>Текущий уровень: %current_level%</gray>"
+      - "<gray>Boost: +%rate_percent%% денег за %duration_minutes% минут(ы) </gray>"
+      - "<yellow>Нажмите, чтобы активировать эту работу.</yellow>"
 
 general:
   no_permission: "<red>У вас нет прав для использования этой команды.</red>"

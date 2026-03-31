@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rplatform.api.impl;
 
 import com.raindropcentral.rplatform.api.PlatformAPI;
@@ -25,7 +38,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 /**
- * Spigot/Bukkit implementation of {@link PlatformAPI} that bridges Adventure components via legacy
+ * Spigot/Bukkit implementation of {@link PlatformAPI} that bridges Adventure components via legacy.
  * serialization and applies skull textures through reflection to avoid hard dependencies on
  * Mojang's authlib.
  *
@@ -97,7 +110,7 @@ public final class SpigotPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * @return {@link PlatformType#SPIGOT}
      */
@@ -107,7 +120,7 @@ public final class SpigotPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * @return {@code false} because Spigot requires legacy serialization
      */
@@ -117,7 +130,7 @@ public final class SpigotPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * @return {@code false} because Folia scheduling is unavailable on Spigot
      */
@@ -127,7 +140,7 @@ public final class SpigotPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * <p><strong>Usage:</strong> Currently no resources need explicit cleanup for Spigot.</p>
      */
@@ -137,7 +150,7 @@ public final class SpigotPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * <p><strong>Usage:</strong> Components are serialized to the legacy format before sending.</p>
      *
@@ -150,7 +163,7 @@ public final class SpigotPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * <p><strong>Usage:</strong> Each component is serialized individually to preserve formatting.</p>
      *
@@ -165,7 +178,7 @@ public final class SpigotPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * <p><strong>Usage:</strong> Converts the component into the string expected by Spigot's action
      * bar API.</p>
@@ -179,7 +192,7 @@ public final class SpigotPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * <p><strong>Usage:</strong> Serializes title and subtitle components before invoking Spigot's
      * string-based API.</p>
@@ -208,7 +221,7 @@ public final class SpigotPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * <p><strong>Usage:</strong> Converts the player's legacy display name to an Adventure
      * component.</p>
@@ -223,7 +236,7 @@ public final class SpigotPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * <p><strong>Usage:</strong> Serializes the component before delegating to Spigot's setter.</p>
      *
@@ -236,7 +249,7 @@ public final class SpigotPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * <p><strong>Usage:</strong> Reads the legacy display name from item meta and converts it back
      * into an Adventure component.</p>
@@ -253,7 +266,7 @@ public final class SpigotPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * <p><strong>Usage:</strong> Serializes the Adventure component to the string-based Spigot
      * representation.</p>
@@ -273,7 +286,7 @@ public final class SpigotPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * <p><strong>Usage:</strong> Converts each lore line from legacy strings to Adventure
      * components.</p>
@@ -295,7 +308,7 @@ public final class SpigotPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * <p><strong>Usage:</strong> Serializes each Adventure component to maintain compatibility with
      * Spigot's lore storage.</p>
@@ -319,7 +332,7 @@ public final class SpigotPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * <p><strong>Usage:</strong> Populates a player head using Spigot's owning player field.</p>
      *
@@ -339,7 +352,7 @@ public final class SpigotPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * <p><strong>Usage:</strong> Associates the skull with the offline player's cached profile.</p>
      *
@@ -359,7 +372,7 @@ public final class SpigotPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * <p><strong>Usage:</strong> Convenience overload delegating to the variant with a display
      * name.</p>
@@ -374,7 +387,7 @@ public final class SpigotPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * <p><strong>Usage:</strong> Applies the custom texture via reflection and optionally assigns a
      * legacy display name.</p>
@@ -401,7 +414,7 @@ public final class SpigotPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * <p><strong>Usage:</strong> Uses reflection to inject the synthetic profile into an existing
      * skull item.</p>
@@ -425,7 +438,7 @@ public final class SpigotPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * Applies a custom texture to a skull using reflection so that authlib remains an optional
+     * Applies a custom texture to a skull using reflection so that authlib remains an optional.
      * dependency.
      *
      * <p><strong>Usage:</strong> Internal helper for the public skull methods; silently fails when
@@ -470,7 +483,7 @@ public final class SpigotPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * @return Bukkit version string
      */
@@ -480,7 +493,7 @@ public final class SpigotPlatformAPI implements PlatformAPI {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc}.
      *
      * @return the scheduler adapter leveraging Bukkit's scheduler
      */

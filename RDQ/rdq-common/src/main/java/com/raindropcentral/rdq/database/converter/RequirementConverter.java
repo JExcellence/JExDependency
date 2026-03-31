@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.database.converter;
 
 import com.raindropcentral.rplatform.requirement.AbstractRequirement;
@@ -10,12 +23,11 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 
 /**
- * JPA {@link AttributeConverter} for converting {@link AbstractRequirement} objects
+ * JPA {@link AttributeConverter} for converting {@link AbstractRequirement} objects.
  * to and from their JSON string representations for database storage.
- * <p>
- * This converter delegates to RPlatform's {@link RequirementParser} for serialization.
+ *
+ * <p>This converter delegates to RPlatform's {@link RequirementParser} for serialization.
  * Uses lazy initialization to avoid triggering RequirementParser during entity class loading.
- * </p>
  */
 @Converter(autoApply = true)
 public class RequirementConverter implements AttributeConverter<AbstractRequirement, String> {
@@ -25,6 +37,9 @@ public class RequirementConverter implements AttributeConverter<AbstractRequirem
     // Lazy initialization flag to avoid triggering RequirementParser during class loading
     private static volatile boolean parserReady = false;
 
+    /**
+     * Executes convertToDatabaseColumn.
+     */
     @Override
     public String convertToDatabaseColumn(AbstractRequirement attribute) {
         if (attribute == null) {
@@ -39,6 +54,9 @@ public class RequirementConverter implements AttributeConverter<AbstractRequirem
         }
     }
 
+    /**
+     * Executes convertToEntityAttribute.
+     */
     @Override
     public AbstractRequirement convertToEntityAttribute(String dbData) {
         if (dbData == null || dbData.isEmpty()) {

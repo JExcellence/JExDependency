@@ -1,4 +1,4 @@
-# RDR Showcase
+# RDR (RaindropReserve)
 
 RDR (RaindropReserve) is a high-performance Minecraft storage plugin for Paper, Spigot, and Folia servers offering modern player vaults, player bound hotkey access controls, and economy-aware progression.
 

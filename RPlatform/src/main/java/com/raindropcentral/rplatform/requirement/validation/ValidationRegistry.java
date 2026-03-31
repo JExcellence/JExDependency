@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rplatform.requirement.validation;
 
 import com.raindropcentral.rplatform.requirement.AbstractRequirement;
@@ -10,9 +23,8 @@ import java.util.logging.Logger;
 
 /**
  * Registry for requirement validators.
- * <p>
- * Allows plugins to register custom validators for their requirement types.
- * </p>
+ *
+ * <p>Allows plugins to register custom validators for their requirement types.
  */
 public final class ValidationRegistry {
 
@@ -23,6 +35,9 @@ public final class ValidationRegistry {
 
     private ValidationRegistry() {}
 
+    /**
+     * Gets instance.
+     */
     @NotNull
     public static ValidationRegistry getInstance() {
         return INSTANCE;

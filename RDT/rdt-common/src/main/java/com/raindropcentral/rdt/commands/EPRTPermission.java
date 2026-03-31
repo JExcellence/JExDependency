@@ -1,18 +1,31 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdt.commands;
 
 import de.jexcellence.evaluable.section.IPermissionNode;
 
 /**
  * Permission nodes used by the primary player command ({@code /prt}).
- * <p>
- * Each enum value provides an {@code internalName} used by the configuration system
+ *
+ * <p>Each enum value provides an {@code internalName} used by the configuration system
  * and a {@code fallbackNode} string that represents the default Bukkit permission
  * when no explicit mapping is provided.
  */
 
 public enum EPRTPermission implements IPermissionNode{
     /** Generic permission to use the base command and tab completion. */
-    COMMAND("command","raindroptowns.comamnd"),
+    COMMAND("command","raindroptowns.command"),
     /** Create a new town. */
     CREATE("createCommand","raindroptowns.command.create"),
     /** Delete your town (mayor only). */
@@ -35,7 +48,13 @@ public enum EPRTPermission implements IPermissionNode{
     DEPOSIT("depositCommand","raindroptowns.command.deposit"),
     //withdraw money from the town bank
     WITHDRAW("withdrawCommand","raindroptowns.command.withdraw"),
-    MAIN("mainCommand","raindroptowns.command.main");
+    MAIN("mainCommand","raindroptowns.command.main"),
+    /** Open the town overview command route. */
+    TOWN("townCommand", "raindroptowns.command.town"),
+    /** Trigger delayed safe-teleport to the player's town nexus. */
+    SPAWN("spawnCommand", "raindroptowns.command.spawn"),
+    /** Read command help output. */
+    HELP("helpCommand", "raindroptowns.command.help");
 
     /** Internal key used by the configuration system to resolve permissions. */
     private final String internalName;
@@ -54,11 +73,17 @@ public enum EPRTPermission implements IPermissionNode{
         this.fallbackNode = fallbackNode;
     }
 
+    /**
+     * Gets internalName.
+     */
     @Override
     public String getInternalName() {
         return this.internalName;
     }
 
+    /**
+     * Gets fallbackNode.
+     */
     @Override
     public String getFallbackNode() {
         return this.fallbackNode;

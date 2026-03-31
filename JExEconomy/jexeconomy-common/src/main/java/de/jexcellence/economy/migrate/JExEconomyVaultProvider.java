@@ -48,6 +48,9 @@ public class JExEconomyVaultProvider implements Economy {
     private volatile long lastCurrencyCheck = 0;
     private static final long CURRENCY_CACHE_DURATION = 30000; // 30 seconds
     
+    /**
+     * Executes JExEconomyVaultProvider.
+     */
     public JExEconomyVaultProvider(
             final @NotNull JExEconomy jexEconomyImpl
     ) {
@@ -58,26 +61,41 @@ public class JExEconomyVaultProvider implements Economy {
         logger.info("JExEconomy Vault provider initialized");
     }
     
+    /**
+     * Returns whether enabled.
+     */
     @Override
     public boolean isEnabled() {
         return this.jexEconomyImpl.getPlugin().isEnabled() && this.getDefaultCurrency() != null;
     }
     
+    /**
+     * Gets name.
+     */
     @Override
     public String getName() {
         return "JExEconomy";
     }
     
+    /**
+     * Returns whether bankSupport.
+     */
     @Override
     public boolean hasBankSupport() {
         return false;
     }
     
+    /**
+     * Executes fractionalDigits.
+     */
     @Override
     public int fractionalDigits() {
         return 2;
     }
     
+    /**
+     * Executes format.
+     */
     @Override
     public String format(double amount) {
         Currency currency = getDefaultCurrency();
@@ -94,18 +112,27 @@ public class JExEconomyVaultProvider implements Economy {
         return formatted;
     }
     
+    /**
+     * Executes currencyNamePlural.
+     */
     @Override
     public String currencyNamePlural() {
         Currency currency = getDefaultCurrency();
         return currency != null ? currency.getIdentifier() + "s" : "not_defined";
     }
     
+    /**
+     * Executes currencyNameSingular.
+     */
     @Override
     public String currencyNameSingular() {
         Currency currency = getDefaultCurrency();
         return currency != null ? currency.getIdentifier() : "not_defined";
     }
     
+    /**
+     * Returns whether account.
+     */
     @Override
     public boolean hasAccount(String playerName) {
         if (playerName == null || playerName.isEmpty()) {
@@ -116,6 +143,9 @@ public class JExEconomyVaultProvider implements Economy {
         return player != null && hasAccount(player);
     }
     
+    /**
+     * Returns whether account.
+     */
     @Override
     public boolean hasAccount(OfflinePlayer player) {
         if (player == null) {
@@ -136,6 +166,9 @@ public class JExEconomyVaultProvider implements Economy {
         }
     }
     
+    /**
+     * Returns whether account.
+     */
     @Override
     public boolean hasAccount(String playerName, String worldName) {
         // JExEconomy doesn't support per-world economies through Vault
@@ -143,11 +176,17 @@ public class JExEconomyVaultProvider implements Economy {
         return hasAccount(playerName);
     }
     
+    /**
+     * Returns whether account.
+     */
     @Override
     public boolean hasAccount(OfflinePlayer player, String worldName) {
         return hasAccount(player);
     }
     
+    /**
+     * Gets balance.
+     */
     @Override
     public double getBalance(String playerName) {
         if (playerName == null || playerName.isEmpty()) {
@@ -158,6 +197,9 @@ public class JExEconomyVaultProvider implements Economy {
         return player != null ? getBalance(player) : 0.0;
     }
     
+    /**
+     * Gets balance.
+     */
     @Override
     public double getBalance(OfflinePlayer player) {
         if (player == null) {
@@ -177,36 +219,57 @@ public class JExEconomyVaultProvider implements Economy {
         }
     }
     
+    /**
+     * Gets balance.
+     */
     @Override
     public double getBalance(String playerName, String worldName) {
         return getBalance(playerName);
     }
     
+    /**
+     * Gets balance.
+     */
     @Override
     public double getBalance(OfflinePlayer player, String worldName) {
         return getBalance(player);
     }
     
+    /**
+     * Executes has.
+     */
     @Override
     public boolean has(String playerName, double amount) {
         return getBalance(playerName) >= amount;
     }
     
+    /**
+     * Executes has.
+     */
     @Override
     public boolean has(OfflinePlayer player, double amount) {
         return getBalance(player) >= amount;
     }
     
+    /**
+     * Executes has.
+     */
     @Override
     public boolean has(String playerName, String worldName, double amount) {
         return has(playerName, amount);
     }
     
+    /**
+     * Executes has.
+     */
     @Override
     public boolean has(OfflinePlayer player, String worldName, double amount) {
         return has(player, amount);
     }
     
+    /**
+     * Executes withdrawPlayer.
+     */
     @Override
     public EconomyResponse withdrawPlayer(String playerName, double amount) {
         if (playerName == null || playerName.isEmpty()) {
@@ -221,6 +284,9 @@ public class JExEconomyVaultProvider implements Economy {
         return withdrawPlayer(player, amount);
     }
     
+    /**
+     * Executes withdrawPlayer.
+     */
     @Override
     public EconomyResponse withdrawPlayer(OfflinePlayer player, double amount) {
         if (player == null) {
@@ -263,16 +329,25 @@ public class JExEconomyVaultProvider implements Economy {
         }
     }
     
+    /**
+     * Executes withdrawPlayer.
+     */
     @Override
     public EconomyResponse withdrawPlayer(String playerName, String worldName, double amount) {
         return withdrawPlayer(playerName, amount);
     }
     
+    /**
+     * Executes withdrawPlayer.
+     */
     @Override
     public EconomyResponse withdrawPlayer(OfflinePlayer player, String worldName, double amount) {
         return withdrawPlayer(player, amount);
     }
     
+    /**
+     * Executes depositPlayer.
+     */
     @Override
     public EconomyResponse depositPlayer(String playerName, double amount) {
         if (playerName == null || playerName.isEmpty()) {
@@ -287,6 +362,9 @@ public class JExEconomyVaultProvider implements Economy {
         return depositPlayer(player, amount);
     }
     
+    /**
+     * Executes depositPlayer.
+     */
     @Override
     public EconomyResponse depositPlayer(OfflinePlayer player, double amount) {
         if (player == null) {
@@ -323,16 +401,25 @@ public class JExEconomyVaultProvider implements Economy {
         }
     }
     
+    /**
+     * Executes depositPlayer.
+     */
     @Override
     public EconomyResponse depositPlayer(String playerName, String worldName, double amount) {
         return depositPlayer(playerName, amount);
     }
     
+    /**
+     * Executes depositPlayer.
+     */
     @Override
     public EconomyResponse depositPlayer(OfflinePlayer player, String worldName, double amount) {
         return depositPlayer(player, amount);
     }
     
+    /**
+     * Executes createPlayerAccount.
+     */
     @Override
     public boolean createPlayerAccount(String playerName) {
         if (playerName == null || playerName.isEmpty()) {
@@ -343,6 +430,9 @@ public class JExEconomyVaultProvider implements Economy {
         return player != null && createPlayerAccount(player);
     }
     
+    /**
+     * Executes createPlayerAccount.
+     */
     @Override
     public boolean createPlayerAccount(OfflinePlayer player) {
         if (player == null) {
@@ -387,83 +477,125 @@ public class JExEconomyVaultProvider implements Economy {
         }
     }
     
+    /**
+     * Executes createPlayerAccount.
+     */
     @Override
     public boolean createPlayerAccount(String playerName, String worldName) {
         return createPlayerAccount(playerName);
     }
     
+    /**
+     * Executes createPlayerAccount.
+     */
     @Override
     public boolean createPlayerAccount(OfflinePlayer player, String worldName) {
         return createPlayerAccount(player);
     }
     
     // Bank-related methods (not supported)
+    /**
+     * Executes createBank.
+     */
     @Override
     public EconomyResponse createBank(String name, String player) {
         return new EconomyResponse(0, 0, EconomyResponse.ResponseType.NOT_IMPLEMENTED,
                                    "JExEconomy does not support bank accounts");
     }
     
+    /**
+     * Executes createBank.
+     */
     @Override
     public EconomyResponse createBank(String name, OfflinePlayer player) {
         return new EconomyResponse(0, 0, EconomyResponse.ResponseType.NOT_IMPLEMENTED,
                                    "JExEconomy does not support bank accounts");
     }
     
+    /**
+     * Executes deleteBank.
+     */
     @Override
     public EconomyResponse deleteBank(String name) {
         return new EconomyResponse(0, 0, EconomyResponse.ResponseType.NOT_IMPLEMENTED,
                                    "JExEconomy does not support bank accounts");
     }
     
+    /**
+     * Executes bankBalance.
+     */
     @Override
     public EconomyResponse bankBalance(String name) {
         return new EconomyResponse(0, 0, EconomyResponse.ResponseType.NOT_IMPLEMENTED,
                                    "JExEconomy does not support bank accounts");
     }
     
+    /**
+     * Executes bankHas.
+     */
     @Override
     public EconomyResponse bankHas(String name, double amount) {
         return new EconomyResponse(0, 0, EconomyResponse.ResponseType.NOT_IMPLEMENTED,
                                    "JExEconomy does not support bank accounts");
     }
     
+    /**
+     * Executes bankWithdraw.
+     */
     @Override
     public EconomyResponse bankWithdraw(String name, double amount) {
         return new EconomyResponse(0, 0, EconomyResponse.ResponseType.NOT_IMPLEMENTED,
                                    "JExEconomy does not support bank accounts");
     }
     
+    /**
+     * Executes bankDeposit.
+     */
     @Override
     public EconomyResponse bankDeposit(String name, double amount) {
         return new EconomyResponse(0, 0, EconomyResponse.ResponseType.NOT_IMPLEMENTED,
                                    "JExEconomy does not support bank accounts");
     }
     
+    /**
+     * Returns whether bankOwner.
+     */
     @Override
     public EconomyResponse isBankOwner(String name, String playerName) {
         return new EconomyResponse(0, 0, EconomyResponse.ResponseType.NOT_IMPLEMENTED,
                                    "JExEconomy does not support bank accounts");
     }
     
+    /**
+     * Returns whether bankOwner.
+     */
     @Override
     public EconomyResponse isBankOwner(String name, OfflinePlayer player) {
         return new EconomyResponse(0, 0, EconomyResponse.ResponseType.NOT_IMPLEMENTED,
                                    "JExEconomy does not support bank accounts");
     }
     
+    /**
+     * Returns whether bankMember.
+     */
     @Override
     public EconomyResponse isBankMember(String name, String playerName) {
         return new EconomyResponse(0, 0, EconomyResponse.ResponseType.NOT_IMPLEMENTED,
                                    "JExEconomy does not support bank accounts");
     }
     
+    /**
+     * Returns whether bankMember.
+     */
     @Override
     public EconomyResponse isBankMember(String name, OfflinePlayer player) {
         return new EconomyResponse(0, 0, EconomyResponse.ResponseType.NOT_IMPLEMENTED,
                                    "JExEconomy does not support bank accounts");
     }
     
+    /**
+     * Gets banks.
+     */
     @Override
     public List<String> getBanks() {
         return List.of(); // Empty list - no bank support

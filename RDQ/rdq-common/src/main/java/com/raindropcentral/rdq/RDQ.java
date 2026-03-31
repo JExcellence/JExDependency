@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq;
 
 import com.raindropcentral.commands.CommandFactory;
@@ -78,6 +91,9 @@ import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Represents the RDQ API type.
+ */
 @Getter
 public abstract class RDQ {
 
@@ -177,6 +193,9 @@ public abstract class RDQ {
 	private QuestProgressAutoSaveTask questProgressAutoSaveTask;
 	private ProgressionValidator<Quest> questProgressionValidator;
 
+	/**
+	 * Executes RDQ.
+	 */
 	public RDQ(
 			@NotNull JavaPlugin plugin,
 			@NotNull String edition
@@ -187,6 +206,9 @@ public abstract class RDQ {
 		this.executor = Executors.newFixedThreadPool(4);
 	}
 
+	/**
+	 * Executes onEnable.
+	 */
 	public void onEnable() {
 		if (
 				onEnableFuture != null && !onEnableFuture.isDone()
@@ -456,7 +478,7 @@ public abstract class RDQ {
 			// Inject cache into management service
 			perkManagementService.setCache(playerPerkCache);
 
-			perkRequirementService = new PerkRequirementService(perkManagementService);
+			perkRequirementService = new PerkRequirementService(this, perkManagementService);
 
 			perkActivationService = new PerkActivationService(
 					this,

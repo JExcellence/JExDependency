@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rplatform.api;
 
 import com.raindropcentral.rplatform.logging.CentralLogger;
@@ -8,7 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Utility responsible for instantiating {@link PlatformAPI} implementations based on the active
+ * Utility responsible for instantiating {@link PlatformAPI} implementations based on the active.
  * server environment.
  *
  * <p>The factory performs a hierarchy of reflection checks to determine whether Folia, modern
@@ -21,7 +34,7 @@ import java.util.logging.Logger;
 public class PlatformAPIFactory {
 
     /**
-     * Logger used to communicate detection and fallback results through the centralized logging
+     * Logger used to communicate detection and fallback results through the centralized logging.
      * pipeline.
      *
      * <p><strong>Lifecycle:</strong> Shared across the JVM; the JUL bridge ensures the handlers and

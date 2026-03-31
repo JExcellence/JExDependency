@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.reward;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -50,6 +63,9 @@ public final class PerkReward extends AbstractReward {
 		perkManagementService = service;
 	}
 	
+	/**
+	 * Executes PerkReward.
+	 */
 	@JsonCreator
 	public PerkReward(
 			@JsonProperty("perkIdentifier") @NotNull String perkIdentifier,
@@ -59,15 +75,24 @@ public final class PerkReward extends AbstractReward {
 		this.autoEnable = autoEnable;
 	}
 	
+	/**
+	 * Executes PerkReward.
+	 */
 	public PerkReward(@NotNull String perkIdentifier) {
 		this(perkIdentifier, false);
 	}
 	
+	/**
+	 * Gets typeId.
+	 */
 	@Override
 	public @NotNull String getTypeId() {
 		return "PERK";
 	}
 	
+	/**
+	 * Executes grant.
+	 */
 	@Override
 	public @NotNull CompletableFuture<Boolean> grant(@NotNull Player player) {
 		if (perkManagementService == null) {
@@ -129,11 +154,17 @@ public final class PerkReward extends AbstractReward {
 				.sendMessage();
 	}
 	
+	/**
+	 * Gets estimatedValue.
+	 */
 	@Override
 	public double getEstimatedValue() {
 		return 100.0;
 	}
 	
+	/**
+	 * Executes validate.
+	 */
 	@Override
 	public void validate() {
 		if (perkIdentifier == null || perkIdentifier.isEmpty()) {

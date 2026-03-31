@@ -39,7 +39,7 @@ include(":JExEconomy:jexeconomy-premium")
 
 // RCore with submodules
 include(":RCore")
-include(":RCore:rcore-common")
+//include(":RCore:rcore-common")
 
 // RDQ with submodules
 include(":RDQ")

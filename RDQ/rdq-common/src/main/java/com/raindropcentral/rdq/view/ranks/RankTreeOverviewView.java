@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.view.ranks;
 
 import com.raindropcentral.rdq.RDQ;
@@ -33,11 +46,10 @@ import java.util.logging.Logger;
 
 /**
  * Paginated GUI view for displaying all available rank trees in RaindropQuests.
- * <p>
- * This view allows players to browse, select, and interact with different rank trees.
+ *
+ * <p>This view allows players to browse, select, and interact with different rank trees.
  * It supports both preview (left click) and selection (right click) functionality.
  * Players with only the default rank must select a rank path before progressing.
- * </p>
  *
  * <ul>
  *   <li>Left click: Preview rank tree details and progression path.</li>

@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.database.entity.reward;
 
 import com.raindropcentral.rdq.config.utility.IconSection;
@@ -21,10 +34,9 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * Entity representing a reward in the RaindropQuests system.
- * <p>
- * This entity encapsulates an {@link AbstractReward} from RPlatform and its visual icon,
+ *
+ * <p>This entity encapsulates an {@link AbstractReward} from RPlatform and its visual icon,
  * providing convenience methods for reward granting.
- * </p>
  */
 @Entity
 @Table(name = "r_reward")
@@ -68,6 +80,9 @@ public class BaseReward extends BaseEntity {
     protected BaseReward() {
     }
 
+    /**
+     * Executes BaseReward.
+     */
     public BaseReward(
             @NotNull AbstractReward reward,
             @NotNull IconSection icon
@@ -83,6 +98,9 @@ public class BaseReward extends BaseEntity {
         this.icon = icon;
     }
 
+    /**
+     * Gets reward.
+     */
     public AbstractReward getReward() {
         if (cachedReward == null && rewardJson != null) {
             try {
@@ -95,6 +113,9 @@ public class BaseReward extends BaseEntity {
         return cachedReward;
     }
 
+    /**
+     * Sets reward.
+     */
     public void setReward(@NotNull AbstractReward reward) {
         this.cachedReward = reward;
         try {
@@ -105,14 +126,23 @@ public class BaseReward extends BaseEntity {
         }
     }
 
+    /**
+     * Executes grant.
+     */
     public CompletableFuture<Boolean> grant(@NotNull Player player) {
         return getReward().grant(player);
     }
 
+    /**
+     * Gets estimatedValue.
+     */
     public double getEstimatedValue() {
         return getReward().getEstimatedValue();
     }
 
+    /**
+     * Gets typeId.
+     */
     public String getTypeId() {
         return getReward().getTypeId();
     }

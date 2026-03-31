@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rplatform.view.anvil;
 
 import me.devnatan.inventoryframework.ViewConfig;
@@ -13,7 +26,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.function.UnaryOperator;
 
 /**
- * Inventory Framework state wrapper that exposes a translation-friendly anvil input modifier while
+ * Inventory Framework state wrapper that exposes a translation-friendly anvil input modifier while.
  * retaining control over lifecycle behaviour.
  *
  * <p>The implementation mirrors the UI conventions established in {@code view} classes, allowing
@@ -35,7 +48,7 @@ public final class CustomAnvilInput extends BaseMutableState<String> implements 
     }
     
     /**
-     * Forces the view type to {@link ViewType#ANVIL} ensuring the modifier pairs with anvil
+     * Forces the view type to {@link ViewType#ANVIL} ensuring the modifier pairs with anvil.
      * containers.
      *
      * @param config the view configuration builder being modified
@@ -57,8 +70,8 @@ public final class CustomAnvilInput extends BaseMutableState<String> implements 
     
     /**
      * Creates a new AnvilInput instance.
-     * <p>
-     * <b><i> This API is experimental and is not subject to the general compatibility guarantees
+ *
+ * <p><b><i> This API is experimental and is not subject to the general compatibility guarantees
      * such API may be changed or may be removed completely in any further release. </i></b>
      *
      * @see <a href="https://github.com/DevNatan/inventory-framework/wiki/anvil-input">Anvil Input on Wiki</a>
@@ -70,8 +83,8 @@ public final class CustomAnvilInput extends BaseMutableState<String> implements 
     
     /**
      * Creates a new AnvilInput instance with an initial input.
-     * <p>
-     * <b><i> This API is experimental and is not subject to the general compatibility guarantees
+ *
+ * <p><b><i> This API is experimental and is not subject to the general compatibility guarantees
      * such API may be changed or may be removed completely in any further release. </i></b>
      *
      * @param initialInput Initial text input value.
@@ -84,12 +97,12 @@ public final class CustomAnvilInput extends BaseMutableState<String> implements 
     
     /**
      * Creates a new AnvilInput instance with an input change handler.
-     * <p>
-     * <code>onInputChange</code> parameter can be used to transform the input provided by the player.
+ *
+ * <p><code>onInputChange</code> parameter can be used to transform the input provided by the player.
      * Note that it's not called immediately, only when view is closed or the player interacts with
      * the item placed at container's {@link ViewType#getResultSlots() first result slot}.
-     * <p>
-     * <b><i> This API is experimental and is not subject to the general compatibility guarantees
+ *
+ * <p><b><i> This API is experimental and is not subject to the general compatibility guarantees
      * such API may be changed or may be removed completely in any further release. </i></b>
      *
      * @param onInputChange Input change handler, current input will be set to the result of it.
@@ -102,12 +115,12 @@ public final class CustomAnvilInput extends BaseMutableState<String> implements 
     
     /**
      * Creates a new AnvilInput instance with an initial input and an input change handler.
-     * <p>
-     * <code>onInputChange</code> parameter can be used to transform the input provided by the player.
+ *
+ * <p><code>onInputChange</code> parameter can be used to transform the input provided by the player.
      * Note that it's not called immediately, only when view is closed or the player interacts with
      * the item placed at container's {@link ViewType#getResultSlots() first result slot}.
-     * <p>
-     * <b><i> This API is experimental and is not subject to the general compatibility guarantees
+ *
+ * <p><b><i> This API is experimental and is not subject to the general compatibility guarantees
      * such API may be changed or may be removed completely in any further release. </i></b>
      *
      * @param initialInput Initial text input value.
@@ -122,8 +135,8 @@ public final class CustomAnvilInput extends BaseMutableState<String> implements 
     
     /**
      * Creates a new AnvilInput instance.
-     * <p>
-     * <b><i> This API is experimental and is not subject to the general compatibility guarantees
+ *
+ * <p><b><i> This API is experimental and is not subject to the general compatibility guarantees
      * such API may be changed or may be removed completely in any further release. </i></b>
      *
      * @param config Anvil input feature configuration.

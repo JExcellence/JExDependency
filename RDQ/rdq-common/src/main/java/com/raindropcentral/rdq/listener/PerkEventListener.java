@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.listener;
 
 import com.raindropcentral.rdq.RDQ;
@@ -23,10 +36,16 @@ public class PerkEventListener implements Listener {
     
     private final RDQ rdq;
     
+    /**
+     * Executes PerkEventListener.
+     */
     public PerkEventListener(@NotNull final RDQ rdq) {
         this.rdq = rdq;
     }
     
+    /**
+     * Executes onPlayerItemConsume.
+     */
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerItemConsume(@NotNull final PlayerItemConsumeEvent event) {
         Player player = event.getPlayer();
@@ -37,6 +56,9 @@ public class PerkEventListener implements Listener {
         rdq.getPerkActivationService().getEventPerkHandler().processEvent(player, "PLAYER_ITEM_CONSUME", event);
     }
     
+    /**
+     * Executes onPlayerFish.
+     */
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerFish(@NotNull final PlayerFishEvent event) {
         Player player = event.getPlayer();

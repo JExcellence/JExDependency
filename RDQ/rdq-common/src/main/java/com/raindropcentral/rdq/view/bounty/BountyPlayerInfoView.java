@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.rdq.view.bounty;
 
 import com.raindropcentral.rdq.RDQ;
@@ -38,6 +51,9 @@ public class BountyPlayerInfoView extends BaseView {
     private final State<Optional<Bounty>> bounty = initialState("bounty");
     private final State<Map<UUID, Map<Integer, ItemStack>>> insertedItems = initialState("insertedItems");
 
+    /**
+     * Executes BountyPlayerInfoView.
+     */
     public BountyPlayerInfoView() {
         super(BountyOverviewView.class);
     }
@@ -71,6 +87,9 @@ public class BountyPlayerInfoView extends BaseView {
         return "bounty_player_info_ui";
     }
 
+    /**
+     * Executes onFirstRender.
+     */
     @Override
     public void onFirstRender(final @NotNull RenderContext render, final @NotNull Player player) {
         renderTargetHead(render, player);
@@ -165,6 +184,9 @@ public class BountyPlayerInfoView extends BaseView {
         });
     }
 
+    /**
+     * Executes onResume.
+     */
     @Override
     public void onResume(final @NotNull Context origin, final @NotNull Context target) {
         @SuppressWarnings("unchecked")

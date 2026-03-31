@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
 package com.raindropcentral.core.service.statistics.collector;
 
 import org.bukkit.Material;
@@ -113,56 +126,89 @@ public record NativeStatisticSnapshot(
             this.playerUuid = playerUuid;
         }
 
+        /**
+         * Performs timestamp.
+         */
         public Builder timestamp(long timestamp) {
             this.timestamp = timestamp;
             return this;
         }
 
+        /**
+         * Performs generalStat.
+         */
         public Builder generalStat(Statistic stat, int value) {
             this.generalStats.put(stat, value);
             return this;
         }
 
+        /**
+         * Performs blockBroken.
+         */
         public Builder blockBroken(Material material, int count) {
             this.blocksBroken.put(material, count);
             return this;
         }
 
+        /**
+         * Performs blockPlaced.
+         */
         public Builder blockPlaced(Material material, int count) {
             this.blocksPlaced.put(material, count);
             return this;
         }
 
+        /**
+         * Performs itemCrafted.
+         */
         public Builder itemCrafted(Material material, int count) {
             this.itemsCrafted.put(material, count);
             return this;
         }
 
+        /**
+         * Performs itemUsed.
+         */
         public Builder itemUsed(Material material, int count) {
             this.itemsUsed.put(material, count);
             return this;
         }
 
+        /**
+         * Performs itemPickedUp.
+         */
         public Builder itemPickedUp(Material material, int count) {
             this.itemsPickedUp.put(material, count);
             return this;
         }
 
+        /**
+         * Performs itemDropped.
+         */
         public Builder itemDropped(Material material, int count) {
             this.itemsDropped.put(material, count);
             return this;
         }
 
+        /**
+         * Performs mobKill.
+         */
         public Builder mobKill(EntityType entityType, int count) {
             this.mobKills.put(entityType, count);
             return this;
         }
 
+        /**
+         * Performs travelStat.
+         */
         public Builder travelStat(TravelMethod method, int distance) {
             this.travelStats.put(method, distance);
             return this;
         }
 
+        /**
+         * Performs build.
+         */
         public NativeStatisticSnapshot build() {
             return new NativeStatisticSnapshot(
                 playerUuid, timestamp,
