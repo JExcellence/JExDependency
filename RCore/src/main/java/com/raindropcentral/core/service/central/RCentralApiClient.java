@@ -15,12 +15,10 @@ package com.raindropcentral.core.service.central;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
-import com.raindropcentral.core.config.RCentralConfig;
 import com.raindropcentral.core.service.statistics.delivery.BatchPayload;
 import com.raindropcentral.core.service.statistics.delivery.DeliveryReceipt;
 import com.raindropcentral.core.service.statistics.delivery.StatisticEntry;
@@ -119,7 +117,6 @@ public class RCentralApiClient {
      * @param playerUuid UUID of the player performing the connect flow
      * @param playerName username of the player performing the connect flow
      * @param maxPlayers current configured maximum player count
-     * @param compatibilitySnapshot optional droplet-store compatibility metadata
      * @return asynchronous transport response
      */
     public CompletableFuture<ApiResponse> connectServer(
@@ -129,8 +126,7 @@ public class RCentralApiClient {
             final @NotNull String pluginVersion,
             final @NotNull String playerUuid,
             final @NotNull String playerName,
-            final int maxPlayers,
-            final @Nullable RCentralConfig.DropletStoreCompatibilitySnapshot compatibilitySnapshot
+            final int maxPlayers
     ) {
         var payload = new JsonObject();
         payload.addProperty("serverUuid", serverUuid);
@@ -139,44 +135,12 @@ public class RCentralApiClient {
         payload.addProperty("minecraftUuid", playerUuid);
         payload.addProperty("minecraftUsername", playerName);
         payload.addProperty("maxPlayers", maxPlayers);
-        applyDropletStoreCompatibility(payload, compatibilitySnapshot);
 
         return sendRequest("/api/server-data/connect", "POST", apiKey, payload);
     }
 
     /**
-     * Sends a server heartbeat update including optional droplet-store compatibility metadata.
-     *
-     * @param apiKey active server API key
-     * @param currentPlayers current online player count
-     * @param maxPlayers current configured maximum player count
-     * @param tps reported server TPS snapshot
-     * @param playerList optional serialized player list
-     * @param compatibilitySnapshot optional droplet-store compatibility metadata
-     * @return asynchronous transport response
-     */
-    public CompletableFuture<ApiResponse> sendHeartbeat(
-            final @NotNull String apiKey,
-            final int currentPlayers,
-            final int maxPlayers,
-            final double tps,
-            final @Nullable String playerList,
-            final @Nullable RCentralConfig.DropletStoreCompatibilitySnapshot compatibilitySnapshot
-    ) {
-        var payload = new JsonObject();
-        payload.addProperty("currentPlayers", currentPlayers);
-        payload.addProperty("maxPlayers", maxPlayers);
-        payload.addProperty("tps", tps);
-        if (playerList != null) {
-            payload.addProperty("playerList", playerList);
-        }
-        applyDropletStoreCompatibility(payload, compatibilitySnapshot);
-
-        return sendRequest("/api/server-data/heartbeat", "POST", apiKey, payload);
-    }
-
-    /**
-     * Sends a heartbeat update without droplet-store compatibility metadata.
+     * Sends a server heartbeat update.
      *
      * @param apiKey active server API key
      * @param currentPlayers current online player count
@@ -192,7 +156,15 @@ public class RCentralApiClient {
             final double tps,
             final @Nullable String playerList
     ) {
-        return sendHeartbeat(apiKey, currentPlayers, maxPlayers, tps, playerList, null);
+        var payload = new JsonObject();
+        payload.addProperty("currentPlayers", currentPlayers);
+        payload.addProperty("maxPlayers", maxPlayers);
+        payload.addProperty("tps", tps);
+        if (playerList != null) {
+            payload.addProperty("playerList", playerList);
+        }
+
+        return sendRequest("/api/server-data/heartbeat", "POST", apiKey, payload);
     }
 
     /**
@@ -233,7 +205,6 @@ public class RCentralApiClient {
      * @param maxPlayers current configured maximum player count
      * @param minecraftUuid optional UUID of the player waking the server
      * @param minecraftUsername optional username of the player waking the server
-     * @param compatibilitySnapshot optional droplet-store compatibility metadata
      * @return asynchronous transport response
      */
     public CompletableFuture<ApiResponse> wakeupServer(
@@ -243,8 +214,7 @@ public class RCentralApiClient {
             final @NotNull String pluginVersion,
             final int maxPlayers,
             final @Nullable String minecraftUuid,
-            final @Nullable String minecraftUsername,
-            final @Nullable RCentralConfig.DropletStoreCompatibilitySnapshot compatibilitySnapshot
+            final @Nullable String minecraftUsername
     ) {
         var payload = new JsonObject();
         payload.addProperty("serverUuid", serverUuid);
@@ -257,9 +227,26 @@ public class RCentralApiClient {
         if (minecraftUsername != null) {
             payload.addProperty("minecraftUsername", minecraftUsername);
         }
-        applyDropletStoreCompatibility(payload, compatibilitySnapshot);
 
         return sendRequest("/api/server-data/wakeup", "POST", apiKey, payload);
+    }
+
+    /**
+     * Requests the effective droplet-store allowlist for the connected server.
+     *
+     * @param apiKey active server API key
+     * @return asynchronous parsed API response
+     */
+    public CompletableFuture<ParsedApiResponse<DropletStoreAllowlistData>> getDropletStoreAllowlist(
+            final @NotNull String apiKey
+    ) {
+        return sendTypedRequest(
+                "/api/server-data/droplet-store/allowlist",
+                "GET",
+                apiKey,
+                null,
+                DropletStoreAllowlistData.class
+        );
     }
 
     /**
@@ -531,21 +518,6 @@ public class RCentralApiClient {
         return null;
     }
 
-    static void applyDropletStoreCompatibility(
-            final @NotNull JsonObject payload,
-            final @Nullable RCentralConfig.DropletStoreCompatibilitySnapshot compatibilitySnapshot
-    ) {
-        if (compatibilitySnapshot == null) {
-            return;
-        }
-
-        payload.addProperty("dropletStoreEnabled", compatibilitySnapshot.dropletStoreEnabled());
-
-        final JsonArray enabledItemCodes = new JsonArray();
-        compatibilitySnapshot.enabledItemCodes().forEach(enabledItemCodes::add);
-        payload.add("enabledDropletStoreItemCodes", enabledItemCodes);
-    }
-
     /**
      * Lightweight transport response returned by non-typed backend endpoints.
      *
@@ -630,6 +602,24 @@ public class RCentralApiClient {
                 return itemName;
             }
             return itemCodeOrBlank();
+        }
+    }
+
+    /**
+     * Effective droplet-store allowlist payload returned to RCore.
+     *
+     * @param allowedItemCodes effective item codes currently allowed for this server
+     */
+    public record DropletStoreAllowlistData(
+            @Nullable List<String> allowedItemCodes
+    ) {
+        /**
+         * Returns the allowlist as a non-null immutable list.
+         *
+         * @return allowlist item codes
+         */
+        public @NotNull List<String> allowedItemCodesOrEmpty() {
+            return allowedItemCodes == null ? List.of() : List.copyOf(allowedItemCodes);
         }
     }
 }

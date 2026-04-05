@@ -1,9 +1,9 @@
-# Nederlandse vertalingen voor RCore Central Integration
+﻿# Nederlandse vertalingen voor RCore Central Integration
 
 prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
 
 rcconnect:
-  usage: "<gray>Gebruik: /rc <connect &lt;api-key&gt;|disconnect|claim droplets></gray>"
+  usage: "<gray>Gebruik: /rc <connect &lt;api-key&gt;|disconnect|claim droplets|store update></gray>"
   usage_no_claim: "<gray>Gebruik: /rc <connect &lt;api-key&gt;|disconnect></gray>"
   connecting: "<yellow>Verbinding maken met RaindropCentral...</yellow>"
   success: "<green>Succesvol verbonden met RaindropCentral!</green> <gray>Server verzendt nu heartbeats.</gray>"
@@ -21,13 +21,20 @@ rcdisconnect:
     failed: "<red>Loskoppelen mislukt. Probeer het opnieuw.</red>"
     network: "<red>Netwerkfout: %error%</red>"
 
+rcstore:
+  updating: "<yellow>Refreshing the local droplet-store allowlist from RaindropCentral...</yellow>"
+  success: "<green>Updated the local droplet-store allowlist.</green> <gray>%count% item(s) are currently allowed.</gray>"
+  error:
+    not_connected: "<red>RCore must be connected to the RaindropCentral backend before the store allowlist can be updated.</red>"
+    failed: "<red>Failed to refresh the droplet-store allowlist: %error%</red>"
+    using_cache: "<yellow>Failed to refresh the droplet-store allowlist, but the last cached list is still being used: %error%</yellow>"
 rcclaim:
   loading: "<yellow>RaindropCentral controleren op niet-geclaimde druppelbeloningen...</yellow>"
   claiming_item: "<yellow>%item_name% claimen van RaindropCentral...</yellow>"
   success:
     claimed: "<green>Je hebt %item_name% geclaimd.</green>"
-    claimed_skill_targeted: "<green>Je hebt %item_name% geclaimd.</green> <gray>Klik met de rechtermuisknop op de cookie om een ​​vaardigheid te kiezen.</gray>"
-    claimed_job_targeted: "<green>Je hebt %item_name% geclaimd.</green> <gray>Klik met de rechtermuisknop op de cookie om een ​​baan te kiezen.</gray>"
+    claimed_skill_targeted: "<green>Je hebt %item_name% geclaimd.</green> <gray>Klik met de rechtermuisknop op de cookie om een â€‹â€‹vaardigheid te kiezen.</gray>"
+    claimed_job_targeted: "<green>Je hebt %item_name% geclaimd.</green> <gray>Klik met de rechtermuisknop op de cookie om een â€‹â€‹baan te kiezen.</gray>"
     claimed_activate: "<green>Je hebt %item_name% geclaimd.</green> <gray>Klik met de rechtermuisknop op de cookie om deze te activeren.</gray>"
     skill_granted: "<green>1 niveau toegekend in %skill_name%.</green> <gray>Bron: %plugin_name%.</gray>"
     job_granted: "<green>1 niveau toegekend in %job_name%.</green> <gray>Bron: %plugin_name%.</gray>"
@@ -52,7 +59,7 @@ rcclaim:
     unsupported_item: "<red>Deze druppelbeloning wordt nog niet ondersteund op deze server.</red> <gray>Item-ID: %item_code%</gray>"
     no_supported_skills: "<red>Deze server heeft momenteel geen ondersteunde vaardighedenplug-in voor deze beloning.</red>"
     no_supported_jobs: "<red>Deze server heeft momenteel geen ondersteunde banenplug-in voor deze beloning.</red>"
-    inventory_full: "<red>Je hebt minimaal één vrije inventarisruimte nodig voordat je deze beloning claimt.</red>"
+    inventory_full: "<red>Je hebt minimaal Ã©Ã©n vrije inventarisruimte nodig voordat je deze beloning claimt.</red>"
     claim_in_progress: "<yellow>Die claim is al in behandeling. Wacht tot de backend reageert.</yellow>"
     claim_failed: "<red>Kan de druppelbeloning niet claimen: %error%</red>"
     already_claimed: "<yellow>Die druppelbeloning is al geclaimd.</yellow>"
@@ -101,12 +108,12 @@ rc_claim_droplets_ui:
       name: "<red>%item_name%</red>"
       lore:
         - "<gray>Item-ID: %item_code%</gray>"
-        - "<red>Voor deze beloning is geen ondersteunde plug-in voor vaardigheden geïnstalleerd.</red>"
+        - "<red>Voor deze beloning is geen ondersteunde plug-in voor vaardigheden geÃ¯nstalleerd.</red>"
     no_jobs:
       name: "<red>%item_name%</red>"
       lore:
         - "<gray>Item-ID: %item_code%</gray>"
-        - "<red>Er is voor deze beloning geen ondersteunde banenplug-in geïnstalleerd.</red>"
+        - "<red>Er is voor deze beloning geen ondersteunde banenplug-in geÃ¯nstalleerd.</red>"
 
 rc_claim_droplet_skills_ui:
   title: "Kies een vaardigheid"
@@ -118,7 +125,7 @@ rc_claim_droplet_skills_ui:
     name: "<gold>Vaardigheidsselectie</gold>"
     lore:
       - "<gray>Abeschikbare vaardigheden: %skill_count%</gray>"
-      - "<yellow>Kies ​​één vaardigheid om de cookie te consumeren.</yellow>"
+      - "<yellow>Kies â€‹â€‹Ã©Ã©n vaardigheid om de cookie te consumeren.</yellow>"
   empty:
     name: "<red>Geen vaardigheden beschikbaar</red>"
     lore:
@@ -127,11 +134,11 @@ rc_claim_droplet_skills_ui:
     name: "<green>%skill_name%</green>"
     level_lore:
       - "<gray>Plugin: %plugin_name%</gray>"
-      - "<gray>Huidig ​​niveau: %current_level%</gray>"
+      - "<gray>Huidig â€‹â€‹niveau: %current_level%</gray>"
       - "<yellow>Klik om 1 niveau in deze vaardigheid te behalen.</yellow>"
     boost_lore:
       - "<gray>Plugin: %plugin_name%</gray>"
-      - "<gray>Huidig ​​niveau: %current_level%</gray>"
+      - "<gray>Huidig â€‹â€‹niveau: %current_level%</gray>"
       - "<gray>Boost: +%rate_percent%% XP voor %duration_minutes% minuut/minuten</gray>"
       - "<yellow>Klik om deze vaardigheidsboost te activeren.</yellow>"
 
@@ -145,7 +152,7 @@ rc_claim_droplet_jobs_ui:
     name: "<gold>Taakselectie</gold>"
     lore:
       - "<gray>Abeschikbare taken: %job_count%</gray>"
-      - "<yellow>Kies ​​één taak om de cookie te gebruiken.</yellow>"
+      - "<yellow>Kies â€‹â€‹Ã©Ã©n taak om de cookie te gebruiken.</yellow>"
   empty:
     name: "<red>Geen vacatures beschikbaar</red>"
     lore:
@@ -154,18 +161,20 @@ rc_claim_droplet_jobs_ui:
     name: "<green>%job_name%</green>"
     level_lore:
       - "<gray>Plugin: %plugin_name%</gray>"
-      - "<gray>Huidig ​​niveau: %current_level%</gray>"
+      - "<gray>Huidig â€‹â€‹niveau: %current_level%</gray>"
       - "<yellow>Klik om 1 niveau te stijgen in deze baan.</yellow>"
     xp_boost_lore:
       - "<gray>Plugin: %plugin_name%</gray>"
-      - "<gray>Huidig ​​niveau: %current_level%</gray>"
+      - "<gray>Huidig â€‹â€‹niveau: %current_level%</gray>"
       - "<gray>Boost: +%rate_percent%% XP voor %duration_minutes% minuut/minuten</gray>"
       - "<yellow>Klik om deze taak XP-boost te activeren.</yellow>"
     vault_boost_lore:
       - "<gray>Plugin: %plugin_name%</gray>"
-      - "<gray>Huidig ​​niveau: %current_level%</gray>"
+      - "<gray>Huidig â€‹â€‹niveau: %current_level%</gray>"
       - "<gray>Boost: +%rate_percent%% geld voor %duration_minutes% minuut(en)</gray>"
       - "<yellow>Klik om deze geldboost voor banen te activeren.</yellow>"
 
 general:
   no_permission: "<red>Je hebt geen toestemming om dit commando te gebruiken.</red>"
+
+

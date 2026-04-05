@@ -146,6 +146,9 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
     @InjectRepository
     private RPlayerRepository playerRepository;
 
+    @InjectRepository
+    private RCentralServerRepository rCentralServerRepository;
+
     /**
      * Creates the delegate and provisions the executor used across asynchronous operations.
      *
@@ -379,7 +382,7 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
      * </p>
      */
     private void initializeComponents() {
-        this.rCentralService = new RCentralService(this.getPlugin(), this.platform);
+        this.rCentralService = new RCentralService(this);
         this.activeCookieBoostService = new ActiveCookieBoostService(this);
         this.platform.getServiceRegistry().bind(CookieBoostLookup.class, this.activeCookieBoostService);
         CookieBoostIntegrationRegistrar.register(this.getPlugin(), this.activeCookieBoostService);
@@ -599,6 +602,15 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
      */
     public RPlayerRepository getPlayerRepository() {
         return playerRepository;
+    }
+
+    /**
+     * Returns the central-server repository injected during repository initialization.
+     *
+     * @return central-server repository, or {@code null} until repositories are wired
+     */
+    public RCentralServerRepository getRCentralServerRepository() {
+        return this.rCentralServerRepository;
     }
 
     /**

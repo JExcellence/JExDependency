@@ -23,7 +23,8 @@ public enum ERCentralPermission implements IPermissionNode {
 
     CONNECT("connect", "rcore.central.connect"),
     DISCONNECT("disconnect", "rcore.central.disconnect"),
-    CLAIM_DROPLETS("claimDroplets", "rcore.central.claim.droplets");
+    CLAIM_DROPLETS("claimDroplets", "rcore.central.claim.droplets"),
+    STORE_UPDATE("storeUpdate", "rcore.central.store.update");
 
     private final String permissionInternalIdentifier;
     private final String fallbackPermissionNode;

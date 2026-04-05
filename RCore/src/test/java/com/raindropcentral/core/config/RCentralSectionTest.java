@@ -13,70 +13,54 @@
 
 package com.raindropcentral.core.config;
 
-import com.raindropcentral.core.service.central.cookie.DropletCookieDefinitions;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertIterableEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RCentralSectionTest {
 
     @Test
-    void defaultsDropletStoreSettingsToEnabledWhenMissing() {
+    void loadsConnectionSettingsFromYaml() {
         final RCentralSection section = RCentralSection.fromConfiguration(load("""
                 backendUrl: "https://api.raindropcentral.com"
+                developmentMode: true
+                autoDetect: false
                 """));
-        final RCentralConfig.DropletStoreCompatibilitySnapshot snapshot =
-                RCentralConfig.resolveDropletStoreCompatibilitySnapshot(section);
 
-        assertTrue(section.isDropletsStoreEnabled());
-        for (final String itemCode : DropletCookieDefinitions.allItemCodes()) {
-            assertTrue(section.isDropletStoreRewardEnabled(itemCode));
-        }
-        assertTrue(snapshot.dropletStoreEnabled());
-        assertIterableEquals(DropletCookieDefinitions.allItemCodes(), snapshot.enabledItemCodes());
+        assertEquals("https://api.raindropcentral.com", section.getBackendUrl());
+        assertTrue(section.isDevelopmentMode());
+        assertFalse(section.isAutoDetect());
     }
 
     @Test
-    void readsExplicitDropletStoreSettingsFromYaml() {
+    void defaultsAutoDetectToTrueWhenMissing() {
         final RCentralSection section = RCentralSection.fromConfiguration(load("""
+                backendUrl: ""
+                """));
+
+        assertNull(section.getBackendUrl());
+        assertFalse(section.isDevelopmentMode());
+        assertTrue(section.isAutoDetect());
+    }
+
+    @Test
+    void ignoresLegacyDropletStoreSettingsWithoutFailing() {
+        final RCentralSection section = RCentralSection.fromConfiguration(load("""
+                backendUrl: "https://api.raindropcentral.com"
                 droplets_store:
                   enabled: false
                   rewards:
                     skill-level-cookie: false
-                    job-level-cookie: false
                 """));
-        final RCentralConfig.DropletStoreCompatibilitySnapshot snapshot =
-                RCentralConfig.resolveDropletStoreCompatibilitySnapshot(section);
 
-        assertFalse(section.isDropletsStoreEnabled());
-        assertFalse(section.isDropletStoreRewardEnabled("skill-level-cookie"));
-        assertFalse(section.isDropletStoreRewardEnabled("job-level-cookie"));
-        assertFalse(snapshot.dropletStoreEnabled());
-        assertTrue(snapshot.enabledItemCodes().isEmpty());
-    }
-
-    @Test
-    void omitsDisabledSupportedRewardFromCompatibilitySnapshot() {
-        final RCentralSection section = RCentralSection.fromConfiguration(load("""
-                droplets_store:
-                  enabled: true
-                  rewards:
-                    skill-level-cookie: false
-                    job-level-cookie: true
-                """));
-        final RCentralConfig.DropletStoreCompatibilitySnapshot snapshot =
-                RCentralConfig.resolveDropletStoreCompatibilitySnapshot(section);
-
-        assertTrue(section.isDropletsStoreEnabled());
-        assertFalse(section.isDropletStoreRewardEnabled("skill-level-cookie"));
-        assertTrue(section.isDropletStoreRewardEnabled("job-level-cookie"));
-        assertTrue(snapshot.dropletStoreEnabled());
-        assertFalse(snapshot.enabledItemCodes().contains("skill-level-cookie"));
-        assertTrue(snapshot.enabledItemCodes().contains("job-level-cookie"));
+        assertEquals("https://api.raindropcentral.com", section.getBackendUrl());
+        assertFalse(section.isDevelopmentMode());
+        assertTrue(section.isAutoDetect());
     }
 
     private static YamlConfiguration load(final String yaml) {

@@ -1,171 +1,180 @@
-# Bản dịch tiếng Việt cho tích hợp RCore Central
+﻿# Báº£n dá»‹ch tiáº¿ng Viá»‡t cho tÃ­ch há»£p RCore Central
 
 prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
 
 rcconnect:
-  usage: "<gray>Cách sử dụng: /rc <connect &lt;api-key&gt;|disconnect|claim droplets></gray>"
-  usage_no_claim: "<gray>Cách sử dụng: /rc <connect &lt;api-key&gt;|disconnect></gray>"
-  connecting: "<yellow>Đang kết nối tới RaindropCentral...</yellow>"
-  success: "<green>Đã kết nối thành công tới RaindropCentral!</green> <gray>Máy chủ hiện đang gửi tín hiệu heartbeat.</gray>"
+  usage: "<gray>CÃ¡ch sá»­ dá»¥ng: /rc <connect &lt;api-key&gt;|disconnect|claim droplets|store update></gray>"
+  usage_no_claim: "<gray>CÃ¡ch sá»­ dá»¥ng: /rc <connect &lt;api-key&gt;|disconnect></gray>"
+  connecting: "<yellow>Äang káº¿t ná»‘i tá»›i RaindropCentral...</yellow>"
+  success: "<green>ÄÃ£ káº¿t ná»‘i thÃ nh cÃ´ng tá»›i RaindropCentral!</green> <gray>MÃ¡y chá»§ hiá»‡n Ä‘ang gá»­i tÃ­n hiá»‡u heartbeat.</gray>"
   error:
-    invalid_key: "<red>Định dạng khóa API không hợp lệ. Khóa API phải gồm 32-128 ký tự chữ và số.</red>"
-    uuid_mismatch: "<red>Khóa API này thuộc về một tài khoản Minecraft khác.</red>"
-    already_connected: "<yellow>Máy chủ đã được kết nối.</yellow> <gray>Sử dụng /rc disconnect trước.</gray>"
-    network: "<red>Lỗi mạng: %error%</red>"
+    invalid_key: "<red>Äá»‹nh dáº¡ng khÃ³a API khÃ´ng há»£p lá»‡. KhÃ³a API pháº£i gá»“m 32-128 kÃ½ tá»± chá»¯ vÃ  sá»‘.</red>"
+    uuid_mismatch: "<red>KhÃ³a API nÃ y thuá»™c vá» má»™t tÃ i khoáº£n Minecraft khÃ¡c.</red>"
+    already_connected: "<yellow>MÃ¡y chá»§ Ä‘Ã£ Ä‘Æ°á»£c káº¿t ná»‘i.</yellow> <gray>Sá»­ dá»¥ng /rc disconnect trÆ°á»›c.</gray>"
+    network: "<red>Lá»—i máº¡ng: %error%</red>"
 
 rcdisconnect:
-  disconnecting: "<yellow>Đang ngắt kết nối khỏi RaindropCentral...</yellow>"
-  success: "<green>Đã ngắt kết nối khỏi RaindropCentral thành công.</green>"
+  disconnecting: "<yellow>Äang ngáº¯t káº¿t ná»‘i khá»i RaindropCentral...</yellow>"
+  success: "<green>ÄÃ£ ngáº¯t káº¿t ná»‘i khá»i RaindropCentral thÃ nh cÃ´ng.</green>"
   error:
-    not_connected: "<red>Máy chủ chưa được kết nối tới RaindropCentral.</red>"
-    failed: "<red>Không thể ngắt kết nối. Vui lòng thử lại.</red>"
-    network: "<red>Lỗi mạng: %error%</red>"
+    not_connected: "<red>MÃ¡y chá»§ chÆ°a Ä‘Æ°á»£c káº¿t ná»‘i tá»›i RaindropCentral.</red>"
+    failed: "<red>KhÃ´ng thá»ƒ ngáº¯t káº¿t ná»‘i. Vui lÃ²ng thá»­ láº¡i.</red>"
+    network: "<red>Lá»—i máº¡ng: %error%</red>"
 
-rcclaim:
-  loading: "<yellow>Đang kiểm tra RaindropCentral để nhận phần thưởng nhỏ chưa được nhận...</yellow>"
-  claiming_item: "<yellow>Đòi %item_name% từ RaindropCentral...</yellow>"
-  success:
-    claimed: "<green>Bạn đã yêu cầu %item_name%.</green>"
-    claimed_skill_targeted: "<green>Bạn đã nhận được %item_name%.</green> <gray>Nhấp chuột phải vào cookie để chọn kỹ năng.</gray>"
-    claimed_job_targeted: "<green>Bạn đã yêu cầu %item_name%.</green> <gray>Nhấp chuột phải vào cookie để chọn công việc.</gray>"
-    claimed_activate: "<green>Bạn đã yêu cầu %item_name%.</green> <gray>Nhấp chuột phải vào cookie để kích hoạt nó.</gray>"
-    skill_granted: "<green>Được cấp 1 cấp trong %skill_name%.</green> <gray>Nguồn: %plugin_name%.</gray>"
-    job_granted: "<green>Được cấp 1 cấp trong %job_name%.</green> <gray>Nguồn: %plugin_name%.</gray>"
-    skill_xp_boost_applied: "<green>Đã kích hoạt +%rate_percent%% kỹ năng XP cho %skill_name%.</green> <gray>Nguồn: %plugin_name%. Thời lượng: %duration_minutes% phút.</gray>"
-    skill_xp_boost_refreshed: "<green>Refreshed +%rate_percent%% kỹ năng XP cho %skill_name%.</green> <gray>Nguồn: %plugin_name%. Đặt lại thời lượng về %duration_minutes% phút.</gray>"
-    job_xp_boost_applied: "<green>Đã kích hoạt +%rate_percent%% công việc XP cho %job_name%.</green> <gray>Nguồn: %plugin_name%. Thời lượng: %duration_minutes% phút.</gray>"
-    job_xp_boost_refreshed: "<green>Refreshed +%rate_percent%% job XP cho %job_name%.</green> <gray>Nguồn: %plugin_name%. Đặt lại thời lượng về %duration_minutes% phút.</gray>"
-    job_vault_boost_applied: "<green>Đã kích hoạt +%rate_percent%% tiền công việc cho %job_name%.</green> <gray>Nguồn: %plugin_name%. Thời lượng: %duration_minutes% phút.</gray>"
-    job_vault_boost_refreshed: "<green>Refreshed +%rate_percent%% tiền công việc cho %job_name%.</green> <gray>Nguồn: %plugin_name%. Đặt lại thời lượng về %duration_minutes% phút.</gray>"
-    double_drop_boost_applied: "<green>Đã kích hoạt hai lần giảm.</green> <gray>Duration: %duration_minutes% phút.</gray>"
-    double_drop_boost_refreshed: "<green>Giảm hai lần được làm mới.</green> <gray>D Đặt lại thời gian thành %duration_minutes% phút.</gray>"
-    pending_delivery: "<green>DĐã phân phối %count% đang chờ phần thưởng nhỏ giọt.</green>"
+rcstore:
+  updating: "<yellow>Refreshing the local droplet-store allowlist from RaindropCentral...</yellow>"
+  success: "<green>Updated the local droplet-store allowlist.</green> <gray>%count% item(s) are currently allowed.</gray>"
   error:
-    store_disabled: "<red>Máy chủ này đã tắt /rc claim droplets.</red>"
-    not_connected: "<red>RCore phải được kết nối với phần phụ trợ RaindropCentral trước khi bạn có thể yêu cầu các giọt.</red>"
-    cooldown: "<yellow>Vui lòng đợi %seconds% giây trước khi sử dụng lại /rc claim droplets.</yellow>"
-    not_registered: "<red>Tài khoản Minecraft của bạn không được liên kết với tài khoản RaindropCentral.</red>"
-    no_unclaimed: "<yellow>Bạn hiện không có bất kỳ phần thưởng nhỏ nào chưa được nhận.</yellow>"
-    api_unavailable: "<red>RaindropCentral hiện không khả dụng: %error%</red>"
-    menu_unavailable: "<red>Hiện không có menu xác nhận giọt nhỏ. Vui lòng thử lại sau.</red>"
-    item_disabled: "<red>Máy chủ này đã vô hiệu hóa việc xác nhận %item_name%.</red> <gray>Item ID: %item_code%</gray>"
-    unsupported_item: "<red>Phần thưởng nhỏ này chưa được hỗ trợ trên máy chủ này.</red> <gray>ID vật phẩm: %item_code%</gray>"
-    no_supported_skills: "<red>Máy chủ này hiện không có plugin kỹ năng được hỗ trợ cho phần thưởng này.</red>"
-    no_supported_jobs: "<red>Máy chủ này hiện không có plugin công việc được hỗ trợ cho phần thưởng này.</red>"
-    inventory_full: "<red>Bạn cần ít nhất một ô kho đồ miễn phí trước khi nhận phần thưởng này.</red>"
-    claim_in_progress: "<yellow>Xác nhận quyền sở hữu đó đã được tiến hành. Vui lòng đợi phần phụ trợ phản hồi.</yellow>"
-    claim_failed: "<red>Không thể nhận phần thưởng nhỏ đó: %error%</red>"
-    already_claimed: "<yellow>Phần thưởng nhỏ đó đã được nhận.</yellow>"
-    purchase_unavailable: "<red>Phần thưởng nhỏ đó không còn có thể nhận được nữa.</red>"
-    cookie_missing: "<red>Không thể tìm thấy cookie nhỏ trong kho của bạn.</red>"
-    skill_grant_failed: "<red>Không thể cấp 1 cấp trong %skill_name%.</red>"
-    job_grant_failed: "<red>Không thể cấp 1 cấp trong %job_name%.</red>"
-    boost_activation_failed: "<red>Không thể kích hoạt %item_name%.</red>"
-    unsupported_integration: "<red>Sự tích hợp bắt buộc cho cookie nhỏ này hiện không khả dụng.</red>"
-    boost_expired: "<yellow>Việc tăng cường cookie nhỏ giọt đó đã hết hạn.</yellow>"
+    not_connected: "<red>RCore must be connected to the RaindropCentral backend before the store allowlist can be updated.</red>"
+    failed: "<red>Failed to refresh the droplet-store allowlist: %error%</red>"
+    using_cache: "<yellow>Failed to refresh the droplet-store allowlist, but the last cached list is still being used: %error%</yellow>"
+rcclaim:
+  loading: "<yellow>Äang kiá»ƒm tra RaindropCentral Ä‘á»ƒ nháº­n pháº§n thÆ°á»Ÿng nhá» chÆ°a Ä‘Æ°á»£c nháº­n...</yellow>"
+  claiming_item: "<yellow>ÄÃ²i %item_name% tá»« RaindropCentral...</yellow>"
+  success:
+    claimed: "<green>Báº¡n Ä‘Ã£ yÃªu cáº§u %item_name%.</green>"
+    claimed_skill_targeted: "<green>Báº¡n Ä‘Ã£ nháº­n Ä‘Æ°á»£c %item_name%.</green> <gray>Nháº¥p chuá»™t pháº£i vÃ o cookie Ä‘á»ƒ chá»n ká»¹ nÄƒng.</gray>"
+    claimed_job_targeted: "<green>Báº¡n Ä‘Ã£ yÃªu cáº§u %item_name%.</green> <gray>Nháº¥p chuá»™t pháº£i vÃ o cookie Ä‘á»ƒ chá»n cÃ´ng viá»‡c.</gray>"
+    claimed_activate: "<green>Báº¡n Ä‘Ã£ yÃªu cáº§u %item_name%.</green> <gray>Nháº¥p chuá»™t pháº£i vÃ o cookie Ä‘á»ƒ kÃ­ch hoáº¡t nÃ³.</gray>"
+    skill_granted: "<green>ÄÆ°á»£c cáº¥p 1 cáº¥p trong %skill_name%.</green> <gray>Nguá»“n: %plugin_name%.</gray>"
+    job_granted: "<green>ÄÆ°á»£c cáº¥p 1 cáº¥p trong %job_name%.</green> <gray>Nguá»“n: %plugin_name%.</gray>"
+    skill_xp_boost_applied: "<green>ÄÃ£ kÃ­ch hoáº¡t +%rate_percent%% ká»¹ nÄƒng XP cho %skill_name%.</green> <gray>Nguá»“n: %plugin_name%. Thá»i lÆ°á»£ng: %duration_minutes% phÃºt.</gray>"
+    skill_xp_boost_refreshed: "<green>Refreshed +%rate_percent%% ká»¹ nÄƒng XP cho %skill_name%.</green> <gray>Nguá»“n: %plugin_name%. Äáº·t láº¡i thá»i lÆ°á»£ng vá» %duration_minutes% phÃºt.</gray>"
+    job_xp_boost_applied: "<green>ÄÃ£ kÃ­ch hoáº¡t +%rate_percent%% cÃ´ng viá»‡c XP cho %job_name%.</green> <gray>Nguá»“n: %plugin_name%. Thá»i lÆ°á»£ng: %duration_minutes% phÃºt.</gray>"
+    job_xp_boost_refreshed: "<green>Refreshed +%rate_percent%% job XP cho %job_name%.</green> <gray>Nguá»“n: %plugin_name%. Äáº·t láº¡i thá»i lÆ°á»£ng vá» %duration_minutes% phÃºt.</gray>"
+    job_vault_boost_applied: "<green>ÄÃ£ kÃ­ch hoáº¡t +%rate_percent%% tiá»n cÃ´ng viá»‡c cho %job_name%.</green> <gray>Nguá»“n: %plugin_name%. Thá»i lÆ°á»£ng: %duration_minutes% phÃºt.</gray>"
+    job_vault_boost_refreshed: "<green>Refreshed +%rate_percent%% tiá»n cÃ´ng viá»‡c cho %job_name%.</green> <gray>Nguá»“n: %plugin_name%. Äáº·t láº¡i thá»i lÆ°á»£ng vá» %duration_minutes% phÃºt.</gray>"
+    double_drop_boost_applied: "<green>ÄÃ£ kÃ­ch hoáº¡t hai láº§n giáº£m.</green> <gray>Duration: %duration_minutes% phÃºt.</gray>"
+    double_drop_boost_refreshed: "<green>Giáº£m hai láº§n Ä‘Æ°á»£c lÃ m má»›i.</green> <gray>D Äáº·t láº¡i thá»i gian thÃ nh %duration_minutes% phÃºt.</gray>"
+    pending_delivery: "<green>DÄÃ£ phÃ¢n phá»‘i %count% Ä‘ang chá» pháº§n thÆ°á»Ÿng nhá» giá»t.</green>"
+  error:
+    store_disabled: "<red>MÃ¡y chá»§ nÃ y Ä‘Ã£ táº¯t /rc claim droplets.</red>"
+    not_connected: "<red>RCore pháº£i Ä‘Æ°á»£c káº¿t ná»‘i vá»›i pháº§n phá»¥ trá»£ RaindropCentral trÆ°á»›c khi báº¡n cÃ³ thá»ƒ yÃªu cáº§u cÃ¡c giá»t.</red>"
+    cooldown: "<yellow>Vui lÃ²ng Ä‘á»£i %seconds% giÃ¢y trÆ°á»›c khi sá»­ dá»¥ng láº¡i /rc claim droplets.</yellow>"
+    not_registered: "<red>TÃ i khoáº£n Minecraft cá»§a báº¡n khÃ´ng Ä‘Æ°á»£c liÃªn káº¿t vá»›i tÃ i khoáº£n RaindropCentral.</red>"
+    no_unclaimed: "<yellow>Báº¡n hiá»‡n khÃ´ng cÃ³ báº¥t ká»³ pháº§n thÆ°á»Ÿng nhá» nÃ o chÆ°a Ä‘Æ°á»£c nháº­n.</yellow>"
+    api_unavailable: "<red>RaindropCentral hiá»‡n khÃ´ng kháº£ dá»¥ng: %error%</red>"
+    menu_unavailable: "<red>Hiá»‡n khÃ´ng cÃ³ menu xÃ¡c nháº­n giá»t nhá». Vui lÃ²ng thá»­ láº¡i sau.</red>"
+    item_disabled: "<red>MÃ¡y chá»§ nÃ y Ä‘Ã£ vÃ´ hiá»‡u hÃ³a viá»‡c xÃ¡c nháº­n %item_name%.</red> <gray>Item ID: %item_code%</gray>"
+    unsupported_item: "<red>Pháº§n thÆ°á»Ÿng nhá» nÃ y chÆ°a Ä‘Æ°á»£c há»— trá»£ trÃªn mÃ¡y chá»§ nÃ y.</red> <gray>ID váº­t pháº©m: %item_code%</gray>"
+    no_supported_skills: "<red>MÃ¡y chá»§ nÃ y hiá»‡n khÃ´ng cÃ³ plugin ká»¹ nÄƒng Ä‘Æ°á»£c há»— trá»£ cho pháº§n thÆ°á»Ÿng nÃ y.</red>"
+    no_supported_jobs: "<red>MÃ¡y chá»§ nÃ y hiá»‡n khÃ´ng cÃ³ plugin cÃ´ng viá»‡c Ä‘Æ°á»£c há»— trá»£ cho pháº§n thÆ°á»Ÿng nÃ y.</red>"
+    inventory_full: "<red>Báº¡n cáº§n Ã­t nháº¥t má»™t Ã´ kho Ä‘á»“ miá»…n phÃ­ trÆ°á»›c khi nháº­n pháº§n thÆ°á»Ÿng nÃ y.</red>"
+    claim_in_progress: "<yellow>XÃ¡c nháº­n quyá»n sá»Ÿ há»¯u Ä‘Ã³ Ä‘Ã£ Ä‘Æ°á»£c tiáº¿n hÃ nh. Vui lÃ²ng Ä‘á»£i pháº§n phá»¥ trá»£ pháº£n há»“i.</yellow>"
+    claim_failed: "<red>KhÃ´ng thá»ƒ nháº­n pháº§n thÆ°á»Ÿng nhá» Ä‘Ã³: %error%</red>"
+    already_claimed: "<yellow>Pháº§n thÆ°á»Ÿng nhá» Ä‘Ã³ Ä‘Ã£ Ä‘Æ°á»£c nháº­n.</yellow>"
+    purchase_unavailable: "<red>Pháº§n thÆ°á»Ÿng nhá» Ä‘Ã³ khÃ´ng cÃ²n cÃ³ thá»ƒ nháº­n Ä‘Æ°á»£c ná»¯a.</red>"
+    cookie_missing: "<red>KhÃ´ng thá»ƒ tÃ¬m tháº¥y cookie nhá» trong kho cá»§a báº¡n.</red>"
+    skill_grant_failed: "<red>KhÃ´ng thá»ƒ cáº¥p 1 cáº¥p trong %skill_name%.</red>"
+    job_grant_failed: "<red>KhÃ´ng thá»ƒ cáº¥p 1 cáº¥p trong %job_name%.</red>"
+    boost_activation_failed: "<red>KhÃ´ng thá»ƒ kÃ­ch hoáº¡t %item_name%.</red>"
+    unsupported_integration: "<red>Sá»± tÃ­ch há»£p báº¯t buá»™c cho cookie nhá» nÃ y hiá»‡n khÃ´ng kháº£ dá»¥ng.</red>"
+    boost_expired: "<yellow>Viá»‡c tÄƒng cÆ°á»ng cookie nhá» giá»t Ä‘Ã³ Ä‘Ã£ háº¿t háº¡n.</yellow>"
 
 rc_claim_droplets_ui:
-  title: "Những giọt không có người nhận"
+  title: "Nhá»¯ng giá»t khÃ´ng cÃ³ ngÆ°á»i nháº­n"
   page:
     name: "<yellow>Trang %page%/%max_page%</yellow>"
     lore:
-      - "<gray>%items_count% các mục có thể xác nhận quyền sở hữu được liệt kê.</gray>"
+      - "<gray>%items_count% cÃ¡c má»¥c cÃ³ thá»ƒ xÃ¡c nháº­n quyá»n sá»Ÿ há»¯u Ä‘Æ°á»£c liá»‡t kÃª.</gray>"
   summary:
-    name: "<gold>Xếp hàng yêu cầu</gold>"
+    name: "<gold>Xáº¿p hÃ ng yÃªu cáº§u</gold>"
     lore:
-      - "<gray>Mục chưa được xác nhận: %item_count%</gray>"
-      - "<gray>Được hỗ trợ trên máy chủ này: %supported_count%</gray>"
-      - "<yellow>Nhấp vào phần thưởng được hỗ trợ để nhận nó.</yellow>"
+      - "<gray>Má»¥c chÆ°a Ä‘Æ°á»£c xÃ¡c nháº­n: %item_count%</gray>"
+      - "<gray>ÄÆ°á»£c há»— trá»£ trÃªn mÃ¡y chá»§ nÃ y: %supported_count%</gray>"
+      - "<yellow>Nháº¥p vÃ o pháº§n thÆ°á»Ÿng Ä‘Æ°á»£c há»— trá»£ Ä‘á»ƒ nháº­n nÃ³.</yellow>"
   empty:
-    name: "<red>Không có phần thưởng chưa được nhận</red>"
+    name: "<red>KhÃ´ng cÃ³ pháº§n thÆ°á»Ÿng chÆ°a Ä‘Æ°á»£c nháº­n</red>"
     lore:
-      - "<gray>Bạn hiện không có bất kỳ phần thưởng nhỏ nào chưa được nhận.</gray>"
+      - "<gray>Báº¡n hiá»‡n khÃ´ng cÃ³ báº¥t ká»³ pháº§n thÆ°á»Ÿng nhá» nÃ o chÆ°a Ä‘Æ°á»£c nháº­n.</gray>"
   entry:
     supported:
       name: "<green>%item_name%</green>"
       lore:
-        - "<gray>ID mặt hàng: %item_code%</gray>"
-        - "<gray>Đã tiêu: %amount_spent% giọt</gray>"
-        - "<yellow>Nhấp để nhận phần thưởng này.</yellow>"
+        - "<gray>ID máº·t hÃ ng: %item_code%</gray>"
+        - "<gray>ÄÃ£ tiÃªu: %amount_spent% giá»t</gray>"
+        - "<yellow>Nháº¥p Ä‘á»ƒ nháº­n pháº§n thÆ°á»Ÿng nÃ y.</yellow>"
     item_disabled:
       name: "<red>%item_name%</red>"
       lore:
-        - "<gray>ID mặt hàng: %item_code%</gray>"
-        - "<red>Máy chủ này đã vô hiệu hóa việc nhận phần thưởng này.</red>"
+        - "<gray>ID máº·t hÃ ng: %item_code%</gray>"
+        - "<red>MÃ¡y chá»§ nÃ y Ä‘Ã£ vÃ´ hiá»‡u hÃ³a viá»‡c nháº­n pháº§n thÆ°á»Ÿng nÃ y.</red>"
     unsupported_item:
       name: "<red>%item_name%</red>"
       lore:
-        - "<gray>ID mặt hàng: %item_code%</gray>"
-        - "<red>Phần thưởng này không được hỗ trợ trên máy chủ này.</red>"
+        - "<gray>ID máº·t hÃ ng: %item_code%</gray>"
+        - "<red>Pháº§n thÆ°á»Ÿng nÃ y khÃ´ng Ä‘Æ°á»£c há»— trá»£ trÃªn mÃ¡y chá»§ nÃ y.</red>"
     no_skills:
       name: "<red>%item_name%</red>"
       lore:
-        - "<gray>ID mặt hàng: %item_code%</gray>"
-        - "<red>Không có plugin kỹ năng hỗ trợ nào được cài đặt cho phần thưởng này.</red>"
+        - "<gray>ID máº·t hÃ ng: %item_code%</gray>"
+        - "<red>KhÃ´ng cÃ³ plugin ká»¹ nÄƒng há»— trá»£ nÃ o Ä‘Æ°á»£c cÃ i Ä‘áº·t cho pháº§n thÆ°á»Ÿng nÃ y.</red>"
     no_jobs:
       name: "<red>%item_name%</red>"
       lore:
-        - "<gray>ID mặt hàng: %item_code%</gray>"
-        - "<red>Không có plugin công việc được hỗ trợ nào được cài đặt cho phần thưởng này.</red>"
+        - "<gray>ID máº·t hÃ ng: %item_code%</gray>"
+        - "<red>KhÃ´ng cÃ³ plugin cÃ´ng viá»‡c Ä‘Æ°á»£c há»— trá»£ nÃ o Ä‘Æ°á»£c cÃ i Ä‘áº·t cho pháº§n thÆ°á»Ÿng nÃ y.</red>"
 
 rc_claim_droplet_skills_ui:
-  title: "Chọn một kỹ năng"
+  title: "Chá»n má»™t ká»¹ nÄƒng"
   page:
     name: "<yellow>Trang %page%/%max_page%</yellow>"
     lore:
-      - "Các mục kỹ năng <gray>%items_count% được liệt kê.</gray>"
+      - "CÃ¡c má»¥c ká»¹ nÄƒng <gray>%items_count% Ä‘Æ°á»£c liá»‡t kÃª.</gray>"
   summary:
-    name: "<gold>Lựa chọn kỹ năng</gold>"
+    name: "<gold>Lá»±a chá»n ká»¹ nÄƒng</gold>"
     lore:
-      - "<gray>Các kỹ năng có sẵn: %skill_count%</gray>"
-      - "<yellow>Chọn một kỹ năng để sử dụng cookie.</yellow>"
+      - "<gray>CÃ¡c ká»¹ nÄƒng cÃ³ sáºµn: %skill_count%</gray>"
+      - "<yellow>Chá»n má»™t ká»¹ nÄƒng Ä‘á»ƒ sá»­ dá»¥ng cookie.</yellow>"
   empty:
-    name: "<red>Không có kỹ năng nào</red>"
+    name: "<red>KhÃ´ng cÃ³ ká»¹ nÄƒng nÃ o</red>"
     lore:
-      - "<gray>Hiện không có kỹ năng hỗ trợ nào.</gray>"
+      - "<gray>Hiá»‡n khÃ´ng cÃ³ ká»¹ nÄƒng há»— trá»£ nÃ o.</gray>"
   entry:
     name: "<green>%skill_name%</green>"
     level_lore:
       - "<gray>Plugin: %plugin_name%</gray>"
-      - "<gray>Cấp độ hiện tại: %current_level%</gray>"
-      - "<yellow>Click để tăng 1 cấp cho kỹ năng này.</yellow>"
+      - "<gray>Cáº¥p Ä‘á»™ hiá»‡n táº¡i: %current_level%</gray>"
+      - "<yellow>Click Ä‘á»ƒ tÄƒng 1 cáº¥p cho ká»¹ nÄƒng nÃ y.</yellow>"
     boost_lore:
       - "<gray>Plugin: %plugin_name%</gray>"
-      - "<gray>Cấp độ hiện tại: %current_level%</gray>"
-      - "<gray>Boost: +%rate_percent%% XP cho %duration_minutes% phút</gray>"
-      - "<yellow>Click để kích hoạt kỹ năng tăng cường này.</yellow>"
+      - "<gray>Cáº¥p Ä‘á»™ hiá»‡n táº¡i: %current_level%</gray>"
+      - "<gray>Boost: +%rate_percent%% XP cho %duration_minutes% phÃºt</gray>"
+      - "<yellow>Click Ä‘á»ƒ kÃ­ch hoáº¡t ká»¹ nÄƒng tÄƒng cÆ°á»ng nÃ y.</yellow>"
 
 rc_claim_droplet_jobs_ui:
-  title: "Chọn một công việc"
+  title: "Chá»n má»™t cÃ´ng viá»‡c"
   page:
     name: "<yellow>Trang %page%/%max_page%</yellow>"
     lore:
-      - "Các mục công việc <gray>%items_count% được liệt kê.</gray>"
+      - "CÃ¡c má»¥c cÃ´ng viá»‡c <gray>%items_count% Ä‘Æ°á»£c liá»‡t kÃª.</gray>"
   summary:
-    name: "<gold>Lựa chọn công việc</gold>"
+    name: "<gold>Lá»±a chá»n cÃ´ng viá»‡c</gold>"
     lore:
-      - "<gray>Việc làm đang có: %job_count%</gray>"
-      - "<yellow>Chọn một công việc để sử dụng cookie.</yellow>"
+      - "<gray>Viá»‡c lÃ m Ä‘ang cÃ³: %job_count%</gray>"
+      - "<yellow>Chá»n má»™t cÃ´ng viá»‡c Ä‘á»ƒ sá»­ dá»¥ng cookie.</yellow>"
   empty:
-    name: "<red>Không có việc làm</red>"
+    name: "<red>KhÃ´ng cÃ³ viá»‡c lÃ m</red>"
     lore:
-      - "<gray>Hiện không có công việc được hỗ trợ nào.</gray>"
+      - "<gray>Hiá»‡n khÃ´ng cÃ³ cÃ´ng viá»‡c Ä‘Æ°á»£c há»— trá»£ nÃ o.</gray>"
   entry:
     name: "<green>%job_name%</green>"
     level_lore:
       - "<gray>Plugin: %plugin_name%</gray>"
-      - "<gray>Cấp độ hiện tại: %current_level%</gray>"
-      - "<yellow>Click để tăng 1 cấp trong công việc này.</yellow>"
+      - "<gray>Cáº¥p Ä‘á»™ hiá»‡n táº¡i: %current_level%</gray>"
+      - "<yellow>Click Ä‘á»ƒ tÄƒng 1 cáº¥p trong cÃ´ng viá»‡c nÃ y.</yellow>"
     xp_boost_lore:
       - "<gray>Plugin: %plugin_name%</gray>"
-      - "<gray>Cấp độ hiện tại: %current_level%</gray>"
-      - "<gray>Boost: +%rate_percent%% XP cho %duration_minutes% phút</gray>"
-      - "<yellow>Click để kích hoạt công việc này XP boost.</yellow>"
+      - "<gray>Cáº¥p Ä‘á»™ hiá»‡n táº¡i: %current_level%</gray>"
+      - "<gray>Boost: +%rate_percent%% XP cho %duration_minutes% phÃºt</gray>"
+      - "<yellow>Click Ä‘á»ƒ kÃ­ch hoáº¡t cÃ´ng viá»‡c nÃ y XP boost.</yellow>"
     vault_boost_lore:
       - "<gray>Plugin: %plugin_name%</gray>"
-      - "<gray>Cấp độ hiện tại: %current_level%</gray>"
-      - "<gray>Boost: +%rate_percent%% tiền cho %duration_minutes% phút</gray>"
-      - "<yellow>Click để kích hoạt công việc tăng tiền này.</yellow>"
+      - "<gray>Cáº¥p Ä‘á»™ hiá»‡n táº¡i: %current_level%</gray>"
+      - "<gray>Boost: +%rate_percent%% tiá»n cho %duration_minutes% phÃºt</gray>"
+      - "<yellow>Click Ä‘á»ƒ kÃ­ch hoáº¡t cÃ´ng viá»‡c tÄƒng tiá»n nÃ y.</yellow>"
 
 general:
-  no_permission: "<red>Bạn không có quyền sử dụng lệnh này.</red>"
+  no_permission: "<red>Báº¡n khÃ´ng cÃ³ quyá»n sá»­ dá»¥ng lá»‡nh nÃ y.</red>"
+
+

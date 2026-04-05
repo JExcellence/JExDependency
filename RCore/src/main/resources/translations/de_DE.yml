@@ -1,15 +1,15 @@
-# German translations for RCore Central Integration
+﻿# German translations for RCore Central Integration
 
 prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
 
 rcconnect:
-  usage: "<gray>Verwendung: /rc <connect &lt;api-key&gt;|disconnect|claim droplets></gray>"
+  usage: "<gray>Verwendung: /rc <connect &lt;api-key&gt;|disconnect|claim droplets|store update></gray>"
   usage_no_claim: "<gray>Verwendung: /rc <connect &lt;api-key&gt;|disconnect></gray>"
   connecting: "<yellow>Verbinde mit RaindropCentral...</yellow>"
   success: "<green>Erfolgreich mit RaindropCentral verbunden!</green> <gray>Server sendet jetzt Heartbeats.</gray>"
   error:
-    invalid_key: "<red>Ungültiges API-Key Format. API-Keys sollten 32-128 alphanumerische Zeichen haben.</red>"
-    uuid_mismatch: "<red>Dieser API-Key gehört zu einem anderen Minecraft-Account.</red>"
+    invalid_key: "<red>UngÃ¼ltiges API-Key Format. API-Keys sollten 32-128 alphanumerische Zeichen haben.</red>"
+    uuid_mismatch: "<red>Dieser API-Key gehÃ¶rt zu einem anderen Minecraft-Account.</red>"
     already_connected: "<yellow>Server ist bereits verbunden.</yellow> <gray>Verwenden Sie zuerst /rc disconnect.</gray>"
     network: "<red>Netzwerkfehler: %error%</red>"
 
@@ -21,61 +21,68 @@ rcdisconnect:
     failed: "<red>Trennung fehlgeschlagen. Bitte erneut versuchen.</red>"
     network: "<red>Netzwerkfehler: %error%</red>"
 
+rcstore:
+  updating: "<yellow>Refreshing the local droplet-store allowlist from RaindropCentral...</yellow>"
+  success: "<green>Updated the local droplet-store allowlist.</green> <gray>%count% item(s) are currently allowed.</gray>"
+  error:
+    not_connected: "<red>RCore must be connected to the RaindropCentral backend before the store allowlist can be updated.</red>"
+    failed: "<red>Failed to refresh the droplet-store allowlist: %error%</red>"
+    using_cache: "<yellow>Failed to refresh the droplet-store allowlist, but the last cached list is still being used: %error%</yellow>"
 rcclaim:
-  loading: "<yellow>Überprüfe RaindropCentral auf nicht beanspruchte Droplet-Belohnungen...</yellow>"
+  loading: "<yellow>ÃœberprÃ¼fe RaindropCentral auf nicht beanspruchte Droplet-Belohnungen...</yellow>"
   claiming_item: "<yellow>%item_name% wird von RaindropCentral...</yellow> beansprucht"
   success:
     claimed: "<green>Sie haben %item_name%.</green> beansprucht"
-    claimed_skill_targeted: "<green>Du hast %item_name% beansprucht.</green> <gray>Rechtsklick auf das Cookie, um eine Fertigkeit auszuwählen.</gray>"
-    claimed_job_targeted: "<green>Sie haben %item_name% beansprucht.</green> <gray>Rechtsklick auf das Cookie, um einen Job auszuwählen.</gray>"
+    claimed_skill_targeted: "<green>Du hast %item_name% beansprucht.</green> <gray>Rechtsklick auf das Cookie, um eine Fertigkeit auszuwÃ¤hlen.</gray>"
+    claimed_job_targeted: "<green>Sie haben %item_name% beansprucht.</green> <gray>Rechtsklick auf das Cookie, um einen Job auszuwÃ¤hlen.</gray>"
     claimed_activate: "<green>Sie haben %item_name% beansprucht.</green> <gray>Rechtsklick auf das Cookie, um es zu aktivieren.</gray>"
-    skill_granted: "<green>Gewährt 1 Level in %skill_name%.</green> <gray>Quelle: %plugin_name%.</gray>"
-    job_granted: "<green>Gewährt 1 Level in %job_name%.</green> <gray>Quelle: %plugin_name%.</gray>"
-    skill_xp_boost_applied: "<green>Aktivierte +%rate_percent%% Fertigkeits-EP für %skill_name%.</green> <gray>Quelle: %plugin_name%. Dauer: %duration_minutes% Minute(n).</gray>"
-    skill_xp_boost_refreshed: "<green>Reaktualisierte +%rate_percent%% Fertigkeits-EP für %skill_name%.</green> <gray>Quelle: %plugin_name%. Dauer auf %duration_minutes% Minute(n) zurückgesetzt.</gray>"
-    job_xp_boost_applied: "<green>Aktivierter +%rate_percent%% Job XP für %job_name%.</green> <gray>Quelle: %plugin_name%. Dauer: %duration_minutes% Minute(n).</gray>"
-    job_xp_boost_refreshed: "<green>Reaktualisierte +%rate_percent%% Job-XP für %job_name%.</green> <gray>Quelle: %plugin_name%. Dauer auf %duration_minutes% Minute(n) zurückgesetzt.</gray>"
-    job_vault_boost_applied: "<green>Aktiviertes +%rate_percent%% Jobgeld für %job_name%.</green> <gray>Quelle: %plugin_name%. Dauer: %duration_minutes% Minute(n).</gray>"
-    job_vault_boost_refreshed: "<green>Reaktualisiertes +%rate_percent%% Jobgeld für %job_name%.</green> <gray>Quelle: %plugin_name%. Dauer auf %duration_minutes% Minute(n) zurückgesetzt.</gray>"
+    skill_granted: "<green>GewÃ¤hrt 1 Level in %skill_name%.</green> <gray>Quelle: %plugin_name%.</gray>"
+    job_granted: "<green>GewÃ¤hrt 1 Level in %job_name%.</green> <gray>Quelle: %plugin_name%.</gray>"
+    skill_xp_boost_applied: "<green>Aktivierte +%rate_percent%% Fertigkeits-EP fÃ¼r %skill_name%.</green> <gray>Quelle: %plugin_name%. Dauer: %duration_minutes% Minute(n).</gray>"
+    skill_xp_boost_refreshed: "<green>Reaktualisierte +%rate_percent%% Fertigkeits-EP fÃ¼r %skill_name%.</green> <gray>Quelle: %plugin_name%. Dauer auf %duration_minutes% Minute(n) zurÃ¼ckgesetzt.</gray>"
+    job_xp_boost_applied: "<green>Aktivierter +%rate_percent%% Job XP fÃ¼r %job_name%.</green> <gray>Quelle: %plugin_name%. Dauer: %duration_minutes% Minute(n).</gray>"
+    job_xp_boost_refreshed: "<green>Reaktualisierte +%rate_percent%% Job-XP fÃ¼r %job_name%.</green> <gray>Quelle: %plugin_name%. Dauer auf %duration_minutes% Minute(n) zurÃ¼ckgesetzt.</gray>"
+    job_vault_boost_applied: "<green>Aktiviertes +%rate_percent%% Jobgeld fÃ¼r %job_name%.</green> <gray>Quelle: %plugin_name%. Dauer: %duration_minutes% Minute(n).</gray>"
+    job_vault_boost_refreshed: "<green>Reaktualisiertes +%rate_percent%% Jobgeld fÃ¼r %job_name%.</green> <gray>Quelle: %plugin_name%. Dauer auf %duration_minutes% Minute(n) zurÃ¼ckgesetzt.</gray>"
     double_drop_boost_applied: "<green>Aktivierte Doppeldrops.</green> <gray>Dauer: %duration_minutes% Minute(n).</gray>"
-    double_drop_boost_refreshed: "<green>Aktualisierte Doppeltropfen.</green> <gray>Dauer zurückgesetzt auf %duration_minutes% Minute(n).</gray>"
+    double_drop_boost_refreshed: "<green>Aktualisierte Doppeltropfen.</green> <gray>Dauer zurÃ¼ckgesetzt auf %duration_minutes% Minute(n).</gray>"
     pending_delivery: "<green>Lieferung %count% ausstehende Droplet-Belohnung(en).</green>"
   error:
     store_disabled: "<red>Dieser Server hat /rc claim droplets.</red> deaktiviert"
-    not_connected: "<red>RCore muss mit dem RaindropCentral-Backend verbunden sein, bevor Sie Droplets beanspruchen können.</red>"
+    not_connected: "<red>RCore muss mit dem RaindropCentral-Backend verbunden sein, bevor Sie Droplets beanspruchen kÃ¶nnen.</red>"
     cooldown: "<yellow>Bitte warten Sie %seconds% Sekunde(n), bevor Sie /rc claim droplets erneut verwenden.</yellow>"
-    not_registered: "<red>YIhr Minecraft-Konto ist nicht mit einem RaindropCentral-Konto verknüpft.</red>"
+    not_registered: "<red>YIhr Minecraft-Konto ist nicht mit einem RaindropCentral-Konto verknÃ¼pft.</red>"
     no_unclaimed: "<yellow>Sie haben derzeit keine nicht beanspruchten Droplet-Belohnungen.</yellow>"
-    api_unavailable: "<red>RaindropCentral ist derzeit nicht verfügbar: %error%</red>"
-    menu_unavailable: "<red>Das Droplet-Anspruchsmenü ist derzeit nicht verfügbar. Bitte versuchen Sie es später noch einmal.</red>"
+    api_unavailable: "<red>RaindropCentral ist derzeit nicht verfÃ¼gbar: %error%</red>"
+    menu_unavailable: "<red>Das Droplet-AnspruchsmenÃ¼ ist derzeit nicht verfÃ¼gbar. Bitte versuchen Sie es spÃ¤ter noch einmal.</red>"
     item_disabled: "<red>Dieser Server hat die Beanspruchung von %item_name%.</red> <gray>Artikel-ID: %item_code%</gray> deaktiviert"
-    unsupported_item: "<red>Diese Droplet-Belohnung wird auf diesem Server noch nicht unterstützt.</red> <gray>Artikel-ID: %item_code%</gray>"
-    no_supported_skills: "<red>Dieser Server verfügt derzeit nicht über ein unterstütztes Skills-Plugin für diese Belohnung.</red>"
-    no_supported_jobs: "<red>Dieser Server verfügt derzeit nicht über ein unterstütztes Job-Plugin für diese Belohnung.</red>"
-    inventory_full: "<red>Du benötigst mindestens einen freien Inventarplatz, bevor du diese Belohnung beanspruchen kannst.</red>"
+    unsupported_item: "<red>Diese Droplet-Belohnung wird auf diesem Server noch nicht unterstÃ¼tzt.</red> <gray>Artikel-ID: %item_code%</gray>"
+    no_supported_skills: "<red>Dieser Server verfÃ¼gt derzeit nicht Ã¼ber ein unterstÃ¼tztes Skills-Plugin fÃ¼r diese Belohnung.</red>"
+    no_supported_jobs: "<red>Dieser Server verfÃ¼gt derzeit nicht Ã¼ber ein unterstÃ¼tztes Job-Plugin fÃ¼r diese Belohnung.</red>"
+    inventory_full: "<red>Du benÃ¶tigst mindestens einen freien Inventarplatz, bevor du diese Belohnung beanspruchen kannst.</red>"
     claim_in_progress: "<yellow>Dieser Anspruch ist bereits in Bearbeitung. Bitte warten Sie, bis das Backend antwortet.</yellow>"
-    claim_failed: "<red>Die Tröpfchenbelohnung konnte nicht beansprucht werden: %error%</red>"
+    claim_failed: "<red>Die TrÃ¶pfchenbelohnung konnte nicht beansprucht werden: %error%</red>"
     already_claimed: "<yellow>Diese Tropfenbelohnung wurde bereits beansprucht.</yellow>"
     purchase_unavailable: "<red>Diese Tropfenbelohnung kann nicht mehr eingefordert werden.</red>"
     cookie_missing: "<red>Das Droplet-Cookie konnte in Ihrem Inventar nicht gefunden werden.</red>"
-    skill_grant_failed: "<red>Es konnte kein Level in %skill_name%.</red> gewährt werden"
-    job_grant_failed: "<red>Es konnte kein Level in %job_name%.</red> gewährt werden"
+    skill_grant_failed: "<red>Es konnte kein Level in %skill_name%.</red> gewÃ¤hrt werden"
+    job_grant_failed: "<red>Es konnte kein Level in %job_name%.</red> gewÃ¤hrt werden"
     boost_activation_failed: "<red>Fehler beim Aktivieren von %item_name%.</red>"
-    unsupported_integration: "<red>Die erforderliche Integration für dieses Droplet-Cookie ist derzeit nicht verfügbar.</red>"
+    unsupported_integration: "<red>Die erforderliche Integration fÃ¼r dieses Droplet-Cookie ist derzeit nicht verfÃ¼gbar.</red>"
     boost_expired: "<yellow>Dieser Droplet-Cookie-Boost ist abgelaufen.</yellow>"
 
 rc_claim_droplets_ui:
-  title: "Nicht beanspruchte Tröpfchen"
+  title: "Nicht beanspruchte TrÃ¶pfchen"
   page:
     name: "<yellow>Seite %page%/%max_page%</yellow>"
     lore:
-      - "<gray>%items_count% beanspruchbare Einträge aufgelistet.</gray>"
+      - "<gray>%items_count% beanspruchbare EintrÃ¤ge aufgelistet.</gray>"
   summary:
     name: "<gold>Anspruchswarteschlange</gold>"
     lore:
-      - "<gray>Nicht beanspruchte Einträge: %item_count%</gray>"
-      - "<gray>Unterstützt auf diesem Server: %supported_count%</gray>"
-      - "<yellow>Klicken Sie auf eine unterstützte Belohnung, um sie einzufordern.</yellow>"
+      - "<gray>Nicht beanspruchte EintrÃ¤ge: %item_count%</gray>"
+      - "<gray>UnterstÃ¼tzt auf diesem Server: %supported_count%</gray>"
+      - "<yellow>Klicken Sie auf eine unterstÃ¼tzte Belohnung, um sie einzufordern.</yellow>"
   empty:
     name: "<red>Keine nicht beanspruchten Belohnungen</red>"
     lore:
@@ -85,7 +92,7 @@ rc_claim_droplets_ui:
       name: "<green>%item_name%</green>"
       lore:
         - "<gray>Artikel-ID: %item_code%</gray>"
-        - "<gray>Ausgegeben: %amount_spent% Tröpfchen</gray>"
+        - "<gray>Ausgegeben: %amount_spent% TrÃ¶pfchen</gray>"
         - "<yellow>Klicken Sie hier, um diese Belohnung einzufordern.</yellow>"
     item_disabled:
       name: "<red>%item_name%</red>"
@@ -96,33 +103,33 @@ rc_claim_droplets_ui:
       name: "<red>%item_name%</red>"
       lore:
         - "<gray>Artikel-ID: %item_code%</gray>"
-        - "<red>Diese Belohnung wird auf diesem Server nicht unterstützt.</red>"
+        - "<red>Diese Belohnung wird auf diesem Server nicht unterstÃ¼tzt.</red>"
     no_skills:
       name: "<red>%item_name%</red>"
       lore:
         - "<gray>Artikel-ID: %item_code%</gray>"
-        - "<red>Für diese Belohnung ist kein unterstütztes Skills-Plugin installiert.</red>"
+        - "<red>FÃ¼r diese Belohnung ist kein unterstÃ¼tztes Skills-Plugin installiert.</red>"
     no_jobs:
       name: "<red>%item_name%</red>"
       lore:
         - "<gray>Artikel-ID: %item_code%</gray>"
-        - "<red>Für diese Belohnung ist kein unterstütztes Job-Plugin installiert.</red>"
+        - "<red>FÃ¼r diese Belohnung ist kein unterstÃ¼tztes Job-Plugin installiert.</red>"
 
 rc_claim_droplet_skills_ui:
-  title: "Wählen Sie eine Fähigkeit"
+  title: "WÃ¤hlen Sie eine FÃ¤higkeit"
   page:
     name: "<yellow>Seite %page%/%max_page%</yellow>"
     lore:
-      - "<gray>%items_count% Skill-Einträge aufgelistet.</gray>"
+      - "<gray>%items_count% Skill-EintrÃ¤ge aufgelistet.</gray>"
   summary:
     name: "<gold>Fertigkeitsauswahl</gold>"
     lore:
-      - "<gray>Averfügbare Fähigkeiten: %skill_count%</gray>"
-      - "<yellow>Wählen Sie einen Skill aus, um das Cookie zu nutzen.</yellow>"
+      - "<gray>AverfÃ¼gbare FÃ¤higkeiten: %skill_count%</gray>"
+      - "<yellow>WÃ¤hlen Sie einen Skill aus, um das Cookie zu nutzen.</yellow>"
   empty:
-    name: "<red>Keine Fähigkeiten verfügbar</red>"
+    name: "<red>Keine FÃ¤higkeiten verfÃ¼gbar</red>"
     lore:
-      - "<gray>Im Moment sind keine unterstützten Fähigkeiten verfügbar.</gray>"
+      - "<gray>Im Moment sind keine unterstÃ¼tzten FÃ¤higkeiten verfÃ¼gbar.</gray>"
   entry:
     name: "<green>%skill_name%</green>"
     level_lore:
@@ -132,24 +139,24 @@ rc_claim_droplet_skills_ui:
     boost_lore:
       - "<gray>Plugin: %plugin_name%</gray>"
       - "<gray>Aktuelles Niveau: %current_level%</gray>"
-      - "<gray>Boost: +%rate_percent%% XP für %duration_minutes% Minute(n)</gray>"
+      - "<gray>Boost: +%rate_percent%% XP fÃ¼r %duration_minutes% Minute(n)</gray>"
       - "<yellow>Klicken Sie hier, um diesen Skill-Boost zu aktivieren.</yellow>"
 
 rc_claim_droplet_jobs_ui:
-  title: "Wählen Sie einen Job"
+  title: "WÃ¤hlen Sie einen Job"
   page:
     name: "<yellow>Seite %page%/%max_page%</yellow>"
     lore:
-      - "<gray>%items_count% Jobeinträge aufgelistet.</gray>"
+      - "<gray>%items_count% JobeintrÃ¤ge aufgelistet.</gray>"
   summary:
     name: "<gold>Jobauswahl</gold>"
     lore:
-      - "<gray>Averfügbare Jobs: %job_count%</gray>"
-      - "<yellow>Wählen Sie einen Job aus, um das Cookie zu nutzen.</yellow>"
+      - "<gray>AverfÃ¼gbare Jobs: %job_count%</gray>"
+      - "<yellow>WÃ¤hlen Sie einen Job aus, um das Cookie zu nutzen.</yellow>"
   empty:
-    name: "<red>Keine Jobs verfügbar</red>"
+    name: "<red>Keine Jobs verfÃ¼gbar</red>"
     lore:
-      - "<gray>Im Moment sind keine unterstützten Jobs verfügbar.</gray>"
+      - "<gray>Im Moment sind keine unterstÃ¼tzten Jobs verfÃ¼gbar.</gray>"
   entry:
     name: "<green>%job_name%</green>"
     level_lore:
@@ -159,13 +166,15 @@ rc_claim_droplet_jobs_ui:
     xp_boost_lore:
       - "<gray>Plugin: %plugin_name%</gray>"
       - "<gray>Aktuelles Niveau: %current_level%</gray>"
-      - "<gray>Boost: +%rate_percent%% XP für %duration_minutes% Minute(n)</gray>"
-      - "<yellow>Klicken Sie hier, um den XP-Boost für diesen Job zu aktivieren.</yellow>"
+      - "<gray>Boost: +%rate_percent%% XP fÃ¼r %duration_minutes% Minute(n)</gray>"
+      - "<yellow>Klicken Sie hier, um den XP-Boost fÃ¼r diesen Job zu aktivieren.</yellow>"
     vault_boost_lore:
       - "<gray>Plugin: %plugin_name%</gray>"
       - "<gray>Aktuelles Niveau: %current_level%</gray>"
-      - "<gray>Boost: +%rate_percent%% Geld für %duration_minutes% Minute(n)</gray>"
+      - "<gray>Boost: +%rate_percent%% Geld fÃ¼r %duration_minutes% Minute(n)</gray>"
       - "<yellow>Klicken Sie hier, um diesen Jobgeld-Boost zu aktivieren.</yellow>"
 
 general:
-  no_permission: "<red>Du hast keine Berechtigung für diesen Befehl.</red>"
+  no_permission: "<red>Du hast keine Berechtigung fÃ¼r diesen Befehl.</red>"
+
+

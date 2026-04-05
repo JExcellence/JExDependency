@@ -70,6 +70,13 @@ public class RCentralServer extends BaseEntity {
     @Column(name = "plugin_version", length = 20)
     private String pluginVersion;
 
+    @Lob
+    @Column(name = "droplet_store_allowed_item_codes_json")
+    private String dropletStoreAllowedItemCodesJson;
+
+    @Column(name = "droplet_store_allowed_item_codes_fetched_at")
+    private LocalDateTime dropletStoreAllowedItemCodesFetchedAt;
+
     @Column(name = "is_public")
     private boolean isPublic = false;
 
@@ -171,6 +178,28 @@ public class RCentralServer extends BaseEntity {
      * Sets pluginVersion.
      */
     public void setPluginVersion(final @Nullable String pluginVersion) { this.pluginVersion = pluginVersion; }
+    /**
+     * Gets dropletStoreAllowedItemCodesJson.
+     */
+    public @Nullable String getDropletStoreAllowedItemCodesJson() { return dropletStoreAllowedItemCodesJson; }
+    /**
+     * Sets dropletStoreAllowedItemCodesJson.
+     */
+    public void setDropletStoreAllowedItemCodesJson(final @Nullable String dropletStoreAllowedItemCodesJson) {
+        this.dropletStoreAllowedItemCodesJson = dropletStoreAllowedItemCodesJson;
+    }
+    /**
+     * Gets dropletStoreAllowedItemCodesFetchedAt.
+     */
+    public @Nullable LocalDateTime getDropletStoreAllowedItemCodesFetchedAt() {
+        return dropletStoreAllowedItemCodesFetchedAt;
+    }
+    /**
+     * Sets dropletStoreAllowedItemCodesFetchedAt.
+     */
+    public void setDropletStoreAllowedItemCodesFetchedAt(final @Nullable LocalDateTime dropletStoreAllowedItemCodesFetchedAt) {
+        this.dropletStoreAllowedItemCodesFetchedAt = dropletStoreAllowedItemCodesFetchedAt;
+    }
     /**
      * Returns whether public.
      */

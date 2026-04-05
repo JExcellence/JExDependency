@@ -31,8 +31,8 @@ import java.util.regex.Pattern;
 /**
  * Command handler for {@code /rc}.
  *
- * <p>The command supports {@code connect}, {@code disconnect}, and {@code claim droplets}
- * subcommands for RaindropCentral connectivity and droplet reward redemption.</p>
+ * <p>The command supports {@code connect}, {@code disconnect}, {@code claim droplets}, and
+ * {@code store update} subcommands for RaindropCentral connectivity and droplet reward management.</p>
  */
 @Command
 @SuppressWarnings("unused")
@@ -78,6 +78,7 @@ public final class PRC extends PlayerCommand {
             case CONNECT -> this.handleConnect(player, args);
             case DISCONNECT -> this.handleDisconnect(player, args);
             case CLAIM -> this.handleClaim(player, args);
+            case STORE -> this.handleStore(player, args);
             default -> this.sendUsage(player);
         }
     }
@@ -96,25 +97,29 @@ public final class PRC extends PlayerCommand {
             if (this.hasPermission(player, ERCentralPermission.DISCONNECT)) {
                 availableSubcommands.add("disconnect");
             }
-            if (this.hasPermission(player, ERCentralPermission.CLAIM_DROPLETS) && this.dropletClaimService.isDropletStoreEnabled()) {
+            if (this.hasPermission(player, ERCentralPermission.CLAIM_DROPLETS)) {
                 availableSubcommands.add("claim");
+            }
+            if (this.hasPermission(player, ERCentralPermission.STORE_UPDATE)) {
+                availableSubcommands.add("store");
             }
             return StringUtil.copyPartialMatches(args[0], availableSubcommands, new ArrayList<>());
         }
         if (args.length == 2
                 && "claim".equalsIgnoreCase(args[0])
-                && this.hasPermission(player, ERCentralPermission.CLAIM_DROPLETS)
-                && this.dropletClaimService.isDropletStoreEnabled()) {
+                && this.hasPermission(player, ERCentralPermission.CLAIM_DROPLETS)) {
             return StringUtil.copyPartialMatches(args[1], List.of("droplets"), new ArrayList<>());
+        }
+        if (args.length == 2
+                && "store".equalsIgnoreCase(args[0])
+                && this.hasPermission(player, ERCentralPermission.STORE_UPDATE)) {
+            return StringUtil.copyPartialMatches(args[1], List.of("update"), new ArrayList<>());
         }
         return List.of();
     }
 
     private void sendUsage(final @NotNull Player player) {
-        final String usageKey = this.dropletClaimService.isDropletStoreEnabled()
-                ? "rcconnect.usage"
-                : "rcconnect.usage_no_claim";
-        new I18n.Builder(usageKey, player)
+        new I18n.Builder("rcconnect.usage", player)
                 .includePrefix()
                 .build().sendMessage();
     }
@@ -235,10 +240,60 @@ public final class PRC extends PlayerCommand {
         this.dropletClaimService.openClaimsMenu(player);
     }
 
+    private void handleStore(
+            final @NotNull Player player,
+            final @NotNull String[] args
+    ) {
+        if (this.hasNoPermission(player, ERCentralPermission.STORE_UPDATE)) {
+            return;
+        }
+        if (args.length != 2 || !"update".equalsIgnoreCase(args[1])) {
+            this.sendUsage(player);
+            return;
+        }
+        if (!this.centralService.isConnected()) {
+            new I18n.Builder("rcstore.error.not_connected", player)
+                    .includePrefix()
+                    .build().sendMessage();
+            return;
+        }
+
+        new I18n.Builder("rcstore.updating", player)
+                .includePrefix()
+                .build().sendMessage();
+
+        this.centralService.forceRefreshDropletStoreAllowlist()
+                .thenAccept(result -> {
+                    if (result.success()) {
+                        new I18n.Builder("rcstore.success", player)
+                                .includePrefix()
+                                .withPlaceholder("count", result.allowedItemCodes().size())
+                                .build().sendMessage();
+                        return;
+                    }
+
+                    final String errorKey = result.usedCachedValue()
+                            ? "rcstore.error.using_cache"
+                            : "rcstore.error.failed";
+                    new I18n.Builder(errorKey, player)
+                            .includePrefix()
+                            .withPlaceholder("error", result.errorMessage())
+                            .build().sendMessage();
+                })
+                .exceptionally(throwable -> {
+                    new I18n.Builder("rcstore.error.failed", player)
+                            .includePrefix()
+                            .withPlaceholder("error", throwable.getMessage())
+                            .build().sendMessage();
+                    return null;
+                });
+    }
+
     private enum RCAction {
         CONNECT,
         DISCONNECT,
         CLAIM,
+        STORE,
         INVALID;
 
         private static @NotNull RCAction fromRawValue(final @NotNull String rawValue) {
@@ -247,6 +302,7 @@ public final class PRC extends PlayerCommand {
                 case "connect" -> CONNECT;
                 case "disconnect" -> DISCONNECT;
                 case "claim" -> CLAIM;
+                case "store" -> STORE;
                 default -> INVALID;
             };
         }

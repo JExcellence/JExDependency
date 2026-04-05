@@ -1,171 +1,180 @@
-# RCore Central Integration 简体中文翻译
+﻿# RCore Central Integration ç®€ä½“ä¸­æ–‡ç¿»è¯‘
 
 prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
 
 rcconnect:
-  usage: "<gray>用法：/rc <connect &lt;api-key&gt;|disconnect|claim droplets></gray>"
-  usage_no_claim: "<gray>用法：/rc <connect &lt;api-key&gt;|disconnect></gray>"
-  connecting: "<yellow>正在连接到 RaindropCentral...</yellow>"
-  success: "<green>已成功连接到 RaindropCentral！</green> <gray>服务器现在正在发送心跳。</gray>"
+  usage: "<gray>ç”¨æ³•ï¼š/rc <connect &lt;api-key&gt;|disconnect|claim droplets|store update></gray>"
+  usage_no_claim: "<gray>ç”¨æ³•ï¼š/rc <connect &lt;api-key&gt;|disconnect></gray>"
+  connecting: "<yellow>æ­£åœ¨è¿žæŽ¥åˆ° RaindropCentral...</yellow>"
+  success: "<green>å·²æˆåŠŸè¿žæŽ¥åˆ° RaindropCentralï¼</green> <gray>æœåŠ¡å™¨çŽ°åœ¨æ­£åœ¨å‘é€å¿ƒè·³ã€‚</gray>"
   error:
-    invalid_key: "<red>API 密钥格式无效。API 密钥应为 32-128 个字母数字字符。</red>"
-    uuid_mismatch: "<red>此 API 密钥属于另一个 Minecraft 账号。</red>"
-    already_connected: "<yellow>服务器已连接。</yellow> <gray> 先使用/rc disconnect。</gray>"
-    network: "<red>网络错误: %error%</red>"
+    invalid_key: "<red>API å¯†é’¥æ ¼å¼æ— æ•ˆã€‚API å¯†é’¥åº”ä¸º 32-128 ä¸ªå­—æ¯æ•°å­—å­—ç¬¦ã€‚</red>"
+    uuid_mismatch: "<red>æ­¤ API å¯†é’¥å±žäºŽå¦ä¸€ä¸ª Minecraft è´¦å·ã€‚</red>"
+    already_connected: "<yellow>æœåŠ¡å™¨å·²è¿žæŽ¥ã€‚</yellow> <gray> å…ˆä½¿ç”¨/rc disconnectã€‚</gray>"
+    network: "<red>ç½‘ç»œé”™è¯¯: %error%</red>"
 
 rcdisconnect:
-  disconnecting: "<yellow>正在断开与 RaindropCentral 的连接...</yellow>"
-  success: "<green>已成功断开与 RaindropCentral 的连接。</green>"
+  disconnecting: "<yellow>æ­£åœ¨æ–­å¼€ä¸Ž RaindropCentral çš„è¿žæŽ¥...</yellow>"
+  success: "<green>å·²æˆåŠŸæ–­å¼€ä¸Ž RaindropCentral çš„è¿žæŽ¥ã€‚</green>"
   error:
-    not_connected: "<red>服务器未连接到 RaindropCentral。</red>"
-    failed: "<red>断开连接失败。请重试。</red>"
-    network: "<red>网络错误: %error%</red>"
+    not_connected: "<red>æœåŠ¡å™¨æœªè¿žæŽ¥åˆ° RaindropCentralã€‚</red>"
+    failed: "<red>æ–­å¼€è¿žæŽ¥å¤±è´¥ã€‚è¯·é‡è¯•ã€‚</red>"
+    network: "<red>ç½‘ç»œé”™è¯¯: %error%</red>"
 
-rcclaim:
-  loading: "<yellow>正在检查RaindropCentral是否有无人认领的水滴奖励...</yellow>"
-  claiming_item: "<yellow>从 RaindropCentral...</yellow> 声明 %item_name%"
-  success:
-    claimed: "<green>您已认领 %item_name%.</green>"
-    claimed_skill_targeted: "<green>您领取了%item_name%.</green> <gray>右键单击cookie选择技能。</gray>"
-    claimed_job_targeted: "<green>您声明了%item_name%.</green> <gray>右键单击cookie以选择作业。</gray>"
-    claimed_activate: "<green>您声明了 %item_name%.</green> <gray>右键单击 cookie 将其激活。</gray>"
-    skill_granted: "<green>在%skill_name%.</green> <gray>中授予1级来源：%plugin_name%.</gray>"
-    job_granted: "<green>在%job_name%.</green> <gray>中授予1级来源：%plugin_name%.</gray>"
-    skill_xp_boost_applied: "<green>激活+%rate_percent%% %skill_name%的技能XP。</green> <gray>来源：%plugin_name%。持续时间：%duration_minutes% 分钟.</gray>"
-    skill_xp_boost_refreshed: "<green>刷新了%skill_name%的+%rate_percent%%技能XP。</green> <gray>来源：%plugin_name%。持续时间重置为 %duration_minutes% 分钟。</gray>"
-    job_xp_boost_applied: "<green>激活+%rate_percent%% %job_name%的作业XP。</green> <gray>来源：%plugin_name%。持续时间：%duration_minutes% 分钟.</gray>"
-    job_xp_boost_refreshed: "<green>刷新了%job_name%的+%rate_percent%%作业XP。</green> <gray>来源：%plugin_name%。持续时间重置为 %duration_minutes% 分钟。</gray>"
-    job_vault_boost_applied: "<green>激活+%rate_percent%% %job_name%的工作资金。</green> <gray>来源：%plugin_name%。持续时间：%duration_minutes% 分钟.</gray>"
-    job_vault_boost_refreshed: "<green>刷新了+%rate_percent%% %job_name%的工作资金。</green> <gray>来源：%plugin_name%。持续时间重置为 %duration_minutes% 分钟。</gray>"
-    double_drop_boost_applied: "<green>激活双滴。</green> <gray>持续时间：%duration_minutes% 分钟。</gray>"
-    double_drop_boost_refreshed: "<green>刷新双滴。</green> <gray>持续时间重置为%duration_minutes%分钟。</gray>"
-    pending_delivery: "<green>已交付%count%待处理的水滴奖励。</green>"
+rcstore:
+  updating: "<yellow>Refreshing the local droplet-store allowlist from RaindropCentral...</yellow>"
+  success: "<green>Updated the local droplet-store allowlist.</green> <gray>%count% item(s) are currently allowed.</gray>"
   error:
-    store_disabled: "<red>此服务器已禁用 /rc claim droplets.</red>"
-    not_connected: "<red>RCore 必须连接到 RaindropCentral 后端才能领取 Droplet。</red>"
-    cooldown: "<yellow>请等待%seconds%秒后再使用/rc claim droplets。</yellow>"
-    not_registered: "<red>您的Minecraft帐户未链接到RaindropCentral帐户。</red>"
-    no_unclaimed: "<yellow>您目前没有任何无人认领的水滴奖励。</yellow>"
-    api_unavailable: "<red>RaindropCentral 目前不可用：%error%</red>"
-    menu_unavailable: "<red> 水滴领取菜单目前不可用。请稍后重试。</red>"
-    item_disabled: "<red>此服务器已禁用声明 %item_name%.</red> <gray>项目 ID：%item_code%</gray>"
-    unsupported_item: "<red> 该服务器尚不支持该水滴奖励。</red> <gray>项目 ID：%item_code%</gray>"
-    no_supported_skills: "<red>该服务器当前没有支持此奖励的技能插件。</red>"
-    no_supported_jobs: "<red>该服务器当前没有支持此奖励的作业插件。</red>"
-    inventory_full: "<red>在领取此奖励之前，您至少需要一个免费库存槽位。</red>"
-    claim_in_progress: "<yellow>该索赔已在进行中。请等待后端响应。</yellow>"
-    claim_failed: "<red>领取水滴奖励失败：%error%</red>"
-    already_claimed: "<yellow>该水滴奖励已领取。</yellow>"
-    purchase_unavailable: "<red>该水滴奖励已无法领取。</red>"
-    cookie_missing: "<red>在您的库存中找不到水滴饼干。</red>"
-    skill_grant_failed: "<red>未能在 %skill_name%.</red> 中授予 1 级"
-    job_grant_failed: "<red>未能在 %job_name%.</red> 中授予 1 级"
-    boost_activation_failed: "<red>激活%item_name%.</red>失败"
-    unsupported_integration: "<red>此 Droplet Cookie 所需的集成目前不可用。</red>"
-    boost_expired: "<yellow>那个水滴饼干增强已经过期了。</yellow>"
+    not_connected: "<red>RCore must be connected to the RaindropCentral backend before the store allowlist can be updated.</red>"
+    failed: "<red>Failed to refresh the droplet-store allowlist: %error%</red>"
+    using_cache: "<yellow>Failed to refresh the droplet-store allowlist, but the last cached list is still being used: %error%</yellow>"
+rcclaim:
+  loading: "<yellow>æ­£åœ¨æ£€æŸ¥RaindropCentralæ˜¯å¦æœ‰æ— äººè®¤é¢†çš„æ°´æ»´å¥–åŠ±...</yellow>"
+  claiming_item: "<yellow>ä»Ž RaindropCentral...</yellow> å£°æ˜Ž %item_name%"
+  success:
+    claimed: "<green>æ‚¨å·²è®¤é¢† %item_name%.</green>"
+    claimed_skill_targeted: "<green>æ‚¨é¢†å–äº†%item_name%.</green> <gray>å³é”®å•å‡»cookieé€‰æ‹©æŠ€èƒ½ã€‚</gray>"
+    claimed_job_targeted: "<green>æ‚¨å£°æ˜Žäº†%item_name%.</green> <gray>å³é”®å•å‡»cookieä»¥é€‰æ‹©ä½œä¸šã€‚</gray>"
+    claimed_activate: "<green>æ‚¨å£°æ˜Žäº† %item_name%.</green> <gray>å³é”®å•å‡» cookie å°†å…¶æ¿€æ´»ã€‚</gray>"
+    skill_granted: "<green>åœ¨%skill_name%.</green> <gray>ä¸­æŽˆäºˆ1çº§æ¥æºï¼š%plugin_name%.</gray>"
+    job_granted: "<green>åœ¨%job_name%.</green> <gray>ä¸­æŽˆäºˆ1çº§æ¥æºï¼š%plugin_name%.</gray>"
+    skill_xp_boost_applied: "<green>æ¿€æ´»+%rate_percent%% %skill_name%çš„æŠ€èƒ½XPã€‚</green> <gray>æ¥æºï¼š%plugin_name%ã€‚æŒç»­æ—¶é—´ï¼š%duration_minutes% åˆ†é’Ÿ.</gray>"
+    skill_xp_boost_refreshed: "<green>åˆ·æ–°äº†%skill_name%çš„+%rate_percent%%æŠ€èƒ½XPã€‚</green> <gray>æ¥æºï¼š%plugin_name%ã€‚æŒç»­æ—¶é—´é‡ç½®ä¸º %duration_minutes% åˆ†é’Ÿã€‚</gray>"
+    job_xp_boost_applied: "<green>æ¿€æ´»+%rate_percent%% %job_name%çš„ä½œä¸šXPã€‚</green> <gray>æ¥æºï¼š%plugin_name%ã€‚æŒç»­æ—¶é—´ï¼š%duration_minutes% åˆ†é’Ÿ.</gray>"
+    job_xp_boost_refreshed: "<green>åˆ·æ–°äº†%job_name%çš„+%rate_percent%%ä½œä¸šXPã€‚</green> <gray>æ¥æºï¼š%plugin_name%ã€‚æŒç»­æ—¶é—´é‡ç½®ä¸º %duration_minutes% åˆ†é’Ÿã€‚</gray>"
+    job_vault_boost_applied: "<green>æ¿€æ´»+%rate_percent%% %job_name%çš„å·¥ä½œèµ„é‡‘ã€‚</green> <gray>æ¥æºï¼š%plugin_name%ã€‚æŒç»­æ—¶é—´ï¼š%duration_minutes% åˆ†é’Ÿ.</gray>"
+    job_vault_boost_refreshed: "<green>åˆ·æ–°äº†+%rate_percent%% %job_name%çš„å·¥ä½œèµ„é‡‘ã€‚</green> <gray>æ¥æºï¼š%plugin_name%ã€‚æŒç»­æ—¶é—´é‡ç½®ä¸º %duration_minutes% åˆ†é’Ÿã€‚</gray>"
+    double_drop_boost_applied: "<green>æ¿€æ´»åŒæ»´ã€‚</green> <gray>æŒç»­æ—¶é—´ï¼š%duration_minutes% åˆ†é’Ÿã€‚</gray>"
+    double_drop_boost_refreshed: "<green>åˆ·æ–°åŒæ»´ã€‚</green> <gray>æŒç»­æ—¶é—´é‡ç½®ä¸º%duration_minutes%åˆ†é’Ÿã€‚</gray>"
+    pending_delivery: "<green>å·²äº¤ä»˜%count%å¾…å¤„ç†çš„æ°´æ»´å¥–åŠ±ã€‚</green>"
+  error:
+    store_disabled: "<red>æ­¤æœåŠ¡å™¨å·²ç¦ç”¨ /rc claim droplets.</red>"
+    not_connected: "<red>RCore å¿…é¡»è¿žæŽ¥åˆ° RaindropCentral åŽç«¯æ‰èƒ½é¢†å– Dropletã€‚</red>"
+    cooldown: "<yellow>è¯·ç­‰å¾…%seconds%ç§’åŽå†ä½¿ç”¨/rc claim dropletsã€‚</yellow>"
+    not_registered: "<red>æ‚¨çš„Minecraftå¸æˆ·æœªé“¾æŽ¥åˆ°RaindropCentralå¸æˆ·ã€‚</red>"
+    no_unclaimed: "<yellow>æ‚¨ç›®å‰æ²¡æœ‰ä»»ä½•æ— äººè®¤é¢†çš„æ°´æ»´å¥–åŠ±ã€‚</yellow>"
+    api_unavailable: "<red>RaindropCentral ç›®å‰ä¸å¯ç”¨ï¼š%error%</red>"
+    menu_unavailable: "<red> æ°´æ»´é¢†å–èœå•ç›®å‰ä¸å¯ç”¨ã€‚è¯·ç¨åŽé‡è¯•ã€‚</red>"
+    item_disabled: "<red>æ­¤æœåŠ¡å™¨å·²ç¦ç”¨å£°æ˜Ž %item_name%.</red> <gray>é¡¹ç›® IDï¼š%item_code%</gray>"
+    unsupported_item: "<red> è¯¥æœåŠ¡å™¨å°šä¸æ”¯æŒè¯¥æ°´æ»´å¥–åŠ±ã€‚</red> <gray>é¡¹ç›® IDï¼š%item_code%</gray>"
+    no_supported_skills: "<red>è¯¥æœåŠ¡å™¨å½“å‰æ²¡æœ‰æ”¯æŒæ­¤å¥–åŠ±çš„æŠ€èƒ½æ’ä»¶ã€‚</red>"
+    no_supported_jobs: "<red>è¯¥æœåŠ¡å™¨å½“å‰æ²¡æœ‰æ”¯æŒæ­¤å¥–åŠ±çš„ä½œä¸šæ’ä»¶ã€‚</red>"
+    inventory_full: "<red>åœ¨é¢†å–æ­¤å¥–åŠ±ä¹‹å‰ï¼Œæ‚¨è‡³å°‘éœ€è¦ä¸€ä¸ªå…è´¹åº“å­˜æ§½ä½ã€‚</red>"
+    claim_in_progress: "<yellow>è¯¥ç´¢èµ”å·²åœ¨è¿›è¡Œä¸­ã€‚è¯·ç­‰å¾…åŽç«¯å“åº”ã€‚</yellow>"
+    claim_failed: "<red>é¢†å–æ°´æ»´å¥–åŠ±å¤±è´¥ï¼š%error%</red>"
+    already_claimed: "<yellow>è¯¥æ°´æ»´å¥–åŠ±å·²é¢†å–ã€‚</yellow>"
+    purchase_unavailable: "<red>è¯¥æ°´æ»´å¥–åŠ±å·²æ— æ³•é¢†å–ã€‚</red>"
+    cookie_missing: "<red>åœ¨æ‚¨çš„åº“å­˜ä¸­æ‰¾ä¸åˆ°æ°´æ»´é¥¼å¹²ã€‚</red>"
+    skill_grant_failed: "<red>æœªèƒ½åœ¨ %skill_name%.</red> ä¸­æŽˆäºˆ 1 çº§"
+    job_grant_failed: "<red>æœªèƒ½åœ¨ %job_name%.</red> ä¸­æŽˆäºˆ 1 çº§"
+    boost_activation_failed: "<red>æ¿€æ´»%item_name%.</red>å¤±è´¥"
+    unsupported_integration: "<red>æ­¤ Droplet Cookie æ‰€éœ€çš„é›†æˆç›®å‰ä¸å¯ç”¨ã€‚</red>"
+    boost_expired: "<yellow>é‚£ä¸ªæ°´æ»´é¥¼å¹²å¢žå¼ºå·²ç»è¿‡æœŸäº†ã€‚</yellow>"
 
 rc_claim_droplets_ui:
-  title: "无人认领的水滴"
+  title: "æ— äººè®¤é¢†çš„æ°´æ»´"
   page:
-    name: "<yellow>页面 %page%/%max_page%</yellow>"
+    name: "<yellow>é¡µé¢ %page%/%max_page%</yellow>"
     lore:
-      - "<gray>%items_count% 列出可索赔条目。</gray>"
+      - "<gray>%items_count% åˆ—å‡ºå¯ç´¢èµ”æ¡ç›®ã€‚</gray>"
   summary:
-    name: "<gold>索赔队列</gold>"
+    name: "<gold>ç´¢èµ”é˜Ÿåˆ—</gold>"
     lore:
-      - "<gray>无人认领的条目：%item_count%</gray>"
-      - "<gray>此服务器支持：%supported_count%</gray>"
-      - "<yellow>点击支持的奖励即可领取。</yellow>"
+      - "<gray>æ— äººè®¤é¢†çš„æ¡ç›®ï¼š%item_count%</gray>"
+      - "<gray>æ­¤æœåŠ¡å™¨æ”¯æŒï¼š%supported_count%</gray>"
+      - "<yellow>ç‚¹å‡»æ”¯æŒçš„å¥–åŠ±å³å¯é¢†å–ã€‚</yellow>"
   empty:
-    name: "<red>没有无人领取的奖励</red>"
+    name: "<red>æ²¡æœ‰æ— äººé¢†å–çš„å¥–åŠ±</red>"
     lore:
-      - "<gray>您目前没有任何无人领取的水滴奖励。</gray>"
+      - "<gray>æ‚¨ç›®å‰æ²¡æœ‰ä»»ä½•æ— äººé¢†å–çš„æ°´æ»´å¥–åŠ±ã€‚</gray>"
   entry:
     supported:
       name: "<green>%item_name%</green>"
       lore:
-        - "<gray>商品 ID：%item_code%</gray>"
-        - "<gray>用过：%amount_spent%水滴</gray>"
-        - "<yellow>点击领取此奖励。</yellow>"
+        - "<gray>å•†å“ IDï¼š%item_code%</gray>"
+        - "<gray>ç”¨è¿‡ï¼š%amount_spent%æ°´æ»´</gray>"
+        - "<yellow>ç‚¹å‡»é¢†å–æ­¤å¥–åŠ±ã€‚</yellow>"
     item_disabled:
       name: "<red>%item_name%</red>"
       lore:
-        - "<gray>商品 ID：%item_code%</gray>"
-        - "<red>该服务器已禁止领取该奖励。</red>"
+        - "<gray>å•†å“ IDï¼š%item_code%</gray>"
+        - "<red>è¯¥æœåŠ¡å™¨å·²ç¦æ­¢é¢†å–è¯¥å¥–åŠ±ã€‚</red>"
     unsupported_item:
       name: "<red>%item_name%</red>"
       lore:
-        - "<gray>商品 ID：%item_code%</gray>"
-        - "<red> 该服务器不支持此奖励。</red>"
+        - "<gray>å•†å“ IDï¼š%item_code%</gray>"
+        - "<red> è¯¥æœåŠ¡å™¨ä¸æ”¯æŒæ­¤å¥–åŠ±ã€‚</red>"
     no_skills:
       name: "<red>%item_name%</red>"
       lore:
-        - "<gray>商品 ID：%item_code%</gray>"
-        - "<red>此奖励没有安装支持的技能插件。</red>"
+        - "<gray>å•†å“ IDï¼š%item_code%</gray>"
+        - "<red>æ­¤å¥–åŠ±æ²¡æœ‰å®‰è£…æ”¯æŒçš„æŠ€èƒ½æ’ä»¶ã€‚</red>"
     no_jobs:
       name: "<red>%item_name%</red>"
       lore:
-        - "<gray>商品 ID：%item_code%</gray>"
-        - "<red>此奖励没有安装支持的作业插件。</red>"
+        - "<gray>å•†å“ IDï¼š%item_code%</gray>"
+        - "<red>æ­¤å¥–åŠ±æ²¡æœ‰å®‰è£…æ”¯æŒçš„ä½œä¸šæ’ä»¶ã€‚</red>"
 
 rc_claim_droplet_skills_ui:
-  title: "选择技能"
+  title: "é€‰æ‹©æŠ€èƒ½"
   page:
-    name: "<yellow>页面 %page%/%max_page%</yellow>"
+    name: "<yellow>é¡µé¢ %page%/%max_page%</yellow>"
     lore:
-      - "<gray>%items_count% 技能条目列出。</gray>"
+      - "<gray>%items_count% æŠ€èƒ½æ¡ç›®åˆ—å‡ºã€‚</gray>"
   summary:
-    name: "<gold>技能选择</gold>"
+    name: "<gold>æŠ€èƒ½é€‰æ‹©</gold>"
     lore:
-      - "<gray>可用技能：%skill_count%</gray>"
-      - "<yellow>选择一项技能消耗cookie。</yellow>"
+      - "<gray>å¯ç”¨æŠ€èƒ½ï¼š%skill_count%</gray>"
+      - "<yellow>é€‰æ‹©ä¸€é¡¹æŠ€èƒ½æ¶ˆè€—cookieã€‚</yellow>"
   empty:
-    name: "<red>没有可用技能</red>"
+    name: "<red>æ²¡æœ‰å¯ç”¨æŠ€èƒ½</red>"
     lore:
-      - "<gray> 目前没有支持的技能。</gray>"
+      - "<gray> ç›®å‰æ²¡æœ‰æ”¯æŒçš„æŠ€èƒ½ã€‚</gray>"
   entry:
     name: "<green>%skill_name%</green>"
     level_lore:
-      - "<gray>插件：%plugin_name%</gray>"
-      - "<gray>当前等级：%current_level%</gray>"
-      - "<yellow>点击该技能获得1级。</yellow>"
+      - "<gray>æ’ä»¶ï¼š%plugin_name%</gray>"
+      - "<gray>å½“å‰ç­‰çº§ï¼š%current_level%</gray>"
+      - "<yellow>ç‚¹å‡»è¯¥æŠ€èƒ½èŽ·å¾—1çº§ã€‚</yellow>"
     boost_lore:
-      - "<gray>插件：%plugin_name%</gray>"
-      - "<gray>当前等级：%current_level%</gray>"
-      - "<gray>Boost：+%rate_percent%% XP %duration_minutes% 分钟</gray>"
-      - "<yellow>点击激活此技能提升。</yellow>"
+      - "<gray>æ’ä»¶ï¼š%plugin_name%</gray>"
+      - "<gray>å½“å‰ç­‰çº§ï¼š%current_level%</gray>"
+      - "<gray>Boostï¼š+%rate_percent%% XP %duration_minutes% åˆ†é’Ÿ</gray>"
+      - "<yellow>ç‚¹å‡»æ¿€æ´»æ­¤æŠ€èƒ½æå‡ã€‚</yellow>"
 
 rc_claim_droplet_jobs_ui:
-  title: "选择工作"
+  title: "é€‰æ‹©å·¥ä½œ"
   page:
-    name: "<yellow>页面 %page%/%max_page%</yellow>"
+    name: "<yellow>é¡µé¢ %page%/%max_page%</yellow>"
     lore:
-      - "列出 <gray>%items_count% 作业条目。</gray>"
+      - "åˆ—å‡º <gray>%items_count% ä½œä¸šæ¡ç›®ã€‚</gray>"
   summary:
-    name: "<gold>职位选择</gold>"
+    name: "<gold>èŒä½é€‰æ‹©</gold>"
     lore:
-      - "<gray>可用职位：%job_count%</gray>"
-      - "<yellow>选择一项作业来消费cookie。</yellow>"
+      - "<gray>å¯ç”¨èŒä½ï¼š%job_count%</gray>"
+      - "<yellow>é€‰æ‹©ä¸€é¡¹ä½œä¸šæ¥æ¶ˆè´¹cookieã€‚</yellow>"
   empty:
-    name: "<red>没有可用的职位</red>"
+    name: "<red>æ²¡æœ‰å¯ç”¨çš„èŒä½</red>"
     lore:
-      - "<gray> 目前没有可用的支持作业。</gray>"
+      - "<gray> ç›®å‰æ²¡æœ‰å¯ç”¨çš„æ”¯æŒä½œä¸šã€‚</gray>"
   entry:
     name: "<green>%job_name%</green>"
     level_lore:
-      - "<gray>插件：%plugin_name%</gray>"
-      - "<gray>当前等级：%current_level%</gray>"
-      - "<yellow>点击该工作即可获得1级。</yellow>"
+      - "<gray>æ’ä»¶ï¼š%plugin_name%</gray>"
+      - "<gray>å½“å‰ç­‰çº§ï¼š%current_level%</gray>"
+      - "<yellow>ç‚¹å‡»è¯¥å·¥ä½œå³å¯èŽ·å¾—1çº§ã€‚</yellow>"
     xp_boost_lore:
-      - "<gray>插件：%plugin_name%</gray>"
-      - "<gray>当前等级：%current_level%</gray>"
-      - "<gray>Boost：+%rate_percent%% XP %duration_minutes% 分钟</gray>"
-      - "<yellow>点击激活该工作XP提升。</yellow>"
+      - "<gray>æ’ä»¶ï¼š%plugin_name%</gray>"
+      - "<gray>å½“å‰ç­‰çº§ï¼š%current_level%</gray>"
+      - "<gray>Boostï¼š+%rate_percent%% XP %duration_minutes% åˆ†é’Ÿ</gray>"
+      - "<yellow>ç‚¹å‡»æ¿€æ´»è¯¥å·¥ä½œXPæå‡ã€‚</yellow>"
     vault_boost_lore:
-      - "<gray>插件：%plugin_name%</gray>"
-      - "<gray>当前等级：%current_level%</gray>"
-      - "<gray>Boost：+%rate_percent%% 钱 %duration_minutes% 分钟 </gray>"
-      - "<yellow>点击激活该工作金钱加成。</yellow>"
+      - "<gray>æ’ä»¶ï¼š%plugin_name%</gray>"
+      - "<gray>å½“å‰ç­‰çº§ï¼š%current_level%</gray>"
+      - "<gray>Boostï¼š+%rate_percent%% é’± %duration_minutes% åˆ†é’Ÿ </gray>"
+      - "<yellow>ç‚¹å‡»æ¿€æ´»è¯¥å·¥ä½œé‡‘é’±åŠ æˆã€‚</yellow>"
 
 general:
-  no_permission: "<red>你没有权限使用此命令。</red>"
+  no_permission: "<red>ä½ æ²¡æœ‰æƒé™ä½¿ç”¨æ­¤å‘½ä»¤ã€‚</red>"
+
+
