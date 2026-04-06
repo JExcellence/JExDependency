@@ -127,6 +127,7 @@ Primary command handler: `PRS` (`PlayerCommand`), so all subcommands are player-
 | `raindropshops.command.taxes` | Required for `/rs taxes`. |
 | `raindropshops.admin.shops` | Required in `ShopOverviewView` to toggle a shop between player/admin mode. |
 | `raindropshops.admin.bypass.town` | Allows ShopBlock placement outside the player's own town even when `protection.only_player_shops` is enabled. |
+| `raindropshops.admin.bypass.outpost` | Allows ShopBlock placement outside the player's own RDT outpost chunks while still respecting the broader town checks. |
 
 ## PlaceholderAPI Placeholders
 

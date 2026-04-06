@@ -104,6 +104,7 @@ All actions are player command routes.
 | `raindropshops.command.taxes` | Tax view access |
 | `raindropshops.admin.shops` | Permission used for toggling player/admin shop mode in overview tools |
 | `raindropshops.admin.bypass.town` | Allows admins to place ShopBlocks outside their own town while `protection.only_player_shops` is enabled |
+| `raindropshops.admin.bypass.outpost` | Allows admins to place ShopBlocks outside their own RDT outpost chunks while keeping the broader town checks intact |
 
 ## PlaceholderAPI Placeholders
 

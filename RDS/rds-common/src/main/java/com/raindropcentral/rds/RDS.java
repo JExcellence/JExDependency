@@ -659,7 +659,7 @@ public class RDS {
         }
         return factory;
     }
-
+    
     private @NotNull CompletableFuture<Void> runSync(final @NotNull Runnable task) {
         final CompletableFuture<Void> future = new CompletableFuture<>();
         this.platform.getScheduler().runSync(() -> {
