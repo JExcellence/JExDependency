@@ -13,46 +13,44 @@
 
 package com.raindropcentral.rdt.configs;
 
+import com.raindropcentral.rdt.utils.ChunkType;
+import de.jexcellence.configmapper.sections.AConfigSection;
+import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
+import org.bukkit.Material;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
-import de.jexcellence.configmapper.sections.AConfigSection;
-import de.jexcellence.configmapper.sections.CSAlways;
-import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
-import org.bukkit.Material;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.jetbrains.annotations.NotNull;
-import org.jspecify.annotations.Nullable;
-
-import com.raindropcentral.rdt.utils.ChunkType;
-
 /**
- * Root configuration section for the RDT plugin.
+ * Parsed configuration snapshot for the RDT runtime.
  *
- * <p>This section exposes global runtime defaults used by shared town gameplay systems.</p>
+ * <p>The section keeps the public API lightweight while supporting direct YAML parsing for tests
+ * and runtime bootstrap. Values fall back to safe defaults when missing or invalid.</p>
  *
  * @author ItsRainingHP
  * @since 1.0.0
- * @version 1.0.6
+ * @version 1.0.0
  */
-@CSAlways
-@SuppressWarnings("unused")
 public class ConfigSection extends AConfigSection {
 
+    private static final long DEFAULT_TOWN_ARCHETYPE_CHANGE_COOLDOWN_SECONDS = 86_400L;
     private static final int DEFAULT_GLOBAL_MAX_CHUNK_LIMIT = 64;
     private static final int DEFAULT_CHUNK_BLOCK_MIN_Y = -10;
     private static final int DEFAULT_CHUNK_BLOCK_MAX_Y = 10;
     private static final int DEFAULT_TOWN_SPAWN_TELEPORT_DELAY_SECONDS = 3;
+    private static final boolean DEFAULT_EXCLUDE_CORNER_CLAIM_ADJACENCY = true;
     private static final Material DEFAULT_ICON_NEXUS = Material.REINFORCED_DEEPSLATE;
     private static final Material DEFAULT_ICON_DEFAULT = Material.OAK_PLANKS;
     private static final Material DEFAULT_ICON_BANK = Material.GOLD_BLOCK;
@@ -70,6 +68,8 @@ public class ConfigSection extends AConfigSection {
     private Integer chunk_block_min_y;
     private Integer chunk_block_max_y;
     private Integer town_spawn_teleport_delay_seconds;
+    private Long town_archetype_change_cooldown_seconds;
+    private Boolean exclude_corner_claim_adjacency;
     private Boolean proxy_enabled;
     private Boolean proxy_town_spawn_enabled;
     private String proxy_server_route_id;
@@ -82,566 +82,529 @@ public class ConfigSection extends AConfigSection {
     private Map<Integer, TownLevelSection> townLevels;
 
     /**
-     * Creates a configuration section bound to the provided evaluation environment.
+     * Creates an empty config section backed by the supplied evaluation environment.
      *
-     * @param baseEnvironment base environment used by the config mapper
+     * @param environmentBuilder expression environment used by the underlying config mapper
      */
-    public ConfigSection(final @NotNull EvaluationEnvironmentBuilder baseEnvironment) {
-        super(baseEnvironment);
+    public ConfigSection(final @NotNull EvaluationEnvironmentBuilder environmentBuilder) {
+        super(environmentBuilder);
     }
 
     /**
-     * Returns the global cap for claimed chunks per town.
+     * Returns the configured global chunk limit for towns.
      *
-     * @return positive chunk-claim limit
+     * @return global town chunk cap
      */
     public int getGlobalMaxChunkLimit() {
-        if (this.global_max_chunk_limit == null || this.global_max_chunk_limit < 1) {
-            return DEFAULT_GLOBAL_MAX_CHUNK_LIMIT;
-        }
-        return this.global_max_chunk_limit;
+        final Integer configured = this.global_max_chunk_limit;
+        return configured == null || configured <= 0 ? DEFAULT_GLOBAL_MAX_CHUNK_LIMIT : configured;
     }
 
     /**
-     * Returns the minimum Y offset from nexus allowed for Chunk Block placement.
+     * Returns the minimum allowed Y offset for placing chunk blocks relative to the nexus.
      *
-     * @return minimum valid Y offset
+     * @return minimum allowed chunk-block Y offset
      */
     public int getChunkBlockMinY() {
-        final int minY = this.getResolvedChunkBlockMinYRaw();
-        final int maxY = this.getResolvedChunkBlockMaxYRaw();
-        if (minY > maxY) {
-            return DEFAULT_CHUNK_BLOCK_MIN_Y;
-        }
-        return minY;
+        return this.getResolvedChunkBlockMinYRaw();
     }
 
     /**
-     * Returns the maximum Y offset from nexus allowed for Chunk Block placement.
+     * Returns the maximum allowed Y offset for placing chunk blocks relative to the nexus.
      *
-     * @return maximum valid Y offset
+     * @return maximum allowed chunk-block Y offset
      */
     public int getChunkBlockMaxY() {
-        final int minY = this.getResolvedChunkBlockMinYRaw();
-        final int maxY = this.getResolvedChunkBlockMaxYRaw();
-        if (minY > maxY) {
-            return DEFAULT_CHUNK_BLOCK_MAX_Y;
-        }
-        return maxY;
+        return this.getResolvedChunkBlockMaxYRaw();
     }
 
     /**
-     * Returns the delay before executing a town-spawn teleport command.
+     * Returns the configured town-spawn delay in seconds.
      *
-     * @return non-negative delay in seconds
+     * @return teleport delay in seconds
      */
     public int getTownSpawnTeleportDelaySeconds() {
-        if (this.town_spawn_teleport_delay_seconds == null || this.town_spawn_teleport_delay_seconds < 0) {
-            return DEFAULT_TOWN_SPAWN_TELEPORT_DELAY_SECONDS;
-        }
-        return this.town_spawn_teleport_delay_seconds;
+        final Integer configured = this.town_spawn_teleport_delay_seconds;
+        return configured == null || configured < 0 ? DEFAULT_TOWN_SPAWN_TELEPORT_DELAY_SECONDS : configured;
     }
 
     /**
-     * Returns whether proxy-backed features are enabled.
+     * Returns the configured cooldown in seconds between town archetype changes.
      *
-     * @return {@code true} when proxy-backed features are enabled
+     * @return archetype change cooldown in seconds
+     */
+    public long getTownArchetypeChangeCooldownSeconds() {
+        final Long configured = this.town_archetype_change_cooldown_seconds;
+        return configured == null || configured < 0L ? DEFAULT_TOWN_ARCHETYPE_CHANGE_COOLDOWN_SECONDS : configured;
+    }
+
+    /**
+     * Returns whether diagonal chunk claims should be excluded from adjacency checks.
+     *
+     * @return {@code true} when only cardinal neighbors count as adjacent
+     */
+    public boolean isCornerClaimAdjacencyExcluded() {
+        return this.exclude_corner_claim_adjacency == null
+            ? DEFAULT_EXCLUDE_CORNER_CLAIM_ADJACENCY
+            : this.exclude_corner_claim_adjacency;
+    }
+
+    /**
+     * Returns whether proxy-aware routing is enabled.
+     *
+     * @return {@code true} when proxy routing is enabled
      */
     public boolean isProxyEnabled() {
-        return this.proxy_enabled != null ? this.proxy_enabled : DEFAULT_PROXY_ENABLED;
+        return Boolean.TRUE.equals(this.proxy_enabled);
     }
 
     /**
-     * Returns whether town-spawn routing should use proxy transfer handoff.
+     * Returns whether proxy-backed town-spawn transfers are enabled.
      *
-     * @return {@code true} when proxy-backed town spawn is enabled
+     * @return {@code true} when proxy town spawn routing is enabled
      */
     public boolean isProxyTownSpawnEnabled() {
-        final boolean enabled = this.proxy_town_spawn_enabled != null
-                ? this.proxy_town_spawn_enabled
-                : DEFAULT_PROXY_TOWN_SPAWN_ENABLED;
-        return this.isProxyEnabled() && enabled;
+        return Boolean.TRUE.equals(this.proxy_town_spawn_enabled);
     }
 
     /**
-     * Returns the configured authoritative route ID for this server.
+     * Returns the configured proxy route identifier for the local server.
      *
-     * @return configured route ID, or empty when not configured
+     * @return normalized proxy route identifier, or an empty string when none is configured
      */
     public @NotNull String getProxyServerRouteId() {
-        if (this.proxy_server_route_id == null) {
-            return "";
-        }
-        return this.proxy_server_route_id.trim();
+        return this.proxy_server_route_id == null ? "" : this.proxy_server_route_id.trim();
     }
 
     /**
      * Returns the configured icon material for a chunk type.
      *
-     * @param chunkType chunk type
-     * @return material used for this type
+     * @param chunkType chunk type to resolve
+     * @return configured icon material, or a safe fallback when no explicit mapping exists
      */
-    public @NotNull Material getChunkTypeIconMaterial(final @NotNull ChunkType chunkType) {
+    public @NotNull Material getChunkTypeIconMaterial(final @Nullable ChunkType chunkType) {
+        if (chunkType == null) {
+            return DEFAULT_ICON_DEFAULT;
+        }
+
         return switch (chunkType) {
             case NEXUS -> this.resolveMaterial(this.chunk_type_icon_nexus, DEFAULT_ICON_NEXUS);
-            case DEFAULT -> this.resolveMaterial(this.chunk_type_icon_default, DEFAULT_ICON_DEFAULT);
+            case DEFAULT, SECURITY, OUTPOST, MEDIC -> this.resolveMaterial(
+                this.chunk_type_icon_default,
+                DEFAULT_ICON_DEFAULT
+            );
             case BANK -> this.resolveMaterial(this.chunk_type_icon_bank, DEFAULT_ICON_BANK);
             case FARM -> this.resolveMaterial(this.chunk_type_icon_farm, DEFAULT_ICON_FARM);
-            case CLAIM_PENDING -> this.resolveMaterial(this.chunk_type_icon_claim_pending, DEFAULT_ICON_CLAIM_PENDING);
-            case CHUNK_BLOCK -> this.resolveMaterial(this.chunk_type_icon_chunk_block, DEFAULT_ICON_CHUNK_BLOCK);
+            case CLAIM_PENDING -> this.resolveMaterial(
+                this.chunk_type_icon_claim_pending,
+                DEFAULT_ICON_CLAIM_PENDING
+            );
         };
     }
 
     /**
-     * Returns all configured town levels keyed by numeric level.
+     * Returns a defensive copy of the configured town levels.
      *
-     * @return copied ordered map of configured town levels
+     * @return configured town levels keyed by target level
      */
     public @NotNull Map<Integer, TownLevelSection> getTownLevels() {
-        final Map<Integer, TownLevelSection> configuredLevels = this.townLevels;
-        if (configuredLevels == null || configuredLevels.isEmpty()) {
-            return new LinkedHashMap<>(createDefaultTownLevels());
-        }
-        return new LinkedHashMap<>(configuredLevels);
+        return Map.copyOf(this.townLevels == null ? createDefaultTownLevels() : this.townLevels);
     }
 
     /**
-     * Returns configuration for one specific town level.
+     * Returns a configured town level section.
      *
-     * @param level target level
-     * @return level config or {@code null} when missing
+     * @param level target level to resolve
+     * @return configured level section, or {@code null} when no section exists
      */
     public @Nullable TownLevelSection getTownLevelSection(final int level) {
-        if (level < 1) {
-            return null;
-        }
         return this.getTownLevels().get(level);
     }
 
     /**
-     * Returns the highest configured town level number.
+     * Returns the highest configured town level.
      *
-     * @return highest configured level, or {@code 0} when no levels are configured
+     * @return highest configured level
      */
     public int getHighestConfiguredTownLevel() {
-        int highest = 0;
-        for (final Integer configuredLevel : this.getTownLevels().keySet()) {
-            if (configuredLevel != null && configuredLevel > highest) {
-                highest = configuredLevel;
-            }
-        }
-        return highest;
+        return this.getTownLevels().keySet().stream().mapToInt(Integer::intValue).max().orElse(1);
     }
 
     /**
-     * Returns the next configured town level above the provided current level.
+     * Returns the next configured town level after the supplied current level.
      *
      * @param currentLevel current town level
-     * @return next configured level, or {@code null} when already at max level
+     * @return next configured level, or {@code null} when already at the highest level
      */
     public @Nullable Integer getNextTownLevel(final int currentLevel) {
-        final int normalizedCurrentLevel = Math.max(1, currentLevel);
-        for (final Integer configuredLevel : this.getTownLevels().keySet()) {
-            if (configuredLevel != null && configuredLevel > normalizedCurrentLevel) {
-                return configuredLevel;
-            }
-        }
-        return null;
+        return this.getTownLevels().keySet().stream()
+            .filter(level -> level > currentLevel)
+            .sorted()
+            .findFirst()
+            .orElse(null);
     }
 
     /**
-     * Loads the RDT root config from disk.
+     * Parses a config section from a YAML file.
      *
-     * @param configFile config file to parse
+     * @param file source config file
      * @return parsed config section
      */
-    public static @NotNull ConfigSection fromFile(final @NotNull File configFile) {
-        return fromConfiguration(YamlConfiguration.loadConfiguration(configFile));
+    public static @NotNull ConfigSection fromFile(final @NotNull File file) {
+        Objects.requireNonNull(file, "file");
+        return fromConfiguration(YamlConfiguration.loadConfiguration(file));
     }
 
     /**
-     * Loads the RDT root config from a bundled resource stream.
+     * Parses a config section from a UTF-8 YAML stream.
      *
-     * @param inputStream config resource stream
+     * @param inputStream source YAML stream
      * @return parsed config section
      */
     public static @NotNull ConfigSection fromInputStream(final @NotNull InputStream inputStream) {
-        final InputStreamReader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
-        return fromConfiguration(YamlConfiguration.loadConfiguration(reader));
+        Objects.requireNonNull(inputStream, "inputStream");
+        try (InputStreamReader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8)) {
+            return fromConfiguration(YamlConfiguration.loadConfiguration(reader));
+        } catch (final Exception exception) {
+            throw new IllegalStateException("Failed to read config stream", exception);
+        }
     }
 
     /**
-     * Creates a default config section with field-level fallback values.
+     * Returns a config section populated with built-in defaults.
      *
      * @return default config section
      */
     public static @NotNull ConfigSection createDefault() {
-        return new ConfigSection(new EvaluationEnvironmentBuilder());
+        return fromConfiguration(new YamlConfiguration());
     }
 
     private static @NotNull ConfigSection fromConfiguration(final @NotNull YamlConfiguration configuration) {
-        final ConfigSection section = createDefault();
-        if (configuration.contains("global_max_chunk_limit")) {
-            section.global_max_chunk_limit = configuration.getInt(
-                    "global_max_chunk_limit",
-                    DEFAULT_GLOBAL_MAX_CHUNK_LIMIT
-            );
-        }
-        if (configuration.contains("chunk_block_min_y")) {
-            section.chunk_block_min_y = configuration.getInt(
-                    "chunk_block_min_y",
-                    DEFAULT_CHUNK_BLOCK_MIN_Y
-            );
-        }
-        if (configuration.contains("chunk_block_max_y")) {
-            section.chunk_block_max_y = configuration.getInt(
-                    "chunk_block_max_y",
-                    DEFAULT_CHUNK_BLOCK_MAX_Y
-            );
-        }
-        if (configuration.contains("town_spawn_teleport_delay_seconds")) {
-            section.town_spawn_teleport_delay_seconds = configuration.getInt(
-                    "town_spawn_teleport_delay_seconds",
-                    DEFAULT_TOWN_SPAWN_TELEPORT_DELAY_SECONDS
-            );
-        }
-        final ConfigurationSection proxySection = configuration.getConfigurationSection("proxy");
-        if (proxySection != null) {
-            if (proxySection.contains("enabled")) {
-                section.proxy_enabled = proxySection.getBoolean("enabled", DEFAULT_PROXY_ENABLED);
-            }
-            if (proxySection.contains("server_route_id")) {
-                section.proxy_server_route_id = proxySection.getString("server_route_id", "");
-            }
-            if (proxySection.contains("town_spawn_enabled")) {
-                section.proxy_town_spawn_enabled = proxySection.getBoolean(
-                        "town_spawn_enabled",
-                        DEFAULT_PROXY_TOWN_SPAWN_ENABLED
-                );
-            }
-        } else {
-            if (configuration.contains("proxy_enabled")) {
-                section.proxy_enabled = configuration.getBoolean("proxy_enabled", DEFAULT_PROXY_ENABLED);
-            }
-            if (configuration.contains("proxy_server_route_id")) {
-                section.proxy_server_route_id = configuration.getString("proxy_server_route_id", "");
-            }
-            if (configuration.contains("proxy_town_spawn_enabled")) {
-                section.proxy_town_spawn_enabled = configuration.getBoolean(
-                        "proxy_town_spawn_enabled",
-                        DEFAULT_PROXY_TOWN_SPAWN_ENABLED
-                );
-            }
-        }
-        if (configuration.contains("chunk_type_icon_nexus")) {
-            section.chunk_type_icon_nexus = configuration.getString("chunk_type_icon_nexus");
-        }
-        if (configuration.contains("chunk_type_icon_default")) {
-            section.chunk_type_icon_default = configuration.getString("chunk_type_icon_default");
-        }
-        if (configuration.contains("chunk_type_icon_bank")) {
-            section.chunk_type_icon_bank = configuration.getString("chunk_type_icon_bank");
-        }
-        if (configuration.contains("chunk_type_icon_farm")) {
-            section.chunk_type_icon_farm = configuration.getString("chunk_type_icon_farm");
-        }
-        if (configuration.contains("chunk_type_icon_claim_pending")) {
-            section.chunk_type_icon_claim_pending = configuration.getString("chunk_type_icon_claim_pending");
-        }
-        if (configuration.contains("chunk_type_icon_chunk_block")) {
-            section.chunk_type_icon_chunk_block = configuration.getString("chunk_type_icon_chunk_block");
-        }
+        final ConfigSection section = new ConfigSection(new EvaluationEnvironmentBuilder());
+        section.global_max_chunk_limit = configuration.getInt("global_max_chunk_limit", DEFAULT_GLOBAL_MAX_CHUNK_LIMIT);
+        section.chunk_block_min_y = configuration.getInt("chunk_block_min_y", DEFAULT_CHUNK_BLOCK_MIN_Y);
+        section.chunk_block_max_y = configuration.getInt("chunk_block_max_y", DEFAULT_CHUNK_BLOCK_MAX_Y);
+        section.town_spawn_teleport_delay_seconds = configuration.getInt(
+            "town_spawn_teleport_delay_seconds",
+            DEFAULT_TOWN_SPAWN_TELEPORT_DELAY_SECONDS
+        );
+        section.town_archetype_change_cooldown_seconds = configuration.getLong(
+            "town.archetype_change_cooldown_seconds",
+            DEFAULT_TOWN_ARCHETYPE_CHANGE_COOLDOWN_SECONDS
+        );
+        section.exclude_corner_claim_adjacency = configuration.getBoolean(
+            "exclude_corner_claim_adjacency",
+            DEFAULT_EXCLUDE_CORNER_CLAIM_ADJACENCY
+        );
+        section.proxy_enabled = configuration.getBoolean("proxy.enabled", DEFAULT_PROXY_ENABLED);
+        section.proxy_town_spawn_enabled = configuration.getBoolean(
+            "proxy.town_spawn_enabled",
+            DEFAULT_PROXY_TOWN_SPAWN_ENABLED
+        );
+        section.proxy_server_route_id = configuration.getString("proxy.server_route_id", "");
+        section.chunk_type_icon_nexus = configuration.getString("chunk_type_icon_nexus", DEFAULT_ICON_NEXUS.name());
+        section.chunk_type_icon_default = configuration.getString("chunk_type_icon_default", DEFAULT_ICON_DEFAULT.name());
+        section.chunk_type_icon_bank = configuration.getString("chunk_type_icon_bank", DEFAULT_ICON_BANK.name());
+        section.chunk_type_icon_farm = configuration.getString("chunk_type_icon_farm", DEFAULT_ICON_FARM.name());
+        section.chunk_type_icon_claim_pending = configuration.getString(
+            "chunk_type_icon_claim_pending",
+            DEFAULT_ICON_CLAIM_PENDING.name()
+        );
+        section.chunk_type_icon_chunk_block = configuration.getString(
+            "chunk_type_icon_chunk_block",
+            DEFAULT_ICON_CHUNK_BLOCK.name()
+        );
         section.townLevels = parseTownLevels(configuration.getConfigurationSection("town.levels"));
         return section;
     }
 
     private int getResolvedChunkBlockMinYRaw() {
-        if (this.chunk_block_min_y == null) {
+        final Integer min = this.chunk_block_min_y;
+        final Integer max = this.chunk_block_max_y;
+        if (min == null || max == null || min > max) {
             return DEFAULT_CHUNK_BLOCK_MIN_Y;
         }
-        return this.chunk_block_min_y;
+        return min;
     }
 
     private int getResolvedChunkBlockMaxYRaw() {
-        if (this.chunk_block_max_y == null) {
+        final Integer min = this.chunk_block_min_y;
+        final Integer max = this.chunk_block_max_y;
+        if (min == null || max == null || min > max) {
             return DEFAULT_CHUNK_BLOCK_MAX_Y;
         }
-        return this.chunk_block_max_y;
+        return max;
     }
 
     private @NotNull Material resolveMaterial(
-            final @Nullable String rawMaterialName,
-            final @NotNull Material fallback
+        final @Nullable String materialName,
+        final @NotNull Material fallback
     ) {
-        if (rawMaterialName == null || rawMaterialName.isBlank()) {
+        if (materialName == null || materialName.isBlank()) {
             return fallback;
         }
-
-        final @Nullable Material resolved = Material.matchMaterial(
-                rawMaterialName.trim().toUpperCase(Locale.ROOT)
-        );
-        if (resolved == null) {
-            return fallback;
-        }
-        return resolved;
+        final Material material = Material.matchMaterial(materialName.trim().toUpperCase(Locale.ROOT));
+        return material == null ? fallback : material;
     }
 
     private static @NotNull Map<Integer, TownLevelSection> parseTownLevels(
-            final @Nullable ConfigurationSection levelsSection
+        final @Nullable ConfigurationSection levelsSection
     ) {
         if (levelsSection == null) {
             return createDefaultTownLevels();
         }
 
-        final Map<Integer, TownLevelSection> parsedLevels = new LinkedHashMap<>();
-        for (final String levelKey : levelsSection.getKeys(false)) {
-            final Integer levelNumber = parsePositiveLevel(levelKey);
-            if (levelNumber == null) {
+        final Map<Integer, TownLevelSection> townLevels = new LinkedHashMap<>();
+        for (final String key : levelsSection.getKeys(false)) {
+            final Integer parsedLevel = parsePositiveLevel(key);
+            if (parsedLevel == null) {
                 continue;
             }
 
-            final ConfigurationSection levelSection = levelsSection.getConfigurationSection(levelKey);
+            final ConfigurationSection levelSection = levelsSection.getConfigurationSection(key);
             if (levelSection == null) {
                 continue;
             }
 
             final Map<String, Map<String, Object>> requirements = parseDefinitionEntries(
-                    levelSection.getConfigurationSection("requirements")
+                levelSection.getConfigurationSection("requirements")
             );
             final Map<String, Map<String, Object>> rewards = parseDefinitionEntries(
-                    levelSection.getConfigurationSection("rewards")
+                levelSection.getConfigurationSection("rewards")
             );
-            parsedLevels.put(levelNumber, new TownLevelSection(levelNumber, requirements, rewards));
+            townLevels.put(parsedLevel, new TownLevelSection(parsedLevel, requirements, rewards));
         }
 
-        if (parsedLevels.isEmpty()) {
-            return createDefaultTownLevels();
-        }
-
-        final List<Integer> sortedLevels = new ArrayList<>(parsedLevels.keySet());
-        sortedLevels.sort(Comparator.naturalOrder());
-        final Map<Integer, TownLevelSection> orderedLevels = new LinkedHashMap<>();
-        for (final Integer sortedLevel : sortedLevels) {
-            final TownLevelSection levelSection = parsedLevels.get(sortedLevel);
-            if (sortedLevel == null || levelSection == null) {
-                continue;
-            }
-            orderedLevels.put(sortedLevel, levelSection);
-        }
-        return orderedLevels;
+        return townLevels.isEmpty() ? createDefaultTownLevels() : townLevels;
     }
 
     private static @NotNull Map<String, Map<String, Object>> parseDefinitionEntries(
-            final @Nullable ConfigurationSection section
+        final @Nullable ConfigurationSection definitionsSection
     ) {
-        final Map<String, Map<String, Object>> entries = new LinkedHashMap<>();
-        if (section == null) {
-            return entries;
+        if (definitionsSection == null) {
+            return Map.of();
         }
 
-        for (final String key : section.getKeys(false)) {
-            if (key == null || key.isBlank()) {
-                continue;
-            }
-            if (!section.isConfigurationSection(key)) {
+        final Map<String, Map<String, Object>> definitions = new LinkedHashMap<>();
+        for (final String key : definitionsSection.getKeys(false)) {
+            final String normalizedKey = normalizeDefinitionKey(key);
+            if (normalizedKey.isEmpty()) {
                 continue;
             }
 
-            final ConfigurationSection entrySection = section.getConfigurationSection(key);
-            if (entrySection == null) {
+            final ConfigurationSection definitionSection = definitionsSection.getConfigurationSection(key);
+            if (definitionSection != null) {
+                definitions.put(normalizedKey, convertSection(definitionSection));
                 continue;
             }
-            entries.put(normalizeDefinitionKey(key), convertSection(entrySection));
+
+            final Object rawValue = definitionsSection.get(key);
+            if (rawValue instanceof Map<?, ?> rawMap) {
+                final Map<String, Object> converted = new LinkedHashMap<>();
+                for (final Map.Entry<?, ?> entry : rawMap.entrySet()) {
+                    if (entry.getKey() == null) {
+                        continue;
+                    }
+                    converted.put(
+                        normalizeNestedKey(String.valueOf(entry.getKey())),
+                        normalizeValue(entry.getValue())
+                    );
+                }
+                definitions.put(normalizedKey, converted);
+            }
         }
-
-        return entries;
+        return definitions;
     }
 
     private static @NotNull Map<String, Object> convertSection(final @NotNull ConfigurationSection section) {
-        final Map<String, Object> values = new LinkedHashMap<>();
+        final Map<String, Object> converted = new LinkedHashMap<>();
         for (final String key : section.getKeys(false)) {
-            values.put(key, normalizeValue(section.get(key)));
+            converted.put(normalizeNestedKey(key), normalizeValue(section.get(key)));
         }
-        return values;
+        return converted;
     }
 
-    private static @Nullable Object normalizeValue(final @Nullable Object value) {
-        if (value instanceof ConfigurationSection nestedSection) {
+    private static @Nullable Object normalizeValue(final @Nullable Object rawValue) {
+        if (rawValue instanceof ConfigurationSection nestedSection) {
             return convertSection(nestedSection);
         }
-
-        if (value instanceof Map<?, ?> valueMap) {
-            final Map<String, Object> normalized = new LinkedHashMap<>();
-            for (final Map.Entry<?, ?> entry : valueMap.entrySet()) {
+        if (rawValue instanceof Map<?, ?> nestedMap) {
+            final Map<String, Object> converted = new LinkedHashMap<>();
+            for (final Map.Entry<?, ?> entry : nestedMap.entrySet()) {
                 if (entry.getKey() == null) {
                     continue;
                 }
-                normalized.put(entry.getKey().toString(), normalizeValue(entry.getValue()));
+                converted.put(
+                    normalizeNestedKey(String.valueOf(entry.getKey())),
+                    normalizeValue(entry.getValue())
+                );
             }
-            return normalized;
+            return converted;
         }
-
-        if (value instanceof List<?> valueList) {
-            final List<Object> normalized = new ArrayList<>(valueList.size());
-            for (final Object entry : valueList) {
-                normalized.add(normalizeValue(entry));
+        if (rawValue instanceof List<?> list) {
+            final List<Object> converted = new ArrayList<>();
+            for (final Object value : list) {
+                converted.add(normalizeValue(value));
             }
-            return normalized;
+            return converted;
         }
-
-        return value;
+        return rawValue;
     }
 
-    private static @Nullable Integer parsePositiveLevel(final @Nullable String levelKey) {
-        if (levelKey == null || levelKey.isBlank()) {
+    private static @Nullable Integer parsePositiveLevel(final @Nullable String rawLevel) {
+        if (rawLevel == null || rawLevel.isBlank()) {
             return null;
         }
         try {
-            final int parsedLevel = Integer.parseInt(levelKey.trim());
-            return parsedLevel < 1 ? null : parsedLevel;
+            final int parsed = Integer.parseInt(rawLevel.trim());
+            return parsed > 0 ? parsed : null;
         } catch (final NumberFormatException ignored) {
             return null;
         }
     }
 
-    private static @NotNull String normalizeDefinitionKey(final @NotNull String key) {
-        return key.trim().toLowerCase(Locale.ROOT);
+    private static @NotNull String normalizeDefinitionKey(final @Nullable String rawKey) {
+        if (rawKey == null) {
+            return "";
+        }
+        return rawKey.trim().toLowerCase(Locale.ROOT);
+    }
+
+    private static @NotNull String normalizeNestedKey(final @Nullable String rawKey) {
+        return rawKey == null ? "" : rawKey.trim();
     }
 
     private static @NotNull Map<Integer, TownLevelSection> createDefaultTownLevels() {
         final Map<Integer, TownLevelSection> defaults = new LinkedHashMap<>();
         for (int level = 1; level <= DEFAULT_TOWN_LEVEL_COUNT; level++) {
-            final Map<String, Map<String, Object>> requirements = new LinkedHashMap<>();
-            final Map<String, Map<String, Object>> rewards = new LinkedHashMap<>();
-            if (level > 1) {
-                final double requirementAmount = Math.round(
-                        DEFAULT_TOWN_LEVEL_BASE_REQUIREMENT
-                                * Math.pow(DEFAULT_TOWN_LEVEL_REQUIREMENT_GROWTH, level - 2)
-                                * 100.0D
-                ) / 100.0D;
-                final double rewardAmount = Math.round(requirementAmount * DEFAULT_TOWN_LEVEL_REWARD_MULTIPLIER * 100.0D) / 100.0D;
-
-                requirements.put("vault_upgrade", Map.of(
-                        "type", "CURRENCY",
-                        "currency", "vault",
-                        "amount", requirementAmount,
-                        "consumable", true,
-                        "description", "Vault funding contribution"
-                ));
-                rewards.put("vault_bonus", Map.of(
-                        "type", "CURRENCY",
-                        "currencyId", "vault",
-                        "amount", rewardAmount,
-                        "description", "Town vault bonus"
-                ));
+            if (level == 1) {
+                defaults.put(level, new TownLevelSection(level, Map.of(), Map.of()));
+                continue;
             }
-            defaults.put(level, new TownLevelSection(level, requirements, rewards));
+
+            final double requirementAmount = Math.round(
+                DEFAULT_TOWN_LEVEL_BASE_REQUIREMENT
+                    * Math.pow(DEFAULT_TOWN_LEVEL_REQUIREMENT_GROWTH, level - 2)
+                    * 100.0D
+            ) / 100.0D;
+            final double rewardAmount = Math.round(
+                requirementAmount * DEFAULT_TOWN_LEVEL_REWARD_MULTIPLIER * 100.0D
+            ) / 100.0D;
+            defaults.put(
+                level,
+                new TownLevelSection(
+                    level,
+                    Map.of(
+                        "vault_upgrade",
+                        Map.of(
+                            "type", "CURRENCY",
+                            "currency", "vault",
+                            "amount", requirementAmount,
+                            "consumable", true,
+                            "description", "Vault funding contribution"
+                        )
+                    ),
+                    Map.of(
+                        "vault_bonus",
+                        Map.of(
+                            "type", "CURRENCY",
+                            "currencyId", "vault",
+                            "amount", rewardAmount,
+                            "description", "Town vault bonus"
+                        )
+                    )
+                )
+            );
         }
         return defaults;
     }
 
     /**
-     * Configuration wrapper for a single town level definition.
+     * Immutable config snapshot for a single town level.
      *
-     * @param level configured numeric level
-     * @param requirements requirement definitions keyed by requirement key
-     * @param rewards reward definitions keyed by reward key
+     * @param level target level reached after completing the requirements
+     * @param requirements normalized requirement definitions keyed by identifier
+     * @param rewards normalized reward definitions keyed by identifier
      */
     public record TownLevelSection(
-            int level,
-            @NotNull Map<String, Map<String, Object>> requirements,
-            @NotNull Map<String, Map<String, Object>> rewards
+        int level,
+        @NotNull Map<String, Map<String, Object>> requirements,
+        @NotNull Map<String, Map<String, Object>> rewards
     ) {
 
         /**
-         * Creates a defensive town-level config record.
+         * Creates an immutable town level section snapshot.
          *
-         * @param level configured numeric level
-         * @param requirements requirement definitions keyed by requirement key
-         * @param rewards reward definitions keyed by reward key
+         * @param level target level reached after leveling up
+         * @param requirements normalized requirement definitions
+         * @param rewards normalized reward definitions
          */
         public TownLevelSection {
-            final Map<String, Map<String, Object>> copiedRequirements = new LinkedHashMap<>();
-            for (final Map.Entry<String, Map<String, Object>> entry : Objects.requireNonNull(
-                    requirements,
-                    "requirements"
-            ).entrySet()) {
-                if (entry.getKey() == null || entry.getValue() == null) {
-                    continue;
-                }
-                copiedRequirements.put(entry.getKey(), deepCopyMap(entry.getValue()));
-            }
-
-            final Map<String, Map<String, Object>> copiedRewards = new LinkedHashMap<>();
-            for (final Map.Entry<String, Map<String, Object>> entry : Objects.requireNonNull(
-                    rewards,
-                    "rewards"
-            ).entrySet()) {
-                if (entry.getKey() == null || entry.getValue() == null) {
-                    continue;
-                }
-                copiedRewards.put(entry.getKey(), deepCopyMap(entry.getValue()));
-            }
-
             level = Math.max(1, level);
-            requirements = copiedRequirements;
-            rewards = copiedRewards;
+            requirements = deepCopyDefinitionMap(requirements);
+            rewards = deepCopyDefinitionMap(rewards);
         }
 
         /**
-         * Returns copied requirement definitions.
+         * Returns a defensive deep copy of the configured requirement definitions.
          *
          * @return copied requirement definitions
          */
         public @NotNull Map<String, Map<String, Object>> getRequirements() {
-            final Map<String, Map<String, Object>> copy = new LinkedHashMap<>();
-            for (final Map.Entry<String, Map<String, Object>> entry : this.requirements.entrySet()) {
-                copy.put(entry.getKey(), deepCopyMap(entry.getValue()));
-            }
-            return copy;
+            return deepCopyDefinitionMap(this.requirements);
         }
 
         /**
-         * Returns copied reward definitions.
+         * Returns a defensive deep copy of the configured reward definitions.
          *
          * @return copied reward definitions
          */
         public @NotNull Map<String, Map<String, Object>> getRewards() {
-            final Map<String, Map<String, Object>> copy = new LinkedHashMap<>();
-            for (final Map.Entry<String, Map<String, Object>> entry : this.rewards.entrySet()) {
-                copy.put(entry.getKey(), deepCopyMap(entry.getValue()));
-            }
-            return copy;
+            return deepCopyDefinitionMap(this.rewards);
         }
 
-        private static @NotNull Map<String, Object> deepCopyMap(final @NotNull Map<String, Object> source) {
-            final Map<String, Object> copy = new LinkedHashMap<>();
-            for (final Map.Entry<String, Object> entry : source.entrySet()) {
-                copy.put(entry.getKey(), deepCopyValue(entry.getValue()));
+        private static @NotNull Map<String, Map<String, Object>> deepCopyDefinitionMap(
+            final @Nullable Map<String, Map<String, Object>> definitions
+        ) {
+            if (definitions == null || definitions.isEmpty()) {
+                return Map.of();
+            }
+
+            final Map<String, Map<String, Object>> copy = new LinkedHashMap<>();
+            for (final Map.Entry<String, Map<String, Object>> entry : definitions.entrySet()) {
+                if (entry.getKey() == null) {
+                    continue;
+                }
+
+                final Map<String, Object> nestedCopy = new LinkedHashMap<>();
+                if (entry.getValue() != null) {
+                    for (final Map.Entry<String, Object> nestedEntry : entry.getValue().entrySet()) {
+                        nestedCopy.put(nestedEntry.getKey(), deepCopyValue(nestedEntry.getValue()));
+                    }
+                }
+                copy.put(entry.getKey(), nestedCopy);
             }
             return copy;
         }
 
         private static @Nullable Object deepCopyValue(final @Nullable Object value) {
-            if (value instanceof Map<?, ?> valueMap) {
-                final Map<String, Object> nested = new LinkedHashMap<>();
-                for (final Map.Entry<?, ?> entry : valueMap.entrySet()) {
+            if (value instanceof Map<?, ?> map) {
+                final Map<String, Object> copiedMap = new LinkedHashMap<>();
+                for (final Map.Entry<?, ?> entry : map.entrySet()) {
                     if (entry.getKey() == null) {
                         continue;
                     }
-                    nested.put(entry.getKey().toString(), deepCopyValue(entry.getValue()));
+                    copiedMap.put(String.valueOf(entry.getKey()), deepCopyValue(entry.getValue()));
                 }
-                return nested;
+                return copiedMap;
             }
-
-            if (value instanceof List<?> valueList) {
-                final List<Object> nested = new ArrayList<>(valueList.size());
-                for (final Object entry : valueList) {
-                    nested.add(deepCopyValue(entry));
+            if (value instanceof List<?> list) {
+                final List<Object> copiedList = new ArrayList<>();
+                for (final Object entry : list) {
+                    copiedList.add(deepCopyValue(entry));
                 }
-                return nested;
+                return copiedList;
             }
-
             return value;
         }
     }

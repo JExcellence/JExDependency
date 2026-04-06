@@ -1,975 +1,509 @@
-prefix: "<gradient:#0ea5e9:#38bdf8>🌧 RDT</gradient> "
+prefix: "<gradient:#0ea5e9:#38bdf8>[RDT]</gradient> "
 
-# ============================================
-# General messages
-# ============================================
-
-no_town: "You are not in a town!"
-no_town_db: "Town {town} not found in DB! Consult developer..."
-no_player: "Player not found or offline!"
-no_mayor: "Mayor not found or offline!"
-plyaer_in_town: "You are already a member of a town!"
-bad_args:
-  create: "Usage: /rt create <townName>"
-  invite: "Usage: /rt invite <player>"
-  join: "Usage: /rt join <townName>"
-  deposit: "Usage /rt deposit <amount>"
-  withdraw: "Usage /rt deposit <amount>"
-  amount: "Amount must be positive number!"
-  number: "Input is not a number!"
-town_exists: "Town already exists!"
-no_funds_town: "You require {cost} to create a town!"
-no_funds_deposit: "You do not have enough funds!"
-no_funds_withdraw: "Your town does not have enough funds!"
-town_deposit: "{amount} deposited to the town!"
-town_withdraw: "{amount} taken from the town!"
-no_eco: "Economy plugin not found!"
-charged: "You have been charged {cost} for creating a town!"
-uuid_used: "An error occurred creating your town: duplicate ID. Please try again..."
-place_nexus: "Place your Nexus to start your town!"
-refunded_town: "You have been refunded {refund} for deleting town {town}!"
-invited: "You have been invited to {town}! Use /rt accept to join!"
-join_request: "{player} has requested to join {town}! Use /rt accept <name> to accept!"
-accepted: "You have joined {town}!"
-no_pending: "No pending requests to join town!"
-member_notice: "{player} has joined {town}!"
-mayor_action: "This action is reserved for mayors!"
-chunk_owned: "Chunk already claimed!"
-chunk_adjacent: "Chunk must be adjacent chunk owned by town!"
-claim_limit: "Your town has reached the claim limit!"
-claim_cost: "You require {cost} to claim a chunk!"
-claim_charged: "You have been charged {cost} for claiming chunk!"
-claimed: "Chunk claimed: Total chunks: {chunks}"
-unclaim_failed: "Chunk must be owned to unclaim. Cannot unclaim Nexus chunk."
-refunded_chunk: "You have been refunded {refund} for unclaiming chunk!"
-player_balance: "Player balance: {balance}"
-town_balance: "Town balance: {balance}"
-grace_period: "Your town has never been taxed. You have a grace period to fund your town. You're town will be taxed in {time} seconds."
-taxed: "Taxes have been taken from your town bank. You will be taxed again in {time} seconds!"
-
-# ============================================
-# GUI Buttons
-# ============================================
-
-town:
-  view_town:
-    lore: "Click to view town"
-
-main_overview_ui:
-  title: "<gradient:#22c55e:#86efac>🏘 Town Overview</gradient>"
-  main_overview:
-    name: "<gradient:#10b981:#34d399>🌍 View Towns</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>Open to explore all towns on the server!</gradient>"
-  create_town:
-    name: "<gradient:#f59e0b:#fbbf24>🧱 Create Town</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>Open the naming anvil for your new town.</gradient>"
-      - "<gradient:#22c55e:#86efac>Submit a valid name to claim a Nexus Block.</gradient>"
-  view_town:
-    name: "<gradient:#38bdf8:#7dd3fc>🏛 View My Town</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>You are already a member of a town.</gradient>"
-      - "<gradient:#22c55e:#86efac>Open your town overview and manage it here.</gradient>"
-  join_town:
-    name: "<gradient:#22c55e:#86efac>🚪 Join A Town</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>Browse towns and send a join request.</gradient>"
-      - "<gradient:#64748b:#94a3b8>Requests persist until accepted or declined.</gradient>"
-  invite_player:
-    name: "<gradient:#f59e0b:#fbbf24>✉ Invite Players</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>Invite players who are not in a town.</gradient>"
-      - "<gradient:#64748b:#94a3b8>Requires permission:</gradient> <gradient:#38bdf8:#7dd3fc>TOWN_INVITE</gradient>"
-    error:
-      system_unavailable: "<gradient:#ef4444:#f87171>⚠ Invite services are unavailable.</gradient>"
-      town_unavailable: "<gradient:#ef4444:#f87171>⚠ Your town data is unavailable.</gradient>"
-      no_permission: "<gradient:#ef4444:#f87171>⚠ You need %permission% to invite players.</gradient>"
-
-server_town_overview:
-  title: "<gradient:#10b981:#34d399>🏙 Server Towns</gradient>"
-  town:
-    open:
-      name: "<gradient:#22c55e:#86efac>🏘 %town_name%</gradient>"
-      lore:
-        - "<gradient:#64748b:#94a3b8>Status:</gradient> <gradient:#22c55e:#86efac>%state%</gradient>"
-        - "<gradient:#64748b:#94a3b8>Click to view this town overview.</gradient>"
-      state: "<gradient:#22c55e:#86efac>Open Borders ✅</gradient>"
-    closed:
-      name: "<gradient:#ef4444:#f87171>🚧 %town_name%</gradient>"
-      lore:
-        - "<gradient:#64748b:#94a3b8>Status:</gradient> <gradient:#ef4444:#f87171>%state%</gradient>"
-        - "<gradient:#64748b:#94a3b8>Public permission required: %permission%</gradient>"
-        - "<gradient:#64748b:#94a3b8>This town is marked as closed to public viewing.</gradient>"
-      state: "<gradient:#ef4444:#f87171>Closed Borders ❌</gradient>"
-  message:
-    closed_borders: "<gradient:#ef4444:#f87171>⚠ %town_name% has closed borders.</gradient>"
-  error:
-    system_unavailable: "<gradient:#ef4444:#f87171>⚠ Town services are unavailable. Try again shortly.</gradient>"
-
-town_info_ui:
-  title: "<gradient:#22d3ee:#67e8f9>🏷 Town Info</gradient>"
-  info:
-    name: "<gradient:#38bdf8:#7dd3fc>📘 %town_name% Basics</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>Mayor:</gradient> <gradient:#f59e0b:#fbbf24>%mayor_name%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Members:</gradient> <gradient:#38bdf8:#7dd3fc>%member_count%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Claimed Chunks:</gradient> <gradient:#22c55e:#86efac>%claimed_chunks%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Town Level:</gradient> <gradient:#22c55e:#86efac>%town_level%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Nexus Chunk:</gradient> <gradient:#38bdf8:#7dd3fc>(%nexus_chunk_x%, %nexus_chunk_z%)</gradient>"
-      - "<gradient:#64748b:#94a3b8>Nexus Server:</gradient> <gradient:#22d3ee:#67e8f9>%nexus_server%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Status:</gradient> <gradient:#22d3ee:#67e8f9>%active_state%</gradient>"
-    state:
-      active: "<gradient:#22c55e:#86efac>Active ✅</gradient>"
-      inactive: "<gradient:#f59e0b:#fbbf24>Inactive ⏸</gradient>"
-    unavailable:
-      name: "<gradient:#ef4444:#f87171>⚠ Town Data Unavailable</gradient>"
-      lore:
-        - "<gradient:#64748b:#94a3b8>No town information could be resolved.</gradient>"
-  overview:
-    name: "<gradient:#22c55e:#86efac>🏛 Open Town Overview</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>Open the full management view for this town.</gradient>"
-      - "<gradient:#64748b:#94a3b8>Requires permission:</gradient> <gradient:#38bdf8:#7dd3fc>%permission%</gradient>"
-    unavailable:
-      name: "<gradient:#ef4444:#f87171>⚠ Overview Unavailable</gradient>"
-      lore:
-        - "<gradient:#64748b:#94a3b8>Town information is unavailable.</gradient>"
-    error:
-      system_unavailable: "<gradient:#ef4444:#f87171>⚠ Town services are unavailable.</gradient>"
-      town_unavailable: "<gradient:#ef4444:#f87171>⚠ Town data could not be resolved.</gradient>"
-      no_permission: "<gradient:#ef4444:#f87171>⚠ You need %permission% to open town overview.</gradient>"
-  protections:
-    name: "<gradient:#22c55e:#86efac>🛡 Town Protections</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>Configure protection role requirements for this town.</gradient>"
-      - "<gradient:#64748b:#94a3b8>Scope:</gradient> <gradient:#38bdf8:#7dd3fc>%scope%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Requires permission:</gradient> <gradient:#38bdf8:#7dd3fc>%permission%</gradient>"
-    scope:
-      town: "<gradient:#22c55e:#86efac>Town-wide 🌐</gradient>"
-    unavailable:
-      name: "<gradient:#ef4444:#f87171>⚠ Protections Unavailable</gradient>"
-      lore:
-        - "<gradient:#64748b:#94a3b8>Town information is unavailable.</gradient>"
-    error:
-      system_unavailable: "<gradient:#ef4444:#f87171>⚠ Protection services are unavailable.</gradient>"
-      town_unavailable: "<gradient:#ef4444:#f87171>⚠ Town data is unavailable for protections.</gradient>"
-      no_permission: "<gradient:#ef4444:#f87171>⚠ You need %permission% to configure protections.</gradient>"
-
-town_chunk_ui:
-  title: "<gradient:#22d3ee:#67e8f9>🧱 Chunk Block • %town_name% (%chunk_x%, %chunk_z%)</gradient>"
-  chunk:
-    name: "<gradient:#38bdf8:#7dd3fc>🗺 Chunk (%chunk_x%, %chunk_z%)</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>Town:</gradient> <gradient:#22c55e:#86efac>%town_name%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Current Type:</gradient> <gradient:#f59e0b:#fbbf24>%chunk_type%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Use the selector to change this chunk type.</gradient>"
-  select_type:
-    name: "<gradient:#22c55e:#86efac>🧭 Select Chunk Type</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>Target Chunk:</gradient> <gradient:#38bdf8:#7dd3fc>(%chunk_x%, %chunk_z%)</gradient>"
-      - "<gradient:#64748b:#94a3b8>Current Type:</gradient> <gradient:#f59e0b:#fbbf24>%chunk_type%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Click to open paginated chunk types.</gradient>"
-  pickup:
-    name: "<gradient:#f59e0b:#fbbf24>📦 Pickup Chunk Block</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>Chunk:</gradient> <gradient:#38bdf8:#7dd3fc>(%chunk_x%, %chunk_z%)</gradient>"
-      - "<gradient:#64748b:#94a3b8>Current Type:</gradient> <gradient:#f59e0b:#fbbf24>%chunk_type%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Returns a Chunk Block that keeps this type.</gradient>"
-      - "<gradient:#64748b:#94a3b8>Requires permission:</gradient> <gradient:#38bdf8:#7dd3fc>%permission%</gradient>"
-    error:
-      no_permission: "<gradient:#ef4444:#f87171>⚠ You need %permission% to pick up this Chunk Block.</gradient>"
-      block_unavailable: "<gradient:#ef4444:#f87171>⚠ This placed Chunk Block could not be validated.</gradient>"
-    success:
-      given: "<gradient:#22c55e:#86efac>✅ Picked up Chunk Block for (%chunk_x%, %chunk_z%) with type %chunk_type%.</gradient>"
-      dropped: "<gradient:#f59e0b:#fbbf24>📦 Inventory full. Chunk Block for (%chunk_x%, %chunk_z%) with type %chunk_type% dropped nearby.</gradient>"
-  protections:
-    name: "<gradient:#22c55e:#86efac>🛡 Chunk Protections</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>Chunk:</gradient> <gradient:#38bdf8:#7dd3fc>(%chunk_x%, %chunk_z%)</gradient>"
-      - "<gradient:#64748b:#94a3b8>Configure protection role requirements for this chunk only.</gradient>"
-      - "<gradient:#64748b:#94a3b8>Requires permission:</gradient> <gradient:#38bdf8:#7dd3fc>%permission%</gradient>"
-    error:
-      no_permission: "<gradient:#ef4444:#f87171>⚠ You need %permission% to configure chunk protections.</gradient>"
-  error:
-    system_unavailable: "<gradient:#ef4444:#f87171>⚠ Chunk upgrade services are unavailable.</gradient>"
-    town_unavailable: "<gradient:#ef4444:#f87171>⚠ Town data is unavailable for this Chunk Block.</gradient>"
-    no_permission: "<gradient:#ef4444:#f87171>⚠ You need %permission% to upgrade this Chunk Block.</gradient>"
-    chunk_unavailable: "<gradient:#ef4444:#f87171>⚠ This target chunk could not be resolved.</gradient>"
-
-town_chunk_type_ui:
-  title: "<gradient:#22c55e:#86efac>🧭 Chunk Types • %town_name% (%chunk_x%, %chunk_z%)</gradient>"
-  type:
-    name: "<gradient:#38bdf8:#7dd3fc>📌 %chunk_type%</gradient> <gradient:#22d3ee:#67e8f9>(%selected_state%)</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>Chunk:</gradient> <gradient:#38bdf8:#7dd3fc>(%chunk_x%, %chunk_z%)</gradient>"
-      - "<gradient:#64748b:#94a3b8>State:</gradient> <gradient:#22d3ee:#67e8f9>%selected_state%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Click to set this chunk type.</gradient>"
-    unavailable:
-      name: "<gradient:#ef4444:#f87171>⚠ Chunk Type Unavailable</gradient>"
-      lore:
-        - "<gradient:#64748b:#94a3b8>The target chunk could not be resolved.</gradient>"
-    state:
-      selected: "<gradient:#22c55e:#86efac>Selected ✅</gradient>"
-      not_selected: "<gradient:#94a3b8:#cbd5e1>Not Selected ◻</gradient>"
-  message:
-    updated: "<gradient:#22c55e:#86efac>✅ Updated chunk (%chunk_x%, %chunk_z%) from %old_type% to %new_type%.</gradient>"
-    already_selected: "<gradient:#f59e0b:#fbbf24>⚠ Chunk (%chunk_x%, %chunk_z%) is already set to %chunk_type%.</gradient>"
-  error:
-    system_unavailable: "<gradient:#ef4444:#f87171>⚠ Chunk type services are unavailable.</gradient>"
-    town_unavailable: "<gradient:#ef4444:#f87171>⚠ Town data is unavailable for chunk type updates.</gradient>"
-    no_permission: "<gradient:#ef4444:#f87171>⚠ You need %permission% to change chunk types.</gradient>"
-    chunk_unavailable: "<gradient:#ef4444:#f87171>⚠ Could not resolve the target chunk.</gradient>"
-    block_unavailable: "<gradient:#ef4444:#f87171>⚠ Could not validate the placed Chunk Block for this chunk.</gradient>"
-
-town_protections_ui:
-  title: "<gradient:#22d3ee:#67e8f9>🛡 Protections • %town_name% (%scope_label%)</gradient>"
-  protection:
-    name: "<gradient:#38bdf8:#7dd3fc>🧩 %protection%</gradient> <gradient:#22c55e:#86efac>(%required_role%)</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>Scope:</gradient> <gradient:#38bdf8:#7dd3fc>%scope_label%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Source:</gradient> <gradient:#38bdf8:#7dd3fc>%source_state%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Required Role:</gradient> <gradient:#22c55e:#86efac>%required_role%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Click to cycle the required role.</gradient>"
-    source:
-      town: "<gradient:#22c55e:#86efac>Town Default 🌐</gradient>"
-      chunk: "<gradient:#f59e0b:#fbbf24>Chunk Override 📍</gradient>"
-    unavailable:
-      name: "<gradient:#ef4444:#f87171>⚠ Protection Entry Unavailable</gradient>"
-      lore:
-        - "<gradient:#64748b:#94a3b8>Town data could not be resolved.</gradient>"
-  scope:
-    town: "<gradient:#22c55e:#86efac>Town-wide 🌐</gradient>"
-    chunk: "<gradient:#f59e0b:#fbbf24>Chunk-only 📍</gradient>"
-  back:
-    name: "<gradient:#f59e0b:#fbbf24>↩ Back</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>Return to the previous view.</gradient>"
-  message:
-    updated: "<gradient:#22c55e:#86efac>✅ Updated %protection% to require %required_role% (%scope_label%).</gradient>"
-  error:
-    system_unavailable: "<gradient:#ef4444:#f87171>⚠ Protection services are unavailable.</gradient>"
-    town_unavailable: "<gradient:#ef4444:#f87171>⚠ Town data is unavailable for this view.</gradient>"
-    no_permission: "<gradient:#ef4444:#f87171>⚠ You need %permission% to configure protections.</gradient>"
-    chunk_unavailable: "<gradient:#ef4444:#f87171>⚠ Target chunk data is unavailable for chunk protections.</gradient>"
-    no_roles: "<gradient:#ef4444:#f87171>⚠ No roles are available to assign protections.</gradient>"
-
-town_overview_ui:
-  title: "<gradient:#22c55e:#86efac>🏛 Town Overview</gradient>"
-  info:
-    name: "<gradient:#f59e0b:#fbbf24>🧭 Nexus Status for %town_name%</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>Placed State: %placed_state%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Nexus Location: %world% (%x%, %y%, %z%)</gradient>"
-      - "<gradient:#64748b:#94a3b8>Nexus Server:</gradient> <gradient:#22d3ee:#67e8f9>%nexus_server%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Town Level:</gradient> <gradient:#22c55e:#86efac>%town_level% ➜ %next_level%</gradient>"
-    state:
-      placed: "<gradient:#22c55e:#86efac>Placed ✅</gradient>"
-      unplaced: "<gradient:#ef4444:#f87171>Not Placed ❌</gradient>"
-    unavailable:
-      name: "<gradient:#ef4444:#f87171>⚠ Town Data Unavailable</gradient>"
-      lore:
-        - "<gradient:#64748b:#94a3b8>No town data could be resolved for this view.</gradient>"
-  pickup:
-    name: "<gradient:#38bdf8:#7dd3fc>📦 Pickup Nexus for %town_name%</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>Mayor-only action.</gradient>"
-      - "<gradient:#64748b:#94a3b8>Reclaims the placed Nexus Block.</gradient>"
-      - "<gradient:#64748b:#94a3b8>Use this before moving your nexus location.</gradient>"
-    unavailable:
-      name: "<gradient:#ef4444:#f87171>⚠ Nexus Pickup Unavailable</gradient>"
-      lore:
-        - "<gradient:#64748b:#94a3b8>Town data could not be resolved.</gradient>"
-    not_placed:
-      name: "<gradient:#94a3b8:#cbd5e1>🧱 No Nexus To Pickup</gradient>"
-      lore:
-        - "<gradient:#64748b:#94a3b8>This town does not currently have a placed nexus.</gradient>"
-    error:
-      system_unavailable: "<gradient:#ef4444:#f87171>⚠ Town services are unavailable. Try again shortly.</gradient>"
-      town_unavailable: "<gradient:#ef4444:#f87171>⚠ Town data could not be loaded for pickup.</gradient>"
-      not_mayor: "<gradient:#ef4444:#f87171>⚠ Only the mayor can pick up the town nexus block.</gradient>"
-      no_permission: "<gradient:#ef4444:#f87171>⚠ You need %permission% to pick up the town nexus block.</gradient>"
-      not_placed: "<gradient:#ef4444:#f87171>⚠ This town does not have a placed nexus block.</gradient>"
-      invalid_location: "<gradient:#ef4444:#f87171>⚠ Nexus location is invalid. Contact staff.</gradient>"
-    success:
-      given: "<gradient:#22c55e:#86efac>✅ Picked up the nexus block for %town_name%.</gradient>"
-      dropped: "<gradient:#f59e0b:#fbbf24>📦 Inventory full. Nexus block for %town_name% dropped nearby.</gradient>"
-  roles:
-    name: "<gradient:#38bdf8:#7dd3fc>📚 Manage Roles for %town_name%</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>View, create, and remove town roles.</gradient>"
-      - "<gradient:#64748b:#94a3b8>Mayor controls add/delete actions.</gradient>"
-    unavailable:
-      name: "<gradient:#ef4444:#f87171>⚠ Roles Unavailable</gradient>"
-      lore:
-        - "<gradient:#64748b:#94a3b8>Town data could not be loaded.</gradient>"
-    error:
-      system_unavailable: "<gradient:#ef4444:#f87171>⚠ Role services are unavailable. Try again shortly.</gradient>"
-      town_unavailable: "<gradient:#ef4444:#f87171>⚠ Could not resolve town data for role management.</gradient>"
-      no_permission: "<gradient:#ef4444:#f87171>⚠ You need %permission% to manage town roles.</gradient>"
-  pending_join:
-    name: "<gradient:#22d3ee:#67e8f9>🕒 Pending Join Requests</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>Current requests:</gradient> <gradient:#38bdf8:#7dd3fc>%pending_count%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Left Click accept, Right Click decline in next view.</gradient>"
-      - "<gradient:#64748b:#94a3b8>Requires permission:</gradient> <gradient:#38bdf8:#7dd3fc>%permission%</gradient>"
-    unavailable:
-      name: "<gradient:#ef4444:#f87171>⚠ Pending Requests Unavailable</gradient>"
-      lore:
-        - "<gradient:#64748b:#94a3b8>Town data could not be loaded.</gradient>"
-    error:
-      system_unavailable: "<gradient:#ef4444:#f87171>⚠ Pending request services are unavailable.</gradient>"
-      town_unavailable: "<gradient:#ef4444:#f87171>⚠ Could not resolve town data for pending requests.</gradient>"
-      no_permission: "<gradient:#ef4444:#f87171>⚠ You need %permission% to manage join requests.</gradient>"
-  chunks:
-    name: "<gradient:#22d3ee:#67e8f9>🗺 Chunk Claims for %town_name%</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>Claimed:</gradient> <gradient:#38bdf8:#7dd3fc>%claimed_chunks%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Nexus Chunk:</gradient> <gradient:#38bdf8:#7dd3fc>(%chunk_x%, %chunk_z%)</gradient>"
-      - "<gradient:#64748b:#94a3b8>Open the claim map window.</gradient>"
-    unavailable:
-      name: "<gradient:#ef4444:#f87171>⚠ Claim Map Unavailable</gradient>"
-      lore:
-        - "<gradient:#64748b:#94a3b8>Town data could not be loaded.</gradient>"
-    error:
-      system_unavailable: "<gradient:#ef4444:#f87171>⚠ Claim services are unavailable.</gradient>"
-      town_unavailable: "<gradient:#ef4444:#f87171>⚠ Town data is unavailable for chunk claims.</gradient>"
-      no_permission: "<gradient:#ef4444:#f87171>⚠ You need %permission% to open chunk claims.</gradient>"
-      nexus_not_placed: "<gradient:#ef4444:#f87171>⚠ Place your nexus before opening chunk claims.</gradient>"
+prt:
   spawn:
-    name: "<gradient:#22c55e:#86efac>📍 Set Town Spawn</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>Current Spawn:</gradient> <gradient:#38bdf8:#7dd3fc>%spawn_world% (%spawn_x%, %spawn_y%, %spawn_z%)</gradient>"
-      - "<gradient:#64748b:#94a3b8>Spawn Server:</gradient> <gradient:#22d3ee:#67e8f9>%spawn_server%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Click to set spawn to your current location.</gradient>"
-      - "<gradient:#64748b:#94a3b8>Requires permission:</gradient> <gradient:#38bdf8:#7dd3fc>%permission%</gradient>"
-    unavailable:
-      name: "<gradient:#ef4444:#f87171>⚠ Spawn Settings Unavailable</gradient>"
-      lore:
-        - "<gradient:#64748b:#94a3b8>Town data could not be loaded.</gradient>"
-    error:
-      system_unavailable: "<gradient:#ef4444:#f87171>⚠ Spawn services are unavailable.</gradient>"
-      town_unavailable: "<gradient:#ef4444:#f87171>⚠ Town data is unavailable for spawn updates.</gradient>"
-      no_permission: "<gradient:#ef4444:#f87171>⚠ You need %permission% to update town spawn.</gradient>"
-      invalid_location: "<gradient:#ef4444:#f87171>⚠ Could not resolve your current location.</gradient>"
-    success:
-      updated: "<gradient:#22c55e:#86efac>✅ Town spawn updated to %world% (%x%, %y%, %z%).</gradient>"
+    unavailable: "<red>Your town spawn is unavailable right now.</red>"
   bank:
-    name: "<gradient:#22d3ee:#67e8f9>🏦 Town Bank</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>Tracked Currencies:</gradient> <gradient:#38bdf8:#7dd3fc>%currency_count%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Left Click deposits your full balance for a currency.</gradient>"
-      - "<gradient:#64748b:#94a3b8>Right Click withdraws the town's full balance for a currency.</gradient>"
-      - "<gradient:#64748b:#94a3b8>Deposit permission:</gradient> <gradient:#38bdf8:#7dd3fc>%deposit_permission%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Withdraw permission:</gradient> <gradient:#38bdf8:#7dd3fc>%withdraw_permission%</gradient>"
-    unavailable:
-      name: "<gradient:#ef4444:#f87171>⚠ Town Bank Unavailable</gradient>"
-      lore:
-        - "<gradient:#64748b:#94a3b8>Town data could not be loaded.</gradient>"
-    error:
-      system_unavailable: "<gradient:#ef4444:#f87171>⚠ Town bank services are unavailable.</gradient>"
-      town_unavailable: "<gradient:#ef4444:#f87171>⚠ Town data is unavailable for bank access.</gradient>"
-      no_permission: "<gradient:#ef4444:#f87171>⚠ You need %deposit_permission% or %withdraw_permission% to open town bank.</gradient>"
-  level_up:
-    name: "<gradient:#22c55e:#86efac>⬆ Town Level Up • %town_name%</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>Current Level:</gradient> <gradient:#38bdf8:#7dd3fc>%current_level%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Next Level:</gradient> <gradient:#22c55e:#86efac>%next_level%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Open progression requirements and rewards.</gradient>"
-      - "<gradient:#64748b:#94a3b8>Requires permission:</gradient> <gradient:#38bdf8:#7dd3fc>%permission%</gradient>"
-    unavailable:
-      name: "<gradient:#ef4444:#f87171>⚠ Level Up Unavailable</gradient>"
-      lore:
-        - "<gradient:#64748b:#94a3b8>Town data could not be loaded.</gradient>"
-    max_level:
-      name: "<gradient:#22c55e:#86efac>🏆 Maximum Town Level Reached</gradient>"
-      lore:
-        - "<gradient:#64748b:#94a3b8>Your town is already at level %current_level%.</gradient>"
-    error:
-      system_unavailable: "<gradient:#ef4444:#f87171>⚠ Level-up services are unavailable.</gradient>"
-      town_unavailable: "<gradient:#ef4444:#f87171>⚠ Town data is unavailable for level up.</gradient>"
-      no_permission: "<gradient:#ef4444:#f87171>⚠ You need %permission% to manage town levels.</gradient>"
-      max_level: "<gradient:#f59e0b:#fbbf24>⚠ Your town is already at the highest level (%current_level%).</gradient>"
+    no_town: "<red>You must belong to a town to use the remote town bank.</red>"
+    locked: "<yellow>Your town has not unlocked remote bank access yet.</yellow>"
 
-town_bank_ui:
-  title: "<gradient:#22d3ee:#67e8f9>🏦 Town Bank • %town_name%</gradient>"
-  currency:
-    name: "<gradient:#38bdf8:#7dd3fc>💱 %currency_name%</gradient> <gradient:#22d3ee:#67e8f9>(%currency_id%)</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>Town Balance:</gradient> <gradient:#22c55e:#86efac>%town_balance%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Your Balance:</gradient> <gradient:#38bdf8:#7dd3fc>%player_balance%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Deposit [%deposit_permission%]:</gradient> <gradient:#22d3ee:#67e8f9>%deposit_state%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Withdraw [%withdraw_permission%]:</gradient> <gradient:#22d3ee:#67e8f9>%withdraw_state%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Left Click: Deposit your full currency balance.</gradient>"
-      - "<gradient:#64748b:#94a3b8>Right Click: Withdraw town's full currency balance.</gradient>"
-    unavailable:
-      name: "<gradient:#ef4444:#f87171>⚠ Currency Entry Unavailable</gradient>"
-      lore:
-        - "<gradient:#64748b:#94a3b8>Town bank data is unavailable.</gradient>"
-  state:
-    enabled: "<gradient:#22c55e:#86efac>Enabled ✅</gradient>"
-    disabled: "<gradient:#ef4444:#f87171>Denied ❌</gradient>"
-  error:
-    system_unavailable: "<gradient:#ef4444:#f87171>⚠ Town bank services are unavailable.</gradient>"
-    town_unavailable: "<gradient:#ef4444:#f87171>⚠ Town data is unavailable for bank updates.</gradient>"
-    no_permission_view: "<gradient:#ef4444:#f87171>⚠ You need %deposit_permission% or %withdraw_permission% to access town bank.</gradient>"
-    no_permission_deposit: "<gradient:#ef4444:#f87171>⚠ You need %permission% to deposit to town bank.</gradient>"
-    no_permission_withdraw: "<gradient:#ef4444:#f87171>⚠ You need %permission% to withdraw from town bank.</gradient>"
-    player_funds_unavailable: "<gradient:#f59e0b:#fbbf24>⚠ You have no %currency_name% (%currency_id%) to deposit.</gradient>"
-    town_funds_unavailable: "<gradient:#f59e0b:#fbbf24>⚠ Town bank has no %currency_name% (%currency_id%) to withdraw.</gradient>"
-    deposit_failed: "<gradient:#ef4444:#f87171>⚠ Failed to deposit %amount% %currency_name% (%currency_id%).</gradient>"
-    withdraw_failed: "<gradient:#ef4444:#f87171>⚠ Failed to withdraw %amount% %currency_name% (%currency_id%).</gradient>"
-  message:
-    deposited: "<gradient:#22c55e:#86efac>✅ Deposited %amount% %currency_name% (%currency_id%). Town balance: %town_balance%.</gradient>"
-    withdrawn: "<gradient:#22c55e:#86efac>✅ Withdrew %amount% %currency_name% (%currency_id%). Town balance: %town_balance%.</gradient>"
+town_spawn:
+  transfer_requested: "<yellow>Sending you to the town spawn server <white>{target_server}</white><yellow>.</yellow>"
+  started: "<yellow>Town spawn warmup started. Teleporting in <white>{seconds}</white><yellow> seconds.</yellow>"
+  teleported: "<green>Teleported to <white>{town}</white><green>.</green>"
 
-town_level_up_ui:
-  title: "<gradient:#22c55e:#86efac>⬆ Town Level Up</gradient>"
-  info:
-    name: "<gradient:#38bdf8:#7dd3fc>📘 Level Progress</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>Current Level:</gradient> <gradient:#38bdf8:#7dd3fc>%current_level%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Next Level:</gradient> <gradient:#22c55e:#86efac>%next_level%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Meet requirements, then attempt level up.</gradient>"
-    unavailable:
-      name: "<gradient:#ef4444:#f87171>⚠ Level Data Unavailable</gradient>"
-      lore:
-        - "<gradient:#64748b:#94a3b8>Town level data could not be resolved.</gradient>"
-  requirements:
-    name: "<gradient:#22d3ee:#67e8f9>📋 View Requirements</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>Target Level:</gradient> <gradient:#22c55e:#86efac>%target_level%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Requirement Count:</gradient> <gradient:#38bdf8:#7dd3fc>%requirement_count%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Permission:</gradient> <gradient:#38bdf8:#7dd3fc>%permission%</gradient>"
-    unavailable:
-      name: "<gradient:#ef4444:#f87171>⚠ Requirements Unavailable</gradient>"
-      lore:
-        - "<gradient:#64748b:#94a3b8>Requirement data could not be loaded.</gradient>"
-  rewards:
-    name: "<gradient:#f59e0b:#fbbf24>🎁 View Rewards</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>Target Level:</gradient> <gradient:#22c55e:#86efac>%target_level%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Reward Count:</gradient> <gradient:#38bdf8:#7dd3fc>%reward_count%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Rewards are granted to your town (item rewards to you).</gradient>"
-    unavailable:
-      name: "<gradient:#ef4444:#f87171>⚠ Rewards Unavailable</gradient>"
-      lore:
-        - "<gradient:#64748b:#94a3b8>Reward data could not be loaded.</gradient>"
-  level_up:
-    name: "<gradient:#22c55e:#86efac>✅ Attempt Level Up</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>Current Level:</gradient> <gradient:#38bdf8:#7dd3fc>%current_level%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Next Level:</gradient> <gradient:#22c55e:#86efac>%next_level%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Requirement State:</gradient> <gradient:#22d3ee:#67e8f9>%requirement_status%</gradient>"
-    unavailable:
-      name: "<gradient:#ef4444:#f87171>⚠ Level-Up Unavailable</gradient>"
-      lore:
-        - "<gradient:#64748b:#94a3b8>Town level state could not be resolved.</gradient>"
-    max_level:
-      name: "<gradient:#22c55e:#86efac>🏆 Maximum Town Level Reached</gradient>"
-      lore:
-        - "<gradient:#64748b:#94a3b8>Your town is already at level %current_level%.</gradient>"
-    state:
-      ready: "<gradient:#22c55e:#86efac>Ready ✅</gradient>"
-      pending: "<gradient:#f59e0b:#fbbf24>Pending ⏳</gradient>"
-      unavailable: "<gradient:#ef4444:#f87171>Unavailable ⚠</gradient>"
-    error:
-      system_unavailable: "<gradient:#ef4444:#f87171>⚠ Level-up services are unavailable.</gradient>"
-      max_level: "<gradient:#f59e0b:#fbbf24>⚠ Your town is already at level %current_level%.</gradient>"
-      requirement_unavailable: "<gradient:#ef4444:#f87171>⚠ Requirement cannot be validated: %requirement%</gradient>"
-      requirement_unmet: "<gradient:#f59e0b:#fbbf24>⚠ Requirements not met. Next required: %requirement% (%requirements%).</gradient>"
-      consume_failed: "<gradient:#ef4444:#f87171>⚠ Failed to consume requirement: %requirement%</gradient>"
-    message:
-      success: "<gradient:#22c55e:#86efac>✅ Town leveled up from %old_level% to %new_level%! Rewards: %reward_count%. Requirements: %requirements%. Rewards: %rewards%.</gradient>"
-      success_with_reward_errors: "<gradient:#f59e0b:#fbbf24>⚠ Town leveled up from %old_level% to %new_level%, but %failed_reward_count% reward(s) failed. Granted: %reward_count%.</gradient>"
-  error:
-    town_unavailable: "<gradient:#ef4444:#f87171>⚠ Town data is unavailable for level management.</gradient>"
-    no_permission: "<gradient:#ef4444:#f87171>⚠ You need %permission% to manage town levels.</gradient>"
+nexus_block:
+  name: "<gradient:#22c55e:#84cc16>[Nexus]</gradient> <white>{town}</white>"
+  lore:
+    - "<gray>Place this block to found your town.</gray>"
+    - "<gray>Town:</gray> <white>{town}</white>"
+    - "<gray>Color:</gray> <white>{town_color}</white>"
 
-town_level_up_requirements_ui:
-  title: "<gradient:#22d3ee:#67e8f9>📋 Level Requirements • %town_name% (→ %target_level%)</gradient>"
-  summary:
-    name: "<gradient:#38bdf8:#7dd3fc>📊 Requirement Summary</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>Current Level:</gradient> <gradient:#38bdf8:#7dd3fc>%current_level%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Target Level:</gradient> <gradient:#22c55e:#86efac>%target_level%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Completed:</gradient> <gradient:#22c55e:#86efac>%met_count% / %requirement_count%</gradient>"
-      - "<gradient:#64748b:#94a3b8>State:</gradient> <gradient:#22d3ee:#67e8f9>%state%</gradient>"
-    state:
-      ready: "<gradient:#22c55e:#86efac>Ready ✅</gradient>"
-      pending: "<gradient:#f59e0b:#fbbf24>Pending ⏳</gradient>"
-      unavailable: "<gradient:#ef4444:#f87171>Unavailable ⚠</gradient>"
-  entry:
-    name: "<gradient:#22c55e:#86efac>🧩 %requirement_name%</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>Key:</gradient> <gradient:#38bdf8:#7dd3fc>%requirement_key%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Type:</gradient> <gradient:#38bdf8:#7dd3fc>%requirement_type%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Status:</gradient> <gradient:#22d3ee:#67e8f9>%status%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Progress:</gradient> %progress_bar% <gradient:#22c55e:#86efac>(%progress%)</gradient>"
-      - "<gradient:#64748b:#94a3b8>Summary:</gradient> <gradient:#f59e0b:#fbbf24>%summary%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Click to attempt completion/progress banking.</gradient>"
-    details: "<gradient:#22d3ee:#67e8f9>Details:</gradient>"
-    unavailable:
-      name: "<gradient:#ef4444:#f87171>⚠ Requirement Unavailable</gradient>"
-      lore:
-        - "<gradient:#64748b:#94a3b8>Requirement data is unavailable.</gradient>"
-    status:
-      met: "<gradient:#22c55e:#86efac>Complete ✅</gradient>"
-      pending: "<gradient:#f59e0b:#fbbf24>Pending ⏳</gradient>"
-      unavailable: "<gradient:#ef4444:#f87171>Unavailable ⚠</gradient>"
-  empty:
-    name: "<gradient:#22c55e:#86efac>✅ No Requirements</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>Level %target_level% has no configured requirements.</gradient>"
-  max_level:
-    name: "<gradient:#22c55e:#86efac>🏆 Maximum Town Level Reached</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>Your town is already at level %current_level%.</gradient>"
-  progress_bar:
-    empty: "<gradient:#6b7280:#9ca3af>░</gradient>"
-    partial: "<gradient:#f59e0b:#fbbf24>▓</gradient>"
-    filled: "<gradient:#10b981:#34d399>█</gradient>"
-  feedback:
-    system_unavailable: "<gradient:#ef4444:#f87171>⚠ Requirement services are unavailable.</gradient>"
-    town_unavailable: "<gradient:#ef4444:#f87171>⚠ Town data is unavailable for requirements.</gradient>"
-    no_permission: "<gradient:#ef4444:#f87171>⚠ You need %permission% to manage level requirements.</gradient>"
-    unsupported: "<gradient:#f59e0b:#fbbf24>⚠ %requirement% does not support click-based progression. %progress_bar% (%progress%)</gradient>"
-    unavailable: "<gradient:#ef4444:#f87171>⚠ %requirement% is unavailable. %progress_bar% (%progress%)</gradient>"
-    no_progress: "<gradient:#f59e0b:#fbbf24>⚠ No new progress banked for %requirement%. %progress_bar% (%progress%)</gradient>"
-    progress_saved: "<gradient:#22c55e:#86efac>✅ Progress saved for %requirement%. %progress_bar% (%progress%)</gradient>"
-    complete: "<gradient:#22c55e:#86efac>✅ Requirement complete: %requirement%. %progress_bar% (%progress%)</gradient>"
+chunk_block:
+  name: "<gradient:#f59e0b:#fbbf24>[Chunk Block]</gradient> <white>{chunk_x}, {chunk_z}</white>"
+  lore:
+    - "<gray>Place this in the assigned chunk to claim it.</gray>"
+    - "<gray>World:</gray> <white>{world}</white>"
+    - "<gray>Chunk:</gray> <white>{chunk_x}, {chunk_z}</white>"
 
-town_level_up_rewards_ui:
-  title: "<gradient:#f59e0b:#fbbf24>🎁 Level Rewards • %town_name% (→ %target_level%)</gradient>"
-  summary:
-    name: "<gradient:#38bdf8:#7dd3fc>🎁 Reward Summary</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>Current Level:</gradient> <gradient:#38bdf8:#7dd3fc>%current_level%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Target Level:</gradient> <gradient:#22c55e:#86efac>%target_level%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Reward Count:</gradient> <gradient:#22c55e:#86efac>%reward_count%</gradient>"
-  entry:
-    name: "<gradient:#22c55e:#86efac>🎁 %reward_name%</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>Key:</gradient> <gradient:#38bdf8:#7dd3fc>%reward_key%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Type:</gradient> <gradient:#38bdf8:#7dd3fc>%reward_type%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Status:</gradient> <gradient:#22d3ee:#67e8f9>%status%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Summary:</gradient> <gradient:#f59e0b:#fbbf24>%summary%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Item rewards are granted to the player who levels up.</gradient>"
-    details: "<gradient:#22d3ee:#67e8f9>Details:</gradient>"
-    unavailable:
-      name: "<gradient:#ef4444:#f87171>⚠ Reward Unavailable</gradient>"
-      lore:
-        - "<gradient:#64748b:#94a3b8>Reward data is unavailable.</gradient>"
-    status:
-      available: "<gradient:#22c55e:#86efac>Available ✅</gradient>"
-      unavailable: "<gradient:#ef4444:#f87171>Unavailable ⚠</gradient>"
-  empty:
-    name: "<gradient:#94a3b8:#cbd5e1>📭 No Rewards Configured</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>Level %target_level% has no configured rewards.</gradient>"
-  max_level:
-    name: "<gradient:#22c55e:#86efac>🏆 Maximum Town Level Reached</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>Your town is already at level %current_level%.</gradient>"
-  feedback:
-    town_unavailable: "<gradient:#ef4444:#f87171>⚠ Town data is unavailable for rewards.</gradient>"
-    no_permission: "<gradient:#ef4444:#f87171>⚠ You need %permission% to view level rewards.</gradient>"
-
-chunk_claim_ui:
-  title: "<gradient:#22d3ee:#67e8f9>🗺 Chunk Claims • %town_name%</gradient>"
-  background:
-    name: "<gradient:#64748b:#94a3b8>·</gradient>"
-  nav:
-    left:
-      name: "<gradient:#38bdf8:#7dd3fc>⬅ Move West</gradient>"
-      lore:
-        - "<gradient:#64748b:#94a3b8>Shift the window one chunk west.</gradient>"
-    right:
-      name: "<gradient:#38bdf8:#7dd3fc>➡ Move East</gradient>"
-      lore:
-        - "<gradient:#64748b:#94a3b8>Shift the window one chunk east.</gradient>"
-    up:
-      name: "<gradient:#38bdf8:#7dd3fc>⬆ Move North</gradient>"
-      lore:
-        - "<gradient:#64748b:#94a3b8>Shift the window one chunk north.</gradient>"
-    down:
-      name: "<gradient:#38bdf8:#7dd3fc>⬇ Move South</gradient>"
-      lore:
-        - "<gradient:#64748b:#94a3b8>Shift the window one chunk south.</gradient>"
-  back:
-    name: "<gradient:#f59e0b:#fbbf24>↩ Back</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>Return to town overview.</gradient>"
-  center:
-    name: "<gradient:#22c55e:#86efac>🎯 Recenter On Nexus</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>Current center chunk:</gradient> <gradient:#38bdf8:#7dd3fc>(%chunk_x%, %chunk_z%)</gradient>"
-      - "<gradient:#64748b:#94a3b8>Click to reset the window center.</gradient>"
-  status:
-    name: "<gradient:#f59e0b:#fbbf24>📊 Claim Status</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>Claimed:</gradient> <gradient:#22c55e:#86efac>%claimed_chunks% / %max_chunks%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Center:</gradient> <gradient:#38bdf8:#7dd3fc>(%center_x%, %center_z%)</gradient>"
-      - "<gradient:#64748b:#94a3b8>Mayor can click chunks to claim/unclaim.</gradient>"
+block_listener:
+  nexus:
+    pickup:
+      unsupported: "<red>The active town nexus cannot be picked up yet.</red>"
+    place:
+      denied: "<red>You cannot place a nexus that does not belong to you.</red>"
+      failed: "<red>Town creation failed. Make sure the chunk is unclaimed and your town data is valid.</red>"
+      success: "<green>Town <white>{town_name}</white><green> has been founded.</green>"
+    open:
+      denied: "<red>Only members of this town can access its nexus.</red>"
+      failed: "<red>Unable to validate nexus governance access. Return to the nexus and try again.</red>"
   chunk:
-    invalid:
-      name: "<gradient:#ef4444:#f87171>⚠ Invalid Chunk</gradient>"
-      lore:
-        - "<gradient:#64748b:#94a3b8>This slot does not map to a valid chunk.</gradient>"
-    nexus:
-      name: "<gradient:#22c55e:#86efac>🏛 Nexus Chunk (%chunk_x%, %chunk_z%)</gradient>"
-      lore:
-        - "<gradient:#64748b:#94a3b8>This chunk contains your nexus block.</gradient>"
-        - "<gradient:#64748b:#94a3b8>This chunk cannot be unclaimed.</gradient>"
-    owned:
-      name: "<gradient:#22c55e:#86efac>✅ Owned Chunk (%chunk_x%, %chunk_z%)</gradient>"
-      lore:
-        - "<gradient:#64748b:#94a3b8>Click to unclaim this chunk.</gradient>"
-    inactive:
-      name: "<gradient:#ef4444:#f87171>🟥 Inactive Chunk (%chunk_x%, %chunk_z%)</gradient>"
-      lore:
-        - "<gradient:#64748b:#94a3b8>This chunk block is outside the nexus Y offset range.</gradient>"
-        - "<gradient:#64748b:#94a3b8>Move/re-place it within %min_y% to %max_y% blocks from nexus Y.</gradient>"
-        - "<gradient:#64748b:#94a3b8>Inactive chunks are treated as DEFAULT.</gradient>"
-    pending:
-      name: "<gradient:#f97316:#fb923c>🟧 Pending Chunk (%chunk_x%, %chunk_z%)</gradient>"
-      lore:
-        - "<gradient:#64748b:#94a3b8>Chunk claim is pending finalization.</gradient>"
-        - "<gradient:#64748b:#94a3b8>Place the Chunk Block in this chunk to secure it.</gradient>"
-    foreign:
-      name: "<gradient:#a855f7:#c084fc>⛔ Claimed By %owner_town% (%chunk_x%, %chunk_z%)</gradient>"
-      lore:
-        - "<gradient:#64748b:#94a3b8>This chunk belongs to another town.</gradient>"
-        - "<gradient:#64748b:#94a3b8>You cannot claim this territory.</gradient>"
-    claimable:
-      name: "<gradient:#f59e0b:#fbbf24>➕ Claimable Chunk (%chunk_x%, %chunk_z%)</gradient>"
-      lore:
-        - "<gradient:#64748b:#94a3b8>Adjacent to your town territory.</gradient>"
-        - "<gradient:#64748b:#94a3b8>Click to claim this chunk.</gradient>"
-    unclaimable:
-      name: "<gradient:#94a3b8:#cbd5e1>▫ Unclaimable Chunk (%chunk_x%, %chunk_z%)</gradient>"
-      lore:
-        - "<gradient:#64748b:#94a3b8>Must be adjacent to one of your chunks.</gradient>"
-  message:
-    only_mayor: "<gradient:#ef4444:#f87171>⚠ Only the mayor can claim or unclaim chunks.</gradient>"
-    nexus_locked: "<gradient:#ef4444:#f87171>⚠ Nexus chunk (%chunk_x%, %chunk_z%) is locked.</gradient>"
-    claimed: "<gradient:#22c55e:#86efac>✅ Claimed chunk (%chunk_x%, %chunk_z%). %claimed_chunks%/%max_chunks%</gradient>"
-    claim_pending: "<gradient:#22c55e:#86efac>✅ Pending claim started for (%chunk_x%, %chunk_z%). Place your Chunk Block within nexus Y offset %min_y% to %max_y%. %claimed_chunks%/%max_chunks%</gradient>"
-    claim_pending_dropped: "<gradient:#f59e0b:#fbbf24>📦 Pending claim started for (%chunk_x%, %chunk_z%). Inventory full, Chunk Block dropped nearby. Place it within nexus Y offset %min_y% to %max_y%. %claimed_chunks%/%max_chunks%</gradient>"
-    unclaimed: "<gradient:#f59e0b:#fbbf24>🧹 Unclaimed chunk (%chunk_x%, %chunk_z%). %claimed_chunks%/%max_chunks%</gradient>"
-    not_adjacent: "<gradient:#ef4444:#f87171>⚠ Chunk (%chunk_x%, %chunk_z%) is not adjacent to your town claims.</gradient>"
-    already_owned: "<gradient:#ef4444:#f87171>⚠ Chunk (%chunk_x%, %chunk_z%) is already owned by %owner_town%.</gradient>"
-    limit_reached: "<gradient:#ef4444:#f87171>⚠ Claim limit reached: %claimed_chunks%/%max_chunks%.</gradient>"
-  error:
-    system_unavailable: "<gradient:#ef4444:#f87171>⚠ Claim services are unavailable.</gradient>"
-    town_unavailable: "<gradient:#ef4444:#f87171>⚠ Town data is unavailable.</gradient>"
-    no_permission: "<gradient:#ef4444:#f87171>⚠ You need %permission% to open this view.</gradient>"
-    nexus_not_placed: "<gradient:#ef4444:#f87171>⚠ Place your nexus before using chunk claims.</gradient>"
-    invalid_target_chunk: "<gradient:#ef4444:#f87171>⚠ Could not resolve the selected chunk.</gradient>"
-
-server_towns_join_ui:
-  title: "<gradient:#22c55e:#86efac>🚪 Join A Town</gradient>"
-  town:
-    name: "<gradient:#f59e0b:#fbbf24>🏘 %town_name%</gradient> <gradient:#38bdf8:#7dd3fc>(%state%)</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>Status:</gradient> <gradient:#38bdf8:#7dd3fc>%state%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Public permission:</gradient> <gradient:#38bdf8:#7dd3fc>%permission%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Click to request joining this town.</gradient>"
-    state:
-      open: "<gradient:#22c55e:#86efac>Requests Open ✅</gradient>"
-      closed: "<gradient:#ef4444:#f87171>Requests Closed ❌</gradient>"
-      invited: "<gradient:#f59e0b:#fbbf24>Invited ⭐</gradient>"
-  message:
-    requested: "<gradient:#22c55e:#86efac>✅ Join request sent to %town_name%.</gradient>"
-    already_pending: "<gradient:#f59e0b:#fbbf24>⚠ You already have a pending request for %town_name%.</gradient>"
-    auto_declined: "<gradient:#ef4444:#f87171>⛔ %town_name% is not accepting public join requests.</gradient>"
-  error:
-    system_unavailable: "<gradient:#ef4444:#f87171>⚠ Join services are unavailable.</gradient>"
-    town_unavailable: "<gradient:#ef4444:#f87171>⚠ This town is unavailable right now.</gradient>"
-    already_in_town: "<gradient:#ef4444:#f87171>⚠ You are already in a town and cannot request another.</gradient>"
-
-town_invite_player_ui:
-  title: "<gradient:#f59e0b:#fbbf24>✉ Invite Players</gradient>"
-  player:
-    name: "<gradient:#22d3ee:#67e8f9>🧑 %player_name%</gradient> <gradient:#38bdf8:#7dd3fc>(%invite_state%)</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>UUID:</gradient> <gradient:#38bdf8:#7dd3fc>%player_uuid%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Status:</gradient> <gradient:#38bdf8:#7dd3fc>%invite_state%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Click to send a town invite.</gradient>"
-    state:
-      invited: "<gradient:#22c55e:#86efac>Invited ✅</gradient>"
-      not_invited: "<gradient:#94a3b8:#cbd5e1>Not Invited ◻</gradient>"
-  message:
-    invited: "<gradient:#22c55e:#86efac>✅ Invited %player_name% to %town_name%.</gradient>"
-    already_invited: "<gradient:#f59e0b:#fbbf24>⚠ %player_name% is already invited.</gradient>"
-    target_in_town: "<gradient:#ef4444:#f87171>⚠ %player_name% is already in a town.</gradient>"
-  error:
-    system_unavailable: "<gradient:#ef4444:#f87171>⚠ Invite services are unavailable.</gradient>"
-    town_unavailable: "<gradient:#ef4444:#f87171>⚠ Town data is unavailable for invites.</gradient>"
-    no_permission: "<gradient:#ef4444:#f87171>⚠ You need %permission% to invite players.</gradient>"
-
-town_pending_join_ui:
-  title: "<gradient:#22d3ee:#67e8f9>🕒 Pending Join Requests</gradient>"
-  request:
-    name: "<gradient:#f59e0b:#fbbf24>🧑 %player_name%</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>UUID:</gradient> <gradient:#38bdf8:#7dd3fc>%player_uuid%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Left Click:</gradient> <gradient:#22c55e:#86efac>Accept ✅</gradient>"
-      - "<gradient:#64748b:#94a3b8>Right Click:</gradient> <gradient:#ef4444:#f87171>Decline ❌</gradient>"
-  message:
-    accepted: "<gradient:#22c55e:#86efac>✅ Accepted %player_name% into %town_name%.</gradient>"
-    accepted_target: "<gradient:#22c55e:#86efac>✅ Your request was accepted by %town_name%.</gradient>"
-    declined: "<gradient:#f59e0b:#fbbf24>⚠ Declined join request from %player_name%.</gradient>"
-    not_pending: "<gradient:#ef4444:#f87171>⚠ No pending request exists for %player_uuid%.</gradient>"
-    target_in_town: "<gradient:#ef4444:#f87171>⚠ %player_name% is already in a different town.</gradient>"
-  error:
-    system_unavailable: "<gradient:#ef4444:#f87171>⚠ Pending request services are unavailable.</gradient>"
-    town_unavailable: "<gradient:#ef4444:#f87171>⚠ Town data is unavailable for pending requests.</gradient>"
-    no_permission: "<gradient:#ef4444:#f87171>⚠ You need %permission% to manage pending requests.</gradient>"
-
-create_town_anvil_ui:
-  title: "<gradient:#f97316:#fb923c>✍ Name Your Town</gradient>"
-  input:
-    lore:
-      - "<gradient:#64748b:#94a3b8>Allowed: letters, numbers, spaces, _ and -</gradient>"
-      - "<gradient:#64748b:#94a3b8>Length: %min_length% to %max_length% characters</gradient>"
-  message:
-    nexus_given: "<gradient:#22c55e:#86efac>✅ Nexus Block created for %town_name%.</gradient>"
-    nexus_dropped: "<gradient:#f59e0b:#fbbf24>📦 Inventory full. Nexus Block for %town_name% dropped nearby.</gradient>"
-  error:
-    system_unavailable: "<gradient:#ef4444:#f87171>⚠ Town services are unavailable. Please try again.</gradient>"
-    invalid_name:
-      generic: "<gradient:#ef4444:#f87171>⚠ Invalid town name: %input%</gradient>"
-      empty: "<gradient:#ef4444:#f87171>⚠ Town name cannot be empty.</gradient>"
-      length: "<gradient:#ef4444:#f87171>⚠ Town name must be %min_length%-%max_length% characters.</gradient>"
-      pattern: "<gradient:#ef4444:#f87171>⚠ Use only letters, numbers, spaces, _ or -.</gradient>"
-      exists: "<gradient:#ef4444:#f87171>⚠ A town named %input% already exists.</gradient>"
-      already_in_town: "<gradient:#ef4444:#f87171>⚠ You are already in a town and cannot create another.</gradient>"
-
-roles_overview_ui:
-  title: "<gradient:#22d3ee:#67e8f9>📚 Town Roles</gradient>"
-  role:
-    name: "<gradient:#f59e0b:#fbbf24>🛡 %role_name%</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>ID:</gradient> <gradient:#38bdf8:#7dd3fc>%role_id%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Permissions:</gradient> <gradient:#38bdf8:#7dd3fc>%permission_count%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Type:</gradient> <gradient:#38bdf8:#7dd3fc>%default_state%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Selection:</gradient> <gradient:#38bdf8:#7dd3fc>%selected_state%</gradient>"
-    state:
-      default: "<gradient:#22c55e:#86efac>Built-in 🔒</gradient>"
-      custom: "<gradient:#f59e0b:#fbbf24>Custom ✨</gradient>"
-      selected: "<gradient:#22c55e:#86efac>Selected ✅</gradient>"
-      not_selected: "<gradient:#94a3b8:#cbd5e1>Not Selected ◻</gradient>"
-  message:
-    selected: "<gradient:#22c55e:#86efac>✅ Selected role %role_name% (%role_id%).</gradient>"
-  add:
-    name: "<gradient:#22c55e:#86efac>➕ Add Role</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>Open role creation anvils.</gradient>"
-      - "<gradient:#64748b:#94a3b8>Input Role ID and Role Name.</gradient>"
-  permissions:
-    name: "<gradient:#38bdf8:#7dd3fc>🧩 Player Permissions</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>Manage per-player town permissions.</gradient>"
-      - "<gradient:#64748b:#94a3b8>Click to choose a member.</gradient>"
-  delete:
-    name: "<gradient:#ef4444:#f87171>🗑 Delete %role_name%</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>Selected Role ID: %role_id%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Click to permanently remove this role.</gradient>"
-    disabled:
-      name: "<gradient:#94a3b8:#cbd5e1>🗑 Delete Role (Disabled)</gradient>"
-      lore:
-        - "<gradient:#64748b:#94a3b8>Select a role first.</gradient>"
-    success: "<gradient:#22c55e:#86efac>✅ Deleted role %role_id%.</gradient>"
-    error:
-      no_selection: "<gradient:#ef4444:#f87171>⚠ Select a role before deleting.</gradient>"
-      default_role: "<gradient:#ef4444:#f87171>⚠ %role_id% is a built-in role and cannot be deleted.</gradient>"
-      role_in_use: "<gradient:#ef4444:#f87171>⚠ %role_id% is assigned to members and cannot be removed.</gradient>"
-      not_found: "<gradient:#ef4444:#f87171>⚠ Role %role_id% could not be found.</gradient>"
-  error:
-    system_unavailable: "<gradient:#ef4444:#f87171>⚠ Role services are unavailable. Try again.</gradient>"
-    town_unavailable: "<gradient:#ef4444:#f87171>⚠ Town data is unavailable for this view.</gradient>"
-    not_mayor: "<gradient:#ef4444:#f87171>⚠ Only the mayor can manage town roles.</gradient>"
-    no_permission: "<gradient:#ef4444:#f87171>⚠ You need %permission% for this role action.</gradient>"
-
-role_create_id_anvil_ui:
-  title: "<gradient:#22d3ee:#67e8f9>✍ Enter Role ID</gradient>"
-  input:
-    lore:
-      - "<gradient:#64748b:#94a3b8>Allowed: letters, numbers, _ and -</gradient>"
-      - "<gradient:#64748b:#94a3b8>Length: %min_length% to %max_length%</gradient>"
-  error:
-    processing_failed: "<gradient:#ef4444:#f87171>⚠ Failed to process role ID input.</gradient>"
-    system_unavailable: "<gradient:#ef4444:#f87171>⚠ Role services are unavailable.</gradient>"
-    town_unavailable: "<gradient:#ef4444:#f87171>⚠ Town data is unavailable.</gradient>"
-    not_mayor: "<gradient:#ef4444:#f87171>⚠ Only the mayor can create roles.</gradient>"
-    no_permission: "<gradient:#ef4444:#f87171>⚠ You need %permission% to create roles.</gradient>"
-    invalid:
-      generic: "<gradient:#ef4444:#f87171>⚠ Invalid role ID: %input%</gradient>"
-      empty: "<gradient:#ef4444:#f87171>⚠ Role ID cannot be empty.</gradient>"
-      length: "<gradient:#ef4444:#f87171>⚠ Role ID must be %min_length%-%max_length% characters.</gradient>"
-      pattern: "<gradient:#ef4444:#f87171>⚠ Use only letters, numbers, _ or - for role IDs.</gradient>"
-      exists: "<gradient:#ef4444:#f87171>⚠ A role with ID %input% already exists.</gradient>"
-
-role_create_name_anvil_ui:
-  title: "<gradient:#22d3ee:#67e8f9>✍ Enter Role Name</gradient>"
-  input:
-    lore:
-      - "<gradient:#64748b:#94a3b8>Enter a role display name.</gradient>"
-      - "<gradient:#64748b:#94a3b8>Length: %min_length% to %max_length%</gradient>"
-  message:
-    created: "<gradient:#22c55e:#86efac>✅ Created role %role_name% (%role_id%).</gradient>"
-  error:
-    processing_failed: "<gradient:#ef4444:#f87171>⚠ Failed to process role name input.</gradient>"
-    role_id_missing: "<gradient:#ef4444:#f87171>⚠ Role ID handoff is missing. Start role creation again.</gradient>"
-    system_unavailable: "<gradient:#ef4444:#f87171>⚠ Role services are unavailable.</gradient>"
-    town_unavailable: "<gradient:#ef4444:#f87171>⚠ Town data is unavailable.</gradient>"
-    not_mayor: "<gradient:#ef4444:#f87171>⚠ Only the mayor can create roles.</gradient>"
-    no_permission: "<gradient:#ef4444:#f87171>⚠ You need %permission% to create roles.</gradient>"
-    invalid:
-      generic: "<gradient:#ef4444:#f87171>⚠ Invalid role name: %input%</gradient>"
-      empty: "<gradient:#ef4444:#f87171>⚠ Role name cannot be empty.</gradient>"
-      length: "<gradient:#ef4444:#f87171>⚠ Role name must be %min_length%-%max_length% characters.</gradient>"
-      exists: "<gradient:#ef4444:#f87171>⚠ Role ID %role_id% already exists.</gradient>"
-
-role_permission_ui:
-  title: "<gradient:#38bdf8:#7dd3fc>👥 Role Permission Players</gradient>"
-  player:
-    name: "<gradient:#f59e0b:#fbbf24>🧑 %player_name%</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>UUID:</gradient> <gradient:#38bdf8:#7dd3fc>%player_uuid%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Role ID:</gradient> <gradient:#38bdf8:#7dd3fc>%role_id%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Left Click: edit this player's permissions.</gradient>"
-      - "<gradient:#64748b:#94a3b8>Right Click: assign this player's town role.</gradient>"
-  error:
-    system_unavailable: "<gradient:#ef4444:#f87171>⚠ Role permission services are unavailable.</gradient>"
-    town_unavailable: "<gradient:#ef4444:#f87171>⚠ Town data is unavailable for this permission view.</gradient>"
-    no_permission: "<gradient:#ef4444:#f87171>⚠ You need %permission% to manage player permissions.</gradient>"
-
-role_assignment_player_permission_ui:
-  title: "<gradient:#22d3ee:#67e8f9>🪪 Assign Player Role</gradient>"
-  role:
-    name: "<gradient:#f59e0b:#fbbf24>🛡 %role_name%</gradient> <gradient:#38bdf8:#7dd3fc>(%selected_state%)</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>ID:</gradient> <gradient:#38bdf8:#7dd3fc>%role_id%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Permissions:</gradient> <gradient:#38bdf8:#7dd3fc>%permission_count%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Status:</gradient> <gradient:#38bdf8:#7dd3fc>%selected_state%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Click to assign this role to the selected player.</gradient>"
-    state:
-      selected: "<gradient:#22c55e:#86efac>Current Role ✅</gradient>"
-      not_selected: "<gradient:#94a3b8:#cbd5e1>Assignable ◻</gradient>"
-  message:
-    assigned: "<gradient:#22c55e:#86efac>✅ Assigned %role_name% (%role_id%) to %player_uuid%.</gradient>"
-    cannot_assign_public: "<gradient:#ef4444:#f87171>⚠ The public role cannot be assigned to town members.</gradient>"
-  error:
-    system_unavailable: "<gradient:#ef4444:#f87171>⚠ Role assignment services are unavailable.</gradient>"
-    town_unavailable: "<gradient:#ef4444:#f87171>⚠ Town data is unavailable for role assignment.</gradient>"
-    player_unavailable: "<gradient:#ef4444:#f87171>⚠ The selected player is unavailable.</gradient>"
-    no_permission: "<gradient:#ef4444:#f87171>⚠ You need %permission% to assign player roles.</gradient>"
-
-role_player_permission_ui:
-  title: "<gradient:#22d3ee:#67e8f9>🔐 Player Permissions</gradient>"
-  permission:
-    name: "<gradient:#f59e0b:#fbbf24>🧩 %permission%</gradient> <gradient:#38bdf8:#7dd3fc>(%state%)</gradient>"
-    lore:
-      - "<gradient:#64748b:#94a3b8>Default Role:</gradient> <gradient:#38bdf8:#7dd3fc>%default_role%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Current State:</gradient> <gradient:#38bdf8:#7dd3fc>%state%</gradient>"
-      - "<gradient:#64748b:#94a3b8>Click to toggle this permission.</gradient>"
-    unavailable:
-      name: "<gradient:#ef4444:#f87171>⚠ Player Data Unavailable</gradient>"
-      lore:
-        - "<gradient:#64748b:#94a3b8>The selected player could not be loaded.</gradient>"
-    state:
-      enabled: "<gradient:#22c55e:#86efac>Enabled ✅</gradient>"
-      disabled: "<gradient:#ef4444:#f87171>Disabled ❌</gradient>"
-  message:
-    toggled: "<gradient:#22c55e:#86efac>✅ %permission% for %player_name% is now %state%.</gradient>"
-  error:
-    system_unavailable: "<gradient:#ef4444:#f87171>⚠ Player permission services are unavailable.</gradient>"
-    town_unavailable: "<gradient:#ef4444:#f87171>⚠ Town data is unavailable for this permission view.</gradient>"
-    player_unavailable: "<gradient:#ef4444:#f87171>⚠ The selected player is unavailable.</gradient>"
-    no_permission: "<gradient:#ef4444:#f87171>⚠ You need %permission% to edit player permissions.</gradient>"
-
-command:
-  prt:
-    help:
-      header: "<gradient:#22c55e:#86efac>📘 /%alias% Commands</gradient>"
-      line_town: "<gradient:#64748b:#94a3b8>• /%alias% town</gradient> <gradient:#10b981:#34d399>Open your town overview.</gradient>"
-      line_main: "<gradient:#64748b:#94a3b8>• /%alias% main</gradient> <gradient:#10b981:#34d399>Open the main towns menu.</gradient>"
-      line_spawn: "<gradient:#64748b:#94a3b8>• /%alias% spawn</gradient> <gradient:#10b981:#34d399>Safely teleport near your town spawn.</gradient>"
-      line_create_hint: "<gradient:#64748b:#94a3b8>• Create a town from the main overview and place your Nexus Block.</gradient>"
-    town:
-      not_in_town: "<gradient:#ef4444:#f87171>⚠ You are not in a town. Join one or create your own from /rt main.</gradient>"
-      no_permission: "<gradient:#ef4444:#f87171>⚠ You need %permission% to open your town view.</gradient>"
-    spawn:
-      starting: "<gradient:#f59e0b:#fbbf24>⏳ Teleporting to your town spawn in %seconds% second(s)...</gradient>"
-      routing: "<gradient:#38bdf8:#7dd3fc>🧭 Routing you to server %server% for town spawn handoff...</gradient>"
-      proxy_unavailable: "<gradient:#ef4444:#f87171>⚠ Proxy routing is unavailable right now. Try again shortly.</gradient>"
-      destination_unavailable: "<gradient:#ef4444:#f87171>⚠ Destination server %server% is unavailable for town spawn.</gradient>"
-      arrival_expired: "<gradient:#ef4444:#f87171>⚠ Town spawn arrival token expired. Run /rt spawn again.</gradient>"
-      spawn_unavailable: "<gradient:#ef4444:#f87171>⚠ This town does not have a configured spawn location.</gradient>"
-      nexus_unavailable: "<gradient:#ef4444:#f87171>⚠ Your town does not have a placed nexus block.</gradient>"
-      world_unavailable: "<gradient:#ef4444:#f87171>⚠ Town spawn world data is unavailable.</gradient>"
-      no_safe_location: "<gradient:#ef4444:#f87171>⚠ Could not find a safe location near your town spawn.</gradient>"
-      success: "<gradient:#22c55e:#86efac>✅ Teleported to town spawn at (%x%, %y%, %z%).</gradient>"
-
-nexus_listener:
-  success:
-    placed: "<gradient:#22c55e:#86efac>✅ Nexus placed for %town_name% at %world% (%x%, %y%, %z%).</gradient>"
-  warning:
-    chunk_inactive: "<gradient:#f59e0b:#fbbf24>⚠ Chunk (%chunk_x%, %chunk_z%) is now INACTIVE. Move its Chunk Block within nexus Y offset %min_y% to %max_y%.</gradient>"
-  error:
-    invalid_item: "<gradient:#ef4444:#f87171>⚠ Invalid Nexus Block data. Please create a new town nexus.</gradient>"
-    only_mayor: "<gradient:#ef4444:#f87171>⚠ Only the mayor can place this town nexus block.</gradient>"
-    break_blocked: "<gradient:#ef4444:#f87171>⛔ You cannot break the placed nexus block for %town_name%. Use the town overview pickup action.</gradient>"
-    system_unavailable: "<gradient:#ef4444:#f87171>⚠ Town services are unavailable. Try again shortly.</gradient>"
-    already_in_other_town: "<gradient:#ef4444:#f87171>⚠ You are already assigned to another town.</gradient>"
-    town_name_taken: "<gradient:#ef4444:#f87171>⚠ The town name %town_name% is already in use.</gradient>"
-    already_placed: "<gradient:#ef4444:#f87171>⚠ This town already has a placed nexus block.</gradient>"
-
-chunk_block_listener:
-  success:
-    placed: "<gradient:#22c55e:#86efac>✅ Chunk Block secured for %town_name% at chunk (%chunk_x%, %chunk_z%) on Y %y%.</gradient>"
-  error:
-    invalid_item: "<gradient:#ef4444:#f87171>⚠ Invalid Chunk Block data. Start the claim from the chunk map again.</gradient>"
-    system_unavailable: "<gradient:#ef4444:#f87171>⚠ Chunk Block services are unavailable. Try again shortly.</gradient>"
-    town_unavailable: "<gradient:#ef4444:#f87171>⚠ Town data is unavailable for this Chunk Block placement.</gradient>"
-    no_permission: "<gradient:#ef4444:#f87171>⚠ You need %permission% to place this Chunk Block.</gradient>"
-    wrong_chunk: "<gradient:#ef4444:#f87171>⚠ Wrong chunk. Target is (%target_chunk_x%, %target_chunk_z%), but you are in (%current_chunk_x%, %current_chunk_z%).</gradient>"
-    chunk_not_pending: "<gradient:#ef4444:#f87171>⚠ Chunk (%chunk_x%, %chunk_z%) is not pending a Chunk Block placement.</gradient>"
-    chunk_type_mismatch: "<gradient:#ef4444:#f87171>⚠ Chunk (%chunk_x%, %chunk_z%) expects type %expected_type%, but this item has %item_type%.</gradient>"
-    nexus_unavailable: "<gradient:#ef4444:#f87171>⚠ Your town nexus is not available. Place the nexus before placing Chunk Blocks.</gradient>"
-    nexus_world_mismatch: "<gradient:#ef4444:#f87171>⚠ Chunk Block world (%block_world%) must match nexus world (%nexus_world%).</gradient>"
-    y_out_of_range: "<gradient:#ef4444:#f87171>⚠ Chunk Block Y offset from nexus must be between %min_y% and %max_y%. Current offset: %y_distance% (block Y %y%, nexus Y %nexus_y%).</gradient>"
-    open_air_required: "<gradient:#ef4444:#f87171>⚠ Chunk Block requires at least %required_sides% open air sides. Current open sides: %open_sides%.</gradient>"
-    cover_blocked: "<gradient:#ef4444:#f87171>⛔ Cannot cover this Chunk Block in (%chunk_x%, %chunk_z%). It must keep at least %required_sides% open air sides (current: %open_sides%).</gradient>"
-    break_blocked: "<gradient:#ef4444:#f87171>⛔ You cannot break the Chunk Block for %town_name% in chunk (%chunk_x%, %chunk_z%).</gradient>"
+    pickup:
+      denied: "<red>You do not have permission to pick up this chunk marker.</red>"
+      failed: "<red>That chunk could not be unclaimed.</red>"
+      success: "<green>Returned the chunk block for <white>{chunk_x}, {chunk_z}</white><green>.</green>"
+    place:
+      denied: "<red>You do not have permission to place town chunk markers.</red>"
+      failed: "<red>That chunk claim could not be finalized here.</red>"
+      success: "<green>Claimed chunk <white>{chunk_x}, {chunk_z}</white><green>.</green>"
 
 town_protection_listener:
+  break:
+    denied: "<red>You cannot break blocks in this town.</red>"
+  place:
+    denied: "<red>You cannot place blocks in this town.</red>"
+  interact:
+    denied: "<red>You cannot use that here.</red>"
+
+town_hub_ui:
+  title: "<gradient:#0ea5e9:#38bdf8>Town Hub</gradient>"
+  summary:
+    name: "<gold>Town Status</gold>"
+    lore:
+      - "<gray>Current town:</gray> <white>{town_name}</white>"
+      - "<gray>Pending invites:</gray> <white>{invite_count}</white>"
+      - "<yellow>Use this hub to browse, manage, or found a town.</yellow>"
+  my_town:
+    name: "<aqua>My Town</aqua>"
+    lore:
+      - "<gray>Town:</gray> <white>{town_name}</white>"
+      - "<gray>Claimed chunks:</gray> <white>{chunk_count}</white>"
+      - "<yellow>Open the remote town overview.</yellow>"
+    locked:
+      name: "<red>No Town</red>"
+      lore:
+        - "<gray>You are not part of a town yet.</gray>"
+  directory:
+    name: "<gold>Town Directory</gold>"
+    lore:
+      - "<gray>Browse every town on the server.</gray>"
+  invites:
+    name: "<gold>Invites</gold>"
+    lore:
+      - "<gray>Pending invites:</gray> <white>{invite_count}</white>"
+      - "<yellow>Click to review invitations.</yellow>"
+  create:
+    name: "<green>Create Town</green>"
+    lore:
+      - "<gray>Start the GUI-only town creation flow.</gray>"
+      - "<gray>You will name your town, choose a color,</gray>"
+      - "<gray>then receive a Nexus Block to place.</gray>"
+    locked:
+      name: "<gray>Create Locked</gray>"
+      lore:
+        - "<gray>Leave your current town before creating a new one.</gray>"
+
+town_create_name_ui:
+  title: "<gradient:#22c55e:#84cc16>Town Name</gradient>"
+  input:
+    lore:
+      - "<gray>Enter the name for your town.</gray>"
   error:
-    denied: "<gradient:#ef4444:#f87171>⛔ %action% requires role %required_role% in this town chunk.</gradient>"
+    invalid_input: "<red>Enter a town name between 1 and 32 characters.</red>"
+    processing_failed: "<red>That town name could not be processed.</red>"
 
-boss_bar:
-  title:
-    town: "<gradient:#22c55e:#86efac>🏘 %town_name% • Chunk (%chunk_x%, %chunk_z%)</gradient>"
-    unincorporated: "<gradient:#f59e0b:#fbbf24>🌾 Unincorporated • Chunk (%chunk_x%, %chunk_z%)</gradient>"
+town_create_color_ui:
+  title: "<gradient:#38bdf8:#60a5fa>Town Color</gradient>"
+  input:
+    lore:
+      - "<gray>Enter a Minecraft color like LIGHT_BLUE</gray>"
+      - "<gray>or a hex value like #55c7ff.</gray>"
+  error:
+    invalid_input: "<red>Enter a valid Minecraft color name or hex code.</red>"
+    processing_failed: "<red>That town color could not be processed.</red>"
 
-# ============================================
-# PAGINATION
-# ============================================
-page:
-  name: "<gradient:#6b7280:#9ca3af>📄 Page %current_page%</gradient>"
-  lore:
-    - "<gradient:#6b7280:#9ca3af>Current page:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
-    - "<gradient:#6b7280:#9ca3af>Total pages:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
-  fallback: "<gradient:#6b7280:#9ca3af>📄 Page %direction%</gradient>"
+town_create_confirm_ui:
+  title: "<gradient:#22c55e:#84cc16>Confirm Town</gradient>"
+  summary:
+    name: "<gold>Town Draft</gold>"
+    lore:
+      - "<gray>Name:</gray> <white>{town_name}</white>"
+      - "<gray>Color:</gray> <white>{town_color}</white>"
+      - "<yellow>Confirm to receive your Nexus Block.</yellow>"
+  confirm:
+    name: "<green>Confirm</green>"
+    lore:
+      - "<gray>Give me the Nexus Block for this town.</gray>"
+  cancel:
+    name: "<red>Cancel</red>"
+    lore:
+      - "<gray>Return to the Town Hub without creating anything.</gray>"
+  confirmed: "<green>Created the draft for <white>{town_name}</white><green> and gave you its Nexus Block.</green>"
+  place_hint: "<yellow>Place the Nexus Block to finalize your town location and claim your first chunk.</yellow>"
+  error:
+    already_in_town: "<red>You are already in a town.</red>"
 
-# ============================================
-# HEAD ITEMS
-# ============================================
+town_directory_ui:
+  title: "<gradient:#38bdf8:#60a5fa>Town Directory</gradient>"
+  summary:
+    name: "<gold>Server Towns</gold>"
+    lore:
+      - "<gray>Total towns:</gray> <white>{town_count}</white>"
+  entry:
+    name: "<aqua>{town_name}</aqua>"
+    lore:
+      - "<gray>Members:</gray> <white>{member_count}</white>"
+      - "<gray>Chunks:</gray> <white>{chunk_count}</white>"
+      - "<gray>Level:</gray> <white>{town_level}</white>"
+      - "<gray>Archetype:</gray> <white>{archetype}</white>"
+      - "<yellow>Click to inspect this town.</yellow>"
+  empty:
+    name: "<red>No Towns</red>"
+    lore:
+      - "<gray>No towns have been founded yet.</gray>"
+
+town_invites_ui:
+  title: "<gradient:#f59e0b:#fbbf24>Town Invites</gradient>"
+  summary:
+    name: "<gold>Invite Inbox</gold>"
+    lore:
+      - "<gray>Pending invites:</gray> <white>{invite_count}</white>"
+      - "<yellow>Click an invite to accept it.</yellow>"
+  entry:
+    name: "<aqua>{town_name}</aqua>"
+    lore:
+      - "<gray>Mayor UUID:</gray> <white>{mayor_uuid}</white>"
+      - "<yellow>Click to join this town.</yellow>"
+  empty:
+    name: "<red>No Invites</red>"
+    lore:
+      - "<gray>You have no active town invites.</gray>"
+  accepted: "<green>You joined <white>{town_name}</white><green>.</green>"
+  accept_failed: "<red>That invite could not be accepted.</red>"
+
+town_overview_ui:
+  title: "<gradient:#22c55e:#84cc16>Town Overview</gradient>"
+  summary:
+    name: "<gold>{town_name}</gold>"
+    lore:
+      - "<gray>Chunks:</gray> <white>{chunk_count}</white>"
+      - "<gray>Members:</gray> <white>{member_count}</white>"
+      - "<gray>Town level:</gray> <white>{town_level}</white>"
+      - "<gray>Archetype:</gray> <white>{archetype}</white>"
+      - "<gray>Access mode:</gray> <white>{access_mode}</white>"
+      - "<gray>Governance:</gray> <white>{governance_state}</white>"
+  claims:
+    name: "<gold>Claims</gold>"
+    lore:
+      - "<gray>Claimed chunks:</gray> <white>{chunk_count}</white>"
+      - "<yellow>Open the claim map.</yellow>"
+    locked:
+      lore:
+        - "<gray>Only town members can manage claims.</gray>"
+  bank:
+    name: "<gold>Town Bank</gold>"
+    lore:
+      - "<gray>Vault balance:</gray> <white>{vault_balance}</white>"
+      - "<gray>Stored slots used:</gray> <white>{storage_slots}</white>"
+      - "<yellow>Open the bank summary.</yellow>"
+    locked:
+      lore:
+        - "<gray>Only town members can open the bank view.</gray>"
+  chunk:
+    name: "<gold>Current Chunk</gold>"
+    lore:
+      - "<gray>Open the chunk view for the claimed chunk you are standing in.</gray>"
+    locked:
+      lore:
+        - "<gray>Only town members can inspect claimed chunks from here.</gray>"
+    not_in_chunk: "<red>You must stand inside one of your town's claimed chunks to open that chunk view.</red>"
+  protections:
+    name: "<gold>Protections</gold>"
+    lore:
+      - "<gray>Security chunk detected.</gray>"
+      - "<yellow>Edit town or chunk protection thresholds.</yellow>"
+    locked:
+      name: "<gray>Protections Locked</gray>"
+      lore:
+        - "<gray>You need a Security chunk before protections can be edited.</gray>"
+  archetype:
+    name: "<gold>Archetype</gold>"
+    lore:
+      - "<gray>Current archetype:</gray> <white>{archetype}</white>"
+      - "<gray>Cooldown:</gray> <white>{cooldown_remaining}</white>"
+      - "<yellow>Click to choose the town archetype.</yellow>"
+    locked:
+      lore:
+        - "<gray>Return to your nexus to change the town archetype.</gray>"
+    updated: "<green>Town archetype updated to <white>{archetype}</white><green>.</green>"
+    cooldown: "<red>Town archetype is on cooldown for <white>{remaining}</white><red>.</red>"
+    failed: "<red>The town archetype could not be updated right now.</red>"
+  rename:
+    name: "<gold>Rename Town</gold>"
+    lore:
+      - "<gray>Rename your town from the nexus.</gray>"
+    locked:
+      lore:
+        - "<gray>Return to your nexus to rename the town.</gray>"
+    success: "<green>Town renamed to <white>{town_name}</white><green>.</green>"
+    failed: "<red>That town name could not be applied.</red>"
+  upgrade:
+    name: "<gold>Upgrade Town</gold>"
+    lore:
+      - "<gray>Current level:</gray> <white>{town_level}</white>"
+      - "<yellow>Click to upgrade the town level.</yellow>"
+    locked:
+      lore:
+        - "<gray>Return to your nexus to upgrade the town.</gray>"
+    success: "<green>Town upgraded successfully. New level: <white>{town_level}</white><green>.</green>"
+    failed: "<red>The town could not be upgraded right now.</red>"
+  missing:
+    name: "<red>Town Missing</red>"
+    lore:
+      - "<gray>That town could not be loaded.</gray>"
+  governance:
+    return_to_nexus: "<red>Return to your town nexus to use that governance action.</red>"
+
+town_archetype_ui:
+  title: "<gradient:#f59e0b:#fbbf24>Choose Archetype</gradient>"
+  summary:
+    name: "<gold>Archetype Selector</gold>"
+    lore:
+      - "<gray>Town:</gray> <white>{town_name}</white>"
+      - "<gray>Current archetype:</gray> <white>{archetype}</white>"
+      - "<yellow>Select the archetype you want for this town.</yellow>"
+  entry:
+    name: "<gold>{archetype}</gold>"
+    selected_lore:
+      - "<gray>Archetype:</gray> <white>{archetype}</white>"
+      - "<green>This town already uses this archetype.</green>"
+    available_lore:
+      - "<gray>Archetype:</gray> <white>{archetype}</white>"
+      - "<yellow>Click to apply this archetype.</yellow>"
+  selected: "<green>Town archetype updated to <white>{archetype}</white><green>.</green>"
+  selection_failed: "<red>The town archetype could not be updated right now.</red>"
+  already_selected: "<yellow>This town already uses <white>{archetype}</white><yellow>.</yellow>"
+  cooldown: "<red>Town archetype is on cooldown for <white>{remaining}</white><red>.</red>"
+  no_permission: "<red>You do not have permission to change the town archetype.</red>"
+  missing:
+    name: "<red>Town Missing</red>"
+    lore:
+      - "<gray>That town could not be loaded.</gray>"
+
+town_bank_ui:
+  title: "<gradient:#f59e0b:#fbbf24>Town Bank</gradient>"
+  summary:
+    name: "<gold>Bank Summary</gold>"
+    lore:
+      - "<gray>Town:</gray> <white>{town_name}</white>"
+      - "<gray>Stored slots used:</gray> <white>{storage_slots}</white>"
+  balance:
+    name: "<gold>Balances</gold>"
+    lore:
+      - "<gray>Vault balance:</gray> <white>{vault_balance}</white>"
+      - "<gray>Tracked currencies:</gray> <white>{currency_count}</white>"
+  access:
+    remote:
+      name: "<aqua>Remote Access</aqua>"
+      lore:
+        - "<gray>This bank view was opened through remote access.</gray>"
+    local:
+      name: "<gold>Local Access</gold>"
+      lore:
+        - "<gray>This bank view was opened through a town menu or bank chunk.</gray>"
+  missing:
+    name: "<red>Town Missing</red>"
+    lore:
+      - "<gray>That town bank is unavailable.</gray>"
+
+town_chunk_ui:
+  title: "<gradient:#38bdf8:#60a5fa>Town Chunk</gradient>"
+  summary:
+    name: "<gold>Chunk Summary</gold>"
+    lore:
+      - "<gray>Town:</gray> <white>{town_name}</white>"
+      - "<gray>Chunk:</gray> <white>{chunk_x}, {chunk_z}</white>"
+      - "<gray>Type:</gray> <white>{chunk_type}</white>"
+      - "<gray>Level:</gray> <white>{chunk_level}</white>"
+  type:
+    name: "<gold>Chunk Type</gold>"
+    lore:
+      - "<gray>Current type:</gray> <white>{chunk_type}</white>"
+      - "<yellow>Click to choose the chunk type.</yellow>"
+    locked:
+      lore:
+        - "<gray>You do not have permission to change chunk types.</gray>"
+    no_permission: "<red>You do not have permission to change chunk types.</red>"
+    changed: "<green>Chunk type changed to <white>{chunk_type}</white><green>.</green>"
+    failed: "<red>The chunk type could not be changed.</red>"
+  protections:
+    name: "<gold>Chunk Protections</gold>"
+    lore:
+      - "<gray>Edit chunk-specific protection overrides.</gray>"
+    locked:
+      lore:
+        - "<gray>A Security chunk is required before protections can be edited.</gray>"
+  info:
+    name: "<gold>Chunk Info</gold>"
+    lore:
+      - "<gray>World:</gray> <white>{world_name}</white>"
+      - "<gray>Chunk:</gray> <white>{chunk_x}, {chunk_z}</white>"
+      - "<gray>Level:</gray> <white>{chunk_level}</white>"
+  return:
+    name: "<gold>Back</gold>"
+    lore:
+      - "<gray>Return to the previous town view.</gray>"
+  missing:
+    name: "<red>Chunk Missing</red>"
+    lore:
+      - "<gray>That chunk could not be loaded.</gray>"
+
 head:
   return:
-    name: "<gradient:#f59e0b:#fbbf24>🔙 Return</gradient>"
+    name: "<gold>Back</gold>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Click to go back</gradient>"
+      - "<gray>Return to the previous town view.</gray>"
+
+town_protections_ui:
+  title: "<gradient:#ef4444:#f87171>Town Protections</gradient>"
+  summary:
+    name: "<gold>Protection Summary</gold>"
+    lore:
+      - "<gray>Town:</gray> <white>{town_name}</white>"
+      - "<gray>Scope:</gray> <white>{scope}</white>"
+      - "<gray>Security:</gray> <white>{security_state}</white>"
+  mode:
+    name: "<gold>Editing Scope</gold>"
+    lore:
+      - "<gray>Current scope:</gray> <white>{scope}</white>"
+      - "<gray>Chunk:</gray> <white>{chunk_x}, {chunk_z}</white>"
+      - "<yellow>Click to switch between town-global and chunk scopes.</yellow>"
+  entry:
+    name: "<gold>{protection}</gold>"
+    lore:
+      - "<gray>Required role:</gray> <white>{role}</white>"
+      - "<gray>Status:</gray> <white>{state}</white>"
+      - "<yellow>Click to cycle the threshold.</yellow>"
+  missing:
+    name: "<red>Town Missing</red>"
+    lore:
+      - "<gray>The protection editor could not load this town.</gray>"
+  locked:
+    security_required: "<red>You need at least one Security chunk before protections can be edited.</red>"
+  updated: "<green>Updated <white>{protection}</white><green> to <white>{role}</white><green>.</green>"
+  update_failed: "<red>The protection could not be updated.</red>"
+
+town_protection_scope_ui:
+  title: "<gradient:#38bdf8:#60a5fa>Select Scope</gradient>"
+  summary:
+    name: "<gold>Scope Selector</gold>"
+    lore:
+      - "<gray>Town:</gray> <white>{town_name}</white>"
+      - "<gray>Current scope:</gray> <white>{current_scope}</white>"
+      - "<gray>Available scopes:</gray> <white>{scope_count}</white>"
+  entry:
+    global:
+      name: "<gold>Town Global</gold>"
+      selected_lore:
+        - "<green>You are already editing the town-global protections.</green>"
+      available_lore:
+        - "<gray>Edit protections that apply to the whole town.</gray>"
+        - "<yellow>Click to switch to the town-global scope.</yellow>"
+    chunk:
+      name: "<gold>{world_name} <white>{chunk_x}, {chunk_z}</white></gold>"
+      selected_lore:
+        - "<gray>World:</gray> <white>{world_name}</white>"
+        - "<gray>Type:</gray> <white>{chunk_type}</white>"
+        - "<green>You are already editing this chunk.</green>"
+      available_lore:
+        - "<gray>World:</gray> <white>{world_name}</white>"
+        - "<gray>Type:</gray> <white>{chunk_type}</white>"
+        - "<yellow>Click to edit protections for this chunk.</yellow>"
+  missing:
+    name: "<red>Town Missing</red>"
+    lore:
+      - "<gray>The scope selector could not load this town.</gray>"
+
+town_claims_ui:
+  title: "<gradient:#22c55e:#84cc16>Claims</gradient>"
+  summary:
+    name: "<gold>Claim Info</gold>"
+    lore:
+      - "<gray>Town:</gray> <white>{town_name}</white>"
+      - "<gray>Claimed chunks:</gray> <white>{chunk_count}</white>"
+      - "<gray>Focus chunk:</gray> <white>{center_x}, {center_z}</white>"
+  navigation:
+    north:
+      name: "<gold>North</gold>"
+      lore:
+        - "<gray>Shift the claim map north.</gray>"
+    south:
+      name: "<gold>South</gold>"
+      lore:
+        - "<gray>Shift the claim map south.</gray>"
+    east:
+      name: "<gold>East</gold>"
+      lore:
+        - "<gray>Shift the claim map east.</gray>"
+    west:
+      name: "<gold>West</gold>"
+      lore:
+        - "<gray>Shift the claim map west.</gray>"
+  return:
+    name: "<gold>Back</gold>"
+    lore:
+      - "<gray>Return to the previous town view.</gray>"
+  recenter:
+    name: "<gold>Center View</gold>"
+    lore:
+      - "<gray>Re-center the claim map on your current chunk.</gray>"
+  chunk:
+    claimed:
+      name: "<green>Claimed</green>"
+      lore:
+        - "<gray>Chunk:</gray> <white>{chunk_x}, {chunk_z}</white>"
+        - "<gray>Type:</gray> <white>{chunk_type}</white>"
+        - "<yellow>Click to inspect this chunk.</yellow>"
+    claimable:
+      name: "<yellow>Claimable</yellow>"
+      lore:
+        - "<gray>Chunk:</gray> <white>{chunk_x}, {chunk_z}</white>"
+        - "<yellow>Click to receive a Chunk Block for this claim.</yellow>"
+    blocked:
+      name: "<red>Out of Range</red>"
+      lore:
+        - "<gray>Chunk:</gray> <white>{chunk_x}, {chunk_z}</white>"
+        - "<gray>Claims must stay adjacent to your town.</gray>"
+  missing:
+    name: "<red>Town Missing</red>"
+    lore:
+      - "<gray>The claim map could not load this town.</gray>"
+  claim:
+    adjacent_only: "<red>You can only claim chunks that touch your current territory.</red>"
+    no_permission: "<red>You do not have permission to claim chunks.</red>"
+    granted: "<green>Received a Chunk Block for <white>{chunk_x}, {chunk_z}</white><green>.</green>"
+    place_hint: "<yellow>Place that Chunk Block in <white>{chunk_x}, {chunk_z}</white><yellow> to claim the plot.</yellow>"
+
+town_chunk_type_ui:
+  title: "<gradient:#f59e0b:#fbbf24>Choose Chunk Type</gradient>"
+  summary:
+    name: "<gold>Chunk Type Selector</gold>"
+    lore:
+      - "<gray>Town:</gray> <white>{town_name}</white>"
+      - "<gray>Chunk:</gray> <white>{chunk_x}, {chunk_z}</white>"
+      - "<gray>Current type:</gray> <white>{chunk_type}</white>"
+      - "<yellow>Select a specialization for this claimed chunk.</yellow>"
+  entry:
+    name: "<gold>{chunk_type}</gold>"
+    selected_lore:
+      - "<gray>Type:</gray> <white>{chunk_type}</white>"
+      - "<green>This chunk already uses this type.</green>"
+    available_lore:
+      - "<gray>Type:</gray> <white>{chunk_type}</white>"
+      - "<yellow>Click to set this chunk to {chunk_type}.</yellow>"
+  selected: "<green>Chunk type changed to <white>{chunk_type}</white><green>.</green>"
+  selection_failed: "<red>The chunk type could not be changed.</red>"
+  already_selected: "<yellow>This chunk is already set to <white>{chunk_type}</white><yellow>.</yellow>"
+  missing:
+    name: "<red>Chunk Missing</red>"
+    lore:
+      - "<gray>That chunk could not be loaded.</gray>"
+
+town_rename_ui:
+  title: "<gradient:#f59e0b:#fbbf24>Rename Town</gradient>"
+  input:
+    lore:
+      - "<gray>Enter the new name for your town.</gray>"
+  error:
+    invalid_input: "<red>Enter a town name between 1 and 32 characters.</red>"
+    processing_failed: "<red>That town name could not be processed.</red>"

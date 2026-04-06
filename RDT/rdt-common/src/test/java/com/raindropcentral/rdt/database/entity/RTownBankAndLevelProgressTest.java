@@ -71,4 +71,17 @@ class RTownBankAndLevelProgressTest {
         assertNull(town.getLevelItemProgress("level.2.item"));
         assertTrue(town.getLevelItemProgress().isEmpty());
     }
+
+    @Test
+    void archetypeChangeTimestampDefaultsToZeroAndClampsNegativeValues() {
+        final RTown town = new RTown(UUID.randomUUID(), UUID.randomUUID(), "Alpha", null);
+
+        assertEquals(0L, town.getLastArchetypeChangeAt());
+
+        town.setLastArchetypeChangeAt(-50L);
+        assertEquals(0L, town.getLastArchetypeChangeAt());
+
+        town.setLastArchetypeChangeAt(1234L);
+        assertEquals(1234L, town.getLastArchetypeChangeAt());
+    }
 }

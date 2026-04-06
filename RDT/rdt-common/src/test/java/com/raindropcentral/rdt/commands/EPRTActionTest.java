@@ -31,21 +31,9 @@ class EPRTActionTest {
     void exposesExpectedActionsInStableOrder() {
         assertArrayEquals(
             new EPRTAction[]{
-                EPRTAction.CREATE,
-                EPRTAction.DELETE,
-                EPRTAction.INFO,
-                EPRTAction.INVITE,
-                EPRTAction.JOIN,
-                EPRTAction.ACCEPT,
-                EPRTAction.CLAIM,
-                EPRTAction.UNCLAIM,
-                EPRTAction.DEBUG,
-                EPRTAction.DEPOSIT,
-                EPRTAction.WITHDRAW,
                 EPRTAction.MAIN,
-                EPRTAction.TOWN,
                 EPRTAction.SPAWN,
-                EPRTAction.HELP
+                EPRTAction.BANK
             },
             EPRTAction.values()
         );

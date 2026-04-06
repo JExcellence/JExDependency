@@ -15,25 +15,26 @@ package com.raindropcentral.rdt.commands;
 
 import de.jexcellence.evaluable.section.ACommandSection;
 import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
+import org.jetbrains.annotations.NotNull;
 
 /**
- * Command section definition for the primary player command {@code /prt}.
+ * Command section definition for {@code /rt}.
  *
- * <p>This class binds the command name to the underlying evaluation environment used
- * by the command framework. Command logic itself is handled by {@link PRT} and
- * registered through {@link com.raindropcentral.commands.CommandFactory}.
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 @SuppressWarnings("unused")
-public class PRTSection extends ACommandSection{
-    /** Base command name players will use in chat. */
+public class PRTSection extends ACommandSection {
+
     private static final String COMMAND_NAME = "prt";
 
     /**
-     * Create a new command section for {@code /prt} bound to the provided environment.
+     * Creates the command section.
      *
-     * @param environmentBuilder evaluation environment builder
+     * @param environmentBuilder expression environment backing the section
      */
-    public PRTSection(EvaluationEnvironmentBuilder environmentBuilder) {
+    public PRTSection(final @NotNull EvaluationEnvironmentBuilder environmentBuilder) {
         super(COMMAND_NAME, environmentBuilder);
     }
 }

@@ -1,4 +1,4 @@
 /**
- * Contains public API types for the <code>com.raindropcentral.rdt.view.main</code> package.
+ * Top-level GUI entry points for RDT.
  */
 package com.raindropcentral.rdt.view.main;

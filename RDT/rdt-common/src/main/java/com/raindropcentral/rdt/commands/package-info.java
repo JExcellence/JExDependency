@@ -1,4 +1,4 @@
 /**
- * Contains public API types for the <code>com.raindropcentral.rdt.commands</code> package.
+ * Command handlers and metadata for the primary RDT player command.
  */
 package com.raindropcentral.rdt.commands;

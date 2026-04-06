@@ -49,6 +49,8 @@ class ConfigSectionTest {
         assertEquals(-10, section.getChunkBlockMinY());
         assertEquals(10, section.getChunkBlockMaxY());
         assertEquals(3, section.getTownSpawnTeleportDelaySeconds());
+        assertEquals(86_400L, section.getTownArchetypeChangeCooldownSeconds());
+        assertTrue(section.isCornerClaimAdjacencyExcluded());
         assertFalse(section.isProxyEnabled());
         assertFalse(section.isProxyTownSpawnEnabled());
         assertEquals("", section.getProxyServerRouteId());
@@ -62,6 +64,7 @@ class ConfigSectionTest {
         assertNotNull(levelTwo);
         assertTrue(levelTwo.getRequirements().containsKey("vault_upgrade"));
         assertTrue(levelTwo.getRewards().containsKey("vault_bonus"));
+        assertEquals("vault", levelTwo.getRewards().get("vault_bonus").get("currencyId"));
     }
 
     @Test
@@ -74,6 +77,7 @@ class ConfigSectionTest {
             chunk_block_min_y: 7
             chunk_block_max_y: 4
             town_spawn_teleport_delay_seconds: -1
+            exclude_corner_claim_adjacency: false
             proxy:
               enabled: true
               server_route_id: "alpha"
@@ -81,6 +85,7 @@ class ConfigSectionTest {
             chunk_type_icon_nexus: DIAMOND_BLOCK
             chunk_type_icon_default: not_a_material
             town:
+              archetype_change_cooldown_seconds: 1800
               levels:
                 "3":
                   requirements:
@@ -90,6 +95,7 @@ class ConfigSectionTest {
                   rewards:
                     " Bonus ":
                       type: CURRENCY
+                      currencyId: tokens
                       amount: 22
                 "abc":
                   requirements: {}
@@ -101,6 +107,8 @@ class ConfigSectionTest {
         assertEquals(-10, section.getChunkBlockMinY());
         assertEquals(10, section.getChunkBlockMaxY());
         assertEquals(3, section.getTownSpawnTeleportDelaySeconds());
+        assertEquals(1_800L, section.getTownArchetypeChangeCooldownSeconds());
+        assertFalse(section.isCornerClaimAdjacencyExcluded());
         assertTrue(section.isProxyEnabled());
         assertTrue(section.isProxyTownSpawnEnabled());
         assertEquals("alpha", section.getProxyServerRouteId());
@@ -116,6 +124,7 @@ class ConfigSectionTest {
         assertNotNull(levelThree);
         assertTrue(levelThree.getRequirements().containsKey("vault_req"));
         assertTrue(levelThree.getRewards().containsKey("bonus"));
+        assertEquals("tokens", levelThree.getRewards().get("bonus").get("currencyId"));
     }
 
     @Test

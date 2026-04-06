@@ -13,76 +13,57 @@
 
 package com.raindropcentral.rdt.view.town;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
-
-import me.devnatan.inventoryframework.component.BukkitItemComponentBuilder;
+import com.raindropcentral.rdt.RDT;
+import com.raindropcentral.rdt.database.entity.RTown;
+import com.raindropcentral.rdt.database.entity.RTownChunk;
+import com.raindropcentral.rdt.database.entity.TownRole;
+import com.raindropcentral.rdt.utils.TownProtections;
+import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
+import com.raindropcentral.rplatform.view.BaseView;
+import de.jexcellence.jextranslate.i18n.I18n;
 import me.devnatan.inventoryframework.context.Context;
-import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.state.State;
-import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import org.jspecify.annotations.NonNull;
-import org.jspecify.annotations.Nullable;
+import org.jetbrains.annotations.Nullable;
 
-import com.raindropcentral.rdt.RDT;
-import com.raindropcentral.rdt.database.entity.RChunk;
-import com.raindropcentral.rdt.database.entity.RDTPlayer;
-import com.raindropcentral.rdt.database.entity.RTown;
-import com.raindropcentral.rdt.database.entity.TownRole;
-import com.raindropcentral.rdt.database.repository.RRDTPlayer;
-import com.raindropcentral.rdt.database.repository.RRTown;
-import com.raindropcentral.rdt.utils.TownPermissions;
-import com.raindropcentral.rdt.utils.TownProtections;
-import com.raindropcentral.rplatform.utility.heads.view.Return;
-import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
-import com.raindropcentral.rplatform.view.APaginatedView;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 /**
- * Paginated role-assignment view for town and chunk protection rules.
- *
- * <p>When opened with {@code protection_scope = "town"}, changes apply to town-wide defaults.
- * When opened with {@code protection_scope = "chunk"}, changes apply only to the target chunk.</p>
+ * Protection editor for town-global or chunk-specific protection thresholds.
  *
  * @author ItsRainingHP
  * @since 1.0.0
- * @version 1.0.1
+ * @version 1.0.0
  */
-public final class TownProtectionsView extends APaginatedView<TownProtections> {
+public class TownProtectionsView extends BaseView {
 
-    private static final String SCOPE_TOWN = "town";
-    private static final String SCOPE_CHUNK = "chunk";
+    private static final int[] PROTECTION_SLOTS = {10, 11, 12, 13, 14, 15, 16, 19, 20, 21, 22, 23, 24, 25, 28};
+    private static final String WORLD_NAME_KEY = "world_name";
+    private static final String CHUNK_X_KEY = "chunk_x";
+    private static final String CHUNK_Z_KEY = "chunk_z";
 
-    private final State<RDT> rdt = initialState("plugin");
+    private final State<RDT> plugin = initialState("plugin");
     private final State<UUID> townUuid = initialState("town_uuid");
-    private final State<String> protectionScope = initialState("protection_scope");
-    private final State<Integer> chunkX = initialState("chunk_x");
-    private final State<Integer> chunkZ = initialState("chunk_z");
-    private final State<Integer> blockX = initialState("block_x");
-    private final State<Integer> blockY = initialState("block_y");
-    private final State<Integer> blockZ = initialState("block_z");
-    private final State<String> blockWorld = initialState("block_world");
 
     /**
      * Creates the protections view.
      */
     public TownProtectionsView() {
-        super();
+        super(TownOverviewView.class);
     }
 
     /**
-     * Returns the i18n key namespace for this view.
+     * Returns the translation namespace for this view.
      *
      * @return translation key prefix
      */
@@ -92,23 +73,49 @@ public final class TownProtectionsView extends APaginatedView<TownProtections> {
     }
 
     /**
-     * Resolves placeholders used in the title.
+     * Returns the menu layout.
      *
-     * @param openContext open context
-     * @return title placeholders
+     * @return layout rows
      */
     @Override
-    protected @NotNull Map<String, Object> getTitlePlaceholders(final @NotNull OpenContext openContext) {
-        final RTown town = this.resolveTown(openContext, openContext.getPlayer());
-        final String scope = this.resolveProtectionScope(openContext);
-        return Map.of(
-                "town_name", town == null ? "Unknown" : town.getTownName(),
-                "scope_label", this.resolveScopeLabel(openContext.getPlayer(), scope)
-        );
+    protected String[] getLayout() {
+        return new String[]{
+            "    s    ",
+            "         ",
+            "         ",
+            "         ",
+            "    m    ",
+            "         "
+        };
     }
 
     /**
-     * Cancels default inventory movement behavior.
+     * Renders summary and protection toggles.
+     *
+     * @param render render context
+     * @param player viewing player
+     */
+    @Override
+    public void onFirstRender(final @NotNull RenderContext render, final @NotNull Player player) {
+        final RTown town = this.resolveTown(render);
+        if (town == null) {
+            render.slot(22).renderWith(() -> this.createMissingItem(player));
+            return;
+        }
+
+        render.slot(4).renderWith(() -> this.createSummaryItem(render));
+        render.slot(40).renderWith(() -> this.createModeItem(render))
+            .onClick(this::handleModeClick);
+        final TownProtections[] protections = TownProtections.values();
+        for (int index = 0; index < protections.length && index < PROTECTION_SLOTS.length; index++) {
+            final TownProtections protection = protections[index];
+            render.slot(PROTECTION_SLOTS[index]).renderWith(() -> this.createProtectionItem(render, protection))
+                .onClick(clickContext -> this.handleProtectionClick(clickContext, protection));
+        }
+    }
+
+    /**
+     * Cancels default inventory interaction for the menu.
      *
      * @param click click context
      */
@@ -117,546 +124,297 @@ public final class TownProtectionsView extends APaginatedView<TownProtections> {
         click.setCancelled(true);
     }
 
-    /**
-     * Validates context and permission before rendering.
-     *
-     * @param render render context
-     * @param player viewer
-     */
-    @Override
-    public void onFirstRender(final @NotNull RenderContext render, final @NotNull Player player) {
-        if (!this.verifyViewerAccess(render, player)) {
-            player.closeInventory();
-            return;
-        }
-        super.onFirstRender(render, player);
-    }
-
-    /**
-     * Loads all protection entries for pagination.
-     *
-     * @param context view context
-     * @return future protection list
-     */
-    @Override
-    protected @NotNull CompletableFuture<List<TownProtections>> getAsyncPaginationSource(
-            final @NotNull Context context
-    ) {
-        final List<TownProtections> protections = Arrays.stream(TownProtections.values())
-                .sorted(Comparator.comparing(TownProtections::name))
-                .toList();
-        return CompletableFuture.completedFuture(protections);
-    }
-
-    /**
-     * Renders a single protection entry.
-     *
-     * @param context context
-     * @param builder builder
-     * @param index index
-     * @param entry protection entry
-     */
-    @Override
-    protected void renderEntry(
-            final @NotNull Context context,
-            final @NotNull BukkitItemComponentBuilder builder,
-            final int index,
-            final @NotNull TownProtections entry
-    ) {
-        final Player viewer = context.getPlayer();
-        final RTown town = this.resolveTown(context, viewer);
+    private void handleModeClick(final @NotNull SlotClickContext clickContext) {
+        final RTown town = this.resolveTown(clickContext);
         if (town == null) {
-            builder.withItem(
-                    UnifiedBuilderFactory.item(Material.BARRIER)
-                            .setName(this.i18n("protection.unavailable.name", viewer).build().component())
-                            .setLore(this.i18n("protection.unavailable.lore", viewer).build().children())
-                            .build()
-            );
+            this.sendUpdateFailedMessage(clickContext);
+            return;
+        }
+        if (!town.hasSecurityChunk()) {
+            new I18n.Builder(this.getKey() + ".locked.security_required", clickContext.getPlayer())
+                .includePrefix()
+                .build()
+                .sendMessage();
             return;
         }
 
-        final @Nullable RChunk chunk = this.resolveTargetChunk(context, town);
-        final String requiredRoleId = this.resolveRequiredRoleId(context, town, chunk, entry);
-        final String scope = this.resolveProtectionScope(context);
-        final String scopeLabel = this.resolveScopeLabel(viewer, scope);
-        final String sourceState = this.resolveSourceStateLabel(context, viewer, chunk, entry);
-        final Material roleMaterial = this.resolveRoleMaterial(requiredRoleId);
-
-        builder.withItem(
-                UnifiedBuilderFactory.item(roleMaterial)
-                        .setName(this.i18n("protection.name", viewer)
-                                .withPlaceholders(Map.of(
-                                        "protection", entry.getProtectionKey(),
-                                        "required_role", requiredRoleId
-                                ))
-                                .build()
-                                .component())
-                        .setLore(this.i18n("protection.lore", viewer)
-                                .withPlaceholders(Map.of(
-                                        "protection", entry.getProtectionKey(),
-                                        "required_role", requiredRoleId,
-                                        "scope_label", scopeLabel,
-                                        "source_state", sourceState
-                                ))
-                                .build()
-                                .children())
-                        .build()
-        ).onClick(click -> this.handleProtectionClick(click, entry));
-    }
-
-    /**
-     * Renders fixed controls for this paginated view.
-     *
-     * @param render render context
-     * @param player viewer
-     */
-    @Override
-    protected void onPaginatedRender(final @NotNull RenderContext render, final @NotNull Player player) {
-        render.slot(6, 1)
-                .renderWith(() -> UnifiedBuilderFactory.item(new Return().getHead(player))
-                        .setName(this.i18n("back.name", player).build().component())
-                        .setLore(this.i18n("back.lore", player).build().children())
-                        .build())
-                .onClick(this::handleBackClick);
-    }
-
-    private void handleBackClick(final @NotNull SlotClickContext click) {
-        click.setCancelled(true);
-
-        final Player player = click.getPlayer();
-        final RDT plugin = this.resolvePlugin(click);
-        final RTown town = this.resolveTown(click, player);
-        if (plugin == null || town == null) {
-            click.closeForPlayer();
-            return;
-        }
-
-        if (this.isChunkScope(click)) {
-            click.openForPlayer(TownChunkView.class, this.buildChunkBackData(click, plugin, town));
-            return;
-        }
-        click.openForPlayer(
-                TownInfoView.class,
-                Map.of(
-                        "plugin", plugin,
-                        "town_uuid", town.getIdentifier()
-                )
-        );
+        clickContext.openForPlayer(TownProtectionScopeView.class, this.createScopeSelectorData(clickContext));
     }
 
     private void handleProtectionClick(
-            final @NotNull SlotClickContext click,
-            final @NotNull TownProtections protection
+        final @NotNull SlotClickContext clickContext,
+        final @NotNull TownProtections protection
     ) {
-        click.setCancelled(true);
-
-        final Player player = click.getPlayer();
-        final RDT plugin = this.resolvePlugin(click);
-        if (plugin == null || plugin.getTownRepository() == null) {
-            this.i18n("error.system_unavailable", player).includePrefix().build().sendMessage();
-            return;
-        }
-
-        final RTown town = this.resolveTown(click, player);
+        final RTown town = this.resolveTown(clickContext);
         if (town == null) {
-            this.i18n("error.town_unavailable", player).includePrefix().build().sendMessage();
+            this.sendUpdateFailedMessage(clickContext);
+            return;
+        }
+        if (!town.hasSecurityChunk()) {
+            new I18n.Builder(this.getKey() + ".locked.security_required", clickContext.getPlayer())
+                .includePrefix()
+                .build()
+                .sendMessage();
             return;
         }
 
-        final RDTPlayer townPlayer = this.resolveTownPlayer(click, player);
-        if (!town.hasTownPermission(townPlayer, TownPermissions.TOWN_PROTECTIONS)) {
-            this.i18n("error.no_permission", player)
-                    .includePrefix()
-                    .withPlaceholder("permission", TownPermissions.TOWN_PROTECTIONS.getPermissionKey())
-                    .build()
-                    .sendMessage();
-            return;
-        }
-
-        final @Nullable RChunk targetChunk = this.resolveTargetChunk(click, town);
-        if (this.isChunkScope(click) && targetChunk == null) {
-            this.i18n("error.chunk_unavailable", player).includePrefix().build().sendMessage();
-            return;
-        }
-
-        final List<String> roleCycle = this.resolveRoleCycle(town);
-        if (roleCycle.isEmpty()) {
-            this.i18n("error.no_roles", player).includePrefix().build().sendMessage();
-            return;
-        }
-
-        final String currentRole = this.resolveRequiredRoleId(click, town, targetChunk, protection);
-        final int currentIndex = roleCycle.indexOf(currentRole);
-        final int nextIndex = currentIndex < 0 ? 0 : (currentIndex + 1) % roleCycle.size();
-        final String nextRole = roleCycle.get(nextIndex);
-
-        if (this.isChunkScope(click) && targetChunk != null) {
-            targetChunk.setProtectionOverrideRoleId(protection, nextRole);
-        } else {
-            town.setProtectionRoleId(protection, nextRole);
-        }
-
-        plugin.getTownRepository().update(town);
-
-        this.i18n("message.updated", player)
+        final boolean chunkScoped = this.hasScopedChunkTarget(clickContext);
+        final List<String> roleOrder = new ArrayList<>(this.plugin.get(clickContext).getTownRuntimeService().getProtectionRoleOrder(town));
+        if (!chunkScoped) {
+            final String nextRoleId = this.nextRoleId(roleOrder, town.getProtectionRoleId(protection), false);
+            final boolean updated = this.plugin.get(clickContext).getTownRuntimeService().setTownProtectionRoleId(
+                town,
+                protection,
+                nextRoleId
+            );
+            if (!updated) {
+                this.sendUpdateFailedMessage(clickContext);
+                return;
+            }
+            new I18n.Builder(this.getKey() + ".updated", clickContext.getPlayer())
                 .includePrefix()
                 .withPlaceholders(Map.of(
-                        "protection", protection.getProtectionKey(),
-                        "required_role", nextRole,
-                        "scope_label", this.resolveScopeLabel(player, this.resolveProtectionScope(click))
+                    "protection", protection.name(),
+                    "role", this.resolveRoleDisplay(town, nextRoleId)
                 ))
                 .build()
                 .sendMessage();
+            clickContext.update();
+            return;
+        }
 
-        click.openForPlayer(TownProtectionsView.class, this.buildOpenData(click, plugin, town));
+        final RTownChunk scopedChunk = this.resolveChunk(clickContext);
+        if (scopedChunk == null) {
+            this.sendUpdateFailedMessage(clickContext);
+            return;
+        }
+        final String nextRoleId = this.nextRoleId(roleOrder, scopedChunk.getProtectionRoleId(protection), true);
+        final boolean updated = this.plugin.get(clickContext).getTownRuntimeService().setChunkProtectionRoleId(
+            scopedChunk,
+            protection,
+            nextRoleId
+        );
+        if (!updated) {
+            this.sendUpdateFailedMessage(clickContext);
+            return;
+        }
+        new I18n.Builder(this.getKey() + ".updated", clickContext.getPlayer())
+            .includePrefix()
+            .withPlaceholders(Map.of(
+                "protection", protection.name(),
+                "role", nextRoleId == null ? "Inherit" : this.resolveRoleDisplay(town, nextRoleId)
+            ))
+            .build()
+            .sendMessage();
+        clickContext.update();
     }
 
-    private boolean verifyViewerAccess(
-            final @NotNull Context context,
-            final @NotNull Player player
-    ) {
-        final RTown town = this.resolveTown(context, player);
-        if (town == null) {
-            this.i18n("error.town_unavailable", player).includePrefix().build().sendMessage();
-            return false;
-        }
-
-        final RDTPlayer townPlayer = this.resolveTownPlayer(context, player);
-        if (!town.hasTownPermission(townPlayer, TownPermissions.TOWN_PROTECTIONS)) {
-            this.i18n("error.no_permission", player)
-                    .includePrefix()
-                    .withPlaceholder("permission", TownPermissions.TOWN_PROTECTIONS.getPermissionKey())
-                    .build()
-                    .sendMessage();
-            return false;
-        }
-
-        if (this.isChunkScope(context) && this.resolveTargetChunk(context, town) == null) {
-            this.i18n("error.chunk_unavailable", player).includePrefix().build().sendMessage();
-            return false;
-        }
-
-        return true;
+    private boolean hasScopedChunkTarget(final @NotNull Context context) {
+        return this.resolveScopedWorldName(context) != null
+            && this.resolveScopedChunkX(context) != null
+            && this.resolveScopedChunkZ(context) != null;
     }
 
-    private @Nullable RTown resolveTown(
-            final @NotNull Context context,
-            final @NotNull Player player
+    private @Nullable RTown resolveTown(final @NotNull Context context) {
+        final UUID resolvedTownUuid = this.townUuid.get(context);
+        return resolvedTownUuid == null || this.plugin.get(context).getTownRuntimeService() == null
+            ? null
+            : this.plugin.get(context).getTownRuntimeService().getTown(resolvedTownUuid);
+    }
+
+    private @Nullable RTownChunk resolveChunk(final @NotNull Context context) {
+        final UUID resolvedTownUuid = this.townUuid.get(context);
+        final String resolvedWorldName = this.resolveScopedWorldName(context);
+        final Integer resolvedChunkX = this.resolveScopedChunkX(context);
+        final Integer resolvedChunkZ = this.resolveScopedChunkZ(context);
+        if (resolvedTownUuid == null
+            || resolvedWorldName == null
+            || resolvedChunkX == null
+            || resolvedChunkZ == null
+            || this.plugin.get(context).getTownRuntimeService() == null) {
+            return null;
+        }
+        return this.plugin.get(context).getTownRuntimeService().getTownChunk(
+            resolvedTownUuid,
+            resolvedWorldName,
+            resolvedChunkX,
+            resolvedChunkZ
+        );
+    }
+
+    private @Nullable String nextRoleId(
+        final @NotNull List<String> roleOrder,
+        final @Nullable String currentRoleId,
+        final boolean allowInherit
     ) {
-        final RDT plugin = this.resolvePlugin(context);
-        if (plugin == null) {
+        final List<String> cycle = new ArrayList<>();
+        if (allowInherit) {
+            cycle.add(null);
+        }
+        cycle.addAll(roleOrder);
+        int currentIndex = cycle.indexOf(currentRoleId);
+        if (currentIndex < 0) {
+            currentIndex = 0;
+        }
+        return cycle.get((currentIndex + 1) % cycle.size());
+    }
+
+    private @NotNull String resolveRoleDisplay(final @NotNull RTown town, final @Nullable String roleId) {
+        if (roleId == null) {
+            return "Inherit";
+        }
+        final TownRole role = town.findRoleById(roleId);
+        return role == null ? roleId : role.getRoleName();
+    }
+
+    private void sendUpdateFailedMessage(final @NotNull SlotClickContext clickContext) {
+        new I18n.Builder(this.getKey() + ".update_failed", clickContext.getPlayer())
+            .includePrefix()
+            .build()
+            .sendMessage();
+    }
+
+    private @NotNull Map<String, Object> createScopeSelectorData(final @NotNull Context context) {
+        final Map<String, Object> data = new LinkedHashMap<>();
+        data.put("plugin", this.plugin.get(context));
+        data.put("town_uuid", this.townUuid.get(context));
+        if (this.hasScopedChunkTarget(context)) {
+            data.put(WORLD_NAME_KEY, this.resolveScopedWorldName(context));
+            data.put(CHUNK_X_KEY, this.resolveScopedChunkX(context));
+            data.put(CHUNK_Z_KEY, this.resolveScopedChunkZ(context));
+        }
+        return data;
+    }
+
+    private @Nullable Map<String, Object> extractData(final @NotNull Context context) {
+        final Object initialData = context.getInitialData();
+        if (!(initialData instanceof Map<?, ?> rawMap)) {
             return null;
         }
 
-        final RRTown townRepository = plugin.getTownRepository();
-        if (townRepository == null) {
-            return null;
-        }
-
-        final UUID resolvedTownUuid = this.resolveTownUuid(context, player, plugin);
-        if (resolvedTownUuid == null) {
-            return null;
-        }
-        return townRepository.findByTownUUID(resolvedTownUuid);
-    }
-
-    private @Nullable UUID resolveTownUuid(
-            final @NotNull Context context,
-            final @NotNull Player player,
-            final @NotNull RDT plugin
-    ) {
-        try {
-            final UUID explicitTownUuid = this.townUuid.get(context);
-            if (explicitTownUuid != null) {
-                return explicitTownUuid;
+        final Map<String, Object> copied = new LinkedHashMap<>();
+        for (final Map.Entry<?, ?> entry : rawMap.entrySet()) {
+            if (entry.getKey() instanceof String key) {
+                copied.put(key, entry.getValue());
             }
-        } catch (final Exception ignored) {
         }
-
-        final RRDTPlayer playerRepository = plugin.getPlayerRepository();
-        if (playerRepository == null) {
-            return null;
-        }
-
-        final RDTPlayer townPlayer = playerRepository.findByPlayer(player.getUniqueId());
-        if (townPlayer == null) {
-            return null;
-        }
-        return townPlayer.getTownUUID();
+        return copied;
     }
 
-    private @Nullable RDTPlayer resolveTownPlayer(
-            final @NotNull Context context,
-            final @NotNull Player player
-    ) {
-        final RDT plugin = this.resolvePlugin(context);
-        if (plugin == null || plugin.getPlayerRepository() == null) {
-            return null;
-        }
-        return plugin.getPlayerRepository().findByPlayer(player.getUniqueId());
+    private @Nullable String resolveScopedWorldName(final @NotNull Context context) {
+        final Map<String, Object> data = this.extractData(context);
+        return data == null || !(data.get(WORLD_NAME_KEY) instanceof String rawWorldName) || rawWorldName.isBlank()
+            ? null
+            : rawWorldName;
     }
 
-    private @Nullable RChunk resolveTargetChunk(
-            final @NotNull Context context,
-            final @NotNull RTown town
-    ) {
-        if (!this.isChunkScope(context)) {
-            return null;
-        }
+    private @Nullable Integer resolveScopedChunkX(final @NotNull Context context) {
+        final Map<String, Object> data = this.extractData(context);
+        return this.asInteger(data == null ? null : data.get(CHUNK_X_KEY));
+    }
 
-        final Integer resolvedChunkX = this.resolveChunkX(context);
-        final Integer resolvedChunkZ = this.resolveChunkZ(context);
-        if (resolvedChunkX == null || resolvedChunkZ == null) {
-            return null;
-        }
+    private @Nullable Integer resolveScopedChunkZ(final @NotNull Context context) {
+        final Map<String, Object> data = this.extractData(context);
+        return this.asInteger(data == null ? null : data.get(CHUNK_Z_KEY));
+    }
 
-        for (final RChunk chunk : town.getChunks()) {
-            if (chunk.getX_loc() == resolvedChunkX && chunk.getZ_loc() == resolvedChunkZ) {
-                return chunk;
+    private @Nullable Integer asInteger(final @Nullable Object value) {
+        if (value instanceof Number number) {
+            return number.intValue();
+        }
+        if (value instanceof String stringValue) {
+            try {
+                return Integer.parseInt(stringValue);
+            } catch (final NumberFormatException ignored) {
+                return null;
             }
         }
         return null;
     }
 
-    private @NotNull String resolveRequiredRoleId(
-            final @NotNull Context context,
-            final @NotNull RTown town,
-            final @Nullable RChunk chunk,
-            final @NotNull TownProtections protection
+    private @NotNull ItemStack createSummaryItem(final @NotNull Context context) {
+        final RTown town = this.resolveTown(context);
+        if (town == null) {
+            return this.createMissingItem(context.getPlayer());
+        }
+        final RTownChunk scopedChunk = this.resolveChunk(context);
+        final boolean chunkScoped = scopedChunk != null;
+        return UnifiedBuilderFactory.item(chunkScoped ? Material.TARGET : Material.SHIELD)
+            .setName(this.i18n("summary.name", context.getPlayer()).build().component())
+            .setLore(this.i18n("summary.lore", context.getPlayer())
+                .withPlaceholders(Map.of(
+                    "town_name", town.getTownName(),
+                    "scope", chunkScoped ? "Chunk" : "Town",
+                    "security_state", town.hasSecurityChunk() ? "Unlocked" : "Locked"
+                ))
+                .build()
+                .children())
+            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+            .build();
+    }
+
+    private @NotNull ItemStack createModeItem(final @NotNull Context context) {
+        final RTown town = this.resolveTown(context);
+        if (town == null) {
+            return this.createMissingItem(context.getPlayer());
+        }
+        final RTownChunk scopedChunk = this.resolveChunk(context);
+        final boolean chunkScoped = scopedChunk != null;
+        return UnifiedBuilderFactory.item(chunkScoped ? Material.ORANGE_BANNER : Material.BLUE_BANNER)
+            .setName(this.i18n("mode.name", context.getPlayer()).build().component())
+            .setLore(this.i18n("mode.lore", context.getPlayer())
+                .withPlaceholders(Map.of(
+                    "scope", chunkScoped ? "Chunk" : "Town",
+                    "chunk_x", chunkScoped ? scopedChunk.getX() : "-",
+                    "chunk_z", chunkScoped ? scopedChunk.getZ() : "-"
+                ))
+                .build()
+                .children())
+            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+            .build();
+    }
+
+    private @NotNull ItemStack createProtectionItem(
+        final @NotNull Context context,
+        final @NotNull TownProtections protection
     ) {
-        if (this.isChunkScope(context) && chunk != null) {
-            final String chunkOverride = chunk.getProtectionOverrideRoleId(protection);
-            if (chunkOverride != null) {
-                return chunkOverride;
-            }
+        final RTown town = this.resolveTown(context);
+        if (town == null) {
+            return this.createMissingItem(context.getPlayer());
         }
-        return town.getProtectionRoleId(protection);
+        final RTownChunk scopedChunk = this.resolveChunk(context);
+        final boolean unlocked = town.hasSecurityChunk();
+        final String currentRoleId = scopedChunk == null
+            ? town.getProtectionRoleId(protection)
+            : scopedChunk.getProtectionRoleId(protection);
+        final boolean inherited = scopedChunk != null && !scopedChunk.overridesProtection(protection);
+        final Material material = unlocked ? Material.LIME_STAINED_GLASS_PANE : Material.GRAY_STAINED_GLASS_PANE;
+        final String roleDisplay = inherited
+            ? "Inherit"
+            : this.resolveRoleDisplay(town, currentRoleId);
+
+        return UnifiedBuilderFactory.item(material)
+            .setName(this.i18n("entry.name", context.getPlayer())
+                .withPlaceholder("protection", protection.name())
+                .build()
+                .component())
+            .setLore(this.i18n("entry.lore", context.getPlayer())
+                .withPlaceholders(Map.of(
+                    "protection", protection.name(),
+                    "role", roleDisplay,
+                    "state", unlocked ? "Editable" : "Locked"
+                ))
+                .build()
+                .children())
+            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+            .build();
     }
 
-    private @NotNull List<String> resolveRoleCycle(final @NotNull RTown town) {
-        final List<String> configuredRoleIds = town.getRoles().stream()
-                .map(TownRole::getRoleId)
-                .map(RTown::normalizeRoleId)
-                .distinct()
-                .sorted()
-                .toList();
-
-        final List<String> ordered = new ArrayList<>();
-        this.addRoleIfPresent(ordered, configuredRoleIds, RTown.PUBLIC_ROLE_ID);
-        this.addRoleIfPresent(ordered, configuredRoleIds, RTown.MEMBER_ROLE_ID);
-        this.addRoleIfPresent(ordered, configuredRoleIds, RTown.MAYOR_ROLE_ID);
-        this.addRoleIfPresent(ordered, configuredRoleIds, RTown.RESTRICTED_ROLE_ID);
-        for (final String roleId : configuredRoleIds) {
-            if (!ordered.contains(roleId)) {
-                ordered.add(roleId);
-            }
-        }
-        return ordered;
-    }
-
-    private void addRoleIfPresent(
-            final @NotNull List<String> orderedRoles,
-            final @NotNull List<String> allRoles,
-            final @NonNull String targetRoleId
-    ) {
-        final String normalizedRoleId = RTown.normalizeRoleId(targetRoleId);
-        if (allRoles.contains(normalizedRoleId) && !orderedRoles.contains(normalizedRoleId)) {
-            orderedRoles.add(normalizedRoleId);
-        }
-    }
-
-    private @NotNull String resolveScopeLabel(
-            final @NotNull Player player,
-            final @NotNull String scope
-    ) {
-        final String key = SCOPE_CHUNK.equals(scope) ? "scope.chunk" : "scope.town";
-        return PlainTextComponentSerializer.plainText().serialize(
-                this.i18n(key, player).build().component()
-        );
-    }
-
-    private @NotNull String resolveSourceStateLabel(
-            final @NotNull Context context,
-            final @NotNull Player player,
-            final @Nullable RChunk chunk,
-            final @NotNull TownProtections protection
-    ) {
-        final String key;
-        if (this.isChunkScope(context) && chunk != null && chunk.hasProtectionOverride(protection)) {
-            key = "protection.source.chunk";
-        } else {
-            key = "protection.source.town";
-        }
-        return PlainTextComponentSerializer.plainText().serialize(
-                this.i18n(key, player).build().component()
-        );
-    }
-
-    private @NotNull Material resolveRoleMaterial(final @NotNull String roleId) {
-        if (RTown.PUBLIC_ROLE_ID.equals(roleId)) {
-            return Material.LIME_DYE;
-        }
-        if (RTown.MEMBER_ROLE_ID.equals(roleId)) {
-            return Material.ORANGE_DYE;
-        }
-        if (RTown.MAYOR_ROLE_ID.equals(roleId)) {
-            return Material.RED_DYE;
-        }
-        if (RTown.RESTRICTED_ROLE_ID.equals(roleId)) {
-            return Material.BLACK_DYE;
-        }
-        return Material.LIGHT_BLUE_DYE;
-    }
-
-    private boolean isChunkScope(final @NotNull Context context) {
-        return SCOPE_CHUNK.equals(this.resolveProtectionScope(context));
-    }
-
-    private @NotNull String resolveProtectionScope(final @NotNull Context context) {
-        try {
-            final String explicitScope = this.protectionScope.get(context);
-            if (explicitScope != null && !explicitScope.isBlank()) {
-                return explicitScope.trim().toLowerCase(Locale.ROOT);
-            }
-        } catch (final Exception ignored) {
-        }
-
-        if (this.resolveChunkX(context) != null && this.resolveChunkZ(context) != null) {
-            return SCOPE_CHUNK;
-        }
-        return SCOPE_TOWN;
-    }
-
-    private @Nullable Integer resolveChunkX(final @NotNull Context context) {
-        try {
-            return this.chunkX.get(context);
-        } catch (final Exception ignored) {
-            return null;
-        }
-    }
-
-    private @Nullable Integer resolveChunkZ(final @NotNull Context context) {
-        try {
-            return this.chunkZ.get(context);
-        } catch (final Exception ignored) {
-            return null;
-        }
-    }
-
-    private @Nullable Integer resolveBlockX(final @NotNull Context context) {
-        try {
-            return this.blockX.get(context);
-        } catch (final Exception ignored) {
-            return null;
-        }
-    }
-
-    private @Nullable Integer resolveBlockY(final @NotNull Context context) {
-        try {
-            return this.blockY.get(context);
-        } catch (final Exception ignored) {
-            return null;
-        }
-    }
-
-    private @Nullable Integer resolveBlockZ(final @NotNull Context context) {
-        try {
-            return this.blockZ.get(context);
-        } catch (final Exception ignored) {
-            return null;
-        }
-    }
-
-    private @Nullable String resolveBlockWorld(final @NotNull Context context) {
-        try {
-            return this.blockWorld.get(context);
-        } catch (final Exception ignored) {
-            return null;
-        }
-    }
-
-    private @NotNull Map<String, Object> buildOpenData(
-            final @NotNull Context context,
-            final @NotNull RDT plugin,
-            final @NotNull RTown town
-    ) {
-        final Map<String, Object> data = new HashMap<>();
-        data.put("plugin", plugin);
-        data.put("town_uuid", town.getIdentifier());
-        data.put("protection_scope", this.resolveProtectionScope(context));
-
-        final Integer resolvedChunkX = this.resolveChunkX(context);
-        final Integer resolvedChunkZ = this.resolveChunkZ(context);
-        if (resolvedChunkX != null) {
-            data.put("chunk_x", resolvedChunkX);
-        }
-        if (resolvedChunkZ != null) {
-            data.put("chunk_z", resolvedChunkZ);
-        }
-
-        final Integer resolvedBlockX = this.resolveBlockX(context);
-        final Integer resolvedBlockY = this.resolveBlockY(context);
-        final Integer resolvedBlockZ = this.resolveBlockZ(context);
-        final String resolvedBlockWorld = this.resolveBlockWorld(context);
-        if (resolvedBlockX != null) {
-            data.put("block_x", resolvedBlockX);
-        }
-        if (resolvedBlockY != null) {
-            data.put("block_y", resolvedBlockY);
-        }
-        if (resolvedBlockZ != null) {
-            data.put("block_z", resolvedBlockZ);
-        }
-        if (resolvedBlockWorld != null && !resolvedBlockWorld.isBlank()) {
-            data.put("block_world", resolvedBlockWorld);
-        }
-
-        return data;
-    }
-
-    private @NotNull Map<String, Object> buildChunkBackData(
-            final @NotNull Context context,
-            final @NotNull RDT plugin,
-            final @NotNull RTown town
-    ) {
-        final Map<String, Object> data = new HashMap<>();
-        data.put("plugin", plugin);
-        data.put("town_uuid", town.getIdentifier());
-
-        final Integer resolvedChunkX = this.resolveChunkX(context);
-        final Integer resolvedChunkZ = this.resolveChunkZ(context);
-        if (resolvedChunkX != null) {
-            data.put("chunk_x", resolvedChunkX);
-        }
-        if (resolvedChunkZ != null) {
-            data.put("chunk_z", resolvedChunkZ);
-        }
-
-        final Integer resolvedBlockX = this.resolveBlockX(context);
-        final Integer resolvedBlockY = this.resolveBlockY(context);
-        final Integer resolvedBlockZ = this.resolveBlockZ(context);
-        final String resolvedBlockWorld = this.resolveBlockWorld(context);
-        if (resolvedBlockX != null) {
-            data.put("block_x", resolvedBlockX);
-        }
-        if (resolvedBlockY != null) {
-            data.put("block_y", resolvedBlockY);
-        }
-        if (resolvedBlockZ != null) {
-            data.put("block_z", resolvedBlockZ);
-        }
-        if (resolvedBlockWorld != null && !resolvedBlockWorld.isBlank()) {
-            data.put("block_world", resolvedBlockWorld);
-        }
-
-        return data;
-    }
-
-    private @Nullable RDT resolvePlugin(final @NotNull Context context) {
-        try {
-            return this.rdt.get(context);
-        } catch (final Exception ignored) {
-            return null;
-        }
+    private @NotNull ItemStack createMissingItem(final @NotNull Player player) {
+        return UnifiedBuilderFactory.item(Material.BARRIER)
+            .setName(this.i18n("missing.name", player).build().component())
+            .setLore(this.i18n("missing.lore", player).build().children())
+            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+            .build();
     }
 }

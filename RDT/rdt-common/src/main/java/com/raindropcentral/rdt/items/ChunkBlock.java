@@ -15,340 +15,223 @@ package com.raindropcentral.rdt.items;
 
 import com.raindropcentral.rdt.RDT;
 import com.raindropcentral.rdt.utils.ChunkType;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
-import org.bukkit.Material;
+import de.jexcellence.jextranslate.i18n.I18n;
 import org.bukkit.NamespacedKey;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
-import org.jspecify.annotations.NonNull;
-import org.jspecify.annotations.Nullable;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
- * Factory and metadata utilities for town Chunk Block items.
- *
- * <p>Chunk Block items are tied to a single town and target chunk coordinate. Placing the item in
- * the intended chunk finalizes a pending claim started from the chunk-claim view.</p>
+ * Bound chunk-claim item payload used to claim one specific target chunk.
  *
  * @author ItsRainingHP
  * @since 1.0.0
- * @version 1.0.1
+ * @version 1.0.0
  */
 public final class ChunkBlock {
 
-    private static final String TOWN_UUID_KEY = "chunk_block_town_uuid";
-    private static final String TOWN_NAME_KEY = "chunk_block_town_name";
-    private static final String MAYOR_UUID_KEY = "chunk_block_mayor_uuid";
-    private static final String CHUNK_X_KEY = "chunk_block_x";
-    private static final String CHUNK_Z_KEY = "chunk_block_z";
-    private static final String CHUNK_TYPE_KEY = "chunk_block_type";
-
-    private static final Material DEFAULT_CHUNK_BLOCK_MATERIAL = Material.OAK_PLANKS;
+    private static final String ITEM_KIND = "chunk_block";
+    private static final String ITEM_TYPE_KEY = "rdt_item_type";
+    private static final String TOWN_UUID_KEY = "rdt_town_uuid";
+    private static final String MAYOR_UUID_KEY = "rdt_mayor_uuid";
+    private static final String WORLD_KEY = "rdt_claim_world";
+    private static final String CHUNK_X_KEY = "rdt_claim_chunk_x";
+    private static final String CHUNK_Z_KEY = "rdt_claim_chunk_z";
+    private static final String CHUNK_TYPE_KEY = "rdt_chunk_type";
 
     private ChunkBlock() {
     }
 
     /**
-     * Creates a Chunk Block item for a specific target chunk.
+     * Creates a bound chunk-claim item.
      *
-     * @param plugin runtime plugin
-     * @param townUuid town identifier
-     * @param townName town display name
-     * @param mayorUuid mayor identifier
-     * @param chunkX target chunk X
-     * @param chunkZ target chunk Z
-     * @return configured Chunk Block item
+     * @param plugin active plugin runtime
+     * @param player receiving player
+     * @param townUuid owning town UUID
+     * @param mayorUuid mayor UUID
+     * @param worldName required target world
+     * @param chunkX required target chunk X
+     * @param chunkZ required target chunk Z
+     * @return bound chunk claim item
      */
-    public static @NonNull ItemStack getChunkBlockItem(
-            final @NotNull RDT plugin,
-            final @NonNull UUID townUuid,
-            final @NotNull String townName,
-            final @NonNull UUID mayorUuid,
-            final int chunkX,
-            final int chunkZ
+    public static @NotNull ItemStack getChunkBlockItem(
+        final @NotNull RDT plugin,
+        final @NotNull Player player,
+        final @NotNull UUID townUuid,
+        final @NotNull UUID mayorUuid,
+        final @NotNull String worldName,
+        final int chunkX,
+        final int chunkZ
     ) {
-        return getChunkBlockItem(
-                plugin,
-                townUuid,
-                townName,
-                mayorUuid,
-                chunkX,
-                chunkZ,
-                ChunkType.CHUNK_BLOCK
-        );
-    }
-
-    /**
-     * Creates a Chunk Block item for a specific target chunk and chunk type.
-     *
-     * @param plugin runtime plugin
-     * @param townUuid town identifier
-     * @param townName town display name
-     * @param mayorUuid mayor identifier
-     * @param chunkX target chunk X
-     * @param chunkZ target chunk Z
-     * @param chunkType chunk type this item should preserve on placement
-     * @return configured Chunk Block item
-     */
-    public static @NonNull ItemStack getChunkBlockItem(
-            final @NotNull RDT plugin,
-            final @NonNull UUID townUuid,
-            final @NotNull String townName,
-            final @NonNull UUID mayorUuid,
-            final int chunkX,
-            final int chunkZ,
-            final @NotNull ChunkType chunkType
-    ) {
-        final Material displayMaterial = plugin.getDefaultConfig().getChunkTypeIconMaterial(chunkType);
-        final ItemStack chunkBlock = new ItemStack(displayMaterial);
-        final ItemMeta meta = chunkBlock.getItemMeta();
-        meta.displayName(Component.text("Chunk Block • " + chunkType.name(), NamedTextColor.GOLD));
-
-        final List<Component> lore = new ArrayList<>();
-        lore.add(Component.text("Place inside the claimed chunk", NamedTextColor.YELLOW));
-        lore.add(Component.text("Target: (" + chunkX + ", " + chunkZ + ")", NamedTextColor.GRAY));
-        lore.add(Component.text("Type: " + chunkType.name(), NamedTextColor.GRAY));
-        meta.lore(lore);
-
-        final PersistentDataContainer persistentDataContainer = meta.getPersistentDataContainer();
-        persistentDataContainer.set(
-                new NamespacedKey(plugin.getPlugin(), TOWN_UUID_KEY),
-                PersistentDataType.STRING,
-                townUuid.toString()
-        );
-        persistentDataContainer.set(
-                new NamespacedKey(plugin.getPlugin(), TOWN_NAME_KEY),
-                PersistentDataType.STRING,
-                townName
-        );
-        persistentDataContainer.set(
-                new NamespacedKey(plugin.getPlugin(), MAYOR_UUID_KEY),
-                PersistentDataType.STRING,
-                mayorUuid.toString()
-        );
-        persistentDataContainer.set(
-                new NamespacedKey(plugin.getPlugin(), CHUNK_X_KEY),
-                PersistentDataType.INTEGER,
-                chunkX
-        );
-        persistentDataContainer.set(
-                new NamespacedKey(plugin.getPlugin(), CHUNK_Z_KEY),
-                PersistentDataType.INTEGER,
-                chunkZ
-        );
-        persistentDataContainer.set(
-                new NamespacedKey(plugin.getPlugin(), CHUNK_TYPE_KEY),
-                PersistentDataType.STRING,
-                chunkType.name()
-        );
+        final ItemStack chunkBlock = new ItemStack(plugin.getDefaultConfig().getChunkTypeIconMaterial(ChunkType.CLAIM_PENDING));
+        final ItemMeta meta = Objects.requireNonNull(chunkBlock.getItemMeta(), "chunk block meta");
+        meta.displayName(new I18n.Builder("chunk_block.name", player)
+            .withPlaceholders(Map.of(
+                "chunk_x", chunkX,
+                "chunk_z", chunkZ
+            ))
+            .build()
+            .component());
+        meta.lore(new I18n.Builder("chunk_block.lore", player)
+            .withPlaceholders(Map.of(
+                "world", worldName,
+                "chunk_x", chunkX,
+                "chunk_z", chunkZ
+            ))
+            .build()
+            .children());
+        final PersistentDataContainer data = meta.getPersistentDataContainer();
+        data.set(key(plugin, ITEM_TYPE_KEY), PersistentDataType.STRING, ITEM_KIND);
+        data.set(key(plugin, TOWN_UUID_KEY), PersistentDataType.STRING, townUuid.toString());
+        data.set(key(plugin, MAYOR_UUID_KEY), PersistentDataType.STRING, mayorUuid.toString());
+        data.set(key(plugin, WORLD_KEY), PersistentDataType.STRING, worldName);
+        data.set(key(plugin, CHUNK_X_KEY), PersistentDataType.INTEGER, chunkX);
+        data.set(key(plugin, CHUNK_Z_KEY), PersistentDataType.INTEGER, chunkZ);
+        data.set(key(plugin, CHUNK_TYPE_KEY), PersistentDataType.STRING, ChunkType.CLAIM_PENDING.name());
         chunkBlock.setItemMeta(meta);
         return chunkBlock;
     }
 
     /**
-     * Returns whether the provided item carries Chunk Block metadata.
+     * Returns whether an item is a bound chunk-block payload.
      *
-     * @param plugin runtime plugin
-     * @param item candidate item
-     * @return {@code true} when this item is a Chunk Block
+     * @param plugin active plugin runtime
+     * @param item item to inspect
+     * @return {@code true} when the item is a bound chunk claim item
      */
-    public static boolean equals(
-            final @NotNull RDT plugin,
-            final @NotNull ItemStack item
-    ) {
-        final ItemMeta meta = item.getItemMeta();
-        if (meta == null) {
+    public static boolean equals(final @NotNull RDT plugin, final @Nullable ItemStack item) {
+        if (item == null || item.getItemMeta() == null) {
             return false;
         }
-
-        final PersistentDataContainer persistentDataContainer = meta.getPersistentDataContainer();
-        return persistentDataContainer.has(
-                new NamespacedKey(plugin.getPlugin(), TOWN_UUID_KEY),
-                PersistentDataType.STRING
-        ) && persistentDataContainer.has(
-                new NamespacedKey(plugin.getPlugin(), TOWN_NAME_KEY),
-                PersistentDataType.STRING
-        ) && persistentDataContainer.has(
-                new NamespacedKey(plugin.getPlugin(), MAYOR_UUID_KEY),
-                PersistentDataType.STRING
-        ) && persistentDataContainer.has(
-                new NamespacedKey(plugin.getPlugin(), CHUNK_X_KEY),
-                PersistentDataType.INTEGER
-        ) && persistentDataContainer.has(
-                new NamespacedKey(plugin.getPlugin(), CHUNK_Z_KEY),
-                PersistentDataType.INTEGER
-        ) && persistentDataContainer.has(
-                new NamespacedKey(plugin.getPlugin(), CHUNK_TYPE_KEY),
-                PersistentDataType.STRING
+        final String itemType = item.getItemMeta().getPersistentDataContainer().get(
+            key(plugin, ITEM_TYPE_KEY),
+            PersistentDataType.STRING
         );
+        return ITEM_KIND.equalsIgnoreCase(itemType);
     }
 
     /**
-     * Reads the town UUID encoded in a Chunk Block item.
+     * Returns the stored owning town UUID.
      *
-     * @param plugin runtime plugin
-     * @param item chunk block item
-     * @return town UUID or {@code null} when unavailable/invalid
+     * @param plugin active plugin runtime
+     * @param item item to inspect
+     * @return stored town UUID, or {@code null} when unavailable
      */
-    public static @Nullable UUID getTownUUID(
-            final @NotNull RDT plugin,
-            final @NotNull ItemStack item
-    ) {
-        final ItemMeta meta = item.getItemMeta();
-        if (meta == null) {
-            return null;
-        }
-        final String encodedUuid = meta.getPersistentDataContainer().get(
-                new NamespacedKey(plugin.getPlugin(), TOWN_UUID_KEY),
-                PersistentDataType.STRING
-        );
-        if (encodedUuid == null) {
+    public static @Nullable UUID getTownUUID(final @NotNull RDT plugin, final @Nullable ItemStack item) {
+        return parseUuid(readString(plugin, item, TOWN_UUID_KEY));
+    }
+
+    /**
+     * Returns the stored mayor UUID.
+     *
+     * @param plugin active plugin runtime
+     * @param item item to inspect
+     * @return stored mayor UUID, or {@code null} when unavailable
+     */
+    public static @Nullable UUID getMayorUUID(final @NotNull RDT plugin, final @Nullable ItemStack item) {
+        return parseUuid(readString(plugin, item, MAYOR_UUID_KEY));
+    }
+
+    /**
+     * Returns the stored target world name.
+     *
+     * @param plugin active plugin runtime
+     * @param item item to inspect
+     * @return target world name, or {@code null} when unavailable
+     */
+    public static @Nullable String getWorldName(final @NotNull RDT plugin, final @Nullable ItemStack item) {
+        return readString(plugin, item, WORLD_KEY);
+    }
+
+    /**
+     * Returns the stored target chunk X coordinate.
+     *
+     * @param plugin active plugin runtime
+     * @param item item to inspect
+     * @return target chunk X coordinate, or {@code null} when unavailable
+     */
+    public static @Nullable Integer getXLoc(final @NotNull RDT plugin, final @Nullable ItemStack item) {
+        return readInteger(plugin, item, CHUNK_X_KEY);
+    }
+
+    /**
+     * Returns the stored target chunk Z coordinate.
+     *
+     * @param plugin active plugin runtime
+     * @param item item to inspect
+     * @return target chunk Z coordinate, or {@code null} when unavailable
+     */
+    public static @Nullable Integer getZLoc(final @NotNull RDT plugin, final @Nullable ItemStack item) {
+        return readInteger(plugin, item, CHUNK_Z_KEY);
+    }
+
+    /**
+     * Returns the stored initial chunk type.
+     *
+     * @param plugin active plugin runtime
+     * @param item item to inspect
+     * @return stored chunk type, or {@code null} when unavailable
+     */
+    public static @Nullable ChunkType getChunkType(final @NotNull RDT plugin, final @Nullable ItemStack item) {
+        final String rawType = readString(plugin, item, CHUNK_TYPE_KEY);
+        if (rawType == null || rawType.isBlank()) {
             return null;
         }
         try {
-            return UUID.fromString(encodedUuid);
-        } catch (IllegalArgumentException ignored) {
+            return ChunkType.valueOf(rawType.trim().toUpperCase(java.util.Locale.ROOT));
+        } catch (final IllegalArgumentException ignored) {
             return null;
         }
     }
 
-    /**
-     * Reads the town name encoded in a Chunk Block item.
-     *
-     * @param plugin runtime plugin
-     * @param item chunk block item
-     * @return encoded town name or {@code null}
-     */
-    public static @Nullable String getTownName(
-            final @NotNull RDT plugin,
-            final @NotNull ItemStack item
+    private static @Nullable String readString(
+        final @NotNull RDT plugin,
+        final @Nullable ItemStack item,
+        final @NotNull String key
     ) {
-        final ItemMeta meta = item.getItemMeta();
-        if (meta == null) {
+        if (item == null || item.getItemMeta() == null) {
             return null;
         }
-        return meta.getPersistentDataContainer().get(
-                new NamespacedKey(plugin.getPlugin(), TOWN_NAME_KEY),
-                PersistentDataType.STRING
+        return item.getItemMeta().getPersistentDataContainer().get(
+            key(plugin, key),
+            PersistentDataType.STRING
         );
     }
 
-    /**
-     * Reads the mayor UUID encoded in a Chunk Block item.
-     *
-     * @param plugin runtime plugin
-     * @param item chunk block item
-     * @return mayor UUID or {@code null}
-     */
-    public static @Nullable UUID getMayorUUID(
-            final @NotNull RDT plugin,
-            final @NotNull ItemStack item
+    private static @Nullable Integer readInteger(
+        final @NotNull RDT plugin,
+        final @Nullable ItemStack item,
+        final @NotNull String key
     ) {
-        final ItemMeta meta = item.getItemMeta();
-        if (meta == null) {
+        if (item == null || item.getItemMeta() == null) {
             return null;
         }
-        final String encodedMayor = meta.getPersistentDataContainer().get(
-                new NamespacedKey(plugin.getPlugin(), MAYOR_UUID_KEY),
-                PersistentDataType.STRING
+        return item.getItemMeta().getPersistentDataContainer().get(
+            key(plugin, key),
+            PersistentDataType.INTEGER
         );
-        if (encodedMayor == null) {
+    }
+
+    private static @Nullable UUID parseUuid(final @Nullable String rawUuid) {
+        if (rawUuid == null || rawUuid.isBlank()) {
             return null;
         }
         try {
-            return UUID.fromString(encodedMayor);
-        } catch (IllegalArgumentException ignored) {
+            return UUID.fromString(rawUuid);
+        } catch (final IllegalArgumentException ignored) {
             return null;
         }
     }
 
-    /**
-     * Reads the target chunk X coordinate encoded in a Chunk Block item.
-     *
-     * @param plugin runtime plugin
-     * @param item chunk block item
-     * @return target chunk X or {@code null}
-     */
-    public static @Nullable Integer getChunkX(
-            final @NotNull RDT plugin,
-            final @NotNull ItemStack item
-    ) {
-        final ItemMeta meta = item.getItemMeta();
-        if (meta == null) {
-            return null;
-        }
-        return meta.getPersistentDataContainer().get(
-                new NamespacedKey(plugin.getPlugin(), CHUNK_X_KEY),
-                PersistentDataType.INTEGER
-        );
-    }
-
-    /**
-     * Reads the target chunk Z coordinate encoded in a Chunk Block item.
-     *
-     * @param plugin runtime plugin
-     * @param item chunk block item
-     * @return target chunk Z or {@code null}
-     */
-    public static @Nullable Integer getChunkZ(
-            final @NotNull RDT plugin,
-            final @NotNull ItemStack item
-    ) {
-        final ItemMeta meta = item.getItemMeta();
-        if (meta == null) {
-            return null;
-        }
-        return meta.getPersistentDataContainer().get(
-                new NamespacedKey(plugin.getPlugin(), CHUNK_Z_KEY),
-                PersistentDataType.INTEGER
-        );
-    }
-
-    /**
-     * Reads the chunk type encoded in a Chunk Block item.
-     *
-     * @param plugin runtime plugin
-     * @param item chunk block item
-     * @return chunk type encoded on the item, defaults to {@link ChunkType#CHUNK_BLOCK}
-     */
-    public static @NotNull ChunkType getChunkType(
-            final @NotNull RDT plugin,
-            final @NotNull ItemStack item
-    ) {
-        final ItemMeta meta = item.getItemMeta();
-        if (meta == null) {
-            return ChunkType.CHUNK_BLOCK;
-        }
-
-        final String rawChunkType = meta.getPersistentDataContainer().get(
-                new NamespacedKey(plugin.getPlugin(), CHUNK_TYPE_KEY),
-                PersistentDataType.STRING
-        );
-        if (rawChunkType == null || rawChunkType.isBlank()) {
-            return ChunkType.CHUNK_BLOCK;
-        }
-
-        try {
-            return ChunkType.valueOf(rawChunkType.trim().toUpperCase(Locale.ROOT));
-        } catch (IllegalArgumentException ignored) {
-            return ChunkType.CHUNK_BLOCK;
-        }
-    }
-
-    /**
-     * Returns the material used by Chunk Block items.
-     *
-     * @return chunk block material
-     */
-    public static @NotNull Material getMaterial() {
-        return DEFAULT_CHUNK_BLOCK_MATERIAL;
+    private static @NotNull NamespacedKey key(final @NotNull RDT plugin, final @NotNull String key) {
+        return new NamespacedKey(plugin.getPlugin(), key);
     }
 }

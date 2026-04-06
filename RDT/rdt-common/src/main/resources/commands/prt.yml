@@ -1,12 +1,12 @@
 commands:
   prt:
     name: 'prt'
-    description: 'RDTImpl Commands'
+    description: 'RDT GUI and travel commands'
     aliases:
       - rt
-    usage: 'rt <help | main | town | spawn>'
+    usage: 'rt <main | spawn | bank>'
     argumentUsages:
-      1$: 'lut["prefix"] & "&7/" & alias & " &c<help | main | town | spawn>"'
+      1$: 'lut["prefix"] & "&7/" & alias & " &c<main | spawn | bank>"'
     errorMessages:
       malformedEnum$: |
         lut["prefix"] & "&7The value &c" & value & " &7is not one of (" &
@@ -16,19 +16,18 @@ commands:
       playerUnknown$: 'lut["prefix"] & "&7The player &c" & value & " &7has &cnot played &7on this server before"'
       internalError$: 'lut["prefix"] & "&4An internal error occurred"'
       notAConsole$: 'lut["prefix"] & "&cYou can only execute this command in the console"'
-      notAPlayer$: 'lut["prefix"] & "&7This command can only be executed as a &cconsole"'
+      notAPlayer$: 'lut["prefix"] & "&7This command can only be executed as a &cplayer"'
       malformedDouble$: 'lut["prefix"] & "&7The value &c" & value & " &7is not a valid &cdouble"'
       malformedFloat$: 'lut["prefix"] & "&7The value &c" & value & " &7is not a valid &cfloat"'
       malformedLong$: 'lut["prefix"] & "&7The value &c" & value & " &7is not a valid &clong"'
       malformedInteger$: 'lut["prefix"] & "&7The value &c" & value & " &7is not a valid &cinteger"'
     permissions:
-      missingMessage$: 'lut["prefix"] & "You\sre lacking the permission: " & permission'
+      missingMessage$: 'lut["prefix"] & "&7You are lacking the permission &c" & permission'
       nodes:
         command: 'raindroptowns.command'
         mainCommand: 'raindroptowns.command.main'
-        townCommand: 'raindroptowns.command.town'
         spawnCommand: 'raindroptowns.command.spawn'
-        helpCommand: 'raindroptowns.command.help'
+        bankCommand: 'raindroptowns.command.bank'
 
 lut:
   prefix: '&8[&9RDT&8] &7'

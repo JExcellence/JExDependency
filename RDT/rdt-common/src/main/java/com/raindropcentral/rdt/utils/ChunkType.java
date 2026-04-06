@@ -13,47 +13,46 @@
 
 package com.raindropcentral.rdt.utils;
 
-import org.jspecify.annotations.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 /**
- * Semantic type assigned to a claimed town chunk.
- *
- * <p>Provides helper comparison methods so call sites can perform null-safe enum checks without
- * duplicating equality boilerplate.</p>
+ * Enumerates the supported specializations for claimed town chunks.
  *
  * @author ItsRainingHP
  * @since 1.0.0
- * @version 1.0.2
+ * @version 1.0.0
  */
 public enum ChunkType {
-    DEFAULT,
     NEXUS,
-    BANK,
-    FARM,
+    DEFAULT,
     CLAIM_PENDING,
-    CHUNK_BLOCK;
+    FARM,
+    SECURITY,
+    OUTPOST,
+    MEDIC,
+    BANK;
 
     /**
-     * Returns whether this chunk type matches the provided type.
+     * Returns whether this type matches the supplied type.
      *
-     * @param chunkType type to compare against
-     * @return {@code true} when equal
+     * @param other comparison target
+     * @return {@code true} when both values are identical
      */
-    public boolean equalsType(final @Nullable ChunkType chunkType) {
-        return this == chunkType;
+    public boolean equalsType(final @Nullable ChunkType other) {
+        return this == other;
     }
 
     /**
-     * Null-safe comparison helper for two chunk types.
+     * Returns whether both supplied types match.
      *
-     * @param first first type
-     * @param second second type
-     * @return {@code true} when equal
+     * @param left left comparison target
+     * @param right right comparison target
+     * @return {@code true} when both values are identical or both {@code null}
      */
     public static boolean equalsType(
-            final @Nullable ChunkType first,
-            final @Nullable ChunkType second
+        final @Nullable ChunkType left,
+        final @Nullable ChunkType right
     ) {
-        return first == second;
+        return left == right;
     }
 }

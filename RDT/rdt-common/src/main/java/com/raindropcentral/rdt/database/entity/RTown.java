@@ -13,1290 +13,798 @@
 
 package com.raindropcentral.rdt.database.entity;
 
+import com.raindropcentral.rdt.utils.ChunkType;
+import com.raindropcentral.rdt.utils.TownArchetype;
 import com.raindropcentral.rdt.utils.TownPermissions;
 import com.raindropcentral.rdt.utils.TownProtections;
-import com.raindropcentral.rplatform.proxy.NetworkLocation;
+import com.raindropcentral.rplatform.database.converter.ItemStackMapConverter;
 import com.raindropcentral.rplatform.database.converter.LocationConverter;
 import com.raindropcentral.rplatform.database.converter.UUIDConverter;
+import com.raindropcentral.rplatform.proxy.NetworkLocation;
 import de.jexcellence.hibernate.entity.BaseEntity;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Embeddable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.MapKeyColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import org.jspecify.annotations.NonNull;
-import org.jspecify.annotations.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
 /**
- * Represents a player-created town in the server.
- *
- * <p>A town has a stable public UUID, a mayor (creator) UUID, a unique human-friendly name,
- * a spawn location, members, and claimed chunks. Role definitions are persisted on the town so
- * member permissions can be derived from each member's role ID.</p>
+ * Persistent town aggregate for claims, roles, bank balances, and protections.
  *
  * @author ItsRainingHP
  * @since 1.0.0
- * @version 1.0.10
+ * @version 1.0.0
  */
 @Entity
-@Table(name = "towns")
-@SuppressWarnings({
-        "DefaultAnnotationParam",
-        "FieldCanBeLocal",
-        "unused",
-        "JpaDataSourceORMInspection"
-})
-/**
- * Represents the RTown API type.
- */
+@Table(name = "rdt_towns")
 public class RTown extends BaseEntity {
 
-    /** Built-in role ID assigned to the town creator. */
+    /** Mayor system role identifier. */
     public static final String MAYOR_ROLE_ID = "MAYOR";
-    /** Built-in role ID assigned to regular members. */
+    /** Default member role identifier. */
     public static final String MEMBER_ROLE_ID = "MEMBER";
-    /** Built-in role ID used for non-member/public access. */
+    /** Public protection role identifier. */
     public static final String PUBLIC_ROLE_ID = "PUBLIC";
-    /** Built-in role ID that denies all actions, including mayor-bypass checks. */
+    /** Restricted protection role identifier. */
     public static final String RESTRICTED_ROLE_ID = "RESTRICTED";
 
-    private static final String MAYOR_ROLE_NAME = "Mayor";
-    private static final String MEMBER_ROLE_NAME = "Member";
-    private static final String PUBLIC_ROLE_NAME = "Public";
-    private static final String RESTRICTED_ROLE_NAME = "Restricted";
+    private static final String DEFAULT_TOWN_COLOR_HEX = "#55CDFC";
 
-    @Column(name = "uuid", unique = true, nullable = false)
+    @Column(name = "town_uuid", nullable = false, unique = true)
     @Convert(converter = UUIDConverter.class)
-    private UUID uuid;
+    private UUID townUuid;
 
-    @Column(name = "mayor", unique = true, nullable = false)
+    @Column(name = "mayor_uuid", nullable = false)
     @Convert(converter = UUIDConverter.class)
-    private UUID mayor;
+    private UUID mayorUuid;
 
-    @Column(name = "active", unique = false, nullable = false)
+    @Column(name = "active", nullable = false)
     private boolean active;
 
-    /** All chunks claimed by this town. */
-    @OneToMany(
-            fetch = FetchType.EAGER,
-            cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            mappedBy = "town"
-    )
-    private final List<RChunk> chunks = new ArrayList<>();
-
-    @Column(name = "town_name", unique = true, nullable = false)
+    @Column(name = "town_name", nullable = false, unique = true, length = 64)
     private String townName;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "town_uuid", referencedColumnName = "uuid")
-    private final Set<RDTPlayer> members = new HashSet<>();
+    @Column(name = "town_color_hex", nullable = false, length = 16)
+    private String townColorHex;
 
-    /** All role definitions available in this town. */
-    @OneToMany(
-            fetch = FetchType.EAGER,
-            cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            mappedBy = "town"
-    )
-    private final List<TownRole> roles = new ArrayList<>();
+    @Column(name = "archetype_id", length = 32)
+    private String archetypeId;
 
-    /** Players explicitly invited to join this town. */
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "town_invites", joinColumns = @JoinColumn(name = "town_id"))
-    @Column(name = "player_uuid", nullable = false)
-    private final Set<String> invitedPlayers = new HashSet<>();
+    @Column(name = "town_level", nullable = false)
+    private int townLevel;
 
-    /** Players that requested to join this town. */
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "town_join_requests", joinColumns = @JoinColumn(name = "town_id"))
-    @Column(name = "player_uuid", nullable = false)
-    private final Set<String> pendingJoinRequests = new HashSet<>();
-
-    /** Role requirements for town-wide protection checks. */
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "town_protections", joinColumns = @JoinColumn(name = "town_id"))
-    @MapKeyColumn(name = "protection_key")
-    @Column(name = "role_id", nullable = false)
-    private final Map<String, String> protections = new HashMap<>();
-
-    /** Ledger events for joins, leaves, and role changes. */
-    @OneToMany(
-            fetch = FetchType.EAGER,
-            cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            mappedBy = "town"
-    )
-    private final List<TownLedgerEntry> ledgerEntries = new ArrayList<>();
-
-    /** Multi-currency balances stored for this town bank. */
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(
-            name = "town_bank_entries",
-            joinColumns = @JoinColumn(name = "town_id"),
-            uniqueConstraints = @UniqueConstraint(columnNames = {"town_id", "currency_id"})
-    )
-    private final List<RTownBank> bankEntries = new ArrayList<>();
-
-    /** Stored town level. Defaults to {@code 1}. */
-    @Column(name = "town_level", unique = false, nullable = false)
-    private int town_level;
-
-    /** Persistent partial progress for town-level requirements. */
-    @OneToMany(
-            mappedBy = "town",
-            fetch = FetchType.EAGER,
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    @OrderBy("progressKey ASC")
-    private List<TownLevelRequirementProgress> levelRequirementProgress = new ArrayList<>();
-
-    @Column(name = "founded", unique = false, nullable = false)
+    @Column(name = "founded", nullable = false)
     private long founded;
 
-    @Column(name = "nexus_location", unique = false, nullable = true)
+    @Column(name = "last_archetype_change_at", nullable = false)
+    private long lastArchetypeChangeAt;
+
+    @Column(name = "aggregate_town_playtime_ticks", nullable = false)
+    private long aggregateTownPlaytimeTicks;
+
     @Convert(converter = LocationConverter.class)
-    private Location nexus_location;
+    @Column(name = "nexus_location")
+    private Location nexusLocation;
 
-    @Column(name = "town_spawn_location", unique = false, nullable = true)
     @Convert(converter = LocationConverter.class)
-    private Location town_spawn_location;
+    @Column(name = "town_spawn_location")
+    private Location townSpawnLocation;
 
-    @Column(name = "nexus_server_id", unique = false, nullable = true, length = 64)
-    private String nexus_server_id;
+    @Column(name = "nexus_server_id", length = 64)
+    private String nexusServerId;
 
-    @Column(name = "town_spawn_server_id", unique = false, nullable = true, length = 64)
-    private String town_spawn_server_id;
+    @Column(name = "town_spawn_server_id", length = 64)
+    private String townSpawnServerId;
 
-    @Column(name = "nexus_world_name", unique = false, nullable = true, length = 255)
-    private String nexus_world_name;
+    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
+    @JoinColumn(name = "town_uuid", referencedColumnName = "town_uuid")
+    @OrderBy("player_uuid ASC")
+    private Set<RDTPlayer> members = new LinkedHashSet<>();
 
-    @Column(name = "town_spawn_world_name", unique = false, nullable = true, length = 255)
-    private String town_spawn_world_name;
+    @OneToMany(mappedBy = "town", fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
+    @OrderBy("rolePriority ASC, roleName ASC")
+    private List<TownRole> roles = new ArrayList<>();
 
-    /** Required by Hibernate. */
+    @OneToMany(mappedBy = "town", fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
+    @OrderBy("worldName ASC, xLoc ASC, zLoc ASC")
+    private List<RTownChunk> chunks = new ArrayList<>();
+
+    @OneToMany(mappedBy = "town", fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
+    @OrderBy("createdAt DESC")
+    private List<TownInvite> invites = new ArrayList<>();
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "rdt_town_protections", joinColumns = @JoinColumn(name = "town_id_fk"))
+    @Column(name = "required_role_id", nullable = false, length = 64)
+    private Map<String, String> protections = new LinkedHashMap<>();
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "rdt_town_bank_balances", joinColumns = @JoinColumn(name = "town_id_fk"))
+    @Column(name = "amount", nullable = false)
+    private Map<String, Double> bankBalances = new LinkedHashMap<>();
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "rdt_town_level_currency_progress", joinColumns = @JoinColumn(name = "town_id_fk"))
+    @Column(name = "amount", nullable = false)
+    private Map<String, Double> levelCurrencyProgress = new LinkedHashMap<>();
+
+    @Convert(converter = ItemStackMapConverter.class)
+    @Column(name = "level_item_progress", columnDefinition = "LONGTEXT")
+    private Map<String, ItemStack> levelItemProgress = new LinkedHashMap<>();
+
+    @Convert(converter = ItemStackMapConverter.class)
+    @Column(name = "shared_bank_storage", columnDefinition = "LONGTEXT")
+    private Map<String, ItemStack> sharedBankStorage = new LinkedHashMap<>();
+
+    /** Creates a town. */
+    public RTown(
+        final @NotNull UUID townUuid,
+        final @NotNull UUID mayorUuid,
+        final @NotNull String townName,
+        final @Nullable Location nexusLocation
+    ) {
+        this(townUuid, mayorUuid, townName, nexusLocation, null);
+    }
+
+    /** Creates a town with nexus and spawn locations. */
+    public RTown(
+        final @NotNull UUID townUuid,
+        final @NotNull UUID mayorUuid,
+        final @NotNull String townName,
+        final @Nullable Location nexusLocation,
+        final @Nullable Location townSpawnLocation
+    ) {
+        this.townUuid = Objects.requireNonNull(townUuid, "townUuid");
+        this.mayorUuid = Objects.requireNonNull(mayorUuid, "mayorUuid");
+        this.active = true;
+        this.townName = normalizeTownName(townName);
+        this.townColorHex = DEFAULT_TOWN_COLOR_HEX;
+        this.townLevel = 1;
+        this.founded = System.currentTimeMillis();
+        this.lastArchetypeChangeAt = 0L;
+        this.nexusLocation = nexusLocation == null ? null : nexusLocation.clone();
+        this.townSpawnLocation = townSpawnLocation == null ? null : townSpawnLocation.clone();
+        this.ensureDefaultRoles();
+    }
+
+    /** JPA constructor. */
     protected RTown() {
     }
 
-    /**
-     * Creates a new town record and seeds built-in Public, Member, Mayor, and Restricted roles.
-     *
-     * @param uuid public town UUID
-     * @param mayor creator/mayor UUID
-     * @param townName unique display name
-     * @param nexusLocation initial nexus location, or {@code null} when not placed
-     */
-    public RTown(
-            final UUID uuid,
-            final UUID mayor,
-            final String townName,
-            final @Nullable Location nexusLocation
-    ) {
-        this(uuid, mayor, townName, nexusLocation, nexusLocation, null);
+    /** Returns the stable town identifier. */
+    public @NotNull UUID getIdentifier() {
+        return this.townUuid;
     }
 
-    /**
-     * Creates a new town record with explicit nexus and town-spawn locations.
-     *
-     * @param uuid public town UUID
-     * @param mayor creator/mayor UUID
-     * @param townName unique display name
-     * @param nexusLocation initial nexus location, or {@code null} when not placed
-     * @param townSpawnLocation initial town spawn location, or {@code null} when not set
-     */
-    public RTown(
-            final UUID uuid,
-            final UUID mayor,
-            final String townName,
-            final @Nullable Location nexusLocation,
-            final @Nullable Location townSpawnLocation
-    ) {
-        this(uuid, mayor, townName, nexusLocation, townSpawnLocation, null);
+    /** Returns the stable town identifier. */
+    public @NotNull UUID getTownUUID() {
+        return this.townUuid;
     }
 
-    /**
-     * Creates a new town record with explicit nexus and town-spawn locations and route ownership.
-     *
-     * @param uuid public town UUID
-     * @param mayor creator/mayor UUID
-     * @param townName unique display name
-     * @param nexusLocation initial nexus location, or {@code null} when not placed
-     * @param townSpawnLocation initial town spawn location, or {@code null} when not set
-     * @param authoritativeServerId authoritative server route identifier for persisted locations
-     */
-    public RTown(
-            final UUID uuid,
-            final UUID mayor,
-            final String townName,
-            final @Nullable Location nexusLocation,
-            final @Nullable Location townSpawnLocation,
-            final @Nullable String authoritativeServerId
-    ) {
-        this.uuid = uuid;
-        this.mayor = mayor;
-        this.townName = townName;
-        this.founded = System.currentTimeMillis();
-        this.setNexusLocation(nexusLocation);
-        this.setTownSpawnLocation(townSpawnLocation);
-        this.setNexusServerId(authoritativeServerId);
-        this.setTownSpawnServerId(authoritativeServerId);
-        this.town_level = 1;
-        this.active = true;
-        this.ensureDefaultRoles();
+    /** Returns the stable town identifier. */
+    public @NotNull UUID getTownUuid() {
+        return this.townUuid;
     }
 
-    /**
-     * Adds a claimed chunk to this town.
-     *
-     * @param chunk claimed chunk entity
-     */
-    public void addChunk(final @NonNull RChunk chunk) {
-        this.chunks.add(chunk);
-    }
-
-    /**
-     * Used by repository caches as the unique business identifier.
-     *
-     * @return town UUID identifier
-     */
-    public UUID getIdentifier() {
-        return this.uuid;
-    }
-
-    /**
-     * Returns the display name of the town.
-     *
-     * @return town name
-     */
-    public String getTownName() {
+    /** Returns the town name. */
+    public @NotNull String getTownName() {
         return this.townName;
     }
 
-    /**
-     * Returns the UUID of this town's mayor.
-     *
-     * @return mayor UUID
-     */
-    public UUID getMayor() {
-        return this.mayor;
+    /** Returns the town name. */
+    public @NotNull String getName() {
+        return this.townName;
     }
 
-    /**
-     * Returns current town member entity records.
-     *
-     * @return members linked to this town
-     */
-    public Set<RDTPlayer> getMembers() {
-        return this.members;
+    /** Replaces the town name. */
+    public void setTownName(final @NotNull String townName) {
+        this.townName = normalizeTownName(townName);
     }
 
-    /**
-     * Adds a member entity reference to this town.
-     *
-     * @param member member entity to include
-     */
-    public void addMember(final @NonNull RDTPlayer member) {
-        this.members.add(member);
+    /** Returns the town color hex. */
+    public @NotNull String getTownColorHex() {
+        return this.townColorHex;
     }
 
-    /**
-     * Removes a member entity reference from this town.
-     *
-     * @param member member entity to remove
-     */
-    public void removeMember(final @NonNull RDTPlayer member) {
-        this.members.remove(member);
+    /** Replaces the town color hex. */
+    public void setTownColorHex(final @Nullable String townColorHex) {
+        this.townColorHex = normalizeTownColorHex(townColorHex);
     }
 
-    /**
-     * Returns the claimed chunk list.
-     *
-     * @return claimed chunks
-     */
-    public List<RChunk> getChunks() {
-        return this.chunks;
+    /** Returns the current archetype identifier. */
+    public @Nullable String getArchetypeId() {
+        return this.archetypeId;
     }
 
-    /**
-     * Returns all role definitions configured for this town.
-     *
-     * @return role definitions, including built-in Public, Member, Mayor, and Restricted roles
-     */
-    public List<TownRole> getRoles() {
-        this.ensureDefaultRoles();
-        return this.roles;
+    /** Returns the current archetype. */
+    public @Nullable TownArchetype getArchetype() {
+        return TownArchetype.fromString(this.archetypeId);
     }
 
-    /**
-     * Looks up a town role by role ID.
-     *
-     * @param roleId role identifier
-     * @return matching role or {@code null} when no role exists for the ID
-     */
-    public @Nullable TownRole findRoleById(final @NonNull String roleId) {
-        this.ensureDefaultRoles();
-        final String normalizedRoleId = normalizeRoleId(roleId);
+    /** Replaces the current archetype. */
+    public void setArchetype(final @Nullable TownArchetype archetype) {
+        this.archetypeId = archetype == null ? null : archetype.name();
+    }
 
-        for (final TownRole role : this.roles) {
-            if (normalizeRoleId(role.getRoleId()).equals(normalizedRoleId)) {
-                return role;
-            }
+    /** Replaces the current archetype identifier. */
+    public void setArchetypeId(final @Nullable String archetypeId) {
+        final TownArchetype archetype = TownArchetype.fromString(archetypeId);
+        this.archetypeId = archetype == null ? null : archetype.name();
+    }
+
+    /** Returns the mayor UUID. */
+    public @NotNull UUID getMayorUUID() {
+        return this.mayorUuid;
+    }
+
+    /** Returns the mayor UUID. */
+    public @NotNull UUID getMayor() {
+        return this.mayorUuid;
+    }
+
+    /** Returns whether the town is active. */
+    public boolean getActive() {
+        return this.active;
+    }
+
+    /** Replaces the town active state. */
+    public void setActive(final boolean active) {
+        this.active = active;
+    }
+
+    /** Returns the town level. */
+    public int getTownLevel() {
+        return this.townLevel;
+    }
+
+    /** Replaces the town level. */
+    public void setTownLevel(final int townLevel) {
+        this.townLevel = Math.max(1, townLevel);
+    }
+
+    /** Returns the last archetype change timestamp in epoch milliseconds. */
+    public long getLastArchetypeChangeAt() {
+        return this.lastArchetypeChangeAt;
+    }
+
+    /** Replaces the last archetype change timestamp in epoch milliseconds. */
+    public void setLastArchetypeChangeAt(final long lastArchetypeChangeAt) {
+        this.lastArchetypeChangeAt = Math.max(0L, lastArchetypeChangeAt);
+    }
+
+    /** Returns aggregate town playtime in ticks. */
+    public long getAggregateTownPlaytimeTicks() {
+        return this.aggregateTownPlaytimeTicks;
+    }
+
+    /** Adds aggregate town playtime. */
+    public void addAggregateTownPlaytimeTicks(final long additionalTicks) {
+        if (additionalTicks > 0L) {
+            this.aggregateTownPlaytimeTicks += additionalTicks;
         }
-
-        return null;
     }
 
-    /**
-     * Creates and attaches a new custom role for this town.
-     *
-     * @param roleId role ID
-     * @param roleName role display name
-     * @param permissions role permissions
-     * @return {@code true} when the role was created; {@code false} when invalid or duplicate
-     */
+    /** Returns the founding timestamp. */
+    public long getFounded() {
+        return this.founded;
+    }
+
+    /** Returns town members. */
+    public @NotNull Set<RDTPlayer> getMembers() {
+        return Set.copyOf(this.members);
+    }
+
+    /** Adds a town member. */
+    public void addMember(final @NotNull RDTPlayer player) {
+        final RDTPlayer validatedPlayer = Objects.requireNonNull(player, "player");
+        if (this.members.stream().anyMatch(existing -> Objects.equals(existing.getIdentifier(), validatedPlayer.getIdentifier()))) {
+            return;
+        }
+        validatedPlayer.setTownUUID(this.townUuid);
+        if (Objects.equals(validatedPlayer.getIdentifier(), this.mayorUuid)) {
+            validatedPlayer.setTownRoleId(MAYOR_ROLE_ID);
+        } else if (validatedPlayer.getTownRoleId() == null) {
+            validatedPlayer.setTownRoleId(MEMBER_ROLE_ID);
+        }
+        this.syncPlayerPermissionsFromRole(validatedPlayer);
+        this.members.add(validatedPlayer);
+    }
+
+    /** Removes a town member. */
+    public void removeMember(final @NotNull RDTPlayer player) {
+        final RDTPlayer validatedPlayer = Objects.requireNonNull(player, "player");
+        if (this.members.removeIf(existing -> Objects.equals(existing.getIdentifier(), validatedPlayer.getIdentifier()))) {
+            validatedPlayer.setTownUUID(null);
+        }
+    }
+
+    /** Returns town roles. */
+    public @NotNull List<TownRole> getRoles() {
+        this.ensureDefaultRoles();
+        return List.copyOf(this.roles);
+    }
+
+    /** Returns claimed chunks. */
+    public @NotNull List<RTownChunk> getChunks() {
+        return List.copyOf(this.chunks);
+    }
+
+    /** Returns invites. */
+    public @NotNull List<TownInvite> getInvites() {
+        return List.copyOf(this.invites);
+    }
+
+    /** Adds a claimed chunk. */
+    public void addChunk(final @NotNull RTownChunk chunk) {
+        final RTownChunk validatedChunk = Objects.requireNonNull(chunk, "chunk");
+        if (this.chunks.stream().anyMatch(existing ->
+            Objects.equals(existing.getWorldName(), validatedChunk.getWorldName())
+                && existing.getX() == validatedChunk.getX()
+                && existing.getZ() == validatedChunk.getZ()
+        )) {
+            return;
+        }
+        this.chunks.add(validatedChunk);
+    }
+
+    /** Removes a claimed chunk. */
+    public boolean removeChunk(final @Nullable RTownChunk chunk) {
+        if (chunk == null) {
+            return false;
+        }
+        return this.chunks.removeIf(existing ->
+            Objects.equals(existing.getWorldName(), chunk.getWorldName())
+                && existing.getX() == chunk.getX()
+                && existing.getZ() == chunk.getZ()
+        );
+    }
+
+    /** Finds a claimed chunk by world and coordinates. */
+    public @Nullable RTownChunk findChunk(
+        final @Nullable String worldName,
+        final int chunkX,
+        final int chunkZ
+    ) {
+        if (worldName == null || worldName.isBlank()) {
+            return null;
+        }
+        return this.chunks.stream()
+            .filter(chunk ->
+                chunk.getWorldName().equalsIgnoreCase(worldName)
+                    && chunk.getX() == chunkX
+                    && chunk.getZ() == chunkZ
+            )
+            .findFirst()
+            .orElse(null);
+    }
+
+    /** Finds a role by identifier. */
+    public @Nullable TownRole findRoleById(final @Nullable String roleId) {
+        final String normalizedRoleId = normalizeRoleId(roleId);
+        this.ensureDefaultRoles();
+        return this.roles.stream()
+            .filter(role -> Objects.equals(role.getRoleId(), normalizedRoleId))
+            .findFirst()
+            .orElse(null);
+    }
+
+    /** Adds a custom role. */
     public boolean addRole(
-            final @NonNull String roleId,
-            final @NonNull String roleName,
-            final @NonNull Set<String> permissions
+        final @NotNull String roleId,
+        final @NotNull String roleName,
+        final @NotNull Set<String> permissions
     ) {
         final String normalizedRoleId = normalizeRoleId(roleId);
-        final String normalizedRoleName = roleName.trim();
-
-        if (normalizedRoleId.isBlank() || normalizedRoleName.isBlank()) {
+        if (isDefaultRoleId(normalizedRoleId) || this.findRoleById(normalizedRoleId) != null) {
             return false;
         }
-
-        this.ensureDefaultRoles();
-        if (this.findRoleById(normalizedRoleId) != null) {
-            return false;
-        }
-
-        this.roles.add(new TownRole(this, normalizedRoleId, normalizedRoleName, permissions));
+        this.roles.add(new TownRole(this, normalizedRoleId, roleName, permissions, 50, false));
         return true;
     }
 
-    /**
-     * Removes a role by role ID.
-     *
-     * @param roleId role ID to remove
-     * @return {@code true} when the role was removed, otherwise {@code false}
-     */
-    public boolean removeRoleById(final @NonNull String roleId) {
+    /** Removes a custom role. */
+    public boolean removeRoleById(final @Nullable String roleId) {
         final String normalizedRoleId = normalizeRoleId(roleId);
-
         if (isDefaultRoleId(normalizedRoleId)) {
             return false;
         }
-
-        for (final RDTPlayer member : this.members) {
-            final String memberRoleId = member.getTownRoleId();
-            if (memberRoleId != null && normalizeRoleId(memberRoleId).equals(normalizedRoleId)) {
-                return false;
-            }
-        }
-
-        return this.roles.removeIf(role -> normalizeRoleId(role.getRoleId()).equals(normalizedRoleId));
+        return this.roles.removeIf(role -> Objects.equals(role.getRoleId(), normalizedRoleId));
     }
 
-    /**
-     * Returns whether the provided role ID is one of the built-in non-removable roles.
-     *
-     * @param roleId role ID to test
-     * @return {@code true} when the role ID represents Public, Mayor, Member, or Restricted
-     */
+    /** Returns whether a role identifier is built in. */
     public static boolean isDefaultRoleId(final @Nullable String roleId) {
-        if (roleId == null) {
-            return false;
-        }
-
         final String normalizedRoleId = normalizeRoleId(roleId);
-        return MAYOR_ROLE_ID.equals(normalizedRoleId)
-                || MEMBER_ROLE_ID.equals(normalizedRoleId)
-                || PUBLIC_ROLE_ID.equals(normalizedRoleId)
-                || RESTRICTED_ROLE_ID.equals(normalizedRoleId);
+        return Objects.equals(normalizedRoleId, MAYOR_ROLE_ID)
+            || Objects.equals(normalizedRoleId, MEMBER_ROLE_ID)
+            || Objects.equals(normalizedRoleId, PUBLIC_ROLE_ID)
+            || Objects.equals(normalizedRoleId, RESTRICTED_ROLE_ID);
     }
 
-    /**
-     * Normalizes role IDs for persistence and comparisons.
-     *
-     * @param roleId raw role ID
-     * @return normalized upper-case role ID, or an empty string when blank
-     */
-    public static @NotNull String normalizeRoleId(final @NonNull String roleId) {
+    /** Normalizes a role identifier. */
+    public static @NotNull String normalizeRoleId(final @Nullable String roleId) {
+        if (roleId == null || roleId.isBlank()) {
+            return MEMBER_ROLE_ID;
+        }
         return roleId.trim().toUpperCase(Locale.ROOT);
     }
 
-    /**
-     * Returns whether a town member has a specific town permission.
-     *
-     * @param member member entity record
-     * @param permission permission to check
-     * @return {@code true} when the member currently has the permission
-     */
-    public boolean hasTownPermission(
-            final @Nullable RDTPlayer member,
-            final @NonNull TownPermissions permission
-    ) {
-        if (member == null) {
-            return false;
-        }
-        if (member.getTownUUID() == null || !member.getTownUUID().equals(this.uuid)) {
-            return false;
-        }
-        if (member.hasTownPermission(permission)) {
-            return true;
-        }
-        if (!member.getTownPermissions().isEmpty()) {
-            return false;
-        }
+    /** Resolves the default priority for a role identifier. */
+    public static int resolveDefaultRolePriority(final @Nullable String roleId) {
+        return switch (normalizeRoleId(roleId)) {
+            case RESTRICTED_ROLE_ID -> 0;
+            case PUBLIC_ROLE_ID -> 10;
+            case MEMBER_ROLE_ID -> 20;
+            case MAYOR_ROLE_ID -> 100;
+            default -> 50;
+        };
+    }
 
-        final String roleId = member.getTownRoleId();
-        if (roleId == null || roleId.isBlank()) {
-            return false;
-        }
+    /** Returns whether a player has a town permission. */
+    public boolean hasTownPermission(final @Nullable RDTPlayer player, final @Nullable TownPermissions permission) {
+        return player != null && permission != null && player.hasTownPermission(permission);
+    }
 
+    /** Returns whether a role grants a town permission. */
+    public boolean hasRolePermission(final @Nullable String roleId, final @Nullable TownPermissions permission) {
         final TownRole role = this.findRoleById(roleId);
         return role != null && role.hasPermission(permission);
     }
 
-    /**
-     * Returns whether the provided role currently has a specific town permission.
-     *
-     * @param roleId role identifier
-     * @param permission permission to check
-     * @return {@code true} when the role has the permission
-     */
-    public boolean hasRolePermission(
-            final @NonNull String roleId,
-            final @NonNull TownPermissions permission
-    ) {
-        final TownRole role = this.findRoleById(roleId);
-        return role != null && role.hasPermission(permission);
+    /** Returns whether a player has an active invite. */
+    public boolean isPlayerInvited(final @Nullable UUID playerUuid) {
+        return playerUuid != null && this.invites.stream()
+            .anyMatch(invite -> invite.isActive() && Objects.equals(invite.getInvitedPlayerUuid(), playerUuid));
     }
 
-    /**
-     * Returns whether a player is currently invited to this town.
-     *
-     * @param playerUuid target player UUID
-     * @return {@code true} when invited
-     */
-    public boolean isPlayerInvited(final @NonNull UUID playerUuid) {
-        return this.invitedPlayers.contains(playerUuid.toString());
-    }
-
-    /**
-     * Adds a player invite for this town.
-     *
-     * @param playerUuid target player UUID
-     * @return {@code true} when the invite was newly added
-     */
-    public boolean invitePlayer(final @NonNull UUID playerUuid) {
-        return this.invitedPlayers.add(playerUuid.toString());
-    }
-
-    /**
-     * Removes a player invite for this town.
-     *
-     * @param playerUuid target player UUID
-     * @return {@code true} when an invite existed and was removed
-     */
-    public boolean uninvitePlayer(final @NonNull UUID playerUuid) {
-        return this.invitedPlayers.remove(playerUuid.toString());
-    }
-
-    /**
-     * Returns whether a player currently has a pending join request.
-     *
-     * @param playerUuid target player UUID
-     * @return {@code true} when a pending request exists
-     */
-    public boolean hasPendingJoinRequest(final @NonNull UUID playerUuid) {
-        return this.pendingJoinRequests.contains(playerUuid.toString());
-    }
-
-    /**
-     * Adds a pending join request for this town.
-     *
-     * @param playerUuid requesting player UUID
-     * @return {@code true} when the request was newly added
-     */
-    public boolean addPendingJoinRequest(final @NonNull UUID playerUuid) {
-        return this.pendingJoinRequests.add(playerUuid.toString());
-    }
-
-    /**
-     * Removes a pending join request for this town.
-     *
-     * @param playerUuid requesting player UUID
-     * @return {@code true} when a pending request existed and was removed
-     */
-    public boolean removePendingJoinRequest(final @NonNull UUID playerUuid) {
-        return this.pendingJoinRequests.remove(playerUuid.toString());
-    }
-
-    /**
-     * Returns all pending join request UUIDs as parsed values.
-     *
-     * @return set of pending player UUIDs
-     */
-    public @NotNull Set<UUID> getPendingJoinRequests() {
-        final Set<UUID> result = new HashSet<>();
-        for (final String playerUuid : this.pendingJoinRequests) {
-            try {
-                result.add(UUID.fromString(playerUuid));
-            } catch (final IllegalArgumentException ignored) {
-            }
-        }
-        return result;
-    }
-
-    /**
-     * Returns ledger entries recorded for this town.
-     *
-     * @return mutable ledger entry list
-     */
-    public @NotNull List<TownLedgerEntry> getLedgerEntries() {
-        return this.ledgerEntries;
-    }
-
-    /**
-     * Returns mutable town bank entries for multi-currency balances.
-     *
-     * @return bank entry list
-     */
-    public @NotNull List<RTownBank> getBankEntries() {
-        return this.bankEntries;
-    }
-
-    /**
-     * Returns the currently stored amount for a currency in this town bank.
-     *
-     * @param currencyId currency identifier
-     * @return non-negative amount for the currency
-     */
-    public double getBankAmount(final @NonNull String currencyId) {
-        final String normalizedCurrencyId = normalizeCurrencyId(currencyId);
-        if (normalizedCurrencyId.isBlank()) {
-            return 0.0D;
-        }
-
-        final RTownBank bankEntry = this.findBankEntry(normalizedCurrencyId);
-        return bankEntry == null ? 0.0D : bankEntry.getAmount();
-    }
-
-    /**
-     * Deposits a currency amount into this town bank.
-     *
-     * @param currencyId currency identifier
-     * @param depositAmount amount to add
-     * @return updated currency amount after deposit
-     */
-    public double depositBank(
-            final @NonNull String currencyId,
-            final double depositAmount
-    ) {
-        final String normalizedCurrencyId = normalizeCurrencyId(currencyId);
-        if (normalizedCurrencyId.isBlank()) {
-            return 0.0D;
-        }
-        if (depositAmount <= 0.0D) {
-            return this.getBankAmount(normalizedCurrencyId);
-        }
-
-        RTownBank bankEntry = this.findBankEntry(normalizedCurrencyId);
-        if (bankEntry == null) {
-            bankEntry = new RTownBank(normalizedCurrencyId, 0.0D);
-            this.bankEntries.add(bankEntry);
-        }
-
-        bankEntry.setAmount(bankEntry.getAmount() + depositAmount);
-        return bankEntry.getAmount();
-    }
-
-    /**
-     * Withdraws a currency amount from this town bank.
-     *
-     * @param currencyId currency identifier
-     * @param withdrawAmount amount to remove
-     * @return {@code true} when the withdrawal succeeded
-     */
-    public boolean withdrawBank(
-            final @NonNull String currencyId,
-            final double withdrawAmount
-    ) {
-        final String normalizedCurrencyId = normalizeCurrencyId(currencyId);
-        if (normalizedCurrencyId.isBlank() || withdrawAmount <= 0.0D) {
+    /** Creates a town invite. */
+    public boolean invitePlayer(final @Nullable UUID playerUuid) {
+        if (playerUuid == null || this.isPlayerInvited(playerUuid)) {
             return false;
         }
-
-        final RTownBank bankEntry = this.findBankEntry(normalizedCurrencyId);
-        if (bankEntry == null || bankEntry.getAmount() + 0.0000001D < withdrawAmount) {
-            return false;
-        }
-
-        final double updatedAmount = Math.max(0.0D, bankEntry.getAmount() - withdrawAmount);
-        bankEntry.setAmount(updatedAmount);
-        if (updatedAmount <= 0.0D) {
-            this.bankEntries.remove(bankEntry);
-        }
-
+        this.invites.add(new TownInvite(this, playerUuid, this.mayorUuid));
         return true;
     }
 
-    /**
-     * Returns the number of currencies currently tracked by this town bank.
-     *
-     * @return currency entry count
-     */
+    /** Expires a town invite. */
+    public boolean uninvitePlayer(final @Nullable UUID playerUuid) {
+        boolean updated = false;
+        for (final TownInvite invite : this.invites) {
+            if (invite.isActive() && Objects.equals(invite.getInvitedPlayerUuid(), playerUuid)) {
+                invite.expire();
+                updated = true;
+            }
+        }
+        return updated;
+    }
+
+    /** Returns a bank balance. */
+    public double getBankAmount(final @NotNull String currencyId) {
+        return this.bankBalances.getOrDefault(normalizeCurrencyId(currencyId), 0.0D);
+    }
+
+    /** Deposits to a bank balance. */
+    public double depositBank(final @NotNull String currencyId, final double amount) {
+        if (amount <= 0.0D) {
+            return this.getBankAmount(currencyId);
+        }
+        final String normalizedCurrencyId = normalizeCurrencyId(currencyId);
+        final double newAmount = this.getBankAmount(normalizedCurrencyId) + amount;
+        this.bankBalances.put(normalizedCurrencyId, newAmount);
+        return newAmount;
+    }
+
+    /** Withdraws from a bank balance. */
+    public boolean withdrawBank(final @NotNull String currencyId, final double amount) {
+        if (amount <= 0.0D) {
+            return true;
+        }
+        final String normalizedCurrencyId = normalizeCurrencyId(currencyId);
+        final double currentAmount = this.getBankAmount(normalizedCurrencyId);
+        if (currentAmount + 1.0E-6D < amount) {
+            return false;
+        }
+        final double newAmount = Math.max(0.0D, currentAmount - amount);
+        if (newAmount <= 1.0E-6D) {
+            this.bankBalances.remove(normalizedCurrencyId);
+        } else {
+            this.bankBalances.put(normalizedCurrencyId, newAmount);
+        }
+        return true;
+    }
+
+    /** Returns the number of tracked bank currencies. */
     public int getBankCurrencyCount() {
-        return this.bankEntries.size();
+        return this.bankBalances.size();
     }
 
-    /**
-     * Returns the current town level.
-     *
-     * @return current level, always at least {@code 1}
-     */
-    public int getTownLevel() {
-        return Math.max(1, this.town_level);
+    /** Returns the legacy Vault bank amount. */
+    public double getBank() {
+        return this.getBankAmount("vault");
     }
 
-    /**
-     * Updates the current town level.
-     *
-     * @param townLevel replacement level
-     */
-    public void setTownLevel(final int townLevel) {
-        this.town_level = Math.max(1, townLevel);
+    /** Deposits Vault currency. */
+    public double deposit(final double amount) {
+        return this.depositBank("vault", amount);
     }
 
-    /**
-     * Returns a defensive copy of banked requirement item progress.
-     *
-     * @return copied progress map keyed by requirement token
-     */
+    /** Withdraws Vault currency. */
+    public boolean withdraw(final double amount) {
+        return this.withdrawBank("vault", amount);
+    }
+
+    /** Syncs cached permissions from the player's current role. */
+    public void syncPlayerPermissionsFromRole(final @NotNull RDTPlayer player) {
+        final TownRole role = this.findRoleById(player.getTownRoleId());
+        if (role == null) {
+            player.replaceTownPermissions(TownPermissions.defaultPermissionKeysForRole(MEMBER_ROLE_ID));
+        } else {
+            player.syncTownPermissionsFromRole(role);
+        }
+    }
+
+    /** Returns stored level-item progress. */
     public @NotNull Map<String, ItemStack> getLevelItemProgress() {
-        final Map<String, ItemStack> itemProgress = new HashMap<>();
-        for (final TownLevelRequirementProgress progress : this.levelRequirementProgress) {
-            final ItemStack itemStack = progress.getItemStack();
-            if (itemStack == null || itemStack.isEmpty()) {
-                continue;
-            }
-            itemProgress.put(progress.getProgressKey(), itemStack);
-        }
-        return itemProgress;
+        return new LinkedHashMap<>(this.levelItemProgress);
     }
 
-    /**
-     * Returns banked requirement item progress for a single key.
-     *
-     * @param progressKey stable requirement token
-     * @return cloned stored item stack, or {@code null} when none exists
-     */
+    /** Returns stored level-item progress for a key. */
     public @Nullable ItemStack getLevelItemProgress(final @NotNull String progressKey) {
-        return this.findLevelRequirementProgress(progressKey)
-                .map(TownLevelRequirementProgress::getItemStack)
-                .orElse(null);
+        return this.levelItemProgress.get(normalizeProgressKey(progressKey));
     }
 
-    /**
-     * Updates banked requirement item progress for a single key.
-     *
-     * @param progressKey stable requirement token
-     * @param itemStack replacement stack, or {@code null} to clear progress
-     */
+    /** Replaces stored level-item progress for a key. */
     public void setLevelItemProgress(
-            final @NotNull String progressKey,
-            final @Nullable ItemStack itemStack
+        final @NotNull String progressKey,
+        final @Nullable ItemStack itemStack
     ) {
         final String normalizedProgressKey = normalizeProgressKey(progressKey);
-        final TownLevelRequirementProgress progress = this.findLevelRequirementProgress(normalizedProgressKey)
-                .orElseGet(() -> new TownLevelRequirementProgress(this, normalizedProgressKey));
-        progress.setItemStack(itemStack);
-        this.removeLevelProgressIfEmpty(progress);
+        if (itemStack == null || itemStack.isEmpty()) {
+            this.levelItemProgress.remove(normalizedProgressKey);
+            return;
+        }
+        this.levelItemProgress.put(normalizedProgressKey, itemStack.clone());
     }
 
-    /**
-     * Returns banked requirement currency progress for a single key.
-     *
-     * @param progressKey stable requirement token
-     * @return banked currency amount, or {@code 0.0} when none exists
-     */
+    /** Returns stored level-currency progress for a key. */
     public double getLevelCurrencyProgress(final @NotNull String progressKey) {
-        return this.findLevelRequirementProgress(progressKey)
-                .map(TownLevelRequirementProgress::getCurrencyAmount)
-                .orElse(0.0D);
+        return this.levelCurrencyProgress.getOrDefault(normalizeProgressKey(progressKey), 0.0D);
     }
 
-    /**
-     * Returns a defensive copy of banked requirement currency progress.
-     *
-     * @return copied progress map keyed by requirement token
-     */
+    /** Returns stored level-currency progress. */
     public @NotNull Map<String, Double> getLevelCurrencyProgress() {
-        final Map<String, Double> currencyProgress = new HashMap<>();
-        for (final TownLevelRequirementProgress progress : this.levelRequirementProgress) {
-            if (!progress.hasCurrencyProgress()) {
-                continue;
-            }
-            currencyProgress.put(progress.getProgressKey(), progress.getCurrencyAmount());
-        }
-        return currencyProgress;
+        return new LinkedHashMap<>(this.levelCurrencyProgress);
     }
 
-    /**
-     * Updates banked requirement currency progress for a single key.
-     *
-     * @param progressKey stable requirement token
-     * @param amount replacement amount
-     */
-    public void setLevelCurrencyProgress(
-            final @NotNull String progressKey,
-            final double amount
-    ) {
+    /** Replaces stored level-currency progress for a key. */
+    public void setLevelCurrencyProgress(final @NotNull String progressKey, final double amount) {
         final String normalizedProgressKey = normalizeProgressKey(progressKey);
-        final TownLevelRequirementProgress progress = this.findLevelRequirementProgress(normalizedProgressKey)
-                .orElseGet(() -> new TownLevelRequirementProgress(this, normalizedProgressKey));
-        progress.setCurrencyAmount(amount);
-        this.removeLevelProgressIfEmpty(progress);
+        if (amount <= 0.0D) {
+            this.levelCurrencyProgress.remove(normalizedProgressKey);
+            return;
+        }
+        this.levelCurrencyProgress.put(normalizedProgressKey, amount);
     }
 
-    /**
-     * Clears all banked requirement progress entries with a matching key prefix.
-     *
-     * @param progressKeyPrefix stable prefix for a level requirement set
-     */
+    /** Clears level progress entries using a stable prefix. */
     public void clearLevelRequirementProgress(final @NotNull String progressKeyPrefix) {
-        final String validatedPrefix = Objects.requireNonNull(
-                progressKeyPrefix,
-                "progressKeyPrefix cannot be null"
-        );
-        final List<TownLevelRequirementProgress> progressEntries = new ArrayList<>(this.levelRequirementProgress);
-        for (final TownLevelRequirementProgress progress : progressEntries) {
-            if (!progress.getProgressKey().startsWith(validatedPrefix)) {
-                continue;
-            }
-            this.removeLevelRequirementProgress(progress);
-        }
+        final String normalizedPrefix = normalizeProgressKey(progressKeyPrefix);
+        this.levelItemProgress.keySet().removeIf(key -> key.startsWith(normalizedPrefix));
+        this.levelCurrencyProgress.keySet().removeIf(key -> key.startsWith(normalizedPrefix));
     }
 
-    /**
-     * Adds a level requirement progress entry to this town.
-     *
-     * @param progress progress entry to attach
-     */
-    void addLevelRequirementProgress(final @NotNull TownLevelRequirementProgress progress) {
-        final TownLevelRequirementProgress validatedProgress = Objects.requireNonNull(progress, "progress cannot be null");
-        final RTown currentOwner = validatedProgress.getTown();
-        if (currentOwner == this && this.containsLevelRequirementProgress(validatedProgress)) {
-            return;
-        }
-        if (currentOwner != null && currentOwner != this) {
-            currentOwner.removeLevelRequirementProgress(validatedProgress);
-        }
-        if (!this.containsLevelRequirementProgress(validatedProgress)) {
-            this.levelRequirementProgress.add(validatedProgress);
-        }
-        validatedProgress.setTownInternal(this);
-    }
-
-    /**
-     * Removes a level requirement progress entry from this town.
-     *
-     * @param progress progress entry to remove
-     */
-    void removeLevelRequirementProgress(final @NotNull TownLevelRequirementProgress progress) {
-        final TownLevelRequirementProgress validatedProgress = Objects.requireNonNull(progress, "progress cannot be null");
-        if (this.levelRequirementProgress.removeIf(
-                existingProgress -> this.matchesLevelRequirementProgress(existingProgress, validatedProgress)
-        )) {
-            validatedProgress.setTownInternal(null);
-        }
-    }
-
-    /**
-     * Records a join event in the town ledger.
-     *
-     * @param playerUuid player UUID
-     * @param roleId assigned role ID
-     */
-    public void recordPlayerJoined(
-            final @NonNull UUID playerUuid,
-            final @NonNull String roleId
-    ) {
-        this.ledgerEntries.add(
-                new TownLedgerEntry(
-                        this,
-                        playerUuid,
-                        "JOINED",
-                        "role=" + normalizeRoleId(roleId)
-                )
-        );
-    }
-
-    /**
-     * Records a leave event in the town ledger.
-     *
-     * @param playerUuid player UUID
-     */
-    public void recordPlayerLeft(final @NonNull UUID playerUuid) {
-        this.ledgerEntries.add(new TownLedgerEntry(this, playerUuid, "LEFT", null));
-    }
-
-    /**
-     * Records a role-change event in the town ledger.
-     *
-     * @param playerUuid player UUID
-     * @param oldRoleId previous role ID, nullable
-     * @param newRoleId new role ID, nullable
-     */
-    public void recordPlayerRoleChanged(
-            final @NonNull UUID playerUuid,
-            final @Nullable String oldRoleId,
-            final @Nullable String newRoleId
-    ) {
-        final String oldValue = oldRoleId == null ? "-" : normalizeRoleId(oldRoleId);
-        final String newValue = newRoleId == null ? "-" : normalizeRoleId(newRoleId);
-        this.ledgerEntries.add(
-                new TownLedgerEntry(
-                        this,
-                        playerUuid,
-                        "ROLE_CHANGED",
-                        "old=" + oldValue + ",new=" + newValue
-                )
-        );
-    }
-
-    /**
-     * Returns the configured nexus block location for this town.
-     *
-     * @return nexus location, or {@code null} when not yet placed
-     */
+    /** Returns the nexus location. */
     public @Nullable Location getNexusLocation() {
-        return this.nexus_location;
+        return this.nexusLocation == null ? null : this.nexusLocation.clone();
     }
 
-    /**
-     * Legacy accessor retained for compatibility with reflective integrations.
-     *
-     * @return nexus location, or {@code null} when not yet placed
-     * @deprecated use {@link #getNexusLocation()} instead
-     */
-    @Deprecated
+    /** Returns the nexus location. */
     public @Nullable Location getNexus_location() {
-        return this.nexus_location;
+        return this.getNexusLocation();
     }
 
-    /**
-     * Updates the nexus block location for this town.
-     *
-     * @param nexusLocation new nexus location, or {@code null} to clear
-     */
+    /** Replaces the nexus location. */
     public void setNexusLocation(final @Nullable Location nexusLocation) {
-        this.nexus_location = nexusLocation;
-        this.nexus_world_name = resolveWorldName(nexusLocation, this.nexus_world_name);
+        this.nexusLocation = nexusLocation == null ? null : nexusLocation.clone();
     }
 
-    /**
-     * Returns the configured town spawn location.
-     *
-     * @return town spawn location, or {@code null} when not yet set
-     */
+    /** Returns the town spawn location. */
     public @Nullable Location getTownSpawnLocation() {
-        return this.town_spawn_location;
+        return this.townSpawnLocation == null ? null : this.townSpawnLocation.clone();
     }
 
-    /**
-     * Updates the town spawn location.
-     *
-     * @param townSpawnLocation new town spawn location, or {@code null} to clear
-     */
+    /** Replaces the town spawn location. */
     public void setTownSpawnLocation(final @Nullable Location townSpawnLocation) {
-        this.town_spawn_location = townSpawnLocation;
-        this.town_spawn_world_name = resolveWorldName(townSpawnLocation, this.town_spawn_world_name);
+        this.townSpawnLocation = townSpawnLocation == null ? null : townSpawnLocation.clone();
     }
 
-    /**
-     * Returns the authoritative server ID for the nexus location.
-     *
-     * @return authoritative nexus server ID, or {@code null} when not assigned
-     */
+    /** Returns the nexus server identifier. */
     public @Nullable String getNexusServerId() {
-        return normalizeServerId(this.nexus_server_id);
+        return this.nexusServerId;
     }
 
-    /**
-     * Updates the authoritative server ID for the nexus location.
-     *
-     * @param nexusServerId authoritative server ID, or {@code null} to clear
-     */
+    /** Replaces the nexus server identifier. */
     public void setNexusServerId(final @Nullable String nexusServerId) {
-        this.nexus_server_id = normalizeServerId(nexusServerId);
+        this.nexusServerId = normalizeServerId(nexusServerId);
     }
 
-    /**
-     * Returns the authoritative server ID for the town spawn location.
-     *
-     * @return authoritative town-spawn server ID, or {@code null} when not assigned
-     */
+    /** Returns the town-spawn server identifier. */
     public @Nullable String getTownSpawnServerId() {
-        return normalizeServerId(this.town_spawn_server_id);
+        return this.townSpawnServerId;
     }
 
-    /**
-     * Updates the authoritative server ID for the town spawn location.
-     *
-     * @param townSpawnServerId authoritative server ID, or {@code null} to clear
-     */
+    /** Replaces the town-spawn server identifier. */
     public void setTownSpawnServerId(final @Nullable String townSpawnServerId) {
-        this.town_spawn_server_id = normalizeServerId(townSpawnServerId);
+        this.townSpawnServerId = normalizeServerId(townSpawnServerId);
     }
 
-    /**
-     * Returns the normalized network location for the nexus.
-     *
-     * @param fallbackServerId fallback server ID when no authoritative ID has been set
-     * @return network location, or {@code null} when no nexus location exists
-     */
-    public @Nullable NetworkLocation getNexusNetworkLocation(final @NotNull String fallbackServerId) {
-        if (this.nexus_location == null) {
-            return null;
-        }
-        return new NetworkLocation(
-            this.resolveNexusServerId(fallbackServerId),
-            resolveWorldName(this.nexus_location, this.nexus_world_name),
-            this.nexus_location.getX(),
-            this.nexus_location.getY(),
-            this.nexus_location.getZ(),
-            this.nexus_location.getYaw(),
-            this.nexus_location.getPitch()
-        );
+    /** Returns the nexus network location. */
+    public @Nullable NetworkLocation getNexusNetworkLocation(final @Nullable String fallbackServerId) {
+        return toNetworkLocation(this.nexusLocation, this.resolveNexusServerId(fallbackServerId));
     }
 
-    /**
-     * Returns the normalized network location for the town spawn.
-     *
-     * @param fallbackServerId fallback server ID when no authoritative ID has been set
-     * @return network location, or {@code null} when no town-spawn location exists
-     */
-    public @Nullable NetworkLocation getTownSpawnNetworkLocation(final @NotNull String fallbackServerId) {
-        if (this.town_spawn_location == null) {
-            return null;
-        }
-        return new NetworkLocation(
-            this.resolveTownSpawnServerId(fallbackServerId),
-            resolveWorldName(this.town_spawn_location, this.town_spawn_world_name),
-            this.town_spawn_location.getX(),
-            this.town_spawn_location.getY(),
-            this.town_spawn_location.getZ(),
-            this.town_spawn_location.getYaw(),
-            this.town_spawn_location.getPitch()
-        );
+    /** Returns the town-spawn network location. */
+    public @Nullable NetworkLocation getTownSpawnNetworkLocation(final @Nullable String fallbackServerId) {
+        return toNetworkLocation(this.townSpawnLocation, this.resolveTownSpawnServerId(fallbackServerId));
     }
 
-    /**
-     * Updates the nexus from one network location payload.
-     *
-     * @param networkLocation replacement network location, or {@code null} to clear
-     */
+    /** Replaces the nexus location from a network payload. */
     public void setNexusNetworkLocation(final @Nullable NetworkLocation networkLocation) {
-        if (networkLocation == null) {
-            this.setNexusLocation(null);
-            this.setNexusServerId(null);
-            this.nexus_world_name = null;
-            return;
-        }
-        final World world = Bukkit.getWorld(networkLocation.worldName());
-        this.setNexusLocation(new Location(
-            world,
-            networkLocation.x(),
-            networkLocation.y(),
-            networkLocation.z(),
-            networkLocation.yaw(),
-            networkLocation.pitch()
-        ));
-        this.setNexusServerId(networkLocation.serverId());
-        this.nexus_world_name = networkLocation.worldName();
+        this.nexusServerId = networkLocation == null ? null : networkLocation.serverId();
+        this.nexusLocation = toBukkitLocation(networkLocation);
     }
 
-    /**
-     * Updates the town spawn from one network location payload.
-     *
-     * @param networkLocation replacement network location, or {@code null} to clear
-     */
+    /** Replaces the town spawn location from a network payload. */
     public void setTownSpawnNetworkLocation(final @Nullable NetworkLocation networkLocation) {
-        if (networkLocation == null) {
-            this.setTownSpawnLocation(null);
-            this.setTownSpawnServerId(null);
-            this.town_spawn_world_name = null;
-            return;
-        }
-        final World world = Bukkit.getWorld(networkLocation.worldName());
-        this.setTownSpawnLocation(new Location(
-            world,
-            networkLocation.x(),
-            networkLocation.y(),
-            networkLocation.z(),
-            networkLocation.yaw(),
-            networkLocation.pitch()
-        ));
-        this.setTownSpawnServerId(networkLocation.serverId());
-        this.town_spawn_world_name = networkLocation.worldName();
+        this.townSpawnServerId = networkLocation == null ? null : networkLocation.serverId();
+        this.townSpawnLocation = toBukkitLocation(networkLocation);
     }
 
-    /**
-     * Backfills missing authoritative server and world ownership metadata.
-     *
-     * @param fallbackServerId fallback server ID to apply when ownership fields are missing
-     * @return {@code true} when any metadata field changed
-     */
-    public boolean ensureAuthoritativeServerOwnership(final @NotNull String fallbackServerId) {
+    /** Backfills missing server ownership fields. */
+    public boolean ensureAuthoritativeServerOwnership(final @Nullable String fallbackServerId) {
         boolean changed = false;
-        if (this.nexus_location != null && this.getNexusServerId() == null) {
-            this.nexus_server_id = normalizeServerId(fallbackServerId);
+        final String normalizedFallback = normalizeServerId(fallbackServerId);
+        if (this.nexusLocation != null && this.nexusServerId == null && normalizedFallback != null) {
+            this.nexusServerId = normalizedFallback;
             changed = true;
         }
-        if (this.town_spawn_location != null && this.getTownSpawnServerId() == null) {
-            this.town_spawn_server_id = normalizeServerId(fallbackServerId);
-            changed = true;
-        }
-
-        final String resolvedNexusWorldName = resolveWorldName(this.nexus_location, this.nexus_world_name);
-        if (!Objects.equals(this.nexus_world_name, resolvedNexusWorldName)) {
-            this.nexus_world_name = resolvedNexusWorldName;
-            changed = true;
-        }
-
-        final String resolvedTownSpawnWorldName = resolveWorldName(this.town_spawn_location, this.town_spawn_world_name);
-        if (!Objects.equals(this.town_spawn_world_name, resolvedTownSpawnWorldName)) {
-            this.town_spawn_world_name = resolvedTownSpawnWorldName;
+        if (this.townSpawnLocation != null && this.townSpawnServerId == null && normalizedFallback != null) {
+            this.townSpawnServerId = normalizedFallback;
             changed = true;
         }
         return changed;
     }
 
-    /**
-     * Resolves the nexus authoritative server ID with a fallback value.
-     *
-     * @param fallbackServerId fallback server ID
-     * @return resolved nexus server ID
-     */
-    public @NotNull String resolveNexusServerId(final @NotNull String fallbackServerId) {
-        final String resolved = normalizeServerId(this.nexus_server_id);
-        if (resolved != null) {
-            return resolved;
-        }
-        return normalizeFallbackServerId(fallbackServerId);
+    /** Resolves the nexus server identifier. */
+    public @Nullable String resolveNexusServerId(final @Nullable String fallbackServerId) {
+        return this.nexusServerId == null ? normalizeServerId(fallbackServerId) : this.nexusServerId;
     }
 
-    /**
-     * Resolves the town-spawn authoritative server ID with a fallback value.
-     *
-     * @param fallbackServerId fallback server ID
-     * @return resolved town-spawn server ID
-     */
-    public @NotNull String resolveTownSpawnServerId(final @NotNull String fallbackServerId) {
-        final String resolved = normalizeServerId(this.town_spawn_server_id);
-        if (resolved != null) {
-            return resolved;
-        }
-        return normalizeFallbackServerId(fallbackServerId);
+    /** Resolves the town-spawn server identifier. */
+    public @Nullable String resolveTownSpawnServerId(final @Nullable String fallbackServerId) {
+        return this.townSpawnServerId == null ? normalizeServerId(fallbackServerId) : this.townSpawnServerId;
     }
 
-    /**
-     * Returns mutable town-wide protection role overrides.
-     *
-     * @return protection-key to role-ID map
-     */
+    /** Returns configured protection role identifiers. */
     public @NotNull Map<String, String> getProtectionRoleIds() {
-        return this.protections;
+        return new LinkedHashMap<>(this.protections);
     }
 
-    /**
-     * Returns the required role ID for a protection at town scope.
-     *
-     * @param protection protection being evaluated
-     * @return normalized required role ID
-     */
-    public @NotNull String getProtectionRoleId(final @NonNull TownProtections protection) {
-        final String configuredRoleId = this.protections.get(protection.getProtectionKey());
-        if (configuredRoleId == null || configuredRoleId.isBlank()) {
-            return protection.getDefaultRoleId();
-        }
-        return normalizeRoleId(configuredRoleId);
+    /** Returns the required role for a protection. */
+    public @NotNull String getProtectionRoleId(final @NotNull TownProtections protection) {
+        return this.protections.getOrDefault(protection.getProtectionKey(), protection.getDefaultRoleId());
     }
 
-    /**
-     * Sets the required role ID for a town-wide protection.
-     *
-     * @param protection protection to update
-     * @param roleId normalized or raw role ID
-     */
+    /** Replaces the required role for a protection. */
     public void setProtectionRoleId(
-            final @NonNull TownProtections protection,
-            final @NonNull String roleId
+        final @NotNull TownProtections protection,
+        final @Nullable String roleId
     ) {
-        final String normalizedRoleId = normalizeRoleId(roleId);
-        if (normalizedRoleId.equals(normalizeRoleId(protection.getDefaultRoleId()))) {
-            this.protections.remove(protection.getProtectionKey());
+        Objects.requireNonNull(protection, "protection");
+        this.protections.put(protection.getProtectionKey(), TownProtections.normalizeRoleId(roleId));
+    }
+
+    /** Returns whether the town currently has a placed nexus. */
+    public boolean hasNexusPlaced() {
+        return this.nexusLocation != null;
+    }
+
+    /** Returns whether the town has any security chunk. */
+    public boolean hasSecurityChunk() {
+        return this.chunks.stream().anyMatch(chunk -> chunk.getChunkType() == ChunkType.SECURITY);
+    }
+
+    /** Returns whether remote bank access is unlocked. */
+    public boolean supportsRemoteBankAccess() {
+        return this.chunks.stream()
+            .anyMatch(chunk -> chunk.getChunkType() == ChunkType.BANK && chunk.getChunkLevel() >= 2);
+    }
+
+    /** Returns shared bank storage contents. */
+    public @NotNull Map<String, ItemStack> getSharedBankStorage() {
+        return new LinkedHashMap<>(this.sharedBankStorage);
+    }
+
+    /** Replaces shared bank storage contents. */
+    public void setSharedBankStorage(final @NotNull Map<String, ItemStack> sharedBankStorage) {
+        this.sharedBankStorage = new LinkedHashMap<>(Objects.requireNonNull(sharedBankStorage, "sharedBankStorage"));
+    }
+
+    @Override
+    public @NotNull String toString() {
+        return "RTown{" + this.townUuid + "," + this.townName + "}";
+    }
+
+    private void ensureDefaultRoles() {
+        this.addDefaultRoleIfMissing(RESTRICTED_ROLE_ID, "Restricted", Set.of(), 0);
+        this.addDefaultRoleIfMissing(PUBLIC_ROLE_ID, "Public", TownPermissions.defaultPermissionKeysForRole(PUBLIC_ROLE_ID), 10);
+        this.addDefaultRoleIfMissing(MEMBER_ROLE_ID, "Member", TownPermissions.defaultPermissionKeysForRole(MEMBER_ROLE_ID), 20);
+        this.addDefaultRoleIfMissing(MAYOR_ROLE_ID, "Mayor", TownPermissions.defaultPermissionKeysForRole(MAYOR_ROLE_ID), 100);
+    }
+
+    private void addDefaultRoleIfMissing(
+        final @NotNull String roleId,
+        final @NotNull String roleName,
+        final @NotNull Set<String> permissions,
+        final int rolePriority
+    ) {
+        if (this.roles.stream().anyMatch(role -> Objects.equals(role.getRoleId(), roleId))) {
             return;
         }
-        this.protections.put(protection.getProtectionKey(), normalizedRoleId);
+        this.roles.add(new TownRole(this, roleId, roleName, permissions, rolePriority, true));
     }
 
-    /**
-     * Returns whether this town currently has a placed nexus location.
-     *
-     * @return {@code true} when the nexus is placed
-     */
-    public boolean hasNexusPlaced() {
-        return this.nexus_location != null;
-    }
-
-    /**
-     * Returns whether the town is active.
-     *
-     * @return {@code true} when active
-     */
-    public boolean getActive() {
-        return this.active;
-    }
-
-    /**
-     * Updates whether this town is active.
-     *
-     * @param active true when this town should be treated as active
-     */
-    public void setActive(final boolean active) {
-        this.active = active;
-    }
-
-    /**
-     * Returns a debug summary of this town entity.
-     *
-     * @return formatted town summary string
-     */
-    @Override
-    public String toString() {
-        return "ID: " + this.uuid + '\n' +
-                "Mayor: " + this.mayor + '\n' +
-                "Name: " + this.townName + '\n' +
-                "founded: " + this.founded + '\n' +
-                "Chunks: " + this.chunks + '\n' +
-                "Members: " + this.members.stream()
-                        .map(member -> member.getIdentifier() + ":" + member.getTownRoleId())
-                        .toList() + "\n" +
-                "Roles: " + this.roles + "\n" +
-                "Invites: " + this.invitedPlayers + "\n" +
-                "Pending Join Requests: " + this.pendingJoinRequests + "\n" +
-                "Protections: " + this.protections + "\n" +
-                "Ledger Entries: " + this.ledgerEntries.size() + "\n" +
-                "Bank Entries: " + this.bankEntries + "\n" +
-                "Town Level: " + this.getTownLevel() + "\n" +
-                "Level Requirement Progress: " + this.levelRequirementProgress.size() + "\n" +
-                "Nexus Location: " + this.nexus_location + "\n" +
-                "Nexus Server ID: " + this.nexus_server_id + "\n" +
-                "Nexus World Name: " + this.nexus_world_name + "\n" +
-                "Town Spawn Location: " + this.town_spawn_location + "\n" +
-                "Town Spawn Server ID: " + this.town_spawn_server_id + "\n" +
-                "Town Spawn World Name: " + this.town_spawn_world_name + "\n";
-    }
-
-    private @NotNull String normalizeCurrencyId(final @NonNull String currencyId) {
-        return currencyId.trim().toLowerCase(Locale.ROOT);
-    }
-
-    private @Nullable RTownBank findBankEntry(final @NonNull String normalizedCurrencyId) {
-        for (final RTownBank bankEntry : this.bankEntries) {
-            if (normalizeCurrencyId(bankEntry.getCurrencyId()).equals(normalizedCurrencyId)) {
-                return bankEntry;
-            }
+    private @NotNull String normalizeCurrencyId(final @NotNull String currencyId) {
+        final String normalized = Objects.requireNonNull(currencyId, "currencyId").trim().toLowerCase(Locale.ROOT);
+        if (normalized.isEmpty()) {
+            throw new IllegalArgumentException("currencyId cannot be blank");
         }
-        return null;
-    }
-
-    private boolean containsLevelRequirementProgress(final @NotNull TownLevelRequirementProgress candidate) {
-        return this.levelRequirementProgress.stream()
-                .anyMatch(existingProgress -> this.matchesLevelRequirementProgress(existingProgress, candidate));
-    }
-
-    private boolean matchesLevelRequirementProgress(
-            final @NotNull TownLevelRequirementProgress left,
-            final @NotNull TownLevelRequirementProgress right
-    ) {
-        if (left == right) {
-            return true;
-        }
-
-        final Long leftId = left.getId();
-        final Long rightId = right.getId();
-        if (leftId != null && Objects.equals(leftId, rightId)) {
-            return true;
-        }
-
-        return left.getProgressKey().equals(right.getProgressKey());
-    }
-
-    private void removeLevelProgressIfEmpty(final @NotNull TownLevelRequirementProgress progress) {
-        if (progress.isEmpty()) {
-            this.removeLevelRequirementProgress(progress);
-        }
-    }
-
-    private @NotNull Optional<TownLevelRequirementProgress> findLevelRequirementProgress(
-            final @NotNull String progressKey
-    ) {
-        final String normalizedProgressKey = normalizeProgressKey(progressKey);
-        return this.levelRequirementProgress.stream()
-                .filter(progress -> progress.getProgressKey().equals(normalizedProgressKey))
-                .findFirst();
+        return normalized;
     }
 
     private static @NotNull String normalizeProgressKey(final @NotNull String progressKey) {
-        final String normalizedProgressKey = Objects.requireNonNull(progressKey, "progressKey cannot be null").trim();
-        if (normalizedProgressKey.isEmpty()) {
+        final String normalized = Objects.requireNonNull(progressKey, "progressKey").trim().toLowerCase(Locale.ROOT);
+        if (normalized.isEmpty()) {
             throw new IllegalArgumentException("progressKey cannot be blank");
         }
-        return normalizedProgressKey;
+        return normalized;
     }
 
-    private static @NotNull String resolveWorldName(
-            final @Nullable Location location,
-            final @Nullable String fallbackWorldName
-    ) {
-        if (location != null && location.getWorld() != null) {
-            return location.getWorld().getName();
+    private static @NotNull String normalizeTownName(final @NotNull String townName) {
+        final String normalized = Objects.requireNonNull(townName, "townName").trim();
+        if (normalized.isEmpty()) {
+            throw new IllegalArgumentException("townName cannot be blank");
         }
-        if (fallbackWorldName == null || fallbackWorldName.isBlank()) {
-            return "unknown";
+        return normalized;
+    }
+
+    private static @NotNull String normalizeTownColorHex(final @Nullable String townColorHex) {
+        if (townColorHex == null || townColorHex.isBlank()) {
+            return DEFAULT_TOWN_COLOR_HEX;
         }
-        return fallbackWorldName.trim();
+        final String normalized = townColorHex.trim().toUpperCase(Locale.ROOT);
+        return normalized.startsWith("#") ? normalized : "#" + normalized;
     }
 
     private static @Nullable String normalizeServerId(final @Nullable String serverId) {
@@ -1306,151 +814,39 @@ public class RTown extends BaseEntity {
         return serverId.trim();
     }
 
-    private static @NotNull String normalizeFallbackServerId(final @NotNull String fallbackServerId) {
-        if (fallbackServerId.isBlank()) {
-            return "server";
-        }
-        return fallbackServerId.trim();
-    }
-
-    private void ensureDefaultRoles() {
-        this.addDefaultRoleIfMissing(
-                PUBLIC_ROLE_ID,
-                PUBLIC_ROLE_NAME,
-                TownPermissions.defaultPermissionKeysForRole(PUBLIC_ROLE_ID)
-        );
-        this.addDefaultRoleIfMissing(
-                MAYOR_ROLE_ID,
-                MAYOR_ROLE_NAME,
-                TownPermissions.defaultPermissionKeysForRole(MAYOR_ROLE_ID)
-        );
-        this.addDefaultRoleIfMissing(
-                MEMBER_ROLE_ID,
-                MEMBER_ROLE_NAME,
-                TownPermissions.defaultPermissionKeysForRole(MEMBER_ROLE_ID)
-        );
-        this.addDefaultRoleIfMissing(
-                RESTRICTED_ROLE_ID,
-                RESTRICTED_ROLE_NAME,
-                TownPermissions.defaultPermissionKeysForRole(RESTRICTED_ROLE_ID)
-        );
-        this.ensureDefaultRolePermissions(PUBLIC_ROLE_ID);
-        this.ensureDefaultRolePermissions(MAYOR_ROLE_ID);
-        this.ensureDefaultRolePermissions(MEMBER_ROLE_ID);
-        this.ensureDefaultRolePermissions(RESTRICTED_ROLE_ID);
-    }
-
-    private void addDefaultRoleIfMissing(
-            final @NonNull String roleId,
-            final @NonNull String roleName,
-            final @NonNull Set<String> defaultPermissions
+    private static @Nullable NetworkLocation toNetworkLocation(
+        final @Nullable Location location,
+        final @Nullable String serverId
     ) {
-        for (final TownRole role : this.roles) {
-            if (normalizeRoleId(role.getRoleId()).equals(normalizeRoleId(roleId))) {
-                return;
-            }
+        if (location == null || location.getWorld() == null || serverId == null) {
+            return null;
         }
-        this.roles.add(new TownRole(this, roleId, roleName, defaultPermissions));
+        return new NetworkLocation(
+            serverId,
+            location.getWorld().getName(),
+            location.getX(),
+            location.getY(),
+            location.getZ(),
+            location.getYaw(),
+            location.getPitch()
+        );
     }
 
-    private void ensureDefaultRolePermissions(final @NonNull String roleId) {
-        final Set<String> defaultPermissions = TownPermissions.defaultPermissionKeysForRole(roleId);
-        for (final TownRole role : this.roles) {
-            if (!normalizeRoleId(role.getRoleId()).equals(normalizeRoleId(roleId))) {
-                continue;
-            }
-            if (defaultPermissions.isEmpty()) {
-                if (!TownPermissions.canAssignToRole(roleId)) {
-                    role.replacePermissions(Set.of());
-                }
-                return;
-            }
-            for (final String permissionKey : defaultPermissions) {
-                role.addPermission(permissionKey);
-            }
-            return;
+    private static @Nullable Location toBukkitLocation(final @Nullable NetworkLocation networkLocation) {
+        if (networkLocation == null) {
+            return null;
         }
-    }
-
-    /**
-     * Persistent multi-currency balance entry owned by a town.
-     *
-     * @author ItsRainingHP
-     * @since 1.0.9
-     * @version 1.0.0
-     */
-    @Embeddable
-    @SuppressWarnings({"unused", "FieldCanBeLocal"})
-    public static class RTownBank {
-
-        @Column(name = "currency_id", nullable = false)
-        private String currencyId;
-
-        @Column(name = "amount", nullable = false)
-        private double amount;
-
-        /**
-         * Required by Hibernate.
-         */
-        protected RTownBank() {
+        final World world = Bukkit.getWorld(networkLocation.worldName());
+        if (world == null) {
+            return null;
         }
-
-        /**
-         * Creates a new town-bank currency entry.
-         *
-         * @param currencyId normalized or raw currency identifier
-         * @param amount initial amount
-         */
-        public RTownBank(
-                final @NonNull String currencyId,
-                final double amount
-        ) {
-            this.currencyId = normalizeCurrencyIdStatic(currencyId);
-            this.amount = Math.max(0.0D, amount);
-        }
-
-        /**
-         * Returns the normalized currency identifier for this entry.
-         *
-         * @return currency identifier
-         */
-        public @NotNull String getCurrencyId() {
-            return this.currencyId;
-        }
-
-        /**
-         * Returns the current non-negative amount for this entry.
-         *
-         * @return currency amount
-         */
-        public double getAmount() {
-            return this.amount;
-        }
-
-        /**
-         * Updates the current amount for this entry.
-         *
-         * @param amount replacement amount
-         */
-        public void setAmount(final double amount) {
-            this.amount = Math.max(0.0D, amount);
-        }
-
-        /**
-         * Returns a debug representation of this bank entry.
-         *
-         * @return formatted bank-entry string
-         */
-        @Override
-        public @NotNull String toString() {
-            return "RTownBank{" +
-                    "currencyId='" + this.currencyId + '\'' +
-                    ", amount=" + this.amount +
-                    '}';
-        }
-
-        private static @NotNull String normalizeCurrencyIdStatic(final @NonNull String currencyId) {
-            return Objects.requireNonNull(currencyId, "currencyId").trim().toLowerCase(Locale.ROOT);
-        }
+        return new Location(
+            world,
+            networkLocation.x(),
+            networkLocation.y(),
+            networkLocation.z(),
+            networkLocation.yaw(),
+            networkLocation.pitch()
+        );
     }
 }

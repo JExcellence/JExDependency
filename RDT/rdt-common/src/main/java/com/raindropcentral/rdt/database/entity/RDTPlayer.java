@@ -25,178 +25,175 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 import org.jetbrains.annotations.NotNull;
-import org.jspecify.annotations.Nullable;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.HashSet;
-import java.util.Locale;
+import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
 /**
- * Persistent representation of a player participating in Raindrop Towns.
- *
- * <p>Stores the player's UUID, optional town membership, and assigned town role ID. The role ID is
- * used to resolve the member's {@link TownRole} definition for permission checks.</p>
+ * Persistent player membership row for Raindrop Towns.
  *
  * @author ItsRainingHP
  * @since 1.0.0
- * @version 1.0.3
+ * @version 1.0.0
  */
 @Entity
 @Table(name = "rdt_players")
-@SuppressWarnings({
-        "DefaultAnnotationParam",
-        "FieldCanBeLocal",
-        "unused",
-        "JpaDataSourceORMInspection"
-})
-/**
- * Represents the RDTPlayer API type.
- */
 public class RDTPlayer extends BaseEntity {
 
-    /** Default role assigned to newly joined town members. */
     private static final String DEFAULT_TOWN_ROLE_ID = RTown.MEMBER_ROLE_ID;
 
-    /** Player's unique UUID (public identifier and cache key). */
-    @Column(name = "player_uuid", unique = true, nullable = false)
+    @Column(name = "player_uuid", nullable = false, unique = true)
     @Convert(converter = UUIDConverter.class)
     private UUID player_uuid;
 
-    /** UUID of the town this player is currently a member of; {@code null} when not in a town. */
-    @Column(name = "town_uuid", unique = false, nullable = true)
+    @Column(name = "town_uuid")
     @Convert(converter = UUIDConverter.class)
     private UUID town_uuid;
 
-    /** Timestamp (epoch millis) when the player last joined their current town. */
-    @Column(name = "join_date", unique = false, nullable = true)
+    @Column(name = "town_join_date", nullable = false)
     private long townJoinDate;
 
-    /** Town role identifier used to resolve the member's permission model. */
-    @Column(name = "town_role_id", unique = false, nullable = true)
+    @Column(name = "town_role_id", length = 64)
     private String townRoleId;
 
-    /** Explicit permission keys assigned to this player for town actions. */
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "rdt_player_town_permissions", joinColumns = @JoinColumn(name = "rdt_player_id"))
-    @Column(name = "permission", nullable = false)
-    private final Set<String> townPermissions = new HashSet<>();
+    @CollectionTable(name = "rdt_player_permissions", joinColumns = @JoinColumn(name = "player_id_fk"))
+    @Column(name = "permission_key", nullable = false, length = 64)
+    private Set<String> townPermissions = new LinkedHashSet<>();
+
+    @Column(name = "boss_bar_enabled", nullable = false)
+    private boolean bossBarEnabled;
 
     /**
-     * Constructs a player record with an initial town membership.
+     * Creates a player profile that already belongs to a town as a default member.
      *
-     * @param player_uuid player identifier
-     * @param town_uuid joined town identifier
+     * @param playerUuid player UUID
+     * @param townUuid town UUID
      */
-    public RDTPlayer(final UUID player_uuid, final UUID town_uuid) {
-        this(player_uuid, town_uuid, DEFAULT_TOWN_ROLE_ID);
+    public RDTPlayer(final @NotNull UUID playerUuid, final @Nullable UUID townUuid) {
+        this(playerUuid, townUuid, DEFAULT_TOWN_ROLE_ID);
     }
 
     /**
-     * Constructs a player record with an initial town membership and explicit role ID.
+     * Creates a player profile with an explicit town role.
      *
-     * @param player_uuid player identifier
-     * @param town_uuid joined town identifier
-     * @param townRoleId assigned role ID
+     * @param playerUuid player UUID
+     * @param townUuid town UUID
+     * @param townRoleId role identifier
      */
     public RDTPlayer(
-            final UUID player_uuid,
-            final UUID town_uuid,
-            final String townRoleId
+        final @NotNull UUID playerUuid,
+        final @Nullable UUID townUuid,
+        final @Nullable String townRoleId
     ) {
-        this.player_uuid = player_uuid;
-        this.town_uuid = town_uuid;
-        this.townRoleId = townRoleId == null ? null : RTown.normalizeRoleId(townRoleId);
-        if (this.townRoleId != null) {
-            this.townPermissions.addAll(TownPermissions.defaultPermissionKeysForRole(this.townRoleId));
-        }
+        this.player_uuid = Objects.requireNonNull(playerUuid, "playerUuid");
+        this.town_uuid = townUuid;
         this.townJoinDate = System.currentTimeMillis();
+        this.bossBarEnabled = true;
+        this.setTownRoleId(townRoleId);
+        if (townUuid == null) {
+            this.townRoleId = null;
+            this.townPermissions.clear();
+        }
     }
 
     /**
-     * Constructs a player record with no town membership.
+     * Creates a player profile with no town membership.
      *
-     * @param player_uuid player identifier
+     * @param playerUuid player UUID
      */
-    public RDTPlayer(final UUID player_uuid) {
-        this.player_uuid = player_uuid;
-        this.town_uuid = null;
-        this.townRoleId = null;
+    public RDTPlayer(final @NotNull UUID playerUuid) {
+        this(playerUuid, null, null);
     }
 
-    /** Required by Hibernate. */
+    /**
+     * Constructor reserved for JPA entity hydration.
+     */
     protected RDTPlayer() {
     }
 
     /**
-     * Returns the player's unique identifier used by repositories and caches.
+     * Returns the stable player identifier.
      *
-     * @return player UUID identifier
+     * @return player UUID
      */
-    public UUID getIdentifier() {
+    public @NotNull UUID getIdentifier() {
         return this.player_uuid;
     }
 
     /**
-     * Returns the current town UUID or {@code null} if the player is unaffiliated.
+     * Returns the player's current town UUID.
      *
-     * @return town UUID
+     * @return town UUID, or {@code null} when the player is not in a town
      */
-    public UUID getTownUUID() {
+    public @Nullable UUID getTownUUID() {
         return this.town_uuid;
     }
 
     /**
-     * Returns the player's town role identifier.
+     * Returns the player's current town UUID.
      *
-     * @return role ID, or {@code null} when unaffiliated
+     * @return town UUID, or {@code null} when the player is not in a town
+     */
+    public @Nullable UUID getTownUuid() {
+        return this.getTownUUID();
+    }
+
+    /**
+     * Returns the current town role identifier.
+     *
+     * @return normalized role identifier, or {@code null} when not in a town
      */
     public @Nullable String getTownRoleId() {
         return this.townRoleId;
     }
 
     /**
-     * Returns explicit permission keys currently assigned to this player.
+     * Returns the mutable cached town permission set.
      *
-     * @return mutable permission key set
+     * @return mutable cached permission set
      */
-    public Set<String> getTownPermissions() {
+    public @NotNull Set<String> getTownPermissions() {
         return this.townPermissions;
     }
 
     /**
-     * Returns whether this player currently has a specific town permission.
+     * Returns whether the player currently has a specific town permission.
      *
-     * @param permission permission enum value
-     * @return {@code true} when enabled
+     * @param permission permission to resolve
+     * @return {@code true} when the player has the permission
      */
-    public boolean hasTownPermission(final @NotNull TownPermissions permission) {
-        return this.hasTownPermission(permission.getPermissionKey());
+    public boolean hasTownPermission(final @Nullable TownPermissions permission) {
+        return permission != null && this.hasTownPermission(permission.getPermissionKey());
     }
 
     /**
-     * Returns whether this player currently has a specific permission key.
+     * Returns whether the player currently has a specific town permission.
      *
-     * @param permissionKey permission key
-     * @return {@code true} when enabled
+     * @param permissionKey permission key to resolve
+     * @return {@code true} when the player has the permission
      */
-    public boolean hasTownPermission(final @NotNull String permissionKey) {
-        return this.townPermissions.contains(normalizePermissionKey(permissionKey));
+    public boolean hasTownPermission(final @Nullable String permissionKey) {
+        final TownPermissions permission = TownPermissions.fromKey(permissionKey);
+        return permission != null && this.townPermissions.contains(permission.getPermissionKey());
     }
 
     /**
-     * Sets the player's town membership and records the current time as the join date.
+     * Replaces the player's town membership.
      *
-     * @param town_uuid new town UUID, or {@code null} to clear membership
+     * @param townUuid replacement town UUID, or {@code null} to clear membership
      */
-    public void setTownUUID(final @Nullable UUID town_uuid) {
-        this.town_uuid = town_uuid;
-        this.townJoinDate = System.currentTimeMillis();
-        if (town_uuid == null) {
+    public void setTownUUID(final @Nullable UUID townUuid) {
+        this.town_uuid = townUuid;
+        if (townUuid == null) {
             this.townRoleId = null;
             this.townPermissions.clear();
             return;
         }
+
         if (this.townRoleId == null || this.townRoleId.isBlank()) {
             this.townRoleId = DEFAULT_TOWN_ROLE_ID;
         }
@@ -206,103 +203,138 @@ public class RDTPlayer extends BaseEntity {
     }
 
     /**
-     * Sets the player's explicit town role identifier.
+     * Replaces the cached town role identifier.
      *
-     * @param townRoleId role ID, or {@code null} to clear
+     * @param townRoleId replacement role identifier
      */
     public void setTownRoleId(final @Nullable String townRoleId) {
-        if (townRoleId == null) {
+        if (this.town_uuid == null && (townRoleId == null || townRoleId.isBlank())) {
             this.townRoleId = null;
             return;
         }
-        this.townRoleId = RTown.normalizeRoleId(townRoleId);
-        if (this.town_uuid != null && this.townPermissions.isEmpty()) {
+        this.townRoleId = RTown.normalizeRoleId(
+            townRoleId == null || townRoleId.isBlank() ? DEFAULT_TOWN_ROLE_ID : townRoleId
+        );
+        if (this.townPermissions.isEmpty()) {
             this.townPermissions.addAll(TownPermissions.defaultPermissionKeysForRole(this.townRoleId));
         }
     }
 
     /**
-     * Replaces this player's explicit town permissions with the provided set.
+     * Replaces the cached permission set after normalizing each permission key.
      *
      * @param permissionKeys replacement permission keys
      */
     public void replaceTownPermissions(final @NotNull Set<String> permissionKeys) {
         this.townPermissions.clear();
         for (final String permissionKey : permissionKeys) {
-            this.townPermissions.add(normalizePermissionKey(permissionKey));
+            final TownPermissions permission = TownPermissions.fromKey(permissionKey);
+            if (permission != null) {
+                this.townPermissions.add(permission.getPermissionKey());
+            }
         }
     }
 
     /**
-     * Synchronizes this player's explicit permissions from a role definition.
+     * Syncs cached permissions from a town role definition.
      *
-     * @param role role definition, or {@code null} to clear permissions
+     * @param townRole role definition to mirror
      */
-    public void syncTownPermissionsFromRole(final @Nullable TownRole role) {
-        if (role == null) {
-            this.townPermissions.clear();
+    public void syncTownPermissionsFromRole(final @Nullable TownRole townRole) {
+        if (townRole == null) {
+            this.replaceTownPermissions(Set.of());
             return;
         }
-        this.replaceTownPermissions(role.getPermissions());
+        this.townRoleId = townRole.getRoleId();
+        if (Objects.equals(this.townRoleId, RTown.MAYOR_ROLE_ID)) {
+            this.replaceTownPermissions(TownPermissions.defaultPermissionKeysForRole(RTown.MAYOR_ROLE_ID));
+            return;
+        }
+        this.replaceTownPermissions(new LinkedHashSet<>(townRole.getPermissions()));
     }
 
     /**
-     * Grants a specific town permission.
+     * Grants a town permission to this player.
      *
      * @param permission permission to grant
      */
-    public void grantTownPermission(final @NotNull TownPermissions permission) {
-        this.townPermissions.add(permission.getPermissionKey());
+    public void grantTownPermission(final @Nullable TownPermissions permission) {
+        if (permission != null) {
+            this.townPermissions.add(permission.getPermissionKey());
+        }
     }
 
     /**
-     * Revokes a specific town permission.
+     * Revokes a town permission from this player.
      *
      * @param permission permission to revoke
      */
-    public void revokeTownPermission(final @NotNull TownPermissions permission) {
-        this.townPermissions.remove(permission.getPermissionKey());
+    public void revokeTownPermission(final @Nullable TownPermissions permission) {
+        if (permission != null) {
+            this.townPermissions.remove(permission.getPermissionKey());
+        }
     }
 
     /**
-     * Toggles a specific town permission.
+     * Toggles a town permission on this player.
      *
      * @param permission permission to toggle
-     * @return {@code true} when the permission is now enabled
+     * @return {@code true} when the permission ended enabled
      */
-    public boolean toggleTownPermission(final @NotNull TownPermissions permission) {
-        final String permissionKey = permission.getPermissionKey();
-        if (this.townPermissions.contains(permissionKey)) {
-            this.townPermissions.remove(permissionKey);
+    public boolean toggleTownPermission(final @Nullable TownPermissions permission) {
+        if (permission == null) {
             return false;
         }
-        this.townPermissions.add(permissionKey);
+        if (this.townPermissions.contains(permission.getPermissionKey())) {
+            this.townPermissions.remove(permission.getPermissionKey());
+            return false;
+        }
+        this.townPermissions.add(permission.getPermissionKey());
         return true;
     }
 
     /**
-     * Legacy alias for role ID retrieval.
+     * Returns the legacy role alias used by earlier code.
      *
-     * @return role ID, or {@code null} when unaffiliated
-     * @deprecated use {@link #getTownRoleId()} instead
+     * @return town role identifier
      */
-    @Deprecated
     public @Nullable String getRole() {
         return this.getTownRoleId();
     }
 
     /**
-     * Legacy alias for setting role IDs.
+     * Replaces the legacy role alias used by earlier code.
      *
-     * @param role role ID value
-     * @deprecated use {@link #setTownRoleId(String)} instead
+     * @param role replacement role identifier
      */
-    @Deprecated
     public void setRole(final @Nullable String role) {
         this.setTownRoleId(role);
     }
 
-    private static @NotNull String normalizePermissionKey(final @NotNull String permissionKey) {
-        return permissionKey.trim().toUpperCase(Locale.ROOT);
+    /**
+     * Returns whether the player is currently the mayor role.
+     *
+     * @return {@code true} when the player's cached role is mayor
+     */
+    public boolean isMayor() {
+        return Objects.equals(this.townRoleId, RTown.MAYOR_ROLE_ID);
+    }
+
+    /**
+     * Returns whether the player wants the town boss bar enabled.
+     *
+     * @return {@code true} when the boss bar should be shown
+     */
+    public boolean isBossBarEnabled() {
+        return this.bossBarEnabled;
+    }
+
+    /**
+     * Replaces the persisted boss-bar preference.
+     *
+     * @param bossBarEnabled replacement boss-bar enabled state
+     */
+    public void setBossBarEnabled(final boolean bossBarEnabled) {
+        this.bossBarEnabled = bossBarEnabled;
     }
 }

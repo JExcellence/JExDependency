@@ -13,110 +13,38 @@
 
 package com.raindropcentral.rdt.utils;
 
+import com.raindropcentral.rdt.database.entity.RTown;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 
 /**
- * Enumerates all configurable town and chunk protection checks.
+ * Enumerates grouped town protection rules for world interaction.
  *
- * <p>Each protection stores a default role ID that is used when no explicit override exists at
- * town or chunk scope.</p>
+ * <p>Each protection stores a minimum allowed role rather than a per-role matrix. Chunk-level
+ * settings may inherit the town value or override it for a specific claim.</p>
  *
  * @author ItsRainingHP
  * @since 1.0.0
- * @version 1.0.2
+ * @version 1.0.0
  */
 public enum TownProtections {
-
-    /** Hostile mob presence inside town territory. */
-    TOWN_HOSTILE_ENTITIES("restricted"),
-    /** Neutral/passive mob presence inside town territory. */
-    TOWN_NEUTRAL_ENTITIES("public"),
-    /** Fire spread behavior inside town territory. */
-    TOWN_FIRE("restricted"),
-    /** Water flow behavior inside town territory. */
-    TOWN_WATER("public"),
-    /** Lava flow behavior inside town territory. */
-    TOWN_LAVA("public"),
-    /** PvP between members of the same town inside town territory. */
-    TOWN_FRIENDLY_PVP("restricted"),
-    /** PvP involving non-town members inside town territory. */
-    TOWN_PUBLIC_PVP("restricted"),
-
-    /** Block-breaking permission inside protected chunks. */
-    BREAK_BLOCK("member"),
-    /** Block-placement permission inside protected chunks. */
-    PLACE_BLOCK("member"),
-
-    /** Chest right-click interaction. */
-    CHEST("member"),
-    /** Shulker-box right-click interaction. */
-    SHULKER_BOXES("member"),
-    /** Trapped-chest right-click interaction. */
-    TRAPPED_CHEST("member"),
-    /** Furnace right-click interaction. */
-    FURNACE("member"),
-    /** Blast-furnace right-click interaction. */
-    BLAST_FURNACE("member"),
-    /** Dispenser right-click interaction. */
-    DISPENSER("member"),
-    /** Hopper right-click interaction. */
-    HOPPER("member"),
-    /** Dropper right-click interaction. */
-    DROPPER("member"),
-    /** Jukebox right-click interaction. */
-    JUKEBOX("member"),
-    /** Stonecutter right-click interaction. */
-    STONECUTTER("member"),
-    /** Smithing-table right-click interaction. */
-    SMITHING_TABLE("member"),
-    /** Fletching-table right-click interaction. */
-    FLETCHING_TABLE("member"),
-    /** Smoker right-click interaction. */
-    SMOKER("member"),
-    /** Loom right-click interaction. */
-    LOOM("member"),
-    /** Grindstone right-click interaction. */
-    GRINDSTONE("member"),
-    /** Composter right-click interaction. */
-    COMPOSTER("member"),
-    /** Cartography-table right-click interaction. */
-    CARTOGRAPHY_TABLE("member"),
-    /** Bell right-click interaction. */
-    BELL("member"),
-    /** Barrel right-click interaction. */
-    BARREL("member"),
-    /** Brewing-stand right-click interaction. */
-    BREWING_STAND("member"),
-    /** Lever toggling interaction. */
-    LEVER("member"),
-    /** Pressure-plate triggered interaction. */
-    PRESSURE_PLATES("member"),
-    /** Button press interaction. */
-    BUTTONS("member"),
-    /** Wooden-door right-click interaction. */
-    WOOD_DOORS("member"),
-    /** Fence-gate right-click interaction. */
-    FENCE_GATES("member"),
-    /** Trapdoor right-click interaction. */
-    TRAPDOORS("member"),
-    /** Minecart interaction. */
-    MINECARTS("member"),
-    /** Lodestone right-click interaction. */
-    LODESTONE("member"),
-    /** Respawn-anchor right-click interaction. */
-    RESPAWN_ANCHOR("member"),
-    /** Boat interaction. */
-    BOATS("member"),
-    /** Ender-pearl usage interaction. */
-    ENDER_PEARL("member"),
-    /** Fireball usage interaction. */
-    FIREBALL("member"),
-    /** Chorus-fruit usage interaction. */
-    CHORUS_FRUIT("member"),
-    /** Lead usage interaction. */
-    LEAD("member");
+    TOWN_HOSTILE_ENTITIES(RTown.RESTRICTED_ROLE_ID),
+    TOWN_PASSIVE_ENTITIES(RTown.PUBLIC_ROLE_ID),
+    TOWN_FIRE(RTown.PUBLIC_ROLE_ID),
+    TOWN_WATER(RTown.PUBLIC_ROLE_ID),
+    TOWN_LAVA(RTown.PUBLIC_ROLE_ID),
+    BREAK_BLOCK(RTown.MEMBER_ROLE_ID),
+    PLACE_BLOCK(RTown.MEMBER_ROLE_ID),
+    CHEST(RTown.MEMBER_ROLE_ID),
+    CONTAINER_ACCESS(RTown.MEMBER_ROLE_ID),
+    SWITCH_ACCESS(RTown.MEMBER_ROLE_ID),
+    LEVER(RTown.MEMBER_ROLE_ID),
+    BUTTONS(RTown.MEMBER_ROLE_ID),
+    WOOD_DOORS(RTown.MEMBER_ROLE_ID),
+    FENCE_GATES(RTown.MEMBER_ROLE_ID),
+    TRAPDOORS(RTown.MEMBER_ROLE_ID);
 
     private final String defaultRoleId;
 
@@ -125,30 +53,51 @@ public enum TownProtections {
     }
 
     /**
-    * Returns the storage key for this protection.
-    *
-    * @return normalized protection key
-    */
+     * Returns the stable persisted protection key.
+     *
+     * @return stable uppercase protection key
+     */
     public @NotNull String getProtectionKey() {
         return this.name();
     }
 
     /**
-     * Returns the fallback role ID used when no explicit override exists.
+     * Returns the default minimum role allowed for this protection.
      *
-     * @return normalized default role ID
+     * @return normalized default role identifier
      */
     public @NotNull String getDefaultRoleId() {
         return this.defaultRoleId;
     }
 
     /**
-     * Normalizes role IDs to persisted uppercase format.
+     * Normalizes a stored role identifier into the uppercase persisted form.
      *
-     * @param roleId raw role ID
-     * @return normalized role ID
+     * @param roleId raw role identifier
+     * @return normalized role identifier, defaulting to {@link RTown#MEMBER_ROLE_ID} when blank
      */
-    public static @NotNull String normalizeRoleId(final @NotNull String roleId) {
+    public static @NotNull String normalizeRoleId(final @Nullable String roleId) {
+        if (roleId == null || roleId.isBlank()) {
+            return RTown.MEMBER_ROLE_ID;
+        }
         return roleId.trim().toUpperCase(Locale.ROOT);
+    }
+
+    /**
+     * Resolves a protection enum from a raw key.
+     *
+     * @param protectionKey raw protection key
+     * @return matching protection enum, or {@code null} when no protection matches
+     */
+    public static @Nullable TownProtections fromKey(final @Nullable String protectionKey) {
+        if (protectionKey == null || protectionKey.isBlank()) {
+            return null;
+        }
+
+        try {
+            return TownProtections.valueOf(protectionKey.trim().toUpperCase(Locale.ROOT));
+        } catch (final IllegalArgumentException ignored) {
+            return null;
+        }
     }
 }

@@ -10,6 +10,10 @@ chunk_block_max_y: 10
 # Delay in seconds before /rt spawn teleports the player to a safe location near their nexus.
 town_spawn_teleport_delay_seconds: 3
 
+# When true, only north/east/south/west claimed chunks count as adjacent for new claims.
+# When false, diagonal corner claims also count as adjacent.
+exclude_corner_claim_adjacency: true
+
 # Proxy-backed routing controls.
 proxy:
   # Enables proxy-aware module features.
@@ -31,6 +35,10 @@ chunk_type_icon_chunk_block: OAK_PLANKS
 # Add, remove, or reorder numeric level keys as desired.
 # Each level key represents the target level reached after successful level-up.
 town:
+  # Cooldown in seconds between town archetype changes.
+  # Default: 24 hours.
+  archetype_change_cooldown_seconds: 86400
+
   levels:
     1:
       requirements: {}

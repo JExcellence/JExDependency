@@ -13,155 +13,169 @@
 
 package com.raindropcentral.rdt.utils;
 
+import com.raindropcentral.rdt.database.entity.RTown;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.EnumSet;
 import java.util.LinkedHashSet;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Set;
 
 /**
- * Enumerates all town permission flags and their default owning role.
+ * Enumerates management and view permissions granted through town roles.
  *
- * <p>Permission values are stored as upper-case string keys (the enum constant name).</p>
+ * <p>These permissions are distinct from {@link TownProtections}, which control world
+ * interaction rules such as block break or container access.</p>
  *
  * @author ItsRainingHP
  * @since 1.0.0
- * @version 1.0.10
+ * @version 1.0.0
  */
 public enum TownPermissions {
+    TOWN_INFO("PUBLIC"),
+    VIEW_TOWN("PUBLIC"),
+    VIEW_DIRECTORY("PUBLIC"),
+    VIEW_INVITES("PUBLIC"),
+    VIEW_ROLES("MEMBER"),
+    VIEW_CHUNKS("MEMBER"),
+    VIEW_BANK("MEMBER"),
+    TOWN_INVITE("MEMBER"),
+    PLACE_CHUNK("MEMBER"),
+    PICKUP_CHUNK("MEMBER"),
+    TOWN_DEPOSIT("MEMBER"),
+    CHANGE_CHUNK_TYPE("MAYOR"),
+    UPGRADE_CHUNK("MAYOR"),
+    CLAIM_CHUNK("MAYOR"),
+    UNCLAIM_CHUNK("MAYOR"),
+    ASSIGN_ROLES("MAYOR"),
+    CREATE_ROLES("MAYOR"),
+    DELETE_ROLES("MAYOR"),
+    EDIT_ROLES("MAYOR"),
+    TOWN_PROTECTIONS("MAYOR"),
+    TOWN_WITHDRAW("MAYOR"),
+    TOWN_BANK_REMOTE("MAYOR"),
+    PLACE_NEXUS("MAYOR"),
+    PICKUP_NEXUS("MAYOR"),
+    RENAME_TOWN("MAYOR"),
+    SET_ARCHETYPE("MAYOR"),
+    UPGRADE_TOWN("MAYOR");
 
-    /** Allows opening general town information from server town listings. */
-    TOWN_INFO("public"),
-    /** Allows requesting to join a town from public-facing town lists. */
-    JOIN_TOWN("public"),
-    /** Allows placing a town nexus block. */
-    PLACE_NEXUS("mayor"),
-    /** Allows picking up a previously placed town nexus block. */
-    PICKUP_NEXUS("mayor"),
-    /** Allows opening role-related management views. */
-    VIEW_ROLES("mayor"),
-    /** Allows configuring town and chunk protection role requirements. */
-    TOWN_PROTECTIONS("mayor"),
-    /** Allows placing a town Chunk Block in its target chunk. */
-    PLACE_CHUNK("mayor"),
-    /** Allows picking up a placed town Chunk Block through chunk management UI. */
-    PICKUP_CHUNK("mayor"),
-    /** Allows creating new town roles. */
-    CREATE_ROLES("mayor"),
-    /** Allows deleting custom town roles. */
-    DELETE_ROLES("mayor"),
-    /** Allows inviting players to join the town. */
-    TOWN_INVITE("member"),
-    /** Allows opening a town overview view. */
-    VIEW_TOWN("member"),
-    /** Allows opening and using the chunk-claim map view. */
-    CLAIM_CHUNK("mayor"),
-    /** Allows depositing currencies from players into the town bank. */
-    TOWN_DEPOSIT("member"),
-    /** Allows withdrawing currencies from the town bank to a player wallet. */
-    TOWN_WITHDRAW("mayor"),
-    /** Allows opening town level-up controls and triggering level progression. */
-    TOWN_LEVEL_UP("mayor"),
-    /** Allows opening chunk upgrade controls on a placed Chunk Block. */
-    UPGRADE_CHUNK("mayor");
+    private final String minimumDefaultRoleId;
 
-    private static final String PUBLIC_ROLE_ID = normalize("public");
-    private static final String MEMBER_ROLE_ID = normalize("member");
-    private static final String MAYOR_ROLE_ID = normalize("mayor");
-    private static final String RESTRICTED_ROLE_ID = normalize("restricted");
-
-    private final String defaultRoleId;
-
-    /**
-     * Creates a permission enum value with a default role assignment.
-     *
-     * @param defaultRoleId default role that should initially own this permission
-     */
-    TownPermissions(final @NotNull String defaultRoleId) {
-        this.defaultRoleId = normalize(defaultRoleId);
+    TownPermissions(final @NotNull String minimumDefaultRoleId) {
+        this.minimumDefaultRoleId = normalizeRoleId(minimumDefaultRoleId);
     }
 
     /**
-     * Returns the default role ID for this permission.
+     * Returns the persisted permission key used in entities and configs.
      *
-     * @return normalized role ID
-     */
-    public @NotNull String getDefaultRoleId() {
-        return this.defaultRoleId;
-    }
-
-    /**
-     * Returns the persisted key used for permission checks.
-     *
-     * @return permission key
+     * @return stable uppercase permission key
      */
     public @NotNull String getPermissionKey() {
         return this.name();
     }
 
     /**
-     * Returns whether this permission belongs to the provided default role.
+     * Returns whether this permission is included by default for the supplied role.
      *
-     * @param roleId role ID to test
-     * @return {@code true} when this permission is default for that role
+     * @param roleId role identifier to evaluate
+     * @return {@code true} when the role receives this permission by default
      */
-    public boolean isDefaultForRole(final @NotNull String roleId) {
-        return this.defaultRoleId.equals(normalize(roleId));
+    public boolean isDefaultForRole(final @Nullable String roleId) {
+        return compareRolePriority(normalizeRoleId(roleId), this.minimumDefaultRoleId) >= 0;
     }
 
     /**
-     * Resolves all permission keys that should be assigned to a role by default.
+     * Normalizes a role or permission key into the stored uppercase identifier form.
      *
-     * @param roleId role ID
-     * @return default permission keys for the role
+     * @param value raw role or permission key
+     * @return normalized uppercase identifier, or an empty string when blank
      */
-    public static @NotNull Set<String> defaultPermissionKeysForRole(final @NotNull String roleId) {
-        final String normalizedRoleId = normalize(roleId);
-        final Set<String> result = new LinkedHashSet<>();
-        if (!canAssignToRole(normalizedRoleId)) {
-            return result;
+    public static @NotNull String normalize(final @Nullable String value) {
+        if (value == null) {
+            return "";
+        }
+        return value.trim().toUpperCase(Locale.ROOT);
+    }
+
+    /**
+     * Returns whether a role may be assigned directly to a player.
+     *
+     * @param roleId role identifier to evaluate
+     * @return {@code true} when the role is assignable to players
+     */
+    public static boolean canAssignToRole(final @Nullable String roleId) {
+        return !Objects.equals(normalizeRoleId(roleId), RTown.RESTRICTED_ROLE_ID)
+            && !Objects.equals(normalizeRoleId(roleId), RTown.PUBLIC_ROLE_ID);
+    }
+
+    /**
+     * Returns the default permission keys granted to a role.
+     *
+     * @param roleId role identifier to evaluate
+     * @return immutable default permission set for the role
+     */
+    public static @NotNull Set<String> defaultPermissionKeysForRole(final @Nullable String roleId) {
+        final String normalizedRoleId = normalizeRoleId(roleId);
+        if (!canAssignToRole(normalizedRoleId) && !Objects.equals(normalizedRoleId, RTown.PUBLIC_ROLE_ID)) {
+            return Set.of();
         }
 
-        for (final TownPermissions permission : values()) {
-            if (permission.defaultRoleId.equals(normalizedRoleId)
-                    || inheritsPermission(normalizedRoleId, permission.defaultRoleId)) {
-                result.add(permission.getPermissionKey());
+        final Set<String> permissionKeys = new LinkedHashSet<>();
+        for (final TownPermissions permission : EnumSet.allOf(TownPermissions.class)) {
+            if (permission.isDefaultForRole(normalizedRoleId)) {
+                permissionKeys.add(permission.getPermissionKey());
             }
         }
-
-        return result;
+        return Set.copyOf(permissionKeys);
     }
 
     /**
-     * Returns whether town permissions can be assigned to the provided role ID.
+     * Normalizes a role identifier into the stored uppercase form.
      *
-     * @param roleId target role ID
-     * @return {@code true} when permissions are assignable to the role
+     * @param roleId raw role identifier
+     * @return normalized role identifier, defaulting to {@link RTown#MEMBER_ROLE_ID} when blank
      */
-    public static boolean canAssignToRole(final @NotNull String roleId) {
-        return !RESTRICTED_ROLE_ID.equals(normalize(roleId));
+    public static @NotNull String normalizeRoleId(final @Nullable String roleId) {
+        final String normalizedRoleId = normalize(roleId);
+        return normalizedRoleId.isEmpty() ? RTown.MEMBER_ROLE_ID : normalizedRoleId;
     }
 
-    private static boolean inheritsPermission(
-            final @NotNull String roleId,
-            final @NotNull String permissionDefaultRoleId
+    /**
+     * Resolves a permission enum from a raw stored key.
+     *
+     * @param permissionKey raw permission key
+     * @return matching enum, or {@code null} when no match exists
+     */
+    public static @Nullable TownPermissions fromKey(final @Nullable String permissionKey) {
+        final String normalizedPermissionKey = normalize(permissionKey);
+        if (normalizedPermissionKey.isEmpty()) {
+            return null;
+        }
+
+        try {
+            return TownPermissions.valueOf(normalizedPermissionKey);
+        } catch (final IllegalArgumentException ignored) {
+            return null;
+        }
+    }
+
+    private static int compareRolePriority(
+        final @NotNull String left,
+        final @NotNull String right
     ) {
-        if (MAYOR_ROLE_ID.equals(roleId)) {
-            return MEMBER_ROLE_ID.equals(permissionDefaultRoleId) || PUBLIC_ROLE_ID.equals(permissionDefaultRoleId);
-        }
-        if (MEMBER_ROLE_ID.equals(roleId)) {
-            return PUBLIC_ROLE_ID.equals(permissionDefaultRoleId);
-        }
-        return false;
+        return Integer.compare(resolveRolePriority(left), resolveRolePriority(right));
     }
 
-    /**
-     * Normalizes role and permission key fragments to upper-case storage format.
-     *
-     * @param value raw value
-     * @return normalized value
-     */
-    public static @NotNull String normalize(final @NotNull String value) {
-        return value.trim().toUpperCase(Locale.ROOT);
+    private static int resolveRolePriority(final @NotNull String roleId) {
+        return switch (roleId) {
+            case RTown.RESTRICTED_ROLE_ID -> 0;
+            case RTown.PUBLIC_ROLE_ID -> 1;
+            case RTown.MEMBER_ROLE_ID -> 2;
+            case RTown.MAYOR_ROLE_ID -> 4;
+            default -> 3;
+        };
     }
 }
