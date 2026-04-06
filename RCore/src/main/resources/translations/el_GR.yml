@@ -1,25 +1,25 @@
-﻿# Î•Î»Î»Î·Î½Î¹ÎºÎ­Ï‚ Î¼ÎµÏ„Î±Ï†ÏÎ¬ÏƒÎµÎ¹Ï‚ Î³Î¹Î± Ï„Î·Î½ ÎµÎ½ÏƒÏ‰Î¼Î¬Ï„Ï‰ÏƒÎ· RCore Central
+# Ελληνικές μεταφράσεις για την ενσωμάτωση RCore Central
 
 prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
 
 rcconnect:
-  usage: "<gray>Î§ÏÎ®ÏƒÎ·: /rc <connect &lt;api-key&gt;|disconnect|claim droplets|store update></gray>"
-  usage_no_claim: "<gray>Î§ÏÎ®ÏƒÎ·: /rc <connect &lt;api-key&gt;|disconnect></gray>"
-  connecting: "<yellow>Î£ÏÎ½Î´ÎµÏƒÎ· Î¼Îµ Ï„Î¿ RaindropCentral...</yellow>"
-  success: "<green>Î— ÏƒÏÎ½Î´ÎµÏƒÎ· Î¼Îµ Ï„Î¿ RaindropCentral Î¿Î»Î¿ÎºÎ»Î·ÏÏŽÎ¸Î·ÎºÎµ Î¼Îµ ÎµÏ€Î¹Ï„Ï…Ï‡Î¯Î±!</green> <gray>ÎŸ Î´Î¹Î±ÎºÎ¿Î¼Î¹ÏƒÏ„Î®Ï‚ ÏƒÏ„Î­Î»Î½ÎµÎ¹ Ï€Î»Î­Î¿Î½ heartbeat ÏƒÎ®Î¼Î±Ï„Î±.</gray>"
+  usage: "<gray>Χρήση: /rc <connect &lt;api-key&gt;|disconnect|claim droplets|store update></gray>"
+  usage_no_claim: "<gray>Χρήση: /rc <connect &lt;api-key&gt;|disconnect></gray>"
+  connecting: "<yellow>Σύνδεση με το RaindropCentral...</yellow>"
+  success: "<green>Η σύνδεση με το RaindropCentral ολοκληρώθηκε με επιτυχία!</green> <gray>Ο διακομιστής στέλνει πλέον heartbeat σήματα.</gray>"
   error:
-    invalid_key: "<red>ÎœÎ· Î­Î³ÎºÏ…ÏÎ· Î¼Î¿ÏÏ†Î® ÎºÎ»ÎµÎ¹Î´Î¹Î¿Ï API. Î¤Î± ÎºÎ»ÎµÎ¹Î´Î¹Î¬ API Ï€ÏÎ­Ï€ÎµÎ¹ Î½Î± Î­Ï‡Î¿Ï…Î½ 32-128 Î±Î»Ï†Î±ÏÎ¹Î¸Î¼Î·Ï„Î¹ÎºÎ¿ÏÏ‚ Ï‡Î±ÏÎ±ÎºÏ„Î®ÏÎµÏ‚.</red>"
-    uuid_mismatch: "<red>Î‘Ï…Ï„ÏŒ Ï„Î¿ ÎºÎ»ÎµÎ¹Î´Î¯ API Î±Î½Î®ÎºÎµÎ¹ ÏƒÎµ Î´Î¹Î±Ï†Î¿ÏÎµÏ„Î¹ÎºÏŒ Î»Î¿Î³Î±ÏÎ¹Î±ÏƒÎ¼ÏŒ Minecraft.</red>"
-    already_connected: "ÎŸ Î´Î¹Î±ÎºÎ¿Î¼Î¹ÏƒÏ„Î®Ï‚ <yellow> ÎµÎ¯Î½Î±Î¹ Î®Î´Î· ÏƒÏ…Î½Î´ÎµÎ´ÎµÎ¼Î­Î½Î¿Ï‚.</yellow> <gray>Î§ÏÎ·ÏƒÎ¹Î¼Î¿Ï€Î¿Î¹Î®ÏƒÏ„Îµ Ï€ÏÏŽÏ„Î± Ï„Î¿ /rc disconnect.</gray>"
-    network: "<red>Î£Ï†Î¬Î»Î¼Î± Î´Î¹ÎºÏ„ÏÎ¿Ï…: %error%</red>"
+    invalid_key: "<red>Μη έγκυρη μορφή κλειδιού API. Τα κλειδιά API πρέπει να έχουν 32-128 αλφαριθμητικούς χαρακτήρες.</red>"
+    uuid_mismatch: "<red>Αυτό το κλειδί API ανήκει σε διαφορετικό λογαριασμό Minecraft.</red>"
+    already_connected: "Ο διακομιστής <yellow> είναι ήδη συνδεδεμένος.</yellow> <gray>Χρησιμοποιήστε πρώτα το /rc disconnect.</gray>"
+    network: "<red>Σφάλμα δικτύου: %error%</red>"
 
 rcdisconnect:
-  disconnecting: "<yellow>Î‘Ï€Î¿ÏƒÏÎ½Î´ÎµÏƒÎ· Î±Ï€ÏŒ Ï„Î¿ RaindropCentral...</yellow>"
-  success: "<green>Î— Î±Ï€Î¿ÏƒÏÎ½Î´ÎµÏƒÎ· Î±Ï€ÏŒ Ï„Î¿ RaindropCentral Î¿Î»Î¿ÎºÎ»Î·ÏÏŽÎ¸Î·ÎºÎµ Î¼Îµ ÎµÏ€Î¹Ï„Ï…Ï‡Î¯Î±.</green>"
+  disconnecting: "<yellow>Αποσύνδεση από το RaindropCentral...</yellow>"
+  success: "<green>Η αποσύνδεση από το RaindropCentral ολοκληρώθηκε με επιτυχία.</green>"
   error:
-    not_connected: "<red>ÎŸ Î´Î¹Î±ÎºÎ¿Î¼Î¹ÏƒÏ„Î®Ï‚ Î´ÎµÎ½ ÎµÎ¯Î½Î±Î¹ ÏƒÏ…Î½Î´ÎµÎ´ÎµÎ¼Î­Î½Î¿Ï‚ Î¼Îµ Ï„Î¿ RaindropCentral.</red>"
-    failed: "<red>Î— Î±Ï€Î¿ÏƒÏÎ½Î´ÎµÏƒÎ· Î±Ï€Î­Ï„Ï…Ï‡Îµ. Î Î±ÏÎ±ÎºÎ±Î»ÏŽ Î´Î¿ÎºÎ¹Î¼Î¬ÏƒÏ„Îµ Î¾Î±Î½Î¬.</red>"
-    network: "<red>Î£Ï†Î¬Î»Î¼Î± Î´Î¹ÎºÏ„ÏÎ¿Ï…: %error%</red>"
+    not_connected: "<red>Ο διακομιστής δεν είναι συνδεδεμένος με το RaindropCentral.</red>"
+    failed: "<red>Η αποσύνδεση απέτυχε. Παρακαλώ δοκιμάστε ξανά.</red>"
+    network: "<red>Σφάλμα δικτύου: %error%</red>"
 
 rcstore:
   updating: "<yellow>Refreshing the local droplet-store allowlist from RaindropCentral...</yellow>"
@@ -29,152 +29,152 @@ rcstore:
     failed: "<red>Failed to refresh the droplet-store allowlist: %error%</red>"
     using_cache: "<yellow>Failed to refresh the droplet-store allowlist, but the last cached list is still being used: %error%</yellow>"
 rcclaim:
-  loading: "<yellow>ÎˆÎ»ÎµÎ³Ï‡Î¿Ï‚ RaindropCentral Î³Î¹Î± Î±Î½Ï„Î±Î¼Î¿Î¹Î²Î­Ï‚ ÏƒÏ„Î±Î³Î¿Î½Î¹Î´Î¯Ï‰Î½ Ï€Î¿Ï… Î´ÎµÎ½ Î­Ï‡Î¿Ï…Î½ Î¶Î·Ï„Î·Î¸ÎµÎ¯...</yellow>"
-  claiming_item: "<yellow>Î”Î¹ÎµÎºÎ´Î¯ÎºÎ·ÏƒÎ· %item_name% Î±Ï€ÏŒ RaindropCentral...</yellow>"
+  loading: "<yellow>Έλεγχος RaindropCentral για ανταμοιβές σταγονιδίων που δεν έχουν ζητηθεί...</yellow>"
+  claiming_item: "<yellow>Διεκδίκηση %item_name% από RaindropCentral...</yellow>"
   success:
-    claimed: "<green> Î¥Ï€Î¿Î²Î¬Î»Î±Ï„Îµ Î±Î¾Î¯Ï‰ÏƒÎ· Î³Î¹Î± %item_name%.</green>"
-    claimed_skill_targeted: "<green> Î”Î¹ÎµÎºÎ´Î¹ÎºÎ®ÏƒÎ±Ï„Îµ %item_name%.</green> <gray> ÎšÎ¬Î½Ï„Îµ Î´ÎµÎ¾Î¯ ÎºÎ»Î¹Îº ÏƒÏ„Î¿ cookie Î³Î¹Î± Î½Î± ÎµÏ€Î¹Î»Î­Î¾ÎµÏ„Îµ Î¼Î¹Î± Î¹ÎºÎ±Î½ÏŒÏ„Î·Ï„Î±.</gray>"
-    claimed_job_targeted: "<green> Î¥Ï€Î¿Î²Î¬Î»Î±Ï„Îµ Î±Î¾Î¯Ï‰ÏƒÎ· %item_name%.</green> <gray> ÎšÎ¬Î½Ï„Îµ Î´ÎµÎ¾Î¯ ÎºÎ»Î¹Îº ÏƒÏ„Î¿ cookie Î³Î¹Î± Î½Î± ÎµÏ€Î¹Î»Î­Î¾ÎµÏ„Îµ Î¼Î¹Î± ÎµÏÎ³Î±ÏƒÎ¯Î±.</gray>"
-    claimed_activate: "<green> Î”Î¹ÎµÎºÎ´Î¹ÎºÎ®ÏƒÎ±Ï„Îµ %item_name%.</green> <gray> ÎšÎ¬Î½Ï„Îµ Î´ÎµÎ¾Î¯ ÎºÎ»Î¹Îº ÏƒÏ„Î¿ cookie Î³Î¹Î± Î½Î± Ï„Î¿ ÎµÎ½ÎµÏÎ³Î¿Ï€Î¿Î¹Î®ÏƒÎµÏ„Îµ.</gray>"
-    skill_granted: "<green>Î§Î¿ÏÎ·Î³Î®Î¸Î·ÎºÎµ 1 ÎµÏ€Î¯Ï€ÎµÎ´Î¿ ÏƒÏ„Î¿ %skill_name%.</green> <gray>Î Î·Î³Î®: %plugin_name%.</gray>"
-    job_granted: "<green>Î§Î¿ÏÎ·Î³Î®Î¸Î·ÎºÎµ 1 ÎµÏ€Î¯Ï€ÎµÎ´Î¿ ÏƒÏ„Î¿ %job_name%.</green> <gray>Î Î·Î³Î®: %plugin_name%.</gray>"
-    skill_xp_boost_applied: "<green>AÎµÎ½ÎµÏÎ³Î¿Ï€Î¿Î¹Î·Î¼Î­Î½Î¿ +%rate_percent%% skill XP Î³Î¹Î± %skill_name%.</green> <gray>Î Î·Î³Î®: %plugin_name%. Î”Î¹Î¬ÏÎºÎµÎ¹Î±: %duration_minutes% Î»ÎµÏ€Ï„ÏŒ(Î±).</gray>"
-    skill_xp_boost_refreshed: "<green>Î‘Î½Î±Î½Î­Ï‰ÏƒÎ· +%rate_percent%% Î¹ÎºÎ±Î½ÏŒÏ„Î·Ï„Î± XP Î³Î¹Î± %skill_name%.</green> <gray>Î Î·Î³Î®: %plugin_name%. Î•Ï€Î±Î½Î±Ï†Î¿ÏÎ¬ Î´Î¹Î¬ÏÎºÎµÎ¹Î±Ï‚ ÏƒÎµ %duration_minutes% Î»ÎµÏ€Ï„Î¬.</gray>"
-    job_xp_boost_applied: "<green>AÎ•Î½ÎµÏÎ³Î¿Ï€Î¿Î¹Î·Î¼Î­Î½Î· +%rate_percent%% ÎµÏÎ³Î±ÏƒÎ¯Î± XP Î³Î¹Î± %job_name%.</green> <gray>Î Î·Î³Î®: %plugin_name%. Î”Î¹Î¬ÏÎºÎµÎ¹Î±: %duration_minutes% Î»ÎµÏ€Ï„ÏŒ(Î±).</gray>"
-    job_xp_boost_refreshed: "<green>Î‘Î½Î±Î½Î­Ï‰ÏƒÎ· +%rate_percent%% ÎµÏÎ³Î±ÏƒÎ¯Î± XP Î³Î¹Î± %job_name%.</green> <gray>Î Î·Î³Î®: %plugin_name%. Î•Ï€Î±Î½Î±Ï†Î¿ÏÎ¬ Î´Î¹Î¬ÏÎºÎµÎ¹Î±Ï‚ ÏƒÎµ %duration_minutes% Î»ÎµÏ€Ï„Î¬.</gray>"
-    job_vault_boost_applied: "<green>AÎµÎ½ÎµÏÎ³Î¿Ï€Î¿Î¹Î·Î¼Î­Î½Î± +%rate_percent%% Ï‡ÏÎ®Î¼Î±Ï„Î± ÎµÏÎ³Î±ÏƒÎ¯Î±Ï‚ Î³Î¹Î± %job_name%.</green> <gray>Î Î·Î³Î®: %plugin_name%. Î”Î¹Î¬ÏÎºÎµÎ¹Î±: %duration_minutes% Î»ÎµÏ€Ï„ÏŒ(Î±).</gray>"
-    job_vault_boost_refreshed: "<green>Î‘Î½Î±Î½Î­Ï‰ÏƒÎ· +%rate_percent%% Ï‡ÏÎ®Î¼Î±Ï„Î± ÎµÏÎ³Î±ÏƒÎ¯Î±Ï‚ Î³Î¹Î± %job_name%.</green> <gray>Î Î·Î³Î®: %plugin_name%. Î•Ï€Î±Î½Î±Ï†Î¿ÏÎ¬ Î´Î¹Î¬ÏÎºÎµÎ¹Î±Ï‚ ÏƒÎµ %duration_minutes% Î»ÎµÏ€Ï„Î¬.</gray>"
-    double_drop_boost_applied: "<green>AÎ•Î½ÎµÏÎ³Î¿Ï€Î¿Î¹Î·Î¼Î­Î½ÎµÏ‚ Î´Î¹Ï€Î»Î­Ï‚ Ï€Ï„ÏŽÏƒÎµÎ¹Ï‚.</green> <gray>Î”Î¹Î¬ÏÎºÎµÎ¹Î±: %duration_minutes% Î»ÎµÏ€Ï„Î¬.</gray>"
-    double_drop_boost_refreshed: "<green>Î‘Î½Î±Î½ÎµÏ‰Î¼Î­Î½ÎµÏ‚ Î´Î¹Ï€Î»Î­Ï‚ ÏƒÏ„Î±Î³ÏŒÎ½ÎµÏ‚.</green> <gray>Î•Ï€Î±Î½Î±Ï†Î¿ÏÎ¬ Î´Î¹Î¬ÏÎºÎµÎ¹Î±Ï‚ ÏƒÎµ %duration_minutes% Î»ÎµÏ€Ï„Î¬.</gray>"
-    pending_delivery: "<green>Î Î±ÏÎ±Î´ÏŒÎ¸Î·ÎºÎµ %count% Î±Î½Ï„Î±Î¼Î¿Î¹Î²Î®(ÎµÏ‚) ÏƒÎµ ÎµÎºÎºÏÎµÎ¼ÏŒÏ„Î·Ï„Î±.</green>"
+    claimed: "<green> Υποβάλατε αξίωση για %item_name%.</green>"
+    claimed_skill_targeted: "<green> Διεκδικήσατε %item_name%.</green> <gray> Κάντε δεξί κλικ στο cookie για να επιλέξετε μια ικανότητα.</gray>"
+    claimed_job_targeted: "<green> Υποβάλατε αξίωση %item_name%.</green> <gray> Κάντε δεξί κλικ στο cookie για να επιλέξετε μια εργασία.</gray>"
+    claimed_activate: "<green> Διεκδικήσατε %item_name%.</green> <gray> Κάντε δεξί κλικ στο cookie για να το ενεργοποιήσετε.</gray>"
+    skill_granted: "<green>Χορηγήθηκε 1 επίπεδο στο %skill_name%.</green> <gray>Πηγή: %plugin_name%.</gray>"
+    job_granted: "<green>Χορηγήθηκε 1 επίπεδο στο %job_name%.</green> <gray>Πηγή: %plugin_name%.</gray>"
+    skill_xp_boost_applied: "<green>Aενεργοποιημένο +%rate_percent%% skill XP για %skill_name%.</green> <gray>Πηγή: %plugin_name%. Διάρκεια: %duration_minutes% λεπτό(α).</gray>"
+    skill_xp_boost_refreshed: "<green>Ανανέωση +%rate_percent%% ικανότητα XP για %skill_name%.</green> <gray>Πηγή: %plugin_name%. Επαναφορά διάρκειας σε %duration_minutes% λεπτά.</gray>"
+    job_xp_boost_applied: "<green>AΕνεργοποιημένη +%rate_percent%% εργασία XP για %job_name%.</green> <gray>Πηγή: %plugin_name%. Διάρκεια: %duration_minutes% λεπτό(α).</gray>"
+    job_xp_boost_refreshed: "<green>Ανανέωση +%rate_percent%% εργασία XP για %job_name%.</green> <gray>Πηγή: %plugin_name%. Επαναφορά διάρκειας σε %duration_minutes% λεπτά.</gray>"
+    job_vault_boost_applied: "<green>Aενεργοποιημένα +%rate_percent%% χρήματα εργασίας για %job_name%.</green> <gray>Πηγή: %plugin_name%. Διάρκεια: %duration_minutes% λεπτό(α).</gray>"
+    job_vault_boost_refreshed: "<green>Ανανέωση +%rate_percent%% χρήματα εργασίας για %job_name%.</green> <gray>Πηγή: %plugin_name%. Επαναφορά διάρκειας σε %duration_minutes% λεπτά.</gray>"
+    double_drop_boost_applied: "<green>AΕνεργοποιημένες διπλές πτώσεις.</green> <gray>Διάρκεια: %duration_minutes% λεπτά.</gray>"
+    double_drop_boost_refreshed: "<green>Ανανεωμένες διπλές σταγόνες.</green> <gray>Επαναφορά διάρκειας σε %duration_minutes% λεπτά.</gray>"
+    pending_delivery: "<green>Παραδόθηκε %count% ανταμοιβή(ες) σε εκκρεμότητα.</green>"
   error:
-    store_disabled: "<red>Î‘Ï…Ï„ÏŒÏ‚ Î¿ Î´Î¹Î±ÎºÎ¿Î¼Î¹ÏƒÏ„Î®Ï‚ Î­Ï‡ÎµÎ¹ Î±Ï€ÎµÎ½ÎµÏÎ³Î¿Ï€Î¿Î¹Î®ÏƒÎµÎ¹ Ï„Î¿ /rc claim droplets.</red>"
-    not_connected: "Î¤Î¿ <red>RCore Ï€ÏÎ­Ï€ÎµÎ¹ Î½Î± ÏƒÏ…Î½Î´ÎµÎ¸ÎµÎ¯ ÏƒÏ„Î¿ backend RaindropCentral Î³Î¹Î± Î½Î± Î¼Ï€Î¿ÏÎ­ÏƒÎµÏ„Îµ Î½Î± Î´Î¹ÎµÎºÎ´Î¹ÎºÎ®ÏƒÎµÏ„Îµ ÏƒÏ„Î±Î³Î¿Î½Î¯Î´Î¹Î±.</red>"
-    cooldown: "<yellow>Î Î±ÏÎ±ÎºÎ±Î»ÏŽ Ï€ÎµÏÎ¹Î¼Î­Î½ÎµÏ„Îµ %seconds% Î´ÎµÏ…Ï„ÎµÏÏŒÎ»ÎµÏ€Ï„Î¿(Î±) Ï€ÏÎ¹Î½ Ï‡ÏÎ·ÏƒÎ¹Î¼Î¿Ï€Î¿Î¹Î®ÏƒÎµÏ„Îµ Î¾Î±Î½Î¬ Ï„Î¿ /rc claim droplets.</yellow>"
-    not_registered: "<red>ÎŸ Î»Î¿Î³Î±ÏÎ¹Î±ÏƒÎ¼ÏŒÏ‚ ÏƒÎ±Ï‚ Minecraft Î´ÎµÎ½ ÎµÎ¯Î½Î±Î¹ ÏƒÏ…Î½Î´ÎµÎ´ÎµÎ¼Î­Î½Î¿Ï‚ Î¼Îµ Î»Î¿Î³Î±ÏÎ¹Î±ÏƒÎ¼ÏŒ RaindropCentral.</red>"
-    no_unclaimed: "<yellow> Î”ÎµÎ½ Î­Ï‡ÎµÏ„Îµ ÎºÎ±Î¼Î¯Î± Î±Î¶Î®Ï„Î·Ï„Î· Î±Î½Ï„Î±Î¼Î¿Î¹Î²Î® ÏƒÏ„Î±Î³Î¿Î½Î¹Î´Î¯Ï‰Î½ Î±Ï…Ï„Î®Î½ Ï„Î· ÏƒÏ„Î¹Î³Î¼Î®.</yellow>"
-    api_unavailable: "Î¤Î¿ <red>RaindropCentral Î´ÎµÎ½ ÎµÎ¯Î½Î±Î¹ Î´Î¹Î±Î¸Î­ÏƒÎ¹Î¼Î¿ Î±Ï…Ï„Î®Î½ Ï„Î· ÏƒÏ„Î¹Î³Î¼Î®: %error%</red>"
-    menu_unavailable: "<red>Î¤Î¿ Î¼ÎµÎ½Î¿Ï Î±Î¾Î¯Ï‰ÏƒÎ·Ï‚ ÏƒÏ„Î±Î³Î¿Î½Î¹Î´Î¯Ï‰Î½ Î´ÎµÎ½ ÎµÎ¯Î½Î±Î¹ Î´Î¹Î±Î¸Î­ÏƒÎ¹Î¼Î¿ Î±Ï…Ï„Î®Î½ Ï„Î· ÏƒÏ„Î¹Î³Î¼Î®. Î”Î¿ÎºÎ¹Î¼Î¬ÏƒÏ„Îµ Î¾Î±Î½Î¬ Î±ÏÎ³ÏŒÏ„ÎµÏÎ±.</red>"
-    item_disabled: "<red>Î‘Ï…Ï„ÏŒÏ‚ Î¿ Î´Î¹Î±ÎºÎ¿Î¼Î¹ÏƒÏ„Î®Ï‚ Î­Ï‡ÎµÎ¹ Î±Ï€ÎµÎ½ÎµÏÎ³Î¿Ï€Î¿Î¹Î®ÏƒÎµÎ¹ Ï„Î·Î½ Î±Î¾Î¯Ï‰ÏƒÎ· %item_name%.</red> <gray>Item ID: %item_code%</gray>"
-    unsupported_item: "<red>Î‘Ï…Ï„Î® Î· Î±Î½Ï„Î±Î¼Î¿Î¹Î²Î® ÏƒÏ„Î±Î³Î¿Î½Î¹Î´Î¯Ï‰Î½ Î´ÎµÎ½ Ï…Ï€Î¿ÏƒÏ„Î·ÏÎ¯Î¶ÎµÏ„Î±Î¹ Î±ÎºÏŒÎ¼Î· ÏƒÎµ Î±Ï…Ï„ÏŒÎ½ Ï„Î¿Î½ Î´Î¹Î±ÎºÎ¿Î¼Î¹ÏƒÏ„Î®.</red> <gray>Item ID: %item_code%</gray>"
-    no_supported_skills: "<red>Î‘Ï…Ï„ÏŒÏ‚ Î¿ Î´Î¹Î±ÎºÎ¿Î¼Î¹ÏƒÏ„Î®Ï‚ Î´ÎµÎ½ Î´Î¹Î±Î¸Î­Ï„ÎµÎ¹ ÎµÏ€Î¯ Ï„Î¿Ï… Ï€Î±ÏÏŒÎ½Ï„Î¿Ï‚ Ï…Ï€Î¿ÏƒÏ„Î·ÏÎ¹Î¶ÏŒÎ¼ÎµÎ½Î· Ï€ÏÎ¿ÏƒÎ¸Î®ÎºÎ· Î´ÎµÎ¾Î¹Î¿Ï„Î®Ï„Ï‰Î½ Î³Î¹Î± Î±Ï…Ï„Î®Î½ Ï„Î·Î½ Î±Î½Ï„Î±Î¼Î¿Î¹Î²Î®.</red>"
-    no_supported_jobs: "<red>Î‘Ï…Ï„ÏŒÏ‚ Î¿ Î´Î¹Î±ÎºÎ¿Î¼Î¹ÏƒÏ„Î®Ï‚ Î´ÎµÎ½ Î´Î¹Î±Î¸Î­Ï„ÎµÎ¹ ÎµÏ€Î¯ Ï„Î¿Ï… Ï€Î±ÏÏŒÎ½Ï„Î¿Ï‚ Ï…Ï€Î¿ÏƒÏ„Î·ÏÎ¹Î¶ÏŒÎ¼ÎµÎ½Î· Ï€ÏÎ¿ÏƒÎ¸Î®ÎºÎ· ÎµÏÎ³Î±ÏƒÎ¹ÏŽÎ½ Î³Î¹Î± Î±Ï…Ï„Î®Î½ Ï„Î·Î½ Î±Î½Ï„Î±Î¼Î¿Î¹Î²Î®.</red>"
-    inventory_full: "<red>Î§ÏÎµÎ¹Î¬Î¶ÎµÏƒÏ„Îµ Ï„Î¿Ï…Î»Î¬Ï‡Î¹ÏƒÏ„Î¿Î½ Î­Î½Î± Î´Ï‰ÏÎµÎ¬Î½ slot Î±Ï€Î¿Î¸Î­Î¼Î±Ï„Î¿Ï‚ Ï€ÏÎ¹Î½ Î´Î¹ÎµÎºÎ´Î¹ÎºÎ®ÏƒÎµÏ„Îµ Î±Ï…Ï„Î®Î½ Ï„Î·Î½ Î±Î½Ï„Î±Î¼Î¿Î¹Î²Î®.</red>"
-    claim_in_progress: "<yellow>Î‘Ï…Ï„Î® Î· Î±Î¾Î¯Ï‰ÏƒÎ· ÎµÎ¯Î½Î±Î¹ Î®Î´Î· ÏƒÎµ ÎµÎ¾Î­Î»Î¹Î¾Î·. Î ÎµÏÎ¹Î¼Î­Î½ÎµÏ„Îµ Î½Î± Î±Ï€Î±Î½Ï„Î®ÏƒÎµÎ¹ Ï„Î¿ backend.</yellow>"
-    claim_failed: "<red>Î‘Ï€Î­Ï„Ï…Ï‡Îµ Î· Î´Î¹ÎµÎºÎ´Î¯ÎºÎ·ÏƒÎ· Î±Ï…Ï„Î®Ï‚ Ï„Î·Ï‚ Î±Î½Ï„Î±Î¼Î¿Î¹Î²Î®Ï‚ ÏƒÏ„Î±Î³Î¿Î½Î¹Î´Î¯Ï‰Î½: %error%</red>"
-    already_claimed: "<yellow>Î‘Ï…Ï„Î® Î· Î±Î½Ï„Î±Î¼Î¿Î¹Î²Î® ÏƒÏ„Î±Î³Î¿Î½Î¹Î´Î¯Ï‰Î½ Î­Ï‡ÎµÎ¹ Î®Î´Î· Î´Î¹ÎµÎºÎ´Î¹ÎºÎ·Î¸ÎµÎ¯.</yellow>"
-    purchase_unavailable: "<red>Î‘Ï…Ï„Î® Î· Î±Î½Ï„Î±Î¼Î¿Î¹Î²Î® ÏƒÏ„Î±Î³Î¿Î½Î¹Î´Î¯Ï‰Î½ Î´ÎµÎ½ ÎµÎ¯Î½Î±Î¹ Ï€Î»Î­Î¿Î½ Î´Î¹Î±Î¸Î­ÏƒÎ¹Î¼Î· Î³Î¹Î± Î±Î¾Î¯Ï‰ÏƒÎ·.</red>"
-    cookie_missing: "<red>Î”ÎµÎ½ Î®Ï„Î±Î½ Î´Ï…Î½Î±Ï„Î® Î· ÎµÏÏÎµÏƒÎ· Ï„Î¿Ï… cookie ÏƒÏ„Î±Î³Î¿Î½Î¹Î´Î¯Ï‰Î½ ÏƒÏ„Î¿ Î±Ï€ÏŒÎ¸ÎµÎ¼Î¬ ÏƒÎ±Ï‚.</red>"
-    skill_grant_failed: "<red>Î‘Ï€Î­Ï„Ï…Ï‡Îµ Î· Ï‡Î¿ÏÎ®Î³Î·ÏƒÎ· 1 ÎµÏ€Î¹Ï€Î­Î´Î¿Ï… ÏƒÏ„Î¿ %skill_name%.</red>"
-    job_grant_failed: "<red>Î‘Ï€Î­Ï„Ï…Ï‡Îµ Î· Ï‡Î¿ÏÎ®Î³Î·ÏƒÎ· 1 ÎµÏ€Î¹Ï€Î­Î´Î¿Ï… ÏƒÏ„Î¿ %job_name%.</red>"
-    boost_activation_failed: "<red>Î‘Ï€Î­Ï„Ï…Ï‡Îµ Î· ÎµÎ½ÎµÏÎ³Î¿Ï€Î¿Î¯Î·ÏƒÎ· %item_name%.</red>"
-    unsupported_integration: "<red>Î— Î±Ï€Î±Î¹Ï„Î¿ÏÎ¼ÎµÎ½Î· ÎµÎ½ÏƒÏ‰Î¼Î¬Ï„Ï‰ÏƒÎ· Î³Î¹Î± Î±Ï…Ï„ÏŒ Ï„Î¿ cookie ÏƒÏ„Î±Î³Î¿Î½Î¹Î´Î¯Ï‰Î½ Î´ÎµÎ½ ÎµÎ¯Î½Î±Î¹ Î´Î¹Î±Î¸Î­ÏƒÎ¹Î¼Î· Î±Ï…Ï„Î®Î½ Ï„Î· ÏƒÏ„Î¹Î³Î¼Î®.</red>"
-    boost_expired: "<yellow>Î‘Ï…Ï„Î® Î· ÎµÎ½Î¯ÏƒÏ‡Ï…ÏƒÎ· cookie ÏƒÏ„Î±Î³Î¿Î½Î¹Î´Î¯Ï‰Î½ Î­Ï‡ÎµÎ¹ Î»Î®Î¾ÎµÎ¹.</yellow>"
+    store_disabled: "<red>Αυτός ο διακομιστής έχει απενεργοποιήσει το /rc claim droplets.</red>"
+    not_connected: "Το <red>RCore πρέπει να συνδεθεί στο backend RaindropCentral για να μπορέσετε να διεκδικήσετε σταγονίδια.</red>"
+    cooldown: "<yellow>Παρακαλώ περιμένετε %seconds% δευτερόλεπτο(α) πριν χρησιμοποιήσετε ξανά το /rc claim droplets.</yellow>"
+    not_registered: "<red>Ο λογαριασμός σας Minecraft δεν είναι συνδεδεμένος με λογαριασμό RaindropCentral.</red>"
+    no_unclaimed: "<yellow> Δεν έχετε καμία αζήτητη ανταμοιβή σταγονιδίων αυτήν τη στιγμή.</yellow>"
+    api_unavailable: "Το <red>RaindropCentral δεν είναι διαθέσιμο αυτήν τη στιγμή: %error%</red>"
+    menu_unavailable: "<red>Το μενού αξίωσης σταγονιδίων δεν είναι διαθέσιμο αυτήν τη στιγμή. Δοκιμάστε ξανά αργότερα.</red>"
+    item_disabled: "<red>Αυτός ο διακομιστής έχει απενεργοποιήσει την αξίωση %item_name%.</red> <gray>Item ID: %item_code%</gray>"
+    unsupported_item: "<red>Αυτή η ανταμοιβή σταγονιδίων δεν υποστηρίζεται ακόμη σε αυτόν τον διακομιστή.</red> <gray>Item ID: %item_code%</gray>"
+    no_supported_skills: "<red>Αυτός ο διακομιστής δεν διαθέτει επί του παρόντος υποστηριζόμενη προσθήκη δεξιοτήτων για αυτήν την ανταμοιβή.</red>"
+    no_supported_jobs: "<red>Αυτός ο διακομιστής δεν διαθέτει επί του παρόντος υποστηριζόμενη προσθήκη εργασιών για αυτήν την ανταμοιβή.</red>"
+    inventory_full: "<red>Χρειάζεστε τουλάχιστον ένα δωρεάν slot αποθέματος πριν διεκδικήσετε αυτήν την ανταμοιβή.</red>"
+    claim_in_progress: "<yellow>Αυτή η αξίωση είναι ήδη σε εξέλιξη. Περιμένετε να απαντήσει το backend.</yellow>"
+    claim_failed: "<red>Απέτυχε η διεκδίκηση αυτής της ανταμοιβής σταγονιδίων: %error%</red>"
+    already_claimed: "<yellow>Αυτή η ανταμοιβή σταγονιδίων έχει ήδη διεκδικηθεί.</yellow>"
+    purchase_unavailable: "<red>Αυτή η ανταμοιβή σταγονιδίων δεν είναι πλέον διαθέσιμη για αξίωση.</red>"
+    cookie_missing: "<red>Δεν ήταν δυνατή η εύρεση του cookie σταγονιδίων στο απόθεμά σας.</red>"
+    skill_grant_failed: "<red>Απέτυχε η χορήγηση 1 επιπέδου στο %skill_name%.</red>"
+    job_grant_failed: "<red>Απέτυχε η χορήγηση 1 επιπέδου στο %job_name%.</red>"
+    boost_activation_failed: "<red>Απέτυχε η ενεργοποίηση %item_name%.</red>"
+    unsupported_integration: "<red>Η απαιτούμενη ενσωμάτωση για αυτό το cookie σταγονιδίων δεν είναι διαθέσιμη αυτήν τη στιγμή.</red>"
+    boost_expired: "<yellow>Αυτή η ενίσχυση cookie σταγονιδίων έχει λήξει.</yellow>"
 
 rc_claim_droplets_ui:
-  title: "Î‘Î¶Î®Ï„Î·Ï„Î± ÏƒÏ„Î±Î³Î¿Î½Î¯Î´Î¹Î±"
+  title: "Αζήτητα σταγονίδια"
   page:
-    name: "<yellow>Î£ÎµÎ»Î¯Î´Î± %page%/%max_page%</yellow>"
+    name: "<yellow>Σελίδα %page%/%max_page%</yellow>"
     lore:
-      - "<gray>%items_count% ÎºÎ±Ï„Î±Ï‡Ï‰ÏÎ¯ÏƒÎµÎ¹Ï‚ Î¼Îµ Î´Ï…Î½Î±Ï„ÏŒÏ„Î·Ï„Î± Î±Î¾Î¯Ï‰ÏƒÎ·Ï‚ Ï€Î±ÏÎ±Ï„Î¯Î¸ÎµÎ½Ï„Î±Î¹.</gray>"
+      - "<gray>%items_count% καταχωρίσεις με δυνατότητα αξίωσης παρατίθενται.</gray>"
   summary:
-    name: "<gold>ÎŸÏ…ÏÎ¬ Î±Î¾Î¯Ï‰ÏƒÎ·Ï‚</gold>"
+    name: "<gold>Ουρά αξίωσης</gold>"
     lore:
-      - "<gray> ÎœÎ· Î´Î¹ÎµÎºÎ´Î¹ÎºÎ·Î¼Î­Î½ÎµÏ‚ ÎºÎ±Ï„Î±Ï‡Ï‰ÏÎ®ÏƒÎµÎ¹Ï‚: %item_count%</gray>"
-      - "<gray>Î¥Ï€Î¿ÏƒÏ„Î·ÏÎ¯Î¶ÎµÏ„Î±Î¹ ÏƒÎµ Î±Ï…Ï„ÏŒÎ½ Ï„Î¿Î½ Î´Î¹Î±ÎºÎ¿Î¼Î¹ÏƒÏ„Î®: %supported_count%</gray>"
-      - "<yellow>ÎšÎ¬Î½Ï„Îµ ÎºÎ»Î¹Îº ÏƒÎµ Î¼Î¹Î± Ï…Ï€Î¿ÏƒÏ„Î·ÏÎ¹Î¶ÏŒÎ¼ÎµÎ½Î· Î±Î½Ï„Î±Î¼Î¿Î¹Î²Î® Î³Î¹Î± Î½Î± Ï„Î· Î´Î¹ÎµÎºÎ´Î¹ÎºÎ®ÏƒÎµÏ„Îµ.</yellow>"
+      - "<gray> Μη διεκδικημένες καταχωρήσεις: %item_count%</gray>"
+      - "<gray>Υποστηρίζεται σε αυτόν τον διακομιστή: %supported_count%</gray>"
+      - "<yellow>Κάντε κλικ σε μια υποστηριζόμενη ανταμοιβή για να τη διεκδικήσετε.</yellow>"
   empty:
-    name: "<red> Î§Ï‰ÏÎ¯Ï‚ Î±Î¶Î®Ï„Î·Ï„ÎµÏ‚ Î±Î½Ï„Î±Î¼Î¿Î¹Î²Î­Ï‚</red>"
+    name: "<red> Χωρίς αζήτητες ανταμοιβές</red>"
     lore:
-      - "<gray> Î‘Ï…Ï„Î®Î½ Ï„Î· ÏƒÏ„Î¹Î³Î¼Î® Î´ÎµÎ½ Î­Ï‡ÎµÏ„Îµ Î±Î¶Î®Ï„Î·Ï„ÎµÏ‚ Î±Î½Ï„Î±Î¼Î¿Î¹Î²Î­Ï‚ ÏƒÏ„Î±Î³Î¿Î½Î¹Î´Î¯Ï‰Î½.</gray>"
+      - "<gray> Αυτήν τη στιγμή δεν έχετε αζήτητες ανταμοιβές σταγονιδίων.</gray>"
   entry:
     supported:
       name: "<green>%item_name%</green>"
       lore:
-        - "<gray>IÏƒÏ„Î¿Î¹Ï‡ÎµÎ¯Î¿: %item_code%</gray>"
-        - "<gray>Spent: %amount_spent% ÏƒÏ„Î±Î³Î¿Î½Î¯Î´Î¹Î±</gray>"
-        - "<yellow>ÎšÎ¬Î½Ï„Îµ ÎºÎ»Î¹Îº Î³Î¹Î± Î½Î± Î´Î¹ÎµÎºÎ´Î¹ÎºÎ®ÏƒÎµÏ„Îµ Î±Ï…Ï„Î®Î½ Ï„Î·Î½ Î±Î½Ï„Î±Î¼Î¿Î¹Î²Î®.</yellow>"
+        - "<gray>Iστοιχείο: %item_code%</gray>"
+        - "<gray>Spent: %amount_spent% σταγονίδια</gray>"
+        - "<yellow>Κάντε κλικ για να διεκδικήσετε αυτήν την ανταμοιβή.</yellow>"
     item_disabled:
       name: "<red>%item_name%</red>"
       lore:
-        - "<gray>IÏƒÏ„Î¿Î¹Ï‡ÎµÎ¯Î¿: %item_code%</gray>"
-        - "<red>Î‘Ï…Ï„ÏŒÏ‚ Î¿ Î´Î¹Î±ÎºÎ¿Î¼Î¹ÏƒÏ„Î®Ï‚ Î­Ï‡ÎµÎ¹ Î±Ï€ÎµÎ½ÎµÏÎ³Î¿Ï€Î¿Î¹Î®ÏƒÎµÎ¹ Ï„Î· Î´Î¹ÎµÎºÎ´Î¯ÎºÎ·ÏƒÎ· Î±Ï…Ï„Î®Ï‚ Ï„Î·Ï‚ Î±Î½Ï„Î±Î¼Î¿Î¹Î²Î®Ï‚.</red>"
+        - "<gray>Iστοιχείο: %item_code%</gray>"
+        - "<red>Αυτός ο διακομιστής έχει απενεργοποιήσει τη διεκδίκηση αυτής της ανταμοιβής.</red>"
     unsupported_item:
       name: "<red>%item_name%</red>"
       lore:
-        - "<gray>IÏƒÏ„Î¿Î¹Ï‡ÎµÎ¯Î¿: %item_code%</gray>"
-        - "<red>Î‘Ï…Ï„Î® Î· Î±Î½Ï„Î±Î¼Î¿Î¹Î²Î® Î´ÎµÎ½ Ï…Ï€Î¿ÏƒÏ„Î·ÏÎ¯Î¶ÎµÏ„Î±Î¹ ÏƒÎµ Î±Ï…Ï„ÏŒÎ½ Ï„Î¿Î½ Î´Î¹Î±ÎºÎ¿Î¼Î¹ÏƒÏ„Î®.</red>"
+        - "<gray>Iστοιχείο: %item_code%</gray>"
+        - "<red>Αυτή η ανταμοιβή δεν υποστηρίζεται σε αυτόν τον διακομιστή.</red>"
     no_skills:
       name: "<red>%item_name%</red>"
       lore:
-        - "<gray>IÏƒÏ„Î¿Î¹Ï‡ÎµÎ¯Î¿: %item_code%</gray>"
-        - "<red>Î”ÎµÎ½ Î­Ï‡ÎµÎ¹ ÎµÎ³ÎºÎ±Ï„Î±ÏƒÏ„Î±Î¸ÎµÎ¯ ÎºÎ±Î¼Î¯Î± Ï…Ï€Î¿ÏƒÏ„Î·ÏÎ¹Î¶ÏŒÎ¼ÎµÎ½Î· Ï€ÏÎ¿ÏƒÎ¸Î®ÎºÎ· Î´ÎµÎ¾Î¹Î¿Ï„Î®Ï„Ï‰Î½ Î³Î¹Î± Î±Ï…Ï„Î®Î½ Ï„Î·Î½ Î±Î½Ï„Î±Î¼Î¿Î¹Î²Î®.</red>"
+        - "<gray>Iστοιχείο: %item_code%</gray>"
+        - "<red>Δεν έχει εγκατασταθεί καμία υποστηριζόμενη προσθήκη δεξιοτήτων για αυτήν την ανταμοιβή.</red>"
     no_jobs:
       name: "<red>%item_name%</red>"
       lore:
-        - "<gray>IÏƒÏ„Î¿Î¹Ï‡ÎµÎ¯Î¿: %item_code%</gray>"
-        - "<red> Î”ÎµÎ½ Î­Ï‡ÎµÎ¹ ÎµÎ³ÎºÎ±Ï„Î±ÏƒÏ„Î±Î¸ÎµÎ¯ ÎºÎ±Î¼Î¯Î± Ï…Ï€Î¿ÏƒÏ„Î·ÏÎ¹Î¶ÏŒÎ¼ÎµÎ½Î· Ï€ÏÎ¿ÏƒÎ¸Î®ÎºÎ· ÎµÏÎ³Î±ÏƒÎ¹ÏŽÎ½ Î³Î¹Î± Î±Ï…Ï„Î®Î½ Ï„Î·Î½ Î±Î½Ï„Î±Î¼Î¿Î¹Î²Î®.</red>"
+        - "<gray>Iστοιχείο: %item_code%</gray>"
+        - "<red> Δεν έχει εγκατασταθεί καμία υποστηριζόμενη προσθήκη εργασιών για αυτήν την ανταμοιβή.</red>"
 
 rc_claim_droplet_skills_ui:
-  title: "Î•Ï€Î¹Î»Î­Î¾Ï„Îµ Î¼Î¹Î± Î´ÎµÎ¾Î¹ÏŒÏ„Î·Ï„Î±"
+  title: "Επιλέξτε μια δεξιότητα"
   page:
-    name: "<yellow>Î£ÎµÎ»Î¯Î´Î± %page%/%max_page%</yellow>"
+    name: "<yellow>Σελίδα %page%/%max_page%</yellow>"
     lore:
-      - "<gray>%items_count% ÎºÎ±Ï„Î±Ï‡Ï‰ÏÎ®ÏƒÎµÎ¹Ï‚ Î´ÎµÎ¾Î¹Î¿Ï„Î®Ï„Ï‰Î½ ÏƒÏ„Î· Î»Î¯ÏƒÏ„Î±.</gray>"
+      - "<gray>%items_count% καταχωρήσεις δεξιοτήτων στη λίστα.</gray>"
   summary:
-    name: "<gold> Î•Ï€Î¹Î»Î¿Î³Î® Î´ÎµÎ¾Î¹Î¿Ï„Î®Ï„Ï‰Î½</gold>"
+    name: "<gold> Επιλογή δεξιοτήτων</gold>"
     lore:
-      - "<gray>AÎ”Î¹Î±Î¸Î­ÏƒÎ¹Î¼ÎµÏ‚ Î´ÎµÎ¾Î¹ÏŒÏ„Î·Ï„ÎµÏ‚: %skill_count%</gray>"
-      - "<yellow>Î•Ï€Î¹Î»Î­Î¾Ï„Îµ Î¼Î¯Î± Î¹ÎºÎ±Î½ÏŒÏ„Î·Ï„Î± Î³Î¹Î± Î½Î± ÎºÎ±Ï„Î±Î½Î±Î»ÏŽÏƒÎµÏ„Îµ Ï„Î¿ cookie.</yellow>"
+      - "<gray>AΔιαθέσιμες δεξιότητες: %skill_count%</gray>"
+      - "<yellow>Επιλέξτε μία ικανότητα για να καταναλώσετε το cookie.</yellow>"
   empty:
-    name: "<red>Î”ÎµÎ½ Ï…Ï€Î¬ÏÏ‡Î¿Ï…Î½ Î´Î¹Î±Î¸Î­ÏƒÎ¹Î¼ÎµÏ‚ Î´ÎµÎ¾Î¹ÏŒÏ„Î·Ï„ÎµÏ‚</red>"
+    name: "<red>Δεν υπάρχουν διαθέσιμες δεξιότητες</red>"
     lore:
-      - "<gray> Î”ÎµÎ½ Ï…Ï€Î¬ÏÏ‡Î¿Ï…Î½ Î´Î¹Î±Î¸Î­ÏƒÎ¹Î¼ÎµÏ‚ Ï…Ï€Î¿ÏƒÏ„Î·ÏÎ¹Î¶ÏŒÎ¼ÎµÎ½ÎµÏ‚ Î´ÎµÎ¾Î¹ÏŒÏ„Î·Ï„ÎµÏ‚ Î±Ï…Ï„Î®Î½ Ï„Î· ÏƒÏ„Î¹Î³Î¼Î®.</gray>"
+      - "<gray> Δεν υπάρχουν διαθέσιμες υποστηριζόμενες δεξιότητες αυτήν τη στιγμή.</gray>"
   entry:
     name: "<green>%skill_name%</green>"
     level_lore:
       - "<gray>Plugin: %plugin_name%</gray>"
-      - "<gray>Î¤ÏÎ­Ï‡Î¿Î½ ÎµÏ€Î¯Ï€ÎµÎ´Î¿: %current_level%</gray>"
-      - "<yellow>ÎšÎ¬Î½Ï„Îµ ÎºÎ»Î¹Îº Î³Î¹Î± Î½Î± ÎºÎµÏÎ´Î¯ÏƒÎµÏ„Îµ 1 ÎµÏ€Î¯Ï€ÎµÎ´Î¿ ÏƒÎµ Î±Ï…Ï„Î®Î½ Ï„Î·Î½ Î¹ÎºÎ±Î½ÏŒÏ„Î·Ï„Î±.</yellow>"
+      - "<gray>Τρέχον επίπεδο: %current_level%</gray>"
+      - "<yellow>Κάντε κλικ για να κερδίσετε 1 επίπεδο σε αυτήν την ικανότητα.</yellow>"
     boost_lore:
       - "<gray>Plugin: %plugin_name%</gray>"
-      - "<gray>Î¤ÏÎ­Ï‡Î¿Î½ ÎµÏ€Î¯Ï€ÎµÎ´Î¿: %current_level%</gray>"
-      - "<gray>Boost: +%rate_percent%% XP Î³Î¹Î± %duration_minutes% Î»ÎµÏ€Ï„Î¬ </gray>"
-      - "<yellow>ÎšÎ¬Î½Ï„Îµ ÎºÎ»Î¹Îº Î³Î¹Î± Î½Î± ÎµÎ½ÎµÏÎ³Î¿Ï€Î¿Î¹Î®ÏƒÎµÏ„Îµ Î±Ï…Ï„Î®Î½ Ï„Î·Î½ ÎµÎ½Î¯ÏƒÏ‡Ï…ÏƒÎ· Î´ÎµÎ¾Î¹Î¿Ï„Î®Ï„Ï‰Î½.</yellow>"
+      - "<gray>Τρέχον επίπεδο: %current_level%</gray>"
+      - "<gray>Boost: +%rate_percent%% XP για %duration_minutes% λεπτά </gray>"
+      - "<yellow>Κάντε κλικ για να ενεργοποιήσετε αυτήν την ενίσχυση δεξιοτήτων.</yellow>"
 
 rc_claim_droplet_jobs_ui:
-  title: "Î•Ï€Î¹Î»Î­Î¾Ï„Îµ Î¼Î¹Î± ÎµÏÎ³Î±ÏƒÎ¯Î±"
+  title: "Επιλέξτε μια εργασία"
   page:
-    name: "<yellow>Î£ÎµÎ»Î¯Î´Î± %page%/%max_page%</yellow>"
+    name: "<yellow>Σελίδα %page%/%max_page%</yellow>"
     lore:
-      - "<gray>%items_count% ÎºÎ±Ï„Î±Ï‡Ï‰ÏÎ®ÏƒÎµÎ¹Ï‚ ÎµÏÎ³Î±ÏƒÎ¹ÏŽÎ½ ÏƒÏ„Î· Î»Î¯ÏƒÏ„Î±.</gray>"
+      - "<gray>%items_count% καταχωρήσεις εργασιών στη λίστα.</gray>"
   summary:
-    name: "<gold>Î•Ï€Î¹Î»Î¿Î³Î® ÎµÏÎ³Î±ÏƒÎ¯Î±Ï‚</gold>"
+    name: "<gold>Επιλογή εργασίας</gold>"
     lore:
-      - "<gray>AÎ”Î¹Î±Î¸Î­ÏƒÎ¹Î¼ÎµÏ‚ ÎµÏÎ³Î±ÏƒÎ¯ÎµÏ‚: %job_count%</gray>"
-      - "<yellow>Î•Ï€Î¹Î»Î­Î¾Ï„Îµ Î¼Î¯Î± ÎµÏÎ³Î±ÏƒÎ¯Î± Î³Î¹Î± Î½Î± ÎºÎ±Ï„Î±Î½Î±Î»ÏŽÏƒÎµÏ„Îµ Ï„Î¿ cookie.</yellow>"
+      - "<gray>AΔιαθέσιμες εργασίες: %job_count%</gray>"
+      - "<yellow>Επιλέξτε μία εργασία για να καταναλώσετε το cookie.</yellow>"
   empty:
-    name: "<red>Î”ÎµÎ½ Ï…Ï€Î¬ÏÏ‡Î¿Ï…Î½ Î´Î¹Î±Î¸Î­ÏƒÎ¹Î¼ÎµÏ‚ Î¸Î­ÏƒÎµÎ¹Ï‚ ÎµÏÎ³Î±ÏƒÎ¯Î±Ï‚</red>"
+    name: "<red>Δεν υπάρχουν διαθέσιμες θέσεις εργασίας</red>"
     lore:
-      - "<gray> Î”ÎµÎ½ Ï…Ï€Î¬ÏÏ‡Î¿Ï…Î½ Î´Î¹Î±Î¸Î­ÏƒÎ¹Î¼ÎµÏ‚ Ï…Ï€Î¿ÏƒÏ„Î·ÏÎ¹Î¶ÏŒÎ¼ÎµÎ½ÎµÏ‚ ÎµÏÎ³Î±ÏƒÎ¯ÎµÏ‚ Î±Ï…Ï„Î®Î½ Ï„Î· ÏƒÏ„Î¹Î³Î¼Î®.</gray>"
+      - "<gray> Δεν υπάρχουν διαθέσιμες υποστηριζόμενες εργασίες αυτήν τη στιγμή.</gray>"
   entry:
     name: "<green>%job_name%</green>"
     level_lore:
       - "<gray>Plugin: %plugin_name%</gray>"
-      - "<gray>Î¤ÏÎ­Ï‡Î¿Î½ ÎµÏ€Î¯Ï€ÎµÎ´Î¿: %current_level%</gray>"
-      - "<yellow>ÎšÎ¬Î½Ï„Îµ ÎºÎ»Î¹Îº Î³Î¹Î± Î½Î± ÎºÎµÏÎ´Î¯ÏƒÎµÏ„Îµ 1 ÎµÏ€Î¯Ï€ÎµÎ´Î¿ ÏƒÎµ Î±Ï…Ï„Î®Î½ Ï„Î·Î½ ÎµÏÎ³Î±ÏƒÎ¯Î±.</yellow>"
+      - "<gray>Τρέχον επίπεδο: %current_level%</gray>"
+      - "<yellow>Κάντε κλικ για να κερδίσετε 1 επίπεδο σε αυτήν την εργασία.</yellow>"
     xp_boost_lore:
       - "<gray>Plugin: %plugin_name%</gray>"
-      - "<gray>Î¤ÏÎ­Ï‡Î¿Î½ ÎµÏ€Î¯Ï€ÎµÎ´Î¿: %current_level%</gray>"
-      - "<gray>Boost: +%rate_percent%% XP Î³Î¹Î± %duration_minutes% Î»ÎµÏ€Ï„Î¬ </gray>"
-      - "<yellow>ÎšÎ¬Î½Ï„Îµ ÎºÎ»Î¹Îº Î³Î¹Î± Î½Î± ÎµÎ½ÎµÏÎ³Î¿Ï€Î¿Î¹Î®ÏƒÎµÏ„Îµ Î±Ï…Ï„Î®Î½ Ï„Î·Î½ ÎµÏÎ³Î±ÏƒÎ¯Î± XP boost.</yellow>"
+      - "<gray>Τρέχον επίπεδο: %current_level%</gray>"
+      - "<gray>Boost: +%rate_percent%% XP για %duration_minutes% λεπτά </gray>"
+      - "<yellow>Κάντε κλικ για να ενεργοποιήσετε αυτήν την εργασία XP boost.</yellow>"
     vault_boost_lore:
       - "<gray>Plugin: %plugin_name%</gray>"
-      - "<gray>Î¤ÏÎ­Ï‡Î¿Î½ ÎµÏ€Î¯Ï€ÎµÎ´Î¿: %current_level%</gray>"
-      - "<gray>Boost: +%rate_percent%% Ï‡ÏÎ®Î¼Î±Ï„Î± Î³Î¹Î± %duration_minutes% Î»ÎµÏ€Ï„Î¬ </gray>"
-      - "<yellow>ÎšÎ¬Î½Ï„Îµ ÎºÎ»Î¹Îº Î³Î¹Î± Î½Î± ÎµÎ½ÎµÏÎ³Î¿Ï€Î¿Î¹Î®ÏƒÎµÏ„Îµ Î±Ï…Ï„Î®Î½ Ï„Î·Î½ ÎµÎ½Î¯ÏƒÏ‡Ï…ÏƒÎ· Ï‡ÏÎ·Î¼Î¬Ï„Ï‰Î½ ÎµÏÎ³Î±ÏƒÎ¯Î±Ï‚.</yellow>"
+      - "<gray>Τρέχον επίπεδο: %current_level%</gray>"
+      - "<gray>Boost: +%rate_percent%% χρήματα για %duration_minutes% λεπτά </gray>"
+      - "<yellow>Κάντε κλικ για να ενεργοποιήσετε αυτήν την ενίσχυση χρημάτων εργασίας.</yellow>"
 
 general:
-  no_permission: "<red>Î”ÎµÎ½ Î­Ï‡ÎµÏ„Îµ Î¬Î´ÎµÎ¹Î± Î½Î± Ï‡ÏÎ·ÏƒÎ¹Î¼Î¿Ï€Î¿Î¹Î®ÏƒÎµÏ„Îµ Î±Ï…Ï„Î® Ï„Î·Î½ ÎµÎ½Ï„Î¿Î»Î®.</red>"
+  no_permission: "<red>Δεν έχετε άδεια να χρησιμοποιήσετε αυτή την εντολή.</red>"
 
 

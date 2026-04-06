@@ -1,25 +1,25 @@
-﻿# ÄŒeskÃ© pÅ™eklady pro integraci RCore Central
+# České překlady pro integraci RCore Central
 
 prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
 
 rcconnect:
-  usage: "<gray>UÅ¾itÃ­: /rc <connect &lt;api-key&gt;|disconnect|claim droplets|store update></gray>"
-  usage_no_claim: "<gray>UÅ¾itÃ­: /rc <connect &lt;api-key&gt;|disconnect></gray>"
-  connecting: "<yellow>PÅ™ipojovÃ¡nÃ­ k RaindropCentral...</yellow>"
-  success: "<green>PÅ™ipojenÃ­ k RaindropCentral bylo ÃºspÄ›Å¡nÃ©!</green> <gray>Server nynÃ­ odesÃ­lÃ¡ heartbeat signÃ¡ly.</gray>"
+  usage: "<gray>Užití: /rc <connect &lt;api-key&gt;|disconnect|claim droplets|store update></gray>"
+  usage_no_claim: "<gray>Užití: /rc <connect &lt;api-key&gt;|disconnect></gray>"
+  connecting: "<yellow>Připojování k RaindropCentral...</yellow>"
+  success: "<green>Připojení k RaindropCentral bylo úspěšné!</green> <gray>Server nyní odesílá heartbeat signály.</gray>"
   error:
-    invalid_key: "<red>NeplatnÃ½ formÃ¡t API klÃ­Äe. API klÃ­Äe musÃ­ mÃ­t 32-128 alfanumerickÃ½ch znakÅ¯.</red>"
-    uuid_mismatch: "<red>Tento API klÃ­Ä patÅ™Ã­ k jinÃ©mu ÃºÄtu Minecraft.</red>"
-    already_connected: "<yellow>Server je jiÅ¾ pÅ™ipojen.</yellow> <gray>Nejprve pouÅ¾ijte /rc disconnect.</gray>"
-    network: "<red>Chyba sÃ­tÄ›: %error%</red>"
+    invalid_key: "<red>Neplatný formát API klíče. API klíče musí mít 32-128 alfanumerických znaků.</red>"
+    uuid_mismatch: "<red>Tento API klíč patří k jinému účtu Minecraft.</red>"
+    already_connected: "<yellow>Server je již připojen.</yellow> <gray>Nejprve použijte /rc disconnect.</gray>"
+    network: "<red>Chyba sítě: %error%</red>"
 
 rcdisconnect:
-  disconnecting: "<yellow>OdpojovÃ¡nÃ­ od RaindropCentral...</yellow>"
-  success: "<green>OdpojenÃ­ od RaindropCentral probÄ›hlo ÃºspÄ›Å¡nÄ›.</green>"
+  disconnecting: "<yellow>Odpojování od RaindropCentral...</yellow>"
+  success: "<green>Odpojení od RaindropCentral proběhlo úspěšně.</green>"
   error:
-    not_connected: "<red>Server nenÃ­ pÅ™ipojen k RaindropCentral.</red>"
-    failed: "<red>OdpojenÃ­ se nezdaÅ™ilo. Zkuste to prosÃ­m znovu.</red>"
-    network: "<red>Chyba sÃ­tÄ›: %error%</red>"
+    not_connected: "<red>Server není připojen k RaindropCentral.</red>"
+    failed: "<red>Odpojení se nezdařilo. Zkuste to prosím znovu.</red>"
+    network: "<red>Chyba sítě: %error%</red>"
 
 rcstore:
   updating: "<yellow>Refreshing the local droplet-store allowlist from RaindropCentral...</yellow>"
@@ -29,152 +29,152 @@ rcstore:
     failed: "<red>Failed to refresh the droplet-store allowlist: %error%</red>"
     using_cache: "<yellow>Failed to refresh the droplet-store allowlist, but the last cached list is still being used: %error%</yellow>"
 rcclaim:
-  loading: "<yellow>Kontrola RaindropCentral kvÅ¯li nevyzvednutÃ½m odmÄ›nÃ¡m za kapky...</yellow>"
-  claiming_item: "<yellow>NÃ¡rokovÃ¡nÃ­ %item_name% od RaindropCentral...</yellow>"
+  loading: "<yellow>Kontrola RaindropCentral kvůli nevyzvednutým odměnám za kapky...</yellow>"
+  claiming_item: "<yellow>Nárokování %item_name% od RaindropCentral...</yellow>"
   success:
-    claimed: "<green>NÃ¡rokovali jste %item_name%.</green>"
-    claimed_skill_targeted: "<green>NÃ¡rokovali jste %item_name%.</green> <gray>KliknutÃ­m pravÃ½m tlaÄÃ­tkem na soubor cookie vyberte dovednost.</gray>"
-    claimed_job_targeted: "<green>NÃ¡rokovali jste %item_name%.</green> <gray>KliknutÃ­m pravÃ½m tlaÄÃ­tkem na soubor cookie vyberte Ãºlohu.</gray>"
-    claimed_activate: "<green>NÃ¡rokovali jste %item_name%.</green> <gray>Aktivujte soubor cookie kliknutÃ­m pravÃ½m tlaÄÃ­tkem.</gray>"
-    skill_granted: "<green>UdÄ›lena 1 ÃºroveÅˆ v %skill_name%.</green> <gray>Szdroj: %plugin_name%.</gray>"
-    job_granted: "<green>UdÄ›lena 1 ÃºroveÅˆ v %job_name%.</green> <gray>Szdroj: %plugin_name%.</gray>"
-    skill_xp_boost_applied: "<green>AktivovÃ¡no +%rate_percent%% dovednostÃ­ XP pro %skill_name%.</green> <gray>Szdroj: %plugin_name%. DÃ©lka: %duration_minutes% minuta(y).</gray>"
-    skill_xp_boost_refreshed: "<green>Obnoveno +%rate_percent%% dovednostÃ­ XP pro %skill_name%.</green> <gray>Szdroj: %plugin_name%. Doba trvÃ¡nÃ­ resetovÃ¡na na %duration_minutes% minuta(y).</gray>"
-    job_xp_boost_applied: "<green>AktivovÃ¡no +%rate_percent%% Ãºloha XP pro %job_name%.</green> <gray>Szdroj: %plugin_name%. DÃ©lka: %duration_minutes% minuta(y).</gray>"
-    job_xp_boost_refreshed: "<green>Obnoveno +%rate_percent%% Ãºloha XP pro %job_name%.</green> <gray>Szdroj: %plugin_name%. Doba trvÃ¡nÃ­ resetovÃ¡na na %duration_minutes% minuta(y).</gray>"
-    job_vault_boost_applied: "<green>AktivovÃ¡no +%rate_percent%% penÃ­ze za prÃ¡ci pro %job_name%.</green> <gray>Szdroj: %plugin_name%. DÃ©lka: %duration_minutes% minuta(y).</gray>"
-    job_vault_boost_refreshed: "<green>Refreshed +%rate_percent%% pracovnÃ­ penÃ­ze pro %job_name%.</green> <gray>Szdroj: %plugin_name%. Doba trvÃ¡nÃ­ resetovÃ¡na na %duration_minutes% minuta(y).</gray>"
-    double_drop_boost_applied: "<green>AktivovanÃ© dvojitÃ© kapky.</green> <gray>TrvÃ¡nÃ­: %duration_minutes% minuta(y).</gray>"
-    double_drop_boost_refreshed: "<green>ObnovenÃ© dvojitÃ© kapky.</green> <gray>Doba trvÃ¡nÃ­ resetovÃ¡na na %duration_minutes% minuta(y).</gray>"
-    pending_delivery: "<green>DoruÄeno %count% ÄekajÃ­cÃ­ na kapkovou odmÄ›nu(y).</green>"
+    claimed: "<green>Nárokovali jste %item_name%.</green>"
+    claimed_skill_targeted: "<green>Nárokovali jste %item_name%.</green> <gray>Kliknutím pravým tlačítkem na soubor cookie vyberte dovednost.</gray>"
+    claimed_job_targeted: "<green>Nárokovali jste %item_name%.</green> <gray>Kliknutím pravým tlačítkem na soubor cookie vyberte úlohu.</gray>"
+    claimed_activate: "<green>Nárokovali jste %item_name%.</green> <gray>Aktivujte soubor cookie kliknutím pravým tlačítkem.</gray>"
+    skill_granted: "<green>Udělena 1 úroveň v %skill_name%.</green> <gray>Szdroj: %plugin_name%.</gray>"
+    job_granted: "<green>Udělena 1 úroveň v %job_name%.</green> <gray>Szdroj: %plugin_name%.</gray>"
+    skill_xp_boost_applied: "<green>Aktivováno +%rate_percent%% dovedností XP pro %skill_name%.</green> <gray>Szdroj: %plugin_name%. Délka: %duration_minutes% minuta(y).</gray>"
+    skill_xp_boost_refreshed: "<green>Obnoveno +%rate_percent%% dovedností XP pro %skill_name%.</green> <gray>Szdroj: %plugin_name%. Doba trvání resetována na %duration_minutes% minuta(y).</gray>"
+    job_xp_boost_applied: "<green>Aktivováno +%rate_percent%% úloha XP pro %job_name%.</green> <gray>Szdroj: %plugin_name%. Délka: %duration_minutes% minuta(y).</gray>"
+    job_xp_boost_refreshed: "<green>Obnoveno +%rate_percent%% úloha XP pro %job_name%.</green> <gray>Szdroj: %plugin_name%. Doba trvání resetována na %duration_minutes% minuta(y).</gray>"
+    job_vault_boost_applied: "<green>Aktivováno +%rate_percent%% peníze za práci pro %job_name%.</green> <gray>Szdroj: %plugin_name%. Délka: %duration_minutes% minuta(y).</gray>"
+    job_vault_boost_refreshed: "<green>Refreshed +%rate_percent%% pracovní peníze pro %job_name%.</green> <gray>Szdroj: %plugin_name%. Doba trvání resetována na %duration_minutes% minuta(y).</gray>"
+    double_drop_boost_applied: "<green>Aktivované dvojité kapky.</green> <gray>Trvání: %duration_minutes% minuta(y).</gray>"
+    double_drop_boost_refreshed: "<green>Obnovené dvojité kapky.</green> <gray>Doba trvání resetována na %duration_minutes% minuta(y).</gray>"
+    pending_delivery: "<green>Doručeno %count% čekající na kapkovou odměnu(y).</green>"
   error:
-    store_disabled: "<red>Tento server zakÃ¡zal /rc claim droplets.</red>"
-    not_connected: "<red>RCore musÃ­ bÃ½t pÅ™ipojen k backendu RaindropCentral, neÅ¾ budete moci nÃ¡rokovat kapky.</red>"
-    cooldown: "<yellow>PPoÄkejte prosÃ­m %seconds% sekundy, neÅ¾ znovu pouÅ¾ijete /rc claim droplets.</yellow>"
-    not_registered: "<red>VÃ¡Å¡ ÃºÄet Minecraft nenÃ­ propojen s ÃºÄtem RaindropCentral.</red>"
-    no_unclaimed: "<yellow>PrÃ¡vÄ› teÄ nemÃ¡te Å¾Ã¡dnÃ© nevyzvednutÃ© kapkovÃ© odmÄ›ny.</yellow>"
-    api_unavailable: "<red>RaindropCentral prÃ¡vÄ› nenÃ­ k dispozici: %error%</red>"
-    menu_unavailable: "<red>NabÃ­dka nÃ¡roku na kapky nenÃ­ momentÃ¡lnÄ› k dispozici. Zkuste to znovu pozdÄ›ji.</red>"
-    item_disabled: "<red>Tento server zakÃ¡zal nÃ¡rokovÃ¡nÃ­ %item_name%.</red> <gray>Item ID: %item_code%</gray>"
-    unsupported_item: "<red>Tato kapkovÃ¡ odmÄ›na zatÃ­m nenÃ­ na tomto serveru podporovÃ¡na.</red> <gray>Item ID: %item_code%</gray>"
-    no_supported_skills: "<red>Tento server aktuÃ¡lnÄ› nemÃ¡ podporovanÃ½ plugin dovednostÃ­ pro tuto odmÄ›nu.</red>"
-    no_supported_jobs: "<red>Tento server aktuÃ¡lnÄ› nemÃ¡ podporovanÃ½ plugin Ãºloh pro tuto odmÄ›nu.</red>"
-    inventory_full: "<red>PÅ™ed uplatnÄ›nÃ­m tÃ©to odmÄ›ny potÅ™ebujete alespoÅˆ jeden volnÃ½ inventÃ¡Å™.</red>"
-    claim_in_progress: "<yellow>Tento nÃ¡rok jiÅ¾ probÃ­hÃ¡. PoÄkejte prosÃ­m, aÅ¾ backend odpovÃ­.</yellow>"
-    claim_failed: "<red>NepodaÅ™ilo se zÃ­skat odmÄ›nu ve formÄ› kapky: %error%</red>"
-    already_claimed: "<yellow>Tato kapkovÃ¡ odmÄ›na jiÅ¾ byla nÃ¡rokovÃ¡na.</yellow>"
-    purchase_unavailable: "<red>Tuto kapkovou odmÄ›nu jiÅ¾ nelze nÃ¡rokovat.</red>"
-    cookie_missing: "<red>Soubor cookie droplet nebyl ve vaÅ¡em inventÃ¡Å™i nalezen.</red>"
-    skill_grant_failed: "<red>NepodaÅ™ilo se udÄ›lit 1 ÃºroveÅˆ v %skill_name%.</red>"
-    job_grant_failed: "<red>NepodaÅ™ilo se udÄ›lit 1 ÃºroveÅˆ v %job_name%.</red>"
-    boost_activation_failed: "<red>NepodaÅ™ilo se aktivovat %item_name%.</red>"
-    unsupported_integration: "<red>PoÅ¾adovanÃ¡ integrace pro tento droplet cookie nenÃ­ momentÃ¡lnÄ› k dispozici.</red>"
-    boost_expired: "<yellow>Toto zvÃ½Å¡enÃ­ cookie droplet vyprÅ¡elo.</yellow>"
+    store_disabled: "<red>Tento server zakázal /rc claim droplets.</red>"
+    not_connected: "<red>RCore musí být připojen k backendu RaindropCentral, než budete moci nárokovat kapky.</red>"
+    cooldown: "<yellow>PPočkejte prosím %seconds% sekundy, než znovu použijete /rc claim droplets.</yellow>"
+    not_registered: "<red>Váš účet Minecraft není propojen s účtem RaindropCentral.</red>"
+    no_unclaimed: "<yellow>Právě teď nemáte žádné nevyzvednuté kapkové odměny.</yellow>"
+    api_unavailable: "<red>RaindropCentral právě není k dispozici: %error%</red>"
+    menu_unavailable: "<red>Nabídka nároku na kapky není momentálně k dispozici. Zkuste to znovu později.</red>"
+    item_disabled: "<red>Tento server zakázal nárokování %item_name%.</red> <gray>Item ID: %item_code%</gray>"
+    unsupported_item: "<red>Tato kapková odměna zatím není na tomto serveru podporována.</red> <gray>Item ID: %item_code%</gray>"
+    no_supported_skills: "<red>Tento server aktuálně nemá podporovaný plugin dovedností pro tuto odměnu.</red>"
+    no_supported_jobs: "<red>Tento server aktuálně nemá podporovaný plugin úloh pro tuto odměnu.</red>"
+    inventory_full: "<red>Před uplatněním této odměny potřebujete alespoň jeden volný inventář.</red>"
+    claim_in_progress: "<yellow>Tento nárok již probíhá. Počkejte prosím, až backend odpoví.</yellow>"
+    claim_failed: "<red>Nepodařilo se získat odměnu ve formě kapky: %error%</red>"
+    already_claimed: "<yellow>Tato kapková odměna již byla nárokována.</yellow>"
+    purchase_unavailable: "<red>Tuto kapkovou odměnu již nelze nárokovat.</red>"
+    cookie_missing: "<red>Soubor cookie droplet nebyl ve vašem inventáři nalezen.</red>"
+    skill_grant_failed: "<red>Nepodařilo se udělit 1 úroveň v %skill_name%.</red>"
+    job_grant_failed: "<red>Nepodařilo se udělit 1 úroveň v %job_name%.</red>"
+    boost_activation_failed: "<red>Nepodařilo se aktivovat %item_name%.</red>"
+    unsupported_integration: "<red>Požadovaná integrace pro tento droplet cookie není momentálně k dispozici.</red>"
+    boost_expired: "<yellow>Toto zvýšení cookie droplet vypršelo.</yellow>"
 
 rc_claim_droplets_ui:
-  title: "NevyzvednutÃ© kapky"
+  title: "Nevyzvednuté kapky"
   page:
     name: "<yellow>Strana %page%/%max_page%</yellow>"
     lore:
-      - "Jsou uvedeny <gray>%items_count% nÃ¡rokovatelnÃ© poloÅ¾ky.</gray>"
+      - "Jsou uvedeny <gray>%items_count% nárokovatelné položky.</gray>"
   summary:
-    name: "<gold> Fronta nÃ¡rokÅ¯</gold>"
+    name: "<gold> Fronta nároků</gold>"
     lore:
-      - "<gray>NevyzvednutÃ© poloÅ¾ky: %item_count%</gray>"
-      - "<gray>SpodporovÃ¡no na tomto serveru: %supported_count%</gray>"
-      - "<yellow>KliknutÃ­m na podporovanou odmÄ›nu ji vyzvednÄ›te.</yellow>"
+      - "<gray>Nevyzvednuté položky: %item_count%</gray>"
+      - "<gray>Spodporováno na tomto serveru: %supported_count%</gray>"
+      - "<yellow>Kliknutím na podporovanou odměnu ji vyzvedněte.</yellow>"
   empty:
-    name: "<red>Å½Ã¡dnÃ© nevyzvednutÃ© odmÄ›ny</red>"
+    name: "<red>Žádné nevyzvednuté odměny</red>"
     lore:
-      - "<gray>MomentÃ¡lnÄ› nemÃ¡te Å¾Ã¡dnÃ© nevyzvednutÃ© kapkovÃ© odmÄ›ny.</gray>"
+      - "<gray>Momentálně nemáte žádné nevyzvednuté kapkové odměny.</gray>"
   entry:
     supported:
       name: "<green>%item_name%</green>"
       lore:
-        - "ID poloÅ¾ky <gray>I: %item_code%</gray>"
-        - "<gray>SvyuÅ¾it: %amount_spent% kapky</gray>"
-        - "<yellow>KliknutÃ­m zÃ­skÃ¡te tuto odmÄ›nu.</yellow>"
+        - "ID položky <gray>I: %item_code%</gray>"
+        - "<gray>Svyužit: %amount_spent% kapky</gray>"
+        - "<yellow>Kliknutím získáte tuto odměnu.</yellow>"
     item_disabled:
       name: "<red>%item_name%</red>"
       lore:
-        - "ID poloÅ¾ky <gray>I: %item_code%</gray>"
-        - "<red>Tento server zakÃ¡zal nÃ¡rokovÃ¡nÃ­ tÃ©to odmÄ›ny.</red>"
+        - "ID položky <gray>I: %item_code%</gray>"
+        - "<red>Tento server zakázal nárokování této odměny.</red>"
     unsupported_item:
       name: "<red>%item_name%</red>"
       lore:
-        - "ID poloÅ¾ky <gray>I: %item_code%</gray>"
-        - "<red>Tato odmÄ›na nenÃ­ na tomto serveru podporovÃ¡na.</red>"
+        - "ID položky <gray>I: %item_code%</gray>"
+        - "<red>Tato odměna není na tomto serveru podporována.</red>"
     no_skills:
       name: "<red>%item_name%</red>"
       lore:
-        - "ID poloÅ¾ky <gray>I: %item_code%</gray>"
-        - "<red>Pro tuto odmÄ›nu nenÃ­ nainstalovÃ¡n Å¾Ã¡dnÃ½ podporovanÃ½ plugin dovednostÃ­.</red>"
+        - "ID položky <gray>I: %item_code%</gray>"
+        - "<red>Pro tuto odměnu není nainstalován žádný podporovaný plugin dovedností.</red>"
     no_jobs:
       name: "<red>%item_name%</red>"
       lore:
-        - "ID poloÅ¾ky <gray>I: %item_code%</gray>"
-        - "<red>Pro tuto odmÄ›nu nenÃ­ nainstalovÃ¡n Å¾Ã¡dnÃ½ podporovanÃ½ plugin Ãºloh.</red>"
+        - "ID položky <gray>I: %item_code%</gray>"
+        - "<red>Pro tuto odměnu není nainstalován žádný podporovaný plugin úloh.</red>"
 
 rc_claim_droplet_skills_ui:
   title: "Vyberte dovednost"
   page:
     name: "<yellow>Strana %page%/%max_page%</yellow>"
     lore:
-      - "Jsou uvedeny poloÅ¾ky dovednostÃ­ <gray>%items_count%.</gray>"
+      - "Jsou uvedeny položky dovedností <gray>%items_count%.</gray>"
   summary:
-    name: "<gold>SVÃ½bÄ›r dovednostÃ­</gold>"
+    name: "<gold>SVýběr dovedností</gold>"
     lore:
-      - "<gray>ADostupnÃ© dovednosti: %skill_count%</gray>"
+      - "<gray>ADostupné dovednosti: %skill_count%</gray>"
       - "<yellow>Vyberte jednu dovednost ke konzumaci cookie.</yellow>"
   empty:
-    name: "<red>Å½Ã¡dnÃ© dovednosti k dispozici</red>"
+    name: "<red>Žádné dovednosti k dispozici</red>"
     lore:
-      - "<gray>NynÃ­ nejsou dostupnÃ© Å¾Ã¡dnÃ© podporovanÃ© dovednosti.</gray>"
+      - "<gray>Nyní nejsou dostupné žádné podporované dovednosti.</gray>"
   entry:
     name: "<green>%skill_name%</green>"
     level_lore:
       - "Plugin <gray>P: %plugin_name%</gray>"
-      - "<gray>AktuÃ¡lnÃ­ ÃºroveÅˆ: %current_level%</gray>"
-      - "<yellow>KliknutÃ­m zÃ­skÃ¡te 1 ÃºroveÅˆ v tÃ©to dovednosti.</yellow>"
+      - "<gray>Aktuální úroveň: %current_level%</gray>"
+      - "<yellow>Kliknutím získáte 1 úroveň v této dovednosti.</yellow>"
     boost_lore:
       - "Plugin <gray>P: %plugin_name%</gray>"
-      - "<gray>AktuÃ¡lnÃ­ ÃºroveÅˆ: %current_level%</gray>"
+      - "<gray>Aktuální úroveň: %current_level%</gray>"
       - "<gray>Boost: +%rate_percent%% XP za %duration_minutes% minut(y)</gray>"
-      - "<yellow>KliknutÃ­m aktivujete toto posÃ­lenÃ­ dovednosti.</yellow>"
+      - "<yellow>Kliknutím aktivujete toto posílení dovednosti.</yellow>"
 
 rc_claim_droplet_jobs_ui:
   title: "Vyberte Job"
   page:
     name: "<yellow>Strana %page%/%max_page%</yellow>"
     lore:
-      - "Jsou uvedeny poloÅ¾ky <gray>%items_count% Ãºloh.</gray>"
+      - "Jsou uvedeny položky <gray>%items_count% úloh.</gray>"
   summary:
-    name: "<gold>VÃ½bÄ›r prÃ¡ce</gold>"
+    name: "<gold>Výběr práce</gold>"
     lore:
-      - "<gray>ADostupnÃ¡ pracovnÃ­ mÃ­sta: %job_count%</gray>"
-      - "<yellow>Vyberte jednu Ãºlohu ke konzumaci souboru cookie.</yellow>"
+      - "<gray>ADostupná pracovní místa: %job_count%</gray>"
+      - "<yellow>Vyberte jednu úlohu ke konzumaci souboru cookie.</yellow>"
   empty:
-    name: "<red>Å½Ã¡dnÃ© dostupnÃ© pracovnÃ­ pozice</red>"
+    name: "<red>Žádné dostupné pracovní pozice</red>"
     lore:
-      - "<gray>NynÃ­ nejsou dostupnÃ© Å¾Ã¡dnÃ© podporovanÃ© Ãºlohy.</gray>"
+      - "<gray>Nyní nejsou dostupné žádné podporované úlohy.</gray>"
   entry:
     name: "<green>%job_name%</green>"
     level_lore:
       - "Plugin <gray>P: %plugin_name%</gray>"
-      - "<gray>AktuÃ¡lnÃ­ ÃºroveÅˆ: %current_level%</gray>"
-      - "<yellow>KliknutÃ­m zÃ­skÃ¡te 1 ÃºroveÅˆ v tÃ©to prÃ¡ci.</yellow>"
+      - "<gray>Aktuální úroveň: %current_level%</gray>"
+      - "<yellow>Kliknutím získáte 1 úroveň v této práci.</yellow>"
     xp_boost_lore:
       - "Plugin <gray>P: %plugin_name%</gray>"
-      - "<gray>AktuÃ¡lnÃ­ ÃºroveÅˆ: %current_level%</gray>"
+      - "<gray>Aktuální úroveň: %current_level%</gray>"
       - "<gray>Boost: +%rate_percent%% XP za %duration_minutes% minut(y)</gray>"
-      - "<yellow>KliknutÃ­m aktivujete tuto Ãºlohu posÃ­lenÃ­ XP.</yellow>"
+      - "<yellow>Kliknutím aktivujete tuto úlohu posílení XP.</yellow>"
     vault_boost_lore:
       - "Plugin <gray>P: %plugin_name%</gray>"
-      - "<gray>AktuÃ¡lnÃ­ ÃºroveÅˆ: %current_level%</gray>"
-      - "<gray>Boost: +%rate_percent%% penÃ­ze za %duration_minutes% minut(y)</gray>"
-      - "<yellow>KliknutÃ­m aktivujete toto zvÃ½Å¡enÃ­ penÄ›z za prÃ¡ci.</yellow>"
+      - "<gray>Aktuální úroveň: %current_level%</gray>"
+      - "<gray>Boost: +%rate_percent%% peníze za %duration_minutes% minut(y)</gray>"
+      - "<yellow>Kliknutím aktivujete toto zvýšení peněz za práci.</yellow>"
 
 general:
-  no_permission: "<red>NemÃ¡te oprÃ¡vnÄ›nÃ­ pouÅ¾Ã­t tento pÅ™Ã­kaz.</red>"
+  no_permission: "<red>Nemáte oprávnění použít tento příkaz.</red>"
 
 

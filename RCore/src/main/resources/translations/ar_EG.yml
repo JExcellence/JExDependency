@@ -1,25 +1,25 @@
-﻿# Ø§Ù„ØªØ±Ø¬Ù…Ø§Øª Ø§Ù„Ù…ØµØ±ÙŠØ© Ø§Ù„Ø¹Ø±Ø¨ÙŠØ© Ù„ØªÙƒØ§Ù…Ù„ RCore Central
+# الترجمات المصرية العربية لتكامل RCore Central
 
 prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
 
 rcconnect:
-  usage: "<gray>Ø§Ù„Ø§Ø³ØªØ¹Ù…Ø§Ù„: /rc <connect &lt;api-key&gt;|disconnect|claim droplets|store update></gray>"
-  usage_no_claim: "<gray>Ø§Ù„Ø§Ø³ØªØ¹Ù…Ø§Ù„: /rc <connect &lt;api-key&gt;|disconnect></gray>"
-  connecting: "<yellow>Ø¬Ø§Ø±ÙŠ Ø§Ù„Ø§ØªØµØ§Ù„ Ø¨Ù€ RaindropCentral...</yellow>"
-  success: "<green>ØªÙ… Ø§Ù„Ø§ØªØµØ§Ù„ Ø¨Ù€ RaindropCentral Ø¨Ù†Ø¬Ø§Ø­!</green> <gray>Ø§Ù„Ø³ÙŠØ±ÙØ± Ø¨ÙŠØ¨Ø¹Øª Ù†Ø¨Ø¶Ø§Øª Ø¯Ù„ÙˆÙ‚ØªÙŠ.</gray>"
+  usage: "<gray>الاستعمال: /rc <connect &lt;api-key&gt;|disconnect|claim droplets|store update></gray>"
+  usage_no_claim: "<gray>الاستعمال: /rc <connect &lt;api-key&gt;|disconnect></gray>"
+  connecting: "<yellow>جاري الاتصال بـ RaindropCentral...</yellow>"
+  success: "<green>تم الاتصال بـ RaindropCentral بنجاح!</green> <gray>السيرفر بيبعت نبضات دلوقتي.</gray>"
   error:
-    invalid_key: "<red>ØµÙŠØºØ© Ù…ÙØªØ§Ø­ Ø§Ù„Ù€ API ØºÙŠØ± ØµØ­ÙŠØ­Ø©. Ù„Ø§Ø²Ù… Ù…ÙØªØ§Ø­ Ø§Ù„Ù€ API ÙŠÙƒÙˆÙ† Ù…Ù† 32 Ø¥Ù„Ù‰ 128 Ø­Ø±Ù Ø£Ùˆ Ø±Ù‚Ù….</red>"
-    uuid_mismatch: "<red>Ù…ÙØªØ§Ø­ Ø§Ù„Ù€ API Ø¯Ù‡ ØªØ§Ø¨Ø¹ Ù„Ø­Ø³Ø§Ø¨ Minecraft Ù…Ø®ØªÙ„Ù.</red>"
-    already_connected: "<yellow>Ø§Ù„Ø®Ø§Ø¯Ù… Ù…ØªØµÙ„ Ø¨Ø§Ù„ÙØ¹Ù„.</yellow> <gray>Ø§Ø³ØªØ®Ø¯Ù… /rc disconnect Ø£ÙˆÙ„Ø§Ù‹.</gray>"
-    network: "<red>Ø®Ø·Ø£ ÙÙŠ Ø§Ù„Ø´Ø¨ÙƒØ©: %error%</red>"
+    invalid_key: "<red>صيغة مفتاح الـ API غير صحيحة. لازم مفتاح الـ API يكون من 32 إلى 128 حرف أو رقم.</red>"
+    uuid_mismatch: "<red>مفتاح الـ API ده تابع لحساب Minecraft مختلف.</red>"
+    already_connected: "<yellow>الخادم متصل بالفعل.</yellow> <gray>استخدم /rc disconnect أولاً.</gray>"
+    network: "<red>خطأ في الشبكة: %error%</red>"
 
 rcdisconnect:
-  disconnecting: "<yellow>Ø¬Ø§Ø±ÙŠ Ù‚Ø·Ø¹ Ø§Ù„Ø§ØªØµØ§Ù„ Ù…Ø¹ RaindropCentral...</yellow>"
-  success: "<green>ØªÙ… Ù‚Ø·Ø¹ Ø§Ù„Ø§ØªØµØ§Ù„ Ù…Ø¹ RaindropCentral Ø¨Ù†Ø¬Ø§Ø­.</green>"
+  disconnecting: "<yellow>جاري قطع الاتصال مع RaindropCentral...</yellow>"
+  success: "<green>تم قطع الاتصال مع RaindropCentral بنجاح.</green>"
   error:
-    not_connected: "<red>Ø§Ù„Ø³ÙŠØ±ÙØ± Ù…Ø´ Ù…ØªØµÙ„ Ø¨Ù€ RaindropCentral.</red>"
-    failed: "<red>ÙØ´Ù„ Ù‚Ø·Ø¹ Ø§Ù„Ø§ØªØµØ§Ù„. Ø­Ø§ÙˆÙ„ ØªØ§Ù†ÙŠ.</red>"
-    network: "<red>Ø®Ø·Ø£ ÙÙŠ Ø§Ù„Ø´Ø¨ÙƒØ©: %error%</red>"
+    not_connected: "<red>السيرفر مش متصل بـ RaindropCentral.</red>"
+    failed: "<red>فشل قطع الاتصال. حاول تاني.</red>"
+    network: "<red>خطأ في الشبكة: %error%</red>"
 
 rcstore:
   updating: "<yellow>Refreshing the local droplet-store allowlist from RaindropCentral...</yellow>"
@@ -29,152 +29,152 @@ rcstore:
     failed: "<red>Failed to refresh the droplet-store allowlist: %error%</red>"
     using_cache: "<yellow>Failed to refresh the droplet-store allowlist, but the last cached list is still being used: %error%</yellow>"
 rcclaim:
-  loading: "<yellow>Ø§Ù„ØªØ­Ù‚Ù‚ Ù…Ù† RaindropCentral Ø¨Ø­Ø«Ù‹Ø§ Ø¹Ù† Ù…ÙƒØ§ÙØ¢Øª Ø§Ù„Ù‚Ø·Ø±Ø§Øª ØºÙŠØ± Ø§Ù„Ù…Ø·Ø§Ù„Ø¨ Ø¨Ù‡Ø§...</yellow>"
-  claiming_item: "<yellow> Ø§Ù„Ù…Ø·Ø§Ù„Ø¨Ø© Ø¨Ù€ %item_name% Ù…Ù† RaindropCentral...</yellow>"
+  loading: "<yellow>التحقق من RaindropCentral بحثًا عن مكافآت القطرات غير المطالب بها...</yellow>"
+  claiming_item: "<yellow> المطالبة بـ %item_name% من RaindropCentral...</yellow>"
   success:
-    claimed: "<green>Ù„Ù‚Ø¯ Ø·Ø§Ù„Ø¨Øª Ø¨Ù€ %item_name%.</green>"
-    claimed_skill_targeted: "<green> Ù„Ù‚Ø¯ Ø·Ø§Ù„Ø¨Øª Ø¨Ù€ %item_name%.</green> <gray> Ø§Ù†Ù‚Ø± Ø¨Ø²Ø± Ø§Ù„Ù…Ø§ÙˆØ³ Ø§Ù„Ø£ÙŠÙ…Ù† ÙÙˆÙ‚ Ù…Ù„Ù ØªØ¹Ø±ÙŠÙ Ø§Ù„Ø§Ø±ØªØ¨Ø§Ø· Ù„Ø§Ø®ØªÙŠØ§Ø± Ù…Ù‡Ø§Ø±Ø©.</gray>"
-    claimed_job_targeted: "<green> Ù„Ù‚Ø¯ Ø·Ø§Ù„Ø¨Øª Ø¨Ù€ %item_name%.</green> <gray> Ø§Ù†Ù‚Ø± Ø¨Ø²Ø± Ø§Ù„Ù…Ø§ÙˆØ³ Ø§Ù„Ø£ÙŠÙ…Ù† ÙÙˆÙ‚ Ù…Ù„Ù ØªØ¹Ø±ÙŠÙ Ø§Ù„Ø§Ø±ØªØ¨Ø§Ø· Ù„Ø§Ø®ØªÙŠØ§Ø± ÙˆØ¸ÙŠÙØ©.</gray>"
-    claimed_activate: "<green> Ù„Ù‚Ø¯ Ø·Ø§Ù„Ø¨Øª Ø¨Ù€ %item_name%.</green> <gray> Ø§Ù†Ù‚Ø± Ø¨Ø²Ø± Ø§Ù„Ù…Ø§ÙˆØ³ Ø§Ù„Ø£ÙŠÙ…Ù† ÙÙˆÙ‚ Ù…Ù„Ù ØªØ¹Ø±ÙŠÙ Ø§Ù„Ø§Ø±ØªØ¨Ø§Ø· Ù„ØªÙ†Ø´ÙŠØ·Ù‡.</gray>"
-    skill_granted: "<green>ØªÙ… Ù…Ù†Ø­ Ø§Ù„Ù…Ø³ØªÙˆÙ‰ Ø§Ù„Ø£ÙˆÙ„ ÙÙŠ %skill_name%.</green> <gray>Ø§Ù„Ù…ØµØ¯Ø±: %plugin_name%.</gray>"
-    job_granted: "<green>ØªÙ… Ù…Ù†Ø­ Ø§Ù„Ù…Ø³ØªÙˆÙ‰ Ø§Ù„Ø£ÙˆÙ„ ÙÙŠ %job_name%.</green> <gray>Ø§Ù„Ù…ØµØ¯Ø±: %plugin_name%.</gray>"
-    skill_xp_boost_applied: "<green> ØªÙ… ØªÙ†Ø´ÙŠØ· +%rate_percent%% Ù…Ù‡Ø§Ø±Ø© XP Ù„Ù€ %skill_name%.</green> <gray> Ø§Ù„Ù…ØµØ¯Ø±: %plugin_name%. Ø§Ù„Ù…Ø¯Ø©: %duration_minutes% Ø¯Ù‚ÙŠÙ‚Ø© (Ø¯Ù‚Ø§Ø¦Ù‚).</gray>"
-    skill_xp_boost_refreshed: "<green>ØªØ­Ø¯ÙŠØ« +%rate_percent%% Ù…Ù‡Ø§Ø±Ø© XP Ù„Ù€ %skill_name%.</green> <gray>Ø§Ù„Ù…ØµØ¯Ø±: %plugin_name%. ØªÙ… Ø¥Ø¹Ø§Ø¯Ø© ØªØ¹ÙŠÙŠÙ† Ø§Ù„Ù…Ø¯Ø© Ø¥Ù„Ù‰ Ø¯Ù‚ÙŠÙ‚Ø© (Ø¯Ù‚Ø§Ø¦Ù‚) %duration_minutes%.</gray>"
-    job_xp_boost_applied: "<green> ØªÙ… ØªÙ†Ø´ÙŠØ· + %rate_percent%% XP Ù„ÙˆØ¸ÙŠÙØ© %job_name%.</green> <gray> Ø§Ù„Ù…ØµØ¯Ø±: %plugin_name%. Ø§Ù„Ù…Ø¯Ø©: %duration_minutes% Ø¯Ù‚ÙŠÙ‚Ø© (Ø¯Ù‚Ø§Ø¦Ù‚).</gray>"
-    job_xp_boost_refreshed: "<green>ØªØ­Ø¯ÙŠØ« +%rate_percent%% XP Ù„ÙˆØ¸ÙŠÙØ© %job_name%.</green> <gray>Ø§Ù„Ù…ØµØ¯Ø±: %plugin_name%. ØªÙ… Ø¥Ø¹Ø§Ø¯Ø© ØªØ¹ÙŠÙŠÙ† Ø§Ù„Ù…Ø¯Ø© Ø¥Ù„Ù‰ Ø¯Ù‚ÙŠÙ‚Ø© (Ø¯Ù‚Ø§Ø¦Ù‚) %duration_minutes%.</gray>"
-    job_vault_boost_applied: "<green>Activated +%rate_percent%% Ø£Ù…ÙˆØ§Ù„ Ø§Ù„ÙˆØ¸ÙŠÙØ© Ù„Ù€ %job_name%.</green> <gray>Ø§Ù„Ù…ØµØ¯Ø±: %plugin_name%. Ø§Ù„Ù…Ø¯Ø©: %duration_minutes% Ø¯Ù‚ÙŠÙ‚Ø© (Ø¯Ù‚Ø§Ø¦Ù‚).</gray>"
-    job_vault_boost_refreshed: "<green>ØªÙ… ØªØ­Ø¯ÙŠØ« +%rate_percent%% Ø£Ù…ÙˆØ§Ù„ Ø§Ù„ÙˆØ¸ÙŠÙØ© Ù„Ù€ %job_name%.</green> <gray>Ø§Ù„Ù…ØµØ¯Ø±: %plugin_name%. ØªÙ… Ø¥Ø¹Ø§Ø¯Ø© ØªØ¹ÙŠÙŠÙ† Ø§Ù„Ù…Ø¯Ø© Ø¥Ù„Ù‰ Ø¯Ù‚ÙŠÙ‚Ø© (Ø¯Ù‚Ø§Ø¦Ù‚) %duration_minutes%.</gray>"
-    double_drop_boost_applied: "<green> Ù‚Ø·Ø±Ø§Øª Ù…Ø²Ø¯ÙˆØ¬Ø© Ù†Ø´Ø·Ø©.</green> <gray>Ø§Ù„Ù…Ø¯Ø©: %duration_minutes% Ø¯Ù‚ÙŠÙ‚Ø© (Ø¯Ù‚Ø§Ø¦Ù‚).</gray>"
-    double_drop_boost_refreshed: "<green> Ù‚Ø·Ø±Ø§Øª Ù…Ø²Ø¯ÙˆØ¬Ø© Ù…Ù†ØªØ¹Ø´Ø©.</green> <gray> Ø¥Ø¹Ø§Ø¯Ø© ØªØ¹ÙŠÙŠÙ† Ø§Ù„Ù…Ø¯Ø© Ø¥Ù„Ù‰ %duration_minutes% Ø¯Ù‚ÙŠÙ‚Ø© (Ø¯Ù‚Ø§Ø¦Ù‚).</gray>"
-    pending_delivery: "<green>ØªÙ… ØªØ³Ù„ÙŠÙ… %count% Ù„Ù…ÙƒØ§ÙØ£Ø© (Ù…ÙƒØ§ÙØ¢Øª) Ø§Ù„Ù‚Ø·Ø±Ø§Øª Ø§Ù„Ù…Ø¹Ù„Ù‚Ø©.</green>"
+    claimed: "<green>لقد طالبت بـ %item_name%.</green>"
+    claimed_skill_targeted: "<green> لقد طالبت بـ %item_name%.</green> <gray> انقر بزر الماوس الأيمن فوق ملف تعريف الارتباط لاختيار مهارة.</gray>"
+    claimed_job_targeted: "<green> لقد طالبت بـ %item_name%.</green> <gray> انقر بزر الماوس الأيمن فوق ملف تعريف الارتباط لاختيار وظيفة.</gray>"
+    claimed_activate: "<green> لقد طالبت بـ %item_name%.</green> <gray> انقر بزر الماوس الأيمن فوق ملف تعريف الارتباط لتنشيطه.</gray>"
+    skill_granted: "<green>تم منح المستوى الأول في %skill_name%.</green> <gray>المصدر: %plugin_name%.</gray>"
+    job_granted: "<green>تم منح المستوى الأول في %job_name%.</green> <gray>المصدر: %plugin_name%.</gray>"
+    skill_xp_boost_applied: "<green> تم تنشيط +%rate_percent%% مهارة XP لـ %skill_name%.</green> <gray> المصدر: %plugin_name%. المدة: %duration_minutes% دقيقة (دقائق).</gray>"
+    skill_xp_boost_refreshed: "<green>تحديث +%rate_percent%% مهارة XP لـ %skill_name%.</green> <gray>المصدر: %plugin_name%. تم إعادة تعيين المدة إلى دقيقة (دقائق) %duration_minutes%.</gray>"
+    job_xp_boost_applied: "<green> تم تنشيط + %rate_percent%% XP لوظيفة %job_name%.</green> <gray> المصدر: %plugin_name%. المدة: %duration_minutes% دقيقة (دقائق).</gray>"
+    job_xp_boost_refreshed: "<green>تحديث +%rate_percent%% XP لوظيفة %job_name%.</green> <gray>المصدر: %plugin_name%. تم إعادة تعيين المدة إلى دقيقة (دقائق) %duration_minutes%.</gray>"
+    job_vault_boost_applied: "<green>Activated +%rate_percent%% أموال الوظيفة لـ %job_name%.</green> <gray>المصدر: %plugin_name%. المدة: %duration_minutes% دقيقة (دقائق).</gray>"
+    job_vault_boost_refreshed: "<green>تم تحديث +%rate_percent%% أموال الوظيفة لـ %job_name%.</green> <gray>المصدر: %plugin_name%. تم إعادة تعيين المدة إلى دقيقة (دقائق) %duration_minutes%.</gray>"
+    double_drop_boost_applied: "<green> قطرات مزدوجة نشطة.</green> <gray>المدة: %duration_minutes% دقيقة (دقائق).</gray>"
+    double_drop_boost_refreshed: "<green> قطرات مزدوجة منتعشة.</green> <gray> إعادة تعيين المدة إلى %duration_minutes% دقيقة (دقائق).</gray>"
+    pending_delivery: "<green>تم تسليم %count% لمكافأة (مكافآت) القطرات المعلقة.</green>"
   error:
-    store_disabled: "<red> Ù„Ù‚Ø¯ Ù‚Ø§Ù… Ù‡Ø°Ø§ Ø§Ù„Ø®Ø§Ø¯Ù… Ø¨ØªØ¹Ø·ÙŠÙ„ /rc claim droplets.</red>"
-    not_connected: "ÙŠØ¬Ø¨ Ø£Ù† ØªÙƒÙˆÙ† <red>RCore Ù…ØªØµÙ„Ø© Ø¨Ø§Ù„ÙˆØ§Ø¬Ù‡Ø© Ø§Ù„Ø®Ù„ÙÙŠØ© RaindropCentral Ù‚Ø¨Ù„ Ø£Ù† ØªØªÙ…ÙƒÙ† Ù…Ù† Ø§Ù„Ù…Ø·Ø§Ù„Ø¨Ø© Ø¨Ø§Ù„Ù‚Ø·Ø±Ø§Øª.</red>"
-    cooldown: "<yellow>ÙŠØ±Ø¬Ù‰ Ø§Ù„Ø§Ù†ØªØ¸Ø§Ø± %seconds% Ø«Ø§Ù†ÙŠØ© (Ø«ÙˆØ§Ù†ÙŠ) Ù‚Ø¨Ù„ Ø§Ø³ØªØ®Ø¯Ø§Ù… /rc claim droplets Ù…Ø±Ø© Ø£Ø®Ø±Ù‰.</yellow>"
-    not_registered: "<red>Ø­Ø³Ø§Ø¨Ùƒ Minecraft ØºÙŠØ± Ù…Ø±ØªØ¨Ø· Ø¨Ø­Ø³Ø§Ø¨ RaindropCentral.</red>"
-    no_unclaimed: "<yellow> Ù„ÙŠØ³ Ù„Ø¯ÙŠÙƒ Ø£ÙŠ Ù…ÙƒØ§ÙØ¢Øª Ù‚Ø·Ø±Ø§Øª Ù„Ù… ÙŠØ·Ø§Ù„Ø¨ Ø¨Ù‡Ø§ Ø£Ø­Ø¯ ÙÙŠ Ø§Ù„ÙˆÙ‚Øª Ø§Ù„Ø­Ø§Ù„ÙŠ.</yellow>"
-    api_unavailable: "<red>RaindropCentral ØºÙŠØ± Ù…ØªØ§Ø­ Ø§Ù„Ø¢Ù†: %error%</red>"
-    menu_unavailable: "<red>Ù‚Ø§Ø¦Ù…Ø© Ø§Ù„Ù…Ø·Ø§Ù„Ø¨Ø© Ø¨Ø§Ù„Ù‚Ø·Ø±Ø§Øª ØºÙŠØ± Ù…ØªØ§Ø­Ø© Ø§Ù„Ø¢Ù†. ÙŠØ±Ø¬Ù‰ Ø§Ù„Ù…Ø­Ø§ÙˆÙ„Ø© Ù…Ø±Ø© Ø£Ø®Ø±Ù‰ Ù„Ø§Ø­Ù‚Ù‹Ø§.</red>"
-    item_disabled: "<red> Ù„Ù‚Ø¯ Ù‚Ø§Ù… Ù‡Ø°Ø§ Ø§Ù„Ø®Ø§Ø¯Ù… Ø¨ØªØ¹Ø·ÙŠÙ„ Ø§Ù„Ù…Ø·Ø§Ù„Ø¨Ø© Ø¨Ù€ %item_name%.</red> <gray> Ù…Ø¹Ø±Ù Ø§Ù„Ø¹Ù†ØµØ±: %item_code%</gray>"
-    unsupported_item: "<red> Ù‡Ø°Ù‡ Ø§Ù„Ù…ÙƒØ§ÙØ£Ø© Ø§Ù„ØµØºÙŠØ±Ø© ØºÙŠØ± Ù…Ø¯Ø¹ÙˆÙ…Ø© Ø¹Ù„Ù‰ Ù‡Ø°Ø§ Ø§Ù„Ø®Ø§Ø¯Ù… Ø­ØªÙ‰ Ø§Ù„Ø¢Ù†. </red> <gray> Ù…Ø¹Ø±Ù Ø§Ù„Ø¹Ù†ØµØ±: %item_code%</gray>"
-    no_supported_skills: "<red> Ù„Ø§ ÙŠØ­ØªÙˆÙŠ Ù‡Ø°Ø§ Ø§Ù„Ø®Ø§Ø¯Ù… Ø­Ø§Ù„ÙŠÙ‹Ø§ Ø¹Ù„Ù‰ Ù…ÙƒÙˆÙ† Ø¥Ø¶Ø§ÙÙŠ Ù…Ø¯Ø¹ÙˆÙ… Ù„Ù„Ù…Ù‡Ø§Ø±Ø§Øª Ù„Ù‡Ø°Ù‡ Ø§Ù„Ù…ÙƒØ§ÙØ£Ø©.</red>"
-    no_supported_jobs: "<red> Ù„Ø§ ÙŠØ­ØªÙˆÙŠ Ù‡Ø°Ø§ Ø§Ù„Ø®Ø§Ø¯Ù… Ø­Ø§Ù„ÙŠÙ‹Ø§ Ø¹Ù„Ù‰ Ù…ÙƒÙˆÙ† Ø¥Ø¶Ø§ÙÙŠ Ù…Ø¯Ø¹ÙˆÙ… Ù„Ù„Ù…Ù‡Ø§Ù… Ù„Ù‡Ø°Ù‡ Ø§Ù„Ù…ÙƒØ§ÙØ£Ø©.</red>"
-    inventory_full: "<red>ØªØ­ØªØ§Ø¬ Ø¥Ù„Ù‰ ÙØªØ­Ø© Ù…Ø®Ø²ÙˆÙ† Ù…Ø¬Ø§Ù†ÙŠØ© ÙˆØ§Ø­Ø¯Ø© Ø¹Ù„Ù‰ Ø§Ù„Ø£Ù‚Ù„ Ù‚Ø¨Ù„ Ø§Ù„Ù…Ø·Ø§Ù„Ø¨Ø© Ø¨Ù‡Ø°Ù‡ Ø§Ù„Ù…ÙƒØ§ÙØ£Ø©.</red>"
-    claim_in_progress: "<yellow>Ù‡Ø°Ù‡ Ø§Ù„Ù…Ø·Ø§Ù„Ø¨Ø© Ù‚ÙŠØ¯ Ø§Ù„ØªÙ‚Ø¯Ù… Ø¨Ø§Ù„ÙØ¹Ù„. ÙŠØ±Ø¬Ù‰ Ø§Ù„Ø§Ù†ØªØ¸Ø§Ø± Ø­ØªÙ‰ ØªØ³ØªØ¬ÙŠØ¨ Ø§Ù„ÙˆØ§Ø¬Ù‡Ø© Ø§Ù„Ø®Ù„ÙÙŠØ©.</yellow>"
-    claim_failed: "<red> ÙØ´Ù„ ÙÙŠ Ø§Ù„Ù…Ø·Ø§Ù„Ø¨Ø© Ø¨Ù…ÙƒØ§ÙØ£Ø© Ø§Ù„Ù‚Ø·Ø±Ø§Øª: %error%</red>"
-    already_claimed: "<yellow> Ù„Ù‚Ø¯ ØªÙ… Ø¨Ø§Ù„ÙØ¹Ù„ Ø§Ù„Ù…Ø·Ø§Ù„Ø¨Ø© Ø¨Ù…ÙƒØ§ÙØ£Ø© Ø§Ù„Ù‚Ø·Ø±Ø§Øª Ù‡Ø°Ù‡.</yellow>"
-    purchase_unavailable: "<red>Ù„Ù… ØªØ¹Ø¯ Ù‡Ø°Ù‡ Ø§Ù„Ù…ÙƒØ§ÙØ£Ø© Ù…ØªØ§Ø­Ø© Ù„Ù„Ù…Ø·Ø§Ù„Ø¨Ø© Ø¨Ù‡Ø§.</red>"
-    cookie_missing: "<red>ØªØ¹Ø°Ø± Ø§Ù„Ø¹Ø«ÙˆØ± Ø¹Ù„Ù‰ Ù…Ù„Ù ØªØ¹Ø±ÙŠÙ Ø§Ù„Ø§Ø±ØªØ¨Ø§Ø· Ø§Ù„ØµØºÙŠØ± ÙÙŠ Ù…Ø®Ø²ÙˆÙ†Ùƒ.</red>"
-    skill_grant_failed: "<red>ÙØ´Ù„ ÙÙŠ Ù…Ù†Ø­ Ù…Ø³ØªÙˆÙ‰ ÙˆØ§Ø­Ø¯ ÙÙŠ %skill_name%.</red>"
-    job_grant_failed: "<red>ÙØ´Ù„ ÙÙŠ Ù…Ù†Ø­ Ù…Ø³ØªÙˆÙ‰ ÙˆØ§Ø­Ø¯ ÙÙŠ %job_name%.</red>"
-    boost_activation_failed: "<red>ÙØ´Ù„ ÙÙŠ ØªÙØ¹ÙŠÙ„ %item_name%.</red>"
-    unsupported_integration: "<red> Ø§Ù„ØªÙƒØ§Ù…Ù„ Ø§Ù„Ù…Ø·Ù„ÙˆØ¨ Ù„Ù…Ù„Ù ØªØ¹Ø±ÙŠÙ Ø§Ù„Ø§Ø±ØªØ¨Ø§Ø· Ù‡Ø°Ø§ ØºÙŠØ± Ù…ØªÙˆÙØ± Ø­Ø§Ù„ÙŠÙ‹Ø§.</red>"
-    boost_expired: "<yellow> Ø§Ù†ØªÙ‡Øª ØµÙ„Ø§Ø­ÙŠØ© Ø¯ÙØ¹Ø© Ù…Ù„ÙØ§Øª ØªØ¹Ø±ÙŠÙ Ø§Ù„Ø§Ø±ØªØ¨Ø§Ø· Ù‡Ø°Ù‡.</yellow>"
+    store_disabled: "<red> لقد قام هذا الخادم بتعطيل /rc claim droplets.</red>"
+    not_connected: "يجب أن تكون <red>RCore متصلة بالواجهة الخلفية RaindropCentral قبل أن تتمكن من المطالبة بالقطرات.</red>"
+    cooldown: "<yellow>يرجى الانتظار %seconds% ثانية (ثواني) قبل استخدام /rc claim droplets مرة أخرى.</yellow>"
+    not_registered: "<red>حسابك Minecraft غير مرتبط بحساب RaindropCentral.</red>"
+    no_unclaimed: "<yellow> ليس لديك أي مكافآت قطرات لم يطالب بها أحد في الوقت الحالي.</yellow>"
+    api_unavailable: "<red>RaindropCentral غير متاح الآن: %error%</red>"
+    menu_unavailable: "<red>قائمة المطالبة بالقطرات غير متاحة الآن. يرجى المحاولة مرة أخرى لاحقًا.</red>"
+    item_disabled: "<red> لقد قام هذا الخادم بتعطيل المطالبة بـ %item_name%.</red> <gray> معرف العنصر: %item_code%</gray>"
+    unsupported_item: "<red> هذه المكافأة الصغيرة غير مدعومة على هذا الخادم حتى الآن. </red> <gray> معرف العنصر: %item_code%</gray>"
+    no_supported_skills: "<red> لا يحتوي هذا الخادم حاليًا على مكون إضافي مدعوم للمهارات لهذه المكافأة.</red>"
+    no_supported_jobs: "<red> لا يحتوي هذا الخادم حاليًا على مكون إضافي مدعوم للمهام لهذه المكافأة.</red>"
+    inventory_full: "<red>تحتاج إلى فتحة مخزون مجانية واحدة على الأقل قبل المطالبة بهذه المكافأة.</red>"
+    claim_in_progress: "<yellow>هذه المطالبة قيد التقدم بالفعل. يرجى الانتظار حتى تستجيب الواجهة الخلفية.</yellow>"
+    claim_failed: "<red> فشل في المطالبة بمكافأة القطرات: %error%</red>"
+    already_claimed: "<yellow> لقد تم بالفعل المطالبة بمكافأة القطرات هذه.</yellow>"
+    purchase_unavailable: "<red>لم تعد هذه المكافأة متاحة للمطالبة بها.</red>"
+    cookie_missing: "<red>تعذر العثور على ملف تعريف الارتباط الصغير في مخزونك.</red>"
+    skill_grant_failed: "<red>فشل في منح مستوى واحد في %skill_name%.</red>"
+    job_grant_failed: "<red>فشل في منح مستوى واحد في %job_name%.</red>"
+    boost_activation_failed: "<red>فشل في تفعيل %item_name%.</red>"
+    unsupported_integration: "<red> التكامل المطلوب لملف تعريف الارتباط هذا غير متوفر حاليًا.</red>"
+    boost_expired: "<yellow> انتهت صلاحية دفعة ملفات تعريف الارتباط هذه.</yellow>"
 
 rc_claim_droplets_ui:
-  title: "Ù‚Ø·Ø±Ø§Øª Ù„Ù… ÙŠØ·Ø§Ù„Ø¨ Ø¨Ù‡Ø§ Ø£Ø­Ø¯"
+  title: "قطرات لم يطالب بها أحد"
   page:
-    name: "<yellow>Ø§Ù„ØµÙØ­Ø© %page%/%max_page%</yellow>"
+    name: "<yellow>الصفحة %page%/%max_page%</yellow>"
     lore:
-      - "ØªÙ… Ø¥Ø¯Ø±Ø§Ø¬ Ø§Ù„Ø¥Ø¯Ø®Ø§Ù„Ø§Øª Ø§Ù„Ù‚Ø§Ø¨Ù„Ø© Ù„Ù„Ù…Ø·Ø§Ù„Ø¨Ø© <gray>%items_count%.</gray>"
+      - "تم إدراج الإدخالات القابلة للمطالبة <gray>%items_count%.</gray>"
   summary:
-    name: "<gold>Ù‚Ø§Ø¦Ù…Ø© Ø§Ù†ØªØ¸Ø§Ø± Ø§Ù„Ù…Ø·Ø§Ù„Ø¨Ø©</gold>"
+    name: "<gold>قائمة انتظار المطالبة</gold>"
     lore:
-      - "<gray> Ø§Ù„Ø¥Ø¯Ø®Ø§Ù„Ø§Øª ØºÙŠØ± Ø§Ù„Ù…Ø·Ø§Ù„Ø¨ Ø¨Ù‡Ø§: %item_count%</gray>"
-      - "<gray> Ù…Ø¯Ø¹ÙˆÙ… Ø¹Ù„Ù‰ Ù‡Ø°Ø§ Ø§Ù„Ø®Ø§Ø¯Ù…: %supported_count%</gray>"
-      - "<yellow>Ø§Ù†Ù‚Ø± ÙÙˆÙ‚ Ø§Ù„Ù…ÙƒØ§ÙØ£Ø© Ø§Ù„Ù…Ø¯Ø¹ÙˆÙ…Ø© Ù„Ù„Ù…Ø·Ø§Ù„Ø¨Ø© Ø¨Ù‡Ø§.</yellow>"
+      - "<gray> الإدخالات غير المطالب بها: %item_count%</gray>"
+      - "<gray> مدعوم على هذا الخادم: %supported_count%</gray>"
+      - "<yellow>انقر فوق المكافأة المدعومة للمطالبة بها.</yellow>"
   empty:
-    name: "<red>Ù„Ø§ ØªÙˆØ¬Ø¯ Ù…ÙƒØ§ÙØ¢Øª Ù„Ù… ØªØªÙ… Ø§Ù„Ù…Ø·Ø§Ù„Ø¨Ø© Ø¨Ù‡Ø§</red>"
+    name: "<red>لا توجد مكافآت لم تتم المطالبة بها</red>"
     lore:
-      - "<gray>Ù„ÙŠØ³ Ù„Ø¯ÙŠÙƒ Ø­Ø§Ù„ÙŠÙ‹Ø§ Ø£ÙŠ Ù…ÙƒØ§ÙØ¢Øª ØµØºÙŠØ±Ø© Ù„Ù… ÙŠØ·Ø§Ù„Ø¨ Ø¨Ù‡Ø§ Ø£Ø­Ø¯.</gray>"
+      - "<gray>ليس لديك حاليًا أي مكافآت صغيرة لم يطالب بها أحد.</gray>"
   entry:
     supported:
       name: "<green>%item_name%</green>"
       lore:
-        - "<gray> Ù…Ø¹Ø±Ù Ø§Ù„Ø¹Ù†ØµØ±: %item_code%</gray>"
-        - "<gray>Ø§Ù„Ù…Ù†ÙÙ‚Ø©: Ù‚Ø·Ø±Ø§Øª %amount_spent%</gray>"
-        - "<yellow>Ø§Ù†Ù‚Ø± Ù„Ù„Ø­ØµÙˆÙ„ Ø¹Ù„Ù‰ Ù‡Ø°Ù‡ Ø§Ù„Ù…ÙƒØ§ÙØ£Ø©.</yellow>"
+        - "<gray> معرف العنصر: %item_code%</gray>"
+        - "<gray>المنفقة: قطرات %amount_spent%</gray>"
+        - "<yellow>انقر للحصول على هذه المكافأة.</yellow>"
     item_disabled:
       name: "<red>%item_name%</red>"
       lore:
-        - "<gray> Ù…Ø¹Ø±Ù Ø§Ù„Ø¹Ù†ØµØ±: %item_code%</gray>"
-        - "<red> Ù„Ù‚Ø¯ Ù‚Ø§Ù… Ù‡Ø°Ø§ Ø§Ù„Ø®Ø§Ø¯Ù… Ø¨ØªØ¹Ø·ÙŠÙ„ Ø§Ù„Ù…Ø·Ø§Ù„Ø¨Ø© Ø¨Ù‡Ø°Ù‡ Ø§Ù„Ù…ÙƒØ§ÙØ£Ø©.</red>"
+        - "<gray> معرف العنصر: %item_code%</gray>"
+        - "<red> لقد قام هذا الخادم بتعطيل المطالبة بهذه المكافأة.</red>"
     unsupported_item:
       name: "<red>%item_name%</red>"
       lore:
-        - "<gray> Ù…Ø¹Ø±Ù Ø§Ù„Ø¹Ù†ØµØ±: %item_code%</gray>"
-        - "<red>Ù‡Ø°Ù‡ Ø§Ù„Ù…ÙƒØ§ÙØ£Ø© ØºÙŠØ± Ù…Ø¯Ø¹ÙˆÙ…Ø© Ø¹Ù„Ù‰ Ù‡Ø°Ø§ Ø§Ù„Ø®Ø§Ø¯Ù….</red>"
+        - "<gray> معرف العنصر: %item_code%</gray>"
+        - "<red>هذه المكافأة غير مدعومة على هذا الخادم.</red>"
     no_skills:
       name: "<red>%item_name%</red>"
       lore:
-        - "<gray> Ù…Ø¹Ø±Ù Ø§Ù„Ø¹Ù†ØµØ±: %item_code%</gray>"
-        - "<red> Ù„Ù… ÙŠØªÙ… ØªØ«Ø¨ÙŠØª Ø£ÙŠ Ù…ÙƒÙˆÙ† Ø¥Ø¶Ø§ÙÙŠ Ù„Ù„Ù…Ù‡Ø§Ø±Ø§Øª Ù…Ø¯Ø¹ÙˆÙ… Ù„Ù‡Ø°Ù‡ Ø§Ù„Ù…ÙƒØ§ÙØ£Ø©.</red>"
+        - "<gray> معرف العنصر: %item_code%</gray>"
+        - "<red> لم يتم تثبيت أي مكون إضافي للمهارات مدعوم لهذه المكافأة.</red>"
     no_jobs:
       name: "<red>%item_name%</red>"
       lore:
-        - "<gray> Ù…Ø¹Ø±Ù Ø§Ù„Ø¹Ù†ØµØ±: %item_code%</gray>"
-        - "<red> Ù„Ù… ÙŠØªÙ… ØªØ«Ø¨ÙŠØª Ø£ÙŠ Ù…Ù„Ø­Ù‚ ÙˆØ¸Ø§Ø¦Ù Ù…Ø¯Ø¹ÙˆÙ… Ù„Ù‡Ø°Ù‡ Ø§Ù„Ù…ÙƒØ§ÙØ£Ø©.</red>"
+        - "<gray> معرف العنصر: %item_code%</gray>"
+        - "<red> لم يتم تثبيت أي ملحق وظائف مدعوم لهذه المكافأة.</red>"
 
 rc_claim_droplet_skills_ui:
-  title: "Ø§Ø®ØªØ± Ù…Ù‡Ø§Ø±Ø©"
+  title: "اختر مهارة"
   page:
-    name: "<yellow>Ø§Ù„ØµÙØ­Ø© %page%/%max_page%</yellow>"
+    name: "<yellow>الصفحة %page%/%max_page%</yellow>"
     lore:
-      - "<gray>%items_count% ØªÙ… Ø¥Ø¯Ø±Ø§Ø¬ Ø¥Ø¯Ø®Ø§Ù„Ø§Øª Ø§Ù„Ù…Ù‡Ø§Ø±Ø§Øª.</gray>"
+      - "<gray>%items_count% تم إدراج إدخالات المهارات.</gray>"
   summary:
-    name: "<gold>Ø§Ø®ØªÙŠØ§Ø± Ø§Ù„Ù…Ù‡Ø§Ø±Ø©</gold>"
+    name: "<gold>اختيار المهارة</gold>"
     lore:
-      - "<gray> Ø§Ù„Ù…Ù‡Ø§Ø±Ø§Øª Ø§Ù„Ù…ØªØ§Ø­Ø©: %skill_count%</gray>"
-      - "<yellow>Ø§Ø®ØªØ± Ù…Ù‡Ø§Ø±Ø© ÙˆØ§Ø­Ø¯Ø© Ù„Ø§Ø³ØªÙ‡Ù„Ø§Ùƒ Ù…Ù„Ù ØªØ¹Ø±ÙŠÙ Ø§Ù„Ø§Ø±ØªØ¨Ø§Ø·.</yellow>"
+      - "<gray> المهارات المتاحة: %skill_count%</gray>"
+      - "<yellow>اختر مهارة واحدة لاستهلاك ملف تعريف الارتباط.</yellow>"
   empty:
-    name: "<red>Ù„Ø§ ØªÙˆØ¬Ø¯ Ù…Ù‡Ø§Ø±Ø§Øª Ù…ØªØ§Ø­Ø©</red>"
+    name: "<red>لا توجد مهارات متاحة</red>"
     lore:
-      - "<gray> Ù„Ø§ ØªÙˆØ¬Ø¯ Ù…Ù‡Ø§Ø±Ø§Øª Ù…Ø¯Ø¹ÙˆÙ…Ø© Ù…ØªØ§Ø­Ø© Ø§Ù„Ø¢Ù†.</gray>"
+      - "<gray> لا توجد مهارات مدعومة متاحة الآن.</gray>"
   entry:
     name: "<green>%skill_name%</green>"
     level_lore:
-      - "<gray>Ø§Ù„Ø¨Ø±Ù†Ø§Ù…Ø¬ Ø§Ù„Ù…Ø³Ø§Ø¹Ø¯: %plugin_name%</gray>"
-      - "<gray>Ø§Ù„Ù…Ø³ØªÙˆÙ‰ Ø§Ù„Ø­Ø§Ù„ÙŠ: %current_level%</gray>"
-      - "<yellow>Ø§Ù†Ù‚Ø± Ù„Ù„Ø­ØµÙˆÙ„ Ø¹Ù„Ù‰ Ù…Ø³ØªÙˆÙ‰ ÙˆØ§Ø­Ø¯ ÙÙŠ Ù‡Ø°Ù‡ Ø§Ù„Ù…Ù‡Ø§Ø±Ø©.</yellow>"
+      - "<gray>البرنامج المساعد: %plugin_name%</gray>"
+      - "<gray>المستوى الحالي: %current_level%</gray>"
+      - "<yellow>انقر للحصول على مستوى واحد في هذه المهارة.</yellow>"
     boost_lore:
-      - "<gray>Ø§Ù„Ø¨Ø±Ù†Ø§Ù…Ø¬ Ø§Ù„Ù…Ø³Ø§Ø¹Ø¯: %plugin_name%</gray>"
-      - "<gray>Ø§Ù„Ù…Ø³ØªÙˆÙ‰ Ø§Ù„Ø­Ø§Ù„ÙŠ: %current_level%</gray>"
-      - "<gray>Boost: + %rate_percent%% XP Ù„Ù€ %duration_minutes% Ø¯Ù‚ÙŠÙ‚Ø© (Ø¯Ù‚Ø§Ø¦Ù‚) </gray>"
-      - "<yellow> Ø§Ù†Ù‚Ø± Ù„ØªÙØ¹ÙŠÙ„ ØªØ¹Ø²ÙŠØ² Ø§Ù„Ù…Ù‡Ø§Ø±Ø§Øª Ù‡Ø°Ø§.</yellow>"
+      - "<gray>البرنامج المساعد: %plugin_name%</gray>"
+      - "<gray>المستوى الحالي: %current_level%</gray>"
+      - "<gray>Boost: + %rate_percent%% XP لـ %duration_minutes% دقيقة (دقائق) </gray>"
+      - "<yellow> انقر لتفعيل تعزيز المهارات هذا.</yellow>"
 
 rc_claim_droplet_jobs_ui:
-  title: "Ø§Ø®ØªØ± ÙˆØ¸ÙŠÙØ©"
+  title: "اختر وظيفة"
   page:
-    name: "<yellow>Ø§Ù„ØµÙØ­Ø© %page%/%max_page%</yellow>"
+    name: "<yellow>الصفحة %page%/%max_page%</yellow>"
     lore:
-      - "ØªÙ… Ø¥Ø¯Ø±Ø§Ø¬ Ø¥Ø¯Ø®Ø§Ù„Ø§Øª Ø§Ù„ÙˆØ¸Ø§Ø¦Ù <gray>%items_count%.</gray>"
+      - "تم إدراج إدخالات الوظائف <gray>%items_count%.</gray>"
   summary:
-    name: "<gold>Ø§Ø®ØªÙŠØ§Ø± Ø§Ù„ÙˆØ¸ÙŠÙØ©</gold>"
+    name: "<gold>اختيار الوظيفة</gold>"
     lore:
-      - "<gray> Ø§Ù„ÙˆØ¸Ø§Ø¦Ù Ø§Ù„Ù…ØªØ§Ø­Ø©: %job_count%</gray>"
-      - "<yellow>Ø§Ø®ØªØ± Ù…Ù‡Ù…Ø© ÙˆØ§Ø­Ø¯Ø© Ù„Ø§Ø³ØªÙ‡Ù„Ø§Ùƒ Ù…Ù„Ù ØªØ¹Ø±ÙŠÙ Ø§Ù„Ø§Ø±ØªØ¨Ø§Ø·.</yellow>"
+      - "<gray> الوظائف المتاحة: %job_count%</gray>"
+      - "<yellow>اختر مهمة واحدة لاستهلاك ملف تعريف الارتباط.</yellow>"
   empty:
-    name: "<red> Ù„Ø§ ØªÙˆØ¬Ø¯ ÙˆØ¸Ø§Ø¦Ù Ù…ØªØ§Ø­Ø© </red>"
+    name: "<red> لا توجد وظائف متاحة </red>"
     lore:
-      - "<gray> Ù„Ø§ ØªÙˆØ¬Ø¯ ÙˆØ¸Ø§Ø¦Ù Ù…Ø¯Ø¹ÙˆÙ…Ø© Ù…ØªØ§Ø­Ø© Ø§Ù„Ø¢Ù†.</gray>"
+      - "<gray> لا توجد وظائف مدعومة متاحة الآن.</gray>"
   entry:
     name: "<green>%job_name%</green>"
     level_lore:
-      - "<gray>Ø§Ù„Ø¨Ø±Ù†Ø§Ù…Ø¬ Ø§Ù„Ù…Ø³Ø§Ø¹Ø¯: %plugin_name%</gray>"
-      - "<gray>Ø§Ù„Ù…Ø³ØªÙˆÙ‰ Ø§Ù„Ø­Ø§Ù„ÙŠ: %current_level%</gray>"
-      - "<yellow>Ø§Ù†Ù‚Ø± Ù„Ù„Ø­ØµÙˆÙ„ Ø¹Ù„Ù‰ Ù…Ø³ØªÙˆÙ‰ ÙˆØ§Ø­Ø¯ ÙÙŠ Ù‡Ø°Ù‡ Ø§Ù„ÙˆØ¸ÙŠÙØ©.</yellow>"
+      - "<gray>البرنامج المساعد: %plugin_name%</gray>"
+      - "<gray>المستوى الحالي: %current_level%</gray>"
+      - "<yellow>انقر للحصول على مستوى واحد في هذه الوظيفة.</yellow>"
     xp_boost_lore:
-      - "<gray>Ø§Ù„Ø¨Ø±Ù†Ø§Ù…Ø¬ Ø§Ù„Ù…Ø³Ø§Ø¹Ø¯: %plugin_name%</gray>"
-      - "<gray>Ø§Ù„Ù…Ø³ØªÙˆÙ‰ Ø§Ù„Ø­Ø§Ù„ÙŠ: %current_level%</gray>"
-      - "<gray>Boost: + %rate_percent%% XP Ù„Ù€ %duration_minutes% Ø¯Ù‚ÙŠÙ‚Ø© (Ø¯Ù‚Ø§Ø¦Ù‚) </gray>"
-      - "<yellow>Ø§Ù†Ù‚Ø± Ù„ØªÙ†Ø´ÙŠØ· Ù‡Ø°Ù‡ Ø§Ù„Ù…Ù‡Ù…Ø© XP Boost.</yellow>"
+      - "<gray>البرنامج المساعد: %plugin_name%</gray>"
+      - "<gray>المستوى الحالي: %current_level%</gray>"
+      - "<gray>Boost: + %rate_percent%% XP لـ %duration_minutes% دقيقة (دقائق) </gray>"
+      - "<yellow>انقر لتنشيط هذه المهمة XP Boost.</yellow>"
     vault_boost_lore:
-      - "<gray>Ø§Ù„Ø¨Ø±Ù†Ø§Ù…Ø¬ Ø§Ù„Ù…Ø³Ø§Ø¹Ø¯: %plugin_name%</gray>"
-      - "<gray>Ø§Ù„Ù…Ø³ØªÙˆÙ‰ Ø§Ù„Ø­Ø§Ù„ÙŠ: %current_level%</gray>"
-      - "<gray>Boost: +%rate_percent%% Ø£Ù…ÙˆØ§Ù„ Ù…Ù‚Ø§Ø¨Ù„ %duration_minutes% Ø¯Ù‚ÙŠÙ‚Ø© (Ø¯Ù‚Ø§Ø¦Ù‚) </gray>"
-      - "<yellow>Ø§Ù†Ù‚Ø± Ù„ØªÙØ¹ÙŠÙ„ Ù‡Ø°Ù‡ Ø§Ù„Ø²ÙŠØ§Ø¯Ø© Ø§Ù„Ù…Ø§Ù„ÙŠØ© Ù„Ù„ÙˆØ¸ÙŠÙØ©.</yellow>"
+      - "<gray>البرنامج المساعد: %plugin_name%</gray>"
+      - "<gray>المستوى الحالي: %current_level%</gray>"
+      - "<gray>Boost: +%rate_percent%% أموال مقابل %duration_minutes% دقيقة (دقائق) </gray>"
+      - "<yellow>انقر لتفعيل هذه الزيادة المالية للوظيفة.</yellow>"
 
 general:
-  no_permission: "<red>Ù…Ø§ Ø¹Ù†Ø¯ÙƒØ´ ØµÙ„Ø§Ø­ÙŠØ© ØªØ³ØªØ®Ø¯Ù… Ø§Ù„Ø£Ù…Ø± Ø¯Ù‡.</red>"
+  no_permission: "<red>ما عندكش صلاحية تستخدم الأمر ده.</red>"
 
 
