@@ -3,8 +3,7 @@ package com.raindropcentral.rdq.cache.quest;
 import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.database.entity.quest.QuestUser;
 import com.raindropcentral.rdq.database.repository.quest.QuestUserRepository;
-import org.bukkit.Bukkit;
-import org.bukkit.scheduler.BukkitTask;
+import com.raindropcentral.rplatform.scheduler.CancellableTaskHandle;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -20,7 +19,7 @@ import java.util.logging.Logger;
  * and saves them back to the database on leave. This provides instant access to
  * quest data without database queries.
  * </p>
- * <h1>Design Philosophy</h1>
+ * <p>Design philosophy:</p>
  * <ul>
  *   <li>Load all active quests on player join</li>
  *   <li>Update progress instantly in memory</li>
@@ -53,7 +52,7 @@ public class QuestCacheManager {
     /**
      * Auto-save task
      */
-    private BukkitTask autoSaveTask;
+    private CancellableTaskHandle autoSaveTask;
     
     /**
      * Whether to log performance metrics
@@ -86,8 +85,7 @@ public class QuestCacheManager {
             return;
         }
         
-        autoSaveTask = Bukkit.getScheduler().runTaskTimerAsynchronously(
-                plugin.getPlugin(),
+        autoSaveTask = plugin.getPlatform().getScheduler().runRepeatingAsync(
                 this::autoSaveAll,
                 AUTO_SAVE_INTERVAL_TICKS,
                 AUTO_SAVE_INTERVAL_TICKS

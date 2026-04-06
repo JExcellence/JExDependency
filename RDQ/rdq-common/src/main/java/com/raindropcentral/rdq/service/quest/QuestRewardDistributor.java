@@ -83,7 +83,7 @@ public class QuestRewardDistributor implements RewardDistributor {
         }
         
         // Send reward notification header
-        Bukkit.getScheduler().runTask(rdq.getPlugin(), () -> {
+        rdq.getPlatform().getScheduler().runAtEntity(player, () -> {
             new I18n.Builder("quest.rewards.header", player)
                     .withPlaceholder("quest", quest.getIdentifier())
                     .build()
@@ -116,7 +116,7 @@ public class QuestRewardDistributor implements RewardDistributor {
                     );
                     
                     // Send completion message
-                    Bukkit.getScheduler().runTask(rdq.getPlugin(), () -> {
+                    rdq.getPlatform().getScheduler().runAtEntity(player, () -> {
                         if (allSuccessful) {
                             new I18n.Builder("quest.rewards.complete", player)
                                     .withPlaceholder("count", String.valueOf(result.getSuccessCount()))
@@ -174,7 +174,7 @@ public class QuestRewardDistributor implements RewardDistributor {
         }
         
         // Send task reward notification
-        Bukkit.getScheduler().runTask(rdq.getPlugin(), () -> {
+        rdq.getPlatform().getScheduler().runAtEntity(player, () -> {
             new I18n.Builder("quest.task.rewards.header", player)
                     .withPlaceholder("task", task.getTaskIdentifier())
                     .build()

@@ -6,9 +6,8 @@ import com.raindropcentral.rdq.config.quest.TaskHandlersSection;
 import com.raindropcentral.rdq.cache.quest.QuestCacheManager;
 import com.raindropcentral.rdq.service.quest.QuestProgressTracker;
 import com.raindropcentral.rplatform.logging.CentralLogger;
-import org.bukkit.Bukkit;
+import com.raindropcentral.rplatform.scheduler.CancellableTaskHandle;
 import org.bukkit.event.HandlerList;
-import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -18,15 +17,13 @@ import java.util.logging.Logger;
 
 /**
  * Manager for registering and unregistering quest task handlers.
- * <p>
- * This class is responsible for:
+ * <p>This class is responsible for:</p>
  * <ul>
  *   <li>Creating task handler instances</li>
  *   <li>Registering event listeners for enabled handlers</li>
  *   <li>Unregistering handlers on plugin disable</li>
  *   <li>Reading configuration for enabled/disabled handlers</li>
  * </ul>
- * </p>
  * <p>
  * Task handlers can be enabled or disabled via the quest-system.yml configuration
  * under the {@code task-handlers} section.
@@ -54,7 +51,7 @@ public class TaskHandlerManager {
     /**
      * Task for periodic performance metrics logging
      */
-    private BukkitTask metricsTask;
+    private CancellableTaskHandle metricsTask;
     
     /**
      * Constructs a new task handler manager.
@@ -240,8 +237,7 @@ public class TaskHandlerManager {
             metricsTask.cancel();
         }
         
-        metricsTask = Bukkit.getScheduler().runTaskTimerAsynchronously(
-                plugin.getPlugin(),
+        metricsTask = plugin.getPlatform().getScheduler().runRepeatingAsync(
                 this::logAllPerformanceMetrics,
                 METRICS_LOG_INTERVAL_TICKS,
                 METRICS_LOG_INTERVAL_TICKS

@@ -1,7 +1,6 @@
 package com.raindropcentral.rdq.cache.quest;
 
 import com.raindropcentral.rplatform.logging.CentralLogger;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.logging.Logger;
@@ -14,7 +13,7 @@ import java.util.logging.Logger;
  * server crash or unexpected shutdown.
  * </p>
  *
- * <h1>Design Rationale</h1>
+ * <p>Design rationale:</p>
  * <ul>
  *   <li>5-minute interval balances safety and performance</li>
  *   <li>Only saves players with changes (dirty flag)</li>
@@ -26,7 +25,7 @@ import java.util.logging.Logger;
  * @version 1.0.0
  * @since TBD
  */
-public class QuestProgressAutoSaveTask extends BukkitRunnable {
+public class QuestProgressAutoSaveTask implements Runnable {
     
     private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
     

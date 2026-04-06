@@ -365,15 +365,30 @@ public class FoliaISchedulerImpl implements ISchedulerAdapter {
      */
     private Method findMethod(Class<?> clazz, String name, Class<?>[] paramTypes) {
         try {
-            return clazz.getMethod(name, paramTypes);
-        } catch (NoSuchMethodException e) {
-            for (Method m : clazz.getMethods()) {
-                if (m.getName().equals(name) && m.getParameterCount() == paramTypes.length) {
-                    return m;
+            return this.makeAccessible(clazz.getMethod(name, paramTypes));
+        } catch (NoSuchMethodException ignored) {
+            for (Class<?> current = clazz; current != null; current = current.getSuperclass()) {
+                for (Method method : current.getDeclaredMethods()) {
+                    if (method.getName().equals(name) && method.getParameterCount() == paramTypes.length) {
+                        return this.makeAccessible(method);
+                    }
                 }
             }
-            return null;
         }
+        for (Method method : clazz.getMethods()) {
+            if (method.getName().equals(name) && method.getParameterCount() == paramTypes.length) {
+                return this.makeAccessible(method);
+            }
+        }
+        return null;
+    }
+
+    private @NotNull Method makeAccessible(final @NotNull Method method) {
+        try {
+            method.setAccessible(true);
+        } catch (final RuntimeException ignored) {
+        }
+        return method;
     }
 
     private long ticksToMillis(final long ticks) {

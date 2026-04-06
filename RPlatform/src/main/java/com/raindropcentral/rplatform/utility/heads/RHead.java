@@ -116,7 +116,7 @@ public abstract class RHead {
   ) {
     return
         UnifiedBuilderFactory
-            .head()
+            .safeHead()
             .setCustomTexture(
                 this.uuid,
                 this.texture

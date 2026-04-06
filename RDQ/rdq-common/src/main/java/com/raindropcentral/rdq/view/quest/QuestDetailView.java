@@ -20,7 +20,6 @@ import me.devnatan.inventoryframework.state.MutableState;
 import me.devnatan.inventoryframework.state.State;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
@@ -188,7 +187,7 @@ public class QuestDetailView extends BaseView {
                     return plugin.getQuestService().canStartQuest(player.getUniqueId(), q.getIdentifier())
                             .thenApply(result -> new LoadResult(null, false, result.success() ? null : result.failureReason()));
                 })
-                .thenAccept(result -> Bukkit.getScheduler().runTask(plugin.getPlugin(), () -> {
+                .thenAccept(result -> plugin.getPlatform().getScheduler().runAtEntity(player, () -> {
                     if (result.active()) {
                         actionState.set(ActionState.ABANDON, render);
                         questProgress.set(result.progress(), render);
@@ -207,7 +206,7 @@ public class QuestDetailView extends BaseView {
                 }))
                 .exceptionally(ex -> {
                     LOGGER.log(Level.SEVERE, "Failed to load quest progress", ex);
-                    Bukkit.getScheduler().runTask(plugin.getPlugin(), () -> {
+                    plugin.getPlatform().getScheduler().runAtEntity(player, () -> {
                         actionState.set(ActionState.START, render);
                         render.update();
                     });
@@ -580,7 +579,7 @@ public class QuestDetailView extends BaseView {
         final Player player = click.getPlayer();
 
         plugin.getQuestService().startQuest(player.getUniqueId(), q.getIdentifier())
-                .thenAccept(result -> Bukkit.getScheduler().runTask(plugin.getPlugin(), () -> {
+                .thenAccept(result -> plugin.getPlatform().getScheduler().runAtEntity(player, () -> {
                     if (result.success()) {
                         new I18n.Builder("view.quest.detail.message.started", player)
                                 .withPlaceholder("quest", q.getIdentifier())
@@ -756,7 +755,7 @@ public class QuestDetailView extends BaseView {
             final @NotNull RDQ plugin
     ) {
         // Schedule repeating task to refresh progress every 2 seconds
-        Bukkit.getScheduler().runTaskTimerAsynchronously(plugin.getPlugin(), () -> {
+        plugin.getPlatform().getScheduler().runRepeatingAsync(() -> {
             // Check if player still has the GUI open
             if (!player.isOnline() || player.getOpenInventory().getTopInventory() != render.getContainer()) {
                 return;
@@ -765,7 +764,7 @@ public class QuestDetailView extends BaseView {
             // Fetch fresh progress
             plugin.getQuestService().getProgress(player.getUniqueId(), q.getIdentifier())
                     .thenAccept(progressOpt -> {
-                        Bukkit.getScheduler().runTask(plugin.getPlugin(), () -> {
+                        plugin.getPlatform().getScheduler().runAtEntity(player, () -> {
                             if (progressOpt.isPresent()) {
                                 // Update state and trigger re-render
                                 questProgress.set(progressOpt.get(), render);

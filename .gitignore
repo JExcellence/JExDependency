@@ -41,5 +41,8 @@ bin/
 ### VS Code ###
 .vscode/
 
+### Local build hooks ###
+build-all.local.bat
+
 ### Mac OS ###
 .DS_Store
