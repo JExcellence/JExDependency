@@ -1,9 +1,0 @@
-name: "JExGlow"
-version: ${version}
-main: de.jexcellence.glow.JExGlow
-loader: de.jexcellence.dependency.loader.PaperPluginLoader
-api-version: '1.19'
-description: ${description}
-author: JExcellence
-website: https://jexcellence.de
-folia-supported: true
