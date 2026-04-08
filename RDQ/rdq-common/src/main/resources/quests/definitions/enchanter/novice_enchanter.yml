@@ -1,0 +1,42 @@
+identifier: "novice_enchanter"
+category: "enchanter"
+difficulty: EASY
+enabled: true
+displayOrder: 1
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
+
+icon:
+  material: ENCHANTING_TABLE
+  displayNameKey: "quest.novice_enchanter.name"
+  descriptionKey: "quest.novice_enchanter.description"
+
+tasks:
+  collect_lapis:
+    orderIndex: 0
+    difficulty: EASY
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: LAPIS_ORE
+      amount: 64
+
+rewards:
+  main_currency:
+    type: CURRENCY
+    currency: coins
+    amount: 250.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 150.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

@@ -13,13 +13,15 @@
 
 package com.raindropcentral.core.service.statistics.aggregation;
 
-import com.raindropcentral.core.service.statistics.delivery.AggregatedStatistics;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 

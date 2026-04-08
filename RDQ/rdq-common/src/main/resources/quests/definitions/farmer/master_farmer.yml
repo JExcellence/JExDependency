@@ -1,0 +1,58 @@
+identifier: "master_farmer"
+category: "farmer"
+difficulty: NORMAL
+enabled: true
+displayOrder: 3
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
+
+icon:
+  material: DIAMOND_HOE
+  displayNameKey: "quest.master_farmer.name"
+  descriptionKey: "quest.master_farmer.description"
+
+tasks:
+  kill_cows:
+    orderIndex: 0
+    difficulty: NORMAL
+    sequential: false
+    requirement:
+      type: KILL_MOBS
+      target: COW
+      amount: 20
+  kill_pigs:
+    orderIndex: 1
+    difficulty: NORMAL
+    sequential: false
+    requirement:
+      type: KILL_MOBS
+      target: PIG
+      amount: 20
+  kill_chickens:
+    orderIndex: 2
+    difficulty: NORMAL
+    sequential: false
+    requirement:
+      type: KILL_MOBS
+      target: CHICKEN
+      amount: 30
+
+rewards:
+  main_currency:
+    type: CURRENCY
+    currency: coins
+    amount: 500.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 300.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

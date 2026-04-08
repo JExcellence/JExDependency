@@ -1,20 +1,13 @@
-/*
- * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
- *
- * This source code is proprietary and confidential to Antimatter Zone LLC.
- * Unauthorized copying, modification, distribution, display, performance,
- * publication, sublicensing, or creation of derivative works is prohibited
- * without prior written permission from Antimatter Zone LLC, except to the
- * extent permitted by applicable United States law.
- *
- * This notice is intended to preserve all rights and remedies available under
- * the laws of the State of Washington and the United States of America.
- */
-
 package com.raindropcentral.rdq.database.entity.quest;
 
 import de.jexcellence.hibernate.entity.BaseEntity;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Index;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
@@ -25,8 +18,8 @@ import java.util.Objects;
 
 /**
  * Entity representing a player's progress on a specific quest task.
- *
- * <p>Tracks the current progress value, required progress value, and completion status
+ * <p>
+ * Tracks the current progress value, required progress value, and completion status
  * for an individual task within a quest.
  *
  * @author RaindropCentral
@@ -43,9 +36,6 @@ import java.util.Objects;
                 @Index(name = "idx_quest_task_progress_completed", columnList = "completed")
         }
 )
-/**
- * Represents the QuestTaskProgress API type.
- */
 public class QuestTaskProgress extends BaseEntity {
     
     @Serial
@@ -164,9 +154,6 @@ public class QuestTaskProgress extends BaseEntity {
         return this.currentProgress;
     }
     
-    /**
-     * Executes equals.
-     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -180,9 +167,6 @@ public class QuestTaskProgress extends BaseEntity {
                 taskIdentifier != null && taskIdentifier.equals(that.taskIdentifier);
     }
     
-    /**
-     * Returns whether hCode.
-     */
     @Override
     public int hashCode() {
         if (this.getId() != null) {
@@ -192,9 +176,6 @@ public class QuestTaskProgress extends BaseEntity {
         return Objects.hash(questUser, taskIdentifier);
     }
     
-    /**
-     * Executes toString.
-     */
     @Override
     public String toString() {
         return "QuestTaskProgress{" +

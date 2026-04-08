@@ -142,8 +142,6 @@ public final class RequirementRegistry {
         
         providers.put(pluginId, provider);
         provider.register();
-        
-        LOGGER.info("Registered requirement provider: " + pluginId + " with types: " + provider.getRequirementTypes().keySet());
     }
 
     /**
@@ -155,7 +153,6 @@ public final class RequirementRegistry {
         PluginRequirementProvider provider = providers.remove(pluginId);
         if (provider != null) {
             provider.unregister();
-            LOGGER.info("Unregistered requirement provider: " + pluginId);
         }
     }
 

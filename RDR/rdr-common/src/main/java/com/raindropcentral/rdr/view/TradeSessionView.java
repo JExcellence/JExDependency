@@ -13,12 +13,6 @@
 
 package com.raindropcentral.rdr.view;
 
-import java.util.Map;
-import java.util.Locale;
-import java.util.Set;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-
 import com.raindropcentral.rdr.RDR;
 import com.raindropcentral.rdr.database.entity.RTradeSession;
 import com.raindropcentral.rdr.database.entity.TradeSessionStatus;
@@ -39,6 +33,12 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Interactive escrow trade session view for one active trade UUID.

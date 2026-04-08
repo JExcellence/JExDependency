@@ -13,17 +13,9 @@
 
 package com.raindropcentral.rds.view.shop;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.CompletableFuture;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
+import com.raindropcentral.rds.RDS;
+import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
+import com.raindropcentral.rplatform.view.APaginatedView;
 import me.devnatan.inventoryframework.component.BukkitItemComponentBuilder;
 import me.devnatan.inventoryframework.component.Pagination;
 import me.devnatan.inventoryframework.context.Context;
@@ -39,9 +31,16 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import com.raindropcentral.rds.RDS;
-import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
-import com.raindropcentral.rplatform.view.APaginatedView;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Renders the admin currency management view for RDS.

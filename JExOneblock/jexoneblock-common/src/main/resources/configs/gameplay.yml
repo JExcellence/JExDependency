@@ -1,0 +1,322 @@
+# JExOneblock Gameplay Configuration
+
+# Evolution System Settings
+evolution:
+  # Enable the evolution system
+  enabled: true
+  # Starting evolution
+  startingEvolution: "Genesis"
+  # Base experience per block break
+  baseExperiencePerBreak: 1.0
+  # Experience multiplier for evolution levels
+  evolutionExperienceMultiplier: 1.02
+  # Experience multiplier for prestige levels
+  prestigeExperienceMultiplier: 1.05
+
+# Item Drop System Settings
+drops:
+  # Enable item drop system
+  enabled: true
+  # Item drop amounts by rarity (min-max ranges)
+  amounts:
+    common:
+      min: 1
+      max: 3
+    uncommon:
+      min: 1
+      max: 4
+    rare:
+      min: 2
+      max: 5
+    epic:
+      min: 2
+      max: 6
+    legendary:
+      min: 3
+      max: 7
+    special:
+      min: 3
+      max: 8
+    unique:
+      min: 4
+      max: 9
+    mythical:
+      min: 4
+      max: 10
+    divine:
+      min: 5
+      max: 12
+    celestial:
+      min: 6
+      max: 15
+    transcendent:
+      min: 7
+      max: 20
+    ethereal:
+      min: 8
+      max: 25
+    cosmic:
+      min: 10
+      max: 30
+    infinite:
+      min: 12
+      max: 35
+    omnipotent:
+      min: 15
+      max: 40
+  # Drop chance multipliers
+  multipliers:
+    # Evolution level multiplier for drop amounts
+    evolutionLevelMultiplier: 0.02
+    # Prestige level multiplier for drop amounts
+    prestigeLevelMultiplier: 0.05
+    # Maximum multiplier cap
+    maxMultiplier: 2.0
+
+# Coin System Settings
+coins:
+  # Enable coin earning system
+  enabled: true
+  # Coin ranges by rarity (min-max with weighted distribution)
+  ranges:
+    common:
+      min: 1
+      max: 3
+      weight: 0.8        # 80% chance for lower values
+    uncommon:
+      min: 2
+      max: 6
+      weight: 0.75       # 75% chance for lower values
+    rare:
+      min: 4
+      max: 12
+      weight: 0.7        # 70% chance for lower values
+    epic:
+      min: 8
+      max: 25
+      weight: 0.65       # 65% chance for lower values
+    legendary:
+      min: 15
+      max: 50
+      weight: 0.6        # 60% chance for lower values
+    special:
+      min: 30
+      max: 100
+      weight: 0.55       # 55% chance for lower values
+    unique:
+      min: 60
+      max: 200
+      weight: 0.5        # 50% chance for lower values
+    mythical:
+      min: 120
+      max: 400
+      weight: 0.45       # 45% chance for lower values
+    divine:
+      min: 250
+      max: 800
+      weight: 0.4        # 40% chance for lower values
+    celestial:
+      min: 500
+      max: 1500
+      weight: 0.35       # 35% chance for lower values
+    transcendent:
+      min: 1000
+      max: 3000
+      weight: 0.3        # 30% chance for lower values
+    ethereal:
+      min: 2000
+      max: 6000
+      weight: 0.25       # 25% chance for lower values
+    cosmic:
+      min: 4000
+      max: 12000
+      weight: 0.2        # 20% chance for lower values
+    infinite:
+      min: 8000
+      max: 25000
+      weight: 0.15       # 15% chance for lower values
+    omnipotent:
+      min: 15000
+      max: 50000
+      weight: 0.1        # 10% chance for lower values
+  # Multipliers
+  multipliers:
+    # Evolution level multiplier (per level)
+    evolutionLevelMultiplier: 0.05
+    # Prestige level multiplier (per level)
+    prestigeLevelMultiplier: 0.25
+    # Break streak multiplier (per 10 streak)
+    streakMultiplier: 0.02
+    # Maximum streak multiplier
+    maxStreakMultiplier: 0.5
+  # Bonus chances
+  bonuses:
+    # Chance for double coins
+    doubleCoinChance: 0.05
+    # Chance for triple coins (rare)
+    tripleCoinChance: 0.01
+    # Lucky coin multiplier range
+    luckyCoinMultiplier:
+      min: 1.5
+      max: 3.0
+      chance: 0.02
+
+# Rarity System Settings
+rarity:
+  # Enable dynamic rarity based on evolution level
+  dynamicRarityEnabled: true
+  # Base rarity chances (percentages) - With intelligent fallback system
+  chances:
+    common: 75.0        # Most blocks should be basic
+    uncommon: 18.0      # Reasonable uncommon chance
+    rare: 5.0           # Rare should be rare but obtainable
+    epic: 1.5           # Epic fairly rare
+    legendary: 0.4      # Legendary rare
+    special: 0.08       # Special very rare
+    unique: 0.015       # Unique extremely rare
+    mythical: 0.003     # Mythical practically never
+    divine: 0.001       # Divine almost never
+    celestial: 0.0005   # Celestial extremely rare
+    transcendent: 0.0002 # Transcendent practically impossible
+    ethereal: 0.0001    # Ethereal practically impossible
+    cosmic: 0.00005     # Cosmic practically impossible
+    infinite: 0.00002   # Infinite practically impossible
+    omnipotent: 0.00001 # Omnipotent practically impossible
+    reserved: 0.000005  # Reserved practically impossible
+
+# Bonus System Settings
+bonuses:
+  # Evolution level rarity bonus (per level)
+  evolutionLevelRarityBonus: 0.01
+  # Prestige level rarity bonus (per level)
+  prestigeLevelRarityBonus: 0.05
+  # Break streak rarity bonus (per streak)
+  streakRarityBonus: 0.001
+  # Maximum streak bonus
+  maxStreakBonus: 0.1
+  # Experience boosts enabled
+  experienceBoostsEnabled: true
+  # Experience boost per rarity level
+  experienceBoostPerRarity: 0.1
+  # Maximum experience boost
+  maxExperienceBoost: 5
+
+# Anti-Grinding Settings
+antiGrinding:
+  # Enable anti-grinding system
+  enabled: true
+  # Threshold for triggering anti-grinding (blocks per minute)
+  threshold: 100
+  # Penalty multiplier when anti-grinding is triggered
+  penalty: 0.5
+
+# Spawn Settings
+spawning:
+  # Enable async spawning for better performance
+  asyncSpawningEnabled: true
+  # Enable spawn optimization
+  spawnOptimizationEnabled: true
+  # Maximum concurrent spawns
+  maxConcurrentSpawns: 5
+  # Spawn processing delay (ticks)
+  spawnProcessingDelay: 1
+  
+  # Chest/Barrel spawn chances by rarity
+  chestSpawnChances:
+    common: 0.01      # 1% chance
+    uncommon: 0.02    # 2% chance
+    rare: 0.05        # 5% chance
+    epic: 0.08        # 8% chance
+    legendary: 0.12   # 12% chance
+    special: 0.15     # 15% chance
+    unique: 0.18      # 18% chance
+    mythical: 0.22    # 22% chance
+    divine: 0.25      # 25% chance
+    celestial: 0.30   # 30% chance
+    transcendent: 0.35 # 35% chance
+    ethereal: 0.40    # 40% chance
+    cosmic: 0.45      # 45% chance
+    infinite: 0.50    # 50% chance
+    omnipotent: 0.60  # 60% chance
+  
+  # Mob spawn chances by rarity
+  entitySpawnChances:
+    common: 0.02      # 2% chance
+    uncommon: 0.03    # 3% chance
+    rare: 0.05        # 5% chance
+    epic: 0.08        # 8% chance
+    legendary: 0.12   # 12% chance
+    special: 0.15     # 15% chance
+    unique: 0.18      # 18% chance
+    mythical: 0.22    # 22% chance
+    divine: 0.25      # 25% chance
+    celestial: 0.30   # 30% chance
+    transcendent: 0.35 # 35% chance
+    ethereal: 0.40    # 40% chance
+    cosmic: 0.45      # 45% chance
+    infinite: 0.50    # 50% chance
+    omnipotent: 0.60  # 60% chance
+  
+  # Special item drop chances by rarity
+  specialItemChances:
+    common: 0.05      # 5% chance
+    uncommon: 0.08    # 8% chance
+    rare: 0.12        # 12% chance
+    epic: 0.15        # 15% chance
+    legendary: 0.20   # 20% chance
+    special: 0.25     # 25% chance
+    unique: 0.30      # 30% chance
+    mythical: 0.35    # 35% chance
+    divine: 0.40      # 40% chance
+    celestial: 0.45   # 45% chance
+    transcendent: 0.50 # 50% chance
+    ethereal: 0.55    # 55% chance
+    cosmic: 0.60      # 60% chance
+    infinite: 0.65    # 65% chance
+    omnipotent: 0.75  # 75% chance
+
+# Random Events
+events:
+  # Enable random events
+  randomEventsEnabled: true
+  # Event cooldown in minutes
+  eventCooldownMinutes: 30
+  # Special event chances
+  specialEventChances:
+    doubleXp: 0.1
+    rareDropBoost: 0.05
+    luckyBreak: 0.02
+
+# Global Multipliers
+multipliers:
+  # Global drop rate multiplier
+  globalDropRateMultiplier: 1.0
+  # Global experience multiplier
+  globalExperienceMultiplier: 1.0
+
+# Starting Settings
+starting:
+  # Starting block count
+  startingBlockCount: 1
+  # Enable starting block progression
+  startingBlockProgressionEnabled: true
+  # Starting block weights
+  startingBlockWeights:
+    STONE: 1.0
+    COBBLESTONE: 0.8
+    DIRT: 0.6
+
+# Generator Settings (for CobblestoneGenerator integration)
+generators:
+  # Trigger blocks that activate generators
+  triggerBlocks:
+    - COBBLESTONE
+    - STONE
+    - DEEPSLATE
+  # Unlock levels for different generator tiers
+  unlockLevels:
+    advanced: 10
+    legendary: 25
+    mythical: 50
+    cosmic: 100
+    omnipotent: 200

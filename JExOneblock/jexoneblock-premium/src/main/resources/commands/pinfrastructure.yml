@@ -1,0 +1,8 @@
+name: infrastructure
+description: Manage island infrastructure and buildings
+usage: /island infrastructure <subcommand>
+permission: jexoneblock.command.infrastructure
+aliases:
+  - infra
+  - buildings
+  - structures

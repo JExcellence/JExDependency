@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ForkJoinPool;
-import java.util.stream.Collectors;
 
 /**
  * Async extension of RequirementService for high-performance batch operations.

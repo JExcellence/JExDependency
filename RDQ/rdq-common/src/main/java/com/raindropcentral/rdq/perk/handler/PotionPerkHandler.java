@@ -141,7 +141,7 @@ public class PotionPerkHandler {
 
 		plugin.getPerkActivationService().recordEffectTrigger(player, playerPerk);
 		
-		LOGGER.info("Applied potion effect " + effectType.getName() + " (amplifier " + amplifier + 
+		LOGGER.info("Applied potion effect " + effectType.getKey().getKey() + " (amplifier " + amplifier + 
 				") to player " + player.getName() + " from perk " + playerPerk.getPerk().getIdentifier());
 		
 		return true;
@@ -202,10 +202,7 @@ public class PotionPerkHandler {
 				activePlayerPerks.remove(player.getUniqueId());
 			}
 		}
-		
-		LOGGER.info("Removed potion effect " + effectType.getName() + " from player " + player.getName() + 
-				" for perk " + playerPerk.getPerk().getIdentifier());
-		
+
 		return true;
 	}
 	

@@ -34,7 +34,12 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -106,7 +111,7 @@ public class BountyPlayerInfoView extends BaseView {
 
         render.layoutSlot('P', UnifiedBuilderFactory
             .unifiedHead(targetPlayer)
-            .setDisplayName((net.kyori.adventure.text.Component) this.i18n("target.name", player)
+            .setDisplayName((Component) this.i18n("target.name", player)
                 .withPlaceholder("target_name", targetName)
                 .build().component())
             .setLore(List.of(

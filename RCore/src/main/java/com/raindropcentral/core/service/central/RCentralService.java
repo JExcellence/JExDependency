@@ -13,22 +13,33 @@
 
 package com.raindropcentral.core.service.central;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.raindropcentral.core.RCoreImpl;
 import com.raindropcentral.core.config.RCentralConfig;
 import com.raindropcentral.core.database.entity.central.RCentralServer;
+import com.raindropcentral.core.database.repository.RCentralServerRepository;
 import com.raindropcentral.rplatform.RPlatform;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.HexFormat;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -37,12 +48,17 @@ import java.util.logging.Logger;
 public class RCentralService {
 
     private static final Logger LOGGER = CentralLogger.getLoggerByName("RCore");
+    private static final Duration DROPLET_STORE_ALLOWLIST_STALE_AFTER = Duration.ofHours(6);
+    private static final Type STRING_LIST_TYPE = new TypeToken<List<String>>() {}.getType();
 
+    private final RCoreImpl rCore;
     private final Plugin plugin;
     private final RPlatform platform;
     private final FileConfiguration config;
-    private final com.raindropcentral.core.config.RCentralConfig rcentralConfig;
+    private final RCentralConfig rcentralConfig;
     private final RCentralApiClient apiClient;
+    private final @Nullable RCentralServerRepository serverRepository;
+    private final Gson gson;
     private final UUID serverUuid;
     private RCentralServer serverEntity;
     private HeartbeatScheduler heartbeatScheduler;
@@ -50,25 +66,32 @@ public class RCentralService {
     /**
      * Executes RCentralService.
      */
-    public RCentralService(final @NotNull Plugin plugin, final @NotNull RPlatform platform) {
-        this.plugin = plugin;
-        this.platform = platform;
-        this.config = plugin.getConfig();
-        this.rcentralConfig = new RCentralConfig(plugin);
+    public RCentralService(final @NotNull RCoreImpl rCore) {
+        this.rCore = rCore;
+        this.plugin = rCore.getPlugin();
+        this.platform = rCore.getPlatform();
+        this.config = this.plugin.getConfig();
+        this.rcentralConfig = new RCentralConfig(this.plugin);
+        this.serverRepository = rCore.getRCentralServerRepository();
+        this.gson = new Gson();
 
         var backendUrl = detectBackendUrl();
-        this.apiClient = new RCentralApiClient(plugin, backendUrl);
+        this.apiClient = new RCentralApiClient(this.plugin, backendUrl);
 
-        var savedUuid = config.getString("connection.server-uuid");
+        var savedUuid = this.config.getString("connection.server-uuid");
         if (savedUuid != null) {
             this.serverUuid = UUID.fromString(savedUuid);
         } else {
             this.serverUuid = UUID.randomUUID();
-            config.set("connection.server-uuid", serverUuid.toString());
-            plugin.saveConfig();
+            this.config.set("connection.server-uuid", this.serverUuid.toString());
+            this.plugin.saveConfig();
+        }
+        this.serverEntity = this.loadPersistedServerEntity();
+        if (this.serverEntity != null) {
+            this.serverEntity.setConnectionStatus(RCentralServer.ConnectionStatus.DISCONNECTED);
         }
 
-        LOGGER.info("RCentralService initialized with server UUID: " + serverUuid);
+        LOGGER.info("RCentralService initialized with server UUID: " + this.serverUuid);
         LOGGER.info("Backend URL: " + backendUrl);
 
         sendWakeupPingIfNeeded();
@@ -101,7 +124,6 @@ public class RCentralService {
         var serverVersion = Bukkit.getVersion();
         var pluginVersion = plugin.getPluginMeta().getVersion();
         var maxPlayers = Bukkit.getMaxPlayers();
-        var compatibilitySnapshot = rcentralConfig.getDropletStoreCompatibilitySnapshot();
 
         return apiClient.connectServer(
                         apiKey,
@@ -110,8 +132,7 @@ public class RCentralService {
                         pluginVersion,
                         playerUuid,
                         playerName,
-                        maxPlayers,
-                        compatibilitySnapshot
+                        maxPlayers
                 )
                 .thenApply(response -> {
                     if (response.isSuccess()) {
@@ -121,16 +142,18 @@ public class RCentralService {
                         config.set("connection.minecraft-username", playerName);
                         plugin.saveConfig();
 
-                        if (serverEntity == null) {
-                            serverEntity = new RCentralServer(serverUuid);
-                        }
-                        serverEntity.setApiKeyHash(hashApiKey(apiKey));
-                        serverEntity.setConnectionStatus(RCentralServer.ConnectionStatus.CONNECTED);
-                        serverEntity.setServerVersion(serverVersion);
-                        serverEntity.setPluginVersion(pluginVersion);
+                        final RCentralServer entity = this.getOrCreateServerEntity();
+                        entity.setApiKeyHash(hashApiKey(apiKey));
+                        entity.setConnectionStatus(RCentralServer.ConnectionStatus.CONNECTED);
+                        entity.setServerVersion(serverVersion);
+                        entity.setPluginVersion(pluginVersion);
+                        entity.setMaxPlayers(maxPlayers);
+                        this.persistServerEntityBlocking();
 
                         LOGGER.info("Successfully connected to RaindropCentral");
                         startHeartbeat(apiKey);
+                        this.refreshDropletStoreAllowlist(false)
+                                .thenAccept(this::logAllowlistRefreshFailure);
 
                         return new ConnectionResult(true, null, null);
                     } else {
@@ -180,6 +203,7 @@ public class RCentralService {
 
                         if (serverEntity != null) {
                             serverEntity.setConnectionStatus(RCentralServer.ConnectionStatus.DISCONNECTED);
+                            this.persistServerEntityBlocking();
                         }
 
                         LOGGER.info("Disconnected from RaindropCentral");
@@ -235,6 +259,7 @@ public class RCentralService {
                         LOGGER.info("Shutdown notification sent successfully");
                         if (serverEntity != null) {
                             serverEntity.setConnectionStatus(RCentralServer.ConnectionStatus.DISCONNECTED);
+                            this.persistServerEntityBlocking();
                         }
                         stopHeartbeat();
                         return true;
@@ -267,7 +292,6 @@ public class RCentralService {
         var serverVersion = Bukkit.getVersion();
         var pluginVersion = plugin.getPluginMeta().getVersion();
         var maxPlayers = Bukkit.getMaxPlayers();
-        var compatibilitySnapshot = rcentralConfig.getDropletStoreCompatibilitySnapshot();
         
         // Retrieve stored player info from last successful connection
         var minecraftUuid = config.getString("connection.minecraft-uuid");
@@ -280,27 +304,32 @@ public class RCentralService {
                         pluginVersion,
                         maxPlayers,
                         minecraftUuid,
-                        minecraftUsername,
-                        compatibilitySnapshot
+                        minecraftUsername
                 )
                 .thenAccept(response -> {
                     if (response.isSuccess()) {
                         LOGGER.info("Wakeup ping sent successfully - server marked as online");
 
-                        if (serverEntity == null) {
-                            serverEntity = new RCentralServer(serverUuid);
-                        }
-                        serverEntity.setConnectionStatus(RCentralServer.ConnectionStatus.CONNECTED);
-                        serverEntity.setServerVersion(serverVersion);
-                        serverEntity.setPluginVersion(pluginVersion);
+                        final RCentralServer entity = this.getOrCreateServerEntity();
+                        entity.setConnectionStatus(RCentralServer.ConnectionStatus.CONNECTED);
+                        entity.setServerVersion(serverVersion);
+                        entity.setPluginVersion(pluginVersion);
+                        entity.setMaxPlayers(maxPlayers);
+                        this.persistServerEntityBlocking();
                         
                         startHeartbeat(apiKey);
+                        this.refreshDropletStoreAllowlist(false)
+                                .thenAccept(this::logAllowlistRefreshFailure);
                     } else {
                         LOGGER.warning("Wakeup ping failed: " + response.statusCode() +
                                 " - Server will need manual reconnection via /rc connect <api-key>");
                         if (response.statusCode() == 401 || response.statusCode() == 403) {
                             config.set("connection.api-key", null);
                             plugin.saveConfig();
+                        }
+                        if (this.serverEntity != null) {
+                            this.serverEntity.setConnectionStatus(RCentralServer.ConnectionStatus.DISCONNECTED);
+                            this.persistServerEntityBlocking();
                         }
                     }
                 })
@@ -322,8 +351,7 @@ public class RCentralService {
                 platform,
                 apiClient,
                 apiKey,
-                sharePlayerList,
-                this::getDropletStoreCompatibilitySnapshot
+                sharePlayerList
         );
         heartbeatScheduler.start();
     }
@@ -398,31 +426,21 @@ public class RCentralService {
     }
 
     /**
-     * Checks whether droplet-store claiming is enabled for this server.
+     * Checks whether one supported droplet-store reward is currently allowed for this server.
      *
-     * @return {@code true} when `/rc claim droplets` should be available
-     */
-    public boolean isDropletStoreEnabled() {
-        return this.rcentralConfig.isDropletsStoreEnabled();
-    }
-
-    /**
-     * Gets the effective droplet-store compatibility snapshot used for backend reporting.
-     *
-     * @return current compatibility snapshot derived from rcentral.yml
-     */
-    public @NotNull RCentralConfig.DropletStoreCompatibilitySnapshot getDropletStoreCompatibilitySnapshot() {
-        return this.rcentralConfig.getDropletStoreCompatibilitySnapshot();
-    }
-
-    /**
-     * Checks whether one supported droplet-store reward is enabled.
+     * <p>When the backend allowlist has not been fetched yet, the method defaults to
+     * {@code true} so claimability is ultimately enforced by the backend until the first
+     * successful cache refresh completes.</p>
      *
      * @param itemCode backend item code
-     * @return {@code true} when claiming is allowed for that reward
+     * @return {@code true} when the cached allowlist currently permits the item
      */
     public boolean isDropletStoreRewardEnabled(final @NotNull String itemCode) {
-        return this.rcentralConfig.isDropletStoreRewardEnabled(itemCode);
+        final List<String> allowedItemCodes = this.getCachedAllowedDropletStoreItemCodesOrNull();
+        if (allowedItemCodes == null) {
+            return true;
+        }
+        return allowedItemCodes.contains(normalizeItemCode(itemCode));
     }
 
     /**
@@ -441,7 +459,8 @@ public class RCentralService {
             );
         }
 
-        return this.apiClient.getUnclaimedDropletPurchases(apiKey, playerUuid);
+        return this.ensureDropletStoreAllowlistFresh()
+                .thenCompose(ignored -> this.apiClient.getUnclaimedDropletPurchases(apiKey, playerUuid));
     }
 
     /**
@@ -462,6 +481,221 @@ public class RCentralService {
             );
         }
 
-        return this.apiClient.claimDropletPurchase(apiKey, playerUuid, purchaseId);
+        return this.ensureDropletStoreAllowlistFresh()
+                .thenCompose(ignored -> this.apiClient.claimDropletPurchase(apiKey, playerUuid, purchaseId));
+    }
+
+    /**
+     * Forces an immediate backend refresh of the local droplet-store allowlist cache.
+     *
+     * @return refresh outcome describing whether the cache was updated or a stale cache was kept
+     */
+    public CompletableFuture<AllowlistRefreshResult> forceRefreshDropletStoreAllowlist() {
+        return this.refreshDropletStoreAllowlist(true);
+    }
+
+    /**
+     * Returns the cached droplet-store allowlist, or an empty list when nothing has been cached yet.
+     *
+     * @return cached allowed item codes
+     */
+    public @NotNull List<String> getCachedDropletStoreAllowedItemCodes() {
+        final List<String> cachedItemCodes = this.getCachedAllowedDropletStoreItemCodesOrNull();
+        return cachedItemCodes == null ? List.of() : cachedItemCodes;
+    }
+
+    private @NotNull CompletableFuture<Void> ensureDropletStoreAllowlistFresh() {
+        if (!this.isDropletStoreAllowlistStale()) {
+            return CompletableFuture.completedFuture(null);
+        }
+
+        return this.refreshDropletStoreAllowlist(false)
+                .thenAccept(this::logAllowlistRefreshFailure);
+    }
+
+    private @NotNull CompletableFuture<AllowlistRefreshResult> refreshDropletStoreAllowlist(final boolean force) {
+        final String apiKey = this.getApiKey();
+        if (apiKey == null || !this.isConnected()) {
+            return CompletableFuture.completedFuture(new AllowlistRefreshResult(
+                    false,
+                    this.hasCachedDropletStoreAllowlist(),
+                    this.getCachedDropletStoreAllowedItemCodes(),
+                    "Server is not connected to RaindropCentral."
+            ));
+        }
+        if (!force && !this.isDropletStoreAllowlistStale()) {
+            return CompletableFuture.completedFuture(new AllowlistRefreshResult(
+                    true,
+                    true,
+                    this.getCachedDropletStoreAllowedItemCodes(),
+                    null
+            ));
+        }
+
+        return this.apiClient.getDropletStoreAllowlist(apiKey)
+                .thenApply(response -> {
+                    if (!response.isSuccess() || response.data() == null) {
+                        return this.toAllowlistFailureResult(this.resolveParsedApiError(response));
+                    }
+
+                    final List<String> allowedItemCodes = normalizeAllowlistItemCodes(
+                            response.data().allowedItemCodesOrEmpty()
+                    );
+                    this.cacheDropletStoreAllowlist(allowedItemCodes);
+                    return new AllowlistRefreshResult(true, false, allowedItemCodes, null);
+                })
+                .exceptionally(throwable -> this.toAllowlistFailureResult(this.resolveThrowableMessage(throwable)));
+    }
+
+    private void logAllowlistRefreshFailure(final @NotNull AllowlistRefreshResult result) {
+        if (!result.success() && result.errorMessage() != null && !result.errorMessage().isBlank()) {
+            LOGGER.warning("Failed to refresh droplet-store allowlist: " + result.errorMessage());
+        }
+    }
+
+    private @NotNull AllowlistRefreshResult toAllowlistFailureResult(final @NotNull String errorMessage) {
+        return new AllowlistRefreshResult(
+                false,
+                this.hasCachedDropletStoreAllowlist(),
+                this.getCachedDropletStoreAllowedItemCodes(),
+                errorMessage
+        );
+    }
+
+    private void cacheDropletStoreAllowlist(final @NotNull List<String> allowedItemCodes) {
+        final RCentralServer entity = this.getOrCreateServerEntity();
+        entity.setDropletStoreAllowedItemCodesJson(this.gson.toJson(normalizeAllowlistItemCodes(allowedItemCodes)));
+        entity.setDropletStoreAllowedItemCodesFetchedAt(LocalDateTime.now());
+        this.persistServerEntityBlocking();
+    }
+
+    private boolean hasCachedDropletStoreAllowlist() {
+        return this.serverEntity != null
+                && this.serverEntity.getDropletStoreAllowedItemCodesJson() != null
+                && !this.serverEntity.getDropletStoreAllowedItemCodesJson().isBlank();
+    }
+
+    private boolean isDropletStoreAllowlistStale() {
+        return isAllowlistStale(
+                this.serverEntity == null ? null : this.serverEntity.getDropletStoreAllowedItemCodesFetchedAt(),
+                LocalDateTime.now()
+        );
+    }
+
+    static boolean isAllowlistStale(
+            final @Nullable LocalDateTime fetchedAt,
+            final @NotNull LocalDateTime now
+    ) {
+        if (fetchedAt == null) {
+            return true;
+        }
+        return !fetchedAt.plus(DROPLET_STORE_ALLOWLIST_STALE_AFTER).isAfter(now);
+    }
+
+    static @NotNull List<String> normalizeAllowlistItemCodes(final @Nullable List<String> rawItemCodes) {
+        if (rawItemCodes == null || rawItemCodes.isEmpty()) {
+            return List.of();
+        }
+
+        final LinkedHashSet<String> normalizedItemCodes = new LinkedHashSet<>();
+        for (final String rawItemCode : rawItemCodes) {
+            final String normalizedItemCode = normalizeItemCode(rawItemCode);
+            if (!normalizedItemCode.isBlank()) {
+                normalizedItemCodes.add(normalizedItemCode);
+            }
+        }
+        return List.copyOf(normalizedItemCodes);
+    }
+
+    private @Nullable List<String> getCachedAllowedDropletStoreItemCodesOrNull() {
+        if (!this.hasCachedDropletStoreAllowlist()) {
+            return null;
+        }
+
+        try {
+            final List<String> cachedCodes = this.gson.fromJson(
+                    this.serverEntity.getDropletStoreAllowedItemCodesJson(),
+                    STRING_LIST_TYPE
+            );
+            return normalizeAllowlistItemCodes(cachedCodes);
+        } catch (RuntimeException exception) {
+            LOGGER.log(Level.WARNING, "Failed to parse cached droplet-store allowlist for " + this.serverUuid, exception);
+            return null;
+        }
+    }
+
+    private @Nullable RCentralServer loadPersistedServerEntity() {
+        if (this.serverRepository == null) {
+            LOGGER.warning("RCentralServerRepository is unavailable; droplet-store allowlist caching is disabled.");
+            return null;
+        }
+
+        try {
+            return this.serverRepository.findByServerUuid(this.serverUuid).join().orElse(null);
+        } catch (RuntimeException exception) {
+            LOGGER.log(Level.WARNING, "Failed to load persisted RCentral server entity for " + this.serverUuid, exception);
+            return null;
+        }
+    }
+
+    private @NotNull RCentralServer getOrCreateServerEntity() {
+        if (this.serverEntity == null) {
+            this.serverEntity = new RCentralServer(this.serverUuid);
+        }
+        return this.serverEntity;
+    }
+
+    private void persistServerEntityBlocking() {
+        if (this.serverRepository == null || this.serverEntity == null) {
+            return;
+        }
+
+        try {
+            if (this.serverEntity.getId() == null) {
+                this.serverEntity = this.serverRepository.createAsync(this.serverEntity).join();
+            } else {
+                this.serverEntity = this.serverRepository.updateAsync(this.serverEntity).join();
+            }
+        } catch (RuntimeException exception) {
+            LOGGER.log(Level.WARNING, "Failed to persist RCentral server entity for " + this.serverUuid, exception);
+        }
+    }
+
+    private static @NotNull String normalizeItemCode(final @Nullable String itemCode) {
+        return itemCode == null ? "" : itemCode.trim().toLowerCase(Locale.ROOT);
+    }
+
+    private @NotNull String resolveParsedApiError(final @NotNull RCentralApiClient.ParsedApiResponse<?> response) {
+        if (response.message() != null && !response.message().isBlank()) {
+            return response.message();
+        }
+        if (response.error() != null && !response.error().isBlank()) {
+            return response.error();
+        }
+        return "Status " + response.statusCode();
+    }
+
+    private @NotNull String resolveThrowableMessage(final @NotNull Throwable throwable) {
+        final String message = throwable.getMessage();
+        return message == null || message.isBlank() ? throwable.getClass().getSimpleName() : message;
+    }
+
+    /**
+     * Droplet-store allowlist refresh outcome.
+     *
+     * @param success whether the backend refresh completed successfully
+     * @param usedCachedValue whether the result kept or returned cached values instead of a fresh fetch
+     * @param allowedItemCodes best-known effective allowlist after the refresh attempt
+     * @param errorMessage failure detail when the refresh did not succeed
+     */
+    public record AllowlistRefreshResult(
+            boolean success,
+            boolean usedCachedValue,
+            @NotNull List<String> allowedItemCodes,
+            @Nullable String errorMessage
+    ) {
+        public AllowlistRefreshResult {
+            allowedItemCodes = List.copyOf(allowedItemCodes);
+        }
     }
 }

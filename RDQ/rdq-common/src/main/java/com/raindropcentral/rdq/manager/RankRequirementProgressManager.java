@@ -1,18 +1,4 @@
-/*
- * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
- *
- * This source code is proprietary and confidential to Antimatter Zone LLC.
- * Unauthorized copying, modification, distribution, display, performance,
- * publication, sublicensing, or creation of derivative works is prohibited
- * without prior written permission from Antimatter Zone LLC, except to the
- * extent permitted by applicable United States law.
- *
- * This notice is intended to preserve all rights and remedies available under
- * the laws of the State of Washington and the United States of America.
- */
-
 package com.raindropcentral.rdq.manager;
-
 
 import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
@@ -31,19 +17,18 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.logging.Logger;
 
 /**
  * Manages rank requirement progress, including persistence, validation, and state management.
- *
- * <p>This manager handles:
+ * <p>
+ * This manager handles:
  * - Calculating and caching requirement progress (via RequirementService)
  * - Persisting completion states to the database
  * - Preventing over-completion of requirements
  * - Validating rank completion eligibility
  * - Coordinating between different rank views
- *
- * <p><b>IMPORTANT:</b> This manager now uses {@link RequirementService} instead of calling
+ * <p>
+ * <b>IMPORTANT:</b> This manager now uses {@link RequirementService} instead of calling
  * requirement methods directly. This ensures that requirement events are properly fired
  * and the rank progression system integrates with the event-driven architecture.
  *
@@ -65,9 +50,6 @@ public class RankRequirementProgressManager {
 	// Cache expiry time (30 seconds)
 	private static final long CACHE_EXPIRY_MS = 30000L;
 	
-	/**
-	 * Executes RankRequirementProgressManager.
-	 */
 	public RankRequirementProgressManager(@NotNull RDQ rdq) {
 		this.rdq = rdq;
 		this.requirementService = RequirementService.getInstance();
@@ -103,8 +85,8 @@ public class RankRequirementProgressManager {
 	
 	/**
 	 * Attempts to complete a requirement and persists the result.
- *
- * <p>This method now uses {@link RequirementService#isMet(Player, AbstractRequirement)}
+	 * <p>
+	 * This method now uses {@link RequirementService#isMet(Player, AbstractRequirement)}
 	 * and {@link RequirementService#consume(Player, AbstractRequirement)} to ensure
 	 * that requirement events are properly fired throughout the completion process.
 	 * This method will consume the required resources if the requirement is successfully completed.
@@ -314,8 +296,8 @@ public class RankRequirementProgressManager {
 	
 	/**
 	 * Calculates the current progress for a specific requirement.
- *
- * <p>This method now uses {@link RequirementService#checkRequirement(Player, AbstractRequirement)}
+	 * <p>
+	 * This method now uses {@link RequirementService#checkRequirement(Player, AbstractRequirement)}
 	 * instead of calling requirement methods directly. This ensures that:
 	 * - RequirementCheckEvent is fired
 	 * - Progress is automatically tracked by RankRequirementListener
@@ -472,7 +454,7 @@ public class RankRequirementProgressManager {
 	// Data classes and enums
 	
 	/**
-	 * Represents the RequirementStatus API type.
+	 * Represents the current completion state for a rank requirement.
 	 */
 	public enum RequirementStatus {
 		NOT_STARTED,
@@ -483,7 +465,7 @@ public class RankRequirementProgressManager {
 	}
 	
 	/**
-	 * Snapshot of requirement progress information for presentation and workflow control.
+	 * Captures progress details for a single rank requirement.
 	 */
 	public static class RequirementProgressData {
 		private final String requirementId;
@@ -495,9 +477,6 @@ public class RankRequirementProgressManager {
 		private final String statusMessage;
 		private final int displayOrder;
 		
-		/**
-		 * Executes RequirementProgressData.
-		 */
 		public RequirementProgressData(
 			@NotNull String requirementId,
 			@NotNull String requirementType,
@@ -519,70 +498,46 @@ public class RankRequirementProgressManager {
 		}
 		
 		// Getters
-		/**
-		 * Gets requirementId.
-		 */
 		public String getRequirementId() { return requirementId; }
-		/**
-		 * Gets requirementType.
-		 */
 		public String getRequirementType() { return requirementType; }
-		/**
-		 * Gets descriptionKey.
-		 */
 		public String getDescriptionKey() { return descriptionKey; }
-		/**
-		 * Returns whether completed.
-		 */
 		public boolean isCompleted() { return isCompleted; }
-		/**
-		 * Gets progressPercentage.
-		 */
 		public double getProgressPercentage() { return progressPercentage; }
-		/**
-		 * Gets status.
-		 */
 		public RequirementStatus getStatus() { return status; }
-		/**
-		 * Gets statusMessage.
-		 */
 		public String getStatusMessage() { return statusMessage; }
-		/**
-		 * Gets displayOrder.
-		 */
 		public int getDisplayOrder() { return displayOrder; }
 		
 		/**
-		 * Gets progressAsPercentage.
+		 * Returns the rounded progress percentage in whole-number form.
+		 *
+		 * @return the rounded progress percentage
 		 */
 		public int getProgressAsPercentage() {
 			return (int) Math.round(progressPercentage * 100);
 		}
 		
 		/**
-		 * Returns whether progress.
+		 * Returns whether the requirement has made any measurable progress.
+		 *
+		 * @return {@code true} when progress is greater than zero
 		 */
 		public boolean hasProgress() {
 			return progressPercentage > 0.0;
 		}
 		
-		/**
-		 * Gets formattedProgress.
-		 */
 		public String getFormattedProgress() {
 			return getProgressAsPercentage() + "%";
 		}
 		
 		/**
-		 * Executes canBeCompleted.
+		 * Returns whether the requirement is ready to be completed.
+		 *
+		 * @return {@code true} when the requirement can be completed now
 		 */
 		public boolean canBeCompleted() {
 			return status == RequirementStatus.READY_TO_COMPLETE && !isCompleted;
 		}
 		
-		/**
-		 * Executes toString.
-		 */
 		@Override
 		public String toString() {
 			return "RequirementProgressData{" +
@@ -596,16 +551,13 @@ public class RankRequirementProgressManager {
 	}
 	
 	/**
-	 * Outcome of attempting to complete a requirement.
+	 * Represents the outcome of attempting to complete a rank requirement.
 	 */
 	public static class RequirementCompletionResult {
 		private final boolean success;
 		private final String messageKey;
 		private final RequirementProgressData updatedProgress;
 		
-		/**
-		 * Executes RequirementCompletionResult.
-		 */
 		public RequirementCompletionResult(
 			boolean success,
 			@NotNull String messageKey,
@@ -616,21 +568,14 @@ public class RankRequirementProgressManager {
 			this.updatedProgress = updatedProgress;
 		}
 		
-		/**
-		 * Returns whether success.
-		 */
 		public boolean isSuccess() { return success; }
-		/**
-		 * Gets messageKey.
-		 */
 		public String getMessageKey() { return messageKey; }
-		/**
-		 * Gets updatedProgress.
-		 */
 		public RequirementProgressData getUpdatedProgress() { return updatedProgress; }
 		
 		/**
-		 * Executes sendMessage.
+		 * Sends the localized completion result message to the player.
+		 *
+		 * @param player the player who should receive the message
 		 */
 		public void sendMessage(@NotNull Player player) {
             new I18n.Builder(messageKey, player).includePrefix().build().sendMessage();

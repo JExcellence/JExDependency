@@ -13,6 +13,7 @@
 
 package com.raindropcentral.rdt.database.entity;
 
+import com.raindropcentral.rdt.utils.ChunkType;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
@@ -70,5 +71,48 @@ class RTownBankAndLevelProgressTest {
         town.setLevelItemProgress("level.2.item", null);
         assertNull(town.getLevelItemProgress("level.2.item"));
         assertTrue(town.getLevelItemProgress().isEmpty());
+    }
+
+    @Test
+    void archetypeChangeTimestampDefaultsToZeroAndClampsNegativeValues() {
+        final RTown town = new RTown(UUID.randomUUID(), UUID.randomUUID(), "Alpha", null);
+
+        assertEquals(0L, town.getLastArchetypeChangeAt());
+
+        town.setLastArchetypeChangeAt(-50L);
+        assertEquals(0L, town.getLastArchetypeChangeAt());
+
+        town.setLastArchetypeChangeAt(1234L);
+        assertEquals(1234L, town.getLastArchetypeChangeAt());
+    }
+
+    @Test
+    void compositeTownLevelUsesPersistedNexusLevelPlusNonNexusChunkLevels() {
+        final RTown town = new RTown(UUID.randomUUID(), UUID.randomUUID(), "Alpha", null);
+        final RTownChunk nexusChunk = new RTownChunk(town, "world", 0, 0, ChunkType.NEXUS);
+        final RTownChunk securityChunk = new RTownChunk(town, "world", 1, 0, ChunkType.SECURITY);
+        final RTownChunk bankChunk = new RTownChunk(town, "world", 2, 0, ChunkType.BANK);
+
+        town.addChunk(nexusChunk);
+        town.addChunk(securityChunk);
+        town.addChunk(bankChunk);
+
+        town.setNexusLevel(3);
+        securityChunk.setChunkLevel(4);
+        bankChunk.setChunkLevel(2);
+
+        assertEquals(9, town.getTownLevel());
+        assertEquals(3, town.getNexusLevel());
+    }
+
+    @Test
+    void bufferedFuelUnitsClampNegativeValuesToZero() {
+        final RTown town = new RTown(UUID.randomUUID(), UUID.randomUUID(), "Alpha", null);
+
+        town.setBufferedFuelUnits(18.5D);
+        assertEquals(18.5D, town.getBufferedFuelUnits(), 0.000_1D);
+
+        town.setBufferedFuelUnits(-10.0D);
+        assertEquals(0.0D, town.getBufferedFuelUnits(), 0.000_1D);
     }
 }

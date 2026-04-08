@@ -1,20 +1,8 @@
-/*
- * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
- *
- * This source code is proprietary and confidential to Antimatter Zone LLC.
- * Unauthorized copying, modification, distribution, display, performance,
- * publication, sublicensing, or creation of derivative works is prohibited
- * without prior written permission from Antimatter Zone LLC, except to the
- * extent permitted by applicable United States law.
- *
- * This notice is intended to preserve all rights and remedies available under
- * the laws of the State of Washington and the United States of America.
- */
-
 package com.raindropcentral.rdq.database.entity.rank;
 
-import com.raindropcentral.rdq.config.utility.IconSection;
 import com.raindropcentral.rdq.database.converter.IconSectionConverter;
+import com.raindropcentral.rplatform.config.icon.IconSection;
+import com.raindropcentral.rplatform.progression.IProgressionNode;
 import de.jexcellence.hibernate.entity.BaseEntity;
 import jakarta.persistence.*;
 import org.jetbrains.annotations.NotNull;
@@ -30,13 +18,13 @@ import java.util.stream.Collectors;
 
 /**
  * Represents a rank within a {@link RRankTree} in the RaindropQuests system.
- *
- * <p>Each rank has a unique identifier, display keys for localization, a LuckPerms group assignment,
+ * <p>
+ * Each rank has a unique identifier, display keys for localization, a LuckPerms group assignment,
  * tier and weight for ordering, and icon representation. Ranks can be linked to previous and next ranks,
  * forming a progression path within a rank tree.
  *
- *
- * <p>This entity is mapped to the {@code r_rank} table in the database.
+ * <p>
+ * This entity is mapped to the {@code r_rank} table in the database.
  *
  * @author JExcellence
  * @version 2.0.0
@@ -44,7 +32,7 @@ import java.util.stream.Collectors;
  */
 @Entity
 @Table(name = "r_rank")
-public class RRank extends BaseEntity {
+public class RRank extends BaseEntity implements IProgressionNode<RRank> {
 	
 	@Transient
 	private static final Logger LOGGER = Logger.getLogger(RRank.class.getName());
@@ -247,80 +235,47 @@ public class RRank extends BaseEntity {
 	) {
 		this(identifier, displayNameKey, descriptionKey, assignedLuckPermsGroup, prefixKey, suffixKey, icon, isInitialRank, tier, weight, null);
 	}
-	
-	/**
-	 * Gets identifier.
-	 */
+
 	public String getIdentifier() {
 		return this.identifier;
 	}
-	
-	/**
-	 * Gets displayNameKey.
-	 */
+
 	public String getDisplayNameKey() {
 		return this.displayNameKey;
 	}
 	
-	/**
-	 * Gets descriptionKey.
-	 */
 	public String getDescriptionKey() {
 		return this.descriptionKey;
 	}
 	
-	/**
-	 * Gets assignedLuckPermsGroup.
-	 */
 	public String getAssignedLuckPermsGroup() {
 		return this.assignedLuckPermsGroup;
 	}
 	
-	/**
-	 * Gets prefixKey.
-	 */
 	public String getPrefixKey() {
 		return this.prefixKey;
 	}
 	
-	/**
-	 * Gets suffixKey.
-	 */
 	public String getSuffixKey() {
 		return this.suffixKey;
 	}
 	
-	/**
-	 * Gets tier.
-	 */
 	public int getTier() {
 		return this.tier;
 	}
 	
-	/**
-	 * Gets weight.
-	 */
 	public int getWeight() {
 		return this.weight;
 	}
 	
-	/**
-	 * Returns whether initialRank.
-	 */
 	public boolean isInitialRank() {
 		return this.isInitialRank;
 	}
 	
-	/**
-	 * Returns whether finalRank.
-	 */
 	public boolean isFinalRank() {
 		return this.isFinalRank;
 	}
 	
-	/**
-	 * Returns whether enabled.
-	 */
 	public boolean isEnabled() {
 		return this.isEnabled;
 	}
@@ -379,51 +334,42 @@ public class RRank extends BaseEntity {
 		                   .collect(Collectors.toList());
 	}
 	
-	/**
-	 * Gets icon.
-	 */
 	public IconSection getIcon() {
 		return this.icon;
 	}
 	
-	/**
-	 * Gets previousRanks.
-	 */
 	public List<String> getPreviousRanks() {
 		return this.previousRanks;
 	}
-	
-	/**
-	 * Gets nextRanks.
-	 */
+
 	public List<String> getNextRanks() {
 		return this.nextRanks;
 	}
-	
-	/**
-	 * Gets version.
-	 */
+
+	@Override
+	@NotNull
+	public List<String> getPreviousNodeIdentifiers() {
+		return this.previousRanks;
+	}
+
+	@Override
+	@NotNull
+	public List<String> getNextNodeIdentifiers() {
+		return this.nextRanks;
+	}
+
 	public int getVersion() {
 		return version;
 	}
 	
-	/**
-	 * Sets rankTree.
-	 */
 	public void setRankTree(final @Nullable RRankTree rankTree) {
 		this.rankTree = rankTree;
 	}
 	
-	/**
-	 * Sets previousRanks.
-	 */
 	public void setPreviousRanks(final List<String> previousRanks) {
 		this.previousRanks = previousRanks;
 	}
 	
-	/**
-	 * Sets nextRanks.
-	 */
 	public void setNextRanks(final List<String> nextRanks) {
 		this.nextRanks = nextRanks;
 	}
@@ -528,10 +474,7 @@ public class RRank extends BaseEntity {
 		
 		return removed;
 	}
-	
-	/**
-	 * Executes equals.
-	 */
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -539,9 +482,6 @@ public class RRank extends BaseEntity {
 		return identifier.equals(rRank.identifier);
 	}
 	
-	/**
-	 * Returns whether hCode.
-	 */
 	@Override
 	public int hashCode() {
 		return identifier.hashCode();

@@ -1,6 +1,5 @@
 package de.jexcellence.economy.command.player.currencies;
 
-import de.jexcellence.economy.command.player.currencies.CurrencyCommandHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

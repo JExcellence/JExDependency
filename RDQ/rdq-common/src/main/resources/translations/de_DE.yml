@@ -2346,3 +2346,253 @@ difficulty:
   normal: <gradient:#f59e0b:#fbbf24>Normal</gradient>
   hard: <gradient:#ef4444:#f87171>Hart</gradient>
   extreme: <gradient:#a855f7:#c084fc>Extrem</gradient>
+# ============================================
+# QUEST SYSTEM
+# ============================================
+quest:
+  # Quest Categories
+  category:
+    combat:
+      name: "<gradient:#ef4444:#f87171>⚔ Kampf</gradient>"
+      description: "<gradient:#6b7280:#9ca3af>Meistere die Kunst des Kampfes</gradient>"
+    mining:
+      name: "<gradient:#6b7280:#9ca3af>⛏ Bergbau</gradient>"
+      description: "<gradient:#6b7280:#9ca3af>Grabe tief in die Erde</gradient>"
+    building:
+      name: "<gradient:#f59e0b:#fbbf24>🏗 Bauen</gradient>"
+      description: "<gradient:#6b7280:#9ca3af>Erschaffe prächtige Strukturen</gradient>"
+  
+  # Combat Basic Quest
+  combat_basic:
+    name: "<gradient:#ef4444:#f87171>⚔ Erste Schritte im Kampf</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Lerne die Grundlagen des Monsterkampfes</gradient>"
+    task:
+      kill_zombies_basic: "<gradient:#6b7280:#9ca3af>Töte 5 Zombies um deine Kampfbereitschaft zu beweisen</gradient>"
+      craft_wooden_sword: "<gradient:#6b7280:#9ca3af>Erschaffe deine erste Waffe</gradient>"
+  
+  # Zombie Slayer Basic Quest
+  zombie_slayer_basic:
+    name: "<gradient:#ef4444:#f87171>🧟 Zombie-Jäger: Anfänger</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Beginne deine Spezialisierung auf Zombie-Eliminierung</gradient>"
+    task:
+      kill_zombies_basic: "<gradient:#6b7280:#9ca3af>Eliminiere 5 Zombies um dein Jäger-Training zu beginnen</gradient>"
+  
+  # Building Quest Chain
+  building_basic:
+    name: "<gradient:#f59e0b:#fbbf24>🏗 Erste Schritte im Bauen</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Lerne die Grundlagen des Bauens</gradient>"
+    task:
+      place_wood_blocks: "<gradient:#6b7280:#9ca3af>Platziere 64 Eichenbretter um mit dem Bauen zu beginnen</gradient>"
+      craft_crafting_table: "<gradient:#6b7280:#9ca3af>Erstelle eine Werkbank für erweiterte Rezepte</gradient>"
+  
+  building_intermediate:
+    name: "<gradient:#f59e0b:#fbbf24>🏗 Fortgeschrittener Baumeister</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Erweitere deine Baufähigkeiten</gradient>"
+    task:
+      place_stone_blocks: "<gradient:#6b7280:#9ca3af>Platziere 256 Steinziegel für stabile Gebäude</gradient>"
+      craft_furnace: "<gradient:#6b7280:#9ca3af>Erstelle einen Ofen zum Schmelzen von Materialien</gradient>"
+      place_glass: "<gradient:#6b7280:#9ca3af>Platziere 32 Glasblöcke für Fenster</gradient>"
+  
+  building_advanced:
+    name: "<gradient:#f59e0b:#fbbf24>🏗 Experten-Baumeister</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Meistere komplexe Bautechniken</gradient>"
+    task:
+      place_blocks_advanced: "<gradient:#6b7280:#9ca3af>Platziere 2000 Blöcke in fortgeschrittenen Bauprojekten</gradient>"
+      craft_iron_door: "<gradient:#6b7280:#9ca3af>Erstelle 2 Eisentüren für sichere Eingänge</gradient>"
+      place_redstone_components: "<gradient:#6b7280:#9ca3af>Platziere 64 Redstone für automatisierte Systeme</gradient>"
+  
+  builders_dream:
+    name: "<gradient:#f59e0b:#fbbf24>🏗 Baumeister-Traum</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Erreiche die ultimative Baumeisterschaft</gradient>"
+
+# ============================================
+# QUEST DEFINITIONEN
+# ============================================
+quest:
+  combat_basic:
+    name: "<gradient:#f59e0b:#fbbf24>⚔ Kampf-Grundlagen</gradient>"
+    description: "<gray>Lerne die Grundlagen des Kampfes</gray>"
+    task:
+      kill_any_mob:
+        name: "<white>Besiege einen Mob</white>"
+        description: "<gray>Töte einen feindlichen Mob</gray>"
+  
+  zombie_hunter_recruit:
+    name: "<gradient:#10b981:#34d399>🧟 Zombie-Jäger: Rekrut</gradient>"
+    description: "<gray>Beginne als Zombie-Jäger</gray>"
+    task:
+      kill_zombies:
+        name: "<white>Jage Zombies</white>"
+        description: "<gray>Eliminiere Zombies</gray>"
+  
+  combat_novice:
+    name: "<gradient:#3b82f6:#60a5fa>⚔ Kampf-Neuling</gradient>"
+    description: "<gray>Verbessere deine Kampffähigkeiten</gray>"
+  
+  combat_apprentice:
+    name: "<gradient:#a855f7:#c084fc>⚔ Kampf-Lehrling</gradient>"
+    description: "<gray>Meistere fortgeschrittene Techniken</gray>"
+  
+  zombie_hunter_elite:
+    name: "<gradient:#ef4444:#f87171>🧟 Zombie-Jäger: Elite</gradient>"
+    description: "<gray>Werde ein Elite-Jäger</gray>"
+  
+  # Quest Belohnungen
+  rewards:
+    complete: "<gradient:#10b981:#34d399>✅ Alle Belohnungen verteilt!</gradient> <gradient:#f59e0b:#fbbf24>(%count% Belohnungen)</gradient>"
+    partial: "<gradient:#f59e0b:#fbbf24>⚠ Teilweise:</gradient> <gradient:#10b981:#34d399>%success%</gradient><gradient:#6b7280:#9ca3af>/</gradient><gradient:#ef4444:#f87171>%total%</gradient>"
+
+# ============================================
+# BELOHNUNGSKARTEN
+# ============================================
+reward:
+  card:
+    name: "<gradient:#f59e0b:#fbbf24>💰 %type%</gradient>"
+    type_label: "<gray>Typ:</gray> <yellow>%type%</yellow>"
+    value_label: "<gray>Wert:</gray> <gold>%value%</gold>"
+
+  # Quest Kategorien
+  category:
+    combat:
+      name: "<gradient:#ef4444:#f87171>⚔ Kampf-Quests</gradient>"
+      icon:
+        lore:
+          - "<gray>Meistere die Kampfkunst</gray>"
+    mining:
+      name: "<gradient:#6b7280:#9ca3af>⛏ Bergbau-Quests</gradient>"
+      icon:
+        lore:
+          - "<gray>Grabe tief und sammle Ressourcen</gray>"
+    building:
+      name: "<gradient:#f59e0b:#fbbf24>🏗 Bau-Quests</gradient>"
+      icon:
+        lore:
+          - "<gray>Baue erstaunliche Strukturen</gray>"
+    miner:
+      name: "<gradient:#6b7280:#9ca3af>⛏ Bergmann-Pfad</gradient>"
+      icon:
+        lore:
+          - "<gray>Werde ein Meister-Bergmann</gray>"
+    hunter:
+      name: "<gradient:#10b981:#34d399>🏹 Jäger-Pfad</gradient>"
+      icon:
+        lore:
+          - "<gray>Jage deine Beute</gray>"
+    farmer:
+      name: "<gradient:#84cc16:#a3e635>🌾 Bauer-Pfad</gradient>"
+      icon:
+        lore:
+          - "<gray>Bewirtschafte das Land</gray>"
+    baker:
+      name: "<gradient:#f59e0b:#fbbf24>🍞 Bäcker-Pfad</gradient>"
+      icon:
+        lore:
+          - "<gray>Backe köstliche Waren</gray>"
+    builder:
+      name: "<gradient:#3b82f6:#60a5fa>🔨 Baumeister-Pfad</gradient>"
+      icon:
+        lore:
+          - "<gray>Handwerke und baue</gray>"
+    enchanter:
+      name: "<gradient:#a855f7:#c084fc>✨ Verzauberer-Pfad</gradient>"
+      icon:
+        lore:
+          - "<gray>Meistere magische Verzauberungen</gray>"
+    trader:
+      name: "<gradient:#10b981:#34d399>💎 Händler-Pfad</gradient>"
+      icon:
+        lore:
+          - "<gray>Handle und gedeihe</gray>"
+    explorer:
+      name: "<gradient:#06b6d4:#67e8f9>🧭 Entdecker-Pfad</gradient>"
+      icon:
+        lore:
+          - "<gray>Entdecke neue Länder</gray>"
+    challenge:
+      name: "<gradient:#ef4444:#f87171>⭐ Herausforderungen</gradient>"
+      icon:
+        lore:
+          - "<gray>Ultimative Herausforderungen</gray>"
+    daily:
+      name: "<gradient:#f59e0b:#fbbf24>🕐 Tägliche Quests</gradient>"
+      icon:
+        lore:
+          - "<gray>Erledige tägliche Aufgaben</gray>"
+    tutorial:
+      name: "<gradient:#3b82f6:#60a5fa>📖 Tutorial-Quests</gradient>"
+      icon:
+        lore:
+          - "<gray>Lerne die Grundlagen</gray>"
+
+
+# ============================================
+# QUEST VIEW ÜBERSETZUNGEN
+# ============================================
+view:
+  quest:
+    categories:
+      title: "<gradient:#3b82f6:#60a5fa>📜 Quest-Kategorien</gradient>"
+      category:
+        lore:
+          quests_total: "<gradient:#10b981:#34d399>📊 Quests:</gradient> <gradient:#f59e0b:#fbbf24>%total%</gradient>"
+          click_to_view: "<gradient:#3b82f6:#60a5fa>▶ Klicken zum Anzeigen</gradient>"
+      stats:
+        name: "<gradient:#a855f7:#c084fc>📈 Dein Quest-Fortschritt</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Gesamt:</gradient> <gradient:#f59e0b:#fbbf24>%total%</gradient>"
+          - "<gradient:#10b981:#34d399>✓ Abgeschlossen:</gradient> <gradient:#22c55e:#86efac>%completed%</gradient>"
+          - "<gradient:#3b82f6:#60a5fa>⚡ Aktiv:</gradient> <gradient:#60a5fa:#93c5fd>%active%</gradient>"
+          - "<gradient:#f59e0b:#fbbf24>◆ Verfügbar:</gradient> <gradient:#fbbf24:#fde68a>%available%</gradient>"
+    
+    list:
+      title: "<gradient:#3b82f6:#60a5fa>📜 %category% Quests</gradient>"
+      items:
+        quest:
+          name: "<gradient:#f59e0b:#fbbf24>%quest_name%</gradient>"
+          lore:
+            description: "<gray>%description%</gray>"
+            difficulty: "<gray>Schwierigkeit:</gray> %difficulty%"
+            tasks: "<gray>Aufgaben:</gray> <white>%task_count%</white>"
+            status: "<gray>Status:</gray> %status%"
+            progress: "<gray>Fortschritt:</gray> <white>%progress%%</white>"
+            click_to_start: "<green>▶ Klicken zum Starten</green>"
+            click_to_view: "<yellow>▶ Klicken für Details</yellow>"
+            active_badge: "<gradient:#10b981:#34d399>⚡ AKTIV</gradient>"
+            completed_badge: "<gradient:#22c55e:#86efac>✓ ABGESCHLOSSEN</gradient>"
+      difficulty:
+        easy: "<gradient:#10b981:#34d399>⭐ Einfach</gradient>"
+        medium: "<gradient:#f59e0b:#fbbf24>⭐⭐ Mittel</gradient>"
+        hard: "<gradient:#ef4444:#f87171>⭐⭐⭐ Schwer</gradient>"
+        expert: "<gradient:#a855f7:#c084fc>⭐⭐⭐⭐ Experte</gradient>"
+    
+    detail:
+      title: "<gradient:#f59e0b:#fbbf24>📜 %quest_name%</gradient>"
+      items:
+        info:
+          name: "<gradient:#3b82f6:#60a5fa>ℹ Quest-Info</gradient>"
+          lore:
+            - "<gray>%description%</gray>"
+            - ""
+            - "<gray>Schwierigkeit:</gray> %difficulty%"
+            - "<gray>Aufgaben:</gray> <white>%task_count%</white>"
+            - "<gray>Status:</gray> %status%"
+        start:
+          name: "<gradient:#10b981:#34d399>▶ Quest starten</gradient>"
+          lore:
+            - "<gray>Klicken zum Starten</gray>"
+        abandon:
+          name: "<gradient:#ef4444:#f87171>✖ Quest abbrechen</gradient>"
+          lore:
+            - "<gray>Klicken zum Abbrechen</gray>"
+            - "<yellow>⚠ Fortschritt geht verloren</yellow>"
+        task:
+          name: "<white>%task_name%</white>"
+          lore:
+            - "<gray>%description%</gray>"
+            - ""
+            - "<gray>Fortschritt:</gray> <white>%current%/%required%</white>"
+            - "<gray>Status:</gray> %status%"
+        reward:
+          header: "<gradient:#f59e0b:#fbbf24>🎁 Belohnungen</gradient>"
+        requirement:
+          header: "<gradient:#ef4444:#f87171>📋 Anforderungen</gradient>"

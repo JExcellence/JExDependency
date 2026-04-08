@@ -1,21 +1,8 @@
-/*
- * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
- *
- * This source code is proprietary and confidential to Antimatter Zone LLC.
- * Unauthorized copying, modification, distribution, display, performance,
- * publication, sublicensing, or creation of derivative works is prohibited
- * without prior written permission from Antimatter Zone LLC, except to the
- * extent permitted by applicable United States law.
- *
- * This notice is intended to preserve all rights and remedies available under
- * the laws of the State of Washington and the United States of America.
- */
-
 package com.raindropcentral.rdq.database.entity.quest;
 
-import com.raindropcentral.rdq.config.utility.IconSection;
 import com.raindropcentral.rdq.database.converter.IconSectionConverter;
-import com.raindropcentral.rdq.quest.model.TaskDifficulty;
+import com.raindropcentral.rdq.model.quest.TaskDifficulty;
+import com.raindropcentral.rplatform.config.icon.IconSection;
 import de.jexcellence.hibernate.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -23,12 +10,14 @@ import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serial;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
  * Entity representing a task within a quest.
- *
- * <p>Quest tasks are individual objectives that must be completed as part of a quest.
+ * <p>
+ * Quest tasks are individual objectives that must be completed as part of a quest.
  * Each task has requirements (stored as JSON) and rewards that are granted upon completion.
  *
  * @author RaindropCentral
@@ -45,9 +34,6 @@ import java.util.Objects;
                 @Index(name = "idx_quest_task_order", columnList = "order_index")
         }
 )
-/**
- * Represents the QuestTask API type.
- */
 public class QuestTask extends BaseEntity {
     
     @Serial
@@ -90,8 +76,8 @@ public class QuestTask extends BaseEntity {
     
     /**
      * JSON data containing RPlatform requirement configuration.
- *
- * <p>This field stores the requirement type and parameters that will be
+     * <p>
+     * This field stores the requirement type and parameters that will be
      * parsed and validated using the RPlatform requirement system.
      */
     @Column(name = "requirement_data", columnDefinition = "TEXT")
@@ -99,8 +85,8 @@ public class QuestTask extends BaseEntity {
     
     /**
      * JSON data containing RPlatform reward configuration.
- *
- * <p>This field stores the reward types and parameters that will be
+     * <p>
+     * This field stores the reward types and parameters that will be
      * granted upon task completion using the RPlatform reward system.
      */
     @Column(name = "reward_data", columnDefinition = "TEXT")
@@ -112,7 +98,38 @@ public class QuestTask extends BaseEntity {
      */
     @Column(name = "sequential", nullable = false)
     private boolean sequential = false;
-    
+
+    /**
+     * Rewards granted upon completing this task.
+     */
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OrderBy("displayOrder ASC")
+    private List<QuestTaskReward> rewards = new ArrayList<>();
+
+    /**
+     * Adds a reward granted when this task is completed.
+     *
+     * @param reward the reward to add
+     */
+    public void addReward(@NotNull final QuestTaskReward reward) {
+        rewards.add(reward);
+    }
+
+    /**
+     * Requirements that must be satisfied before this task can be completed.
+     */
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<QuestTaskRequirement> requirements = new ArrayList<>();
+
+    /**
+     * Adds a prerequisite requirement to this task.
+     *
+     * @param requirement the requirement to add
+     */
+    public void addRequirement(@NotNull final QuestTaskRequirement requirement) {
+        requirements.add(requirement);
+    }
+
     /**
      * Protected no-argument constructor for JPA.
      */
@@ -139,9 +156,6 @@ public class QuestTask extends BaseEntity {
         this.orderIndex = orderIndex;
     }
     
-    /**
-     * Executes equals.
-     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -155,9 +169,6 @@ public class QuestTask extends BaseEntity {
                 taskIdentifier != null && taskIdentifier.equals(questTask.taskIdentifier);
     }
     
-    /**
-     * Returns whether hCode.
-     */
     @Override
     public int hashCode() {
         if (this.getId() != null) {
@@ -167,9 +178,6 @@ public class QuestTask extends BaseEntity {
         return Objects.hash(quest, taskIdentifier);
     }
     
-    /**
-     * Executes toString.
-     */
     @Override
     public String toString() {
         return "QuestTask{" +

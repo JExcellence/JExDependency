@@ -13,10 +13,6 @@
 
 package com.raindropcentral.rdr.view;
 
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
 import com.raindropcentral.rdr.RDR;
 import com.raindropcentral.rdr.database.entity.RTradeSession;
 import com.raindropcentral.rdr.database.entity.TradeSessionStatus;
@@ -33,6 +29,10 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * View listing current non-terminal trade sessions for the viewer.

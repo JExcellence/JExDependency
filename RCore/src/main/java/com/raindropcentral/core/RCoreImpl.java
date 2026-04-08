@@ -20,7 +20,11 @@ import com.raindropcentral.core.database.entity.inventory.RPlayerInventory;
 import com.raindropcentral.core.database.entity.player.RPlayer;
 import com.raindropcentral.core.database.entity.statistic.RAbstractStatistic;
 import com.raindropcentral.core.database.entity.statistic.RPlayerStatistic;
-import com.raindropcentral.core.database.repository.*;
+import com.raindropcentral.core.database.repository.RCentralServerRepository;
+import com.raindropcentral.core.database.repository.RPlayerInventoryRepository;
+import com.raindropcentral.core.database.repository.RPlayerRepository;
+import com.raindropcentral.core.database.repository.RPlayerStatisticRepository;
+import com.raindropcentral.core.database.repository.RStatisticRepository;
 import com.raindropcentral.core.proxy.ProxyHostConfig;
 import com.raindropcentral.core.proxy.RCorePaperProxyBridge;
 import com.raindropcentral.core.proxy.RCoreProxyCoordinator;
@@ -33,10 +37,10 @@ import com.raindropcentral.core.service.statistics.StatisticsDeliveryServiceFact
 import com.raindropcentral.core.view.DropletClaimsView;
 import com.raindropcentral.core.view.DropletJobSelectionView;
 import com.raindropcentral.core.view.DropletSkillSelectionView;
-import com.raindropcentral.rplatform.cookie.CookieBoostIntegrationRegistrar;
-import com.raindropcentral.rplatform.cookie.CookieBoostLookup;
 import com.raindropcentral.rplatform.RPlatform;
 import com.raindropcentral.rplatform.api.PlatformType;
+import com.raindropcentral.rplatform.cookie.CookieBoostIntegrationRegistrar;
+import com.raindropcentral.rplatform.cookie.CookieBoostLookup;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.metrics.BStatsMetrics;
 import com.raindropcentral.rplatform.proxy.ProxyService;
@@ -44,13 +48,13 @@ import de.jexcellence.dependency.delegate.AbstractPluginDelegate;
 import de.jexcellence.hibernate.repository.InjectRepository;
 import de.jexcellence.hibernate.repository.RepositoryManager;
 import jakarta.persistence.EntityManagerFactory;
+import me.devnatan.inventoryframework.AnvilInputFeature;
+import me.devnatan.inventoryframework.ViewFrame;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.ServicePriority;
 import org.jetbrains.annotations.NotNull;
-import me.devnatan.inventoryframework.AnvilInputFeature;
-import me.devnatan.inventoryframework.ViewFrame;
 
 import java.io.File;
 import java.util.HashMap;
@@ -145,6 +149,9 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
 
     @InjectRepository
     private RPlayerRepository playerRepository;
+
+    @InjectRepository
+    private RCentralServerRepository rCentralServerRepository;
 
     /**
      * Creates the delegate and provisions the executor used across asynchronous operations.
@@ -379,7 +386,7 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
      * </p>
      */
     private void initializeComponents() {
-        this.rCentralService = new RCentralService(this.getPlugin(), this.platform);
+        this.rCentralService = new RCentralService(this);
         this.activeCookieBoostService = new ActiveCookieBoostService(this);
         this.platform.getServiceRegistry().bind(CookieBoostLookup.class, this.activeCookieBoostService);
         CookieBoostIntegrationRegistrar.register(this.getPlugin(), this.activeCookieBoostService);
@@ -599,6 +606,15 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
      */
     public RPlayerRepository getPlayerRepository() {
         return playerRepository;
+    }
+
+    /**
+     * Returns the central-server repository injected during repository initialization.
+     *
+     * @return central-server repository, or {@code null} until repositories are wired
+     */
+    public RCentralServerRepository getRCentralServerRepository() {
+        return this.rCentralServerRepository;
     }
 
     /**

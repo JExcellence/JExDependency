@@ -3,7 +3,7 @@
 prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
 
 rcconnect:
-  usage: "<gray>使用法: /rc <connect &lt;api-key&gt;|disconnect|claim droplets></gray>"
+  usage: "<gray>使用法: /rc <connect &lt;api-key&gt;|disconnect|claim droplets|store update></gray>"
   usage_no_claim: "<gray>使用法: /rc <connect &lt;api-key&gt;|disconnect></gray>"
   connecting: "<yellow>RaindropCentral に接続中...</yellow>"
   success: "<green>RaindropCentral への接続に成功しました！</green> <gray>サーバーは現在ハートビートを送信しています。</gray>"
@@ -21,6 +21,13 @@ rcdisconnect:
     failed: "<red>切断に失敗しました。もう一度お試しください。</red>"
     network: "<red>ネットワークエラー: %error%</red>"
 
+rcstore:
+  updating: "<yellow>Refreshing the local droplet-store allowlist from RaindropCentral...</yellow>"
+  success: "<green>Updated the local droplet-store allowlist.</green> <gray>%count% item(s) are currently allowed.</gray>"
+  error:
+    not_connected: "<red>RCore must be connected to the RaindropCentral backend before the store allowlist can be updated.</red>"
+    failed: "<red>Failed to refresh the droplet-store allowlist: %error%</red>"
+    using_cache: "<yellow>Failed to refresh the droplet-store allowlist, but the last cached list is still being used: %error%</yellow>"
 rcclaim:
   loading: "<yellow>未請求のドロップレット報酬について RaindropCentral を確認中...</yellow>"
   claiming_item: "<yellow>RaindropCentral...</yellow> から %item_name% を請求しています"
@@ -169,3 +176,5 @@ rc_claim_droplet_jobs_ui:
 
 general:
   no_permission: "<red>このコマンドを使用する権限がありません。</red>"
+
+

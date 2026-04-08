@@ -1,0 +1,50 @@
+identifier: "novice_trader"
+category: "trader"
+difficulty: EASY
+enabled: true
+displayOrder: 1
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
+
+icon:
+  material: EMERALD
+  displayNameKey: "quest.novice_trader.name"
+  descriptionKey: "quest.novice_trader.description"
+
+tasks:
+  mine_emeralds:
+    orderIndex: 0
+    difficulty: EASY
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: EMERALD_ORE
+      amount: 16
+  mine_gold:
+    orderIndex: 1
+    difficulty: EASY
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: GOLD_ORE
+      amount: 32
+
+rewards:
+  main_currency:
+    type: CURRENCY
+    currency: coins
+    amount: 300.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 150.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

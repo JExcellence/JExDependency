@@ -13,10 +13,6 @@
 
 package com.raindropcentral.rdr.view;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import com.raindropcentral.rdr.RDR;
 import com.raindropcentral.rdr.configs.ConfigSection;
 import com.raindropcentral.rdr.database.entity.RDRPlayer;
@@ -34,6 +30,10 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Store view used to purchase additional persistent storages.

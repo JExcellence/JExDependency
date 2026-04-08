@@ -13,10 +13,6 @@
 
 package com.raindropcentral.rdr.view;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import com.raindropcentral.rdr.RDR;
 import com.raindropcentral.rdr.database.entity.RTradeDelivery;
 import com.raindropcentral.rdr.database.entity.RTradeSession;
@@ -32,6 +28,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Inbox view for pending trade invites and claimable deliveries.

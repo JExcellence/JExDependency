@@ -87,10 +87,6 @@ public final class DropletClaimService {
      * @param player player requesting the claim UI
      */
     public void openClaimsMenu(final @NotNull Player player) {
-        if (!this.isDropletStoreEnabled()) {
-            this.send(player, "rcclaim.error.store_disabled");
-            return;
-        }
         if (!this.centralService.isConnected()) {
             this.send(player, "rcclaim.error.not_connected");
             return;
@@ -158,10 +154,6 @@ public final class DropletClaimService {
             final @NotNull Player player,
             final @NotNull RCentralApiClient.DropletStorePurchaseData purchase
     ) {
-        if (!this.isDropletStoreEnabled()) {
-            this.send(player, "rcclaim.error.store_disabled");
-            return;
-        }
         final ClaimSupportStatus supportStatus = this.getSupportStatus(player, purchase);
         switch (supportStatus) {
             case UNSUPPORTED_ITEM -> {
@@ -513,15 +505,6 @@ public final class DropletClaimService {
      */
     public @Nullable DropletCookieDefinition getCookieDefinition(final @Nullable ItemStack item) {
         return DropletCookieDefinitions.get(this.readItemCode(item));
-    }
-
-    /**
-     * Returns whether the droplet-store claim flow is enabled by configuration.
-     *
-     * @return {@code true} when claims are allowed on this server
-     */
-    public boolean isDropletStoreEnabled() {
-        return this.centralService.isDropletStoreEnabled();
     }
 
     /**

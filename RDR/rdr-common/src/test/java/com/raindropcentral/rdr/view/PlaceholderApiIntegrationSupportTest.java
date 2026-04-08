@@ -13,16 +13,16 @@
 
 package com.raindropcentral.rdr.view;
 
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginManager;
+import org.jetbrains.annotations.NotNull;
+import org.junit.jupiter.api.Test;
+
 import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.PluginManager;
-import org.jetbrains.annotations.NotNull;
-import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;

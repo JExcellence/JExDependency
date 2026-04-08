@@ -13,19 +13,19 @@
 
 package com.raindropcentral.rds.database.repository;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
-import java.util.concurrent.ExecutorService;
-
 import com.raindropcentral.rds.database.entity.ShopAdminPlayerSetting;
 import de.jexcellence.hibernate.repository.BaseRepository;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.LockModeType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
+import java.util.concurrent.ExecutorService;
 
 /**
  * Repository for persisted admin player override settings.

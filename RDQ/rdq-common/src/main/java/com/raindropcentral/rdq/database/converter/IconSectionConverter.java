@@ -13,14 +13,14 @@
 
 package com.raindropcentral.rdq.database.converter;
 
-import com.raindropcentral.rdq.config.utility.IconSection;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.raindropcentral.rplatform.config.icon.IconSection;
 import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 import org.bukkit.Material;
 import org.jetbrains.annotations.Nullable;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

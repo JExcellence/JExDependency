@@ -16,6 +16,10 @@ package com.raindropcentral.rdr.configs;
 import de.jexcellence.configmapper.sections.AConfigSection;
 import de.jexcellence.configmapper.sections.CSAlways;
 import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -26,11 +30,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.StringJoiner;
 import java.util.logging.Logger;
-
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * Root configuration section for the RDR plugin.

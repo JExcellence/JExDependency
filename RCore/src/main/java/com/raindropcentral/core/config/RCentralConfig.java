@@ -13,7 +13,6 @@
 
 package com.raindropcentral.core.config;
 
-import com.raindropcentral.core.service.central.cookie.DropletCookieDefinitions;
 import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
@@ -21,7 +20,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,7 +31,6 @@ public class RCentralConfig {
     private static final Logger LOGGER = Logger.getLogger(RCentralConfig.class.getName());
     private static final String CONFIG_FOLDER = "rcentral";
     private static final String CONFIG_FILE = "rcentral.yml";
-    private static final List<String> SUPPORTED_DROPLET_STORE_ITEM_CODES = DropletCookieDefinitions.allItemCodes();
 
     private final Plugin plugin;
     private RCentralSection rcentralSection;
@@ -72,15 +69,10 @@ public class RCentralConfig {
     }
 
     private void logConfig() {
-        final DropletStoreCompatibilitySnapshot compatibilitySnapshot = this.getDropletStoreCompatibilitySnapshot();
-        LOGGER.info(String.format("RCentral Config - URL: %s, DevMode: %s, AutoDetect: %s, DropletsStore: %s, EnabledDropletItems: %s",
+        LOGGER.info(String.format("RCentral Config - URL: %s, DevMode: %s, AutoDetect: %s",
                 getBackendUrl() != null ? getBackendUrl() : "auto",
                 isDevelopmentMode(),
-                isAutoDetect(),
-                compatibilitySnapshot.dropletStoreEnabled(),
-                compatibilitySnapshot.enabledItemCodes().isEmpty()
-                        ? "none"
-                        : String.join(",", compatibilitySnapshot.enabledItemCodes())));
+                isAutoDetect()));
     }
 
     /**
@@ -103,73 +95,6 @@ public class RCentralConfig {
      */
     public boolean isAutoDetect() {
         return rcentralSection.isAutoDetect();
-    }
-
-    /**
-     * Checks whether the droplet-store claim command is enabled.
-     */
-    public boolean isDropletsStoreEnabled() {
-        return this.rcentralSection.isDropletsStoreEnabled();
-    }
-
-    /**
-     * Checks whether one supported droplet-store reward is enabled.
-     *
-     * @param itemCode backend item code
-     * @return {@code true} when claiming is allowed for that reward
-     */
-    public boolean isDropletStoreRewardEnabled(final @NotNull String itemCode) {
-        return this.rcentralSection.isDropletStoreRewardEnabled(itemCode);
-    }
-
-    /**
-     * Returns the effective droplet-store compatibility snapshot for health reporting.
-     *
-     * @return master droplet-store state plus enabled supported item codes
-     */
-    public @NotNull DropletStoreCompatibilitySnapshot getDropletStoreCompatibilitySnapshot() {
-        return resolveDropletStoreCompatibilitySnapshot(this.rcentralSection);
-    }
-
-    /**
-     * Computes the compatibility payload sent to the backend from the loaded section snapshot.
-     *
-     * @param section loaded configuration section
-     * @return compatibility state describing whether droplet claims are enabled and which supported
-     *         item codes remain claimable on this server
-     */
-    static @NotNull DropletStoreCompatibilitySnapshot resolveDropletStoreCompatibilitySnapshot(
-            final @NotNull RCentralSection section
-    ) {
-        if (!section.isDropletsStoreEnabled()) {
-            return new DropletStoreCompatibilitySnapshot(false, List.of());
-        }
-
-        final List<String> enabledItemCodes = SUPPORTED_DROPLET_STORE_ITEM_CODES.stream()
-                .filter(section::isDropletStoreRewardEnabled)
-                .toList();
-        return new DropletStoreCompatibilitySnapshot(true, enabledItemCodes);
-    }
-
-    /**
-     * Immutable backend compatibility snapshot for the droplet claim feature.
-     *
-     * @param dropletStoreEnabled whether the server exposes droplet claiming at all
-     * @param enabledItemCodes supported item codes that remain enabled locally
-     */
-    public record DropletStoreCompatibilitySnapshot(
-            boolean dropletStoreEnabled,
-            @NotNull List<String> enabledItemCodes
-    ) {
-        /**
-         * Creates an immutable compatibility snapshot.
-         *
-         * @param dropletStoreEnabled whether the claim flow is enabled
-         * @param enabledItemCodes locally enabled supported item codes
-         */
-        public DropletStoreCompatibilitySnapshot {
-            enabledItemCodes = List.copyOf(enabledItemCodes);
-        }
     }
 
     /**

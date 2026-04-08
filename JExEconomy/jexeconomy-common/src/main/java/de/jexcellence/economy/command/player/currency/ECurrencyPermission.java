@@ -1,6 +1,5 @@
 package de.jexcellence.economy.command.player.currency;
 
-import de.jexcellence.economy.command.player.currency.ECurrencyAction;
 import de.jexcellence.evaluable.section.IPermissionNode;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

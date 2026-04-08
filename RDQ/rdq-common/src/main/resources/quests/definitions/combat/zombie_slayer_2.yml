@@ -1,0 +1,54 @@
+identifier: "zombie_slayer_2"
+category: "combat"
+difficulty: NORMAL
+enabled: true
+displayOrder: 2
+repeatable: true
+maxCompletions: -1
+cooldownSeconds: 7200
+timeLimitSeconds: 0
+
+icon:
+  material: ZOMBIE_HEAD
+  displayNameKey: "quest.zombie_slayer_2.name"
+  descriptionKey: "quest.zombie_slayer_2.description"
+
+tasks:
+  kill_zombies:
+    orderIndex: 0
+    difficulty: NORMAL
+    sequential: false
+    requirement:
+      type: KILL_MOBS
+      target: ZOMBIE
+      amount: 50
+    reward:
+      type: CURRENCY
+      currency: raindrops
+      amount: 125.0
+  collect_rotten_flesh:
+    orderIndex: 1
+    difficulty: NORMAL
+    sequential: false
+    requirement:
+      type: CONSUME_ITEM
+      target: ROTTEN_FLESH
+      amount: 25
+
+rewards:
+  main_currency:
+    type: CURRENCY
+    currency: raindrops
+    amount: 500.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 1000.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

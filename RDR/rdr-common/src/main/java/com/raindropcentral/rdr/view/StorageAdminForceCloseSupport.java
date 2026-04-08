@@ -13,8 +13,6 @@
 
 package com.raindropcentral.rdr.view;
 
-import java.util.Map;
-
 import com.raindropcentral.rdr.RDR;
 import me.devnatan.inventoryframework.ViewFrame;
 import me.devnatan.inventoryframework.Viewer;
@@ -22,6 +20,8 @@ import me.devnatan.inventoryframework.context.IFRenderContext;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Map;
 
 /**
  * Helpers for force-closing RDR views from storage admin tooling.

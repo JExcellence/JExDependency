@@ -13,33 +13,28 @@
 
 package com.raindropcentral.rdt.listeners;
 
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
+import com.raindropcentral.rdt.RDT;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
 import org.jetbrains.annotations.NotNull;
 
-import com.raindropcentral.rdt.RDT;
-import com.raindropcentral.rdt.factory.BossBarFactory;
-
 /**
- * Keeps the town status boss bar synchronized with player movement and session lifecycle events.
+ * Keeps the town boss bar in sync with player movement and login state.
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @since 1.0.0
- * @version 1.0.1
+ * @version 1.0.0
  */
 @SuppressWarnings("unused")
-public final class PlayerMovementListener implements Listener {
+public class PlayerMovementListener implements Listener {
 
     private final RDT plugin;
 
     /**
-     * Creates a new movement listener.
+     * Creates the movement listener.
      *
      * @param plugin active RDT runtime
      */
@@ -48,76 +43,47 @@ public final class PlayerMovementListener implements Listener {
     }
 
     /**
-     * Updates the boss bar whenever a player crosses into a different chunk.
+     * Shows or refreshes the boss bar when a player joins.
      *
-     * @param event player move event
-     */
-    @EventHandler(ignoreCancelled = true)
-    public void onPlayerMove(final @NotNull PlayerMoveEvent event) {
-        if (event.getTo() == null) {
-            return;
-        }
-        if (event.getFrom().getChunk().equals(event.getTo().getChunk())) {
-            return;
-        }
-        this.updateBossBar(
-                event.getPlayer(),
-                event.getTo().getChunk().getX(),
-                event.getTo().getChunk().getZ()
-        );
-    }
-
-    /**
-     * Initializes the boss bar display after player join.
-     *
-     * @param event player join event
+     * @param event join event
      */
     @EventHandler
     public void onPlayerJoin(final @NotNull PlayerJoinEvent event) {
-        this.updateBossBar(event.getPlayer());
+        if (this.plugin.getTownBossBarService() != null) {
+            this.plugin.getTownBossBarService().refreshPlayer(event.getPlayer());
+        }
     }
 
     /**
-     * Rebuilds the boss bar one tick after respawn to ensure fresh location context.
+     * Refreshes the boss bar when the player changes chunks.
      *
-     * @param event player respawn event
+     * @param event move event
      */
-    @EventHandler
-    public void onPlayerRespawn(final @NotNull PlayerRespawnEvent event) {
-        Bukkit.getScheduler().runTask(this.plugin.getPlugin(), () -> this.updateBossBar(event.getPlayer()));
+    @EventHandler(ignoreCancelled = true)
+    public void onPlayerMove(final @NotNull PlayerMoveEvent event) {
+        if (event.getTo() == null
+            || event.getFrom().getWorld() == null
+            || event.getTo().getWorld() == null
+            || (event.getFrom().getChunk().getX() == event.getTo().getChunk().getX()
+            && event.getFrom().getChunk().getZ() == event.getTo().getChunk().getZ()
+            && event.getFrom().getWorld().getUID().equals(event.getTo().getWorld().getUID()))) {
+            return;
+        }
+
+        if (this.plugin.getTownBossBarService() != null) {
+            this.plugin.getTownBossBarService().refreshPlayer(event.getPlayer());
+        }
     }
 
     /**
-     * Clears boss bar state when a player disconnects.
+     * Hides the boss bar when a player disconnects.
      *
-     * @param event player quit event
+     * @param event quit event
      */
     @EventHandler
     public void onPlayerQuit(final @NotNull PlayerQuitEvent event) {
-        final BossBarFactory bossBarFactory = this.plugin.getBossBarFactory();
-        if (bossBarFactory == null) {
-            return;
+        if (this.plugin.getTownBossBarService() != null) {
+            this.plugin.getTownBossBarService().clearPlayer(event.getPlayer());
         }
-        bossBarFactory.clear(event.getPlayer());
-    }
-
-    private void updateBossBar(final @NotNull Player player) {
-        this.updateBossBar(
-                player,
-                player.getLocation().getChunk().getX(),
-                player.getLocation().getChunk().getZ()
-        );
-    }
-
-    private void updateBossBar(
-            final @NotNull Player player,
-            final int chunkX,
-            final int chunkZ
-    ) {
-        final BossBarFactory bossBarFactory = this.plugin.getBossBarFactory();
-        if (bossBarFactory == null) {
-            return;
-        }
-        bossBarFactory.run(player, chunkX, chunkZ);
     }
 }

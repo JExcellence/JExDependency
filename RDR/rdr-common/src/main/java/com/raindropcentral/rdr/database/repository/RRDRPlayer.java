@@ -13,17 +13,16 @@
 
 package com.raindropcentral.rdr.database.repository;
 
-import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.ExecutorService;
-import java.util.function.Function;
-
+import com.raindropcentral.rdr.database.entity.RDRPlayer;
 import de.jexcellence.hibernate.repository.CachedRepository;
 import jakarta.persistence.EntityManagerFactory;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import com.raindropcentral.rdr.database.entity.RDRPlayer;
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.function.Function;
 
 /**
  * Repository for persisted {@link RDRPlayer} records.

@@ -13,9 +13,6 @@
 
 package com.raindropcentral.rds.database.entity;
 
-import java.util.Objects;
-import java.util.UUID;
-
 import com.raindropcentral.rplatform.database.converter.UUIDConverter;
 import de.jexcellence.hibernate.entity.BaseEntity;
 import jakarta.persistence.Column;
@@ -24,6 +21,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Objects;
+import java.util.UUID;
 
 /**
  * Persists one admin override definition for an individual player.

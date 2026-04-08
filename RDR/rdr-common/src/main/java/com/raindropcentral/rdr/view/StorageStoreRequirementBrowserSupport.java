@@ -13,28 +13,18 @@
 
 package com.raindropcentral.rdr.view;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
+import com.raindropcentral.rdr.RDR;
+import com.raindropcentral.rplatform.requirement.AbstractRequirement;
+import com.raindropcentral.rplatform.requirement.impl.*;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import com.raindropcentral.rdr.RDR;
-import com.raindropcentral.rplatform.requirement.AbstractRequirement;
-import com.raindropcentral.rplatform.requirement.impl.ChoiceRequirement;
-import com.raindropcentral.rplatform.requirement.impl.CompositeRequirement;
-import com.raindropcentral.rplatform.requirement.impl.CurrencyRequirement;
-import com.raindropcentral.rplatform.requirement.impl.ExperienceLevelRequirement;
-import com.raindropcentral.rplatform.requirement.impl.ItemRequirement;
-import com.raindropcentral.rplatform.requirement.impl.LocationRequirement;
-import com.raindropcentral.rplatform.requirement.impl.PermissionRequirement;
-import com.raindropcentral.rplatform.requirement.impl.PlaytimeRequirement;
-import com.raindropcentral.rplatform.requirement.impl.PluginRequirement;
-import com.raindropcentral.rplatform.requirement.impl.TimedRequirement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides support utilities for storage store requirement browser.

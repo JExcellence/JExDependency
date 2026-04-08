@@ -1,0 +1,58 @@
+identifier: "legendary_trader"
+category: "trader"
+difficulty: EXTREME
+enabled: true
+displayOrder: 5
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
+
+icon:
+  material: NETHER_STAR
+  displayNameKey: "quest.legendary_trader.name"
+  descriptionKey: "quest.legendary_trader.description"
+
+tasks:
+  mine_emerald_blocks:
+    orderIndex: 0
+    difficulty: EXTREME
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: EMERALD_ORE
+      amount: 128
+  kill_traders:
+    orderIndex: 1
+    difficulty: EXTREME
+    sequential: false
+    requirement:
+      type: KILL_MOBS
+      target: WANDERING_TRADER
+      amount: 10
+  mine_nether_stars:
+    orderIndex: 2
+    difficulty: EXTREME
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: ANCIENT_DEBRIS
+      amount: 64
+
+rewards:
+  main_currency:
+    type: CURRENCY
+    currency: coins
+    amount: 10000.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 3000.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

@@ -16,7 +16,6 @@ package com.raindropcentral.rdq.rank;
 import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
 import com.raindropcentral.rdq.database.entity.rank.RRank;
 import com.raindropcentral.rdq.database.entity.rank.RRankTree;
-import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 /**

@@ -17,7 +17,6 @@ import com.raindropcentral.rdq.database.entity.rank.RRankUpgradeRequirement;
 import com.raindropcentral.rdq.manager.RankRequirementProgressManager.RequirementProgressData;
 import com.raindropcentral.rdq.manager.RankRequirementProgressManager.RequirementStatus;
 import com.raindropcentral.rplatform.requirement.AbstractRequirement;
-import com.raindropcentral.rplatform.requirement.Requirement;
 import com.raindropcentral.rplatform.requirement.impl.ItemRequirement;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import net.kyori.adventure.text.Component;

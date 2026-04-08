@@ -1,0 +1,58 @@
+identifier: "grand_farmer"
+category: "farmer"
+difficulty: HARD
+enabled: true
+displayOrder: 4
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
+
+icon:
+  material: GOLDEN_HOE
+  displayNameKey: "quest.grand_farmer.name"
+  descriptionKey: "quest.grand_farmer.description"
+
+tasks:
+  harvest_melons:
+    orderIndex: 0
+    difficulty: HARD
+    sequential: false
+    requirement:
+      type: BREAK_BLOCKS
+      target: MELON
+      amount: 256
+  harvest_pumpkins:
+    orderIndex: 1
+    difficulty: HARD
+    sequential: false
+    requirement:
+      type: BREAK_BLOCKS
+      target: PUMPKIN
+      amount: 256
+  place_farmland:
+    orderIndex: 2
+    difficulty: HARD
+    sequential: false
+    requirement:
+      type: PLACE_BLOCKS
+      target: FARMLAND
+      amount: 128
+
+rewards:
+  main_currency:
+    type: CURRENCY
+    currency: coins
+    amount: 1000.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 600.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

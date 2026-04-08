@@ -13,9 +13,10 @@
 
 package com.raindropcentral.rdq.database.entity.quest;
 
-import com.raindropcentral.rdq.config.utility.IconSection;
 import com.raindropcentral.rdq.database.converter.IconSectionConverter;
-import com.raindropcentral.rdq.quest.model.QuestDifficulty;
+import com.raindropcentral.rdq.model.quest.QuestDifficulty;
+import com.raindropcentral.rplatform.config.icon.IconSection;
+import com.raindropcentral.rplatform.progression.IProgressionNode;
 import de.jexcellence.hibernate.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -30,8 +31,8 @@ import java.util.Objects;
 
 /**
  * Entity representing a quest.
- *
- * <p>A quest is a collection of tasks that players must complete to earn rewards.
+ * <p>
+ * A quest is a collection of tasks that players must complete to earn rewards.
  * Quests can be repeatable, have cooldowns, time limits, and difficulty levels.
  *
  * @author RaindropCentral
@@ -50,10 +51,7 @@ import java.util.Objects;
                 @Index(name = "idx_quest_difficulty", columnList = "difficulty")
         }
 )
-/**
- * Represents the Quest API type.
- */
-public class Quest extends BaseEntity {
+public class Quest extends BaseEntity implements IProgressionNode<Quest> {
     
     @Serial
     private static final long serialVersionUID = 1L;
@@ -84,7 +82,7 @@ public class Quest extends BaseEntity {
      */
     @Enumerated(EnumType.STRING)
     @Column(name = "difficulty", nullable = false, length = 32)
-    private QuestDifficulty difficulty = QuestDifficulty.NORMAL;
+    private QuestDifficulty difficulty = QuestDifficulty.MEDIUM;
     
     /**
      * Whether this quest can be completed multiple times.
@@ -118,14 +116,63 @@ public class Quest extends BaseEntity {
      */
     @Column(name = "enabled", nullable = false)
     private boolean enabled = true;
-    
+
+    /**
+     * JSON-serialized reward configuration from the quest definition YAML.
+     * Contains the Map&lt;String, RewardSection&gt; serialized via Gson.
+     */
+    @Column(name = "reward_data", columnDefinition = "LONGTEXT")
+    private String rewardData;
+
+    /**
+     * JSON-serialized requirement configuration from the quest definition YAML.
+     * Contains the Map&lt;String, BaseRequirementSection&gt; serialized via Gson.
+     */
+    @Column(name = "requirement_data", columnDefinition = "LONGTEXT")
+    private String requirementData;
+
     /**
      * Tasks that must be completed for this quest.
      */
     @OneToMany(mappedBy = "quest", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @OrderBy("orderIndex ASC")
     private List<QuestTask> tasks = new ArrayList<>();
-    
+
+    /**
+     * Rewards granted upon quest completion.
+     */
+    @OneToMany(mappedBy = "quest", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OrderBy("displayOrder ASC")
+    private List<QuestReward> rewards = new ArrayList<>();
+
+    /**
+     * Requirements that must be met to start this quest.
+     */
+    @OneToMany(mappedBy = "quest", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<QuestRequirement> requirements = new ArrayList<>();
+
+    /**
+     * Identifiers of quests that must be completed before this quest becomes available.
+     */
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(
+            name = "rdq_quest_prerequisites",
+            joinColumns = @JoinColumn(name = "quest_id")
+    )
+    @Column(name = "prerequisite_quest_identifier")
+    private List<String> previousQuestIdentifiers = new ArrayList<>();
+
+    /**
+     * Identifiers of quests that are unlocked when this quest is completed.
+     */
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(
+            name = "rdq_quest_dependents",
+            joinColumns = @JoinColumn(name = "quest_id")
+    )
+    @Column(name = "dependent_quest_identifier")
+    private List<String> nextQuestIdentifiers = new ArrayList<>();
+
     /**
      * Protected no-argument constructor for JPA.
      */
@@ -209,8 +256,39 @@ public class Quest extends BaseEntity {
     }
     
     /**
-     * Executes equals.
+     * Adds a reward granted when this quest is completed.
+     *
+     * @param reward the reward to add
      */
+    public void addReward(@NotNull final QuestReward reward) {
+        rewards.add(reward);
+    }
+
+    /**
+     * Adds a prerequisite requirement to this quest.
+     *
+     * @param requirement the requirement to add
+     */
+    public void addRequirement(@NotNull final QuestRequirement requirement) {
+        requirements.add(requirement);
+    }
+
+    // -------------------------------------------------------------------------
+    // IProgressionNode implementation
+    // -------------------------------------------------------------------------
+
+    @Override
+    @NotNull
+    public List<String> getPreviousNodeIdentifiers() {
+        return this.previousQuestIdentifiers;
+    }
+
+    @Override
+    @NotNull
+    public List<String> getNextNodeIdentifiers() {
+        return this.nextQuestIdentifiers;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -223,9 +301,6 @@ public class Quest extends BaseEntity {
         return identifier != null && identifier.equals(quest.identifier);
     }
     
-    /**
-     * Returns whether hCode.
-     */
     @Override
     public int hashCode() {
         if (this.getId() != null) {
@@ -235,9 +310,6 @@ public class Quest extends BaseEntity {
         return Objects.hash(identifier);
     }
     
-    /**
-     * Executes toString.
-     */
     @Override
     public String toString() {
         return "Quest{" +

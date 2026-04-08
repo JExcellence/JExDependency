@@ -36,5 +36,8 @@ class ERCentralPermissionTest {
 
         assertEquals("claimDroplets", ERCentralPermission.CLAIM_DROPLETS.getInternalName());
         assertEquals("rcore.central.claim.droplets", ERCentralPermission.CLAIM_DROPLETS.getFallbackNode());
+
+        assertEquals("storeUpdate", ERCentralPermission.STORE_UPDATE.getInternalName());
+        assertEquals("rcore.central.store.update", ERCentralPermission.STORE_UPDATE.getFallbackNode());
     }
 }

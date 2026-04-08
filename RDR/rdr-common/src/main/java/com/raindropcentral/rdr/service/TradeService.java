@@ -13,6 +13,26 @@
 
 package com.raindropcentral.rdr.service;
 
+import com.raindropcentral.rdr.RDR;
+import com.raindropcentral.rdr.configs.ConfigSection;
+import com.raindropcentral.rdr.database.entity.RServerBank;
+import com.raindropcentral.rdr.database.entity.RTradeDelivery;
+import com.raindropcentral.rdr.database.entity.RTradeSession;
+import com.raindropcentral.rdr.database.entity.TradeSessionStatus;
+import com.raindropcentral.rdr.database.repository.RRServerBank;
+import com.raindropcentral.rdr.database.repository.RRTradeDelivery;
+import com.raindropcentral.rdr.database.repository.RRTradeSession;
+import com.raindropcentral.rplatform.economy.JExEconomyBridge;
+import com.raindropcentral.rplatform.proxy.PlayerPresenceSnapshot;
+import com.raindropcentral.rplatform.proxy.ProxyTransferRequest;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.RegisteredServiceProvider;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -29,26 +49,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
-
-import com.raindropcentral.rdr.RDR;
-import com.raindropcentral.rdr.configs.ConfigSection;
-import com.raindropcentral.rdr.database.entity.RServerBank;
-import com.raindropcentral.rdr.database.entity.RTradeDelivery;
-import com.raindropcentral.rdr.database.entity.RTradeSession;
-import com.raindropcentral.rdr.database.entity.TradeSessionStatus;
-import com.raindropcentral.rdr.database.repository.RRServerBank;
-import com.raindropcentral.rdr.database.repository.RRTradeDelivery;
-import com.raindropcentral.rdr.database.repository.RRTradeSession;
-import com.raindropcentral.rplatform.proxy.PlayerPresenceSnapshot;
-import com.raindropcentral.rplatform.proxy.ProxyTransferRequest;
-import com.raindropcentral.rplatform.economy.JExEconomyBridge;
-import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.RegisteredServiceProvider;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * Service facade for DB-first cross-server trade flows and escrow operations.

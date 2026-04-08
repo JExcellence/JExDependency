@@ -1,24 +1,15 @@
-/*
- * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
- *
- * This source code is proprietary and confidential to Antimatter Zone LLC.
- * Unauthorized copying, modification, distribution, display, performance,
- * publication, sublicensing, or creation of derivative works is prohibited
- * without prior written permission from Antimatter Zone LLC, except to the
- * extent permitted by applicable United States law.
- *
- * This notice is intended to preserve all rights and remedies available under
- * the laws of the State of Washington and the United States of America.
- */
-
 package com.raindropcentral.rdq.quest.listener;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.raindropcentral.rdq.RDQ;
+import com.raindropcentral.rdq.cache.quest.QuestCacheManager;
+import com.raindropcentral.rdq.database.entity.quest.QuestTask;
 import com.raindropcentral.rdq.database.entity.quest.QuestUser;
-import com.raindropcentral.rdq.quest.cache.QuestCacheManager;
-import com.raindropcentral.rdq.quest.service.QuestProgressTracker;
-import com.raindropcentral.rdq.quest.service.QuestService;
+import com.raindropcentral.rdq.service.quest.QuestProgressTracker;
 import com.raindropcentral.rplatform.logging.CentralLogger;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -28,264 +19,287 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  * Event listener for tracking quest progress from game events.
+ * <p>
+ * For each Bukkit event, this listener reads the {@code requirementData} JSON
+ * stored on each {@link QuestTask}, matches the event against
+ * {@code type} / {@code target} / {@code amount}, and calls
+ * {@link QuestProgressTracker#updateProgress} when a task matches.
  *
- * <p>This listener monitors various Bukkit events and updates quest task progress
- * accordingly. It handles events like entity kills, block breaking/placing,
- * item consumption, fishing, and movement.
- *
- * <p>Note: This is a simplified implementation. Task matching logic should be
- * implemented based on task requirements stored in the database.
+ * <h2>Supported task types</h2>
+ * <ul>
+ *   <li>{@code KILL_MOBS} – EntityDeathEvent. Target = entity type or category
+ *       ("HOSTILE", "PASSIVE", "NEUTRAL", or a concrete type like "ZOMBIE").</li>
+ *   <li>{@code MINE_BLOCKS} / {@code BREAK_BLOCKS} – BlockBreakEvent. Target = block
+ *       material name or "ORE" to match any ore.</li>
+ *   <li>{@code PLACE_BLOCKS} – BlockPlaceEvent. Target = block material name.</li>
+ *   <li>{@code CATCH_FISH} – PlayerFishEvent (CAUGHT_FISH state). Target ignored.</li>
+ *   <li>{@code CONSUME_ITEM} – PlayerItemConsumeEvent. Target = item material name.</li>
+ * </ul>
  *
  * @author RaindropCentral
- * @version 1.0.0
+ * @version 2.0.0
  */
 public class QuestEventListener implements Listener {
-    
+
     private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
-    
-    private final RDQ plugin;
-    private final QuestService questService;
+    private static final Gson GSON = new Gson();
+
     private final QuestProgressTracker progressTracker;
     private final QuestCacheManager cacheManager;
-    
-    // Throttling for movement events to prevent spam
-    private final Map<UUID, Long> lastMoveUpdate = new HashMap<>();
-    private static final long MOVE_UPDATE_INTERVAL = 5000; // 5 seconds
-    
+
     /**
-     * Constructs a new QuestEventListener.
+     * Creates the quest event listener for the provided plugin instance.
      *
-     * @param plugin the RDQ plugin instance
+     * @param plugin the active RDQ plugin instance
      */
     public QuestEventListener(@NotNull final RDQ plugin) {
-        this.plugin = plugin;
-        this.questService = plugin.getQuestService();
         this.progressTracker = plugin.getQuestProgressTracker();
         this.cacheManager = plugin.getQuestCacheManager();
     }
-    
+
+    // -------------------------------------------------------------------------
+    // KILL_MOBS
+    // -------------------------------------------------------------------------
+
     /**
-     * Handles entity death events for kill-based quest tasks.
+     * Updates quest progress for mob-kill tasks after an entity dies.
      *
-     * @param event the entity death event
+     * @param event the monitored entity death event
      */
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onEntityDeath(@NotNull final EntityDeathEvent event) {
-        if (!(event.getEntity().getKiller() instanceof Player player)) {
-            return;
-        }
-        
-        try {
-            final String entityType = event.getEntity().getType().name();
-            
-            // Get active quests for this player
-            final List<QuestUser> activeQuests = cacheManager.getPlayerQuests(player.getUniqueId());
-            
-            // For each active quest, update matching tasks
-            // Note: This is simplified - real implementation should check task requirements
-            for (QuestUser questUser : activeQuests) {
-                final String questId = questUser.getQuest().getIdentifier();
-                
-                // Example: Update zombie_slayer quest when killing zombies
-                if (questId.contains("zombie") && entityType.equals("ZOMBIE")) {
-                    progressTracker.updateProgress(
-                        player.getUniqueId(),
-                        questId,
-                        "kill_zombies", // Task ID - should come from quest definition
-                        1
-                    ).exceptionally(ex -> {
-                        LOGGER.log(Level.WARNING, "Failed to update kill task progress", ex);
-                        return null;
-                    });
-                }
+        final Player player = event.getEntity().getKiller();
+        if (player == null) return;
+
+        final String entityType = event.getEntity().getType().name();
+        final boolean isHostile = isHostile(event.getEntity());
+        final boolean isPassive = isPassive(event.getEntity());
+
+        processPlayerQuests(player.getUniqueId(), task -> {
+            final JsonObject req = parseRequirement(task.getRequirementData());
+            if (req == null) return;
+            if (!isType(req, "KILL_MOBS")) return;
+
+            final String target = getString(req, "target");
+            if (target == null) return;
+
+            final boolean matches = switch (target.toUpperCase()) {
+                case "HOSTILE" -> isHostile;
+                case "PASSIVE" -> isPassive;
+                case "NEUTRAL" -> !isHostile && !isPassive;
+                case "ANY"     -> true;
+                default        -> target.equalsIgnoreCase(entityType);
+            };
+
+            if (matches) {
+                updateTask(player.getUniqueId(), task, 1);
             }
-            
-        } catch (Exception e) {
-            LOGGER.log(Level.WARNING, "Error processing entity death event", e);
-        }
+        });
     }
-    
+
+    // -------------------------------------------------------------------------
+    // MINE_BLOCKS / BREAK_BLOCKS
+    // -------------------------------------------------------------------------
+
     /**
-     * Handles block break events for mining/breaking quest tasks.
+     * Updates quest progress for block-breaking tasks after a block is mined.
      *
-     * @param event the block break event
+     * @param event the monitored block break event
      */
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onBlockBreak(@NotNull final BlockBreakEvent event) {
         final Player player = event.getPlayer();
-        
-        try {
-            final String blockType = event.getBlock().getType().name();
-            
-            // Get active quests for this player
-            final List<QuestUser> activeQuests = cacheManager.getPlayerQuests(player.getUniqueId());
-            
-            // For each active quest, update matching tasks
-            for (QuestUser questUser : activeQuests) {
-                final String questId = questUser.getQuest().getIdentifier();
-                
-                // Example: Update mining quests
-                if (questId.contains("miner") && blockType.contains("ORE")) {
-                    progressTracker.updateProgress(
-                        player.getUniqueId(),
-                        questId,
-                        "mine_ores", // Task ID - should come from quest definition
-                        1
-                    ).exceptionally(ex -> {
-                        LOGGER.log(Level.WARNING, "Failed to update mining task progress", ex);
-                        return null;
-                    });
-                }
+        final String blockType = event.getBlock().getType().name();
+
+        processPlayerQuests(player.getUniqueId(), task -> {
+            final JsonObject req = parseRequirement(task.getRequirementData());
+            if (req == null) return;
+            if (!isType(req, "MINE_BLOCKS") && !isType(req, "BREAK_BLOCKS")) return;
+
+            final String target = getString(req, "target");
+            if (target == null) return;
+
+            final boolean matches = target.equalsIgnoreCase("ORE")
+                    ? blockType.contains("_ORE")
+                    : target.equalsIgnoreCase(blockType);
+
+            if (matches) {
+                updateTask(player.getUniqueId(), task, 1);
             }
-            
-        } catch (Exception e) {
-            LOGGER.log(Level.WARNING, "Error processing block break event", e);
-        }
+        });
     }
-    
+
+    // -------------------------------------------------------------------------
+    // PLACE_BLOCKS
+    // -------------------------------------------------------------------------
+
     /**
-     * Handles block place events for building quest tasks.
+     * Updates quest progress for block-placement tasks after a block is placed.
      *
-     * @param event the block place event
+     * @param event the monitored block place event
      */
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onBlockPlace(@NotNull final BlockPlaceEvent event) {
         final Player player = event.getPlayer();
-        
-        try {
-            final String blockType = event.getBlock().getType().name();
-            
-            // Get active quests for this player
-            final List<QuestUser> activeQuests = cacheManager.getPlayerQuests(player.getUniqueId());
-            
-            // For each active quest, update matching tasks
-            for (QuestUser questUser : activeQuests) {
-                final String questId = questUser.getQuest().getIdentifier();
-                
-                // Example: Update building quests
-                if (questId.contains("builder")) {
-                    progressTracker.updateProgress(
-                        player.getUniqueId(),
-                        questId,
-                        "place_blocks", // Task ID - should come from quest definition
-                        1
-                    ).exceptionally(ex -> {
-                        LOGGER.log(Level.WARNING, "Failed to update building task progress", ex);
-                        return null;
-                    });
-                }
-            }
-            
-        } catch (Exception e) {
-            LOGGER.log(Level.WARNING, "Error processing block place event", e);
-        }
+        final String blockType = event.getBlock().getType().name();
+
+        processPlayerQuests(player.getUniqueId(), task -> {
+            final JsonObject req = parseRequirement(task.getRequirementData());
+            if (req == null) return;
+            if (!isType(req, "PLACE_BLOCKS")) return;
+
+            final String target = getString(req, "target");
+            if (target == null || !target.equalsIgnoreCase(blockType)) return;
+
+            updateTask(player.getUniqueId(), task, 1);
+        });
     }
-    
+
+    // -------------------------------------------------------------------------
+    // CATCH_FISH
+    // -------------------------------------------------------------------------
+
     /**
-     * Handles item consumption events for consumption quest tasks.
+     * Updates quest progress for fishing tasks after a successful catch.
      *
-     * @param event the item consume event
+     * @param event the monitored fishing event
+     */
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onFish(@NotNull final PlayerFishEvent event) {
+        if (event.getState() != PlayerFishEvent.State.CAUGHT_FISH) return;
+
+        final Player player = event.getPlayer();
+
+        processPlayerQuests(player.getUniqueId(), task -> {
+            final JsonObject req = parseRequirement(task.getRequirementData());
+            if (req == null) return;
+            if (!isType(req, "CATCH_FISH")) return;
+
+            updateTask(player.getUniqueId(), task, 1);
+        });
+    }
+
+    // -------------------------------------------------------------------------
+    // CONSUME_ITEM
+    // -------------------------------------------------------------------------
+
+    /**
+     * Updates quest progress for consume-item tasks after an item is eaten or drunk.
+     *
+     * @param event the monitored item consumption event
      */
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onItemConsume(@NotNull final PlayerItemConsumeEvent event) {
         final Player player = event.getPlayer();
-        
+        final String itemType = event.getItem().getType().name();
+
+        processPlayerQuests(player.getUniqueId(), task -> {
+            final JsonObject req = parseRequirement(task.getRequirementData());
+            if (req == null) return;
+            if (!isType(req, "CONSUME_ITEM")) return;
+
+            final String target = getString(req, "target");
+            if (target == null || !target.equalsIgnoreCase(itemType)) return;
+
+            updateTask(player.getUniqueId(), task, 1);
+        });
+    }
+
+    // -------------------------------------------------------------------------
+    // Helpers
+    // -------------------------------------------------------------------------
+
+    @FunctionalInterface
+    private interface TaskConsumer {
+        void accept(QuestTask task);
+    }
+
+    /**
+     * Iterates all active quests for {@code playerId} and their tasks,
+     * calling {@code consumer} for each task.
+     */
+    private void processPlayerQuests(@NotNull final UUID playerId,
+                                     @NotNull final TaskConsumer consumer) {
         try {
-            final String itemType = event.getItem().getType().name();
-            
-            // Get active quests for this player
-            final List<QuestUser> activeQuests = cacheManager.getPlayerQuests(player.getUniqueId());
-            
-            // For each active quest, update matching tasks
-            for (QuestUser questUser : activeQuests) {
-                // Task matching logic would go here
-                // This is a placeholder implementation
+            final List<QuestUser> activeQuests = cacheManager.getPlayerQuests(playerId);
+            for (final QuestUser questUser : activeQuests) {
+                final List<QuestTask> tasks = questUser.getQuest().getTasks();
+                for (final QuestTask task : tasks) {
+                    try {
+                        consumer.accept(task);
+                    } catch (final Exception e) {
+                        LOGGER.log(Level.FINE, "Error processing task " + task.getTaskIdentifier(), e);
+                    }
+                }
             }
-            
-        } catch (Exception e) {
-            LOGGER.log(Level.WARNING, "Error processing item consume event", e);
+        } catch (final Exception e) {
+            LOGGER.log(Level.WARNING, "Error processing quest events for player " + playerId, e);
         }
     }
-    
-    /**
-     * Handles fishing events for fishing quest tasks.
-     *
-     * @param event the fishing event
-     */
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onPlayerFish(@NotNull final PlayerFishEvent event) {
-        if (event.getState() != PlayerFishEvent.State.CAUGHT_FISH) {
-            return;
-        }
-        
-        final Player player = event.getPlayer();
-        
+
+    private void updateTask(@NotNull final UUID playerId,
+                            @NotNull final QuestTask task,
+                            final int amount) {
+        final String questId = task.getQuest().getIdentifier();
+        final String taskId  = task.getTaskIdentifier();
+
+        progressTracker.updateProgress(playerId, questId, taskId, amount)
+                .exceptionally(ex -> {
+                    LOGGER.log(Level.WARNING,
+                            "Failed to update progress for task " + taskId + " in quest " + questId, ex);
+                    return null;
+                });
+    }
+
+    /** Parses the {@code requirementData} JSON string; returns {@code null} on failure or empty input. */
+    @Nullable
+    private static JsonObject parseRequirement(@Nullable final String json) {
+        if (json == null || json.isBlank()) return null;
         try {
-            // Get active quests for this player
-            final List<QuestUser> activeQuests = cacheManager.getPlayerQuests(player.getUniqueId());
-            
-            // For each active quest, update matching tasks
-            for (QuestUser questUser : activeQuests) {
-                // Task matching logic would go here
-                // This is a placeholder implementation
-            }
-            
-        } catch (Exception e) {
-            LOGGER.log(Level.WARNING, "Error processing fishing event", e);
+            return JsonParser.parseString(json).getAsJsonObject();
+        } catch (final Exception e) {
+            return null;
         }
     }
-    
-    /**
-     * Handles player movement events for distance/exploration quest tasks.
- *
- * <p>This event is throttled to prevent excessive updates.
-     *
-     * @param event the player move event
-     */
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onPlayerMove(@NotNull final PlayerMoveEvent event) {
-        final Player player = event.getPlayer();
-        final UUID playerId = player.getUniqueId();
-        
-        // Throttle movement updates
-        final long currentTime = System.currentTimeMillis();
-        final Long lastUpdate = lastMoveUpdate.get(playerId);
-        
-        if (lastUpdate != null && (currentTime - lastUpdate) < MOVE_UPDATE_INTERVAL) {
-            return;
-        }
-        
-        // Only track significant movement (not just head rotation)
-        if (event.getFrom().distanceSquared(event.getTo()) < 0.01) {
-            return;
-        }
-        
-        lastMoveUpdate.put(playerId, currentTime);
-        
-        try {
-            // Get active quests for this player
-            final List<QuestUser> activeQuests = cacheManager.getPlayerQuests(player.getUniqueId());
-            
-            // For each active quest, update matching tasks
-            for (QuestUser questUser : activeQuests) {
-                // Task matching logic would go here
-                // This is a placeholder implementation
-            }
-            
-        } catch (Exception e) {
-            LOGGER.log(Level.FINE, "Error processing player move event", e);
-        }
+
+    private static boolean isType(@NotNull final JsonObject req, @NotNull final String type) {
+        final String t = getString(req, "type");
+        return type.equalsIgnoreCase(t);
+    }
+
+    @Nullable
+    private static String getString(@NotNull final JsonObject obj, @NotNull final String key) {
+        if (!obj.has(key) || obj.get(key).isJsonNull()) return null;
+        return obj.get(key).getAsString();
+    }
+
+    // -------------------------------------------------------------------------
+    // Entity category helpers (no external dependency)
+    // -------------------------------------------------------------------------
+
+    private static boolean isHostile(@NotNull final Entity entity) {
+        return entity instanceof org.bukkit.entity.Monster
+                || entity instanceof org.bukkit.entity.Slime
+                || entity instanceof org.bukkit.entity.Ghast
+                || entity instanceof org.bukkit.entity.MagmaCube
+                || entity instanceof org.bukkit.entity.Shulker
+                || entity instanceof org.bukkit.entity.Phantom;
+    }
+
+    private static boolean isPassive(@NotNull final Entity entity) {
+        return entity instanceof org.bukkit.entity.Animals
+                || entity instanceof org.bukkit.entity.Squid
+                || entity instanceof org.bukkit.entity.Bat
+                || entity instanceof org.bukkit.entity.WaterMob;
     }
 }

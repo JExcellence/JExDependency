@@ -1,0 +1,175 @@
+# OneBlock Effects Configuration
+# Modern MiniMessage format with full customization support
+
+# Global effect settings
+enabled: true
+enableParticles: true
+enableSounds: true
+enableAnimations: true
+globalVolumeMultiplier: 1.0
+globalParticleMultiplier: 1.0
+
+# Block break effects
+enableBlockBreakEffects: true
+minRarityForEffects: 3  # RARE and above (1=COMMON, 2=UNCOMMON, 3=RARE, etc.)
+enableProgressionPreview: true
+
+# Chest opening effects
+enableChestEffects: true
+minRarityForChestEffects: 3  # RARE and above
+
+# Entity spawn effects
+enableEntitySpawnEffects: true
+minRarityForEntityEffects: 3  # RARE and above
+
+# Per-rarity effect configuration
+rarityEffects:
+  COMMON:
+    enabled: false  # No effects for common
+    sound: "BLOCK_NOTE_BLOCK_PLING"
+    soundPitch: 1.0
+    soundVolume: 1.0
+    particle: "HAPPY_VILLAGER"
+    particleCount: 10
+    particleSpread: 0.3
+    colorCode: "<white>"
+    
+  UNCOMMON:
+    enabled: false  # No effects for uncommon
+    sound: "BLOCK_NOTE_BLOCK_BELL"
+    soundPitch: 1.2
+    soundVolume: 1.0
+    particle: "BUBBLE"
+    particleCount: 20
+    particleSpread: 0.4
+    colorCode: "<green>"
+    
+  RARE:
+    enabled: true
+    sound: "BLOCK_NOTE_BLOCK_CHIME"
+    soundPitch: 1.4
+    soundVolume: 1.0
+    particle: "WITCH"
+    particleCount: 30
+    particleSpread: 0.5
+    colorCode: "<blue>"
+    
+  EPIC:
+    enabled: true
+    sound: "BLOCK_NOTE_BLOCK_XYLOPHONE"
+    soundPitch: 1.6
+    soundVolume: 1.0
+    particle: "ENCHANTED_HIT"
+    particleCount: 40
+    particleSpread: 0.6
+    colorCode: "<dark_purple>"
+    
+  LEGENDARY:
+    enabled: true
+    sound: "ENTITY_ENDER_DRAGON_GROWL"
+    soundPitch: 0.8
+    soundVolume: 1.2
+    particle: "DRAGON_BREATH"
+    particleCount: 50
+    particleSpread: 0.8
+    colorCode: "<gold>"
+    
+  SPECIAL:
+    enabled: true
+    sound: "ENTITY_WITHER_SPAWN"
+    soundPitch: 0.6
+    soundVolume: 1.3
+    particle: "END_ROD"
+    particleCount: 60
+    particleSpread: 1.0
+    colorCode: "<red>"
+    
+  UNIQUE:
+    enabled: true
+    sound: "UI_TOAST_CHALLENGE_COMPLETE"
+    soundPitch: 2.0
+    soundVolume: 1.4
+    particle: "TOTEM_OF_UNDYING"
+    particleCount: 80
+    particleSpread: 1.2
+    colorCode: "<yellow>"
+    
+  MYTHICAL:
+    enabled: true
+    sound: "BLOCK_BEACON_ACTIVATE"
+    soundPitch: 0.5
+    soundVolume: 1.5
+    particle: "SOUL_FIRE_FLAME"
+    particleCount: 100
+    particleSpread: 1.5
+    colorCode: "<light_purple>"
+    
+  DIVINE:
+    enabled: true
+    sound: "BLOCK_CONDUIT_ACTIVATE"
+    soundPitch: 0.4
+    soundVolume: 1.6
+    particle: "WHITE_ASH"
+    particleCount: 120
+    particleSpread: 1.8
+    colorCode: "<aqua>"
+    
+  CELESTIAL:
+    enabled: true
+    sound: "ENTITY_LIGHTNING_BOLT_THUNDER"
+    soundPitch: 0.3
+    soundVolume: 1.7
+    particle: "ELECTRIC_SPARK"
+    particleCount: 150
+    particleSpread: 2.0
+    colorCode: "<dark_aqua>"
+    
+  TRANSCENDENT:
+    enabled: true
+    sound: "BLOCK_END_PORTAL_SPAWN"
+    soundPitch: 0.2
+    soundVolume: 1.8
+    particle: "PORTAL"
+    particleCount: 180
+    particleSpread: 2.5
+    colorCode: "<dark_blue>"
+    
+  ETHEREAL:
+    enabled: true
+    sound: "ENTITY_PHANTOM_AMBIENT"
+    soundPitch: 1.8
+    soundVolume: 1.9
+    particle: "SCULK_SOUL"
+    particleCount: 200
+    particleSpread: 3.0
+    colorCode: "<dark_gray>"
+    
+  COSMIC:
+    enabled: true
+    sound: "MUSIC_DISC_OTHERSIDE"
+    soundPitch: 0.1
+    soundVolume: 2.0
+    particle: "REVERSE_PORTAL"
+    particleCount: 250
+    particleSpread: 3.5
+    colorCode: "<black>"
+    
+  INFINITE:
+    enabled: true
+    sound: "ENTITY_WARDEN_SONIC_BOOM"
+    soundPitch: 0.05
+    soundVolume: 2.0
+    particle: "SONIC_BOOM"
+    particleCount: 300
+    particleSpread: 4.0
+    colorCode: "<dark_red>"
+    
+  OMNIPOTENT:
+    enabled: true
+    sound: "ENTITY_WARDEN_HEARTBEAT"
+    soundPitch: 0.01
+    soundVolume: 2.0
+    particle: "SHRIEK"
+    particleCount: 500
+    particleSpread: 5.0
+    colorCode: "<obfuscated><dark_red>"

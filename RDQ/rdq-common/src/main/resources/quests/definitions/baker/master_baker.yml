@@ -1,0 +1,58 @@
+identifier: "master_baker"
+category: "baker"
+difficulty: NORMAL
+enabled: true
+displayOrder: 3
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
+
+icon:
+  material: GOLDEN_APPLE
+  displayNameKey: "quest.master_baker.name"
+  descriptionKey: "quest.master_baker.description"
+
+tasks:
+  collect_cocoa_beans:
+    orderIndex: 0
+    difficulty: NORMAL
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: COCOA
+      amount: 64
+  craft_cookies_bulk:
+    orderIndex: 1
+    difficulty: NORMAL
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: COOKIE
+      amount: 128
+  craft_bread_bulk:
+    orderIndex: 2
+    difficulty: NORMAL
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: BREAD
+      amount: 64
+
+rewards:
+  main_currency:
+    type: CURRENCY
+    currency: coins
+    amount: 500.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 300.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

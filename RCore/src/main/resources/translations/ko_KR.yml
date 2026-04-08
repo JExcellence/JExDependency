@@ -3,7 +3,7 @@
 prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
 
 rcconnect:
-  usage: "<gray>사용법: /rc <connect &lt;api-key&gt;|disconnect|claim droplets></gray>"
+  usage: "<gray>사용법: /rc <connect &lt;api-key&gt;|disconnect|claim droplets|store update></gray>"
   usage_no_claim: "<gray>사용법: /rc <connect &lt;api-key&gt;|disconnect></gray>"
   connecting: "<yellow>RaindropCentral에 연결 중...</yellow>"
   success: "<green>RaindropCentral에 성공적으로 연결되었습니다!</green> <gray>서버가 이제 하트비트를 전송하고 있습니다.</gray>"
@@ -21,6 +21,13 @@ rcdisconnect:
     failed: "<red>연결 해제에 실패했습니다. 다시 시도해 주세요.</red>"
     network: "<red>네트워크 오류: %error%</red>"
 
+rcstore:
+  updating: "<yellow>Refreshing the local droplet-store allowlist from RaindropCentral...</yellow>"
+  success: "<green>Updated the local droplet-store allowlist.</green> <gray>%count% item(s) are currently allowed.</gray>"
+  error:
+    not_connected: "<red>RCore must be connected to the RaindropCentral backend before the store allowlist can be updated.</red>"
+    failed: "<red>Failed to refresh the droplet-store allowlist: %error%</red>"
+    using_cache: "<yellow>Failed to refresh the droplet-store allowlist, but the last cached list is still being used: %error%</yellow>"
 rcclaim:
   loading: "<yellow>RaindropCentral에서 받지 못한 물방울 보상을 확인하는 중...</yellow>"
   claiming_item: "<yellow>RaindropCentral에서 %item_name% 소유권을 주장하는 중...</yellow>"
@@ -169,3 +176,5 @@ rc_claim_droplet_jobs_ui:
 
 general:
   no_permission: "<red>이 명령어를 사용할 권한이 없습니다.</red>"
+
+

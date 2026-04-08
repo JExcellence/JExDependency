@@ -106,7 +106,9 @@ public class ServerEnvironment {
      * Returns whether paper.
      */
     public boolean isPaper() {
-        return serverType == ServerType.PAPER || serverType == ServerType.PURPUR;
+        return serverType == ServerType.PAPER
+            || serverType == ServerType.PURPUR
+            || serverType == ServerType.FOLIA;
     }
 
     /**

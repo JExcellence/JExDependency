@@ -3,7 +3,7 @@
 prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
 
 rcconnect:
-  usage: "<gray>Cách sử dụng: /rc <connect &lt;api-key&gt;|disconnect|claim droplets></gray>"
+  usage: "<gray>Cách sử dụng: /rc <connect &lt;api-key&gt;|disconnect|claim droplets|store update></gray>"
   usage_no_claim: "<gray>Cách sử dụng: /rc <connect &lt;api-key&gt;|disconnect></gray>"
   connecting: "<yellow>Đang kết nối tới RaindropCentral...</yellow>"
   success: "<green>Đã kết nối thành công tới RaindropCentral!</green> <gray>Máy chủ hiện đang gửi tín hiệu heartbeat.</gray>"
@@ -21,6 +21,13 @@ rcdisconnect:
     failed: "<red>Không thể ngắt kết nối. Vui lòng thử lại.</red>"
     network: "<red>Lỗi mạng: %error%</red>"
 
+rcstore:
+  updating: "<yellow>Refreshing the local droplet-store allowlist from RaindropCentral...</yellow>"
+  success: "<green>Updated the local droplet-store allowlist.</green> <gray>%count% item(s) are currently allowed.</gray>"
+  error:
+    not_connected: "<red>RCore must be connected to the RaindropCentral backend before the store allowlist can be updated.</red>"
+    failed: "<red>Failed to refresh the droplet-store allowlist: %error%</red>"
+    using_cache: "<yellow>Failed to refresh the droplet-store allowlist, but the last cached list is still being used: %error%</yellow>"
 rcclaim:
   loading: "<yellow>Đang kiểm tra RaindropCentral để nhận phần thưởng nhỏ chưa được nhận...</yellow>"
   claiming_item: "<yellow>Đòi %item_name% từ RaindropCentral...</yellow>"
@@ -169,3 +176,5 @@ rc_claim_droplet_jobs_ui:
 
 general:
   no_permission: "<red>Bạn không có quyền sử dụng lệnh này.</red>"
+
+

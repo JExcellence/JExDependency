@@ -1,16 +1,3 @@
-/*
- * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
- *
- * This source code is proprietary and confidential to Antimatter Zone LLC.
- * Unauthorized copying, modification, distribution, display, performance,
- * publication, sublicensing, or creation of derivative works is prohibited
- * without prior written permission from Antimatter Zone LLC, except to the
- * extent permitted by applicable United States law.
- *
- * This notice is intended to preserve all rights and remedies available under
- * the laws of the State of Washington and the United States of America.
- */
-
 package com.raindropcentral.rdq.quest.requirement;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -30,11 +17,11 @@ import java.util.logging.Logger;
 
 /**
  * Requirement that checks if a player has completed a specific quest.
- *
- * <p>This requirement integrates with the quest completion history system to verify
+ * <p>
+ * This requirement integrates with the quest completion history system to verify
  * that a player has completed a quest at least once (or a minimum number of times).
- *
- * <p>Example JSON configuration:
+ * <p>
+ * Example JSON configuration:
  * <pre>
  * {
  *   "type": "QUEST_COMPLETION",
@@ -91,8 +78,8 @@ public final class QuestCompletionRequirement extends AbstractRequirement {
     
     /**
      * Sets the repository for this requirement.
- *
- * <p>This is called during initialization by the quest system.
+     * <p>
+     * This is called during initialization by the quest system.
      *
      * @param repository the completion history repository
      */
@@ -119,9 +106,6 @@ public final class QuestCompletionRequirement extends AbstractRequirement {
         return minCompletions;
     }
     
-    /**
-     * Returns whether met.
-     */
     @Override
     public boolean isMet(@NotNull final Player player) {
         if (repository == null) {
@@ -149,9 +133,6 @@ public final class QuestCompletionRequirement extends AbstractRequirement {
         }
     }
     
-    /**
-     * Executes calculateProgress.
-     */
     @Override
     public double calculateProgress(@NotNull final Player player) {
         if (repository == null) {
@@ -180,17 +161,11 @@ public final class QuestCompletionRequirement extends AbstractRequirement {
         }
     }
     
-    /**
-     * Executes consume.
-     */
     @Override
     public void consume(@NotNull final Player player) {
         // Quest completions are not consumable - they remain in history
     }
     
-    /**
-     * Gets descriptionKey.
-     */
     @Override
     @NotNull
     public String getDescriptionKey() {

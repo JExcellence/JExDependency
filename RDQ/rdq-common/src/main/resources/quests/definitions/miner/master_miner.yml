@@ -1,0 +1,58 @@
+identifier: "master_miner"
+category: "miner"
+difficulty: NORMAL
+enabled: true
+displayOrder: 3
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
+
+icon:
+  material: DIAMOND_PICKAXE
+  displayNameKey: "quest.master_miner.name"
+  descriptionKey: "quest.master_miner.description"
+
+tasks:
+  mine_diamonds:
+    orderIndex: 0
+    difficulty: NORMAL
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: DIAMOND_ORE
+      amount: 32
+  mine_lapis:
+    orderIndex: 1
+    difficulty: NORMAL
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: LAPIS_ORE
+      amount: 64
+  mine_emeralds:
+    orderIndex: 2
+    difficulty: NORMAL
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: EMERALD_ORE
+      amount: 16
+
+rewards:
+  main_currency:
+    type: CURRENCY
+    currency: coins
+    amount: 500.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 300.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

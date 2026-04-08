@@ -20,15 +20,15 @@
 
 package com.raindropcentral.rplatform.database.converter;
 
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
-
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Persists slot-indexed {@link ItemStack} inventories as a delimiter-safe string payload.

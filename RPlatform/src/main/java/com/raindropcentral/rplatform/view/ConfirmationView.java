@@ -13,7 +13,6 @@
 
 package com.raindropcentral.rplatform.view;
 
-import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import de.jexcellence.jextranslate.i18n.I18n;
 import me.devnatan.inventoryframework.View;

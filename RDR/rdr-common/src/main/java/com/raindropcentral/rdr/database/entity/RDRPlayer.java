@@ -13,14 +13,7 @@
 
 package com.raindropcentral.rdr.database.entity;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.UUID;
-
+import com.raindropcentral.rplatform.database.converter.UUIDConverter;
 import de.jexcellence.hibernate.entity.BaseEntity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -34,7 +27,13 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import com.raindropcentral.rplatform.database.converter.UUIDConverter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Persistent player extension for RDR storage and store-progress data.

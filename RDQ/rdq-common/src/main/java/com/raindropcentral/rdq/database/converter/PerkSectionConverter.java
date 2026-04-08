@@ -11,12 +11,12 @@
  * the laws of the State of Washington and the United States of America.
  */
 
-/*
+package com.raindropcentral.rdq.database.converter;/*
 package com.raindropcentral.rdq.database.converter;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.raindropcentral.rdq.config.utility.IconSection;
+import com.raindropcentral.rplatform.config.icon.IconSection;
 import com.raindropcentral.rdq.config.utility.RequirementSection;
 import com.raindropcentral.rdq.config.utility.RewardSection;
 import com.raindropcentral.rdq2.config.perk.PerkSettingsSection;

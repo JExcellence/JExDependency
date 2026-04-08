@@ -21,6 +21,7 @@ import com.raindropcentral.rds.items.ShopBlock;
 import com.raindropcentral.rds.service.shop.ShopOwnershipSupport;
 import com.raindropcentral.rplatform.protection.RProtectionBridge;
 import de.jexcellence.jextranslate.i18n.I18n;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -33,9 +34,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.UUID;
 
@@ -50,6 +54,7 @@ import java.util.UUID;
 public class BlockListener implements Listener {
 
     private static final String TOWN_PLACEMENT_BYPASS_PERMISSION = "raindropshops.admin.bypass.town";
+    private static final String OUTPOST_PLACEMENT_BYPASS_PERMISSION = "raindropshops.admin.bypass.outpost";
 
     private final RDS rds;
 
@@ -210,6 +215,13 @@ public class BlockListener implements Listener {
             return false;
         }
 
+        if (this.isRdtProtectionBridge(protectionBridge)
+                && !hasOutpostPlacementBypassPermission(player)
+                && !this.isPlayerStandingInRdtOutpost(player)) {
+            this.sendMessage(player, "block_listener.error.protection_requires_outpost");
+            return false;
+        }
+
         return true;
     }
 
@@ -223,6 +235,139 @@ public class BlockListener implements Listener {
             final @NotNull Player player
     ) {
         return player.hasPermission(TOWN_PLACEMENT_BYPASS_PERMISSION);
+    }
+
+    /**
+     * Determines whether a player can bypass RDT outpost placement restrictions.
+     *
+     * @param player player placing the shop block
+     * @return {@code true} when the player has the outpost bypass permission
+     */
+    static boolean hasOutpostPlacementBypassPermission(
+            final @NotNull Player player
+    ) {
+        return player.hasPermission(OUTPOST_PLACEMENT_BYPASS_PERMISSION);
+    }
+
+    private boolean isRdtProtectionBridge(final @NotNull RProtectionBridge protectionBridge) {
+        return "RDT".equalsIgnoreCase(protectionBridge.getPluginName());
+    }
+
+    private boolean isPlayerStandingInRdtOutpost(final @NotNull Player player) {
+        try {
+            final Plugin plugin = Bukkit.getPluginManager().getPlugin("RDT");
+            if (plugin == null || !plugin.isEnabled()) {
+                return false;
+            }
+
+            final Object runtime = this.resolveRdtRuntime(plugin);
+            if (runtime == null) {
+                return false;
+            }
+
+            final Object townRuntimeService = this.invokeOptional(runtime, "getTownRuntimeService");
+            if (townRuntimeService == null) {
+                return false;
+            }
+
+            final Object result = this.invokeOptional(townRuntimeService, "isOutpostChunk", player.getLocation());
+            return result instanceof Boolean allowed && allowed;
+        } catch (final ReflectiveOperationException ignored) {
+            return false;
+        }
+    }
+
+    private @Nullable Object resolveRdtRuntime(final @NotNull Plugin plugin) throws ReflectiveOperationException {
+        if (this.hasZeroArgMethod(plugin.getClass(), "getTownRuntimeService")) {
+            return plugin;
+        }
+
+        final Object directRuntime = this.firstNonNull(
+            this.invokeOptional(plugin, "getRdt"),
+            this.readFieldOptional(plugin, "rdt")
+        );
+        if (directRuntime != null && this.hasZeroArgMethod(directRuntime.getClass(), "getTownRuntimeService")) {
+            return directRuntime;
+        }
+
+        final Object delegate = this.firstNonNull(
+            this.readFieldOptional(plugin, "impl"),
+            this.readFieldOptional(plugin, "delegate")
+        );
+        if (delegate == null) {
+            return null;
+        }
+
+        final Object delegatedRuntime = this.firstNonNull(
+            this.invokeOptional(delegate, "getRdt"),
+            this.readFieldOptional(delegate, "rdt")
+        );
+        return delegatedRuntime != null && this.hasZeroArgMethod(delegatedRuntime.getClass(), "getTownRuntimeService")
+            ? delegatedRuntime
+            : null;
+    }
+
+    private boolean hasZeroArgMethod(final @NotNull Class<?> type, final @NotNull String methodName) {
+        try {
+            type.getMethod(methodName);
+            return true;
+        } catch (final NoSuchMethodException ignored) {
+            return false;
+        }
+    }
+
+    private @Nullable Object invokeOptional(
+        final @NotNull Object target,
+        final @NotNull String methodName,
+        final Object... arguments
+    ) throws ReflectiveOperationException {
+        final Method method = this.findMethod(target.getClass(), methodName, arguments.length);
+        if (method == null) {
+            return null;
+        }
+        return method.invoke(target, arguments);
+    }
+
+    private @Nullable Method findMethod(
+        final @NotNull Class<?> type,
+        final @NotNull String methodName,
+        final int parameterCount
+    ) {
+        for (final Method method : type.getMethods()) {
+            if (method.getName().equals(methodName) && method.getParameterCount() == parameterCount) {
+                return method;
+            }
+        }
+        return null;
+    }
+
+    private @Nullable Object readFieldOptional(
+        final @NotNull Object target,
+        final @NotNull String fieldName
+    ) throws ReflectiveOperationException {
+        Class<?> current = target.getClass();
+        while (current != null) {
+            try {
+                final Field field = current.getDeclaredField(fieldName);
+                field.setAccessible(true);
+                return field.get(target);
+            } catch (final NoSuchFieldException ignored) {
+                current = current.getSuperclass();
+            }
+        }
+        return null;
+    }
+
+    private @Nullable Object firstNonNull(final @Nullable Object... values) {
+        if (values == null) {
+            return null;
+        }
+        for (final Object value : values) {
+            if (value != null) {
+                return value;
+            }
+        }
+        return null;
     }
 
     private void upgradeShopToDoubleChest(

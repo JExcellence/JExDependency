@@ -18,128 +18,110 @@ import de.jexcellence.hibernate.repository.CachedRepository;
 import jakarta.persistence.EntityManagerFactory;
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
-import org.jspecify.annotations.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Function;
 
 /**
- * Cached repository for {@link com.raindropcentral.rdt.database.entity.RTown} entities.
+ * Cached repository for persisted {@link RTown} records.
  *
- * <p>Responsibilities:
- * <ul>
- *   <li>Provide standard CRUD operations backed by {@link CachedRepository}</li>
- *   <li>Expose convenience finders for common lookups (by mayor, name, or town UUID)</li>
- *   <li>Support async usage through the provided {@link ExecutorService}</li>
- * </ul>
- * Notes:
- * <ul>
- *   <li>Blocking operations should be executed off the main server thread.</li>
- * </ul>
- */
-@SuppressWarnings({
-        "unused",
-        "FieldCanBeLocal"
-})
-/**
- * Represents the RRTown API type.
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 public class RRTown extends CachedRepository<RTown, Long, UUID> {
 
-    // Keep a reference to the EntityManagerFactory for custom ad-hoc queries
-    private final EntityManagerFactory emf;
-    private final String fallbackServerId;
-
     /**
-     * Construct a repository for {@link RTown}.
+     * Creates the town repository.
      *
-     * @param executorService       executor for async operations
-     * @param entityManagerFactory  JPA entity manager factory
-     * @param entityClass           entity class (typically {@link RTown}.class)
-     * @param keyExtractor          cache key extractor (unique external identifier)
+     * @param executorService async executor
+     * @param entityManagerFactory entity manager factory
+     * @param entityClass managed entity class
+     * @param keyExtractor cache key extractor
      */
     public RRTown(
-            @NotNull ExecutorService executorService,
-            @NotNull EntityManagerFactory entityManagerFactory,
-            @NotNull Class<RTown> entityClass,
-            @NotNull Function<RTown, UUID> keyExtractor
-    ) {
-        this(executorService, entityManagerFactory, entityClass, keyExtractor, "server");
-    }
-
-    /**
-     * Construct a repository for {@link RTown} with one fallback server identifier.
-     *
-     * @param executorService executor for async operations
-     * @param entityManagerFactory JPA entity manager factory
-     * @param entityClass entity class (typically {@link RTown}.class)
-     * @param keyExtractor cache key extractor (unique external identifier)
-     * @param fallbackServerId fallback server ID used for legacy ownership backfill
-     */
-    public RRTown(
-            @NotNull ExecutorService executorService,
-            @NotNull EntityManagerFactory entityManagerFactory,
-            @NotNull Class<RTown> entityClass,
-            @NotNull Function<RTown, UUID> keyExtractor,
-            @NotNull String fallbackServerId
+        final @NotNull ExecutorService executorService,
+        final @NotNull EntityManagerFactory entityManagerFactory,
+        final @NotNull Class<RTown> entityClass,
+        final @NotNull Function<RTown, UUID> keyExtractor
     ) {
         super(executorService, entityManagerFactory, entityClass, keyExtractor);
-        this.emf = entityManagerFactory;
-        this.fallbackServerId = fallbackServerId;
     }
 
     /**
-     * Find the town where the given UUID is the mayor.
-     * IMPORTANT: Run on a background thread; do not call from the main server thread.
+     * Finds a town by mayor UUID.
      *
-     * @param mayor UUID of the player to check
-     * @return the first town found where this player is mayor, or {@code null} if none
+     * @param mayorUuid mayor UUID
+     * @return matching town, or {@code null} when none exists
      */
-    public RTown findByMayor(UUID mayor) {
-        return this.backfillAndReturn(findByAttributes(Map.of("mayor", mayor)).orElse(null));
+    public @Nullable RTown findByMayor(final @NotNull UUID mayorUuid) {
+        return findByAttributes(Map.of("mayorUuid", mayorUuid)).orElse(null);
     }
 
-
     /**
-     * Find a town by its human-friendly name.
+     * Finds a town by town name.
      *
-     * @param townName case-sensitive town name
-     * @return matching town or {@code null} if none
+     * @param townName town name
+     * @return matching town, or {@code null} when none exists
      */
-    public RTown findByTName(String townName) {
-        return this.backfillAndReturn(findByAttributes(Map.of("townName", townName)).orElse(null));
+    public @Nullable RTown findByTName(final @NotNull String townName) {
+        return findByAttributes(Map.of("townName", townName.trim())).orElse(null);
     }
 
     /**
-     * Find a town by its public UUID identifier.
+     * Finds a town by town UUID.
      *
-     * @param uuid town UUID
-     * @return matching town or {@code null} if none
+     * @param townUuid town UUID
+     * @return matching town, or {@code null} when none exists
      */
-    public RTown findByTownUUID(UUID uuid) {
-        return this.backfillAndReturn(findByAttributes(Map.of("uuid", uuid)).orElse(null));
+    public @Nullable RTown findByTownUUID(final @NotNull UUID townUuid) {
+        return findByAttributes(Map.of("townUuid", townUuid)).orElse(null);
     }
 
     /**
-     * Finds a town by its placed nexus block location.
+     * Finds a town by town UUID.
      *
-     * @param location exact persisted nexus location
-     * @return matching town or {@code null} when no town owns that nexus location
+     * @param townUuid town UUID
+     * @return matching town, or {@code null} when none exists
+     */
+    public @Nullable RTown findByTownUuid(final @NotNull UUID townUuid) {
+        return this.findByTownUUID(townUuid);
+    }
+
+    /**
+     * Finds a town by identifier.
+     *
+     * @param identifier town UUID
+     * @return matching town, or {@code null} when none exists
+     */
+    public @Nullable RTown findByIdentifier(final @NotNull UUID identifier) {
+        return this.findByTownUUID(identifier);
+    }
+
+    /**
+     * Finds a town by exact nexus location.
+     *
+     * @param location nexus location
+     * @return matching town, or {@code null} when none exists
      */
     public @Nullable RTown findByNexusLocation(final @NotNull Location location) {
-        return this.backfillAndReturn(findByAttributes(Map.of("nexus_location", location)).orElse(null));
+        return this.findAll().stream()
+            .filter(town -> sameLocation(town.getNexusLocation(), location))
+            .findFirst()
+            .orElse(null);
     }
 
-    private @Nullable RTown backfillAndReturn(final @Nullable RTown town) {
-        if (town == null) {
-            return null;
-        }
-        if (town.ensureAuthoritativeServerOwnership(this.fallbackServerId)) {
-            this.update(town);
-        }
-        return town;
+    private static boolean sameLocation(final @Nullable Location left, final @NotNull Location right) {
+        return left != null
+            && left.getWorld() != null
+            && right.getWorld() != null
+            && Objects.equals(left.getWorld().getUID(), right.getWorld().getUID())
+            && left.getBlockX() == right.getBlockX()
+            && left.getBlockY() == right.getBlockY()
+            && left.getBlockZ() == right.getBlockZ();
     }
-
 }

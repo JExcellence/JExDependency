@@ -25,12 +25,13 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * Tests town-placement bypass permission behavior for shop placement.
+ * Tests placement bypass permission behavior for shop placement.
  *
  * @author ItsRainingHP
  * @since 1.0.0
@@ -43,7 +44,7 @@ class BlockListenerTest {
             final @TempDir Path tempDir
     ) throws IOException {
         final ConfigSection config = this.loadConfig(tempDir, true);
-        final Player bypassPlayer = this.createPlayerWithPermission(true);
+        final Player bypassPlayer = this.createPlayerWithPermissions("raindropshops.admin.bypass.town");
         final BlockListener listener = new BlockListener((RDS) null);
 
         assertTrue(this.invokeCanPlacePlayerShop(listener, bypassPlayer, config));
@@ -51,11 +52,20 @@ class BlockListenerTest {
 
     @Test
     void bypassPermissionSupportMatchesPlayerPermissionNode() {
-        final Player bypassPlayer = this.createPlayerWithPermission(true);
-        final Player regularPlayer = this.createPlayerWithPermission(false);
+        final Player bypassPlayer = this.createPlayerWithPermissions("raindropshops.admin.bypass.town");
+        final Player regularPlayer = this.createPlayerWithPermissions();
 
         assertTrue(BlockListener.hasTownPlacementBypassPermission(bypassPlayer));
         assertFalse(BlockListener.hasTownPlacementBypassPermission(regularPlayer));
+    }
+
+    @Test
+    void outpostBypassPermissionSupportMatchesPlayerPermissionNode() {
+        final Player bypassPlayer = this.createPlayerWithPermissions("raindropshops.admin.bypass.outpost");
+        final Player regularPlayer = this.createPlayerWithPermissions();
+
+        assertTrue(BlockListener.hasOutpostPlacementBypassPermission(bypassPlayer));
+        assertFalse(BlockListener.hasOutpostPlacementBypassPermission(regularPlayer));
     }
 
     private boolean invokeCanPlacePlayerShop(
@@ -84,12 +94,16 @@ class BlockListenerTest {
         return ConfigSection.fromFile(configFile.toFile());
     }
 
-    private Player createPlayerWithPermission(
-            final boolean hasBypassPermission
+    private Player createPlayerWithPermissions(
+            final String... permissions
     ) {
+        final Set<String> grantedPermissions = Set.of(permissions);
         final InvocationHandler handler = (proxy, method, args) -> {
-            if ("hasPermission".equals(method.getName())) {
-                return hasBypassPermission;
+            if ("hasPermission".equals(method.getName())
+                    && args != null
+                    && args.length == 1
+                    && args[0] instanceof String permission) {
+                return grantedPermissions.contains(permission);
             }
             return this.getDefaultValue(proxy, method, args);
         };

@@ -1,0 +1,58 @@
+identifier: "novice_miner"
+category: "mining"
+difficulty: EASY
+enabled: true
+displayOrder: 1
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
+
+icon:
+  material: STONE_PICKAXE
+  displayNameKey: "quest.novice_miner.name"
+  descriptionKey: "quest.novice_miner.description"
+
+tasks:
+  break_stone:
+    orderIndex: 0
+    difficulty: EASY
+    sequential: false
+    icon:
+      material: STONE
+      displayNameKey: "quest.novice_miner.task.break_stone.name"
+      descriptionKey: "quest.novice_miner.task.break_stone.description"
+    requirement:
+      type: MINE_BLOCKS
+      target: STONE
+      amount: 100
+  break_coal_ore:
+    orderIndex: 1
+    difficulty: EASY
+    sequential: false
+    icon:
+      material: COAL_ORE
+      displayNameKey: "quest.novice_miner.task.break_coal_ore.name"
+      descriptionKey: "quest.novice_miner.task.break_coal_ore.description"
+    requirement:
+      type: MINE_BLOCKS
+      target: COAL_ORE
+      amount: 20
+
+rewards:
+  main_currency:
+    type: CURRENCY
+    currency: coins
+    amount: 300.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 150.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

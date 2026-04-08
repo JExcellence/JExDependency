@@ -1,0 +1,82 @@
+identifier: "zombie_hunter_elite"
+category: "combat"
+difficulty: HARD
+enabled: true
+displayOrder: 3
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
+
+icon:
+  material: NETHERITE_SWORD
+  displayNameKey: "quest.zombie_hunter_elite.name"
+  descriptionKey: "quest.zombie_hunter_elite.description"
+
+tasks:
+  kill_zombies:
+    orderIndex: 0
+    difficulty: HARD
+    sequential: false
+    icon:
+      material: ZOMBIE_HEAD
+      displayNameKey: "quest.zombie_hunter_elite.task.kill_zombies.name"
+      descriptionKey: "quest.zombie_hunter_elite.task.kill_zombies.description"
+    requirement:
+      type: KILL_MOBS
+      target: ZOMBIE
+      amount: 100
+  kill_husks:
+    orderIndex: 1
+    difficulty: HARD
+    sequential: false
+    icon:
+      material: SAND
+      displayNameKey: "quest.zombie_hunter_elite.task.kill_husks.name"
+      descriptionKey: "quest.zombie_hunter_elite.task.kill_husks.description"
+    requirement:
+      type: KILL_MOBS
+      target: HUSK
+      amount: 50
+  kill_drowned:
+    orderIndex: 2
+    difficulty: HARD
+    sequential: false
+    icon:
+      material: TRIDENT
+      displayNameKey: "quest.zombie_hunter_elite.task.kill_drowned.name"
+      descriptionKey: "quest.zombie_hunter_elite.task.kill_drowned.description"
+    requirement:
+      type: KILL_MOBS
+      target: DROWNED
+      amount: 25
+  kill_zombie_villagers:
+    orderIndex: 3
+    difficulty: HARD
+    sequential: false
+    icon:
+      material: GOLDEN_APPLE
+      displayNameKey: "quest.zombie_hunter_elite.task.kill_zombie_villagers.name"
+      descriptionKey: "quest.zombie_hunter_elite.task.kill_zombie_villagers.description"
+    requirement:
+      type: KILL_MOBS
+      target: ZOMBIE_VILLAGER
+      amount: 10
+
+rewards:
+  main_currency:
+    type: CURRENCY
+    currency: coins
+    amount: 2000.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 1000.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

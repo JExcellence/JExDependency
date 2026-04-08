@@ -13,12 +13,6 @@
 
 package com.raindropcentral.rdr.listeners;
 
-import java.lang.reflect.Proxy;
-import java.util.List;
-import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
-import java.util.logging.Logger;
-
 import com.raindropcentral.rdr.configs.ConfigSection;
 import com.raindropcentral.rdr.database.entity.RDRPlayer;
 import com.raindropcentral.rdr.database.entity.RStorage;
@@ -28,6 +22,12 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.junit.jupiter.api.Test;
+
+import java.lang.reflect.Proxy;
+import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;

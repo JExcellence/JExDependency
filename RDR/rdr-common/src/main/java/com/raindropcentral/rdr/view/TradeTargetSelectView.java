@@ -13,12 +13,6 @@
 
 package com.raindropcentral.rdr.view;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
 import com.raindropcentral.rdr.RDR;
 import com.raindropcentral.rdr.service.TradeService;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
@@ -33,6 +27,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * Trade target selector view used to start a new invite.

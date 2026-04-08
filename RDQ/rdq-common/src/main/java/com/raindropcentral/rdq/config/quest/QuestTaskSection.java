@@ -15,6 +15,7 @@ package com.raindropcentral.rdq.config.quest;
 
 import com.raindropcentral.rdq.config.requirement.BaseRequirementSection;
 import com.raindropcentral.rdq.config.utility.RewardSection;
+import com.raindropcentral.rplatform.config.icon.IconSection;
 import de.jexcellence.configmapper.sections.AConfigSection;
 import de.jexcellence.configmapper.sections.CSAlways;
 import de.jexcellence.configmapper.sections.CSIgnore;
@@ -37,11 +38,8 @@ public class QuestTaskSection extends AConfigSection {
     /** The unique identifier for this task. */
     private String identifier;
     
-    /** The key for the display name of the task (for localization). */
-    private String nameKey;
-    
-    /** The key for the description of the task (for localization). */
-    private String descriptionKey;
+    /** The icon configuration for this task. */
+    private IconSection icon;
     
     /** The order index of this task within the quest. */
     private Integer orderIndex;
@@ -85,41 +83,58 @@ public class QuestTaskSection extends AConfigSection {
     public void afterParsing(final List<Field> fields) throws Exception {
         super.afterParsing(fields);
         
+        // Initialize icon if not provided
+        if (this.icon == null) {
+            this.icon = new IconSection(null);
+        }
+        
         if (this.questId != null && this.taskId != null) {
-            if (this.nameKey == null) {
-                this.nameKey = "quest." + this.questId + ".task." + this.taskId + ".name";
+            // Set default icon keys if not provided
+            if (this.icon.getDisplayNameKey().equals("not_defined")) {
+                this.icon.setDisplayNameKey("quest." + this.questId + ".task." + this.taskId + ".name");
             }
-            if (this.descriptionKey == null) {
-                this.descriptionKey = "quest." + this.questId + ".task." + this.taskId + ".description";
+            if (this.icon.getDescriptionKey().equals("not_defined")) {
+                this.icon.setDescriptionKey("quest." + this.questId + ".task." + this.taskId + ".description");
             }
         }
     }
     
     /**
-     * Gets the unique identifier for this task.
+     * Gets the icon configuration for this task.
      *
-     * @return the task identifier, or a generated one if not set
+     * @return the icon section
+     */
+    public IconSection getIcon() {
+        if (this.icon == null) {
+            this.icon = new IconSection(null);
+            this.icon.setMaterial("PAPER");
+            if (this.questId != null && this.taskId != null) {
+                this.icon.setDisplayNameKey("quest." + this.questId + ".task." + this.taskId + ".name");
+                this.icon.setDescriptionKey("quest." + this.questId + ".task." + this.taskId + ".description");
+            }
+        }
+        return this.icon;
+    }
+    
+    /**
+     * Sets the icon configuration for this task.
+     *
+     * @param icon the icon section
+     */
+    public void setIcon(final IconSection icon) {
+        this.icon = icon;
+    }
+
+    /**
+     * Gets the unique identifier for this task.
+     * Falls back to {@code taskId} (the map key) if the {@code identifier} field was not set in YAML.
+     *
+     * @return the task identifier
      */
     public String getIdentifier() {
-        return this.identifier == null ? "not_defined_" + UUID.randomUUID() : this.identifier;
-    }
-    
-    /**
-     * Gets the name key for this task.
-     *
-     * @return the name key, or "not_defined" if not set
-     */
-    public String getNameKey() {
-        return this.nameKey == null ? "not_defined" : this.nameKey;
-    }
-    
-    /**
-     * Gets the description key for this task.
-     *
-     * @return the description key, or "not_defined" if not set
-     */
-    public String getDescriptionKey() {
-        return this.descriptionKey == null ? "not_defined" : this.descriptionKey;
+        if (this.identifier != null) return this.identifier;
+        if (this.taskId != null) return this.taskId;
+        return "not_defined_" + UUID.randomUUID();
     }
     
     /**

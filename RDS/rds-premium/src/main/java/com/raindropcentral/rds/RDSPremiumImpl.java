@@ -13,13 +13,13 @@
 
 package com.raindropcentral.rds;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import com.raindropcentral.rds.service.PremiumShopService;
 import de.jexcellence.dependency.delegate.AbstractPluginDelegate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Delegate implementation for the RDS premium edition.

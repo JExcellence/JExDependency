@@ -1,0 +1,111 @@
+# Configurable Farm chunk progression levels.
+# Add, remove, or reorder numeric level keys as desired.
+# The highest numeric key becomes the Farm max level.
+levels:
+  1:
+    requirements: {}
+    rewards: {}
+  2:
+    requirements:
+      vault_upgrade:
+        type: "CURRENCY"
+        currency: "vault"
+        amount: 1000.0
+        consumable: true
+        description: "Farm funding contribution"
+      harvest_materials:
+        type: "ITEM"
+        requiredItems:
+          - type: "WHEAT"
+            amount: 64
+        consumeOnComplete: true
+        exactMatch: false
+        description: "Farm harvest materials"
+    rewards:
+      vault_bonus:
+        type: "CURRENCY"
+        currencyId: "vault"
+        amount: 150.0
+        description: "Farm treasury rebate"
+      town_broadcast:
+        type: "COMMAND"
+        command: "rt broadcast {town_uuid} <aqua>{town_name}</aqua> <yellow>upgraded Farm chunk <white>{chunk_x}, {chunk_z}</white> to level <white>{target_level}</white><yellow>!</yellow>"
+        executeAsPlayer: false
+  3:
+    requirements:
+      vault_upgrade:
+        type: "CURRENCY"
+        currency: "vault"
+        amount: 1750.0
+        consumable: true
+        description: "Farm funding contribution"
+      carrot_supplies:
+        type: "ITEM"
+        requiredItems:
+          - type: "CARROT"
+            amount: 64
+        consumeOnComplete: true
+        exactMatch: false
+        description: "Farm carrot supplies"
+    rewards:
+      vault_bonus:
+        type: "CURRENCY"
+        currencyId: "vault"
+        amount: 250.0
+        description: "Farm treasury rebate"
+      town_broadcast:
+        type: "COMMAND"
+        command: "rt broadcast {town_uuid} <aqua>{town_name}</aqua> <yellow>upgraded Farm chunk <white>{chunk_x}, {chunk_z}</white> to level <white>{target_level}</white><yellow>!</yellow>"
+        executeAsPlayer: false
+  4:
+    requirements:
+      vault_upgrade:
+        type: "CURRENCY"
+        currency: "vault"
+        amount: 2750.0
+        consumable: true
+        description: "Farm funding contribution"
+      potato_supplies:
+        type: "ITEM"
+        requiredItems:
+          - type: "POTATO"
+            amount: 64
+        consumeOnComplete: true
+        exactMatch: false
+        description: "Farm potato supplies"
+    rewards:
+      vault_bonus:
+        type: "CURRENCY"
+        currencyId: "vault"
+        amount: 400.0
+        description: "Farm treasury rebate"
+      town_broadcast:
+        type: "COMMAND"
+        command: "rt broadcast {town_uuid} <aqua>{town_name}</aqua> <yellow>upgraded Farm chunk <white>{chunk_x}, {chunk_z}</white> to level <white>{target_level}</white><yellow>!</yellow>"
+        executeAsPlayer: false
+  5:
+    requirements:
+      vault_upgrade:
+        type: "CURRENCY"
+        currency: "vault"
+        amount: 4000.0
+        consumable: true
+        description: "Farm funding contribution"
+      pumpkin_supplies:
+        type: "ITEM"
+        requiredItems:
+          - type: "PUMPKIN"
+            amount: 32
+        consumeOnComplete: true
+        exactMatch: false
+        description: "Farm pumpkin supplies"
+    rewards:
+      vault_bonus:
+        type: "CURRENCY"
+        currencyId: "vault"
+        amount: 600.0
+        description: "Farm treasury rebate"
+      town_broadcast:
+        type: "COMMAND"
+        command: "rt broadcast {town_uuid} <aqua>{town_name}</aqua> <yellow>upgraded Farm chunk <white>{chunk_x}, {chunk_z}</white> to level <white>{target_level}</white><yellow>!</yellow>"
+        executeAsPlayer: false

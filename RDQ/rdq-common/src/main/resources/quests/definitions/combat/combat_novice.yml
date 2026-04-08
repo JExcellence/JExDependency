@@ -1,0 +1,70 @@
+identifier: "combat_novice"
+category: "combat"
+difficulty: EASY
+enabled: true
+displayOrder: 2
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
+
+icon:
+  material: IRON_SWORD
+  displayNameKey: "quest.combat_novice.name"
+  descriptionKey: "quest.combat_novice.description"
+
+tasks:
+  kill_skeletons:
+    orderIndex: 0
+    difficulty: EASY
+    sequential: false
+    icon:
+      material: SKELETON_SKULL
+      displayNameKey: "quest.combat_novice.task.kill_skeletons.name"
+      descriptionKey: "quest.combat_novice.task.kill_skeletons.description"
+    requirement:
+      type: KILL_MOBS
+      target: SKELETON
+      amount: 10
+  kill_creepers:
+    orderIndex: 1
+    difficulty: EASY
+    sequential: false
+    icon:
+      material: CREEPER_HEAD
+      displayNameKey: "quest.combat_novice.task.kill_creepers.name"
+      descriptionKey: "quest.combat_novice.task.kill_creepers.description"
+    requirement:
+      type: KILL_MOBS
+      target: CREEPER
+      amount: 5
+  kill_hostile_mobs:
+    orderIndex: 2
+    difficulty: EASY
+    sequential: false
+    icon:
+      material: ZOMBIE_HEAD
+      displayNameKey: "quest.combat_novice.task.kill_hostile_mobs.name"
+      descriptionKey: "quest.combat_novice.task.kill_hostile_mobs.description"
+    requirement:
+      type: KILL_MOBS
+      target: ZOMBIE
+      amount: 25
+
+rewards:
+  main_currency:
+    type: CURRENCY
+    currency: coins
+    amount: 500.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 200.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

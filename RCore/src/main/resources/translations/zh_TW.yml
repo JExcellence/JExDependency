@@ -3,7 +3,7 @@
 prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
 
 rcconnect:
-  usage: "<gray>用法：/rc <connect &lt;api-key&gt;|disconnect|claim droplets></gray>"
+  usage: "<gray>用法：/rc <connect &lt;api-key&gt;|disconnect|claim droplets|store update></gray>"
   usage_no_claim: "<gray>用法：/rc <connect &lt;api-key&gt;|disconnect></gray>"
   connecting: "<yellow>正在連線到 RaindropCentral...</yellow>"
   success: "<green>已成功連線到 RaindropCentral！</green> <gray>伺服器現在正在傳送心跳。</gray>"
@@ -21,6 +21,13 @@ rcdisconnect:
     failed: "<red>中斷連線失敗。請再試一次。</red>"
     network: "<red>網路錯誤: %error%</red>"
 
+rcstore:
+  updating: "<yellow>Refreshing the local droplet-store allowlist from RaindropCentral...</yellow>"
+  success: "<green>Updated the local droplet-store allowlist.</green> <gray>%count% item(s) are currently allowed.</gray>"
+  error:
+    not_connected: "<red>RCore must be connected to the RaindropCentral backend before the store allowlist can be updated.</red>"
+    failed: "<red>Failed to refresh the droplet-store allowlist: %error%</red>"
+    using_cache: "<yellow>Failed to refresh the droplet-store allowlist, but the last cached list is still being used: %error%</yellow>"
 rcclaim:
   loading: "<yellow>正在檢查RaindropCentral是否有無人認領的水滴獎勵...</yellow>"
   claiming_item: "<yellow>從 RaindropCentral...</yellow> 聲明 %item_name%"
@@ -169,3 +176,5 @@ rc_claim_droplet_jobs_ui:
 
 general:
   no_permission: "<red>你沒有權限使用此指令。</red>"
+
+

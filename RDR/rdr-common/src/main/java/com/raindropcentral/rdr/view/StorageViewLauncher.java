@@ -13,14 +13,6 @@
 
 package com.raindropcentral.rdr.view;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
-
 import com.raindropcentral.rdr.RDR;
 import com.raindropcentral.rdr.configs.ConfigSection;
 import com.raindropcentral.rdr.database.entity.RStorage;
@@ -31,6 +23,14 @@ import com.raindropcentral.rplatform.protection.RProtectionBridge;
 import de.jexcellence.jextranslate.i18n.I18n;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Shared launcher for lease-aware storage view opens.

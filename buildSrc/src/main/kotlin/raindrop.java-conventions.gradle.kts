@@ -1,13 +1,6 @@
 /**
  * Common Java configuration for all Raindrop modules
  */
-import org.gradle.api.GradleException
-import org.gradle.api.plugins.quality.CheckstyleExtension
-import org.gradle.api.plugins.quality.Checkstyle
-import org.gradle.api.tasks.compile.JavaCompile
-import org.gradle.api.tasks.javadoc.Javadoc
-import org.gradle.external.javadoc.JavadocMemberLevel
-import org.gradle.external.javadoc.StandardJavadocDocletOptions
 
 plugins {
     java

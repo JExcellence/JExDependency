@@ -15,7 +15,14 @@ package com.raindropcentral.rplatform.reward.validation;
 
 import com.raindropcentral.rplatform.requirement.validation.ValidationResult;
 import com.raindropcentral.rplatform.reward.AbstractReward;
-import com.raindropcentral.rplatform.reward.impl.*;
+import com.raindropcentral.rplatform.reward.impl.ChoiceReward;
+import com.raindropcentral.rplatform.reward.impl.CommandReward;
+import com.raindropcentral.rplatform.reward.impl.CompositeReward;
+import com.raindropcentral.rplatform.reward.impl.CurrencyReward;
+import com.raindropcentral.rplatform.reward.impl.ExperienceReward;
+import com.raindropcentral.rplatform.reward.impl.ItemReward;
+import com.raindropcentral.rplatform.reward.impl.PermissionReward;
+import com.raindropcentral.rplatform.reward.impl.VanishingChestReward;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;

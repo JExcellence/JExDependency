@@ -15,7 +15,13 @@ package com.raindropcentral.core.database.entity.central;
 
 import com.raindropcentral.core.database.entity.player.RPlayer;
 import de.jexcellence.hibernate.entity.BaseEntity;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -69,6 +75,13 @@ public class RCentralServer extends BaseEntity {
 
     @Column(name = "plugin_version", length = 20)
     private String pluginVersion;
+
+    @Lob
+    @Column(name = "droplet_store_allowed_item_codes_json")
+    private String dropletStoreAllowedItemCodesJson;
+
+    @Column(name = "droplet_store_allowed_item_codes_fetched_at")
+    private LocalDateTime dropletStoreAllowedItemCodesFetchedAt;
 
     @Column(name = "is_public")
     private boolean isPublic = false;
@@ -171,6 +184,28 @@ public class RCentralServer extends BaseEntity {
      * Sets pluginVersion.
      */
     public void setPluginVersion(final @Nullable String pluginVersion) { this.pluginVersion = pluginVersion; }
+    /**
+     * Gets dropletStoreAllowedItemCodesJson.
+     */
+    public @Nullable String getDropletStoreAllowedItemCodesJson() { return dropletStoreAllowedItemCodesJson; }
+    /**
+     * Sets dropletStoreAllowedItemCodesJson.
+     */
+    public void setDropletStoreAllowedItemCodesJson(final @Nullable String dropletStoreAllowedItemCodesJson) {
+        this.dropletStoreAllowedItemCodesJson = dropletStoreAllowedItemCodesJson;
+    }
+    /**
+     * Gets dropletStoreAllowedItemCodesFetchedAt.
+     */
+    public @Nullable LocalDateTime getDropletStoreAllowedItemCodesFetchedAt() {
+        return dropletStoreAllowedItemCodesFetchedAt;
+    }
+    /**
+     * Sets dropletStoreAllowedItemCodesFetchedAt.
+     */
+    public void setDropletStoreAllowedItemCodesFetchedAt(final @Nullable LocalDateTime dropletStoreAllowedItemCodesFetchedAt) {
+        this.dropletStoreAllowedItemCodesFetchedAt = dropletStoreAllowedItemCodesFetchedAt;
+    }
     /**
      * Returns whether public.
      */

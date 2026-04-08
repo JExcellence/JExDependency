@@ -13,13 +13,6 @@
 
 package com.raindropcentral.rdr.view;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.UUID;
-
 import com.raindropcentral.rdr.RDR;
 import com.raindropcentral.rdr.database.entity.RTradeSession;
 import com.raindropcentral.rdr.service.TradeService;
@@ -36,6 +29,13 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * Currency selector view for trade-session escrow offers.

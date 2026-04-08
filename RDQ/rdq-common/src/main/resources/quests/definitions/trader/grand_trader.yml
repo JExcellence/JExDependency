@@ -1,0 +1,50 @@
+identifier: "grand_trader"
+category: "trader"
+difficulty: HARD
+enabled: true
+displayOrder: 4
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
+
+icon:
+  material: NETHERITE_INGOT
+  displayNameKey: "quest.grand_trader.name"
+  descriptionKey: "quest.grand_trader.description"
+
+tasks:
+  mine_emerald_blocks:
+    orderIndex: 0
+    difficulty: HARD
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: EMERALD_ORE
+      amount: 32
+  mine_netherite:
+    orderIndex: 1
+    difficulty: HARD
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: ANCIENT_DEBRIS
+      amount: 16
+
+rewards:
+  main_currency:
+    type: CURRENCY
+    currency: coins
+    amount: 3500.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 1500.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

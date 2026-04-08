@@ -8,6 +8,10 @@
 prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "
 
 # ============================================
+# QUEST SYSTEM
+# ============================================
+
+# ============================================
 # ROOT LEVEL KEYS (used by direct I18n.Builder calls)
 # ============================================
 pseudo:
@@ -68,6 +72,12 @@ rank:
   messages:
     requirements_complete: "<gradient:#10b981:#34d399>🎉 RANK UP!</gradient> <gradient:#6b7280:#9ca3af>You've completed all requirements for</gradient> <gradient:#f59e0b:#fbbf24>%rank%</gradient>"
     claim_upgrade: "<gradient:#6b7280:#9ca3af>Use the rank menu to claim your rank upgrade!</gradient>"
+
+  upgraded: "<gradient:#10b981:#34d399>🎉 RANK UP!</gradient> <gradient:#6b7280:#9ca3af>You've been promoted to</gradient> <gradient:#f59e0b:#fbbf24>%rank%</gradient>"
+  unlocked: "<gradient:#a855f7:#c084fc>✨ NEW RANK UNLOCKED!</gradient> <gradient:#6b7280:#9ca3af>You can now pursue</gradient> <gradient:#f59e0b:#fbbf24>%rank%</gradient>"
+  unlocked_multiple:
+    one: "<gradient:#a855f7:#c084fc>✨ NEW RANK UNLOCKED!</gradient> <gradient:#6b7280:#9ca3af>You can now pursue</gradient> <gradient:#f59e0b:#fbbf24>%ranks%</gradient>"
+    other: "<gradient:#a855f7:#c084fc>✨ %count% NEW RANKS UNLOCKED!</gradient> <gradient:#6b7280:#9ca3af>You can now pursue:</gradient> <gradient:#f59e0b:#fbbf24>%ranks%</gradient>"
 
   default:
     name: "<gradient:#6b7280:#9ca3af>Unranked</gradient>"
@@ -623,6 +633,8 @@ rank_tree_overview_ui:
     pre_requisites: "<gradient:#f59e0b:#fbbf24>Prerequisites:</gradient>"
     rank_path_locked: "<gradient:#ef4444:#f87171>🔒 This rank path is locked!</gradient>"
   currently_active: "<gradient:#10b981:#34d399>✅ Currently Active</gradient>"
+  progress:
+    rank_count: "<gray>Ranks in path: <white>%total%</white></gray>"
   click_to_preview: "<gradient:#3b82f6:#60a5fa>Left-click to preview</gradient>"
   click_to_continue: "<gradient:#10b981:#34d399>Right-click to continue</gradient>"
   previously_selected: "<gradient:#f59e0b:#fbbf24>📋 Previously Selected</gradient>"
@@ -706,6 +718,11 @@ rank_path_overview_ui:
     pending: "<gradient:#f59e0b:#fbbf24>⏳ In Progress Connection</gradient>"
     in_progress: "<gradient:#f59e0b:#fbbf24>⏳ In Progress Connection</gradient>"
     locked: "<gradient:#ef4444:#f87171>🔒 Locked Connection</gradient>"
+  progress:
+    requirements_header: "<yellow>Requirements:</yellow>"
+    requirements_count: "<gray>Progress: <white>%met%/%total% requirements met</white></gray>"
+    rewards_header: "<yellow>Rewards:</yellow>"
+    more_rewards: "<gray>  ...and %count% more</gray>"
   rank:
     owned: "<gradient:#10b981:#34d399>✅ Owned</gradient>"
     in_progress: "<gradient:#f59e0b:#fbbf24>⏳ In Progress</gradient>"
@@ -2111,6 +2128,80 @@ rank_requirements_journey_ui:
     preview_mode: "<gradient:#3b82f6:#60a5fa>👁 Preview mode - interactions disabled</gradient>"
 
   reward:
+
+    # Quest Categories
+    category:
+      combat:
+        name: "<gradient:#ef4444:#f87171>⚔ Combat Quests</gradient>"
+        icon:
+          lore:
+            - "<gray>Master the art of combat</gray>"
+            - "<gray>Complete combat challenges</gray>"
+      mining:
+        name: "<gradient:#6b7280:#9ca3af>⛏ Mining Quests</gradient>"
+        icon:
+          lore:
+            - "<gray>Dig deep and gather resources</gray>"
+      building:
+        name: "<gradient:#f59e0b:#fbbf24>🏗 Building Quests</gradient>"
+        icon:
+          lore:
+            - "<gray>Construct amazing structures</gray>"
+      miner:
+        name: "<gradient:#6b7280:#9ca3af>⛏ Miner Path</gradient>"
+        icon:
+          lore:
+            - "<gray>Become a master miner</gray>"
+      hunter:
+        name: "<gradient:#10b981:#34d399>🏹 Hunter Path</gradient>"
+        icon:
+          lore:
+            - "<gray>Hunt down your prey</gray>"
+      farmer:
+        name: "<gradient:#84cc16:#a3e635>🌾 Farmer Path</gradient>"
+        icon:
+          lore:
+            - "<gray>Cultivate the land</gray>"
+      baker:
+        name: "<gradient:#f59e0b:#fbbf24>🍞 Baker Path</gradient>"
+        icon:
+          lore:
+            - "<gray>Bake delicious goods</gray>"
+      builder:
+        name: "<gradient:#3b82f6:#60a5fa>🔨 Builder Path</gradient>"
+        icon:
+          lore:
+            - "<gray>Craft and build</gray>"
+      enchanter:
+        name: "<gradient:#a855f7:#c084fc>✨ Enchanter Path</gradient>"
+        icon:
+          lore:
+            - "<gray>Master magical enchantments</gray>"
+      trader:
+        name: "<gradient:#10b981:#34d399>💎 Trader Path</gradient>"
+        icon:
+          lore:
+            - "<gray>Trade and prosper</gray>"
+      explorer:
+        name: "<gradient:#06b6d4:#67e8f9>🧭 Explorer Path</gradient>"
+        icon:
+          lore:
+            - "<gray>Discover new lands</gray>"
+      challenge:
+        name: "<gradient:#ef4444:#f87171>⭐ Challenge Quests</gradient>"
+        icon:
+          lore:
+            - "<gray>Ultimate challenges await</gray>"
+      daily:
+        name: "<gradient:#f59e0b:#fbbf24>🕐 Daily Quests</gradient>"
+        icon:
+          lore:
+            - "<gray>Complete daily tasks</gray>"
+      tutorial:
+        name: "<gradient:#3b82f6:#60a5fa>📖 Tutorial Quests</gradient>"
+        icon:
+          lore:
+            - "<gray>Learn the basics</gray>"
     card:
       name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
       compact_name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
@@ -2377,144 +2468,1038 @@ perk:
   combat_heal:
     name: "<gradient:#10b981:#34d399>Combat Heal</gradient>"
     description: "<gradient:#6b7280:#9ca3af>Heal when dealing damage to enemies</gradient>"
-quest:
-  zombie_slayer:
-    name: <gradient:#ef4444:#f87171>Zombie Slayer</gradient>
-    description: Defeat zombies and collect their drops to prove your combat prowess
-    task:
-      kill_zombies:
-        name: <white>Defeat Zombies</white>
-        description: Kill %amount% zombies
-      collect_flesh:
-        name: <white>Collect Rotten Flesh</white>
-        description: Gather %amount% rotten flesh from defeated zombies
-  master_miner:
-    name: <gradient:#6b7280:#9ca3af>Master Miner</gradient>
-    description: Mine various ores within the time limit to become a master miner
-    task:
-      mine_coal:
-        name: <white>Mine Coal</white>
-        description: Mine %amount% coal ore blocks
-      mine_iron:
-        name: <white>Mine Iron</white>
-        description: Mine %amount% iron ore blocks
-      mine_diamond:
-        name: <white>Mine Diamonds</white>
-        description: Mine %amount% diamond ore blocks
-  builders_dream:
-    name: <gradient:#f59e0b:#fbbf24>Builder's Dream</gradient>
-    description: Construct a building following the sequential steps to showcase your building skills
-    task:
-      foundation:
-        name: <white>Lay Foundation</white>
-        description: Place %amount% brick blocks for the foundation
-      walls:
-        name: <white>Build Walls</white>
-        description: Place %amount% oak plank blocks for the walls
-      windows:
-        name: <white>Add Windows</white>
-        description: Place %amount% glass blocks for windows
-      roof:
-        name: <white>Complete Roof</white>
-        description: Place %amount% oak stair blocks for the roof
 view:
   quest:
+    # ---- QuestCategoryView (getKey = "view.quest.categories") ----
     categories:
-      title: <gradient:#f59e0b:#fbbf24>Quest Categories</gradient>
+      category:
+        lore:
+          quests_total: "<gradient:#10b981:#34d399>📊 Quests:</gradient> <gradient:#f59e0b:#fbbf24>%total%</gradient>"
+          click_to_view: "<gradient:#3b82f6:#60a5fa>▶ Click to view quests</gradient>"
+      stats:
+        name: "<gradient:#a855f7:#c084fc>📈 Your Quest Progress</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Total:</gradient> <gradient:#f59e0b:#fbbf24>%total%</gradient>"
+          - "<gradient:#10b981:#34d399>✓ Completed:</gradient> <gradient:#22c55e:#86efac>%completed%</gradient>"
+          - "<gradient:#3b82f6:#60a5fa>⚡ Active:</gradient> <gradient:#60a5fa:#93c5fd>%active%</gradient>"
+          - "<gradient:#f59e0b:#fbbf24>◆ Available:</gradient> <gradient:#fbbf24:#fde68a>%available%</gradient>"
+
+      title: "<gradient:#f59e0b:#fbbf24>Quest Categories</gradient>"
+      quest_count: "<gray>Quests: <white>%count%</white></gray>"
+      click_to_view: "<yellow>Click to view quests</yellow>"
+    # ---- QuestListView (getKey = "view.quest.list") ----
     list:
-      title: <gradient:#f59e0b:#fbbf24>%category% Quests</gradient>
+      items:
+        quest:
+          name: "<gradient:#f59e0b:#fbbf24>%quest_name%</gradient>"
+          lore:
+            description: "<gray>%description%</gray>"
+            difficulty: "<gray>Difficulty:</gray> %difficulty%"
+            tasks: "<gray>Tasks:</gray> <white>%task_count%</white>"
+            status: "<gray>Status:</gray> %status%"
+            progress: "<gray>Progress:</gray> <white>%progress%%</white>"
+            click_to_start: "<green>▶ Click to start</green>"
+            click_to_view: "<yellow>▶ Click to view details</yellow>"
+            active_badge: "<gradient:#10b981:#34d399>⚡ ACTIVE</gradient>"
+            completed_badge: "<gradient:#22c55e:#86efac>✓ COMPLETED</gradient>"
+      difficulty:
+        easy: "<gradient:#10b981:#34d399>⭐ Easy</gradient>"
+        medium: "<gradient:#f59e0b:#fbbf24>⭐⭐ Medium</gradient>"
+        hard: "<gradient:#ef4444:#f87171>⭐⭐⭐ Hard</gradient>"
+        expert: "<gradient:#a855f7:#c084fc>⭐⭐⭐⭐ Expert</gradient>"
+
+      title: "<gradient:#f59e0b:#fbbf24>%category% Quests</gradient>"
+      tasks: "<gray>Tasks:</gray> <white>%task_count%</white>"
+      state:
+        available: "<gradient:#10b981:#34d399>✨ Available</gradient>"
+      rewards:
+        header: "<gradient:#f59e0b:#fbbf24>🎁 Rewards</gradient>"
+      click_start: "<green>▶ Click to start</green>"
+      task_count: "<gray>Tasks: <white>%count%</white></gray>"
+      more_rewards: "<gray>  ...and %count% more</gray>"
+      prerequisites: "<red>Prerequisites:</red>"
+      quest_item:
+        name: "<gradient:#f59e0b:#fbbf24>%quest_name%</gradient>"
+        lore:
+        - "<gray>%quest_description%</gray>"
+        - ""
+        - "<dark_gray>Difficulty: %difficulty%</dark_gray>"
+        - "<dark_gray>Status: %status%</dark_gray>"
+        - "<dark_gray>Tasks: <white>%task_count%</white></dark_gray>"
+        - ""
+        - "%action_hint%"
+    # ---- QuestDetailView (getKey = "view.quest.detail") ----
     detail:
-      title: '<gradient:#f59e0b:#fbbf24>Quest: %quest%</gradient>'
+      start:
+        name: "<green>Start Quest</green>"
+        lore:
+          - "<gray>Click to start this quest</gray>"
+      cannot_start:
+        name: "<red>Cannot Start Quest</red>"
+        reason: "<gray>Reason: %reason%</gray>"
+      abandon:
+        name: "<red>Abandon Quest</red>"
+        lore:
+          - "<gray>Click to abandon this quest</gray>"
+          - ""
+          - "<yellow>Warning: Progress will be lost</yellow>"
+      message:
+        started: "<gradient:#10b981:#34d399>✅ Quest started!</gradient> <gradient:#f59e0b:#fbbf24>%quest_name%</gradient>"
+      items:
+        info:
+          name: "<gradient:#3b82f6:#60a5fa>ℹ Quest Info</gradient>"
+          lore:
+            - "<gray>%description%</gray>"
+            - ""
+            - "<gray>Difficulty:</gray> %difficulty%"
+            - "<gray>Tasks:</gray> <white>%task_count%</white>"
+            - "<gray>Status:</gray> %status%"
+        start:
+          name: "<gradient:#10b981:#34d399>▶ Start Quest</gradient>"
+          lore:
+            - "<gray>Click to start this quest</gray>"
+        abandon:
+          name: "<gradient:#ef4444:#f87171>✖ Abandon Quest</gradient>"
+          lore:
+            - "<gray>Click to abandon this quest</gray>"
+            - "<yellow>⚠ Progress will be lost</yellow>"
+        task:
+          name: "<white>%task_name%</white>"
+          lore:
+            - "<gray>%description%</gray>"
+            - ""
+            - "<gray>Progress:</gray> <white>%current%/%required%</white>"
+            - "<gray>Status:</gray> %status%"
+          difficulty:
+            easy: "<gradient:#10b981:#34d399>⭐ Easy</gradient>"
+          objective: "<gray>Objective:</gray> <white>%objective%</white>"
+        reward:
+          header: "<gradient:#f59e0b:#fbbf24>🎁 Quest Rewards</gradient>"
+          currency: "<gradient:#f59e0b:#fbbf24>💰 Currency:</gradient> <gradient:#10b981:#34d399>%amount%</gradient>"
+        tasks: "<gray>Tasks:</gray> <white>%task_count%</white>"
+        state:
+          available: "<gradient:#10b981:#34d399>✨ Available</gradient>"
+        rewards:
+          header: "<gradient:#f59e0b:#fbbf24>🎁 Rewards</gradient>"
+        click_start: "<green>▶ Click to start</green>"
+        requirement:
+          header: "<gradient:#ef4444:#f87171>📋 Requirements</gradient>"
+      title: "<gradient:#f59e0b:#fbbf24>Quest: %quest%</gradient>"
+      # Error states
+      error:
+        quest_not_found: "<red>Quest not found!</red>"
+        general: "<red>An error occurred. Please try again.</red>"
+        start_failed: "<red>Could not start quest: %reason%</red>"
+        abandon_failed: "<red>Could not abandon quest: %reason%</red>"
+      # Difficulty labels (used via difficulty.EASY etc.)
+      difficulty:
+        trivial: "<gradient:#84cc16:#a3e635>Trivial</gradient>"
+        easy: "<gradient:#10b981:#34d399>Easy</gradient>"
+        normal: "<gradient:#f59e0b:#fbbf24>Normal</gradient>"
+        hard: "<gradient:#ef4444:#f87171>Hard</gradient>"
+        extreme: "<gradient:#a855f7:#c084fc>Extreme</gradient>"
+      # Info labels
+      info:
+        repeatable: "<aqua>Repeatable quest</aqua>"
+        cooldown: "<gray>Cooldown: <white>%time%</white></gray>"
+        time_limit: "<yellow>Time Limit: <white>%time%</white></yellow>"
+        prerequisites: "<gray>Prerequisites: <white>%count%</white></gray>"
+      # Requirement status
+      requirement:
+        met: "<green>✓ Requirement Met</green>"
+        not_met: "<red>✗ Requirement Not Met</red>"
+        progress: "<gray>Progress: <white>%progress%%</white></gray>"
+      # Task status
+      task:
+        not_started: "<gray>Not Started</gray>"
+        difficulty: "<gray>Difficulty: <white>%difficulty%</white></gray>"
+        optional: "<aqua>Optional</aqua>"
+        progress_bar: "<gray>Progress: <white>%current%/%required%</white></gray>"
+        progress_percentage: "<gray>%percentage%% Complete</gray>"
+        completed: "<green>✓ Completed</green>"
+        remaining: "<yellow>Remaining: %remaining%</yellow>"
+        milestone:
+          quarter: "<gradient:#f59e0b:#fbbf24>25% - Keep going!</gradient>"
+          halfway: "<gradient:#3b82f6:#60a5fa>50% - Halfway there!</gradient>"
+          almost_done: "<gradient:#10b981:#34d399>75% - Almost done!</gradient>"
+      # Overall quest progress
+      overall:
+        progress: "<gray>Quest Progress: <white>%completed%/%total% tasks</white></gray>"
+        percentage: "<gray>Overall: <white>%percentage%%</white></gray>"
+        completed_tasks: "<green>%completed% of %total% tasks completed</green>"
+      # Reward display
+      reward:
+        value: "<gold>Value: %value%</gold>"
+      # Notifications
+      notification:
+        started: "<gradient:#10b981:#34d399>Quest Started!</gradient> <gray>You've started</gray> <gradient:#f59e0b:#fbbf24>%quest%</gradient>"
+        abandoned: "<gradient:#ef4444:#f87171>Quest Abandoned</gradient> <gray>You've abandoned</gray> <gradient:#f59e0b:#fbbf24>%quest%</gradient>"
+    # ---- Active Quests View ----
     active:
-      title: <gradient:#f59e0b:#fbbf24>Active Quests</gradient>
+      title: "<gradient:#f59e0b:#fbbf24>Active Quests</gradient>"
+    # ---- Shared quest view keys ----
+    progress:
+      overall: "<yellow>Overall Progress</yellow>"
+      percentage: "<gray>Progress: <white>%progress%%</white></gray>"
+      tasks_completed: "<gray>Tasks: <white>%completed%/%total%</white></gray>"
+      time_elapsed: "<gray>Time Elapsed: <white>%time%</white></gray>"
+      time_remaining: "<gray>Time Remaining: <white>%time%</white></gray>"
+    task:
+      progress: "<gray>Progress: <white>%current%/%required%</white></gray>"
+      completed: "<green>Completed</green>"
+      remaining: "<gray>Remaining: <white>%remaining%</white></gray>"
+      locked: "<red>Locked</red>"
+      sequential: "<yellow>Complete previous tasks first</yellow>"
     items:
       back:
-        name: <gray>Back</gray>
+        name: "<gray>Back</gray>"
         lore:
-        - <gray>Return to previous menu</gray>
-      start:
-        name: <green>Start Quest</green>
-        lore:
-        - <gray>Click to start this quest</gray>
-        - ''
-        - <dark_gray>Requirements:</dark_gray>
-        - <dark_gray>- %requirements%</dark_gray>
-      abandon:
-        name: <red>Abandon Quest</red>
-        lore:
-        - <gray>Click to abandon this quest</gray>
-        - ''
-        - '<yellow>Warning: Progress will be lost</yellow>'
-      info:
-        name: <yellow>Quest Info</yellow>
-        lore:
-        - <gray>Click to view quest details</gray>
-      progress:
-        name: <aqua>View Progress</aqua>
-        lore:
-        - <gray>Click to view quest progress</gray>
-        - ''
-        - '<dark_gray>Progress: <white>%progress%%</white></dark_gray>'
+        - "<gray>Return to previous menu</gray>"
       close:
-        name: <gray>Close</gray>
+        name: "<gray>Close</gray>"
         lore:
-        - <gray>Close this menu</gray>
-      quest_item:
-        name: <gradient:#f59e0b:#fbbf24>%quest_name%</gradient>
-        lore:
-        - <gray>%quest_description%</gray>
-        - ''
-        - '<dark_gray>Difficulty: %difficulty%</dark_gray>'
-        - '<dark_gray>Status: %status%</dark_gray>'
-        - '<dark_gray>Tasks: <white>%task_count%</white></dark_gray>'
-        - ''
-        - '%action_hint%'
+        - "<gray>Close this menu</gray>"
       task_item:
-        name: <white>%task_name%</white>
+        name: "<white>%task_name%</white>"
         lore:
-        - <gray>%task_description%</gray>
-        - ''
-        - '<dark_gray>Progress: <white>%current%/%required%</white></dark_gray>'
-        - '<dark_gray>Status: %status%</dark_gray>'
+        - "<gray>%task_description%</gray>"
+        - ""
+        - "<dark_gray>Progress: <white>%current%/%required%</white></dark_gray>"
+        - "<dark_gray>Status: %status%</dark_gray>"
     lore:
-      click_to_start: <green>Click to start this quest</green>
-      click_to_view: <yellow>Click to view quest details</yellow>
-      click_to_abandon: <red>Click to abandon this quest</red>
-      already_completed: <green>Already completed</green>
-      requirements_not_met: <red>Requirements not met</red>
-      on_cooldown: '<red>On cooldown: %time%</red>'
-      time_remaining: '<yellow>Time remaining: %time%</yellow>'
-      repeatable: <aqua>Repeatable quest</aqua>
-      one_time: <gray>One-time quest</gray>
-    progress:
-      overall: <yellow>Overall Progress</yellow>
-      percentage: '<gray>Progress: <white>%progress%%</white></gray>'
-      tasks_completed: '<gray>Tasks: <white>%completed%/%total%</white></gray>'
-      time_elapsed: '<gray>Time Elapsed: <white>%time%</white></gray>'
-      time_remaining: '<gray>Time Remaining: <white>%time%</white></gray>'
-    task:
-      progress: '<gray>Progress: <white>%current%/%required%</white></gray>'
-      completed: <green>Completed</green>
-      remaining: '<gray>Remaining: <white>%remaining%</white></gray>'
-      locked: <red>Locked</red>
-      sequential: <yellow>Complete previous tasks first</yellow>
+      click_to_start: "<green>Click to start this quest</green>"
+      click_to_view: "<yellow>Click to view quest details</yellow>"
+      click_to_abandon: "<red>Click to abandon this quest</red>"
+      already_completed: "<green>Already completed</green>"
+      requirements_not_met: "<red>Requirements not met</red>"
+      on_cooldown: "<red>On cooldown: %time%</red>"
+      time_remaining: "<yellow>Time remaining: %time%</yellow>"
+      repeatable: "<aqua>Repeatable quest</aqua>"
+      one_time: "<gray>One-time quest</gray>"
     rewards:
-      header: <yellow>Rewards</yellow>
-      currency: <gold>%amount% %currency%</gold>
-      experience: <aqua>%amount% Experience</aqua>
-      item: <white>%amount%x %item%</white>
-      perk: '<gradient:#a855f7:#c084fc>Perk: %perk%</gradient>'
-      quest: '<gradient:#f59e0b:#fbbf24>Quest: %quest%</gradient>'
+      header: "<yellow>Rewards</yellow>"
+      currency: "<gold>%amount% %currency%</gold>"
+      experience: "<aqua>%amount% Experience</aqua>"
+      item: "<white>%amount%x %item%</white>"
+      perk: "<gradient:#a855f7:#c084fc>Perk: %perk%</gradient>"
+      quest: "<gradient:#f59e0b:#fbbf24>Quest: %quest%</gradient>"
     requirements:
-      header: <yellow>Requirements</yellow>
-      level: <aqua>Level %level%</aqua>
-      currency: <gold>%amount% %currency%</gold>
-      quest_completion: '<gradient:#f59e0b:#fbbf24>Complete: %quest%</gradient>'
-      rank: '<gradient:#a855f7:#c084fc>Rank: %rank%</gradient>'
-      permission: '<gray>Permission: %permission%</gray>'
+      header: "<yellow>Requirements</yellow>"
+      level: "<aqua>Level %level%</aqua>"
+      currency: "<gold>%amount% %currency%</gold>"
+      quest_completion: "<gradient:#f59e0b:#fbbf24>Complete: %quest%</gradient>"
+      rank: "<gradient:#a855f7:#c084fc>Rank: %rank%</gradient>"
+      permission: "<gray>Permission: %permission%</gray>"
+    reward:
+      value: "<gold>Value: %value%</gold>"
 difficulty:
   trivial: <gradient:#84cc16:#a3e635>Trivial</gradient>
   easy: <gradient:#10b981:#34d399>Easy</gradient>
   normal: <gradient:#f59e0b:#fbbf24>Normal</gradient>
   hard: <gradient:#ef4444:#f87171>Hard</gradient>
   extreme: <gradient:#a855f7:#c084fc>Extreme</gradient>
+
+
+# ============================================
+# QUEST REWARD ITEMS
+# ============================================
+item:
+  baker_hoe:
+    name: "<gradient:#f59e0b:#fbbf24>🌾 Baker's Hoe</gradient>"
+    lore:
+    - "<gradient:#6b7280:#9ca3af>A tool for the aspiring baker</gradient>"
+    - "<gradient:#10b981:#34d399>Efficiency II</gradient>"
+
+  builder_axe:
+    name: "<gradient:#f59e0b:#fbbf24>🪓 Builder's Axe</gradient>"
+    lore:
+    - "<gradient:#6b7280:#9ca3af>A tool for construction</gradient>"
+    - "<gradient:#10b981:#34d399>Efficiency II</gradient>"
+
+  skilled_builder_axe:
+    name: "<gradient:#f59e0b:#fbbf24>🪓 Skilled Builder's Axe</gradient>"
+    lore:
+    - "<gradient:#6b7280:#9ca3af>An improved construction tool</gradient>"
+    - "<gradient:#10b981:#34d399>Efficiency III • Unbreaking II</gradient>"
+
+  master_builder_axe:
+    name: "<gradient:#f59e0b:#fbbf24>🪓 Master Builder's Axe</gradient>"
+    lore:
+    - "<gradient:#6b7280:#9ca3af>A master craftsman's tool</gradient>"
+    - "<gradient:#10b981:#34d399>Efficiency IV • Unbreaking III • Silk Touch</gradient>"
+
+  grand_builder_axe:
+    name: "<gradient:#f59e0b:#fbbf24>🪓 Grand Builder's Axe</gradient>"
+    lore:
+    - "<gradient:#6b7280:#9ca3af>A legendary construction tool</gradient>"
+    - "<gradient:#10b981:#34d399>Efficiency V • Unbreaking III • Silk Touch • Mending</gradient>"
+
+  legendary_builder_axe:
+    name: "<gradient:#f59e0b:#fbbf24>🪓 Legendary Architect's Axe</gradient>"
+    lore:
+    - "<gradient:#6b7280:#9ca3af>The ultimate builder's tool</gradient>"
+    - "<gradient:#10b981:#34d399>Efficiency X • Unbreaking X • Silk Touch • Mending</gradient>"
+
+  enchanter_lapis:
+    name: "<gradient:#a855f7:#c084fc>💎 Enchanter's Lapis</gradient>"
+    lore:
+    - "<gradient:#6b7280:#9ca3af>Magical lapis lazuli</gradient>"
+
+  skilled_enchanter_book:
+    name: "<gradient:#a855f7:#c084fc>📖 Skilled Enchanter's Tome</gradient>"
+    lore:
+    - "<gradient:#6b7280:#9ca3af>A book of enchantments</gradient>"
+    - "<gradient:#10b981:#34d399>Efficiency III</gradient>"
+
+  master_enchanter_book:
+    name: "<gradient:#a855f7:#c084fc>📖 Master Enchanter's Grimoire</gradient>"
+    lore:
+    - "<gradient:#6b7280:#9ca3af>A powerful grimoire</gradient>"
+    - "<gradient:#10b981:#34d399>Sharpness V • Unbreaking III</gradient>"
+
+  grand_enchanter_book:
+    name: "<gradient:#a855f7:#c084fc>📖 Grand Enchanter's Codex</gradient>"
+    lore:
+    - "<gradient:#6b7280:#9ca3af>An ancient codex of power</gradient>"
+    - "<gradient:#10b981:#34d399>Protection IV • Unbreaking III • Mending</gradient>"
+
+  legendary_enchanter_book:
+    name: "<gradient:#a855f7:#c084fc>📖 Archmage's Tome</gradient>"
+    lore:
+    - "<gradient:#6b7280:#9ca3af>The ultimate book of magic</gradient>"
+    - "<gradient:#10b981:#34d399>Sharpness X • Protection X • Unbreaking X • Mending</gradient>"
+
+  trader_emerald:
+    name: "<gradient:#10b981:#34d399>💎 Trader's Emerald</gradient>"
+    lore:
+    - "<gradient:#6b7280:#9ca3af>A valuable trading gem</gradient>"
+
+  skilled_trader_emerald:
+    name: "<gradient:#10b981:#34d399>💎 Merchant's Emerald Block</gradient>"
+    lore:
+    - "<gradient:#6b7280:#9ca3af>Compressed wealth</gradient>"
+
+  master_trader_diamond:
+    name: "<gradient:#3b82f6:#60a5fa>💎 Master Trader's Diamond</gradient>"
+    lore:
+    - "<gradient:#6b7280:#9ca3af>A precious trading commodity</gradient>"
+
+  grand_trader_netherite:
+    name: "<gradient:#6b7280:#9ca3af>💎 Grand Trader's Netherite</gradient>"
+    lore:
+    - "<gradient:#6b7280:#9ca3af>The ultimate trading material</gradient>"
+
+  legendary_trader_star:
+    name: "<gradient:#f59e0b:#fbbf24>⭐ Tycoon's Nether Star</gradient>"
+    lore:
+    - "<gradient:#6b7280:#9ca3af>A symbol of ultimate wealth</gradient>"
+
+  legendary_trader_emerald:
+    name: "<gradient:#10b981:#34d399>💎 Tycoon's Emerald Cache</gradient>"
+    lore:
+    - "<gradient:#6b7280:#9ca3af>Massive wealth in emerald form</gradient>"
+
+
+# ============================================
+# QUEST DEFINITIONS
+# ============================================
+quest:
+  # Quest Categories
+  category:
+    tutorial:
+      name: "<gradient:#3b82f6:#60a5fa>📖 Tutorial</gradient>"
+      description: "<gradient:#6b7280:#9ca3af>Learn the basics of the server</gradient>"
+      icon:
+        lore: "<gradient:#6b7280:#9ca3af>Start your journey here</gradient>"
+    combat:
+      name: "<gradient:#ef4444:#f87171>⚔ Combat</gradient>"
+      description: "<gradient:#6b7280:#9ca3af>Master the art of battle</gradient>"
+      icon:
+        lore: "<gradient:#6b7280:#9ca3af>Prove your combat prowess</gradient>"
+    mining:
+      name: "<gradient:#6b7280:#9ca3af>⛏ Mining</gradient>"
+      description: "<gradient:#6b7280:#9ca3af>Delve deep into the earth</gradient>"
+      icon:
+        lore: "<gradient:#6b7280:#9ca3af>Extract valuable resources</gradient>"
+    baker:
+      name: "<gradient:#f59e0b:#fbbf24>🍞 Baker</gradient>"
+      description: "<gradient:#6b7280:#9ca3af>Master the culinary arts</gradient>"
+      icon:
+        lore: "<gradient:#6b7280:#9ca3af>Create delicious treats</gradient>"
+    hunter:
+      name: "<gradient:#ef4444:#f87171>🏹 Hunter</gradient>"
+      description: "<gradient:#6b7280:#9ca3af>Track and hunt dangerous prey</gradient>"
+      icon:
+        lore: "<gradient:#6b7280:#9ca3af>Become a master hunter</gradient>"
+    miner:
+      name: "<gradient:#6b7280:#9ca3af>⛏ Miner</gradient>"
+      description: "<gradient:#6b7280:#9ca3af>Delve deep for precious resources</gradient>"
+      icon:
+        lore: "<gradient:#6b7280:#9ca3af>Mine the rarest ores</gradient>"
+    farmer:
+      name: "<gradient:#10b981:#34d399>🌾 Farmer</gradient>"
+      description: "<gradient:#6b7280:#9ca3af>Cultivate the land and harvest crops</gradient>"
+      icon:
+        lore: "<gradient:#6b7280:#9ca3af>Grow bountiful harvests</gradient>"
+    explorer:
+      name: "<gradient:#3b82f6:#60a5fa>🗺 Explorer</gradient>"
+      description: "<gradient:#6b7280:#9ca3af>Discover uncharted territories</gradient>"
+      icon:
+        lore: "<gradient:#6b7280:#9ca3af>Explore the unknown</gradient>"
+    builder:
+      name: "<gradient:#f59e0b:#fbbf24>🏗 Builder</gradient>"
+      description: "<gradient:#6b7280:#9ca3af>Construct magnificent structures</gradient>"
+      icon:
+        lore: "<gradient:#6b7280:#9ca3af>Build amazing creations</gradient>"
+    enchanter:
+      name: "<gradient:#a855f7:#c084fc>✨ Enchanter</gradient>"
+      description: "<gradient:#6b7280:#9ca3af>Harness magical enchantments</gradient>"
+      icon:
+        lore: "<gradient:#6b7280:#9ca3af>Master mystical powers</gradient>"
+    trader:
+      name: "<gradient:#10b981:#34d399>💎 Trader</gradient>"
+      description: "<gradient:#6b7280:#9ca3af>Master the art of commerce</gradient>"
+      icon:
+        lore: "<gradient:#6b7280:#9ca3af>Become a wealthy merchant</gradient>"
+    daily:
+      name: "<gradient:#f59e0b:#fbbf24>🕐 Daily</gradient>"
+      description: "<gradient:#6b7280:#9ca3af>Complete daily challenges</gradient>"
+      icon:
+        lore: "<gradient:#6b7280:#9ca3af>Fresh quests every day</gradient>"
+    challenge:
+      name: "<gradient:#ef4444:#f87171>⭐ Challenge</gradient>"
+      description: "<gradient:#6b7280:#9ca3af>Test your skills with difficult quests</gradient>"
+      icon:
+        lore: "<gradient:#6b7280:#9ca3af>Only for the bravest</gradient>"
+    building:
+      name: "<gradient:#f59e0b:#fbbf24>🏗 Building</gradient>"
+      description: "<gradient:#6b7280:#9ca3af>Create magnificent structures</gradient>"
+      icon:
+        lore: "<gradient:#6b7280:#9ca3af>Build amazing creations</gradient>"
+
+  # Quest Messages
+  messages:
+    prerequisites_not_met: "<gradient:#ef4444:#f87171>❌ Prerequisites not met!</gradient> <gradient:#6b7280:#9ca3af>Complete these quests first:</gradient> <gradient:#f59e0b:#fbbf24>%missing_quests%</gradient>"
+    quest_unlocked: "<gradient:#10b981:#34d399>🎉 NEW QUEST UNLOCKED!</gradient> <gradient:#f59e0b:#fbbf24>%quest_name%</gradient> <gradient:#6b7280:#9ca3af>is now available!</gradient>"
+    quest_started: "<gradient:#10b981:#34d399>✅ Quest Started:</gradient> <gradient:#f59e0b:#fbbf24>%quest_name%</gradient>"
+    quest_completed: "<gradient:#10b981:#34d399>🎉 QUEST COMPLETE!</gradient> <gradient:#f59e0b:#fbbf24>%quest_name%</gradient>"
+    quest_abandoned: "<gradient:#ef4444:#f87171>❌ Quest Abandoned:</gradient> <gradient:#6b7280:#9ca3af>%quest_name%</gradient>"
+
+  # Zombie Slayer Quest Chain
+  zombie_slayer_1:
+    name: "<gradient:#ef4444:#f87171>🧟 Zombie Slayer I</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Begin your journey as an undead hunter</gradient>"
+    task:
+      kill_zombies:
+        name: "<gradient:#ef4444:#f87171>Kill Zombies</gradient>"
+        description: "<gradient:#6b7280:#9ca3af>Eliminate 10 zombies</gradient>"
+
+  zombie_slayer_2:
+    name: "<gradient:#ef4444:#f87171>🧟 Zombie Slayer II</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Prove your skills against the undead horde</gradient>"
+    task:
+      kill_zombies:
+        name: "<gradient:#ef4444:#f87171>Kill Zombies</gradient>"
+        description: "<gradient:#6b7280:#9ca3af>Eliminate 50 zombies</gradient>"
+      collect_flesh:
+        name: "<gradient:#8b5cf6:#a78bfa>Collect Rotten Flesh</gradient>"
+        description: "<gradient:#6b7280:#9ca3af>Gather 25 rotten flesh</gradient>"
+
+  zombie_slayer_3:
+    name: "<gradient:#ef4444:#f87171>🧟 Zombie Slayer III</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Become the ultimate undead destroyer</gradient>"
+    task:
+      kill_zombies:
+        name: "<gradient:#ef4444:#f87171>Kill Zombies</gradient>"
+        description: "<gradient:#6b7280:#9ca3af>Eliminate 100 zombies</gradient>"
+      collect_flesh:
+        name: "<gradient:#8b5cf6:#a78bfa>Collect Rotten Flesh</gradient>"
+        description: "<gradient:#6b7280:#9ca3af>Gather 50 rotten flesh</gradient>"
+      kill_villagers:
+        name: "<gradient:#f59e0b:#fbbf24>Kill Zombie Villagers</gradient>"
+        description: "<gradient:#6b7280:#9ca3af>Eliminate 10 zombie villagers</gradient>"
+
+  # Combat Quest Chain
+  combat_novice:
+    name: "<gradient:#ef4444:#f87171>⚔ Combat Novice</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Learn the basics of combat</gradient>"
+    task:
+      kill_zombies: "<gradient:#6b7280:#9ca3af>Kill 10 zombies</gradient>"
+      kill_skeletons: "<gradient:#6b7280:#9ca3af>Kill 5 skeletons</gradient>"
+
+  combat_apprentice:
+    name: "<gradient:#ef4444:#f87171>⚔ Combat Apprentice</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Advance your combat skills</gradient>"
+    task:
+      kill_creepers: "<gradient:#6b7280:#9ca3af>Kill 8 creepers</gradient>"
+      kill_spiders: "<gradient:#6b7280:#9ca3af>Kill 12 spiders</gradient>"
+
+  # ============================================
+  # BAKER CATEGORY QUESTS
+  # ============================================
+  apprentice_baker:
+    name: "<gradient:#f59e0b:#fbbf24>🍞 Apprentice Baker</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Learn the basics of baking and food preparation</gradient>"
+    task1:
+      name: "<gradient:#f59e0b:#fbbf24>Collect Wheat</gradient>"
+    task2:
+      name: "<gradient:#f59e0b:#fbbf24>Craft Bread</gradient>"
+    task3:
+      name: "<gradient:#f59e0b:#fbbf24>Bake Cookies</gradient>"
+
+  journeyman_baker:
+    name: "<gradient:#f59e0b:#fbbf24>🍞 Journeyman Baker</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Advance your baking skills with complex recipes</gradient>"
+    task1:
+      name: "<gradient:#f59e0b:#fbbf24>Craft Cakes</gradient>"
+    task2:
+      name: "<gradient:#f59e0b:#fbbf24>Craft Pumpkin Pies</gradient>"
+    task3:
+      name: "<gradient:#f59e0b:#fbbf24>Collect Sugar</gradient>"
+    task4:
+      name: "<gradient:#f59e0b:#fbbf24>Craft Golden Carrots</gradient>"
+
+  master_baker:
+    name: "<gradient:#f59e0b:#fbbf24>🍞 Master Baker</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Master advanced baking techniques</gradient>"
+    task1:
+      name: "<gradient:#f59e0b:#fbbf24>Collect Cocoa Beans</gradient>"
+    task2:
+      name: "<gradient:#f59e0b:#fbbf24>Craft Suspicious Stew</gradient>"
+    task3:
+      name: "<gradient:#f59e0b:#fbbf24>Breed Cows</gradient>"
+
+  grand_baker:
+    name: "<gradient:#f59e0b:#fbbf24>🍞 Grand Baker</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Become a legendary culinary master</gradient>"
+    task1:
+      name: "<gradient:#f59e0b:#fbbf24>Craft Golden Apples</gradient>"
+    task2:
+      name: "<gradient:#f59e0b:#fbbf24>Collect Honey Bottles</gradient>"
+    task3:
+      name: "<gradient:#f59e0b:#fbbf24>Craft Enchanted Golden Apples</gradient>"
+
+  legendary_baker:
+    name: "<gradient:#f59e0b:#fbbf24>🍞 Legendary Baker</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Achieve ultimate mastery of the culinary arts</gradient>"
+    task1:
+      name: "<gradient:#f59e0b:#fbbf24>Collect Rare Ingredients</gradient>"
+    task2:
+      name: "<gradient:#f59e0b:#fbbf24>Craft Gourmet Meals</gradient>"
+    task3:
+      name: "<gradient:#f59e0b:#fbbf24>Host Grand Feast</gradient>"
+    task4:
+      name: "<gradient:#f59e0b:#fbbf24>Earn Master Chef Title</gradient>"
+
+  daily_baker:
+    name: "<gradient:#f59e0b:#fbbf24>🍞 Daily Baker</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Complete daily baking tasks for rewards</gradient>"
+    task1:
+      name: "<gradient:#f59e0b:#fbbf24>Bake Daily Bread</gradient>"
+    task2:
+      name: "<gradient:#f59e0b:#fbbf24>Craft Daily Treats</gradient>"
+    task3:
+      name: "<gradient:#f59e0b:#fbbf24>Serve Customers</gradient>"
+
+  # ============================================
+  # HUNTER CATEGORY QUESTS
+  # ============================================
+  novice_hunter:
+    name: "<gradient:#ef4444:#f87171>🏹 Novice Hunter</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Begin your journey as a hunter</gradient>"
+    task1:
+      name: "<gradient:#ef4444:#f87171>Kill Zombies</gradient>"
+    task2:
+      name: "<gradient:#ef4444:#f87171>Kill Skeletons</gradient>"
+    task3:
+      name: "<gradient:#ef4444:#f87171>Collect Bones</gradient>"
+
+  skilled_hunter:
+    name: "<gradient:#ef4444:#f87171>🏹 Skilled Hunter</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Prove your hunting prowess</gradient>"
+    task1:
+      name: "<gradient:#ef4444:#f87171>Kill Creepers</gradient>"
+    task2:
+      name: "<gradient:#ef4444:#f87171>Kill Spiders</gradient>"
+    task3:
+      name: "<gradient:#ef4444:#f87171>Collect Spider Eyes</gradient>"
+    task4:
+      name: "<gradient:#ef4444:#f87171>Collect Gunpowder</gradient>"
+
+  master_hunter:
+    name: "<gradient:#ef4444:#f87171>🏹 Master Hunter</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Master the art of the hunt</gradient>"
+    task1:
+      name: "<gradient:#ef4444:#f87171>Kill Endermen</gradient>"
+    task2:
+      name: "<gradient:#ef4444:#f87171>Kill Blazes</gradient>"
+    task3:
+      name: "<gradient:#ef4444:#f87171>Collect Ender Pearls</gradient>"
+
+  grand_hunter:
+    name: "<gradient:#ef4444:#f87171>🏹 Grand Hunter</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Hunt the most dangerous creatures</gradient>"
+    task1:
+      name: "<gradient:#ef4444:#f87171>Kill Withers</gradient>"
+    task2:
+      name: "<gradient:#ef4444:#f87171>Collect Nether Stars</gradient>"
+    task3:
+      name: "<gradient:#ef4444:#f87171>Kill Wardens</gradient>"
+
+  legendary_hunter:
+    name: "<gradient:#ef4444:#f87171>🏹 Legendary Hunter</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Become the ultimate apex predator</gradient>"
+    task1:
+      name: "<gradient:#ef4444:#f87171>Kill Ender Dragon</gradient>"
+    task2:
+      name: "<gradient:#ef4444:#f87171>Collect Dragon Egg</gradient>"
+    task3:
+      name: "<gradient:#ef4444:#f87171>Kill Elder Guardians</gradient>"
+    task4:
+      name: "<gradient:#ef4444:#f87171>Earn Apex Hunter Title</gradient>"
+
+  # ============================================
+  # MINER CATEGORY QUESTS
+  # ============================================
+  novice_miner:
+    name: "<gradient:#6b7280:#9ca3af>⛏ Novice Miner</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Start your mining career</gradient>"
+    task1:
+      name: "<gradient:#6b7280:#9ca3af>Mine Stone</gradient>"
+    task2:
+      name: "<gradient:#6b7280:#9ca3af>Mine Coal</gradient>"
+    task3:
+      name: "<gradient:#6b7280:#9ca3af>Craft Stone Pickaxe</gradient>"
+
+  skilled_miner:
+    name: "<gradient:#6b7280:#9ca3af>⛏ Skilled Miner</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Dig deeper for better resources</gradient>"
+    task1:
+      name: "<gradient:#6b7280:#9ca3af>Mine Iron Ore</gradient>"
+    task2:
+      name: "<gradient:#6b7280:#9ca3af>Mine Gold Ore</gradient>"
+    task3:
+      name: "<gradient:#6b7280:#9ca3af>Mine Redstone</gradient>"
+    task4:
+      name: "<gradient:#6b7280:#9ca3af>Craft Iron Pickaxe</gradient>"
+
+  master_miner:
+    name: "<gradient:#6b7280:#9ca3af>⛏ Master Miner</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Master deep mining techniques</gradient>"
+    task1:
+      name: "<gradient:#6b7280:#9ca3af>Mine Diamonds</gradient>"
+    task2:
+      name: "<gradient:#6b7280:#9ca3af>Mine Emeralds</gradient>"
+    task3:
+      name: "<gradient:#6b7280:#9ca3af>Craft Diamond Pickaxe</gradient>"
+
+  grand_miner:
+    name: "<gradient:#6b7280:#9ca3af>⛏ Grand Miner</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Unearth the rarest materials</gradient>"
+    task1:
+      name: "<gradient:#6b7280:#9ca3af>Mine Ancient Debris</gradient>"
+    task2:
+      name: "<gradient:#6b7280:#9ca3af>Craft Netherite Ingots</gradient>"
+    task3:
+      name: "<gradient:#6b7280:#9ca3af>Craft Netherite Pickaxe</gradient>"
+
+  legendary_miner:
+    name: "<gradient:#6b7280:#9ca3af>⛏ Legendary Miner</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Achieve legendary mining mastery</gradient>"
+    task1:
+      name: "<gradient:#6b7280:#9ca3af>Mine Massive Ore Veins</gradient>"
+    task2:
+      name: "<gradient:#6b7280:#9ca3af>Collect Rare Gems</gradient>"
+    task3:
+      name: "<gradient:#6b7280:#9ca3af>Discover Hidden Treasures</gradient>"
+    task4:
+      name: "<gradient:#6b7280:#9ca3af>Earn Master Miner Title</gradient>"
+
+  # ============================================
+  # FARMER CATEGORY QUESTS
+  # ============================================
+  novice_farmer:
+    name: "<gradient:#10b981:#34d399>🌾 Novice Farmer</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Learn the basics of farming</gradient>"
+    task1:
+      name: "<gradient:#10b981:#34d399>Plant Wheat</gradient>"
+    task2:
+      name: "<gradient:#10b981:#34d399>Harvest Wheat</gradient>"
+    task3:
+      name: "<gradient:#10b981:#34d399>Craft Hoe</gradient>"
+
+  skilled_farmer:
+    name: "<gradient:#10b981:#34d399>🌾 Skilled Farmer</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Expand your agricultural knowledge</gradient>"
+    task1:
+      name: "<gradient:#10b981:#34d399>Plant Carrots</gradient>"
+    task2:
+      name: "<gradient:#10b981:#34d399>Plant Potatoes</gradient>"
+    task3:
+      name: "<gradient:#10b981:#34d399>Harvest Crops</gradient>"
+    task4:
+      name: "<gradient:#10b981:#34d399>Breed Animals</gradient>"
+
+  master_farmer:
+    name: "<gradient:#10b981:#34d399>🌾 Master Farmer</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Master advanced farming techniques</gradient>"
+    task1:
+      name: "<gradient:#10b981:#34d399>Plant Melons</gradient>"
+    task2:
+      name: "<gradient:#10b981:#34d399>Plant Pumpkins</gradient>"
+    task3:
+      name: "<gradient:#10b981:#34d399>Harvest Large Farm</gradient>"
+
+  grand_farmer:
+    name: "<gradient:#10b981:#34d399>🌾 Grand Farmer</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Cultivate rare and exotic crops</gradient>"
+    task1:
+      name: "<gradient:#10b981:#34d399>Plant Nether Wart</gradient>"
+    task2:
+      name: "<gradient:#10b981:#34d399>Harvest Chorus Fruit</gradient>"
+    task3:
+      name: "<gradient:#10b981:#34d399>Breed Rare Animals</gradient>"
+
+  legendary_farmer:
+    name: "<gradient:#10b981:#34d399>🌾 Legendary Farmer</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Achieve ultimate agricultural mastery</gradient>"
+    task1:
+      name: "<gradient:#10b981:#34d399>Create Mega Farm</gradient>"
+    task2:
+      name: "<gradient:#10b981:#34d399>Harvest Massive Yields</gradient>"
+    task3:
+      name: "<gradient:#10b981:#34d399>Breed Perfect Livestock</gradient>"
+    task4:
+      name: "<gradient:#10b981:#34d399>Earn Master Farmer Title</gradient>"
+
+  # ============================================
+  # EXPLORER CATEGORY QUESTS
+  # ============================================
+  novice_explorer:
+    name: "<gradient:#3b82f6:#60a5fa>🗺 Novice Explorer</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Begin your exploration journey</gradient>"
+    task1:
+      name: "<gradient:#3b82f6:#60a5fa>Travel Distance</gradient>"
+    task2:
+      name: "<gradient:#3b82f6:#60a5fa>Discover Biomes</gradient>"
+    task3:
+      name: "<gradient:#3b82f6:#60a5fa>Craft Compass</gradient>"
+
+  skilled_explorer:
+    name: "<gradient:#3b82f6:#60a5fa>🗺 Skilled Explorer</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Venture into new territories</gradient>"
+    task1:
+      name: "<gradient:#3b82f6:#60a5fa>Find Villages</gradient>"
+    task2:
+      name: "<gradient:#3b82f6:#60a5fa>Discover Structures</gradient>"
+    task3:
+      name: "<gradient:#3b82f6:#60a5fa>Explore Caves</gradient>"
+    task4:
+      name: "<gradient:#3b82f6:#60a5fa>Craft Maps</gradient>"
+
+  master_explorer:
+    name: "<gradient:#3b82f6:#60a5fa>🗺 Master Explorer</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Master the art of exploration</gradient>"
+    task1:
+      name: "<gradient:#3b82f6:#60a5fa>Find Stronghold</gradient>"
+    task2:
+      name: "<gradient:#3b82f6:#60a5fa>Discover Nether Fortress</gradient>"
+    task3:
+      name: "<gradient:#3b82f6:#60a5fa>Explore Ocean Monument</gradient>"
+
+  grand_explorer:
+    name: "<gradient:#3b82f6:#60a5fa>🗺 Grand Explorer</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Discover the rarest locations</gradient>"
+    task1:
+      name: "<gradient:#3b82f6:#60a5fa>Find End City</gradient>"
+    task2:
+      name: "<gradient:#3b82f6:#60a5fa>Discover Woodland Mansion</gradient>"
+    task3:
+      name: "<gradient:#3b82f6:#60a5fa>Explore Ancient City</gradient>"
+
+  legendary_explorer:
+    name: "<gradient:#3b82f6:#60a5fa>🗺 Legendary Explorer</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Become a legendary pathfinder</gradient>"
+    task1:
+      name: "<gradient:#3b82f6:#60a5fa>Map Entire World</gradient>"
+    task2:
+      name: "<gradient:#3b82f6:#60a5fa>Discover All Biomes</gradient>"
+    task3:
+      name: "<gradient:#3b82f6:#60a5fa>Find All Structures</gradient>"
+    task4:
+      name: "<gradient:#3b82f6:#60a5fa>Earn Master Explorer Title</gradient>"
+
+  # ============================================
+  # BUILDER CATEGORY QUESTS
+  # ============================================
+  novice_builder:
+    name: "<gradient:#f59e0b:#fbbf24>🏗 Novice Builder</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Learn the basics of construction</gradient>"
+    task1:
+      name: "<gradient:#f59e0b:#fbbf24>Collect Wood</gradient>"
+    task2:
+      name: "<gradient:#f59e0b:#fbbf24>Craft Planks</gradient>"
+    task3:
+      name: "<gradient:#f59e0b:#fbbf24>Place Blocks</gradient>"
+
+  skilled_builder:
+    name: "<gradient:#f59e0b:#fbbf24>🏗 Skilled Builder</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Advance your building skills</gradient>"
+    task1:
+      name: "<gradient:#f59e0b:#fbbf24>Craft Bricks</gradient>"
+    task2:
+      name: "<gradient:#f59e0b:#fbbf24>Place Stone</gradient>"
+    task3:
+      name: "<gradient:#f59e0b:#fbbf24>Craft Stairs</gradient>"
+    task4:
+      name: "<gradient:#f59e0b:#fbbf24>Place Glass</gradient>"
+
+  master_builder:
+    name: "<gradient:#f59e0b:#fbbf24>🏗 Master Builder</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Master complex construction</gradient>"
+    task1:
+      name: "<gradient:#f59e0b:#fbbf24>Collect Quartz</gradient>"
+    task2:
+      name: "<gradient:#f59e0b:#fbbf24>Craft Quartz Blocks</gradient>"
+    task3:
+      name: "<gradient:#f59e0b:#fbbf24>Build Structure</gradient>"
+
+  grand_builder:
+    name: "<gradient:#f59e0b:#fbbf24>🏗 Grand Builder</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Construct massive monuments</gradient>"
+    task1:
+      name: "<gradient:#f59e0b:#fbbf24>Collect Prismarine</gradient>"
+    task2:
+      name: "<gradient:#f59e0b:#fbbf24>Craft Blocks</gradient>"
+    task3:
+      name: "<gradient:#f59e0b:#fbbf24>Build Monument</gradient>"
+
+  # ============================================
+  # ENCHANTER CATEGORY QUESTS
+  # ============================================
+  novice_enchanter:
+    name: "<gradient:#a855f7:#c084fc>✨ Novice Enchanter</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Learn the basics of enchanting</gradient>"
+    task1:
+      name: "<gradient:#a855f7:#c084fc>Collect Lapis</gradient>"
+    task2:
+      name: "<gradient:#a855f7:#c084fc>Craft Table</gradient>"
+    task3:
+      name: "<gradient:#a855f7:#c084fc>Enchant Items</gradient>"
+
+  skilled_enchanter:
+    name: "<gradient:#a855f7:#c084fc>✨ Skilled Enchanter</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Advance your enchanting knowledge</gradient>"
+    task1:
+      name: "<gradient:#a855f7:#c084fc>Craft Bookshelves</gradient>"
+    task2:
+      name: "<gradient:#a855f7:#c084fc>Collect Experience</gradient>"
+    task3:
+      name: "<gradient:#a855f7:#c084fc>Enchant Diamond Tools</gradient>"
+    task4:
+      name: "<gradient:#a855f7:#c084fc>Craft Anvil</gradient>"
+
+  master_enchanter:
+    name: "<gradient:#a855f7:#c084fc>✨ Master Enchanter</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Master advanced enchantments</gradient>"
+    task1:
+      name: "<gradient:#a855f7:#c084fc>Collect Diamonds</gradient>"
+    task2:
+      name: "<gradient:#a855f7:#c084fc>Enchant Max Level</gradient>"
+    task3:
+      name: "<gradient:#a855f7:#c084fc>Gain Levels</gradient>"
+
+  grand_enchanter:
+    name: "<gradient:#a855f7:#c084fc>✨ Grand Enchanter</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Harness powerful enchantments</gradient>"
+    task1:
+      name: "<gradient:#a855f7:#c084fc>Collect Netherite</gradient>"
+    task2:
+      name: "<gradient:#a855f7:#c084fc>Enchant Netherite Gear</gradient>"
+    task3:
+      name: "<gradient:#a855f7:#c084fc>Gain Massive XP</gradient>"
+
+  # ============================================
+  # TRADER CATEGORY QUESTS
+  # ============================================
+  novice_trader:
+    name: "<gradient:#10b981:#34d399>💎 Novice Trader</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Begin your trading career</gradient>"
+    task1:
+      name: "<gradient:#10b981:#34d399>Collect Emeralds</gradient>"
+    task2:
+      name: "<gradient:#10b981:#34d399>Trade with Villagers</gradient>"
+    task3:
+      name: "<gradient:#10b981:#34d399>Collect Gold</gradient>"
+
+  skilled_trader:
+    name: "<gradient:#10b981:#34d399>💎 Skilled Trader</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Expand your trading network</gradient>"
+    task1:
+      name: "<gradient:#10b981:#34d399>Trade Librarian</gradient>"
+    task2:
+      name: "<gradient:#10b981:#34d399>Collect Diamonds</gradient>"
+    task3:
+      name: "<gradient:#10b981:#34d399>Trade Toolsmith</gradient>"
+    task4:
+      name: "<gradient:#10b981:#34d399>Collect Emeralds Advanced</gradient>"
+
+  master_trader:
+    name: "<gradient:#10b981:#34d399>💎 Master Trader</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Master the art of commerce</gradient>"
+    task1:
+      name: "<gradient:#10b981:#34d399>Trade Armorer</gradient>"
+    task2:
+      name: "<gradient:#10b981:#34d399>Collect Netherite</gradient>"
+    task3:
+      name: "<gradient:#10b981:#34d399>Trade Weaponsmith</gradient>"
+
+  grand_trader:
+    name: "<gradient:#10b981:#34d399>💎 Grand Trader</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Build a trading empire</gradient>"
+    task1:
+      name: "<gradient:#10b981:#34d399>Trade All Professions</gradient>"
+    task2:
+      name: "<gradient:#10b981:#34d399>Collect Emerald Blocks</gradient>"
+    task3:
+      name: "<gradient:#10b981:#34d399>Collect Netherite Ingots</gradient>"
+
+  # ============================================
+  # QUEST COMPLETION TITLES
+  # ============================================
+  legendary_builder:
+    complete:
+      title: "<gradient:#f59e0b:#fbbf24>🏗 LEGENDARY ARCHITECT!</gradient>"
+      subtitle: "<gradient:#6b7280:#9ca3af>You've mastered construction</gradient>"
+
+  legendary_enchanter:
+    complete:
+      title: "<gradient:#a855f7:#c084fc>✨ ARCHMAGE!</gradient>"
+      subtitle: "<gradient:#6b7280:#9ca3af>You've mastered all magic</gradient>"
+
+  legendary_trader:
+    complete:
+      title: "<gradient:#10b981:#34d399>💎 TRADE TYCOON!</gradient>"
+      subtitle: "<gradient:#6b7280:#9ca3af>You've mastered commerce</gradient>"
+
+  # ============================================
+  # COMBAT BASIC QUEST
+  # ============================================
+  combat_basic:
+    name: "<gradient:#ef4444:#f87171>⚔ First Steps in Combat</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Learn the basics of fighting monsters</gradient>"
+    task1:
+      name: "<gradient:#ef4444:#f87171>⚔ Kill Mobs</gradient>"
+    task2:
+      name: "<gradient:#f59e0b:#fbbf24>🗡 Craft a Sword</gradient>"
+
+  # ============================================
+  # TUTORIAL QUEST
+  # ============================================
+  tutorial_welcome:
+    name: "<gradient:#3b82f6:#60a5fa>👋 Welcome to the Server!</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Get started with your adventure</gradient>"
+    task1:
+      name: "<gradient:#3b82f6:#60a5fa>📖 Read the Welcome Sign</gradient>"
+    task2:
+      name: "<gradient:#10b981:#34d399>📦 Open the Starter Chest</gradient>"
+    task3:
+      name: "<gradient:#f59e0b:#fbbf24>🗺 Explore the Spawn</gradient>"
+
+  # ============================================
+  # CHALLENGE QUEST
+  # ============================================
+  challenge_dragon_slayer:
+    name: "<gradient:#a855f7:#c084fc>🐉 Dragon Slayer</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Face the ultimate challenge - slay the Ender Dragon!</gradient>"
+    task1:
+      name: "<gradient:#a855f7:#c084fc>⚔ Slay the Dragon</gradient>"
+    task2:
+      name: "<gradient:#f59e0b:#fbbf24>🥚 Collect Dragon Egg</gradient>"
+    task3:
+      name: "<gradient:#ef4444:#f87171>💀 Destroy End Crystals</gradient>"
+    task4:
+      name: "<gradient:#10b981:#34d399>🏆 Return Victorious</gradient>"
+
+  # ============================================
+  # DAILY QUEST
+  # ============================================
+  daily_gatherer:
+    name: "<gradient:#f59e0b:#fbbf24>🌾 Daily Gatherer</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Gather resources every day for rewards</gradient>"
+    task1:
+      name: "<gradient:#f59e0b:#fbbf24>🌿 Gather Plants</gradient>"
+    task2:
+      name: "<gradient:#6b7280:#9ca3af>⛏ Mine Resources</gradient>"
+
+  # ============================================
+  # ZOMBIE HUNTER QUEST CHAIN
+  # ============================================
+  zombie_hunter_recruit:
+    name: "<gradient:#ef4444:#f87171>🧟 Zombie Hunter Recruit</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Begin your specialization in zombie elimination</gradient>"
+    task1:
+      name: "<gradient:#ef4444:#f87171>⚔ Slay Zombies</gradient>"
+    task2:
+      name: "<gradient:#8b5cf6:#a78bfa>🦴 Collect Rotten Flesh</gradient>"
+
+  zombie_hunter_elite:
+    name: "<gradient:#ef4444:#f87171>🧟 Zombie Hunter Elite</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Prove your mastery over the undead horde</gradient>"
+    task1:
+      name: "<gradient:#ef4444:#f87171>⚔ Kill Zombies</gradient>"
+    task2:
+      name: "<gradient:#f59e0b:#fbbf24>🧟‍♂ Kill Zombie Villagers</gradient>"
+    task3:
+      name: "<gradient:#8b5cf6:#a78bfa>🦴 Collect Flesh</gradient>"
+
+  zombie_hunter_veteran:
+    name: "<gradient:#ef4444:#f87171>🧟 Zombie Hunter Veteran</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Achieve mastery as an undead destroyer</gradient>"
+    task1:
+      name: "<gradient:#ef4444:#f87171>⚔ Slay Waves of Undead</gradient>"
+    task2:
+      name: "<gradient:#a855f7:#c084fc>🧟 Hunt Zombie Villagers</gradient>"
+    task3:
+      name: "<gradient:#f59e0b:#fbbf24>💀 Collect Trophies</gradient>"
+
+  # ============================================
+  # GENERAL QUEST KEYS
+  # ============================================
+  general:
+    error: "<red>An error occurred. Please try again.</red>"
+    quest_not_found: "<red>Quest not found: %quest%</red>"
+
+  # Quest Reward Messages
+  rewards:
+    header: "<gradient:#f59e0b:#fbbf24>🎁 Quest Rewards</gradient>"
+    order: "<gradient:#10b981:#34d399>✨ Reward Order:</gradient> <gradient:#f59e0b:#fbbf24>%order%</gradient>"
+    complete: "<gradient:#10b981:#34d399>✅ All rewards distributed!</gradient> <gradient:#f59e0b:#fbbf24>(%count% rewards)</gradient>"
+    partial: "<gradient:#f59e0b:#fbbf24>⚠ Partial rewards:</gradient> <gradient:#10b981:#34d399>%success%</gradient><gradient:#6b7280:#9ca3af>/</gradient><gradient:#ef4444:#f87171>%total%</gradient>"
+    currency: "<gradient:#f59e0b:#fbbf24>💰 Currency:</gradient> <gradient:#10b981:#34d399>%amount%</gradient>"
+    experience: "<gradient:#10b981:#34d399>✨ Experience:</gradient> <gradient:#f59e0b:#fbbf24>%amount% XP</gradient>"
+
+  # Quest Task Messages
+  task:
+    complete: "<gradient:#10b981:#34d399>✅ Task completed!</gradient> <gradient:#f59e0b:#fbbf24>%task_name%</gradient>"
+
+  # Quest Completion Messages
+  complete: "<gradient:#10b981:#34d399>🎉 Quest completed!</gradient> <gradient:#f59e0b:#fbbf24>%quest_name%</gradient>"
+
+
+  status:
+    not_started: "<gradient:#6b7280:#9ca3af>❓ Not Started</gradient>"
+    in_progress: "<gradient:#f59e0b:#fbbf24>⏳ In Progress</gradient>"
+    completed: "<gradient:#10b981:#34d399>✅ Completed</gradient>"
+    failed: "<gradient:#ef4444:#f87171>❌ Failed</gradient>"
+    locked: "<gradient:#6b7280:#9ca3af>🔒 Locked</gradient>"
+    available: "<gradient:#10b981:#34d399>✨ Available</gradient>"
+    on_cooldown: "<gradient:#f59e0b:#fbbf24>⏰ On Cooldown</gradient>"
+    loading: "<gradient:#6b7280:#9ca3af>Loading...</gradient>"
+
+  difficulty:
+    trivial: "<gradient:#84cc16:#a3e635>Trivial</gradient>"
+    easy: "<gradient:#10b981:#34d399>Easy</gradient>"
+    normal: "<gradient:#f59e0b:#fbbf24>Normal</gradient>"
+    hard: "<gradient:#ef4444:#f87171>Hard</gradient>"
+    extreme: "<gradient:#a855f7:#c084fc>Extreme</gradient>"

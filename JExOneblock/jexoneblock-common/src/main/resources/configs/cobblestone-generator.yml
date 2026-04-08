@@ -1,0 +1,188 @@
+# JExOneblock Cobblestone Generator Configuration
+
+# Generator System Settings
+generator:
+  # Enable the generator system
+  enabled: true
+  # Maximum number of active generators per island
+  maxActiveGenerators: 5
+  # Base generation speed (blocks per second)
+  baseSpeed: 1.0
+  # Maximum generation speed
+  maxSpeed: 10.0
+  # Processing delay in ticks
+  processingDelay: 20
+  # Maximum blocks processed per tick
+  maxBlocksPerTick: 10
+
+# Generator Types Configuration
+generators:
+  basic:
+    enabled: true
+    unlockLevel: 1
+    baseSpeed: 1.0
+    maxSpeed: 5.0
+    blocks:
+      COBBLESTONE: 1.0
+      STONE: 0.8
+    upgradeLevels: {}
+    autoCollectionEnabled: false
+    autoSmeltingEnabled: false
+    autoSellingEnabled: false
+  advanced:
+    enabled: true
+    unlockLevel: 10
+    baseSpeed: 2.0
+    maxSpeed: 8.0
+    blocks:
+      COBBLESTONE: 1.0
+      STONE: 0.9
+      ANDESITE: 0.1
+      DIORITE: 0.1
+      GRANITE: 0.1
+    upgradeLevels: {}
+    autoCollectionEnabled: false
+    autoSmeltingEnabled: false
+    autoSellingEnabled: false
+  legendary:
+    enabled: true
+    unlockLevel: 25
+    baseSpeed: 5.0
+    maxSpeed: 15.0
+    blocks:
+      COBBLESTONE: 0.8
+      STONE: 0.7
+      ANDESITE: 0.2
+      DIORITE: 0.2
+      GRANITE: 0.2
+      DEEPSLATE: 0.1
+    upgradeLevels: {}
+    autoCollectionEnabled: true
+    autoSmeltingEnabled: false
+    autoSellingEnabled: false
+  mythical:
+    enabled: true
+    unlockLevel: 50
+    baseSpeed: 8.0
+    maxSpeed: 25.0
+    blocks:
+      COBBLESTONE: 0.6
+      STONE: 0.5
+      DEEPSLATE: 0.3
+      BLACKSTONE: 0.2
+      BASALT: 0.1
+    upgradeLevels: {}
+    autoCollectionEnabled: true
+    autoSmeltingEnabled: true
+    autoSellingEnabled: false
+  cosmic:
+    enabled: true
+    unlockLevel: 100
+    baseSpeed: 12.0
+    maxSpeed: 40.0
+    blocks:
+      STONE: 0.4
+      DEEPSLATE: 0.3
+      BLACKSTONE: 0.2
+      BASALT: 0.15
+      END_STONE: 0.05
+    upgradeLevels: {}
+    autoCollectionEnabled: true
+    autoSmeltingEnabled: true
+    autoSellingEnabled: true
+  omnipotent:
+    enabled: true
+    unlockLevel: 200
+    baseSpeed: 20.0
+    maxSpeed: 100.0
+    blocks:
+      DEEPSLATE: 0.3
+      BLACKSTONE: 0.25
+      BASALT: 0.2
+      END_STONE: 0.15
+      NETHERRACK: 0.1
+    upgradeLevels: {}
+    autoCollectionEnabled: true
+    autoSmeltingEnabled: true
+    autoSellingEnabled: true
+
+# Upgrade System
+upgrades:
+  # Enable upgrade system
+  enabled: true
+  # Upgrade costs (per level)
+  upgradeCosts:
+    speed: 1000
+    efficiency: 1500
+    capacity: 2000
+  # Upgrade multipliers
+  upgradeMultipliers:
+    speed: 1.1
+    efficiency: 1.05
+    capacity: 1.2
+  # Maximum upgrade level
+  maxUpgradeLevel: 100
+
+# Automation Settings
+automation:
+  # Enable automation features
+  enabled: true
+  # Auto-collection unlock level
+  autoCollectionUnlockLevel: 5
+  # Auto-selling unlock level
+  autoSellingUnlockLevel: 15
+  # Auto-smelting unlock level
+  autoSmeltingUnlockLevel: 25
+  # Smart collection (only collect when inventory has space)
+  smartCollectionEnabled: true
+
+# Efficiency System
+efficiency:
+  # Enable efficiency bonuses
+  enabled: true
+  # Maximum efficiency bonus
+  maxEfficiencyBonus: 2.0
+  # Efficiency decay time (minutes)
+  efficiencyDecayTime: 30
+  # Efficiency bonuses per evolution level
+  efficiencyBonuses:
+    Genesis: 1.0
+    Stone: 1.05
+    Coal: 1.1
+    Iron: 1.15
+    Gold: 1.2
+    Diamond: 1.3
+    Nether: 1.4
+    End: 1.5
+    Cosmic: 1.75
+    Infinite: 2.0
+
+# Prestige System
+prestige:
+  # Enable prestige system for generators
+  enabled: true
+  # Prestige unlock level
+  prestigeUnlockLevel: 50
+  # Prestige bonuses per level
+  prestigeBonuses:
+    speed: 0.05
+    efficiency: 0.03
+    capacity: 0.1
+
+# Experience System
+experience:
+  # Base experience per block generated
+  baseExperiencePerBlock: 0.1
+  # Maximum generator level
+  maxLevel: 1000
+  # Experience required for each level (formula: level * 100)
+  experienceFormula: "level * 100"
+
+# Optimization Settings
+optimization:
+  # Enable async processing
+  asyncProcessingEnabled: true
+  # Enable optimizations
+  optimizationsEnabled: true
+  # Multiple generators per island
+  multipleGeneratorsEnabled: true

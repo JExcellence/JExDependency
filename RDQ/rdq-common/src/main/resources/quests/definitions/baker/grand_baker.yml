@@ -1,0 +1,58 @@
+identifier: "grand_baker"
+category: "baker"
+difficulty: HARD
+enabled: true
+displayOrder: 4
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
+
+icon:
+  material: ENCHANTED_GOLDEN_APPLE
+  displayNameKey: "quest.grand_baker.name"
+  descriptionKey: "quest.grand_baker.description"
+
+tasks:
+  craft_cakes_bulk:
+    orderIndex: 0
+    difficulty: HARD
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: CAKE
+      amount: 25
+  craft_pumpkin_pies_bulk:
+    orderIndex: 1
+    difficulty: HARD
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: PUMPKIN_PIE
+      amount: 50
+  collect_milk_buckets:
+    orderIndex: 2
+    difficulty: HARD
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: MILK_BUCKET
+      amount: 32
+
+rewards:
+  main_currency:
+    type: CURRENCY
+    currency: coins
+    amount: 1000.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 600.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

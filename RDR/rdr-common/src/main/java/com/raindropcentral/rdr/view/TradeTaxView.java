@@ -13,13 +13,6 @@
 
 package com.raindropcentral.rdr.view;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.concurrent.CompletableFuture;
-
 import com.raindropcentral.rdr.RDR;
 import com.raindropcentral.rdr.configs.ConfigSection;
 import com.raindropcentral.rdr.service.TradeService;
@@ -35,6 +28,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Paginated read-only view listing configured per-currency trade-tax rules.

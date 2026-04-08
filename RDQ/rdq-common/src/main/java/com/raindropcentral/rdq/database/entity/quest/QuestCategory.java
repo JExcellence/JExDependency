@@ -1,22 +1,17 @@
-/*
- * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
- *
- * This source code is proprietary and confidential to Antimatter Zone LLC.
- * Unauthorized copying, modification, distribution, display, performance,
- * publication, sublicensing, or creation of derivative works is prohibited
- * without prior written permission from Antimatter Zone LLC, except to the
- * extent permitted by applicable United States law.
- *
- * This notice is intended to preserve all rights and remedies available under
- * the laws of the State of Washington and the United States of America.
- */
-
 package com.raindropcentral.rdq.database.entity.quest;
 
-import com.raindropcentral.rdq.config.utility.IconSection;
 import com.raindropcentral.rdq.database.converter.IconSectionConverter;
+import com.raindropcentral.rplatform.config.icon.IconSection;
 import de.jexcellence.hibernate.entity.BaseEntity;
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Index;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.Getter;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
@@ -28,8 +23,8 @@ import java.util.Objects;
 
 /**
  * Entity representing a quest category.
- *
- * <p>Quest categories group related quests together for organization and navigation.
+ * <p>
+ * Quest categories group related quests together for organization and navigation.
  * Each category has a unique identifier, display information, and contains multiple quests.
  *
  * @author RaindropCentral
@@ -47,9 +42,6 @@ import java.util.Objects;
                 @Index(name = "idx_quest_category_display_order", columnList = "display_order")
         }
 )
-/**
- * Represents the QuestCategory API type.
- */
 public class QuestCategory extends BaseEntity {
     
     @Serial
@@ -87,7 +79,13 @@ public class QuestCategory extends BaseEntity {
      */
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Quest> quests = new ArrayList<>();
-    
+
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<QuestCategoryReward> rewards = new ArrayList<>();
+
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<QuestCategoryRequirement> requirements = new ArrayList<>();
+
     /**
      * Protected no-argument constructor for JPA.
      */
@@ -141,10 +139,25 @@ public class QuestCategory extends BaseEntity {
         quests.remove(quest);
         quest.setCategory(null);
     }
-    
+
     /**
-     * Executes equals.
+     * Adds a reward granted when the category is completed.
+     *
+     * @param reward the reward to add
      */
+    public void addReward(@NotNull final QuestCategoryReward reward) {
+        rewards.add(reward);
+    }
+
+    /**
+     * Adds a prerequisite requirement to this quest category.
+     *
+     * @param requirement the requirement to add
+     */
+    public void addRequirement(@NotNull final QuestCategoryRequirement requirement) {
+        requirements.add(requirement);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -157,9 +170,6 @@ public class QuestCategory extends BaseEntity {
         return identifier != null && identifier.equals(that.identifier);
     }
     
-    /**
-     * Returns whether hCode.
-     */
     @Override
     public int hashCode() {
         if (this.getId() != null) {
@@ -169,9 +179,6 @@ public class QuestCategory extends BaseEntity {
         return Objects.hash(identifier);
     }
     
-    /**
-     * Executes toString.
-     */
     @Override
     public String toString() {
         return "QuestCategory{" +

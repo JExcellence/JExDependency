@@ -13,10 +13,6 @@
 
 package com.raindropcentral.rdr.requirement;
 
-import java.util.Map;
-import java.util.Objects;
-import java.util.logging.Logger;
-
 import com.raindropcentral.rdr.RDR;
 import com.raindropcentral.rdr.configs.StoreRequirementSection;
 import com.raindropcentral.rplatform.requirement.AbstractRequirement;
@@ -24,6 +20,10 @@ import com.raindropcentral.rplatform.requirement.config.RequirementFactory;
 import com.raindropcentral.rplatform.requirement.config.RequirementSectionAdapter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.logging.Logger;
 
 /**
  * Registers RDR-specific requirement support with the shared RPlatform requirement system.

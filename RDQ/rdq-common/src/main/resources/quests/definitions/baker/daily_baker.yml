@@ -1,0 +1,58 @@
+identifier: "daily_baker"
+category: "baker"
+difficulty: EASY
+enabled: true
+displayOrder: 2
+repeatable: true
+maxCompletions: -1
+cooldownSeconds: 86400
+timeLimitSeconds: 0
+
+icon:
+  material: BREAD
+  displayNameKey: "quest.daily_baker.name"
+  descriptionKey: "quest.daily_baker.description"
+
+tasks:
+  craft_bread_daily:
+    orderIndex: 0
+    difficulty: EASY
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: BREAD
+      amount: 32
+  craft_cookies_daily:
+    orderIndex: 1
+    difficulty: EASY
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: COOKIE
+      amount: 24
+  craft_cakes_daily:
+    orderIndex: 2
+    difficulty: EASY
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: CAKE
+      amount: 3
+
+rewards:
+  main_currency:
+    type: CURRENCY
+    currency: coins
+    amount: 200.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 100.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

@@ -1,0 +1,17 @@
+{
+  "pluginVersion": "${version}",
+  "supportedItemCodes": [
+    "skill-level-cookie",
+    "skill-xp-rate-10-cookie",
+    "skill-xp-rate-50-cookie",
+    "skill-xp-rate-100-cookie",
+    "job-level-cookie",
+    "job-xp-rate-10-cookie",
+    "job-xp-rate-50-cookie",
+    "job-xp-rate-100-cookie",
+    "job-vault-rate-10-cookie",
+    "job-vault-rate-50-cookie",
+    "job-vault-rate-100-cookie",
+    "double-drop-rate-cookie"
+  ]
+}

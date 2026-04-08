@@ -1,0 +1,157 @@
+# Configurable Security chunk progression levels.
+# Add, remove, or reorder numeric level keys as desired.
+# The highest numeric key becomes the Security max level.
+fuel:
+  enabled: true
+  offline_protection: false
+  calculation_interval_seconds: 60
+  tank_placement_radius_blocks: 3
+  fuels:
+    redstone:
+      material: REDSTONE
+      units: 25
+
+  base_rate: 0.80
+  chunk_exponent: 1.08
+  town_level_rate: 0.04
+  minimum_effective_chunk_ratio: 0.75
+
+  chunk_types:
+    base:
+      weight: 1.00
+      level_scale: 0.00
+      min_weight: 1.00
+
+    nexus:
+      weight: 1.35
+      level_scale: 0.06
+      min_weight: 1.35
+
+    security:
+      weight: 0.70
+      level_scale: -0.05
+      min_weight: 0.45
+
+    bank:
+      weight: 1.20
+      level_scale: 0.05
+      min_weight: 1.20
+
+    farm:
+      weight: 0.80
+      level_scale: -0.04
+      min_weight: 0.55
+
+    outpost:
+      weight: 1.15
+      level_scale: 0.05
+      min_weight: 1.15
+
+levels:
+  1:
+    requirements: {}
+    rewards: {}
+  2:
+    requirements:
+      vault_upgrade:
+        type: "CURRENCY"
+        currency: "vault"
+        amount: 1000.0
+        consumable: true
+        description: "Security funding contribution"
+      reinforcement_materials:
+        type: "ITEM"
+        requiredItems:
+          - type: "IRON_INGOT"
+            amount: 32
+        consumeOnComplete: true
+        exactMatch: false
+        description: "Security reinforcement materials"
+    rewards:
+      vault_bonus:
+        type: "CURRENCY"
+        currencyId: "vault"
+        amount: 150.0
+        description: "Security treasury rebate"
+      town_broadcast:
+        type: "COMMAND"
+        command: "rt broadcast {town_uuid} <aqua>{town_name}</aqua> <yellow>upgraded Security chunk <white>{chunk_x}, {chunk_z}</white> to level <white>{target_level}</white><yellow>!</yellow>"
+        executeAsPlayer: false
+  3:
+    requirements:
+      vault_upgrade:
+        type: "CURRENCY"
+        currency: "vault"
+        amount: 1750.0
+        consumable: true
+        description: "Security funding contribution"
+      signal_materials:
+        type: "ITEM"
+        requiredItems:
+          - type: "REDSTONE"
+            amount: 48
+        consumeOnComplete: true
+        exactMatch: false
+        description: "Security signal materials"
+    rewards:
+      vault_bonus:
+        type: "CURRENCY"
+        currencyId: "vault"
+        amount: 250.0
+        description: "Security treasury rebate"
+      town_broadcast:
+        type: "COMMAND"
+        command: "rt broadcast {town_uuid} <aqua>{town_name}</aqua> <yellow>upgraded Security chunk <white>{chunk_x}, {chunk_z}</white> to level <white>{target_level}</white><yellow>!</yellow>"
+        executeAsPlayer: false
+  4:
+    requirements:
+      vault_upgrade:
+        type: "CURRENCY"
+        currency: "vault"
+        amount: 2750.0
+        consumable: true
+        description: "Security funding contribution"
+      barrier_materials:
+        type: "ITEM"
+        requiredItems:
+          - type: "OBSIDIAN"
+            amount: 24
+        consumeOnComplete: true
+        exactMatch: false
+        description: "Security barrier materials"
+    rewards:
+      vault_bonus:
+        type: "CURRENCY"
+        currencyId: "vault"
+        amount: 400.0
+        description: "Security treasury rebate"
+      town_broadcast:
+        type: "COMMAND"
+        command: "rt broadcast {town_uuid} <aqua>{town_name}</aqua> <yellow>upgraded Security chunk <white>{chunk_x}, {chunk_z}</white> to level <white>{target_level}</white><yellow>!</yellow>"
+        executeAsPlayer: false
+  5:
+    requirements:
+      vault_upgrade:
+        type: "CURRENCY"
+        currency: "vault"
+        amount: 4000.0
+        consumable: true
+        description: "Security funding contribution"
+      precision_materials:
+        type: "ITEM"
+        requiredItems:
+          - type: "DIAMOND"
+            amount: 8
+        consumeOnComplete: true
+        exactMatch: false
+        description: "Security precision materials"
+    rewards:
+      vault_bonus:
+        type: "CURRENCY"
+        currencyId: "vault"
+        amount: 600.0
+        description: "Security treasury rebate"
+      town_broadcast:
+        type: "COMMAND"
+        command: "rt broadcast {town_uuid} <aqua>{town_name}</aqua> <yellow>upgraded Security chunk <white>{chunk_x}, {chunk_z}</white> to level <white>{target_level}</white><yellow>!</yellow>"
+        executeAsPlayer: false

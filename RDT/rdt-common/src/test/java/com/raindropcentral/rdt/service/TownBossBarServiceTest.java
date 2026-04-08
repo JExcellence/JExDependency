@@ -1,0 +1,70 @@
+/*
+ * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
+ *
+ * This source code is proprietary and confidential to Antimatter Zone LLC.
+ * Unauthorized copying, modification, distribution, display, performance,
+ * publication, sublicensing, or creation of derivative works is prohibited
+ * without prior written permission from Antimatter Zone LLC, except to the
+ * extent permitted by applicable United States law.
+ *
+ * This notice is intended to preserve all rights and remedies available under
+ * the laws of the State of Washington and the United States of America.
+ */
+
+package com.raindropcentral.rdt.service;
+
+import com.raindropcentral.rdt.RDT;
+import com.raindropcentral.rplatform.scheduler.ISchedulerAdapter;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.lang.reflect.Field;
+import java.util.List;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+
+@ExtendWith(MockitoExtension.class)
+class TownBossBarServiceTest {
+
+    @Mock
+    private JavaPlugin javaPlugin;
+
+    @Mock
+    private ISchedulerAdapter scheduler;
+
+    @Mock
+    private TownService townService;
+
+    @Mock
+    private Player firstPlayer;
+
+    @Mock
+    private Player secondPlayer;
+
+    @Test
+    void refreshPlayersUsesEntitySchedulerContexts() throws ReflectiveOperationException {
+        final RDT plugin = new RDT(javaPlugin, "test", townService);
+        setField(plugin, "scheduler", scheduler);
+
+        final TownBossBarService service = new TownBossBarService(plugin);
+
+        service.refreshPlayers(List.of(firstPlayer, secondPlayer));
+
+        verify(scheduler).runAtEntity(eq(firstPlayer), any(Runnable.class));
+        verify(scheduler).runAtEntity(eq(secondPlayer), any(Runnable.class));
+        verifyNoMoreInteractions(scheduler);
+    }
+
+    private static void setField(final RDT target, final String fieldName, final Object value) throws ReflectiveOperationException {
+        final Field field = RDT.class.getDeclaredField(fieldName);
+        field.setAccessible(true);
+        field.set(target, value);
+    }
+}

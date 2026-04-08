@@ -13,8 +13,8 @@
 
 package com.raindropcentral.rdq.database.entity.bounty;
 
-import com.raindropcentral.rdq.config.utility.IconSection;
 import com.raindropcentral.rdq.database.converter.IconSectionConverter;
+import com.raindropcentral.rplatform.config.icon.IconSection;
 import com.raindropcentral.rplatform.database.converter.RewardConverter;
 import com.raindropcentral.rplatform.reward.AbstractReward;
 import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
@@ -35,7 +35,10 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * Represents the BountyReward API type.
+ * Stores a bounty reward definition and contributor metadata.
+ *
+ * <p>Each entity wraps the serialized reward payload, optional icon metadata,
+ * contributor ownership, and estimated value used by the bounty system.</p>
  */
 @Entity
 @Table(name = "rdq_bounty_reward")
@@ -62,27 +65,18 @@ public class BountyReward extends BaseEntity {
 
     protected BountyReward() {}
 
-    /**
-     * Executes BountyReward.
-     */
     public BountyReward(@NotNull AbstractReward reward) {
         this.reward = reward;
         this.contributorUniqueId = null;
         this.icon = new IconSection(new EvaluationEnvironmentBuilder());
     }
 
-    /**
-     * Executes BountyReward.
-     */
     public BountyReward(@NotNull AbstractReward reward, @NotNull UUID contributorUniqueId) {
         this.reward = reward;
         this.contributorUniqueId = contributorUniqueId;
         this.icon = new IconSection(new EvaluationEnvironmentBuilder());
     }
 
-    /**
-     * Executes BountyReward.
-     */
     public BountyReward(@NotNull AbstractReward reward, @NotNull IconSection icon, @Nullable UUID contributorUniqueId) {
         this.reward = reward;
         this.icon = icon;
@@ -90,15 +84,15 @@ public class BountyReward extends BaseEntity {
     }
 
     /**
-     * Executes grant.
+     * Grants this reward to the provided player.
+     *
+     * @param player the player who should receive the reward
+     * @return a future completing with {@code true} when the reward is granted successfully
      */
     public @NotNull CompletableFuture<Boolean> grant(@NotNull Player player) {
         return reward.grant(player);
     }
 
-    /**
-     * Executes equals.
-     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -106,17 +100,11 @@ public class BountyReward extends BaseEntity {
         return Objects.equals(getId(), other.getId());
     }
 
-    /**
-     * Returns whether hCode.
-     */
     @Override
     public int hashCode() { 
         return Objects.hash(getId()); 
     }
 
-    /**
-     * Executes toString.
-     */
     @Override
     public String toString() {
         return "BountyReward[id=%d, rewardData=%s]".formatted(getId(), reward.toString());

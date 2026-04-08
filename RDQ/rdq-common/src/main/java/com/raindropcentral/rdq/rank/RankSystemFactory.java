@@ -13,34 +13,44 @@
 
  package com.raindropcentral.rdq.rank;
 
- import com.raindropcentral.rdq.RDQ;
- import com.raindropcentral.rdq.config.ranks.rank.RankSection;
- import com.raindropcentral.rdq.config.ranks.ranktree.RankTreeSection;
- import com.raindropcentral.rdq.config.ranks.system.RankSystemSection;
- import com.raindropcentral.rdq.config.requirement.BaseRequirementSection;
- import com.raindropcentral.rdq.config.requirement.BaseRequirementSectionAdapter;
- import com.raindropcentral.rdq.config.utility.IconSection;
- import com.raindropcentral.rdq.config.utility.RewardSection;
- import com.raindropcentral.rdq.database.entity.rank.*;
- import com.raindropcentral.rdq.database.entity.requirement.BaseRequirement;
- import com.raindropcentral.rdq.database.entity.reward.BaseReward;
- import com.raindropcentral.rplatform.logging.CentralLogger;
- import com.raindropcentral.rplatform.requirement.AbstractRequirement;
- import com.raindropcentral.rplatform.requirement.config.RequirementFactory;
- import com.raindropcentral.rplatform.reward.AbstractReward;
- import com.raindropcentral.rplatform.reward.config.RewardFactory;
- import de.jexcellence.evaluable.ConfigKeeper;
- import de.jexcellence.evaluable.ConfigManager;
- import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
- import lombok.Getter;
- import org.jetbrains.annotations.NotNull;
- import org.jetbrains.annotations.Nullable;
+import com.raindropcentral.rdq.RDQ;
+import com.raindropcentral.rdq.config.ranks.rank.RankSection;
+import com.raindropcentral.rdq.config.ranks.ranktree.RankTreeSection;
+import com.raindropcentral.rdq.config.ranks.system.RankSystemSection;
+import com.raindropcentral.rdq.config.requirement.BaseRequirementSection;
+import com.raindropcentral.rdq.config.requirement.BaseRequirementSectionAdapter;
+import com.raindropcentral.rdq.config.utility.RewardSection;
+import com.raindropcentral.rdq.database.entity.rank.RPlayerRankUpgradeProgress;
+import com.raindropcentral.rdq.database.entity.rank.RRank;
+import com.raindropcentral.rdq.database.entity.rank.RRankReward;
+import com.raindropcentral.rdq.database.entity.rank.RRankTree;
+import com.raindropcentral.rdq.database.entity.rank.RRankUpgradeRequirement;
+import com.raindropcentral.rdq.database.entity.requirement.BaseRequirement;
+import com.raindropcentral.rdq.database.entity.reward.BaseReward;
+import com.raindropcentral.rplatform.config.icon.IconSection;
+import com.raindropcentral.rplatform.logging.CentralLogger;
+import com.raindropcentral.rplatform.requirement.AbstractRequirement;
+import com.raindropcentral.rplatform.requirement.config.RequirementFactory;
+import com.raindropcentral.rplatform.reward.AbstractReward;
+import com.raindropcentral.rplatform.reward.config.RewardFactory;
+import de.jexcellence.evaluable.ConfigKeeper;
+import de.jexcellence.evaluable.ConfigManager;
+import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
+import lombok.Getter;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
- import java.io.File;
- import java.util.*;
- import java.util.logging.Level;
- import java.util.logging.Logger;
- import java.util.stream.Collectors;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 /**
  * Factory responsible for loading, constructing, and validating the rank system from configuration files.
@@ -839,6 +849,7 @@ public class RankSystemFactory {
             try {
                 LOGGER.info("Parsing reward '" + key + "' of type: " + section.getType());
 
+                @SuppressWarnings("unchecked")
                 final RewardFactory<RewardSection> rewardFactory = (RewardFactory<RewardSection>) (RewardFactory<?>) RewardFactory.getInstance();
                 AbstractReward abstractReward;
                 
@@ -909,7 +920,7 @@ public class RankSystemFactory {
      * Generates a default icon for a reward based on its type.
      */
     private IconSection generateDefaultIcon(String rewardType, RewardSection section) {
-        IconSection icon = new IconSection(new de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder());
+        IconSection icon = new IconSection(new EvaluationEnvironmentBuilder());
         
         String material = switch (rewardType.toUpperCase()) {
             case "ITEM" -> {

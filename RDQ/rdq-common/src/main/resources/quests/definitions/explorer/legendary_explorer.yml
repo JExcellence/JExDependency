@@ -1,0 +1,58 @@
+identifier: "legendary_explorer"
+category: "explorer"
+difficulty: EXTREME
+enabled: true
+displayOrder: 5
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
+
+icon:
+  material: RECOVERY_COMPASS
+  displayNameKey: "quest.legendary_explorer.name"
+  descriptionKey: "quest.legendary_explorer.description"
+
+tasks:
+  mine_jungle_logs:
+    orderIndex: 0
+    difficulty: EXTREME
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: JUNGLE_LOG
+      amount: 256
+  mine_nether_materials:
+    orderIndex: 1
+    difficulty: EXTREME
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: NETHER_QUARTZ_ORE
+      amount: 256
+  mine_end_materials:
+    orderIndex: 2
+    difficulty: EXTREME
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: CHORUS_FLOWER
+      amount: 100
+
+rewards:
+  main_currency:
+    type: CURRENCY
+    currency: coins
+    amount: 5000.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 2000.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

@@ -13,13 +13,13 @@
 
 package com.raindropcentral.rdr.commands;
 
-import java.lang.reflect.Proxy;
-import java.util.List;
-import java.util.UUID;
-
 import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
 import org.bukkit.entity.Player;
 import org.junit.jupiter.api.Test;
+
+import java.lang.reflect.Proxy;
+import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;

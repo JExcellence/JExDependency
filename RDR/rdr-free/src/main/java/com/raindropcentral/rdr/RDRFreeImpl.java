@@ -13,13 +13,13 @@
 
 package com.raindropcentral.rdr;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import com.raindropcentral.rdr.service.FreeStorageService;
 import de.jexcellence.dependency.delegate.AbstractPluginDelegate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Delegate implementation for the RDR free edition.

@@ -31,7 +31,6 @@ import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import java.util.zip.ZipException;
 
 /**
  * Paper-specific plugin loader that mirrors the runtime behaviour of {@link de.jexcellence.dependency.JEDependency}.

@@ -1,0 +1,58 @@
+identifier: "novice_explorer"
+category: "explorer"
+difficulty: EASY
+enabled: true
+displayOrder: 1
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
+
+icon:
+  material: COMPASS
+  displayNameKey: "quest.novice_explorer.name"
+  descriptionKey: "quest.novice_explorer.description"
+
+tasks:
+  mine_wood_forest:
+    orderIndex: 0
+    difficulty: EASY
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: OAK_LOG
+      amount: 64
+  mine_sand:
+    orderIndex: 1
+    difficulty: EASY
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: SAND
+      amount: 64
+  mine_gravel:
+    orderIndex: 2
+    difficulty: EASY
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: GRAVEL
+      amount: 32
+
+rewards:
+  main_currency:
+    type: CURRENCY
+    currency: coins
+    amount: 150.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 75.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

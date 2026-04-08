@@ -1,21 +1,8 @@
-/*
- * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
- *
- * This source code is proprietary and confidential to Antimatter Zone LLC.
- * Unauthorized copying, modification, distribution, display, performance,
- * publication, sublicensing, or creation of derivative works is prohibited
- * without prior written permission from Antimatter Zone LLC, except to the
- * extent permitted by applicable United States law.
- *
- * This notice is intended to preserve all rights and remedies available under
- * the laws of the State of Washington and the United States of America.
- */
-
 package com.raindropcentral.rdq.database.entity.rank;
 
-import com.raindropcentral.rdq.config.utility.IconSection;
 import com.raindropcentral.rdq.database.converter.IconSectionConverter;
 import com.raindropcentral.rdq.database.entity.requirement.BaseRequirement;
+import com.raindropcentral.rplatform.config.icon.IconSection;
 import de.jexcellence.hibernate.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
@@ -36,12 +23,12 @@ import java.util.Objects;
 
 /**
  * Entity representing a single upgrade requirement for a {@link RRank} in the RaindropQuests system.
- *
- * <p>This entity encapsulates a single {@link com.raindropcentral.rdq.database.entity.requirement.BaseRequirement} that must be satisfied
+ * <p>
+ * This entity encapsulates a single {@link BaseRequirement} that must be satisfied
  * to fulfill part of the upgrade condition for the associated rank. It also includes an icon for visual representation.
  *
- *
- * <p>Multiple instances of this entity can exist for a single rank, representing different requirements
+ * <p>
+ * Multiple instances of this entity can exist for a single rank, representing different requirements
  * that all need to be completed for the rank upgrade.
  *
  * @author JExcellence
@@ -179,9 +166,6 @@ public class RRankUpgradeRequirement extends BaseEntity {
 		this.requirement.consume(player);
 	}
 	
-	/**
-	 * Executes equals.
-	 */
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -201,9 +185,6 @@ public class RRankUpgradeRequirement extends BaseEntity {
 		return false;
 	}
 	
-	/**
-	 * Returns whether hCode.
-	 */
 	@Override
 	public int hashCode() {
 		if (this.getId() != null) {

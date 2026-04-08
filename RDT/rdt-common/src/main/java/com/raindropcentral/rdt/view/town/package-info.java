@@ -1,4 +1,4 @@
 /**
- * Contains public API types for the <code>com.raindropcentral.rdt.view.town</code> package.
+ * Town-management GUI views for RDT.
  */
 package com.raindropcentral.rdt.view.town;

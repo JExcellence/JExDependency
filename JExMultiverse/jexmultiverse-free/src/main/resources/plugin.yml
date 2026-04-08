@@ -1,0 +1,7 @@
+name: "JExMultiverse"
+version: ${version}
+main: de.jexcellence.multiverse.JExMultiverseFree
+api-version: ${apiVersion}
+description: ${description}
+author: JExcellence
+website: https://jexcellence.de

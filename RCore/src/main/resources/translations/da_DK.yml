@@ -1,16 +1,16 @@
-# Danske oversaettelser for RCore Central Integration
+﻿# Danske oversaettelser for RCore Central Integration
 
 prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
 
 rcconnect:
-  usage: "<gray>Brug: /rc <connect &lt;api-key&gt;|disconnect|claim droplets></gray>"
+  usage: "<gray>Brug: /rc <connect &lt;api-key&gt;|disconnect|claim droplets|store update></gray>"
   usage_no_claim: "<gray>Brug: /rc <connect &lt;api-key&gt;|disconnect></gray>"
   connecting: "<yellow>Forbinder til RaindropCentral...</yellow>"
   success: "<green>Forbundet til RaindropCentral!</green> <gray>Serveren sender nu heartbeats.</gray>"
   error:
     invalid_key: "<red>Ugyldigt API-noegleformat. API-noegler skal vaere 32-128 alfanumeriske tegn.</red>"
     uuid_mismatch: "<red>Denne API-noegle tilhoerer en anden Minecraft-konto.</red>"
-    already_connected: "<yellow>Server er allerede tilsluttet.</yellow> <gray>Brug /rc disconnect først.</gray>"
+    already_connected: "<yellow>Server er allerede tilsluttet.</yellow> <gray>Brug /rc disconnect fÃ¸rst.</gray>"
     network: "<red>Netvaerksfejl: %error%</red>"
 
 rcdisconnect:
@@ -21,122 +21,129 @@ rcdisconnect:
     failed: "<red>Kunne ikke afbryde forbindelsen. Proev igen.</red>"
     network: "<red>Netvaerksfejl: %error%</red>"
 
+rcstore:
+  updating: "<yellow>Refreshing the local droplet-store allowlist from RaindropCentral...</yellow>"
+  success: "<green>Updated the local droplet-store allowlist.</green> <gray>%count% item(s) are currently allowed.</gray>"
+  error:
+    not_connected: "<red>RCore must be connected to the RaindropCentral backend before the store allowlist can be updated.</red>"
+    failed: "<red>Failed to refresh the droplet-store allowlist: %error%</red>"
+    using_cache: "<yellow>Failed to refresh the droplet-store allowlist, but the last cached list is still being used: %error%</yellow>"
 rcclaim:
-  loading: "<yellow>Tjekker RaindropCentral for uafhentede dråbebelønninger...</yellow>"
+  loading: "<yellow>Tjekker RaindropCentral for uafhentede drÃ¥bebelÃ¸nninger...</yellow>"
   claiming_item: "<yellow> Krav %item_name% fra RaindropCentral...</yellow>"
   success:
-    claimed: "<green>Du gjorde krav på %item_name%.</green>"
-    claimed_skill_targeted: "<green>Du gjorde krav på %item_name%.</green> <gray>Højreklik på cookien for at vælge en færdighed.</gray>"
-    claimed_job_targeted: "<green>Du gjorde krav på %item_name%.</green> <gray>Højreklik på cookien for at vælge et job.</gray>"
-    claimed_activate: "<green>Du gjorde krav på %item_name%.</green> <gray>Højreklik på cookien for at aktivere den.</gray>"
+    claimed: "<green>Du gjorde krav pÃ¥ %item_name%.</green>"
+    claimed_skill_targeted: "<green>Du gjorde krav pÃ¥ %item_name%.</green> <gray>HÃ¸jreklik pÃ¥ cookien for at vÃ¦lge en fÃ¦rdighed.</gray>"
+    claimed_job_targeted: "<green>Du gjorde krav pÃ¥ %item_name%.</green> <gray>HÃ¸jreklik pÃ¥ cookien for at vÃ¦lge et job.</gray>"
+    claimed_activate: "<green>Du gjorde krav pÃ¥ %item_name%.</green> <gray>HÃ¸jreklik pÃ¥ cookien for at aktivere den.</gray>"
     skill_granted: "<green>Bevilget 1 niveau i %skill_name%.</green> <gray>Kilde: %plugin_name%.</gray>"
     job_granted: "<green>Bevilget 1 niveau i %job_name%.</green> <gray>Kilde: %plugin_name%.</gray>"
-    skill_xp_boost_applied: "<green>Aaktiveret +%rate_percent%% færdighed XP for %skill_name%.</green> <gray>Kilde: %plugin_name%. Varighed: %duration_minutes% minut(er).</gray>"
-    skill_xp_boost_refreshed: "<green>Opfrisket +%rate_percent%% færdighed XP for %skill_name%.</green> <gray>Kilde: %plugin_name%. Varighed nulstillet til %duration_minutes% minut(er).</gray>"
+    skill_xp_boost_applied: "<green>Aaktiveret +%rate_percent%% fÃ¦rdighed XP for %skill_name%.</green> <gray>Kilde: %plugin_name%. Varighed: %duration_minutes% minut(er).</gray>"
+    skill_xp_boost_refreshed: "<green>Opfrisket +%rate_percent%% fÃ¦rdighed XP for %skill_name%.</green> <gray>Kilde: %plugin_name%. Varighed nulstillet til %duration_minutes% minut(er).</gray>"
     job_xp_boost_applied: "<green>Aaktiveret +%rate_percent%% job XP for %job_name%.</green> <gray>Kilde: %plugin_name%. Varighed: %duration_minutes% minut(er).</gray>"
     job_xp_boost_refreshed: "<green>Opfrisket +%rate_percent%% job XP for %job_name%.</green> <gray>Kilde: %plugin_name%. Varighed nulstillet til %duration_minutes% minut(er).</gray>"
     job_vault_boost_applied: "<green>Aaktiveret +%rate_percent%% jobpenge for %job_name%.</green> <gray>Kilde: %plugin_name%. Varighed: %duration_minutes% minut(er).</gray>"
     job_vault_boost_refreshed: "<green>Refreshed +%rate_percent%% jobpenge for %job_name%.</green> <gray>Kilde: %plugin_name%. Varighed nulstillet til %duration_minutes% minut(er).</gray>"
     double_drop_boost_applied: "<green>Aaktiveret dobbeltfald.</green> <gray>Varighed: %duration_minutes% minut(er).</gray>"
-    double_drop_boost_refreshed: "<green>Opfrisket dobbeltdråber.</green> <gray>Varighed nulstillet til %duration_minutes% minut(er).</gray>"
-    pending_delivery: "<green>Leveret %count% afventer dråbebelønning(er).</green>"
+    double_drop_boost_refreshed: "<green>Opfrisket dobbeltdrÃ¥ber.</green> <gray>Varighed nulstillet til %duration_minutes% minut(er).</gray>"
+    pending_delivery: "<green>Leveret %count% afventer drÃ¥bebelÃ¸nning(er).</green>"
   error:
     store_disabled: "<red>Denne server har deaktiveret /rc claim droplets.</red>"
-    not_connected: "<red>RCore skal være forbundet til RaindropCentral-backend, før du kan gøre krav på droplets.</red>"
-    cooldown: "<yellow> Vent venligst %seconds% sekund(er), før du bruger /rc claim droplets igen.</yellow>"
+    not_connected: "<red>RCore skal vÃ¦re forbundet til RaindropCentral-backend, fÃ¸r du kan gÃ¸re krav pÃ¥ droplets.</red>"
+    cooldown: "<yellow> Vent venligst %seconds% sekund(er), fÃ¸r du bruger /rc claim droplets igen.</yellow>"
     not_registered: "<red>Din Minecraft-konto er ikke knyttet til en RaindropCentral-konto.</red>"
-    no_unclaimed: "<yellow>Du har ikke nogen uhævede dråbebelønninger lige nu.</yellow>"
-    api_unavailable: "<red>RaindropCentral er ikke tilgængelig lige nu: %error%</red>"
-    menu_unavailable: "<red>Dråbekravsmenuen er ikke tilgængelig lige nu. Prøv venligst igen senere.</red>"
+    no_unclaimed: "<yellow>Du har ikke nogen uhÃ¦vede drÃ¥bebelÃ¸nninger lige nu.</yellow>"
+    api_unavailable: "<red>RaindropCentral er ikke tilgÃ¦ngelig lige nu: %error%</red>"
+    menu_unavailable: "<red>DrÃ¥bekravsmenuen er ikke tilgÃ¦ngelig lige nu. PrÃ¸v venligst igen senere.</red>"
     item_disabled: "<red>Denne server har deaktiveret krav om %item_name%.</red> <gray>Item ID: %item_code%</gray>"
-    unsupported_item: "<red>Denne droplet-belønning er ikke understøttet på denne server endnu.</red> <gray>Vare-id: %item_code%</gray>"
-    no_supported_skills: "<red>Denne server har i øjeblikket ikke et understøttet færdighedsplugin til denne belønning.</red>"
-    no_supported_jobs: "<red>Denne server har i øjeblikket ikke et understøttet jobplugin til denne belønning.</red>"
-    inventory_full: "<red>Du skal have mindst én gratis lagerplads, før du kan gøre krav på denne belønning.</red>"
-    claim_in_progress: "<yellow>Denne påstand er allerede i gang. Vent venligst på, at backend svarer.</yellow>"
-    claim_failed: "<red> Kunne ikke gøre krav på den dråbebelønning: %error%</red>"
-    already_claimed: "<yellow>Den dråbebelønning er allerede blevet gjort krav på.</yellow>"
-    purchase_unavailable: "<red>Den dråbebelønning er ikke længere tilgængelig at gøre krav på.</red>"
-    cookie_missing: "<red>Dråbecookien kunne ikke findes i din beholdning.</red>"
+    unsupported_item: "<red>Denne droplet-belÃ¸nning er ikke understÃ¸ttet pÃ¥ denne server endnu.</red> <gray>Vare-id: %item_code%</gray>"
+    no_supported_skills: "<red>Denne server har i Ã¸jeblikket ikke et understÃ¸ttet fÃ¦rdighedsplugin til denne belÃ¸nning.</red>"
+    no_supported_jobs: "<red>Denne server har i Ã¸jeblikket ikke et understÃ¸ttet jobplugin til denne belÃ¸nning.</red>"
+    inventory_full: "<red>Du skal have mindst Ã©n gratis lagerplads, fÃ¸r du kan gÃ¸re krav pÃ¥ denne belÃ¸nning.</red>"
+    claim_in_progress: "<yellow>Denne pÃ¥stand er allerede i gang. Vent venligst pÃ¥, at backend svarer.</yellow>"
+    claim_failed: "<red> Kunne ikke gÃ¸re krav pÃ¥ den drÃ¥bebelÃ¸nning: %error%</red>"
+    already_claimed: "<yellow>Den drÃ¥bebelÃ¸nning er allerede blevet gjort krav pÃ¥.</yellow>"
+    purchase_unavailable: "<red>Den drÃ¥bebelÃ¸nning er ikke lÃ¦ngere tilgÃ¦ngelig at gÃ¸re krav pÃ¥.</red>"
+    cookie_missing: "<red>DrÃ¥becookien kunne ikke findes i din beholdning.</red>"
     skill_grant_failed: "<red> Kunne ikke tildele 1 niveau i %skill_name%.</red>"
     job_grant_failed: "<red> Kunne ikke tildele 1 niveau i %job_name%.</red>"
     boost_activation_failed: "<red> Det lykkedes ikke at aktivere %item_name%.</red>"
-    unsupported_integration: "<red>Den påkrævede integration for denne droplet-cookie er ikke tilgængelig lige nu.</red>"
-    boost_expired: "<yellow>Den dråbe-cookie-boost er udløbet.</yellow>"
+    unsupported_integration: "<red>Den pÃ¥krÃ¦vede integration for denne droplet-cookie er ikke tilgÃ¦ngelig lige nu.</red>"
+    boost_expired: "<yellow>Den drÃ¥be-cookie-boost er udlÃ¸bet.</yellow>"
 
 rc_claim_droplets_ui:
-  title: "Uhævede dråber"
+  title: "UhÃ¦vede drÃ¥ber"
   page:
     name: "<yellow>Side %page%/%max_page%</yellow>"
     lore:
-      - "<gray>%items_count% angivet poster, der kan gøres gældende.</gray>"
+      - "<gray>%items_count% angivet poster, der kan gÃ¸res gÃ¦ldende.</gray>"
   summary:
-    name: "<gold>Indløsningskø</gold>"
+    name: "<gold>IndlÃ¸sningskÃ¸</gold>"
     lore:
       - "<gray>Uafhentede poster: %item_count%</gray>"
-      - "<gray>Understøttet på denne server: %supported_count%</gray>"
-      - "<yellow>Klik på en understøttet belønning for at gøre krav på den.</yellow>"
+      - "<gray>UnderstÃ¸ttet pÃ¥ denne server: %supported_count%</gray>"
+      - "<yellow>Klik pÃ¥ en understÃ¸ttet belÃ¸nning for at gÃ¸re krav pÃ¥ den.</yellow>"
   empty:
-    name: "<red>Ingen uafhentede belønninger</red>"
+    name: "<red>Ingen uafhentede belÃ¸nninger</red>"
     lore:
-      - "<gray>Du har i øjeblikket ingen uafhentede dråbebelønninger.</gray>"
+      - "<gray>Du har i Ã¸jeblikket ingen uafhentede drÃ¥bebelÃ¸nninger.</gray>"
   entry:
     supported:
       name: "<green>%item_name%</green>"
       lore:
         - "<gray>Vare-id: %item_code%</gray>"
-        - "<gray>Brugt: %amount_spent% dråber</gray>"
-        - "<yellow>Klik for at gøre krav på denne belønning.</yellow>"
+        - "<gray>Brugt: %amount_spent% drÃ¥ber</gray>"
+        - "<yellow>Klik for at gÃ¸re krav pÃ¥ denne belÃ¸nning.</yellow>"
     item_disabled:
       name: "<red>%item_name%</red>"
       lore:
         - "<gray>Vare-id: %item_code%</gray>"
-        - "<red>Denne server har deaktiveret krav på denne belønning.</red>"
+        - "<red>Denne server har deaktiveret krav pÃ¥ denne belÃ¸nning.</red>"
     unsupported_item:
       name: "<red>%item_name%</red>"
       lore:
         - "<gray>Vare-id: %item_code%</gray>"
-        - "<red>Denne belønning understøttes ikke på denne server.</red>"
+        - "<red>Denne belÃ¸nning understÃ¸ttes ikke pÃ¥ denne server.</red>"
     no_skills:
       name: "<red>%item_name%</red>"
       lore:
         - "<gray>Vare-id: %item_code%</gray>"
-        - "<red>Der er ikke installeret noget understøttet færdighedsplugin til denne belønning.</red>"
+        - "<red>Der er ikke installeret noget understÃ¸ttet fÃ¦rdighedsplugin til denne belÃ¸nning.</red>"
     no_jobs:
       name: "<red>%item_name%</red>"
       lore:
         - "<gray>Vare-id: %item_code%</gray>"
-        - "<red>Ingen understøttet jobplugin er installeret for denne belønning.</red>"
+        - "<red>Ingen understÃ¸ttet jobplugin er installeret for denne belÃ¸nning.</red>"
 
 rc_claim_droplet_skills_ui:
-  title: "Vælg en færdighed"
+  title: "VÃ¦lg en fÃ¦rdighed"
   page:
     name: "<yellow>Side %page%/%max_page%</yellow>"
     lore:
-      - "<gray>%items_count% færdighedsindgange listet.</gray>"
+      - "<gray>%items_count% fÃ¦rdighedsindgange listet.</gray>"
   summary:
-    name: "<gold>Valg af færdighed</gold>"
+    name: "<gold>Valg af fÃ¦rdighed</gold>"
     lore:
-      - "<gray>ATilgængelige færdigheder: %skill_count%</gray>"
-      - "<yellow>Vælg én færdighed til at forbruge cookien.</yellow>"
+      - "<gray>ATilgÃ¦ngelige fÃ¦rdigheder: %skill_count%</gray>"
+      - "<yellow>VÃ¦lg Ã©n fÃ¦rdighed til at forbruge cookien.</yellow>"
   empty:
-    name: "<red>Ingen færdigheder til rådighed</red>"
+    name: "<red>Ingen fÃ¦rdigheder til rÃ¥dighed</red>"
     lore:
-      - "<gray>Ingen understøttede færdigheder er tilgængelige lige nu.</gray>"
+      - "<gray>Ingen understÃ¸ttede fÃ¦rdigheder er tilgÃ¦ngelige lige nu.</gray>"
   entry:
     name: "<green>%skill_name%</green>"
     level_lore:
       - "<gray>Plugin: %plugin_name%</gray>"
       - "<gray>Aktuelt niveau: %current_level%</gray>"
-      - "<yellow>Klik for at få 1 niveau i denne færdighed.</yellow>"
+      - "<yellow>Klik for at fÃ¥ 1 niveau i denne fÃ¦rdighed.</yellow>"
     boost_lore:
       - "<gray>Plugin: %plugin_name%</gray>"
       - "<gray>Aktuelt niveau: %current_level%</gray>"
       - "<gray>Boost: +%rate_percent%% XP i %duration_minutes% minut(er) </gray>"
-      - "<yellow>Klik for at aktivere denne færdighedsboost.</yellow>"
+      - "<yellow>Klik for at aktivere denne fÃ¦rdighedsboost.</yellow>"
 
 rc_claim_droplet_jobs_ui:
-  title: "Vælg et job"
+  title: "VÃ¦lg et job"
   page:
     name: "<yellow>Side %page%/%max_page%</yellow>"
     lore:
@@ -144,18 +151,18 @@ rc_claim_droplet_jobs_ui:
   summary:
     name: "<gold>Jobvalg</gold>"
     lore:
-      - "<gray>ATilgængelige job: %job_count%</gray>"
-      - "<yellow>Vælg ét job til at forbruge cookien.</yellow>"
+      - "<gray>ATilgÃ¦ngelige job: %job_count%</gray>"
+      - "<yellow>VÃ¦lg Ã©t job til at forbruge cookien.</yellow>"
   empty:
     name: "<red>Ingen ledige job</red>"
     lore:
-      - "<gray>Ingen understøttede job er tilgængelige lige nu.</gray>"
+      - "<gray>Ingen understÃ¸ttede job er tilgÃ¦ngelige lige nu.</gray>"
   entry:
     name: "<green>%job_name%</green>"
     level_lore:
       - "<gray>Plugin: %plugin_name%</gray>"
       - "<gray>Aktuelt niveau: %current_level%</gray>"
-      - "<yellow>Klik for at få 1 niveau i dette job.</yellow>"
+      - "<yellow>Klik for at fÃ¥ 1 niveau i dette job.</yellow>"
     xp_boost_lore:
       - "<gray>Plugin: %plugin_name%</gray>"
       - "<gray>Aktuelt niveau: %current_level%</gray>"
@@ -169,3 +176,5 @@ rc_claim_droplet_jobs_ui:
 
 general:
   no_permission: "<red>Du har ikke tilladelse til at bruge denne kommando.</red>"
+
+

@@ -1,0 +1,200 @@
+# ============================================================================
+# Quest System Configuration
+# ============================================================================
+# Main configuration file for the RDQ quest system.
+# 
+# Structure:
+#   - System-wide settings (max quests, features)
+#   - Category definitions (metadata only)
+#   - Quest definitions loaded from: definitions/{category}/*.yml
+# ============================================================================
+
+# ========================================
+# SYSTEM SETTINGS
+# ========================================
+enabled: true
+maxActiveQuests: 5
+enableQuestLog: true
+enableQuestTracking: true
+enableQuestNotifications: true
+
+# ========================================
+# TASK HANDLERS
+# ========================================
+# Configure which task handlers are enabled and their behavior.
+# Disabling unused handlers can improve performance.
+task-handlers:
+  KILL_MOBS:
+    enabled: true
+  COLLECT_ITEMS:
+    enabled: true
+  CRAFT_ITEMS:
+    enabled: true
+  BREAK_BLOCKS:
+    enabled: true
+  PLACE_BLOCKS:
+    enabled: true
+  REACH_LOCATION:
+    enabled: true
+  TRADE_WITH_VILLAGER:
+    enabled: true
+  ENCHANT_ITEM:
+    enabled: true
+  BREED_ANIMALS:
+    enabled: true
+  GAIN_EXPERIENCE:
+    enabled: true
+  FISH_ITEMS:
+    enabled: true
+
+# ========================================
+# REWARDS
+# ========================================
+# Configure reward distribution behavior.
+rewards:
+  # Retry failed currency rewards once before logging error
+  retry-currency: true
+  
+  # Drop items on ground if player inventory is full
+  drop-on-full: true
+  
+  # Continue distributing remaining rewards even if one fails
+  continue-on-error: true
+
+# ========================================
+# PERFORMANCE
+# ========================================
+# Performance optimization settings for quest system.
+performance:
+  # Skip task handler processing for players with no active quests
+  skip-inactive-players: true
+  
+  # Use cached quest data instead of database queries
+  use-cache: true
+  
+  # Maximum time (ms) to spend processing a single event
+  max-processing-time: 5
+
+# ========================================
+# QUEST CATEGORIES
+# ========================================
+# Categories organize quests into logical groups.
+# Individual quest definitions are in: definitions/{category}/*.yml
+categories:
+  
+  tutorial:
+    displayOrder: 0
+    icon:
+      material: BOOK
+      displayNameKey: "quest.category.tutorial.name"
+      descriptionKey: "quest.category.tutorial.description"
+    enabled: true
+    quests: {}
+  
+  combat:
+    displayOrder: 1
+    icon:
+      material: IRON_SWORD
+      displayNameKey: "quest.category.combat.name"
+      descriptionKey: "quest.category.combat.description"
+    enabled: true
+    quests: {}
+  
+  mining:
+    displayOrder: 2
+    icon:
+      material: IRON_PICKAXE
+      displayNameKey: "quest.category.mining.name"
+      descriptionKey: "quest.category.mining.description"
+    enabled: true
+    quests: {}
+  
+  baker:
+    displayOrder: 3
+    icon:
+      material: BREAD
+      displayNameKey: "quest.category.baker.name"
+      descriptionKey: "quest.category.baker.description"
+    enabled: true
+    quests: {}
+  
+  hunter:
+    displayOrder: 4
+    icon:
+      material: BOW
+      displayNameKey: "quest.category.hunter.name"
+      descriptionKey: "quest.category.hunter.description"
+    enabled: true
+    quests: {}
+  
+  miner:
+    displayOrder: 5
+    icon:
+      material: DIAMOND_PICKAXE
+      displayNameKey: "quest.category.miner.name"
+      descriptionKey: "quest.category.miner.description"
+    enabled: true
+    quests: {}
+  
+  farmer:
+    displayOrder: 6
+    icon:
+      material: GOLDEN_HOE
+      displayNameKey: "quest.category.farmer.name"
+      descriptionKey: "quest.category.farmer.description"
+    enabled: true
+    quests: {}
+  
+  explorer:
+    displayOrder: 7
+    icon:
+      material: COMPASS
+      displayNameKey: "quest.category.explorer.name"
+      descriptionKey: "quest.category.explorer.description"
+    enabled: true
+    quests: {}
+  
+  builder:
+    displayOrder: 8
+    icon:
+      material: BRICKS
+      displayNameKey: "quest.category.builder.name"
+      descriptionKey: "quest.category.builder.description"
+    enabled: true
+    quests: {}
+  
+  enchanter:
+    displayOrder: 9
+    icon:
+      material: ENCHANTING_TABLE
+      displayNameKey: "quest.category.enchanter.name"
+      descriptionKey: "quest.category.enchanter.description"
+    enabled: true
+    quests: {}
+  
+  trader:
+    displayOrder: 10
+    icon:
+      material: EMERALD
+      displayNameKey: "quest.category.trader.name"
+      descriptionKey: "quest.category.trader.description"
+    enabled: true
+    quests: {}
+  
+  daily:
+    displayOrder: 11
+    icon:
+      material: CLOCK
+      displayNameKey: "quest.category.daily.name"
+      descriptionKey: "quest.category.daily.description"
+    enabled: true
+    quests: {}
+  
+  challenge:
+    displayOrder: 12
+    icon:
+      material: NETHER_STAR
+      displayNameKey: "quest.category.challenge.name"
+      descriptionKey: "quest.category.challenge.description"
+    enabled: true
+    quests: {}

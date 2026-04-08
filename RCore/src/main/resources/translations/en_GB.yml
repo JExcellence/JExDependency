@@ -1,9 +1,9 @@
-# British English translations for RCore Central Integration
+﻿# British English translations for RCore Central Integration
 
 prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
 
 rcconnect:
-  usage: "<gray>Usage: /rc <connect &lt;api-key&gt;|disconnect|claim droplets></gray>"
+  usage: "<gray>Usage: /rc <connect &lt;api-key&gt;|disconnect|claim droplets|store update></gray>"
   usage_no_claim: "<gray>Usage: /rc <connect &lt;api-key&gt;|disconnect></gray>"
   connecting: "<yellow>Connecting to RaindropCentral...</yellow>"
   success: "<green>Successfully connected to RaindropCentral!</green> <gray>Server is now sending heartbeats.</gray>"
@@ -21,6 +21,13 @@ rcdisconnect:
     failed: "<red>Failed to disconnect. Please try again.</red>"
     network: "<red>Network error: %error%</red>"
 
+rcstore:
+  updating: "<yellow>Refreshing the local droplet-store allowlist from RaindropCentral...</yellow>"
+  success: "<green>Updated the local droplet-store allowlist.</green> <gray>%count% item(s) are currently allowed.</gray>"
+  error:
+    not_connected: "<red>RCore must be connected to the RaindropCentral backend before the store allowlist can be updated.</red>"
+    failed: "<red>Failed to refresh the droplet-store allowlist: %error%</red>"
+    using_cache: "<yellow>Failed to refresh the droplet-store allowlist, but the last cached list is still being used: %error%</yellow>"
 rcclaim:
   loading: "<yellow>Checking RaindropCentral for unclaimed droplet rewards...</yellow>"
   claiming_item: "<yellow>Claiming %item_name% from RaindropCentral...</yellow>"
@@ -169,3 +176,5 @@ rc_claim_droplet_jobs_ui:
 
 general:
   no_permission: "<red>You don't have permission to use this command.</red>"
+
+

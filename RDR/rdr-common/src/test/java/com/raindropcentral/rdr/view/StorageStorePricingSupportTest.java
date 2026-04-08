@@ -13,12 +13,12 @@
 
 package com.raindropcentral.rdr.view;
 
-import java.lang.reflect.Proxy;
-
 import com.raindropcentral.rdr.configs.StoreRequirementSection;
 import com.raindropcentral.rplatform.requirement.AbstractRequirement;
-import org.junit.jupiter.api.Test;
 import org.bukkit.entity.Player;
+import org.junit.jupiter.api.Test;
+
+import java.lang.reflect.Proxy;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

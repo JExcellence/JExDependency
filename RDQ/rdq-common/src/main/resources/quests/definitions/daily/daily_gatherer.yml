@@ -1,0 +1,58 @@
+identifier: "daily_gatherer"
+category: "daily"
+difficulty: EASY
+enabled: true
+displayOrder: 1
+repeatable: true
+maxCompletions: -1
+cooldownSeconds: 86400
+timeLimitSeconds: 0
+
+icon:
+  material: CHEST
+  displayNameKey: "quest.daily_gatherer.name"
+  descriptionKey: "quest.daily_gatherer.description"
+
+tasks:
+  break_any_blocks:
+    orderIndex: 0
+    difficulty: EASY
+    sequential: false
+    icon:
+      material: STONE
+      displayNameKey: "quest.daily_gatherer.task.break_any_blocks.name"
+      descriptionKey: "quest.daily_gatherer.task.break_any_blocks.description"
+    requirement:
+      type: BREAK_BLOCKS
+      target: STONE
+      amount: 500
+  mine_ores:
+    orderIndex: 1
+    difficulty: EASY
+    sequential: false
+    icon:
+      material: COAL_ORE
+      displayNameKey: "quest.daily_gatherer.task.mine_ores.name"
+      descriptionKey: "quest.daily_gatherer.task.mine_ores.description"
+    requirement:
+      type: MINE_BLOCKS
+      target: COAL_ORE
+      amount: 100
+
+rewards:
+  main_currency:
+    type: CURRENCY
+    currency: coins
+    amount: 500.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 200.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

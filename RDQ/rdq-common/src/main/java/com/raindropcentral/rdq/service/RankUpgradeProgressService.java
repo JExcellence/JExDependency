@@ -26,7 +26,6 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.logging.Logger;
 
 /**
  * Enhanced service for managing player rank upgrade progress with improved.

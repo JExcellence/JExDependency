@@ -13,13 +13,6 @@
 
 package com.raindropcentral.rdr.listeners;
 
-import java.util.Objects;
-import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
-import java.util.function.Supplier;
-import java.util.function.ToIntFunction;
-import java.util.logging.Logger;
-
 import com.raindropcentral.rdr.RDR;
 import com.raindropcentral.rdr.configs.ConfigSection;
 import com.raindropcentral.rdr.database.entity.RDRPlayer;
@@ -32,6 +25,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Supplier;
+import java.util.function.ToIntFunction;
+import java.util.logging.Logger;
 
 /**
  * Player join listener that provisions persistent RDR storage profiles.

@@ -1,0 +1,45 @@
+identifier: "tutorial_first_steps"
+category: "tutorial"
+difficulty: TRIVIAL
+enabled: true
+displayOrder: 0
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
+
+icon:
+  material: LEATHER_BOOTS
+  displayNameKey: "quest.tutorial_first_steps.name"
+  descriptionKey: "quest.tutorial_first_steps.description"
+
+tasks:
+  walk_around:
+    orderIndex: 0
+    difficulty: TRIVIAL
+    sequential: false
+    requirement:
+      type: WALK_DISTANCE
+      amount: 100
+
+rewards:
+  welcome_title:
+    type: TITLE
+    titleId: "newcomer"
+    displayName: "Newcomer"
+  starter_coins:
+    type: CURRENCY
+    currency: coins
+    amount: 50.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  starter_xp:
+    type: EXPERIENCE
+    amount: 25.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

@@ -13,8 +13,7 @@
 
 package com.raindropcentral.rdr.database.entity;
 
-import java.util.Objects;
-
+import com.raindropcentral.rplatform.database.converter.ItemStackConverter;
 import de.jexcellence.hibernate.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
@@ -28,7 +27,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import com.raindropcentral.rplatform.database.converter.ItemStackConverter;
+import java.util.Objects;
 
 /**
  * Persistent banked progress for a single storage-store requirement token.

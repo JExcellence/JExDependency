@@ -10,7 +10,7 @@ categories:
       descriptionKey: "quest.category.combat.icon.lore"
     displayOrder: 0
     enabled: true
-  
+
   mining:
     identifier: "mining"
     icon:
@@ -19,7 +19,7 @@ categories:
       descriptionKey: "quest.category.mining.icon.lore"
     displayOrder: 1
     enabled: true
-  
+
   building:
     identifier: "building"
     icon:
@@ -28,30 +28,102 @@ categories:
       descriptionKey: "quest.category.building.icon.lore"
     displayOrder: 2
     enabled: true
-  
-  exploration:
-    identifier: "exploration"
+
+  miner:
+    identifier: "miner"
     icon:
-      type: "COMPASS"
-      displayNameKey: "quest.category.exploration.name"
-      descriptionKey: "quest.category.exploration.icon.lore"
+      type: "IRON_PICKAXE"
+      displayNameKey: "quest.category.miner.name"
+      descriptionKey: "quest.category.miner.icon.lore"
     displayOrder: 3
     enabled: true
-  
-  farming:
-    identifier: "farming"
+
+  hunter:
+    identifier: "hunter"
     icon:
-      type: "GOLDEN_HOE"
-      displayNameKey: "quest.category.farming.name"
-      descriptionKey: "quest.category.farming.icon.lore"
+      type: "BOW"
+      displayNameKey: "quest.category.hunter.name"
+      descriptionKey: "quest.category.hunter.icon.lore"
     displayOrder: 4
     enabled: true
-  
-  beginner:
-    identifier: "beginner"
+
+  farmer:
+    identifier: "farmer"
     icon:
-      type: "BOOK"
-      displayNameKey: "quest.category.beginner.name"
-      descriptionKey: "quest.category.beginner.icon.lore"
+      type: "GOLDEN_HOE"
+      displayNameKey: "quest.category.farmer.name"
+      descriptionKey: "quest.category.farmer.icon.lore"
     displayOrder: 5
+    enabled: true
+
+  baker:
+    identifier: "baker"
+    icon:
+      type: "BREAD"
+      displayNameKey: "quest.category.baker.name"
+      descriptionKey: "quest.category.baker.icon.lore"
+    displayOrder: 6
+    enabled: true
+
+  builder:
+    identifier: "builder"
+    icon:
+      type: "CRAFTING_TABLE"
+      displayNameKey: "quest.category.builder.name"
+      descriptionKey: "quest.category.builder.icon.lore"
+    displayOrder: 7
+    enabled: true
+
+  enchanter:
+    identifier: "enchanter"
+    icon:
+      type: "ENCHANTING_TABLE"
+      displayNameKey: "quest.category.enchanter.name"
+      descriptionKey: "quest.category.enchanter.icon.lore"
+    displayOrder: 8
+    enabled: true
+
+  trader:
+    identifier: "trader"
+    icon:
+      type: "EMERALD"
+      displayNameKey: "quest.category.trader.name"
+      descriptionKey: "quest.category.trader.icon.lore"
+    displayOrder: 9
+    enabled: true
+
+  explorer:
+    identifier: "explorer"
+    icon:
+      type: "COMPASS"
+      displayNameKey: "quest.category.explorer.name"
+      descriptionKey: "quest.category.explorer.icon.lore"
+    displayOrder: 10
+    enabled: true
+
+  challenge:
+    identifier: "challenge"
+    icon:
+      type: "NETHER_STAR"
+      displayNameKey: "quest.category.challenge.name"
+      descriptionKey: "quest.category.challenge.icon.lore"
+    displayOrder: 11
+    enabled: true
+
+  daily:
+    identifier: "daily"
+    icon:
+      type: "CLOCK"
+      displayNameKey: "quest.category.daily.name"
+      descriptionKey: "quest.category.daily.icon.lore"
+    displayOrder: 12
+    enabled: true
+
+  tutorial:
+    identifier: "tutorial"
+    icon:
+      type: "WRITABLE_BOOK"
+      displayNameKey: "quest.category.tutorial.name"
+      descriptionKey: "quest.category.tutorial.icon.lore"
+    displayOrder: 13
     enabled: true

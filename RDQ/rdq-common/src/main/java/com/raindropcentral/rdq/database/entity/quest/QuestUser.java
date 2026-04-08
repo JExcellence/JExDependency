@@ -1,20 +1,15 @@
-/*
- * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
- *
- * This source code is proprietary and confidential to Antimatter Zone LLC.
- * Unauthorized copying, modification, distribution, display, performance,
- * publication, sublicensing, or creation of derivative works is prohibited
- * without prior written permission from Antimatter Zone LLC, except to the
- * extent permitted by applicable United States law.
- *
- * This notice is intended to preserve all rights and remedies available under
- * the laws of the State of Washington and the United States of America.
- */
-
 package com.raindropcentral.rdq.database.entity.quest;
 
 import de.jexcellence.hibernate.entity.BaseEntity;
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Index;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
@@ -29,8 +24,8 @@ import java.util.UUID;
 
 /**
  * Entity representing a player's progress on a quest.
- *
- * <p>Tracks when a player started a quest, their progress on individual tasks,
+ * <p>
+ * Tracks when a player started a quest, their progress on individual tasks,
  * and completion status.
  *
  * @author RaindropCentral
@@ -48,9 +43,6 @@ import java.util.UUID;
                 @Index(name = "idx_quest_user_active", columnList = "player_id, completed")
         }
 )
-/**
- * Represents the QuestUser API type.
- */
 public class QuestUser extends BaseEntity {
     
     @Serial
@@ -186,9 +178,6 @@ public class QuestUser extends BaseEntity {
         progress.setQuestUser(null);
     }
     
-    /**
-     * Executes equals.
-     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -202,9 +191,6 @@ public class QuestUser extends BaseEntity {
                 quest != null && quest.equals(questUser.quest);
     }
     
-    /**
-     * Returns whether hCode.
-     */
     @Override
     public int hashCode() {
         if (this.getId() != null) {
@@ -214,9 +200,6 @@ public class QuestUser extends BaseEntity {
         return Objects.hash(playerId, quest);
     }
     
-    /**
-     * Executes toString.
-     */
     @Override
     public String toString() {
         return "QuestUser{" +

@@ -13,8 +13,8 @@
 
 package com.raindropcentral.rdq.database.entity.reward;
 
-import com.raindropcentral.rdq.config.utility.IconSection;
 import com.raindropcentral.rdq.database.converter.IconSectionConverter;
+import com.raindropcentral.rplatform.config.icon.IconSection;
 import com.raindropcentral.rplatform.reward.AbstractReward;
 import com.raindropcentral.rplatform.reward.json.RewardParser;
 import de.jexcellence.hibernate.entity.BaseEntity;

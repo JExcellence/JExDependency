@@ -1,0 +1,66 @@
+identifier: "legendary_hunter"
+category: "hunter"
+difficulty: EXTREME
+enabled: true
+displayOrder: 5
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
+
+icon:
+  material: BOW
+  displayNameKey: "quest.legendary_hunter.name"
+  descriptionKey: "quest.legendary_hunter.description"
+
+tasks:
+  kill_ender_dragon:
+    orderIndex: 0
+    difficulty: EXTREME
+    sequential: false
+    requirement:
+      type: KILL_MOBS
+      target: ENDER_DRAGON
+      amount: 1
+  kill_wither:
+    orderIndex: 1
+    difficulty: EXTREME
+    sequential: false
+    requirement:
+      type: KILL_MOBS
+      target: WITHER
+      amount: 1
+  kill_elder_guardian:
+    orderIndex: 2
+    difficulty: EXTREME
+    sequential: false
+    requirement:
+      type: KILL_MOBS
+      target: ELDER_GUARDIAN
+      amount: 3
+  kill_ravagers:
+    orderIndex: 3
+    difficulty: EXTREME
+    sequential: false
+    requirement:
+      type: KILL_MOBS
+      target: RAVAGER
+      amount: 10
+
+rewards:
+  main_currency:
+    type: CURRENCY
+    currency: coins
+    amount: 5000.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 2000.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

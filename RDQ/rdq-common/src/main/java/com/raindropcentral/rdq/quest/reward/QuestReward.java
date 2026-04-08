@@ -1,23 +1,10 @@
-/*
- * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
- *
- * This source code is proprietary and confidential to Antimatter Zone LLC.
- * Unauthorized copying, modification, distribution, display, performance,
- * publication, sublicensing, or creation of derivative works is prohibited
- * without prior written permission from Antimatter Zone LLC, except to the
- * extent permitted by applicable United States law.
- *
- * This notice is intended to preserve all rights and remedies available under
- * the laws of the State of Washington and the United States of America.
- */
-
 package com.raindropcentral.rdq.quest.reward;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.raindropcentral.rdq.quest.service.QuestService;
+import com.raindropcentral.rdq.service.quest.QuestService;
 import com.raindropcentral.rplatform.reward.AbstractReward;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -28,12 +15,12 @@ import java.util.logging.Logger;
 
 /**
  * Reward that grants quest start or completion as a reward.
- *
- * <p>This reward integrates with the quest service to automatically start a quest
+ * <p>
+ * This reward integrates with the quest service to automatically start a quest
  * for a player or mark a quest as completed. This is useful for quest chains
  * where completing one quest automatically starts or completes another.
- *
- * <p>Example JSON configuration:
+ * <p>
+ * Example JSON configuration:
  * <pre>
  * {
  *   "type": "QUEST",
@@ -108,8 +95,8 @@ public final class QuestReward extends AbstractReward {
     
     /**
      * Sets the quest service for this reward.
- *
- * <p>This is called during initialization by the quest system.
+     * <p>
+     * This is called during initialization by the quest system.
      *
      * @param questService the quest service
      */
@@ -137,18 +124,12 @@ public final class QuestReward extends AbstractReward {
         return action;
     }
     
-    /**
-     * Gets typeId.
-     */
     @Override
     @NotNull
     public String getTypeId() {
         return "QUEST";
     }
     
-    /**
-     * Executes grant.
-     */
     @Override
     @NotNull
     public CompletableFuture<Boolean> grant(@NotNull final Player player) {
@@ -172,13 +153,13 @@ public final class QuestReward extends AbstractReward {
     private CompletableFuture<Boolean> grantQuestStart(@NotNull final Player player) {
         return questService.startQuest(player.getUniqueId(), questIdentifier)
                 .thenApply(result -> {
-                    if (result instanceof com.raindropcentral.rdq.quest.model.QuestStartResult.Success) {
+                    if (result.success()) {
                         LOGGER.log(Level.FINE, "Quest reward: Started quest " + questIdentifier + 
                                 " for " + player.getName());
                         return true;
                     } else {
                         LOGGER.log(Level.WARNING, "Quest reward: Failed to start quest " + 
-                                questIdentifier + " for " + player.getName() + ": " + result);
+                                questIdentifier + " for " + player.getName() + ": " + result.failureReason());
                         return false;
                     }
                 })
@@ -191,8 +172,8 @@ public final class QuestReward extends AbstractReward {
     
     /**
      * Grants quest completion to the player.
- *
- * <p>This is an admin/cheat function that immediately completes the quest
+     * <p>
+     * This is an admin/cheat function that immediately completes the quest
      * without requiring the player to complete tasks.
      *
      * @param player the player
@@ -205,9 +186,6 @@ public final class QuestReward extends AbstractReward {
         return CompletableFuture.completedFuture(false);
     }
     
-    /**
-     * Gets estimatedValue.
-     */
     @Override
     public double getEstimatedValue() {
         // Quest rewards have variable value depending on the quest
@@ -215,18 +193,12 @@ public final class QuestReward extends AbstractReward {
         return 50.0;
     }
     
-    /**
-     * Gets descriptionKey.
-     */
     @Override
     @NotNull
     public String getDescriptionKey() {
         return "reward.quest." + action.name().toLowerCase();
     }
     
-    /**
-     * Executes validate.
-     */
     @Override
     public void validate() {
         if (questIdentifier == null || questIdentifier.trim().isEmpty()) {

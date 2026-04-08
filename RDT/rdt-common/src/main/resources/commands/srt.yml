@@ -1,0 +1,27 @@
+commands:
+  srt:
+    name: 'rt'
+    description: 'Console-only RDT routes'
+    aliases: []
+    usage: 'rt broadcast <town_uuid> <mini_message>'
+    argumentUsages:
+      1$: 'lut["prefix"] & "<gray>/" & alias & " <red>broadcast <town_uuid> <mini_message></red></gray>"'
+    errorMessages:
+      malformedEnum$: |
+        lut["prefix"] & "<gray>The value <red>" & value & "</red> is not valid</gray>"
+      playerNotOnline$: 'lut["prefix"] & "<gray>The player <red>" & value & "</red> is <red>not online</red></gray>"'
+      playerUnknown$: 'lut["prefix"] & "<gray>The player <red>" & value & "</red> has <red>not played</red> on this server before</gray>"'
+      internalError$: 'lut["prefix"] & "<dark_red>An internal error occurred</dark_red>"'
+      notAConsole$: 'lut["prefix"] & "<red>You can only execute this command in the console</red>"'
+      notAPlayer$: 'lut["prefix"] & "<gray>This command can only be executed as a <red>player</red></gray>"'
+      malformedDouble$: 'lut["prefix"] & "<gray>The value <red>" & value & "</red> is not a valid number</gray>"'
+      malformedFloat$: 'lut["prefix"] & "<gray>The value <red>" & value & "</red> is not a valid number</gray>"'
+      malformedLong$: 'lut["prefix"] & "<gray>The value <red>" & value & "</red> is not a valid number</gray>"'
+      malformedInteger$: 'lut["prefix"] & "<gray>The value <red>" & value & "</red> is not a valid number</gray>"'
+    permissions:
+      missingMessage$: 'lut["prefix"] & "<gray>You lack the permission: <red>" & permission & "</red></gray>"'
+      nodes:
+        broadcast: 'raindroptowns.command.broadcast'
+
+lut:
+  prefix: '<gradient:#38bdf8:#60a5fa>[RDT]</gradient> '

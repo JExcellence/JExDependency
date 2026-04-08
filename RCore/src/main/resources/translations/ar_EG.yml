@@ -3,7 +3,7 @@
 prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
 
 rcconnect:
-  usage: "<gray>الاستعمال: /rc <connect &lt;api-key&gt;|disconnect|claim droplets></gray>"
+  usage: "<gray>الاستعمال: /rc <connect &lt;api-key&gt;|disconnect|claim droplets|store update></gray>"
   usage_no_claim: "<gray>الاستعمال: /rc <connect &lt;api-key&gt;|disconnect></gray>"
   connecting: "<yellow>جاري الاتصال بـ RaindropCentral...</yellow>"
   success: "<green>تم الاتصال بـ RaindropCentral بنجاح!</green> <gray>السيرفر بيبعت نبضات دلوقتي.</gray>"
@@ -21,6 +21,13 @@ rcdisconnect:
     failed: "<red>فشل قطع الاتصال. حاول تاني.</red>"
     network: "<red>خطأ في الشبكة: %error%</red>"
 
+rcstore:
+  updating: "<yellow>Refreshing the local droplet-store allowlist from RaindropCentral...</yellow>"
+  success: "<green>Updated the local droplet-store allowlist.</green> <gray>%count% item(s) are currently allowed.</gray>"
+  error:
+    not_connected: "<red>RCore must be connected to the RaindropCentral backend before the store allowlist can be updated.</red>"
+    failed: "<red>Failed to refresh the droplet-store allowlist: %error%</red>"
+    using_cache: "<yellow>Failed to refresh the droplet-store allowlist, but the last cached list is still being used: %error%</yellow>"
 rcclaim:
   loading: "<yellow>التحقق من RaindropCentral بحثًا عن مكافآت القطرات غير المطالب بها...</yellow>"
   claiming_item: "<yellow> المطالبة بـ %item_name% من RaindropCentral...</yellow>"
@@ -169,3 +176,5 @@ rc_claim_droplet_jobs_ui:
 
 general:
   no_permission: "<red>ما عندكش صلاحية تستخدم الأمر ده.</red>"
+
+

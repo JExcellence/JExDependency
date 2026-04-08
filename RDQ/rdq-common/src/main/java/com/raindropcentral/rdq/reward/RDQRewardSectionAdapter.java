@@ -16,7 +16,13 @@ package com.raindropcentral.rdq.reward;
 import com.raindropcentral.rdq.config.utility.RewardSection;
 import com.raindropcentral.rplatform.reward.AbstractReward;
 import com.raindropcentral.rplatform.reward.config.RewardSectionAdapter;
-import com.raindropcentral.rplatform.reward.impl.*;
+import com.raindropcentral.rplatform.reward.impl.ChoiceReward;
+import com.raindropcentral.rplatform.reward.impl.CommandReward;
+import com.raindropcentral.rplatform.reward.impl.CompositeReward;
+import com.raindropcentral.rplatform.reward.impl.CurrencyReward;
+import com.raindropcentral.rplatform.reward.impl.ExperienceReward;
+import com.raindropcentral.rplatform.reward.impl.ItemReward;
+import com.raindropcentral.rplatform.reward.impl.PermissionReward;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

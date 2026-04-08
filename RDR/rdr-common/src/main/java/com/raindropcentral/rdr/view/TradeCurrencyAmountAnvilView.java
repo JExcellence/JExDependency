@@ -13,11 +13,6 @@
 
 package com.raindropcentral.rdr.view;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.UUID;
-
 import com.raindropcentral.rdr.RDR;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import com.raindropcentral.rplatform.view.AbstractAnvilView;
@@ -32,6 +27,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * Anvil input view used to capture an explicit trade-currency add/remove amount.

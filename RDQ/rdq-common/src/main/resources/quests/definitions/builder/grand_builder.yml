@@ -1,0 +1,50 @@
+identifier: "grand_builder"
+category: "builder"
+difficulty: HARD
+enabled: true
+displayOrder: 4
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
+
+icon:
+  material: PRISMARINE
+  displayNameKey: "quest.grand_builder.name"
+  descriptionKey: "quest.grand_builder.description"
+
+tasks:
+  collect_prismarine:
+    orderIndex: 0
+    difficulty: HARD
+    sequential: false
+    requirement:
+      type: MINE_BLOCKS
+      target: PRISMARINE
+      amount: 128
+  build_monument:
+    orderIndex: 1
+    difficulty: HARD
+    sequential: false
+    requirement:
+      type: PLACE_BLOCKS
+      target: PRISMARINE
+      amount: 1000
+
+rewards:
+  main_currency:
+    type: CURRENCY
+    currency: coins
+    amount: 2500.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 1000.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

@@ -1,0 +1,8 @@
+name: generator
+description: Manage cobblestone generator structures
+usage: /island generator <subcommand>
+permission: jexoneblock.command.generator
+aliases:
+  - gen
+  - generators
+  - cobblegen

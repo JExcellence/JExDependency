@@ -1,0 +1,111 @@
+# Configurable Bank chunk progression levels.
+# Add, remove, or reorder numeric level keys as desired.
+# The highest numeric key becomes the Bank max level.
+levels:
+  1:
+    requirements: {}
+    rewards: {}
+  2:
+    requirements:
+      vault_upgrade:
+        type: "CURRENCY"
+        currency: "vault"
+        amount: 1000.0
+        consumable: true
+        description: "Bank funding contribution"
+      reserve_materials:
+        type: "ITEM"
+        requiredItems:
+          - type: "GOLD_INGOT"
+            amount: 32
+        consumeOnComplete: true
+        exactMatch: false
+        description: "Bank reserve materials"
+    rewards:
+      vault_bonus:
+        type: "CURRENCY"
+        currencyId: "vault"
+        amount: 150.0
+        description: "Bank treasury rebate"
+      town_broadcast:
+        type: "COMMAND"
+        command: "rt broadcast {town_uuid} <aqua>{town_name}</aqua> <yellow>upgraded Bank chunk <white>{chunk_x}, {chunk_z}</white> to level <white>{target_level}</white><yellow>!</yellow>"
+        executeAsPlayer: false
+  3:
+    requirements:
+      vault_upgrade:
+        type: "CURRENCY"
+        currency: "vault"
+        amount: 1750.0
+        consumable: true
+        description: "Bank funding contribution"
+      trade_materials:
+        type: "ITEM"
+        requiredItems:
+          - type: "EMERALD"
+            amount: 24
+        consumeOnComplete: true
+        exactMatch: false
+        description: "Bank trade materials"
+    rewards:
+      vault_bonus:
+        type: "CURRENCY"
+        currencyId: "vault"
+        amount: 250.0
+        description: "Bank treasury rebate"
+      town_broadcast:
+        type: "COMMAND"
+        command: "rt broadcast {town_uuid} <aqua>{town_name}</aqua> <yellow>upgraded Bank chunk <white>{chunk_x}, {chunk_z}</white> to level <white>{target_level}</white><yellow>!</yellow>"
+        executeAsPlayer: false
+  4:
+    requirements:
+      vault_upgrade:
+        type: "CURRENCY"
+        currency: "vault"
+        amount: 2750.0
+        consumable: true
+        description: "Bank funding contribution"
+      vault_materials:
+        type: "ITEM"
+        requiredItems:
+          - type: "GOLD_BLOCK"
+            amount: 16
+        consumeOnComplete: true
+        exactMatch: false
+        description: "Bank vault materials"
+    rewards:
+      vault_bonus:
+        type: "CURRENCY"
+        currencyId: "vault"
+        amount: 400.0
+        description: "Bank treasury rebate"
+      town_broadcast:
+        type: "COMMAND"
+        command: "rt broadcast {town_uuid} <aqua>{town_name}</aqua> <yellow>upgraded Bank chunk <white>{chunk_x}, {chunk_z}</white> to level <white>{target_level}</white><yellow>!</yellow>"
+        executeAsPlayer: false
+  5:
+    requirements:
+      vault_upgrade:
+        type: "CURRENCY"
+        currency: "vault"
+        amount: 4000.0
+        consumable: true
+        description: "Bank funding contribution"
+      precision_materials:
+        type: "ITEM"
+        requiredItems:
+          - type: "DIAMOND"
+            amount: 8
+        consumeOnComplete: true
+        exactMatch: false
+        description: "Bank precision materials"
+    rewards:
+      vault_bonus:
+        type: "CURRENCY"
+        currencyId: "vault"
+        amount: 600.0
+        description: "Bank treasury rebate"
+      town_broadcast:
+        type: "COMMAND"
+        command: "rt broadcast {town_uuid} <aqua>{town_name}</aqua> <yellow>upgraded Bank chunk <white>{chunk_x}, {chunk_z}</white> to level <white>{target_level}</white><yellow>!</yellow>"
+        executeAsPlayer: false

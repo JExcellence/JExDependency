@@ -14,6 +14,7 @@
 package com.raindropcentral.rplatform.reward.impl;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.raindropcentral.rplatform.reward.AbstractReward;
@@ -30,6 +31,7 @@ import java.util.logging.Logger;
  * Represents the CompositeReward API type.
  */
 @JsonTypeName("COMPOSITE")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public final class CompositeReward extends AbstractReward {
 
     private static final Logger LOGGER = Logger.getLogger(CompositeReward.class.getName());

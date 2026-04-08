@@ -1,0 +1,8 @@
+name: island
+description: Main island management commands
+usage: /island <subcommand>
+permission: jexoneblock.command.island
+aliases:
+  - is
+  - oneblock
+  - ob

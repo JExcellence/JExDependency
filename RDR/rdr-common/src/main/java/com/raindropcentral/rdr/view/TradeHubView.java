@@ -13,8 +13,6 @@
 
 package com.raindropcentral.rdr.view;
 
-import java.util.Map;
-
 import com.raindropcentral.rdr.RDR;
 import com.raindropcentral.rdr.service.TradeService;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
@@ -27,6 +25,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Map;
 
 /**
  * Root trade hub view for the DB-first cross-server trade subsystem.

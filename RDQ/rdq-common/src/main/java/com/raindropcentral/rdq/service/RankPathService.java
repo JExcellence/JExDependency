@@ -1,16 +1,3 @@
-/*
- * Copyright (c) 2021-2026 Antimatter Zone LLC. All rights reserved.
- *
- * This source code is proprietary and confidential to Antimatter Zone LLC.
- * Unauthorized copying, modification, distribution, display, performance,
- * publication, sublicensing, or creation of derivative works is prohibited
- * without prior written permission from Antimatter Zone LLC, except to the
- * extent permitted by applicable United States law.
- *
- * This notice is intended to preserve all rights and remedies available under
- * the laws of the State of Washington and the United States of America.
- */
-
 package com.raindropcentral.rdq.service;
 
 import com.raindropcentral.rdq.RDQ;
@@ -20,7 +7,6 @@ import com.raindropcentral.rdq.database.entity.rank.RPlayerRankPath;
 import com.raindropcentral.rdq.database.entity.rank.RRank;
 import com.raindropcentral.rdq.database.entity.rank.RRankTree;
 import com.raindropcentral.rdq.view.ranks.interaction.RankProgressionManager;
-import com.raindropcentral.rplatform.logging.CentralLogger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -31,17 +17,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Represents the RankPathService API type.
+ * Coordinates rank-path selection and initial rank assignment for RDQ players.
+ *
+ * <p>This service validates eligibility, activates the chosen rank tree, and
+ * delegates follow-up progression work to the rank progression manager.</p>
  */
 public class RankPathService {
 	
 	private static final Logger LOGGER = Logger.getLogger(RankPathService.class.getName());
 	private final RDQ rdq;
 	private final RankProgressionManager progressionManager;
-	
-	/**
-	 * Executes RankPathService.
-	 */
+
 	public RankPathService(final @NotNull RDQ rdq) {
 		this.rdq = rdq;
 		this.progressionManager = new RankProgressionManager(rdq);

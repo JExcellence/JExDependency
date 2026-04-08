@@ -3,7 +3,7 @@
 prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
 
 rcconnect:
-  usage: "<gray>Užití: /rc <connect &lt;api-key&gt;|disconnect|claim droplets></gray>"
+  usage: "<gray>Užití: /rc <connect &lt;api-key&gt;|disconnect|claim droplets|store update></gray>"
   usage_no_claim: "<gray>Užití: /rc <connect &lt;api-key&gt;|disconnect></gray>"
   connecting: "<yellow>Připojování k RaindropCentral...</yellow>"
   success: "<green>Připojení k RaindropCentral bylo úspěšné!</green> <gray>Server nyní odesílá heartbeat signály.</gray>"
@@ -21,6 +21,13 @@ rcdisconnect:
     failed: "<red>Odpojení se nezdařilo. Zkuste to prosím znovu.</red>"
     network: "<red>Chyba sítě: %error%</red>"
 
+rcstore:
+  updating: "<yellow>Refreshing the local droplet-store allowlist from RaindropCentral...</yellow>"
+  success: "<green>Updated the local droplet-store allowlist.</green> <gray>%count% item(s) are currently allowed.</gray>"
+  error:
+    not_connected: "<red>RCore must be connected to the RaindropCentral backend before the store allowlist can be updated.</red>"
+    failed: "<red>Failed to refresh the droplet-store allowlist: %error%</red>"
+    using_cache: "<yellow>Failed to refresh the droplet-store allowlist, but the last cached list is still being used: %error%</yellow>"
 rcclaim:
   loading: "<yellow>Kontrola RaindropCentral kvůli nevyzvednutým odměnám za kapky...</yellow>"
   claiming_item: "<yellow>Nárokování %item_name% od RaindropCentral...</yellow>"
@@ -169,3 +176,5 @@ rc_claim_droplet_jobs_ui:
 
 general:
   no_permission: "<red>Nemáte oprávnění použít tento příkaz.</red>"
+
+

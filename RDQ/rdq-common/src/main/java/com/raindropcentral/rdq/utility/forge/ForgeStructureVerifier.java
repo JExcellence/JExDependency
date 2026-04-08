@@ -11,7 +11,7 @@
  * the laws of the State of Washington and the United States of America.
  */
 
-/*
+package com.raindropcentral.rdq.utility.forge;/*
 package com.raindropcentral.rdq.utility.forge;
 
 import com.raindropcentral.rdq.utility.CooldownManager;

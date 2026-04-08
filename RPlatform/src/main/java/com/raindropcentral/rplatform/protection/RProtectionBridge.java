@@ -13,14 +13,14 @@
 
 package com.raindropcentral.rplatform.protection;
 
-import java.util.List;
-
-import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import com.raindropcentral.rplatform.protection.impl.HuskTownProtectionBridge;
 import com.raindropcentral.rplatform.protection.impl.RDTProtectionBridge;
 import com.raindropcentral.rplatform.protection.impl.TownyProtectionBridge;
+import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 /**
  * Shared protection-API bridge contract for town-oriented plugins.

@@ -14,10 +14,10 @@
 package com.raindropcentral.rdt.service;
 
 /**
- * Defines edition-specific runtime behavior for RDT.
+ * Defines edition-specific town rules exposed to the shared RDT runtime.
  *
- * <p>The shared runtime delegates configuration mutability checks and edition metadata to this
- * abstraction so free and premium jars can share one codebase.</p>
+ * <p>The runtime uses this contract to decide whether premium-only behavior such as mutable
+ * configs should be enabled without coupling the common module to a concrete edition.</p>
  *
  * @author ItsRainingHP
  * @since 1.0.0
@@ -28,14 +28,14 @@ public interface TownService {
     /**
      * Returns whether the active edition allows runtime config changes.
      *
-     * @return {@code true} when config changes are allowed
+     * @return {@code true} when config edits are supported
      */
     boolean canChangeConfigs();
 
     /**
-     * Returns whether the active edition is premium.
+     * Returns whether the active edition should be treated as premium.
      *
-     * @return {@code true} for premium editions
+     * @return {@code true} when the runtime is premium
      */
     boolean isPremium();
 }

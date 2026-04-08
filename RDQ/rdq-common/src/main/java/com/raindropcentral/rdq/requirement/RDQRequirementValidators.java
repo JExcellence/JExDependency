@@ -13,7 +13,11 @@
 
 package com.raindropcentral.rdq.requirement;
 
-import com.raindropcentral.rplatform.requirement.impl.*;
+import com.raindropcentral.rplatform.requirement.impl.ChoiceRequirement;
+import com.raindropcentral.rplatform.requirement.impl.CompositeRequirement;
+import com.raindropcentral.rplatform.requirement.impl.ExperienceLevelRequirement;
+import com.raindropcentral.rplatform.requirement.impl.ItemRequirement;
+import com.raindropcentral.rplatform.requirement.impl.PermissionRequirement;
 import com.raindropcentral.rplatform.requirement.validation.RequirementValidator;
 import com.raindropcentral.rplatform.requirement.validation.ValidationRegistry;
 import com.raindropcentral.rplatform.requirement.validation.ValidationResult;

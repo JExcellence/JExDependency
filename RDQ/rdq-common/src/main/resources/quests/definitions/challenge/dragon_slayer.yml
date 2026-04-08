@@ -1,0 +1,46 @@
+identifier: "challenge_dragon_slayer"
+category: "challenge"
+difficulty: EXTREME
+enabled: true
+displayOrder: 1
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
+
+icon:
+  material: DRAGON_HEAD
+  displayNameKey: "quest.challenge_dragon_slayer.name"
+  descriptionKey: "quest.challenge_dragon_slayer.description"
+
+tasks:
+  slay_dragon:
+    orderIndex: 0
+    difficulty: EXTREME
+    sequential: false
+    icon:
+      material: DRAGON_EGG
+      displayNameKey: "quest.challenge_dragon_slayer.task.slay_dragon.name"
+      descriptionKey: "quest.challenge_dragon_slayer.task.slay_dragon.description"
+    requirement:
+      type: KILL_MOBS
+      target: ENDER_DRAGON
+      amount: 1
+
+rewards:
+  main_currency:
+    type: CURRENCY
+    currency: coins
+    amount: 50000.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 10000.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

@@ -1,0 +1,46 @@
+identifier: "combat_basic"
+category: "combat"
+difficulty: EASY
+enabled: true
+displayOrder: 1
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
+
+icon:
+  material: WOODEN_SWORD
+  displayNameKey: "quest.combat_basic.name"
+  descriptionKey: "quest.combat_basic.description"
+
+tasks:
+  kill_any_mob:
+    orderIndex: 0
+    difficulty: EASY
+    sequential: false
+    icon:
+      material: ZOMBIE_HEAD
+      displayNameKey: "quest.combat_basic.task.kill_any_mob.name"
+      descriptionKey: "quest.combat_basic.task.kill_any_mob.description"
+    requirement:
+      type: KILL_MOBS
+      target: ZOMBIE
+      amount: 5
+
+rewards:
+  main_currency:
+    type: CURRENCY
+    currencyId: coins
+    amount: 100.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "quest.combat_basic.reward.currency.name"
+      descriptionKey: "quest.combat_basic.reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 50.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "quest.combat_basic.reward.experience.name"
+      descriptionKey: "quest.combat_basic.reward.experience.description"

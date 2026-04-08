@@ -1,0 +1,2056 @@
+common:
+  back: "<gradient:#ff6b6b:#ee5a24> Back</gradient>"
+  next: "<gradient:#00d2d3:#01a3a4>Next </gradient>"
+  previous: "<gradient:#00d2d3:#01a3a4> Previous</gradient>"
+  close: "<red><bold> Close</bold></red>"
+  help: "<yellow><bold>? Help</bold></yellow>"
+  refresh: "<green><bold> Refresh</bold></green>"
+  loading: "<gray><italic> Loading...</italic></gray>"
+  error: "<red><bold> Error</bold></red>"
+  success: "<green><bold> Success</bold></green>"
+  failed: "<red><bold> Failed</bold></red>"
+  online: "<green><bold> Online</bold></green>"
+  offline: "<gray><bold> Offline</bold></gray>"
+  unknown_player: "<gray><italic>Unknown Player</italic></gray>"
+  "yes": "<green><bold> Yes</bold></green>"
+  "no": "<red><bold> No</bold></red>"
+  enabled: "<green><bold> Enabled</bold></green>"
+  disabled: "<red><bold> Disabled</bold></red>"
+  console: "<dark_purple><bold>Console</bold></dark_purple>"
+  no_reason: "<gray><italic>No reason provided</italic></gray>"
+  expired: "<red><bold> Expired</bold></red>"
+
+world_selector:
+  title: "<gradient:#2196F3:#03DAC6><bold> World Selection</bold></gradient>"
+  loading: "<yellow><bold></bold></yellow> <yellow>Loading available worlds...</yellow>"
+  no_worlds:
+    title: "<red><bold> No Worlds Available</bold></red>"
+    description:
+      - "<gray>No OneBlock worlds are currently</gray>"
+      - "<gray>available for island creation.</gray>"
+      - ""
+      - "<red>Please contact an administrator.</red>"
+  error:
+    title: "<red><bold> Error Loading Worlds</bold></red>"
+    description:
+      - "<gray>Failed to load available worlds:</gray>"
+      - "<red>{error}</red>"
+      - ""
+      - "<yellow>Click refresh to try again.</yellow>"
+  world:
+    name: "<white><bold> {world}</bold></white>"
+    description:
+      - "<yellow>Environment:</yellow> <blue>{environment}</blue>"
+      - "<yellow>Online Players:</yellow> <green><bold>{players}</bold></green>"
+      - ""
+      - "<green>Click to select this world</green>"
+  refresh: "<green><bold> Refresh Worlds</bold></green>"
+  info:
+    title: "<blue><bold> World Information</bold></blue>"
+    description:
+      - "<gray>Select a world for your island.</gray>"
+      - "<gray>Different worlds may have</gray>"
+      - "<gray>different features and settings.</gray>"
+
+storage_main_ui:
+  title: "<gradient:#4facfe:#00f2fe><bold> Island Storage</bold></gradient> <gray>({used}/{capacity})</gray>"
+
+storage_main:
+  actions:
+    search: "<yellow><bold> Search Items</bold></yellow>"
+    search_lore:
+      - "<gray>Click to search for specific items</gray>"
+      - "<gray>in your storage system</gray>"
+    deposit: "<green><bold> Quick Deposit</bold></green>"
+    deposit_lore:
+      - "<gray>Deposit items from your inventory</gray>"
+      - "<gray>into storage automatically</gray>"
+  categories:
+    blocks: "<gradient:#8e44ad:#9b59b6><bold> Blocks</bold></gradient>"
+    blocks_lore:
+      - "<gray>Building blocks and materials</gray>"
+      - "<gray>Items stored: {count}</gray>"
+    tools: "<gradient:#e67e22:#f39c12><bold> Tools & Weapons</bold></gradient>"
+    tools_lore:
+      - "<gray>Tools, weapons, and equipment</gray>"
+      - "<gray>Items stored: {count}</gray>"
+    food: "<gradient:#27ae60:#2ecc71><bold> Food & Consumables</bold></gradient>"
+    food_lore:
+      - "<gray>Food items and consumables</gray>"
+      - "<gray>Items stored: {count}</gray>"
+    materials: "<gradient:#34495e:#95a5a6><bold> Raw Materials</bold></gradient>"
+    materials_lore:
+      - "<gray>Raw materials and resources</gray>"
+      - "<gray>Items stored: {count}</gray>"
+    redstone: "<gradient:#e74c3c:#c0392b><bold> Redstone & Tech</bold></gradient>"
+    redstone_lore:
+      - "<gray>Redstone components and tech items</gray>"
+      - "<gray>Items stored: {count}</gray>"
+    misc: "<gradient:#95a5a6:#7f8c8d><bold> Miscellaneous</bold></gradient>"
+    misc_lore:
+      - "<gray>Other items and miscellaneous</gray>"
+      - "<gray>Items stored: {count}</gray>"
+  help:
+    header: "<gradient:#3498db:#2980b9><bold> Storage System Help</bold></gradient>"
+    categories: "<gray>Click on categories to browse stored items by type</gray>"
+    actions: "<gray>Use action buttons to search, deposit, or get help</gray>"
+  search:
+    coming_soon: "<yellow><bold></bold></yellow> <yellow>Search functionality coming soon!</yellow>"
+  deposit:
+    coming_soon: "<yellow><bold></bold></yellow> <yellow>Quick deposit functionality coming soon!</yellow>"
+  error:
+    title: "<red><bold> Storage Error</bold></red>"
+    lore:
+      - "<red>Failed to load storage data</red>"
+      - "<red>Please try again later</red>"
+
+storage_category_ui:
+  title: "<gradient:#4facfe:#00f2fe><bold> Storage - {category}</bold></gradient>"
+
+storage_category:
+  empty:
+    title: "<gray><bold> No Items</bold></gray>"
+    lore:
+      - "<gray>This category is empty</gray>"
+      - "<gray>Store items to see them here</gray>"
+  item:
+    name: "<white><bold>{material}</bold></white>"
+    lore:
+      - "<yellow>Amount:</yellow> <white><bold>{amount}</bold></white>"
+      - "<yellow>Stacks:</yellow> <white><bold>{stacks}</bold></white>"
+      - ""
+      - "<green>Click to view details</green>"
+  error:
+    title: "<red><bold> Category Error</bold></red>"
+    lore:
+      - "<red>Failed to load category items</red>"
+
+storage_category_enhanced:
+  title: "<gradient:#4facfe:#00f2fe><bold> Storage - {category}</bold></gradient> <gray>({count} items)</gray>"
+  nav:
+    previous: "<yellow><bold> Previous Page</bold></yellow>"
+    next: "<yellow><bold> Next Page</bold></yellow>"
+  actions:
+    filter: "<purple><bold> Filter Items</bold></purple>"
+    filter_lore:
+      - "<gray>Filter items by type</gray>"
+      - "<gray>or properties</gray>"
+      - ""
+      - "<green>Click to filter</green>"
+    sort: "<blue><bold> Sort Items</bold></blue>"
+    sort_lore:
+      - "<gray>Sort by:</gray>"
+      - "<white> Quantity</white>"
+      - "<white> Alphabetical</white>"
+      - "<white> Rarity</white>"
+      - ""
+      - "<green>Click to change sort</green>"
+    withdraw_all: "<green><bold> Withdraw All {category}</bold></green>"
+    withdraw_all_lore:
+      - "<gray>Withdraw all items from</gray>"
+      - "<gray>this category to inventory</gray>"
+      - ""
+      - "<yellow>Requires inventory space</yellow>"
+
+storage_item_detail_ui:
+  title: "<gradient:#4facfe:#00f2fe><bold> Item Details - {material}</bold></gradient>"
+
+storage_item_detail:
+  info:
+    name: "<blue><bold> Item Information</bold></blue>"
+    lore:
+      - "<yellow>Material:</yellow> <white><bold>{material}</bold></white>"
+      - "<yellow>Total Amount:</yellow> <white><bold>{amount}</bold></white>"
+      - "<yellow>Full Stacks:</yellow> <white><bold>{stacks}</bold></white>"
+      - "<yellow>Remaining:</yellow> <white><bold>{remainder}</bold></white>"
+  withdraw:
+    name: "<green><bold> Withdraw Items</bold></green>"
+    lore:
+      - "<gray>Click to withdraw items</gray>"
+      - "<gray>Shift-click for stack</gray>"
+  actions:
+    withdraw_1: "<green><bold> Withdraw 1</bold></green>"
+    withdraw_stack: "<green><bold> Withdraw Stack</bold></green>"
+    withdraw_all: "<green><bold> Withdraw All</bold></green>"
+  messages:
+    withdrawn: "<green><bold></bold></green> <green>Withdrew</green> <white><bold>{amount}x {material}</bold></white>"
+    insufficient: "<red><bold></bold></red> <red>Not enough items in storage</red>"
+    inventory_full: "<red><bold></bold></red> <red>Your inventory is full</red>"
+
+island_main_ui:
+  title: "<gradient:#4CAF50:#8BC34A><bold> {name} - Level {level}</bold></gradient> <gray>({evolution})</gray>"
+  island:
+    info:
+      name: "<gradient:#FFD700:#FFA000><bold> {name}</bold></gradient> <gray>(Owner: {owner})</gray>"
+      lore:
+        - "<yellow>Level:</yellow> <blue><bold>{level}</bold></blue>"
+        - "<yellow>Experience:</yellow> <green><bold>{experience}</bold></green>"
+        - "<yellow>Coins:</yellow> <gold><bold>{coins}</bold></gold>"
+        - "<yellow>Size:</yellow> <white>{size}</white>"
+        - "<yellow>Created:</yellow> <gray>{created}</gray>"
+        - ""
+        - "<green>Click for detailed info</green>"
+      detailed:
+        header: "<gradient:#4CAF50:#8BC34A><bold> Detailed Island Information</bold></gradient>"
+        name: "<yellow>Island Name:</yellow> <white><bold>{name}</bold></white>"
+        owner: "<yellow>Owner:</yellow> <white><bold>{owner}</bold></white>"
+        level: "<yellow>Level:</yellow> <blue><bold>{level}</bold></blue>"
+        experience: "<yellow>Experience:</yellow> <green><bold>{experience}</bold></green>"
+        coins: "<yellow>Island Coins:</yellow> <gold><bold>{coins}</bold></gold>"
+        size: "<yellow>Island Size:</yellow> <white>{size}</white>"
+        created: "<yellow>Created:</yellow> <gray>{created}</gray>"
+    evolution:
+      name: "<gradient:#FF6F00:#FF8F00><bold> {evolution} Evolution</bold></gradient> <gray>Level {level}</gray>"
+      lore:
+        - "<yellow>Blocks Broken:</yellow> <blue><bold>{blocks_broken}</bold></blue>"
+        - "<yellow>Prestige Level:</yellow> <light_purple><bold>{prestige}</bold></light_purple>"
+        - "<yellow>Evolution XP:</yellow> <green><bold>{experience}</bold></green>"
+        - ""
+        - "<green>Click to browse evolutions</green>"
+    members:
+      name: "<yellow><bold> Island Members</bold></yellow> <gray>({count}/{max})</gray>"
+      lore:
+        - "<yellow>Online:</yellow> <green><bold>{online}</bold></green>"
+        - "<yellow>Banned:</yellow> <red><bold>{banned}</bold></red>"
+        - ""
+        - "<green>Click to manage members</green>"
+    settings:
+      name: "<gray><bold> Island Settings</bold></gray>"
+      lore:
+        - "<yellow>Privacy:</yellow> <blue>{privacy}</blue>"
+        - "<yellow>Description:</yellow> <gray>{description}</gray>"
+        - ""
+        - "<green>Click to modify settings</green>"
+    visitors:
+      name: "<blue><bold> Visitor Settings</bold></blue>"
+      lore:
+        - "<yellow>Can Visit:</yellow> <blue>{can_visit}</blue>"
+        - ""
+        - "<green>Click to configure permissions</green>"
+    banned:
+      name: "<red><bold> Banned Players</bold></red> <gray>({count})</gray>"
+      lore:
+        - "<gray>Manage banned players</gray>"
+        - "<gray>and their restrictions</gray>"
+        - ""
+        - "<green>Click to view list</green>"
+    upgrades:
+      name: "<purple><bold> Island Upgrades</bold></purple>"
+      lore:
+        - "<yellow>Size Level:</yellow> <white><bold>{size_level}</bold></white>"
+        - ""
+        - "<green>Click to upgrade island</green>"
+      not_implemented: "<yellow><bold></bold></yellow> <yellow>Island upgrades coming soon!</yellow>"
+    oneblock:
+      name: "<dark_gray><bold> OneBlock Core</bold></dark_gray>"
+      lore:
+        - "<yellow>Evolution:</yellow> <gradient:#FF6F00:#FF8F00><bold>{evolution}</bold></gradient>"
+        - "<yellow>Blocks Broken:</yellow> <blue><bold>{blocks}</bold></blue>"
+        - ""
+        - "<green>Click to view core details</green>"
+    error:
+      no_permission_settings: "<red><bold></bold></red> <red>You don't have permission to modify island settings</red>"
+
+island:
+  info:
+    name: "<gradient:#FFD700:#FFA000><bold> {name}</bold></gradient> <gray>(Owner: {owner})</gray>"
+    lore:
+      - "<yellow>Level:</yellow> <blue><bold>{level}</bold></blue>"
+      - "<yellow>Experience:</yellow> <green><bold>{experience}</bold></green>"
+      - "<yellow>Coins:</yellow> <gold><bold>{coins}</bold></gold>"
+      - "<yellow>Size:</yellow> <white>{size}</white>"
+      - "<yellow>Created:</yellow> <gray>{created}</gray>"
+      - ""
+      - "<green>Click for detailed info</green>"
+    detailed:
+      header: "<gradient:#4CAF50:#8BC34A><bold> Detailed Island Information</bold></gradient>"
+      name: "<yellow>Island Name:</yellow> <white><bold>{name}</bold></white>"
+      owner: "<yellow>Owner:</yellow> <white><bold>{owner}</bold></white>"
+      level: "<yellow>Level:</yellow> <blue><bold>{level}</bold></blue>"
+      experience: "<yellow>Experience:</yellow> <green><bold>{experience}</bold></green>"
+      coins: "<yellow>Island Coins:</yellow> <gold><bold>{coins}</bold></gold>"
+      size: "<yellow>Island Size:</yellow> <white>{size}</white>"
+      created: "<yellow>Created:</yellow> <gray>{created}</gray>"
+  name:
+    title: "<gradient:#FFD700:#FFA000><bold> Island Name</bold></gradient>"
+    lore:
+      - "<yellow>Current:</yellow> <white><bold>{current_name}</bold></white>"
+      - "<yellow>Length:</yellow> <gray>{min_length}-{max_length} characters</gray>"
+      - ""
+      - "<green>Click to change name</green>"
+    prompt: "<yellow>Type new island name in chat (current: {current})</yellow>"
+  evolution:
+    name: "<gradient:#FF6F00:#FF8F00><bold> {evolution} Evolution</bold></gradient> <gray>Level {level}</gray>"
+    lore:
+      - "<yellow>Blocks Broken:</yellow> <blue><bold>{blocks_broken}</bold></blue>"
+      - "<yellow>Prestige Level:</yellow> <light_purple><bold>{prestige}</bold></light_purple>"
+      - "<yellow>Evolution XP:</yellow> <green><bold>{experience}</bold></green>"
+      - ""
+      - "<green>Click to browse evolutions</green>"
+  members:
+    name: "<yellow><bold> Island Members</bold></yellow> <gray>({count}/{max})</gray>"
+    lore:
+      - "<yellow>Online:</yellow> <green><bold>{online}</bold></green>"
+      - "<yellow>Banned:</yellow> <red><bold>{banned}</bold></red>"
+      - ""
+      - "<green>Click to manage members</green>"
+  settings:
+    name: "<gray><bold> Island Settings</bold></gray>"
+    lore:
+      - "<yellow>Privacy:</yellow> <blue>{privacy}</blue>"
+      - "<yellow>Description:</yellow> <gray>{description}</gray>"
+      - ""
+      - "<green>Click to modify settings</green>"
+    no_permission: "<red><bold></bold></red> <red>You don't have permission to modify island settings</red>"
+    description:
+      title: "<blue><bold> Island Description</bold></blue>"
+      lore:
+        - "<yellow>Current:</yellow> <gray>{current_description}</gray>"
+        - "<yellow>Max Length:</yellow> <white><bold>{max_length}</bold></white> <gray>characters</gray>"
+        - ""
+        - "<green>Click to change description</green>"
+      prompt: "<yellow>Type new description in chat (current: {current})</yellow>"
+    privacy:
+      title: "<blue><bold> Privacy: {status}</bold></blue>"
+      lore:
+        - "<yellow>Current:</yellow> <white><bold>{current_status}</bold></white>"
+        - "<yellow>New Status:</yellow> <white><bold>{new_status}</bold></white>"
+        - "<gray>{description}</gray>"
+        - ""
+        - "<green>Click to toggle privacy</green>"
+      changed: "<green><bold></bold></green> <green>Island privacy changed to</green> <white><bold>{status}</bold></white>"
+      public_warning: "<yellow><bold></bold></yellow> <yellow>Your island is now visible to all players</yellow>"
+      private_info: "<blue><bold></bold></blue> <blue>Your island is now private and invite-only</blue>"
+  visitors:
+    name: "<blue><bold> Visitor Settings</bold></blue>"
+    lore:
+      - "<yellow>Can Visit:</yellow> <blue>{can_visit}</blue>"
+      - ""
+      - "<green>Click to configure permissions</green>"
+  banned:
+    name: "<red><bold> Banned Players</bold></red> <gray>({count})</gray>"
+    lore:
+      - "<gray>Manage banned players</gray>"
+      - "<gray>and their restrictions</gray>"
+      - ""
+      - "<green>Click to view list</green>"
+  upgrades:
+    name: "<purple><bold> Island Upgrades</bold></purple>"
+    lore:
+      - "<yellow>Size Level:</yellow> <white><bold>{size_level}</bold></white>"
+      - ""
+      - "<green>Click to upgrade island</green>"
+    not_implemented: "<yellow><bold></bold></yellow> <yellow>Island upgrades coming soon!</yellow>"
+  oneblock:
+    name: "<dark_gray><bold> OneBlock Core</bold></dark_gray>"
+    lore:
+      - "<yellow>Evolution:</yellow> <gradient:#FF6F00:#FF8F00><bold>{evolution}</bold></gradient>"
+      - "<yellow>Blocks Broken:</yellow> <blue><bold>{blocks}</bold></blue>"
+      - ""
+      - "<green>Click to view core details</green>"
+  error:
+    no_permission_settings: "<red><bold></bold></red> <red>You don't have permission to modify island settings</red>"
+
+evolution_browser_ui:
+  title: "<gradient:#FF6F00:#FF8F00><bold> Evolution Browser</bold></gradient>"
+  page:
+    name: "<white><bold>Page {current}/{total}</bold></white>"
+    lore:
+      - "<gray>Showing {showing} evolutions</gray>"
+      - ""
+      - "<gray>Use arrows to navigate</gray>"
+  current: "<gradient:#FFD700:#FFA000><bold> {evolution}</bold></gradient> <yellow>(Current)</yellow>"
+  current_lore:
+    - "<gold><bold>Your current evolution</bold></gold>"
+    - "<yellow>Level:</yellow> <white><bold>{level}</bold></white>"
+    - "<yellow>Required Blocks:</yellow> <blue><bold>{blocks}</bold></blue>"
+    - ""
+    - "<gray>{description}</gray>"
+    - ""
+    - "<gold> Currently active </gold>"
+  unlocked: "<gradient:#4CAF50:#8BC34A><bold> {evolution}</bold></gradient>"
+  unlocked_lore:
+    - "<green><bold>Evolution unlocked!</bold></green>"
+    - "<yellow>Level:</yellow> <white><bold>{level}</bold></white>"
+    - "<yellow>Required Blocks:</yellow> <blue><bold>{blocks}</bold></blue>"
+    - ""
+    - "<gray>{description}</gray>"
+    - ""
+    - "<green>Click to view details</green>"
+  locked: "<gradient:#9E9E9E:#616161><bold> {evolution}</bold></gradient> <red>(Locked)</red>"
+  locked_lore:
+    - "<red><bold>Evolution locked</bold></red>"
+    - "<yellow>Required Level:</yellow> <white><bold>{level}</bold></white>"
+    - "<yellow>Required Blocks:</yellow> <blue><bold>{blocks}</bold></blue>"
+    - "<yellow>Your Blocks:</yellow> <red><bold>{current_blocks}</bold></red>"
+    - ""
+    - "<gray>{description}</gray>"
+    - ""
+    - "<red>Complete requirements to unlock</red>"
+  filter: "<purple><bold> Filter Evolutions</bold></purple>"
+  filter_lore:
+    - "<gray>Filter by status</gray>"
+    - "<gray>Show locked/unlocked</gray>"
+    - ""
+    - "<green>Click to filter</green>"
+  filter_coming_soon: "<yellow><bold></bold></yellow> <yellow>Filter system coming soon!</yellow>"
+  help_header: "<gradient:#00BCD4:#0097A7><bold> Evolution Browser Help</bold></gradient>"
+  help_unlocked: "<green><bold></bold></green> <green>Green = Unlocked evolutions</green>"
+  help_locked: "<red><bold></bold></red> <red>Red = Locked evolutions</red>"
+  help_current: "<gold><bold></bold></gold> <gold>Gold = Current evolution</gold>"
+  help_navigation: "<gray>Use</gray> <white><bold> </bold></white> <gray>arrows to navigate pages</gray>"
+
+evolution_browser:
+  current: "<gradient:#FFD700:#FFA000><bold> {evolution}</bold></gradient> <yellow>(Current)</yellow>"
+  current_lore:
+    - "<gold><bold>Your current evolution</bold></gold>"
+    - "<yellow>Level:</yellow> <white><bold>{level}</bold></white>"
+    - "<yellow>Required Blocks:</yellow> <blue><bold>{blocks}</bold></blue>"
+    - ""
+    - "<gray>{description}</gray>"
+    - ""
+    - "<gold> Currently active </gold>"
+  unlocked: "<gradient:#4CAF50:#8BC34A><bold> {evolution}</bold></gradient>"
+  unlocked_lore:
+    - "<green><bold>Evolution unlocked!</bold></green>"
+    - "<yellow>Level:</yellow> <white><bold>{level}</bold></white>"
+    - "<yellow>Required Blocks:</yellow> <blue><bold>{blocks}</bold></blue>"
+    - ""
+    - "<gray>{description}</gray>"
+    - ""
+    - "<green>Click to view details</green>"
+  locked: "<gradient:#9E9E9E:#616161><bold> {evolution}</bold></gradient> <red>(Locked)</red>"
+  locked_lore:
+    - "<red><bold>Evolution locked</bold></red>"
+    - "<yellow>Required Level:</yellow> <white><bold>{level}</bold></white>"
+    - "<yellow>Required Blocks:</yellow> <blue><bold>{blocks}</bold></blue>"
+    - "<yellow>Your Blocks:</yellow> <red><bold>{current_blocks}</bold></red>"
+    - ""
+    - "<gray>{description}</gray>"
+    - ""
+    - "<red>Complete requirements to unlock</red>"
+  filter: "<purple><bold> Filter Evolutions</bold></purple>"
+  filter_lore:
+    - "<gray>Filter by status</gray>"
+    - "<gray>Show locked/unlocked</gray>"
+    - ""
+    - "<green>Click to filter</green>"
+  filter_coming_soon: "<yellow><bold></bold></yellow> <yellow>Filter system coming soon!</yellow>"
+  navigation: "<aqua><bold> Navigation</bold></aqua> <gray>Page {page}/{total}</gray>"
+  navigation_lore:
+    - "<gray>Showing</gray> <white><bold>{showing}</bold></white> <gray>of</gray> <white><bold>{total_evolutions}</bold></white>"
+    - ""
+    - "<gray>Use arrow keys to navigate</gray>"
+  help_header: "<gradient:#00BCD4:#0097A7><bold> Evolution Browser Help</bold></gradient>"
+  help_unlocked: "<green><bold></bold></green> <green>Green = Unlocked evolutions</green>"
+  help_locked: "<red><bold></bold></red> <red>Red = Locked evolutions</red>"
+  help_current: "<gold><bold></bold></gold> <gold>Gold = Current evolution</gold>"
+  help_navigation: "<gray>Use</gray> <white><bold> </bold></white> <gray>arrows to navigate pages</gray>"
+
+evolution_detail_ui:
+  title: "<gradient:#FF6F00:#FF8F00><bold> Evolution Details - {evolution}</bold></gradient>"
+  page:
+    name: "<white><bold>Page {current}/{total}</bold></white>"
+    lore:
+      - "<gray>Showing {showing} items</gray>"
+      - ""
+      - "<gray>Use arrows to navigate</gray>"
+  entry:
+    name: "<white><bold>{name}</bold></white> <gray>({rarity})</gray>"
+    lore:
+      - "<yellow>Rarity:</yellow> {rarity}"
+      - "<yellow>Type:</yellow> <white>{type}</white>"
+      - "<yellow>Chance:</yellow> <white><bold>{chance}</bold></white>"
+      - ""
+      - "<gray>{description}</gray>"
+  mode:
+    blocks: "<gradient:#8e44ad:#9b59b6><bold> Blocks</bold></gradient>"
+    blocks_lore:
+      - "<gray>View block drops for this evolution</gray>"
+      - "<gray>Shows materials and their chances</gray>"
+    items: "<gradient:#e67e22:#f39c12><bold> Items</bold></gradient>"
+    items_lore:
+      - "<gray>View item drops for this evolution</gray>"
+      - "<gray>Shows special items and rewards</gray>"
+    mobs: "<gradient:#27ae60:#2ecc71><bold> Mobs</bold></gradient>"
+    mobs_lore:
+      - "<gray>View mob spawns for this evolution</gray>"
+      - "<gray>Shows creatures and spawn rates</gray>"
+    chests: "<gradient:#34495e:#95a5a6><bold> Chests</bold></gradient>"
+    chests_lore:
+      - "<gray>View chest spawns for this evolution</gray>"
+      - "<gray>Shows treasure chests and contents</gray>"
+    effects: "<gradient:#e74c3c:#c0392b><bold> Effects</bold></gradient>"
+    effects_lore:
+      - "<gray>View special effects for this evolution</gray>"
+      - "<gray>Shows particles and sounds</gray>"
+
+evolution:
+  details:
+    header: "<gradient:#FF6F00:#FF8F00><bold> Evolution Details: {evolution}</bold></gradient>"
+    level: "<yellow>Required Level:</yellow> <white><bold>{level}</bold></white>"
+    blocks: "<yellow>Blocks Required:</yellow> <blue><bold>{blocks}</bold></blue>"
+    description: "<yellow>Description:</yellow> <gray>{description}</gray>"
+    current_status: "<gold><bold> This is your current evolution </bold></gold>"
+    unlocked_status: "<green><bold> Evolution is unlocked</bold></green>"
+    locked_status: "<red><bold> Need {remaining} more blocks to unlock</bold></red>"
+    bonuses: "<yellow><bold>Evolution Bonuses:</bold></yellow>"
+    bonus_item: "<gray> {bonus}</gray>"
+
+entry:
+  name: "<white><bold>{name}</bold></white> <gray>({rarity})</gray>"
+  lore:
+    - "<yellow>Rarity:</yellow> {rarity}"
+    - "<yellow>Drop Chance:</yellow> <white><bold>{chance}%</bold></white>"
+    - "<yellow>Experience:</yellow> <green><bold>{experience}</bold></green>"
+    - ""
+    - "<gray>Click for more details</gray>"
+
+mode:
+  blocks: "<gradient:#8e44ad:#9b59b6><bold> Blocks</bold></gradient>"
+  blocks_lore:
+    - "<gray>View block drops for this evolution</gray>"
+    - "<gray>Shows materials and their chances</gray>"
+  items: "<gradient:#e67e22:#f39c12><bold> Items</bold></gradient>"
+  items_lore:
+    - "<gray>View item drops for this evolution</gray>"
+    - "<gray>Shows special items and rewards</gray>"
+  mobs: "<gradient:#27ae60:#2ecc71><bold> Mobs</bold></gradient>"
+  mobs_lore:
+    - "<gray>View mob spawns for this evolution</gray>"
+    - "<gray>Shows creatures and spawn rates</gray>"
+  chests: "<gradient:#34495e:#95a5a6><bold> Chests</bold></gradient>"
+  chests_lore:
+    - "<gray>View chest spawns for this evolution</gray>"
+    - "<gray>Shows treasure chests and contents</gray>"
+  effects: "<gradient:#e74c3c:#c0392b><bold> Effects</bold></gradient>"
+  effects_lore:
+    - "<gray>View special effects for this evolution</gray>"
+    - "<gray>Shows particles and sounds</gray>"
+
+biome_selection_ui:
+  title: "<gradient:#4CAF50:#8BC34A><bold> Biome Selection - {category}</bold></gradient>"
+
+banned_players:
+  title: "<red><bold> Banned Players</bold></red>"
+  players:
+    entry:
+      permanent_status: "<red><bold>Permanent</bold></red>"
+      player: "<yellow>Player:</yellow> <white><bold>{player}</bold></white>"
+      reason: "<yellow>Reason:</yellow> <gray>{reason}</gray>"
+      banned_by: "<yellow>Banned by:</yellow> <white><bold>{banner}</bold></white>"
+      banned_at: "<yellow>Banned:</yellow> <gray>{date}</gray>"
+      expires: "<yellow>Expires:</yellow> <gray>{date}</gray>"
+      time_remaining: "<yellow>Time left:</yellow> <red><bold>{time}</bold></red>"
+      permanent: "<red><bold>Permanent Ban</bold></red>"
+      click_unban: "<yellow>Click to unban</yellow>"
+      click_details: "<gray>Click for details</gray>"
+    clear_all:
+      name: "<red><bold> Clear All Bans</bold></red>"
+      lore:
+        - "<gray>Remove all active bans</gray>"
+        - "<gray>from this island</gray>"
+        - ""
+        - "<red><bold>Warning: This cannot be undone!</bold></red>"
+    unban_expired:
+      name: "<yellow><bold> Remove Expired Bans</bold></yellow>"
+      lore:
+        - "<gray>Clean up expired bans</gray>"
+        - "<gray>from the ban list</gray>"
+      success: "<green><bold></bold></green> <green>Removed</green> <white><bold>{count}</bold></white> <green>expired bans</green>"
+    add_ban:
+      name: "<red><bold> Add New Ban</bold></red>"
+      lore:
+        - "<gray>Ban a player from</gray>"
+        - "<gray>visiting your island</gray>"
+      instructions: "<yellow>Type the player name in chat to ban them</yellow>"
+    history:
+      name: "<blue><bold> Ban History</bold></blue>"
+      lore:
+        - "<gray>View complete ban history</gray>"
+        - "<gray>including expired bans</gray>"
+      coming_soon: "<yellow><bold></bold></yellow> <yellow>Ban history coming soon!</yellow>"
+  details:
+    header: "<red><bold> Ban Details: {player}</bold></red>"
+    info: "<yellow>Reason:</yellow> <gray>{reason}</gray> <gray>|</gray> <yellow>Banned:</yellow> <gray>{banned_at}</gray>"
+  unban:
+    confirm:
+      header: "<yellow><bold> Confirm Unban: {player}</bold></yellow>"
+      details: "<yellow>Banned for:</yellow> <gray>{reason}</gray> <yellow>on</yellow> <gray>{banned_at}</gray>"
+      prompt: "<yellow>Type 'confirm' to unban this player</yellow>"
+    success: "<green><bold></bold></green> <green>Successfully unbanned</green> <white><bold>{player}</bold></white>"
+    error: "<red><bold></bold></red> <red>Failed to unban player: {error}</red>"
+    notify_player: "<green><bold></bold></green> <green>You have been unbanned from</green> <white><bold>{island}</bold></white>"
+  unban_all:
+    confirm:
+      header: "<red><bold> Unban All Players ({count} bans)</bold></red>"
+      warning: "<red><bold>This will remove ALL active bans!</bold></red>"
+      prompt: "<yellow>Type 'confirm unban all' to proceed</yellow>"
+
+members_list_ui:
+  title: "<yellow><bold> Members ({member_count})</bold></yellow> <gray>- Page {page}/{total_pages}</gray>"
+
+members:
+  list:
+    member:
+      lore:
+        - "<yellow>Role:</yellow> <white><bold>{role}</bold></white>"
+        - "<yellow>Status:</yellow> <green><bold>{status}</bold></green>"
+        - "<yellow>Joined:</yellow> <gray>{joined}</gray>"
+        - "<yellow>Last Active:</yellow> <gray>{last_activity}</gray>"
+        - "<yellow>Invited by:</yellow> <white><bold>{invited_by}</bold></white>"
+        - ""
+        - "<gray>{action}</gray>"
+    first_page: "<yellow><bold></bold></yellow> <yellow>You are already on the first page</yellow>"
+    last_page: "<yellow><bold></bold></yellow> <yellow>You are already on the last page</yellow>"
+    invite:
+      name: "<green><bold> Invite Member</bold></green>"
+      lore:
+        - "<gray>Invite a new player</gray>"
+        - "<gray>to join your island</gray>"
+      no_permission:
+        - "<red>You don't have permission</red>"
+        - "<red>to invite members</red>"
+    permissions:
+      name: "<blue><bold> Manage Permissions</bold></blue>"
+      lore:
+        - "<gray>Manage member roles</gray>"
+        - "<gray>and permissions</gray>"
+      no_permission:
+        - "<red>You don't have permission</red>"
+        - "<red>to manage permissions</red>"
+    refresh:
+      name: "<green><bold> Refresh List</bold></green>"
+      lore:
+        - "<gray>Update the member list</gray>"
+        - "<gray>with latest data</gray>"
+    refreshed: "<green><bold></bold></green> <green>Member list refreshed</green>"
+  invite:
+    prompt: "<yellow>Type the player name in chat to invite them</yellow>"
+    no_permission: "<red><bold></bold></red> <red>You don't have permission to invite members</red>"
+  permissions:
+    no_permission: "<red><bold></bold></red> <red>You don't have permission to manage permissions</red>"
+  management:
+    header: "<blue><bold> Managing Member: {member}</bold></blue>"
+    options: "<yellow>Member:</yellow> <white><bold>{member}</bold></white> <gray>|</gray> <yellow>Role:</yellow> <blue><bold>{role}</bold></blue>"
+    coming_soon: "<yellow><bold></bold></yellow> <yellow>Member management options coming soon!</yellow>"
+  owner:
+    info:
+      header: "<gradient:#FFD700:#FFA000><bold> Island Owner: {owner}</bold></gradient>"
+      details: "<yellow>Created:</yellow> <gray>{created}</gray> <gray>|</gray> <yellow>Last Active:</yellow> <gray>{last_activity}</gray>"
+  info:
+    header: "<blue><bold> Member Info: {member}</bold></blue>"
+    details: "<yellow>Role:</yellow> <blue><bold>{role}</bold></blue> <gray>|</gray> <yellow>Status:</yellow> <green><bold>{status}</bold></green> <gray>|</gray> <yellow>Joined:</yellow> <gray>{joined}</gray> <gray>|</gray> <yellow>Last Active:</yellow> <gray>{last_activity}</gray>"
+    invited_by: "<yellow>Invited by:</yellow> <white><bold>{inviter}</bold></white>"
+
+member_permission_ui:
+  title: "<blue><bold> Member Permissions</bold></blue> <gray>- Page {page}/{total_pages}</gray>"
+
+member:
+  permissions:
+    no_access: "<red><bold></bold></red> <red>You don't have access to member permissions</red>"
+    selection:
+      lore:
+        - "<yellow>Role:</yellow> <blue><bold>{role}</bold></blue>"
+        - "<yellow>Status:</yellow> <green><bold>{status}</bold></green>"
+        - "<yellow>Joined:</yellow> <gray>{joined}</gray>"
+        - "<yellow>Invited by:</yellow> <white><bold>{invited_by}</bold></white>"
+        - "<gray>{action}</gray>"
+    selected:
+      lore:
+        - "<yellow>Status:</yellow> <green><bold>{status}</bold></green>"
+        - "<yellow>Joined:</yellow> <gray>{joined}</gray>"
+        - "<yellow>Last Activity:</yellow> <gray>{last_activity}</gray>"
+        - "<yellow>Invited by:</yellow> <white><bold>{invited_by}</bold></white>"
+    role:
+      lore:
+        - "<yellow>Permissions:</yellow> <white><bold>{permissions}</bold></white>"
+        - "<gray>{action}</gray>"
+    role_changed: "<green><bold></bold></green> <green>Changed</green> <white><bold>{member}</bold></white><green>'s role from</green> <blue><bold>{old_role}</bold></blue> <green>to</green> <blue><bold>{new_role}</bold></blue>"
+    role_changed_notification: "<blue><bold></bold></blue> <blue>Your role on</blue> <white><bold>{island}</bold></white> <blue>was changed from</blue> <red><bold>{old_role}</bold></red> <blue>to</blue> <green><bold>{new_role}</bold></green> <blue>by</blue> <white><bold>{changed_by}</bold></white>"
+    role_change_failed: "<red><bold></bold></red> <red>Failed to change</red> <white><bold>{member}</bold></white><red>'s role: {error}</red>"
+
+infrastructure_main_ui:
+  title: "<gradient:#ff9a9e:#fecfef><bold> Infrastructure</bold></gradient> <gray>({energy}/{max_energy} Energy)</gray>"
+
+infrastructure:
+  main:
+    error: "<red><bold></bold></red> <red>Failed to load infrastructure</red>"
+  stats:
+    error: "<red><bold></bold></red> <red>Failed to load statistics</red>"
+  storage:
+    error: "<red><bold></bold></red> <red>Failed to open storage</red>"
+  processors:
+    error: "<red><bold></bold></red> <red>Failed to open processors</red>"
+  automation:
+    error: "<red><bold></bold></red> <red>Failed to open automation</red>"
+  generators:
+    error: "<red><bold></bold></red> <red>Failed to open generators</red>"
+  crafting:
+    error: "<red><bold></bold></red> <red>Failed to open crafting</red>"
+  service_unavailable: "<red><bold></bold></red> <red>Infrastructure service unavailable</red>"
+  data_not_found: "<red><bold></bold></red> <red>Infrastructure data not found</red>"
+
+energy:
+  name: "<gradient:#ffd89b:#19547b><bold> Energy System</bold></gradient> <gray>({current}/{max})</gray>"
+  lore:
+    - "<yellow>Generation:</yellow> <green><bold>+{generation}/tick</bold></green>"
+    - "<yellow>Consumption:</yellow> <red><bold>-{consumption}/tick</bold></red>"
+    - "<yellow>Net:</yellow> <blue><bold>{net}/tick</bold></blue>"
+    - ""
+    - "<green>Click for detailed stats</green>"
+
+processors_ui:
+  title: "<gradient:#667eea:#764ba2><bold> Processors</bold></gradient>"
+
+automation_ui:
+  title: "<gradient:#f093fb:#f5576c><bold> Automation Systems</bold></gradient>"
+  auto_smelting:
+    name: "<gradient:#ff6b6b:#ee5a24><bold> Auto Smelting</bold></gradient>"
+    lore:
+      - "<gray>Automatically smelt ores</gray>"
+      - "<gray>and materials</gray>"
+      - ""
+      - "<yellow>Status:</yellow> {status}"
+  auto_sorting:
+    name: "<gradient:#4facfe:#00f2fe><bold> Auto Sorting</bold></gradient>"
+    lore:
+      - "<gray>Automatically sort items</gray>"
+      - "<gray>into storage categories</gray>"
+      - ""
+      - "<yellow>Status:</yellow> {status}"
+  auto_crafting:
+    name: "<gradient:#a8edea:#fed6e3><bold> Auto Crafting</bold></gradient>"
+    lore:
+      - "<gray>Automatically craft items</gray>"
+      - "<gray>from recipes</gray>"
+      - ""
+      - "<yellow>Status:</yellow> {status}"
+  auto_mining:
+    name: "<gradient:#667eea:#764ba2><bold> Auto Mining</bold></gradient>"
+    lore:
+      - "<gray>Automatically mine blocks</gray>"
+      - "<gray>in designated areas</gray>"
+      - ""
+      - "<yellow>Status:</yellow> {status}"
+  quantum_processing:
+    name: "<gradient:#ffecd2:#fcb69f><bold> Quantum Processing</bold></gradient>"
+    lore:
+      - "<gray>Advanced processing system</gray>"
+      - "<gray>for instant operations</gray>"
+      - ""
+      - "<yellow>Status:</yellow> {status}"
+  resource_multiplier:
+    name: "<gradient:#ff9a9e:#fecfef><bold> Resource Multiplier</bold></gradient>"
+    lore:
+      - "<gray>Multiply resource output</gray>"
+      - "<gray>from automation</gray>"
+      - ""
+      - "<yellow>Status:</yellow> {status}"
+
+crafting_queue_ui:
+  title: "<gradient:#a8edea:#fed6e3><bold> Crafting Queue</bold></gradient>"
+
+generator_upgrade_ui:
+  title: "<gradient:#ffecd2:#fcb69f><bold> Generator Upgrade</bold></gradient>"
+
+module_craft_ui:
+  title: "<gradient:#667eea:#764ba2><bold> Module Crafting</bold></gradient>"
+
+processor_upgrade_ui:
+  title: "<gradient:#ff9a9e:#fecfef><bold> Processor Upgrade</bold></gradient>"
+
+storage_upgrade_ui:
+  title: "<gradient:#4facfe:#00f2fe><bold> Storage Upgrade</bold></gradient>"
+
+storage_withdraw_ui:
+  title: "<gradient:#00d2d3:#01a3a4><bold> Storage Withdrawal</bold></gradient>"
+
+oneblock_core_ui:
+  title: "<gradient:#FF6F00:#FF8F00><bold> OneBlock Core</bold></gradient>"
+
+island_settings_ui:
+  title: "<gradient:#4CAF50:#8BC34A><bold> Island Settings</bold></gradient>"
+
+generators_ui:
+  title: "<gradient:#ffecd2:#fcb69f><bold> Generators</bold></gradient>"
+
+generator_structure_ui:
+  title: "<gradient:#ffecd2:#fcb69f><bold> Generator Structure - {name}</bold></gradient>"
+
+service:
+  oneblock:
+    evolution:
+      advanced: "<green><bold></bold></green> <green>Evolution completed successfully</green>"
+      failed: "<red><bold></bold></red> <red>Evolution failed: {reason}</red>"
+  infrastructure:
+    initialized: "<green><bold></bold></green> <green>Infrastructure system initialized</green>"
+    error: "<red><bold></bold></red> <red>Infrastructure system error: {message}</red>"
+
+oneblock:
+  break:
+    progress: "<gradient:#4facfe:#00f2fe> {evolution}</gradient> <white>Lv.{level}</white> <yellow>XP: {experience}</yellow> <gray>|</gray> {rarity} <green>+{experience_gained} XP</green> <gray>|</gray> <blue>Total: {total_blocks}</blue> <gray>|</gray> <gold>Streak: {streak}</gold>"
+    rare_drop: "<gradient:#ff9a9e:#fecfef><bold> RARE DROP!</bold></gradient> <white><bold>{player}</bold></white> <gray>found a</gray> <gradient:{rarity_color}><bold>{rarity}</bold></gradient> <gray>item!</gray>"
+  evolution:
+    level_up: "<gradient:#a8edea:#fed6e3><bold> LEVEL UP!</bold></gradient> <white>Your</white> <gradient:#FF6F00:#FF8F00><bold>{evolution}</bold></gradient> <white>reached level</white> <yellow><bold>{level}</bold></yellow><white>!</white>"
+    change: "<gradient:#667eea:#764ba2><bold> EVOLUTION!</bold></gradient> <white>Your OneBlock evolved to</white> <gradient:#FF6F00:#FF8F00><bold>{evolution}</bold></gradient><white>!</white>"
+    content_loading: "<yellow><bold></bold></yellow> <yellow>Loading evolution content...</yellow>"
+    content_updated: "<green><bold></bold></green> <green>Evolution content updated!</green>"
+    dynamic_generation: "<blue><bold></bold></blue> <blue>Generating dynamic content for</blue> <gradient:#FF6F00:#FF8F00><bold>{evolution}</bold></gradient>"
+    cache_cleared: "<green><bold></bold></green> <green>Evolution content cache cleared</green>"
+  event:
+    chest_spawn: "<gradient:#ffecd2:#fcb69f><bold> TREASURE!</bold></gradient> <white>A</white> <bold>{rarity}</bold> <white>chest appeared!</white>"
+    mob_spawn_hostile: "<gradient:#ff6b6b:#ee5a24><bold> DANGER!</bold></gradient> <white>A</white> <bold>{rarity}</bold> <red><bold>{mob_type}</bold></red> <white>spawned!</white>"
+    mob_spawn_friendly: "<gradient:#00d2d3:#01a3a4><bold> FRIEND!</bold></gradient> <white>A</white> <bold>{rarity}</bold> <green><bold>{mob_type}</bold></green> <white>appeared!</white>"
+    special_item: "<gradient:#ffd89b:#19547b><bold> SPECIAL!</bold></gradient> <white>You found a</white> <bold>{rarity}</bold> <yellow><bold>{item}</bold></yellow><white>!</white>"
+  tier:
+    genesis: "<gradient:#90EE90:#32CD32><bold>Genesis</bold></gradient>"
+    primordial: "<gradient:#8B4513:#D2691E><bold>Primordial</bold></gradient>"
+    ancient: "<gradient:#FFD700:#FFA500><bold>Ancient</bold></gradient>"
+    medieval: "<gradient:#C0C0C0:#708090><bold>Medieval</bold></gradient>"
+    renaissance: "<gradient:#FF69B4:#DA70D6><bold>Renaissance</bold></gradient>"
+    industrial: "<gradient:#696969:#2F4F4F><bold>Industrial</bold></gradient>"
+    modern: "<gradient:#00CED1:#4682B4><bold>Modern</bold></gradient>"
+    stellar: "<gradient:#9370DB:#8A2BE2><bold>Stellar</bold></gradient>"
+    cosmic: "<gradient:#FF1493:#DC143C><bold>Cosmic</bold></gradient>"
+    eternal: "<gradient:#FFD700:#FF6347><bold>Eternal</bold></gradient>"
+
+evolution_requirements:
+  requirement:
+    item:
+      description: "<yellow>Collect required items</yellow>"
+      progress: "<white>{current}/{required}</white> <gray>{item}</gray>"
+    currency:
+      description: "<gold>Accumulate required currency</gold>"
+      progress: "<white>{current}/{required}</white> <yellow>{currency_type}</yellow>"
+    experience_level:
+      description: "<blue>Gain required experience</blue>"
+      progress: "<white>{current}/{required}</white> <aqua>{experience_type}</aqua>"
+    custom:
+      description: "<purple>Complete custom objective</purple>"
+      progress: "<white>{current}/{required}</white> <light_purple>{objective_type}</light_purple>"
+    progress:
+      overall: "<yellow>Overall Progress:</yellow> <white>{progress}%</white>"
+      complete: "<green><bold> Complete</bold></green>"
+      incomplete: "<red><bold> Incomplete</bold></red>"
+      checking: "<yellow><bold></bold></yellow> <yellow>Checking requirements...</yellow>"
+    validation:
+      success: "<green><bold></bold></green> <green>All requirements validated successfully</green>"
+      failed: "<red><bold></bold></red> <red>Requirement validation failed: {errors}</red>"
+    consumption:
+      success: "<green><bold></bold></green> <green>Requirements consumed successfully</green>"
+      failed: "<red><bold></bold></red> <red>Failed to consume requirements</red>"
+      not_met: "<red><bold></bold></red> <red>Requirements not met for consumption</red>"
+
+bonus:
+  system:
+    enhanced: "<gradient:#ff9a9e:#fecfef><bold> Enhanced Bonus System</bold></gradient>"
+    calculating: "<yellow><bold></bold></yellow> <yellow>Calculating bonuses...</yellow>"
+    cache_cleared: "<green><bold></bold></green> <green>Bonus cache cleared</green>"
+  source:
+    tier: "<gradient:#FFD700:#FFA500><bold>Tier Bonus</bold></gradient>"
+    progression: "<gradient:#00d2d3:#01a3a4><bold>Progress Bonus</bold></gradient>"
+    infrastructure: "<gradient:#696969:#2F4F4F><bold>Infrastructure Bonus</bold></gradient>"
+    synergy: "<gradient:#9370DB:#8A2BE2><bold>Synergy Bonus</bold></gradient>"
+    temporary: "<gradient:#ff6b6b:#ee5a24><bold>Temporary Bonus</bold></gradient>"
+  multiplier:
+    format: "<white>{bonus_name}:</white> <green>+{percentage}%</green>"
+    stacking: "<yellow>Stacking:</yellow> <white>{count} bonuses</white>"
+    total: "<gold><bold>Total Bonus:</bold></gold> <white>+{percentage}%</white>"
+  types:
+    block_break_speed: "Block Breaking Speed"
+    experience_multiplier: "Experience Gain"
+    rare_drops: "Rare Drop Chance"
+    energy: "Energy Generation"
+    automation_efficiency: "Automation Efficiency"
+    storage_capacity: "Storage Capacity"
+    generator_speed: "Generator Speed"
+    evolution_progress: "Evolution Progress"
+    all_stats: "All Statistics"
+    ultimate: "Ultimate Enhancement"
+    luck: "Luck"
+    probability: "Event Probability"
+    efficiency: "General Efficiency"
+
+ui:
+  navigation:
+    close: "<red><bold> Close</bold></red>"
+    close_description: "<gray>Click to close this menu</gray>"
+    back: "<yellow><bold> Back</bold></yellow>"
+    back_description: "<gray>Return to previous menu</gray>"
+    help: "<blue><bold>? Help</bold></blue>"
+    help_description: "<gray>Get help for this menu</gray>"
+    refresh: "<green><bold> Refresh</bold></green>"
+    refresh_description: "<gray>Refresh the current view</gray>"
+  pagination:
+    previous: "<yellow><bold> Previous</bold></yellow>"
+    previous_available: "<gray>Go to previous page</gray>"
+    previous_unavailable: "<gray>No previous page available</gray>"
+    next: "<yellow><bold>Next </bold></yellow>"
+    next_available: "<gray>Go to next page</gray>"
+    next_unavailable: "<gray>No next page available</gray>"
+    info: "<white><bold>Page {current}/{total}</bold></white>"
+    info_description: "<gray>Showing {items} items total</gray>"
+  status:
+    enabled: "<green>Enabled</green>"
+    disabled: "<red>Disabled</red>"
+  progress:
+    description: "<yellow>Progress:</yellow> <white>{progress}%</white><br><gray>{bar}</gray>"
+  numerical:
+    description: "<yellow>Value:</yellow> <white>{value}</white><br><gray>Raw: {raw_value}</gray>"
+  category:
+    description: "<gray>Category information</gray>"
+  action:
+    create_description: "<green>Click to create new item</green>"
+    edit_description: "<yellow>Click to edit this item</yellow>"
+    delete_description: "<red>Click to delete this item</red>"
+    view_description: "<blue>Click to view details</blue>"
+    configure_description: "<purple>Click to configure settings</purple>"
+    upgrade_description: "<gold>Click to upgrade</gold>"
+    reset_description: "<red>Click to reset</red>"
+    copy_description: "<aqua>Click to copy</aqua>"
+    move_description: "<yellow>Click to move</yellow>"
+    toggle_description: "<green>Click to toggle</green>"
+  loading:
+    title: "<yellow><bold> Loading...</bold></yellow>"
+    description: "<gray>Please wait while data is being loaded</gray>"
+  error:
+    title: "<red><bold> Error</bold></red>"
+  help:
+    default: "<yellow>Help for {view} is not yet available</yellow>"
+  breadcrumb:
+    description: "<gray>Navigation breadcrumb</gray>"
+
+evolution_display:
+  display:
+    name: "<gradient:#FF6F00:#FF8F00><bold>{evolution}</bold></gradient>"
+    level: "<yellow>Level:</yellow> <white>{level}</white>"
+    experience: "<blue>Experience Required:</blue> <white>{experience}</white>"
+    description: "<gray>{description}</gray>"
+
+requirement:
+  display:
+    name: "<white><bold>{requirement}</bold></white>"
+    progress: "<yellow>Progress:</yellow> <white>{progress}</white>"
+    type: "<gray>Type:</gray> <white>{type}</white>"
+  status:
+    complete: "<green><bold> Complete</bold></green>"
+    incomplete: "<red><bold> Incomplete</bold></red>"
+
+bonus_display:
+  display:
+    name: "<gradient:#ff9a9e:#fecfef><bold>{bonus}</bold></gradient>"
+    value: "<green>{value}</green>"
+    source: "<gray>Source:</gray> <white>{source}</white>"
+  status:
+    active: "<green><bold> Active</bold></green>"
+    inactive: "<gray><bold> Inactive</bold></gray>"
+
+island_stats:
+    title: "<gradient:#4facfe:#00f2fe><bold> {island} Statistics</bold></gradient>"
+    level: "<yellow>Island Level:</yellow> <white>{level}</white>"
+    evolution: "<yellow>Current Evolution:</yellow> <gradient:#FF6F00:#FF8F00><bold>{evolution}</bold></gradient>"
+    evolution_level: "<yellow>Evolution Level:</yellow> <white>{level}</white>"
+    experience: "<blue>Evolution Experience:</blue> <white>{experience}</white>"
+    blocks_broken: "<gray>Blocks Broken:</gray> <white>{blocks}</white>"
+    coins: "<gold>Island Coins:</gold> <white>{coins}</white>"
+
+progress:
+  overview:
+    title: "<gradient:#a8edea:#fed6e3><bold> {evolution} Progress</bold></gradient>"
+    overall: "<yellow>Overall Progress:</yellow> <white>{progress}%</white>"
+    requirements: "<gray>Requirements:</gray> <white>{completed}/{total}</white>"
+  status:
+    ready: "<green><bold> Ready to Evolve!</bold></green>"
+    in_progress: "<yellow><bold> In Progress</bold></yellow>"
+
+generator:
+  visualization:
+    title: "<gradient:#667eea:#764ba2><bold> Generator Visualization</bold></gradient>"
+    action:
+      preview: "<blue><bold> Preview</bold></blue>"
+      preview_description: "<gray>View 3D structure preview</gray>"
+      build: "<green><bold> Build</bold></green>"
+      build_description: "<gray>Interactive building mode</gray>"
+      materials: "<yellow><bold> Materials</bold></yellow>"
+      materials_description: "<gray>View required materials</gray>"
+      progress: "<purple><bold> Progress</bold></purple>"
+      progress_description: "<gray>View build progress</gray>"
+      start_build: "<green><bold> Start Build</bold></green>"
+      pause_build: "<yellow><bold> Pause Build</bold></yellow>"
+      cancel_build: "<red><bold> Cancel Build</bold></red>"
+      next_step: "<blue><bold> Next Step</bold></blue>"
+      next_layer: "<purple><bold> Next Layer</bold></purple>"
+    
+    build_mode:
+      automatic: "<green><bold> Automatic</bold></green>"
+      automatic_description: "<gray>Build entire structure automatically</gray>"
+      step_by_step: "<blue><bold> Step by Step</bold></blue>"
+      step_by_step_description: "<gray>Build one block at a time</gray>"
+      layer_by_layer: "<purple><bold> Layer by Layer</bold></purple>"
+      layer_by_layer_description: "<gray>Build one layer at a time</gray>"
+      manual: "<yellow><bold> Manual</bold></yellow>"
+      manual_description: "<gray>Manual placement with guidance</gray>"
+    
+    view_mode:
+      isometric: "<blue><bold> Isometric</bold></blue>"
+      top_down: "<green><bold> Top Down</bold></green>"
+      side: "<yellow><bold> Side View</bold></yellow>"
+      perspective: "<purple><bold> Perspective</bold></purple>"
+    
+    particle_style:
+      outline: "<blue><bold> Outline</bold></blue>"
+      filled: "<green><bold> Filled</bold></green>"
+      wireframe: "<yellow><bold> Wireframe</bold></yellow>"
+      corners: "<purple><bold> Corners</bold></purple>"
+      animated: "<red><bold> Animated</bold></red>"
+    
+    status:
+      preparing: "<yellow><bold> Preparing...</bold></yellow>"
+      building: "<green><bold> Building...</bold></green>"
+      paused: "<orange><bold> Paused</bold></orange>"
+      completed: "<green><bold> Completed!</bold></green>"
+      cancelled: "<red><bold> Cancelled</bold></red>"
+      error: "<red><bold> Error</bold></red>"
+    
+    progress:
+      overall: "<gradient:#4facfe:#00f2fe><bold>Overall Progress</bold></gradient>"
+      layer: "<gradient:#a8edea:#fed6e3><bold>Layer {0}</bold></gradient>"
+      blocks_placed: "<gray>Blocks: {0}/{1}</gray>"
+      materials_used: "<gray>Materials: {0}/{1}</gray>"
+      time_elapsed: "<gray>Time: {0}</gray>"
+      estimated_remaining: "<gray>Est. Remaining: {0}</gray>"
+    
+    materials:
+      required: "<yellow><bold> Required Materials</bold></yellow>"
+      available: "<green><bold> Available</bold></green>"
+      missing: "<red><bold> Missing</bold></red>"
+      total_cost: "<gold><bold> Total Cost</bold></gold>"
+      
+    settings:
+      title: "<gradient:#667eea:#764ba2><bold> Visualization Settings</bold></gradient>"
+      particle_effects: "<blue><bold> Particle Effects</bold></blue>"
+      particle_density: "<yellow><bold> Particle Density</bold></yellow>"
+      view_range: "<green><bold> View Range</bold></green>"
+      auto_rotate: "<purple><bold> Auto Rotate</bold></purple>"
+      show_grid: "<gray><bold> Show Grid</bold></gray>"
+      
+    messages:
+      build_started: "<green> Build started in {0} mode!</green>"
+      build_paused: "<yellow> Build paused. Click resume to continue.</yellow>"
+      build_resumed: "<green> Build resumed!</green>"
+      build_completed: "<green><bold> Structure completed successfully!</bold></green>"
+      build_cancelled: "<red> Build cancelled.</red>"
+      step_completed: "<green> Step {0}/{1} completed!</green>"
+      layer_completed: "<green> Layer {0} completed!</green>"
+      insufficient_materials: "<red> Insufficient materials: {0} x{1}</red>"
+      material_consumed: "<gray> Used: {0} x{1}</gray>"
+      
+    tooltips:
+      click_to_preview: "<gray>Click to preview structure</gray>"
+      click_to_build: "<gray>Click to start building</gray>"
+      click_to_rotate: "<gray>Click to rotate view</gray>"
+      scroll_to_zoom: "<gray>Scroll to zoom in/out</gray>"
+      drag_to_pan: "<gray>Drag to pan view</gray>"
+
+commands:
+  island:
+    created: "<green><bold></bold></green> <green>Island created successfully!</green>"
+    creation_failed: "<red><bold></bold></red> <red>Failed to create island: {reason}</red>"
+    teleported: "<green><bold></bold></green> <green>Teleported to your island</green>"
+    teleport_failed: "<red><bold></bold></red> <red>Failed to teleport to island</red>"
+    not_found: "<red><bold></bold></red> <red>Island not found</red>"
+    permission_denied: "<red><bold></bold></red> <red>You don't have permission to do that</red>"
+
+errors:
+  general: "<red><bold></bold></red> <red>An unexpected error occurred</red>"
+  permission_denied: "<red><bold></bold></red> <red>Permission denied</red>"
+  player_not_found: "<red><bold></bold></red> <red>Player not found</red>"
+  island_not_found: "<red><bold></bold></red> <red>Island not found</red>"
+  service_unavailable: "<red><bold></bold></red> <red>Service temporarily unavailable</red>"
+  invalid_input: "<red><bold></bold></red> <red>Invalid input provided</red>"
+
+region:
+  boundary_violation: "<red><bold></bold></red> <red>You cannot build outside your island boundaries!</red>"
+  permission_denied: "<red><bold></bold></red> <red>You don't have permission to {action} here!</red>"
+  region_created: "<green><bold></bold></green> <green>Island region created successfully!</green>"
+  spiral_position: "<yellow>Your island is located at spiral position</yellow> <white><bold>{position}</bold></white>"
+  boundary_warning: "<yellow><bold></bold></yellow> <yellow>Warning: You are {distance} blocks from the island boundary</yellow>"
+  outside_region: "<red>You are outside the island region</red>"
+  wrong_world: "<red>You are in the wrong world</red>"
+  no_region: "<red>No island region found at this location</red>"
+  region_disabled: "<yellow>Region protection is currently disabled</yellow>"
+  near_boundary: "<yellow>You are approaching the island boundary</yellow>"
+  protection:
+    enabled: "<green><bold></bold></green> <green>Island protection enabled</green>"
+    disabled: "<red><bold></bold></red> <red>Island protection disabled</red>"
+    bypass_admin: "<yellow><bold></bold></yellow> <yellow>Admin bypass active - region protection ignored</yellow>"
+  permissions:
+    granted: "<green><bold></bold></green> <green>Permission</green> <white><bold>{permission}</bold></white> <green>granted to</green> <white><bold>{player}</bold></white>"
+    revoked: "<red><bold></bold></red> <red>Permission</red> <white><bold>{permission}</bold></white> <red>revoked from</red> <white><bold>{player}</bold></white>"
+    already_granted: "<yellow><bold></bold></yellow> <yellow>Player</yellow> <white><bold>{player}</bold></white> <yellow>already has permission</yellow> <white><bold>{permission}</bold></white>"
+    not_found: "<red><bold></bold></red> <red>Permission</red> <white><bold>{permission}</bold></white> <red>not found for player</red> <white><bold>{player}</bold></white>"
+  actions:
+    build: "build"
+    break: "break blocks"
+    interact: "interact"
+    chest_access: "access chests"
+    door_access: "use doors"
+    button_access: "use buttons"
+    lever_access: "use levers"
+    redstone_access: "use redstone"
+    animal_interact: "interact with animals"
+    villager_trade: "trade with villagers"
+    item_pickup: "pick up items"
+    item_drop: "drop items"
+    pvp: "engage in PvP"
+    teleport: "teleport"
+  spiral:
+    generation_failed: "<red><bold></bold></red> <red>Failed to generate island position: {reason}</red>"
+    max_islands_reached: "<red><bold></bold></red> <red>Maximum number of islands reached in this world</red>"
+    position_occupied: "<yellow><bold></bold></yellow> <yellow>Spiral position {position} is already occupied</yellow>"
+    statistics: "<blue><bold> Spiral Statistics</bold></blue>"
+    stats_generated: "<yellow>Generated:</yellow> <white><bold>{generated}</bold></white>"
+    stats_occupied: "<yellow>Occupied:</yellow> <white><bold>{occupied}</bold></white>"
+    stats_available: "<yellow>Available:</yellow> <white><bold>{available}</bold></white>"
+    stats_utilization: "<yellow>Utilization:</yellow> <white><bold>{utilization}%</bold></white>"
+
+general:
+  back: "<gray><bold> Back</bold></gray>"
+
+infrastructure_dashboard:
+  dashboard:
+    title: "<gradient:#667eea:#764ba2><bold> Infrastructure Dashboard</bold></gradient>"
+    energy_status: "<yellow>Energy: {current}/{max} ({rate}/tick)</yellow>"
+    processor_status: "<blue>Processors: {active}/{total}</blue>"
+    automation_status: "<green>Automation: {efficiency}% efficiency</green>"
+    
+    mode:
+      overview:
+        name: "<gradient:#4facfe:#00f2fe><bold> Overview</bold></gradient>"
+        description: "<gray>Complete system overview</gray>"
+      energy:
+        name: "<gradient:#ff9a9e:#fecfef><bold> Energy</bold></gradient>"
+        description: "<gray>Energy generation and consumption</gray>"
+      storage:
+        name: "<gradient:#a8edea:#fed6e3><bold> Storage</bold></gradient>"
+        description: "<gray>Storage systems and capacity</gray>"
+      processing:
+        name: "<gradient:#d299c2:#fef9d7><bold> Processing</bold></gradient>"
+        description: "<gray>Processors and automation</gray>"
+      monitoring:
+        name: "<gradient:#89f7fe:#66a6ff><bold> Monitoring</bold></gradient>"
+        description: "<gray>Real-time system monitoring</gray>"
+    
+    status:
+      energy:
+        name: "<yellow><bold> Energy System</bold></yellow>"
+        placeholder: "<gray>Energy system status information</gray>"
+      storage:
+        name: "<blue><bold> Storage System</bold></blue>"
+        placeholder: "<gray>Storage system status information</gray>"
+      processing:
+        name: "<green><bold> Processing System</bold></green>"
+        placeholder: "<gray>Processing system status information</gray>"
+      automation:
+        name: "<purple><bold> Automation System</bold></purple>"
+        placeholder: "<gray>Automation system status information</gray>"
+    
+    stats:
+      total_items:
+        name: "<blue><bold> Total Items</bold></blue>"
+        description: "<gray>Total items stored in system</gray>"
+      efficiency:
+        name: "<green><bold> System Efficiency</bold></green>"
+        description: "<gray>Overall system efficiency rating</gray>"
+      processors:
+        name: "<purple><bold> Active Processors</bold></purple>"
+        description: "<gray>Number of active processors</gray>"
+      uptime:
+        name: "<yellow><bold> System Uptime</bold></yellow>"
+        description: "<gray>Total system uptime</gray>"
+    
+    energy:
+      overview:
+        name: "<yellow><bold> Energy Overview</bold></yellow>"
+      generation:
+        name: "<green><bold> Energy Generation</bold></green>"
+        placeholder: "<gray>Energy generation details</gray>"
+      consumption:
+        name: "<red><bold> Energy Consumption</bold></red>"
+        placeholder: "<gray>Energy consumption details</gray>"
+      efficiency:
+        name: "<blue><bold> Energy Efficiency</bold></blue>"
+        placeholder: "<gray>Energy efficiency metrics</gray>"
+      current: "<gray>Current: {current}/{max}</gray>"
+      generation_rate: "<green>Generation: +{rate}/tick</green>"
+      consumption_rate: "<red>Consumption: -{rate}/tick</red>"
+      net_rate: "<yellow>Net: {rate}/tick</yellow>"
+    
+    storage:
+      overview:
+        name: "<blue><bold> Storage Overview</bold></blue>"
+        placeholder: "<gray>Storage system overview</gray>"
+      capacity:
+        name: "<purple><bold> Storage Capacity</bold></purple>"
+        placeholder: "<gray>Storage capacity details</gray>"
+      categories:
+        name: "<yellow><bold> Storage Categories</bold></yellow>"
+        placeholder: "<gray>Storage categories overview</gray>"
+      efficiency:
+        name: "<green><bold> Storage Efficiency</bold></green>"
+        placeholder: "<gray>Storage efficiency metrics</gray>"
+    
+    processing:
+      overview:
+        name: "<green><bold> Processing Overview</bold></green>"
+        placeholder: "<gray>Processing system overview</gray>"
+      processor:
+        name: "<blue><bold>{name} Level {level}</bold></blue>"
+        placeholder: "<gray>Processor details</gray>"
+      automation:
+        name: "<purple><bold> Automation Status</bold></purple>"
+    
+    monitoring:
+      health:
+        name: "<green><bold> System Health</bold></green>"
+        placeholder: "<gray>System health metrics</gray>"
+      performance:
+        name: "<blue><bold> Performance</bold></blue>"
+        placeholder: "<gray>Performance metrics</gray>"
+      alerts:
+        name: "<red><bold> Alerts</bold></red>"
+        placeholder: "<gray>System alerts and warnings</gray>"
+      uptime:
+        name: "<yellow><bold> System Uptime</bold></yellow>"
+        placeholder: "<gray>System uptime information</gray>"
+    
+    activity:
+      title: "<purple><bold> Recent Activity</bold></purple>"
+      coming_soon: "<gray>Activity log coming soon...</gray>"
+    
+    actions:
+      storage:
+        name: "<blue><bold> Open Storage</bold></blue>"
+        description: "<gray>Access storage system</gray>"
+      processors:
+        name: "<green><bold> Manage Processors</bold></green>"
+        description: "<gray>Configure processors</gray>"
+      automation:
+        name: "<purple><bold> Configure Automation</bold></purple>"
+        description: "<gray>Setup automation rules</gray>"
+      settings:
+        name: "<yellow><bold> System Settings</bold></yellow>"
+        description: "<gray>Infrastructure settings</gray>"
+    
+    error: "<red>Failed to load infrastructure dashboard</red>"
+storage_enhanced:
+  enhanced:
+    title: "<gradient:#4facfe:#00f2fe><bold> Enhanced Storage</bold></gradient>"
+    
+    search:
+      title: "<yellow><bold> Search Storage</bold></yellow>"
+      placeholder: "<gray>Search items...</gray>"
+      results: "<yellow>Found {count} items</yellow>"
+      no_results: "<red>No items found</red>"
+      suggestions: "<blue>Suggestions:</blue>"
+      popular_terms: "<purple>Popular searches:</purple>"
+      
+      filters:
+        title: "<blue><bold> Search Filters</bold></blue>"
+        fuzzy_search: "<green>Fuzzy Search</green>"
+        include_aliases: "<yellow>Include Aliases</yellow>"
+        include_tags: "<purple>Include Tags</purple>"
+        category_filter: "<blue>Category Filter</blue>"
+        sort_by: "<orange>Sort By</orange>"
+        
+      options:
+        relevance: "<white>Relevance</white>"
+        quantity: "<green>Quantity</green>"
+        rarity: "<purple>Rarity</purple>"
+        alphabetical: "<blue>Alphabetical</blue>"
+        recent_access: "<yellow>Recent Access</yellow>"
+    
+    categories:
+      auto_generated: "<blue>Auto-categorized</blue>"
+      custom: "<purple>Custom Category</purple>"
+      
+      stats:
+        total_items: "<gray>Total Items: {count}</gray>"
+        unique_types: "<gray>Unique Types: {count}</gray>"
+        last_accessed: "<gray>Last Accessed: {time}</gray>"
+        access_frequency: "<gray>Access Frequency: {frequency}</gray>"
+        
+      optimization:
+        title: "<yellow><bold> Category Optimization</bold></yellow>"
+        split_category: "<orange>Consider splitting this category</orange>"
+        merge_category: "<blue>Consider merging with similar category</blue>"
+        create_quick_access: "<green>Add to quick access menu</green>"
+        reorganize_items: "<purple>Reorganize items for better efficiency</purple>"
+    
+    bulk_operations:
+      title: "<green><bold> Bulk Operations</bold></green>"
+      deposit_all: "<green>Deposit All</green>"
+      withdraw_category: "<yellow>Withdraw Category</yellow>"
+      organize_storage: "<blue>Organize Storage</blue>"
+      transfer_items: "<purple>Transfer Items</purple>"
+      
+    analytics:
+      title: "<purple><bold> Storage Analytics</bold></purple>"
+      efficiency_score: "<green>Efficiency: {score}%</green>"
+      storage_usage: "<blue>Usage: {used}/{total} ({percentage}%)</blue>"
+      category_distribution: "<yellow>Category Distribution</yellow>"
+      access_patterns: "<orange>Access Patterns</orange>"
+      
+    recommendations:
+      title: "<gold><bold> Recommendations</bold></gold>"
+      frequently_accessed: "<green>Frequently Accessed</green>"
+      similar_items: "<blue>Similar Items</blue>"
+      category_suggestions: "<purple>Category Suggestions</purple>"
+      
+    messages:
+      indexing: "<yellow>Indexing storage items...</yellow>"
+      search_complete: "<green>Search completed in {time}ms</green>"
+      cache_cleared: "<blue>Search cache cleared</blue>"
+      preferences_updated: "<green>Search preferences updated</green>"
+      optimization_applied: "<green>Storage optimization applied</green>"
+
+# Storage mode translations
+storage:
+  mode:
+    categories:
+      name: "<gradient:#4facfe:#00f2fe><bold> Categories</bold></gradient>"
+      description: "<gray>Browse items by category</gray>"
+    search:
+      name: "<gradient:#ff9a9e:#fecfef><bold> Search</bold></gradient>"
+      description: "<gray>Search for specific items</gray>"
+    analytics:
+      name: "<gradient:#a8edea:#fed6e3><bold> Analytics</bold></gradient>"
+      description: "<gray>View storage statistics</gray>"
+    bulk_operations:
+      name: "<gradient:#d299c2:#fef9d7><bold> Bulk Operations</bold></gradient>"
+      description: "<gray>Perform bulk actions</gray>"
+
+# Error messages for enhanced systems
+error:
+  storage:
+    search_failed: "<red>Search operation failed</red>"
+    index_corrupted: "<red>Storage index is corrupted</red>"
+    category_not_found: "<red>Category not found</red>"
+    insufficient_space: "<red>Insufficient storage space</red>"
+  
+  infrastructure:
+    service_unavailable: "<red>Infrastructure service is unavailable</red>"
+    data_corruption: "<red>Infrastructure data is corrupted</red>"
+    energy_insufficient: "<red>Insufficient energy for operation</red>"
+    processor_offline: "<red>Processor is offline</red>"
+  
+  generator:
+    structure_invalid: "<red>Invalid structure configuration</red>"
+    build_failed: "<red>Structure build failed</red>"
+    materials_missing: "<red>Required materials are missing</red>"
+    visualization_error: "<red>Visualization rendering failed</red>"
+
+# Success messages
+success:
+  storage:
+    organized: "<green>Storage successfully organized</green>"
+    search_completed: "<green>Search completed successfully</green>"
+    bulk_operation_completed: "<green>Bulk operation completed</green>"
+    category_optimized: "<green>Category optimization applied</green>"
+  
+  infrastructure:
+    system_optimized: "<green>System optimization completed</green>"
+    energy_restored: "<green>Energy system restored</green>"
+    processor_activated: "<green>Processor successfully activated</green>"
+    automation_configured: "<green>Automation successfully configured</green>"
+  
+  generator:
+    structure_built: "<green>Structure built successfully</green>"
+    visualization_loaded: "<green>Visualization loaded successfully</green>"
+    materials_validated: "<green>All materials validated</green>"
+    build_progress_saved: "<green>Build progress saved</green>"
+
+# Status messages
+status:
+  loading: "<yellow>Loading...</yellow>"
+  processing: "<yellow>Processing...</yellow>"
+  optimizing: "<yellow>Optimizing...</yellow>"
+  validating: "<yellow>Validating...</yellow>"
+  building: "<yellow>Building...</yellow>"
+  searching: "<yellow>Searching...</yellow>"
+  
+  completed: "<green>Completed</green>"
+  failed: "<red>Failed</red>"
+  cancelled: "<gray>Cancelled</gray>"
+  paused: "<orange>Paused</orange>"
+
+# Help and tooltip content
+help:
+  storage:
+    categories: "<gray>Categories organize your items automatically based on type and properties</gray>"
+    search: "<gray>Use search to quickly find specific items using names, tags, or properties</gray>"
+    analytics: "<gray>Analytics show storage efficiency and usage patterns</gray>"
+    bulk_operations: "<gray>Bulk operations allow you to perform actions on multiple items at once</gray>"
+  
+  infrastructure:
+    dashboard: "<gray>The dashboard provides an overview of all your infrastructure systems</gray>"
+    energy: "<gray>Energy powers all your infrastructure systems and automation</gray>"
+    processors: "<gray>Processors handle automated tasks and resource processing</gray>"
+    automation: "<gray>Automation systems work in the background to optimize your island</gray>"
+  
+  generator:
+    visualization: "<gray>Visualization shows you exactly how structures will look before building</gray>"
+    build_modes: "<gray>Different build modes offer various levels of automation and control</gray>"
+    materials: "<gray>Material validation ensures you have everything needed before starting</gray>"
+    progress: "<gray>Progress tracking shows build status and estimated completion time</gray>"
+
+# Tooltip content
+tooltip:
+  click_to_open: "<gray>Click to open</gray>"
+  click_to_close: "<gray>Click to close</gray>"
+  click_to_toggle: "<gray>Click to toggle</gray>"
+  click_to_configure: "<gray>Click to configure</gray>"
+  click_to_optimize: "<gray>Click to optimize</gray>"
+  click_to_refresh: "<gray>Click to refresh</gray>"
+  
+  shift_click: "<gray>Shift+click for advanced options</gray>"
+  right_click: "<gray>Right-click for context menu</gray>"
+  drag_to_move: "<gray>Drag to move</gray>"
+  scroll_to_zoom: "<gray>Scroll to zoom</gray>"
+
+# Confirmation messages
+confirmation:
+  delete_all: "<yellow>Are you sure you want to delete all items?</yellow>"
+  reset_settings: "<yellow>Are you sure you want to reset all settings?</yellow>"
+  clear_cache: "<yellow>Are you sure you want to clear the cache?</yellow>"
+  optimize_storage: "<yellow>Are you sure you want to optimize storage? This may take some time.</yellow>"
+  
+  confirm: "<green>Confirm</green>"
+  cancel: "<red>Cancel</red>"
+  
+# Notification messages
+notification:
+  system_update: "<blue>System has been updated</blue>"
+  cache_cleared: "<blue>Cache has been cleared</blue>"
+  optimization_complete: "<green>Optimization completed successfully</green>"
+  backup_created: "<green>Backup created successfully</green>"
+  
+  warning_high_usage: "<yellow>Warning: High system usage detected</yellow>"
+  warning_low_space: "<yellow>Warning: Low storage space</yellow>"
+  warning_energy_low: "<yellow>Warning: Energy levels are low</yellow>"
+
+# Misc translations for edge cases
+misc:
+  unknown: "<gray>Unknown</gray>"
+  not_available: "<gray>Not Available</gray>"
+  coming_soon: "<yellow>Coming Soon</yellow>"
+  under_development: "<yellow>Under Development</yellow>"
+  
+  enabled: "<green>Enabled</green>"
+  disabled: "<red>Disabled</red>"
+  active: "<green>Active</green>"
+  inactive: "<gray>Inactive</gray>"
+  
+  high: "<green>High</green>"
+  medium: "<yellow>Medium</yellow>"
+  low: "<red>Low</red>"
+  
+  excellent: "<green>Excellent</green>"
+  good: "<yellow>Good</yellow>"
+  fair: "<orange>Fair</orange>"
+  poor: "<red>Poor</red>"
+
+# ==================== GENERATOR STRUCTURE SYSTEM ====================
+
+generator_browser_ui:
+  title: "<gradient:#FFD700:#FFA500><bold> Generator Structures</bold></gradient>"
+  page:
+    name: "<white><bold>Page {current}/{total}</bold></white>"
+    lore:
+      - "<gray>Showing {showing} designs</gray>"
+      - ""
+      - "<gray>Use arrows to navigate</gray>"
+  info:
+    title: "<gold><bold> Generator Overview</bold></gold>"
+    lore:
+      - "<gray>Unlocked: <green>{unlocked}</green>/<white>{total}</white></gray>"
+      - "<gray>Available: <yellow>{available}</yellow></gray>"
+      - ""
+      - "<gray>Build generator structures to</gray>"
+      - "<gray>enhance your block generation!</gray>"
+  design:
+    name: "<white>{status} {name}</white>"
+    tier_info:
+      - "<gray>Tier: <gold>{tier}</gold></gray>"
+      - "<gray>Difficulty: <yellow>{difficulty}</yellow></gray>"
+    description:
+      - "<gray>{description}</gray>"
+    status:
+      unlocked:
+        - "<green> Unlocked</green>"
+      available:
+        - "<yellow> Available to unlock</yellow>"
+      locked:
+        - "<red> Locked ({progress})</red>"
+    bonus:
+      speed:
+        - "<aqua> Speed: <white>{value}</white></aqua>"
+      xp:
+        - "<light_purple> XP: <white>{value}</white></light_purple>"
+      fortune:
+        - "<gold> Fortune: <white>{value}</white></gold>"
+      none:
+        - "<gray>No bonuses</gray>"
+    action:
+      view:
+        - ""
+        - "<green> Click to view details</green>"
+      unlock:
+        - ""
+        - "<yellow> Click to unlock</yellow>"
+      requirements:
+        - ""
+        - "<gray> Click to view requirements</gray>"
+    empty: "<gray>Coming Soon</gray>"
+  help:
+    title: "<yellow><bold>? Help</bold></yellow>"
+    lore:
+      - "<gray>Generator structures enhance</gray>"
+      - "<gray>your OneBlock experience.</gray>"
+      - ""
+      - "<gray>Build structures around your</gray>"
+      - "<gray>generator to unlock bonuses!</gray>"
+    message: "<green>Generator structures provide speed, XP, and fortune bonuses when built around your OneBlock!</green>"
+  refresh:
+    title: "<green><bold> Refresh</bold></green>"
+    lore:
+      - "<gray>Click to refresh the view</gray>"
+  error:
+    title: "<red><bold> Error</bold></red>"
+    lore:
+      - "<gray>Failed to load generator data.</gray>"
+      - "<gray>Please try again later.</gray>"
+
+generator_design_detail_ui:
+  title: "<gradient:#FFD700:#FFA500><bold> {design_name}</bold></gradient>"
+  page:
+    name: "<white><bold>Page {current}/{total}</bold></white>"
+    lore:
+      - "<gray>Showing {showing} items</gray>"
+      - ""
+      - "<gray>Use arrows to navigate</gray>"
+  info:
+    title: "<gold><bold>{name}</bold></gold>"
+    type:
+      - "<gray>Type: <white>{type}</white></gray>"
+    tier:
+      - "<gray>Tier: <gold>{tier}</gold></gray>"
+    description:
+      - "<gray>{description}</gray>"
+    dimensions:
+      - "<gray>Size: <white>{width}x{height}x{depth}</white></gray>"
+    layers:
+      - "<gray>Layers: <white>{count}</white></gray>"
+    bonuses_header:
+      - ""
+      - "<yellow>Bonuses:</yellow>"
+    bonus:
+      speed:
+        - "<aqua>   Speed: <white>{value}</white></aqua>"
+      xp:
+        - "<light_purple>   XP: <white>{value}</white></light_purple>"
+      fortune:
+        - "<gold>   Fortune: <white>{value}</white></gold>"
+  preview_3d:
+    title: "<aqua><bold> 3D Preview</bold></aqua>"
+    lore:
+      - "<gray>Click to view an interactive</gray>"
+      - "<gray>3D preview of this structure.</gray>"
+    started: "<green>3D preview started! Look around to see the structure outline.</green>"
+  preview_grid:
+    title: "<blue><bold> Grid Preview</bold></blue>"
+    lore:
+      - "<gray>View grid-based visualization</gray>"
+      - "<gray>of this generator structure</gray>"
+      - ""
+      - "<green>Click to open visualization</green>"
+  layers:
+    title: "<yellow><bold> Layers ({count})</bold></yellow>"
+    description:
+      - "<gray>View the layer-by-layer</gray>"
+      - "<gray>breakdown of this structure.</gray>"
+    entry:
+      - "<gray>  Layer {index}: {width}x{depth}</gray>"
+    more:
+      - "<gray>  ... and {count} more</gray>"
+    click_hint:
+      - ""
+      - "<yellow> Click to view layers</yellow>"
+  materials:
+    title: "<green><bold> Materials ({count})</bold></green>"
+    description:
+      - "<gray>View all required materials</gray>"
+      - "<gray>for this structure.</gray>"
+    entry:
+      - "<gray>   {material} x{amount}</gray>"
+    more:
+      - "<gray>  ... and {count} more</gray>"
+    click_hint:
+      - ""
+      - "<yellow> Click to view materials</yellow>"
+  requirements:
+    title: "<light_purple><bold> Requirements</bold></light_purple>"
+    progress:
+      - "<gray>Progress: <white>{progress}</white></gray>"
+    ready:
+      - ""
+      - "<green> All requirements met!</green>"
+    not_ready:
+      - ""
+      - "<red> Requirements not met</red>"
+  pattern:
+    empty: "<gray>Empty</gray>"
+    material: "<white>{material}</white>"
+    position:
+      - "<dark_gray>Position: {x}, {z}</dark_gray>"
+  build:
+    ready: "<green><bold> Build Structure</bold></green>"
+    not_ready: "<gray><bold> Build Structure</bold></gray>"
+    ready_lore:
+      - "<gray>Click to start building</gray>"
+      - "<gray>this generator structure!</gray>"
+    not_ready_lore:
+      - "<gray>Complete all requirements</gray>"
+      - "<gray>to unlock building.</gray>"
+    starting: "<yellow>Starting build for <white>{design}</white>...</yellow>"
+    success: "<green>Structure built successfully!</green>"
+    failed: "<red>Build failed: {reason}</red>"
+    requirements_not_met: "<red>You don't meet the requirements to build this structure!</red>"
+  error:
+    title: "<red><bold> Error</bold></red>"
+    lore:
+      - "<gray>Failed to load design data.</gray>"
+
+generator_visualization_3d:
+  title: "<gradient:#00CED1:#20B2AA><bold> 3D Preview - {design_name}</bold></gradient>"
+  preview:
+    block: "<white>{material}</white>"
+  controls:
+    rotate_left:
+      title: "<yellow><bold> Rotate Left</bold></yellow>"
+      lore:
+        - "<gray>Click to rotate the view</gray>"
+        - "<gray>counter-clockwise.</gray>"
+    rotate_right:
+      title: "<yellow><bold> Rotate Right</bold></yellow>"
+      lore:
+        - "<gray>Click to rotate the view</gray>"
+        - "<gray>clockwise.</gray>"
+    zoom_in:
+      title: "<green><bold>+ Zoom In</bold></green>"
+      lore:
+        - "<gray>Click to zoom in.</gray>"
+      max:
+        - "<gray>Maximum zoom reached.</gray>"
+    zoom_out:
+      title: "<red><bold>- Zoom Out</bold></red>"
+      lore:
+        - "<gray>Click to zoom out.</gray>"
+      min:
+        - "<gray>Minimum zoom reached.</gray>"
+    layer_up:
+      title: "<lime><bold> Layer Up</bold></lime>"
+      lore:
+        - "<gray>Current: <white>{current_layer}</white>/<white>{total_layers}</white></gray>"
+        - "<gray>Click to view higher layer.</gray>"
+    layer_down:
+      title: "<red><bold> Layer Down</bold></red>"
+      lore:
+        - "<gray>Current: <white>{current_layer}</white>/<white>{total_layers}</white></gray>"
+        - "<gray>Click to view lower layer.</gray>"
+    perspective:
+      title: "<aqua><bold> {perspective}</bold></aqua>"
+      lore:
+        - "<gray>Click to change perspective.</gray>"
+        - "<gray>Current: {perspective}</gray>"
+    center_view:
+      title: "<blue><bold> Center View</bold></blue>"
+      lore:
+        - "<gray>Click to center the view</gray>"
+    back:
+      title: "<red><bold> Back</bold></red>"
+      lore:
+        - "<gray>Return to previous menu</gray>"
+  info:
+    title: "<gold><bold> Structure Info</bold></gold>"
+    lore:
+      - "<gray>Design: <white>{design_name}</white></gray>"
+      - "<gray>Size: <white>{width}x{height}x{depth}</white></gray>"
+      - "<gray>Layer: <white>{current_layer}</white>/<white>{total_layers}</white></gray>"
+  structure:
+    block:
+      title: "<white><bold> {material}</bold></white>"
+      lore:
+        - "<gray>Position: {x}, {y}, {z}</gray>"
+        - "<gray>Layer: {layer}</gray>"
+    empty:
+      title: "<gray><bold> Empty</bold></gray>"
+      lore:
+        - "<gray>Position: {x}, {y}, {z}</gray>"
+  error:
+    title: "<red><bold> Error</bold></red>"
+    lore:
+      - "<gray>Failed to load preview.</gray>"
+
+generator_visualization_grid_ui:
+  title: "<gradient:#00CED1:#20B2AA><bold> Grid Preview - {design_name}</bold></gradient>"
+  page:
+    name: "<white><bold>Layer {current}/{total}</bold></white>"
+    lore:
+      - "<gray>Viewing layer {current}</gray>"
+      - ""
+      - "<gray>Use arrows to change layers</gray>"
+  controls:
+    rotate_left:
+      title: "<yellow><bold> Rotate Left</bold></yellow>"
+      lore:
+        - "<gray>Click to rotate the view</gray>"
+        - "<gray>counter-clockwise.</gray>"
+    rotate_right:
+      title: "<yellow><bold> Rotate Right</bold></yellow>"
+      lore:
+        - "<gray>Click to rotate the view</gray>"
+        - "<gray>clockwise.</gray>"
+    zoom_in:
+      title: "<green><bold>+ Zoom In</bold></green>"
+      lore:
+        - "<gray>Click to zoom in.</gray>"
+    zoom_out:
+      title: "<red><bold>- Zoom Out</bold></red>"
+      lore:
+        - "<gray>Click to zoom out.</gray>"
+    layer_up:
+      title: "<lime><bold> Layer Up</bold></lime>"
+      lore:
+        - "<gray>Current: <white>{current_layer}</white>/<white>{total_layers}</white></gray>"
+        - "<gray>Click to view higher layer.</gray>"
+    layer_down:
+      title: "<red><bold> Layer Down</bold></red>"
+      lore:
+        - "<gray>Current: <white>{current_layer}</white>/<white>{total_layers}</white></gray>"
+        - "<gray>Click to view lower layer.</gray>"
+    center_view:
+      title: "<blue><bold> Center View</bold></blue>"
+      lore:
+        - "<gray>Click to center the view</gray>"
+    back:
+      title: "<red><bold> Back</bold></red>"
+      lore:
+        - "<gray>Return to previous menu</gray>"
+  info:
+    title: "<gold><bold> Structure Info</bold></gold>"
+    lore:
+      - "<gray>Design: <white>{design_name}</white></gray>"
+      - "<gray>Size: <white>{width}x{height}x{depth}</white></gray>"
+      - "<gray>Layer: <white>{current_layer}</white>/<white>{total_layers}</white></gray>"
+  structure:
+    block:
+      title: "<white><bold> {material}</bold></white>"
+      lore:
+        - "<gray>Position: {x}, {y}, {z}</gray>"
+        - "<gray>Layer: {layer}</gray>"
+    empty:
+      title: "<gray><bold> Empty</bold></gray>"
+      lore:
+        - "<gray>Position: {x}, {y}, {z}</gray>"
+  error:
+    title: "<red><bold> Error</bold></red>"
+    lore:
+      - "<gray>Failed to load visualization.</gray>"
+
+generator_build_progress_grid_ui:
+  title: "<gradient:#32CD32:#228B22><bold> Building - {design_name}</bold></gradient>"
+  page:
+    name: "<white><bold>Layer {current}/{total}</bold></white>"
+    lore:
+      - "<gray>Building layer {current}</gray>"
+      - ""
+      - "<gray>Use arrows to view layers</gray>"
+  controls:
+    layer_up:
+      title: "<lime><bold> Layer Up</bold></lime>"
+      lore:
+        - "<gray>Current: <white>{current_layer}</white>/<white>{total_layers}</white></gray>"
+        - "<gray>Click to view higher layer.</gray>"
+    layer_down:
+      title: "<red><bold> Layer Down</bold></red>"
+      lore:
+        - "<gray>Current: <white>{current_layer}</white>/<white>{total_layers}</white></gray>"
+        - "<gray>Click to view lower layer.</gray>"
+    center_view:
+      title: "<blue><bold> Center View</bold></blue>"
+      lore:
+        - "<gray>Click to center the view</gray>"
+    cancel:
+      title: "<red><bold> Cancel Build</bold></red>"
+      lore:
+        - "<gray>Stop the build process</gray>"
+        - "<red>This cannot be undone!</red>"
+    finished:
+      title: "<green><bold> Build Complete!</bold></green>"
+      lore:
+        - "<gray>Click to close</gray>"
+  progress:
+    info:
+      title: "<gold><bold> Build Progress</bold></gold>"
+      lore:
+        - "<gray>Design: <white>{design_name}</white></gray>"
+        - "<gray>Progress: <green>{progress}%</green></gray>"
+        - "<gray>Blocks: <white>{placed}</white>/<white>{total}</white></gray>"
+        - "<gray>Layer: <white>{current_layer}</white>/<white>{total_layers}</white></gray>"
+  build_state:
+    block:
+      title: "<white><bold> {state}</bold></white>"
+      lore:
+        - "<gray>Position: {x}, {y}, {z}</gray>"
+        - "<gray>Material: {material}</gray>"
+  structure:
+    empty:
+      title: "<gray><bold> Empty</bold></gray>"
+      lore:
+        - "<gray>Position: {x}, {y}, {z}</gray>"
+  error:
+    title: "<red><bold> Error</bold></red>"
+    lore:
+      - "<gray>Failed to load build progress.</gray>"
+
+generator_build_progress:
+  title: "<gradient:#32CD32:#228B22><bold> Building - {design_name}</bold></gradient>"
+  info:
+    title: "<gold><bold>{name}</bold></gold>"
+    type:
+      - "<gray>Type: <white>{type}</white></gray>"
+    tier:
+      - "<gray>Tier: <gold>{tier}</gold></gray>"
+    dimensions:
+      - "<gray>Size: <white>{width}x{height}x{depth}</white></gray>"
+  progress:
+    title: "<yellow><bold> Build Progress</bold></yellow>"
+    blocks:
+      - "<gray>Blocks: <white>{placed}</white>/<white>{total}</white></gray>"
+    percentage:
+      - "<gray>Progress: <green>{percent}%</green></gray>"
+    complete:
+      - ""
+      - "<green><bold> Build Complete!</bold></green>"
+    cancelled:
+      - ""
+      - "<red><bold> Build Cancelled</bold></red>"
+    bar_segment: "<gray>{percent}%</gray>"
+  layer:
+    title: "<aqua><bold> Layer Progress</bold></aqua>"
+    current:
+      - "<gray>Layer: <white>{current}</white>/<white>{total}</white></gray>"
+    progress:
+      - "<gray>Layer Progress: <green>{percent}%</green></gray>"
+    name:
+      - "<gray>Building: <white>{name}</white></gray>"
+  materials:
+    title: "<green><bold> Materials Used</bold></green>"
+    consumed:
+      - "<gray>Consumed: <white>{consumed}</white>/<white>{total}</white></gray>"
+    entry:
+      - "<gray>   {material} x{amount}</gray>"
+    more:
+      - "<gray>  ... and {count} more</gray>"
+  cancel:
+    title: "<red><bold> Cancel Build</bold></red>"
+    lore:
+      - "<gray>Click to cancel the build.</gray>"
+      - "<yellow>Materials will be refunded.</yellow>"
+    message: "<yellow>Build cancelled. Materials have been refunded.</yellow>"
+  complete:
+    title: "<green><bold> Complete!</bold></green>"
+    lore:
+      - "<gray>Build completed successfully!</gray>"
+      - "<gray>Click to close.</gray>"
+  stopped:
+    title: "<gray><bold> Stopped</bold></gray>"
+    lore:
+      - "<gray>Build was stopped.</gray>"
+      - "<gray>Click to close.</gray>"
+  error:
+    title: "<red><bold> Error</bold></red>"
+    lore:
+      - "<gray>Failed to load build data.</gray>"
+
+generator_structures:
+  design:
+    foundry:
+      name: "Foundry Generator"
+      description: "An industrial smelting facility that enhances block generation with heat-based processing."
+    aquatic:
+      name: "Aquatic Generator"
+      description: "An underwater temple structure that harnesses the power of the ocean."
+    volcanic:
+      name: "Volcanic Generator"
+      description: "A volcanic forge that uses magma and fire for enhanced generation."
+    crystal:
+      name: "Crystal Generator"
+      description: "An ethereal crystal formation that resonates with magical energy."
+    mechanical:
+      name: "Mechanical Generator"
+      description: "A redstone-powered machine with automated collection systems."
+    nature:
+      name: "Nature Generator"
+      description: "A living organic structure that grows and regenerates."
+    nether:
+      name: "Nether Generator"
+      description: "A hellish forge that channels the power of the Nether."
+    end:
+      name: "End Generator"
+      description: "A void-touched structure infused with End energy."
+    ancient:
+      name: "Ancient Generator"
+      description: "A deep dark excavation site with ancient power."
+    celestial:
+      name: "Celestial Generator"
+      description: "A divine beacon structure of ultimate power."
+  requirement:
+    evolution_level: "Reach Evolution Level {level}"
+    blocks_broken: "Break {blocks} blocks"
+    prestige_level: "Reach Prestige Level {level}"
+    island_level: "Reach Island Level {level}"
+    generator_tier: "Unlock {tier} Generator"
+    item: "Have {amount}x {item}"
+    currency: "Have {amount} coins"
+  build:
+    started: "<yellow>Building <white>{design}</white>...</yellow>"
+    progress: "<gray>Build progress: <green>{percent}%</green></gray>"
+    layer_complete: "<green>Layer {layer} complete!</green>"
+    complete: "<green><bold></bold></green> <green>Generator structure <white>{design}</white> built successfully!</green>"
+    cancelled: "<yellow>Build cancelled. Materials refunded.</yellow>"
+    failed: "<red>Build failed: {reason}</red>"
+    no_space: "<red>Not enough space to build here!</red>"
+    missing_materials: "<red>Missing materials: {materials}</red>"
+  error:
+    not_found: "<red>Generator design not found: {design}</red>"
+    not_enabled: "<red>This generator design is not enabled.</red>"
+    already_building: "<red>You are already building a structure!</red>"
+    no_active_build: "<red>You don't have an active build to cancel.</red>"
+    requirements_not_met: "<red>You don't meet the requirements for this generator.</red>"
+
+# ==================== ADMIN GENERATOR COMMANDS ====================
+admin:
+  generator:
+    no_permission: "<red>You don't have permission to use admin generator commands.</red>"
+    not_initialized: "<red>Generator system is not initialized yet.</red>"
+    help:
+      header: "<gold><bold>Generator Admin Commands:</bold></gold>"
+      list: "<gray>  /admingen list - List all generator designs</gray>"
+      info: "<gray>  /admingen info <design> - Show design details</gray>"
+      build: "<gray>  /admingen build <player> <design> [x] [y] [z] - Build for player</gray>"
+      remove: "<gray>  /admingen remove <player> [design] - Remove structures</gray>"
+      reload: "<gray>  /admingen reload - Reload configurations</gray>"
+      status: "<gray>  /admingen status <player> - Show player status</gray>"
+      enable: "<gray>  /admingen enable <design> - Enable a design</gray>"
+      disable: "<gray>  /admingen disable <design> - Disable a design</gray>"
+      give: "<gray>  /admingen give <player> <design> - Give generator (bypass reqs)</gray>"
+      gui: "<gray>  /admingen gui <player> - Open GUI for player</gray>"
+    list:
+      header: "<gold>Generator Designs ({count}):</gold>"
+      entry: "<gray>  {enabled} <white>{key}</white> - <yellow>{name}</yellow> (Tier {tier}, {type})</gray>"
+    info:
+      usage: "<red>Usage: /admingen info <design></red>"
+      not_found: "<red>Generator design '{design}' not found.</red>"
+      header: "<gold><bold>Generator: {name}</bold></gold>"
+      key: "<gray>  Key: <white>{key}</white></gray>"
+      type: "<gray>  Type: <white>{type}</white></gray>"
+      tier: "<gray>  Tier: <white>{tier}</white></gray>"
+      enabled: "<gray>  Enabled: <white>{enabled}</white></gray>"
+      speed: "<gray>  Speed: <white>{speed}</white></gray>"
+      xp: "<gray>  XP: <white>{xp}</white></gray>"
+      fortune: "<gray>  Fortune: <white>{fortune}</white></gray>"
+      layers: "<gray>  Layers: <white>{layers}</white></gray>"
+    build:
+      usage: "<red>Usage: /admingen build <player> <design> [x] [y] [z]</red>"
+      player_not_found: "<red>Player '{player}' not found or offline.</red>"
+      design_not_found: "<red>Generator design '{design}' not found.</red>"
+      invalid_coordinates: "<red>Invalid coordinates. Please use numbers.</red>"
+      started: "<green>Started building <white>{design}</white> for <white>{player}</white> at <white>{location}</white>.</green>"
+      started_player: "<green>An admin started building <white>{design}</white> for you!</green>"
+      failed: "<red>Build failed: {reason}</red>"
+      error: "<red>Error: {error}</red>"
+    remove:
+      usage: "<red>Usage: /admingen remove <player> [design]</red>"
+      player_not_found: "<red>Player '{player}' not found or offline.</red>"
+      no_island: "<red>Player <white>{player}</white> doesn't have an island.</red>"
+      not_found: "<red>Player <white>{player}</white> doesn't have a <white>{design}</white> generator.</red>"
+      success: "<green>Removed <white>{design}</white> generator from <white>{player}</white>.</green>"
+      none_found: "<red>Player <white>{player}</white> has no generator structures.</red>"
+      all_success: "<green>Removed <white>{count}</white> generator structures from <white>{player}</white>.</green>"
+      error: "<red>Error: {error}</red>"
+    reload:
+      reloading: "<yellow>Reloading generator configurations...</yellow>"
+      success: "<green>Generator configurations reloaded successfully!</green>"
+      failed: "<red>Failed to reload: {reason}</red>"
+    status:
+      usage: "<red>Usage: /admingen status <player></red>"
+      player_not_found: "<red>Player '{player}' not found or offline.</red>"
+      no_island: "<red>Player <white>{player}</white> doesn't have an island.</red>"
+      header: "<gold>Generator Status for <white>{player}</white> ({count} structures):</gold>"
+      none: "<gray>  No generator structures built.</gray>"
+      entry: "<gray>  {active} <white>{design}</white> (Tier {tier}) at <white>{location}</white></gray>"
+      error: "<red>Error: {error}</red>"
+    enable:
+      usage: "<red>Usage: /admingen enable <design></red>"
+      not_found: "<red>Generator design '{design}' not found.</red>"
+      success: "<green>Enabled generator design <white>{design}</white>.</green>"
+    disable:
+      usage: "<red>Usage: /admingen disable <design></red>"
+      not_found: "<red>Generator design '{design}' not found.</red>"
+      success: "<yellow>Disabled generator design <white>{design}</white>.</yellow>"
+    give:
+      usage: "<red>Usage: /admingen give <player> <design></red>"
+      player_not_found: "<red>Player '{player}' not found or offline.</red>"
+      design_not_found: "<red>Generator design '{design}' not found.</red>"
+      success: "<green>Gave <white>{design}</white> generator to <white>{player}</white>.</green>"
+      received: "<green>You received a <white>{design}</white> generator from an admin!</green>"
+      failed: "<red>Failed to give generator: {reason}</red>"
+      error: "<red>Error: {error}</red>"
+    gui:
+      usage: "<red>Usage: /admingen gui <player></red>"
+      player_not_found: "<red>Player '{player}' not found or offline.</red>"
+      opened: "<green>Opened generator GUI for <white>{player}</white>.</green>"
+
+# ==================== PLAYER GENERATOR COMMANDS (EXTENDED) ====================
+  commands:
+    title: "<gold><bold>Generator Commands:</bold></gold>"
+    help: "<gray>  /generator help - Show detailed help</gray>"
+    browse: "<gray>  /generator [browse] - Open generator browser</gray>"
+    list: "<gray>  /generator list - List all generators</gray>"
+    view: "<gray>  /generator view <type> - View generator structure</gray>"
+    animate: "<gray>  /generator animate <type> - Animated preview</gray>"
+    build: "<gray>  /generator build <type> - Build a generator</gray>"
+    scan: "<gray>  /generator scan - Scan for structures</gray>"
+    activate: "<gray>  /generator activate <type> - Activate generator</gray>"
+    validate: "<gray>  /generator validate - Validate structures</gray>"
+    info: "<gray>  /generator info <type> - Show generator info</gray>"
+    cancel: "<gray>  /generator cancel - Cancel current build</gray>"
+    status: "<gray>  /generator status - Show your generator status</gray>"
+  browse:
+    opening: "<green>Opening generator browser...</green>"
+  status:
+    player_not_found: "<red>Player data not found.</red>"
+    no_island: "<red>You don't have an island yet.</red>"
+    island_not_found: "<red>Island data not found.</red>"
+    header: "<gold>Your Generator Structures ({count}):</gold>"
+    none: "<gray>You haven't built any generator structures yet.</gray>"
+    help: "<yellow>Use <white>/generator browse</white> to see available generators!</yellow>"
+    entry: "<gray>  {active} <white>{name}</white> (Tier {tier}) - <aqua>{bonuses}</aqua></gray>"
+    footer: "<gray>Use <white>/generator browse</white> to manage your generators.</gray>"
+    error: "<red>Error: {error}</red>"
+  list:
+    design_entry: "<gray>  {status} <white>{name}</white> (Tier {tier}, {type})</gray>"
+    legacy_header: "<gray><italic>Legacy Generators:</italic></gray>"

@@ -17,6 +17,7 @@ import com.raindropcentral.rdt.database.entity.RDTPlayer;
 import de.jexcellence.hibernate.repository.CachedRepository;
 import jakarta.persistence.EntityManagerFactory;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 import java.util.UUID;
@@ -24,49 +25,48 @@ import java.util.concurrent.ExecutorService;
 import java.util.function.Function;
 
 /**
- * Cached repository for {@link RDTPlayer} entities.
+ * Cached repository for persisted {@link RDTPlayer} records.
  *
- * <p>Provides CRUD operations and a convenience finder for locating a player by UUID.
- * Use off the main server thread for blocking calls.
- */
-@SuppressWarnings({
-        "unused",
-        "FieldCanBeLocal"
-})
-/**
- * Represents the RRDTPlayer API type.
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 public class RRDTPlayer extends CachedRepository<RDTPlayer, Long, UUID> {
-    // Keep a reference to the EntityManagerFactory for custom ad-hoc queries
-    private final EntityManagerFactory emf;
 
     /**
-     * Construct a repository for {@link RDTPlayer}.
+     * Creates the player repository.
      *
-     * @param executorService       executor for async operations
-     * @param entityManagerFactory  JPA entity manager factory
-     * @param entityClass           entity class (typically {@link RDTPlayer}.class)
-     * @param keyExtractor          cache key extractor (player UUID)
+     * @param executorService async executor
+     * @param entityManagerFactory entity manager factory
+     * @param entityClass managed entity class
+     * @param keyExtractor cache key extractor
      */
     public RRDTPlayer(
-            @NotNull ExecutorService executorService,
-            @NotNull EntityManagerFactory entityManagerFactory,
-            @NotNull Class<RDTPlayer> entityClass,
-            @NotNull Function<RDTPlayer, UUID> keyExtractor
+        final @NotNull ExecutorService executorService,
+        final @NotNull EntityManagerFactory entityManagerFactory,
+        final @NotNull Class<RDTPlayer> entityClass,
+        final @NotNull Function<RDTPlayer, UUID> keyExtractor
     ) {
         super(executorService, entityManagerFactory, entityClass, keyExtractor);
-        this.emf = entityManagerFactory;
     }
 
     /**
-     * Find a player record by player UUID.
-     * IMPORTANT: Run on a background thread; do not call from the main server thread.
+     * Finds a player record by player UUID.
      *
-     * @param player_uuid UUID of the player
-     * @return matching player or {@code null} if none
+     * @param playerUuid player UUID
+     * @return matching player record, or {@code null} when none exists
      */
-    public RDTPlayer findByPlayer(UUID player_uuid) {
-        return findByAttributes(Map.of("player_uuid", player_uuid)).orElse(null);
+    public @Nullable RDTPlayer findByPlayer(final @NotNull UUID playerUuid) {
+        return findByAttributes(Map.of("player_uuid", playerUuid)).orElse(null);
     }
 
+    /**
+     * Finds a player record by identifier.
+     *
+     * @param identifier player UUID
+     * @return matching player record, or {@code null} when none exists
+     */
+    public @Nullable RDTPlayer findByIdentifier(final @NotNull UUID identifier) {
+        return this.findByPlayer(identifier);
+    }
 }

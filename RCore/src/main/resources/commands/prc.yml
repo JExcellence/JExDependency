@@ -3,7 +3,7 @@ commands:
     name: 'rc'
     description: 'Manage this server connection to RaindropCentral'
     aliases: []
-    usage: 'rc <connect <api-key>|disconnect|claim droplets>'
+    usage: 'rc <connect <api-key>|disconnect|claim droplets|store update>'
     errorMessages:
       invalidKey$: 'lut["prefix"] & "&cInvalid API key format"'
       uuidMismatch$: 'lut["prefix"] & "&cThis API key belongs to a different Minecraft account"'
@@ -17,6 +17,7 @@ commands:
         connect: 'rcore.central.connect'
         disconnect: 'rcore.central.disconnect'
         claimDroplets: 'rcore.central.claim.droplets'
+        storeUpdate: 'rcore.central.store.update'
 
 lut:
   prefix: '&8[&bRaindropCentral&8] &7'

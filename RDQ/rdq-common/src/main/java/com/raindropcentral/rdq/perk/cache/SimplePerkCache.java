@@ -20,7 +20,14 @@ import jakarta.persistence.OptimisticLockException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
@@ -149,7 +156,7 @@ public class SimplePerkCache {
 					// This prevents OptimisticLockException on the Perk entity
 					repository.updatePlayerPerkOnly(perk).join();
 					savedCount++;
-				} catch (jakarta.persistence.OptimisticLockException e) {
+				} catch (OptimisticLockException e) {
 					// Log but continue - this perk was modified elsewhere
 					LOGGER.fine("Optimistic lock on perk " + perk.getPerk().getIdentifier() + 
 							" for player " + playerId + " - entity was updated elsewhere, skipping");

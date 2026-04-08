@@ -1,0 +1,58 @@
+identifier: "tutorial_welcome"
+category: "tutorial"
+difficulty: EASY
+enabled: true
+displayOrder: 1
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
+
+icon:
+  material: BOOK
+  displayNameKey: "quest.tutorial_welcome.name"
+  descriptionKey: "quest.tutorial_welcome.description"
+
+tasks:
+  mine_first_blocks:
+    orderIndex: 0
+    difficulty: EASY
+    sequential: false
+    icon:
+      material: OAK_LOG
+      displayNameKey: "quest.tutorial_welcome.task.mine_first_blocks.name"
+      descriptionKey: "quest.tutorial_welcome.task.mine_first_blocks.description"
+    requirement:
+      type: MINE_BLOCKS
+      target: OAK_LOG
+      amount: 10
+  break_dirt:
+    orderIndex: 1
+    difficulty: EASY
+    sequential: false
+    icon:
+      material: DIRT
+      displayNameKey: "quest.tutorial_welcome.task.break_dirt.name"
+      descriptionKey: "quest.tutorial_welcome.task.break_dirt.description"
+    requirement:
+      type: BREAK_BLOCKS
+      target: DIRT
+      amount: 10
+
+rewards:
+  main_currency:
+    type: CURRENCY
+    currency: coins
+    amount: 100.0
+    icon:
+      material: GOLD_INGOT
+      displayNameKey: "reward.currency.name"
+      descriptionKey: "reward.currency.description"
+      enchanted: true
+  main_xp:
+    type: EXPERIENCE
+    amount: 50.0
+    icon:
+      material: EXPERIENCE_BOTTLE
+      displayNameKey: "reward.experience.name"
+      descriptionKey: "reward.experience.description"

@@ -13,14 +13,12 @@
 
 package com.raindropcentral.rdr.view;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
-
+import com.raindropcentral.rdr.RDR;
+import com.raindropcentral.rdr.database.entity.RStorage;
+import com.raindropcentral.rdr.database.entity.StorageTrustStatus;
+import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
+import com.raindropcentral.rplatform.view.APaginatedView;
+import de.jexcellence.jextranslate.i18n.I18n;
 import me.devnatan.inventoryframework.component.BukkitItemComponentBuilder;
 import me.devnatan.inventoryframework.context.Context;
 import me.devnatan.inventoryframework.context.OpenContext;
@@ -36,12 +34,13 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import com.raindropcentral.rdr.RDR;
-import com.raindropcentral.rdr.database.entity.RStorage;
-import com.raindropcentral.rdr.database.entity.StorageTrustStatus;
-import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
-import com.raindropcentral.rplatform.view.APaginatedView;
-import de.jexcellence.jextranslate.i18n.I18n;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Paginated owner management view for shared storage trust access.

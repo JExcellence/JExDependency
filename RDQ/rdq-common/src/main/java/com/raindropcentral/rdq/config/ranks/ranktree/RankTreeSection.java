@@ -15,7 +15,7 @@ package com.raindropcentral.rdq.config.ranks.ranktree;
 
 import com.raindropcentral.rdq.config.ranks.rank.RankSection;
 import com.raindropcentral.rdq.config.ranks.system.CrossTreeProgressionSection;
-import com.raindropcentral.rdq.config.utility.IconSection;
+import com.raindropcentral.rplatform.config.icon.IconSection;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import de.jexcellence.configmapper.sections.AConfigSection;
 import de.jexcellence.configmapper.sections.CSAlways;

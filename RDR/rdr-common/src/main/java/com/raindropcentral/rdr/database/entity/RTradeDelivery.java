@@ -13,17 +13,10 @@
 
 package com.raindropcentral.rdr.database.entity;
 
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
-
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.raindropcentral.rplatform.database.converter.ItemStackSlotMapConverter;
+import com.raindropcentral.rplatform.database.converter.UUIDConverter;
 import de.jexcellence.hibernate.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
@@ -38,8 +31,14 @@ import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.raindropcentral.rplatform.database.converter.ItemStackSlotMapConverter;
-import com.raindropcentral.rplatform.database.converter.UUIDConverter;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
+import java.util.UUID;
 
 /**
  * Persisted trade payout row that recipients can claim from any server.

@@ -16,65 +16,30 @@ package com.raindropcentral.rdt.commands;
 import de.jexcellence.evaluable.section.IPermissionNode;
 
 /**
- * Permission nodes used by the primary player command ({@code /prt}).
+ * Permission nodes used by the primary RDT player command.
  *
- * <p>Each enum value provides an {@code internalName} used by the configuration system
- * and a {@code fallbackNode} string that represents the default Bukkit permission
- * when no explicit mapping is provided.
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
-
-public enum EPRTPermission implements IPermissionNode{
-    /** Generic permission to use the base command and tab completion. */
-    COMMAND("command","raindroptowns.command"),
-    /** Create a new town. */
-    CREATE("createCommand","raindroptowns.command.create"),
-    /** Delete your town (mayor only). */
-    DELETE("deleteCommand","raindroptowns.command.delete"),
-    /** View information about your town. */
-    INFO("infoCommand","raindroptowns.command.info"),
-    /** Invite a player to your town. */
-    INVITE("inviteCommand","raindroptowns.command.invite"),
-    /** Request to join a town. */
-    JOIN("joinCommand","raindroptowns.command.join"),
-    /** Accept invitations or (as mayor) accept join requests. */
-    ACCEPT("acceptCommand","raindroptowns.command.accept"),
-    /** Claim chunks for your town (mayor only). */
-    CLAIM("claimCommand","raindroptowns.command.claim"),
-    //unclaim a chunk
-    UNCLAIM("unclaimCommand","raindroptowns.command.unclaim"),
-    /** Print debug output for your town. */
-    DEBUG("debugCommand","raindroptowns.command.debug"),
-    //deposit money to the town bank
-    DEPOSIT("depositCommand","raindroptowns.command.deposit"),
-    //withdraw money from the town bank
-    WITHDRAW("withdrawCommand","raindroptowns.command.withdraw"),
-    MAIN("mainCommand","raindroptowns.command.main"),
-    /** Open the town overview command route. */
-    TOWN("townCommand", "raindroptowns.command.town"),
-    /** Trigger delayed safe-teleport to the player's town nexus. */
+public enum EPRTPermission implements IPermissionNode {
+    COMMAND("command", "raindroptowns.command"),
+    MAIN("mainCommand", "raindroptowns.command.main"),
     SPAWN("spawnCommand", "raindroptowns.command.spawn"),
-    /** Read command help output. */
-    HELP("helpCommand", "raindroptowns.command.help");
+    BANK("bankCommand", "raindroptowns.command.bank");
 
-    /** Internal key used by the configuration system to resolve permissions. */
     private final String internalName;
-
-    /** Default Bukkit permission node used when no explicit mapping is provided. */
     private final String fallbackNode;
 
-    /**
-     * Construct a permission node descriptor.
-     *
-     * @param internalName internal configuration key
-     * @param fallbackNode default Bukkit permission node
-     */
-    EPRTPermission(String internalName, String fallbackNode){
+    EPRTPermission(final String internalName, final String fallbackNode) {
         this.internalName = internalName;
         this.fallbackNode = fallbackNode;
     }
 
     /**
-     * Gets internalName.
+     * Returns the internal config key for this permission.
+     *
+     * @return internal permission key
      */
     @Override
     public String getInternalName() {
@@ -82,7 +47,9 @@ public enum EPRTPermission implements IPermissionNode{
     }
 
     /**
-     * Gets fallbackNode.
+     * Returns the fallback Bukkit permission node.
+     *
+     * @return fallback permission node
      */
     @Override
     public String getFallbackNode() {

@@ -1,0 +1,33 @@
+commands:
+  pmultiverse:
+    name: 'pmultiverse'
+    description: 'Manage multiverse worlds'
+    aliases:
+      - mv
+      - multiverse
+    usage: 'multiverse <action> [world-name] [environment] [type]'
+    argumentUsages:
+      1$: 'lut["prefix"] & "&7/" & alias & " &c<action>"'
+      2$: 'lut["prefix"] & "&7/" & alias & " &c<action> <world-name>"'
+      3$: 'lut["prefix"] & "&7/" & alias & " &c<action> <world-name> [environment]"'
+      4$: 'lut["prefix"] & "&7/" & alias & " &c<action> <world-name> [environment] [type]"'
+    errorMessages:
+      malformedEnum$: |
+        lut["prefix"] & "&7The value &c" & value & " &7is not valid"
+      playerNotOnline$: 'lut["prefix"] & "&7The player &c" & value & " &7is &cnot online"'
+      playerUnknown$: 'lut["prefix"] & "&7The player &c" & value & " &7has &cnot played &7on this server before"'
+      internalError$: 'lut["prefix"] & "&4An internal error occurred"'
+      notAConsole$: 'lut["prefix"] & "&cYou can only execute this command in the console"'
+      notAPlayer$: 'lut["prefix"] & "&7This command can only be executed as a &cplayer"'
+    permissions:
+      missingMessage$: 'lut["prefix"] & "&7You lack the permission: &c" & permission'
+      nodes:
+        command: 'jexmultiverse.command'
+        commandCreate: 'jexmultiverse.command.create'
+        commandDelete: 'jexmultiverse.command.delete'
+        commandEdit: 'jexmultiverse.command.edit'
+        commandTeleport: 'jexmultiverse.command.teleport'
+        commandLoad: 'jexmultiverse.command.load'
+
+lut:
+  prefix: '&8[&6JExMultiverse&8] &7'

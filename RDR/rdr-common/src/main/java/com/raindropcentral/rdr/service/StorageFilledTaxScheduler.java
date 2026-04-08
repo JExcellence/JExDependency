@@ -13,16 +13,6 @@
 
 package com.raindropcentral.rdr.service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
-import java.util.logging.Logger;
-
 import com.raindropcentral.rdr.RDR;
 import com.raindropcentral.rdr.configs.ConfigSection;
 import com.raindropcentral.rdr.database.entity.RStorage;
@@ -34,6 +24,16 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
+import java.util.logging.Logger;
 
 /**
  * Schedules recurring storage taxes for non-empty player storages.

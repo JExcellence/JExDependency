@@ -24,8 +24,8 @@ import me.devnatan.inventoryframework.component.ComponentFactory;
 import me.devnatan.inventoryframework.context.Context;
 import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
-import me.devnatan.inventoryframework.context.SlotRenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
+import me.devnatan.inventoryframework.context.SlotRenderContext;
 import me.devnatan.inventoryframework.internal.LayoutSlot;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -754,7 +754,7 @@ public abstract class BaseView extends View {
 			
 			// Fallback to a simple barrier item
 			render
-				.slot(bottomLeftSlot, new org.bukkit.inventory.ItemStack(org.bukkit.Material.BARRIER))
+				.slot(bottomLeftSlot, new ItemStack(Material.BARRIER))
 				.onClick(this::handleBackButtonClick);
 		}
 	}
