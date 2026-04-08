@@ -6,7 +6,6 @@ import org.jetbrains.annotations.NotNull;
  * Represents the progress of a single task within a quest.
  * <p>
  * This record contains information about a task's completion status and progress.
- * </p>
  *
  * @param taskId the unique identifier of the task (Long ID)
  * @param taskIdentifier the string identifier of the task

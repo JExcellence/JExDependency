@@ -19,7 +19,6 @@ import java.util.logging.Logger;
  * This listener automatically loads quest data when a player joins,
  * enables the quest progress sidebar if the player has active quests,
  * and saves data when they quit.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0
@@ -41,7 +40,6 @@ public class QuestCacheListener implements Listener {
      * player has active quests.
      * <p>
      * Uses LOWEST priority to load data before other listeners access it.
-     * </p>
      *
      * @param event the player join event
      */
@@ -79,7 +77,6 @@ public class QuestCacheListener implements Listener {
      * Handles player quit event — disables the sidebar and saves quest data.
      * <p>
      * Uses MONITOR priority to save data after other plugins are done.
-     * </p>
      *
      * @param event the player quit event
      */

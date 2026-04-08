@@ -4,7 +4,11 @@ package com.raindropcentral.rdq.service.quest;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.raindropcentral.rdq.RDQ;
-import com.raindropcentral.rdq.database.entity.quest.*;
+import com.raindropcentral.rdq.database.entity.quest.Quest;
+import com.raindropcentral.rdq.database.entity.quest.QuestCompletionHistory;
+import com.raindropcentral.rdq.database.entity.quest.QuestTask;
+import com.raindropcentral.rdq.database.entity.quest.QuestTaskProgress;
+import com.raindropcentral.rdq.database.entity.quest.QuestUser;
 import com.raindropcentral.rdq.database.repository.quest.QuestCompletionHistoryRepository;
 import com.raindropcentral.rdq.database.repository.quest.QuestRepository;
 import com.raindropcentral.rdq.database.repository.quest.QuestUserRepository;
@@ -19,7 +23,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -33,7 +42,6 @@ import java.util.stream.Collectors;
  * This service batches progress updates for performance and processes them
  * periodically. It handles task completion, quest completion, and reward
  * distribution.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0
@@ -52,7 +60,7 @@ public class QuestProgressTrackerImpl implements QuestProgressTracker {
     private final com.raindropcentral.rdq.cache.quest.QuestCacheManager cacheManager;
     
     /**
-     * Pending progress updates: (playerId, questId, taskId) -> amount
+     * Pending progress updates: (playerId, questId, taskId) -> amount.
      */
     private final Map<ProgressKey, AtomicInteger> pendingUpdates;
     

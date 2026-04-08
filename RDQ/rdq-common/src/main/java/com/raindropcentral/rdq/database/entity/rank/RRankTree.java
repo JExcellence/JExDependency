@@ -13,8 +13,8 @@
 
 package com.raindropcentral.rdq.database.entity.rank;
 
-import com.raindropcentral.rplatform.config.icon.IconSection;
 import com.raindropcentral.rdq.database.converter.IconSectionConverter;
+import com.raindropcentral.rplatform.config.icon.IconSection;
 import de.jexcellence.hibernate.entity.BaseEntity;
 import jakarta.persistence.*;
 import org.hibernate.Hibernate;

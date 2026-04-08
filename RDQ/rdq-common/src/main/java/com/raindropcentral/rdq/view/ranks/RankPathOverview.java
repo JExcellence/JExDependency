@@ -13,18 +13,24 @@
 
 package com.raindropcentral.rdq.view.ranks;
 
-
 import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
-import com.raindropcentral.rdq.database.entity.rank.*;
+import com.raindropcentral.rdq.database.entity.rank.RPlayerRank;
+import com.raindropcentral.rdq.database.entity.rank.RPlayerRankUpgradeProgress;
+import com.raindropcentral.rdq.database.entity.rank.RRank;
+import com.raindropcentral.rdq.database.entity.rank.RRankTree;
+import com.raindropcentral.rdq.database.entity.rank.RRankUpgradeRequirement;
 import com.raindropcentral.rdq.manager.RankRequirementProgressManager;
 import com.raindropcentral.rdq.rank.IRankSystemService;
 import com.raindropcentral.rplatform.logging.CentralLogger;
-import com.raindropcentral.rplatform.utility.heads.view.*;
+import com.raindropcentral.rplatform.utility.heads.view.Down;
+import com.raindropcentral.rplatform.utility.heads.view.Next;
+import com.raindropcentral.rplatform.utility.heads.view.Previous;
+import com.raindropcentral.rplatform.utility.heads.view.Return;
+import com.raindropcentral.rplatform.utility.heads.view.Up;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import com.raindropcentral.rplatform.view.BaseView;
 import de.jexcellence.jextranslate.i18n.I18n;
-
 import me.devnatan.inventoryframework.context.Context;
 import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
@@ -39,7 +45,14 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;

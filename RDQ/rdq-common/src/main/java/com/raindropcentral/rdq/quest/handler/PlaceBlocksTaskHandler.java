@@ -22,11 +22,9 @@ import java.util.Map;
  *   <li>Block type (e.g., STONE, COBBLESTONE, OAK_PLANKS)</li>
  *   <li>World where the block was placed</li>
  * </ul>
- * </p>
  * <p>
  * Only blocks placed in survival mode are counted. Creative mode placements
  * are ignored to prevent exploitation.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0
@@ -63,7 +61,6 @@ public class PlaceBlocksTaskHandler extends BaseTaskHandler {
      *   <li>The block is a valid material (not AIR)</li>
      * </ul>
      * If all conditions are met, it updates progress for matching PLACE_BLOCKS tasks.
-     * </p>
      *
      * @param event the block place event
      */

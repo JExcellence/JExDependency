@@ -14,14 +14,24 @@
 package com.raindropcentral.rplatform.reward.config;
 
 import com.raindropcentral.rplatform.reward.AbstractReward;
-import com.raindropcentral.rplatform.reward.RewardRegistry;
-import com.raindropcentral.rplatform.reward.impl.*;
+import com.raindropcentral.rplatform.reward.impl.ChoiceReward;
+import com.raindropcentral.rplatform.reward.impl.CommandReward;
+import com.raindropcentral.rplatform.reward.impl.CompositeReward;
+import com.raindropcentral.rplatform.reward.impl.CurrencyReward;
+import com.raindropcentral.rplatform.reward.impl.ExperienceReward;
+import com.raindropcentral.rplatform.reward.impl.ItemReward;
+import com.raindropcentral.rplatform.reward.impl.PermissionReward;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.logging.Logger;
 

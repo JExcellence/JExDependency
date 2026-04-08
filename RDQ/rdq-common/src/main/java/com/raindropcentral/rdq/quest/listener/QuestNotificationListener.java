@@ -28,7 +28,6 @@ import java.util.logging.Logger;
  *     <li>Quest completion notifications with reward details</li>
  *     <li>Formatting of different reward types</li>
  * </ul>
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0
@@ -56,7 +55,6 @@ public class QuestNotificationListener implements Listener {
      * Handles task completion events.
      * <p>
      * Sends a notification to the player when they complete a task.
-     * </p>
      *
      * @param event the task complete event
      */
@@ -110,7 +108,6 @@ public class QuestNotificationListener implements Listener {
      * <p>
      * Sends a notification to the player when they complete a quest,
      * including a list of all rewards received.
-     * </p>
      *
      * @param event the quest complete event
      */

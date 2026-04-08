@@ -13,11 +13,18 @@
 
 package com.raindropcentral.rdq.database.entity.rank;
 
-import com.raindropcentral.rplatform.config.icon.IconSection;
 import com.raindropcentral.rdq.database.converter.IconSectionConverter;
 import com.raindropcentral.rdq.database.entity.reward.BaseReward;
+import com.raindropcentral.rplatform.config.icon.IconSection;
 import de.jexcellence.hibernate.entity.BaseEntity;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.Version;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.entity.Player;

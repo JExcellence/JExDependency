@@ -15,7 +15,6 @@ package com.raindropcentral.core.service.statistics.queue;
 
 import com.raindropcentral.rplatform.type.EStatisticType.StatisticDataType;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 

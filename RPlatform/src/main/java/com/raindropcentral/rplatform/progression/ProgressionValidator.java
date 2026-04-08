@@ -5,7 +5,13 @@ import com.raindropcentral.rplatform.progression.model.ProgressionState;
 import com.raindropcentral.rplatform.progression.model.ProgressionStatus;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -13,7 +19,6 @@ import java.util.concurrent.ConcurrentHashMap;
  * Service for validating progression prerequisites and determining node unlock status.
  * <p>
  * This class provides the core logic for progression systems, handling:
- * </p>
  * <ul>
  *     <li>Prerequisite validation</li>
  *     <li>Node unlock status determination</li>
@@ -103,7 +108,6 @@ import java.util.concurrent.ConcurrentHashMap;
  * <p>
  * This class is thread-safe and can be used concurrently by multiple players.
  * Internal caches use ConcurrentHashMap for safe concurrent access.
- * </p>
  *
  * <h2>Performance Considerations:</h2>
  * <ul>
@@ -117,7 +121,6 @@ import java.util.concurrent.ConcurrentHashMap;
  * <p>
  * The validator uses depth-first search to detect cycles in prerequisite chains.
  * Call {@link #validatePrerequisiteChains()} on startup to ensure configuration is valid.
- * </p>
  *
  * @param <T> The type of progression node being validated
  * @author RaindropCentral
@@ -147,7 +150,6 @@ public class ProgressionValidator<T extends IProgressionNode<T>> {
      * This constructor builds internal caches for fast prerequisite lookups.
      * The caches are immutable after construction, so nodes should not be
      * modified after passing them to this constructor.
-     * </p>
      *
      * @param completionTracker Completion tracker implementation for querying player progress
      * @param nodes Collection of all nodes in the progression system
@@ -177,7 +179,6 @@ public class ProgressionValidator<T extends IProgressionNode<T>> {
      * Checks if a node is unlocked for a player.
      * <p>
      * A node is considered unlocked if:
-     * </p>
      * <ul>
      *     <li>It is an initial node (no prerequisites), OR</li>
      *     <li>All of its prerequisite nodes have been completed by the player</li>
@@ -186,7 +187,6 @@ public class ProgressionValidator<T extends IProgressionNode<T>> {
      * <p>
      * This method does NOT check if the node is already completed or active.
      * Use {@link #getProgressionState(UUID, String)} for complete status information.
-     * </p>
      *
      * @param playerId Player UUID
      * @param nodeIdentifier Node identifier to check
@@ -211,7 +211,6 @@ public class ProgressionValidator<T extends IProgressionNode<T>> {
      * <p>
      * This method determines the node's status and any missing prerequisites.
      * The status can be:
-     * </p>
      * <ul>
      *     <li>{@link ProgressionStatus#COMPLETED} - Player has completed this node</li>
      *     <li>{@link ProgressionStatus#ACTIVE} - Player is currently working on this node</li>
@@ -275,7 +274,6 @@ public class ProgressionValidator<T extends IProgressionNode<T>> {
      * <p>
      * This is a batch operation that efficiently checks multiple nodes at once.
      * Only nodes with status AVAILABLE or ACTIVE are considered unlocked.
-     * </p>
      *
      * @param playerId Player UUID
      * @param nodes Collection of nodes to check
@@ -304,11 +302,9 @@ public class ProgressionValidator<T extends IProgressionNode<T>> {
      * This method should be called after a player completes a node to determine
      * which dependent nodes are now unlocked. It checks all nodes that list the
      * completed node as a prerequisite.
-     * </p>
      *
      * <p>
      * A dependent node is considered newly unlocked if:
-     * </p>
      * <ul>
      *     <li>It lists the completed node as a prerequisite</li>
      *     <li>All of its prerequisites are now completed</li>
@@ -353,11 +349,9 @@ public class ProgressionValidator<T extends IProgressionNode<T>> {
      * This method uses depth-first search to detect cycles in the prerequisite graph.
      * It should be called during plugin initialization to ensure the progression
      * configuration is valid.
-     * </p>
      *
      * <p>
      * The algorithm:
-     * </p>
      * <ol>
      *     <li>Iterates through all nodes</li>
      *     <li>For each node, performs DFS on its prerequisite chain</li>
@@ -386,7 +380,6 @@ public class ProgressionValidator<T extends IProgressionNode<T>> {
      * This method delegates to the completion tracker to clear any cached
      * completion data for the player. Call this when player data is modified
      * externally or needs to be refreshed.
-     * </p>
      *
      * @param playerId Player UUID
      */

@@ -13,13 +13,9 @@
 
 package com.raindropcentral.rdr.view;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.CompletableFuture;
-
+import com.raindropcentral.rdr.RDR;
+import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
+import com.raindropcentral.rplatform.view.APaginatedView;
 import me.devnatan.inventoryframework.component.BukkitItemComponentBuilder;
 import me.devnatan.inventoryframework.context.Context;
 import me.devnatan.inventoryframework.context.RenderContext;
@@ -35,9 +31,12 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import com.raindropcentral.rdr.RDR;
-import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
-import com.raindropcentral.rplatform.view.APaginatedView;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Renders a paginated editor for configurable values in {@code config/config.yml}.

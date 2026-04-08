@@ -1,6 +1,5 @@
 package com.raindropcentral.rdq.manager;
 
-
 import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
 import com.raindropcentral.rdq.database.entity.rank.RPlayerRankUpgradeProgress;
@@ -18,7 +17,6 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.logging.Logger;
 
 /**
  * Manages rank requirement progress, including persistence, validation, and state management.
@@ -29,12 +27,10 @@ import java.util.logging.Logger;
  * - Preventing over-completion of requirements
  * - Validating rank completion eligibility
  * - Coordinating between different rank views
- * </p>
  * <p>
  * <b>IMPORTANT:</b> This manager now uses {@link RequirementService} instead of calling
  * requirement methods directly. This ensures that requirement events are properly fired
  * and the rank progression system integrates with the event-driven architecture.
- * </p>
  *
  * @author ItsRainingHP
  * @version 2.0.0
@@ -93,7 +89,6 @@ public class RankRequirementProgressManager {
 	 * This method now uses {@link RequirementService#isMet(Player, AbstractRequirement)}
 	 * and {@link RequirementService#consume(Player, AbstractRequirement)} to ensure
 	 * that requirement events are properly fired throughout the completion process.
-	 * </p>
 	 * This method will consume the required resources if the requirement is successfully completed.
 	 */
 	public @NotNull RequirementCompletionResult attemptRequirementCompletion(
@@ -307,7 +302,6 @@ public class RankRequirementProgressManager {
 	 * - RequirementCheckEvent is fired
 	 * - Progress is automatically tracked by RankRequirementListener
 	 * - The system integrates with the event-driven architecture
-	 * </p>
 	 */
 	private @NotNull RequirementProgressData calculateRequirementProgress(
 		@NotNull Player player,
@@ -459,6 +453,9 @@ public class RankRequirementProgressManager {
 	
 	// Data classes and enums
 	
+	/**
+	 * Represents the current completion state for a rank requirement.
+	 */
 	public enum RequirementStatus {
 		NOT_STARTED,
 		IN_PROGRESS,
@@ -467,6 +464,9 @@ public class RankRequirementProgressManager {
 		ERROR
 	}
 	
+	/**
+	 * Captures progress details for a single rank requirement.
+	 */
 	public static class RequirementProgressData {
 		private final String requirementId;
 		private final String requirementType;
@@ -507,10 +507,20 @@ public class RankRequirementProgressManager {
 		public String getStatusMessage() { return statusMessage; }
 		public int getDisplayOrder() { return displayOrder; }
 		
+		/**
+		 * Returns the rounded progress percentage in whole-number form.
+		 *
+		 * @return the rounded progress percentage
+		 */
 		public int getProgressAsPercentage() {
 			return (int) Math.round(progressPercentage * 100);
 		}
 		
+		/**
+		 * Returns whether the requirement has made any measurable progress.
+		 *
+		 * @return {@code true} when progress is greater than zero
+		 */
 		public boolean hasProgress() {
 			return progressPercentage > 0.0;
 		}
@@ -519,6 +529,11 @@ public class RankRequirementProgressManager {
 			return getProgressAsPercentage() + "%";
 		}
 		
+		/**
+		 * Returns whether the requirement is ready to be completed.
+		 *
+		 * @return {@code true} when the requirement can be completed now
+		 */
 		public boolean canBeCompleted() {
 			return status == RequirementStatus.READY_TO_COMPLETE && !isCompleted;
 		}
@@ -535,6 +550,9 @@ public class RankRequirementProgressManager {
 		}
 	}
 	
+	/**
+	 * Represents the outcome of attempting to complete a rank requirement.
+	 */
 	public static class RequirementCompletionResult {
 		private final boolean success;
 		private final String messageKey;
@@ -554,6 +572,11 @@ public class RankRequirementProgressManager {
 		public String getMessageKey() { return messageKey; }
 		public RequirementProgressData getUpdatedProgress() { return updatedProgress; }
 		
+		/**
+		 * Sends the localized completion result message to the player.
+		 *
+		 * @param player the player who should receive the message
+		 */
 		public void sendMessage(@NotNull Player player) {
             new I18n.Builder(messageKey, player).includePrefix().build().sendMessage();
 		}

@@ -11,7 +11,6 @@ import java.util.logging.Logger;
  * This task runs every 5 minutes (6000 ticks) and saves all players with unsaved
  * quest progress changes. This ensures that progress is not lost in case of a
  * server crash or unexpected shutdown.
- * </p>
  *
  * <p>Design rationale:</p>
  * <ul>

@@ -23,7 +23,6 @@ import org.jetbrains.annotations.NotNull;
  * Event fired when a player starts a quest.
  * <p>
  * This event is called on the main thread after a quest is successfully started.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0

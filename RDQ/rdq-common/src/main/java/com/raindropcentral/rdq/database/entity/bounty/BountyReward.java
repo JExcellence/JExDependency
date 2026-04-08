@@ -13,8 +13,8 @@
 
 package com.raindropcentral.rdq.database.entity.bounty;
 
-import com.raindropcentral.rplatform.config.icon.IconSection;
 import com.raindropcentral.rdq.database.converter.IconSectionConverter;
+import com.raindropcentral.rplatform.config.icon.IconSection;
 import com.raindropcentral.rplatform.database.converter.RewardConverter;
 import com.raindropcentral.rplatform.reward.AbstractReward;
 import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
@@ -34,6 +34,12 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * Stores a bounty reward definition and contributor metadata.
+ *
+ * <p>Each entity wraps the serialized reward payload, optional icon metadata,
+ * contributor ownership, and estimated value used by the bounty system.</p>
+ */
 @Entity
 @Table(name = "rdq_bounty_reward")
 @Getter
@@ -77,6 +83,12 @@ public class BountyReward extends BaseEntity {
         this.contributorUniqueId = contributorUniqueId;
     }
 
+    /**
+     * Grants this reward to the provided player.
+     *
+     * @param player the player who should receive the reward
+     * @return a future completing with {@code true} when the reward is granted successfully
+     */
     public @NotNull CompletableFuture<Boolean> grant(@NotNull Player player) {
         return reward.grant(player);
     }

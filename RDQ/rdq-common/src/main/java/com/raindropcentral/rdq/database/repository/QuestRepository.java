@@ -20,7 +20,6 @@ import java.util.function.Function;
  * This repository provides cached access to quests with methods for finding by identifier,
  * category, difficulty, and enabled status. It follows the CachedRepository pattern for
  * optimal performance with frequently accessed quest definitions.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -54,7 +53,6 @@ public class QuestRepository extends CachedRepository<Quest, Long, String> {
 	 * Finds a quest by its unique identifier.
 	 * <p>
 	 * This method is used by the quest system to look up quests by their identifier.
-	 * </p>
 	 *
 	 * @param identifier the quest identifier
 	 * @return CompletableFuture containing the optional quest
@@ -82,7 +80,6 @@ public class QuestRepository extends CachedRepository<Quest, Long, String> {
 	 * Finds all quests with the specified enabled status.
 	 * <p>
 	 * This method is used to filter quests based on their availability to players.
-	 * </p>
 	 *
 	 * @param enabled whether to find enabled or disabled quests
 	 * @return CompletableFuture containing the list of quests
@@ -109,7 +106,6 @@ public class QuestRepository extends CachedRepository<Quest, Long, String> {
 	 * <p>
 	 * This method is used to retrieve all quests within a category for display
 	 * in category-based quest views.
-	 * </p>
 	 *
 	 * @param category the quest category
 	 * @return CompletableFuture containing the list of quests in the category
@@ -136,7 +132,6 @@ public class QuestRepository extends CachedRepository<Quest, Long, String> {
 	 * <p>
 	 * This method is used to filter quests by difficulty for progression tracking
 	 * and quest recommendations.
-	 * </p>
 	 *
 	 * @param difficulty the quest difficulty level
 	 * @return CompletableFuture containing the list of quests with the specified difficulty
@@ -163,7 +158,6 @@ public class QuestRepository extends CachedRepository<Quest, Long, String> {
 	 * <p>
 	 * This method uses JOIN FETCH to load tasks in a single query,
 	 * avoiding N+1 query problems when displaying quest details.
-	 * </p>
 	 *
 	 * @param category the quest category
 	 * @return CompletableFuture containing the list of quests with eagerly loaded details
@@ -194,7 +188,6 @@ public class QuestRepository extends CachedRepository<Quest, Long, String> {
 	 * This method is used for populating the quest cache on startup. Uses LEFT JOIN FETCH
 	 * to eagerly load category and task associations, avoiding LazyInitializationException
 	 * when these are accessed outside the Hibernate session.
-	 * </p>
 	 *
 	 * @return CompletableFuture containing the list of all enabled quests
 	 */

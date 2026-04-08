@@ -13,10 +13,10 @@
 
 package com.raindropcentral.rdr.service;
 
-import java.util.Objects;
-
 import com.raindropcentral.rdr.configs.ConfigSection;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 /**
  * Defines edition-specific storage behaviour for the RDR runtime.

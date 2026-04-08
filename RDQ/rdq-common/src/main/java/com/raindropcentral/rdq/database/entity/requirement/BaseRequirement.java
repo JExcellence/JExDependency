@@ -13,11 +13,10 @@
 
 package com.raindropcentral.rdq.database.entity.requirement;
 
-import com.raindropcentral.rplatform.config.icon.IconSection;
 import com.raindropcentral.rdq.database.converter.IconSectionConverter;
 import com.raindropcentral.rdq.database.converter.RequirementConverter;
+import com.raindropcentral.rplatform.config.icon.IconSection;
 import com.raindropcentral.rplatform.requirement.AbstractRequirement;
-import com.raindropcentral.rplatform.requirement.Requirement;
 import de.jexcellence.hibernate.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;

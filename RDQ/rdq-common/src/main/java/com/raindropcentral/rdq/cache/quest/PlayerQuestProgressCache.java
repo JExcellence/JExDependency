@@ -7,7 +7,14 @@ import jakarta.persistence.OptimisticLockException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
@@ -19,7 +26,6 @@ import java.util.logging.Logger;
  * This cache loads all active quest progress on player join, stores it in memory,
  * and saves it back to the database on player quit. This provides instant access
  * to quest progress data without database queries during gameplay.
- * </p>
  *
  * <ul>
  *   <li>Load all active quest progress on player join</li>
@@ -32,7 +38,6 @@ import java.util.logging.Logger;
  * This cache uses synchronized lists to prevent ConcurrentModificationException
  * when progress is modified while auto-save is running. All public methods are
  * thread-safe and can be called from any thread.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -45,17 +50,17 @@ public class PlayerQuestProgressCache {
     private final PlayerQuestProgressRepository repository;
     
     /**
-     * Cache of player quest progress: UUID -> List of PlayerQuestProgress
+     * Cache of player quest progress: UUID -> List of PlayerQuestProgress.
      */
     private final ConcurrentHashMap<UUID, List<PlayerQuestProgress>> cache;
     
     /**
-     * Set of players with unsaved changes
+     * Set of players with unsaved changes.
      */
     private final Set<UUID> dirtyPlayers;
     
     /**
-     * Whether to log performance metrics
+     * Whether to log performance metrics.
      */
     private final boolean logPerformance;
     
@@ -122,7 +127,6 @@ public class PlayerQuestProgressCache {
      * <p>
      * This method should be called when a player quits the server to persist
      * all progress changes and free memory.
-     * </p>
      *
      * @param playerId the player's UUID
      */

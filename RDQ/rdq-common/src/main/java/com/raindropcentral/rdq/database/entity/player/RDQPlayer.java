@@ -3,11 +3,19 @@ package com.raindropcentral.rdq.database.entity.player;
 import com.raindropcentral.rdq.database.entity.rank.RPlayerRank;
 import com.raindropcentral.rdq.database.entity.rank.RPlayerRankPath;
 import de.jexcellence.hibernate.entity.BaseEntity;
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Entity representing a RaindropQuests player extension.
@@ -15,7 +23,6 @@ import java.util.*;
  * This entity is mapped to the {@code rdq_player} table and extends the core player
  * with quest-specific features like bounties, ranks, rank paths, and perks.
  * Uses UUID reference to RCore's RPlayer instead of direct entity relationship.
- * </p>
  *
  * @author JExcellence
  */
@@ -47,11 +54,9 @@ public class RDQPlayer extends BaseEntity {
      * This field establishes a one-to-many relationship with the {@link RPlayerRank} entity,
      * representing the player's current ranks across different rank trees. The association is eagerly fetched,
      * cascades all operations, and removes orphans when the relationship is broken.
-     * </p>
      * <p>
      * A player can have multiple rank records - one for each rank tree they are progressing in.
      * Mapped by the {@code rdqPlayer} property in {@link RPlayerRank}.
-     * </p>
      */
     @OneToMany(
             fetch = FetchType.EAGER,

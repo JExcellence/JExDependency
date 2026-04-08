@@ -17,7 +17,6 @@ import java.util.logging.Logger;
  * <p>
  * Loads active quest data into the in-memory cache on join and
  * flushes it back to the database on quit.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0

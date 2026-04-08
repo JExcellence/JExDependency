@@ -16,7 +16,6 @@ import java.util.concurrent.ConcurrentHashMap;
  * <p>
  * This class extends ProgressionValidator to add an additional caching layer for
  * progression states, reducing database queries for frequently accessed data.
- * </p>
  *
  * <h2>Caching Strategy:</h2>
  * <ul>
@@ -68,7 +67,6 @@ import java.util.concurrent.ConcurrentHashMap;
  * Cache size grows with: (active players) × (nodes per player) × (state object size).
  * With default TTL of 5 minutes and 100 active players checking 10 nodes each,
  * expect ~50KB memory usage.
- * </p>
  *
  * @param <T> The type of progression node
  * @author RaindropCentral
@@ -90,7 +88,7 @@ public class CachedProgressionValidator<T extends IProgressionNode<T>> extends P
     }
     
     /**
-     * Nested map: playerId -> (nodeId -> CacheEntry)
+     * Nested map: playerId -> (nodeId -> CacheEntry).
      */
     private final Map<UUID, Map<String, CacheEntry<T>>> stateCache;
     
@@ -209,7 +207,6 @@ public class CachedProgressionValidator<T extends IProgressionNode<T>> extends P
      * <p>
      * This method removes all cached progression states for all players.
      * Use this for testing or when you need to force a full cache refresh.
-     * </p>
      */
     public void clearAllCaches() {
         int size = stateCache.values().stream().mapToInt(Map::size).sum();
@@ -222,7 +219,6 @@ public class CachedProgressionValidator<T extends IProgressionNode<T>> extends P
      * <p>
      * This method should be called periodically to prevent memory leaks
      * from expired but not yet accessed entries.
-     * </p>
      *
      * @return Number of entries removed
      */

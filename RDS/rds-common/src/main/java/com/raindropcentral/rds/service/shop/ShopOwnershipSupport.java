@@ -13,12 +13,11 @@
 
 package com.raindropcentral.rds.service.shop;
 
-import java.util.UUID;
-
-import org.jetbrains.annotations.NotNull;
-
 import com.raindropcentral.rds.RDS;
 import com.raindropcentral.rds.database.entity.Shop;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.UUID;
 
 /**
  * Utility methods for counting a player's active non-admin shops.

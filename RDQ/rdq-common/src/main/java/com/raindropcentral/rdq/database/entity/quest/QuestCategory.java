@@ -1,9 +1,17 @@
 package com.raindropcentral.rdq.database.entity.quest;
 
-import com.raindropcentral.rplatform.config.icon.IconSection;
 import com.raindropcentral.rdq.database.converter.IconSectionConverter;
+import com.raindropcentral.rplatform.config.icon.IconSection;
 import de.jexcellence.hibernate.entity.BaseEntity;
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Index;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.Getter;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
@@ -18,7 +26,6 @@ import java.util.Objects;
  * <p>
  * Quest categories group related quests together for organization and navigation.
  * Each category has a unique identifier, display information, and contains multiple quests.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0
@@ -133,10 +140,20 @@ public class QuestCategory extends BaseEntity {
         quest.setCategory(null);
     }
 
+    /**
+     * Adds a reward granted when the category is completed.
+     *
+     * @param reward the reward to add
+     */
     public void addReward(@NotNull final QuestCategoryReward reward) {
         rewards.add(reward);
     }
 
+    /**
+     * Adds a prerequisite requirement to this quest category.
+     *
+     * @param requirement the requirement to add
+     */
     public void addRequirement(@NotNull final QuestCategoryRequirement requirement) {
         requirements.add(requirement);
     }

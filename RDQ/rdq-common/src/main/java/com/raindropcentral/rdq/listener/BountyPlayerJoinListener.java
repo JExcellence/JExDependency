@@ -16,7 +16,6 @@ package com.raindropcentral.rdq.listener;
 import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.database.entity.bounty.Bounty;
 import de.jexcellence.jextranslate.i18n.I18n;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

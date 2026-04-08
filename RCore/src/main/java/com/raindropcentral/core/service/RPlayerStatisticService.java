@@ -15,7 +15,12 @@ package com.raindropcentral.core.service;
 
 import com.raindropcentral.core.database.entity.central.RCentralServer;
 import com.raindropcentral.core.database.entity.player.RPlayer;
-import com.raindropcentral.core.database.entity.statistic.*;
+import com.raindropcentral.core.database.entity.statistic.RAbstractStatistic;
+import com.raindropcentral.core.database.entity.statistic.RBooleanStatistic;
+import com.raindropcentral.core.database.entity.statistic.RDateStatistic;
+import com.raindropcentral.core.database.entity.statistic.RNumberStatistic;
+import com.raindropcentral.core.database.entity.statistic.RPlayerStatistic;
+import com.raindropcentral.core.database.entity.statistic.RStringStatistic;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

@@ -13,10 +13,13 @@
 
 package com.raindropcentral.rdq.view.ranks.interaction;
 
-
 import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
-import com.raindropcentral.rdq.database.entity.rank.*;
+import com.raindropcentral.rdq.database.entity.rank.RPlayerRank;
+import com.raindropcentral.rdq.database.entity.rank.RPlayerRankUpgradeProgress;
+import com.raindropcentral.rdq.database.entity.rank.RRank;
+import com.raindropcentral.rdq.database.entity.rank.RRankTree;
+import com.raindropcentral.rdq.database.entity.rank.RRankUpgradeRequirement;
 import com.raindropcentral.rdq.event.RankAssignedEvent;
 import com.raindropcentral.rdq.service.RankUpgradeProgressService;
 import com.raindropcentral.rdq.view.ranks.hierarchy.RankNode;

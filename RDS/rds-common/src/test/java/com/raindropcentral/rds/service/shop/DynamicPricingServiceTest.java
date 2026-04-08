@@ -13,17 +13,16 @@
 
 package com.raindropcentral.rds.service.shop;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Map;
-
+import com.raindropcentral.rds.configs.DynamicPricingMissingBasePriceMode;
+import com.raindropcentral.rds.configs.DynamicPricingSection;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-import com.raindropcentral.rds.configs.DynamicPricingMissingBasePriceMode;
-import com.raindropcentral.rds.configs.DynamicPricingSection;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

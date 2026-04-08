@@ -20,13 +20,11 @@ import java.util.function.Function;
  * This repository provides cached access to player quest progress records, which track
  * active quest state for online players. Progress is loaded on player join and saved on
  * player quit, with periodic auto-save for crash protection.
- * </p>
  *
  * <p>
  * This repository follows the CachedRepository pattern for optimal performance with
  * frequently accessed player progress data. Use the cache layer (PlayerQuestProgressCache)
  * for instant access to online player progress.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -66,7 +64,6 @@ public class PlayerQuestProgressRepository extends CachedRepository<PlayerQuestP
      * <p>
      * This method is used to load all active quests when a player joins the server.
      * Results are ordered by start time (most recent first).
-     * </p>
      *
      * @param playerId the player's UUID
      * @return CompletableFuture containing the list of progress records
@@ -93,7 +90,6 @@ public class PlayerQuestProgressRepository extends CachedRepository<PlayerQuestP
      * <p>
      * This method is used to check if a player has already started a quest
      * and to retrieve their current progress.
-     * </p>
      *
      * @param playerId the player's UUID
      * @param questId  the quest ID
@@ -127,7 +123,6 @@ public class PlayerQuestProgressRepository extends CachedRepository<PlayerQuestP
      * <p>
      * This method is used to display a player's active quest list and to enforce
      * the maximum active quest limit.
-     * </p>
      *
      * @param playerId the player's UUID
      * @return CompletableFuture containing the list of active progress records
@@ -156,7 +151,6 @@ public class PlayerQuestProgressRepository extends CachedRepository<PlayerQuestP
      * <p>
      * This method uses JOIN FETCH to load task progress in a single query,
      * avoiding N+1 query problems when displaying quest details.
-     * </p>
      *
      * @param playerId the player's UUID
      * @param questId  the quest ID
@@ -191,7 +185,6 @@ public class PlayerQuestProgressRepository extends CachedRepository<PlayerQuestP
      * Finds all active quest progress for a player with task progress eagerly loaded.
      * <p>
      * This method is used when loading all player progress on join to minimize database queries.
-     * </p>
      *
      * @param playerId the player's UUID
      * @return CompletableFuture containing the list of progress records with eagerly loaded tasks
@@ -220,7 +213,6 @@ public class PlayerQuestProgressRepository extends CachedRepository<PlayerQuestP
      * Counts the number of active quests for a player.
      * <p>
      * This method is used to enforce the maximum active quest limit.
-     * </p>
      *
      * @param playerId the player's UUID
      * @return CompletableFuture containing the count of active quests
@@ -248,7 +240,6 @@ public class PlayerQuestProgressRepository extends CachedRepository<PlayerQuestP
      * <p>
      * This method is used for quest statistics and to see how many players
      * are currently working on a quest.
-     * </p>
      *
      * @param quest the quest
      * @return CompletableFuture containing the list of progress records
@@ -274,7 +265,6 @@ public class PlayerQuestProgressRepository extends CachedRepository<PlayerQuestP
      * Finds all active progress records for a specific quest.
      * <p>
      * This method is used to see how many players are currently working on a quest.
-     * </p>
      *
      * @param quest the quest
      * @return CompletableFuture containing the list of active progress records
@@ -303,7 +293,6 @@ public class PlayerQuestProgressRepository extends CachedRepository<PlayerQuestP
      * <p>
      * This method is used for data cleanup or player reset operations.
      * Use with caution as this permanently deletes all quest progress.
-     * </p>
      *
      * @param playerId the player's UUID
      * @return CompletableFuture that completes when deletion is done

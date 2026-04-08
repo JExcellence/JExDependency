@@ -13,12 +13,6 @@
 
 package com.raindropcentral.rdr.commands;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
 import com.raindropcentral.commands.PlayerCommand;
 import com.raindropcentral.commands.utility.Command;
 import com.raindropcentral.rdr.RDR;
@@ -36,6 +30,12 @@ import org.bukkit.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jspecify.annotations.NonNull;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Primary player command for the RDR storage plugin.

@@ -15,7 +15,6 @@ import java.util.concurrent.CompletableFuture;
  * <p>
  * This interface defines the contract for reward distribution, including
  * error handling, retry logic, and result tracking.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0
@@ -29,7 +28,6 @@ public interface RewardDistributor {
      * This method attempts to distribute all rewards associated with the quest.
      * If any reward fails, the method continues with remaining rewards and
      * returns a result indicating which rewards succeeded and which failed.
-     * </p>
      *
      * @param playerId the player's UUID
      * @param quest    the completed quest
@@ -47,7 +45,6 @@ public interface RewardDistributor {
      * This method attempts to distribute all rewards associated with the task.
      * If any reward fails, the method continues with remaining rewards and
      * returns a result indicating which rewards succeeded and which failed.
-     * </p>
      *
      * @param playerId the player's UUID
      * @param quest    the quest containing the task
@@ -66,7 +63,6 @@ public interface RewardDistributor {
      * <p>
      * This method attempts to distribute a single reward with retry logic
      * for transient failures (e.g., currency operations).
-     * </p>
      *
      * @param player the player to reward
      * @param reward the reward to distribute
@@ -83,7 +79,6 @@ public interface RewardDistributor {
      * <p>
      * This method attempts to distribute a reward up to the specified number
      * of times before giving up.
-     * </p>
      *
      * @param player     the player to reward
      * @param reward     the reward to distribute

@@ -13,16 +13,16 @@
 
 package com.raindropcentral.rdr.configs;
 
+import org.bukkit.configuration.ConfigurationSection;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-
-import org.bukkit.configuration.ConfigurationSection;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * Raw configuration wrapper for a single storage-store requirement definition.

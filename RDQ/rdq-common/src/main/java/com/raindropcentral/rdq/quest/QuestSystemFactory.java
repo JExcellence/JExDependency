@@ -1,9 +1,16 @@
 package com.raindropcentral.rdq.quest;
 
 import com.google.gson.Gson;
-import com.raindropcentral.rdq.RDQ;
-import com.raindropcentral.rdq.config.quest.*;
 import com.google.gson.reflect.TypeToken;
+import com.raindropcentral.rdq.RDQ;
+import com.raindropcentral.rdq.config.quest.PerformanceSection;
+import com.raindropcentral.rdq.config.quest.QuestCategoriesSection;
+import com.raindropcentral.rdq.config.quest.QuestCategorySection;
+import com.raindropcentral.rdq.config.quest.QuestSection;
+import com.raindropcentral.rdq.config.quest.QuestSystemSection;
+import com.raindropcentral.rdq.config.quest.QuestTaskSection;
+import com.raindropcentral.rdq.config.quest.RewardsSection;
+import com.raindropcentral.rdq.config.quest.TaskHandlersSection;
 import com.raindropcentral.rdq.database.entity.quest.Quest;
 import com.raindropcentral.rdq.database.entity.quest.QuestCategory;
 import com.raindropcentral.rdq.database.entity.quest.QuestReward;
@@ -12,8 +19,8 @@ import com.raindropcentral.rdq.database.entity.quest.QuestTaskReward;
 import com.raindropcentral.rdq.database.entity.reward.BaseReward;
 import com.raindropcentral.rdq.database.repository.quest.QuestCategoryRepository;
 import com.raindropcentral.rdq.database.repository.quest.QuestRepository;
-import com.raindropcentral.rdq.database.repository.quest.QuestTaskRepository;
 import com.raindropcentral.rdq.database.repository.quest.QuestRewardRepository;
+import com.raindropcentral.rdq.database.repository.quest.QuestTaskRepository;
 import com.raindropcentral.rdq.database.repository.quest.QuestTaskRewardRepository;
 import com.raindropcentral.rdq.model.quest.QuestDifficulty;
 import com.raindropcentral.rdq.model.quest.TaskDifficulty;
@@ -29,7 +36,11 @@ import org.jetbrains.annotations.Nullable;
 import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -43,7 +54,6 @@ import java.util.logging.Logger;
  * parses them using ConfigKeeper, and persists them to the database.
  * Quest definitions are organized in category subdirectories under
  * {@code quests/definitions/<category>/}.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0
@@ -186,7 +196,6 @@ public class QuestSystemFactory {
      * <p>
      * Entry names under {@code quests/definitions/<category>/<file>.yml} are
      * enumerated directly from the JAR so no hardcoded file list is needed.
-     * </p>
      *
      * @param definitionsDir the on-disk {@code quests/definitions/} directory
      */
@@ -318,7 +327,6 @@ public class QuestSystemFactory {
      * <p>
      * Default quest files bundled in the JAR are copied to their respective
      * category subfolder if they do not yet exist on disk.
-     * </p>
      */
     private void loadQuestDefinitions() {
         try {
@@ -724,7 +732,6 @@ public class QuestSystemFactory {
      * <p>
      * This method parses the reward JSON, creates BaseReward entities using the
      * QuestRewardFactory, and links them to the quest via QuestReward entities.
-     * </p>
      *
      * @param quest the quest to create rewards for (must be persisted with an ID)
      */
@@ -783,7 +790,6 @@ public class QuestSystemFactory {
      * <p>
      * This method parses the reward JSON, creates a BaseReward entity using the
      * QuestRewardFactory, and links it to the task via a QuestTaskReward entity.
-     * </p>
      *
      * @param task the task to create rewards for (must be persisted with an ID)
      */
@@ -839,7 +845,6 @@ public class QuestSystemFactory {
      * <p>
      * This method generates a simple icon with appropriate material and i18n keys
      * based on the reward type.
-     * </p>
      *
      * @param type       the reward type (e.g., "CURRENCY", "ITEM", "EXPERIENCE")
      * @param rewardData the reward data map

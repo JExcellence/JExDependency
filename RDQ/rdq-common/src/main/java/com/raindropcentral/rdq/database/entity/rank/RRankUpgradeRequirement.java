@@ -1,8 +1,8 @@
 package com.raindropcentral.rdq.database.entity.rank;
 
-import com.raindropcentral.rplatform.config.icon.IconSection;
 import com.raindropcentral.rdq.database.converter.IconSectionConverter;
 import com.raindropcentral.rdq.database.entity.requirement.BaseRequirement;
+import com.raindropcentral.rplatform.config.icon.IconSection;
 import de.jexcellence.hibernate.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
@@ -26,12 +26,10 @@ import java.util.Objects;
  * <p>
  * This entity encapsulates a single {@link BaseRequirement} that must be satisfied
  * to fulfill part of the upgrade condition for the associated rank. It also includes an icon for visual representation.
- * </p>
  *
  * <p>
  * Multiple instances of this entity can exist for a single rank, representing different requirements
  * that all need to be completed for the rank upgrade.
- * </p>
  *
  * @author JExcellence
  * @version 2.0.0

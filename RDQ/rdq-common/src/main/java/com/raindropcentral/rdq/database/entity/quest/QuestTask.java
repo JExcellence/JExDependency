@@ -1,8 +1,8 @@
 package com.raindropcentral.rdq.database.entity.quest;
 
-import com.raindropcentral.rplatform.config.icon.IconSection;
 import com.raindropcentral.rdq.database.converter.IconSectionConverter;
 import com.raindropcentral.rdq.model.quest.TaskDifficulty;
+import com.raindropcentral.rplatform.config.icon.IconSection;
 import de.jexcellence.hibernate.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -19,7 +19,6 @@ import java.util.Objects;
  * <p>
  * Quest tasks are individual objectives that must be completed as part of a quest.
  * Each task has requirements (stored as JSON) and rewards that are granted upon completion.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0
@@ -80,7 +79,6 @@ public class QuestTask extends BaseEntity {
      * <p>
      * This field stores the requirement type and parameters that will be
      * parsed and validated using the RPlatform requirement system.
-     * </p>
      */
     @Column(name = "requirement_data", columnDefinition = "TEXT")
     private String requirementData;
@@ -90,7 +88,6 @@ public class QuestTask extends BaseEntity {
      * <p>
      * This field stores the reward types and parameters that will be
      * granted upon task completion using the RPlatform reward system.
-     * </p>
      */
     @Column(name = "reward_data", columnDefinition = "TEXT")
     private String rewardData;
@@ -110,19 +107,32 @@ public class QuestTask extends BaseEntity {
     private List<QuestTaskReward> rewards = new ArrayList<>();
 
     /**
-     * Protected no-argument constructor for JPA.
+     * Adds a reward granted when this task is completed.
+     *
+     * @param reward the reward to add
      */
     public void addReward(@NotNull final QuestTaskReward reward) {
         rewards.add(reward);
     }
 
+    /**
+     * Requirements that must be satisfied before this task can be completed.
+     */
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<QuestTaskRequirement> requirements = new ArrayList<>();
 
+    /**
+     * Adds a prerequisite requirement to this task.
+     *
+     * @param requirement the requirement to add
+     */
     public void addRequirement(@NotNull final QuestTaskRequirement requirement) {
         requirements.add(requirement);
     }
 
+    /**
+     * Protected no-argument constructor for JPA.
+     */
     protected QuestTask() {
     }
     

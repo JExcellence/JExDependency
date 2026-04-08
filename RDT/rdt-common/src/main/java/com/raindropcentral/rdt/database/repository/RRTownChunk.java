@@ -13,17 +13,16 @@
 
 package com.raindropcentral.rdt.database.repository;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
-import java.util.concurrent.ExecutorService;
-
+import com.raindropcentral.rdt.database.entity.RTownChunk;
 import de.jexcellence.hibernate.repository.BaseRepository;
 import jakarta.persistence.EntityManagerFactory;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import com.raindropcentral.rdt.database.entity.RTownChunk;
+import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
+import java.util.concurrent.ExecutorService;
 
 /**
  * Repository for persisted {@link RTownChunk} records.

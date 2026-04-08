@@ -24,12 +24,10 @@ import java.util.UUID;
  *   <li>Player location (X, Y, Z coordinates)</li>
  *   <li>World where the location is</li>
  * </ul>
- * </p>
  * <p>
  * This handler implements throttling to avoid excessive event processing.
  * Movement events are only processed once per second per player to reduce
  * server load.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0
@@ -71,7 +69,6 @@ public class ReachLocationTaskHandler extends BaseTaskHandler {
      *   <li>Checks if player is eligible for quest progress</li>
      * </ul>
      * If all conditions are met, it updates progress for matching REACH_LOCATION tasks.
-     * </p>
      *
      * @param event the player move event
      */

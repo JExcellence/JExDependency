@@ -21,7 +21,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.Serial;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * Stores a bounty contract and its attached rewards.

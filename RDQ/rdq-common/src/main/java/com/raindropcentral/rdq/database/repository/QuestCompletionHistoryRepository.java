@@ -20,7 +20,6 @@ import java.util.function.Function;
  * This repository provides access to quest completion history records, which are used for
  * tracking repeatability, cooldowns, statistics, and leaderboards. Unlike player progress
  * entities, completion history is not cached as it's accessed less frequently.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -60,7 +59,6 @@ public class QuestCompletionHistoryRepository extends CachedRepository<QuestComp
 	 * <p>
 	 * This method is used to display a player's quest completion history and statistics.
 	 * Results are ordered by completion time (most recent first).
-	 * </p>
 	 *
 	 * @param playerId the player's UUID
 	 * @return CompletableFuture containing the list of completion records
@@ -86,7 +84,6 @@ public class QuestCompletionHistoryRepository extends CachedRepository<QuestComp
 	 * Finds the most recent completion record for a specific player and quest.
 	 * <p>
 	 * This method is used for cooldown calculations and repeatability checks.
-	 * </p>
 	 *
 	 * @param playerId the player's UUID
 	 * @param questId  the quest ID
@@ -122,7 +119,6 @@ public class QuestCompletionHistoryRepository extends CachedRepository<QuestComp
 	 * Counts how many times a player has completed a specific quest.
 	 * <p>
 	 * This method is used for repeatability checks and max completion enforcement.
-	 * </p>
 	 *
 	 * @param playerId the player's UUID
 	 * @param questId  the quest ID
@@ -155,7 +151,6 @@ public class QuestCompletionHistoryRepository extends CachedRepository<QuestComp
 	 * <p>
 	 * This method is used for quest statistics and leaderboards.
 	 * Results are ordered by completion time (most recent first).
-	 * </p>
 	 *
 	 * @param quest the quest
 	 * @return CompletableFuture containing the list of completion records
@@ -181,7 +176,6 @@ public class QuestCompletionHistoryRepository extends CachedRepository<QuestComp
 	 * Finds the fastest completions for a specific quest.
 	 * <p>
 	 * This method is used for leaderboards showing the fastest quest completions.
-	 * </p>
 	 *
 	 * @param quest the quest
 	 * @param limit maximum number of results to return
@@ -215,7 +209,6 @@ public class QuestCompletionHistoryRepository extends CachedRepository<QuestComp
 	 * <p>
 	 * This method returns the complete history of a player's completions for a specific quest,
 	 * ordered by completion time (most recent first).
-	 * </p>
 	 *
 	 * @param playerId the player's UUID
 	 * @param questId  the quest ID

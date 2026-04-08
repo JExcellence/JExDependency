@@ -18,12 +18,10 @@ import java.util.Optional;
  * This entity tracks the current progress value for simple tasks (e.g., "mine 10 stone")
  * and contains requirement progress for complex tasks (e.g., "complete 3 requirements").
  * It supports both simple counter-based progress and complex requirement-based progress.
- * </p>
  *
  * <p>
  * Each player can have only one progress record per task within a quest, enforced by a unique constraint.
  * Progress is automatically capped at the task's target value to prevent overflow.
- * </p>
  *
  * @author JExcellence
  * @version 2.0.0
@@ -66,7 +64,6 @@ public class PlayerTaskProgress extends BaseEntity {
      * <p>
      * For simple tasks like "mine 10 stone", this represents the current count (0-10).
      * For complex tasks with requirements, this may be unused or represent an aggregate value.
-     * </p>
      */
     @Column(name = "current_progress", nullable = false)
     private long currentProgress = 0;
@@ -88,7 +85,6 @@ public class PlayerTaskProgress extends BaseEntity {
      * <p>
      * For complex tasks with multiple requirements, this tracks progress on each requirement.
      * For simple tasks, this list may be empty.
-     * </p>
      */
     @OneToMany(mappedBy = "taskProgress", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<PlayerTaskRequirementProgress> requirementProgress = new ArrayList<>();
@@ -225,7 +221,6 @@ public class PlayerTaskProgress extends BaseEntity {
      * Increments the progress by the specified amount.
      * <p>
      * This method is used for simple tasks with counter-based progress.
-     * </p>
      *
      * @param amount the amount to increment
      * @return the new progress value
@@ -240,7 +235,6 @@ public class PlayerTaskProgress extends BaseEntity {
      * <p>
      * For simple tasks, this is calculated as (current / target) * 100.
      * For complex tasks with requirements, this is the average of all requirement progress.
-     * </p>
      *
      * @return the progress percentage
      */
@@ -263,7 +257,6 @@ public class PlayerTaskProgress extends BaseEntity {
      * <p>
      * For simple tasks, this returns the task's target value.
      * For complex tasks with requirements, this returns the number of requirements.
-     * </p>
      *
      * @return the required progress value
      */
@@ -287,7 +280,6 @@ public class PlayerTaskProgress extends BaseEntity {
      * Marks the task as completed.
      * <p>
      * This sets the completed flag to true and records the completion time.
-     * </p>
      */
     public void markCompleted() {
         this.completed = true;
@@ -298,7 +290,6 @@ public class PlayerTaskProgress extends BaseEntity {
      * Resets the task progress to zero.
      * <p>
      * This clears the current progress, completion status, and all requirement progress.
-     * </p>
      */
     public void resetProgress() {
         this.currentProgress = 0;
@@ -312,7 +303,6 @@ public class PlayerTaskProgress extends BaseEntity {
      * <p>
      * This method manages the bidirectional relationship between PlayerTaskProgress
      * and PlayerTaskRequirementProgress.
-     * </p>
      *
      * @param progress the requirement progress to add
      */
@@ -330,7 +320,6 @@ public class PlayerTaskProgress extends BaseEntity {
      * <p>
      * This method manages the bidirectional relationship between PlayerTaskProgress
      * and PlayerTaskRequirementProgress.
-     * </p>
      *
      * @param progress the requirement progress to remove
      */

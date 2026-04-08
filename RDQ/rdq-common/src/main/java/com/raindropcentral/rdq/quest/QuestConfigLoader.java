@@ -4,13 +4,13 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.database.entity.quest.Quest;
-import com.raindropcentral.rplatform.config.icon.IconSection;
 import com.raindropcentral.rdq.database.entity.quest.QuestCategory;
 import com.raindropcentral.rdq.database.entity.quest.QuestTask;
 import com.raindropcentral.rdq.database.repository.quest.QuestCategoryRepository;
 import com.raindropcentral.rdq.database.repository.quest.QuestRepository;
 import com.raindropcentral.rdq.model.quest.QuestDifficulty;
 import com.raindropcentral.rdq.model.quest.TaskDifficulty;
+import com.raindropcentral.rplatform.config.icon.IconSection;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -21,7 +21,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Enumeration;
-import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.jar.JarEntry;
@@ -35,7 +34,6 @@ import java.util.logging.Logger;
  * This loader reads the quest-system.yml file using ConfigManager/ConfigKeeper
  * and creates QuestCategory entities in the database. It should be run during
  * server startup before the quest cache is initialized.
- * </p>
  *
  * @author JExcellence
  * @version 2.0.0
@@ -66,7 +64,6 @@ public class QuestConfigLoader {
 	 * Categories are inferred from the directory structure under
 	 * {@code quests/definitions/<category>/*.yml}. A {@link QuestCategory} entity is
 	 * created automatically for each directory that does not yet exist in the database.
-	 * </p>
 	 *
 	 * @return a future completing when loading is done
 	 */
@@ -92,7 +89,6 @@ public class QuestConfigLoader {
 	 * <p>
 	 * Files are only written when they do not already exist on disk, preserving any
 	 * server-side customisations made by administrators.
-	 * </p>
 	 */
 	private void extractQuestDefinitions() {
 		final java.net.URL jarUrl = plugin.getPlugin().getClass()

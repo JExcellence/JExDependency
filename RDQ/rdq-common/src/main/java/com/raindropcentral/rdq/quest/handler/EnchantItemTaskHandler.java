@@ -3,7 +3,6 @@ package com.raindropcentral.rdq.quest.handler;
 import com.raindropcentral.rdq.cache.quest.PlayerQuestProgressCache;
 import com.raindropcentral.rdq.cache.quest.QuestCacheManager;
 import com.raindropcentral.rdq.service.quest.QuestProgressTracker;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
@@ -26,10 +25,8 @@ import java.util.stream.Collectors;
  *   <li>Enchantments applied (type and level)</li>
  *   <li>Experience level used</li>
  * </ul>
- * </p>
  * <p>
  * Only successful enchantments are counted. Cancelled enchantments are ignored.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0
@@ -67,7 +64,6 @@ public class EnchantItemTaskHandler extends BaseTaskHandler {
      *   <li>The item is valid</li>
      * </ul>
      * If all conditions are met, it updates progress for matching ENCHANT_ITEM tasks.
-     * </p>
      *
      * @param event the enchant item event
      */

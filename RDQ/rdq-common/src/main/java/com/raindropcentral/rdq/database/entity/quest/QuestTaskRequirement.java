@@ -1,10 +1,16 @@
 package com.raindropcentral.rdq.database.entity.quest;
 
-import com.raindropcentral.rplatform.config.icon.IconSection;
 import com.raindropcentral.rdq.database.converter.IconSectionConverter;
 import com.raindropcentral.rdq.database.entity.requirement.BaseRequirement;
+import com.raindropcentral.rplatform.config.icon.IconSection;
 import de.jexcellence.hibernate.entity.BaseEntity;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -18,12 +24,10 @@ import java.util.Objects;
  * This entity encapsulates a single {@link BaseRequirement} that must be satisfied
  * to complete the associated quest task. It also includes an icon for visual representation
  * and display order for UI presentation.
- * </p>
  *
  * <p>
  * Multiple instances of this entity can exist for a single task, representing different requirements
  * that all need to be completed for the task to be marked as complete.
- * </p>
  *
  * @author JExcellence
  * @version 2.0.0
@@ -102,7 +106,6 @@ public class QuestTaskRequirement extends BaseEntity {
      * Sets the task for this requirement.
      * <p>
      * This method manages the bidirectional relationship between QuestTask and QuestTaskRequirement.
-     * </p>
      *
      * @param task the task to set
      */

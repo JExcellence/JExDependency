@@ -15,11 +15,11 @@ package com.raindropcentral.rdt.view.main;
 
 import com.raindropcentral.rdt.RDT;
 import com.raindropcentral.rdt.database.entity.RTown;
+import com.raindropcentral.rdt.utils.TownOverviewAccessMode;
 import com.raindropcentral.rdt.view.town.TownCreationProgressView;
 import com.raindropcentral.rdt.view.town.TownDirectoryView;
 import com.raindropcentral.rdt.view.town.TownInvitesView;
 import com.raindropcentral.rdt.view.town.TownOverviewView;
-import com.raindropcentral.rdt.utils.TownOverviewAccessMode;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import com.raindropcentral.rplatform.view.BaseView;
 import me.devnatan.inventoryframework.context.RenderContext;

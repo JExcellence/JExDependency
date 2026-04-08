@@ -1,7 +1,10 @@
 package com.raindropcentral.rdq.database.entity.quest;
 
 import de.jexcellence.hibernate.entity.BaseEntity;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Index;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
@@ -17,7 +20,6 @@ import java.util.UUID;
  * <p>
  * Tracks how many times a player has completed a quest and when they can
  * repeat it again (for repeatable quests with cooldowns).
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0

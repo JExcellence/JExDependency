@@ -13,9 +13,6 @@
 
 package com.raindropcentral.rdr.view;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.raindropcentral.rdr.RDR;
 import com.raindropcentral.rdr.database.entity.RStorage;
 import com.raindropcentral.rdr.database.entity.StorageTrustStatus;
@@ -34,6 +31,9 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Per-storage settings hub for owner-only storage management actions.

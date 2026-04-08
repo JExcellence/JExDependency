@@ -3,7 +3,6 @@
  * <p>
  * This package contains immutable data models that represent the state
  * of progression nodes:
- * </p>
  * <ul>
  *     <li>{@link com.raindropcentral.rplatform.progression.model.ProgressionStatus} - Status enumeration</li>
  *     <li>{@link com.raindropcentral.rplatform.progression.model.ProgressionState} - State record</li>

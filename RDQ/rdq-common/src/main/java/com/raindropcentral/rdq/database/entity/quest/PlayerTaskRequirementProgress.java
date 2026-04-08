@@ -1,7 +1,13 @@
 package com.raindropcentral.rdq.database.entity.quest;
 
 import de.jexcellence.hibernate.entity.BaseEntity;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -13,12 +19,10 @@ import java.util.Objects;
  * <p>
  * This entity tracks the completion progress of individual task requirements, ranging from 0.0 (not started)
  * to 1.0 (completed). It provides a granular view of requirement completion within complex tasks.
- * </p>
  *
  * <p>
  * Each player can have only one progress record per requirement within a task, enforced by a unique constraint.
  * Progress is automatically capped at 1.0 to prevent overflow.
- * </p>
  *
  * @author JExcellence
  * @version 2.0.0

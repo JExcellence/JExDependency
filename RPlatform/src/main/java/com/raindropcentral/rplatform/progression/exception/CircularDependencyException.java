@@ -9,7 +9,6 @@ import org.jetbrains.annotations.Nullable;
  * This exception indicates that a node's prerequisite chain forms a cycle,
  * which would make it impossible to complete the progression. For example:
  * Quest A requires Quest B, Quest B requires Quest C, and Quest C requires Quest A.
- * </p>
  *
  * <h2>Common Scenarios:</h2>
  * <ul>
@@ -32,7 +31,6 @@ import org.jetbrains.annotations.Nullable;
  * <h2>Prevention:</h2>
  * <p>
  * To prevent circular dependencies:
- * </p>
  * <ul>
  *     <li>Validate progression configuration on plugin startup</li>
  *     <li>Use {@link com.raindropcentral.rplatform.progression.ProgressionValidator#validatePrerequisiteChains()}</li>
@@ -45,7 +43,6 @@ import org.jetbrains.annotations.Nullable;
  * <p>
  * This exception is thrown by the progression validator when it detects a cycle
  * using depth-first search with a recursion stack. The algorithm:
- * </p>
  * <ol>
  *     <li>Traverses each node's prerequisite chain</li>
  *     <li>Maintains a recursion stack of currently visiting nodes</li>
@@ -56,7 +53,6 @@ import org.jetbrains.annotations.Nullable;
  * <h2>Error Message Format:</h2>
  * <p>
  * The exception message typically includes:
- * </p>
  * <ul>
  *     <li>The node identifier where the cycle was detected</li>
  *     <li>The chain of nodes forming the cycle (if available)</li>
@@ -81,7 +77,6 @@ public class CircularDependencyException extends RuntimeException {
      * <p>
      * The message should clearly identify the nodes involved in the cycle
      * to help administrators fix the configuration.
-     * </p>
      *
      * @param message The detail message explaining the circular dependency
      */
@@ -94,7 +89,6 @@ public class CircularDependencyException extends RuntimeException {
      * <p>
      * This constructor is useful when the circular dependency detection
      * fails due to an underlying issue (e.g., database error while loading nodes).
-     * </p>
      *
      * @param message The detail message explaining the circular dependency
      * @param cause The cause of the exception (can be null)
@@ -107,7 +101,6 @@ public class CircularDependencyException extends RuntimeException {
      * Constructs a new circular dependency exception with the specified cause.
      * <p>
      * The detail message is set to {@code (cause==null ? null : cause.toString())}.
-     * </p>
      *
      * @param cause The cause of the exception (can be null)
      */

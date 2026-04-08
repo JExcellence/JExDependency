@@ -13,11 +13,6 @@
 
 package com.raindropcentral.rdr.view;
 
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.concurrent.CompletableFuture;
-
 import com.raindropcentral.rdr.RDR;
 import com.raindropcentral.rdr.database.entity.RServerBank;
 import com.raindropcentral.rdr.service.TradeService;
@@ -34,6 +29,11 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Admin-only paginated view for server trade-tax bank balances and withdrawal actions.

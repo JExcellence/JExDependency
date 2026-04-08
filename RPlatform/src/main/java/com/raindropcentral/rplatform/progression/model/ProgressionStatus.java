@@ -5,7 +5,6 @@ package com.raindropcentral.rplatform.progression.model;
  * <p>
  * These states represent the lifecycle of a progression node from the perspective
  * of a specific player:
- * </p>
  * <ul>
  *     <li>{@link #LOCKED} - Prerequisites not met, cannot be started</li>
  *     <li>{@link #AVAILABLE} - Prerequisites met, can be started</li>
@@ -41,7 +40,6 @@ public enum ProgressionStatus {
      * <p>
      * The player cannot start this node until all prerequisite nodes are completed.
      * UI should display this node as locked with information about missing prerequisites.
-     * </p>
      */
     LOCKED,
     
@@ -50,7 +48,6 @@ public enum ProgressionStatus {
      * <p>
      * All prerequisites are met and the player can start this node.
      * UI should display this node as available with a start action.
-     * </p>
      */
     AVAILABLE,
     
@@ -59,7 +56,6 @@ public enum ProgressionStatus {
      * <p>
      * The player has started this node and is working on completing it.
      * UI should display progress information and allow viewing details.
-     * </p>
      */
     ACTIVE,
     
@@ -68,7 +64,6 @@ public enum ProgressionStatus {
      * <p>
      * The player has successfully completed this node.
      * UI should display completion status and any rewards earned.
-     * </p>
      */
     COMPLETED;
     
@@ -77,7 +72,6 @@ public enum ProgressionStatus {
      * <p>
      * A node is considered unlocked if it's AVAILABLE, ACTIVE, or COMPLETED.
      * Only LOCKED nodes are considered locked.
-     * </p>
      *
      * @return true if this status is not LOCKED
      */
@@ -89,7 +83,6 @@ public enum ProgressionStatus {
      * Checks if this status allows starting the node.
      * <p>
      * Only AVAILABLE nodes can be started.
-     * </p>
      *
      * @return true if this status is AVAILABLE
      */
@@ -101,7 +94,6 @@ public enum ProgressionStatus {
      * Checks if this status represents an active node.
      * <p>
      * Only ACTIVE nodes are considered in progress.
-     * </p>
      *
      * @return true if this status is ACTIVE
      */
@@ -113,7 +105,6 @@ public enum ProgressionStatus {
      * Checks if this status represents a completed node.
      * <p>
      * Only COMPLETED nodes are considered finished.
-     * </p>
      *
      * @return true if this status is COMPLETED
      */

@@ -13,13 +13,10 @@
 
 package com.raindropcentral.rplatform.utility.heads.view.pagination;
 
-
 import com.raindropcentral.rplatform.utility.heads.RHead;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import de.jexcellence.jextranslate.i18n.I18n;
 import net.kyori.adventure.text.Component;
-
-import java.util.List;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;

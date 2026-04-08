@@ -13,16 +13,16 @@
 
 package com.raindropcentral.rplatform.protection.impl;
 
-import java.math.BigDecimal;
-import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.math.BigDecimal;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * HuskTowns implementation of {@link com.raindropcentral.rplatform.protection.RProtectionBridge}.

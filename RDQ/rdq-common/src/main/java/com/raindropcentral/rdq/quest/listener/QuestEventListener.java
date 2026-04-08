@@ -4,9 +4,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.raindropcentral.rdq.RDQ;
+import com.raindropcentral.rdq.cache.quest.QuestCacheManager;
 import com.raindropcentral.rdq.database.entity.quest.QuestTask;
 import com.raindropcentral.rdq.database.entity.quest.QuestUser;
-import com.raindropcentral.rdq.cache.quest.QuestCacheManager;
 import com.raindropcentral.rdq.service.quest.QuestProgressTracker;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import org.bukkit.entity.Entity;
@@ -34,9 +34,8 @@ import java.util.logging.Logger;
  * stored on each {@link QuestTask}, matches the event against
  * {@code type} / {@code target} / {@code amount}, and calls
  * {@link QuestProgressTracker#updateProgress} when a task matches.
- * </p>
  *
- * <h1>Supported task types</h1>
+ * <h2>Supported task types</h2>
  * <ul>
  *   <li>{@code KILL_MOBS} – EntityDeathEvent. Target = entity type or category
  *       ("HOSTILE", "PASSIVE", "NEUTRAL", or a concrete type like "ZOMBIE").</li>
@@ -58,6 +57,11 @@ public class QuestEventListener implements Listener {
     private final QuestProgressTracker progressTracker;
     private final QuestCacheManager cacheManager;
 
+    /**
+     * Creates the quest event listener for the provided plugin instance.
+     *
+     * @param plugin the active RDQ plugin instance
+     */
     public QuestEventListener(@NotNull final RDQ plugin) {
         this.progressTracker = plugin.getQuestProgressTracker();
         this.cacheManager = plugin.getQuestCacheManager();
@@ -67,6 +71,11 @@ public class QuestEventListener implements Listener {
     // KILL_MOBS
     // -------------------------------------------------------------------------
 
+    /**
+     * Updates quest progress for mob-kill tasks after an entity dies.
+     *
+     * @param event the monitored entity death event
+     */
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onEntityDeath(@NotNull final EntityDeathEvent event) {
         final Player player = event.getEntity().getKiller();
@@ -102,6 +111,11 @@ public class QuestEventListener implements Listener {
     // MINE_BLOCKS / BREAK_BLOCKS
     // -------------------------------------------------------------------------
 
+    /**
+     * Updates quest progress for block-breaking tasks after a block is mined.
+     *
+     * @param event the monitored block break event
+     */
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onBlockBreak(@NotNull final BlockBreakEvent event) {
         final Player player = event.getPlayer();
@@ -129,6 +143,11 @@ public class QuestEventListener implements Listener {
     // PLACE_BLOCKS
     // -------------------------------------------------------------------------
 
+    /**
+     * Updates quest progress for block-placement tasks after a block is placed.
+     *
+     * @param event the monitored block place event
+     */
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onBlockPlace(@NotNull final BlockPlaceEvent event) {
         final Player player = event.getPlayer();
@@ -150,6 +169,11 @@ public class QuestEventListener implements Listener {
     // CATCH_FISH
     // -------------------------------------------------------------------------
 
+    /**
+     * Updates quest progress for fishing tasks after a successful catch.
+     *
+     * @param event the monitored fishing event
+     */
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onFish(@NotNull final PlayerFishEvent event) {
         if (event.getState() != PlayerFishEvent.State.CAUGHT_FISH) return;
@@ -169,6 +193,11 @@ public class QuestEventListener implements Listener {
     // CONSUME_ITEM
     // -------------------------------------------------------------------------
 
+    /**
+     * Updates quest progress for consume-item tasks after an item is eaten or drunk.
+     *
+     * @param event the monitored item consumption event
+     */
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onItemConsume(@NotNull final PlayerItemConsumeEvent event) {
         final Player player = event.getPlayer();

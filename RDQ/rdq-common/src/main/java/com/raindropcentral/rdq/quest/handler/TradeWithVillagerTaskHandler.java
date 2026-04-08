@@ -27,7 +27,6 @@ import java.util.Map;
  * <p>
  * Note: This handler uses VillagerAcquireTradeEvent which is available in
  * modern Minecraft versions. For older versions, alternative events may be needed.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0

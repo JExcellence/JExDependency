@@ -16,7 +16,6 @@ import java.util.function.Function;
  * <p>
  * Provides cached access to quest tasks with methods for finding by quest
  * and by quest + task identifier combination.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0

@@ -12,7 +12,6 @@ import java.util.function.Function;
  * Repository for managing {@link QuestTaskReward} entities.
  * <p>
  * Provides CRUD operations for task-level rewards.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0

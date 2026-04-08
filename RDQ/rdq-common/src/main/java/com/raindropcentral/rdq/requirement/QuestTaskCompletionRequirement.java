@@ -21,8 +21,6 @@ import com.raindropcentral.rplatform.requirement.AbstractRequirement;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,7 +29,6 @@ import java.util.logging.Logger;
  * <p>
  * This requirement integrates with the quest user progress system to verify
  * that a player has completed a specific task within an active quest.
- * </p>
  * <p>
  * Example JSON configuration:
  * <pre>
@@ -87,7 +84,6 @@ public final class QuestTaskCompletionRequirement extends AbstractRequirement {
      * Sets the quest service for this requirement.
      * <p>
      * This is called during initialization by the quest system.
-     * </p>
      *
      * @param questService the quest service
      */

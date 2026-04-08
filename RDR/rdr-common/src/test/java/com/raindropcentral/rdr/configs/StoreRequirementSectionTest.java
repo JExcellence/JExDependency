@@ -13,13 +13,12 @@
 
 package com.raindropcentral.rdr.configs;
 
-import java.util.List;
-import java.util.Map;
-
+import com.raindropcentral.rplatform.requirement.config.RequirementFactory;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.junit.jupiter.api.Test;
 
-import com.raindropcentral.rplatform.requirement.config.RequirementFactory;
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;

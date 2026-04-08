@@ -13,15 +13,15 @@
 
 package com.raindropcentral.rds.database.entity;
 
-import java.util.Locale;
-import java.util.Objects;
-
 import de.jexcellence.hibernate.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Locale;
+import java.util.Objects;
 
 /**
  * Persists one admin override definition for a LuckPerms group.

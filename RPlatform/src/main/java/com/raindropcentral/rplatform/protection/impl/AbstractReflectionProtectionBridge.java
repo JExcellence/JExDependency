@@ -13,18 +13,17 @@
 
 package com.raindropcentral.rplatform.protection.impl;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.util.Locale;
-import java.util.concurrent.CompletableFuture;
-import java.util.Optional;
-import java.util.UUID;
-
+import com.raindropcentral.rplatform.protection.RProtectionBridge;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import com.raindropcentral.rplatform.protection.RProtectionBridge;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.Locale;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Shared reflection helpers used by protection bridges.

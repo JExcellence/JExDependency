@@ -30,7 +30,6 @@ import java.util.logging.Logger;
  * <p>
  * This requirement integrates with the quest completion history system to verify
  * that a player has completed a quest at least once (or a minimum number of times).
- * </p>
  * <p>
  * Example JSON configuration:
  * <pre>
@@ -91,7 +90,6 @@ public final class QuestCompletionRequirement extends AbstractRequirement {
      * Sets the quest service for this requirement.
      * <p>
      * This is called during initialization by the quest system.
-     * </p>
      *
      * @param questService the quest service
      */

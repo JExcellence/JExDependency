@@ -10,11 +10,9 @@
  *     <li>{@link com.raindropcentral.rdq.database.entity.quest.QuestTaskProgress} - Player task progress</li>
  *     <li>{@link com.raindropcentral.rdq.database.entity.quest.QuestCompletionHistory} - Quest completion tracking</li>
  * </ul>
- * </p>
  * <p>
  * All entities extend {@link de.jexcellence.hibernate.entity.BaseEntity} and use JPA annotations
  * for persistence with JExHibernate.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0

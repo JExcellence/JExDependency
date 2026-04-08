@@ -13,9 +13,6 @@
 
 package com.raindropcentral.rds.view.shop;
 
-import java.util.List;
-import java.util.Map;
-
 import com.raindropcentral.rds.RDS;
 import com.raindropcentral.rds.configs.ConfigSection;
 import com.raindropcentral.rds.database.entity.RDSPlayer;
@@ -30,6 +27,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Root RDS store view used to inspect the next shop purchase tier.

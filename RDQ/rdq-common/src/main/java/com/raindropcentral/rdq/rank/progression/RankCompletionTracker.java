@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
  * This class provides completion tracking functionality for ranks, integrating
  * with the existing rank system's database entities. In the rank system, "completion"
  * means a player has achieved a rank and it is their current active rank.
- * </p>
  *
  * <h2>Usage Example:</h2>
  * <pre>{@code
@@ -128,7 +127,6 @@ public class RankCompletionTracker implements ICompletionTracker<RRank> {
 	 * <p>
 	 * CachedRepository handles cache invalidation automatically,
 	 * so this method is a no-op for this implementation.
-	 * </p>
 	 *
 	 * @param playerId Player UUID
 	 */
@@ -141,7 +139,6 @@ public class RankCompletionTracker implements ICompletionTracker<RRank> {
 	 * Gets all ranks a player has achieved (active and inactive).
 	 * <p>
 	 * This includes ranks from all rank trees the player has progressed through.
-	 * </p>
 	 *
 	 * @param playerId Player UUID
 	 * @return CompletableFuture containing list of all rank identifiers
@@ -160,7 +157,6 @@ public class RankCompletionTracker implements ICompletionTracker<RRank> {
 	 * <p>
 	 * This is more specific than hasCompleted() as it checks for a particular
 	 * rank tree context.
-	 * </p>
 	 *
 	 * @param playerId Player UUID
 	 * @param rankIdentifier Rank identifier

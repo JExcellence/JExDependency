@@ -1,7 +1,13 @@
 package com.raindropcentral.rdq.database.entity.quest;
 
 import de.jexcellence.hibernate.entity.BaseEntity;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Index;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
@@ -15,7 +21,6 @@ import java.util.Objects;
  * <p>
  * Tracks the current progress value, required progress value, and completion status
  * for an individual task within a quest.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0

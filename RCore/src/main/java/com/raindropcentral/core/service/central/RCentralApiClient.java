@@ -27,6 +27,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.net.ConnectException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -34,7 +35,6 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
 import java.time.Instant;
-import java.lang.reflect.Type;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;

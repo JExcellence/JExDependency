@@ -13,7 +13,6 @@
 
 package com.raindropcentral.rdq.view.ranks;
 
-
 import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
 import com.raindropcentral.rdq.database.entity.rank.RPlayerRank;
@@ -31,10 +30,13 @@ import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import com.raindropcentral.rplatform.view.APaginatedView;
 import de.jexcellence.jextranslate.i18n.I18n;
 import me.devnatan.inventoryframework.component.BukkitItemComponentBuilder;
-import me.devnatan.inventoryframework.context.*;
+import me.devnatan.inventoryframework.context.CloseContext;
+import me.devnatan.inventoryframework.context.Context;
+import me.devnatan.inventoryframework.context.OpenContext;
+import me.devnatan.inventoryframework.context.RenderContext;
+import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.state.State;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -42,7 +44,12 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 import java.util.logging.Logger;

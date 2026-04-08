@@ -37,10 +37,8 @@ import java.util.concurrent.CompletableFuture;
  *     <li>Progress monitoring</li>
  *     <li>Requirement validation</li>
  * </ul>
- * </p>
  * <p>
  * All methods return {@link CompletableFuture} for non-blocking async operations.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0
@@ -84,7 +82,6 @@ public interface QuestService {
      *     <li>Quest is not on cooldown</li>
      *     <li>All quest requirements are met</li>
      * </ul>
-     * </p>
      *
      * @param playerId        the player's unique identifier
      * @param questIdentifier the quest identifier
@@ -101,7 +98,6 @@ public interface QuestService {
      * <p>
      * This removes the quest from the player's active quests and
      * cleans up all associated progress data.
-     * </p>
      *
      * @param playerId        the player's unique identifier
      * @param questIdentifier the quest identifier
@@ -140,7 +136,6 @@ public interface QuestService {
      * <p>
      * This performs all validation checks without actually starting the quest.
      * Useful for UI display to show why a quest cannot be started.
-     * </p>
      *
      * @param playerId        the player's unique identifier
      * @param questIdentifier the quest identifier
@@ -179,7 +174,6 @@ public interface QuestService {
      * <p>
      * This should be called when player data is modified externally
      * or when a full refresh is needed.
-     * </p>
      *
      * @param playerId the player's unique identifier
      */
@@ -189,7 +183,6 @@ public interface QuestService {
      * Invalidates all cached quest definitions.
      * <p>
      * This should be called when quest configurations are reloaded.
-     * </p>
      */
     void invalidateQuestCache();
 
@@ -198,7 +191,6 @@ public interface QuestService {
      * <p>
      * This method should be called after a quest is completed to trigger
      * the progression system's automatic unlocking logic.
-     * </p>
      *
      * @param playerId the player's unique identifier
      * @param questIdentifier the completed quest identifier
@@ -215,7 +207,6 @@ public interface QuestService {
      * <p>
      * This includes the quest state, active quest data, completion history,
      * cooldown information, and missing requirements.
-     * </p>
      *
      * @param playerId the player's unique identifier
      * @param questIdentifier the quest identifier

@@ -18,7 +18,6 @@ import java.util.function.Function;
  * This repository provides cached access to quest categories with methods for finding by identifier,
  * enabled status, and display order. Quest categories are used to organize quests into logical groups
  * for navigation and progression tracking.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -57,7 +56,6 @@ public class QuestCategoryRepository extends CachedRepository<QuestCategory, Lon
 	 * Finds a quest category by its unique identifier.
 	 * <p>
 	 * This method is used by the quest system to look up categories by their identifier.
-	 * </p>
 	 *
 	 * @param identifier the category identifier
 	 * @return CompletableFuture containing the optional category
@@ -85,7 +83,6 @@ public class QuestCategoryRepository extends CachedRepository<QuestCategory, Lon
 	 * Finds all quest categories with the specified enabled status.
 	 * <p>
 	 * This method is used to filter categories based on their availability to players.
-	 * </p>
 	 *
 	 * @param enabled whether to find enabled or disabled categories
 	 * @return CompletableFuture containing the list of categories
@@ -112,7 +109,6 @@ public class QuestCategoryRepository extends CachedRepository<QuestCategory, Lon
 	 * <p>
 	 * This method is used to retrieve all categories in the correct order for display
 	 * in quest navigation menus and category selection views.
-	 * </p>
 	 *
 	 * @return CompletableFuture containing the list of all categories ordered by sort order
 	 */
@@ -136,7 +132,6 @@ public class QuestCategoryRepository extends CachedRepository<QuestCategory, Lon
 	 * Finds all enabled quest categories ordered by their display order.
 	 * <p>
 	 * This method is the most commonly used query for displaying available categories to players.
-	 * </p>
 	 *
 	 * @return CompletableFuture containing the list of enabled categories ordered by display order
 	 */
@@ -161,7 +156,6 @@ public class QuestCategoryRepository extends CachedRepository<QuestCategory, Lon
 	 * <p>
 	 * This method uses JOIN FETCH to load quests in a single query,
 	 * avoiding N+1 query problems when displaying category details.
-	 * </p>
 	 *
 	 * @param identifier the category identifier
 	 * @return CompletableFuture containing the optional category with eagerly loaded quests

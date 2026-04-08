@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
  * <p>
  * This implementation uses the quest completion history repository and player quest progress cache
  * to efficiently track which quests players have completed and which are currently active.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0

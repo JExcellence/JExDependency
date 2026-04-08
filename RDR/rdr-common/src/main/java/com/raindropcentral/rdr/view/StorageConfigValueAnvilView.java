@@ -13,11 +13,9 @@
 
 package com.raindropcentral.rdr.view;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Locale;
-import java.util.Map;
-
+import com.raindropcentral.rdr.RDR;
+import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
+import com.raindropcentral.rplatform.view.AbstractAnvilView;
 import me.devnatan.inventoryframework.context.Context;
 import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
@@ -30,9 +28,10 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import com.raindropcentral.rdr.RDR;
-import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
-import com.raindropcentral.rplatform.view.AbstractAnvilView;
+import java.io.File;
+import java.io.IOException;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Renders the config value editor anvil for a selected storage config path.

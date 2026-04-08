@@ -4,7 +4,6 @@ import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.database.entity.quest.Quest;
 import com.raindropcentral.rdq.database.entity.quest.QuestCategory;
 import com.raindropcentral.rdq.model.quest.ActiveQuest;
-import com.raindropcentral.rdq.model.quest.QuestState;
 import com.raindropcentral.rdq.model.quest.QuestStateInfo;
 import com.raindropcentral.rdq.service.quest.QuestService;
 import com.raindropcentral.rplatform.logging.CentralLogger;
@@ -44,7 +43,6 @@ import java.util.stream.Collectors;
  *   <li>Active badge and progress if the player is currently on this quest</li>
  *   <li>Completed badge if already finished</li>
  * </ul>
- * </p>
  *
  * @author RaindropCentral
  * @version 2.0.0

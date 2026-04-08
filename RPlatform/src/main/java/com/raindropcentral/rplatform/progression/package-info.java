@@ -4,7 +4,6 @@
  * <p>
  * This package contains interfaces and services for managing progression nodes (Quests, Ranks,
  * Achievements, etc.) with support for:
- * </p>
  * <ul>
  *     <li>Prerequisite validation</li>
  *     <li>Sequential progression enforcement</li>

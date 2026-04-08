@@ -9,7 +9,6 @@ import com.raindropcentral.rdq.database.entity.reward.BaseReward;
 import com.raindropcentral.rdq.rank.progression.RankCompletionTracker;
 import com.raindropcentral.rplatform.progression.ProgressionValidator;
 import com.raindropcentral.rplatform.progression.model.ProgressionState;
-import com.raindropcentral.rplatform.progression.model.ProgressionStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -25,7 +24,6 @@ import java.util.logging.Logger;
  * This service integrates with the RPlatform Progression System to validate
  * prerequisites before allowing rank upgrades and automatically unlock dependent
  * ranks upon completion.
- * </p>
  *
  * <h2>Integration Points:</h2>
  * <ul>
@@ -91,7 +89,6 @@ public class RankUpgradeService {
 	 * This method validates prerequisites using the ProgressionValidator before
 	 * allowing the upgrade. If prerequisites are met, it grants the rank and
 	 * processes automatic unlocking of dependent ranks.
-	 * </p>
 	 *
 	 * @param playerId The player's UUID
 	 * @param rankIdentifier The identifier of the rank to upgrade to
@@ -175,7 +172,6 @@ public class RankUpgradeService {
 	 * <p>
 	 * This method grants the rank, updates the database, sends notifications,
 	 * and processes automatic unlocking of dependent ranks.
-	 * </p>
 	 *
 	 * @param playerId The player's UUID
 	 * @param rank The rank to grant
@@ -222,7 +218,6 @@ public class RankUpgradeService {
 	 * <p>
 	 * This method uses the ProgressionValidator to determine which dependent
 	 * ranks are now unlocked after completing the given rank.
-	 * </p>
 	 *
 	 * @param playerId The player's UUID
 	 * @param completedRank The rank that was just completed
@@ -252,7 +247,6 @@ public class RankUpgradeService {
 	 * This method handles the actual database operations to grant a rank to a player,
 	 * including creating the RDQPlayer entity if it doesn't exist and managing
 	 * rank tree relationships.
-	 * </p>
 	 *
 	 * @param playerId The player's UUID
 	 * @param rank The rank to grant
@@ -297,7 +291,6 @@ public class RankUpgradeService {
 	 * <p>
 	 * This method handles the logic for creating new rank records or updating
 	 * existing ones within the same rank tree.
-	 * </p>
 	 *
 	 * @param rdqPlayer The RDQPlayer entity
 	 * @param rank The rank to grant
@@ -350,7 +343,6 @@ public class RankUpgradeService {
 	 * This method handles granting any permissions, rewards, or other benefits
 	 * associated with the rank. This includes LuckPerms group updates and
 	 * rank reward processing.
-	 * </p>
 	 *
 	 * @param playerId The player's UUID
 	 * @param rank The rank that was granted

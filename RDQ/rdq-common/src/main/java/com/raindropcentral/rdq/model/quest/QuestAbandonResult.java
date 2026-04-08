@@ -7,7 +7,6 @@ import org.jetbrains.annotations.NotNull;
  * <p>
  * This provides a type-safe way to handle all possible outcomes when a player
  * tries to abandon a quest.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0

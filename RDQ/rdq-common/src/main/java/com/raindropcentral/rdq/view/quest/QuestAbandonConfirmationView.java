@@ -27,7 +27,6 @@ import java.util.logging.Logger;
  * This view provides a confirmation interface before abandoning a quest,
  * helping prevent accidental quest abandonment and providing clear information
  * about what will be lost.
- * </p>
  *
  * <h2>Features:</h2>
  * <ul>

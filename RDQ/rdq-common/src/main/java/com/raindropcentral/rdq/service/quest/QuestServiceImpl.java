@@ -13,7 +13,13 @@ import com.raindropcentral.rdq.database.repository.quest.QuestCategoryRepository
 import com.raindropcentral.rdq.database.repository.quest.QuestCompletionHistoryRepository;
 import com.raindropcentral.rdq.database.repository.quest.QuestRepository;
 import com.raindropcentral.rdq.database.repository.quest.QuestUserRepository;
-import com.raindropcentral.rdq.model.quest.*;
+import com.raindropcentral.rdq.model.quest.ActiveQuest;
+import com.raindropcentral.rdq.model.quest.QuestAbandonResult;
+import com.raindropcentral.rdq.model.quest.QuestProgress;
+import com.raindropcentral.rdq.model.quest.QuestStartResult;
+import com.raindropcentral.rdq.model.quest.QuestState;
+import com.raindropcentral.rdq.model.quest.QuestStateInfo;
+import com.raindropcentral.rdq.model.quest.TaskProgress;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.Duration;
@@ -31,7 +37,6 @@ import java.util.stream.Collectors;
  * This service manages all quest-related operations including quest discovery,
  * starting, abandoning, and progress tracking. It uses Caffeine caching for
  * improved performance on frequently accessed data.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0
@@ -553,6 +558,13 @@ public class QuestServiceImpl implements QuestService {
         return CompletableFuture.completedFuture(List.of());
     }
 
+    /**
+     * Loads the recorded completion history for a player's quest.
+     *
+     * @param playerId the player identifier
+     * @param questIdentifier the quest identifier
+     * @return a future completing with the stored completion history when present
+     */
     @NotNull
     public CompletableFuture<Optional<QuestCompletionHistory>> getCompletionHistory(
             @NotNull final UUID playerId,

@@ -36,14 +36,23 @@ import java.util.function.Function;
 public class RPlayerRankRepository extends CachedRepository<RPlayerRank, Long, Long> {
 	
 	/**
+	 * Entity manager factory used to create repository sessions.
+	 */
+	private final EntityManagerFactory entityManagerFactory;
+
+	/**
+	 * Executor used for asynchronous repository operations.
+	 */
+	private final ExecutorService executor;
+
+	/**
 	 * Constructs a new {@code RPlayerRankRepository} for managing {@link RPlayerRank} entities.
 	 *
 	 * @param executor             the {@link ExecutorService} used for asynchronous repository operations
 	 * @param entityManagerFactory the {@link EntityManagerFactory} used to create and manage entity managers
+	 * @param entityClass          the managed entity type
+	 * @param keyExtractor         the cache key extractor
 	 */
-	private final EntityManagerFactory entityManagerFactory;
-	private final ExecutorService executor;
-
 	public RPlayerRankRepository(
 		final @NotNull ExecutorService executor,
 		final @NotNull EntityManagerFactory entityManagerFactory,
@@ -55,6 +64,13 @@ public class RPlayerRankRepository extends CachedRepository<RPlayerRank, Long, L
 		this.executor = executor;
 	}
 
+	/**
+	 * Returns whether a player has an entry for the supplied rank identifier.
+	 *
+	 * @param playerId the player identifier to inspect
+	 * @param rankId the rank identifier to look up
+	 * @return a future completing with {@code true} when the player has the rank
+	 */
 	public CompletableFuture<Boolean> existsByPlayerIdAndRankId(@NotNull final UUID playerId, final Long rankId) {
 		return CompletableFuture.supplyAsync(() -> {
 			EntityManager em = entityManagerFactory.createEntityManager();
@@ -68,6 +84,13 @@ public class RPlayerRankRepository extends CachedRepository<RPlayerRank, Long, L
 		}, executor);
 	}
 
+	/**
+	 * Finds a player's rank entry for the supplied rank identifier.
+	 *
+	 * @param playerId the player identifier to inspect
+	 * @param rankId the rank identifier to look up
+	 * @return a future completing with the matching rank entry when present
+	 */
 	public CompletableFuture<Optional<RPlayerRank>> findByPlayerIdAndRankId(@NotNull final UUID playerId, final Long rankId) {
 		return CompletableFuture.supplyAsync(() -> {
 			EntityManager em = entityManagerFactory.createEntityManager();
@@ -81,6 +104,13 @@ public class RPlayerRankRepository extends CachedRepository<RPlayerRank, Long, L
 		}, executor);
 	}
 
+	/**
+	 * Finds the player's rank entry matching the requested active state.
+	 *
+	 * @param playerId the player identifier to inspect
+	 * @param active whether the returned rank entry must be active
+	 * @return a future completing with the matching rank entry when present
+	 */
 	public CompletableFuture<Optional<RPlayerRank>> findByPlayerIdAndIsActive(@NotNull final UUID playerId, final boolean active) {
 		return CompletableFuture.supplyAsync(() -> {
 			EntityManager em = entityManagerFactory.createEntityManager();
@@ -94,6 +124,12 @@ public class RPlayerRankRepository extends CachedRepository<RPlayerRank, Long, L
 		}, executor);
 	}
 
+	/**
+	 * Loads every rank entry associated with the supplied player.
+	 *
+	 * @param playerId the player identifier to inspect
+	 * @return a future completing with every rank entry owned by the player
+	 */
 	public CompletableFuture<List<RPlayerRank>> findByPlayerId(@NotNull final UUID playerId) {
 		return CompletableFuture.supplyAsync(() -> {
 			EntityManager em = entityManagerFactory.createEntityManager();

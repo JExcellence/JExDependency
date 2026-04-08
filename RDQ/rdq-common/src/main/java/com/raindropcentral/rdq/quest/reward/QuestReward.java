@@ -19,7 +19,6 @@ import java.util.logging.Logger;
  * This reward integrates with the quest service to automatically start a quest
  * for a player or mark a quest as completed. This is useful for quest chains
  * where completing one quest automatically starts or completes another.
- * </p>
  * <p>
  * Example JSON configuration:
  * <pre>
@@ -98,7 +97,6 @@ public final class QuestReward extends AbstractReward {
      * Sets the quest service for this reward.
      * <p>
      * This is called during initialization by the quest system.
-     * </p>
      *
      * @param questService the quest service
      */
@@ -177,7 +175,6 @@ public final class QuestReward extends AbstractReward {
      * <p>
      * This is an admin/cheat function that immediately completes the quest
      * without requiring the player to complete tasks.
-     * </p>
      *
      * @param player the player
      * @return a future completing with true if successful

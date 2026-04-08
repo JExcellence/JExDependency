@@ -19,7 +19,6 @@ import java.util.logging.Logger;
  * <p>
  * This requirement integrates with the quest user progress system to verify
  * that a player has completed a specific task within an active quest.
- * </p>
  * <p>
  * Example JSON configuration:
  * <pre>
@@ -75,7 +74,6 @@ public final class QuestTaskCompletionRequirement extends AbstractRequirement {
      * Sets the repository for this requirement.
      * <p>
      * This is called during initialization by the quest system.
-     * </p>
      *
      * @param repository the quest user repository
      */

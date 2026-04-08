@@ -14,8 +14,8 @@
 package com.raindropcentral.rdq.config.quest;
 
 import com.raindropcentral.rdq.config.requirement.BaseRequirementSection;
-import com.raindropcentral.rplatform.config.icon.IconSection;
 import com.raindropcentral.rdq.config.utility.RewardSection;
+import com.raindropcentral.rplatform.config.icon.IconSection;
 import de.jexcellence.configmapper.sections.AConfigSection;
 import de.jexcellence.configmapper.sections.CSAlways;
 import de.jexcellence.configmapper.sections.CSIgnore;

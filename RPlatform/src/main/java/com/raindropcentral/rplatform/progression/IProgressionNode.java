@@ -9,12 +9,10 @@ import java.util.List;
  * <p>
  * Implementations include Quests, Ranks, Achievements, Story Chapters, and any other
  * feature that requires sequential progression with prerequisites.
- * </p>
  *
  * <p>
  * This interface provides a generic foundation for progression systems, allowing
  * different features to share common progression logic including:
- * </p>
  * <ul>
  *     <li>Prerequisite validation</li>
  *     <li>Sequential progression enforcement</li>
@@ -58,7 +56,6 @@ import java.util.List;
  * <h2>Linear Progression Example:</h2>
  * <p>
  * Creating a simple linear quest chain (Quest A → Quest B → Quest C):
- * </p>
  * <pre>{@code
  * // Quest A (initial node)
  * Quest questA = new Quest("quest_a");
@@ -79,7 +76,6 @@ import java.util.List;
  * <h2>Multiple Prerequisites Example:</h2>
  * <p>
  * Creating a quest that requires multiple prerequisites (Quest A AND Quest B → Quest C):
- * </p>
  * <pre>{@code
  * // Quest A (initial node)
  * Quest questA = new Quest("quest_a");
@@ -97,7 +93,6 @@ import java.util.List;
  * <h2>Branching Progression Example:</h2>
  * <p>
  * Creating a quest that unlocks multiple paths (Quest A → Quest B OR Quest C):
- * </p>
  * <pre>{@code
  * // Quest A (initial node that branches)
  * Quest questA = new Quest("quest_a");
@@ -115,7 +110,6 @@ import java.util.List;
  * <h2>Integration with Progression System:</h2>
  * <p>
  * Once the progression system components are implemented, you can use them as follows:
- * </p>
  * <pre>{@code
  * // Create completion tracker (tracks which nodes players have completed)
  * QuestCompletionTracker tracker = new QuestCompletionTracker(repository);
@@ -263,7 +257,6 @@ import java.util.List;
  * Implementations should be immutable or thread-safe if used in concurrent contexts.
  * The progression validation system uses thread-safe data structures internally, but node
  * implementations should ensure their identifier and prerequisite lists don't change during validation.
- * </p>
  *
  * @param <T> The concrete type implementing this interface (enables type-safe operations)
  * @author RaindropCentral
@@ -277,7 +270,6 @@ public interface IProgressionNode<T extends IProgressionNode<T>> {
      * <p>
      * This identifier must be unique within the progression system and is used
      * to reference this node in prerequisite relationships.
-     * </p>
      *
      * @return unique identifier (never null or empty)
      */
@@ -288,11 +280,9 @@ public interface IProgressionNode<T extends IProgressionNode<T>> {
      * <p>
      * All nodes in this list must be completed before this node can be started.
      * This implements AND logic for prerequisites (all must be completed).
-     * </p>
      *
      * <p>
      * For initial nodes (nodes with no prerequisites), return an empty list.
-     * </p>
      *
      * @return list of prerequisite node identifiers (never null, may be empty)
      */
@@ -303,11 +293,9 @@ public interface IProgressionNode<T extends IProgressionNode<T>> {
      * <p>
      * When this node is completed, the progression system will check these dependent
      * nodes to see if they can be automatically unlocked.
-     * </p>
      *
      * <p>
      * For final nodes (nodes with no dependents), return an empty list.
-     * </p>
      *
      * @return list of dependent node identifiers (never null, may be empty)
      */
@@ -318,7 +306,6 @@ public interface IProgressionNode<T extends IProgressionNode<T>> {
      * <p>
      * Initial nodes are immediately available to all players and serve as
      * entry points into the progression system.
-     * </p>
      *
      * @return true if this node has no prerequisites, false otherwise
      */
@@ -331,7 +318,6 @@ public interface IProgressionNode<T extends IProgressionNode<T>> {
      * <p>
      * Final nodes represent the end of a progression chain and have no
      * nodes that depend on them.
-     * </p>
      *
      * @return true if this node has no dependent nodes, false otherwise
      */
@@ -343,7 +329,6 @@ public interface IProgressionNode<T extends IProgressionNode<T>> {
      * Checks if this node has any prerequisites.
      * <p>
      * This is a convenience method equivalent to {@code !isInitialNode()}.
-     * </p>
      *
      * @return true if prerequisites exist, false otherwise
      */

@@ -19,13 +19,11 @@ import java.util.UUID;
  * This entity tracks when a player started a quest, whether it's completed, and contains
  * all task progress for the quest. It serves as the root entity for tracking a player's
  * active quest state.
- * </p>
  *
  * <p>
  * Each player can have only one active progress record per quest, enforced by a unique constraint.
  * Once a quest is completed, the progress record is typically archived to {@link QuestCompletionHistory}
  * and removed from active progress.
- * </p>
  *
  * @author JExcellence
  * @version 2.0.0
@@ -86,7 +84,6 @@ public class PlayerQuestProgress extends BaseEntity {
      * <p>
      * These are loaded lazily as they may be numerous and are not always needed.
      * Use JOIN FETCH when you need to load all task progress at once.
-     * </p>
      */
     @OneToMany(mappedBy = "questProgress", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @OrderBy("id ASC")
@@ -227,7 +224,6 @@ public class PlayerQuestProgress extends BaseEntity {
      * <p>
      * This method manages the bidirectional relationship between PlayerQuestProgress
      * and PlayerTaskProgress.
-     * </p>
      *
      * @param progress the task progress to add
      */
@@ -245,7 +241,6 @@ public class PlayerQuestProgress extends BaseEntity {
      * <p>
      * This method manages the bidirectional relationship between PlayerQuestProgress
      * and PlayerTaskProgress.
-     * </p>
      *
      * @param progress the task progress to remove
      */
@@ -297,7 +292,6 @@ public class PlayerQuestProgress extends BaseEntity {
      * Gets the overall progress percentage for this quest.
      * <p>
      * This is calculated as (completed tasks / total tasks) * 100.
-     * </p>
      *
      * @return the progress percentage (0-100)
      */
@@ -330,7 +324,6 @@ public class PlayerQuestProgress extends BaseEntity {
      * Marks the quest as completed.
      * <p>
      * This sets the completed flag to true and records the completion time.
-     * </p>
      */
     public void markCompleted() {
         this.completed = true;

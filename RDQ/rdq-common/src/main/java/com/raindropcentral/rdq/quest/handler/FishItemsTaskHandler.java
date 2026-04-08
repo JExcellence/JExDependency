@@ -23,11 +23,9 @@ import java.util.Map;
  *   <li>Item type caught (e.g., COD, SALMON, TREASURE)</li>
  *   <li>World where the fishing occurred</li>
  * </ul>
- * </p>
  * <p>
  * Only successful catches are counted. Failed fishing attempts or other
  * fishing states are ignored.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0
@@ -65,7 +63,6 @@ public class FishItemsTaskHandler extends BaseTaskHandler {
      *   <li>An item was actually caught</li>
      * </ul>
      * If all conditions are met, it updates progress for matching FISH_ITEMS tasks.
-     * </p>
      *
      * @param event the player fish event
      */

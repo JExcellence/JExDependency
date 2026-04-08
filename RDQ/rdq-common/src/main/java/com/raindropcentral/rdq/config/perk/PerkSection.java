@@ -14,8 +14,8 @@
 package com.raindropcentral.rdq.config.perk;
 
 import com.raindropcentral.rdq.config.requirement.BaseRequirementSection;
-import com.raindropcentral.rplatform.config.icon.IconSection;
 import com.raindropcentral.rdq.config.utility.RewardSection;
+import com.raindropcentral.rplatform.config.icon.IconSection;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import de.jexcellence.configmapper.sections.AConfigSection;
 import de.jexcellence.configmapper.sections.CSAlways;

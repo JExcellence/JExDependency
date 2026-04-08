@@ -13,9 +13,9 @@
 
 package com.raindropcentral.rdq.database.entity.quest;
 
-import com.raindropcentral.rplatform.config.icon.IconSection;
 import com.raindropcentral.rdq.database.converter.IconSectionConverter;
 import com.raindropcentral.rdq.model.quest.QuestDifficulty;
+import com.raindropcentral.rplatform.config.icon.IconSection;
 import com.raindropcentral.rplatform.progression.IProgressionNode;
 import de.jexcellence.hibernate.entity.BaseEntity;
 import jakarta.persistence.*;
@@ -34,7 +34,6 @@ import java.util.Objects;
  * <p>
  * A quest is a collection of tasks that players must complete to earn rewards.
  * Quests can be repeatable, have cooldowns, time limits, and difficulty levels.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0
@@ -256,10 +255,20 @@ public class Quest extends BaseEntity implements IProgressionNode<Quest> {
         task.setQuest(null);
     }
     
+    /**
+     * Adds a reward granted when this quest is completed.
+     *
+     * @param reward the reward to add
+     */
     public void addReward(@NotNull final QuestReward reward) {
         rewards.add(reward);
     }
 
+    /**
+     * Adds a prerequisite requirement to this quest.
+     *
+     * @param requirement the requirement to add
+     */
     public void addRequirement(@NotNull final QuestRequirement requirement) {
         requirements.add(requirement);
     }

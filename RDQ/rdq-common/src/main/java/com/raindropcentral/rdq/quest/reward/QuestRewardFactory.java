@@ -5,8 +5,12 @@ import com.raindropcentral.rdq.database.entity.reward.BaseReward;
 import com.raindropcentral.rdq.database.repository.RRewardRepository;
 import com.raindropcentral.rplatform.config.icon.IconSection;
 import com.raindropcentral.rplatform.reward.AbstractReward;
-import com.raindropcentral.rplatform.reward.impl.*;
+import com.raindropcentral.rplatform.reward.impl.CommandReward;
+import com.raindropcentral.rplatform.reward.impl.CurrencyReward;
+import com.raindropcentral.rplatform.reward.impl.ExperienceReward;
 import com.raindropcentral.rplatform.reward.impl.ExperienceReward.ExperienceType;
+import com.raindropcentral.rplatform.reward.impl.ItemReward;
+import com.raindropcentral.rplatform.reward.impl.TitleReward;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
@@ -27,7 +31,6 @@ import java.util.stream.Collectors;
  * This factory converts reward sections from YAML quest definitions into
  * concrete BaseReward entities that can be persisted to the database and
  * distributed to players.
- * </p>
  *
  * @author RaindropCentral
  * @version 2.0.0
@@ -54,7 +57,6 @@ public class QuestRewardFactory {
      * <p>
      * Note: IconSection is optional. If not present in rewardData, a default icon
      * will be generated based on the reward type.
-     * </p>
      *
      * @param rewardKey  the reward key from YAML
      * @param rewardData the reward configuration map
@@ -223,7 +225,6 @@ public class QuestRewardFactory {
      * This is a temporary solution that creates a simple IconSection without using
      * the config mapper system. The icon will have basic properties but won't support
      * advanced features like expressions or dynamic values.
-     * </p>
      *
      * @param type the reward type
      * @param rewardData the reward configuration data

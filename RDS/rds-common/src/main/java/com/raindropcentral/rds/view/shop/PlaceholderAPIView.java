@@ -13,8 +13,6 @@
 
 package com.raindropcentral.rds.view.shop;
 
-import java.util.Map;
-
 import com.raindropcentral.rds.RDS;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import com.raindropcentral.rplatform.view.BaseView;
@@ -27,6 +25,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Map;
 
 /**
  * Administrative PlaceholderAPI integration view for RDS.

@@ -13,8 +13,21 @@
 
 package com.raindropcentral.rplatform.view.anvil;
 
-import me.devnatan.inventoryframework.*;
-import me.devnatan.inventoryframework.context.*;
+import me.devnatan.inventoryframework.BukkitViewContainer;
+import me.devnatan.inventoryframework.IFViewFrame;
+import me.devnatan.inventoryframework.PlatformView;
+import me.devnatan.inventoryframework.ViewConfig;
+import me.devnatan.inventoryframework.ViewContainer;
+import me.devnatan.inventoryframework.ViewFrame;
+import me.devnatan.inventoryframework.ViewType;
+import me.devnatan.inventoryframework.context.CloseContext;
+import me.devnatan.inventoryframework.context.IFCloseContext;
+import me.devnatan.inventoryframework.context.IFContext;
+import me.devnatan.inventoryframework.context.IFOpenContext;
+import me.devnatan.inventoryframework.context.IFRenderContext;
+import me.devnatan.inventoryframework.context.IFSlotClickContext;
+import me.devnatan.inventoryframework.context.OpenContext;
+import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.feature.Feature;
 import me.devnatan.inventoryframework.pipeline.PipelineInterceptor;
 import me.devnatan.inventoryframework.pipeline.StandardPipelinePhases;

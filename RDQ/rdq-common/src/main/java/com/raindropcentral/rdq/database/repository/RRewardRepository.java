@@ -13,7 +13,6 @@ import java.util.function.Function;
  * <p>
  * Extends {@link CachedRepository} to provide caching and asynchronous database operations
  * for reward entities.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0

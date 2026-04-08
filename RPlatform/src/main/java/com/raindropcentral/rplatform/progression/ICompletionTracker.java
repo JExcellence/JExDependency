@@ -12,11 +12,9 @@ import java.util.concurrent.CompletableFuture;
  * Implementations handle persistence and caching of completion data for players,
  * providing async operations to check completion status, track active nodes,
  * and manage completion state.
- * </p>
  *
  * <p>
  * This interface is designed to work with the progression system to provide:
- * </p>
  * <ul>
  *     <li>Async completion status checks</li>
  *     <li>Active node tracking (in-progress nodes)</li>
@@ -236,7 +234,6 @@ import java.util.concurrent.CompletableFuture;
  * Implementations must be thread-safe as they will be accessed concurrently
  * by multiple players. Use thread-safe collections (ConcurrentHashMap, etc.)
  * and ensure proper synchronization when modifying shared state.
- * </p>
  *
  * @param <T> The type of progression node being tracked
  * @author RaindropCentral
@@ -250,11 +247,9 @@ public interface ICompletionTracker<T extends IProgressionNode<T>> {
      * <p>
      * This method should check persistent storage (database) or cache to determine
      * if the player has previously completed this node.
-     * </p>
      *
      * <p>
      * Implementations should:
-     * </p>
      * <ul>
      *     <li>Check cache first for performance</li>
      *     <li>Fall back to database if not cached</li>
@@ -274,11 +269,9 @@ public interface ICompletionTracker<T extends IProgressionNode<T>> {
      * This method determines if the player is currently working on this node.
      * For quests, this means the quest is started but not completed.
      * For ranks, this means the rank is the player's current rank.
-     * </p>
      *
      * <p>
      * Implementations should:
-     * </p>
      * <ul>
      *     <li>Check active/in-progress state from cache or database</li>
      *     <li>Return false if node is not active</li>
@@ -297,11 +290,9 @@ public interface ICompletionTracker<T extends IProgressionNode<T>> {
      * <p>
      * This method returns a list of all nodes the player has completed,
      * which is useful for batch prerequisite checking and UI rendering.
-     * </p>
      *
      * <p>
      * Implementations should:
-     * </p>
      * <ul>
      *     <li>Return all completed nodes from persistent storage</li>
      *     <li>Consider caching the result for performance</li>
@@ -319,11 +310,9 @@ public interface ICompletionTracker<T extends IProgressionNode<T>> {
      * <p>
      * This method persists the completion to storage and should trigger
      * cache invalidation to ensure consistency.
-     * </p>
      *
      * <p>
      * Implementations should:
-     * </p>
      * <ul>
      *     <li>Persist completion to database</li>
      *     <li>Update cache if applicable</li>
@@ -344,11 +333,9 @@ public interface ICompletionTracker<T extends IProgressionNode<T>> {
      * This method should be called when completion data changes to ensure
      * the cache reflects the current state. It's typically called after
      * marking a node as completed or when external changes occur.
-     * </p>
      *
      * <p>
      * Implementations should:
-     * </p>
      * <ul>
      *     <li>Remove player's completion data from cache</li>
      *     <li>Clear any derived caches (progression state, etc.)</li>

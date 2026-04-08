@@ -22,7 +22,6 @@ import java.util.function.Function;
  * Entity graphs allow eager loading of specific collections without causing Hibernate's
  * "cannot simultaneously fetch multiple bags" error.
  * The cache key is the quest {@code identifier} string.
- * </p>
  *
  * @author RaindropCentral
  * @version 3.0.0
@@ -55,7 +54,6 @@ public class QuestRepository extends CachedRepository<Quest, Long, String> {
      * Finds all enabled quests in a specific category.
      * <p>
      * Uses a custom JPQL query with JOIN FETCH to eagerly load tasks collection.
-     * </p>
      *
      * @param categoryId the category database ID
      * @return a future containing the list of quests
@@ -88,7 +86,6 @@ public class QuestRepository extends CachedRepository<Quest, Long, String> {
      * Uses entity graphs to load both tasks and rewards collections without causing
      * MultipleBagFetchException. This is useful for GUI displays that need to show
      * reward information.
-     * </p>
      *
      * @param categoryId the category database ID
      * @return a future containing the list of quests with rewards loaded
@@ -136,7 +133,6 @@ public class QuestRepository extends CachedRepository<Quest, Long, String> {
      * Checks the Caffeine key cache first (O(1)), then falls back to
      * {@code findByAttribute("identifier", identifier)} via the inherited
      * {@link #findByKeyAsync} method.
-     * </p>
      *
      * @param identifier the quest identifier
      * @return a future containing the optional quest
@@ -161,7 +157,6 @@ public class QuestRepository extends CachedRepository<Quest, Long, String> {
      * <p>
      * Uses entity graphs to load collections without causing MultipleBagFetchException.
      * This loads the quest with its tasks and quest-level rewards in separate queries.
-     * </p>
      *
      * @param identifier the quest identifier
      * @return a future containing the optional quest with collections loaded

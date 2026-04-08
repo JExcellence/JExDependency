@@ -17,7 +17,6 @@ import java.util.function.Function;
  * <p>
  * Provides cached access to quest completion history with methods for finding
  * completions by player, quest, and checking cooldown status.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0

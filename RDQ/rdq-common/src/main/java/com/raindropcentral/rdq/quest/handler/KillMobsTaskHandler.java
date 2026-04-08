@@ -24,11 +24,9 @@ import java.util.Map;
  *   <li>Entity type (e.g., ZOMBIE, SKELETON, COW)</li>
  *   <li>World where the kill occurred</li>
  * </ul>
- * </p>
  * <p>
  * Only kills of monsters and animals are counted. Player kills, armor stand
  * destruction, and other entity deaths are ignored.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0
@@ -66,7 +64,6 @@ public class KillMobsTaskHandler extends BaseTaskHandler {
      *   <li>The entity is a mob (monster or animal)</li>
      * </ul>
      * If all conditions are met, it updates progress for matching KILL_MOBS tasks.
-     * </p>
      *
      * @param event the entity death event
      */

@@ -13,8 +13,6 @@
 
 package com.raindropcentral.rdr.view;
 
-import java.util.Map;
-
 import com.raindropcentral.rdr.RDR;
 import com.raindropcentral.rdr.configs.ConfigSection;
 import com.raindropcentral.rdr.database.entity.RDRPlayer;
@@ -29,6 +27,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Map;
 
 /**
  * Root storage menu for RDR players.

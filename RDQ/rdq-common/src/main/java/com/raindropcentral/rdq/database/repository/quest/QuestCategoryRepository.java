@@ -17,7 +17,6 @@ import java.util.function.Function;
  * <p>
  * Uses {@link CachedRepository} built-in methods wherever possible.
  * The cache key is the category {@code identifier} string.
- * </p>
  *
  * @author RaindropCentral
  * @version 2.0.0

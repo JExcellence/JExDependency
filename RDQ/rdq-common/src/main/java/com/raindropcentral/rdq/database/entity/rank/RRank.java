@@ -1,7 +1,7 @@
 package com.raindropcentral.rdq.database.entity.rank;
 
-import com.raindropcentral.rplatform.config.icon.IconSection;
 import com.raindropcentral.rdq.database.converter.IconSectionConverter;
+import com.raindropcentral.rplatform.config.icon.IconSection;
 import com.raindropcentral.rplatform.progression.IProgressionNode;
 import de.jexcellence.hibernate.entity.BaseEntity;
 import jakarta.persistence.*;
@@ -22,11 +22,9 @@ import java.util.stream.Collectors;
  * Each rank has a unique identifier, display keys for localization, a LuckPerms group assignment,
  * tier and weight for ordering, and icon representation. Ranks can be linked to previous and next ranks,
  * forming a progression path within a rank tree.
- * </p>
  *
  * <p>
  * This entity is mapped to the {@code r_rank} table in the database.
- * </p>
  *
  * @author JExcellence
  * @version 2.0.0

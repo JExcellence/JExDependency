@@ -13,10 +13,10 @@
 
 package com.raindropcentral.rds.service;
 
-import java.util.Objects;
-
 import com.raindropcentral.rds.configs.ConfigSection;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 /**
  * Defines edition-specific shop behaviour for the RDS runtime.

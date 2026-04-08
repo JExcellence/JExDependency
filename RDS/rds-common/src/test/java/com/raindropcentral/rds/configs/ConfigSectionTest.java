@@ -13,6 +13,10 @@
 
 package com.raindropcentral.rds.configs;
 
+import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -23,10 +27,6 @@ import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 import java.util.stream.IntStream;
-
-import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;

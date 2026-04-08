@@ -22,11 +22,9 @@ import java.util.Map;
  *   <li>Block type (e.g., STONE, DIAMOND_ORE, OAK_LOG)</li>
  *   <li>World where the block was broken</li>
  * </ul>
- * </p>
  * <p>
  * Only blocks broken in survival mode are counted. Creative mode breaks
  * are ignored to prevent exploitation.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0
@@ -59,7 +57,6 @@ public class BreakBlocksTaskHandler extends BaseTaskHandler {
      * <p>
      * Fires progress for both {@code MINE_BLOCKS} and {@code BREAK_BLOCKS} task types
      * so that quest YAMLs using either convention are supported.
-     * </p>
      *
      * @param event the block break event
      */

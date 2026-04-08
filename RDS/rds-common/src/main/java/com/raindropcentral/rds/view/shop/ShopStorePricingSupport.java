@@ -13,17 +13,6 @@
 
 package com.raindropcentral.rds.view.shop;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
-import me.devnatan.inventoryframework.context.Context;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import com.raindropcentral.rds.RDS;
 import com.raindropcentral.rds.configs.ConfigSection;
 import com.raindropcentral.rds.configs.StoreRequirementSection;
@@ -32,16 +21,17 @@ import com.raindropcentral.rplatform.economy.JExEconomyBridge;
 import com.raindropcentral.rplatform.requirement.AbstractRequirement;
 import com.raindropcentral.rplatform.requirement.RequirementService;
 import com.raindropcentral.rplatform.requirement.config.RequirementFactory;
-import com.raindropcentral.rplatform.requirement.impl.ChoiceRequirement;
-import com.raindropcentral.rplatform.requirement.impl.CompositeRequirement;
-import com.raindropcentral.rplatform.requirement.impl.CurrencyRequirement;
-import com.raindropcentral.rplatform.requirement.impl.ExperienceLevelRequirement;
-import com.raindropcentral.rplatform.requirement.impl.ItemRequirement;
-import com.raindropcentral.rplatform.requirement.impl.LocationRequirement;
-import com.raindropcentral.rplatform.requirement.impl.PermissionRequirement;
-import com.raindropcentral.rplatform.requirement.impl.PlaytimeRequirement;
-import com.raindropcentral.rplatform.requirement.impl.PluginRequirement;
-import com.raindropcentral.rplatform.requirement.impl.TimedRequirement;
+import com.raindropcentral.rplatform.requirement.impl.*;
+import me.devnatan.inventoryframework.context.Context;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides support utilities for shop store pricing.

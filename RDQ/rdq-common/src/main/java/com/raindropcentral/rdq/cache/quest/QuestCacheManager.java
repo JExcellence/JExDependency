@@ -6,7 +6,13 @@ import com.raindropcentral.rdq.database.repository.quest.QuestUserRepository;
 import com.raindropcentral.rplatform.scheduler.CancellableTaskHandle;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
@@ -18,7 +24,6 @@ import java.util.logging.Logger;
  * This cache loads all active quests for a player on join, stores them in memory,
  * and saves them back to the database on leave. This provides instant access to
  * quest data without database queries.
- * </p>
  * <p>Design philosophy:</p>
  * <ul>
  *   <li>Load all active quests on player join</li>
@@ -40,22 +45,22 @@ public class QuestCacheManager {
     private final QuestUserRepository repository;
     
     /**
-     * Cache of player quest data: UUID -> List of QuestUser
+     * Cache of player quest data: UUID -> List of QuestUser.
      */
     private final ConcurrentHashMap<UUID, List<QuestUser>> cache;
     
     /**
-     * Set of players with unsaved changes
+     * Set of players with unsaved changes.
      */
     private final Set<UUID> dirtyPlayers;
     
     /**
-     * Auto-save task
+     * Auto-save task.
      */
     private CancellableTaskHandle autoSaveTask;
     
     /**
-     * Whether to log performance metrics
+     * Whether to log performance metrics.
      */
     private final boolean logPerformance;
     
@@ -116,7 +121,6 @@ public class QuestCacheManager {
      * Thread Safety: The loaded list is wrapped in a synchronized list
      * to prevent ConcurrentModificationException when quests are modified
      * while auto-save is running.
-     * </p>
      *
      * @param playerId the player's UUID
      * @return a future completing when loading is done
@@ -148,7 +152,6 @@ public class QuestCacheManager {
      * Loads all active quests for a player synchronously (blocking).
      * <p>
      * Use loadPlayerAsync() for better performance.
-     * </p>
      *
      * @param playerId the player's UUID
      */
@@ -166,7 +169,6 @@ public class QuestCacheManager {
      * Returns a copy of the list to prevent external modification.
      * To modify quest data, use the returned objects directly - they are
      * references to the cached entities, not copies.
-     * </p>
      *
      * @param playerId the player's UUID
      * @return the list of active quests, or empty list if not loaded
@@ -183,7 +185,6 @@ public class QuestCacheManager {
      * WARNING: This returns the actual cached list. Modifications to the list
      * structure (add/remove) must be synchronized. Use this when you need to
      * modify quest data in place.
-     * </p>
      *
      * @param playerId the player's UUID
      * @return the cached list of active quests, or empty list if not loaded
@@ -349,7 +350,6 @@ public class QuestCacheManager {
      * Auto-saves all players with unsaved changes.
      * <p>
      * This is called periodically for crash protection.
-     * </p>
      *
      * @return the number of players saved
      */

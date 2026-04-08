@@ -22,11 +22,9 @@ import java.util.Map;
  *   <li>Animal type (e.g., COW, SHEEP, CHICKEN)</li>
  *   <li>World where the breeding occurred</li>
  * </ul>
- * </p>
  * <p>
  * Only breeding initiated by players is counted. Natural breeding or breeding
  * by other means is ignored.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0
@@ -64,7 +62,6 @@ public class BreedAnimalsTaskHandler extends BaseTaskHandler {
      *   <li>The entity is an animal</li>
      * </ul>
      * If all conditions are met, it updates progress for matching BREED_ANIMALS tasks.
-     * </p>
      *
      * @param event the entity breed event
      */

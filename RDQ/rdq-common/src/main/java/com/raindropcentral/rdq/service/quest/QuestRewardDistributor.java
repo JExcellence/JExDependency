@@ -24,7 +24,6 @@ import java.util.logging.Logger;
  * This service handles all types of rewards by delegating to the underlying
  * {@link com.raindropcentral.rdq.database.entity.reward.BaseReward} system.
  * It provides enhanced error handling, retry logic, and detailed result tracking.
- * </p>
  * 
  * <h2>Reward Distribution Process:</h2>
  * <ol>

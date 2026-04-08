@@ -35,11 +35,9 @@ import java.util.concurrent.CompletableFuture;
  *     <li>Batch progress processing</li>
  *     <li>Task handler integration</li>
  * </ul>
- * </p>
  * <p>
  * Progress updates are batched for performance and processed periodically.
  * All methods return {@link CompletableFuture} for non-blocking async operations.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0
@@ -51,7 +49,6 @@ public interface QuestProgressTracker {
      * <p>
      * This method batches updates and processes them periodically for performance.
      * If the task reaches its required progress, it will be automatically completed.
-     * </p>
      *
      * @param playerId        the player's unique identifier
      * @param questIdentifier the quest identifier
@@ -71,7 +68,6 @@ public interface QuestProgressTracker {
      * Marks a specific task as completed.
      * <p>
      * This distributes task rewards and checks if the quest should be completed.
-     * </p>
      *
      * @param playerId        the player's unique identifier
      * @param questIdentifier the quest identifier
@@ -90,7 +86,6 @@ public interface QuestProgressTracker {
      * <p>
      * This distributes quest rewards, records completion history,
      * and handles cooldown/repeat logic.
-     * </p>
      *
      * @param playerId        the player's unique identifier
      * @param questIdentifier the quest identifier
@@ -137,7 +132,6 @@ public interface QuestProgressTracker {
      * <p>
      * This should be called before server shutdown or when immediate
      * consistency is required.
-     * </p>
      *
      * @return a future completing when all updates are processed
      */
@@ -148,7 +142,6 @@ public interface QuestProgressTracker {
      * Starts the batch processing scheduler.
      * <p>
      * This should be called during plugin initialization.
-     * </p>
      */
     void start();
     
@@ -156,7 +149,6 @@ public interface QuestProgressTracker {
      * Stops the batch processing scheduler and flushes pending updates.
      * <p>
      * This should be called during plugin shutdown.
-     * </p>
      *
      * @return a future completing when shutdown is complete
      */
@@ -176,7 +168,6 @@ public interface QuestProgressTracker {
      *   <li>Fire TaskCompleteEvent when tasks complete</li>
      *   <li>Fire QuestCompleteEvent when quests complete</li>
      * </ul>
-     * </p>
      *
      * @param playerId the player's unique identifier
      * @param taskType the type of task (e.g., "KILL_MOBS", "COLLECT_ITEMS")
@@ -197,7 +188,6 @@ public interface QuestProgressTracker {
      * <p>
      * This method is used by task handlers to efficiently find quests that
      * might be affected by a game event.
-     * </p>
      *
      * @param playerId the player's unique identifier
      * @param taskType the type of task to filter by
@@ -218,7 +208,6 @@ public interface QuestProgressTracker {
      *   <li>The task type matches</li>
      *   <li>All required criteria fields are present and match</li>
      * </ul>
-     * </p>
      * <p>
      * Common criteria keys include:
      * <ul>
@@ -227,7 +216,6 @@ public interface QuestProgressTracker {
      *   <li>"block_type" - For block breaking/placing (e.g., "STONE")</li>
      *   <li>"world" - For location-based tasks</li>
      * </ul>
-     * </p>
      *
      * @param task     the quest task to check
      * @param criteria the criteria to match against

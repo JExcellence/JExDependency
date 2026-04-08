@@ -22,11 +22,9 @@ import java.util.Map;
  *   <li>Item material (e.g., DIAMOND, IRON_INGOT, WHEAT)</li>
  *   <li>Item amount picked up</li>
  * </ul>
- * </p>
  * <p>
  * Progress is incremented by the number of items picked up, not just by 1.
  * For example, picking up a stack of 64 wheat will add 64 to the progress.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0
@@ -64,7 +62,6 @@ public class CollectItemsTaskHandler extends BaseTaskHandler {
      * </ul>
      * If all conditions are met, it updates progress for matching COLLECT_ITEMS tasks
      * by the amount of items picked up.
-     * </p>
      *
      * @param event the item pickup event
      */

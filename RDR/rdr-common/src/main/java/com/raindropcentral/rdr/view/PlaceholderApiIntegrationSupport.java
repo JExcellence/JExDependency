@@ -13,12 +13,12 @@
 
 package com.raindropcentral.rdr.view;
 
-import java.util.Objects;
-
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Objects;
 
 /**
  * Utility helpers for PlaceholderAPI support detection and command execution.

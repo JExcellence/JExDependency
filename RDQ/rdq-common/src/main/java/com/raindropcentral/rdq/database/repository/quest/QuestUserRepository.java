@@ -18,13 +18,11 @@ import java.util.function.Function;
  * <p>
  * Uses {@link CachedRepository} built-in methods wherever possible.
  * The cache key is the {@code QuestUser} database ID ({@code Long}).
- * </p>
  * <p>
  * Task progress ({@code QuestUser.taskProgress}) is a lazy {@code List} — Hibernate
  * cannot JOIN FETCH two bags simultaneously. We therefore load {@code taskProgress}
  * in a single JOIN FETCH query and rely on the caller (or {@link QuestRepository})
  * to supply the already-cached {@code Quest.tasks} list separately.
- * </p>
  *
  * @author RaindropCentral
  * @version 2.0.0
@@ -59,7 +57,6 @@ public class QuestUserRepository extends CachedRepository<QuestUser, Long, Long>
      * Uses a single JOIN FETCH for {@code taskProgress} only — {@code Quest.tasks} is
      * intentionally omitted here to avoid {@code MultipleBagFetchException}. Callers that
      * need task definitions should enrich results via {@link QuestRepository#findByIdentifier}.
-     * </p>
      *
      * @param playerId the player's UUID
      * @return a future containing the list of active quest users

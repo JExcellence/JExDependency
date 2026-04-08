@@ -35,7 +35,6 @@ import java.util.stream.Collectors;
  * Displays all available quest categories for players to browse and select.
  * Quest counts per category are fetched asynchronously alongside the categories
  * so the lore always reflects the real database count.
- * </p>
  *
  * @author RaindropCentral
  * @version 2.1.0

@@ -12,7 +12,6 @@ import java.util.List;
  * <p>
  * This record encapsulates the outcome of reward distribution, including
  * which rewards succeeded and which failed.
- * </p>
  *
  * @param allSuccessful true if all rewards were distributed successfully
  * @param rewards       the list of rewards that were attempted

@@ -13,9 +13,8 @@
 
 package com.raindropcentral.rds.service.shop;
 
-import org.junit.jupiter.api.Test;
-
 import com.raindropcentral.rds.configs.DynamicPricingSection;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

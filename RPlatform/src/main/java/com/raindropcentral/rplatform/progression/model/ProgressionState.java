@@ -10,7 +10,6 @@ import java.util.List;
  * <p>
  * This immutable record encapsulates all information about a player's relationship
  * with a progression node, including:
- * </p>
  * <ul>
  *     <li>The node itself</li>
  *     <li>The current status (LOCKED, AVAILABLE, ACTIVE, COMPLETED)</li>
@@ -73,7 +72,6 @@ public record ProgressionState<T extends IProgressionNode<T>>(
      * Checks if the node is unlocked (available or better).
      * <p>
      * A node is unlocked if its status is AVAILABLE, ACTIVE, or COMPLETED.
-     * </p>
      *
      * @return true if the node is unlocked
      */
@@ -85,7 +83,6 @@ public record ProgressionState<T extends IProgressionNode<T>>(
      * Checks if the node is locked (prerequisites not met).
      * <p>
      * A node is locked if its status is LOCKED.
-     * </p>
      *
      * @return true if the node is locked
      */
@@ -97,7 +94,6 @@ public record ProgressionState<T extends IProgressionNode<T>>(
      * Checks if the node can be started.
      * <p>
      * A node can be started if its status is AVAILABLE.
-     * </p>
      *
      * @return true if the node can be started
      */
@@ -109,7 +105,6 @@ public record ProgressionState<T extends IProgressionNode<T>>(
      * Checks if the node is in progress.
      * <p>
      * A node is in progress if its status is ACTIVE.
-     * </p>
      *
      * @return true if the node is active
      */
@@ -121,7 +116,6 @@ public record ProgressionState<T extends IProgressionNode<T>>(
      * Checks if the node is completed.
      * <p>
      * A node is completed if its status is COMPLETED.
-     * </p>
      *
      * @return true if the node is completed
      */
@@ -133,7 +127,6 @@ public record ProgressionState<T extends IProgressionNode<T>>(
      * Gets the node identifier.
      * <p>
      * Convenience method equivalent to {@code node().getIdentifier()}.
-     * </p>
      *
      * @return the node identifier
      */
@@ -146,7 +139,6 @@ public record ProgressionState<T extends IProgressionNode<T>>(
      * <p>
      * This is typically true when the status is LOCKED, but may also be
      * used for informational purposes in other states.
-     * </p>
      *
      * @return true if there are missing prerequisites
      */
@@ -158,7 +150,6 @@ public record ProgressionState<T extends IProgressionNode<T>>(
      * Gets the count of missing prerequisites.
      * <p>
      * Convenience method equivalent to {@code missingPrerequisites().size()}.
-     * </p>
      *
      * @return the number of missing prerequisites
      */

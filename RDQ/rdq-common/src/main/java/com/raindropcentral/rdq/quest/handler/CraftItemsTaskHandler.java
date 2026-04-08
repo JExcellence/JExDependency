@@ -8,7 +8,6 @@ import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.inventory.CraftItemEvent;
-import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
@@ -23,12 +22,10 @@ import java.util.Map;
  *   <li>Item material crafted (e.g., DIAMOND_SWORD, BREAD, IRON_PICKAXE)</li>
  *   <li>Amount crafted (handles shift-click crafting)</li>
  * </ul>
- * </p>
  * <p>
  * This handler correctly handles shift-click crafting, which can craft multiple
  * items at once. The amount is calculated based on the available materials and
  * inventory space.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0
@@ -66,7 +63,6 @@ public class CraftItemsTaskHandler extends BaseTaskHandler {
      * </ul>
      * If all conditions are met, it updates progress for matching CRAFT_ITEMS tasks
      * by the amount of items crafted (including shift-click crafting).
-     * </p>
      *
      * @param event the craft item event
      */
@@ -116,11 +112,9 @@ public class CraftItemsTaskHandler extends BaseTaskHandler {
      *   <li>Available inventory space</li>
      *   <li>Stack size of the crafted item</li>
      * </ul>
-     * </p>
      * <p>
      * This is a simplified calculation that may not be 100% accurate in all cases,
      * but should work for most common scenarios.
-     * </p>
      *
      * @param event the craft item event
      * @return the estimated amount of items that will be crafted

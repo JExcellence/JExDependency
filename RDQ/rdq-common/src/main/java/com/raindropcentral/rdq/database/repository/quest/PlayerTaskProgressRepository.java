@@ -20,13 +20,11 @@ import java.util.function.Function;
  * This repository provides access to player task progress records, which track
  * progress on individual quest tasks. Task progress is typically loaded as part
  * of quest progress and is not cached separately.
- * </p>
  *
  * <p>
  * Most operations on task progress should go through the PlayerQuestProgress entity
  * and its bidirectional relationship. This repository provides additional query methods
  * for specific use cases like statistics and bulk operations.
- * </p>
  *
  * @author JExcellence
  * @version 1.0.0
@@ -66,7 +64,6 @@ public class PlayerTaskProgressRepository extends CachedRepository<PlayerTaskPro
      * <p>
      * This method is used when task progress needs to be loaded separately
      * from the quest progress entity.
-     * </p>
      *
      * @param questProgress the quest progress
      * @return CompletableFuture containing the list of task progress records
@@ -92,7 +89,6 @@ public class PlayerTaskProgressRepository extends CachedRepository<PlayerTaskPro
      * Finds a specific task progress record.
      * <p>
      * This method is used to look up progress for a specific task within a quest.
-     * </p>
      *
      * @param questProgress the quest progress
      * @param task          the quest task
@@ -125,7 +121,6 @@ public class PlayerTaskProgressRepository extends CachedRepository<PlayerTaskPro
      * Finds all completed task progress records for a quest progress.
      * <p>
      * This method is used to check which tasks have been completed.
-     * </p>
      *
      * @param questProgress the quest progress
      * @return CompletableFuture containing the list of completed task progress records
@@ -153,7 +148,6 @@ public class PlayerTaskProgressRepository extends CachedRepository<PlayerTaskPro
      * Finds all incomplete task progress records for a quest progress.
      * <p>
      * This method is used to display remaining tasks to complete.
-     * </p>
      *
      * @param questProgress the quest progress
      * @return CompletableFuture containing the list of incomplete task progress records
@@ -182,7 +176,6 @@ public class PlayerTaskProgressRepository extends CachedRepository<PlayerTaskPro
      * <p>
      * This method uses JOIN FETCH to load requirement progress in a single query,
      * avoiding N+1 query problems when displaying task details.
-     * </p>
      *
      * @param questProgress the quest progress
      * @param task          the quest task
@@ -217,7 +210,6 @@ public class PlayerTaskProgressRepository extends CachedRepository<PlayerTaskPro
      * Finds all task progress for a quest progress with requirement progress eagerly loaded.
      * <p>
      * This method is used when displaying full quest details with all task requirements.
-     * </p>
      *
      * @param questProgress the quest progress
      * @return CompletableFuture containing the list of task progress with eagerly loaded requirements
@@ -246,7 +238,6 @@ public class PlayerTaskProgressRepository extends CachedRepository<PlayerTaskPro
      * Counts the number of completed tasks for a quest progress.
      * <p>
      * This method is used for progress calculations and statistics.
-     * </p>
      *
      * @param questProgress the quest progress
      * @return CompletableFuture containing the count of completed tasks
@@ -274,7 +265,6 @@ public class PlayerTaskProgressRepository extends CachedRepository<PlayerTaskPro
      * <p>
      * This method is used for task statistics and to see how many players
      * have completed a specific task.
-     * </p>
      *
      * @param task the quest task
      * @return CompletableFuture containing the list of task progress records
@@ -300,7 +290,6 @@ public class PlayerTaskProgressRepository extends CachedRepository<PlayerTaskPro
      * Counts how many players have completed a specific task.
      * <p>
      * This method is used for task statistics and leaderboards.
-     * </p>
      *
      * @param task the quest task
      * @return CompletableFuture containing the count of completions

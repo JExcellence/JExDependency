@@ -14,8 +14,8 @@
 package com.raindropcentral.rds.service.bank;
 
 import com.raindropcentral.rds.RDS;
-import com.raindropcentral.rds.database.entity.Shop;
 import com.raindropcentral.rds.database.entity.ServerBank;
+import com.raindropcentral.rds.database.entity.Shop;
 import com.raindropcentral.rds.database.repository.RServerBank;
 import com.raindropcentral.rds.database.repository.RShop;
 import org.jetbrains.annotations.NotNull;

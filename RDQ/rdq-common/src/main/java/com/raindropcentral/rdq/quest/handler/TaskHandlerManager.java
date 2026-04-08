@@ -2,8 +2,8 @@ package com.raindropcentral.rdq.quest.handler;
 
 import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.cache.quest.PlayerQuestProgressCache;
-import com.raindropcentral.rdq.config.quest.TaskHandlersSection;
 import com.raindropcentral.rdq.cache.quest.QuestCacheManager;
+import com.raindropcentral.rdq.config.quest.TaskHandlersSection;
 import com.raindropcentral.rdq.service.quest.QuestProgressTracker;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.scheduler.CancellableTaskHandle;
@@ -27,7 +27,6 @@ import java.util.logging.Logger;
  * <p>
  * Task handlers can be enabled or disabled via the quest-system.yml configuration
  * under the {@code task-handlers} section.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0
@@ -37,7 +36,7 @@ public class TaskHandlerManager {
     private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
     
     /**
-     * Performance metrics logging interval in ticks (5 minutes)
+     * Performance metrics logging interval in ticks (5 minutes).
      */
     private static final long METRICS_LOG_INTERVAL_TICKS = 20L * 60L * 5L;
     
@@ -49,7 +48,7 @@ public class TaskHandlerManager {
     private final TaskHandlersSection config;
     
     /**
-     * Task for periodic performance metrics logging
+     * Task for periodic performance metrics logging.
      */
     private CancellableTaskHandle metricsTask;
     
@@ -82,10 +81,8 @@ public class TaskHandlerManager {
      * <p>
      * This method creates instances of all available task handlers and registers
      * them as event listeners if they are enabled in the configuration.
-     * </p>
      * <p>
      * After registration, starts a periodic task to log performance metrics.
-     * </p>
      */
     public void registerHandlers() {
         LOGGER.info("Registering quest task handlers...");
@@ -116,7 +113,6 @@ public class TaskHandlerManager {
      * <p>
      * This method checks if the handler is enabled in the configuration before
      * registering it as an event listener.
-     * </p>
      *
      * @param handler the task handler to register
      */
@@ -141,10 +137,8 @@ public class TaskHandlerManager {
      * <p>
      * This method should be called when the plugin is being disabled to clean up
      * event listeners and prevent memory leaks.
-     * </p>
      * <p>
      * Also stops the performance metrics logging task.
-     * </p>
      */
     public void unregisterHandlers() {
         LOGGER.info("Unregistering quest task handlers...");
@@ -168,7 +162,6 @@ public class TaskHandlerManager {
      * <p>
      * Task handlers can be disabled by setting {@code task-handlers.<TYPE>.enabled}
      * to {@code false} in the quest-system.yml configuration file.
-     * </p>
      *
      * @param taskType the task type identifier
      * @return true if the handler is enabled (default: true)
@@ -209,7 +202,6 @@ public class TaskHandlerManager {
      * This method unregisters all current handlers and re-registers them
      * based on the new configuration. This allows handlers to be enabled
      * or disabled without restarting the server.
-     * </p>
      *
      * @param newConfig the updated task handlers configuration
      */
@@ -230,7 +222,6 @@ public class TaskHandlerManager {
      * <p>
      * Logs performance metrics for all task handlers every 5 minutes.
      * This helps monitor quest system performance and identify bottlenecks.
-     * </p>
      */
     private void startPerformanceMetricsLogging() {
         if (metricsTask != null) {
@@ -268,7 +259,6 @@ public class TaskHandlerManager {
      *   <li>Maximum processing time</li>
      *   <li>Skip rate percentage</li>
      * </ul>
-     * </p>
      */
     private void logAllPerformanceMetrics() {
         if (handlers.isEmpty()) {
@@ -324,7 +314,6 @@ public class TaskHandlerManager {
      * Gets performance metrics for all task handlers.
      * <p>
      * Returns a map of task type to performance metrics.
-     * </p>
      *
      * @return a map of task type to metrics
      */

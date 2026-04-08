@@ -30,7 +30,6 @@ import java.util.List;
  * <p>
  * This event is called on the main thread after a quest is marked as completed
  * and after rewards have been distributed.
- * </p>
  *
  * @author RaindropCentral
  * @version 2.0.0
@@ -98,7 +97,6 @@ public class QuestCompleteEvent extends Event {
      * Gets the reward distribution result.
      * <p>
      * This will be null if the quest had no rewards.
-     * </p>
      *
      * @return the reward distribution result, or null if no rewards
      */

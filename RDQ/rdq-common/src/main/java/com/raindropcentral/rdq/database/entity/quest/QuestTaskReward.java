@@ -1,10 +1,16 @@
 package com.raindropcentral.rdq.database.entity.quest;
 
-import com.raindropcentral.rplatform.config.icon.IconSection;
 import com.raindropcentral.rdq.database.converter.IconSectionConverter;
 import com.raindropcentral.rdq.database.entity.reward.BaseReward;
+import com.raindropcentral.rplatform.config.icon.IconSection;
 import de.jexcellence.hibernate.entity.BaseEntity;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -18,12 +24,10 @@ import java.util.concurrent.CompletableFuture;
  * <p>
  * This entity encapsulates a single {@link BaseReward} that is granted when completing the associated quest task.
  * It also includes an icon for visual representation, display order, and auto-grant configuration.
- * </p>
  *
  * <p>
  * Multiple instances of this entity can exist for a single task, representing different rewards
  * that are granted when the task is completed.
- * </p>
  *
  * @author JExcellence
  * @version 2.0.0
@@ -110,7 +114,6 @@ public class QuestTaskReward extends BaseEntity {
      * Sets the task for this reward.
      * <p>
      * This method manages the bidirectional relationship between QuestTask and QuestTaskReward.
-     * </p>
      *
      * @param task the task to set
      */

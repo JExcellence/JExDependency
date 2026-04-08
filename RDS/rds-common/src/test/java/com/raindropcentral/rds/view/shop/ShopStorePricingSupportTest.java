@@ -13,14 +13,13 @@
 
 package com.raindropcentral.rds.view.shop;
 
-import java.lang.reflect.Proxy;
-import java.util.List;
-
+import com.raindropcentral.rds.configs.StoreRequirementSection;
+import com.raindropcentral.rplatform.requirement.AbstractRequirement;
 import org.bukkit.entity.Player;
 import org.junit.jupiter.api.Test;
 
-import com.raindropcentral.rds.configs.StoreRequirementSection;
-import com.raindropcentral.rplatform.requirement.AbstractRequirement;
+import java.lang.reflect.Proxy;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

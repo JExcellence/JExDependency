@@ -12,7 +12,10 @@ import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,7 +31,6 @@ import java.util.logging.Logger;
  *   <li>Criteria matching logic</li>
  *   <li>Error handling and logging</li>
  * </ul>
- * </p>
  * <p>
  * Subclasses must implement:
  * <ul>
@@ -36,7 +38,6 @@ import java.util.logging.Logger;
  *   <li>{@link #shouldProcess(Event, Player)} - Whether to process the event</li>
  *   <li>{@link #extractCriteria(Event)} - Extract task criteria from the event</li>
  * </ul>
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0
@@ -49,22 +50,22 @@ public abstract class BaseTaskHandler implements Listener {
     protected final PlayerQuestProgressCache progressCache;
     
     /**
-     * Performance metrics: total events processed
+     * Performance metrics: total events processed.
      */
     private final AtomicLong eventsProcessed = new AtomicLong(0);
     
     /**
-     * Performance metrics: total events skipped (early exit)
+     * Performance metrics: total events skipped (early exit).
      */
     private final AtomicLong eventsSkipped = new AtomicLong(0);
     
     /**
-     * Performance metrics: total processing time in nanoseconds
+     * Performance metrics: total processing time in nanoseconds.
      */
     private final AtomicLong totalProcessingTimeNanos = new AtomicLong(0);
     
     /**
-     * Performance metrics: maximum processing time in nanoseconds
+     * Performance metrics: maximum processing time in nanoseconds.
      */
     private final AtomicLong maxProcessingTimeNanos = new AtomicLong(0);
     
@@ -91,7 +92,6 @@ public abstract class BaseTaskHandler implements Listener {
      * <p>
      * This should match the task type defined in quest configurations
      * (e.g., "KILL_MOBS", "COLLECT_ITEMS", "CRAFT_ITEMS").
-     * </p>
      *
      * @return the task type identifier
      */
@@ -107,7 +107,6 @@ public abstract class BaseTaskHandler implements Listener {
      *   <li>Checking if the item matches criteria</li>
      *   <li>Checking if the action is valid</li>
      * </ul>
-     * </p>
      *
      * @param event  the Bukkit event
      * @param player the player who triggered the event
@@ -126,7 +125,6 @@ public abstract class BaseTaskHandler implements Listener {
      *   <li>"block_type" - For block breaking/placing</li>
      *   <li>"world" - For location-based tasks</li>
      * </ul>
-     * </p>
      *
      * @param event the Bukkit event
      * @return a map of criteria key-value pairs
@@ -143,12 +141,10 @@ public abstract class BaseTaskHandler implements Listener {
      *   <li>They are in a disabled world</li>
      *   <li>They have no active quests</li>
      * </ul>
-     * </p>
      * <p>
      * This method implements early exit optimization by checking if the player
      * has any active quests before processing the event. This significantly
      * improves performance when many players have no active quests.
-     * </p>
      *
      * @param player the player to check
      * @return true if the player is eligible
@@ -193,7 +189,6 @@ public abstract class BaseTaskHandler implements Listener {
      *   <li>Matches tasks against criteria</li>
      *   <li>Updates progress via the tracker</li>
      * </ol>
-     * </p>
      *
      * @param player   the player
      * @param criteria the task criteria to match
@@ -239,7 +234,6 @@ public abstract class BaseTaskHandler implements Listener {
      * <p>
      * This method delegates to the QuestProgressTracker for consistent
      * criteria matching logic across all task handlers.
-     * </p>
      *
      * @param task     the quest task
      * @param criteria the criteria to match
@@ -257,7 +251,6 @@ public abstract class BaseTaskHandler implements Listener {
      * <p>
      * This is a convenience method that combines eligibility checking,
      * event processing, criteria extraction, and progress updating.
-     * </p>
      * <p>
      * This method includes performance tracking and early exit optimizations:
      * <ul>
@@ -265,7 +258,6 @@ public abstract class BaseTaskHandler implements Listener {
      *   <li>Skips processing if player has no active quests</li>
      *   <li>Uses cached data instead of database queries</li>
      * </ul>
-     * </p>
      *
      * @param event  the Bukkit event
      * @param player the player who triggered the event
@@ -316,7 +308,6 @@ public abstract class BaseTaskHandler implements Listener {
      * Handles an event with a custom amount and updates quest progress if applicable.
      * <p>
      * This method includes performance tracking and early exit optimizations.
-     * </p>
      *
      * @param event  the Bukkit event
      * @param player the player who triggered the event
@@ -378,7 +369,6 @@ public abstract class BaseTaskHandler implements Listener {
      *   <li>max_processing_time_ms - Maximum processing time in milliseconds</li>
      *   <li>total_events - Total events received</li>
      * </ul>
-     * </p>
      *
      * @return a map of performance metrics
      */
@@ -422,7 +412,6 @@ public abstract class BaseTaskHandler implements Listener {
      * <p>
      * This is useful for periodic metric logging without accumulating
      * metrics over the entire server lifetime.
-     * </p>
      */
     public void resetPerformanceMetrics() {
         eventsProcessed.set(0);
@@ -436,7 +425,6 @@ public abstract class BaseTaskHandler implements Listener {
      * <p>
      * This method should be called periodically (e.g., every 5 minutes)
      * to monitor task handler performance.
-     * </p>
      */
     public void logPerformanceMetrics() {
         final Map<String, Object> metrics = getPerformanceMetrics();

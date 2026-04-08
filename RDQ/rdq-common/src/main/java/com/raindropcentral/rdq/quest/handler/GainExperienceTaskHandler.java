@@ -21,10 +21,8 @@ import java.util.Map;
  *   <li>Amount of experience gained</li>
  *   <li>World where the experience was gained</li>
  * </ul>
- * </p>
  * <p>
  * Only positive experience gains are counted. Experience loss is ignored.
- * </p>
  *
  * @author RaindropCentral
  * @version 1.0.0
@@ -61,7 +59,6 @@ public class GainExperienceTaskHandler extends BaseTaskHandler {
      *   <li>The experience change is positive (gain, not loss)</li>
      * </ul>
      * If all conditions are met, it updates progress for matching GAIN_EXPERIENCE tasks.
-     * </p>
      *
      * @param event the player experience change event
      */
