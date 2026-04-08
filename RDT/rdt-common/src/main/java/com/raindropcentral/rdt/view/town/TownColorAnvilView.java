@@ -14,6 +14,7 @@
 package com.raindropcentral.rdt.view.town;
 
 import com.raindropcentral.rdt.utils.TownColorUtil;
+import com.raindropcentral.rplatform.view.AbstractAnvilView;
 import me.devnatan.inventoryframework.context.Context;
 import me.devnatan.inventoryframework.context.OpenContext;
 import org.jetbrains.annotations.NotNull;
@@ -23,62 +24,36 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Second anvil step of the GUI-only town-creation flow.
+ * Nexus-governed anvil input view for updating a town's stored color.
  *
  * @author ItsRainingHP
  * @since 1.0.0
  * @version 1.0.0
  */
-public class CreateTownColorAnvilView extends AbstractTownCreationAnvilView {
-
-    private static final String DEFAULT_TOWN_COLOR_INPUT = "color";
+public final class TownColorAnvilView extends AbstractAnvilView {
 
     /**
-     * Creates the town-color input view.
+     * Creates the town-color anvil view.
      */
-    public CreateTownColorAnvilView() {
-        super();
+    public TownColorAnvilView() {
+        super(TownOverviewView.class);
     }
 
-    /**
-     * Returns the translation namespace for this view.
-     *
-     * @return translation key prefix
-     */
     @Override
     protected @NotNull String getKey() {
-        return "town_create_color_ui";
+        return "town_color_ui";
     }
 
-    /**
-     * Returns the title suffix used by {@link com.raindropcentral.rplatform.view.AbstractAnvilView}.
-     *
-     * @return localized title suffix
-     */
     @Override
     protected @NotNull String getTitleKey() {
         return "title";
     }
 
-    /**
-     * Processes the entered town color.
-     *
-     * @param input player input
-     * @param context current context
-     * @return canonical town color
-     */
     @Override
-    protected Object processInput(final @NotNull String input, final @NotNull Context context) {
+    protected @Nullable Object processInput(final @NotNull String input, final @NotNull Context context) {
         return TownColorUtil.parseTownColor(input);
     }
 
-    /**
-     * Returns whether the entered town color is valid.
-     *
-     * @param input input to validate
-     * @param context current context
-     * @return {@code true} when the color is valid
-     */
     @Override
     protected boolean isValidInput(final @NotNull String input, final @NotNull Context context) {
         try {
@@ -89,27 +64,17 @@ public class CreateTownColorAnvilView extends AbstractTownCreationAnvilView {
         }
     }
 
-    /**
-     * Returns the default input shown in the anvil.
-     *
-     * @param context open context
-     * @return initial input text
-     */
     @Override
     protected String getInitialInputText(final @NotNull OpenContext context) {
-        return DEFAULT_TOWN_COLOR_INPUT;
+        final Object initialData = context.getInitialData();
+        if (initialData instanceof Map<?, ?> rawMap && rawMap.get("current_town_color") instanceof String currentTownColor) {
+            return currentTownColor;
+        }
+        return "#55CDFC";
     }
 
-    /**
-     * Flattens the anvil result into the parent view data map.
-     *
-     * @param result processed result
-     * @param input original input
-     * @param context current context
-     * @return merged parent data
-     */
     @Override
-    protected Map<String, Object> prepareResultData(
+    protected @NotNull Map<String, Object> prepareResultData(
         final @Nullable Object result,
         final @NotNull String input,
         final @NotNull Context context
@@ -123,7 +88,7 @@ public class CreateTownColorAnvilView extends AbstractTownCreationAnvilView {
                 }
             }
         }
-        resultData.put("draftTownColor", result == null ? TownColorUtil.parseTownColor(input) : result);
+        resultData.put("updated_town_color", result == null ? TownColorUtil.parseTownColor(input) : result);
         return resultData;
     }
 }

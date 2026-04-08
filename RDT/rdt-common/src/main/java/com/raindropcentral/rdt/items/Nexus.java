@@ -42,7 +42,6 @@ public final class Nexus {
     private static final String TOWN_UUID_KEY = "rdt_town_uuid";
     private static final String MAYOR_UUID_KEY = "rdt_mayor_uuid";
     private static final String TOWN_NAME_KEY = "rdt_town_name";
-    private static final String TOWN_COLOR_KEY = "rdt_town_color";
 
     private Nexus() {
     }
@@ -54,15 +53,13 @@ public final class Nexus {
      * @param player receiving player
      * @param townUuid pre-generated town UUID
      * @param townName chosen town name
-     * @param townColor chosen canonical town color
      * @return bound nexus item
      */
     public static @NotNull ItemStack getNexusItem(
         final @NotNull RDT plugin,
         final @NotNull Player player,
         final @NotNull UUID townUuid,
-        final @NotNull String townName,
-        final @NotNull String townColor
+        final @NotNull String townName
     ) {
         final ItemStack nexus = new ItemStack(plugin.getDefaultConfig().getChunkTypeIconMaterial(ChunkType.NEXUS));
         final ItemMeta meta = Objects.requireNonNull(nexus.getItemMeta(), "nexus item meta");
@@ -71,10 +68,7 @@ public final class Nexus {
             .build()
             .component());
         meta.lore(new I18n.Builder("nexus_block.lore", player)
-            .withPlaceholders(java.util.Map.of(
-                "town", townName,
-                "town_color", townColor
-            ))
+            .withPlaceholder("town", townName)
             .build()
             .children());
         final PersistentDataContainer data = meta.getPersistentDataContainer();
@@ -82,7 +76,6 @@ public final class Nexus {
         data.set(key(plugin, TOWN_UUID_KEY), PersistentDataType.STRING, townUuid.toString());
         data.set(key(plugin, MAYOR_UUID_KEY), PersistentDataType.STRING, player.getUniqueId().toString());
         data.set(key(plugin, TOWN_NAME_KEY), PersistentDataType.STRING, townName);
-        data.set(key(plugin, TOWN_COLOR_KEY), PersistentDataType.STRING, townColor);
         nexus.setItemMeta(meta);
         return nexus;
     }
@@ -136,17 +129,6 @@ public final class Nexus {
      */
     public static @Nullable String getTownName(final @NotNull RDT plugin, final @Nullable ItemStack item) {
         return readString(plugin, item, TOWN_NAME_KEY);
-    }
-
-    /**
-     * Returns the bound town color stored on the item.
-     *
-     * @param plugin active plugin runtime
-     * @param item item to inspect
-     * @return stored town color, or {@code null} when unavailable
-     */
-    public static @Nullable String getTownColor(final @NotNull RDT plugin, final @Nullable ItemStack item) {
-        return readString(plugin, item, TOWN_COLOR_KEY);
     }
 
     private static @Nullable String readString(

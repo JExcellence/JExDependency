@@ -1,0 +1,111 @@
+# Configurable Outpost chunk progression levels.
+# Add, remove, or reorder numeric level keys as desired.
+# The highest numeric key becomes the Outpost max level.
+levels:
+  1:
+    requirements: {}
+    rewards: {}
+  2:
+    requirements:
+      vault_upgrade:
+        type: "CURRENCY"
+        currency: "vault"
+        amount: 1000.0
+        consumable: true
+        description: "Outpost funding contribution"
+      navigation_tools:
+        type: "ITEM"
+        requiredItems:
+          - type: "COMPASS"
+            amount: 8
+        consumeOnComplete: true
+        exactMatch: false
+        description: "Outpost navigation tools"
+    rewards:
+      vault_bonus:
+        type: "CURRENCY"
+        currencyId: "vault"
+        amount: 150.0
+        description: "Outpost treasury rebate"
+      town_broadcast:
+        type: "COMMAND"
+        command: "rt broadcast {town_uuid} <aqua>{town_name}</aqua> <yellow>upgraded Outpost chunk <white>{chunk_x}, {chunk_z}</white> to level <white>{target_level}</white><yellow>!</yellow>"
+        executeAsPlayer: false
+  3:
+    requirements:
+      vault_upgrade:
+        type: "CURRENCY"
+        currency: "vault"
+        amount: 1750.0
+        consumable: true
+        description: "Outpost funding contribution"
+      travel_supplies:
+        type: "ITEM"
+        requiredItems:
+          - type: "ENDER_PEARL"
+            amount: 16
+        consumeOnComplete: true
+        exactMatch: false
+        description: "Outpost travel supplies"
+    rewards:
+      vault_bonus:
+        type: "CURRENCY"
+        currencyId: "vault"
+        amount: 250.0
+        description: "Outpost treasury rebate"
+      town_broadcast:
+        type: "COMMAND"
+        command: "rt broadcast {town_uuid} <aqua>{town_name}</aqua> <yellow>upgraded Outpost chunk <white>{chunk_x}, {chunk_z}</white> to level <white>{target_level}</white><yellow>!</yellow>"
+        executeAsPlayer: false
+  4:
+    requirements:
+      vault_upgrade:
+        type: "CURRENCY"
+        currency: "vault"
+        amount: 2750.0
+        consumable: true
+        description: "Outpost funding contribution"
+      fortification_materials:
+        type: "ITEM"
+        requiredItems:
+          - type: "OBSIDIAN"
+            amount: 24
+        consumeOnComplete: true
+        exactMatch: false
+        description: "Outpost fortification materials"
+    rewards:
+      vault_bonus:
+        type: "CURRENCY"
+        currencyId: "vault"
+        amount: 400.0
+        description: "Outpost treasury rebate"
+      town_broadcast:
+        type: "COMMAND"
+        command: "rt broadcast {town_uuid} <aqua>{town_name}</aqua> <yellow>upgraded Outpost chunk <white>{chunk_x}, {chunk_z}</white> to level <white>{target_level}</white><yellow>!</yellow>"
+        executeAsPlayer: false
+  5:
+    requirements:
+      vault_upgrade:
+        type: "CURRENCY"
+        currency: "vault"
+        amount: 4000.0
+        consumable: true
+        description: "Outpost funding contribution"
+      relay_materials:
+        type: "ITEM"
+        requiredItems:
+          - type: "ENDER_EYE"
+            amount: 8
+        consumeOnComplete: true
+        exactMatch: false
+        description: "Outpost relay materials"
+    rewards:
+      vault_bonus:
+        type: "CURRENCY"
+        currencyId: "vault"
+        amount: 600.0
+        description: "Outpost treasury rebate"
+      town_broadcast:
+        type: "COMMAND"
+        command: "rt broadcast {town_uuid} <aqua>{town_name}</aqua> <yellow>upgraded Outpost chunk <white>{chunk_x}, {chunk_z}</white> to level <white>{target_level}</white><yellow>!</yellow>"
+        executeAsPlayer: false

@@ -1,0 +1,179 @@
+# Configurable Nexus progression levels.
+# Add, remove, or reorder numeric level keys as desired.
+# Each level key represents the target Nexus level reached after successful level-up.
+levels:
+  1:
+    requirements:
+      town_charter:
+        type: "CURRENCY"
+        currency: "vault"
+        amount: 1000.0
+        consumable: true
+        description: "Town charter funding"
+    rewards:
+      town_broadcast:
+        type: "COMMAND"
+        command: "rt broadcast {town_uuid} <gradient:#22c55e:#84cc16>{town_name}</gradient> <yellow>has been founded and claimed its first Nexus!</yellow>"
+        executeAsPlayer: false
+  2:
+    requirements:
+      vault_upgrade:
+        type: "CURRENCY"
+        currency: "vault"
+        amount: 2500.0
+        consumable: true
+        description: "Vault funding contribution"
+    rewards:
+      vault_bonus:
+        type: "CURRENCY"
+        currencyId: "vault"
+        amount: 500.0
+        description: "Town vault bonus"
+      town_broadcast:
+        type: "COMMAND"
+        command: "rt broadcast {town_uuid} <gradient:#22c55e:#84cc16>{town_name}</gradient> <yellow>advanced its Nexus to level <white>{target_level}</white><yellow>!</yellow>"
+        executeAsPlayer: false
+  3:
+    requirements:
+      vault_upgrade:
+        type: "CURRENCY"
+        currency: "vault"
+        amount: 3000.0
+        consumable: true
+        description: "Vault funding contribution"
+    rewards:
+      vault_bonus:
+        type: "CURRENCY"
+        currencyId: "vault"
+        amount: 600.0
+        description: "Town vault bonus"
+      town_broadcast:
+        type: "COMMAND"
+        command: "rt broadcast {town_uuid} <gradient:#22c55e:#84cc16>{town_name}</gradient> <yellow>advanced its Nexus to level <white>{target_level}</white><yellow>!</yellow>"
+        executeAsPlayer: false
+  4:
+    requirements:
+      vault_upgrade:
+        type: "CURRENCY"
+        currency: "vault"
+        amount: 3600.0
+        consumable: true
+        description: "Vault funding contribution"
+    rewards:
+      vault_bonus:
+        type: "CURRENCY"
+        currencyId: "vault"
+        amount: 720.0
+        description: "Town vault bonus"
+      town_broadcast:
+        type: "COMMAND"
+        command: "rt broadcast {town_uuid} <gradient:#22c55e:#84cc16>{town_name}</gradient> <yellow>advanced its Nexus to level <white>{target_level}</white><yellow>!</yellow>"
+        executeAsPlayer: false
+  5:
+    requirements:
+      vault_upgrade:
+        type: "CURRENCY"
+        currency: "vault"
+        amount: 4320.0
+        consumable: true
+        description: "Vault funding contribution"
+    rewards:
+      vault_bonus:
+        type: "CURRENCY"
+        currencyId: "vault"
+        amount: 864.0
+        description: "Town vault bonus"
+      town_broadcast:
+        type: "COMMAND"
+        command: "rt broadcast {town_uuid} <gradient:#22c55e:#84cc16>{town_name}</gradient> <yellow>advanced its Nexus to level <white>{target_level}</white><yellow>!</yellow>"
+        executeAsPlayer: false
+  6:
+    requirements:
+      vault_upgrade:
+        type: "CURRENCY"
+        currency: "vault"
+        amount: 5184.0
+        consumable: true
+        description: "Vault funding contribution"
+    rewards:
+      vault_bonus:
+        type: "CURRENCY"
+        currencyId: "vault"
+        amount: 1036.8
+        description: "Town vault bonus"
+      town_broadcast:
+        type: "COMMAND"
+        command: "rt broadcast {town_uuid} <gradient:#22c55e:#84cc16>{town_name}</gradient> <yellow>advanced its Nexus to level <white>{target_level}</white><yellow>!</yellow>"
+        executeAsPlayer: false
+  7:
+    requirements:
+      vault_upgrade:
+        type: "CURRENCY"
+        currency: "vault"
+        amount: 6220.8
+        consumable: true
+        description: "Vault funding contribution"
+    rewards:
+      vault_bonus:
+        type: "CURRENCY"
+        currencyId: "vault"
+        amount: 1244.16
+        description: "Town vault bonus"
+      town_broadcast:
+        type: "COMMAND"
+        command: "rt broadcast {town_uuid} <gradient:#22c55e:#84cc16>{town_name}</gradient> <yellow>advanced its Nexus to level <white>{target_level}</white><yellow>!</yellow>"
+        executeAsPlayer: false
+  8:
+    requirements:
+      vault_upgrade:
+        type: "CURRENCY"
+        currency: "vault"
+        amount: 7464.96
+        consumable: true
+        description: "Vault funding contribution"
+    rewards:
+      vault_bonus:
+        type: "CURRENCY"
+        currencyId: "vault"
+        amount: 1492.99
+        description: "Town vault bonus"
+      town_broadcast:
+        type: "COMMAND"
+        command: "rt broadcast {town_uuid} <gradient:#22c55e:#84cc16>{town_name}</gradient> <yellow>advanced its Nexus to level <white>{target_level}</white><yellow>!</yellow>"
+        executeAsPlayer: false
+  9:
+    requirements:
+      vault_upgrade:
+        type: "CURRENCY"
+        currency: "vault"
+        amount: 8957.95
+        consumable: true
+        description: "Vault funding contribution"
+    rewards:
+      vault_bonus:
+        type: "CURRENCY"
+        currencyId: "vault"
+        amount: 1791.59
+        description: "Town vault bonus"
+      town_broadcast:
+        type: "COMMAND"
+        command: "rt broadcast {town_uuid} <gradient:#22c55e:#84cc16>{town_name}</gradient> <yellow>advanced its Nexus to level <white>{target_level}</white><yellow>!</yellow>"
+        executeAsPlayer: false
+  10:
+    requirements:
+      vault_upgrade:
+        type: "CURRENCY"
+        currency: "vault"
+        amount: 10749.54
+        consumable: true
+        description: "Vault funding contribution"
+    rewards:
+      vault_bonus:
+        type: "CURRENCY"
+        currencyId: "vault"
+        amount: 2149.91
+        description: "Town vault bonus"
+      town_broadcast:
+        type: "COMMAND"
+        command: "rt broadcast {town_uuid} <gradient:#22c55e:#84cc16>{town_name}</gradient> <yellow>advanced its Nexus to level <white>{target_level}</white><yellow>!</yellow>"
+        executeAsPlayer: false

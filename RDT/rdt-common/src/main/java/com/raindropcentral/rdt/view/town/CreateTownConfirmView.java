@@ -15,7 +15,6 @@ package com.raindropcentral.rdt.view.town;
 
 import com.raindropcentral.rdt.RDT;
 import com.raindropcentral.rdt.items.Nexus;
-import com.raindropcentral.rdt.view.main.TownHubView;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import com.raindropcentral.rplatform.view.BaseView;
 import de.jexcellence.jextranslate.i18n.I18n;
@@ -42,13 +41,12 @@ public class CreateTownConfirmView extends BaseView {
 
     private final State<RDT> plugin = initialState("plugin");
     private final State<String> draftTownName = initialState("draftTownName");
-    private final State<String> draftTownColor = initialState("draftTownColor");
 
     /**
      * Creates the town-creation confirmation view.
      */
     public CreateTownConfirmView() {
-        super(TownHubView.class);
+        super(TownCreationProgressView.class);
     }
 
     /**
@@ -86,12 +84,12 @@ public class CreateTownConfirmView extends BaseView {
      */
     @Override
     public void onFirstRender(final @NotNull RenderContext render, final @NotNull Player player) {
-        render.layoutSlot('s', this.createSummaryItem(player, this.draftTownName.get(render), this.draftTownColor.get(render)));
+        render.layoutSlot('s', this.createSummaryItem(player, this.draftTownName.get(render)));
         render.layoutSlot('c', this.createConfirmItem(player))
             .onClick(clickContext -> this.handleConfirm(clickContext));
         render.layoutSlot('x', this.createCancelItem(player))
             .onClick(clickContext -> clickContext.openForPlayer(
-                TownHubView.class,
+                TownCreationProgressView.class,
                 Map.of("plugin", this.plugin.get(clickContext))
             ));
     }
@@ -113,7 +111,15 @@ public class CreateTownConfirmView extends BaseView {
                 .includePrefix()
                 .build()
                 .sendMessage();
-            clickContext.openForPlayer(TownHubView.class, Map.of("plugin", rdt));
+            clickContext.openForPlayer(TownCreationProgressView.class, Map.of("plugin", rdt));
+            return;
+        }
+        if (rdt.getTownRuntimeService() == null || !rdt.getTownRuntimeService().canCreateTown(clickContext.getPlayer())) {
+            new I18n.Builder("town_create_confirm_ui.error.requirements_incomplete", clickContext.getPlayer())
+                .includePrefix()
+                .build()
+                .sendMessage();
+            clickContext.openForPlayer(TownCreationProgressView.class, Map.of("plugin", rdt));
             return;
         }
 
@@ -121,8 +127,7 @@ public class CreateTownConfirmView extends BaseView {
             rdt,
             clickContext.getPlayer(),
             UUID.randomUUID(),
-            this.draftTownName.get(clickContext),
-            this.draftTownColor.get(clickContext)
+            this.draftTownName.get(clickContext)
         );
         clickContext.getPlayer().getInventory().addItem(nexusItem)
             .values()
@@ -141,16 +146,12 @@ public class CreateTownConfirmView extends BaseView {
 
     private @NotNull ItemStack createSummaryItem(
         final @NotNull Player player,
-        final @NotNull String townName,
-        final @NotNull String townColor
+        final @NotNull String townName
     ) {
         return UnifiedBuilderFactory.item(Material.BEACON)
             .setName(this.i18n("summary.name", player).build().component())
             .setLore(this.i18n("summary.lore", player)
-                .withPlaceholders(Map.of(
-                    "town_name", townName,
-                    "town_color", townColor
-                ))
+                .withPlaceholder("town_name", townName)
                 .build()
                 .children())
             .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)

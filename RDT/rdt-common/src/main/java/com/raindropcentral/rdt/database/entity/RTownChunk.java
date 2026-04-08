@@ -36,6 +36,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
@@ -79,14 +80,31 @@ public class RTownChunk extends BaseEntity {
     @Column(name = "chunk_block_location")
     private Location chunkBlockLocation;
 
+    @Convert(converter = LocationConverter.class)
+    @Column(name = "fuel_tank_location")
+    private Location fuelTankLocation;
+
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "rdt_chunk_protections", joinColumns = @JoinColumn(name = "chunk_id_fk"))
     @Column(name = "required_role_id", nullable = false, length = 64)
     private Map<String, String> protectionOverrides = new LinkedHashMap<>();
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "rdt_chunk_level_currency_progress", joinColumns = @JoinColumn(name = "chunk_id_fk"))
+    @Column(name = "amount", nullable = false)
+    private Map<String, Double> levelCurrencyProgress = new LinkedHashMap<>();
+
+    @Convert(converter = ItemStackMapConverter.class)
+    @Column(name = "level_item_progress", columnDefinition = "LONGTEXT")
+    private Map<String, ItemStack> levelItemProgress = new LinkedHashMap<>();
+
     @Convert(converter = ItemStackMapConverter.class)
     @Column(name = "seed_box_contents", columnDefinition = "LONGTEXT")
     private Map<String, ItemStack> seedBoxContents = new LinkedHashMap<>();
+
+    @Convert(converter = ItemStackMapConverter.class)
+    @Column(name = "fuel_tank_contents", columnDefinition = "LONGTEXT")
+    private Map<String, ItemStack> fuelTankContents = new LinkedHashMap<>();
 
     /**
      * Creates a persisted town chunk.
@@ -227,10 +245,21 @@ public class RTownChunk extends BaseEntity {
         final ChunkType validatedType = Objects.requireNonNull(chunkType, "chunkType");
         if (this.chunkType != validatedType) {
             this.chunkType = validatedType;
-            this.chunkLevel = 1;
-            this.protectionOverrides.clear();
-            this.seedBoxContents.clear();
+            this.town.recalculateTownLevel();
         }
+    }
+
+    /**
+     * Resets chunk-local state after a chunk type change.
+     */
+    public void resetChunkTypeState() {
+        this.chunkLevel = 1;
+        this.protectionOverrides.clear();
+        this.levelCurrencyProgress.clear();
+        this.levelItemProgress.clear();
+        this.seedBoxContents.clear();
+        this.clearFuelTankState();
+        this.town.recalculateTownLevel();
     }
 
     /**
@@ -249,6 +278,7 @@ public class RTownChunk extends BaseEntity {
      */
     public void setChunkLevel(final int chunkLevel) {
         this.chunkLevel = Math.max(1, chunkLevel);
+        this.town.recalculateTownLevel();
     }
 
     /**
@@ -270,6 +300,33 @@ public class RTownChunk extends BaseEntity {
     }
 
     /**
+     * Returns the placed fuel tank location for this Security chunk.
+     *
+     * @return placed fuel tank location, or {@code null} when no tank is placed
+     */
+    public @Nullable Location getFuelTankLocation() {
+        return this.fuelTankLocation == null ? null : this.fuelTankLocation.clone();
+    }
+
+    /**
+     * Replaces the placed fuel tank location for this Security chunk.
+     *
+     * @param fuelTankLocation replacement fuel tank location
+     */
+    public void setFuelTankLocation(final @Nullable Location fuelTankLocation) {
+        this.fuelTankLocation = fuelTankLocation == null ? null : fuelTankLocation.clone();
+    }
+
+    /**
+     * Returns whether a fuel tank is currently tracked for this chunk.
+     *
+     * @return {@code true} when a fuel tank location is stored
+     */
+    public boolean hasFuelTank() {
+        return this.fuelTankLocation != null;
+    }
+
+    /**
      * Returns a defensive copy of the chunk protection overrides.
      *
      * @return configured protection overrides
@@ -288,7 +345,7 @@ public class RTownChunk extends BaseEntity {
         if (protection == null) {
             return null;
         }
-        return this.protectionOverrides.get(protection.getProtectionKey());
+        return protection.normalizeOverrideRoleId(this.protectionOverrides.get(protection.getProtectionKey()));
     }
 
     /**
@@ -308,7 +365,7 @@ public class RTownChunk extends BaseEntity {
         }
         this.protectionOverrides.put(
             protection.getProtectionKey(),
-            TownProtections.normalizeRoleId(roleId)
+            protection.normalizeConfiguredRoleId(roleId)
         );
     }
 
@@ -340,10 +397,126 @@ public class RTownChunk extends BaseEntity {
         this.seedBoxContents = new LinkedHashMap<>(Objects.requireNonNull(seedBoxContents, "seedBoxContents"));
     }
 
+    /**
+     * Returns a defensive copy of the stored fuel tank contents.
+     *
+     * @return copied stored fuel tank contents
+     */
+    public @NotNull Map<String, ItemStack> getFuelTankContents() {
+        return new LinkedHashMap<>(this.fuelTankContents);
+    }
+
+    /**
+     * Replaces the stored fuel tank contents.
+     *
+     * @param fuelTankContents replacement fuel tank contents
+     */
+    public void setFuelTankContents(final @NotNull Map<String, ItemStack> fuelTankContents) {
+        this.fuelTankContents = new LinkedHashMap<>(Objects.requireNonNull(fuelTankContents, "fuelTankContents"));
+    }
+
+    /**
+     * Clears the placed fuel tank location and its persisted contents.
+     */
+    public void clearFuelTankState() {
+        this.fuelTankLocation = null;
+        this.fuelTankContents.clear();
+    }
+
+    /**
+     * Returns stored level-item progress.
+     *
+     * @return copied stored item progress
+     */
+    public @NotNull Map<String, ItemStack> getLevelItemProgress() {
+        return new LinkedHashMap<>(this.levelItemProgress);
+    }
+
+    /**
+     * Returns stored level-item progress for a key.
+     *
+     * @param progressKey progress key to resolve
+     * @return stored progress item, or {@code null} when absent
+     */
+    public @Nullable ItemStack getLevelItemProgress(final @NotNull String progressKey) {
+        return this.levelItemProgress.get(normalizeProgressKey(progressKey));
+    }
+
+    /**
+     * Replaces stored level-item progress for a key.
+     *
+     * @param progressKey progress key to update
+     * @param itemStack replacement stored item, or {@code null} to clear it
+     */
+    public void setLevelItemProgress(
+        final @NotNull String progressKey,
+        final @Nullable ItemStack itemStack
+    ) {
+        final String normalizedProgressKey = normalizeProgressKey(progressKey);
+        if (itemStack == null || itemStack.isEmpty()) {
+            this.levelItemProgress.remove(normalizedProgressKey);
+            return;
+        }
+        this.levelItemProgress.put(normalizedProgressKey, itemStack.clone());
+    }
+
+    /**
+     * Returns stored level-currency progress for a key.
+     *
+     * @param progressKey progress key to resolve
+     * @return stored currency amount
+     */
+    public double getLevelCurrencyProgress(final @NotNull String progressKey) {
+        return this.levelCurrencyProgress.getOrDefault(normalizeProgressKey(progressKey), 0.0D);
+    }
+
+    /**
+     * Returns all stored level-currency progress.
+     *
+     * @return copied stored currency progress
+     */
+    public @NotNull Map<String, Double> getLevelCurrencyProgress() {
+        return new LinkedHashMap<>(this.levelCurrencyProgress);
+    }
+
+    /**
+     * Replaces stored level-currency progress for a key.
+     *
+     * @param progressKey progress key to update
+     * @param amount replacement amount
+     */
+    public void setLevelCurrencyProgress(final @NotNull String progressKey, final double amount) {
+        final String normalizedProgressKey = normalizeProgressKey(progressKey);
+        if (amount <= 0.0D) {
+            this.levelCurrencyProgress.remove(normalizedProgressKey);
+            return;
+        }
+        this.levelCurrencyProgress.put(normalizedProgressKey, amount);
+    }
+
+    /**
+     * Clears stored level progress entries using a stable key prefix.
+     *
+     * @param progressKeyPrefix shared prefix for one level target
+     */
+    public void clearLevelRequirementProgress(final @NotNull String progressKeyPrefix) {
+        final String normalizedPrefix = normalizeProgressKey(progressKeyPrefix);
+        this.levelItemProgress.keySet().removeIf(key -> key.startsWith(normalizedPrefix));
+        this.levelCurrencyProgress.keySet().removeIf(key -> key.startsWith(normalizedPrefix));
+    }
+
     private static @NotNull String normalizeWorldName(final @NotNull String worldName) {
         final String normalized = Objects.requireNonNull(worldName, "worldName").trim();
         if (normalized.isEmpty()) {
             throw new IllegalArgumentException("worldName cannot be blank");
+        }
+        return normalized;
+    }
+
+    private static @NotNull String normalizeProgressKey(final @NotNull String progressKey) {
+        final String normalized = Objects.requireNonNull(progressKey, "progressKey").trim().toLowerCase(Locale.ROOT);
+        if (normalized.isEmpty()) {
+            throw new IllegalArgumentException("progressKey cannot be blank");
         }
         return normalized;
     }

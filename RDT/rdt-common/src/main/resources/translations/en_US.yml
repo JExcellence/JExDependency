@@ -17,7 +17,6 @@ nexus_block:
   lore:
     - "<gray>Place this block to found your town.</gray>"
     - "<gray>Town:</gray> <white>{town}</white>"
-    - "<gray>Color:</gray> <white>{town_color}</white>"
 
 chunk_block:
   name: "<gradient:#f59e0b:#fbbf24>[Chunk Block]</gradient> <white>{chunk_x}, {chunk_z}</white>"
@@ -25,6 +24,25 @@ chunk_block:
     - "<gray>Place this in the assigned chunk to claim it.</gray>"
     - "<gray>World:</gray> <white>{world}</white>"
     - "<gray>Chunk:</gray> <white>{chunk_x}, {chunk_z}</white>"
+
+fuel_tank:
+  name: "<gradient:#ef4444:#f97316>[Fuel Tank]</gradient> <white>{chunk_x}, {chunk_z}</white>"
+  lore:
+    - "<gray>Place this chest inside its Security chunk.</gray>"
+    - "<gray>World:</gray> <white>{world}</white>"
+    - "<gray>Chunk:</gray> <white>{chunk_x}, {chunk_z}</white>"
+    - "<yellow>Only configured fuel items can be stored here.</yellow>"
+  place:
+    denied: "<red>You do not have permission to place Security fuel tanks.</red>"
+    failed: "<red>That fuel tank could not be placed here.</red>"
+    invalid_location: "<red>The fuel tank must be inside its Security chunk and within the configured radius of the chunk block.</red>"
+    double_chest: "<red>Fuel tanks cannot form double chests.</red>"
+    success: "<green>Fuel tank placed for this Security chunk.</green>"
+    warning: "<yellow>Security features will not work until fuel is supplied.</yellow>"
+  break:
+    denied: "<red>Placed fuel tanks must be picked up from the Security chunk view.</red>"
+  inventory:
+    only_fuel: "<red>Only configured fuel items can be placed in the fuel tank.</red>"
 
 block_listener:
   nexus:
@@ -85,9 +103,9 @@ town_hub_ui:
   create:
     name: "<green>Create Town</green>"
     lore:
-      - "<gray>Start the GUI-only town creation flow.</gray>"
-      - "<gray>You will name your town, choose a color,</gray>"
-      - "<gray>then receive a Nexus Block to place.</gray>"
+      - "<gray>Open the creation requirements and rewards.</gray>"
+      - "<gray>Complete the turn-ins, name your town,</gray>"
+      - "<gray>and receive a Nexus Block to place.</gray>"
     locked:
       name: "<gray>Create Locked</gray>"
       lore:
@@ -102,23 +120,12 @@ town_create_name_ui:
     invalid_input: "<red>Enter a town name between 1 and 32 characters.</red>"
     processing_failed: "<red>That town name could not be processed.</red>"
 
-town_create_color_ui:
-  title: "<gradient:#38bdf8:#60a5fa>Town Color</gradient>"
-  input:
-    lore:
-      - "<gray>Enter a Minecraft color like LIGHT_BLUE</gray>"
-      - "<gray>or a hex value like #55c7ff.</gray>"
-  error:
-    invalid_input: "<red>Enter a valid Minecraft color name or hex code.</red>"
-    processing_failed: "<red>That town color could not be processed.</red>"
-
 town_create_confirm_ui:
   title: "<gradient:#22c55e:#84cc16>Confirm Town</gradient>"
   summary:
     name: "<gold>Town Draft</gold>"
     lore:
       - "<gray>Name:</gray> <white>{town_name}</white>"
-      - "<gray>Color:</gray> <white>{town_color}</white>"
       - "<yellow>Confirm to receive your Nexus Block.</yellow>"
   confirm:
     name: "<green>Confirm</green>"
@@ -127,11 +134,146 @@ town_create_confirm_ui:
   cancel:
     name: "<red>Cancel</red>"
     lore:
-      - "<gray>Return to the Town Hub without creating anything.</gray>"
+      - "<gray>Return to the town creation menu.</gray>"
   confirmed: "<green>Created the draft for <white>{town_name}</white><green> and gave you its Nexus Block.</green>"
   place_hint: "<yellow>Place the Nexus Block to finalize your town location and claim your first chunk.</yellow>"
   error:
     already_in_town: "<red>You are already in a town.</red>"
+    requirements_incomplete: "<red>Finish the town creation requirements before confirming a town.</red>"
+
+town_creation_ui:
+  title: "<gradient:#22c55e:#84cc16>Town Creation</gradient>"
+  summary:
+    name: "<gold>Creation Progress</gold>"
+    lore:
+      - "<gray>Status:</gray> <white>{ready_state}</white>"
+      - "<gray>Requirements:</gray> <white>{requirement_count}</white>"
+      - "<gray>Rewards:</gray> <white>{reward_count}</white>"
+      - "<gray>Progress:</gray> <white>{progress_percent}%</white>"
+  requirements:
+    name: "<gold>Requirements</gold>"
+    lore:
+      - "<gray>Entries:</gray> <white>{requirement_count}</white>"
+      - "<gray>Progress:</gray> <white>{progress_percent}%</white>"
+      - "<yellow>Click to view saved turn-ins and remaining goals.</yellow>"
+  rewards:
+    name: "<gold>Rewards</gold>"
+    lore:
+      - "<gray>Rewards:</gray> <white>{reward_count}</white>"
+      - "<yellow>Click to preview the founding rewards.</yellow>"
+  create:
+    name: "<gold>Start Town</gold>"
+    ready:
+      lore:
+        - "<green>All creation requirements are complete.</green>"
+        - "<yellow>Click to choose your town name.</yellow>"
+    progress:
+      lore:
+        - "<gray>Progress:</gray> <white>{progress_percent}%</white>"
+        - "<yellow>Click to review the remaining requirements.</yellow>"
+    unavailable:
+      lore:
+        - "<gray>Town creation is unavailable right now.</gray>"
+    locked:
+      lore:
+        - "<gray>Leave your current town before creating a new one.</gray>"
+  return:
+    name: "<gold>Back</gold>"
+    lore:
+      - "<gray>Return to the Town Hub.</gray>"
+  missing:
+    name: "<red>Creation Missing</red>"
+    lore:
+      - "<gray>Town creation could not be loaded right now.</gray>"
+
+town_creation_shared:
+  messages:
+    contribution_saved: "<green>Saved a contribution of <white>{contributed_amount}</white><green> toward town creation.</green>"
+    not_enough_resources: "<red>You do not have enough resources to contribute right now.</red>"
+    requirement_complete: "<green>One town creation requirement is now complete.</green>"
+    ready_to_create: "<green>All town creation requirements are complete. You can now start your town.</green>"
+    invalid_target: "<red>That town creation requirement is unavailable right now.</red>"
+
+town_creation_requirements_ui:
+  title: "<gradient:#f59e0b:#fbbf24>Creation Requirements</gradient>"
+  summary:
+    name: "<gold>Requirement Summary</gold>"
+    lore:
+      - "<gray>Requirements:</gray> <white>{requirement_count}</white>"
+      - "<gray>Progress:</gray> <white>{progress_percent}%</white>"
+  entry:
+    name: "<gold>{requirement_name}</gold>"
+    completed:
+      lore:
+        - "<gray>{description}</gray>"
+        - "<gray>Progress:</gray> <white>{current_amount}</white><gray> / </gray><white>{required_amount}</white>"
+        - "<green>Completed.</green>"
+    contributable:
+      lore:
+        - "<gray>{description}</gray>"
+        - "<gray>Progress:</gray> <white>{current_amount}</white><gray> / </gray><white>{required_amount}</white>"
+        - "<gray>Available now:</gray> <white>{available_amount}</white>"
+        - "<gray>Completion:</gray> <white>{progress_percent}%</white>"
+        - "<yellow>Click to contribute progress.</yellow>"
+    view_only:
+      lore:
+        - "<gray>{description}</gray>"
+        - "<gray>Progress:</gray> <white>{current_amount}</white><gray> / </gray><white>{required_amount}</white>"
+        - "<gray>Completion:</gray> <white>{progress_percent}%</white>"
+        - "<yellow>This requirement tracks live player progress.</yellow>"
+  rewards:
+    name: "<gold>Rewards</gold>"
+    lore:
+      - "<gray>Preview the founding rewards.</gray>"
+  hub:
+    name: "<gold>Creation Hub</gold>"
+    lore:
+      - "<gray>Return to the town creation overview.</gray>"
+  return:
+    name: "<gold>Back</gold>"
+    lore:
+      - "<gray>Return to the previous view.</gray>"
+  empty:
+    name: "<gray>Empty Slot</gray>"
+    lore:
+      - "<gray>No requirement is assigned to this slot.</gray>"
+  missing:
+    name: "<red>Requirements Missing</red>"
+    lore:
+      - "<gray>This creation requirement list could not be loaded.</gray>"
+
+town_creation_rewards_ui:
+  title: "<gradient:#38bdf8:#60a5fa>Creation Rewards</gradient>"
+  summary:
+    name: "<gold>Creation Rewards</gold>"
+    lore:
+      - "<gray>Reward count:</gray> <white>{reward_count}</white>"
+      - "<yellow>These rewards are granted when the town is founded.</yellow>"
+  entry:
+    name: "<gold>{reward_name}</gold>"
+    lore:
+      - "<gray>Type:</gray> <white>{reward_type}</white>"
+      - "<gray>{description}</gray>"
+  requirements:
+    name: "<gold>Requirements</gold>"
+    lore:
+      - "<gray>Return to the requirement breakdown.</gray>"
+  hub:
+    name: "<gold>Creation Hub</gold>"
+    lore:
+      - "<gray>Return to the town creation overview.</gray>"
+  return:
+    name: "<gold>Back</gold>"
+    lore:
+      - "<gray>Return to the previous view.</gray>"
+  empty:
+    name: "<gray>Empty Slot</gray>"
+    lore:
+      - "<gray>No reward is assigned to this slot.</gray>"
+  missing:
+    name: "<red>Rewards Missing</red>"
+    lore:
+      - "<gray>This creation reward list could not be loaded.</gray>"
 
 town_directory_ui:
   title: "<gradient:#38bdf8:#60a5fa>Town Directory</gradient>"
@@ -144,7 +286,7 @@ town_directory_ui:
     lore:
       - "<gray>Members:</gray> <white>{member_count}</white>"
       - "<gray>Chunks:</gray> <white>{chunk_count}</white>"
-      - "<gray>Level:</gray> <white>{town_level}</white>"
+      - "<gray>Town level:</gray> <white>{town_level}</white>"
       - "<gray>Archetype:</gray> <white>{archetype}</white>"
       - "<yellow>Click to inspect this town.</yellow>"
   empty:
@@ -211,11 +353,20 @@ town_overview_ui:
     name: "<gold>Protections</gold>"
     lore:
       - "<gray>Security chunk detected.</gray>"
-      - "<yellow>Edit town or chunk protection thresholds.</yellow>"
+      - "<yellow>Use any Security chunk to edit protections.</yellow>"
     locked:
       name: "<gray>Protections Locked</gray>"
       lore:
+        - "<gray>Only town members can manage protections from here.</gray>"
+    security_locked:
+      lore:
         - "<gray>You need a Security chunk before protections can be edited.</gray>"
+    permission_locked:
+      lore:
+        - "<gray>You do not have permission to manage protections.</gray>"
+    security_required: "<red>You need at least one Security chunk before protections can be edited.</red>"
+    open_from_security_chunk: "<yellow>Open any Security chunk to configure town protections.</yellow>"
+    no_permission: "<red>You do not have permission to manage town protections.</red>"
   archetype:
     name: "<gold>Archetype</gold>"
     lore:
@@ -237,16 +388,48 @@ town_overview_ui:
         - "<gray>Return to your nexus to rename the town.</gray>"
     success: "<green>Town renamed to <white>{town_name}</white><green>.</green>"
     failed: "<red>That town name could not be applied.</red>"
-  upgrade:
-    name: "<gold>Upgrade Town</gold>"
+  color:
+    name: "<gold>Town Color</gold>"
     lore:
-      - "<gray>Current level:</gray> <white>{town_level}</white>"
-      - "<yellow>Click to upgrade the town level.</yellow>"
+      - "<gray>Current color:</gray> <white>{town_color}</white>"
+      - "<gray>Update your town color from the nexus.</gray>"
     locked:
       lore:
-        - "<gray>Return to your nexus to upgrade the town.</gray>"
-    success: "<green>Town upgraded successfully. New level: <white>{town_level}</white><green>.</green>"
-    failed: "<red>The town could not be upgraded right now.</red>"
+        - "<gray>Return to your nexus to update the town color.</gray>"
+    success: "<green>Town color updated to <white>{town_color}</white><green>.</green>"
+    failed: "<red>That town color could not be applied.</red>"
+  upgrade:
+    name: "<gold>Nexus Progression</gold>"
+    progress:
+      lore:
+        - "<gray>Current Nexus level:</gray> <white>{current_level}</white>"
+        - "<gray>Target level:</gray> <white>{target_level}</white>"
+        - "<gray>Progress:</gray> <white>{progress_percent}%</white>"
+        - "<yellow>Click to open Nexus requirements and rewards.</yellow>"
+    ready:
+      lore:
+        - "<gray>Target Nexus level:</gray> <white>{target_level}</white>"
+        - "<green>All requirements are complete.</green>"
+        - "<yellow>Click to level up the Nexus now.</yellow>"
+    max:
+      lore:
+        - "<gray>Current Nexus level:</gray> <white>{current_level}</white>"
+        - "<green>Your Nexus has reached the maximum configured level.</green>"
+    locked:
+      lore:
+        - "<gray>Only town members can browse Nexus progression from here.</gray>"
+  fuel:
+    name: "<gold>Fuel</gold>"
+    lore:
+      - "<gray>Pooled fuel:</gray> <white>{pooled_fuel_fe} FE</white>"
+      - "<gray>Drain:</gray> <white>{fuel_per_hour} FE/hour</white>"
+      - "<gray>Interval:</gray> <white>{interval_seconds}s</white>"
+      - "<gray>Status:</gray> <white>{power_state}</white>"
+    no_security:
+      lore:
+        - "<gray>No Security chunk is available to host a fuel tank.</gray>"
+        - "<gray>Pooled fuel:</gray> <white>{pooled_fuel_fe} FE</white>"
+        - "<gray>Status:</gray> <white>{power_state}</white>"
   missing:
     name: "<red>Town Missing</red>"
     lore:
@@ -329,16 +512,98 @@ town_chunk_ui:
   protections:
     name: "<gold>Chunk Protections</gold>"
     lore:
-      - "<gray>Edit chunk-specific protection overrides.</gray>"
-    locked:
+      - "<gray>Open the chunk protection categories.</gray>"
+    security_locked:
       lore:
-        - "<gray>A Security chunk is required before protections can be edited.</gray>"
+        - "<gray>Only Security chunks can open chunk-specific protections.</gray>"
+    permission_locked:
+      lore:
+        - "<gray>You do not have permission to manage chunk protections.</gray>"
+    security_required: "<red>A Security chunk is required before protections can be edited.</red>"
+    security_only: "<red>Only Security chunks can open chunk-specific protections.</red>"
+    no_permission: "<red>You do not have permission to manage chunk protections.</red>"
   info:
     name: "<gold>Chunk Info</gold>"
     lore:
       - "<gray>World:</gray> <white>{world_name}</white>"
       - "<gray>Chunk:</gray> <white>{chunk_x}, {chunk_z}</white>"
       - "<gray>Level:</gray> <white>{chunk_level}</white>"
+  upgrade:
+    name: "<gold>{level_scope} Progression</gold>"
+    progress:
+      lore:
+        - "<gray>Current {level_scope} level:</gray> <white>{current_level}</white>"
+        - "<gray>Target level:</gray> <white>{target_level}</white>"
+        - "<gray>Progress:</gray> <white>{progress_percent}%</white>"
+        - "<yellow>Click to open {level_scope} requirements and rewards.</yellow>"
+    ready:
+      lore:
+        - "<gray>Target {level_scope} level:</gray> <white>{target_level}</white>"
+        - "<green>All {level_scope} requirements are complete.</green>"
+        - "<yellow>Click to level up this chunk now.</yellow>"
+    max:
+      lore:
+        - "<gray>Current {level_scope} level:</gray> <white>{current_level}</white>"
+        - "<green>This {level_scope} chunk has reached the maximum configured level.</green>"
+    unavailable:
+      lore:
+        - "<gray>{chunk_type} chunks do not support chunk progression.</gray>"
+    unavailable_message: "<red>{chunk_type} chunks do not support chunk progression.</red>"
+  fuel:
+    name: "<gold>Fuel</gold>"
+    lore:
+      - "<gray>Local tank:</gray> <white>{local_fuel_fe} FE</white>"
+      - "<gray>Pooled town fuel:</gray> <white>{pooled_fuel_fe} FE</white>"
+      - "<gray>Drain:</gray> <white>{fuel_per_hour} FE/hour</white>"
+      - "<gray>Estimated empty:</gray> <white>{estimated_empty}</white>"
+      - "<gray>Interval:</gray> <white>{interval_seconds}s</white>"
+      - "<gray>Radius:</gray> <white>{radius_blocks} blocks</white>"
+      - "<gray>Status:</gray> <white>{power_state}</white>"
+    offline:
+      lore:
+        - "<gray>Local tank:</gray> <white>{local_fuel_fe} FE</white>"
+        - "<gray>Pooled town fuel:</gray> <white>{pooled_fuel_fe} FE</white>"
+        - "<gray>Drain:</gray> <white>{fuel_per_hour} FE/hour</white>"
+        - "<gray>Estimated empty:</gray> <white>{estimated_empty}</white>"
+        - "<gray>Interval:</gray> <white>{interval_seconds}s</white>"
+        - "<gray>Radius:</gray> <white>{radius_blocks} blocks</white>"
+        - "<green>Offline chunk protections enabled.</green>"
+        - "<gray>Status:</gray> <white>{power_state}</white>"
+    no_tank:
+      lore:
+        - "<gray>No fuel tank is placed for this Security chunk.</gray>"
+        - "<gray>Pooled town fuel:</gray> <white>{pooled_fuel_fe} FE</white>"
+        - "<gray>Drain:</gray> <white>{fuel_per_hour} FE/hour</white>"
+        - "<gray>Estimated empty:</gray> <white>{estimated_empty}</white>"
+        - "<gray>Interval:</gray> <white>{interval_seconds}s</white>"
+        - "<gray>Radius:</gray> <white>{radius_blocks} blocks</white>"
+        - "<gray>Status:</gray> <white>{power_state}</white>"
+      offline:
+        lore:
+          - "<gray>No fuel tank is placed for this Security chunk.</gray>"
+          - "<gray>Pooled town fuel:</gray> <white>{pooled_fuel_fe} FE</white>"
+          - "<gray>Drain:</gray> <white>{fuel_per_hour} FE/hour</white>"
+          - "<gray>Estimated empty:</gray> <white>{estimated_empty}</white>"
+          - "<gray>Interval:</gray> <white>{interval_seconds}s</white>"
+          - "<gray>Radius:</gray> <white>{radius_blocks} blocks</white>"
+          - "<green>Offline chunk protections enabled.</green>"
+          - "<gray>Status:</gray> <white>{power_state}</white>"
+    locked:
+      lore:
+        - "<gray>Only Security chunks use fuel tanks.</gray>"
+  fuel_pickup:
+    name: "<gold>Pickup Fuel Tank</gold>"
+    lore:
+      - "<gray>Remove the placed fuel tank for this Security chunk.</gray>"
+      - "<gray>All stored fuel will drop at the tank location.</gray>"
+      - "<yellow>Click to return the tank item.</yellow>"
+    locked:
+      lore:
+        - "<gray>You do not have permission to pick up the fuel tank.</gray>"
+    success: "<green>Picked up the fuel tank and returned the tank item.</green>"
+    success_with_fuel: "<green>Picked up the fuel tank, returned the tank item, and dropped the stored fuel.</green>"
+    no_permission: "<red>You do not have permission to pick up the fuel tank.</red>"
+    failed: "<red>The fuel tank could not be picked up right now.</red>"
   return:
     name: "<gold>Back</gold>"
     lore:
@@ -348,11 +613,303 @@ town_chunk_ui:
     lore:
       - "<gray>That chunk could not be loaded.</gray>"
 
+town_level_shared:
+  messages:
+    no_permission: "<red>You do not have permission to manage {level_scope} progression.</red>"
+    not_enough_resources: "<red>You do not have enough resources to contribute right now.</red>"
+    contribution_saved: "<green>Saved a contribution of <white>{contributed_amount}</white><green> toward {level_scope} progression.</green>"
+    requirement_complete: "<green>One {level_scope} requirement is now complete.</green>"
+    level_ready: "<green>All {level_scope} requirements are complete. Level up is ready.</green>"
+    max_level: "<yellow>{level_scope} is already at the maximum configured level.</yellow>"
+    not_ready: "<red>{level_scope} cannot level up yet. Finish the remaining requirements first.</red>"
+    level_up_success: "<green>{level_scope} leveled up from <white>{current_level}</white><green> to <white>{target_level}</white><green>.</green>"
+    level_up_failed: "<red>{level_scope} could not be leveled right now.</red>"
+    invalid_target: "<red>That {level_scope} progression target is unavailable right now.</red>"
+
+town_level_progress_ui:
+  title: "<gradient:#22c55e:#84cc16>Level Progression</gradient>"
+  summary:
+    name: "<gold>{level_scope} Summary</gold>"
+    lore:
+      - "<gray>Town:</gray> <white>{town_name}</white>"
+      - "<gray>Current level:</gray> <white>{current_level}</white>"
+      - "<gray>Target level:</gray> <white>{target_level}</white>"
+      - "<gray>Max level:</gray> <white>{max_level}</white>"
+      - "<gray>Progress:</gray> <white>{progress_percent}%</white>"
+      - "<gray>Location:</gray> <white>{location}</white>"
+  requirements:
+    name: "<gold>Requirements</gold>"
+    lore:
+      - "<gray>Entries:</gray> <white>{requirement_count}</white>"
+      - "<gray>Progress:</gray> <white>{progress_percent}%</white>"
+      - "<yellow>Click to view saved turn-ins and remaining goals.</yellow>"
+  rewards:
+    name: "<gold>Rewards</gold>"
+    lore:
+      - "<gray>Rewards:</gray> <white>{reward_count}</white>"
+      - "<yellow>Click to preview the unlock rewards.</yellow>"
+  roadmap:
+    name: "<gold>Roadmap</gold>"
+    lore:
+      - "<gray>Current level:</gray> <white>{current_level}</white>"
+      - "<gray>Max level:</gray> <white>{max_level}</white>"
+      - "<yellow>Click to browse the full progression roadmap.</yellow>"
+  upgrade:
+    name: "<gold>Finalize {level_scope}</gold>"
+    unavailable:
+      lore:
+        - "<gray>This progression target is unavailable right now.</gray>"
+    progress:
+      lore:
+        - "<gray>Target level:</gray> <white>{target_level}</white>"
+        - "<gray>Progress:</gray> <white>{progress_percent}%</white>"
+        - "<yellow>Click to review the remaining requirements.</yellow>"
+    ready:
+      lore:
+        - "<gray>Target level:</gray> <white>{target_level}</white>"
+        - "<green>All requirements are complete.</green>"
+        - "<yellow>Click to level up now.</yellow>"
+    max:
+      lore:
+        - "<green>This progression path is fully completed.</green>"
+  return:
+    name: "<gold>Back</gold>"
+    lore:
+      - "<gray>Return to the previous view.</gray>"
+  missing:
+    name: "<red>Progression Missing</red>"
+    lore:
+      - "<gray>This progression target could not be loaded.</gray>"
+
+town_level_requirements_ui:
+  title: "<gradient:#f59e0b:#fbbf24>Level Requirements</gradient>"
+  summary:
+    name: "<gold>Requirement Summary</gold>"
+    lore:
+      - "<gray>Target level:</gray> <white>{target_level}</white>"
+      - "<gray>Requirements:</gray> <white>{requirement_count}</white>"
+      - "<gray>Progress:</gray> <white>{progress_percent}%</white>"
+  entry:
+    name: "<gold>{requirement_name}</gold>"
+    completed:
+      lore:
+        - "<gray>{description}</gray>"
+        - "<gray>Progress:</gray> <white>{current_amount}</white><gray> / </gray><white>{required_amount}</white>"
+        - "<green>Completed.</green>"
+    contributable:
+      lore:
+        - "<gray>{description}</gray>"
+        - "<gray>Progress:</gray> <white>{current_amount}</white><gray> / </gray><white>{required_amount}</white>"
+        - "<gray>Available now:</gray> <white>{available_amount}</white>"
+        - "<gray>Completion:</gray> <white>{progress_percent}%</white>"
+        - "<yellow>Click to contribute progress.</yellow>"
+    view_only:
+      lore:
+        - "<gray>{description}</gray>"
+        - "<gray>Progress:</gray> <white>{current_amount}</white><gray> / </gray><white>{required_amount}</white>"
+        - "<gray>Completion:</gray> <white>{progress_percent}%</white>"
+        - "<yellow>This requirement tracks live player progress.</yellow>"
+  rewards:
+    name: "<gold>Rewards</gold>"
+    lore:
+      - "<gray>Preview the rewards for this level.</gray>"
+  hub:
+    name: "<gold>Progress Hub</gold>"
+    lore:
+      - "<gray>Return to the level progression hub.</gray>"
+  return:
+    name: "<gold>Back</gold>"
+    lore:
+      - "<gray>Return to the previous view.</gray>"
+  empty:
+    name: "<gray>Empty Slot</gray>"
+    lore:
+      - "<gray>No requirement is assigned to this slot.</gray>"
+  missing:
+    name: "<red>Requirements Missing</red>"
+    lore:
+      - "<gray>This requirement list could not be loaded.</gray>"
+
+town_level_rewards_ui:
+  title: "<gradient:#38bdf8:#60a5fa>Level Rewards</gradient>"
+  summary:
+    name: "<gold>{level_scope} Rewards</gold>"
+    lore:
+      - "<gray>Target level:</gray> <white>{target_level}</white>"
+      - "<gray>Reward count:</gray> <white>{reward_count}</white>"
+      - "<yellow>These rewards are granted when the level is finalized.</yellow>"
+  entry:
+    name: "<gold>{reward_name}</gold>"
+    lore:
+      - "<gray>Type:</gray> <white>{reward_type}</white>"
+      - "<gray>{description}</gray>"
+  requirements:
+    name: "<gold>Requirements</gold>"
+    lore:
+      - "<gray>Return to the requirement breakdown.</gray>"
+  hub:
+    name: "<gold>Progress Hub</gold>"
+    lore:
+      - "<gray>Return to the level progression hub.</gray>"
+  return:
+    name: "<gold>Back</gold>"
+    lore:
+      - "<gray>Return to the previous view.</gray>"
+  empty:
+    name: "<gray>Empty Slot</gray>"
+    lore:
+      - "<gray>No reward is assigned to this slot.</gray>"
+  missing:
+    name: "<red>Rewards Missing</red>"
+    lore:
+      - "<gray>This reward list could not be loaded.</gray>"
+
+town_level_roadmap_ui:
+  title: "<gradient:#a78bfa:#60a5fa>Level Roadmap</gradient>"
+  summary:
+    name: "<gold>{level_scope} Roadmap</gold>"
+    lore:
+      - "<gray>Current level:</gray> <white>{current_level}</white>"
+      - "<gray>Max level:</gray> <white>{max_level}</white>"
+      - "<gray>Page:</gray> <white>{page}</white><gray> / </gray><white>{page_count}</white>"
+      - "<yellow>Click any level to preview its requirements and rewards.</yellow>"
+  entry:
+    name: "<gold>{level_scope} Level {target_level}</gold>"
+    completed:
+      lore:
+        - "<gray>Requirements:</gray> <white>{requirement_count}</white>"
+        - "<gray>Rewards:</gray> <white>{reward_count}</white>"
+        - "<green>This level is already completed.</green>"
+    ready:
+      lore:
+        - "<gray>Requirements:</gray> <white>{requirement_count}</white>"
+        - "<gray>Rewards:</gray> <white>{reward_count}</white>"
+        - "<green>This level is ready to finalize.</green>"
+        - "<yellow>Click to review it.</yellow>"
+    current:
+      lore:
+        - "<gray>Requirements:</gray> <white>{requirement_count}</white>"
+        - "<gray>Rewards:</gray> <white>{reward_count}</white>"
+        - "<yellow>This is your current level.</yellow>"
+    upcoming:
+      lore:
+        - "<gray>Requirements:</gray> <white>{requirement_count}</white>"
+        - "<gray>Rewards:</gray> <white>{reward_count}</white>"
+        - "<gray>Progress:</gray> <white>{progress_percent}%</white>"
+        - "<yellow>Click to preview this future level.</yellow>"
+  page:
+    previous:
+      name: "<gold>Previous Page</gold>"
+      lore:
+        - "<gray>View the previous roadmap page.</gray>"
+      locked:
+        lore:
+          - "<gray>You are already on the first page.</gray>"
+    next:
+      name: "<gold>Next Page</gold>"
+      lore:
+        - "<gray>View the next roadmap page.</gray>"
+      locked:
+        lore:
+          - "<gray>You are already on the last page.</gray>"
+  hub:
+    name: "<gold>Progress Hub</gold>"
+    lore:
+      - "<gray>Return to the level progression hub.</gray>"
+  return:
+    name: "<gold>Back</gold>"
+    lore:
+      - "<gray>Return to the previous view.</gray>"
+  empty:
+    name: "<gray>Empty Slot</gray>"
+    lore:
+      - "<gray>No configured level is assigned to this slot.</gray>"
+  missing:
+    name: "<red>Roadmap Missing</red>"
+    lore:
+      - "<gray>This roadmap could not be loaded.</gray>"
+
+town_level_currency_input_ui:
+  title: "<gradient:#22c55e:#84cc16>Contribute Currency</gradient>"
+  input:
+    lore:
+      - "<gray>Enter the amount you want to contribute.</gray>"
+      - "<yellow>The final contribution will be clamped to the remaining requirement.</yellow>"
+  error:
+    invalid_input: "<red>Enter a valid positive number to contribute.</red>"
+    processing_failed: "<red>That contribution could not be processed right now.</red>"
+
 head:
   return:
     name: "<gold>Back</gold>"
     lore:
       - "<gray>Return to the previous town view.</gray>"
+
+town_protection_shared:
+  categories:
+    role_based: "<gold>Role-Based</gold>"
+    binary_toggle: "<gold>On / Off</gold>"
+  protections:
+    hostile_entities: "<red>Hostile Entities</red>"
+    passive_entities: "<green>Passive Entities</green>"
+    fire: "<gold>Fire Spread</gold>"
+    water: "<aqua>Water Flow</aqua>"
+    lava: "<gold>Lava Flow</gold>"
+    break_block: "<gold>Break Blocks</gold>"
+    place_block: "<gold>Place Blocks</gold>"
+    container_access: "<gold>Container Access</gold>"
+    switch_access: "<gold>Switch Actions</gold>"
+    item_use: "<gold>Item Use</gold>"
+    chest: "<gold>Chest Access</gold>"
+    shulker_boxes: "<light_purple>Shulker Box Access</light_purple>"
+    trapped_chest: "<gold>Trapped Chest Access</gold>"
+    furnace: "<gray>Furnace Use</gray>"
+    blast_furnace: "<gray>Blast Furnace Use</gray>"
+    dispenser: "<gold>Dispenser Use</gold>"
+    hopper: "<gold>Hopper Use</gold>"
+    dropper: "<gold>Dropper Use</gold>"
+    jukebox: "<gold>Jukebox Use</gold>"
+    stonecutter: "<gold>Stonecutter Use</gold>"
+    smithing_table: "<gold>Smithing Table Use</gold>"
+    fletching_table: "<gold>Fletching Table Use</gold>"
+    smoker: "<gold>Smoker Use</gold>"
+    loom: "<gold>Loom Use</gold>"
+    grindstone: "<gold>Grindstone Use</gold>"
+    composter: "<gold>Composter Use</gold>"
+    cartography_table: "<gold>Cartography Table Use</gold>"
+    bell: "<gold>Bell Use</gold>"
+    barrel: "<gold>Barrel Access</gold>"
+    brewing_stand: "<gold>Brewing Stand Use</gold>"
+    lever: "<gold>Lever Use</gold>"
+    pressure_plates: "<gold>Pressure Plate Use</gold>"
+    buttons: "<gold>Button Use</gold>"
+    wood_doors: "<gold>Door Access</gold>"
+    fence_gates: "<gold>Fence Gate Access</gold>"
+    trapdoors: "<gold>Trapdoor Access</gold>"
+    minecarts: "<gold>Minecart Use</gold>"
+    boats: "<gold>Boat Use</gold>"
+    ender_pearl: "<gold>Ender Pearl Use</gold>"
+    fireball: "<gold>Fire Charge Use</gold>"
+    chorus_fruit: "<gold>Chorus Fruit Use</gold>"
+    lead: "<gold>Lead Use</gold>"
+    lodestone: "<gold>Lodestone Use</gold>"
+    respawn_anchor: "<gold>Respawn Anchor Use</gold>"
+    target: "<gold>Target Use</gold>"
+  scope:
+    town: "Town"
+    chunk: "Chunk"
+    town_global: "Town Global"
+  security:
+    unlocked: "Unlocked"
+    locked: "Locked"
+  states:
+    inherit: "Inherit"
+    allowed: "Allowed"
+    restricted: "Restricted"
+    editable: "Editable"
+    locked: "Locked"
+  messages:
+    in_use: "<red>Another player is already editing town protections.</red>"
 
 town_protections_ui:
   title: "<gradient:#ef4444:#f87171>Town Protections</gradient>"
@@ -362,25 +919,214 @@ town_protections_ui:
       - "<gray>Town:</gray> <white>{town_name}</white>"
       - "<gray>Scope:</gray> <white>{scope}</white>"
       - "<gray>Security:</gray> <white>{security_state}</white>"
+      - "<gray>Access:</gray> <white>{access_state}</white>"
   mode:
     name: "<gold>Editing Scope</gold>"
     lore:
       - "<gray>Current scope:</gray> <white>{scope}</white>"
+      - "<gray>Selection:</gray> <white>{selection}</white>"
+      - "<gray>World:</gray> <white>{world_name}</white>"
+      - "<gray>Type:</gray> <white>{chunk_type}</white>"
       - "<gray>Chunk:</gray> <white>{chunk_x}, {chunk_z}</white>"
       - "<yellow>Click to switch between town-global and chunk scopes.</yellow>"
-  entry:
-    name: "<gold>{protection}</gold>"
-    lore:
-      - "<gray>Required role:</gray> <white>{role}</white>"
-      - "<gray>Status:</gray> <white>{state}</white>"
-      - "<yellow>Click to cycle the threshold.</yellow>"
+  category:
+    role_based:
+      lore:
+        - "<gray>Manage role thresholds for block edits, switch actions, and item use.</gray>"
+        - "<gray>Scope:</gray> <white>{scope}</white>"
+        - "<gray>Access:</gray> <white>{access_state}</white>"
+        - "<yellow>Click to open this editor.</yellow>"
+    binary_toggle:
+      lore:
+        - "<gray>Manage allowed or restricted rules for fire, fluids, and mobs.</gray>"
+        - "<gray>Scope:</gray> <white>{scope}</white>"
+        - "<gray>Access:</gray> <white>{access_state}</white>"
+        - "<yellow>Click to open this editor.</yellow>"
   missing:
     name: "<red>Town Missing</red>"
     lore:
-      - "<gray>The protection editor could not load this town.</gray>"
+      - "<gray>The protection hub could not load this town.</gray>"
   locked:
     security_required: "<red>You need at least one Security chunk before protections can be edited.</red>"
+    no_permission: "<red>You do not have permission to manage town protections.</red>"
+
+town_role_protections_ui:
+  title: "<gradient:#f59e0b:#fbbf24>Role Protections</gradient>"
+  summary:
+    name: "<gold>Role Protection Summary</gold>"
+    lore:
+      - "<gray>Town:</gray> <white>{town_name}</white>"
+      - "<gray>Scope:</gray> <white>{scope}</white>"
+      - "<gray>Security:</gray> <white>{security_state}</white>"
+      - "<gray>Access:</gray> <white>{access_state}</white>"
+  mode:
+    name: "<gold>Editing Scope</gold>"
+    lore:
+      - "<gray>Current scope:</gray> <white>{scope}</white>"
+      - "<gray>Selection:</gray> <white>{selection}</white>"
+      - "<gray>World:</gray> <white>{world_name}</white>"
+      - "<gray>Type:</gray> <white>{chunk_type}</white>"
+      - "<gray>Chunk:</gray> <white>{chunk_x}, {chunk_z}</white>"
+      - "<yellow>Click to switch between town-global and chunk scopes.</yellow>"
+  entry:
+    lore:
+      - "<gray>Required role:</gray> <white>{role}</white>"
+      - "<gray>Access:</gray> <white>{access_state}</white>"
+      - "<yellow>Click to cycle the threshold.</yellow>"
+  switch_entry:
+    lore:
+      - "<gray>Configured role:</gray> <white>{role}</white>"
+      - "<gray>Effective role:</gray> <white>{effective_role}</white>"
+      - "<gray>Actions covered:</gray> <white>{action_count}</white>"
+      - "<gray>Access:</gray> <white>{access_state}</white>"
+      - "<yellow>Click to open the switch-action editor.</yellow>"
+  item_use_entry:
+    lore:
+      - "<gray>Configured role:</gray> <white>{role}</white>"
+      - "<gray>Effective role:</gray> <white>{effective_role}</white>"
+      - "<gray>Actions covered:</gray> <white>{action_count}</white>"
+      - "<gray>Access:</gray> <white>{access_state}</white>"
+      - "<yellow>Click to open the item-use editor.</yellow>"
+  missing:
+    name: "<red>Town Missing</red>"
+    lore:
+      - "<gray>The role protection editor could not load this town.</gray>"
+  locked:
+    security_required: "<red>You need at least one Security chunk before protections can be edited.</red>"
+    no_permission: "<red>You do not have permission to manage town protections.</red>"
   updated: "<green>Updated <white>{protection}</white><green> to <white>{role}</white><green>.</green>"
+  update_failed: "<red>The protection could not be updated.</red>"
+
+town_switch_protections_ui:
+  title: "<gradient:#fb7185:#f97316>Switch Protections</gradient>"
+  summary:
+    name: "<gold>Switch Protection Summary</gold>"
+    lore:
+      - "<gray>Town:</gray> <white>{town_name}</white>"
+      - "<gray>Scope:</gray> <white>{scope}</white>"
+      - "<gray>Security:</gray> <white>{security_state}</white>"
+      - "<gray>Access:</gray> <white>{access_state}</white>"
+  mode:
+    name: "<gold>Editing Scope</gold>"
+    lore:
+      - "<gray>Current scope:</gray> <white>{scope}</white>"
+      - "<gray>Selection:</gray> <white>{selection}</white>"
+      - "<gray>World:</gray> <white>{world_name}</white>"
+      - "<gray>Type:</gray> <white>{chunk_type}</white>"
+      - "<gray>Chunk:</gray> <white>{chunk_x}, {chunk_z}</white>"
+      - "<yellow>Click to switch between town-global and chunk scopes.</yellow>"
+  bulk:
+    name: "<gold>All Switch Actions</gold>"
+    lore:
+      - "<gray>Configured role:</gray> <white>{role}</white>"
+      - "<gray>Effective role:</gray> <white>{effective_role}</white>"
+      - "<gray>Actions covered:</gray> <white>{action_count}</white>"
+      - "<gray>Access:</gray> <white>{access_state}</white>"
+      - "<yellow>Click to update every switch action in this scope.</yellow>"
+  entry:
+    lore:
+      - "<gray>Configured role:</gray> <white>{role}</white>"
+      - "<gray>Effective role:</gray> <white>{effective_role}</white>"
+      - "<gray>Access:</gray> <white>{access_state}</white>"
+      - "<yellow>Click to cycle this switch action.</yellow>"
+  page:
+    name: "<gold>Page <white>{current_page}/{total_pages}</white></gold>"
+    lore:
+      - "<gray>Switch actions:</gray> <white>{items_count}</white>"
+      - "<gray>Current page:</gray> <white>{current_page}</white>"
+      - "<gray>Total pages:</gray> <white>{total_pages}</white>"
+  missing:
+    name: "<red>Town Missing</red>"
+    lore:
+      - "<gray>The switch protection editor could not load this town.</gray>"
+  locked:
+    security_required: "<red>You need at least one Security chunk before protections can be edited.</red>"
+    no_permission: "<red>You do not have permission to manage town protections.</red>"
+  updated_all: "<green>Updated all switch actions to <white>{role}</white><green>.</green>"
+  updated: "<green>Updated <white>{protection}</white><green> to <white>{role}</white><green>.</green>"
+  update_failed: "<red>The switch protection could not be updated.</red>"
+
+town_item_use_protections_ui:
+  title: "<gradient:#22c55e:#84cc16>Item Use Protections</gradient>"
+  summary:
+    name: "<gold>Item Use Summary</gold>"
+    lore:
+      - "<gray>Town:</gray> <white>{town_name}</white>"
+      - "<gray>Scope:</gray> <white>{scope}</white>"
+      - "<gray>Security:</gray> <white>{security_state}</white>"
+      - "<gray>Access:</gray> <white>{access_state}</white>"
+  mode:
+    name: "<gold>Editing Scope</gold>"
+    lore:
+      - "<gray>Current scope:</gray> <white>{scope}</white>"
+      - "<gray>Selection:</gray> <white>{selection}</white>"
+      - "<gray>World:</gray> <white>{world_name}</white>"
+      - "<gray>Type:</gray> <white>{chunk_type}</white>"
+      - "<gray>Chunk:</gray> <white>{chunk_x}, {chunk_z}</white>"
+      - "<yellow>Click to switch between town-global and chunk scopes.</yellow>"
+  bulk:
+    name: "<gold>All Item Use</gold>"
+    lore:
+      - "<gray>Configured role:</gray> <white>{role}</white>"
+      - "<gray>Effective role:</gray> <white>{effective_role}</white>"
+      - "<gray>Actions covered:</gray> <white>{action_count}</white>"
+      - "<gray>Access:</gray> <white>{access_state}</white>"
+      - "<yellow>Click to update every item-use action in this scope.</yellow>"
+  entry:
+    lore:
+      - "<gray>Configured role:</gray> <white>{role}</white>"
+      - "<gray>Effective role:</gray> <white>{effective_role}</white>"
+      - "<gray>Access:</gray> <white>{access_state}</white>"
+      - "<yellow>Click to cycle this item-use action.</yellow>"
+  page:
+    name: "<gold>Page <white>{current_page}/{total_pages}</white></gold>"
+    lore:
+      - "<gray>Item-use actions:</gray> <white>{items_count}</white>"
+      - "<gray>Current page:</gray> <white>{current_page}</white>"
+      - "<gray>Total pages:</gray> <white>{total_pages}</white>"
+  missing:
+    name: "<red>Town Missing</red>"
+    lore:
+      - "<gray>The item-use protection editor could not load this town.</gray>"
+  locked:
+    security_required: "<red>You need at least one Security chunk before protections can be edited.</red>"
+    no_permission: "<red>You do not have permission to manage town protections.</red>"
+  updated_all: "<green>Updated all item-use actions to <white>{role}</white><green>.</green>"
+  updated: "<green>Updated <white>{protection}</white><green> to <white>{role}</white><green>.</green>"
+  update_failed: "<red>The item-use protection could not be updated.</red>"
+
+town_toggle_protections_ui:
+  title: "<gradient:#38bdf8:#60a5fa>On / Off Protections</gradient>"
+  summary:
+    name: "<gold>On / Off Summary</gold>"
+    lore:
+      - "<gray>Town:</gray> <white>{town_name}</white>"
+      - "<gray>Scope:</gray> <white>{scope}</white>"
+      - "<gray>Security:</gray> <white>{security_state}</white>"
+      - "<gray>Access:</gray> <white>{access_state}</white>"
+  mode:
+    name: "<gold>Editing Scope</gold>"
+    lore:
+      - "<gray>Current scope:</gray> <white>{scope}</white>"
+      - "<gray>Selection:</gray> <white>{selection}</white>"
+      - "<gray>World:</gray> <white>{world_name}</white>"
+      - "<gray>Type:</gray> <white>{chunk_type}</white>"
+      - "<gray>Chunk:</gray> <white>{chunk_x}, {chunk_z}</white>"
+      - "<yellow>Click to switch between town-global and chunk scopes.</yellow>"
+  entry:
+    lore:
+      - "<gray>Current setting:</gray> <white>{state}</white>"
+      - "<gray>Effective state:</gray> <white>{effective_state}</white>"
+      - "<gray>Access:</gray> <white>{access_state}</white>"
+      - "<yellow>Click to cycle this setting.</yellow>"
+  missing:
+    name: "<red>Town Missing</red>"
+    lore:
+      - "<gray>The on or off protection editor could not load this town.</gray>"
+  locked:
+    security_required: "<red>You need at least one Security chunk before protections can be edited.</red>"
+    no_permission: "<red>You do not have permission to manage town protections.</red>"
+  updated: "<green>Updated <white>{protection}</white><green> to <white>{state}</white><green>.</green>"
   update_failed: "<red>The protection could not be updated.</red>"
 
 town_protection_scope_ui:
@@ -491,9 +1237,16 @@ town_chunk_type_ui:
     available_lore:
       - "<gray>Type:</gray> <white>{chunk_type}</white>"
       - "<yellow>Click to set this chunk to {chunk_type}.</yellow>"
+    available_reset_lore:
+      - "<gray>Type:</gray> <white>{chunk_type}</white>"
+      - "<yellow>Click to set this chunk to {chunk_type}.</yellow>"
+      - "<red>Changing the type will reset this chunk's saved progression.</red>"
   selected: "<green>Chunk type changed to <white>{chunk_type}</white><green>.</green>"
   selection_failed: "<red>The chunk type could not be changed.</red>"
   already_selected: "<yellow>This chunk is already set to <white>{chunk_type}</white><yellow>.</yellow>"
+  fuel_tank_granted: "<yellow>You received a bound fuel tank. Place it in this Security chunk and add fuel before security features will work.</yellow>"
+  fuel_tank_removed: "<yellow>The Security fuel tank was removed from this chunk.</yellow>"
+  fuel_tank_removed_with_fuel: "<yellow>The Security fuel tank was removed and its stored fuel dropped at the tank location.</yellow>"
   missing:
     name: "<red>Chunk Missing</red>"
     lore:
@@ -507,3 +1260,13 @@ town_rename_ui:
   error:
     invalid_input: "<red>Enter a town name between 1 and 32 characters.</red>"
     processing_failed: "<red>That town name could not be processed.</red>"
+
+town_color_ui:
+  title: "<gradient:#38bdf8:#60a5fa>Town Color</gradient>"
+  input:
+    lore:
+      - "<gray>Enter a Minecraft color like LIGHT_BLUE</gray>"
+      - "<gray>or a hex value like #55c7ff.</gray>"
+  error:
+    invalid_input: "<red>Enter a valid Minecraft color name or hex code.</red>"
+    processing_failed: "<red>That town color could not be processed.</red>"

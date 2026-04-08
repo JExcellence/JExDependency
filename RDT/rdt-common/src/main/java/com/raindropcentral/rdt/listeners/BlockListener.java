@@ -226,15 +226,13 @@ public class BlockListener implements Listener {
 
         final UUID townUuid = Nexus.getTownUUID(this.plugin, item);
         final String townName = Nexus.getTownName(this.plugin, item);
-        final String townColor = Nexus.getTownColor(this.plugin, item);
-        final RTown town = townUuid == null || townName == null || townColor == null
+        final RTown town = townUuid == null || townName == null
             ? null
             : this.plugin.getTownRuntimeService().finalizeTownCreation(
                 player,
                 event.getBlockPlaced().getLocation(),
                 townUuid,
-                townName,
-                townColor
+                townName
             );
         if (town == null) {
             event.setCancelled(true);

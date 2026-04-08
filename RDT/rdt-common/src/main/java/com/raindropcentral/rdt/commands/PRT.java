@@ -19,23 +19,32 @@ import com.raindropcentral.rdt.RDT;
 import com.raindropcentral.rdt.database.entity.RTown;
 import com.raindropcentral.rdt.view.main.TownHubView;
 import com.raindropcentral.rdt.view.town.TownBankView;
+import de.jexcellence.evaluable.error.CommandError;
+import de.jexcellence.evaluable.error.EErrorType;
 import de.jexcellence.evaluable.section.ACommandSection;
 import de.jexcellence.jextranslate.i18n.I18n;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import org.bukkit.Server;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.NonNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.UUID;
 
 /**
- * Primary player command for the RDT town plugin.
+ * Primary {@code /rt} command root for the RDT town plugin.
  *
- * <p>The command intentionally remains small and only launches GUI entry points or town spawn
- * travel. Town creation and claiming are fully view and item driven.</p>
+ * <p>Players can open the main town views or trigger spawn travel, while the server console can
+ * dispatch the internal {@code broadcast} route used by config-driven reward execution.</p>
  *
  * @author ItsRainingHP
  * @since 1.0.0
@@ -44,6 +53,8 @@ import java.util.Map;
 @Command
 @SuppressWarnings("unused")
 public class PRT extends PlayerCommand {
+
+    private static final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();
 
     private final RDT rdt;
 
@@ -56,6 +67,30 @@ public class PRT extends PlayerCommand {
     public PRT(final @NotNull ACommandSection commandSection, final @NotNull RDT rdt) {
         super(commandSection);
         this.rdt = rdt;
+    }
+
+    /**
+     * Routes console senders to the broadcast subcommand and keeps all other routes player-only.
+     *
+     * @param sender invoking command sender
+     * @param alias invoked alias
+     * @param args supplied arguments
+     */
+    @Override
+    protected void onInvocation(
+        final @NotNull CommandSender sender,
+        final @NotNull String alias,
+        final @NotNull String[] args
+    ) {
+        if (sender instanceof ConsoleCommandSender console) {
+            if (this.resolveAction(args) != EPRTAction.BROADCAST) {
+                throw new CommandError(null, EErrorType.NOT_A_PLAYER);
+            }
+            this.handleBroadcastCommand(console, alias, args);
+            return;
+        }
+
+        super.onInvocation(sender, alias, args);
     }
 
     /**
@@ -76,6 +111,7 @@ public class PRT extends PlayerCommand {
             case SPAWN -> this.handleSpawnCommand(player);
             case BANK -> this.handleBankCommand(player);
             case MAIN -> this.handleMainCommand(player);
+            case BROADCAST -> throw new CommandError(null, EErrorType.NOT_A_CONSOLE);
         }
     }
 
@@ -172,6 +208,50 @@ public class PRT extends PlayerCommand {
         }
 
         return List.of();
+    }
+
+    private void handleBroadcastCommand(
+        final @NotNull ConsoleCommandSender console,
+        final @NotNull String alias,
+        final @NotNull String[] args
+    ) {
+        if (args.length < 3) {
+            console.sendMessage("Usage: /" + alias + " broadcast <town_uuid> <mini_message>");
+            return;
+        }
+
+        final UUID townUuid;
+        try {
+            townUuid = UUID.fromString(args[1]);
+        } catch (final IllegalArgumentException exception) {
+            console.sendMessage("Invalid town UUID: " + args[1]);
+            return;
+        }
+
+        final RTown town = this.rdt.getTownRuntimeService() == null
+            ? null
+            : this.rdt.getTownRuntimeService().getTown(townUuid);
+        if (town == null) {
+            console.sendMessage("Town not found: " + townUuid);
+            return;
+        }
+
+        final String message = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
+        final Component broadcastMessage = MINI_MESSAGE.deserialize(message);
+        final Server server = this.rdt.getServer();
+        int delivered = 0;
+        for (final var member : town.getMembers()) {
+            final Player onlinePlayer = server.getPlayer(member.getIdentifier());
+            if (onlinePlayer == null || !onlinePlayer.isOnline()) {
+                continue;
+            }
+            onlinePlayer.sendMessage(broadcastMessage);
+            delivered++;
+        }
+
+        console.sendMessage(
+            "Sent town broadcast to " + delivered + " online member(s) of " + town.getTownName() + '.'
+        );
     }
 
     private @NotNull EPRTAction resolveAction(final @NotNull String[] args) {

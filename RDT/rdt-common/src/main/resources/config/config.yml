@@ -14,6 +14,11 @@ town_spawn_teleport_delay_seconds: 3
 # When false, diagonal corner claims also count as adjacent.
 exclude_corner_claim_adjacency: true
 
+chunk_type:
+  # When true, changing a claimed chunk to a different type resets chunk-local state.
+  # This resets chunk level, saved level progress, protection overrides, and seed-box contents.
+  reset_state_on_change: true
+
 # Proxy-backed routing controls.
 proxy:
   # Enables proxy-aware module features.
@@ -31,141 +36,7 @@ chunk_type_icon_farm: HAY_BLOCK
 chunk_type_icon_claim_pending: ORANGE_STAINED_GLASS
 chunk_type_icon_chunk_block: OAK_PLANKS
 
-# Configurable town progression levels.
-# Add, remove, or reorder numeric level keys as desired.
-# Each level key represents the target level reached after successful level-up.
 town:
   # Cooldown in seconds between town archetype changes.
   # Default: 24 hours.
   archetype_change_cooldown_seconds: 86400
-
-  levels:
-    1:
-      requirements: {}
-      rewards: {}
-    2:
-      requirements:
-        vault_upgrade:
-          type: "CURRENCY"
-          currency: "vault"
-          amount: 2500.0
-          consumable: true
-          description: "Vault funding contribution"
-      rewards:
-        vault_bonus:
-          type: "CURRENCY"
-          currencyId: "vault"
-          amount: 500.0
-          description: "Town vault bonus"
-    3:
-      requirements:
-        vault_upgrade:
-          type: "CURRENCY"
-          currency: "vault"
-          amount: 3000.0
-          consumable: true
-          description: "Vault funding contribution"
-      rewards:
-        vault_bonus:
-          type: "CURRENCY"
-          currencyId: "vault"
-          amount: 600.0
-          description: "Town vault bonus"
-    4:
-      requirements:
-        vault_upgrade:
-          type: "CURRENCY"
-          currency: "vault"
-          amount: 3600.0
-          consumable: true
-          description: "Vault funding contribution"
-      rewards:
-        vault_bonus:
-          type: "CURRENCY"
-          currencyId: "vault"
-          amount: 720.0
-          description: "Town vault bonus"
-    5:
-      requirements:
-        vault_upgrade:
-          type: "CURRENCY"
-          currency: "vault"
-          amount: 4320.0
-          consumable: true
-          description: "Vault funding contribution"
-      rewards:
-        vault_bonus:
-          type: "CURRENCY"
-          currencyId: "vault"
-          amount: 864.0
-          description: "Town vault bonus"
-    6:
-      requirements:
-        vault_upgrade:
-          type: "CURRENCY"
-          currency: "vault"
-          amount: 5184.0
-          consumable: true
-          description: "Vault funding contribution"
-      rewards:
-        vault_bonus:
-          type: "CURRENCY"
-          currencyId: "vault"
-          amount: 1036.8
-          description: "Town vault bonus"
-    7:
-      requirements:
-        vault_upgrade:
-          type: "CURRENCY"
-          currency: "vault"
-          amount: 6220.8
-          consumable: true
-          description: "Vault funding contribution"
-      rewards:
-        vault_bonus:
-          type: "CURRENCY"
-          currencyId: "vault"
-          amount: 1244.16
-          description: "Town vault bonus"
-    8:
-      requirements:
-        vault_upgrade:
-          type: "CURRENCY"
-          currency: "vault"
-          amount: 7464.96
-          consumable: true
-          description: "Vault funding contribution"
-      rewards:
-        vault_bonus:
-          type: "CURRENCY"
-          currencyId: "vault"
-          amount: 1492.99
-          description: "Town vault bonus"
-    9:
-      requirements:
-        vault_upgrade:
-          type: "CURRENCY"
-          currency: "vault"
-          amount: 8957.95
-          consumable: true
-          description: "Vault funding contribution"
-      rewards:
-        vault_bonus:
-          type: "CURRENCY"
-          currencyId: "vault"
-          amount: 1791.59
-          description: "Town vault bonus"
-    10:
-      requirements:
-        vault_upgrade:
-          type: "CURRENCY"
-          currency: "vault"
-          amount: 10749.54
-          consumable: true
-          description: "Vault funding contribution"
-      rewards:
-        vault_bonus:
-          type: "CURRENCY"
-          currencyId: "vault"
-          amount: 2149.91
-          description: "Town vault bonus"

@@ -17,6 +17,9 @@ import com.raindropcentral.rdt.RDT;
 import com.raindropcentral.rdt.database.entity.RDTPlayer;
 import com.raindropcentral.rdt.database.entity.RTown;
 import com.raindropcentral.rdt.database.entity.RTownChunk;
+import com.raindropcentral.rdt.service.LevelProgressSnapshot;
+import com.raindropcentral.rdt.service.LevelScope;
+import com.raindropcentral.rdt.service.LevelUpResult;
 import com.raindropcentral.rdt.service.NexusAccessService;
 import com.raindropcentral.rdt.service.TownRuntimeService;
 import com.raindropcentral.rdt.utils.TownArchetype;
@@ -89,8 +92,8 @@ public class TownOverviewView extends BaseView {
             "    s    ",
             "  c b k  ",
             "  p a n  ",
-            "    u    ",
-            "         ",
+            "   l u   ",
+            "    f    ",
             "         "
         };
     }
@@ -128,6 +131,20 @@ public class TownOverviewView extends BaseView {
             new I18n.Builder(this.getKey() + '.' + key, target.getPlayer())
                 .includePrefix()
                 .withPlaceholder("town_name", renamedTownName)
+                .build()
+                .sendMessage();
+            target.openForPlayer(TownOverviewView.class, this.reopenData(target, town.getTownUUID()));
+            return;
+        }
+
+        if (data.get("updated_town_color") instanceof String updatedTownColor) {
+            final boolean updated = this.isNexusGovernanceUnlocked(target, town)
+                && this.viewerHasPermission(target, town, TownPermissions.CHANGE_TOWN_COLOR)
+                && this.plugin.get(target).getTownRuntimeService().setTownColor(town, updatedTownColor);
+            final String key = updated ? "color.success" : "color.failed";
+            new I18n.Builder(this.getKey() + '.' + key, target.getPlayer())
+                .includePrefix()
+                .withPlaceholder("town_color", updatedTownColor)
                 .build()
                 .sendMessage();
             target.openForPlayer(TownOverviewView.class, this.reopenData(target, town.getTownUUID()));
@@ -175,8 +192,11 @@ public class TownOverviewView extends BaseView {
             .onClick(clickContext -> this.handleArchetypeClick(clickContext, town));
         render.slot(33).renderWith(() -> this.createRenameItem(render, town))
             .onClick(clickContext -> this.handleRenameClick(clickContext, town));
-        render.slot(40).renderWith(() -> this.createUpgradeItem(render, town))
+        render.slot(30).renderWith(() -> this.createColorItem(render, town))
+            .onClick(clickContext -> this.handleColorClick(clickContext, town));
+        render.slot(32).renderWith(() -> this.createUpgradeItem(render, town))
             .onClick(clickContext -> this.handleUpgradeClick(clickContext, town));
+        render.slot(49).renderWith(() -> this.createFuelItem(render, town));
     }
 
     /**
@@ -250,13 +270,24 @@ public class TownOverviewView extends BaseView {
         if (!this.isOwnTownViewer(clickContext, town)) {
             return;
         }
-        clickContext.openForPlayer(
-            TownProtectionsView.class,
-            Map.of(
-                "plugin", this.plugin.get(clickContext),
-                "town_uuid", town.getTownUUID()
-            )
-        );
+        if (!town.hasSecurityChunk()) {
+            new I18n.Builder(this.getKey() + ".protections.security_required", clickContext.getPlayer())
+                .includePrefix()
+                .build()
+                .sendMessage();
+            return;
+        }
+        if (!this.viewerHasPermission(clickContext, town, TownPermissions.TOWN_PROTECTIONS)) {
+            new I18n.Builder(this.getKey() + ".protections.no_permission", clickContext.getPlayer())
+                .includePrefix()
+                .build()
+                .sendMessage();
+            return;
+        }
+        new I18n.Builder(this.getKey() + ".protections.open_from_security_chunk", clickContext.getPlayer())
+            .includePrefix()
+            .build()
+            .sendMessage();
     }
 
     private void handleArchetypeClick(final @NotNull SlotClickContext clickContext, final @NotNull RTown town) {
@@ -282,21 +313,43 @@ public class TownOverviewView extends BaseView {
         );
     }
 
-    private void handleUpgradeClick(final @NotNull SlotClickContext clickContext, final @NotNull RTown town) {
+    private void handleColorClick(final @NotNull SlotClickContext clickContext, final @NotNull RTown town) {
         if (!this.isNexusGovernanceUnlocked(clickContext, town)
-            || !this.viewerHasPermission(clickContext, town, TownPermissions.UPGRADE_TOWN)) {
+            || !this.viewerHasPermission(clickContext, town, TownPermissions.CHANGE_TOWN_COLOR)) {
             this.sendReturnToNexus(clickContext.getPlayer());
             return;
         }
 
-        final boolean upgraded = this.plugin.get(clickContext).getTownRuntimeService().upgradeTown(clickContext.getPlayer(), town);
-        final String key = upgraded ? "upgrade.success" : "upgrade.failed";
-        new I18n.Builder(this.getKey() + '.' + key, clickContext.getPlayer())
-            .includePrefix()
-            .withPlaceholder("town_level", town.getTownLevel())
-            .build()
-            .sendMessage();
-        clickContext.update();
+        clickContext.openForPlayer(
+            TownColorAnvilView.class,
+            this.reopenData(clickContext, town.getTownUUID(), Map.of("current_town_color", town.getTownColorHex()))
+        );
+    }
+
+    private void handleUpgradeClick(final @NotNull SlotClickContext clickContext, final @NotNull RTown town) {
+        if (!this.isOwnTownViewer(clickContext, town)) {
+            return;
+        }
+
+        final LevelProgressSnapshot snapshot = this.resolveNexusSnapshot(clickContext, town);
+        final boolean canFinalize = snapshot != null
+            && snapshot.readyToLevelUp()
+            && this.isNexusGovernanceUnlocked(clickContext, town)
+            && this.viewerHasPermission(clickContext, town, TownPermissions.UPGRADE_TOWN);
+        if (snapshot != null && canFinalize) {
+            final LevelUpResult result = this.plugin.get(clickContext).getTownRuntimeService().levelUpNexus(
+                clickContext.getPlayer(),
+                town
+            );
+            this.sendLevelMessage(clickContext.getPlayer(), LevelScope.NEXUS, result);
+            clickContext.update();
+            return;
+        }
+
+        clickContext.openForPlayer(
+            TownLevelProgressView.class,
+            TownLevelViewSupport.createNexusNavigationData(clickContext, town)
+        );
     }
 
     private @Nullable Map<String, Object> extractData(final @NotNull Context context) {
@@ -531,12 +584,23 @@ public class TownOverviewView extends BaseView {
 
     private @NotNull ItemStack createProtectionsItem(final @NotNull Context context, final @NotNull RTown town) {
         final boolean ownTown = this.isOwnTownViewer(context, town);
-        final boolean unlocked = ownTown && town.hasSecurityChunk();
-        final Material material = unlocked ? Material.IRON_SWORD : Material.BARRIER;
-        final String key = unlocked ? "protections" : "protections.locked";
+        final boolean hasPermission = ownTown && this.viewerHasPermission(context, town, TownPermissions.TOWN_PROTECTIONS);
+        final boolean unlocked = ownTown && town.hasSecurityChunk() && hasPermission;
+        final Material material = unlocked
+            ? Material.SHIELD
+            : ownTown && !town.hasSecurityChunk()
+                ? Material.BARRIER
+                : Material.GRAY_DYE;
+        final String loreKey = unlocked
+            ? "protections.lore"
+            : !ownTown
+                ? "protections.locked.lore"
+                : town.hasSecurityChunk()
+                    ? "protections.permission_locked.lore"
+                    : "protections.security_locked.lore";
         return UnifiedBuilderFactory.item(material)
-            .setName(this.i18n(key + ".name", context.getPlayer()).build().component())
-            .setLore(this.i18n(key + ".lore", context.getPlayer()).build().children())
+            .setName(this.i18n("protections.name", context.getPlayer()).build().component())
+            .setLore(this.i18n(loreKey, context.getPlayer()).build().children())
             .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
             .build();
     }
@@ -614,17 +678,113 @@ public class TownOverviewView extends BaseView {
             .build();
     }
 
-    private @NotNull ItemStack createUpgradeItem(final @NotNull Context context, final @NotNull RTown town) {
+    private @NotNull ItemStack createColorItem(final @NotNull Context context, final @NotNull RTown town) {
         final boolean unlocked = this.isNexusGovernanceUnlocked(context, town)
-            && this.viewerHasPermission(context, town, TownPermissions.UPGRADE_TOWN);
-        return UnifiedBuilderFactory.item(unlocked ? Material.EXPERIENCE_BOTTLE : Material.GRAY_DYE)
-            .setName(this.i18n("upgrade.name", context.getPlayer()).build().component())
-            .setLore(this.i18n((unlocked ? "upgrade" : "upgrade.locked") + ".lore", context.getPlayer())
-                .withPlaceholder("town_level", town.getTownLevel())
+            && this.viewerHasPermission(context, town, TownPermissions.CHANGE_TOWN_COLOR);
+        return UnifiedBuilderFactory.item(unlocked ? Material.LIGHT_BLUE_DYE : Material.GRAY_DYE)
+            .setName(this.i18n("color.name", context.getPlayer()).build().component())
+            .setLore(this.i18n((unlocked ? "color" : "color.locked") + ".lore", context.getPlayer())
+                .withPlaceholder("town_color", town.getTownColorHex())
                 .build()
                 .children())
             .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
             .build();
+    }
+
+    private @NotNull ItemStack createUpgradeItem(final @NotNull Context context, final @NotNull RTown town) {
+        final boolean ownTown = this.isOwnTownViewer(context, town);
+        final LevelProgressSnapshot snapshot = ownTown ? this.resolveNexusSnapshot(context, town) : null;
+        final boolean canFinalize = snapshot != null
+            && snapshot.readyToLevelUp()
+            && this.isNexusGovernanceUnlocked(context, town)
+            && this.viewerHasPermission(context, town, TownPermissions.UPGRADE_TOWN);
+        final Material material = !ownTown
+            ? Material.GRAY_DYE
+            : snapshot != null && snapshot.maxLevelReached()
+                ? Material.NETHER_STAR
+                : canFinalize
+                    ? Material.EMERALD_BLOCK
+                    : Material.EXPERIENCE_BOTTLE;
+        final String loreKey = !ownTown
+            ? "upgrade.locked.lore"
+            : snapshot != null && snapshot.maxLevelReached()
+                ? "upgrade.max.lore"
+                : canFinalize
+                    ? "upgrade.ready.lore"
+                    : "upgrade.progress.lore";
+        return UnifiedBuilderFactory.item(material)
+            .setName(this.i18n("upgrade.name", context.getPlayer()).build().component())
+            .setLore(this.i18n(loreKey, context.getPlayer())
+                .withPlaceholders(Map.of(
+                    "town_level", town.getTownLevel(),
+                    "current_level", snapshot == null ? town.getTownLevel() : snapshot.currentLevel(),
+                    "target_level", snapshot == null ? town.getTownLevel() : snapshot.displayLevel(),
+                    "progress_percent", snapshot == null ? 0 : Math.round(snapshot.progress() * 100.0D)
+                ))
+                .build()
+                .children())
+            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+            .build();
+    }
+
+    private @NotNull ItemStack createFuelItem(final @NotNull Context context, final @NotNull RTown town) {
+        final var fuelService = this.plugin.get(context).getTownFuelService();
+        final boolean powered = fuelService != null && fuelService.isTownPowered(town);
+        final boolean hasSecurityChunk = town.hasSecurityChunk();
+        final double pooledFuelUnits = fuelService == null ? 0.0D : fuelService.getTotalFuelUnits(town);
+        final double fuelPerHour = fuelService == null ? 0.0D : fuelService.getFuelPerHour(town);
+        final int intervalSeconds = this.plugin.get(context).getSecurityConfig().getFuel().getCalculationIntervalSeconds();
+        final Material material = hasSecurityChunk
+            ? powered
+                ? Material.REDSTONE_BLOCK
+                : Material.REDSTONE
+            : Material.BARRIER;
+        final String loreKey = hasSecurityChunk ? "fuel.lore" : "fuel.no_security.lore";
+        return UnifiedBuilderFactory.item(material)
+            .setName(this.i18n("fuel.name", context.getPlayer()).build().component())
+            .setLore(this.i18n(loreKey, context.getPlayer())
+                .withPlaceholders(Map.of(
+                    "pooled_fuel_fe", this.formatFuelAmount(pooledFuelUnits),
+                    "fuel_per_hour", this.formatFuelAmount(fuelPerHour),
+                    "interval_seconds", intervalSeconds,
+                    "power_state", powered ? "Powered" : "Unpowered"
+                ))
+                .build()
+                .children())
+            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+            .build();
+    }
+
+    private @Nullable LevelProgressSnapshot resolveNexusSnapshot(final @NotNull Context context, final @NotNull RTown town) {
+        final TownRuntimeService runtimeService = this.plugin.get(context).getTownRuntimeService();
+        return runtimeService == null ? null : runtimeService.getNexusLevelProgress(context.getPlayer(), town);
+    }
+
+    private @NotNull String formatFuelAmount(final double amount) {
+        return String.format(Locale.ROOT, "%.2f", Math.max(0.0D, amount));
+    }
+
+    private void sendLevelMessage(
+        final @NotNull Player player,
+        final @NotNull LevelScope scope,
+        final @NotNull LevelUpResult result
+    ) {
+        final String key = switch (result.status()) {
+            case SUCCESS -> "level_up_success";
+            case NO_PERMISSION -> "no_permission";
+            case NOT_READY -> "not_ready";
+            case MAX_LEVEL -> "max_level";
+            case INVALID_TARGET, FAILED -> "level_up_failed";
+        };
+        new I18n.Builder("town_level_shared.messages." + key, player)
+            .includePrefix()
+            .withPlaceholders(Map.of(
+                "level_scope", scope.getDisplayName(),
+                "current_level", result.previousLevel(),
+                "target_level", result.newLevel()
+            ))
+            .build()
+            .sendMessage();
     }
 
     private @NotNull ItemStack createMissingTownItem(final @NotNull Player player) {

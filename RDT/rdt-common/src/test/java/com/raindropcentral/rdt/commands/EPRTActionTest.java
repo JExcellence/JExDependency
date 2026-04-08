@@ -33,7 +33,8 @@ class EPRTActionTest {
             new EPRTAction[]{
                 EPRTAction.MAIN,
                 EPRTAction.SPAWN,
-                EPRTAction.BANK
+                EPRTAction.BANK,
+                EPRTAction.BROADCAST
             },
             EPRTAction.values()
         );

@@ -17,10 +17,14 @@ import com.raindropcentral.rdt.RDT;
 import com.raindropcentral.rdt.database.entity.RTown;
 import com.raindropcentral.rdt.database.entity.RTownChunk;
 import com.raindropcentral.rdt.utils.ChunkType;
+import com.raindropcentral.rdt.utils.TownProtectionCategory;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import com.raindropcentral.rplatform.view.APaginatedView;
+import me.devnatan.inventoryframework.View;
 import me.devnatan.inventoryframework.component.BukkitItemComponentBuilder;
+import me.devnatan.inventoryframework.context.CloseContext;
 import me.devnatan.inventoryframework.context.Context;
+import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.state.State;
@@ -50,9 +54,11 @@ import java.util.concurrent.CompletableFuture;
  */
 public class TownProtectionScopeView extends APaginatedView<TownProtectionScopeView.ScopeOption> {
 
-    private static final String WORLD_NAME_KEY = "world_name";
-    private static final String CHUNK_X_KEY = "chunk_x";
-    private static final String CHUNK_Z_KEY = "chunk_z";
+    private static final String WORLD_NAME_KEY = AbstractTownProtectionView.WORLD_NAME_KEY;
+    private static final String CHUNK_X_KEY = AbstractTownProtectionView.CHUNK_X_KEY;
+    private static final String CHUNK_Z_KEY = AbstractTownProtectionView.CHUNK_Z_KEY;
+    private static final String PROTECTION_CATEGORY_KEY = AbstractTownProtectionView.PROTECTION_CATEGORY_KEY;
+    private static final String PROTECTION_VIEW_KEY = AbstractTownProtectionView.PROTECTION_VIEW_KEY;
 
     private final State<RDT> plugin = initialState("plugin");
     private final State<UUID> townUuid = initialState("town_uuid");
@@ -62,6 +68,30 @@ public class TownProtectionScopeView extends APaginatedView<TownProtectionScopeV
      */
     public TownProtectionScopeView() {
         super(TownProtectionsView.class);
+    }
+
+    @Override
+    public void onOpen(final @NotNull OpenContext open) {
+        final UUID resolvedTownUuid = this.townUuid.get(open);
+        if (resolvedTownUuid != null
+            && !TownProtectionEditSessionRegistry.acquire(resolvedTownUuid, open.getPlayer().getUniqueId())) {
+            new de.jexcellence.jextranslate.i18n.I18n.Builder("town_protection_shared.messages.in_use", open.getPlayer())
+                .includePrefix()
+                .build()
+                .sendMessage();
+            open.getPlayer().closeInventory();
+            return;
+        }
+        super.onOpen(open);
+    }
+
+    @Override
+    public void onClose(final @NotNull CloseContext close) {
+        final UUID resolvedTownUuid = this.townUuid.get(close);
+        if (resolvedTownUuid != null) {
+            TownProtectionEditSessionRegistry.release(resolvedTownUuid, close.getPlayer().getUniqueId());
+        }
+        super.onClose(close);
     }
 
     /**
@@ -91,7 +121,10 @@ public class TownProtectionScopeView extends APaginatedView<TownProtectionScopeV
         if (town == null) {
             return CompletableFuture.completedFuture(List.of());
         }
+        return CompletableFuture.completedFuture(buildScopeOptions(town));
+    }
 
+    static @NotNull List<ScopeOption> buildScopeOptions(final @NotNull RTown town) {
         final List<RTownChunk> claimedChunks = new ArrayList<>(town.getChunks());
         claimedChunks.sort(Comparator.comparing(RTownChunk::getWorldName, String.CASE_INSENSITIVE_ORDER)
             .thenComparingInt(RTownChunk::getX)
@@ -100,9 +133,11 @@ public class TownProtectionScopeView extends APaginatedView<TownProtectionScopeV
         final List<ScopeOption> scopes = new ArrayList<>();
         scopes.add(ScopeOption.global());
         for (final RTownChunk townChunk : claimedChunks) {
-            scopes.add(ScopeOption.chunk(townChunk));
+            if (townChunk.getChunkType() == ChunkType.SECURITY) {
+                scopes.add(ScopeOption.chunk(townChunk));
+            }
         }
-        return CompletableFuture.completedFuture(List.copyOf(scopes));
+        return List.copyOf(scopes);
     }
 
     /**
@@ -157,12 +192,38 @@ public class TownProtectionScopeView extends APaginatedView<TownProtectionScopeV
         final Map<String, Object> data = new LinkedHashMap<>();
         data.put("plugin", this.plugin.get(clickContext));
         data.put("town_uuid", this.townUuid.get(clickContext));
+        final TownProtectionCategory category = this.resolveProtectionCategory(clickContext);
+        final String protectionViewKey = this.resolveProtectionViewKey(clickContext);
+        if (category != null) {
+            data.put(PROTECTION_CATEGORY_KEY, category.name());
+        }
+        if (protectionViewKey != null) {
+            data.put(PROTECTION_VIEW_KEY, protectionViewKey);
+        }
         if (scopeOption.chunkScoped()) {
             data.put("world_name", scopeOption.worldName());
             data.put("chunk_x", scopeOption.chunkX());
             data.put("chunk_z", scopeOption.chunkZ());
         }
-        clickContext.openForPlayer(TownProtectionsView.class, data);
+        AbstractTownProtectionView.copyOriginChunkTarget(this.extractData(clickContext), data);
+        clickContext.openForPlayer(resolveTargetViewClass(category, protectionViewKey), data);
+    }
+
+    static @NotNull Class<? extends View> resolveTargetViewClass(final @Nullable TownProtectionCategory category) {
+        return resolveTargetViewClass(category, null);
+    }
+
+    static @NotNull Class<? extends View> resolveTargetViewClass(
+        final @Nullable TownProtectionCategory category,
+        final @Nullable String protectionViewKey
+    ) {
+        if (Objects.equals(protectionViewKey, TownSwitchProtectionsView.VIEW_KEY)) {
+            return TownSwitchProtectionsView.class;
+        }
+        if (Objects.equals(protectionViewKey, TownItemUseProtectionsView.VIEW_KEY)) {
+            return TownItemUseProtectionsView.class;
+        }
+        return category == null ? TownProtectionsView.class : TownProtectionsView.resolveCategoryViewClass(category);
     }
 
     private @Nullable RTown resolveTown(final @NotNull Context context) {
@@ -224,25 +285,45 @@ public class TownProtectionScopeView extends APaginatedView<TownProtectionScopeV
     }
 
     private boolean isSelectedScope(final @NotNull Context context, final @NotNull ScopeOption scopeOption) {
-        final String selectedWorldName = this.resolveScopedWorldName(context);
-        final Integer selectedChunkX = this.resolveScopedChunkX(context);
-        final Integer selectedChunkZ = this.resolveScopedChunkZ(context);
+        final RTownChunk selectedChunk = this.resolveSelectedChunk(context);
         if (!scopeOption.chunkScoped()) {
-            return selectedWorldName == null || selectedChunkX == null || selectedChunkZ == null;
+            return selectedChunk == null;
         }
-        return Objects.equals(selectedWorldName, scopeOption.worldName())
-            && Objects.equals(selectedChunkX, scopeOption.chunkX())
-            && Objects.equals(selectedChunkZ, scopeOption.chunkZ());
+        return selectedChunk != null
+            && Objects.equals(selectedChunk.getWorldName(), scopeOption.worldName())
+            && Objects.equals(selectedChunk.getX(), scopeOption.chunkX())
+            && Objects.equals(selectedChunk.getZ(), scopeOption.chunkZ());
     }
 
     private @NotNull String resolveCurrentScopeLabel(final @NotNull Context context) {
+        final RTownChunk selectedChunk = this.resolveSelectedChunk(context);
+        if (selectedChunk == null) {
+            return "Town Global";
+        }
+        return selectedChunk.getWorldName() + ' ' + selectedChunk.getX() + ", " + selectedChunk.getZ();
+    }
+
+    private @Nullable RTownChunk resolveSelectedChunk(final @NotNull Context context) {
+        final RTown town = this.resolveTown(context);
         final String selectedWorldName = this.resolveScopedWorldName(context);
         final Integer selectedChunkX = this.resolveScopedChunkX(context);
         final Integer selectedChunkZ = this.resolveScopedChunkZ(context);
-        if (selectedWorldName == null || selectedChunkX == null || selectedChunkZ == null) {
-            return "Town Global";
+        return town == null
+            ? null
+            : resolveSelectedChunk(town, selectedWorldName, selectedChunkX, selectedChunkZ);
+    }
+
+    static @Nullable RTownChunk resolveSelectedChunk(
+        final @NotNull RTown town,
+        final @Nullable String worldName,
+        final @Nullable Integer chunkX,
+        final @Nullable Integer chunkZ
+    ) {
+        if (worldName == null || chunkX == null || chunkZ == null) {
+            return null;
         }
-        return selectedWorldName + ' ' + selectedChunkX + ", " + selectedChunkZ;
+        final RTownChunk townChunk = town.findChunk(worldName, chunkX, chunkZ);
+        return townChunk != null && townChunk.getChunkType() == ChunkType.SECURITY ? townChunk : null;
     }
 
     private @Nullable Map<String, Object> extractData(final @NotNull Context context) {
@@ -265,6 +346,28 @@ public class TownProtectionScopeView extends APaginatedView<TownProtectionScopeV
         return data == null || !(data.get(WORLD_NAME_KEY) instanceof String rawWorldName) || rawWorldName.isBlank()
             ? null
             : rawWorldName;
+    }
+
+    private @Nullable TownProtectionCategory resolveProtectionCategory(final @NotNull Context context) {
+        final Map<String, Object> data = this.extractData(context);
+        if (data == null) {
+            return null;
+        }
+
+        final Object rawCategory = data.get(PROTECTION_CATEGORY_KEY);
+        if (rawCategory instanceof TownProtectionCategory category) {
+            return category;
+        }
+        return rawCategory instanceof String categoryKey
+            ? TownProtectionCategory.fromKey(categoryKey)
+            : null;
+    }
+
+    private @Nullable String resolveProtectionViewKey(final @NotNull Context context) {
+        final Map<String, Object> data = this.extractData(context);
+        return data == null || !(data.get(PROTECTION_VIEW_KEY) instanceof String rawViewKey) || rawViewKey.isBlank()
+            ? null
+            : rawViewKey;
     }
 
     private @Nullable Integer resolveScopedChunkX(final @NotNull Context context) {

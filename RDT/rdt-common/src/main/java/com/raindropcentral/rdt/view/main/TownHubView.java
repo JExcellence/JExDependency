@@ -15,16 +15,13 @@ package com.raindropcentral.rdt.view.main;
 
 import com.raindropcentral.rdt.RDT;
 import com.raindropcentral.rdt.database.entity.RTown;
-import com.raindropcentral.rdt.view.town.CreateTownColorAnvilView;
-import com.raindropcentral.rdt.view.town.CreateTownConfirmView;
-import com.raindropcentral.rdt.view.town.CreateTownNameAnvilView;
+import com.raindropcentral.rdt.view.town.TownCreationProgressView;
 import com.raindropcentral.rdt.view.town.TownDirectoryView;
 import com.raindropcentral.rdt.view.town.TownInvitesView;
 import com.raindropcentral.rdt.view.town.TownOverviewView;
 import com.raindropcentral.rdt.utils.TownOverviewAccessMode;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import com.raindropcentral.rplatform.view.BaseView;
-import me.devnatan.inventoryframework.context.Context;
 import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.state.State;
@@ -83,50 +80,6 @@ public class TownHubView extends BaseView {
     }
 
     /**
-     * Continues the town-creation flow when the player returns from an anvil step.
-     *
-     * @param origin previous context
-     * @param target current hub context
-     */
-    @Override
-    public void onResume(final @NotNull Context origin, final @NotNull Context target) {
-        final Map<String, Object> data = this.extractData(target) != null
-            ? this.extractData(target)
-            : this.extractData(origin);
-        if (data == null) {
-            target.update();
-            return;
-        }
-
-        final Object townName = data.get("draftTownName");
-        final Object townColor = data.get("draftTownColor");
-        if (townName instanceof String draftTownName && !(townColor instanceof String)) {
-            target.openForPlayer(
-                CreateTownColorAnvilView.class,
-                Map.of(
-                    "plugin", this.plugin.get(target),
-                    "draftTownName", draftTownName
-                )
-            );
-            return;
-        }
-
-        if (townName instanceof String draftTownName && townColor instanceof String draftTownColor) {
-            target.openForPlayer(
-                CreateTownConfirmView.class,
-                Map.of(
-                    "plugin", this.plugin.get(target),
-                    "draftTownName", draftTownName,
-                    "draftTownColor", draftTownColor
-                )
-            );
-            return;
-        }
-
-        target.update();
-    }
-
-    /**
      * Renders the root navigation options for town browsing and creation.
      *
      * @param render render context
@@ -175,7 +128,7 @@ public class TownHubView extends BaseView {
                     return;
                 }
                 clickContext.openForPlayer(
-                    CreateTownNameAnvilView.class,
+                    TownCreationProgressView.class,
                     Map.of("plugin", rdt)
                 );
             });
@@ -189,20 +142,6 @@ public class TownHubView extends BaseView {
     @Override
     public void onClick(final @NotNull SlotClickContext click) {
         click.setCancelled(true);
-    }
-
-    private @Nullable Map<String, Object> extractData(final @NotNull Context context) {
-        final Object initialData = context.getInitialData();
-        if (!(initialData instanceof Map<?, ?> rawMap)) {
-            return null;
-        }
-        final java.util.Map<String, Object> copied = new java.util.LinkedHashMap<>();
-        for (final Map.Entry<?, ?> entry : rawMap.entrySet()) {
-            if (entry.getKey() instanceof String key) {
-                copied.put(key, entry.getValue());
-            }
-        }
-        return copied;
     }
 
     private @NotNull ItemStack createSummaryItem(

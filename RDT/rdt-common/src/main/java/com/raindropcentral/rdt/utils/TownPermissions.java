@@ -41,6 +41,7 @@ public enum TownPermissions {
     VIEW_ROLES("MEMBER"),
     VIEW_CHUNKS("MEMBER"),
     VIEW_BANK("MEMBER"),
+    CONTRIBUTE("MEMBER"),
     TOWN_INVITE("MEMBER"),
     PLACE_CHUNK("MEMBER"),
     PICKUP_CHUNK("MEMBER"),
@@ -59,6 +60,7 @@ public enum TownPermissions {
     PLACE_NEXUS("MAYOR"),
     PICKUP_NEXUS("MAYOR"),
     RENAME_TOWN("MAYOR"),
+    CHANGE_TOWN_COLOR("MAYOR"),
     SET_ARCHETYPE("MAYOR"),
     UPGRADE_TOWN("MAYOR");
 

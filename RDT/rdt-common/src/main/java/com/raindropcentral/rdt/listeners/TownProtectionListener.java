@@ -16,24 +16,31 @@ package com.raindropcentral.rdt.listeners;
 import com.raindropcentral.rdt.RDT;
 import com.raindropcentral.rdt.utils.TownProtections;
 import de.jexcellence.jextranslate.i18n.I18n;
+import io.papermc.paper.event.entity.EntityMoveEvent;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Container;
 import org.bukkit.block.data.Openable;
 import org.bukkit.block.data.Powerable;
 import org.bukkit.entity.Animals;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Monster;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockFromToEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.block.BlockSpreadEvent;
-import org.bukkit.event.world.ChunkLoadEvent;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -85,22 +92,81 @@ public class TownProtectionListener implements Listener {
     }
 
     /**
-     * Enforces switch and container protections.
+     * Enforces switch, container, and right-click item-use protections.
      *
      * @param event interact event
      */
     @EventHandler(ignoreCancelled = true)
     public void onPlayerInteract(final @NotNull PlayerInteractEvent event) {
-        if (event.getHand() != EquipmentSlot.HAND || event.getAction() != Action.RIGHT_CLICK_BLOCK || event.getClickedBlock() == null) {
+        if (event.getAction() == Action.PHYSICAL) {
+            final Block clickedBlock = event.getClickedBlock();
+            if (clickedBlock == null) {
+                return;
+            }
+
+            final TownProtections protection = resolveInteractProtection(clickedBlock);
+            if (protection != TownProtections.PRESSURE_PLATES) {
+                return;
+            }
+
+            if (!this.plugin.getTownRuntimeService().isPlayerAllowed(event.getPlayer(), clickedBlock.getLocation(), protection)) {
+                event.setCancelled(true);
+                this.sendDeniedMessage(event.getPlayer(), "interact");
+            }
             return;
         }
 
-        final TownProtections protection = this.resolveInteractProtection(event.getClickedBlock());
+        if (event.getHand() != EquipmentSlot.HAND
+            || (event.getAction() != Action.RIGHT_CLICK_AIR && event.getAction() != Action.RIGHT_CLICK_BLOCK)) {
+            return;
+        }
+
+        final Block clickedBlock = event.getClickedBlock();
+        final TownProtections interactProtection = clickedBlock == null ? null : resolveInteractProtection(clickedBlock);
+        if (interactProtection != null) {
+            if (!this.plugin.getTownRuntimeService().isPlayerAllowed(event.getPlayer(), clickedBlock.getLocation(), interactProtection)) {
+                event.setCancelled(true);
+                this.sendDeniedMessage(event.getPlayer(), "interact");
+            }
+            return;
+        }
+
+        final TownProtections itemUseProtection = resolveItemUseProtection(event.getItem());
+        if (itemUseProtection == null) {
+            return;
+        }
+
+        final Location interactionLocation = clickedBlock == null ? event.getPlayer().getLocation() : clickedBlock.getLocation();
+        if (!this.plugin.getTownRuntimeService().isPlayerAllowed(event.getPlayer(), interactionLocation, itemUseProtection)) {
+            event.setCancelled(true);
+            this.sendDeniedMessage(event.getPlayer(), "interact");
+        }
+    }
+
+    /**
+     * Enforces entity-interaction and item-use protections for entities such as minecarts, boats,
+     * and lead targets.
+     *
+     * @param event entity-interact event
+     */
+    @EventHandler(ignoreCancelled = true)
+    public void onPlayerInteractEntity(final @NotNull PlayerInteractEntityEvent event) {
+        if (event.getHand() != EquipmentSlot.HAND) {
+            return;
+        }
+
+        final TownProtections heldItemProtection = resolveEntityItemUseProtection(
+            event.getRightClicked(),
+            event.getPlayer().getInventory().getItemInMainHand()
+        );
+        final TownProtections protection = heldItemProtection == null
+            ? resolveEntityInteractProtection(event.getRightClicked())
+            : heldItemProtection;
         if (protection == null) {
             return;
         }
 
-        if (!this.plugin.getTownRuntimeService().isPlayerAllowed(event.getPlayer(), event.getClickedBlock().getLocation(), protection)) {
+        if (!this.plugin.getTownRuntimeService().isPlayerAllowed(event.getPlayer(), event.getRightClicked().getLocation(), protection)) {
             event.setCancelled(true);
             this.sendDeniedMessage(event.getPlayer(), "interact");
         }
@@ -113,17 +179,35 @@ public class TownProtectionListener implements Listener {
      */
     @EventHandler(ignoreCancelled = true)
     public void onCreatureSpawn(final @NotNull CreatureSpawnEvent event) {
-        final TownProtections protection;
-        if (event.getEntity() instanceof Monster) {
-            protection = TownProtections.TOWN_HOSTILE_ENTITIES;
-        } else if (event.getEntity() instanceof Animals) {
-            protection = TownProtections.TOWN_PASSIVE_ENTITIES;
-        } else {
+        final TownProtections protection = this.resolveProtectionEntity(event.getEntity());
+        if (protection == null) {
             return;
         }
 
         if (!this.plugin.getTownRuntimeService().isWorldActionAllowed(event.getLocation(), protection)) {
             event.setCancelled(true);
+        }
+    }
+
+    /**
+     * Removes protected mobs when they cross into a newly restricted claimed chunk.
+     *
+     * @param event entity movement event
+     */
+    @EventHandler(ignoreCancelled = true)
+    public void onEntityMove(final @NotNull EntityMoveEvent event) {
+        final TownProtections protection = this.resolveProtectionEntity(event.getEntity());
+        if (protection == null || !this.hasChangedChunk(event.getFrom(), event.getTo())) {
+            return;
+        }
+
+        final var townRuntimeService = this.plugin.getTownRuntimeService();
+        if (townRuntimeService == null) {
+            return;
+        }
+
+        if (!townRuntimeService.isWorldActionAllowed(event.getTo(), protection)) {
+            event.getEntity().remove();
         }
     }
 
@@ -185,33 +269,135 @@ public class TownProtectionListener implements Listener {
         }
     }
 
-    private @Nullable TownProtections resolveInteractProtection(final @NotNull Block block) {
-        if (block.getState() instanceof Container) {
-            return TownProtections.CONTAINER_ACCESS;
+    static @Nullable TownProtections resolveInteractProtection(final @NotNull Block block) {
+        final Material material = block.getType();
+        final String materialName = material.name();
+        if (materialName.equals(Material.SHULKER_BOX.name()) || materialName.endsWith("_SHULKER_BOX")) {
+            return TownProtections.SHULKER_BOXES;
         }
-
-        final String materialName = block.getType().name();
         if (materialName.endsWith("_BUTTON")) {
             return TownProtections.BUTTONS;
         }
-        if (materialName == null || materialName.isBlank()) {
-            return null;
+        if (materialName.endsWith("_PRESSURE_PLATE")) {
+            return TownProtections.PRESSURE_PLATES;
         }
-        if (materialName.contains("TRAPDOOR")) {
-            return TownProtections.TRAPDOORS;
-        }
-        if (materialName.contains("FENCE_GATE")) {
+        if (materialName.endsWith("_FENCE_GATE")) {
             return TownProtections.FENCE_GATES;
         }
-        if (materialName.contains("DOOR")) {
+        if (materialName.endsWith("_TRAPDOOR")) {
+            return TownProtections.TRAPDOORS;
+        }
+        if (isWoodDoor(materialName)) {
             return TownProtections.WOOD_DOORS;
         }
-        if (materialName == Material.LEVER.name()) {
-            return TownProtections.LEVER;
+        return switch (material) {
+            case CHEST -> TownProtections.CHEST;
+            case TRAPPED_CHEST -> TownProtections.TRAPPED_CHEST;
+            case FURNACE -> TownProtections.FURNACE;
+            case BLAST_FURNACE -> TownProtections.BLAST_FURNACE;
+            case DISPENSER -> TownProtections.DISPENSER;
+            case HOPPER -> TownProtections.HOPPER;
+            case DROPPER -> TownProtections.DROPPER;
+            case JUKEBOX -> TownProtections.JUKEBOX;
+            case STONECUTTER -> TownProtections.STONECUTTER;
+            case SMITHING_TABLE -> TownProtections.SMITHING_TABLE;
+            case FLETCHING_TABLE -> TownProtections.FLETCHING_TABLE;
+            case SMOKER -> TownProtections.SMOKER;
+            case LOOM -> TownProtections.LOOM;
+            case GRINDSTONE -> TownProtections.GRINDSTONE;
+            case COMPOSTER -> TownProtections.COMPOSTER;
+            case CARTOGRAPHY_TABLE -> TownProtections.CARTOGRAPHY_TABLE;
+            case BELL -> TownProtections.BELL;
+            case BARREL -> TownProtections.BARREL;
+            case BREWING_STAND -> TownProtections.BREWING_STAND;
+            case LEVER -> TownProtections.LEVER;
+            case LODESTONE -> TownProtections.LODESTONE;
+            case RESPAWN_ANCHOR -> TownProtections.RESPAWN_ANCHOR;
+            case TARGET -> TownProtections.TARGET;
+            default -> block.getState() instanceof Container
+                ? TownProtections.CONTAINER_ACCESS
+                : block.getBlockData() instanceof Openable || block.getBlockData() instanceof Powerable
+                    ? TownProtections.SWITCH_ACCESS
+                    : null;
+        };
+    }
+
+    static @Nullable TownProtections resolveItemUseProtection(final @Nullable ItemStack itemStack) {
+        return resolveItemUseProtection(itemStack == null ? null : itemStack.getType());
+    }
+
+    static @Nullable TownProtections resolveItemUseProtection(final @Nullable Material material) {
+        if (material == null || material == Material.AIR || material.name().endsWith("_AIR")) {
+            return null;
         }
-        return block.getBlockData() instanceof Openable || block.getBlockData() instanceof Powerable
-            ? TownProtections.SWITCH_ACCESS
+
+        final String materialName = material.name();
+        if (materialName.endsWith("_CHEST_BOAT") || materialName.endsWith("_BOAT")) {
+            return TownProtections.BOATS;
+        }
+        if (materialName.endsWith("MINECART")) {
+            return TownProtections.MINECARTS;
+        }
+        return switch (material) {
+            case ENDER_PEARL -> TownProtections.ENDER_PEARL;
+            case FIRE_CHARGE -> TownProtections.FIREBALL;
+            case CHORUS_FRUIT -> TownProtections.CHORUS_FRUIT;
+            case LEAD -> TownProtections.LEAD;
+            default -> null;
+        };
+    }
+
+    static @Nullable TownProtections resolveEntityItemUseProtection(
+        final @NotNull Entity entity,
+        final @Nullable ItemStack itemStack
+    ) {
+        return resolveEntityItemUseProtection(entity, itemStack == null ? null : itemStack.getType());
+    }
+
+    static @Nullable TownProtections resolveEntityItemUseProtection(
+        final @NotNull Entity entity,
+        final @Nullable Material heldMaterial
+    ) {
+        return heldMaterial == Material.LEAD
+            && (entity instanceof LivingEntity || entity.getType() == EntityType.LEASH_KNOT)
+            ? TownProtections.LEAD
             : null;
+    }
+
+    static @Nullable TownProtections resolveEntityInteractProtection(final @NotNull Entity entity) {
+        final String entityTypeName = entity.getType().name();
+        if (entityTypeName.endsWith("MINECART")) {
+            return TownProtections.MINECARTS;
+        }
+        if (entityTypeName.equals("BOAT") || entityTypeName.equals("CHEST_BOAT") || entityTypeName.endsWith("_BOAT")) {
+            return TownProtections.BOATS;
+        }
+        return null;
+    }
+
+    private static boolean isWoodDoor(final @NotNull String materialName) {
+        return materialName.endsWith("_DOOR")
+            && !materialName.equals(Material.IRON_DOOR.name())
+            && !materialName.contains("COPPER");
+    }
+
+    private @Nullable TownProtections resolveProtectionEntity(final @NotNull Entity entity) {
+        if (entity instanceof Monster) {
+            return TownProtections.TOWN_HOSTILE_ENTITIES;
+        }
+        if (entity instanceof Animals) {
+            return TownProtections.TOWN_PASSIVE_ENTITIES;
+        }
+        return null;
+    }
+
+    private boolean hasChangedChunk(final @NotNull Location from, final @NotNull Location to) {
+        if (from.getWorld() == null || to.getWorld() == null) {
+            return true;
+        }
+        return !from.getWorld().getUID().equals(to.getWorld().getUID())
+            || Math.floorDiv(from.getBlockX(), 16) != Math.floorDiv(to.getBlockX(), 16)
+            || Math.floorDiv(from.getBlockZ(), 16) != Math.floorDiv(to.getBlockZ(), 16);
     }
 
     private void sendDeniedMessage(final @NotNull org.bukkit.entity.Player player, final @NotNull String actionKey) {

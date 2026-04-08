@@ -15,6 +15,11 @@ package com.raindropcentral.rdt;
 
 import com.raindropcentral.commands.CommandFactory;
 import com.raindropcentral.rdt.configs.ConfigSection;
+import com.raindropcentral.rdt.configs.BankConfigSection;
+import com.raindropcentral.rdt.configs.FarmConfigSection;
+import com.raindropcentral.rdt.configs.NexusConfigSection;
+import com.raindropcentral.rdt.configs.OutpostConfigSection;
+import com.raindropcentral.rdt.configs.SecurityConfigSection;
 import com.raindropcentral.rdt.database.entity.RDTPlayer;
 import com.raindropcentral.rdt.database.entity.RTown;
 import com.raindropcentral.rdt.database.repository.RRDTPlayer;
@@ -24,23 +29,37 @@ import com.raindropcentral.rdt.database.repository.RRTownInvite;
 import com.raindropcentral.rdt.requirement.RDTRequirementProvider;
 import com.raindropcentral.rdt.service.NexusAccessService;
 import com.raindropcentral.rdt.service.TownBossBarService;
+import com.raindropcentral.rdt.service.TownFuelService;
 import com.raindropcentral.rdt.service.TownRuntimeService;
 import com.raindropcentral.rdt.service.TownService;
 import com.raindropcentral.rdt.service.TownSpawnService;
 import com.raindropcentral.rdt.view.main.TownHubView;
 import com.raindropcentral.rdt.view.town.ClaimsView;
-import com.raindropcentral.rdt.view.town.CreateTownColorAnvilView;
 import com.raindropcentral.rdt.view.town.CreateTownConfirmView;
 import com.raindropcentral.rdt.view.town.CreateTownNameAnvilView;
 import com.raindropcentral.rdt.view.town.TownArchetypeView;
 import com.raindropcentral.rdt.view.town.TownBankView;
+import com.raindropcentral.rdt.view.town.TownColorAnvilView;
+import com.raindropcentral.rdt.view.town.TownCreationCurrencyContributionAnvilView;
+import com.raindropcentral.rdt.view.town.TownCreationProgressView;
+import com.raindropcentral.rdt.view.town.TownCreationRequirementsView;
+import com.raindropcentral.rdt.view.town.TownCreationRewardsView;
 import com.raindropcentral.rdt.view.town.TownChunkTypeView;
 import com.raindropcentral.rdt.view.town.TownChunkView;
 import com.raindropcentral.rdt.view.town.TownDirectoryView;
+import com.raindropcentral.rdt.view.town.TownItemUseProtectionsView;
 import com.raindropcentral.rdt.view.town.TownInvitesView;
+import com.raindropcentral.rdt.view.town.TownLevelCurrencyContributionAnvilView;
+import com.raindropcentral.rdt.view.town.TownLevelProgressView;
+import com.raindropcentral.rdt.view.town.TownLevelRequirementsView;
+import com.raindropcentral.rdt.view.town.TownLevelRewardsView;
+import com.raindropcentral.rdt.view.town.TownLevelRoadmapView;
 import com.raindropcentral.rdt.view.town.TownOverviewView;
 import com.raindropcentral.rdt.view.town.TownProtectionScopeView;
 import com.raindropcentral.rdt.view.town.TownProtectionsView;
+import com.raindropcentral.rdt.view.town.TownRoleProtectionsView;
+import com.raindropcentral.rdt.view.town.TownSwitchProtectionsView;
+import com.raindropcentral.rdt.view.town.TownToggleProtectionsView;
 import com.raindropcentral.rdt.view.town.TownRenameAnvilView;
 import com.raindropcentral.rplatform.RPlatform;
 import com.raindropcentral.rplatform.api.PlatformType;
@@ -76,6 +95,11 @@ public class RDT {
 
     private static final String CONFIG_FOLDER_PATH = "config";
     private static final String CONFIG_FILE_NAME = "config.yml";
+    private static final String NEXUS_CONFIG_FILE_NAME = "nexus.yml";
+    private static final String SECURITY_CONFIG_FILE_NAME = "security.yml";
+    private static final String BANK_CONFIG_FILE_NAME = "bank.yml";
+    private static final String FARM_CONFIG_FILE_NAME = "farm.yml";
+    private static final String OUTPOST_CONFIG_FILE_NAME = "outpost.yml";
 
     private final JavaPlugin plugin;
     private final String edition;
@@ -100,6 +124,7 @@ public class RDT {
     private TownRuntimeService townRuntimeService;
     private TownSpawnService townSpawnService;
     private TownBossBarService townBossBarService;
+    private TownFuelService townFuelService;
     private NexusAccessService nexusAccessService;
     private RDTRequirementProvider requirementProvider;
 
@@ -145,7 +170,7 @@ public class RDT {
                 this.scheduler = this.platform.getScheduler();
                 this.platformType = this.platform.getPlatformType();
                 this.proxyService = this.platform.getProxyService();
-                this.ensureDefaultConfigFile();
+                this.ensureBundledConfigFiles();
                 this.initializeRepositories();
                 this.initializeServices();
                 this.initializeRequirementProvider();
@@ -173,6 +198,9 @@ public class RDT {
         if (this.townBossBarService != null) {
             this.townBossBarService.shutdown();
         }
+        if (this.townFuelService != null) {
+            this.townFuelService.shutdown();
+        }
         if (this.requirementProvider != null) {
             this.requirementProvider.unregister();
             this.requirementProvider = null;
@@ -197,16 +225,115 @@ public class RDT {
      * @return parsed plugin configuration
      */
     public @NotNull ConfigSection getDefaultConfig() {
-        this.ensureDefaultConfigFile();
+        this.ensureBundledConfigFiles();
         try {
             if (!this.canChangeConfigs()) {
                 final InputStream defaultStream = this.plugin.getResource(CONFIG_FOLDER_PATH + '/' + CONFIG_FILE_NAME);
                 return defaultStream == null ? ConfigSection.createDefault() : ConfigSection.fromInputStream(defaultStream);
             }
-            return ConfigSection.fromFile(this.getDefaultConfigFile());
+            return ConfigSection.fromFile(this.getConfigFile(CONFIG_FILE_NAME));
         } catch (final Exception exception) {
             this.getLogger().warning("Failed to load RDT config: " + exception.getMessage());
             return ConfigSection.createDefault();
+        }
+    }
+
+    /**
+     * Loads the effective Nexus level configuration.
+     *
+     * @return parsed Nexus level configuration
+     */
+    public @NotNull NexusConfigSection getNexusConfig() {
+        this.ensureBundledConfigFiles();
+        try {
+            if (!this.canChangeConfigs()) {
+                final InputStream defaultStream = this.plugin.getResource(CONFIG_FOLDER_PATH + '/' + NEXUS_CONFIG_FILE_NAME);
+                return defaultStream == null ? NexusConfigSection.createDefault() : NexusConfigSection.fromInputStream(defaultStream);
+            }
+            return NexusConfigSection.fromFile(this.getConfigFile(NEXUS_CONFIG_FILE_NAME));
+        } catch (final Exception exception) {
+            this.getLogger().warning("Failed to load RDT nexus config: " + exception.getMessage());
+            return NexusConfigSection.createDefault();
+        }
+    }
+
+    /**
+     * Loads the effective Security chunk level configuration.
+     *
+     * @return parsed Security level configuration
+     */
+    public @NotNull SecurityConfigSection getSecurityConfig() {
+        this.ensureBundledConfigFiles();
+        try {
+            if (!this.canChangeConfigs()) {
+                final InputStream defaultStream = this.plugin.getResource(CONFIG_FOLDER_PATH + '/' + SECURITY_CONFIG_FILE_NAME);
+                return defaultStream == null
+                    ? SecurityConfigSection.createDefault()
+                    : SecurityConfigSection.fromInputStream(defaultStream);
+            }
+            return SecurityConfigSection.fromFile(this.getConfigFile(SECURITY_CONFIG_FILE_NAME));
+        } catch (final Exception exception) {
+            this.getLogger().warning("Failed to load RDT security config: " + exception.getMessage());
+            return SecurityConfigSection.createDefault();
+        }
+    }
+
+    /**
+     * Loads the effective Bank chunk level configuration.
+     *
+     * @return parsed Bank level configuration
+     */
+    public @NotNull BankConfigSection getBankConfig() {
+        this.ensureBundledConfigFiles();
+        try {
+            if (!this.canChangeConfigs()) {
+                final InputStream defaultStream = this.plugin.getResource(CONFIG_FOLDER_PATH + '/' + BANK_CONFIG_FILE_NAME);
+                return defaultStream == null ? BankConfigSection.createDefault() : BankConfigSection.fromInputStream(defaultStream);
+            }
+            return BankConfigSection.fromFile(this.getConfigFile(BANK_CONFIG_FILE_NAME));
+        } catch (final Exception exception) {
+            this.getLogger().warning("Failed to load RDT bank config: " + exception.getMessage());
+            return BankConfigSection.createDefault();
+        }
+    }
+
+    /**
+     * Loads the effective Farm chunk level configuration.
+     *
+     * @return parsed Farm level configuration
+     */
+    public @NotNull FarmConfigSection getFarmConfig() {
+        this.ensureBundledConfigFiles();
+        try {
+            if (!this.canChangeConfigs()) {
+                final InputStream defaultStream = this.plugin.getResource(CONFIG_FOLDER_PATH + '/' + FARM_CONFIG_FILE_NAME);
+                return defaultStream == null ? FarmConfigSection.createDefault() : FarmConfigSection.fromInputStream(defaultStream);
+            }
+            return FarmConfigSection.fromFile(this.getConfigFile(FARM_CONFIG_FILE_NAME));
+        } catch (final Exception exception) {
+            this.getLogger().warning("Failed to load RDT farm config: " + exception.getMessage());
+            return FarmConfigSection.createDefault();
+        }
+    }
+
+    /**
+     * Loads the effective Outpost chunk level configuration.
+     *
+     * @return parsed Outpost level configuration
+     */
+    public @NotNull OutpostConfigSection getOutpostConfig() {
+        this.ensureBundledConfigFiles();
+        try {
+            if (!this.canChangeConfigs()) {
+                final InputStream defaultStream = this.plugin.getResource(CONFIG_FOLDER_PATH + '/' + OUTPOST_CONFIG_FILE_NAME);
+                return defaultStream == null
+                    ? OutpostConfigSection.createDefault()
+                    : OutpostConfigSection.fromInputStream(defaultStream);
+            }
+            return OutpostConfigSection.fromFile(this.getConfigFile(OUTPOST_CONFIG_FILE_NAME));
+        } catch (final Exception exception) {
+            this.getLogger().warning("Failed to load RDT outpost config: " + exception.getMessage());
+            return OutpostConfigSection.createDefault();
         }
     }
 
@@ -240,6 +367,7 @@ public class RDT {
         this.townRuntimeService = new TownRuntimeService(this);
         this.townSpawnService = new TownSpawnService(this);
         this.townBossBarService = new TownBossBarService(this);
+        this.townFuelService = new TownFuelService(this);
     }
 
     private void initializeRequirementProvider() {
@@ -264,20 +392,33 @@ public class RDT {
             .install(AnvilInputFeature.AnvilInput)
             .with(
                 new TownHubView(),
+                new TownCreationProgressView(),
+                new TownCreationRequirementsView(),
+                new TownCreationRewardsView(),
+                new TownCreationCurrencyContributionAnvilView(),
                 new CreateTownNameAnvilView(),
-                new CreateTownColorAnvilView(),
                 new CreateTownConfirmView(),
                 new TownDirectoryView(),
                 new TownInvitesView(),
                 new TownOverviewView(),
                 new TownArchetypeView(),
                 new TownBankView(),
+                new TownColorAnvilView(),
                 new TownRenameAnvilView(),
+                new TownLevelCurrencyContributionAnvilView(),
+                new TownLevelProgressView(),
+                new TownLevelRequirementsView(),
+                new TownLevelRewardsView(),
+                new TownLevelRoadmapView(),
                 new ClaimsView(),
                 new TownChunkView(),
                 new TownChunkTypeView(),
                 new TownProtectionScopeView(),
-                new TownProtectionsView()
+                new TownProtectionsView(),
+                new TownRoleProtectionsView(),
+                new TownItemUseProtectionsView(),
+                new TownSwitchProtectionsView(),
+                new TownToggleProtectionsView()
             )
             .disableMetrics()
             .register();
@@ -286,6 +427,9 @@ public class RDT {
     private void startRuntimeServices() {
         if (this.townBossBarService != null) {
             this.townBossBarService.start();
+        }
+        if (this.townFuelService != null) {
+            this.townFuelService.start();
         }
     }
 
@@ -302,11 +446,20 @@ public class RDT {
         return future;
     }
 
-    private @NotNull File getDefaultConfigFile() {
-        return new File(new File(this.plugin.getDataFolder(), CONFIG_FOLDER_PATH), CONFIG_FILE_NAME);
+    private @NotNull File getConfigFile(final @NotNull String fileName) {
+        return new File(new File(this.plugin.getDataFolder(), CONFIG_FOLDER_PATH), fileName);
     }
 
-    private void ensureDefaultConfigFile() {
+    private void ensureBundledConfigFiles() {
+        this.ensureBundledConfigFile(CONFIG_FILE_NAME);
+        this.ensureBundledConfigFile(NEXUS_CONFIG_FILE_NAME);
+        this.ensureBundledConfigFile(SECURITY_CONFIG_FILE_NAME);
+        this.ensureBundledConfigFile(BANK_CONFIG_FILE_NAME);
+        this.ensureBundledConfigFile(FARM_CONFIG_FILE_NAME);
+        this.ensureBundledConfigFile(OUTPOST_CONFIG_FILE_NAME);
+    }
+
+    private void ensureBundledConfigFile(final @NotNull String fileName) {
         final File dataFolder = this.plugin.getDataFolder();
         if (!dataFolder.exists() && !dataFolder.mkdirs()) {
             this.getLogger().warning("Could not create plugin data folder for config extraction.");
@@ -319,15 +472,15 @@ public class RDT {
             return;
         }
 
-        final File configFile = new File(configFolder, CONFIG_FILE_NAME);
+        final File configFile = new File(configFolder, fileName);
         if (configFile.exists()) {
             return;
         }
 
         try {
-            this.plugin.saveResource(CONFIG_FOLDER_PATH + "/" + CONFIG_FILE_NAME, false);
+            this.plugin.saveResource(CONFIG_FOLDER_PATH + "/" + fileName, false);
         } catch (final IllegalArgumentException exception) {
-            this.getLogger().warning("Bundled default config could not be extracted: " + exception.getMessage());
+            this.getLogger().warning("Bundled default config could not be extracted for " + fileName + ": " + exception.getMessage());
         }
     }
 
@@ -508,6 +661,15 @@ public class RDT {
      */
     public @Nullable TownBossBarService getTownBossBarService() {
         return this.townBossBarService;
+    }
+
+    /**
+     * Returns the FE town fuel service.
+     *
+     * @return FE town fuel service
+     */
+    public @Nullable TownFuelService getTownFuelService() {
+        return this.townFuelService;
     }
 
     /**

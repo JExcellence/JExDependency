@@ -14,7 +14,7 @@
 package com.raindropcentral.rdt.commands;
 
 /**
- * Supported actions for the primary {@code /rt} player command.
+ * Supported actions for the primary {@code /rt} command root.
  *
  * @author ItsRainingHP
  * @since 1.0.0
@@ -23,5 +23,6 @@ package com.raindropcentral.rdt.commands;
 public enum EPRTAction {
     MAIN,
     SPAWN,
-    BANK
+    BANK,
+    BROADCAST
 }

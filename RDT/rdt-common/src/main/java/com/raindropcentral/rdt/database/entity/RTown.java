@@ -41,6 +41,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -94,6 +95,12 @@ public class RTown extends BaseEntity {
 
     @Column(name = "town_level", nullable = false)
     private int townLevel;
+
+    @Column(name = "nexus_level")
+    private Integer nexusLevel;
+
+    @Column(name = "buffered_fuel_units", nullable = false)
+    private double bufferedFuelUnits;
 
     @Column(name = "founded", nullable = false)
     private long founded;
@@ -182,6 +189,8 @@ public class RTown extends BaseEntity {
         this.townName = normalizeTownName(townName);
         this.townColorHex = DEFAULT_TOWN_COLOR_HEX;
         this.townLevel = 1;
+        this.nexusLevel = 1;
+        this.bufferedFuelUnits = 0.0D;
         this.founded = System.currentTimeMillis();
         this.lastArchetypeChangeAt = 0L;
         this.nexusLocation = nexusLocation == null ? null : nexusLocation.clone();
@@ -284,6 +293,60 @@ public class RTown extends BaseEntity {
         this.townLevel = Math.max(1, townLevel);
     }
 
+    /** Returns whether the persisted nexus level has been backfilled. */
+    public boolean hasPersistedNexusLevel() {
+        return this.nexusLevel != null;
+    }
+
+    /** Backfills legacy towns whose old town level represented the nexus level directly. */
+    public boolean backfillLegacyNexusLevelIfNeeded() {
+        if (this.nexusLevel != null) {
+            return false;
+        }
+        this.nexusLevel = Math.max(1, this.townLevel);
+        return true;
+    }
+
+    /** Returns the persisted nexus progression level. */
+    public int getNexusLevel() {
+        return Math.max(1, this.nexusLevel == null ? this.townLevel : this.nexusLevel);
+    }
+
+    /** Replaces the persisted nexus progression level. */
+    public void setNexusLevel(final int nexusLevel) {
+        this.nexusLevel = Math.max(1, nexusLevel);
+        this.recalculateTownLevel();
+    }
+
+    /** Returns the currently buffered FE already withdrawn from fuel items. */
+    public double getBufferedFuelUnits() {
+        return Math.max(0.0D, this.bufferedFuelUnits);
+    }
+
+    /** Replaces the currently buffered FE already withdrawn from fuel items. */
+    public void setBufferedFuelUnits(final double bufferedFuelUnits) {
+        this.bufferedFuelUnits = Math.max(0.0D, bufferedFuelUnits);
+    }
+
+    /** Returns the cached composite town level derived from the nexus and non-nexus chunks. */
+    public int recalculateTownLevel() {
+        this.backfillLegacyNexusLevelIfNeeded();
+        this.townLevel = this.calculateCompositeTownLevel();
+        return this.townLevel;
+    }
+
+    /** Calculates the composite town level without mutating any additional town state. */
+    public int calculateCompositeTownLevel() {
+        int compositeLevel = this.getNexusLevel();
+        for (final RTownChunk chunk : this.chunks) {
+            if (chunk.getChunkType() == ChunkType.NEXUS) {
+                continue;
+            }
+            compositeLevel += Math.max(1, chunk.getChunkLevel());
+        }
+        return Math.max(1, compositeLevel);
+    }
+
     /** Returns the last archetype change timestamp in epoch milliseconds. */
     public long getLastArchetypeChangeAt() {
         return this.lastArchetypeChangeAt;
@@ -367,6 +430,7 @@ public class RTown extends BaseEntity {
             return;
         }
         this.chunks.add(validatedChunk);
+        this.recalculateTownLevel();
     }
 
     /** Removes a claimed chunk. */
@@ -374,11 +438,15 @@ public class RTown extends BaseEntity {
         if (chunk == null) {
             return false;
         }
-        return this.chunks.removeIf(existing ->
+        final boolean removed = this.chunks.removeIf(existing ->
             Objects.equals(existing.getWorldName(), chunk.getWorldName())
                 && existing.getX() == chunk.getX()
                 && existing.getZ() == chunk.getZ()
         );
+        if (removed) {
+            this.recalculateTownLevel();
+        }
+        return removed;
     }
 
     /** Finds a claimed chunk by world and coordinates. */
@@ -711,9 +779,24 @@ public class RTown extends BaseEntity {
         return new LinkedHashMap<>(this.protections);
     }
 
+    /**
+     * Returns the explicitly stored role for a protection.
+     *
+     * @param protection protection to resolve
+     * @return stored role identifier, or {@code null} when the protection inherits a legacy parent
+     *     or its enum default
+     */
+    public @Nullable String getConfiguredProtectionRoleId(final @Nullable TownProtections protection) {
+        if (protection == null) {
+            return null;
+        }
+        final String configuredRoleId = this.protections.get(protection.getProtectionKey());
+        return configuredRoleId == null ? null : protection.normalizeConfiguredRoleId(configuredRoleId);
+    }
+
     /** Returns the required role for a protection. */
     public @NotNull String getProtectionRoleId(final @NotNull TownProtections protection) {
-        return this.protections.getOrDefault(protection.getProtectionKey(), protection.getDefaultRoleId());
+        return this.resolveProtectionRoleId(protection, EnumSet.noneOf(TownProtections.class));
     }
 
     /** Replaces the required role for a protection. */
@@ -722,7 +805,7 @@ public class RTown extends BaseEntity {
         final @Nullable String roleId
     ) {
         Objects.requireNonNull(protection, "protection");
-        this.protections.put(protection.getProtectionKey(), TownProtections.normalizeRoleId(roleId));
+        this.protections.put(protection.getProtectionKey(), protection.normalizeConfiguredRoleId(roleId));
     }
 
     /** Returns whether the town currently has a placed nexus. */
@@ -754,6 +837,25 @@ public class RTown extends BaseEntity {
     @Override
     public @NotNull String toString() {
         return "RTown{" + this.townUuid + "," + this.townName + "}";
+    }
+
+    private @NotNull String resolveProtectionRoleId(
+        final @NotNull TownProtections protection,
+        final @NotNull EnumSet<TownProtections> visited
+    ) {
+        if (!visited.add(protection)) {
+            return protection.normalizeConfiguredRoleId(protection.getDefaultRoleId());
+        }
+
+        final String configuredRoleId = this.protections.get(protection.getProtectionKey());
+        if (configuredRoleId != null) {
+            return protection.normalizeConfiguredRoleId(configuredRoleId);
+        }
+
+        final TownProtections fallbackProtection = protection.getFallbackProtection();
+        return fallbackProtection == null
+            ? protection.normalizeConfiguredRoleId(protection.getDefaultRoleId())
+            : this.resolveProtectionRoleId(fallbackProtection, visited);
     }
 
     private void ensureDefaultRoles() {

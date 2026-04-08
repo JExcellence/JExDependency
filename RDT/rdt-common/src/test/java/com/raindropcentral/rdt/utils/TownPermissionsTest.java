@@ -54,17 +54,26 @@ class TownPermissionsTest {
 
         assertTrue(memberPermissions.contains(TownPermissions.TOWN_INFO.getPermissionKey()));
         assertTrue(memberPermissions.contains(TownPermissions.TOWN_INVITE.getPermissionKey()));
+        assertTrue(memberPermissions.contains(TownPermissions.CONTRIBUTE.getPermissionKey()));
         assertFalse(memberPermissions.contains(TownPermissions.CLAIM_CHUNK.getPermissionKey()));
 
         assertTrue(mayorPermissions.contains(TownPermissions.TOWN_INFO.getPermissionKey()));
         assertTrue(mayorPermissions.contains(TownPermissions.TOWN_INVITE.getPermissionKey()));
+        assertTrue(mayorPermissions.contains(TownPermissions.CONTRIBUTE.getPermissionKey()));
         assertTrue(mayorPermissions.contains(TownPermissions.CLAIM_CHUNK.getPermissionKey()));
+        assertTrue(mayorPermissions.contains(TownPermissions.CHANGE_TOWN_COLOR.getPermissionKey()));
         assertTrue(mayorPermissions.contains(TownPermissions.UPGRADE_CHUNK.getPermissionKey()));
+        assertFalse(publicPermissions.contains(TownPermissions.CONTRIBUTE.getPermissionKey()));
+        assertFalse(memberPermissions.contains(TownPermissions.CHANGE_TOWN_COLOR.getPermissionKey()));
     }
 
     @Test
     void reportsPermissionDefaultOwnership() {
         assertTrue(TownPermissions.CLAIM_CHUNK.isDefaultForRole("mayor"));
         assertFalse(TownPermissions.CLAIM_CHUNK.isDefaultForRole("member"));
+        assertTrue(TownPermissions.CHANGE_TOWN_COLOR.isDefaultForRole("mayor"));
+        assertFalse(TownPermissions.CHANGE_TOWN_COLOR.isDefaultForRole("member"));
+        assertTrue(TownPermissions.CONTRIBUTE.isDefaultForRole("member"));
+        assertFalse(TownPermissions.CONTRIBUTE.isDefaultForRole("public"));
     }
 }

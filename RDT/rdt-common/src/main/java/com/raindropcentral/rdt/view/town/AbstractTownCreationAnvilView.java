@@ -12,8 +12,6 @@
  */
 
 package com.raindropcentral.rdt.view.town;
-
-import com.raindropcentral.rdt.view.main.TownHubView;
 import com.raindropcentral.rplatform.view.AbstractAnvilView;
 import me.devnatan.inventoryframework.BukkitViewContainer;
 import me.devnatan.inventoryframework.ViewConfigBuilder;
@@ -44,10 +42,10 @@ import java.util.Map;
 abstract class AbstractTownCreationAnvilView extends AbstractAnvilView {
 
     /**
-     * Creates the town-creation anvil with Town Hub back navigation.
+     * Creates the town-creation anvil with town-creation hub back navigation.
      */
     protected AbstractTownCreationAnvilView() {
-        super(TownHubView.class);
+        super(TownCreationProgressView.class);
     }
 
     /**

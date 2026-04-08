@@ -14,6 +14,7 @@
 package com.raindropcentral.rdt.database.entity;
 
 import com.raindropcentral.rdt.utils.TownPermissions;
+import com.raindropcentral.rplatform.database.converter.ItemStackMapConverter;
 import com.raindropcentral.rplatform.database.converter.UUIDConverter;
 import de.jexcellence.hibernate.entity.BaseEntity;
 import jakarta.persistence.CollectionTable;
@@ -24,10 +25,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
@@ -66,6 +71,15 @@ public class RDTPlayer extends BaseEntity {
 
     @Column(name = "boss_bar_enabled", nullable = false)
     private boolean bossBarEnabled;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "rdt_player_creation_currency_progress", joinColumns = @JoinColumn(name = "player_id_fk"))
+    @Column(name = "amount", nullable = false)
+    private Map<String, Double> townCreationCurrencyProgress = new LinkedHashMap<>();
+
+    @Convert(converter = ItemStackMapConverter.class)
+    @Column(name = "town_creation_item_progress", columnDefinition = "LONGTEXT")
+    private Map<String, ItemStack> townCreationItemProgress = new LinkedHashMap<>();
 
     /**
      * Creates a player profile that already belongs to a town as a default member.
@@ -336,5 +350,104 @@ public class RDTPlayer extends BaseEntity {
      */
     public void setBossBarEnabled(final boolean bossBarEnabled) {
         this.bossBarEnabled = bossBarEnabled;
+    }
+
+    /**
+     * Returns stored town-creation item progress.
+     *
+     * @return stored town-creation item progress
+     */
+    public @NotNull Map<String, ItemStack> getTownCreationItemProgress() {
+        return new LinkedHashMap<>(this.townCreationItemProgress);
+    }
+
+    /**
+     * Returns stored town-creation item progress for a key.
+     *
+     * @param progressKey progress entry key
+     * @return stored progress item, or {@code null} when absent
+     */
+    public @Nullable ItemStack getTownCreationItemProgress(final @NotNull String progressKey) {
+        final ItemStack storedItem = this.townCreationItemProgress.get(normalizeProgressKey(progressKey));
+        return storedItem == null ? null : storedItem.clone();
+    }
+
+    /**
+     * Replaces stored town-creation item progress for a key.
+     *
+     * @param progressKey progress entry key
+     * @param itemStack stored progress item, or {@code null} to clear the key
+     */
+    public void setTownCreationItemProgress(
+        final @NotNull String progressKey,
+        final @Nullable ItemStack itemStack
+    ) {
+        final String normalizedProgressKey = normalizeProgressKey(progressKey);
+        if (itemStack == null || itemStack.isEmpty()) {
+            this.townCreationItemProgress.remove(normalizedProgressKey);
+            return;
+        }
+        this.townCreationItemProgress.put(normalizedProgressKey, itemStack.clone());
+    }
+
+    /**
+     * Returns stored town-creation currency progress for a key.
+     *
+     * @param progressKey progress entry key
+     * @return stored progress amount
+     */
+    public double getTownCreationCurrencyProgress(final @NotNull String progressKey) {
+        return this.townCreationCurrencyProgress.getOrDefault(normalizeProgressKey(progressKey), 0.0D);
+    }
+
+    /**
+     * Returns stored town-creation currency progress.
+     *
+     * @return stored town-creation currency progress
+     */
+    public @NotNull Map<String, Double> getTownCreationCurrencyProgress() {
+        return new LinkedHashMap<>(this.townCreationCurrencyProgress);
+    }
+
+    /**
+     * Replaces stored town-creation currency progress for a key.
+     *
+     * @param progressKey progress entry key
+     * @param amount stored progress amount
+     */
+    public void setTownCreationCurrencyProgress(final @NotNull String progressKey, final double amount) {
+        final String normalizedProgressKey = normalizeProgressKey(progressKey);
+        if (amount <= 0.0D) {
+            this.townCreationCurrencyProgress.remove(normalizedProgressKey);
+            return;
+        }
+        this.townCreationCurrencyProgress.put(normalizedProgressKey, amount);
+    }
+
+    /**
+     * Clears stored town-creation requirement progress that matches a stable prefix.
+     *
+     * @param progressKeyPrefix stable progress-key prefix
+     */
+    public void clearTownCreationRequirementProgress(final @NotNull String progressKeyPrefix) {
+        final String normalizedPrefix = normalizeProgressKey(progressKeyPrefix);
+        this.townCreationItemProgress.keySet().removeIf(key -> key.startsWith(normalizedPrefix));
+        this.townCreationCurrencyProgress.keySet().removeIf(key -> key.startsWith(normalizedPrefix));
+    }
+
+    /**
+     * Clears all stored town-creation progress.
+     */
+    public void clearTownCreationProgress() {
+        this.townCreationItemProgress.clear();
+        this.townCreationCurrencyProgress.clear();
+    }
+
+    private static @NotNull String normalizeProgressKey(final @NotNull String progressKey) {
+        final String normalized = Objects.requireNonNull(progressKey, "progressKey").trim().toLowerCase(Locale.ROOT);
+        if (normalized.isEmpty()) {
+            throw new IllegalArgumentException("progressKey cannot be blank");
+        }
+        return normalized;
     }
 }

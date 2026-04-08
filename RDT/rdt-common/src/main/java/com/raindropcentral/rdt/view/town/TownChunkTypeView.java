@@ -151,13 +151,32 @@ public class TownChunkTypeView extends BaseView {
             return;
         }
 
-        final boolean changed = this.plugin.get(clickContext).getTownRuntimeService().setChunkType(townChunk, chunkType);
-        final String messageKey = changed ? "selected" : "selection_failed";
+        final var result = this.plugin.get(clickContext).getTownRuntimeService().setChunkType(
+            clickContext.getPlayer(),
+            townChunk,
+            chunkType
+        );
+        final String messageKey = result.success() ? "selected" : "selection_failed";
         new I18n.Builder(this.getKey() + '.' + messageKey, clickContext.getPlayer())
             .includePrefix()
             .withPlaceholder("chunk_type", chunkType.name())
             .build()
             .sendMessage();
+        if (result.success() && result.fuelTankGranted()) {
+            new I18n.Builder(this.getKey() + ".fuel_tank_granted", clickContext.getPlayer())
+                .includePrefix()
+                .build()
+                .sendMessage();
+        }
+        if (result.success() && result.fuelTankRemoved()) {
+            new I18n.Builder(
+                this.getKey() + (result.droppedFuel() ? ".fuel_tank_removed_with_fuel" : ".fuel_tank_removed"),
+                clickContext.getPlayer()
+            )
+                .includePrefix()
+                .build()
+                .sendMessage();
+        }
         this.openChunkView(clickContext, townChunk);
     }
 
@@ -216,7 +235,12 @@ public class TownChunkTypeView extends BaseView {
         final @NotNull ChunkType chunkType
     ) {
         final boolean selected = townChunk.getChunkType() == chunkType;
-        final String loreKey = selected ? "entry.selected_lore" : "entry.available_lore";
+        final boolean resetsState = this.plugin.get(context).getDefaultConfig().isChunkTypeResetOnChange();
+        final String loreKey = selected
+            ? "entry.selected_lore"
+            : resetsState
+                ? "entry.available_reset_lore"
+                : "entry.available_lore";
         return UnifiedBuilderFactory.item(this.plugin.get(context).getDefaultConfig().getChunkTypeIconMaterial(chunkType))
             .setName(this.i18n("entry.name", context.getPlayer())
                 .withPlaceholder("chunk_type", chunkType.name())
