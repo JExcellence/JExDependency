@@ -45,4 +45,4 @@ bin/
 build-all.local.bat
 
 ### Mac OS ###
-.DS_Store
+.DS_Store.dual-graph/

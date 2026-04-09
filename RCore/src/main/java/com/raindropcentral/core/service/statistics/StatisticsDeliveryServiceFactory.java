@@ -65,7 +65,12 @@ public class StatisticsDeliveryServiceFactory {
         UUID serverUuidObj = rCentralService.getServerUuid();
 
         if (apiClient == null || apiKey == null || serverUuidObj == null) {
-            LOGGER.warning("RCentral service not fully initialized, statistics delivery disabled");
+            StringBuilder missing = new StringBuilder("RCentral service not fully initialized - Missing: ");
+            if (apiClient == null) missing.append("apiClient ");
+            if (apiKey == null) missing.append("apiKey ");
+            if (serverUuidObj == null) missing.append("serverUuid ");
+            LOGGER.warning(missing.toString());
+            LOGGER.warning("Statistics delivery disabled. Connect with: /rc connect <api-key>");
             return null;
         }
 

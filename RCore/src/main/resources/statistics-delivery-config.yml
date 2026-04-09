@@ -100,3 +100,95 @@ statistics-delivery:
     sign-payloads: true
     # Encrypt sensitive data (IP addresses, locations)
     encrypt-sensitive-data: true
+
+  # Vanilla Minecraft Statistics Collection
+  # Enhanced collection system for native Minecraft statistics
+  vanilla-statistics:
+    # Enable or disable vanilla statistics collection
+    enabled: true
+    
+    # Collection frequency in seconds (10-600, default 60)
+    collection-frequency: 60
+    
+    # Minimum delta threshold for transmitting statistics
+    # Statistics with changes below this value are filtered out
+    delta-threshold: 5
+    
+    # Performance settings
+    batch-size: 100
+    parallel-threads: 4
+    afk-threshold: 600
+    
+    # TPS-based throttling
+    tps-throttling:
+      enabled: true
+      pause-below: 15.0
+      reduce-below: 18.0
+    
+    # Privacy settings
+    privacy:
+      enabled: false
+      anonymize-uuids: false
+      excluded-statistics:
+        - LEAVE_GAME
+        - TIME_SINCE_REST
+    
+    # Category-specific settings
+    categories:
+      blocks:
+        enabled: true
+        frequency: 60
+      items:
+        enabled: true
+        frequency: 60
+      mobs:
+        enabled: true
+        frequency: 60
+      travel:
+        enabled: true
+        frequency: 120
+      general:
+        enabled: true
+        frequency: 60
+      interaction:
+        enabled: true
+        frequency: 60
+    
+    # Filtering
+    filtering:
+      materials:
+        whitelist: []
+        blacklist: []
+      entities:
+        whitelist: []
+        blacklist: []
+    
+    # Custom aggregates
+    custom-aggregates:
+      total_blocks_interacted:
+        type: sum
+        statistics:
+          - MINE_BLOCK
+          - BREAK_BLOCK
+          - PLACE_BLOCK
+      total_combat:
+        type: sum
+        statistics:
+          - KILL_ENTITY
+          - ENTITY_KILLED_BY
+          - DAMAGE_DEALT
+          - DAMAGE_TAKEN
+      total_distance:
+        type: sum
+        statistics:
+          - WALK_ONE_CM
+          - SPRINT_ONE_CM
+          - SWIM_ONE_CM
+          - FLY_ONE_CM
+          - BOAT_ONE_CM
+          - HORSE_ONE_CM
+    
+    # Cross-server synchronization
+    cross-server-sync:
+      enabled: true
+      cache-validity-minutes: 5

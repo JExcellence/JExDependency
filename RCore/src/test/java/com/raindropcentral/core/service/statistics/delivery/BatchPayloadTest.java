@@ -43,7 +43,7 @@ class BatchPayloadTest {
         final StatisticEntry entry = new StatisticEntry(
             UUID.randomUUID(),
             "total_kills",
-            3.0D,
+            "3.0",
             StatisticDataType.NUMBER,
             10L,
             false,

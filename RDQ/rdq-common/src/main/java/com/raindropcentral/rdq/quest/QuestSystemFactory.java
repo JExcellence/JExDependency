@@ -358,7 +358,6 @@ public class QuestSystemFactory {
             int totalLoaded = 0;
 
             // Process quests sequentially to avoid OptimisticLockException
-            // when multiple quests try to update the same entities concurrently
             for (final File categoryDir : categoryDirs) {
                 final File[] questFiles = categoryDir.listFiles((dir, name) -> name.endsWith(".yml"));
                 if (questFiles == null || questFiles.length == 0) {
@@ -383,14 +382,12 @@ public class QuestSystemFactory {
                         final QuestSection questConfig = cfgKeeper.rootSection;
                         questConfig.setQuestId(questId);
 
-                        // Process quest creation and task creation sequentially
-                        synchronized (this) {
-                            final Quest quest = createQuestFromConfig(questConfig);
-                            if (quest != null) {
-                                createTasksFromConfig(quest, questConfig);
-                                totalLoaded++;
-                                LOGGER.fine("Loaded quest: " + categoryDir.getName() + "/" + questId);
-                            }
+                        // Create quest and tasks in separate transactions
+                        final Quest quest = createQuestFromConfig(questConfig);
+                        if (quest != null) {
+                            createTasksFromConfig(quest, questConfig);
+                            totalLoaded++;
+                            LOGGER.fine("Loaded quest: " + categoryDir.getName() + "/" + questId);
                         }
 
                     } catch (Exception e) {
@@ -409,67 +406,109 @@ public class QuestSystemFactory {
 
     /**
      * Creates or updates a {@link Quest} entity from a parsed {@link QuestSection}.
+     * Includes retry logic for OptimisticLockException.
      *
      * @param config the quest configuration
      * @return the persisted Quest entity, or {@code null} if creation failed
      */
     @Nullable
     private Quest createQuestFromConfig(@NotNull final QuestSection config) {
-        try {
-            final var categoryOpt = categoryRepository.findByIdentifier(config.getCategory()).join();
-            if (categoryOpt.isEmpty()) {
-                LOGGER.warning("Category not found for quest: " + config.getIdentifier()
-                    + " (category: " + config.getCategory() + ")");
+        final int maxRetries = 3;
+        int attempt = 0;
+        
+        while (attempt < maxRetries) {
+            try {
+                return createQuestFromConfigInternal(config);
+            } catch (jakarta.persistence.OptimisticLockException e) {
+                attempt++;
+                if (attempt >= maxRetries) {
+                    LOGGER.log(Level.WARNING, "Failed to create quest from config after " + maxRetries 
+                        + " attempts: " + config.getIdentifier(), e);
+                    return null;
+                }
+                
+                // Exponential backoff: 50ms, 100ms, 200ms
+                long backoffMs = 50L * (1L << (attempt - 1));
+                try {
+                    Thread.sleep(backoffMs);
+                } catch (InterruptedException ie) {
+                    Thread.currentThread().interrupt();
+                    LOGGER.warning("Interrupted while retrying quest creation: " + config.getIdentifier());
+                    return null;
+                }
+                
+                LOGGER.fine("Retrying quest creation (attempt " + (attempt + 1) + "/" + maxRetries 
+                    + ") for: " + config.getIdentifier());
+            } catch (Exception e) {
+                LOGGER.log(Level.WARNING, "Failed to create quest from config: " + config.getIdentifier(), e);
                 return null;
             }
-            final QuestCategory category = categoryOpt.get();
+        }
+        
+        return null;
+    }
 
-            final var existingOpt = questRepository.findByIdentifier(config.getIdentifier()).join();
-            Quest quest;
-
-            if (existingOpt.isPresent()) {
-                quest = existingOpt.get();
-            } else {
-                final QuestDifficulty difficulty = parseQuestDifficulty(config.getDifficulty());
-                quest = new Quest(
-                    config.getIdentifier(),
-                    category,
-                    config.getIcon(),
-                    difficulty
-                );
-            }
-
-            quest.setRepeatable(config.getRepeatable());
-            quest.setMaxCompletions(config.getMaxCompletions());
-            quest.setCooldownSeconds(config.getCooldownSeconds());
-            quest.setTimeLimitSeconds(config.getTimeLimitSeconds());
-            quest.setEnabled(config.getEnabled());
-
-            // Persist rewards and requirements as JSON for display and validation
-            if (!config.getRewards().isEmpty()) {
-                quest.setRewardData(GSON.toJson(config.getRewards()));
-                // Note: Actual QuestReward entities are NOT created here to avoid LazyInitializationException
-                // They should be created separately in a proper transaction context if needed
-            }
-            if (!config.getRequirements().isEmpty()) {
-                quest.setRequirementData(GSON.toJson(config.getRequirements()));
-            }
-
-            if (quest.getId() == null) {
-                quest = questRepository.create(quest);
-            } else {
-                quest = questRepository.update(quest);
-            }
-            
-            // Create reward entities from JSON data
-            createRewardsFromJson(quest);
-
-            return quest;
-
-        } catch (Exception e) {
-            LOGGER.log(Level.WARNING, "Failed to create quest from config: " + config.getIdentifier(), e);
+    /**
+     * Internal method that performs the actual quest creation/update.
+     * <p>
+     * This method creates or updates ONLY the Quest entity itself, without
+     * touching any child entities (tasks, rewards, requirements). Child entities
+     * are handled separately to avoid OptimisticLockException from cascading.
+     * </p>
+     *
+     * @param config the quest configuration
+     * @return the persisted Quest entity
+     */
+    @Nullable
+    private Quest createQuestFromConfigInternal(@NotNull final QuestSection config) {
+        final var categoryOpt = categoryRepository.findByIdentifier(config.getCategory()).join();
+        if (categoryOpt.isEmpty()) {
+            LOGGER.warning("Category not found for quest: " + config.getIdentifier()
+                + " (category: " + config.getCategory() + ")");
             return null;
         }
+        final QuestCategory category = categoryOpt.get();
+
+        final var existingOpt = questRepository.findByIdentifier(config.getIdentifier()).join();
+        Quest quest;
+
+        if (existingOpt.isPresent()) {
+            quest = existingOpt.get();
+            // Clear collections to prevent cascade operations
+            quest.getTasks().clear();
+            quest.getRewards().clear();
+            quest.getRequirements().clear();
+        } else {
+            final QuestDifficulty difficulty = parseQuestDifficulty(config.getDifficulty());
+            quest = new Quest(
+                config.getIdentifier(),
+                category,
+                config.getIcon(),
+                difficulty
+            );
+        }
+
+        quest.setRepeatable(config.getRepeatable());
+        quest.setMaxCompletions(config.getMaxCompletions());
+        quest.setCooldownSeconds(config.getCooldownSeconds());
+        quest.setTimeLimitSeconds(config.getTimeLimitSeconds());
+        quest.setEnabled(config.getEnabled());
+
+        // Persist rewards and requirements as JSON for display and validation
+        if (!config.getRewards().isEmpty()) {
+            quest.setRewardData(GSON.toJson(config.getRewards()));
+        }
+        if (!config.getRequirements().isEmpty()) {
+            quest.setRequirementData(GSON.toJson(config.getRequirements()));
+        }
+
+        if (quest.getId() == null) {
+            quest = questRepository.create(quest);
+        } else {
+            quest = questRepository.update(quest);
+        }
+
+        return quest;
     }
 
     /**
@@ -493,50 +532,96 @@ public class QuestSystemFactory {
             taskSection.setQuestId(config.getQuestId());
             taskSection.setTaskId(taskKey);
 
-            try {
-                // Get the icon from the task section (already configured with i18n keys)
-                final IconSection taskIcon = taskSection.getIcon();
-
-                // Check whether this task already exists to avoid duplicates
-                final var existingOpt = questTaskRepository
-                    .findByQuestAndIdentifier(quest.getId(), taskSection.getIdentifier())
-                    .join();
-
-                final QuestTask task;
-                if (existingOpt.isPresent()) {
-                    task = existingOpt.get();
-                    // Refresh mutable fields (icon, order, difficulty, sequential, data)
-                    task.setIcon(taskIcon);
-                    task.setOrderIndex(taskSection.getOrderIndex());
-                } else {
-                    task = new QuestTask(quest, taskSection.getIdentifier(), taskIcon, taskSection.getOrderIndex());
+            // Retry logic for OptimisticLockException
+            final int maxRetries = 3;
+            int attempt = 0;
+            boolean success = false;
+            
+            while (attempt < maxRetries && !success) {
+                try {
+                    createTaskFromConfigInternal(quest, taskSection);
+                    success = true;
+                } catch (jakarta.persistence.OptimisticLockException e) {
+                    attempt++;
+                    if (attempt >= maxRetries) {
+                        LOGGER.log(Level.WARNING, "Failed to persist task '" + taskKey 
+                            + "' for quest '" + config.getIdentifier() + "' after " + maxRetries + " attempts", e);
+                        break;
+                    }
+                    
+                    // Exponential backoff: 50ms, 100ms, 200ms
+                    long backoffMs = 50L * (1L << (attempt - 1));
+                    try {
+                        Thread.sleep(backoffMs);
+                    } catch (InterruptedException ie) {
+                        Thread.currentThread().interrupt();
+                        LOGGER.warning("Interrupted while retrying task creation: " + taskKey);
+                        break;
+                    }
+                    
+                    LOGGER.fine("Retrying task creation (attempt " + (attempt + 1) + "/" + maxRetries 
+                        + ") for: " + taskKey);
+                } catch (Exception e) {
+                    LOGGER.log(Level.WARNING,
+                        "Failed to persist task '" + taskKey + "' for quest '" + config.getIdentifier() + "'", e);
+                    break;
                 }
-
-                task.setDifficulty(parseTaskDifficulty(taskSection.getDifficulty()));
-                task.setSequential(taskSection.getSequential());
-
-                if (taskSection.getRequirement() != null) {
-                    task.setRequirementData(GSON.toJson(taskSection.getRequirement()));
-                }
-                if (taskSection.getReward() != null && taskSection.getReward().getType() != null) {
-                    task.setRewardData(GSON.toJson(taskSection.getReward()));
-                    // Note: Actual QuestTaskReward entities are NOT created here to avoid LazyInitializationException
-                    // They should be created separately in a proper transaction context if needed
-                }
-
-                if (task.getId() == null) {
-                    questTaskRepository.create(task);
-                } else {
-                    questTaskRepository.update(task);
-                }
-                
-                // Create reward entities from JSON data
-                createTaskRewardsFromJson(task);
-
-            } catch (Exception e) {
-                LOGGER.log(Level.WARNING,
-                    "Failed to persist task '" + taskKey + "' for quest '" + config.getIdentifier() + "'", e);
             }
+        }
+    }
+
+    /**
+     * Internal method that creates or updates a single quest task.
+     * <p>
+     * This method loads the quest fresh from the database to ensure we have
+     * the latest version and avoid OptimisticLockException.
+     * </p>
+     *
+     * @param quest the parent quest entity (used for ID reference only)
+     * @param taskSection the task configuration
+     */
+    private void createTaskFromConfigInternal(@NotNull final Quest quest, @NotNull final QuestTaskSection taskSection) {
+        // Get the icon from the task section (already configured with i18n keys)
+        final IconSection taskIcon = taskSection.getIcon();
+
+        // Check whether this task already exists to avoid duplicates
+        final var existingOpt = questTaskRepository
+            .findByQuestAndIdentifier(quest.getId(), taskSection.getIdentifier())
+            .join();
+
+        final QuestTask task;
+        if (existingOpt.isPresent()) {
+            task = existingOpt.get();
+            // Refresh mutable fields (icon, order, difficulty, sequential, data)
+            task.setIcon(taskIcon);
+            task.setOrderIndex(taskSection.getOrderIndex());
+            // Clear collections to prevent cascade operations
+            task.getRewards().clear();
+            task.getRequirements().clear();
+        } else {
+            // Load quest fresh from database to get latest version
+            final var freshQuestOpt = questRepository.findById(quest.getId());
+            if (freshQuestOpt.isEmpty()) {
+                LOGGER.warning("Quest not found when creating task: " + quest.getIdentifier());
+                return;
+            }
+            task = new QuestTask(freshQuestOpt.get(), taskSection.getIdentifier(), taskIcon, taskSection.getOrderIndex());
+        }
+
+        task.setDifficulty(parseTaskDifficulty(taskSection.getDifficulty()));
+        task.setSequential(taskSection.getSequential());
+
+        if (taskSection.getRequirement() != null) {
+            task.setRequirementData(GSON.toJson(taskSection.getRequirement()));
+        }
+        if (taskSection.getReward() != null && taskSection.getReward().getType() != null) {
+            task.setRewardData(GSON.toJson(taskSection.getReward()));
+        }
+
+        if (task.getId() == null) {
+            questTaskRepository.create(task);
+        } else {
+            questTaskRepository.update(task);
         }
     }
 

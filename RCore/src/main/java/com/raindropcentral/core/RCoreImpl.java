@@ -34,6 +34,18 @@ import com.raindropcentral.core.service.central.RCentralService;
 import com.raindropcentral.core.service.central.cookie.ActiveCookieBoostService;
 import com.raindropcentral.core.service.statistics.StatisticsDeliveryService;
 import com.raindropcentral.core.service.statistics.StatisticsDeliveryServiceFactory;
+import com.raindropcentral.core.service.statistics.queue.DeliveryPriority;
+import com.raindropcentral.core.service.statistics.queue.StatisticsQueueManager;
+import com.raindropcentral.core.service.statistics.vanilla.VanillaStatisticCollectionService;
+import com.raindropcentral.core.service.statistics.vanilla.VanillaStatisticCollector;
+import com.raindropcentral.core.service.statistics.vanilla.aggregation.StatisticAggregationEngine;
+import com.raindropcentral.core.service.statistics.vanilla.batch.BatchCollectionProcessor;
+import com.raindropcentral.core.service.statistics.vanilla.cache.StatisticCacheManager;
+import com.raindropcentral.core.service.statistics.vanilla.config.VanillaStatisticConfig;
+import com.raindropcentral.core.service.statistics.vanilla.event.EventDrivenCollectionHandler;
+import com.raindropcentral.core.service.statistics.vanilla.privacy.PlayerPrivacyManager;
+import com.raindropcentral.core.service.statistics.vanilla.scheduler.CollectionScheduler;
+import com.raindropcentral.core.service.statistics.vanilla.scheduler.TPSThrottler;
 import com.raindropcentral.core.view.DropletClaimsView;
 import com.raindropcentral.core.view.DropletJobSelectionView;
 import com.raindropcentral.core.view.DropletSkillSelectionView;
@@ -140,6 +152,12 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
      * Statistics delivery service for transmitting player statistics to RaindropCentral.
      */
     private StatisticsDeliveryService statisticsDeliveryService;
+    
+    /**
+     * Vanilla statistic collection service for collecting Minecraft native statistics.
+     */
+    private VanillaStatisticCollectionService vanillaStatisticService;
+    
     private BStatsMetrics metrics;
     private ViewFrame viewFrame;
 
@@ -240,7 +258,12 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
         }
         Bukkit.getServicesManager().unregisterAll(this.getPlugin());
 
-        // Shutdown statistics delivery service first to flush pending statistics
+        // Shutdown vanilla statistics service first to flush pending statistics
+        if (this.vanillaStatisticService != null && this.vanillaStatisticService.isInitialized()) {
+            this.vanillaStatisticService.shutdown().join();
+        }
+
+        // Shutdown statistics delivery service to flush pending statistics
         StatisticsDeliveryServiceFactory.shutdown(this.statisticsDeliveryService);
 
         // Notify RCentral of shutdown
@@ -397,6 +420,9 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
             this.getPlugin(), this.rCentralService
         );
         StatisticsDeliveryServiceFactory.initialize(this.statisticsDeliveryService);
+
+        // Initialize vanilla statistic collection service
+        initializeVanillaStatistics();
 
         this.initializeViews();
         this.activeCookieBoostService.hydrateOnlinePlayers();
@@ -642,6 +668,112 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
      */
     public @NotNull ActiveCookieBoostService getActiveCookieBoostService() {
         return this.activeCookieBoostService;
+    }
+
+    /**
+     * Initializes the vanilla statistic collection service.
+     * Creates all required components and starts the collection system.
+     */
+    private void initializeVanillaStatistics() {
+        try {
+            // Load configuration
+            VanillaStatisticConfig config = new VanillaStatisticConfig(this.getPlugin());
+            
+            if (!config.isEnabled()) {
+                LOGGER.info("Vanilla statistics collection is disabled in configuration");
+                return;
+            }
+
+            // Check if statistics delivery service is available
+            if (this.statisticsDeliveryService == null) {
+                LOGGER.warning("Statistics delivery service not available, vanilla statistics disabled");
+                return;
+            }
+
+            // Get queue manager from statistics delivery service
+            StatisticsQueueManager queueManager = this.statisticsDeliveryService.getQueueManager();
+            
+            // Create privacy manager
+            PlayerPrivacyManager privacyManager = new PlayerPrivacyManager();
+            
+            // Create cache manager
+            StatisticCacheManager cacheManager = new StatisticCacheManager(
+                this.getPlugin(),
+                config
+            );
+            
+            // Create version detection components
+            com.raindropcentral.core.service.statistics.vanilla.version.MinecraftVersionDetector versionDetector = 
+                new com.raindropcentral.core.service.statistics.vanilla.version.MinecraftVersionDetector();
+            com.raindropcentral.core.service.statistics.vanilla.version.StatisticAvailabilityChecker availabilityChecker = 
+                new com.raindropcentral.core.service.statistics.vanilla.version.StatisticAvailabilityChecker(versionDetector);
+            com.raindropcentral.core.service.statistics.vanilla.version.StatisticMapper mapper = 
+                new com.raindropcentral.core.service.statistics.vanilla.version.StatisticMapper(versionDetector);
+            
+            // Create TPS throttler
+            TPSThrottler tpsThrottler = new TPSThrottler(config);
+            
+            // Create vanilla statistic collector
+            VanillaStatisticCollector collector = new VanillaStatisticCollector(
+                config,
+                availabilityChecker,
+                mapper
+            );
+            
+            // Create aggregation engine
+            StatisticAggregationEngine aggregationEngine = new StatisticAggregationEngine(config);
+            
+            // Create batch processor
+            BatchCollectionProcessor batchProcessor = new BatchCollectionProcessor(
+                config,
+                collector,
+                cacheManager
+            );
+            
+            // Create collection scheduler
+            CollectionScheduler scheduler = new CollectionScheduler(
+                config,
+                cacheManager,
+                tpsThrottler
+            );
+            
+            // Create event handler with queue consumer lambda
+            EventDrivenCollectionHandler eventHandler = new EventDrivenCollectionHandler(
+                this.getPlugin(),
+                collector,
+                cacheManager,
+                config,
+                statistics -> queueManager.enqueueBatch(statistics),
+                null  // syncManager - will be set later if enabled
+            );
+            
+            // Create vanilla statistic collection service
+            this.vanillaStatisticService = new VanillaStatisticCollectionService(
+                this.getPlugin(),
+                config,
+                queueManager,
+                privacyManager,
+                collector,
+                cacheManager,
+                aggregationEngine,
+                batchProcessor,
+                scheduler,
+                eventHandler
+            );
+            
+            // Initialize asynchronously
+            this.vanillaStatisticService.initialize().thenRun(() -> {
+                LOGGER.info("Vanilla statistic collection service initialized successfully");
+            }).exceptionally(error -> {
+                LOGGER.severe("Failed to initialize vanilla statistic collection service: " + 
+                    error.getMessage());
+                return null;
+            });
+            
+        } catch (Exception e) {
+            LOGGER.severe("Error initializing vanilla statistics: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     /**

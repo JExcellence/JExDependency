@@ -172,11 +172,7 @@ public final class PluginLogger {
                 FLUSH_INTERVAL_TICKS, // Initial delay
                 FLUSH_INTERVAL_TICKS  // Period
             );
-        } catch (Exception e) {
-            // If we can't start the flush task, log a warning but continue
-            originalErr.println("[PluginLogger] Warning: Could not start periodic flush task for " + plugin.getName());
-            originalErr.println("[PluginLogger] Logs will only be flushed on explicit flush() or close() calls");
-        }
+        } catch (Exception ignored) {}
     }
     
     /**

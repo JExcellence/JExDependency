@@ -29,12 +29,8 @@ import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -106,6 +102,7 @@ public class EventDrivenCollector implements Listener {
 
     /**
      * Handles player quit - captures full snapshot with HIGH priority.
+     * Collection is done asynchronously to avoid blocking the main thread.
      */
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerQuit(final PlayerQuitEvent event) {
@@ -114,34 +111,40 @@ public class EventDrivenCollector implements Listener {
 
         LOGGER.fine("Player quit event: " + player.getName());
 
-        try {
-            // Collect all statistics for the player
-            List<QueuedStatistic> customStats = playerCollector.collectForPlayer(playerUuid);
-            List<QueuedStatistic> nativeStats = nativeCollector.collectForPlayer(player);
+        // Run collection asynchronously to avoid blocking main thread
+        CompletableFuture.runAsync(() -> {
+            try {
+                // Collect all statistics for the player
+                List<QueuedStatistic> customStats = playerCollector.collectForPlayer(playerUuid);
+                List<QueuedStatistic> nativeStats = nativeCollector.collectForPlayer(player);
 
-            // Upgrade all to HIGH priority
-            List<QueuedStatistic> allStats = new ArrayList<>();
-            for (QueuedStatistic stat : customStats) {
-                allStats.add(stat.withPriority(DeliveryPriority.HIGH));
+                // Upgrade all to HIGH priority
+                List<QueuedStatistic> allStats = new ArrayList<>();
+                for (QueuedStatistic stat : customStats) {
+                    allStats.add(stat.withPriority(DeliveryPriority.HIGH));
+                }
+                for (QueuedStatistic stat : nativeStats) {
+                    allStats.add(stat.withPriority(DeliveryPriority.HIGH));
+                }
+
+                // Queue immediately (bypass consolidation for disconnect)
+                int enqueued = queueManager.enqueueBatch(allStats);
+                LOGGER.fine("Queued " + enqueued + " statistics for disconnecting player " + player.getName());
+
+            } catch (Exception e) {
+                LOGGER.warning("Failed to collect disconnect statistics for " + player.getName() + ": " + e.getMessage());
             }
-            for (QueuedStatistic stat : nativeStats) {
-                allStats.add(stat.withPriority(DeliveryPriority.HIGH));
-            }
+        }).exceptionally(ex -> {
+            LOGGER.warning("Async collection failed for " + player.getName() + ": " + ex.getMessage());
+            return null;
+        });
 
-            // Queue immediately (bypass consolidation for disconnect)
-            int enqueued = queueManager.enqueueBatch(allStats);
-            LOGGER.fine("Queued " + enqueued + " statistics for disconnecting player " + player.getName());
+        // Clear tracking data immediately (don't wait for async collection)
+        playerCollector.clearPlayerTracking(playerUuid);
+        nativeCollector.clearPlayerSnapshot(playerUuid);
 
-            // Clear tracking data
-            playerCollector.clearPlayerTracking(playerUuid);
-            nativeCollector.clearPlayerSnapshot(playerUuid);
-
-            // Cancel any pending consolidation
-            cancelConsolidation(playerUuid);
-
-        } catch (Exception e) {
-            LOGGER.warning("Failed to collect disconnect statistics for " + player.getName() + ": " + e.getMessage());
-        }
+        // Cancel any pending consolidation
+        cancelConsolidation(playerUuid);
     }
 
     /**

@@ -18,6 +18,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonSerializer;
 import com.google.gson.reflect.TypeToken;
 import com.raindropcentral.core.service.statistics.delivery.BatchPayload;
 import com.raindropcentral.core.service.statistics.delivery.DeliveryReceipt;
@@ -66,7 +67,7 @@ public class RCentralApiClient {
                 .connectTimeout(Duration.ofSeconds(10))
                 .followRedirects(HttpClient.Redirect.NORMAL) // Follow 301, 302, 303, 307, 308 redirects
                 .build();
-        // Configure Gson to handle ISO timestamp strings as longs
+        // Configure Gson to handle ISO timestamp strings as longs and ensure proper serialization
         this.gson = new GsonBuilder()
                 .registerTypeAdapter(long.class, (JsonDeserializer<Long>) (json, type, context) -> {
                     if (json.isJsonPrimitive()) {
@@ -103,6 +104,18 @@ public class RCentralApiClient {
                         }
                     }
                     return json.getAsLong();
+                })
+                // Ensure StatisticEntry values are always serialized as strings
+                .registerTypeAdapter(StatisticEntry.class, (com.google.gson.JsonSerializer<StatisticEntry>) (src, typeOfSrc, context) -> {
+                    JsonObject obj = new JsonObject();
+                    obj.addProperty("playerUuid", src.playerUuid().toString());
+                    obj.addProperty("statisticKey", src.statisticKey());
+                    obj.addProperty("value", src.value()); // Already a String from fromQueued()
+                    obj.addProperty("dataType", src.dataType().name());
+                    obj.addProperty("collectionTimestamp", src.collectionTimestamp());
+                    obj.addProperty("isDelta", src.isDelta());
+                    obj.addProperty("sourcePlugin", src.sourcePlugin());
+                    return obj;
                 })
                 .create();
     }
@@ -307,6 +320,12 @@ public class RCentralApiClient {
         return CompletableFuture.supplyAsync(() -> {
             try {
                 String json = gson.toJson(payload);
+                
+                // Debug logging to verify serialization
+                if (logger.isLoggable(Level.FINE)) {
+                    logger.fine("Sending statistics JSON: " + json.substring(0, Math.min(500, json.length())));
+                }
+                
                 var request = HttpRequest.newBuilder()
                         .uri(URI.create(baseUrl + "/api/statistics/deliver"))
                         .header("X-API-Key", apiKey)
@@ -401,8 +420,16 @@ public class RCentralApiClient {
                 var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
                 if (response.statusCode() >= 200 && response.statusCode() < 300) {
-                    return gson.fromJson(response.body(),
-                            new TypeToken<List<StatisticEntry>>(){}.getType());
+                    // Try to parse as array first (expected format)
+                    try {
+                        return gson.fromJson(response.body(),
+                                new TypeToken<List<StatisticEntry>>(){}.getType());
+                    } catch (com.google.gson.JsonSyntaxException e) {
+                        // Backend returned an object instead of array - handle gracefully
+                        logger.log(Level.FINE, "Backend returned object format instead of array for player " + 
+                                playerUuid + ", returning empty list");
+                        return List.of();
+                    }
                 } else if (response.statusCode() == 404) {
                     return List.of(); // No statistics found for player
                 } else {
@@ -418,6 +445,60 @@ public class RCentralApiClient {
 
                 logger.log(Level.WARNING, "Player statistics request failed for " + playerUuid, e);
                 throw new RuntimeException("Player statistics request failed: " + e.getMessage(), e);
+            }
+        });
+    }
+
+    /**
+     * Submits vanilla Minecraft statistics to the backend API.
+     * <p>
+     * This method sends statistics to the {@code /api/v1/statistics/vanilla} endpoint
+     * which is specifically designed for vanilla Minecraft statistics collection.
+     * </p>
+     *
+     * @param apiKey       the API key for authentication
+     * @param serverUuid   the unique server identifier
+     * @param payload      the batch payload containing vanilla statistics
+     * @return a future containing the delivery receipt
+     */
+    public CompletableFuture<DeliveryReceipt> submitVanillaStatistics(
+            final @NotNull String apiKey,
+            final @NotNull UUID serverUuid,
+            final @NotNull BatchPayload payload
+    ) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                String json = gson.toJson(payload);
+                var request = HttpRequest.newBuilder()
+                        .uri(URI.create(baseUrl + "/api/v1/statistics/vanilla"))
+                        .header("Authorization", "Bearer " + apiKey)
+                        .header("X-Server-Id", serverUuid.toString())
+                        .header("Content-Type", "application/json")
+                        .timeout(Duration.ofSeconds(30))
+                        .POST(HttpRequest.BodyPublishers.ofString(json))
+                        .build();
+
+                var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+                if (response.statusCode() >= 200 && response.statusCode() < 300) {
+                    // Parse the response as DeliveryReceipt
+                    return gson.fromJson(response.body(), DeliveryReceipt.class);
+                } else {
+                    logger.warning("Vanilla statistics submission failed with status " + 
+                        response.statusCode() + ": " + response.body());
+                    throw new RuntimeException("Vanilla statistics submission failed with status " + 
+                        response.statusCode() + ": " + response.body());
+                }
+
+            } catch (IOException | InterruptedException e) {
+                if (e instanceof ConnectException) {
+                    logger.log(Level.INFO, "Backend not reachable at " + baseUrl + 
+                        ". If you think this is an issue contact the administrator of the plugin.");
+                    return null;
+                }
+
+                logger.log(Level.WARNING, "Vanilla statistics submission failed", e);
+                throw new RuntimeException("Vanilla statistics submission failed: " + e.getMessage(), e);
             }
         });
     }

@@ -25,10 +25,8 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
@@ -191,6 +189,74 @@ public class NativeStatisticCollector {
     }
 
     /**
+     * Cached set of block materials to avoid triggering DataFixer on main thread.
+     * Initialized lazily on first use.
+     */
+    private static Set<Material> blockMaterials = null;
+
+    /**
+     * Cached set of item materials to avoid triggering DataFixer on main thread.
+     * Initialized lazily on first use.
+     */
+    private static Set<Material> itemMaterials = null;
+
+    /**
+     * Initializes the block materials cache asynchronously to avoid blocking the main thread.
+     * This prevents the DataFixer from being initialized on the main thread during player disconnect.
+     */
+    private static synchronized void initializeBlockMaterialsCache() {
+        if (blockMaterials != null) {
+            return;
+        }
+
+        // Initialize with empty set first to prevent multiple initializations
+        blockMaterials = new HashSet<>();
+
+        // Populate asynchronously to avoid blocking
+        CompletableFuture.runAsync(() -> {
+            Set<Material> blocks = new HashSet<>();
+            for (Material material : Material.values()) {
+                try {
+                    if (material.isBlock()) {
+                        blocks.add(material);
+                    }
+                } catch (Exception e) {
+                    // Ignore materials that can't be checked
+                }
+            }
+            blockMaterials = blocks;
+        });
+    }
+
+    /**
+     * Initializes the item materials cache asynchronously to avoid blocking the main thread.
+     * This prevents the DataFixer from being initialized on the main thread during player disconnect.
+     */
+    private static synchronized void initializeItemMaterialsCache() {
+        if (itemMaterials != null) {
+            return;
+        }
+
+        // Initialize with empty set first to prevent multiple initializations
+        itemMaterials = new HashSet<>();
+
+        // Populate asynchronously to avoid blocking
+        CompletableFuture.runAsync(() -> {
+            Set<Material> items = new HashSet<>();
+            for (Material material : Material.values()) {
+                try {
+                    if (material.isItem()) {
+                        items.add(material);
+                    }
+                } catch (Exception e) {
+                    // Ignore materials that can't be checked
+                }
+            }
+            itemMaterials = items;
+        });
+    }
+
+    /**
      * Collects block statistics (broken, placed).
      */
     public List<QueuedStatistic> collectBlockStatistics(final @NotNull Player player) {
@@ -205,15 +271,20 @@ public class NativeStatisticCollector {
         final boolean deltaOnly,
         final long timestamp
     ) {
+        // Initialize cache if needed
+        if (blockMaterials == null) {
+            initializeBlockMaterialsCache();
+            // Return empty list if cache not ready yet
+            return new ArrayList<>();
+        }
+
         List<QueuedStatistic> result = new ArrayList<>();
         UUID playerUuid = player.getUniqueId();
 
         int totalBroken = 0;
         int totalPlaced = 0;
 
-        for (Material material : Material.values()) {
-            if (!material.isBlock()) continue;
-
+        for (Material material : blockMaterials) {
             try {
                 // Blocks broken
                 int broken = player.getStatistic(Statistic.MINE_BLOCK, material);
@@ -268,14 +339,19 @@ public class NativeStatisticCollector {
         final boolean deltaOnly,
         final long timestamp
     ) {
+        // Initialize cache if needed
+        if (itemMaterials == null) {
+            initializeItemMaterialsCache();
+            // Return empty list if cache not ready yet
+            return new ArrayList<>();
+        }
+
         List<QueuedStatistic> result = new ArrayList<>();
         UUID playerUuid = player.getUniqueId();
 
         int totalCrafted = 0;
 
-        for (Material material : Material.values()) {
-            if (!material.isItem()) continue;
-
+        for (Material material : itemMaterials) {
             try {
                 int crafted = player.getStatistic(Statistic.CRAFT_ITEM, material);
                 if (crafted > 0) {

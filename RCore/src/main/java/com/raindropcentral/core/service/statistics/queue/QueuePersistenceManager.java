@@ -246,10 +246,32 @@ public class QueuePersistenceManager {
     }
 
     private void clearWal() {
-        try {
-            Files.deleteIfExists(walFile);
-        } catch (IOException e) {
-            LOGGER.warning("Failed to clear WAL: " + e.getMessage());
+        // On Windows, file handles may not be released immediately
+        // Try multiple times with a small delay
+        int maxAttempts = 3;
+        for (int attempt = 1; attempt <= maxAttempts; attempt++) {
+            try {
+                if (Files.deleteIfExists(walFile)) {
+                    LOGGER.fine("Cleared WAL file");
+                    return;
+                }
+                // File doesn't exist, nothing to do
+                return;
+            } catch (IOException e) {
+                if (attempt < maxAttempts) {
+                    // Wait a bit and try again (Windows file handle release delay)
+                    try {
+                        Thread.sleep(50);
+                    } catch (InterruptedException ie) {
+                        Thread.currentThread().interrupt();
+                        LOGGER.warning("Interrupted while waiting to clear WAL");
+                        return;
+                    }
+                } else {
+                    // Last attempt failed, log warning
+                    LOGGER.warning("Failed to clear WAL after " + maxAttempts + " attempts: " + e.getMessage());
+                }
+            }
         }
     }
 
@@ -261,22 +283,55 @@ public class QueuePersistenceManager {
 
             String line;
             int applied = 0;
+            int skipped = 0;
+            int lineNumber = 0;
+            
             while ((line = reader.readLine()) != null) {
-                if (line.isBlank()) continue;
+                lineNumber++;
+                
+                // Skip empty or whitespace-only lines
+                if (line.isBlank()) {
+                    continue;
+                }
+                
+                // Skip lines that are clearly not JSON objects
+                String trimmed = line.trim();
+                if (!trimmed.startsWith("{") || !trimmed.endsWith("}")) {
+                    LOGGER.fine("Skipping malformed WAL entry at line " + lineNumber + ": not a JSON object");
+                    skipped++;
+                    continue;
+                }
+                
                 try {
                     SerializableStatistic ser = gson.fromJson(line, SerializableStatistic.class);
+                    if (ser == null) {
+                        LOGGER.fine("Skipping null WAL entry at line " + lineNumber);
+                        skipped++;
+                        continue;
+                    }
+                    
                     QueuedStatistic stat = ser.toQueuedStatistic();
                     if (stat != null) {
                         queues.get(stat.priority()).add(stat);
                         applied++;
+                    } else {
+                        LOGGER.fine("Skipping invalid WAL entry at line " + lineNumber);
+                        skipped++;
                     }
+                } catch (com.google.gson.JsonSyntaxException e) {
+                    LOGGER.fine("Skipping malformed JSON at line " + lineNumber + ": " + e.getMessage());
+                    skipped++;
                 } catch (Exception e) {
-                    LOGGER.warning("Failed to parse WAL entry: " + e.getMessage());
+                    LOGGER.warning("Failed to parse WAL entry at line " + lineNumber + ": " + e.getMessage());
+                    skipped++;
                 }
             }
 
             if (applied > 0) {
-                LOGGER.info("Applied " + applied + " entries from WAL");
+                LOGGER.info("Applied " + applied + " entries from WAL" + 
+                    (skipped > 0 ? " (skipped " + skipped + " invalid entries)" : ""));
+            } else if (skipped > 0) {
+                LOGGER.warning("Skipped " + skipped + " invalid WAL entries, no valid entries found");
             }
 
         } catch (IOException e) {
@@ -289,6 +344,9 @@ public class QueuePersistenceManager {
      */
     public void validateAndRepair() {
         LOGGER.info("Validating queue integrity...");
+
+        // Clean up corrupted WAL file first
+        cleanupCorruptedWal();
 
         if (!Files.exists(queueFile)) {
             LOGGER.info("No queue file found, nothing to validate");
@@ -314,6 +372,80 @@ public class QueuePersistenceManager {
             try {
                 Files.deleteIfExists(queueFile);
                 Files.deleteIfExists(walFile);
+            } catch (IOException ignored) {}
+        }
+    }
+
+    /**
+     * Cleans up corrupted WAL file by removing invalid entries.
+     * Creates a new clean WAL file with only valid entries.
+     */
+    private void cleanupCorruptedWal() {
+        if (!Files.exists(walFile)) {
+            return;
+        }
+
+        try {
+            List<String> validLines = new ArrayList<>();
+            int totalLines = 0;
+            int validCount = 0;
+
+            // Read and validate all lines
+            try (BufferedReader reader = new BufferedReader(
+                new InputStreamReader(new FileInputStream(walFile.toFile()), StandardCharsets.UTF_8))) {
+
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    totalLines++;
+                    
+                    if (line.isBlank()) {
+                        continue;
+                    }
+
+                    String trimmed = line.trim();
+                    if (!trimmed.startsWith("{") || !trimmed.endsWith("}")) {
+                        continue;
+                    }
+
+                    try {
+                        // Try to parse to validate
+                        SerializableStatistic ser = gson.fromJson(line, SerializableStatistic.class);
+                        if (ser != null && ser.toQueuedStatistic() != null) {
+                            validLines.add(line);
+                            validCount++;
+                        }
+                    } catch (Exception ignored) {
+                        // Skip invalid entries
+                    }
+                }
+            }
+
+            // If we found invalid entries, rewrite the WAL file
+            if (validCount < totalLines) {
+                int removed = totalLines - validCount;
+                LOGGER.info("Cleaning WAL file: removing " + removed + " corrupted entries, keeping " + validCount + " valid entries");
+
+                if (validLines.isEmpty()) {
+                    // No valid entries, just delete the file
+                    Files.deleteIfExists(walFile);
+                } else {
+                    // Rewrite with only valid entries
+                    try (Writer writer = new BufferedWriter(
+                        new OutputStreamWriter(new FileOutputStream(walFile.toFile()), StandardCharsets.UTF_8))) {
+                        for (String validLine : validLines) {
+                            writer.write(validLine);
+                            writer.write("\n");
+                        }
+                    }
+                }
+            }
+
+        } catch (IOException e) {
+            LOGGER.warning("Failed to cleanup corrupted WAL: " + e.getMessage());
+            // If cleanup fails, just delete the WAL file to start fresh
+            try {
+                Files.deleteIfExists(walFile);
+                LOGGER.info("Deleted corrupted WAL file to start fresh");
             } catch (IOException ignored) {}
         }
     }
