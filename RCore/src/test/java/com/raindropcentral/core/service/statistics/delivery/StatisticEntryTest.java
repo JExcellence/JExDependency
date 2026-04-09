@@ -31,7 +31,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class StatisticEntryTest {
 
     @Test
-    void convertsQueuedStatisticWithoutLosingFields() {
+    void convertsQueuedStatisticToWireFormatWithoutLosingMetadata() {
         final UUID playerUniqueId = UUID.randomUUID();
         final QueuedStatistic queuedStatistic = QueuedStatistic.builder()
             .playerUuid(playerUniqueId)
@@ -47,7 +47,7 @@ class StatisticEntryTest {
 
         assertEquals(queuedStatistic.playerUuid(), entry.playerUuid());
         assertEquals(queuedStatistic.statisticKey(), entry.statisticKey());
-        assertEquals(queuedStatistic.value(), entry.value());
+        assertEquals(String.valueOf(queuedStatistic.value()), entry.value());
         assertEquals(queuedStatistic.dataType(), entry.dataType());
         assertEquals(queuedStatistic.collectionTimestamp(), entry.collectionTimestamp());
         assertEquals(queuedStatistic.isDelta(), entry.isDelta());
