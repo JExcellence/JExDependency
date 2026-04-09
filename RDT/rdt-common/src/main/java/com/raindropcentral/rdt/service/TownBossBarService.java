@@ -19,12 +19,15 @@ import com.raindropcentral.rdt.database.entity.RTown;
 import com.raindropcentral.rdt.utils.TownColorUtil;
 import com.raindropcentral.rplatform.scheduler.CancellableTaskHandle;
 import com.raindropcentral.rplatform.scheduler.ISchedulerAdapter;
+import de.jexcellence.jextranslate.i18n.I18n;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 import java.util.Objects;
@@ -42,6 +45,7 @@ public final class TownBossBarService {
 
     private static final long UPDATE_PERIOD_TICKS = 20L;
     private static final int PLAYTIME_FLUSH_INTERVAL_UPDATES = 60;
+    private static final int TARGET_BLOCK_DISTANCE_BLOCKS = 16;
 
     private final RDT plugin;
     private final Map<UUID, BossBar> activeBars = new ConcurrentHashMap<>();
@@ -114,38 +118,66 @@ public final class TownBossBarService {
             return;
         }
 
-        final Location location = player.getLocation();
-        final int chunkX = TownRuntimeService.toChunkCoordinate(location.getBlockX());
-        final int chunkZ = TownRuntimeService.toChunkCoordinate(location.getBlockZ());
-        final RTown town = this.plugin.getTownRuntimeService() == null
-            ? null
-            : this.plugin.getTownRuntimeService().getTownAt(location);
-        final String titleText = town == null
-            ? "unincorporated | " + chunkX + ", " + chunkZ
-            : town.getTownName() + " | " + chunkX + ", " + chunkZ;
-        final float progress = this.resolveProgress(town);
-        final BossBar.Color color = town == null
-            ? BossBar.Color.WHITE
-            : TownColorUtil.toBossBarColor(town.getTownColorHex());
+        final BossBarRenderState renderState = this.resolveRenderState(player);
 
         this.activeBars.compute(player.getUniqueId(), (playerId, existingBar) -> {
             if (existingBar == null) {
                 final BossBar bossBar = BossBar.bossBar(
-                    Component.text(titleText),
-                    progress,
-                    color,
+                    this.buildTitleComponent(player, renderState),
+                    renderState.progress(),
+                    renderState.color(),
                     BossBar.Overlay.PROGRESS
                 );
                 player.showBossBar(bossBar);
                 return bossBar;
             }
 
-            existingBar.name(Component.text(titleText));
-            existingBar.progress(progress);
-            existingBar.color(color);
+            existingBar.name(this.buildTitleComponent(player, renderState));
+            existingBar.progress(renderState.progress());
+            existingBar.color(renderState.color());
             player.showBossBar(existingBar);
             return existingBar;
         });
+    }
+
+    BossBarRenderState resolveRenderState(final @NotNull Player player) {
+        final TownRuntimeService runtimeService = this.plugin.getTownRuntimeService();
+        final RTown targetedNexusTown = this.findTargetedNexusTown(player, runtimeService);
+        if (targetedNexusTown != null && runtimeService != null) {
+            final NexusCombatSnapshot combatSnapshot = runtimeService.getNexusCombatSnapshot(targetedNexusTown);
+            return new BossBarRenderState(
+                "town_boss_bar.nexus.title",
+                Map.of(
+                    "town_name", targetedNexusTown.getTownName(),
+                    "current_health", this.formatStatValue(combatSnapshot.currentHealth()),
+                    "max_health", this.formatStatValue(combatSnapshot.maxHealth()),
+                    "defense", this.formatStatValue(combatSnapshot.defense()),
+                    "nexus_level", combatSnapshot.nexusLevel()
+                ),
+                combatSnapshot.progress(),
+                TownColorUtil.toBossBarColor(targetedNexusTown.getTownColorHex())
+            );
+        }
+
+        final Location location = player.getLocation();
+        final int chunkX = TownRuntimeService.toChunkCoordinate(location.getBlockX());
+        final int chunkZ = TownRuntimeService.toChunkCoordinate(location.getBlockZ());
+        final RTown town = runtimeService == null ? null : runtimeService.getTownAt(location);
+        if (town == null) {
+            return new BossBarRenderState(
+                "town_boss_bar.territory.wilderness",
+                Map.of("chunk_x", chunkX, "chunk_z", chunkZ),
+                1.0F,
+                BossBar.Color.WHITE
+            );
+        }
+
+        return new BossBarRenderState(
+            "town_boss_bar.territory.claimed",
+            Map.of("town_name", town.getTownName(), "chunk_x", chunkX, "chunk_z", chunkZ),
+            this.resolveProgress(town),
+            TownColorUtil.toBossBarColor(town.getTownColorHex())
+        );
     }
 
     private void refreshOnlinePlayers() {
@@ -175,6 +207,36 @@ public final class TownBossBarService {
         final int maxChunks = Math.max(1, this.plugin.getDefaultConfig().getGlobalMaxChunkLimit());
         final float progress = (float) town.getChunks().size() / (float) maxChunks;
         return Math.max(0.0F, Math.min(1.0F, progress));
+    }
+
+    private @NotNull Component buildTitleComponent(
+        final @NotNull Player player,
+        final @NotNull BossBarRenderState renderState
+    ) {
+        return new I18n.Builder(renderState.translationKey(), player)
+            .withPlaceholders(renderState.placeholders())
+            .build()
+            .component();
+    }
+
+    private @Nullable RTown findTargetedNexusTown(
+        final @NotNull Player player,
+        final @Nullable TownRuntimeService runtimeService
+    ) {
+        if (runtimeService == null) {
+            return null;
+        }
+
+        final Block targetBlock = player.getTargetBlockExact(TARGET_BLOCK_DISTANCE_BLOCKS);
+        return targetBlock == null ? null : runtimeService.findNexusTown(targetBlock.getLocation());
+    }
+
+    private @NotNull String formatStatValue(final double value) {
+        final double roundedValue = Math.rint(value);
+        if (Math.abs(value - roundedValue) < 0.000_1D) {
+            return String.valueOf((long) roundedValue);
+        }
+        return String.format(java.util.Locale.ROOT, "%.1f", value);
     }
 
     private void trackTownPlaytime(final @NotNull Player player) {
@@ -214,5 +276,20 @@ public final class TownBossBarService {
             }
         }
         this.dirtyTownPlaytimeTicks.clear();
+    }
+
+    record BossBarRenderState(
+        @NotNull String translationKey,
+        @NotNull Map<String, Object> placeholders,
+        float progress,
+        @NotNull BossBar.Color color
+    ) {
+
+        BossBarRenderState {
+            translationKey = Objects.requireNonNull(translationKey, "translationKey");
+            placeholders = Map.copyOf(Objects.requireNonNull(placeholders, "placeholders"));
+            progress = Math.max(0.0F, Math.min(1.0F, progress));
+            color = Objects.requireNonNull(color, "color");
+        }
     }
 }

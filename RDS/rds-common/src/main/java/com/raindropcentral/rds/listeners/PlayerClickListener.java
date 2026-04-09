@@ -60,7 +60,10 @@ public class PlayerClickListener implements Listener {
         final Shop shop = this.rds.getShopRepository().findByLocation(location);
         if (shop == null) return;
         if (event.getAction().isRightClick()) event.setCancelled(true);
-        final Class<? extends View> viewClass = shop.canAccessOverview(player.getUniqueId())
+        final boolean canAccessOverview = this.rds.getTownShopService() == null
+                ? shop.canAccessOverview(player.getUniqueId())
+                : this.rds.getTownShopService().canAccessOverview(player, shop);
+        final Class<? extends View> viewClass = canAccessOverview
                 ? ShopOverviewView.class
                 : ShopCustomerView.class;
         this.rds.getViewFrame().open(

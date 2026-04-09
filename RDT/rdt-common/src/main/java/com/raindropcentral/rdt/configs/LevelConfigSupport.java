@@ -13,11 +13,13 @@
 
 package com.raindropcentral.rdt.configs;
 
+import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -74,6 +76,23 @@ final class LevelConfigSupport {
         return levels.isEmpty() ? copyLevels(fallback) : Map.copyOf(levels);
     }
 
+    static @NotNull Map<Integer, NexusCombatStats> parseNexusCombatStats(
+        final @Nullable ConfigurationSection levelsSection,
+        final @NotNull Collection<Integer> resolvedLevels
+    ) {
+        final Map<Integer, NexusCombatStats> combatStats = new LinkedHashMap<>();
+        for (final Integer level : resolvedLevels) {
+            if (level == null) {
+                continue;
+            }
+            final ConfigurationSection levelSection = levelsSection == null
+                ? null
+                : levelsSection.getConfigurationSection(String.valueOf(level));
+            combatStats.put(level, parseNexusCombatStats(level, levelSection == null ? null : levelSection.getConfigurationSection("combat")));
+        }
+        return Map.copyOf(combatStats);
+    }
+
     static @NotNull Map<Integer, LevelDefinition> createDefaultNexusLevels() {
         final Map<Integer, LevelDefinition> defaults = new LinkedHashMap<>();
         for (int level = 1; level <= DEFAULT_NEXUS_LEVEL_COUNT; level++) {
@@ -122,6 +141,14 @@ final class LevelConfigSupport {
                     )
                 )
             );
+        }
+        return Map.copyOf(defaults);
+    }
+
+    static @NotNull Map<Integer, NexusCombatStats> createDefaultNexusCombatStats() {
+        final Map<Integer, NexusCombatStats> defaults = new LinkedHashMap<>();
+        for (int level = 1; level <= DEFAULT_NEXUS_LEVEL_COUNT; level++) {
+            defaults.put(level, NexusCombatStats.createDefault(level));
         }
         return Map.copyOf(defaults);
     }
@@ -225,13 +252,68 @@ final class LevelConfigSupport {
     }
 
     static @NotNull Map<Integer, LevelDefinition> createDefaultOutpostLevels() {
-        return createDefaultChunkLevels(
+        final Map<Integer, LevelDefinition> defaults = new LinkedHashMap<>(createDefaultChunkLevels(
             "Outpost",
             new ChunkLevelItemDefinition[] {
                 new ChunkLevelItemDefinition("navigation_tools", "COMPASS", 8, "Outpost navigation tools"),
                 new ChunkLevelItemDefinition("travel_supplies", "ENDER_PEARL", 16, "Outpost travel supplies"),
                 new ChunkLevelItemDefinition("fortification_materials", "OBSIDIAN", 24, "Outpost fortification materials"),
                 new ChunkLevelItemDefinition("relay_materials", "ENDER_EYE", 8, "Outpost relay materials")
+            }
+        ));
+        addDefaultOutpostTownShopReward(defaults, 3);
+        addDefaultOutpostTownShopReward(defaults, 4);
+        addDefaultOutpostTownShopReward(defaults, 5);
+        return Map.copyOf(defaults);
+    }
+
+    static @NotNull Map<Integer, LevelDefinition> createDefaultMedicLevels() {
+        return createDefaultChunkLevels(
+            "Medic",
+            new ChunkLevelItemDefinition[] {
+                new ChunkLevelItemDefinition(
+                    "clinic_supplies",
+                    "GLISTERING_MELON_SLICE",
+                    24,
+                    "Medic clinic supplies"
+                ),
+                new ChunkLevelItemDefinition("triage_rations", "GOLDEN_CARROT", 32, "Medic triage rations"),
+                new ChunkLevelItemDefinition("restoratives", "GHAST_TEAR", 8, "Medic restorative supplies"),
+                new ChunkLevelItemDefinition(
+                    "revival_supplies",
+                    "TOTEM_OF_UNDYING",
+                    1,
+                    "Medic revival supplies"
+                )
+            },
+            new ChunkLevelRewardItemDefinition[] {
+                new ChunkLevelRewardItemDefinition("field_supplies", "HONEY_BOTTLE", 8, "Medic field supplies"),
+                new ChunkLevelRewardItemDefinition("combat_rations", "GOLDEN_CARROT", 16, "Medic combat rations"),
+                new ChunkLevelRewardItemDefinition("recovery_cache", "GOLDEN_APPLE", 4, "Medic recovery cache"),
+                new ChunkLevelRewardItemDefinition("emergency_cache", "GOLDEN_APPLE", 8, "Medic emergency cache")
+            }
+        );
+    }
+
+    static @NotNull Map<Integer, LevelDefinition> createDefaultArmoryLevels() {
+        return createDefaultChunkLevels(
+            "Armory",
+            new ChunkLevelItemDefinition[] {
+                new ChunkLevelItemDefinition("forging_materials", "IRON_INGOT", 32, "Armory forging materials"),
+                new ChunkLevelItemDefinition("defense_kits", "SHIELD", 6, "Armory defense kits"),
+                new ChunkLevelItemDefinition("ranged_hardware", "CROSSBOW", 4, "Armory ranged hardware"),
+                new ChunkLevelItemDefinition("elite_forging", "NETHERITE_SCRAP", 4, "Armory elite forging")
+            },
+            new ChunkLevelRewardItemDefinition[] {
+                new ChunkLevelRewardItemDefinition("munition_cache", "ARROW", 64, "Armory munition cache"),
+                new ChunkLevelRewardItemDefinition(
+                    "precision_munitions",
+                    "SPECTRAL_ARROW",
+                    24,
+                    "Armory precision munitions"
+                ),
+                new ChunkLevelRewardItemDefinition("spare_materials", "IRON_INGOT", 24, "Armory spare materials"),
+                new ChunkLevelRewardItemDefinition("elite_cache", "DIAMOND", 8, "Armory elite cache")
             }
         );
     }
@@ -392,6 +474,71 @@ final class LevelConfigSupport {
         return Map.copyOf(copy);
     }
 
+    static @NotNull Map<Integer, NexusCombatStats> copyNexusCombatStats(final @NotNull Map<Integer, NexusCombatStats> source) {
+        final Map<Integer, NexusCombatStats> copy = new LinkedHashMap<>();
+        for (final Map.Entry<Integer, NexusCombatStats> entry : source.entrySet()) {
+            if (entry.getKey() == null || entry.getValue() == null) {
+                continue;
+            }
+            copy.put(entry.getKey(), new NexusCombatStats(
+                entry.getValue().level(),
+                entry.getValue().maxHealth(),
+                entry.getValue().defense()
+            ));
+        }
+        return Map.copyOf(copy);
+    }
+
+    static @NotNull Material resolveConfiguredBlockMaterial(
+        final @Nullable String rawMaterialName,
+        final @NotNull Material fallback
+    ) {
+        if (rawMaterialName == null || rawMaterialName.isBlank()) {
+            return fallback;
+        }
+        final Material material = Material.matchMaterial(rawMaterialName.trim().toUpperCase(Locale.ROOT));
+        if (material == null || !isConfiguredBlockMaterial(material)) {
+            return fallback;
+        }
+        return switch (material) {
+            case CHEST, TRAPPED_CHEST, HOPPER -> fallback;
+            default -> material;
+        };
+    }
+
+    static boolean isConfiguredBlockMaterial(final @NotNull Material material) {
+        try {
+            return material.isBlock();
+        } catch (final ExceptionInInitializerError | NoClassDefFoundError | IllegalStateException exception) {
+            return switch (material) {
+                case AIR, CAVE_AIR, VOID_AIR, GOLD_INGOT, DIAMOND, ARROW, HONEY_BOTTLE, TOTEM_OF_UNDYING,
+                     SPECTRAL_ARROW, CROSSBOW, SHIELD, NETHERITE_SCRAP -> false;
+                default -> material.name().endsWith("_BLOCK")
+                    || material.name().endsWith("_PLANKS")
+                    || material.name().endsWith("_GLASS")
+                    || material.name().endsWith("_WOOL")
+                    || material.name().endsWith("_TERRACOTTA")
+                    || material.name().endsWith("_CONCRETE")
+                    || material.name().endsWith("_STAIRS")
+                    || material.name().endsWith("_SLAB")
+                    || material.name().endsWith("_WALL")
+                    || material.name().endsWith("_DOOR")
+                    || material.name().endsWith("_TRAPDOOR")
+                    || material.name().endsWith("_FENCE")
+                    || material.name().endsWith("_FENCE_GATE")
+                    || material.name().endsWith("_LOG")
+                    || material.name().endsWith("_WOOD")
+                    || material.name().endsWith("_LEAVES")
+                    || material == Material.LODESTONE
+                    || material == Material.SEA_LANTERN
+                    || material == Material.CRYING_OBSIDIAN
+                    || material == Material.GLOWSTONE
+                    || material == Material.REINFORCED_DEEPSLATE
+                    || material == Material.ORANGE_STAINED_GLASS;
+            };
+        }
+    }
+
     private static @NotNull Map<String, Object> createCurrencyRequirement(
         final double amount,
         final @NotNull String description
@@ -403,6 +550,21 @@ final class LevelConfigSupport {
         definition.put("consumable", true);
         definition.put("description", description);
         return Map.copyOf(definition);
+    }
+
+    private static @NotNull NexusCombatStats parseNexusCombatStats(
+        final int level,
+        final @Nullable ConfigurationSection combatSection
+    ) {
+        final NexusCombatStats defaults = NexusCombatStats.createDefault(level);
+        if (combatSection == null) {
+            return defaults;
+        }
+        return new NexusCombatStats(
+            level,
+            combatSection.getDouble("max_health", defaults.maxHealth()),
+            combatSection.getDouble("defense", defaults.defense())
+        );
     }
 
     private static @NotNull Map<String, Object> createItemRequirement(
@@ -443,15 +605,66 @@ final class LevelConfigSupport {
         return Map.copyOf(definition);
     }
 
+    private static @NotNull Map<String, Object> createItemReward(
+        final @NotNull String material,
+        final int amount,
+        final @NotNull String description
+    ) {
+        final Map<String, Object> item = new LinkedHashMap<>();
+        item.put("material", material);
+        item.put("amount", Math.max(1, amount));
+
+        final Map<String, Object> definition = new LinkedHashMap<>();
+        definition.put("type", "ITEM");
+        definition.put("item", Map.copyOf(item));
+        definition.put("description", description);
+        return Map.copyOf(definition);
+    }
+
     private static @NotNull Map<Integer, LevelDefinition> createDefaultChunkLevels(
         final @NotNull String scopeName,
         final @NotNull ChunkLevelItemDefinition[] itemDefinitions
+    ) {
+        return createDefaultChunkLevels(scopeName, itemDefinitions, new ChunkLevelRewardItemDefinition[0]);
+    }
+
+    private static @NotNull Map<Integer, LevelDefinition> createDefaultChunkLevels(
+        final @NotNull String scopeName,
+        final @NotNull ChunkLevelItemDefinition[] itemDefinitions,
+        final @NotNull ChunkLevelRewardItemDefinition[] rewardDefinitions
     ) {
         final Map<Integer, LevelDefinition> defaults = new LinkedHashMap<>();
         defaults.put(1, new LevelDefinition(1, Map.of(), Map.of()));
         for (int index = 0; index < itemDefinitions.length; index++) {
             final int level = index + 2;
             final ChunkLevelItemDefinition itemDefinition = itemDefinitions[index];
+            final Map<String, Map<String, Object>> rewards = new LinkedHashMap<>();
+            rewards.put(
+                "vault_bonus",
+                createCurrencyReward(
+                    DEFAULT_CHUNK_LEVEL_REWARDS[index],
+                    scopeName + " treasury rebate"
+                )
+            );
+            if (index < rewardDefinitions.length) {
+                final ChunkLevelRewardItemDefinition rewardDefinition = rewardDefinitions[index];
+                rewards.put(
+                    rewardDefinition.key(),
+                    createItemReward(
+                        rewardDefinition.material(),
+                        rewardDefinition.amount(),
+                        rewardDefinition.description()
+                    )
+                );
+            }
+            rewards.put(
+                "town_broadcast",
+                createCommandReward(
+                    "rt broadcast {town_uuid} <aqua>{town_name}</aqua> <yellow>upgraded "
+                        + scopeName + " chunk <white>{chunk_x}, {chunk_z}</white> to level "
+                        + "<white>{target_level}</white><yellow>!</yellow>"
+                )
+            );
             defaults.put(
                 level,
                 new LevelDefinition(
@@ -469,19 +682,7 @@ final class LevelConfigSupport {
                             itemDefinition.description()
                         )
                     ),
-                    Map.of(
-                        "vault_bonus",
-                        createCurrencyReward(
-                            DEFAULT_CHUNK_LEVEL_REWARDS[index],
-                            scopeName + " treasury rebate"
-                        ),
-                        "town_broadcast",
-                        createCommandReward(
-                            "rt broadcast {town_uuid} <aqua>{town_name}</aqua> <yellow>upgraded "
-                                + scopeName + " chunk <white>{chunk_x}, {chunk_z}</white> to level "
-                                + "<white>{target_level}</white><yellow>!</yellow>"
-                        )
-                    )
+                    Map.copyOf(rewards)
                 )
             );
         }
@@ -492,7 +693,42 @@ final class LevelConfigSupport {
         return Math.round(amount * 100.0D) / 100.0D;
     }
 
+    private static void addDefaultOutpostTownShopReward(
+        final @NotNull Map<Integer, LevelDefinition> levels,
+        final int level
+    ) {
+        final LevelDefinition existingDefinition = levels.get(level);
+        if (existingDefinition == null) {
+            return;
+        }
+
+        final Map<String, Map<String, Object>> rewards = new LinkedHashMap<>(existingDefinition.getRewards());
+        rewards.put(
+            "town_shop_reward",
+            createCommandReward(
+                "rs internal reward-town-shop {player} RDT {town_uuid} {town_name_base64} {chunk_uuid} "
+                    + "{world_name} {chunk_x} {chunk_z} {target_level}"
+            )
+        );
+        levels.put(
+            level,
+            new LevelDefinition(
+                existingDefinition.level(),
+                existingDefinition.getRequirements(),
+                Map.copyOf(rewards)
+            )
+        );
+    }
+
     private record ChunkLevelItemDefinition(
+        @NotNull String key,
+        @NotNull String material,
+        int amount,
+        @NotNull String description
+    ) {
+    }
+
+    private record ChunkLevelRewardItemDefinition(
         @NotNull String key,
         @NotNull String material,
         int amount,

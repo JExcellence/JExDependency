@@ -126,7 +126,7 @@ public final class TownLevelProgressView extends BaseView {
 
         final LevelUpResult result = switch (snapshot.scope()) {
             case NEXUS -> plugin.getTownRuntimeService().levelUpNexus(clickContext.getPlayer(), town);
-            case SECURITY, BANK, FARM, OUTPOST -> {
+            case SECURITY, BANK, FARM, OUTPOST, MEDIC, ARMORY -> {
                 final RTownChunk townChunk = TownLevelViewSupport.resolveChunk(clickContext);
                 yield townChunk == null
                     ? new LevelUpResult(LevelUpStatus.INVALID_TARGET, snapshot.currentLevel(), snapshot.currentLevel())
@@ -150,6 +150,18 @@ public final class TownLevelProgressView extends BaseView {
         switch (result.status()) {
             case SUCCESS -> {
                 this.sendSharedMessage(clickContext.getPlayer(), "level_up_success", placeholders);
+                TownLevelViewSupport.sendFarmUnlockMessages(
+                    TownLevelViewSupport.plugin(clickContext),
+                    clickContext.getPlayer(),
+                    scope,
+                    result
+                );
+                TownLevelViewSupport.sendMedicUnlockMessages(
+                    TownLevelViewSupport.plugin(clickContext),
+                    clickContext.getPlayer(),
+                    scope,
+                    result
+                );
                 clickContext.openForPlayer(TownLevelProgressView.class, this.createBaseNavigationData(clickContext));
             }
             case NO_PERMISSION -> this.sendSharedMessage(clickContext.getPlayer(), "no_permission", placeholders);

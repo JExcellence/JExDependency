@@ -14,6 +14,8 @@
 package com.raindropcentral.rplatform.requirement.plugin;
 
 import com.raindropcentral.rplatform.job.JobBridge;
+import com.raindropcentral.rplatform.protection.impl.HuskTownProtectionBridge;
+import com.raindropcentral.rplatform.protection.impl.TownyProtectionBridge;
 import com.raindropcentral.rplatform.skill.SkillBridge;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -27,7 +29,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Registry for {@link PluginIntegrationBridge} instances used by {@code PLUGIN} requirements.
  *
- * <p>The registry registers built-in skill and job adapters on first access and supports both
+ * <p>The registry registers built-in skill, job, and town adapters on first access and supports both
  * direct integration lookup and category-based auto-detection.</p>
  *
  * @author ItsRainingHP, JExcellence
@@ -38,6 +40,7 @@ public final class PluginIntegrationRegistry {
 
     private static final String CATEGORY_SKILLS = "SKILLS";
     private static final String CATEGORY_JOBS = "JOBS";
+    private static final String CATEGORY_TOWNS = "TOWNS";
 
     private static final PluginIntegrationRegistry INSTANCE = new PluginIntegrationRegistry();
 
@@ -118,6 +121,7 @@ public final class PluginIntegrationRegistry {
         final List<String> priorities = switch (normalizedCategory) {
             case CATEGORY_SKILLS -> List.of("ecoskills", "auraskills", "mcmmo");
             case CATEGORY_JOBS -> List.of("ecojobs", "jobsreborn");
+            case CATEGORY_TOWNS -> List.of("rdt", "towny", "husktowns");
             default -> List.of();
         };
 
@@ -166,6 +170,10 @@ public final class PluginIntegrationRegistry {
         for (final JobBridge jobBridge : JobBridge.getDefaultBridges()) {
             registerBridge(new JobBridgeAdapter(jobBridge));
         }
+
+        registerBridge(new ProtectionTownPluginIntegrationBridge("towny", new TownyProtectionBridge()));
+        registerBridge(new ProtectionTownPluginIntegrationBridge("husktowns", new HuskTownProtectionBridge()));
+        registerBridge(new RdtPluginIntegrationBridge());
     }
 
     private @NotNull String normalizeIntegrationId(final @NotNull String integrationId) {
@@ -178,6 +186,9 @@ public final class PluginIntegrationRegistry {
             case "ecojob", "ecojobs" -> "ecojobs";
             case "ecoskill", "ecoskills" -> "ecoskills";
             case "auraskill", "auraskills" -> "auraskills";
+            case "towny", "townyadvanced" -> "towny";
+            case "husktown", "husktowns" -> "husktowns";
+            case "raindroptowns", "raindropcentraltowns", "rdt" -> "rdt";
             case "mcmmo" -> "mcmmo";
             default -> normalized;
         };

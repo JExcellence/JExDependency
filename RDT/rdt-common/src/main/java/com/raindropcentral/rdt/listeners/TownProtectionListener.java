@@ -14,6 +14,7 @@
 package com.raindropcentral.rdt.listeners;
 
 import com.raindropcentral.rdt.RDT;
+import com.raindropcentral.rdt.items.CacheChest;
 import com.raindropcentral.rdt.utils.TownProtections;
 import de.jexcellence.jextranslate.i18n.I18n;
 import io.papermc.paper.event.entity.EntityMoveEvent;
@@ -72,6 +73,13 @@ public class TownProtectionListener implements Listener {
      */
     @EventHandler(ignoreCancelled = true)
     public void onBlockBreak(final @NotNull BlockBreakEvent event) {
+        final var townRuntimeService = this.plugin.getTownRuntimeService();
+        if (townRuntimeService != null
+            && (townRuntimeService.findSalvageBlockChunk(event.getBlock().getLocation()) != null
+            || townRuntimeService.findRepairBlockChunk(event.getBlock().getLocation()) != null
+            || this.isPlacedCacheChest(event.getBlock()))) {
+            return;
+        }
         if (!this.plugin.getTownRuntimeService().isPlayerAllowed(event.getPlayer(), event.getBlock().getLocation(), TownProtections.BREAK_BLOCK)) {
             event.setCancelled(true);
             this.sendDeniedMessage(event.getPlayer(), "break");
@@ -85,6 +93,9 @@ public class TownProtectionListener implements Listener {
      */
     @EventHandler(ignoreCancelled = true)
     public void onBlockPlace(final @NotNull BlockPlaceEvent event) {
+        if (CacheChest.equals(this.plugin, event.getItemInHand())) {
+            return;
+        }
         if (!this.plugin.getTownRuntimeService().isPlayerAllowed(event.getPlayer(), event.getBlockPlaced().getLocation(), TownProtections.PLACE_BLOCK)) {
             event.setCancelled(true);
             this.sendDeniedMessage(event.getPlayer(), "place");
@@ -122,6 +133,9 @@ public class TownProtectionListener implements Listener {
         }
 
         final Block clickedBlock = event.getClickedBlock();
+        if (clickedBlock != null && this.isPlacedCacheChest(clickedBlock)) {
+            return;
+        }
         final TownProtections interactProtection = clickedBlock == null ? null : resolveInteractProtection(clickedBlock);
         if (interactProtection != null) {
             if (!this.plugin.getTownRuntimeService().isPlayerAllowed(event.getPlayer(), clickedBlock.getLocation(), interactProtection)) {
@@ -398,6 +412,11 @@ public class TownProtectionListener implements Listener {
         return !from.getWorld().getUID().equals(to.getWorld().getUID())
             || Math.floorDiv(from.getBlockX(), 16) != Math.floorDiv(to.getBlockX(), 16)
             || Math.floorDiv(from.getBlockZ(), 16) != Math.floorDiv(to.getBlockZ(), 16);
+    }
+
+    private boolean isPlacedCacheChest(final @NotNull Block block) {
+        return block.getState() instanceof org.bukkit.block.TileState tileState
+            && CacheChest.isPlacedCacheChest(this.plugin, tileState);
     }
 
     private void sendDeniedMessage(final @NotNull org.bukkit.entity.Player player, final @NotNull String actionKey) {

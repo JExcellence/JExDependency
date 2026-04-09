@@ -13,6 +13,7 @@
 
 package com.raindropcentral.rdt.configs;
 
+import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -33,10 +34,17 @@ import java.util.Objects;
  */
 public final class OutpostConfigSection {
 
-    private final Map<Integer, LevelDefinition> levels;
+    private static final Material DEFAULT_BLOCK_MATERIAL = Material.LODESTONE;
 
-    private OutpostConfigSection(final @NotNull Map<Integer, LevelDefinition> levels) {
+    private final Map<Integer, LevelDefinition> levels;
+    private final Material blockMaterial;
+
+    private OutpostConfigSection(
+        final @NotNull Map<Integer, LevelDefinition> levels,
+        final @NotNull Material blockMaterial
+    ) {
         this.levels = LevelConfigSupport.copyLevels(levels);
+        this.blockMaterial = Objects.requireNonNull(blockMaterial, "blockMaterial");
     }
 
     /**
@@ -56,6 +64,15 @@ public final class OutpostConfigSection {
      */
     public @Nullable LevelDefinition getLevelDefinition(final int level) {
         return this.levels.get(level);
+    }
+
+    /**
+     * Returns the configured marker-block material for Outpost chunks.
+     *
+     * @return configured marker-block material
+     */
+    public @NotNull Material getBlockMaterial() {
+        return this.blockMaterial;
     }
 
     /**
@@ -113,7 +130,7 @@ public final class OutpostConfigSection {
      * @return default Outpost config
      */
     public static @NotNull OutpostConfigSection createDefault() {
-        return new OutpostConfigSection(LevelConfigSupport.createDefaultOutpostLevels());
+        return new OutpostConfigSection(LevelConfigSupport.createDefaultOutpostLevels(), DEFAULT_BLOCK_MATERIAL);
     }
 
     private static @NotNull OutpostConfigSection fromConfiguration(final @NotNull YamlConfiguration configuration) {
@@ -121,6 +138,10 @@ public final class OutpostConfigSection {
             LevelConfigSupport.parseLevels(
                 configuration.getConfigurationSection("levels"),
                 LevelConfigSupport.createDefaultOutpostLevels()
+            ),
+            LevelConfigSupport.resolveConfiguredBlockMaterial(
+                configuration.getString("block_material"),
+                DEFAULT_BLOCK_MATERIAL
             )
         );
     }

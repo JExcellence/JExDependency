@@ -18,7 +18,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonSerializer;
 import com.google.gson.reflect.TypeToken;
 import com.raindropcentral.core.service.statistics.delivery.BatchPayload;
 import com.raindropcentral.core.service.statistics.delivery.DeliveryReceipt;

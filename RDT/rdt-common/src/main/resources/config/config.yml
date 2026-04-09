@@ -8,6 +8,7 @@ chunk_block_min_y: -10
 chunk_block_max_y: 10
 
 # Delay in seconds before /rt spawn teleports the player to a safe location near their nexus.
+# Set to 0 for an instant local teleport.
 town_spawn_teleport_delay_seconds: 3
 
 # When true, only north/east/south/west claimed chunks count as adjacent for new claims.
@@ -17,18 +18,23 @@ exclude_corner_claim_adjacency: true
 chunk_type:
   # When true, changing a claimed chunk to a different type resets chunk-local state.
   # This resets chunk level, saved level progress, protection overrides, and seed-box contents.
+  # Leave this enabled unless you intentionally want chunk progress to carry between roles.
   reset_state_on_change: true
 
-# Proxy-backed routing controls.
+# Proxy-backed routing controls used by /rt spawn for cross-server towns.
 proxy:
-  # Enables proxy-aware module features.
+  # Master switch for proxy-aware behavior.
   enabled: false
-  # Optional authoritative route identifier for this Paper server.
+  # Route ID for this Paper server. This must match the proxy/server identifier used by your routing layer.
+  # Leave blank on single-server setups.
   server_route_id: ""
-  # Routes /rt spawn through proxy transfer when the town spawn is owned by another server.
+  # When true, /rt spawn can transfer players to another server if the town spawn is hosted there.
+  # Requires `enabled: true`, a non-empty `server_route_id`, and an available proxy service.
   town_spawn_enabled: false
 
-# Icon/material mapping used for chunk type views and chunk block placement material changes.
+# GUI icons and default chunk marker materials. Values must be valid Bukkit Material names.
+# `chunk_type_icon_default` is also used for Security, Outpost, Medic, and Armory views.
+# `chunk_type_icon_chunk_block` is the default marker block for plain claimed chunks.
 chunk_type_icon_nexus: REINFORCED_DEEPSLATE
 chunk_type_icon_default: OAK_PLANKS
 chunk_type_icon_bank: GOLD_BLOCK
@@ -38,5 +44,10 @@ chunk_type_icon_chunk_block: OAK_PLANKS
 
 town:
   # Cooldown in seconds between town archetype changes.
-  # Default: 24 hours.
+  # Default: 24 hours. Set to 0 to allow immediate switching.
   archetype_change_cooldown_seconds: 86400
+  # Nexus level required before the town diplomacy system unlocks.
+  # Towns below this level always resolve relationships as neutral.
+  relationship_unlock_level: 5
+  # Cooldown in seconds after a confirmed town relationship change before that pair can change again.
+  relationship_change_cooldown_seconds: 21600

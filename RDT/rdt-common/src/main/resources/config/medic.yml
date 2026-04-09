@@ -1,0 +1,212 @@
+# Configurable Medic chunk progression levels and runtime perks.
+# Add, remove, or reorder numeric level keys as desired.
+# The highest numeric key becomes the Medic max level.
+# Valid Bukkit block material used for the Medic chunk marker.
+block_material: SEA_LANTERN
+
+# Level 1 unlock: pulse-based food regeneration while standing in the Medic chunk.
+food_regen:
+  enabled: true
+  unlock_level: 1
+  town_members_only: true
+  interval_ticks: 40
+  food_points_per_pulse: 1
+  saturation_per_pulse: 0.5
+
+# Level 2 unlock: pulse-based health regeneration while standing in the Medic chunk.
+health_regen:
+  enabled: true
+  unlock_level: 2
+  town_members_only: true
+  interval_ticks: 40
+  health_points_per_pulse: 1.0
+
+# Level 3 unlock: removes configured harmful effects on entry and on each pulse while standing in the Medic chunk.
+cleanse:
+  enabled: true
+  unlock_level: 3
+  town_members_only: true
+  interval_ticks: 40
+  harmful_effects:
+    - BAD_OMEN
+    - BLINDNESS
+    - DARKNESS
+    - HUNGER
+    - INSTANT_DAMAGE
+    - LEVITATION
+    - MINING_FATIGUE
+    - NAUSEA
+    - POISON
+    - RAID_OMEN
+    - SLOWNESS
+    - TRIAL_OMEN
+    - UNLUCK
+    - WEAKNESS
+    - WITHER
+
+# Level 4 unlock: grants a timed fortified-recovery buff that persists for a while after leaving the Medic chunk.
+fortified_recovery:
+  enabled: true
+  unlock_level: 4
+  town_members_only: true
+  duration_seconds: 300
+  refresh_while_inside: true
+  target_max_health: 40.0
+  upkeep_interval_ticks: 20
+  target_food_level: 20
+  target_saturation: 20.0
+
+# Level 5 unlock: instantly refills missing health and food, then repeats after the configured cooldown while the
+# player remains inside a qualifying Medic chunk.
+emergency_refill:
+  enabled: true
+  unlock_level: 5
+  town_members_only: true
+  trigger_on_entry: true
+  cooldown_seconds: 30
+  target_health_mode: CURRENT_MAX
+  target_food_level: 20
+  target_saturation: 20.0
+
+# Each numeric key is the level reached after the upgrade succeeds.
+# Requirement and reward entry names (for example `vault_upgrade`) are stable IDs used for progress tracking and UI.
+# `description` is the player-facing label shown in upgrade previews.
+# Currency requirements use `currency`, `amount`, and `consumable`.
+# Item requirements use `requiredItems`; `consumeOnComplete` removes contributed items and `exactMatch`
+# switches matching from material-only to full item similarity.
+# Currency rewards use `currencyId` and deposit into the town bank.
+# Item rewards grant the configured `item.material` and `item.amount`.
+# Command rewards can use placeholders such as {town_uuid}, {town_name}, {target_level}, {chunk_x}, and {chunk_z}.
+# `executeAsPlayer: false` runs the command from console instead of as the player.
+levels:
+  1:
+    requirements: {}
+    rewards: {}
+  2:
+    requirements:
+      vault_upgrade:
+        type: "CURRENCY"
+        currency: "vault"
+        amount: 1000.0
+        consumable: true
+        description: "Medic funding contribution"
+      clinic_supplies:
+        type: "ITEM"
+        requiredItems:
+          - type: "GLISTERING_MELON_SLICE"
+            amount: 24
+        consumeOnComplete: true
+        exactMatch: false
+        description: "Medic clinic supplies"
+    rewards:
+      vault_bonus:
+        type: "CURRENCY"
+        currencyId: "vault"
+        amount: 150.0
+        description: "Medic treasury rebate"
+      field_supplies:
+        type: "ITEM"
+        item:
+          material: "HONEY_BOTTLE"
+          amount: 8
+        description: "Medic field supplies"
+      town_broadcast:
+        type: "COMMAND"
+        command: "rt broadcast {town_uuid} <aqua>{town_name}</aqua> <yellow>upgraded Medic chunk <white>{chunk_x}, {chunk_z}</white> to level <white>{target_level}</white><yellow>!</yellow>"
+        executeAsPlayer: false
+  3:
+    requirements:
+      vault_upgrade:
+        type: "CURRENCY"
+        currency: "vault"
+        amount: 1750.0
+        consumable: true
+        description: "Medic funding contribution"
+      triage_rations:
+        type: "ITEM"
+        requiredItems:
+          - type: "GOLDEN_CARROT"
+            amount: 32
+        consumeOnComplete: true
+        exactMatch: false
+        description: "Medic triage rations"
+    rewards:
+      vault_bonus:
+        type: "CURRENCY"
+        currencyId: "vault"
+        amount: 250.0
+        description: "Medic treasury rebate"
+      combat_rations:
+        type: "ITEM"
+        item:
+          material: "GOLDEN_CARROT"
+          amount: 16
+        description: "Medic combat rations"
+      town_broadcast:
+        type: "COMMAND"
+        command: "rt broadcast {town_uuid} <aqua>{town_name}</aqua> <yellow>upgraded Medic chunk <white>{chunk_x}, {chunk_z}</white> to level <white>{target_level}</white><yellow>!</yellow>"
+        executeAsPlayer: false
+  4:
+    requirements:
+      vault_upgrade:
+        type: "CURRENCY"
+        currency: "vault"
+        amount: 2750.0
+        consumable: true
+        description: "Medic funding contribution"
+      restoratives:
+        type: "ITEM"
+        requiredItems:
+          - type: "GHAST_TEAR"
+            amount: 8
+        consumeOnComplete: true
+        exactMatch: false
+        description: "Medic restorative supplies"
+    rewards:
+      vault_bonus:
+        type: "CURRENCY"
+        currencyId: "vault"
+        amount: 400.0
+        description: "Medic treasury rebate"
+      recovery_cache:
+        type: "ITEM"
+        item:
+          material: "GOLDEN_APPLE"
+          amount: 4
+        description: "Medic recovery cache"
+      town_broadcast:
+        type: "COMMAND"
+        command: "rt broadcast {town_uuid} <aqua>{town_name}</aqua> <yellow>upgraded Medic chunk <white>{chunk_x}, {chunk_z}</white> to level <white>{target_level}</white><yellow>!</yellow>"
+        executeAsPlayer: false
+  5:
+    requirements:
+      vault_upgrade:
+        type: "CURRENCY"
+        currency: "vault"
+        amount: 4000.0
+        consumable: true
+        description: "Medic funding contribution"
+      revival_supplies:
+        type: "ITEM"
+        requiredItems:
+          - type: "TOTEM_OF_UNDYING"
+            amount: 1
+        consumeOnComplete: true
+        exactMatch: false
+        description: "Medic revival supplies"
+    rewards:
+      vault_bonus:
+        type: "CURRENCY"
+        currencyId: "vault"
+        amount: 600.0
+        description: "Medic treasury rebate"
+      emergency_cache:
+        type: "ITEM"
+        item:
+          material: "GOLDEN_APPLE"
+          amount: 8
+        description: "Medic emergency cache"
+      town_broadcast:
+        type: "COMMAND"
+        command: "rt broadcast {town_uuid} <aqua>{town_name}</aqua> <yellow>upgraded Medic chunk <white>{chunk_x}, {chunk_z}</white> to level <white>{target_level}</white><yellow>!</yellow>"
+        executeAsPlayer: false

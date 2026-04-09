@@ -215,6 +215,33 @@ public final class TownyProtectionBridge extends AbstractReflectionProtectionBri
     }
 
     /**
+     * Resolves the Towny level number for the player's town.
+     *
+     * @param player player to inspect
+     * @return Towny level number, or {@code 0} when unavailable
+     * @throws NullPointerException if {@code player} is {@code null}
+     */
+    @Override
+    public double getPlayerTownLevel(@NotNull Player player) {
+        if (!isAvailable()) {
+            return 0.0D;
+        }
+
+        try {
+            final Object town = resolveResidentTown(player);
+            if (town == null) {
+                return 0.0D;
+            }
+
+            final Double level = resolveTownLevelNumber(town);
+            return level == null ? 1.0D : Math.max(0.0D, level);
+        } catch (Exception exception) {
+            LOGGER.log(Level.FINE, "Failed to resolve Towny town level for " + player.getName(), exception);
+            return 0.0D;
+        }
+    }
+
+    /**
      * Deposits funds into the player's Towny town bank.
      *
      * @param player player whose town receives the deposit
@@ -437,5 +464,43 @@ public final class TownyProtectionBridge extends AbstractReflectionProtectionBri
                 return null;
             }
         }
+    }
+
+    @Nullable
+    private Double resolveTownLevelNumber(@NotNull Object town) {
+        return firstNonNullDouble(
+            invokeOptional(town, "getLevelNumber"),
+            invokeOptional(town, "getTownLevel"),
+            invokeOptional(town, "getLevel")
+        );
+    }
+
+    @Nullable
+    private Double firstNonNullDouble(@Nullable Object... values) {
+        for (final Object value : values) {
+            final Double numericValue = toNumericLevel(value);
+            if (numericValue != null) {
+                return numericValue;
+            }
+        }
+        return null;
+    }
+
+    @Nullable
+    private Double toNumericLevel(@Nullable Object value) {
+        final Double directValue = asDouble(value);
+        if (directValue != null) {
+            return directValue;
+        }
+        if (value == null) {
+            return null;
+        }
+
+        return firstNonNullDouble(
+            invokeOptional(value, "getLevelNumber"),
+            invokeOptional(value, "getLevel"),
+            invokeOptional(value, "getValue"),
+            invokeOptional(value, "getIndex")
+        );
     }
 }

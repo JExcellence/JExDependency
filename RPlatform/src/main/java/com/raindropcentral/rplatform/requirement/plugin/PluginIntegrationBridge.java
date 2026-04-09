@@ -23,7 +23,7 @@ import java.util.Map;
  * Generic bridge contract used by {@code PLUGIN} requirements.
  *
  * <p>Implementations expose a key/value requirement surface over third-party plugins while keeping
- * runtime dependencies optional.</p>
+ * runtime dependencies optional. Built-in categories include skills, jobs, and town progression.</p>
  *
  * @author ItsRainingHP, JExcellence
  * @since 2.0.0
@@ -48,7 +48,7 @@ public interface PluginIntegrationBridge {
     /**
      * Gets the high-level integration category.
      *
-     * @return category identifier (for example {@code "SKILLS"} or {@code "JOBS"})
+     * @return category identifier (for example {@code "SKILLS"}, {@code "JOBS"}, or {@code "TOWNS"})
      */
     @NotNull String getCategory();
 

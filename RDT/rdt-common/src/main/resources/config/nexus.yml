@@ -1,8 +1,18 @@
 # Configurable Nexus progression levels.
 # Add, remove, or reorder numeric level keys as desired.
 # Each level key represents the target Nexus level reached after successful level-up.
+# Requirement and reward entry names (for example `vault_upgrade`) are stable IDs used for progress tracking and UI.
+# `description` is the player-facing label shown in upgrade previews.
+# Currency requirements use `currency`, `amount`, and `consumable`.
+# Currency rewards use `currencyId` and deposit into the town bank.
+# Item rewards can use `item.material` and `item.amount` if you add them later.
+# Command rewards can use placeholders such as {town_uuid}, {town_name}, and {target_level}.
+# `executeAsPlayer: false` runs the command from console instead of as the player.
 levels:
   1:
+    combat:
+      max_health: 1000.0
+      defense: 0.0
     requirements:
       town_charter:
         type: "CURRENCY"
@@ -16,6 +26,9 @@ levels:
         command: "rt broadcast {town_uuid} <gradient:#22c55e:#84cc16>{town_name}</gradient> <yellow>has been founded and claimed its first Nexus!</yellow>"
         executeAsPlayer: false
   2:
+    combat:
+      max_health: 1250.0
+      defense: 2.0
     requirements:
       vault_upgrade:
         type: "CURRENCY"
@@ -34,6 +47,9 @@ levels:
         command: "rt broadcast {town_uuid} <gradient:#22c55e:#84cc16>{town_name}</gradient> <yellow>advanced its Nexus to level <white>{target_level}</white><yellow>!</yellow>"
         executeAsPlayer: false
   3:
+    combat:
+      max_health: 1500.0
+      defense: 4.0
     requirements:
       vault_upgrade:
         type: "CURRENCY"
@@ -52,6 +68,9 @@ levels:
         command: "rt broadcast {town_uuid} <gradient:#22c55e:#84cc16>{town_name}</gradient> <yellow>advanced its Nexus to level <white>{target_level}</white><yellow>!</yellow>"
         executeAsPlayer: false
   4:
+    combat:
+      max_health: 1750.0
+      defense: 6.0
     requirements:
       vault_upgrade:
         type: "CURRENCY"
@@ -70,6 +89,9 @@ levels:
         command: "rt broadcast {town_uuid} <gradient:#22c55e:#84cc16>{town_name}</gradient> <yellow>advanced its Nexus to level <white>{target_level}</white><yellow>!</yellow>"
         executeAsPlayer: false
   5:
+    combat:
+      max_health: 2000.0
+      defense: 8.0
     requirements:
       vault_upgrade:
         type: "CURRENCY"
@@ -88,6 +110,9 @@ levels:
         command: "rt broadcast {town_uuid} <gradient:#22c55e:#84cc16>{town_name}</gradient> <yellow>advanced its Nexus to level <white>{target_level}</white><yellow>!</yellow>"
         executeAsPlayer: false
   6:
+    combat:
+      max_health: 2250.0
+      defense: 10.0
     requirements:
       vault_upgrade:
         type: "CURRENCY"
@@ -106,6 +131,9 @@ levels:
         command: "rt broadcast {town_uuid} <gradient:#22c55e:#84cc16>{town_name}</gradient> <yellow>advanced its Nexus to level <white>{target_level}</white><yellow>!</yellow>"
         executeAsPlayer: false
   7:
+    combat:
+      max_health: 2500.0
+      defense: 12.0
     requirements:
       vault_upgrade:
         type: "CURRENCY"
@@ -124,6 +152,9 @@ levels:
         command: "rt broadcast {town_uuid} <gradient:#22c55e:#84cc16>{town_name}</gradient> <yellow>advanced its Nexus to level <white>{target_level}</white><yellow>!</yellow>"
         executeAsPlayer: false
   8:
+    combat:
+      max_health: 2750.0
+      defense: 14.0
     requirements:
       vault_upgrade:
         type: "CURRENCY"
@@ -142,6 +173,9 @@ levels:
         command: "rt broadcast {town_uuid} <gradient:#22c55e:#84cc16>{town_name}</gradient> <yellow>advanced its Nexus to level <white>{target_level}</white><yellow>!</yellow>"
         executeAsPlayer: false
   9:
+    combat:
+      max_health: 3000.0
+      defense: 16.0
     requirements:
       vault_upgrade:
         type: "CURRENCY"
@@ -160,6 +194,9 @@ levels:
         command: "rt broadcast {town_uuid} <gradient:#22c55e:#84cc16>{town_name}</gradient> <yellow>advanced its Nexus to level <white>{target_level}</white><yellow>!</yellow>"
         executeAsPlayer: false
   10:
+    combat:
+      max_health: 3250.0
+      defense: 18.0
     requirements:
       vault_upgrade:
         type: "CURRENCY"

@@ -24,6 +24,7 @@ import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapKeyColumn;
 import jakarta.persistence.Table;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -80,6 +81,12 @@ public class RDTPlayer extends BaseEntity {
     @Convert(converter = ItemStackMapConverter.class)
     @Column(name = "town_creation_item_progress", columnDefinition = "LONGTEXT")
     private Map<String, ItemStack> townCreationItemProgress = new LinkedHashMap<>();
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "rdt_player_armory_free_repair_usage", joinColumns = @JoinColumn(name = "player_id_fk"))
+    @MapKeyColumn(name = "chunk_uuid", length = 64)
+    @Column(name = "used_at", nullable = false)
+    private Map<String, Long> armoryFreeRepairUsage = new LinkedHashMap<>();
 
     /**
      * Creates a player profile that already belongs to a town as a default member.
@@ -443,11 +450,56 @@ public class RDTPlayer extends BaseEntity {
         this.townCreationCurrencyProgress.clear();
     }
 
+    /**
+     * Returns the persisted free-repair timestamp for one Armory chunk.
+     *
+     * @param chunkUuid Armory chunk UUID
+     * @return last-used timestamp in epoch milliseconds, or {@code 0} when unused
+     */
+    public long getArmoryFreeRepairUsedAt(final @NotNull UUID chunkUuid) {
+        return this.armoryFreeRepairUsage.getOrDefault(normalizeChunkKey(chunkUuid), 0L);
+    }
+
+    /**
+     * Returns a defensive copy of the persisted free-repair timestamps keyed by chunk UUID.
+     *
+     * @return copied free-repair usage map
+     */
+    public @NotNull Map<String, Long> getArmoryFreeRepairUsage() {
+        return new LinkedHashMap<>(this.armoryFreeRepairUsage);
+    }
+
+    /**
+     * Replaces the persisted free-repair timestamp for one Armory chunk.
+     *
+     * @param chunkUuid Armory chunk UUID
+     * @param usedAt epoch-millisecond timestamp, or {@code 0} to clear the entry
+     */
+    public void setArmoryFreeRepairUsedAt(final @NotNull UUID chunkUuid, final long usedAt) {
+        final String normalizedChunkKey = normalizeChunkKey(chunkUuid);
+        if (usedAt <= 0L) {
+            this.armoryFreeRepairUsage.remove(normalizedChunkKey);
+            return;
+        }
+        this.armoryFreeRepairUsage.put(normalizedChunkKey, usedAt);
+    }
+
+    /**
+     * Clears every persisted Armory free-repair usage entry.
+     */
+    public void clearArmoryFreeRepairUsage() {
+        this.armoryFreeRepairUsage.clear();
+    }
+
     private static @NotNull String normalizeProgressKey(final @NotNull String progressKey) {
         final String normalized = Objects.requireNonNull(progressKey, "progressKey").trim().toLowerCase(Locale.ROOT);
         if (normalized.isEmpty()) {
             throw new IllegalArgumentException("progressKey cannot be blank");
         }
         return normalized;
+    }
+
+    private static @NotNull String normalizeChunkKey(final @NotNull UUID chunkUuid) {
+        return Objects.requireNonNull(chunkUuid, "chunkUuid").toString().toLowerCase(Locale.ROOT);
     }
 }

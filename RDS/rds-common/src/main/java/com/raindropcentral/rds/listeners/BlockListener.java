@@ -17,8 +17,11 @@ import com.raindropcentral.rds.RDS;
 import com.raindropcentral.rds.configs.ConfigSection;
 import com.raindropcentral.rds.database.entity.RDSPlayer;
 import com.raindropcentral.rds.database.entity.Shop;
+import com.raindropcentral.rds.database.entity.TownShopOutpost;
 import com.raindropcentral.rds.items.ShopBlock;
+import com.raindropcentral.rds.items.TownShopBlock;
 import com.raindropcentral.rds.service.shop.ShopOwnershipSupport;
+import com.raindropcentral.rds.service.shop.TownShopService;
 import com.raindropcentral.rplatform.protection.RProtectionBridge;
 import de.jexcellence.jextranslate.i18n.I18n;
 import org.bukkit.Bukkit;
@@ -110,10 +113,17 @@ public class BlockListener implements Listener {
         final Block placedBlock = event.getBlockPlaced();
         final ItemStack item = event.getItemInHand();
         final boolean shopBlock = ShopBlock.equals(this.rds, item);
+        final TownShopBlock.Metadata townShopMetadata = TownShopBlock.getMetadata(this.rds, item);
+        final boolean townShopBlock = townShopMetadata != null;
         final Block mergedPartner = this.getMergedChestPartner(placedBlock);
 
-        if (!shopBlock) {
+        if (!shopBlock && !townShopBlock) {
             this.preventNormalChestShopMerge(event, mergedPartner);
+            return;
+        }
+
+        if (townShopBlock) {
+            this.handleTownShopPlacement(event, townShopMetadata, placedBlock.getLocation(), mergedPartner);
             return;
         }
 
@@ -185,6 +195,46 @@ public class BlockListener implements Listener {
         }
 
         this.placeShopItem(ownerId, playerData, shopLocation);
+    }
+
+    private void handleTownShopPlacement(
+        final @NotNull BlockPlaceEvent event,
+        final @Nullable TownShopBlock.Metadata metadata,
+        final @NotNull Location shopLocation,
+        final @Nullable Block mergedPartner
+    ) {
+        final TownShopService townShopService = this.rds.getTownShopService();
+        if (townShopService == null || metadata == null) {
+            event.setCancelled(true);
+            this.sendMessage(event.getPlayer(), "block_listener.error.invalid_town_shop");
+            return;
+        }
+
+        final TownShopOutpost outpost = townShopService.getOutpost(metadata.chunkUuid());
+        if (outpost == null) {
+            event.setCancelled(true);
+            this.sendMessage(event.getPlayer(), "block_listener.error.invalid_town_shop");
+            return;
+        }
+
+        if (!outpost.matchesLocation(shopLocation)) {
+            event.setCancelled(true);
+            this.sendMessage(event.getPlayer(), "block_listener.error.town_shop_wrong_outpost");
+            return;
+        }
+
+        if (mergedPartner != null) {
+            this.upgradeTownShopToDoubleChest(event, shopLocation, mergedPartner, metadata, townShopService);
+            return;
+        }
+
+        if (!townShopService.canPlaceTownShop(shopLocation, event.getPlayer(), metadata)) {
+            event.setCancelled(true);
+            this.sendMessage(event.getPlayer(), "block_listener.error.town_shop_unavailable");
+            return;
+        }
+
+        this.placeTownShop(outpost, shopLocation);
     }
 
     private boolean canPlacePlayerShop(
@@ -399,6 +449,42 @@ public class BlockListener implements Listener {
         this.rds.getShopRepository().update(adjacentShop);
     }
 
+    private void upgradeTownShopToDoubleChest(
+        final @NotNull BlockPlaceEvent event,
+        final @NotNull Location secondaryLocation,
+        final @NotNull Block mergedPartner,
+        final @NotNull TownShopBlock.Metadata metadata,
+        final @NotNull TownShopService townShopService
+    ) {
+        final Shop adjacentShop = this.rds.getShopRepository().findByLocation(mergedPartner.getLocation());
+        if (adjacentShop == null) {
+            event.setCancelled(true);
+            this.sendMessage(event.getPlayer(), "block_listener.error.double_chest_requires_shop_block");
+            return;
+        }
+
+        if (!adjacentShop.isTownShop()) {
+            event.setCancelled(true);
+            this.sendMessage(event.getPlayer(), "block_listener.error.double_chest_owner_mismatch");
+            return;
+        }
+
+        if (adjacentShop.isDoubleChest()) {
+            event.setCancelled(true);
+            this.sendMessage(event.getPlayer(), "block_listener.error.shop_already_double_chest");
+            return;
+        }
+
+        if (!townShopService.canExtendTownShop(secondaryLocation, event.getPlayer(), adjacentShop, metadata)) {
+            event.setCancelled(true);
+            this.sendMessage(event.getPlayer(), "block_listener.error.town_shop_unavailable");
+            return;
+        }
+
+        adjacentShop.setSecondaryShopLocation(secondaryLocation);
+        this.rds.getShopRepository().update(adjacentShop);
+    }
+
     private void placeShopItem(
             final @NotNull UUID ownerId,
             final @NotNull RDSPlayer playerData,
@@ -407,6 +493,14 @@ public class BlockListener implements Listener {
         final Shop shop = new Shop(ownerId, shopLocation);
         this.rds.getShopRepository().create(shop);
         this.rds.getPlayerRepository().update(playerData);
+    }
+
+    private void placeTownShop(
+        final @NotNull TownShopOutpost outpost,
+        final @NotNull Location shopLocation
+    ) {
+        final Shop shop = Shop.createTownShop(outpost, shopLocation);
+        this.rds.getShopRepository().create(shop);
     }
 
     private @Nullable Block getMergedChestPartner(

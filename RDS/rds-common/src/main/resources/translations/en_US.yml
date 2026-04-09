@@ -25,7 +25,10 @@ prs:
     enabled: "<green>Shop boss bar enabled while looking at a shop.</green>"
     disabled: "<yellow>Shop boss bar disabled.</yellow>"
   give:
-    syntax: "<red>Usage: /rs give <target_player> <amount></red>"
+    syntax: "<red>Usage: /rs give <target_player> <amount> or /rs give town <target_player> <amount></red>"
+    town:
+      outpost_required: "<red>{target_player} must be standing in an eligible Outpost chunk to receive town shops.</red>"
+      success: "<green>Granted <white>{granted_amount}</white><green> town shop token(s) to <white>{target_player}</white><green> for <white>{town_name}</white><green> at <white>{chunk_x}, {chunk_z}</white><green>.</green>"
   scoreboard:
     syntax: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Usage:</gray> <white>/rs scoreboard &lt;ledger|stock&gt;</white>"
     enabled: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Enabled the <white>{scoreboard_type}</white><gray> sidebar.</gray>"
@@ -55,6 +58,7 @@ shop_boss_bar:
   type:
     player: "Player"
     admin: "Admin"
+    town: "Town"
   owner:
     admin: "Admin"
   available_items:
@@ -72,6 +76,14 @@ shop_block:
   name: "<blue>RaindropShop</blue>"
   lore:
     - "<yellow>Place this block to set up your shop.</yellow>"
+
+town_shop_block:
+  name: "<aqua>Town Shop</aqua> <white>{town_name}</white>"
+  lore:
+    - "<gray>Place this chest inside its bound Outpost chunk.</gray>"
+    - "<gray>World:</gray> <white>{world_name}</white>"
+    - "<gray>Chunk:</gray> <white>{chunk_x}, {chunk_z}</white>"
+    - "<yellow>Town members with shop-management access can place it.</yellow>"
 
 # Shop store overview UI labels, lore, and availability states.
 shop_store_ui:
@@ -164,6 +176,9 @@ block_listener:
     protection_requires_town: "<red>You must belong to a town to place a ShopBlock while protection.only_player_shops is enabled.</red>"
     protection_requires_own_town: "<red>You must stand in your own town claim to place this ShopBlock.</red>"
     protection_requires_outpost: "<red>When RDT is active, player shops can only be placed inside your town's Outpost chunks.</red>"
+    invalid_town_shop: "<red>This Town Shop token is invalid or no longer linked to an active Outpost.</red>"
+    town_shop_wrong_outpost: "<red>This Town Shop token can only be placed inside its bound Outpost chunk.</red>"
+    town_shop_unavailable: "<red>This Town Shop token cannot be used here right now. Make sure you have permission and available Outpost capacity.</red>"
     shop_protected: "<red>Shops cannot be broken directly. Use the shop menu to close the shop.</red>"
     double_chest_requires_shop_block: "<red>Double-chest shops require a second <blue>ShopBlock</blue><red>. Normal chests cannot merge with shop chests.</red>"
     double_chest_owner_mismatch: "<red>This ShopBlock belongs to a different owner, so it cannot extend this shop.</red>"
@@ -196,6 +211,13 @@ shop_overview_ui:
         - "<gray>Stored entries:</gray> <white>{item_count}</white>"
         - "<gray>Shop type:</gray> <white>Admin Shop</white>"
         - "<gray>Inventory:</gray> <white>Infinite</white>"
+    town:
+      lore:
+        - "<gray>Owner:</gray> <white>{owner}</white>"
+        - "<gray>Location:</gray> <white>{location}</white>"
+        - "<gray>Stored entries:</gray> <white>{item_count}</white>"
+        - "<gray>Shop type:</gray> <white>Town Shop</white>"
+        - "<gray>Inventory:</gray> <white>Finite</white>"
   finance:
     name: "<gold>Shop Bank</gold>"
     lore:
@@ -295,6 +317,7 @@ shop_overview_ui:
     close_not_empty: "<red>You can only close a shop after removing all stored items. Remaining entries: {item_count}.</red>"
     close_bank_not_empty: "<red>Withdraw your shop bank before closing this shop. Remaining tracked currencies: {bank_currency_count}.</red>"
     closed: "<green>Closed the shop and returned {returned_blocks} ShopBlock(s). Counted shops: {owned_shops}.</green>"
+    closed_town: "<green>Closed the town shop and returned {returned_blocks} Town Shop token(s).</green>"
     tax_locked: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>This shop has unpaid tax debt:</gray> <white>{debt_summary}</white><gray>. Pay taxes to unlock add/edit.</gray>"
     tax_not_due: "<gradient:#38bdf8:#60a5fa>[!]</gradient> <gray>This shop has no unpaid tax debt.</gray>"
     tax_payment_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Tax payment is unavailable because the tax scheduler is not loaded.</gray>"
@@ -1509,6 +1532,13 @@ shop_ledger_ui:
         - "<gray>Counted shops:</gray> <white>{counted_shops}</white>"
         - "<gray>Currency id:</gray> <white>{currency_type}</white>"
         - "<gray>Recorded:</gray> <white>{created_at}</white>"
+    outpost_tax:
+      name: "<gold>Outpost Sale Tax</gold>"
+      lore:
+        - "<gray>Town:</gray> <white>{actor}</white>"
+        - "<gray>Deposited:</gray> <white>{amount} {currency_name}</white>"
+        - "<gray>Currency id:</gray> <white>{currency_type}</white>"
+        - "<gray>Recorded:</gray> <white>{created_at}</white>"
   feedback:
     empty:
       name: "<red>No Ledger Entries</red>"
@@ -1547,6 +1577,16 @@ shop_customer_ui:
         - "<gray>Your discount:</gray> <white>{discount_percent}</white>"
         - "<gray>Shop type:</gray> <white>Admin Shop</white>"
         - "<gray>Inventory:</gray> <white>Infinite</white>"
+        - "<yellow>Left click an item to buy one.</yellow>"
+        - "<yellow>Right click an item to choose an amount.</yellow>"
+    town:
+      lore:
+        - "<gray>Owner:</gray> <white>{owner}</white>"
+        - "<gray>Location:</gray> <white>{location}</white>"
+        - "<gray>Available entries:</gray> <white>{stored_count}</white>"
+        - "<gray>Your discount:</gray> <white>{discount_percent}</white>"
+        - "<gray>Shop type:</gray> <white>Town Shop</white>"
+        - "<gray>Inventory:</gray> <white>Finite</white>"
         - "<yellow>Left click an item to buy one.</yellow>"
         - "<yellow>Right click an item to choose an amount.</yellow>"
   entry:

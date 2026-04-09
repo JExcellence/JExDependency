@@ -31,6 +31,8 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -49,9 +51,10 @@ public class TownChunkTypeView extends BaseView {
         ChunkType.SECURITY,
         ChunkType.OUTPOST,
         ChunkType.MEDIC,
-        ChunkType.BANK
+        ChunkType.BANK,
+        ChunkType.ARMORY
     };
-    private static final char[] TYPE_LAYOUT_KEYS = {'a', 'b', 'c', 'd', 'e', 'f'};
+    private static final char[] TYPE_LAYOUT_KEYS = {'a', 'b', 'c', 'd', 'e', 'f', 'g'};
 
     private final State<RDT> plugin = initialState("plugin");
     private final State<UUID> townUuid = initialState("town_uuid");
@@ -87,7 +90,7 @@ public class TownChunkTypeView extends BaseView {
             "    s    ",
             "  a b c  ",
             "  d e f  ",
-            "         ",
+            "    g    ",
             "         ",
             "         "
         };
@@ -177,6 +180,57 @@ public class TownChunkTypeView extends BaseView {
                 .build()
                 .sendMessage();
         }
+        if (result.success() && chunkType == ChunkType.FARM) {
+            new I18n.Builder(this.getKey() + ".farm_selected_hint", clickContext.getPlayer())
+                .includePrefix()
+                .build()
+                .sendMessage();
+        }
+        if (result.success() && chunkType == ChunkType.ARMORY) {
+            new I18n.Builder(this.getKey() + ".armory_selected_hint", clickContext.getPlayer())
+                .includePrefix()
+                .build()
+                .sendMessage();
+        }
+        if (result.success() && result.seedBoxGranted()) {
+            new I18n.Builder(this.getKey() + ".seed_box_granted", clickContext.getPlayer())
+                .includePrefix()
+                .build()
+                .sendMessage();
+        }
+        if (result.success() && result.seedBoxRemoved()) {
+            new I18n.Builder(
+                this.getKey() + (result.droppedSeeds() ? ".seed_box_removed_with_seeds" : ".seed_box_removed"),
+                clickContext.getPlayer()
+            )
+                .includePrefix()
+                .build()
+                .sendMessage();
+        }
+        if (result.success() && result.salvageBlockGranted()) {
+            new I18n.Builder(this.getKey() + ".salvage_block_granted", clickContext.getPlayer())
+                .includePrefix()
+                .build()
+                .sendMessage();
+        }
+        if (result.success() && result.salvageBlockRemoved()) {
+            new I18n.Builder(this.getKey() + ".salvage_block_removed", clickContext.getPlayer())
+                .includePrefix()
+                .build()
+                .sendMessage();
+        }
+        if (result.success() && result.repairBlockGranted()) {
+            new I18n.Builder(this.getKey() + ".repair_block_granted", clickContext.getPlayer())
+                .includePrefix()
+                .build()
+                .sendMessage();
+        }
+        if (result.success() && result.repairBlockRemoved()) {
+            new I18n.Builder(this.getKey() + ".repair_block_removed", clickContext.getPlayer())
+                .includePrefix()
+                .build()
+                .sendMessage();
+        }
         this.openChunkView(clickContext, townChunk);
     }
 
@@ -241,17 +295,23 @@ public class TownChunkTypeView extends BaseView {
             : resetsState
                 ? "entry.available_reset_lore"
                 : "entry.available_lore";
-        return UnifiedBuilderFactory.item(this.plugin.get(context).getDefaultConfig().getChunkTypeIconMaterial(chunkType))
+        final List<net.kyori.adventure.text.Component> lore = new ArrayList<>(this.i18n(loreKey, context.getPlayer())
+            .withPlaceholder("chunk_type", chunkType.name())
+            .build()
+            .children());
+        lore.addAll(this.i18n(resolveBenefitLoreKey(chunkType), context.getPlayer()).build().children());
+        return UnifiedBuilderFactory.item(this.plugin.get(context).getChunkTypeDisplayMaterial(chunkType))
             .setName(this.i18n("entry.name", context.getPlayer())
                 .withPlaceholder("chunk_type", chunkType.name())
                 .build()
                 .component())
-            .setLore(this.i18n(loreKey, context.getPlayer())
-                .withPlaceholder("chunk_type", chunkType.name())
-                .build()
-                .children())
+            .setLore(lore)
             .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
             .build();
+    }
+
+    static @NotNull String resolveBenefitLoreKey(final @NotNull ChunkType chunkType) {
+        return "entry.benefits." + chunkType.name().toLowerCase(java.util.Locale.ROOT);
     }
 
     private @NotNull ItemStack createMissingChunkItem(final @NotNull Player player) {

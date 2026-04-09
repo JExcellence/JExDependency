@@ -32,7 +32,8 @@ class ShopLedgerTypeTest {
         assertArrayEquals(
             new ShopLedgerType[]{
                 ShopLedgerType.PURCHASE,
-                ShopLedgerType.TAXATION
+                ShopLedgerType.TAXATION,
+                ShopLedgerType.OUTPOST_TAX
             },
             ShopLedgerType.values()
         );
@@ -41,5 +42,6 @@ class ShopLedgerTypeTest {
     @Test
     void resolvesEnumValueByCanonicalName() {
         assertEquals(ShopLedgerType.TAXATION, ShopLedgerType.valueOf("TAXATION"));
+        assertEquals(ShopLedgerType.OUTPOST_TAX, ShopLedgerType.valueOf("OUTPOST_TAX"));
     }
 }

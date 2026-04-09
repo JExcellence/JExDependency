@@ -25,7 +25,6 @@ import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.state.State;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -482,7 +481,7 @@ public class ShopBankView extends APaginatedView<ShopBankView.BankViewEntry> {
             final @NotNull Context context,
             final @NotNull Shop shop
     ) {
-        return shop.canManage(context.getPlayer().getUniqueId()) || ShopAdminAccessSupport.hasOwnerOverride(context);
+        return ShopAdminAccessSupport.canManage(context, shop, this.rds.get(context));
     }
 
     private @NotNull Map<String, Object> createViewData(
@@ -532,8 +531,7 @@ public class ShopBankView extends APaginatedView<ShopBankView.BankViewEntry> {
     private @NotNull String getOwnerName(
             final @NotNull Shop shop
     ) {
-        final String ownerName = Bukkit.getOfflinePlayer(shop.getOwner()).getName();
-        return ownerName == null ? shop.getOwner().toString() : ownerName;
+        return ShopAdminAccessSupport.resolveOwnerName(shop);
     }
 
     /**

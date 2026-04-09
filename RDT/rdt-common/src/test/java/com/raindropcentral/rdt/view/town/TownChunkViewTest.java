@@ -49,8 +49,18 @@ class TownChunkViewTest {
         assertTrue(TownChunkView.supportsChunkProgression(new RTownChunk(town, "world", 2, 4, ChunkType.BANK)));
         assertTrue(TownChunkView.supportsChunkProgression(new RTownChunk(town, "world", 2, 5, ChunkType.FARM)));
         assertTrue(TownChunkView.supportsChunkProgression(new RTownChunk(town, "world", 2, 6, ChunkType.OUTPOST)));
+        assertTrue(TownChunkView.supportsChunkProgression(new RTownChunk(town, "world", 2, 7, ChunkType.MEDIC)));
+        assertTrue(TownChunkView.supportsChunkProgression(new RTownChunk(town, "world", 2, 8, ChunkType.ARMORY)));
         assertFalse(TownChunkView.supportsChunkProgression(new RTownChunk(town, "world", 2, 7, ChunkType.DEFAULT)));
-        assertFalse(TownChunkView.supportsChunkProgression(new RTownChunk(town, "world", 2, 8, ChunkType.MEDIC)));
+        assertFalse(TownChunkView.supportsChunkProgression(new RTownChunk(town, "world", 2, 9, ChunkType.CLAIM_PENDING)));
+    }
+
+    @Test
+    void onlyNexusChunksExposeTownRelationships() {
+        final RTown town = new RTown(UUID.randomUUID(), UUID.randomUUID(), "Town", null);
+
+        assertTrue(TownChunkView.supportsTownRelationships(new RTownChunk(town, "world", 2, 3, ChunkType.NEXUS)));
+        assertFalse(TownChunkView.supportsTownRelationships(new RTownChunk(town, "world", 2, 4, ChunkType.SECURITY)));
     }
 
     @Test
@@ -67,6 +77,42 @@ class TownChunkViewTest {
 
         assertTrue(TownChunkView.supportsFuelFeatures(new RTownChunk(town, "world", 2, 3, ChunkType.SECURITY)));
         assertFalse(TownChunkView.supportsFuelFeatures(new RTownChunk(town, "world", 2, 4, ChunkType.DEFAULT)));
+    }
+
+    @Test
+    void bankControlsOnlyRenderForBankChunks() {
+        final RTown town = new RTown(UUID.randomUUID(), UUID.randomUUID(), "Town", null);
+
+        assertTrue(TownChunkView.supportsBankFeatures(new RTownChunk(town, "world", 2, 3, ChunkType.BANK)));
+        assertFalse(TownChunkView.supportsBankFeatures(new RTownChunk(town, "world", 2, 4, ChunkType.DEFAULT)));
+        assertFalse(TownChunkView.supportsBankFeatures(new RTownChunk(town, "world", 2, 5, ChunkType.SECURITY)));
+    }
+
+    @Test
+    void farmControlsOnlyRenderForFarmChunks() {
+        final RTown town = new RTown(UUID.randomUUID(), UUID.randomUUID(), "Town", null);
+
+        assertTrue(TownChunkView.supportsFarmFeatures(new RTownChunk(town, "world", 2, 3, ChunkType.FARM)));
+        assertFalse(TownChunkView.supportsFarmFeatures(new RTownChunk(town, "world", 2, 4, ChunkType.DEFAULT)));
+        assertFalse(TownChunkView.supportsFarmFeatures(new RTownChunk(town, "world", 2, 5, ChunkType.SECURITY)));
+    }
+
+    @Test
+    void medicControlsOnlyRenderForMedicChunks() {
+        final RTown town = new RTown(UUID.randomUUID(), UUID.randomUUID(), "Town", null);
+
+        assertTrue(TownChunkView.supportsMedicFeatures(new RTownChunk(town, "world", 2, 3, ChunkType.MEDIC)));
+        assertFalse(TownChunkView.supportsMedicFeatures(new RTownChunk(town, "world", 2, 4, ChunkType.DEFAULT)));
+        assertFalse(TownChunkView.supportsMedicFeatures(new RTownChunk(town, "world", 2, 5, ChunkType.FARM)));
+    }
+
+    @Test
+    void armoryControlsOnlyRenderForArmoryChunks() {
+        final RTown town = new RTown(UUID.randomUUID(), UUID.randomUUID(), "Town", null);
+
+        assertTrue(TownChunkView.supportsArmoryFeatures(new RTownChunk(town, "world", 2, 3, ChunkType.ARMORY)));
+        assertFalse(TownChunkView.supportsArmoryFeatures(new RTownChunk(town, "world", 2, 4, ChunkType.DEFAULT)));
+        assertFalse(TownChunkView.supportsArmoryFeatures(new RTownChunk(town, "world", 2, 5, ChunkType.MEDIC)));
     }
 
     @Test

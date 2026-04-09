@@ -1,6 +1,19 @@
 # Configurable Outpost chunk progression levels.
 # Add, remove, or reorder numeric level keys as desired.
 # The highest numeric key becomes the Outpost max level.
+# Valid Bukkit block material used for the Outpost chunk marker.
+block_material: LODESTONE
+
+# Each numeric key is the level reached after the upgrade succeeds.
+# Requirement and reward entry names (for example `vault_upgrade`) are stable IDs used for progress tracking and UI.
+# `description` is the player-facing label shown in upgrade previews.
+# Currency requirements use `currency`, `amount`, and `consumable`.
+# Item requirements use `requiredItems`; `consumeOnComplete` removes contributed items and `exactMatch`
+# switches matching from material-only to full item similarity.
+# Currency rewards use `currencyId` and deposit into the town bank.
+# Item rewards grant the configured `item.material` and `item.amount`.
+# Command rewards can use placeholders such as {town_uuid}, {town_name}, {target_level}, {chunk_x}, and {chunk_z}.
+# `executeAsPlayer: false` runs the command from console instead of as the player.
 levels:
   1:
     requirements: {}
@@ -53,6 +66,11 @@ levels:
         currencyId: "vault"
         amount: 250.0
         description: "Outpost treasury rebate"
+      town_shop_reward:
+        type: "COMMAND"
+        command: "rs internal reward-town-shop {player} RDT {town_uuid} {town_name_base64} {chunk_uuid} {world_name} {chunk_x} {chunk_z} {target_level}"
+        executeAsPlayer: false
+        description: "Hidden RDS Outpost town-shop reward"
       town_broadcast:
         type: "COMMAND"
         command: "rt broadcast {town_uuid} <aqua>{town_name}</aqua> <yellow>upgraded Outpost chunk <white>{chunk_x}, {chunk_z}</white> to level <white>{target_level}</white><yellow>!</yellow>"
@@ -79,6 +97,11 @@ levels:
         currencyId: "vault"
         amount: 400.0
         description: "Outpost treasury rebate"
+      town_shop_reward:
+        type: "COMMAND"
+        command: "rs internal reward-town-shop {player} RDT {town_uuid} {town_name_base64} {chunk_uuid} {world_name} {chunk_x} {chunk_z} {target_level}"
+        executeAsPlayer: false
+        description: "Hidden RDS Outpost town-shop reward"
       town_broadcast:
         type: "COMMAND"
         command: "rt broadcast {town_uuid} <aqua>{town_name}</aqua> <yellow>upgraded Outpost chunk <white>{chunk_x}, {chunk_z}</white> to level <white>{target_level}</white><yellow>!</yellow>"
@@ -105,6 +128,11 @@ levels:
         currencyId: "vault"
         amount: 600.0
         description: "Outpost treasury rebate"
+      town_shop_reward:
+        type: "COMMAND"
+        command: "rs internal reward-town-shop {player} RDT {town_uuid} {town_name_base64} {chunk_uuid} {world_name} {chunk_x} {chunk_z} {target_level}"
+        executeAsPlayer: false
+        description: "Hidden RDS Outpost town-shop reward"
       town_broadcast:
         type: "COMMAND"
         command: "rt broadcast {town_uuid} <aqua>{town_name}</aqua> <yellow>upgraded Outpost chunk <white>{chunk_x}, {chunk_z}</white> to level <white>{target_level}</white><yellow>!</yellow>"

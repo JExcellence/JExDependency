@@ -45,6 +45,8 @@ class NexusConfigSectionTest {
         assertTrue(levelOne.getRequirements().containsKey("town_charter"));
         assertTrue(levelOne.getRewards().containsKey("town_broadcast"));
         assertEquals("vault", levelOne.getRequirements().get("town_charter").get("currency"));
+        assertEquals(1000.0D, section.getCombatStats(1).maxHealth());
+        assertEquals(0.0D, section.getCombatStats(1).defense());
 
         final LevelDefinition levelTwo = section.getLevelDefinition(2);
         assertNotNull(levelTwo);
@@ -52,6 +54,8 @@ class NexusConfigSectionTest {
         assertTrue(levelTwo.getRewards().containsKey("vault_bonus"));
         assertTrue(levelTwo.getRewards().containsKey("town_broadcast"));
         assertEquals("vault", levelTwo.getRequirements().get("vault_upgrade").get("currency"));
+        assertEquals(1250.0D, section.getCombatStats(2).maxHealth());
+        assertEquals(2.0D, section.getCombatStats(2).defense());
     }
 
     @Test
@@ -59,6 +63,8 @@ class NexusConfigSectionTest {
         final NexusConfigSection section = NexusConfigSection.fromInputStream(new ByteArrayInputStream("""
             levels:
               "3":
+                combat:
+                  max_health: 1800
                 requirements:
                   " Vault Req ":
                     type: CURRENCY
@@ -70,6 +76,8 @@ class NexusConfigSectionTest {
                     type: COMMAND
                     command: "rt broadcast {town_uuid} test"
               "7":
+                combat:
+                  defense: 22
                 requirements:
                   " Rare Item ":
                     type: ITEM
@@ -98,10 +106,14 @@ class NexusConfigSectionTest {
         assertTrue(levelThree.getRewards().containsKey("bonus"));
         assertEquals("tokens", levelThree.getRequirements().get("vault req").get("currencyId"));
         assertEquals("rt broadcast {town_uuid} test", levelThree.getRewards().get("bonus").get("command"));
+        assertEquals(1800.0D, section.getCombatStats(3).maxHealth());
+        assertEquals(4.0D, section.getCombatStats(3).defense());
 
         final LevelDefinition levelSeven = section.getLevelDefinition(7);
         assertNotNull(levelSeven);
         assertTrue(levelSeven.getRequirements().containsKey("rare item"));
         assertTrue(levelSeven.getRewards().containsKey("vault bonus"));
+        assertEquals(2500.0D, section.getCombatStats(7).maxHealth());
+        assertEquals(22.0D, section.getCombatStats(7).defense());
     }
 }

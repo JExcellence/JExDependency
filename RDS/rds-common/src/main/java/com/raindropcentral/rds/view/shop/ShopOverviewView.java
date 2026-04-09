@@ -18,6 +18,7 @@ import com.raindropcentral.rds.database.entity.RDSPlayer;
 import com.raindropcentral.rds.database.entity.Shop;
 import com.raindropcentral.rds.database.entity.ShopLedgerType;
 import com.raindropcentral.rds.items.ShopBlock;
+import com.raindropcentral.rds.items.TownShopBlock;
 import com.raindropcentral.rds.service.shop.ShopOwnershipSupport;
 import com.raindropcentral.rds.service.tax.ShopTaxScheduler;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
@@ -27,7 +28,6 @@ import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.state.State;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -90,7 +90,7 @@ public class ShopOverviewView extends BaseView {
             final @NotNull Player player
     ) {
         final Shop shop = this.getCurrentShop(render);
-        final boolean owner = shop != null && shop.isOwner(player.getUniqueId());
+        final boolean canClose = shop != null && this.canClose(render, shop);
         final boolean canSupply = shop != null && this.canSupply(render, shop);
         final boolean canManage = shop != null && this.canManage(render, shop);
         final boolean hasTaxDebt = shop != null && shop.hasTaxDebt();
@@ -118,11 +118,12 @@ public class ShopOverviewView extends BaseView {
                             this.createShopViewData(clickContext, currentShop)
                     );
                 });
-        if (owner) {
+        if (canClose) {
             render.slot(1)
                     .renderWith(() -> createCloseShopItem(shop, player))
                     .onClick(this::handleCloseShopClick);
 
+            if (shop.isPlayerShop()) {
             render.slot(13)
                     .renderWith(() -> createTrustedPlayersItem(shop, player))
                     .onClick(clickContext -> clickContext.openForPlayer(
@@ -132,8 +133,9 @@ public class ShopOverviewView extends BaseView {
                                     "shopLocation", shop.getShopLocation()
                             )
                     ));
+            }
         }
-        if (owner && player.hasPermission(ADMIN_SHOPS_PERMISSION)) {
+        if (canClose && shop.isPlayerShop() && player.hasPermission(ADMIN_SHOPS_PERMISSION)) {
             render.slot(0)
                     .renderWith(() -> createAdminToggleItem(shop, player))
                     .onClick(clickContext -> {
@@ -146,7 +148,7 @@ public class ShopOverviewView extends BaseView {
                             return;
                         }
 
-                        if (!currentShop.isOwner(clickContext.getPlayer().getUniqueId())) {
+                        if (!ShopAdminAccessSupport.canActAsOwner(clickContext, currentShop, this.rds.get(clickContext))) {
                             this.i18n("feedback.not_owner", clickContext.getPlayer())
                                     .includePrefix()
                                     .build()
@@ -458,7 +460,7 @@ public class ShopOverviewView extends BaseView {
             return;
         }
 
-        if (!currentShop.isOwner(clickContext.getPlayer().getUniqueId())) {
+        if (!this.canClose(clickContext, currentShop)) {
             this.i18n("feedback.not_owner", clickContext.getPlayer())
                     .includePrefix()
                     .build()
@@ -493,7 +495,14 @@ public class ShopOverviewView extends BaseView {
         final int returnedBlocks = currentShop.getShopBlockCount();
         final ItemStack[] returnedItems = new ItemStack[returnedBlocks];
         for (int index = 0; index < returnedBlocks; index++) {
-            returnedItems[index] = ShopBlock.getShopBlock(plugin, clickContext.getPlayer());
+            if (currentShop.isTownShop() && plugin.getTownShopService() != null) {
+                final var outpost = plugin.getTownShopService().getOutpost(currentShop);
+                returnedItems[index] = outpost == null
+                        ? ShopBlock.getShopBlock(plugin, clickContext.getPlayer())
+                        : TownShopBlock.getTownShopBlock(plugin, clickContext.getPlayer(), outpost);
+            } else {
+                returnedItems[index] = ShopBlock.getShopBlock(plugin, clickContext.getPlayer());
+            }
         }
 
         clickContext.getPlayer().getInventory().addItem(returnedItems)
@@ -502,7 +511,7 @@ public class ShopOverviewView extends BaseView {
                         item
                 ));
 
-        this.i18n("feedback.closed", clickContext.getPlayer())
+        this.i18n(currentShop.isTownShop() ? "feedback.closed_town" : "feedback.closed", clickContext.getPlayer())
                 .withPlaceholders(Map.of(
                         "owned_shops", activeOwnedShops,
                         "returned_blocks", returnedBlocks
@@ -548,6 +557,7 @@ public class ShopOverviewView extends BaseView {
                                 "ledger_count", shop.getLedgerEntryCount(),
                                 "purchase_count", shop.getLedgerEntryCount(ShopLedgerType.PURCHASE),
                                 "tax_count", shop.getLedgerEntryCount(ShopLedgerType.TAXATION)
+                                        + shop.getLedgerEntryCount(ShopLedgerType.OUTPOST_TAX)
                         ))
                         .build()
                         .children())
@@ -758,8 +768,11 @@ public class ShopOverviewView extends BaseView {
     private @NotNull String getSummaryLoreSuffix(
             final @NotNull Shop shop
     ) {
-        return shop.isAdminShop()
-                ? "summary.admin.lore"
+        if (shop.isAdminShop()) {
+            return "summary.admin.lore";
+        }
+        return shop.isTownShop()
+                ? "summary.town.lore"
                 : "summary.player.lore";
     }
 
@@ -771,8 +784,7 @@ public class ShopOverviewView extends BaseView {
     }
 
     private @NotNull String getOwnerName(final @NotNull Shop shop) {
-        final String ownerName = Bukkit.getOfflinePlayer(shop.getOwner()).getName();
-        return ownerName == null ? shop.getOwner().toString() : ownerName;
+        return ShopAdminAccessSupport.resolveOwnerName(shop);
     }
 
     private @NotNull String formatDebtSummary(
@@ -795,14 +807,21 @@ public class ShopOverviewView extends BaseView {
             final @NotNull Context context,
             final @NotNull Shop shop
     ) {
-        return shop.canManage(context.getPlayer().getUniqueId()) || ShopAdminAccessSupport.hasOwnerOverride(context);
+        return ShopAdminAccessSupport.canManage(context, shop, this.rds.get(context));
     }
 
     private boolean canSupply(
             final @NotNull Context context,
             final @NotNull Shop shop
     ) {
-        return shop.canSupply(context.getPlayer().getUniqueId()) || ShopAdminAccessSupport.hasOwnerOverride(context);
+        return ShopAdminAccessSupport.canSupply(context, shop, this.rds.get(context));
+    }
+
+    private boolean canClose(
+            final @NotNull Context context,
+            final @NotNull Shop shop
+    ) {
+        return ShopAdminAccessSupport.canActAsOwner(context, shop, this.rds.get(context));
     }
 
     private @NotNull Map<String, Object> createShopViewData(

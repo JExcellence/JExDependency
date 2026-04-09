@@ -89,6 +89,12 @@ final class ShopAdminForceCloseSupport {
             final @NotNull RDS plugin,
             final @NotNull Shop shop
     ) {
+        if (shop.isTownShop() && plugin.getTownShopService() != null) {
+            final int closedViews = closeShopViews(plugin, shop);
+            plugin.getTownShopService().forceCloseTownShop(shop);
+            return closedViews;
+        }
+
         final int closedViews = closeShopViews(plugin, shop);
 
         plugin.getShopRepository().deleteEntity(shop);

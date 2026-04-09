@@ -1,6 +1,74 @@
 # Configurable Farm chunk progression levels.
 # Add, remove, or reorder numeric level keys as desired.
 # The highest numeric key becomes the Farm max level.
+# Valid Bukkit block material used for the Farm chunk marker.
+block_material: HAY_BLOCK
+
+# Enhanced natural crop growth that can be toggled per Farm chunk once unlocked.
+growth:
+  # Toggle state applied when a Farm chunk unlocks this feature for the first time.
+  enabled_by_default: true
+  # Farm level that unlocks Growth I.
+  tier_1_unlock_level: 2
+  # Effective natural crop growth speed while Growth I is active.
+  # 1.0 = vanilla speed, 2.0 = about twice as fast on average.
+  tier_1_growth_speed_multiplier: 2.0
+  # Farm level that upgrades the bonus to Growth II.
+  tier_2_unlock_level: 4
+  # Effective natural crop growth speed while Growth II is active.
+  # The bundled default keeps the previous overall Growth II strength while using speed-based semantics.
+  tier_2_growth_speed_multiplier: 3.0
+
+# Natural crop-growth failure applied outside Farm chunks.
+crop_failure:
+  # Enables natural crop growth failure outside Farm chunks.
+  enabled: true
+  # Chance for a natural crop growth tick to fail in non-Farm chunks.
+  # Farm chunks are exempt from this penalty.
+  # 0.5 = 50% of natural grow ticks are cancelled outside Farm chunks.
+  failure_rate: 0.5
+
+# Chunk-bound seed box storage. Only the materials listed below can be stored in the box.
+seed_box:
+  # Farm level that unlocks the seed box item and placement.
+  unlock_level: 3
+  # Maximum distance from the Farm chunk marker where the seed box can be placed.
+  placement_radius_blocks: 3
+  allowed_materials:
+    # Valid seed or crop materials that auto-replant may pull from the seed box.
+    - WHEAT_SEEDS
+    - BEETROOT_SEEDS
+    - CARROT
+    - POTATO
+    - MELON_SEEDS
+    - PUMPKIN_SEEDS
+
+# Auto-replant settings unlocked per Farm chunk.
+replant:
+  # Farm level that unlocks auto-replanting.
+  unlock_level: 3
+  # Toggle state applied when a Farm chunk unlocks auto-replant for the first time.
+  enabled_by_default: true
+  # INVENTORY_FIRST consumes seeds from the player's inventory before the seed box.
+  # SEED_BOX_FIRST consumes stored seed-box contents before the player's inventory.
+  default_source_priority: INVENTORY_FIRST
+
+# Harvest bonus applied once the chunk reaches the configured level.
+double_harvest:
+  # Farm level that unlocks the multiplier.
+  unlock_level: 5
+  # Crop drop multiplier applied while double harvest is unlocked.
+  multiplier: 2
+
+# Each numeric key is the level reached after the upgrade succeeds.
+# Requirement and reward entry names (for example `vault_upgrade`) are stable IDs used for progress tracking and UI.
+# `description` is the player-facing label shown in upgrade previews.
+# Currency requirements use `currency`, `amount`, and `consumable`.
+# Item requirements use `requiredItems`; `consumeOnComplete` removes contributed items and `exactMatch`
+# switches matching from material-only to full item similarity.
+# Currency rewards use `currencyId` and deposit into the town bank.
+# Command rewards can use placeholders such as {town_uuid}, {town_name}, {target_level}, {chunk_x}, and {chunk_z}.
+# `executeAsPlayer: false` runs the command from console instead of as the player.
 levels:
   1:
     requirements: {}

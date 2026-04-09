@@ -18,8 +18,10 @@ import com.raindropcentral.rds.configs.ConfigSection;
 import com.raindropcentral.rds.database.entity.RDSPlayer;
 import com.raindropcentral.rds.database.entity.ServerBank;
 import com.raindropcentral.rds.database.entity.Shop;
+import com.raindropcentral.rds.database.entity.TownShopOutpost;
 import com.raindropcentral.rds.database.repository.RRDSPlayer;
 import com.raindropcentral.rds.database.repository.RRTownShopBank;
+import com.raindropcentral.rds.database.repository.RRTownShopOutpost;
 import com.raindropcentral.rds.database.repository.RServerBank;
 import com.raindropcentral.rds.database.repository.RShop;
 import com.raindropcentral.rds.database.repository.RShopAdminGroupSetting;
@@ -32,6 +34,7 @@ import com.raindropcentral.rds.service.shop.AdminShopRestockScheduler;
 import com.raindropcentral.rds.service.shop.DynamicPricingService;
 import com.raindropcentral.rds.service.shop.ShopAdminPlayerSettingsService;
 import com.raindropcentral.rds.service.shop.ShopBossBarService;
+import com.raindropcentral.rds.service.shop.TownShopService;
 import com.raindropcentral.rds.service.tax.ShopTaxScheduler;
 import com.raindropcentral.rds.view.shop.*;
 import com.raindropcentral.rds.view.shop.anvil.*;
@@ -105,12 +108,14 @@ public class RDS {
     private ShopSidebarScoreboardService shopSidebarScoreboardService;
     private ShopAdminPlayerSettingsService shopAdminPlayerSettingsService;
     private DynamicPricingService dynamicPricingService;
+    private TownShopService townShopService;
     private BStatsMetrics metrics;
     private PlaceholderRegistry placeholderRegistry;
     private volatile CompletableFuture<Void> enableFuture;
     private RRDSPlayer playerRepository;
     private RShop shopRepository;
     private RServerBank serverBankRepository;
+    private RRTownShopOutpost townShopOutpostRepository;
     private RRTownShopBank townShopBankRepository;
     private RShopAdminPlayerSetting shopAdminPlayerSettingRepository;
     private RShopAdminGroupSetting shopAdminGroupSettingRepository;
@@ -167,6 +172,7 @@ public class RDS {
                     this.initializeCommands();
                     this.initializeAdminPlayerSettings();
                     this.initializeDynamicPricing();
+                    this.initializeTownShops();
                     this.initializeViews();
                     this.initializeTaxes();
                     this.initializeAdminShopRestocking();
@@ -574,6 +580,10 @@ public class RDS {
         this.dynamicPricingService.start();
     }
 
+    private void initializeTownShops() {
+        this.townShopService = new TownShopService(this);
+    }
+
     private void initializeRepositories() {
         this.playerRepository = new RRDSPlayer(
                 this.executor,
@@ -594,6 +604,13 @@ public class RDS {
                 this.entityManagerFactory,
                 ServerBank.class,
                 ServerBank::getCurrencyType
+        );
+
+        this.townShopOutpostRepository = new RRTownShopOutpost(
+                this.executor,
+                this.entityManagerFactory,
+                TownShopOutpost.class,
+                TownShopOutpost::getChunkUuid
         );
 
         this.townShopBankRepository = new RRTownShopBank(
@@ -1066,6 +1083,15 @@ public class RDS {
     }
 
     /**
+     * Returns the service coordinating town-owned outpost shops.
+     *
+     * @return town-shop service, or {@code null} before enable completes
+     */
+    public @Nullable TownShopService getTownShopService() {
+        return this.townShopService;
+    }
+
+    /**
      * Returns the optional LuckPerms integration wrapper.
      *
      * @return LuckPerms service wrapper, or {@code null} if LuckPerms is unavailable
@@ -1117,6 +1143,15 @@ public class RDS {
      */
     public @Nullable RServerBank getServerBankRepository() {
         return this.serverBankRepository;
+    }
+
+    /**
+     * Returns the repository used for persisted outpost town-shop entitlement rows.
+     *
+     * @return outpost entitlement repository, or {@code null} before repository initialization completes
+     */
+    public @Nullable RRTownShopOutpost getTownShopOutpostRepository() {
+        return this.townShopOutpostRepository;
     }
 
     /**

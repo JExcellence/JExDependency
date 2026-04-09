@@ -29,7 +29,6 @@ import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.state.State;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -462,8 +461,7 @@ public class ShopEditView extends APaginatedView<ShopEditView.EditableShopEntry>
     }
 
     private @NotNull String getOwnerName(final @NotNull Shop shop) {
-        final String ownerName = Bukkit.getOfflinePlayer(shop.getOwner()).getName();
-        return ownerName == null ? shop.getOwner().toString() : ownerName;
+        return ShopAdminAccessSupport.resolveOwnerName(shop);
     }
 
     private @NotNull String getAdminRestockModeLabel(
@@ -536,7 +534,7 @@ public class ShopEditView extends APaginatedView<ShopEditView.EditableShopEntry>
             final @NotNull Context context,
             final @NotNull Shop shop
     ) {
-        return shop.canManage(context.getPlayer().getUniqueId()) || ShopAdminAccessSupport.hasOwnerOverride(context);
+        return ShopAdminAccessSupport.canManage(context, shop, this.rds.get(context));
     }
 
     private @NotNull Map<String, Object> createViewData(

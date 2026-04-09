@@ -27,6 +27,19 @@ supported-plugins:
     enabled: true
     category: JOBS
 
+  # Town progression plugins
+  rdt:
+    enabled: true
+    category: TOWNS
+
+  towny:
+    enabled: true
+    category: TOWNS
+
+  husktowns:
+    enabled: true
+    category: TOWNS
+
 # Auto-detection settings
 auto-detection:
   # When using "plugin: auto", which plugins to prefer by category
@@ -38,6 +51,11 @@ auto-detection:
   jobs-priority:
     - ecojobs
     - jobsreborn
+
+  towns-priority:
+    - rdt
+    - towny
+    - husktowns
 
 # Advanced: Custom plugin integrations (for unsupported plugins)
 # Only use this if you need a plugin we don't support yet

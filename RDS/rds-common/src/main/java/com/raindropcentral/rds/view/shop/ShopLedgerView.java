@@ -26,7 +26,6 @@ import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.state.State;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -177,6 +176,7 @@ public class ShopLedgerView extends APaginatedView<ShopLedgerEntry> {
                                 "ledger_count", shop.getLedgerEntryCount(),
                                 "purchase_count", shop.getLedgerEntryCount(ShopLedgerType.PURCHASE),
                                 "tax_count", shop.getLedgerEntryCount(ShopLedgerType.TAXATION)
+                                        + shop.getLedgerEntryCount(ShopLedgerType.OUTPOST_TAX)
                         ))
                         .build()
                         .children())
@@ -225,6 +225,7 @@ public class ShopLedgerView extends APaginatedView<ShopLedgerEntry> {
         return switch (ledgerType) {
             case PURCHASE -> Material.EMERALD;
             case TAXATION -> Material.CLOCK;
+            case OUTPOST_TAX -> Material.GOLD_NUGGET;
         };
     }
 
@@ -293,14 +294,13 @@ public class ShopLedgerView extends APaginatedView<ShopLedgerEntry> {
     private @NotNull String getOwnerName(
             final @NotNull Shop shop
     ) {
-        final String ownerName = Bukkit.getOfflinePlayer(shop.getOwner()).getName();
-        return ownerName == null ? shop.getOwner().toString() : ownerName;
+        return ShopAdminAccessSupport.resolveOwnerName(shop);
     }
 
     private boolean canManage(
             final @NotNull Context context,
             final @NotNull Shop shop
     ) {
-        return shop.canManage(context.getPlayer().getUniqueId()) || ShopAdminAccessSupport.hasOwnerOverride(context);
+        return ShopAdminAccessSupport.canManage(context, shop, this.rds.get(context));
     }
 }

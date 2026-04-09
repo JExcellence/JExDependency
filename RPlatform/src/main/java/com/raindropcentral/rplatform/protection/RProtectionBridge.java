@@ -106,6 +106,20 @@ public interface RProtectionBridge {
     @Nullable String getPlayerTownDisplayName(@NotNull Player player);
 
     /**
+     * Resolves the player's current town level or progression tier.
+     *
+     * <p>Plugins that do not expose a native town-level concept should return {@code 1} when the
+     * player belongs to a town and {@code 0} otherwise.</p>
+     *
+     * @param player player whose town level should be resolved
+     * @return numeric town level, or {@code 0} when the player is not in a town
+     * @throws NullPointerException if {@code player} is {@code null}
+     */
+    default double getPlayerTownLevel(@NotNull Player player) {
+        return isPlayerInTown(player) ? 1.0D : 0.0D;
+    }
+
+    /**
      * Deposits funds into the player's own town bank.
      *
      * @param player player whose town should receive the deposit
@@ -116,6 +130,25 @@ public interface RProtectionBridge {
     boolean depositToTownBank(@NotNull Player player, double amount);
 
     /**
+     * Deposits funds into the identified town bank using an explicit currency id.
+     *
+     * <p>Bridges that do not support identifier-based or multi-currency town banking may return
+     * {@code false}.</p>
+     *
+     * @param townIdentifier stable town identifier
+     * @param currencyType currency id to deposit
+     * @param amount positive amount to deposit
+     * @return {@code true} when the deposit operation succeeds
+     */
+    default boolean depositToTownBank(
+        final @NotNull String townIdentifier,
+        final @NotNull String currencyType,
+        final double amount
+    ) {
+        return false;
+    }
+
+    /**
      * Withdraws funds from the player's own town bank.
      *
      * @param player player whose town should be debited
@@ -124,6 +157,41 @@ public interface RProtectionBridge {
      * @throws NullPointerException if {@code player} is {@code null}
      */
     boolean withdrawFromTownBank(@NotNull Player player, double amount);
+
+    /**
+     * Withdraws funds from the identified town bank using an explicit currency id.
+     *
+     * <p>Bridges that do not support identifier-based or multi-currency town banking may return
+     * {@code false}.</p>
+     *
+     * @param townIdentifier stable town identifier
+     * @param currencyType currency id to withdraw
+     * @param amount positive amount to withdraw
+     * @return {@code true} when the withdraw operation succeeds
+     */
+    default boolean withdrawFromTownBank(
+        final @NotNull String townIdentifier,
+        final @NotNull String currencyType,
+        final double amount
+    ) {
+        return false;
+    }
+
+    /**
+     * Returns whether the player currently has a named town-management permission.
+     *
+     * <p>Bridges that do not expose role-driven town permissions may return {@code false}.</p>
+     *
+     * @param player player to inspect
+     * @param permissionKey permission key to resolve
+     * @return {@code true} when the player has the named town permission
+     */
+    default boolean hasTownPermission(
+        final @NotNull Player player,
+        final @NotNull String permissionKey
+    ) {
+        return false;
+    }
 
     /**
      * Detects the first available protection bridge from the default bridge list.

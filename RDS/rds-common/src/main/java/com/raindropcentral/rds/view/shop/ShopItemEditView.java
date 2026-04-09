@@ -525,7 +525,7 @@ public class ShopItemEditView extends BaseView {
             final @NotNull Context context,
             final @NotNull Shop shop
     ) {
-        return shop.canManage(context.getPlayer().getUniqueId()) || ShopAdminAccessSupport.hasOwnerOverride(context);
+        return ShopAdminAccessSupport.canManage(context, shop, this.rds.get(context));
     }
 
     private @NotNull Map<String, Object> createBaseViewData(

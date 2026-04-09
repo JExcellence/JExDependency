@@ -263,6 +263,39 @@ public final class RDTProtectionBridge extends AbstractReflectionProtectionBridg
     }
 
     /**
+     * Resolves the composite RDT town level for the player's town.
+     *
+     * @param player player to inspect
+     * @return RDT composite town level, or {@code 0} when unavailable
+     * @throws NullPointerException if {@code player} is {@code null}
+     */
+    @Override
+    public double getPlayerTownLevel(@NotNull Player player) {
+        if (!isAvailable()) {
+            return 0.0D;
+        }
+
+        try {
+            final Object playerRecord = resolvePlayerRecord(player);
+            if (playerRecord == null) {
+                return 0.0D;
+            }
+
+            final UUID townUuid = resolveTownUuid(playerRecord);
+            if (townUuid == null) {
+                return 0.0D;
+            }
+
+            final Object town = resolveTown(townUuid);
+            final Double townLevel = asDouble(invokeOptional(town, "getTownLevel"));
+            return townLevel == null ? 0.0D : Math.max(0.0D, townLevel);
+        } catch (Exception exception) {
+            LOGGER.log(Level.FINE, "Failed to resolve RDT town level for " + player.getName(), exception);
+            return 0.0D;
+        }
+    }
+
+    /**
      * Deposits funds into the player's RDT town bank.
      *
      * @param player player whose town receives the deposit
@@ -277,26 +310,37 @@ public final class RDTProtectionBridge extends AbstractReflectionProtectionBridg
         }
 
         try {
-            final Object playerRecord = resolvePlayerRecord(player);
-            if (playerRecord == null) {
-                return false;
-            }
+            final String townIdentifier = getPlayerTownIdentifier(player);
+            return townIdentifier != null && this.depositToTownBank(townIdentifier, "vault", amount);
+        } catch (Exception exception) {
+            LOGGER.log(Level.FINE, "Failed to deposit into RDT bank for " + player.getName(), exception);
+            return false;
+        }
+    }
 
-            final UUID townUuid = resolveTownUuid(playerRecord);
-            if (townUuid == null) {
-                return false;
-            }
+    @Override
+    public boolean depositToTownBank(
+        final @NotNull String townIdentifier,
+        final @NotNull String currencyType,
+        final double amount
+    ) {
+        if (!isAvailable() || amount <= 0.0D) {
+            return false;
+        }
 
-            final Object town = resolveTown(townUuid);
+        try {
+            final Object town = resolveTownByIdentifier(townIdentifier);
             if (town == null) {
                 return false;
             }
 
             final BigDecimal decimalAmount = BigDecimal.valueOf(amount);
-            final boolean success = tryInvoke(town, "deposit", amount)
-                    || tryInvoke(town, "deposit", decimalAmount)
-                    || tryInvoke(town, "depositMoney", amount)
-                    || tryInvoke(town, "addToBank", amount);
+            final boolean success = tryInvoke(town, "depositBank", currencyType, amount)
+                || tryInvoke(town, "depositBank", currencyType, decimalAmount)
+                || tryInvoke(town, "deposit", amount)
+                || tryInvoke(town, "deposit", decimalAmount)
+                || tryInvoke(town, "depositMoney", amount)
+                || tryInvoke(town, "addToBank", amount);
             if (!success) {
                 return false;
             }
@@ -304,7 +348,7 @@ public final class RDTProtectionBridge extends AbstractReflectionProtectionBridg
             persistTown(town);
             return true;
         } catch (Exception exception) {
-            LOGGER.log(Level.FINE, "Failed to deposit into RDT bank for " + player.getName(), exception);
+            LOGGER.log(Level.FINE, "Failed to deposit into RDT bank for town " + townIdentifier, exception);
             return false;
         }
     }
@@ -324,9 +368,78 @@ public final class RDTProtectionBridge extends AbstractReflectionProtectionBridg
         }
 
         try {
+            final String townIdentifier = getPlayerTownIdentifier(player);
+            return townIdentifier != null && this.withdrawFromTownBank(townIdentifier, "vault", amount);
+        } catch (Exception exception) {
+            LOGGER.log(Level.FINE, "Failed to withdraw from RDT bank for " + player.getName(), exception);
+            return false;
+        }
+    }
+
+    @Override
+    public boolean withdrawFromTownBank(
+        final @NotNull String townIdentifier,
+        final @NotNull String currencyType,
+        final double amount
+    ) {
+        if (!isAvailable() || amount <= 0.0D) {
+            return false;
+        }
+
+        try {
+            final Object town = resolveTownByIdentifier(townIdentifier);
+            if (town == null) {
+                return false;
+            }
+
+            final Double currentBank = asDouble(firstNonNull(
+                invokeOptional(town, "getBankAmount", currencyType),
+                invokeOptional(town, "getBank")
+            ));
+            if (currentBank != null && currentBank + 1.0E-6D < amount) {
+                return false;
+            }
+
+            final BigDecimal decimalAmount = BigDecimal.valueOf(amount);
+            final boolean success = tryInvoke(town, "withdrawBank", currencyType, amount)
+                || tryInvoke(town, "withdrawBank", currencyType, decimalAmount)
+                || tryInvoke(town, "withdraw", amount)
+                || tryInvoke(town, "withdraw", decimalAmount)
+                || tryInvoke(town, "withdrawMoney", amount)
+                || tryInvoke(town, "removeFromBank", amount);
+            if (!success) {
+                return false;
+            }
+
+            persistTown(town);
+            return true;
+        } catch (Exception exception) {
+            LOGGER.log(Level.FINE, "Failed to withdraw from RDT bank for town " + townIdentifier, exception);
+            return false;
+        }
+    }
+
+    @Override
+    public boolean hasTownPermission(
+        final @NotNull Player player,
+        final @NotNull String permissionKey
+    ) {
+        if (!isAvailable()) {
+            return false;
+        }
+
+        try {
             final Object playerRecord = resolvePlayerRecord(player);
             if (playerRecord == null) {
                 return false;
+            }
+
+            final Object directResult = firstNonNull(
+                invokeOptional(playerRecord, "hasTownPermission", permissionKey),
+                invokeOptional(playerRecord, "hasPermission", permissionKey)
+            );
+            if (directResult instanceof Boolean granted) {
+                return granted;
             }
 
             final UUID townUuid = resolveTownUuid(playerRecord);
@@ -335,28 +448,15 @@ public final class RDTProtectionBridge extends AbstractReflectionProtectionBridg
             }
 
             final Object town = resolveTown(townUuid);
-            if (town == null) {
-                return false;
-            }
-
-            final Double currentBank = asDouble(invokeOptional(town, "getBank"));
-            if (currentBank != null && currentBank < amount) {
-                return false;
-            }
-
-            final BigDecimal decimalAmount = BigDecimal.valueOf(amount);
-            final boolean success = tryInvoke(town, "withdraw", amount)
-                    || tryInvoke(town, "withdraw", decimalAmount)
-                    || tryInvoke(town, "withdrawMoney", amount)
-                    || tryInvoke(town, "removeFromBank", amount);
-            if (!success) {
-                return false;
-            }
-
-            persistTown(town);
-            return true;
+            final Object townResult = town == null
+                ? null
+                : firstNonNull(
+                    invokeOptional(town, "hasTownPermission", playerRecord, permissionKey),
+                    invokeOptional(town, "hasRolePermission", invokeOptional(playerRecord, "getTownRoleId"), permissionKey)
+                );
+            return townResult instanceof Boolean granted && granted;
         } catch (Exception exception) {
-            LOGGER.log(Level.FINE, "Failed to withdraw from RDT bank for " + player.getName(), exception);
+            LOGGER.log(Level.FINE, "Failed to resolve RDT permission " + permissionKey + " for " + player.getName(), exception);
             return false;
         }
     }
@@ -446,6 +546,40 @@ public final class RDTProtectionBridge extends AbstractReflectionProtectionBridg
                 invokeOptional(townRepository, "findByIdentifier", townUuid),
                 invokeOptional(townRepository, "findById", townUuid)
         );
+    }
+
+    @Nullable
+    private Object resolveTownByIdentifier(@NotNull String townIdentifier) {
+        final String normalizedIdentifier = townIdentifier.trim();
+        if (normalizedIdentifier.isEmpty()) {
+            return null;
+        }
+
+        try {
+            return this.resolveTown(UUID.fromString(normalizedIdentifier));
+        } catch (IllegalArgumentException ignored) {
+            if (this.rdtRuntime == null) {
+                return null;
+            }
+
+            final Object townRepository = invokeOptional(this.rdtRuntime, "getTownRepository");
+            if (townRepository == null) {
+                return null;
+            }
+
+            final Object towns = invokeOptional(townRepository, "findAll");
+            if (!(towns instanceof Iterable<?> iterable)) {
+                return null;
+            }
+
+            for (final Object town : iterable) {
+                final String identifier = resolveTownIdentifier(town);
+                if (identifier != null && identifier.equalsIgnoreCase(normalizedIdentifier)) {
+                    return town;
+                }
+            }
+            return null;
+        }
     }
 
     private boolean isChunkClaimedByTown(@NotNull Object town, int chunkX, int chunkZ) {

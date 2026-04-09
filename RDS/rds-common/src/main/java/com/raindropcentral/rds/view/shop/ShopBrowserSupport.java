@@ -19,7 +19,6 @@ import com.raindropcentral.rds.items.AbstractItem;
 import com.raindropcentral.rds.items.ShopItem;
 import com.raindropcentral.rds.service.shop.AdminShopStockSupport;
 import me.devnatan.inventoryframework.View;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -30,7 +29,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
-import java.util.UUID;
 
 /**
  * Shared shop-browser helpers used by the public directory and material search views.
@@ -136,7 +134,7 @@ public final class ShopBrowserSupport {
 
             entries.add(new ShopBrowserEntry(
                     shopLocation,
-                    shop.getOwner(),
+                    ShopAdminAccessSupport.resolveOwnerName(plugin, shop),
                     countAvailableItems(shop),
                     matchingOfferCount
             ));
@@ -222,18 +220,12 @@ public final class ShopBrowserSupport {
                 + location.getBlockZ() + ")";
     }
 
-    static @NotNull String getOwnerName(
-            final @NotNull UUID ownerId
-    ) {
-        final String ownerName = Bukkit.getOfflinePlayer(ownerId).getName();
-        return ownerName == null ? ownerId.toString() : ownerName;
-    }
-
     static @NotNull Class<? extends View> getTargetView(
+            final @NotNull RDS plugin,
             final @NotNull Shop shop,
             final @NotNull Player player
     ) {
-        return shop.canAccessOverview(player.getUniqueId())
+        return ShopAdminAccessSupport.canAccessOverview(player, shop, plugin)
                 ? ShopOverviewView.class
                 : ShopCustomerView.class;
     }
@@ -252,13 +244,13 @@ public final class ShopBrowserSupport {
      * Immutable shop browser entry used by paginated directory views.
      *
      * @param shopLocation shop block location
-     * @param ownerId owner unique identifier
+     * @param ownerName owner name
      * @param availableItemCount visible stock count used by the directory summary
      * @param matchingOfferCount number of visible listings matching the active material filter
      */
     record ShopBrowserEntry(
             @NotNull Location shopLocation,
-            @NotNull UUID ownerId,
+            @NotNull String ownerName,
             int availableItemCount,
             int matchingOfferCount
     ) {

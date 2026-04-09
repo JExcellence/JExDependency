@@ -143,4 +143,23 @@ class RDTPlayerTest {
         assertEquals(0.0D, player.getTownCreationCurrencyProgress("nexus.level.1.charter"));
         assertNull(player.getTownCreationItemProgress("nexus.level.1.materials#0"));
     }
+
+    @Test
+    void armoryFreeRepairUsageIsTrackedPerChunkAndCanBeCleared() {
+        final RDTPlayer player = new RDTPlayer(UUID.randomUUID());
+        final UUID firstChunk = UUID.randomUUID();
+        final UUID secondChunk = UUID.randomUUID();
+
+        player.setArmoryFreeRepairUsedAt(firstChunk, 1_000L);
+        player.setArmoryFreeRepairUsedAt(secondChunk, 2_000L);
+
+        assertEquals(1_000L, player.getArmoryFreeRepairUsedAt(firstChunk));
+        assertEquals(2_000L, player.getArmoryFreeRepairUsedAt(secondChunk));
+        assertEquals(2, player.getArmoryFreeRepairUsage().size());
+
+        player.clearArmoryFreeRepairUsage();
+
+        assertEquals(0L, player.getArmoryFreeRepairUsedAt(firstChunk));
+        assertTrue(player.getArmoryFreeRepairUsage().isEmpty());
+    }
 }

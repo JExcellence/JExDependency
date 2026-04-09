@@ -34,9 +34,14 @@ import java.util.Objects;
 public final class NexusConfigSection {
 
     private final Map<Integer, LevelDefinition> levels;
+    private final Map<Integer, NexusCombatStats> combatStats;
 
-    private NexusConfigSection(final @NotNull Map<Integer, LevelDefinition> levels) {
+    private NexusConfigSection(
+        final @NotNull Map<Integer, LevelDefinition> levels,
+        final @NotNull Map<Integer, NexusCombatStats> combatStats
+    ) {
         this.levels = LevelConfigSupport.copyLevels(levels);
+        this.combatStats = LevelConfigSupport.copyNexusCombatStats(combatStats);
     }
 
     /**
@@ -49,6 +54,15 @@ public final class NexusConfigSection {
     }
 
     /**
+     * Returns a defensive copy of configured Nexus combat stats.
+     *
+     * @return configured combat stats keyed by Nexus level
+     */
+    public @NotNull Map<Integer, NexusCombatStats> getCombatStats() {
+        return LevelConfigSupport.copyNexusCombatStats(this.combatStats);
+    }
+
+    /**
      * Returns the configured Nexus level definition.
      *
      * @param level target level to resolve
@@ -56,6 +70,17 @@ public final class NexusConfigSection {
      */
     public @Nullable LevelDefinition getLevelDefinition(final int level) {
         return this.levels.get(level);
+    }
+
+    /**
+     * Returns the configured Nexus combat stats for one level.
+     *
+     * @param level level to resolve
+     * @return matching combat stats, or bundled defaults for that level when absent
+     */
+    public @NotNull NexusCombatStats getCombatStats(final int level) {
+        final int normalizedLevel = Math.max(1, level);
+        return this.combatStats.getOrDefault(normalizedLevel, NexusCombatStats.createDefault(normalizedLevel));
     }
 
     /**
@@ -113,15 +138,20 @@ public final class NexusConfigSection {
      * @return default Nexus config
      */
     public static @NotNull NexusConfigSection createDefault() {
-        return new NexusConfigSection(LevelConfigSupport.createDefaultNexusLevels());
+        return new NexusConfigSection(
+            LevelConfigSupport.createDefaultNexusLevels(),
+            LevelConfigSupport.createDefaultNexusCombatStats()
+        );
     }
 
     private static @NotNull NexusConfigSection fromConfiguration(final @NotNull YamlConfiguration configuration) {
+        final Map<Integer, LevelDefinition> levels = LevelConfigSupport.parseLevels(
+            configuration.getConfigurationSection("levels"),
+            LevelConfigSupport.createDefaultNexusLevels()
+        );
         return new NexusConfigSection(
-            LevelConfigSupport.parseLevels(
-                configuration.getConfigurationSection("levels"),
-                LevelConfigSupport.createDefaultNexusLevels()
-            )
+            levels,
+            LevelConfigSupport.parseNexusCombatStats(configuration.getConfigurationSection("levels"), levels.keySet())
         );
     }
 }

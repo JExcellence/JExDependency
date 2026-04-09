@@ -55,16 +55,22 @@ class TownPermissionsTest {
         assertTrue(memberPermissions.contains(TownPermissions.TOWN_INFO.getPermissionKey()));
         assertTrue(memberPermissions.contains(TownPermissions.TOWN_INVITE.getPermissionKey()));
         assertTrue(memberPermissions.contains(TownPermissions.CONTRIBUTE.getPermissionKey()));
+        assertTrue(memberPermissions.contains(TownPermissions.SUPPLY_TOWN_SHOPS.getPermissionKey()));
         assertFalse(memberPermissions.contains(TownPermissions.CLAIM_CHUNK.getPermissionKey()));
+        assertFalse(memberPermissions.contains(TownPermissions.MANAGE_TOWN_SHOPS.getPermissionKey()));
 
         assertTrue(mayorPermissions.contains(TownPermissions.TOWN_INFO.getPermissionKey()));
         assertTrue(mayorPermissions.contains(TownPermissions.TOWN_INVITE.getPermissionKey()));
         assertTrue(mayorPermissions.contains(TownPermissions.CONTRIBUTE.getPermissionKey()));
+        assertTrue(mayorPermissions.contains(TownPermissions.SUPPLY_TOWN_SHOPS.getPermissionKey()));
+        assertTrue(mayorPermissions.contains(TownPermissions.MANAGE_TOWN_SHOPS.getPermissionKey()));
+        assertTrue(mayorPermissions.contains(TownPermissions.MANAGE_RELATIONSHIPS.getPermissionKey()));
         assertTrue(mayorPermissions.contains(TownPermissions.CLAIM_CHUNK.getPermissionKey()));
         assertTrue(mayorPermissions.contains(TownPermissions.CHANGE_TOWN_COLOR.getPermissionKey()));
         assertTrue(mayorPermissions.contains(TownPermissions.UPGRADE_CHUNK.getPermissionKey()));
         assertFalse(publicPermissions.contains(TownPermissions.CONTRIBUTE.getPermissionKey()));
         assertFalse(memberPermissions.contains(TownPermissions.CHANGE_TOWN_COLOR.getPermissionKey()));
+        assertFalse(memberPermissions.contains(TownPermissions.MANAGE_RELATIONSHIPS.getPermissionKey()));
     }
 
     @Test
@@ -75,5 +81,11 @@ class TownPermissionsTest {
         assertFalse(TownPermissions.CHANGE_TOWN_COLOR.isDefaultForRole("member"));
         assertTrue(TownPermissions.CONTRIBUTE.isDefaultForRole("member"));
         assertFalse(TownPermissions.CONTRIBUTE.isDefaultForRole("public"));
+        assertTrue(TownPermissions.SUPPLY_TOWN_SHOPS.isDefaultForRole("member"));
+        assertFalse(TownPermissions.SUPPLY_TOWN_SHOPS.isDefaultForRole("public"));
+        assertTrue(TownPermissions.MANAGE_TOWN_SHOPS.isDefaultForRole("mayor"));
+        assertFalse(TownPermissions.MANAGE_TOWN_SHOPS.isDefaultForRole("member"));
+        assertTrue(TownPermissions.MANAGE_RELATIONSHIPS.isDefaultForRole("mayor"));
+        assertFalse(TownPermissions.MANAGE_RELATIONSHIPS.isDefaultForRole("member"));
     }
 }

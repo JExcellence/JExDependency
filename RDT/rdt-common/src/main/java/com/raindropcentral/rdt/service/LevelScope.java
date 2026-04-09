@@ -29,7 +29,9 @@ public enum LevelScope {
     SECURITY("Security"),
     BANK("Bank"),
     FARM("Farm"),
-    OUTPOST("Outpost");
+    OUTPOST("Outpost"),
+    MEDIC("Medic"),
+    ARMORY("Armory");
 
     private final String displayName;
 
@@ -71,7 +73,9 @@ public enum LevelScope {
             case BANK -> BANK;
             case FARM -> FARM;
             case OUTPOST -> OUTPOST;
-            case NEXUS, DEFAULT, CLAIM_PENDING, MEDIC -> null;
+            case MEDIC -> MEDIC;
+            case ARMORY -> ARMORY;
+            case NEXUS, DEFAULT, CLAIM_PENDING -> null;
         };
     }
 }

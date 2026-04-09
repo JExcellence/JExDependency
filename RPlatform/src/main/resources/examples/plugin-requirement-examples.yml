@@ -69,6 +69,31 @@ requirements:
     consumable: true
     description: "requirement.economy.money"
 
+# Example 8: Shared town-level requirement via auto-detection
+  any_town_plugin_level:
+    type: PLUGIN
+    plugin: auto
+    category: TOWNS
+    values:
+      town_level: 1
+    description: "requirement.towns.shared.town_level"
+
+# Example 9: RDT standing chunk-level requirement
+  rdt_current_chunk_level:
+    type: PLUGIN
+    plugin: rdt
+    values:
+      chunk_level: 3
+    description: "requirement.towns.rdt.chunk_level"
+
+# Example 10: RDT typed chunk-level requirement
+  rdt_security_chunk_level:
+    type: PLUGIN
+    plugin: rdt
+    values:
+      security_chunk_level: 4
+    description: "requirement.towns.rdt.security_chunk_level"
+
 # Migration from old system:
 # OLD (hardcoded):
 # requirements:

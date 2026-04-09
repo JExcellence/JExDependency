@@ -44,6 +44,8 @@ class ConfigSectionTest {
         assertEquals(10, section.getChunkBlockMaxY());
         assertEquals(3, section.getTownSpawnTeleportDelaySeconds());
         assertEquals(86_400L, section.getTownArchetypeChangeCooldownSeconds());
+        assertEquals(21_600L, section.getTownRelationshipChangeCooldownSeconds());
+        assertEquals(5, section.getTownRelationshipUnlockLevel());
         assertTrue(section.isCornerClaimAdjacencyExcluded());
         assertFalse(section.isProxyEnabled());
         assertFalse(section.isProxyTownSpawnEnabled());
@@ -51,6 +53,7 @@ class ConfigSectionTest {
         assertEquals("", section.getProxyServerRouteId());
         assertEquals(Material.REINFORCED_DEEPSLATE, section.getChunkTypeIconMaterial(ChunkType.NEXUS));
         assertEquals(Material.OAK_PLANKS, section.getChunkTypeIconMaterial(ChunkType.DEFAULT));
+        assertEquals(Material.OAK_PLANKS, section.getDefaultChunkBlockMaterial());
     }
 
     @Test
@@ -74,6 +77,8 @@ class ConfigSectionTest {
             chunk_type_icon_default: not_a_material
             town:
               archetype_change_cooldown_seconds: 1800
+              relationship_change_cooldown_seconds: -5
+              relationship_unlock_level: 0
             """);
 
         final ConfigSection section = ConfigSection.fromFile(configFile.toFile());
@@ -83,6 +88,8 @@ class ConfigSectionTest {
         assertEquals(10, section.getChunkBlockMaxY());
         assertEquals(3, section.getTownSpawnTeleportDelaySeconds());
         assertEquals(1_800L, section.getTownArchetypeChangeCooldownSeconds());
+        assertEquals(21_600L, section.getTownRelationshipChangeCooldownSeconds());
+        assertEquals(5, section.getTownRelationshipUnlockLevel());
         assertFalse(section.isCornerClaimAdjacencyExcluded());
         assertTrue(section.isProxyEnabled());
         assertTrue(section.isProxyTownSpawnEnabled());
@@ -90,5 +97,6 @@ class ConfigSectionTest {
         assertEquals("alpha", section.getProxyServerRouteId());
         assertEquals(Material.DIAMOND_BLOCK, section.getChunkTypeIconMaterial(ChunkType.NEXUS));
         assertEquals(Material.OAK_PLANKS, section.getChunkTypeIconMaterial(ChunkType.DEFAULT));
+        assertEquals(Material.OAK_PLANKS, section.getDefaultChunkBlockMaterial());
     }
 }

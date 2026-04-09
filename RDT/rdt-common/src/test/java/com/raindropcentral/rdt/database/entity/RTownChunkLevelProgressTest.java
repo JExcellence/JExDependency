@@ -14,6 +14,7 @@
 package com.raindropcentral.rdt.database.entity;
 
 import com.raindropcentral.rdt.utils.ChunkType;
+import com.raindropcentral.rdt.utils.FarmReplantPriority;
 import com.raindropcentral.rdt.utils.TownProtections;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -64,10 +65,16 @@ class RTownChunkLevelProgressTest {
         final RTownChunk townChunk = new RTownChunk(town, "world", 1, 2, ChunkType.SECURITY);
         final ItemStack seedBoxItem = this.mockItemStack(12);
         final ItemStack levelProgressItem = this.mockItemStack(3);
+        final World world = Mockito.mock(World.class);
+        Mockito.when(world.getName()).thenReturn("world");
 
         townChunk.setChunkLevel(4);
         townChunk.setProtectionRoleId(TownProtections.BREAK_BLOCK, RTown.MAYOR_ROLE_ID);
+        townChunk.setSeedBoxLocation(new Location(world, 18.0D, 64.0D, 34.0D));
         townChunk.setSeedBoxContents(Map.of("0", seedBoxItem));
+        townChunk.setFarmGrowthEnabled(Boolean.TRUE);
+        townChunk.setFarmAutoReplantEnabled(Boolean.FALSE);
+        townChunk.setFarmReplantPriority(FarmReplantPriority.SEED_BOX_FIRST);
         townChunk.setLevelCurrencyProgress("security.level.4.vault", 500.0D);
         townChunk.setLevelItemProgress("security.level.4.item", levelProgressItem);
 
@@ -76,7 +83,11 @@ class RTownChunkLevelProgressTest {
         assertEquals(ChunkType.DEFAULT, townChunk.getChunkType());
         assertEquals(4, townChunk.getChunkLevel());
         assertEquals(RTown.MAYOR_ROLE_ID, townChunk.getProtectionRoleId(TownProtections.BREAK_BLOCK));
+        assertTrue(townChunk.hasSeedBox());
         assertEquals(1, townChunk.getSeedBoxContents().size());
+        assertTrue(townChunk.isFarmGrowthEnabled(false));
+        assertTrue(townChunk.getFarmAutoReplantEnabledValue() == Boolean.FALSE);
+        assertEquals(FarmReplantPriority.SEED_BOX_FIRST, townChunk.getFarmReplantPriorityValue());
         assertEquals(500.0D, townChunk.getLevelCurrencyProgress("security.level.4.vault"));
         assertEquals(3, townChunk.getLevelItemProgress("security.level.4.item").getAmount());
     }
@@ -93,21 +104,31 @@ class RTownChunkLevelProgressTest {
 
         townChunk.setChunkLevel(4);
         townChunk.setProtectionRoleId(TownProtections.BREAK_BLOCK, RTown.MAYOR_ROLE_ID);
+        townChunk.setSeedBoxLocation(new Location(world, 18.0D, 64.0D, 34.0D));
         townChunk.setSeedBoxContents(Map.of("0", seedBoxItem));
+        townChunk.setFarmGrowthEnabled(Boolean.TRUE);
+        townChunk.setFarmAutoReplantEnabled(Boolean.FALSE);
+        townChunk.setFarmReplantPriority(FarmReplantPriority.SEED_BOX_FIRST);
         townChunk.setLevelCurrencyProgress("security.level.4.vault", 500.0D);
         townChunk.setLevelItemProgress("security.level.4.item", levelProgressItem);
         townChunk.setFuelTankLocation(new Location(world, 16.0D, 64.0D, 32.0D));
         townChunk.setFuelTankContents(Map.of("0", fuelItem));
+        townChunk.setAlliedProtectionAllowed(TownProtections.BREAK_BLOCK, Boolean.TRUE);
 
         townChunk.resetChunkTypeState();
 
         assertEquals(1, townChunk.getChunkLevel());
         assertTrue(townChunk.getProtectionRoleIds().isEmpty());
+        assertNull(townChunk.getSeedBoxLocation());
         assertTrue(townChunk.getSeedBoxContents().isEmpty());
+        assertNull(townChunk.getFarmGrowthEnabledValue());
+        assertNull(townChunk.getFarmAutoReplantEnabledValue());
+        assertNull(townChunk.getFarmReplantPriorityValue());
         assertTrue(townChunk.getLevelCurrencyProgress().isEmpty());
         assertTrue(townChunk.getLevelItemProgress().isEmpty());
         assertNull(townChunk.getFuelTankLocation());
         assertTrue(townChunk.getFuelTankContents().isEmpty());
+        assertTrue(townChunk.getAlliedProtectionStates().isEmpty());
     }
 
     private ItemStack mockItemStack(final int amount) {

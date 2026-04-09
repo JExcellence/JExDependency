@@ -217,6 +217,15 @@ public class TownProtectionScopeView extends APaginatedView<TownProtectionScopeV
         final @Nullable TownProtectionCategory category,
         final @Nullable String protectionViewKey
     ) {
+        if (Objects.equals(protectionViewKey, TownAlliedProtectionsView.VIEW_KEY)) {
+            return TownAlliedProtectionsView.class;
+        }
+        if (Objects.equals(protectionViewKey, TownAlliedSwitchProtectionsView.VIEW_KEY)) {
+            return TownAlliedSwitchProtectionsView.class;
+        }
+        if (Objects.equals(protectionViewKey, TownAlliedItemUseProtectionsView.VIEW_KEY)) {
+            return TownAlliedItemUseProtectionsView.class;
+        }
         if (Objects.equals(protectionViewKey, TownSwitchProtectionsView.VIEW_KEY)) {
             return TownSwitchProtectionsView.class;
         }

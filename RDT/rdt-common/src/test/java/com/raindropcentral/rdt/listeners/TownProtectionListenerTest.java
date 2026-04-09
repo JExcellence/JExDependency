@@ -22,12 +22,17 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.TileState;
 import org.bukkit.block.data.Openable;
 import org.bukkit.entity.Animals;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Monster;
+import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -43,6 +48,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -169,8 +175,49 @@ class TownProtectionListenerTest {
         assertNull(TownProtectionListener.resolveEntityItemUseProtection(cow, Material.STICK));
     }
 
+    @Test
+    void onBlockBreakSkipsGenericBreakProtectionForTrackedArmoryBlocks() {
+        final TownProtectionListener listener = new TownProtectionListener(this.createPlugin(this.townRuntimeService));
+        final Player player = Mockito.mock(Player.class);
+        final Block block = Mockito.mock(Block.class);
+        final Location blockLocation = new Location(this.world, 32.0D, 64.0D, 48.0D);
+
+        when(block.getLocation()).thenReturn(blockLocation);
+        when(this.townRuntimeService.findSalvageBlockChunk(blockLocation)).thenReturn(Mockito.mock(com.raindropcentral.rdt.database.entity.RTownChunk.class));
+
+        listener.onBlockBreak(new BlockBreakEvent(block, player));
+
+        verify(this.townRuntimeService).findSalvageBlockChunk(blockLocation);
+        verify(this.townRuntimeService, never()).isPlayerAllowed(player, blockLocation, TownProtections.BREAK_BLOCK);
+        verifyNoMoreInteractions(this.townRuntimeService);
+    }
+
+    @Test
+    void onBlockBreakSkipsGenericBreakProtectionForPlacedCacheChest() {
+        final TownProtectionListener listener = new TownProtectionListener(this.createPlugin(this.townRuntimeService));
+        final Player player = Mockito.mock(Player.class);
+        final Block block = Mockito.mock(Block.class);
+        final TileState tileState = Mockito.mock(TileState.class);
+        final PersistentDataContainer persistentDataContainer = Mockito.mock(PersistentDataContainer.class);
+        final Location blockLocation = new Location(this.world, 48.0D, 64.0D, 48.0D);
+
+        when(block.getLocation()).thenReturn(blockLocation);
+        when(block.getState()).thenReturn(tileState);
+        when(tileState.getPersistentDataContainer()).thenReturn(persistentDataContainer);
+        when(persistentDataContainer.get(Mockito.any(), Mockito.eq(PersistentDataType.STRING))).thenReturn("bank_cache");
+
+        listener.onBlockBreak(new BlockBreakEvent(block, player));
+
+        verify(this.townRuntimeService).findSalvageBlockChunk(blockLocation);
+        verify(this.townRuntimeService).findRepairBlockChunk(blockLocation);
+        verify(this.townRuntimeService, never()).isPlayerAllowed(player, blockLocation, TownProtections.BREAK_BLOCK);
+    }
+
     private RDT createPlugin(final TownRuntimeService runtimeService) {
-        final RDT plugin = new RDT(this.javaPlugin, "test", this.townService);
+        final JavaPlugin pluginDelegate = Mockito.mock(JavaPlugin.class, Mockito.RETURNS_DEEP_STUBS);
+        Mockito.lenient().when(pluginDelegate.getName()).thenReturn("test");
+        Mockito.lenient().when(pluginDelegate.getPluginMeta().getName()).thenReturn("test");
+        final RDT plugin = new RDT(pluginDelegate, "test", this.townService);
         if (runtimeService == null) {
             return plugin;
         }

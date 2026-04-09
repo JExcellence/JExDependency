@@ -71,7 +71,10 @@ class TownProtectionsTest {
                 TownProtections.BREAK_BLOCK,
                 TownProtections.PLACE_BLOCK,
                 TownProtections.SWITCH_ACCESS,
-                TownProtections.ITEM_USE
+                TownProtections.ITEM_USE,
+                TownProtections.ARMORY_USE,
+                TownProtections.ARMORY_BREAK,
+                TownProtections.ARMORY_FURNACE_TOGGLE
             ),
             TownProtections.editableValues(TownProtectionCategory.ROLE_BASED)
         );

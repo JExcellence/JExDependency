@@ -23,6 +23,7 @@ import com.raindropcentral.rds.service.shop.AdminShopPurchaseCommandSupport;
 import com.raindropcentral.rds.service.shop.AdminShopStockSupport;
 import com.raindropcentral.rds.service.shop.DynamicPricingMarketStats;
 import com.raindropcentral.rds.service.shop.DynamicPricingService;
+import com.raindropcentral.rds.service.shop.TownShopService;
 import com.raindropcentral.rds.view.shop.anvil.ShopPurchaseAmountAnvilView;
 import com.raindropcentral.rplatform.economy.JExEconomyBridge;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
@@ -34,7 +35,6 @@ import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.state.State;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -372,7 +372,13 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
             shop.setItems(items);
         }
 
-        shop.addBank(currentItem.getCurrencyType(), totalPrice);
+        final TownShopService.SaleTaxResult saleTaxResult = plugin.getTownShopService() == null
+                ? null
+                : plugin.getTownShopService().applySaleTax(shop, currentItem.getCurrencyType(), totalPrice);
+        shop.addBank(
+                currentItem.getCurrencyType(),
+                Math.max(0.0D, totalPrice - (saleTaxResult == null ? 0.0D : saleTaxResult.amount()))
+        );
         shop.addLedgerEntry(
                 ShopLedgerEntry.purchase(
                         shop,
@@ -669,7 +675,9 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
     ) {
         final String loreKey = shop.isAdminShop()
                 ? "summary.admin.lore"
-                : "summary.player.lore";
+                : shop.isTownShop()
+                    ? "summary.town.lore"
+                    : "summary.player.lore";
         return UnifiedBuilderFactory.item(Material.CHEST)
                 .setName(this.i18n("summary.name", player).build().component())
                 .setLore(this.i18n(loreKey, player)
@@ -739,8 +747,7 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
     }
 
     private @NotNull String getOwnerName(final @NotNull Shop shop) {
-        final String ownerName = Bukkit.getOfflinePlayer(shop.getOwner()).getName();
-        return ownerName == null ? shop.getOwner().toString() : ownerName;
+        return ShopAdminAccessSupport.resolveOwnerName(shop);
     }
 
     private @NotNull String getCurrencyDisplayName(

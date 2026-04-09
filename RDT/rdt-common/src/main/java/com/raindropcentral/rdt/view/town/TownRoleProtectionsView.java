@@ -42,7 +42,7 @@ import java.util.Map;
  */
 public class TownRoleProtectionsView extends AbstractTownProtectionView {
 
-    private static final int[] PROTECTION_SLOTS = {10, 12, 14, 16};
+    private static final int[] PROTECTION_SLOTS = {10, 12, 14, 16, 21, 23, 25};
 
     /**
      * Creates the role-based protections editor.
@@ -95,6 +95,8 @@ public class TownRoleProtectionsView extends AbstractTownProtectionView {
         render.slot(4).renderWith(() -> this.createSummaryItem(render));
         render.slot(40).renderWith(() -> this.createScopeItem(render))
             .onClick(this::handleScopeClick);
+        render.slot(31).renderWith(() -> this.createAlliedProtectionsItem(render))
+            .onClick(this::handleAlliedProtectionsClick);
 
         final List<TownProtections> protections = TownProtections.editableValues(TownProtectionCategory.ROLE_BASED);
         for (int index = 0; index < protections.size() && index < PROTECTION_SLOTS.length; index++) {
@@ -123,6 +125,18 @@ public class TownRoleProtectionsView extends AbstractTownProtectionView {
         clickContext.openForPlayer(
             TownProtectionScopeView.class,
             this.createProtectionNavigationData(clickContext, TownProtectionCategory.ROLE_BASED)
+        );
+    }
+
+    private void handleAlliedProtectionsClick(final @NotNull SlotClickContext clickContext) {
+        final RTown town = this.resolveTown(clickContext);
+        if (town == null || !this.ensureProtectionAccess(clickContext, town)) {
+            return;
+        }
+
+        clickContext.openForPlayer(
+            TownAlliedProtectionsView.class,
+            this.createProtectionNavigationData(clickContext, null, TownAlliedProtectionsView.VIEW_KEY)
         );
     }
 
@@ -282,6 +296,26 @@ public class TownRoleProtectionsView extends AbstractTownProtectionView {
                     "effective_role", this.resolveRoleDisplay(town, effectiveRoleId, context.getPlayer()),
                     "access_state", this.resolveAccessStateDisplay(context, town),
                     "action_count", TownProtections.switchActionValues().size()
+                ))
+                .build()
+                .children())
+            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+            .build();
+    }
+
+    private @NotNull ItemStack createAlliedProtectionsItem(final @NotNull Context context) {
+        final RTown town = this.resolveTown(context);
+        if (town == null) {
+            return this.createMissingItem(context.getPlayer());
+        }
+
+        final boolean editable = this.protectionEditingUnlocked(context, town);
+        return UnifiedBuilderFactory.item(editable ? Material.LIME_BANNER : Material.GRAY_DYE)
+            .setName(this.i18n("allied_entry.name", context.getPlayer()).build().component())
+            .setLore(this.i18n("allied_entry.lore", context.getPlayer())
+                .withPlaceholders(Map.of(
+                    "scope", this.resolveScopeDisplay(context),
+                    "access_state", this.resolveAccessStateDisplay(context, town)
                 ))
                 .build()
                 .children())

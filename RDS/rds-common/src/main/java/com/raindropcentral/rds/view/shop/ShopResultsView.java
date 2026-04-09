@@ -90,13 +90,13 @@ public class ShopResultsView extends AbstractShopBrowserView {
         return UnifiedBuilderFactory.item(Material.CHEST)
                 .setName(this.i18n("entry.name", player)
                         .withPlaceholders(Map.of(
-                                "owner", ShopBrowserSupport.getOwnerName(entry.ownerId())
+                                "owner", entry.ownerName()
                         ))
                         .build()
                         .component())
                 .setLore(this.i18n("entry.lore", player)
                         .withPlaceholders(Map.of(
-                                "owner", ShopBrowserSupport.getOwnerName(entry.ownerId()),
+                                "owner", entry.ownerName(),
                                 "location", ShopBrowserSupport.formatLocation(entry.shopLocation()),
                                 "material", this.getMaterialLabel(this.searchMaterial.get(context)),
                                 "matching_count", entry.matchingOfferCount(),

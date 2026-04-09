@@ -100,7 +100,34 @@ Built-in type ids registered by `BuiltInRequirementProvider`:
 - `TIME_BASED`
 - `PLUGIN`
 
-Plugin requirements (`type: PLUGIN`) are routed through `PluginIntegrationRegistry` and support explicit integration ids plus category auto-detection (`SKILLS`, `JOBS`).
+Plugin requirements (`type: PLUGIN`) are routed through `PluginIntegrationRegistry` and support explicit integration ids plus category auto-detection (`SKILLS`, `JOBS`, `TOWNS`).
+
+Built-in `PLUGIN` integrations currently include:
+
+- skills: `ecoskills`, `auraskills`, `mcmmo`
+- jobs: `ecojobs`, `jobsreborn`
+- towns: `rdt`, `towny`, `husktowns`
+
+Town integrations share the following requirement key:
+
+- `town_level`
+
+`town_level` resolves each plugin's native town level concept:
+
+- `rdt`: composite town level
+- `towny`: Towny level number
+- `husktowns`: HuskTowns town level
+
+RDT additionally exposes the following requirement keys:
+
+- `nexus_level`
+- `chunk_level`
+- `security_chunk_level`
+- `bank_chunk_level`
+- `farm_chunk_level`
+- `outpost_chunk_level`
+- `medic_chunk_level`
+- `armory_chunk_level`
 
 ## Rewards System
 

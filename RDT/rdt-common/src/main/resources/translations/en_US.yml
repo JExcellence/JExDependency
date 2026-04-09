@@ -5,12 +5,22 @@ prt:
     unavailable: "<red>Your town spawn is unavailable right now.</red>"
   bank:
     no_town: "<red>You must belong to a town to use the remote town bank.</red>"
+    no_permission: "<red>You do not have permission to access your town bank.</red>"
     locked: "<yellow>Your town has not unlocked remote bank access yet.</yellow>"
+    location_required: "<yellow>You must stand in one of your town's claimed chunks to open the full bank remotely.</yellow>"
+    cache_unavailable: "<red>Your town cache is not available for remote deposits right now.</red>"
 
 town_spawn:
   transfer_requested: "<yellow>Sending you to the town spawn server <white>{target_server}</white><yellow>.</yellow>"
   started: "<yellow>Town spawn warmup started. Teleporting in <white>{seconds}</white><yellow> seconds.</yellow>"
   teleported: "<green>Teleported to <white>{town}</white><green>.</green>"
+
+town_boss_bar:
+  territory:
+    wilderness: "<gray>Wilderness</gray> <dark_gray>|</dark_gray> <white>{chunk_x}, {chunk_z}</white>"
+    claimed: "<gradient:#22c55e:#84cc16>{town_name}</gradient> <dark_gray>|</dark_gray> <white>{chunk_x}, {chunk_z}</white>"
+  nexus:
+    title: "<gradient:#22c55e:#84cc16>{town_name}</gradient> <dark_gray>|</dark_gray> <red>{current_health}</red><gray>/</gray><white>{max_health} HP</white> <dark_gray>|</dark_gray> <aqua>{defense} DEF</aqua> <dark_gray>|</dark_gray> <yellow>Nexus Lv {nexus_level}</yellow>"
 
 nexus_block:
   name: "<gradient:#22c55e:#84cc16>[Nexus]</gradient> <white>{town}</white>"
@@ -44,6 +54,80 @@ fuel_tank:
   inventory:
     only_fuel: "<red>Only configured fuel items can be placed in the fuel tank.</red>"
 
+seed_box:
+  name: "<gradient:#84cc16:#22c55e>[Seed Box]</gradient> <white>{chunk_x}, {chunk_z}</white>"
+  lore:
+    - "<gray>Place this chest inside its Farm chunk.</gray>"
+    - "<gray>World:</gray> <white>{world}</white>"
+    - "<gray>Chunk:</gray> <white>{chunk_x}, {chunk_z}</white>"
+    - "<yellow>Only configured seed items can be stored here.</yellow>"
+  place:
+    denied: "<red>You do not have permission to place Farm seed boxes.</red>"
+    failed: "<red>That seed box could not be placed here.</red>"
+    invalid_location: "<red>The seed box must be inside its Farm chunk and within the configured radius of the chunk block.</red>"
+    double_chest: "<red>Seed boxes cannot form double chests.</red>"
+    success: "<green>Seed box placed for this Farm chunk.</green>"
+    warning: "<yellow>Only configured seed items can be stored here, and pickup is handled through the Farm chunk view.</yellow>"
+  break:
+    denied: "<red>Placed seed boxes must be picked up from the Farm chunk view.</red>"
+  inventory:
+    only_seeds: "<red>Only configured seed items can be placed in the seed box.</red>"
+
+cache_chest:
+  name: "<gradient:#f59e0b:#fbbf24>[Cache Chest]</gradient> <white>{town_name}</white>"
+  lore:
+    - "<gray>Place this chest inside an eligible Bank plot for <white>{town_name}</white><gray>.</gray>"
+    - "<gray>Only one cache chest may exist per town.</gray>"
+    - "<yellow>Pick it up from the Bank chunk view or bank menu.</yellow>"
+  place:
+    denied: "<red>You do not have permission to place your town cache chest.</red>"
+    failed: "<red>That cache chest could not be placed here.</red>"
+    already_placed: "<yellow>Your town already has a placed cache chest.</yellow>"
+    invalid_location: "<red>The cache chest must be inside a level 4+ Bank chunk and within the configured radius of the chunk marker.</red>"
+    double_chest: "<red>Cache chests cannot form double chests.</red>"
+    success: "<green>Town cache chest placed successfully.</green>"
+    warning: "<yellow>This chest uses the shared town-bank lock, so only one player may access it at a time.</yellow>"
+  break:
+    denied: "<red>Placed cache chests must be picked up from the Bank chunk view or bank menu.</red>"
+  access:
+    no_permission: "<red>You do not have permission to open this town cache chest.</red>"
+
+salvage_block:
+  name: "<gradient:#f59e0b:#fbbf24>[Salvage Block]</gradient> <white>{chunk_x}, {chunk_z}</white>"
+  lore:
+    - "<gray>Place this block inside its Armory chunk.</gray>"
+    - "<gray>World:</gray> <white>{world}</white>"
+    - "<gray>Chunk:</gray> <white>{chunk_x}, {chunk_z}</white>"
+    - "<yellow>Right-click it with supported gear to salvage base materials.</yellow>"
+  place:
+    denied: "<red>You do not have permission to place Armory salvage blocks.</red>"
+    failed: "<red>That salvage block could not be placed here.</red>"
+    invalid_location: "<red>The salvage block must be inside its Armory chunk and within the configured radius of the chunk block.</red>"
+    success: "<green>Salvage block placed for this Armory chunk.</green>"
+    warning: "<yellow>Use direct block breaking to recover it later.</yellow>"
+  break:
+    denied: "<red>You do not have permission to recover this salvage block.</red>"
+    success: "<green>Recovered the salvage block and returned the bound item.</green>"
+    failed: "<red>The salvage block could not be recovered right now.</red>"
+
+repair_block:
+  name: "<gradient:#d1d5db:#f3f4f6>[Repair Block]</gradient> <white>{chunk_x}, {chunk_z}</white>"
+  lore:
+    - "<gray>Place this block inside its Armory chunk.</gray>"
+    - "<gray>World:</gray> <white>{world}</white>"
+    - "<gray>Chunk:</gray> <white>{chunk_x}, {chunk_z}</white>"
+    - "<yellow>Right-click it with supported gear to repair using base materials.</yellow>"
+  place:
+    denied: "<red>You do not have permission to place Armory repair blocks.</red>"
+    failed: "<red>That repair block could not be placed here.</red>"
+    invalid_location: "<red>The repair block must be inside its Armory chunk and within the configured radius of the chunk block.</red>"
+    success: "<green>Repair block placed for this Armory chunk.</green>"
+    warning: "<yellow>Use direct block breaking to recover it later.</yellow>"
+  break:
+    denied: "<red>You do not have permission to recover this repair block.</red>"
+    success: "<green>Recovered the repair block and returned the bound item.</green>"
+    failed: "<red>The repair block could not be recovered right now.</red>"
+
 block_listener:
   nexus:
     pickup:
@@ -64,6 +148,7 @@ block_listener:
       denied: "<red>You do not have permission to place town chunk markers.</red>"
       failed: "<red>That chunk claim could not be finalized here.</red>"
       success: "<green>Claimed chunk <white>{chunk_x}, {chunk_z}</white><green>.</green>"
+      next_step: "<yellow>Right-click the chunk marker to choose a specialty like <white>Farm</white><yellow> or <white>Security</white><yellow>.</yellow>"
 
 town_protection_listener:
   break:
@@ -489,6 +574,108 @@ town_bank_ui:
     lore:
       - "<gray>That town bank is unavailable.</gray>"
 
+town_bank_shared:
+  messages:
+    in_use: "<yellow>Your town bank is already being accessed by another player.</yellow>"
+    item_storage_unlocked: "<green>Shared item storage unlocked. Your town bank now holds <white>{storage_rows}</white><green> rows of shared storage.</green>"
+    remote_command_unlocked: "<green>Remote bank access unlocked. Use <white>/rt bank</white><green> while standing in your town.</green>"
+    cache_unlocked: "<green>Town cache unlocked. Place the bound cache chest within <white>{radius_blocks}</white><green> blocks of an eligible Bank chunk marker.</green>"
+    remote_cache_unlocked: "<green>Cluster cache deposits unlocked. <white>/rt bank</white><green> can now deposit into the cache from other worlds or servers.</green>"
+
+town_bank_root_ui:
+  title: "<gradient:#f59e0b:#fbbf24>Town Bank</gradient>"
+  summary:
+    name: "<gold>Bank Overview</gold>"
+    lore:
+      - "<gray>Town:</gray> <white>{town_name}</white>"
+      - "<gray>Highest Bank level:</gray> <white>{bank_level}</white>"
+      - "<gray>Access lock:</gray> <white>{viewer_lock}</white>"
+  currency:
+    name: "<gold>{currency}</gold>"
+    lore:
+      - "<gray>Town balance:</gray> <white>{town_balance}</white>"
+      - "<gray>Your balance:</gray> <white>{player_balance}</white>"
+      - "<gray>Deposits:</gray> <white>{deposit_state}</white>"
+      - "<gray>Withdrawals:</gray> <white>{withdraw_state}</white>"
+      - "<gray>Status:</gray> <white>{support_state}</white>"
+      - "<yellow>Left click to deposit. Right click to withdraw.</yellow>"
+  shared_storage:
+    name: "<gold>Shared Item Storage</gold>"
+    lore:
+      - "<gray>Occupied slots:</gray> <white>{occupied_slots}</white>"
+      - "<yellow>Click to open the town's shared item storage.</yellow>"
+    locked_lore:
+      - "<gray>Unlocks at Bank level:</gray> <white>{unlock_level}</white>"
+      - "<gray>Shared item storage is not unlocked yet.</gray>"
+  remote:
+    name: "<gold>Remote Access</gold>"
+    lore:
+      - "<gray>/rt bank access:</gray> <white>{remote_state}</white>"
+      - "<gray>Remote cache deposit:</gray> <white>{remote_cache_state}</white>"
+      - "<gray>Full remote unlock:</gray> <white>{unlock_level}</white>"
+      - "<gray>Cross-cluster cache unlock:</gray> <white>{cache_unlock_level}</white>"
+  cache:
+    name: "<gold>Town Cache</gold>"
+    locked_lore:
+      - "<gray>Unlocks at Bank level:</gray> <white>{unlock_level}</white>"
+      - "<gray>The town cache is not unlocked yet.</gray>"
+    unplaced_lore:
+      - "<gray>No cache chest is placed yet.</gray>"
+      - "<gray>Placement radius:</gray> <white>{radius_blocks} blocks</white>"
+      - "<gray>Stored occupied slots:</gray> <white>{stored_slots}</white>"
+      - "<yellow>Place the bound cache chest in an eligible Bank plot.</yellow>"
+    placed_lore:
+      - "<gray>Cache status:</gray> <white>Placed</white>"
+      - "<gray>Placement radius:</gray> <white>{radius_blocks} blocks</white>"
+      - "<gray>Stored occupied slots:</gray> <white>{stored_slots}</white>"
+      - "<yellow>Click to open the town cache.</yellow>"
+  pickup_cache:
+    name: "<gold>Pickup Cache Chest</gold>"
+    lore:
+      - "<gray>Remove the placed cache chest and return the bound item.</gray>"
+      - "<gray>Stored cache contents stay in town storage.</gray>"
+      - "<yellow>Click to pick up the placed cache chest.</yellow>"
+    locked_lore:
+      - "<gray>You do not have permission to pick up the cache chest.</gray>"
+    unavailable_lore:
+      - "<gray>No cache chest is currently placed.</gray>"
+    success: "<green>Picked up the town cache chest and returned the bound item.</green>"
+    no_permission: "<red>You do not have permission to pick up the cache chest.</red>"
+    not_placed: "<yellow>No cache chest is currently placed.</yellow>"
+    failed: "<red>The cache chest could not be picked up right now.</red>"
+  return:
+    name: "<gold>Return</gold>"
+    lore:
+      - "<yellow>Go back to the previous town menu.</yellow>"
+  missing:
+    name: "<red>Town Missing</red>"
+    lore:
+      - "<gray>That town bank could not be loaded.</gray>"
+  messages:
+    item_storage_locked: "<yellow>Shared item storage unlocks at a higher Bank level.</yellow>"
+    cache_locked: "<yellow>The town cache unlocks at a higher Bank level.</yellow>"
+    cache_unplaced: "<yellow>Your town cache chest has not been placed yet.</yellow>"
+  transaction:
+    success: "<green>{amount} {currency} transferred successfully. New town balance: <white>{town_balance}</white><green>.</green>"
+    invalid_target: "<red>That bank transaction target is unavailable.</red>"
+    no_permission: "<red>You do not have permission for that bank transaction.</red>"
+    invalid_amount: "<red>Enter a valid positive amount.</red>"
+    invalid_currency: "<red>That currency is not supported by this bank.</red>"
+    not_enough_resources: "<red>You do not have enough currency for that transaction.</red>"
+    failed: "<red>The bank transaction could not be completed right now.</red>"
+
+town_bank_storage_ui:
+  title: "<gradient:#f59e0b:#fbbf24>{storage_name}</gradient>"
+
+town_bank_currency_input_ui:
+  title: "<gradient:#f59e0b:#fbbf24>Bank Amount</gradient>"
+  input:
+    lore:
+      - "<gray>Enter the amount you want to move.</gray>"
+  error:
+    invalid_input: "<red>Enter a valid positive amount.</red>"
+    processing_failed: "<red>That bank amount could not be processed.</red>"
+
 town_chunk_ui:
   title: "<gradient:#38bdf8:#60a5fa>Town Chunk</gradient>"
   summary:
@@ -528,6 +715,42 @@ town_chunk_ui:
       - "<gray>World:</gray> <white>{world_name}</white>"
       - "<gray>Chunk:</gray> <white>{chunk_x}, {chunk_z}</white>"
       - "<gray>Level:</gray> <white>{chunk_level}</white>"
+  outpost_shop:
+    name: "<gold>Town Shops</gold>"
+    lore:
+      - "<gray>Outpost level:</gray> <white>{chunk_level}</white>"
+      - "<gray>Base town shops unlocked:</gray> <white>{total_shops}</white>"
+      - "<gray>Claim or reissue one bound Town Shop token when this Outpost still has available capacity.</gray>"
+      - "<yellow>Click to claim a Town Shop token.</yellow>"
+    locked:
+      lore:
+        - "<gray>Town Shops unlock at Outpost level <white>{unlock_level}</white><gray>.</gray>"
+        - "<gray>Current Outpost level:</gray> <white>{chunk_level}</white>"
+    permission_locked:
+      lore:
+        - "<gray>Base town shops unlocked:</gray> <white>{total_shops}</white>"
+        - "<gray>You do not have permission to claim or manage Town Shops for this Outpost.</gray>"
+    unavailable:
+      lore:
+        - "<gray>Town shop rewards require the RDS plugin.</gray>"
+        - "<gray>This Outpost still upgrades normally, but token claims are unavailable right now.</gray>"
+    locked_message: "<red>Town Shops unlock at Outpost level <white>{unlock_level}</white><red>.</red>"
+    no_permission: "<red>You do not have permission to claim or manage Town Shops for this Outpost.</red>"
+    unavailable_message: "<red>Town shop claims are unavailable because RDS is not installed.</red>"
+    success: "<green>Reissued a Town Shop token for Outpost <white>{chunk_x}, {chunk_z}</white><green>.</green>"
+    failed: "<red>No Town Shop token could be reissued for this Outpost right now. Check available capacity and token ownership.</red>"
+  relationships:
+    name: "<gold>Town Relationships</gold>"
+    lore:
+      - "<gray>Nexus level:</gray> <white>{nexus_level}</white>"
+      - "<gray>Unlock level:</gray> <white>{unlock_level}</white>"
+      - "<gray>Management:</gray> <white>{manage_state}</white>"
+      - "<yellow>Click to browse diplomacy with other towns.</yellow>"
+    locked:
+      lore:
+        - "<gray>Nexus level:</gray> <white>{nexus_level}</white>"
+        - "<gray>Unlock level:</gray> <white>{unlock_level}</white>"
+        - "<gray>All town relationships remain neutral until this Nexus reaches the unlock level.</gray>"
   upgrade:
     name: "<gold>{level_scope} Progression</gold>"
     progress:
@@ -604,6 +827,238 @@ town_chunk_ui:
     success_with_fuel: "<green>Picked up the fuel tank, returned the tank item, and dropped the stored fuel.</green>"
     no_permission: "<red>You do not have permission to pick up the fuel tank.</red>"
     failed: "<red>The fuel tank could not be picked up right now.</red>"
+  bank:
+    no_permission: "<red>You do not have permission to use Bank chunk features.</red>"
+    access:
+      name: "<gold>Bank Access</gold>"
+      lore:
+        - "<gray>Bank level:</gray> <white>{bank_level}</white>"
+        - "<gray>Shared storage unlock:</gray> <white>{shared_unlock_level}</white>"
+        - "<yellow>Click to open the actionable town bank menu.</yellow>"
+      locked:
+        lore:
+          - "<gray>Bank level:</gray> <white>{bank_level}</white>"
+          - "<gray>Shared storage unlock:</gray> <white>{shared_unlock_level}</white>"
+          - "<gray>You do not currently have access to the actionable bank menu.</gray>"
+    cache:
+      name: "<gold>Town Cache</gold>"
+      locked:
+        lore:
+          - "<gray>Unlocks at Bank level:</gray> <white>{unlock_level}</white>"
+          - "<gray>The town cache is not unlocked yet.</gray>"
+      unplaced:
+        lore:
+          - "<gray>No cache chest is placed for this town.</gray>"
+          - "<gray>Placement radius:</gray> <white>{radius_blocks} blocks</white>"
+          - "<gray>Stored occupied slots:</gray> <white>{stored_slots}</white>"
+          - "<yellow>Place the bound cache chest in an eligible Bank plot.</yellow>"
+      placed:
+        lore:
+          - "<gray>Cache status:</gray> <white>Placed</white>"
+          - "<gray>Placement radius:</gray> <white>{radius_blocks} blocks</white>"
+          - "<gray>Stored occupied slots:</gray> <white>{stored_slots}</white>"
+          - "<gray>The cache can also be opened from the Bank menu.</gray>"
+    cache_pickup:
+      name: "<gold>Pickup Cache Chest</gold>"
+      lore:
+        - "<gray>Remove the placed cache chest and return the bound item.</gray>"
+        - "<gray>Stored cache contents stay in town storage.</gray>"
+        - "<yellow>Click to pick up the placed cache chest.</yellow>"
+      locked:
+        lore:
+          - "<gray>You do not have permission to pick up the cache chest.</gray>"
+      success: "<green>Picked up the town cache chest and returned the bound item.</green>"
+      no_permission: "<red>You do not have permission to pick up the cache chest.</red>"
+      not_placed: "<yellow>No cache chest is currently placed.</yellow>"
+      failed: "<red>The cache chest could not be picked up right now.</red>"
+  farm:
+    no_permission: "<red>You do not have permission to manage Farm chunk enhancements.</red>"
+    update_failed: "<red>The Farm chunk setting could not be updated right now.</red>"
+    seed_box:
+      name: "<gold>Seed Box</gold>"
+      locked:
+        lore:
+          - "<gray>Unlocks at Farm level:</gray> <white>{unlock_level}</white>"
+          - "<gray>Seed boxes store configured seeds for auto-replanting.</gray>"
+      unplaced:
+        lore:
+          - "<gray>No seed box is placed for this Farm chunk.</gray>"
+          - "<gray>Placement radius:</gray> <white>{radius_blocks} blocks</white>"
+          - "<gray>Stored stacks:</gray> <white>{stored_seed_stacks}</white>"
+          - "<yellow>Place the bound seed box chest near this chunk marker.</yellow>"
+      placed:
+        lore:
+          - "<gray>Seed box status:</gray> <white>Placed</white>"
+          - "<gray>Placement radius:</gray> <white>{radius_blocks} blocks</white>"
+          - "<gray>Stored stacks:</gray> <white>{stored_seed_stacks}</white>"
+          - "<gray>Stored items:</gray> <white>{stored_seed_items}</white>"
+          - "<gray>Auto-replant can pull configured seeds from this box.</gray>"
+    growth:
+      name: "<gold>Enhanced Growth</gold>"
+      lore:
+        - "<gray>Tier:</gray> <white>{growth_tier}</white>"
+        - "<gray>Speed:</gray> <white>{growth_speed_multiplier}x</white>"
+        - "<gray>Status:</gray> <white>{growth_state}</white>"
+        - "<yellow>Click to toggle enhanced natural crop growth.</yellow>"
+      locked:
+        lore:
+          - "<gray>Unlocks at Farm level:</gray> <white>{unlock_level}</white>"
+          - "<gray>Natural crop growth becomes faster once unlocked.</gray>"
+      locked_message: "<red>Enhanced Growth unlocks at Farm level <white>{unlock_level}</white><red>.</red>"
+      enabled: "<green>Enhanced Growth is now enabled for this Farm chunk.</green>"
+      disabled: "<yellow>Enhanced Growth is now disabled for this Farm chunk.</yellow>"
+    replant:
+      name: "<gold>Auto-Replant</gold>"
+      lore:
+        - "<gray>Status:</gray> <white>{replant_state}</white>"
+        - "<gray>Supported crops:</gray> <white>Wheat, Beetroot, Carrots, Potatoes</white>"
+        - "<yellow>Click to toggle automatic replanting after harvest.</yellow>"
+      locked:
+        lore:
+          - "<gray>Unlocks at Farm level:</gray> <white>{unlock_level}</white>"
+          - "<gray>Auto-replant uses your inventory and seed box based on priority.</gray>"
+      locked_message: "<red>Auto-Replant unlocks at Farm level <white>{unlock_level}</white><red>.</red>"
+      enabled: "<green>Auto-Replant is now enabled for this Farm chunk.</green>"
+      disabled: "<yellow>Auto-Replant is now disabled for this Farm chunk.</yellow>"
+    priority:
+      name: "<gold>Replant Priority</gold>"
+      lore:
+        - "<gray>Current priority:</gray> <white>{priority}</white>"
+        - "<gray>Auto-replant checks sources in this order.</gray>"
+        - "<yellow>Click to swap between inventory-first and seed-box-first.</yellow>"
+      locked:
+        lore:
+          - "<gray>Unlocks at Farm level:</gray> <white>{unlock_level}</white>"
+          - "<gray>Priority becomes configurable once auto-replant unlocks.</gray>"
+      locked_message: "<red>Replant priority unlocks at Farm level <white>{unlock_level}</white><red>.</red>"
+      changed: "<green>Farm replant priority changed to <white>{priority}</white><green>.</green>"
+    seed_pickup:
+      name: "<gold>Pickup Seed Box</gold>"
+      lore:
+        - "<gray>Remove the placed seed box for this Farm chunk.</gray>"
+        - "<gray>All stored seeds will drop at the seed-box location.</gray>"
+        - "<yellow>Click to return the seed-box item.</yellow>"
+      locked:
+        lore:
+          - "<gray>You do not have permission to pick up the seed box.</gray>"
+      success: "<green>Picked up the seed box and returned the seed-box item.</green>"
+      success_with_seeds: "<green>Picked up the seed box, returned the seed-box item, and dropped the stored seeds.</green>"
+      no_permission: "<red>You do not have permission to pick up the seed box.</red>"
+      failed: "<red>The seed box could not be picked up right now.</red>"
+  medic:
+    food_regen:
+      name: "<gold>Field Rations</gold>"
+      lore:
+        - "<gray>Unlocks at Medic level:</gray> <white>{unlock_level}</white>"
+        - "<gray>Status:</gray> <white>{viewer_status}</white>"
+        - "<gray>Pulse:</gray> <white>+{food_points_per_pulse} food</white>"
+        - "<gray>Saturation:</gray> <white>+{saturation_per_pulse}</white>"
+        - "<gray>Interval:</gray> <white>{interval_seconds}s</white>"
+    health_regen:
+      name: "<gold>Recovery Pulse</gold>"
+      lore:
+        - "<gray>Unlocks at Medic level:</gray> <white>{unlock_level}</white>"
+        - "<gray>Status:</gray> <white>{viewer_status}</white>"
+        - "<gray>Pulse:</gray> <white>+{health_points_per_pulse} health</white>"
+        - "<gray>Interval:</gray> <white>{interval_seconds}s</white>"
+        - "<gray>Heals up to your current max health while inside.</gray>"
+    cleanse:
+      name: "<gold>Cleanse Field</gold>"
+      lore:
+        - "<gray>Unlocks at Medic level:</gray> <white>{unlock_level}</white>"
+        - "<gray>Status:</gray> <white>{viewer_status}</white>"
+        - "<gray>Interval:</gray> <white>{interval_seconds}s</white>"
+        - "<gray>Effects removed:</gray> <white>{effect_count}</white>"
+        - "<gray>Configured list:</gray> <white>{harmful_effects}</white>"
+    fortified_recovery:
+      name: "<gold>Fortified Recovery</gold>"
+      lore:
+        - "<gray>Unlocks at Medic level:</gray> <white>{unlock_level}</white>"
+        - "<gray>Status:</gray> <white>{viewer_status}</white>"
+        - "<gray>Target max health:</gray> <white>{target_max_health}</white>"
+        - "<gray>Food target:</gray> <white>{target_food_level}</white>"
+        - "<gray>Saturation target:</gray> <white>{target_saturation}</white>"
+        - "<gray>Duration:</gray> <white>{duration}</white>"
+        - "<gray>Upkeep interval:</gray> <white>{upkeep_interval_seconds}s</white>"
+        - "<gray>Remaining:</gray> <white>{remaining_duration}</white>"
+    emergency_refill:
+      name: "<gold>Emergency Refill</gold>"
+      lore:
+        - "<gray>Unlocks at Medic level:</gray> <white>{unlock_level}</white>"
+        - "<gray>Status:</gray> <white>{viewer_status}</white>"
+        - "<gray>Health target:</gray> <white>{target_health_mode}</white>"
+        - "<gray>Food target:</gray> <white>{target_food_level}</white>"
+        - "<gray>Saturation target:</gray> <white>{target_saturation}</white>"
+        - "<gray>Cooldown:</gray> <white>{cooldown_seconds}s</white>"
+        - "<gray>Remaining cooldown:</gray> <white>{cooldown_remaining}</white>"
+  armory:
+    no_permission: "<red>You do not have permission to use Armory chunk features.</red>"
+    free_repair:
+      name: "<gold>Free Repair</gold>"
+      lore:
+        - "<gray>Unlocks at Armory level:</gray> <white>{unlock_level}</white>"
+        - "<gray>Status:</gray> <white>{viewer_status}</white>"
+        - "<gray>Repairs:</gray> <white>Armor, main hand, and offhand</white>"
+        - "<gray>Cooldown:</gray> <white>{cooldown}</white>"
+        - "<gray>Remaining:</gray> <white>{cooldown_remaining}</white>"
+        - "<yellow>Click to repair your equipped damageable items.</yellow>"
+      success: "<green>Repaired <white>{repaired_items}</white><green> equipped items. Free repair is now on cooldown for <white>{cooldown_remaining}</white><green>.</green>"
+      locked_message: "<red>Free Repair is not unlocked for this Armory chunk yet.</red>"
+      cooldown_message: "<red>Free Repair will be ready again in <white>{cooldown_remaining}</white><red>.</red>"
+      nothing_to_repair: "<yellow>You do not have any damaged equipped items to repair.</yellow>"
+      failed: "<red>Free Repair could not be used right now.</red>"
+    salvage_block:
+      name: "<gold>Salvage Block</gold>"
+      locked:
+        lore:
+          - "<gray>Unlocks at Armory level:</gray> <white>{unlock_level}</white>"
+          - "<gray>Salvage supported gear into scaled base materials.</gray>"
+      unplaced:
+        lore:
+          - "<gray>No salvage block is placed for this Armory chunk.</gray>"
+          - "<gray>Placement radius:</gray> <white>{radius_blocks} blocks</white>"
+          - "<yellow>Place the bound salvage block near this chunk marker.</yellow>"
+      placed:
+        lore:
+          - "<gray>Salvage block status:</gray> <white>Placed</white>"
+          - "<gray>Placement radius:</gray> <white>{radius_blocks} blocks</white>"
+          - "<gray>Right-click it with supported gear to salvage materials.</gray>"
+    repair_block:
+      name: "<gold>Repair Block</gold>"
+      locked:
+        lore:
+          - "<gray>Unlocks at Armory level:</gray> <white>{unlock_level}</white>"
+          - "<gray>Repair supported iron, gold, diamond, and netherite gear.</gray>"
+      unplaced:
+        lore:
+          - "<gray>No repair block is placed for this Armory chunk.</gray>"
+          - "<gray>Placement radius:</gray> <white>{radius_blocks} blocks</white>"
+          - "<gray>Iron:</gray> <white>{iron_material_cost}</white><gray> for </gray><white>{iron_repair_percent}%</white>"
+          - "<gray>Gold:</gray> <white>{gold_material_cost}</white><gray> for </gray><white>{gold_repair_percent}%</white>"
+          - "<gray>Diamond:</gray> <white>{diamond_material_cost}</white><gray> for </gray><white>{diamond_repair_percent}%</white>"
+          - "<gray>Netherite:</gray> <white>{netherite_material_cost}</white><gray> for </gray><white>{netherite_repair_percent}%</white>"
+      placed:
+        lore:
+          - "<gray>Repair block status:</gray> <white>Placed</white>"
+          - "<gray>Placement radius:</gray> <white>{radius_blocks} blocks</white>"
+          - "<gray>Iron:</gray> <white>{iron_material_cost}</white><gray> for </gray><white>{iron_repair_percent}%</white>"
+          - "<gray>Gold:</gray> <white>{gold_material_cost}</white><gray> for </gray><white>{gold_repair_percent}%</white>"
+          - "<gray>Diamond:</gray> <white>{diamond_material_cost}</white><gray> for </gray><white>{diamond_repair_percent}%</white>"
+          - "<gray>Netherite:</gray> <white>{netherite_material_cost}</white><gray> for </gray><white>{netherite_repair_percent}%</white>"
+    double_smelt:
+      name: "<gold>Double Smelt</gold>"
+      lore:
+        - "<gray>Unlocks at Armory level:</gray> <white>{unlock_level}</white>"
+        - "<gray>Status:</gray> <white>{toggle_state}</white>"
+        - "<gray>Access:</gray> <white>{access_state}</white>"
+        - "<gray>Burn multiplier:</gray> <white>{burn_faster_multiplier}x</white>"
+        - "<gray>Extra fuel per smelt:</gray> <white>{extra_fuel_per_smelt_units}</white>"
+        - "<yellow>Click to toggle furnace doubling for this Armory chunk.</yellow>"
+      locked_message: "<red>Double Smelt unlocks at Armory level <white>{unlock_level}</white><red>.</red>"
+      no_permission: "<red>You do not have permission to toggle Double Smelt for this Armory chunk.</red>"
+      enabled: "<green>Double Smelt is now enabled for this Armory chunk.</green>"
+      disabled: "<yellow>Double Smelt is now disabled for this Armory chunk.</yellow>"
+      update_failed: "<red>The Double Smelt setting could not be updated right now.</red>"
   return:
     name: "<gold>Back</gold>"
     lore:
@@ -625,6 +1080,39 @@ town_level_shared:
     level_up_success: "<green>{level_scope} leveled up from <white>{current_level}</white><green> to <white>{target_level}</white><green>.</green>"
     level_up_failed: "<red>{level_scope} could not be leveled right now.</red>"
     invalid_target: "<red>That {level_scope} progression target is unavailable right now.</red>"
+
+town_farm_shared:
+  messages:
+    growth_tier_1_unlocked: "<green>Enhanced Growth I unlocked for this Farm chunk. Natural crop growth now runs at <white>{growth_speed_multiplier}x</white><green> speed while enabled.</green>"
+    seed_box_unlocked: "<green>Seed Box storage unlocked. Place the bound seed box within <white>{radius_blocks}</white><green> blocks of this Farm chunk marker.</green>"
+    replant_unlocked: "<green>Auto-Replant unlocked with the default priority set to <white>{priority}</white><green>.</green>"
+    growth_tier_2_unlocked: "<green>Enhanced Growth II unlocked. The Farm growth boost now runs at <white>{growth_speed_multiplier}x</white><green> speed while enabled.</green>"
+    double_harvest_unlocked: "<green>Double Harvest unlocked. Harvested crop drops are now multiplied by <white>{multiplier}</white><green>.</green>"
+
+town_medic_shared:
+  messages:
+    food_regen_unlocked: "<green>Field Rations unlocked. Town members now regain <white>{food_points_per_pulse}</white><green> food every <white>{interval_seconds}</white><green> seconds with <white>{saturation_per_pulse}</white><green> saturation support inside this Medic chunk.</green>"
+    health_regen_unlocked: "<green>Recovery Pulse unlocked. Town members now regain <white>{health_points_per_pulse}</white><green> health every <white>{interval_seconds}</white><green> seconds inside this Medic chunk.</green>"
+    cleanse_unlocked: "<green>Cleanse Field unlocked. This Medic chunk now removes <white>{effect_count}</white><green> configured harmful effects every <white>{interval_seconds}</white><green> seconds.</green>"
+    fortified_recovery_unlocked: "<green>Fortified Recovery unlocked. Town members entering this Medic chunk can now reach <white>{target_max_health}</white><green> max health and full food support for <white>{duration_seconds}</white><green> seconds.</green>"
+    emergency_refill_unlocked: "<green>Emergency Refill unlocked. This Medic chunk now instantly tops players up using <white>{target_health_mode}</white><green> health targeting with a <white>{cooldown_seconds}</white><green>-second cooldown.</green>"
+
+town_armory_shared:
+  messages:
+    armory_use_denied: "<red>You do not have permission to use Armory chunk utilities here.</red>"
+    free_repair_unlocked: "<green>Free Repair unlocked. Town members can now repair equipped gear from the chunk view with a <white>{cooldown}</white><green> cooldown.</green>"
+    salvage_block_unlocked: "<green>Salvage Block unlocked. Place the bound salvage block within <white>{radius_blocks}</white><green> blocks of this Armory chunk marker.</green>"
+    repair_block_unlocked: "<green>Repair Block unlocked. Place the bound repair block within <white>{radius_blocks}</white><green> blocks of this Armory chunk marker. Base repair costs are now configured for iron, gold, diamond, and netherite gear.</green>"
+    double_smelt_unlocked: "<green>Double Smelt unlocked. Furnaces and blast furnaces can now double outputs with a <white>{burn_faster_multiplier}x</white><green> burn multiplier and <white>{extra_fuel_per_smelt_units}</white><green> extra fuel per smelt.</green>"
+    salvage_success: "<green>Salvaged the held item and returned <white>{recovered_material_count}</white><green> materials.</green>"
+    salvage_success_empty: "<yellow>Salvaged the held item, but it was too damaged to return any materials.</yellow>"
+    salvage_unsupported_item: "<red>That held item cannot be salvaged here.</red>"
+    salvage_failed: "<red>The salvage block could not be used right now.</red>"
+    repair_success: "<green>Repaired the held item using <white>{material_cost}</white><green> <white>{repair_material}</white><green> for <white>{repair_percent}%</white><green> durability restoration.</green>"
+    repair_fully_repaired: "<yellow>The held item is already fully repaired.</yellow>"
+    repair_not_enough_materials: "<red>You need <white>{material_cost}</white><red> <white>{repair_material}</white><red> to repair that item.</red>"
+    repair_unsupported_item: "<red>That held item cannot be repaired here.</red>"
+    repair_failed: "<red>The repair block could not be used right now.</red>"
 
 town_level_progress_ui:
   title: "<gradient:#22c55e:#84cc16>Level Progression</gradient>"
@@ -860,6 +1348,9 @@ town_protection_shared:
     container_access: "<gold>Container Access</gold>"
     switch_access: "<gold>Switch Actions</gold>"
     item_use: "<gold>Item Use</gold>"
+    armory_use: "<gold>Armory Use</gold>"
+    armory_break: "<gold>Armory Block Recovery</gold>"
+    armory_furnace_toggle: "<gold>Armory Furnace Toggle</gold>"
     chest: "<gold>Chest Access</gold>"
     shulker_boxes: "<light_purple>Shulker Box Access</light_purple>"
     trapped_chest: "<gold>Trapped Chest Access</gold>"
@@ -987,6 +1478,13 @@ town_role_protections_ui:
       - "<gray>Actions covered:</gray> <white>{action_count}</white>"
       - "<gray>Access:</gray> <white>{access_state}</white>"
       - "<yellow>Click to open the item-use editor.</yellow>"
+  allied_entry:
+    name: "<gold>Allied Town Permissions</gold>"
+    lore:
+      - "<gray>Manage what allied town members may do in this scope.</gray>"
+      - "<gray>Scope:</gray> <white>{scope}</white>"
+      - "<gray>Access:</gray> <white>{access_state}</white>"
+      - "<yellow>Click to open allied permissions.</yellow>"
   missing:
     name: "<red>Town Missing</red>"
     lore:
@@ -1094,6 +1592,270 @@ town_item_use_protections_ui:
   updated_all: "<green>Updated all item-use actions to <white>{role}</white><green>.</green>"
   updated: "<green>Updated <white>{protection}</white><green> to <white>{role}</white><green>.</green>"
   update_failed: "<red>The item-use protection could not be updated.</red>"
+
+town_allied_protections_ui:
+  title: "<gradient:#10b981:#34d399>Allied Permissions</gradient>"
+  summary:
+    name: "<gold>Allied Permission Summary</gold>"
+    lore:
+      - "<gray>Town:</gray> <white>{town_name}</white>"
+      - "<gray>Scope:</gray> <white>{scope}</white>"
+      - "<gray>Security:</gray> <white>{security_state}</white>"
+      - "<gray>Access:</gray> <white>{access_state}</white>"
+  mode:
+    name: "<gold>Editing Scope</gold>"
+    lore:
+      - "<gray>Current scope:</gray> <white>{scope}</white>"
+      - "<gray>Selection:</gray> <white>{selection}</white>"
+      - "<gray>World:</gray> <white>{world_name}</white>"
+      - "<gray>Type:</gray> <white>{chunk_type}</white>"
+      - "<gray>Chunk:</gray> <white>{chunk_x}, {chunk_z}</white>"
+      - "<yellow>Click to switch between town-global and chunk scopes.</yellow>"
+  entry:
+    lore:
+      - "<gray>Configured state:</gray> <white>{configured_state}</white>"
+      - "<gray>Effective state:</gray> <white>{effective_state}</white>"
+      - "<gray>Access:</gray> <white>{access_state}</white>"
+      - "<yellow>Click to cycle allied access for this protection.</yellow>"
+  switch_entry:
+    lore:
+      - "<gray>Configured state:</gray> <white>{configured_state}</white>"
+      - "<gray>Effective state:</gray> <white>{effective_state}</white>"
+      - "<gray>Actions covered:</gray> <white>{action_count}</white>"
+      - "<gray>Access:</gray> <white>{access_state}</white>"
+      - "<yellow>Click to open the allied switch editor.</yellow>"
+  item_use_entry:
+    lore:
+      - "<gray>Configured state:</gray> <white>{configured_state}</white>"
+      - "<gray>Effective state:</gray> <white>{effective_state}</white>"
+      - "<gray>Actions covered:</gray> <white>{action_count}</white>"
+      - "<gray>Access:</gray> <white>{access_state}</white>"
+      - "<yellow>Click to open the allied item-use editor.</yellow>"
+  missing:
+    name: "<red>Town Missing</red>"
+    lore:
+      - "<gray>The allied permission editor could not load this town.</gray>"
+  locked:
+    security_required: "<red>You need at least one Security chunk before protections can be edited.</red>"
+    no_permission: "<red>You do not have permission to manage town protections.</red>"
+  updated: "<green>Updated allied access for <white>{protection}</white><green> to <white>{state}</white><green>.</green>"
+  update_failed: "<red>The allied protection could not be updated.</red>"
+
+town_allied_switch_protections_ui:
+  title: "<gradient:#14b8a6:#2dd4bf>Allied Switch Permissions</gradient>"
+  summary:
+    name: "<gold>Allied Switch Summary</gold>"
+    lore:
+      - "<gray>Town:</gray> <white>{town_name}</white>"
+      - "<gray>Scope:</gray> <white>{scope}</white>"
+      - "<gray>Security:</gray> <white>{security_state}</white>"
+      - "<gray>Access:</gray> <white>{access_state}</white>"
+  mode:
+    name: "<gold>Editing Scope</gold>"
+    lore:
+      - "<gray>Current scope:</gray> <white>{scope}</white>"
+      - "<gray>Selection:</gray> <white>{selection}</white>"
+      - "<gray>World:</gray> <white>{world_name}</white>"
+      - "<gray>Type:</gray> <white>{chunk_type}</white>"
+      - "<gray>Chunk:</gray> <white>{chunk_x}, {chunk_z}</white>"
+      - "<yellow>Click to switch between town-global and chunk scopes.</yellow>"
+  bulk:
+    name: "<gold>All Switch Actions</gold>"
+    lore:
+      - "<gray>Configured state:</gray> <white>{configured_state}</white>"
+      - "<gray>Effective state:</gray> <white>{effective_state}</white>"
+      - "<gray>Actions covered:</gray> <white>{action_count}</white>"
+      - "<gray>Access:</gray> <white>{access_state}</white>"
+      - "<yellow>Click to update all allied switch actions in this scope.</yellow>"
+  entry:
+    lore:
+      - "<gray>Configured state:</gray> <white>{configured_state}</white>"
+      - "<gray>Effective state:</gray> <white>{effective_state}</white>"
+      - "<gray>Access:</gray> <white>{access_state}</white>"
+      - "<yellow>Click to cycle this allied switch action.</yellow>"
+  page:
+    name: "<gold>Page <white>{current_page}/{total_pages}</white></gold>"
+    lore:
+      - "<gray>Switch actions:</gray> <white>{items_count}</white>"
+      - "<gray>Current page:</gray> <white>{current_page}</white>"
+      - "<gray>Total pages:</gray> <white>{total_pages}</white>"
+  missing:
+    name: "<red>Town Missing</red>"
+    lore:
+      - "<gray>The allied switch editor could not load this town.</gray>"
+  locked:
+    security_required: "<red>You need at least one Security chunk before protections can be edited.</red>"
+    no_permission: "<red>You do not have permission to manage town protections.</red>"
+  updated_all: "<green>Updated all allied switch actions to <white>{state}</white><green>.</green>"
+  updated: "<green>Updated allied access for <white>{protection}</white><green> to <white>{state}</white><green>.</green>"
+  update_failed: "<red>The allied switch protection could not be updated.</red>"
+
+town_allied_item_use_protections_ui:
+  title: "<gradient:#84cc16:#22c55e>Allied Item Use</gradient>"
+  summary:
+    name: "<gold>Allied Item Use Summary</gold>"
+    lore:
+      - "<gray>Town:</gray> <white>{town_name}</white>"
+      - "<gray>Scope:</gray> <white>{scope}</white>"
+      - "<gray>Security:</gray> <white>{security_state}</white>"
+      - "<gray>Access:</gray> <white>{access_state}</white>"
+  mode:
+    name: "<gold>Editing Scope</gold>"
+    lore:
+      - "<gray>Current scope:</gray> <white>{scope}</white>"
+      - "<gray>Selection:</gray> <white>{selection}</white>"
+      - "<gray>World:</gray> <white>{world_name}</white>"
+      - "<gray>Type:</gray> <white>{chunk_type}</white>"
+      - "<gray>Chunk:</gray> <white>{chunk_x}, {chunk_z}</white>"
+      - "<yellow>Click to switch between town-global and chunk scopes.</yellow>"
+  bulk:
+    name: "<gold>All Item Use</gold>"
+    lore:
+      - "<gray>Configured state:</gray> <white>{configured_state}</white>"
+      - "<gray>Effective state:</gray> <white>{effective_state}</white>"
+      - "<gray>Actions covered:</gray> <white>{action_count}</white>"
+      - "<gray>Access:</gray> <white>{access_state}</white>"
+      - "<yellow>Click to update all allied item-use actions in this scope.</yellow>"
+  entry:
+    lore:
+      - "<gray>Configured state:</gray> <white>{configured_state}</white>"
+      - "<gray>Effective state:</gray> <white>{effective_state}</white>"
+      - "<gray>Access:</gray> <white>{access_state}</white>"
+      - "<yellow>Click to cycle this allied item-use action.</yellow>"
+  page:
+    name: "<gold>Page <white>{current_page}/{total_pages}</white></gold>"
+    lore:
+      - "<gray>Item-use actions:</gray> <white>{items_count}</white>"
+      - "<gray>Current page:</gray> <white>{current_page}</white>"
+      - "<gray>Total pages:</gray> <white>{total_pages}</white>"
+  missing:
+    name: "<red>Town Missing</red>"
+    lore:
+      - "<gray>The allied item-use editor could not load this town.</gray>"
+  locked:
+    security_required: "<red>You need at least one Security chunk before protections can be edited.</red>"
+    no_permission: "<red>You do not have permission to manage town protections.</red>"
+  updated_all: "<green>Updated all allied item-use actions to <white>{state}</white><green>.</green>"
+  updated: "<green>Updated allied access for <white>{protection}</white><green> to <white>{state}</white><green>.</green>"
+  update_failed: "<red>The allied item-use protection could not be updated.</red>"
+
+town_relationship_shared:
+  states:
+    neutral: "<white>Neutral</white>"
+    allied: "<green>Allied</green>"
+    hostile: "<red>Hostile</red>"
+  pending:
+    none: "<gray>None</gray>"
+    outgoing: "<yellow>Outgoing</yellow>"
+    incoming: "<aqua>Incoming</aqua>"
+  status:
+    locked: "<red>Locked</red>"
+    unlocked: "<green>Unlocked</green>"
+  manage:
+    allowed: "<green>Allowed</green>"
+    blocked: "<red>Blocked</red>"
+  broadcasts:
+    request_received: "<yellow>{source_town}</yellow><gray> requested a </gray><white>{relationship}</white><gray> relationship with your town.</gray>"
+    confirmed:
+      neutral: "<gray>Your relationship with </gray><yellow>{other_town}</yellow><gray> is now </gray><white>{relationship}</white><gray>.</gray>"
+      allied: "<gray>Your relationship with </gray><yellow>{other_town}</yellow><gray> is now </gray><white>{relationship}</white><gray>.</gray>"
+      hostile: "<gray>Your relationship with </gray><yellow>{other_town}</yellow><gray> is now </gray><white>{relationship}</white><gray>.</gray>"
+
+town_relationships_ui:
+  title: "<gradient:#38bdf8:#22c55e>Town Relationships</gradient>"
+  summary:
+    name: "<gold>Relationship Summary</gold>"
+    lore:
+      - "<gray>Town:</gray> <white>{town_name}</white>"
+      - "<gray>Nexus level:</gray> <white>{nexus_level}</white>"
+      - "<gray>Unlock level:</gray> <white>{unlock_level}</white>"
+      - "<gray>Unlock state:</gray> <white>{unlock_state}</white>"
+      - "<gray>Other towns:</gray> <white>{relationship_count}</white>"
+  entry:
+    name: "<gold>{town_name}</gold>"
+    lore:
+      - "<gray>Effective:</gray> <white>{effective_relationship}</white>"
+      - "<gray>Confirmed:</gray> <white>{confirmed_relationship}</white>"
+      - "<gray>Pending:</gray> <white>{pending_state}</white>"
+      - "<gray>Direction:</gray> <white>{pending_direction}</white>"
+      - "<gray>Cooldown:</gray> <white>{cooldown}</white>"
+      - "<gray>Target unlock:</gray> <white>{target_unlock_state}</white>"
+      - "<gray>Target Nexus:</gray> <white>{target_nexus_level}</white><gray> / unlock </gray><white>{unlock_level}</white>"
+      - "<yellow>Click to review or manage this relationship.</yellow>"
+  empty:
+    name: "<gray>No Other Towns</gray>"
+    lore:
+      - "<gray>No other towns are currently available to manage.</gray>"
+  missing:
+    name: "<red>Town Missing</red>"
+    lore:
+      - "<gray>The relationship browser could not load this town.</gray>"
+
+town_relationship_detail_ui:
+  title: "<gradient:#22c55e:#38bdf8>Relationship Details</gradient>"
+  summary:
+    name: "<gold>{town_name}</gold>"
+    lore:
+      - "<gray>Effective:</gray> <white>{effective_relationship}</white>"
+      - "<gray>Confirmed:</gray> <white>{confirmed_relationship}</white>"
+      - "<gray>Pending:</gray> <white>{pending_state}</white>"
+      - "<gray>Cooldown:</gray> <white>{cooldown}</white>"
+  info:
+    name: "<gold>Relationship Info</gold>"
+    lore:
+      - "<gray>Your Nexus:</gray> <white>{source_nexus_level}</white>"
+      - "<gray>Target Nexus:</gray> <white>{target_nexus_level}</white>"
+      - "<gray>Unlock level:</gray> <white>{unlock_level}</white>"
+      - "<gray>Your unlock:</gray> <white>{source_unlock_state}</white>"
+      - "<gray>Target unlock:</gray> <white>{target_unlock_state}</white>"
+      - "<gray>Permission:</gray> <white>{manage_state}</white>"
+      - "<gray>Pending direction:</gray> <white>{pending_direction}</white>"
+  actions:
+    neutral:
+      name: "<white>Neutral</white>"
+    allied:
+      name: "<green>Allied</green>"
+    hostile:
+      name: "<red>Hostile</red>"
+    available:
+      lore:
+        - "<gray>Target town:</gray> <white>{target_town}</white>"
+        - "<gray>Selected state:</gray> <white>{relationship}</white>"
+        - "<gray>Pending:</gray> <white>{pending_state}</white>"
+        - "<yellow>Click to request or confirm this relationship.</yellow>"
+    active:
+      lore:
+        - "<gray>Selected state:</gray> <white>{relationship}</white>"
+        - "<green>This is already the active relationship.</green>"
+    cooldown:
+      lore:
+        - "<gray>Selected state:</gray> <white>{relationship}</white>"
+        - "<gray>Cooldown remaining:</gray> <white>{cooldown}</white>"
+        - "<gray>Relationship changes are temporarily locked for this pair.</gray>"
+    locked:
+      lore:
+        - "<gray>Selected state:</gray> <white>{relationship}</white>"
+        - "<gray>Both towns must unlock diplomacy before this change can happen.</gray>"
+    no_permission:
+      lore:
+        - "<gray>Selected state:</gray> <white>{relationship}</white>"
+        - "<gray>You do not have permission to manage this relationship.</gray>"
+  missing:
+    name: "<red>Relationship Missing</red>"
+    lore:
+      - "<gray>This relationship target could not be loaded.</gray>"
+  return:
+    name: "<gold>Back</gold>"
+    lore:
+      - "<gray>Return to the relationship browser.</gray>"
+  messages:
+    pending: "<yellow>Sent a <white>{relationship}</white><yellow> request to <white>{target_town}</white><yellow>.</yellow>"
+    confirmed: "<green>Relationship with <white>{target_town}</white><green> changed to <white>{relationship}</white><green>.</green>"
+    cooldown: "<red>You must wait <white>{cooldown}</white><red> before changing this relationship again.</red>"
+    locked: "<red>Both towns must unlock diplomacy before this relationship can change.</red>"
+    unchanged: "<yellow>The relationship with <white>{target_town}</white><yellow> is already set that way.</yellow>"
+    failed: "<red>The relationship with <white>{target_town}</white><red> could not be updated.</red>"
+    no_permission: "<red>You do not have permission to manage the relationship with <white>{target_town}</white><red>.</red>"
 
 town_toggle_protections_ui:
   title: "<gradient:#38bdf8:#60a5fa>On / Off Protections</gradient>"
@@ -1241,12 +2003,36 @@ town_chunk_type_ui:
       - "<gray>Type:</gray> <white>{chunk_type}</white>"
       - "<yellow>Click to set this chunk to {chunk_type}.</yellow>"
       - "<red>Changing the type will reset this chunk's saved progression.</red>"
+    benefits:
+      default:
+        - "<gray>Flexible base chunk for general town builds and expansion.</gray>"
+      farm:
+        - "<green>Growth boosts, seed-box storage, auto-replant, and double harvest unlocks.</green>"
+      security:
+        - "<red>Chunk-specific protections backed by a fuel tank and pooled town power.</red>"
+      outpost:
+        - "<aqua>Travel-focused chunk progression for relay and exploration support.</aqua>"
+      medic:
+        - "<gold>Food regen, health regen, cleanse, fortified recovery, and emergency refill unlock as this Medic chunk levels up.</gold>"
+      bank:
+        - "<yellow>Bank progression plus remote-access utility for your town treasury.</yellow>"
+      armory:
+        - "<gray>Free repair, salvage and repair blocks, plus furnace doubling unlock as this Armory chunk levels up.</gray>"
   selected: "<green>Chunk type changed to <white>{chunk_type}</white><green>.</green>"
   selection_failed: "<red>The chunk type could not be changed.</red>"
   already_selected: "<yellow>This chunk is already set to <white>{chunk_type}</white><yellow>.</yellow>"
   fuel_tank_granted: "<yellow>You received a bound fuel tank. Place it in this Security chunk and add fuel before security features will work.</yellow>"
   fuel_tank_removed: "<yellow>The Security fuel tank was removed from this chunk.</yellow>"
   fuel_tank_removed_with_fuel: "<yellow>The Security fuel tank was removed and its stored fuel dropped at the tank location.</yellow>"
+  farm_selected_hint: "<yellow>Farm chunk selected. Level 2 unlocks Enhanced Growth, level 3 unlocks Seed Box storage and Auto-Replant, level 4 upgrades growth, and level 5 unlocks Double Harvest.</yellow>"
+  armory_selected_hint: "<yellow>Armory chunk selected. Level 2 unlocks Free Repair, level 3 unlocks the Salvage Block, level 4 unlocks the Repair Block, and level 5 unlocks Double Smelt.</yellow>"
+  seed_box_granted: "<yellow>You received a bound seed box. Place it in this Farm chunk and store configured seeds for auto-replanting.</yellow>"
+  seed_box_removed: "<yellow>The Farm seed box was removed from this chunk.</yellow>"
+  seed_box_removed_with_seeds: "<yellow>The Farm seed box was removed and its stored seeds dropped at the seed-box location.</yellow>"
+  salvage_block_granted: "<yellow>You received a bound salvage block. Place it in this Armory chunk to salvage supported gear into base materials.</yellow>"
+  salvage_block_removed: "<yellow>The Armory salvage block was removed from this chunk.</yellow>"
+  repair_block_granted: "<yellow>You received a bound repair block. Place it in this Armory chunk to repair supported gear with base materials.</yellow>"
+  repair_block_removed: "<yellow>The Armory repair block was removed from this chunk.</yellow>"
   missing:
     name: "<red>Chunk Missing</red>"
     lore:

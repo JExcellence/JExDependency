@@ -231,7 +231,9 @@ public class ShopBossBarService {
     ) {
         final String key = shop.isAdminShop()
                 ? "shop_boss_bar.type.admin"
-                : "shop_boss_bar.type.player";
+                : shop.isTownShop()
+                    ? "shop_boss_bar.type.town"
+                    : "shop_boss_bar.type.player";
         return this.toPlainString(key, viewer, Map.of());
     }
 
@@ -241,6 +243,10 @@ public class ShopBossBarService {
     ) {
         if (shop.isAdminShop()) {
             return this.toPlainString("shop_boss_bar.owner.admin", viewer, Map.of());
+        }
+
+        if (this.plugin.getTownShopService() != null) {
+            return this.plugin.getTownShopService().resolveOwnerName(shop);
         }
 
         final String ownerName = Bukkit.getOfflinePlayer(shop.getOwner()).getName();

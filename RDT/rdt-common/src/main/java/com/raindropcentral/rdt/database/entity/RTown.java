@@ -80,6 +80,9 @@ public class RTown extends BaseEntity {
     @Column(name = "nexus_level")
     private Integer nexusLevel;
 
+    @Column(name = "current_nexus_health")
+    private Double currentNexusHealth;
+
     @Column(name = "buffered_fuel_units", nullable = false)
     private double bufferedFuelUnits;
 
@@ -129,6 +132,11 @@ public class RTown extends BaseEntity {
     private Map<String, String> protections = new LinkedHashMap<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "rdt_town_allied_protections", joinColumns = @JoinColumn(name = "town_id_fk"))
+    @Column(name = "access_state", nullable = false, length = 32)
+    private Map<String, String> alliedProtections = new LinkedHashMap<>();
+
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "rdt_town_bank_balances", joinColumns = @JoinColumn(name = "town_id_fk"))
     @Column(name = "amount", nullable = false)
     private Map<String, Double> bankBalances = new LinkedHashMap<>();
@@ -145,6 +153,17 @@ public class RTown extends BaseEntity {
     @Convert(converter = ItemStackMapConverter.class)
     @Column(name = "shared_bank_storage", columnDefinition = "LONGTEXT")
     private Map<String, ItemStack> sharedBankStorage = new LinkedHashMap<>();
+
+    @Convert(converter = ItemStackMapConverter.class)
+    @Column(name = "bank_cache_contents", columnDefinition = "LONGTEXT")
+    private Map<String, ItemStack> bankCacheContents = new LinkedHashMap<>();
+
+    @Convert(converter = LocationConverter.class)
+    @Column(name = "bank_cache_location")
+    private Location bankCacheLocation;
+
+    @Column(name = "bank_cache_server_id", length = 64)
+    private String bankCacheServerId;
 
     /** Creates a town. */
     public RTown(
@@ -288,6 +307,11 @@ public class RTown extends BaseEntity {
         return true;
     }
 
+    /** Returns whether the persisted Nexus health has been backfilled. */
+    public boolean hasPersistedCurrentNexusHealth() {
+        return this.currentNexusHealth != null;
+    }
+
     /** Returns the persisted nexus progression level. */
     public int getNexusLevel() {
         return Math.max(1, this.nexusLevel == null ? this.townLevel : this.nexusLevel);
@@ -297,6 +321,67 @@ public class RTown extends BaseEntity {
     public void setNexusLevel(final int nexusLevel) {
         this.nexusLevel = Math.max(1, nexusLevel);
         this.recalculateTownLevel();
+    }
+
+    /**
+     * Backfills legacy towns whose Nexus health predates persisted combat state.
+     *
+     * @param maxNexusHealth current maximum Nexus health for the town
+     * @return {@code true} when the persisted health was initialized
+     */
+    public boolean backfillLegacyCurrentNexusHealthIfNeeded(final double maxNexusHealth) {
+        if (this.currentNexusHealth != null) {
+            return false;
+        }
+        this.currentNexusHealth = normalizeCurrentNexusHealth(maxNexusHealth, maxNexusHealth);
+        return true;
+    }
+
+    /**
+     * Clamps the persisted Nexus health into the valid range for the supplied maximum health.
+     *
+     * @param maxNexusHealth current maximum Nexus health for the town
+     * @return {@code true} when the persisted health changed
+     */
+    public boolean clampCurrentNexusHealth(final double maxNexusHealth) {
+        if (this.currentNexusHealth == null) {
+            return false;
+        }
+        final double normalizedHealth = normalizeCurrentNexusHealth(this.currentNexusHealth, maxNexusHealth);
+        if (Double.compare(this.currentNexusHealth, normalizedHealth) == 0) {
+            return false;
+        }
+        this.currentNexusHealth = normalizedHealth;
+        return true;
+    }
+
+    /**
+     * Returns the current persisted Nexus health clamped to the supplied maximum.
+     *
+     * @param maxNexusHealth current maximum Nexus health for the town
+     * @return normalized current Nexus health
+     */
+    public double getCurrentNexusHealth(final double maxNexusHealth) {
+        return normalizeCurrentNexusHealth(this.currentNexusHealth == null ? maxNexusHealth : this.currentNexusHealth, maxNexusHealth);
+    }
+
+    /**
+     * Replaces the current persisted Nexus health.
+     *
+     * @param currentNexusHealth replacement current Nexus health
+     * @param maxNexusHealth current maximum Nexus health for the town
+     */
+    public void setCurrentNexusHealth(final double currentNexusHealth, final double maxNexusHealth) {
+        this.currentNexusHealth = normalizeCurrentNexusHealth(currentNexusHealth, maxNexusHealth);
+    }
+
+    /**
+     * Fully heals the Nexus to the supplied maximum health.
+     *
+     * @param maxNexusHealth current maximum Nexus health for the town
+     */
+    public void healNexusToFull(final double maxNexusHealth) {
+        this.currentNexusHealth = normalizeCurrentNexusHealth(maxNexusHealth, maxNexusHealth);
     }
 
     /** Returns the currently buffered FE already withdrawn from fuel items. */
@@ -789,6 +874,46 @@ public class RTown extends BaseEntity {
         this.protections.put(protection.getProtectionKey(), protection.normalizeConfiguredRoleId(roleId));
     }
 
+    /** Returns configured allied-access states for role-based protections. */
+    public @NotNull Map<String, String> getAlliedProtectionStates() {
+        return new LinkedHashMap<>(this.alliedProtections);
+    }
+
+    /**
+     * Returns the explicitly stored allied-access state for a protection.
+     *
+     * @param protection protection to resolve
+     * @return {@code true} when allies are explicitly allowed, {@code false} when restricted, or
+     *     {@code null} when the protection inherits a legacy parent or its default restriction
+     */
+    public @Nullable Boolean getConfiguredAlliedProtectionAllowed(final @Nullable TownProtections protection) {
+        if (protection == null) {
+            return null;
+        }
+        return parseAlliedProtectionState(this.alliedProtections.get(protection.getProtectionKey()));
+    }
+
+    /**
+     * Returns whether allied towns may use one protection at the town-global scope.
+     *
+     * @param protection protection to resolve
+     * @return {@code true} when allies are allowed to perform the protected action
+     */
+    public boolean isAlliedProtectionAllowed(final @NotNull TownProtections protection) {
+        return this.resolveAlliedProtectionAllowed(protection, EnumSet.noneOf(TownProtections.class));
+    }
+
+    /**
+     * Replaces the stored allied-access state for one protection.
+     *
+     * @param protection protection to update
+     * @param allowed replacement allied-access state
+     */
+    public void setAlliedProtectionAllowed(final @NotNull TownProtections protection, final boolean allowed) {
+        Objects.requireNonNull(protection, "protection");
+        this.alliedProtections.put(protection.getProtectionKey(), formatAlliedProtectionState(allowed));
+    }
+
     /** Returns whether the town currently has a placed nexus. */
     public boolean hasNexusPlaced() {
         return this.nexusLocation != null;
@@ -799,12 +924,6 @@ public class RTown extends BaseEntity {
         return this.chunks.stream().anyMatch(chunk -> chunk.getChunkType() == ChunkType.SECURITY);
     }
 
-    /** Returns whether remote bank access is unlocked. */
-    public boolean supportsRemoteBankAccess() {
-        return this.chunks.stream()
-            .anyMatch(chunk -> chunk.getChunkType() == ChunkType.BANK && chunk.getChunkLevel() >= 2);
-    }
-
     /** Returns shared bank storage contents. */
     public @NotNull Map<String, ItemStack> getSharedBankStorage() {
         return new LinkedHashMap<>(this.sharedBankStorage);
@@ -813,6 +932,53 @@ public class RTown extends BaseEntity {
     /** Replaces shared bank storage contents. */
     public void setSharedBankStorage(final @NotNull Map<String, ItemStack> sharedBankStorage) {
         this.sharedBankStorage = new LinkedHashMap<>(Objects.requireNonNull(sharedBankStorage, "sharedBankStorage"));
+    }
+
+    /** Returns persisted town cache contents. */
+    public @NotNull Map<String, ItemStack> getBankCacheContents() {
+        return new LinkedHashMap<>(this.bankCacheContents);
+    }
+
+    /** Replaces persisted town cache contents. */
+    public void setBankCacheContents(final @NotNull Map<String, ItemStack> bankCacheContents) {
+        this.bankCacheContents = new LinkedHashMap<>(Objects.requireNonNull(bankCacheContents, "bankCacheContents"));
+    }
+
+    /** Returns the placed town cache location. */
+    public @Nullable Location getBankCacheLocation() {
+        return this.bankCacheLocation == null ? null : this.bankCacheLocation.clone();
+    }
+
+    /** Replaces the placed town cache location. */
+    public void setBankCacheLocation(final @Nullable Location bankCacheLocation) {
+        this.bankCacheLocation = bankCacheLocation == null ? null : bankCacheLocation.clone();
+    }
+
+    /** Returns whether the town currently has a placed cache chest. */
+    public boolean hasBankCacheLocation() {
+        return this.bankCacheLocation != null;
+    }
+
+    /** Returns the authoritative host server route identifier for the town cache. */
+    public @Nullable String getBankCacheServerId() {
+        return this.bankCacheServerId;
+    }
+
+    /** Replaces the authoritative host server route identifier for the town cache. */
+    public void setBankCacheServerId(final @Nullable String bankCacheServerId) {
+        this.bankCacheServerId = normalizeServerId(bankCacheServerId);
+    }
+
+    /** Clears the current placed cache binding but preserves persisted cache contents. */
+    public void clearBankCachePlacement() {
+        this.bankCacheLocation = null;
+        this.bankCacheServerId = null;
+    }
+
+    /** Clears all town cache state, including placed binding and persisted contents. */
+    public void clearBankCacheState() {
+        this.clearBankCachePlacement();
+        this.bankCacheContents.clear();
     }
 
     @Override
@@ -837,6 +1003,23 @@ public class RTown extends BaseEntity {
         return fallbackProtection == null
             ? protection.normalizeConfiguredRoleId(protection.getDefaultRoleId())
             : this.resolveProtectionRoleId(fallbackProtection, visited);
+    }
+
+    private boolean resolveAlliedProtectionAllowed(
+        final @NotNull TownProtections protection,
+        final @NotNull EnumSet<TownProtections> visited
+    ) {
+        if (!visited.add(protection)) {
+            return false;
+        }
+
+        final Boolean configuredState = parseAlliedProtectionState(this.alliedProtections.get(protection.getProtectionKey()));
+        if (configuredState != null) {
+            return configuredState;
+        }
+
+        final TownProtections fallbackProtection = protection.getFallbackProtection();
+        return fallbackProtection != null && this.resolveAlliedProtectionAllowed(fallbackProtection, visited);
     }
 
     private void ensureDefaultRoles() {
@@ -897,6 +1080,17 @@ public class RTown extends BaseEntity {
         return serverId.trim();
     }
 
+    private static @Nullable Boolean parseAlliedProtectionState(final @Nullable String rawState) {
+        if (rawState == null || rawState.isBlank()) {
+            return null;
+        }
+        return Objects.equals(rawState.trim().toUpperCase(Locale.ROOT), "ALLOWED");
+    }
+
+    private static @NotNull String formatAlliedProtectionState(final boolean allowed) {
+        return allowed ? "ALLOWED" : "RESTRICTED";
+    }
+
     private static @Nullable NetworkLocation toNetworkLocation(
         final @Nullable Location location,
         final @Nullable String serverId
@@ -931,5 +1125,10 @@ public class RTown extends BaseEntity {
             networkLocation.yaw(),
             networkLocation.pitch()
         );
+    }
+
+    private static double normalizeCurrentNexusHealth(final double currentNexusHealth, final double maxNexusHealth) {
+        final double normalizedMaximum = Math.max(1.0D, maxNexusHealth);
+        return Math.clamp(currentNexusHealth, 0.0D, normalizedMaximum);
     }
 }

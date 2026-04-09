@@ -35,7 +35,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -130,8 +129,9 @@ public class ShopAdminShopControlView extends APaginatedView<ShopAdminShopContro
 
             entries.add(new ShopControlEntry(
                     location,
-                    shop.getOwner(),
+                    ShopAdminAccessSupport.resolveOwnerName(this.rds.get(context), shop),
                     shop.isAdminShop(),
+                    shop.isTownShop(),
                     shop.getStoredItemCount(),
                     shop.getBankCurrencyCount()
             ));
@@ -236,7 +236,7 @@ public class ShopAdminShopControlView extends APaginatedView<ShopAdminShopContro
             return;
         }
 
-        final String ownerName = this.getOwnerName(liveShop.getOwner());
+        final String ownerName = ShopAdminAccessSupport.resolveOwnerName(plugin, liveShop);
         final String locationLabel = this.formatLocation(liveShop.getShopLocation());
         final int closedViews = ShopAdminForceCloseSupport.forceCloseShop(plugin, liveShop);
 
@@ -317,7 +317,11 @@ public class ShopAdminShopControlView extends APaginatedView<ShopAdminShopContro
                 .getI18nVersionWrapper()
                 .asPlaceholder();
         final String shopTypeLabel = this.i18n(
-                        entry.adminShop() ? "entry.type.admin" : "entry.type.player",
+                        entry.adminShop()
+                                ? "entry.type.admin"
+                                : entry.townShop()
+                                        ? "entry.type.town"
+                                        : "entry.type.player",
                         player
                 )
                 .build()
@@ -325,16 +329,16 @@ public class ShopAdminShopControlView extends APaginatedView<ShopAdminShopContro
                 .asPlaceholder();
 
         return UnifiedBuilderFactory.item(mode == ShopAdminShopControlMode.FORCE_CLOSE_SHOP ? Material.BARRIER : Material.SPYGLASS)
-                .setName(this.i18n("entry.name", player)
+                        .setName(this.i18n("entry.name", player)
                         .withPlaceholders(Map.of(
-                                "owner", this.getOwnerName(entry.ownerId()),
+                                "owner", entry.ownerName(),
                                 "location", this.formatLocation(entry.shopLocation())
                         ))
                         .build()
                         .component())
                 .setLore(this.i18n("entry.lore", player)
                         .withPlaceholders(Map.of(
-                                "owner", this.getOwnerName(entry.ownerId()),
+                                "owner", entry.ownerName(),
                                 "location", this.formatLocation(entry.shopLocation()),
                                 "shop_type", shopTypeLabel,
                                 "stored_count", entry.storedItems(),
@@ -376,13 +380,6 @@ public class ShopAdminShopControlView extends APaginatedView<ShopAdminShopContro
                 : ShopAdminShopControlMode.fromRaw(rawMode);
     }
 
-    private @NotNull String getOwnerName(
-            final @NotNull UUID ownerId
-    ) {
-        final String ownerName = Bukkit.getOfflinePlayer(ownerId).getName();
-        return ownerName == null || ownerName.isBlank() ? ownerId.toString() : ownerName;
-    }
-
     private @NotNull String formatLocation(
             final @NotNull Location location
     ) {
@@ -404,15 +401,17 @@ public class ShopAdminShopControlView extends APaginatedView<ShopAdminShopContro
      * Immutable shop-control list entry.
      *
      * @param shopLocation primary shop location
-     * @param ownerId owner UUID
+     * @param ownerName owner label
      * @param adminShop whether the shop is an admin shop
+     * @param townShop whether the shop is town-owned
      * @param storedItems total stored entries
      * @param bankCurrencies tracked bank currency count
      */
     protected record ShopControlEntry(
             @NotNull Location shopLocation,
-            @NotNull UUID ownerId,
+            @NotNull String ownerName,
             boolean adminShop,
+            boolean townShop,
             int storedItems,
             int bankCurrencies
     ) {

@@ -209,7 +209,7 @@ abstract class AbstractShopBrowserView extends APaginatedView<ShopBrowserSupport
         }
 
         clickContext.openForPlayer(
-                ShopBrowserSupport.getTargetView(shop, clickContext.getPlayer()),
+                ShopBrowserSupport.getTargetView(this.getPlugin(clickContext), shop, clickContext.getPlayer()),
                 Map.of(
                         "plugin", this.getPlugin(clickContext),
                         "shopLocation", shopLocation

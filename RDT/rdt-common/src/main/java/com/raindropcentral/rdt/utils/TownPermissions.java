@@ -46,7 +46,9 @@ public enum TownPermissions {
     PLACE_CHUNK("MEMBER"),
     PICKUP_CHUNK("MEMBER"),
     TOWN_DEPOSIT("MEMBER"),
+    SUPPLY_TOWN_SHOPS("MEMBER"),
     CHANGE_CHUNK_TYPE("MAYOR"),
+    MANAGE_TOWN_SHOPS("MAYOR"),
     UPGRADE_CHUNK("MAYOR"),
     CLAIM_CHUNK("MAYOR"),
     UNCLAIM_CHUNK("MAYOR"),
@@ -62,6 +64,7 @@ public enum TownPermissions {
     RENAME_TOWN("MAYOR"),
     CHANGE_TOWN_COLOR("MAYOR"),
     SET_ARCHETYPE("MAYOR"),
+    MANAGE_RELATIONSHIPS("MAYOR"),
     UPGRADE_TOWN("MAYOR");
 
     private final String minimumDefaultRoleId;

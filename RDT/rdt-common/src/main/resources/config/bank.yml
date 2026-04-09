@@ -1,6 +1,43 @@
 # Configurable Bank chunk progression levels.
 # Add, remove, or reorder numeric level keys as desired.
 # The highest numeric key becomes the Bank max level.
+# Valid Bukkit block material used for the Bank chunk marker.
+block_material: GOLD_BLOCK
+
+currency_storage:
+  unlock_level: 1
+  currencies:
+    - "vault"
+    - "raindrops"
+
+item_storage:
+  unlock_level: 2
+  rows: 6
+
+remote_access:
+  unlock_level: 3
+  require_own_claim: true
+  cross_cluster_cache_deposit_unlock_level: 5
+
+cache:
+  unlock_level: 4
+  rows: 3
+  placement_radius_blocks: 10
+  item_material: CHEST
+
+locking:
+  single_viewer: true
+
+# Each numeric key is the level reached after the upgrade succeeds.
+# Requirement and reward entry names (for example `vault_upgrade`) are stable IDs used for progress tracking and UI.
+# `description` is the player-facing label shown in upgrade previews.
+# Currency requirements use `currency`, `amount`, and `consumable`.
+# Item requirements use `requiredItems`; `consumeOnComplete` removes contributed items and `exactMatch`
+# switches matching from material-only to full item similarity.
+# Currency rewards use `currencyId` and deposit into the town bank.
+# Item rewards grant the configured `item.material` and `item.amount`.
+# Command rewards can use placeholders such as {town_uuid}, {town_name}, {target_level}, {chunk_x}, and {chunk_z}.
+# `executeAsPlayer: false` runs the command from console instead of as the player.
 levels:
   1:
     requirements: {}

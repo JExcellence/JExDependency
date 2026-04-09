@@ -212,6 +212,37 @@ public class ShopLedgerEntry extends BaseEntity {
     }
 
     /**
+     * Creates an outpost sale-tax ledger entry.
+     *
+     * @param shop target shop
+     * @param townIdentifier town identifier receiving the tax
+     * @param townDisplayName town display name receiving the tax
+     * @param currencyType sale currency id
+     * @param amount tax amount deposited into the town bank
+     * @return created outpost-tax ledger entry
+     */
+    public static @NotNull ShopLedgerEntry outpostTax(
+        final @NotNull Shop shop,
+        final @Nullable UUID townIdentifier,
+        final @NotNull String townDisplayName,
+        final @NotNull String currencyType,
+        final double amount
+    ) {
+        return new ShopLedgerEntry(
+            shop,
+            ShopLedgerType.OUTPOST_TAX,
+            currencyType,
+            amount,
+            townIdentifier,
+            townDisplayName,
+            null,
+            null,
+            null,
+            null
+        );
+    }
+
+    /**
      * Returns the shop.
      *
      * @return the shop

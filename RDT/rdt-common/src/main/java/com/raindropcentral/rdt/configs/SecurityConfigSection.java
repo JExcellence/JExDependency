@@ -46,16 +46,20 @@ public final class SecurityConfigSection {
     private static final double DEFAULT_CHUNK_EXPONENT = 1.08D;
     private static final double DEFAULT_TOWN_LEVEL_RATE = 0.04D;
     private static final double DEFAULT_MINIMUM_EFFECTIVE_CHUNK_RATIO = 0.75D;
+    private static final Material DEFAULT_BLOCK_MATERIAL = Material.CRYING_OBSIDIAN;
 
     private final Map<Integer, LevelDefinition> levels;
     private final FuelSettings fuel;
+    private final Material blockMaterial;
 
     private SecurityConfigSection(
         final @NotNull Map<Integer, LevelDefinition> levels,
-        final @NotNull FuelSettings fuel
+        final @NotNull FuelSettings fuel,
+        final @NotNull Material blockMaterial
     ) {
         this.levels = LevelConfigSupport.copyLevels(levels);
         this.fuel = fuel.copy();
+        this.blockMaterial = Objects.requireNonNull(blockMaterial, "blockMaterial");
     }
 
     /**
@@ -107,6 +111,15 @@ public final class SecurityConfigSection {
      */
     public @NotNull FuelSettings getFuel() {
         return this.fuel.copy();
+    }
+
+    /**
+     * Returns the configured marker-block material for Security chunks.
+     *
+     * @return configured marker-block material
+     */
+    public @NotNull Material getBlockMaterial() {
+        return this.blockMaterial;
     }
 
     /**
@@ -173,7 +186,8 @@ public final class SecurityConfigSection {
     public static @NotNull SecurityConfigSection createDefault() {
         return new SecurityConfigSection(
             LevelConfigSupport.createDefaultSecurityLevels(),
-            FuelSettings.createDefault()
+            FuelSettings.createDefault(),
+            DEFAULT_BLOCK_MATERIAL
         );
     }
 
@@ -183,7 +197,11 @@ public final class SecurityConfigSection {
                 configuration.getConfigurationSection("levels"),
                 LevelConfigSupport.createDefaultSecurityLevels()
             ),
-            FuelSettings.fromConfiguration(configuration.getConfigurationSection("fuel"))
+            FuelSettings.fromConfiguration(configuration.getConfigurationSection("fuel")),
+            LevelConfigSupport.resolveConfiguredBlockMaterial(
+                configuration.getString("block_material"),
+                DEFAULT_BLOCK_MATERIAL
+            )
         );
     }
 
@@ -197,7 +215,7 @@ public final class SecurityConfigSection {
             case BANK -> "bank";
             case FARM -> "farm";
             case OUTPOST -> "outpost";
-            case DEFAULT, CLAIM_PENDING, MEDIC -> "base";
+            case DEFAULT, CLAIM_PENDING, MEDIC, ARMORY -> "base";
         };
     }
 

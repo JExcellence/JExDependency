@@ -25,8 +25,10 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.EnumSet;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * Parsed configuration snapshot for the RDT runtime.
@@ -41,6 +43,8 @@ import java.util.Objects;
 public class ConfigSection extends AConfigSection {
 
     private static final long DEFAULT_TOWN_ARCHETYPE_CHANGE_COOLDOWN_SECONDS = 86_400L;
+    private static final long DEFAULT_TOWN_RELATIONSHIP_CHANGE_COOLDOWN_SECONDS = 21_600L;
+    private static final int DEFAULT_TOWN_RELATIONSHIP_UNLOCK_LEVEL = 5;
     private static final int DEFAULT_GLOBAL_MAX_CHUNK_LIMIT = 64;
     private static final int DEFAULT_CHUNK_BLOCK_MIN_Y = -10;
     private static final int DEFAULT_CHUNK_BLOCK_MAX_Y = 10;
@@ -55,12 +59,19 @@ public class ConfigSection extends AConfigSection {
     private static final boolean DEFAULT_PROXY_ENABLED = false;
     private static final boolean DEFAULT_PROXY_TOWN_SPAWN_ENABLED = false;
     private static final boolean DEFAULT_CHUNK_TYPE_RESET_STATE_ON_CHANGE = true;
+    private static final Set<Material> PROHIBITED_CHUNK_BLOCK_MATERIALS = EnumSet.of(
+        Material.CHEST,
+        Material.TRAPPED_CHEST,
+        Material.HOPPER
+    );
 
     private Integer global_max_chunk_limit;
     private Integer chunk_block_min_y;
     private Integer chunk_block_max_y;
     private Integer town_spawn_teleport_delay_seconds;
     private Long town_archetype_change_cooldown_seconds;
+    private Long town_relationship_change_cooldown_seconds;
+    private Integer town_relationship_unlock_level;
     private Boolean exclude_corner_claim_adjacency;
     private Boolean proxy_enabled;
     private Boolean proxy_town_spawn_enabled;
@@ -131,6 +142,26 @@ public class ConfigSection extends AConfigSection {
     }
 
     /**
+     * Returns the configured cooldown in seconds between confirmed town relationship changes.
+     *
+     * @return relationship-change cooldown in seconds
+     */
+    public long getTownRelationshipChangeCooldownSeconds() {
+        final Long configured = this.town_relationship_change_cooldown_seconds;
+        return configured == null || configured < 0L ? DEFAULT_TOWN_RELATIONSHIP_CHANGE_COOLDOWN_SECONDS : configured;
+    }
+
+    /**
+     * Returns the configured Nexus level required before diplomacy unlocks.
+     *
+     * @return required Nexus level for town relationships
+     */
+    public int getTownRelationshipUnlockLevel() {
+        final Integer configured = this.town_relationship_unlock_level;
+        return configured == null || configured <= 0 ? DEFAULT_TOWN_RELATIONSHIP_UNLOCK_LEVEL : configured;
+    }
+
+    /**
      * Returns whether diagonal chunk claims should be excluded from adjacency checks.
      *
      * @return {@code true} when only cardinal neighbors count as adjacent
@@ -180,6 +211,15 @@ public class ConfigSection extends AConfigSection {
     }
 
     /**
+     * Returns the configured default marker-block material used for claimed chunks.
+     *
+     * @return configured default marker-block material, or a safe fallback when invalid
+     */
+    public @NotNull Material getDefaultChunkBlockMaterial() {
+        return this.resolveBlockMaterial(this.chunk_type_icon_chunk_block, DEFAULT_ICON_CHUNK_BLOCK);
+    }
+
+    /**
      * Returns the configured icon material for a chunk type.
      *
      * @param chunkType chunk type to resolve
@@ -192,7 +232,7 @@ public class ConfigSection extends AConfigSection {
 
         return switch (chunkType) {
             case NEXUS -> this.resolveMaterial(this.chunk_type_icon_nexus, DEFAULT_ICON_NEXUS);
-            case DEFAULT, SECURITY, OUTPOST, MEDIC -> this.resolveMaterial(
+            case DEFAULT, SECURITY, OUTPOST, MEDIC, ARMORY -> this.resolveMaterial(
                 this.chunk_type_icon_default,
                 DEFAULT_ICON_DEFAULT
             );
@@ -253,6 +293,14 @@ public class ConfigSection extends AConfigSection {
             "town.archetype_change_cooldown_seconds",
             DEFAULT_TOWN_ARCHETYPE_CHANGE_COOLDOWN_SECONDS
         );
+        section.town_relationship_change_cooldown_seconds = configuration.getLong(
+            "town.relationship_change_cooldown_seconds",
+            DEFAULT_TOWN_RELATIONSHIP_CHANGE_COOLDOWN_SECONDS
+        );
+        section.town_relationship_unlock_level = configuration.getInt(
+            "town.relationship_unlock_level",
+            DEFAULT_TOWN_RELATIONSHIP_UNLOCK_LEVEL
+        );
         section.exclude_corner_claim_adjacency = configuration.getBoolean(
             "exclude_corner_claim_adjacency",
             DEFAULT_EXCLUDE_CORNER_CLAIM_ADJACENCY
@@ -309,5 +357,21 @@ public class ConfigSection extends AConfigSection {
         }
         final Material material = Material.matchMaterial(materialName.trim().toUpperCase(Locale.ROOT));
         return material == null ? fallback : material;
+    }
+
+    private @NotNull Material resolveBlockMaterial(
+        final @Nullable String materialName,
+        final @NotNull Material fallback
+    ) {
+        if (materialName == null || materialName.isBlank()) {
+            return fallback;
+        }
+        final Material material = Material.matchMaterial(materialName.trim().toUpperCase(Locale.ROOT));
+        if (material == null
+            || !LevelConfigSupport.isConfiguredBlockMaterial(material)
+            || PROHIBITED_CHUNK_BLOCK_MATERIALS.contains(material)) {
+            return fallback;
+        }
+        return material;
     }
 }

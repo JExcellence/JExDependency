@@ -30,7 +30,6 @@ import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.state.MutableState;
 import me.devnatan.inventoryframework.state.State;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -559,8 +558,7 @@ public class ShopInputView extends BaseView {
     }
 
     private @NotNull String getOwnerName(final @NotNull Shop shop) {
-        final String ownerName = Bukkit.getOfflinePlayer(shop.getOwner()).getName();
-        return ownerName == null ? shop.getOwner().toString() : ownerName;
+        return ShopAdminAccessSupport.resolveOwnerName(shop);
     }
 
     private @NotNull String formatDebtSummary(
@@ -578,7 +576,7 @@ public class ShopInputView extends BaseView {
             final @NotNull Context context,
             final @NotNull Shop shop
     ) {
-        return shop.canSupply(context.getPlayer().getUniqueId()) || ShopAdminAccessSupport.hasOwnerOverride(context);
+        return ShopAdminAccessSupport.canSupply(context, shop, this.rds.get(context));
     }
 
     private @NotNull Map<String, Object> createOverviewData(

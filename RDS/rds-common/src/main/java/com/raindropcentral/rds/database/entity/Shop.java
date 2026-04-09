@@ -20,21 +20,14 @@ import com.raindropcentral.rds.items.json.ItemParser;
 import com.raindropcentral.rplatform.database.converter.LocationConverter;
 import com.raindropcentral.rplatform.database.converter.UUIDConverter;
 import de.jexcellence.hibernate.entity.BaseEntity;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Convert;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OrderBy;
-import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
+import jakarta.persistence.*;
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -71,6 +64,32 @@ public class Shop extends BaseEntity {
     @Column(name = "owner_uuid", unique = false, nullable = false)
     @Convert(converter = UUIDConverter.class)
     private UUID owner_uuid;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "owner_type", nullable = false, length = 16)
+    private ShopOwnerType owner_type = ShopOwnerType.PLAYER;
+
+    @Column(name = "protection_plugin", length = 32)
+    private String protection_plugin;
+
+    @Column(name = "town_identifier", length = 128)
+    private String town_identifier;
+
+    @Column(name = "town_display_name", length = 128)
+    private String town_display_name;
+
+    @Column(name = "outpost_chunk_uuid")
+    @Convert(converter = UUIDConverter.class)
+    private UUID outpost_chunk_uuid;
+
+    @Column(name = "outpost_world_name", length = 64)
+    private String outpost_world_name;
+
+    @Column(name = "outpost_chunk_x")
+    private Integer outpost_chunk_x;
+
+    @Column(name = "outpost_chunk_z")
+    private Integer outpost_chunk_z;
 
     @Column(name = "shop_location", unique = false, nullable = true)
     @Convert(converter = LocationConverter.class)
@@ -132,6 +151,7 @@ public class Shop extends BaseEntity {
      */
     public Shop(UUID owner_uuid, Location shop_location) {
         this.owner_uuid = owner_uuid;
+        this.owner_type = ShopOwnerType.PLAYER;
         this.shop_location = shop_location;
         this.secondary_shop_location = null;
         this.bankEntries = new ArrayList<>();
@@ -141,12 +161,147 @@ public class Shop extends BaseEntity {
     }
 
     /**
+     * Creates a new town-owned shop bound to one outpost chunk.
+     *
+     * @param outpost bound outpost entitlement row
+     * @param shopLocation primary chest location
+     * @return created town-owned shop
+     */
+    public static @NotNull Shop createTownShop(
+        final @NotNull TownShopOutpost outpost,
+        final @NotNull Location shopLocation
+    ) {
+        final Shop shop = new Shop(resolveSyntheticOwnerId(outpost.getTownIdentifier()), shopLocation);
+        shop.owner_type = ShopOwnerType.TOWN;
+        shop.protection_plugin = outpost.getProtectionPlugin();
+        shop.town_identifier = outpost.getTownIdentifier();
+        shop.town_display_name = outpost.getTownDisplayName();
+        shop.outpost_chunk_uuid = outpost.getChunkUuid();
+        shop.outpost_world_name = outpost.getWorldName();
+        shop.outpost_chunk_x = outpost.getChunkX();
+        shop.outpost_chunk_z = outpost.getChunkZ();
+        shop.trustedPlayersJson = "{}";
+        return shop;
+    }
+
+    /**
      * Returns the owner.
      *
      * @return the owner
      */
     public UUID getOwner() {
         return this.owner_uuid;
+    }
+
+    /**
+     * Returns the persisted shop owner type.
+     *
+     * @return owner type
+     */
+    public @NotNull ShopOwnerType getOwnerType() {
+        return this.owner_type == null ? ShopOwnerType.PLAYER : this.owner_type;
+    }
+
+    /**
+     * Returns whether this shop is town-owned.
+     *
+     * @return {@code true} when this is a town-owned shop
+     */
+    public boolean isTownShop() {
+        return this.getOwnerType() == ShopOwnerType.TOWN;
+    }
+
+    /**
+     * Returns whether this shop is player-owned.
+     *
+     * @return {@code true} when this is a player-owned shop
+     */
+    public boolean isPlayerShop() {
+        return this.getOwnerType() == ShopOwnerType.PLAYER;
+    }
+
+    /**
+     * Returns the player owner UUID when this is a player-owned shop.
+     *
+     * @return player owner UUID, or {@code null} when this shop is town-owned
+     */
+    public @Nullable UUID getOwnerPlayerId() {
+        return this.isPlayerShop() ? this.owner_uuid : null;
+    }
+
+    /**
+     * Returns the owning protection plugin id for town-owned shops.
+     *
+     * @return owning protection plugin id, or {@code null} when this is a player-owned shop
+     */
+    public @Nullable String getProtectionPlugin() {
+        return this.protection_plugin;
+    }
+
+    /**
+     * Returns the owning town identifier for town-owned shops.
+     *
+     * @return town identifier, or {@code null} when this is a player-owned shop
+     */
+    public @Nullable String getTownIdentifier() {
+        return this.town_identifier;
+    }
+
+    /**
+     * Returns the owning town display name for town-owned shops.
+     *
+     * @return town display name, or {@code null} when this is a player-owned shop
+     */
+    public @Nullable String getTownDisplayName() {
+        return this.town_display_name;
+    }
+
+    /**
+     * Returns the bound outpost chunk UUID for town-owned shops.
+     *
+     * @return outpost chunk UUID, or {@code null} when this shop is not outpost-bound
+     */
+    public @Nullable UUID getOutpostChunkUuid() {
+        return this.outpost_chunk_uuid;
+    }
+
+    /**
+     * Returns the bound outpost world name.
+     *
+     * @return outpost world name, or {@code null} when none is stored
+     */
+    public @Nullable String getOutpostWorldName() {
+        return this.outpost_world_name;
+    }
+
+    /**
+     * Returns the bound outpost chunk x coordinate.
+     *
+     * @return outpost chunk x, or {@code null} when none is stored
+     */
+    public @Nullable Integer getOutpostChunkX() {
+        return this.outpost_chunk_x;
+    }
+
+    /**
+     * Returns the bound outpost chunk z coordinate.
+     *
+     * @return outpost chunk z, or {@code null} when none is stored
+     */
+    public @Nullable Integer getOutpostChunkZ() {
+        return this.outpost_chunk_z;
+    }
+
+    /**
+     * Returns whether this shop is bound to the supplied outpost row.
+     *
+     * @param outpost outpost row to compare
+     * @return {@code true} when this shop belongs to the supplied outpost
+     */
+    public boolean isBoundToOutpost(final @Nullable TownShopOutpost outpost) {
+        return outpost != null
+            && Objects.equals(this.outpost_chunk_uuid, outpost.getChunkUuid())
+            && Objects.equals(this.town_identifier, outpost.getTownIdentifier());
     }
 
     /**
@@ -560,6 +715,10 @@ public class Shop extends BaseEntity {
      * @return the trusted players
      */
     public @NotNull Map<UUID, ShopTrustStatus> getTrustedPlayers() {
+        if (this.isTownShop()) {
+            this.cachedTrustedPlayers = new HashMap<>();
+            return Map.of();
+        }
         if (this.cachedTrustedPlayers == null) {
             this.cachedTrustedPlayers = this.parseTrustedPlayers();
         }
@@ -629,6 +788,11 @@ public class Shop extends BaseEntity {
     public void setTrustedPlayers(
             final @Nullable Map<UUID, ShopTrustStatus> trustedPlayers
     ) {
+        if (this.isTownShop()) {
+            this.cachedTrustedPlayers = new HashMap<>();
+            this.trustedPlayersJson = "{}";
+            return;
+        }
         final Map<UUID, ShopTrustStatus> safeTrustedPlayers = new HashMap<>();
         if (trustedPlayers != null) {
             for (final Map.Entry<UUID, ShopTrustStatus> entry : trustedPlayers.entrySet()) {
@@ -658,6 +822,9 @@ public class Shop extends BaseEntity {
     public @NotNull ShopTrustStatus getTrustStatus(
             final @NotNull UUID playerId
     ) {
+        if (this.isTownShop()) {
+            return ShopTrustStatus.PUBLIC;
+        }
         if (this.isOwner(playerId)) {
             return ShopTrustStatus.TRUSTED;
         }
@@ -672,6 +839,9 @@ public class Shop extends BaseEntity {
             final @NotNull UUID playerId,
             final @NotNull ShopTrustStatus status
     ) {
+        if (this.isTownShop()) {
+            return;
+        }
         if (this.isOwner(playerId)) {
             return;
         }
@@ -692,6 +862,9 @@ public class Shop extends BaseEntity {
     public int getTrustedPlayerCount(
             final @NotNull ShopTrustStatus status
     ) {
+        if (this.isTownShop()) {
+            return 0;
+        }
         int count = 0;
         for (final ShopTrustStatus trustedStatus : this.getTrustedPlayers().values()) {
             if (trustedStatus == status) {
@@ -708,6 +881,9 @@ public class Shop extends BaseEntity {
     public boolean canAccessOverview(
             final @NotNull UUID playerId
     ) {
+        if (this.isTownShop()) {
+            return false;
+        }
         return this.isOwner(playerId) || this.getTrustStatus(playerId) != ShopTrustStatus.PUBLIC;
     }
 
@@ -717,6 +893,9 @@ public class Shop extends BaseEntity {
     public boolean canSupply(
             final @NotNull UUID playerId
     ) {
+        if (this.isTownShop()) {
+            return false;
+        }
         return this.isOwner(playerId) || this.getTrustStatus(playerId).hasSupplyAccess();
     }
 
@@ -726,6 +905,9 @@ public class Shop extends BaseEntity {
     public boolean canManage(
             final @NotNull UUID playerId
     ) {
+        if (this.isTownShop()) {
+            return false;
+        }
         return this.isOwner(playerId) || this.getTrustStatus(playerId).hasFullAccess();
     }
 
@@ -736,7 +918,18 @@ public class Shop extends BaseEntity {
      * @return {@code true} if owner; otherwise {@code false}
      */
     public boolean isOwner(final UUID playerId) {
+        if (this.isTownShop()) {
+            return false;
+        }
         return Objects.equals(this.owner_uuid, playerId);
+    }
+
+    private static @NotNull UUID resolveSyntheticOwnerId(final @NotNull String townIdentifier) {
+        try {
+            return UUID.fromString(townIdentifier);
+        } catch (IllegalArgumentException ignored) {
+            return UUID.nameUUIDFromBytes(townIdentifier.getBytes(StandardCharsets.UTF_8));
+        }
     }
 
     private @NotNull Map<UUID, ShopTrustStatus> parseTrustedPlayers() {

@@ -14,6 +14,7 @@
 package com.raindropcentral.rdt.database.entity;
 
 import com.raindropcentral.rdt.utils.ChunkType;
+import com.raindropcentral.rdt.utils.FarmReplantPriority;
 import com.raindropcentral.rdt.utils.TownProtections;
 import com.raindropcentral.rplatform.database.converter.ItemStackMapConverter;
 import com.raindropcentral.rplatform.database.converter.LocationConverter;
@@ -74,10 +75,40 @@ public class RTownChunk extends BaseEntity {
     @Column(name = "fuel_tank_location")
     private Location fuelTankLocation;
 
+    @Convert(converter = LocationConverter.class)
+    @Column(name = "seed_box_location")
+    private Location seedBoxLocation;
+
+    @Convert(converter = LocationConverter.class)
+    @Column(name = "salvage_block_location")
+    private Location salvageBlockLocation;
+
+    @Convert(converter = LocationConverter.class)
+    @Column(name = "repair_block_location")
+    private Location repairBlockLocation;
+
+    @Column(name = "farm_growth_enabled")
+    private Boolean farmGrowthEnabled;
+
+    @Column(name = "farm_auto_replant_enabled")
+    private Boolean farmAutoReplantEnabled;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "farm_replant_priority", length = 32)
+    private FarmReplantPriority farmReplantPriority;
+
+    @Column(name = "armory_double_smelt_enabled")
+    private Boolean armoryDoubleSmeltEnabled;
+
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "rdt_chunk_protections", joinColumns = @JoinColumn(name = "chunk_id_fk"))
     @Column(name = "required_role_id", nullable = false, length = 64)
     private Map<String, String> protectionOverrides = new LinkedHashMap<>();
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "rdt_chunk_allied_protections", joinColumns = @JoinColumn(name = "chunk_id_fk"))
+    @Column(name = "access_state", nullable = false, length = 32)
+    private Map<String, String> alliedProtectionOverrides = new LinkedHashMap<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "rdt_chunk_level_currency_progress", joinColumns = @JoinColumn(name = "chunk_id_fk"))
@@ -245,10 +276,12 @@ public class RTownChunk extends BaseEntity {
     public void resetChunkTypeState() {
         this.chunkLevel = 1;
         this.protectionOverrides.clear();
+        this.alliedProtectionOverrides.clear();
         this.levelCurrencyProgress.clear();
         this.levelItemProgress.clear();
-        this.seedBoxContents.clear();
+        this.clearFarmState();
         this.clearFuelTankState();
+        this.clearArmoryState();
         this.town.recalculateTownLevel();
     }
 
@@ -317,6 +350,87 @@ public class RTownChunk extends BaseEntity {
     }
 
     /**
+     * Returns the placed seed-box location for this Farm chunk.
+     *
+     * @return placed seed-box location, or {@code null} when no box is placed
+     */
+    public @Nullable Location getSeedBoxLocation() {
+        return this.seedBoxLocation == null ? null : this.seedBoxLocation.clone();
+    }
+
+    /**
+     * Replaces the placed seed-box location for this Farm chunk.
+     *
+     * @param seedBoxLocation replacement seed-box location
+     */
+    public void setSeedBoxLocation(final @Nullable Location seedBoxLocation) {
+        this.seedBoxLocation = seedBoxLocation == null ? null : seedBoxLocation.clone();
+    }
+
+    /**
+     * Returns whether a seed box is currently tracked for this chunk.
+     *
+     * @return {@code true} when a seed-box location is stored
+     */
+    public boolean hasSeedBox() {
+        return this.seedBoxLocation != null;
+    }
+
+    /**
+     * Returns the placed salvage-block location for this Armory chunk.
+     *
+     * @return placed salvage-block location, or {@code null} when none is tracked
+     */
+    public @Nullable Location getSalvageBlockLocation() {
+        return this.salvageBlockLocation == null ? null : this.salvageBlockLocation.clone();
+    }
+
+    /**
+     * Replaces the placed salvage-block location for this Armory chunk.
+     *
+     * @param salvageBlockLocation replacement salvage-block location
+     */
+    public void setSalvageBlockLocation(final @Nullable Location salvageBlockLocation) {
+        this.salvageBlockLocation = salvageBlockLocation == null ? null : salvageBlockLocation.clone();
+    }
+
+    /**
+     * Returns whether a salvage block is currently tracked for this chunk.
+     *
+     * @return {@code true} when a salvage-block location is stored
+     */
+    public boolean hasSalvageBlock() {
+        return this.salvageBlockLocation != null;
+    }
+
+    /**
+     * Returns the placed repair-block location for this Armory chunk.
+     *
+     * @return placed repair-block location, or {@code null} when none is tracked
+     */
+    public @Nullable Location getRepairBlockLocation() {
+        return this.repairBlockLocation == null ? null : this.repairBlockLocation.clone();
+    }
+
+    /**
+     * Replaces the placed repair-block location for this Armory chunk.
+     *
+     * @param repairBlockLocation replacement repair-block location
+     */
+    public void setRepairBlockLocation(final @Nullable Location repairBlockLocation) {
+        this.repairBlockLocation = repairBlockLocation == null ? null : repairBlockLocation.clone();
+    }
+
+    /**
+     * Returns whether a repair block is currently tracked for this chunk.
+     *
+     * @return {@code true} when a repair-block location is stored
+     */
+    public boolean hasRepairBlock() {
+        return this.repairBlockLocation != null;
+    }
+
+    /**
      * Returns a defensive copy of the chunk protection overrides.
      *
      * @return configured protection overrides
@@ -370,6 +484,57 @@ public class RTownChunk extends BaseEntity {
     }
 
     /**
+     * Returns a defensive copy of configured allied-access overrides.
+     *
+     * @return copied allied-access overrides
+     */
+    public @NotNull Map<String, String> getAlliedProtectionStates() {
+        return new LinkedHashMap<>(this.alliedProtectionOverrides);
+    }
+
+    /**
+     * Returns the configured allied-access override for one protection.
+     *
+     * @param protection protection to resolve
+     * @return {@code true} when allies are explicitly allowed, {@code false} when restricted, or
+     *     {@code null} when the chunk inherits the town-global setting
+     */
+    public @Nullable Boolean getConfiguredAlliedProtectionAllowed(final @Nullable TownProtections protection) {
+        if (protection == null) {
+            return null;
+        }
+        return parseAlliedProtectionState(this.alliedProtectionOverrides.get(protection.getProtectionKey()));
+    }
+
+    /**
+     * Stores or clears the chunk-level allied-access override for one protection.
+     *
+     * @param protection protection to update
+     * @param allowed replacement allied-access override, or {@code null} to inherit the town value
+     */
+    public void setAlliedProtectionAllowed(
+        final @NotNull TownProtections protection,
+        final @Nullable Boolean allowed
+    ) {
+        Objects.requireNonNull(protection, "protection");
+        if (allowed == null) {
+            this.alliedProtectionOverrides.remove(protection.getProtectionKey());
+            return;
+        }
+        this.alliedProtectionOverrides.put(protection.getProtectionKey(), formatAlliedProtectionState(allowed));
+    }
+
+    /**
+     * Returns whether the chunk overrides allied access for one protection.
+     *
+     * @param protection protection to inspect
+     * @return {@code true} when an explicit allied override is stored
+     */
+    public boolean overridesAlliedProtection(final @Nullable TownProtections protection) {
+        return protection != null && this.alliedProtectionOverrides.containsKey(protection.getProtectionKey());
+    }
+
+    /**
      * Returns a defensive copy of the farm seed-box contents.
      *
      * @return copied seed-box contents
@@ -385,6 +550,118 @@ public class RTownChunk extends BaseEntity {
      */
     public void setSeedBoxContents(final @NotNull Map<String, ItemStack> seedBoxContents) {
         this.seedBoxContents = new LinkedHashMap<>(Objects.requireNonNull(seedBoxContents, "seedBoxContents"));
+    }
+
+    /**
+     * Returns the stored Farm growth-toggle state, falling back when the state has not been initialized yet.
+     *
+     * @param fallback fallback enabled value
+     * @return effective growth-toggle state
+     */
+    public boolean isFarmGrowthEnabled(final boolean fallback) {
+        return this.farmGrowthEnabled == null ? fallback : this.farmGrowthEnabled;
+    }
+
+    /**
+     * Returns the raw stored Farm growth-toggle state.
+     *
+     * @return stored growth-toggle state, or {@code null} when not initialized
+     */
+    public @Nullable Boolean getFarmGrowthEnabledValue() {
+        return this.farmGrowthEnabled;
+    }
+
+    /**
+     * Replaces the stored Farm growth-toggle state.
+     *
+     * @param farmGrowthEnabled replacement growth-toggle state, or {@code null} to clear it
+     */
+    public void setFarmGrowthEnabled(final @Nullable Boolean farmGrowthEnabled) {
+        this.farmGrowthEnabled = farmGrowthEnabled;
+    }
+
+    /**
+     * Returns the stored Farm auto-replant state, falling back when the state has not been initialized yet.
+     *
+     * @param fallback fallback enabled value
+     * @return effective auto-replant state
+     */
+    public boolean isFarmAutoReplantEnabled(final boolean fallback) {
+        return this.farmAutoReplantEnabled == null ? fallback : this.farmAutoReplantEnabled;
+    }
+
+    /**
+     * Returns the raw stored Farm auto-replant state.
+     *
+     * @return stored auto-replant state, or {@code null} when not initialized
+     */
+    public @Nullable Boolean getFarmAutoReplantEnabledValue() {
+        return this.farmAutoReplantEnabled;
+    }
+
+    /**
+     * Replaces the stored Farm auto-replant state.
+     *
+     * @param farmAutoReplantEnabled replacement auto-replant state, or {@code null} to clear it
+     */
+    public void setFarmAutoReplantEnabled(final @Nullable Boolean farmAutoReplantEnabled) {
+        this.farmAutoReplantEnabled = farmAutoReplantEnabled;
+    }
+
+    /**
+     * Returns the stored Farm replant-source priority, falling back when the state has not been initialized yet.
+     *
+     * @param fallback fallback replant-source priority
+     * @return effective replant-source priority
+     */
+    public @NotNull FarmReplantPriority getFarmReplantPriority(final @NotNull FarmReplantPriority fallback) {
+        return this.farmReplantPriority == null ? Objects.requireNonNull(fallback, "fallback") : this.farmReplantPriority;
+    }
+
+    /**
+     * Returns the raw stored Farm replant-source priority.
+     *
+     * @return stored replant-source priority, or {@code null} when not initialized
+     */
+    public @Nullable FarmReplantPriority getFarmReplantPriorityValue() {
+        return this.farmReplantPriority;
+    }
+
+    /**
+     * Replaces the stored Farm replant-source priority.
+     *
+     * @param farmReplantPriority replacement replant-source priority, or {@code null} to clear it
+     */
+    public void setFarmReplantPriority(final @Nullable FarmReplantPriority farmReplantPriority) {
+        this.farmReplantPriority = farmReplantPriority;
+    }
+
+    /**
+     * Returns the stored Armory double-smelt state, falling back when the state has not been initialized yet.
+     *
+     * @param fallback fallback enabled value
+     * @return effective double-smelt state
+     */
+    public boolean isArmoryDoubleSmeltEnabled(final boolean fallback) {
+        return this.armoryDoubleSmeltEnabled == null ? fallback : this.armoryDoubleSmeltEnabled;
+    }
+
+    /**
+     * Returns the raw stored Armory double-smelt state.
+     *
+     * @return stored double-smelt state, or {@code null} when not initialized
+     */
+    public @Nullable Boolean getArmoryDoubleSmeltEnabledValue() {
+        return this.armoryDoubleSmeltEnabled;
+    }
+
+    /**
+     * Replaces the stored Armory double-smelt state.
+     *
+     * @param armoryDoubleSmeltEnabled replacement double-smelt state, or {@code null} to clear it
+     */
+    public void setArmoryDoubleSmeltEnabled(final @Nullable Boolean armoryDoubleSmeltEnabled) {
+        this.armoryDoubleSmeltEnabled = armoryDoubleSmeltEnabled;
     }
 
     /**
@@ -411,6 +688,33 @@ public class RTownChunk extends BaseEntity {
     public void clearFuelTankState() {
         this.fuelTankLocation = null;
         this.fuelTankContents.clear();
+    }
+
+    /**
+     * Clears the placed seed-box location and its persisted contents.
+     */
+    public void clearSeedBoxState() {
+        this.seedBoxLocation = null;
+        this.seedBoxContents.clear();
+    }
+
+    /**
+     * Clears all Farm-specific persisted state for this chunk.
+     */
+    public void clearFarmState() {
+        this.clearSeedBoxState();
+        this.farmGrowthEnabled = null;
+        this.farmAutoReplantEnabled = null;
+        this.farmReplantPriority = null;
+    }
+
+    /**
+     * Clears the placed Armory salvage block, repair block, and double-smelt state.
+     */
+    public void clearArmoryState() {
+        this.salvageBlockLocation = null;
+        this.repairBlockLocation = null;
+        this.armoryDoubleSmeltEnabled = null;
     }
 
     /**
@@ -501,6 +805,17 @@ public class RTownChunk extends BaseEntity {
             throw new IllegalArgumentException("worldName cannot be blank");
         }
         return normalized;
+    }
+
+    private static @Nullable Boolean parseAlliedProtectionState(final @Nullable String rawState) {
+        if (rawState == null || rawState.isBlank()) {
+            return null;
+        }
+        return Objects.equals(rawState.trim().toUpperCase(Locale.ROOT), "ALLOWED");
+    }
+
+    private static @NotNull String formatAlliedProtectionState(final boolean allowed) {
+        return allowed ? "ALLOWED" : "RESTRICTED";
     }
 
     private static @NotNull String normalizeProgressKey(final @NotNull String progressKey) {

@@ -1,0 +1,188 @@
+# Configurable Armory chunk progression levels and runtime perks.
+# Add, remove, or reorder numeric level keys as desired.
+# The highest numeric key becomes the Armory max level.
+# Valid Bukkit block material used for the Armory chunk marker.
+block_material: IRON_BLOCK
+
+# Level 2 unlock: repair every equipped damageable item for free on a per-player cooldown.
+free_repair:
+  enabled: true
+  unlock_level: 2
+  cooldown_seconds: 86400
+
+# Level 3 unlock: a chunk-bound salvage block that breaks supported gear down into its base materials.
+salvage_block:
+  enabled: true
+  unlock_level: 3
+  block_material: GOLD_BLOCK
+  placement_radius_blocks: 3
+
+# Level 4 unlock: a chunk-bound repair block that repairs supported gear using family-specific materials.
+repair_block:
+  enabled: true
+  unlock_level: 4
+  block_material: IRON_BLOCK
+  placement_radius_blocks: 3
+  iron:
+    material_cost: 1
+    repair_percent: 25.0
+  gold:
+    material_cost: 1
+    repair_percent: 25.0
+  diamond:
+    material_cost: 1
+    repair_percent: 25.0
+  netherite:
+    material_cost: 1
+    repair_percent: 25.0
+
+# Level 5 unlock: doubles furnace and blast-furnace outputs while increasing fuel usage.
+double_smelt:
+  enabled: true
+  unlock_level: 5
+  enabled_by_default: false
+  burn_faster_multiplier: 1.0
+  extra_fuel_per_smelt_units: 0
+
+# Each numeric key is the level reached after the upgrade succeeds.
+# Requirement and reward entry names (for example `vault_upgrade`) are stable IDs used for progress tracking and UI.
+# `description` is the player-facing label shown in upgrade previews.
+# Currency requirements use `currency`, `amount`, and `consumable`.
+# Item requirements use `requiredItems`; `consumeOnComplete` removes contributed items and `exactMatch`
+# switches matching from material-only to full item similarity.
+# Currency rewards use `currencyId` and deposit into the town bank.
+# Item rewards grant the configured `item.material` and `item.amount`.
+# Command rewards can use placeholders such as {town_uuid}, {town_name}, {target_level}, {chunk_x}, and {chunk_z}.
+# `executeAsPlayer: false` runs the command from console instead of as the player.
+levels:
+  1:
+    requirements: {}
+    rewards: {}
+  2:
+    requirements:
+      vault_upgrade:
+        type: "CURRENCY"
+        currency: "vault"
+        amount: 1000.0
+        consumable: true
+        description: "Armory funding contribution"
+      forging_materials:
+        type: "ITEM"
+        requiredItems:
+          - type: "IRON_INGOT"
+            amount: 32
+        consumeOnComplete: true
+        exactMatch: false
+        description: "Armory forging materials"
+    rewards:
+      vault_bonus:
+        type: "CURRENCY"
+        currencyId: "vault"
+        amount: 150.0
+        description: "Armory treasury rebate"
+      munition_cache:
+        type: "ITEM"
+        item:
+          material: "ARROW"
+          amount: 64
+        description: "Armory munition cache"
+      town_broadcast:
+        type: "COMMAND"
+        command: "rt broadcast {town_uuid} <aqua>{town_name}</aqua> <yellow>upgraded Armory chunk <white>{chunk_x}, {chunk_z}</white> to level <white>{target_level}</white><yellow>!</yellow>"
+        executeAsPlayer: false
+  3:
+    requirements:
+      vault_upgrade:
+        type: "CURRENCY"
+        currency: "vault"
+        amount: 1750.0
+        consumable: true
+        description: "Armory funding contribution"
+      defense_kits:
+        type: "ITEM"
+        requiredItems:
+          - type: "SHIELD"
+            amount: 6
+        consumeOnComplete: true
+        exactMatch: false
+        description: "Armory defense kits"
+    rewards:
+      vault_bonus:
+        type: "CURRENCY"
+        currencyId: "vault"
+        amount: 250.0
+        description: "Armory treasury rebate"
+      precision_munitions:
+        type: "ITEM"
+        item:
+          material: "SPECTRAL_ARROW"
+          amount: 24
+        description: "Armory precision munitions"
+      town_broadcast:
+        type: "COMMAND"
+        command: "rt broadcast {town_uuid} <aqua>{town_name}</aqua> <yellow>upgraded Armory chunk <white>{chunk_x}, {chunk_z}</white> to level <white>{target_level}</white><yellow>!</yellow>"
+        executeAsPlayer: false
+  4:
+    requirements:
+      vault_upgrade:
+        type: "CURRENCY"
+        currency: "vault"
+        amount: 2750.0
+        consumable: true
+        description: "Armory funding contribution"
+      ranged_hardware:
+        type: "ITEM"
+        requiredItems:
+          - type: "CROSSBOW"
+            amount: 4
+        consumeOnComplete: true
+        exactMatch: false
+        description: "Armory ranged hardware"
+    rewards:
+      vault_bonus:
+        type: "CURRENCY"
+        currencyId: "vault"
+        amount: 400.0
+        description: "Armory treasury rebate"
+      spare_materials:
+        type: "ITEM"
+        item:
+          material: "IRON_INGOT"
+          amount: 24
+        description: "Armory spare materials"
+      town_broadcast:
+        type: "COMMAND"
+        command: "rt broadcast {town_uuid} <aqua>{town_name}</aqua> <yellow>upgraded Armory chunk <white>{chunk_x}, {chunk_z}</white> to level <white>{target_level}</white><yellow>!</yellow>"
+        executeAsPlayer: false
+  5:
+    requirements:
+      vault_upgrade:
+        type: "CURRENCY"
+        currency: "vault"
+        amount: 4000.0
+        consumable: true
+        description: "Armory funding contribution"
+      elite_forging:
+        type: "ITEM"
+        requiredItems:
+          - type: "NETHERITE_SCRAP"
+            amount: 4
+        consumeOnComplete: true
+        exactMatch: false
+        description: "Armory elite forging"
+    rewards:
+      vault_bonus:
+        type: "CURRENCY"
+        currencyId: "vault"
+        amount: 600.0
+        description: "Armory treasury rebate"
+      elite_cache:
+        type: "ITEM"
+        item:
+          material: "DIAMOND"
+          amount: 8
+        description: "Armory elite cache"
+      town_broadcast:
+        type: "COMMAND"
+        command: "rt broadcast {town_uuid} <aqua>{town_name}</aqua> <yellow>upgraded Armory chunk <white>{chunk_x}, {chunk_z}</white> to level <white>{target_level}</white><yellow>!</yellow>"
+        executeAsPlayer: false

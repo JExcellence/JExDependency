@@ -51,6 +51,7 @@ dependencies {
     testImplementation(project(":JExCommand"))
     testImplementation(project(":RPlatform"))
     testImplementation(libs.paper.api)
+    testCompileOnly(libs.jackson.annotations)
     testImplementation(platform(libs.hibernate.platform))
     testImplementation(libs.bundles.hibernate)
     testImplementation(libs.jehibernate)

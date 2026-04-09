@@ -18,7 +18,8 @@ import com.raindropcentral.commands.utility.Command;
 import com.raindropcentral.rdt.RDT;
 import com.raindropcentral.rdt.database.entity.RTown;
 import com.raindropcentral.rdt.view.main.TownHubView;
-import com.raindropcentral.rdt.view.town.TownBankView;
+import com.raindropcentral.rdt.view.town.TownBankRootView;
+import com.raindropcentral.rdt.view.town.TownBankStorageView;
 import de.jexcellence.evaluable.error.CommandError;
 import de.jexcellence.evaluable.error.EErrorType;
 import de.jexcellence.evaluable.section.ACommandSection;
@@ -145,18 +146,7 @@ public class PRT extends PlayerCommand {
             return;
         }
 
-        final RTown town = this.rdt.getTownRuntimeService() == null
-            ? null
-            : this.rdt.getTownRuntimeService().getTownFor(player.getUniqueId());
-        if (town == null) {
-            new I18n.Builder("prt.bank.no_town", player)
-                .includePrefix()
-                .build()
-                .sendMessage();
-            return;
-        }
-
-        if (!town.supportsRemoteBankAccess()) {
+        if (this.rdt.getTownBankService() == null) {
             new I18n.Builder("prt.bank.locked", player)
                 .includePrefix()
                 .build()
@@ -164,15 +154,49 @@ public class PRT extends PlayerCommand {
             return;
         }
 
-        this.rdt.getViewFrame().open(
-            TownBankView.class,
-            player,
-            Map.of(
-                "plugin", this.rdt,
-                "town_uuid", town.getTownUUID(),
-                "remote_bank", true
-            )
-        );
+        final var access = this.rdt.getTownBankService().resolveCommandAccess(player);
+        switch (access.status()) {
+            case NO_TOWN -> new I18n.Builder("prt.bank.no_town", player)
+                .includePrefix()
+                .build()
+                .sendMessage();
+            case NO_VIEW_PERMISSION, NO_REMOTE_PERMISSION -> new I18n.Builder("prt.bank.no_permission", player)
+                .includePrefix()
+                .build()
+                .sendMessage();
+            case LOCKED, INVALID_TARGET -> new I18n.Builder("prt.bank.locked", player)
+                .includePrefix()
+                .build()
+                .sendMessage();
+            case LOCATION_REQUIRED -> new I18n.Builder("prt.bank.location_required", player)
+                .includePrefix()
+                .build()
+                .sendMessage();
+            case CACHE_UNAVAILABLE -> new I18n.Builder("prt.bank.cache_unavailable", player)
+                .includePrefix()
+                .build()
+                .sendMessage();
+            case LOCAL_BANK -> this.rdt.getViewFrame().open(
+                TownBankRootView.class,
+                player,
+                Map.of(
+                    "plugin", this.rdt,
+                    "town_uuid", access.town().getTownUUID(),
+                    "world_name", access.localChunk() == null ? player.getWorld().getName() : access.localChunk().getWorldName(),
+                    "chunk_x", access.localChunk() == null ? player.getLocation().getChunk().getX() : access.localChunk().getX(),
+                    "chunk_z", access.localChunk() == null ? player.getLocation().getChunk().getZ() : access.localChunk().getZ()
+                )
+            );
+            case REMOTE_CACHE_DEPOSIT -> this.rdt.getViewFrame().open(
+                TownBankStorageView.class,
+                player,
+                Map.of(
+                    "plugin", this.rdt,
+                    "town_uuid", access.town().getTownUUID(),
+                    "bank_storage_mode", "REMOTE_CACHE_DEPOSIT"
+                )
+            );
+        }
     }
 
     /**
@@ -201,7 +225,9 @@ public class PRT extends PlayerCommand {
             if (this.hasPermission(player, EPRTPermission.SPAWN)) {
                 suggestions.add(EPRTAction.SPAWN.name().toLowerCase(Locale.ROOT));
             }
-            if (this.hasPermission(player, EPRTPermission.BANK)) {
+            if (this.hasPermission(player, EPRTPermission.BANK)
+                && this.rdt.getTownBankService() != null
+                && this.rdt.getTownBankService().isBankCommandVisible(player)) {
                 suggestions.add(EPRTAction.BANK.name().toLowerCase(Locale.ROOT));
             }
             return StringUtil.copyPartialMatches(args[0], suggestions, new ArrayList<>());

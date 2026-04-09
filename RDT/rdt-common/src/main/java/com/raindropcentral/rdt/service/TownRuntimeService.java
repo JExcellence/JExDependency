@@ -15,17 +15,24 @@ package com.raindropcentral.rdt.service;
 
 import com.raindropcentral.rdt.RDT;
 import com.raindropcentral.rdt.configs.LevelDefinition;
+import com.raindropcentral.rdt.configs.NexusCombatStats;
 import com.raindropcentral.rdt.database.entity.RDTPlayer;
 import com.raindropcentral.rdt.database.entity.RTown;
 import com.raindropcentral.rdt.database.entity.RTownChunk;
+import com.raindropcentral.rdt.database.entity.RTownRelationship;
 import com.raindropcentral.rdt.database.entity.TownInvite;
 import com.raindropcentral.rdt.database.entity.TownRole;
 import com.raindropcentral.rdt.items.FuelTank;
+import com.raindropcentral.rdt.items.RepairBlock;
+import com.raindropcentral.rdt.items.SalvageBlock;
+import com.raindropcentral.rdt.items.SeedBox;
 import com.raindropcentral.rdt.utils.ChunkType;
+import com.raindropcentral.rdt.utils.FarmReplantPriority;
 import com.raindropcentral.rdt.utils.TownArchetype;
 import com.raindropcentral.rdt.utils.TownColorUtil;
 import com.raindropcentral.rdt.utils.TownPermissions;
 import com.raindropcentral.rdt.utils.TownProtections;
+import com.raindropcentral.rdt.utils.TownRelationshipState;
 import com.raindropcentral.rplatform.economy.JExEconomyBridge;
 import com.raindropcentral.rplatform.requirement.AbstractRequirement;
 import com.raindropcentral.rplatform.requirement.RequirementService;
@@ -40,11 +47,13 @@ import com.raindropcentral.rplatform.reward.impl.CurrencyReward;
 import com.raindropcentral.rplatform.reward.impl.ExperienceReward;
 import com.raindropcentral.rplatform.reward.impl.ItemReward;
 import com.raindropcentral.rplatform.reward.impl.PermissionReward;
+import de.jexcellence.jextranslate.i18n.I18n;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.block.Chest;
 import org.bukkit.entity.Animals;
@@ -53,9 +62,12 @@ import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -377,21 +389,224 @@ public final class TownRuntimeService {
     }
 
     /**
+     * Returns the configured Nexus level required before diplomacy unlocks.
+     *
+     * @return required Nexus level for town relationships
+     */
+    public int getTownRelationshipUnlockLevel() {
+        return this.plugin.getDefaultConfig().getTownRelationshipUnlockLevel();
+    }
+
+    /**
+     * Returns the configured cooldown in milliseconds between confirmed relationship changes for
+     * one town pair.
+     *
+     * @return relationship-change cooldown in milliseconds
+     */
+    public long getTownRelationshipChangeCooldownMillis() {
+        return Math.max(0L, this.plugin.getDefaultConfig().getTownRelationshipChangeCooldownSeconds()) * 1000L;
+    }
+
+    /**
+     * Returns whether one town has unlocked diplomacy based on its current Nexus level.
+     *
+     * @param town town to inspect
+     * @return {@code true} when diplomacy is unlocked for the town
+     */
+    public boolean areTownRelationshipsUnlocked(final @NotNull RTown town) {
+        final RTown liveTown = this.resolveLiveTown(town);
+        return (liveTown == null ? town : liveTown).getNexusLevel() >= this.getTownRelationshipUnlockLevel();
+    }
+
+    /**
+     * Returns one derived diplomacy snapshot for a source town and target town.
+     *
+     * @param sourceTown viewing source town
+     * @param targetTown target town
+     * @return immutable relationship snapshot for the pair
+     */
+    public @NotNull TownRelationshipViewEntry getTownRelationshipViewEntry(
+        final @NotNull RTown sourceTown,
+        final @NotNull RTown targetTown
+    ) {
+        final RTown liveSourceTown = this.resolveLiveTown(sourceTown);
+        final RTown liveTargetTown = this.resolveLiveTown(targetTown);
+        final RTown resolvedSourceTown = liveSourceTown == null ? sourceTown : liveSourceTown;
+        final RTown resolvedTargetTown = liveTargetTown == null ? targetTown : liveTargetTown;
+        return this.buildTownRelationshipViewEntry(
+            resolvedSourceTown,
+            resolvedTargetTown,
+            this.getStoredTownRelationship(resolvedSourceTown, resolvedTargetTown)
+        );
+    }
+
+    /**
+     * Returns diplomacy snapshots for every town other than the supplied source town.
+     *
+     * @param sourceTown viewing source town
+     * @return immutable sorted list of relationship snapshots
+     */
+    public @NotNull List<TownRelationshipViewEntry> getTownRelationshipViewEntries(final @NotNull RTown sourceTown) {
+        final RTown liveSourceTown = this.resolveLiveTown(sourceTown);
+        final RTown resolvedSourceTown = liveSourceTown == null ? sourceTown : liveSourceTown;
+        final Map<String, RTownRelationship> relationshipsByPair = new HashMap<>();
+        if (this.plugin.getTownRelationshipRepository() != null) {
+            for (final RTownRelationship relationship : this.plugin.getTownRelationshipRepository().findByTownUuid(
+                resolvedSourceTown.getTownUUID()
+            )) {
+                relationshipsByPair.put(relationship.getPairKey(), relationship);
+            }
+        }
+
+        final List<TownRelationshipViewEntry> entries = new ArrayList<>();
+        for (final RTown targetTown : this.getTowns()) {
+            if (Objects.equals(targetTown.getTownUUID(), resolvedSourceTown.getTownUUID())) {
+                continue;
+            }
+            entries.add(this.buildTownRelationshipViewEntry(
+                resolvedSourceTown,
+                targetTown,
+                relationshipsByPair.get(RTownRelationship.buildPairKey(
+                    resolvedSourceTown.getTownUUID(),
+                    targetTown.getTownUUID()
+                ))
+            ));
+        }
+        return List.copyOf(entries);
+    }
+
+    /**
+     * Attempts to change the diplomacy state between two towns.
+     *
+     * @param sourceTown town requesting the change
+     * @param targetTown target town
+     * @param requestedState requested diplomacy state
+     * @return structured change result describing the updated relationship snapshot
+     */
+    public @NotNull TownRelationshipChangeResult changeTownRelationship(
+        final @NotNull RTown sourceTown,
+        final @NotNull RTown targetTown,
+        final @NotNull TownRelationshipState requestedState
+    ) {
+        if (this.plugin.getTownRelationshipRepository() == null) {
+            return new TownRelationshipChangeResult(
+                TownRelationshipChangeStatus.FAILED,
+                this.getTownRelationshipViewEntry(sourceTown, targetTown),
+                requestedState
+            );
+        }
+
+        final RTown liveSourceTown = this.resolveLiveTown(sourceTown);
+        final RTown liveTargetTown = this.resolveLiveTown(targetTown);
+        final RTown resolvedSourceTown = liveSourceTown == null ? sourceTown : liveSourceTown;
+        final RTown resolvedTargetTown = liveTargetTown == null ? targetTown : liveTargetTown;
+        if (Objects.equals(resolvedSourceTown.getTownUUID(), resolvedTargetTown.getTownUUID())) {
+            return new TownRelationshipChangeResult(
+                TownRelationshipChangeStatus.FAILED,
+                this.buildTownRelationshipViewEntry(resolvedSourceTown, resolvedTargetTown, null),
+                requestedState
+            );
+        }
+
+        RTownRelationship relationship = this.getStoredTownRelationship(resolvedSourceTown, resolvedTargetTown);
+        final TownRelationshipViewEntry currentEntry = this.buildTownRelationshipViewEntry(
+            resolvedSourceTown,
+            resolvedTargetTown,
+            relationship
+        );
+        if (currentEntry.lockedByLevel()) {
+            return new TownRelationshipChangeResult(TownRelationshipChangeStatus.LOCKED, currentEntry, requestedState);
+        }
+        if (currentEntry.cooldownRemainingMillis() > 0L) {
+            return new TownRelationshipChangeResult(TownRelationshipChangeStatus.COOLDOWN, currentEntry, requestedState);
+        }
+
+        final TownRelationshipState confirmedState = relationship == null
+            ? TownRelationshipState.NEUTRAL
+            : relationship.getConfirmedState();
+        final TownRelationshipState pendingState = relationship == null ? null : relationship.getPendingState();
+        final UUID sourceTownUuid = resolvedSourceTown.getTownUUID();
+        final UUID pendingRequesterTownUuid = relationship == null ? null : relationship.getPendingRequesterTownUuid();
+
+        if (requestedState == TownRelationshipState.HOSTILE) {
+            if (confirmedState == TownRelationshipState.HOSTILE) {
+                if (relationship != null && relationship.getPendingState() != null) {
+                    relationship.clearPendingState();
+                    this.persistTownRelationship(relationship);
+                }
+                return new TownRelationshipChangeResult(
+                    TownRelationshipChangeStatus.UNCHANGED,
+                    this.buildTownRelationshipViewEntry(resolvedSourceTown, resolvedTargetTown, relationship),
+                    requestedState
+                );
+            }
+
+            relationship = relationship == null
+                ? new RTownRelationship(resolvedSourceTown.getTownUUID(), resolvedTargetTown.getTownUUID())
+                : relationship;
+            relationship.setConfirmedState(TownRelationshipState.HOSTILE);
+            relationship.clearPendingState();
+            relationship.setCooldownUntilMillis(System.currentTimeMillis() + this.getTownRelationshipChangeCooldownMillis());
+            this.persistTownRelationship(relationship);
+            this.broadcastConfirmedTownRelationshipChange(
+                resolvedSourceTown,
+                resolvedTargetTown,
+                TownRelationshipState.HOSTILE
+            );
+            return new TownRelationshipChangeResult(
+                TownRelationshipChangeStatus.CONFIRMED,
+                this.buildTownRelationshipViewEntry(resolvedSourceTown, resolvedTargetTown, relationship),
+                requestedState
+            );
+        }
+
+        if (confirmedState == requestedState) {
+            return new TownRelationshipChangeResult(TownRelationshipChangeStatus.UNCHANGED, currentEntry, requestedState);
+        }
+
+        if (pendingState == requestedState) {
+            if (!Objects.equals(pendingRequesterTownUuid, sourceTownUuid) && relationship != null) {
+                relationship.setConfirmedState(requestedState);
+                relationship.clearPendingState();
+                relationship.setCooldownUntilMillis(System.currentTimeMillis() + this.getTownRelationshipChangeCooldownMillis());
+                this.persistTownRelationship(relationship);
+                this.broadcastConfirmedTownRelationshipChange(resolvedSourceTown, resolvedTargetTown, requestedState);
+                return new TownRelationshipChangeResult(
+                    TownRelationshipChangeStatus.CONFIRMED,
+                    this.buildTownRelationshipViewEntry(resolvedSourceTown, resolvedTargetTown, relationship),
+                    requestedState
+                );
+            }
+            return new TownRelationshipChangeResult(TownRelationshipChangeStatus.UNCHANGED, currentEntry, requestedState);
+        }
+
+        relationship = relationship == null
+            ? new RTownRelationship(resolvedSourceTown.getTownUUID(), resolvedTargetTown.getTownUUID())
+            : relationship;
+        relationship.setPendingState(requestedState);
+        relationship.setPendingRequesterTownUuid(sourceTownUuid);
+        this.persistTownRelationship(relationship);
+        this.broadcastPendingTownRelationshipRequest(resolvedSourceTown, resolvedTargetTown, requestedState);
+        return new TownRelationshipChangeResult(
+            TownRelationshipChangeStatus.PENDING,
+            this.buildTownRelationshipViewEntry(resolvedSourceTown, resolvedTargetTown, relationship),
+            requestedState
+        );
+    }
+
+    /**
      * Backfills the persisted Nexus level when needed and refreshes the cached composite town level.
      *
      * @param town live town entity to refresh
      * @return {@code true} when the town state changed and was persisted
      */
     public boolean ensureCompositeTownState(final @NotNull RTown town) {
-        if (this.plugin.getTownRepository() == null) {
-            return false;
-        }
-
         final boolean backfilled = town.backfillLegacyNexusLevelIfNeeded();
         final int previousTownLevel = town.getTownLevel();
         final int recalculatedTownLevel = town.recalculateTownLevel();
-        final boolean changed = backfilled || previousTownLevel != recalculatedTownLevel;
-        if (changed) {
+        final boolean combatStateChanged = this.ensureNexusCombatState(town);
+        final boolean changed = backfilled || previousTownLevel != recalculatedTownLevel || combatStateChanged;
+        if (changed && this.plugin.getTownRepository() != null) {
             this.plugin.getTownRepository().update(town);
         }
         return changed;
@@ -530,6 +745,7 @@ public final class TownRuntimeService {
         );
         nexusChunk.setChunkBlockLocation(nexusLocation);
         town.addChunk(nexusChunk);
+        this.healTownNexusToFull(town);
 
         this.plugin.getTownRepository().create(town);
         this.grantTownCreationRewards(player, town);
@@ -760,6 +976,7 @@ public final class TownRuntimeService {
             return false;
         }
         liveTown.setNexusLevel(nextLevel);
+        this.healTownNexusToFull(liveTown);
         liveTown.clearLevelRequirementProgress(this.buildProgressKeyPrefix(LevelScope.NEXUS, nextLevel));
         this.plugin.getTownRepository().update(liveTown);
         town.setTownLevel(liveTown.getTownLevel());
@@ -805,6 +1022,26 @@ public final class TownRuntimeService {
         final int previewLevel
     ) {
         return this.getLevelProgress(player, LevelScope.NEXUS, town, null, previewLevel);
+    }
+
+    /**
+     * Returns the current Nexus combat state for one town.
+     *
+     * <p>This accessor normalizes legacy persisted health before returning the snapshot.</p>
+     *
+     * @param town town whose Nexus combat state should be resolved
+     * @return current Nexus combat snapshot
+     */
+    public @NotNull NexusCombatSnapshot getNexusCombatSnapshot(final @NotNull RTown town) {
+        final RTown liveTown = this.resolveLiveTown(town);
+        this.ensureCompositeTownState(liveTown);
+        final NexusCombatStats combatStats = this.resolveNexusCombatStats(liveTown.getNexusLevel());
+        return new NexusCombatSnapshot(
+            liveTown.getNexusLevel(),
+            liveTown.getCurrentNexusHealth(combatStats.maxHealth()),
+            combatStats.maxHealth(),
+            combatStats.defense()
+        );
     }
 
     /**
@@ -1032,21 +1269,81 @@ public final class TownRuntimeService {
         final ChunkType previousType = liveTownChunk.getChunkType();
         final boolean enteringSecurity = previousType != ChunkType.SECURITY && chunkType == ChunkType.SECURITY;
         final boolean leavingSecurity = previousType == ChunkType.SECURITY && chunkType != ChunkType.SECURITY;
+        final boolean enteringBank = previousType != ChunkType.BANK && chunkType == ChunkType.BANK;
+        final boolean leavingBank = previousType == ChunkType.BANK && chunkType != ChunkType.BANK;
+        final boolean enteringFarm = previousType != ChunkType.FARM && chunkType == ChunkType.FARM;
+        final boolean leavingFarm = previousType == ChunkType.FARM && chunkType != ChunkType.FARM;
+        final boolean enteringArmory = previousType != ChunkType.ARMORY && chunkType == ChunkType.ARMORY;
+        final boolean leavingArmory = previousType == ChunkType.ARMORY && chunkType != ChunkType.ARMORY;
         final FuelTankRemoval fuelTankRemoval = leavingSecurity
             ? this.removeFuelTankInternal(liveTownChunk, null, false)
             : FuelTankRemoval.none();
+        final SeedBoxRemoval seedBoxRemoval = leavingFarm
+            ? this.removeSeedBoxInternal(liveTownChunk, null, false)
+            : SeedBoxRemoval.none();
+        final SalvageBlockRemoval salvageBlockRemoval = leavingArmory
+            ? this.removeSalvageBlockInternal(liveTownChunk, null, false)
+            : SalvageBlockRemoval.none();
+        final RepairBlockRemoval repairBlockRemoval = leavingArmory
+            ? this.removeRepairBlockInternal(liveTownChunk, null, false)
+            : RepairBlockRemoval.none();
+        if (leavingBank && this.plugin.getTownBankService() != null) {
+            this.plugin.getTownBankService().clearCacheForHostLoss(liveTownChunk);
+        }
 
         liveTownChunk.setChunkType(chunkType);
         if (this.plugin.getDefaultConfig().isChunkTypeResetOnChange()) {
             liveTownChunk.resetChunkTypeState();
         } else if (leavingSecurity) {
             liveTownChunk.clearFuelTankState();
+        } else if (leavingFarm) {
+            liveTownChunk.clearFarmState();
+        } else if (leavingArmory) {
+            liveTownChunk.clearArmoryState();
         }
+        this.initializeFarmEnhancementDefaults(liveTownChunk);
+        this.initializeArmoryEnhancementDefaults(liveTownChunk);
+        this.syncChunkMarkerMaterial(liveTownChunk);
 
         final boolean fuelTankGranted = enteringSecurity && actor != null && this.giveFuelTank(actor, liveTownChunk);
+        final boolean seedBoxGranted = enteringFarm
+            && actor != null
+            && this.shouldGrantSeedBoxAtLevel(liveTownChunk.getChunkLevel())
+            && this.giveSeedBox(actor, liveTownChunk);
+        final boolean salvageBlockGranted = enteringArmory
+            && actor != null
+            && this.shouldGrantSalvageBlockAtLevel(liveTownChunk.getChunkLevel())
+            && this.giveSalvageBlock(actor, liveTownChunk);
+        final boolean repairBlockGranted = enteringArmory
+            && actor != null
+            && this.shouldGrantRepairBlockAtLevel(liveTownChunk.getChunkLevel())
+            && this.giveRepairBlock(actor, liveTownChunk);
+        if (enteringBank
+            && actor != null
+            && this.plugin.getTownBankService() != null
+            && this.plugin.getTownBankService().shouldGrantCacheChestOnBankEntry(liveTownChunk.getTown(), liveTownChunk.getChunkLevel())) {
+            this.plugin.getTownBankService().giveCacheChest(actor, liveTownChunk.getTown());
+        }
         this.ensureCompositeTownState(liveTownChunk.getTown());
         this.plugin.getTownRepository().update(liveTownChunk.getTown());
-        return new ChunkTypeChangeResult(true, fuelTankGranted, fuelTankRemoval.removed(), fuelTankRemoval.droppedFuel());
+        if (chunkType == ChunkType.OUTPOST) {
+            this.syncRdsTownOutpost(liveTownChunk);
+        } else if (previousType == ChunkType.OUTPOST) {
+            this.removeRdsTownOutpost(liveTownChunk.getIdentifier());
+        }
+        return new ChunkTypeChangeResult(
+            true,
+            fuelTankGranted,
+            fuelTankRemoval.removed(),
+            fuelTankRemoval.droppedFuel(),
+            seedBoxGranted,
+            seedBoxRemoval.removed(),
+            seedBoxRemoval.droppedSeeds(),
+            salvageBlockGranted,
+            salvageBlockRemoval.removed(),
+            repairBlockGranted,
+            repairBlockRemoval.removed()
+        );
     }
 
     /**
@@ -1075,10 +1372,21 @@ public final class TownRuntimeService {
             return false;
         }
         this.removeFuelTankInternal(liveTownChunk, null, false);
+        this.removeSeedBoxInternal(liveTownChunk, null, false);
+        this.removeSalvageBlockInternal(liveTownChunk, null, false);
+        this.removeRepairBlockInternal(liveTownChunk, null, false);
+        if (liveTownChunk.getChunkType() == ChunkType.BANK && this.plugin.getTownBankService() != null) {
+            this.plugin.getTownBankService().clearCacheForHostLoss(liveTownChunk);
+        }
+        final boolean removingOutpost = liveTownChunk.getChunkType() == ChunkType.OUTPOST;
+        final UUID removedChunkUuid = liveTownChunk.getIdentifier();
         final RTown town = liveTownChunk.getTown();
         final boolean removed = town.removeChunk(liveTownChunk);
         if (removed) {
             this.plugin.getTownRepository().update(town);
+            if (removingOutpost) {
+                this.removeRdsTownOutpost(removedChunkUuid);
+            }
         }
         return removed;
     }
@@ -1093,6 +1401,37 @@ public final class TownRuntimeService {
     public boolean hasTownPermission(final @NotNull Player player, final @NotNull TownPermissions permission) {
         final RDTPlayer playerData = this.getPlayerData(player.getUniqueId());
         return playerData != null && playerData.hasTownPermission(permission);
+    }
+
+    /**
+     * Returns whether a player has one town management permission for a specific town.
+     *
+     * @param player player to inspect
+     * @param town town to validate ownership against
+     * @param permission management permission to resolve
+     * @return {@code true} when the player belongs to the supplied town and holds the permission
+     */
+    public boolean hasTownPermission(
+        final @NotNull Player player,
+        final @NotNull RTown town,
+        final @NotNull TownPermissions permission
+    ) {
+        final RDTPlayer playerData = this.getPlayerData(player.getUniqueId());
+        return playerData != null
+            && Objects.equals(playerData.getTownUUID(), town.getTownUUID())
+            && playerData.hasTownPermission(permission);
+    }
+
+    /**
+     * Returns whether a player has a specific town management permission key.
+     *
+     * @param player player to inspect
+     * @param permissionKey management permission key to resolve
+     * @return {@code true} when the player holds the permission
+     */
+    public boolean hasTownPermission(final @NotNull Player player, final @NotNull String permissionKey) {
+        final RDTPlayer playerData = this.getPlayerData(player.getUniqueId());
+        return playerData != null && playerData.hasTownPermission(permissionKey);
     }
 
     /**
@@ -1184,6 +1523,64 @@ public final class TownRuntimeService {
     }
 
     /**
+     * Updates one town-global allied-access rule.
+     *
+     * @param town town to update
+     * @param protection protection to update
+     * @param allowed replacement allied-access state
+     * @return {@code true} when the live town snapshot was updated
+     */
+    public boolean setTownAlliedProtectionAllowed(
+        final @NotNull RTown town,
+        final @NotNull TownProtections protection,
+        final boolean allowed
+    ) {
+        if (this.plugin.getTownRepository() == null) {
+            return false;
+        }
+        final RTown liveTown = this.resolveLiveTown(town);
+        if (liveTown == null) {
+            return false;
+        }
+        liveTown.setAlliedProtectionAllowed(protection, allowed);
+        this.plugin.getTownRepository().update(liveTown);
+        return true;
+    }
+
+    /**
+     * Updates multiple town-global allied-access rules in one repository write.
+     *
+     * @param town town to update
+     * @param protections protections to update
+     * @param allowed replacement allied-access state for every supplied protection
+     * @return {@code true} when the live town snapshot was updated
+     */
+    public boolean setTownAlliedProtectionAllowed(
+        final @NotNull RTown town,
+        final @NotNull Collection<TownProtections> protections,
+        final boolean allowed
+    ) {
+        if (this.plugin.getTownRepository() == null) {
+            return false;
+        }
+        final RTown liveTown = this.resolveLiveTown(town);
+        if (liveTown == null) {
+            return false;
+        }
+
+        final List<TownProtections> distinctProtections = this.normalizeProtectionList(protections);
+        if (distinctProtections.isEmpty()) {
+            return false;
+        }
+
+        for (final TownProtections protection : distinctProtections) {
+            liveTown.setAlliedProtectionAllowed(protection, allowed);
+        }
+        this.plugin.getTownRepository().update(liveTown);
+        return true;
+    }
+
+    /**
      * Updates one chunk-specific protection threshold.
      *
      * @param townChunk chunk to update
@@ -1246,6 +1643,65 @@ public final class TownRuntimeService {
     }
 
     /**
+     * Updates one chunk-specific allied-access override.
+     *
+     * @param townChunk chunk to update
+     * @param protection protection to update
+     * @param allowed replacement allied-access override, or {@code null} to inherit
+     * @return {@code true} when the live chunk snapshot was updated
+     */
+    public boolean setChunkAlliedProtectionAllowed(
+        final @NotNull RTownChunk townChunk,
+        final @NotNull TownProtections protection,
+        final @Nullable Boolean allowed
+    ) {
+        if (this.plugin.getTownRepository() == null) {
+            return false;
+        }
+        final RTownChunk liveTownChunk = this.resolveLiveTownChunk(townChunk);
+        if (liveTownChunk == null) {
+            return false;
+        }
+        liveTownChunk.setAlliedProtectionAllowed(protection, allowed);
+        this.plugin.getTownRepository().update(liveTownChunk.getTown());
+        return true;
+    }
+
+    /**
+     * Updates multiple chunk-specific allied-access overrides in one repository write.
+     *
+     * @param townChunk chunk to update
+     * @param protections protections to update
+     * @param allowed replacement allied-access override, or {@code null} to clear every supplied
+     *     override
+     * @return {@code true} when the live chunk snapshot was updated
+     */
+    public boolean setChunkAlliedProtectionAllowed(
+        final @NotNull RTownChunk townChunk,
+        final @NotNull Collection<TownProtections> protections,
+        final @Nullable Boolean allowed
+    ) {
+        if (this.plugin.getTownRepository() == null) {
+            return false;
+        }
+        final RTownChunk liveTownChunk = this.resolveLiveTownChunk(townChunk);
+        if (liveTownChunk == null) {
+            return false;
+        }
+
+        final List<TownProtections> distinctProtections = this.normalizeProtectionList(protections);
+        if (distinctProtections.isEmpty()) {
+            return false;
+        }
+
+        for (final TownProtections protection : distinctProtections) {
+            liveTownChunk.setAlliedProtectionAllowed(protection, allowed);
+        }
+        this.plugin.getTownRepository().update(liveTownChunk.getTown());
+        return true;
+    }
+
+    /**
      * Reconciles loaded hostile and passive mobs in one claimed chunk against the active protection
      * thresholds.
      *
@@ -1288,6 +1744,26 @@ public final class TownRuntimeService {
         return liveTown == null ? town : liveTown;
     }
 
+    private boolean ensureNexusCombatState(final @NotNull RTown town) {
+        if (town.getId() == null && !town.hasPersistedCurrentNexusHealth()) {
+            return false;
+        }
+        final NexusCombatStats combatStats = this.resolveNexusCombatStats(town.getNexusLevel());
+        final boolean backfilled = town.getId() != null
+            && town.backfillLegacyCurrentNexusHealthIfNeeded(combatStats.maxHealth());
+        final boolean clamped = town.clampCurrentNexusHealth(combatStats.maxHealth());
+        return backfilled || clamped;
+    }
+
+    private @NotNull NexusCombatStats resolveNexusCombatStats(final int nexusLevel) {
+        return this.plugin.getNexusConfig().getCombatStats(nexusLevel);
+    }
+
+    private void healTownNexusToFull(final @NotNull RTown town) {
+        final NexusCombatStats combatStats = this.resolveNexusCombatStats(town.getNexusLevel());
+        town.healNexusToFull(combatStats.maxHealth());
+    }
+
     private @NotNull List<TownProtections> normalizeProtectionList(final @NotNull Collection<TownProtections> protections) {
         final LinkedHashSet<TownProtections> distinctProtections = new LinkedHashSet<>();
         for (final TownProtections protection : protections) {
@@ -1305,6 +1781,21 @@ public final class TownRuntimeService {
         }
         final RTownChunk liveTownChunk = liveTown.findChunk(townChunk.getWorldName(), townChunk.getX(), townChunk.getZ());
         return liveTownChunk == null ? townChunk : liveTownChunk;
+    }
+
+    private void syncChunkMarkerMaterial(final @NotNull RTownChunk townChunk) {
+        final Location markerLocation = townChunk.getChunkBlockLocation();
+        if (markerLocation == null || markerLocation.getWorld() == null) {
+            return;
+        }
+        final World markerWorld = markerLocation.getWorld();
+        if (!markerWorld.isChunkLoaded(
+            toChunkCoordinate(markerLocation.getBlockX()),
+            toChunkCoordinate(markerLocation.getBlockZ())
+        )) {
+            return;
+        }
+        markerLocation.getBlock().setType(this.plugin.getChunkTypeDisplayMaterial(townChunk.getChunkType()), false);
     }
 
     private void reconcileProtectionEffects(
@@ -1406,6 +1897,48 @@ public final class TownRuntimeService {
     }
 
     /**
+     * Returns the Farm chunk whose seed box is placed at the supplied exact location.
+     *
+     * @param location block location to inspect
+     * @return owning Farm chunk, or {@code null} when the location is not a seed box
+     */
+    public @Nullable RTownChunk findSeedBoxChunk(final @Nullable Location location) {
+        final RTownChunk townChunk = this.getChunkAt(location);
+        if (location == null || townChunk == null || townChunk.getSeedBoxLocation() == null) {
+            return null;
+        }
+        return sameBlock(location, townChunk.getSeedBoxLocation()) ? townChunk : null;
+    }
+
+    /**
+     * Returns the Armory chunk whose salvage block is placed at the supplied exact location.
+     *
+     * @param location block location to inspect
+     * @return owning Armory chunk, or {@code null} when the location is not a salvage block
+     */
+    public @Nullable RTownChunk findSalvageBlockChunk(final @Nullable Location location) {
+        final RTownChunk townChunk = this.getChunkAt(location);
+        if (location == null || townChunk == null || townChunk.getSalvageBlockLocation() == null) {
+            return null;
+        }
+        return sameBlock(location, townChunk.getSalvageBlockLocation()) ? townChunk : null;
+    }
+
+    /**
+     * Returns the Armory chunk whose repair block is placed at the supplied exact location.
+     *
+     * @param location block location to inspect
+     * @return owning Armory chunk, or {@code null} when the location is not a repair block
+     */
+    public @Nullable RTownChunk findRepairBlockChunk(final @Nullable Location location) {
+        final RTownChunk townChunk = this.getChunkAt(location);
+        if (location == null || townChunk == null || townChunk.getRepairBlockLocation() == null) {
+            return null;
+        }
+        return sameBlock(location, townChunk.getRepairBlockLocation()) ? townChunk : null;
+    }
+
+    /**
      * Returns whether one fuel tank placement location is valid for a Security chunk.
      *
      * @param townChunk owning Security chunk
@@ -1442,6 +1975,124 @@ public final class TownRuntimeService {
     }
 
     /**
+     * Returns whether one seed-box placement location is valid for a Farm chunk.
+     *
+     * @param townChunk owning Farm chunk
+     * @param seedBoxLocation requested seed-box placement location
+     * @return {@code true} when the placement is inside the owning Farm chunk and within radius
+     */
+    public boolean isValidSeedBoxPlacement(
+        final @NotNull RTownChunk townChunk,
+        final @NotNull Location seedBoxLocation
+    ) {
+        final RTownChunk liveTownChunk = this.resolveLiveTownChunk(townChunk);
+        if (liveTownChunk == null
+            || liveTownChunk.getChunkType() != ChunkType.FARM
+            || liveTownChunk.hasSeedBox()
+            || seedBoxLocation.getWorld() == null) {
+            return false;
+        }
+
+        if (!Objects.equals(liveTownChunk.getWorldName(), seedBoxLocation.getWorld().getName())
+            || toChunkCoordinate(seedBoxLocation.getBlockX()) != liveTownChunk.getX()
+            || toChunkCoordinate(seedBoxLocation.getBlockZ()) != liveTownChunk.getZ()) {
+            return false;
+        }
+
+        final Location chunkMarkerLocation = liveTownChunk.getChunkBlockLocation();
+        if (chunkMarkerLocation == null
+            || chunkMarkerLocation.getWorld() == null
+            || !Objects.equals(chunkMarkerLocation.getWorld().getName(), seedBoxLocation.getWorld().getName())) {
+            return false;
+        }
+
+        final int radius = this.plugin.getFarmConfig().getSeedBox().placementRadiusBlocks();
+        return chunkMarkerLocation.distanceSquared(seedBoxLocation) <= ((double) radius * (double) radius);
+    }
+
+    /**
+     * Returns whether one salvage-block placement location is valid for an Armory chunk.
+     *
+     * @param townChunk owning Armory chunk
+     * @param salvageBlockLocation requested salvage-block placement location
+     * @return {@code true} when the placement is inside the owning Armory chunk and within radius
+     */
+    public boolean isValidSalvageBlockPlacement(
+        final @NotNull RTownChunk townChunk,
+        final @NotNull Location salvageBlockLocation
+    ) {
+        final RTownChunk liveTownChunk = this.resolveLiveTownChunk(townChunk);
+        if (liveTownChunk == null
+            || liveTownChunk.getChunkType() != ChunkType.ARMORY
+            || liveTownChunk.hasSalvageBlock()
+            || salvageBlockLocation.getWorld() == null) {
+            return false;
+        }
+
+        if (!Objects.equals(liveTownChunk.getWorldName(), salvageBlockLocation.getWorld().getName())
+            || toChunkCoordinate(salvageBlockLocation.getBlockX()) != liveTownChunk.getX()
+            || toChunkCoordinate(salvageBlockLocation.getBlockZ()) != liveTownChunk.getZ()) {
+            return false;
+        }
+
+        final Location repairBlockLocation = liveTownChunk.getRepairBlockLocation();
+        if (repairBlockLocation != null && sameBlock(salvageBlockLocation, repairBlockLocation)) {
+            return false;
+        }
+
+        final Location chunkMarkerLocation = liveTownChunk.getChunkBlockLocation();
+        if (chunkMarkerLocation == null
+            || chunkMarkerLocation.getWorld() == null
+            || !Objects.equals(chunkMarkerLocation.getWorld().getName(), salvageBlockLocation.getWorld().getName())) {
+            return false;
+        }
+
+        final int radius = this.plugin.getArmoryConfig().getSalvageBlock().placementRadiusBlocks();
+        return chunkMarkerLocation.distanceSquared(salvageBlockLocation) <= ((double) radius * (double) radius);
+    }
+
+    /**
+     * Returns whether one repair-block placement location is valid for an Armory chunk.
+     *
+     * @param townChunk owning Armory chunk
+     * @param repairBlockLocation requested repair-block placement location
+     * @return {@code true} when the placement is inside the owning Armory chunk and within radius
+     */
+    public boolean isValidRepairBlockPlacement(
+        final @NotNull RTownChunk townChunk,
+        final @NotNull Location repairBlockLocation
+    ) {
+        final RTownChunk liveTownChunk = this.resolveLiveTownChunk(townChunk);
+        if (liveTownChunk == null
+            || liveTownChunk.getChunkType() != ChunkType.ARMORY
+            || liveTownChunk.hasRepairBlock()
+            || repairBlockLocation.getWorld() == null) {
+            return false;
+        }
+
+        if (!Objects.equals(liveTownChunk.getWorldName(), repairBlockLocation.getWorld().getName())
+            || toChunkCoordinate(repairBlockLocation.getBlockX()) != liveTownChunk.getX()
+            || toChunkCoordinate(repairBlockLocation.getBlockZ()) != liveTownChunk.getZ()) {
+            return false;
+        }
+
+        final Location salvageBlockLocation = liveTownChunk.getSalvageBlockLocation();
+        if (salvageBlockLocation != null && sameBlock(repairBlockLocation, salvageBlockLocation)) {
+            return false;
+        }
+
+        final Location chunkMarkerLocation = liveTownChunk.getChunkBlockLocation();
+        if (chunkMarkerLocation == null
+            || chunkMarkerLocation.getWorld() == null
+            || !Objects.equals(chunkMarkerLocation.getWorld().getName(), repairBlockLocation.getWorld().getName())) {
+            return false;
+        }
+
+        final int radius = this.plugin.getArmoryConfig().getRepairBlock().placementRadiusBlocks();
+        return chunkMarkerLocation.distanceSquared(repairBlockLocation) <= ((double) radius * (double) radius);
+    }
+
+    /**
      * Persists a placed fuel tank for one Security chunk.
      *
      * @param townChunk owning Security chunk
@@ -1473,6 +2124,87 @@ public final class TownRuntimeService {
     }
 
     /**
+     * Persists a placed seed box for one Farm chunk.
+     *
+     * @param townChunk owning Farm chunk
+     * @param seedBoxLocation placed chest location
+     * @param seedBoxContents initial persisted seed-box contents
+     * @return {@code true} when the seed-box state was saved
+     */
+    public boolean registerSeedBox(
+        final @NotNull RTownChunk townChunk,
+        final @NotNull Location seedBoxLocation,
+        final @NotNull Map<String, ItemStack> seedBoxContents
+    ) {
+        if (this.plugin.getTownRepository() == null || !this.isValidSeedBoxPlacement(townChunk, seedBoxLocation)) {
+            return false;
+        }
+
+        final RTownChunk liveTownChunk = this.resolveLiveTownChunk(townChunk);
+        if (liveTownChunk == null) {
+            return false;
+        }
+
+        liveTownChunk.setSeedBoxLocation(seedBoxLocation);
+        liveTownChunk.setSeedBoxContents(this.filterConfiguredSeedContents(seedBoxContents));
+        if (this.plugin.getTownFarmService() != null) {
+            this.plugin.getTownFarmService().syncLiveSeedBoxInventory(liveTownChunk);
+        }
+        this.plugin.getTownRepository().update(liveTownChunk.getTown());
+        return true;
+    }
+
+    /**
+     * Persists a placed salvage block for one Armory chunk.
+     *
+     * @param townChunk owning Armory chunk
+     * @param salvageBlockLocation placed block location
+     * @return {@code true} when the salvage-block state was saved
+     */
+    public boolean registerSalvageBlock(
+        final @NotNull RTownChunk townChunk,
+        final @NotNull Location salvageBlockLocation
+    ) {
+        if (this.plugin.getTownRepository() == null || !this.isValidSalvageBlockPlacement(townChunk, salvageBlockLocation)) {
+            return false;
+        }
+
+        final RTownChunk liveTownChunk = this.resolveLiveTownChunk(townChunk);
+        if (liveTownChunk == null) {
+            return false;
+        }
+
+        liveTownChunk.setSalvageBlockLocation(salvageBlockLocation);
+        this.plugin.getTownRepository().update(liveTownChunk.getTown());
+        return true;
+    }
+
+    /**
+     * Persists a placed repair block for one Armory chunk.
+     *
+     * @param townChunk owning Armory chunk
+     * @param repairBlockLocation placed block location
+     * @return {@code true} when the repair-block state was saved
+     */
+    public boolean registerRepairBlock(
+        final @NotNull RTownChunk townChunk,
+        final @NotNull Location repairBlockLocation
+    ) {
+        if (this.plugin.getTownRepository() == null || !this.isValidRepairBlockPlacement(townChunk, repairBlockLocation)) {
+            return false;
+        }
+
+        final RTownChunk liveTownChunk = this.resolveLiveTownChunk(townChunk);
+        if (liveTownChunk == null) {
+            return false;
+        }
+
+        liveTownChunk.setRepairBlockLocation(repairBlockLocation);
+        this.plugin.getTownRepository().update(liveTownChunk.getTown());
+        return true;
+    }
+
+    /**
      * Persists the current contents of one placed Security fuel tank.
      *
      * @param townChunk owning Security chunk
@@ -1498,6 +2230,120 @@ public final class TownRuntimeService {
         }
         this.plugin.getTownRepository().update(liveTownChunk.getTown());
         return true;
+    }
+
+    /**
+     * Persists the current contents of one placed Farm seed box.
+     *
+     * @param townChunk owning Farm chunk
+     * @param seedBoxContents replacement seed-box contents
+     * @return {@code true} when the contents were saved
+     */
+    public boolean syncSeedBoxContents(
+        final @NotNull RTownChunk townChunk,
+        final @NotNull Map<String, ItemStack> seedBoxContents
+    ) {
+        if (this.plugin.getTownRepository() == null) {
+            return false;
+        }
+
+        final RTownChunk liveTownChunk = this.resolveLiveTownChunk(townChunk);
+        if (liveTownChunk == null || !liveTownChunk.hasSeedBox()) {
+            return false;
+        }
+
+        liveTownChunk.setSeedBoxContents(this.filterConfiguredSeedContents(seedBoxContents));
+        if (this.plugin.getTownFarmService() != null) {
+            this.plugin.getTownFarmService().syncLiveSeedBoxInventory(liveTownChunk);
+        }
+        this.plugin.getTownRepository().update(liveTownChunk.getTown());
+        return true;
+    }
+
+    /**
+     * Replaces the Armory double-smelt toggle state for one Armory chunk.
+     *
+     * @param townChunk target Armory chunk
+     * @param enabled replacement double-smelt state
+     * @return {@code true} when the state was saved
+     */
+    public boolean setArmoryDoubleSmeltEnabled(final @NotNull RTownChunk townChunk, final boolean enabled) {
+        if (this.plugin.getTownRepository() == null) {
+            return false;
+        }
+
+        final RTownChunk liveTownChunk = this.resolveLiveTownChunk(townChunk);
+        if (liveTownChunk == null
+            || liveTownChunk.getChunkType() != ChunkType.ARMORY
+            || !this.plugin.getArmoryConfig().getDoubleSmelt().isUnlocked(liveTownChunk.getChunkLevel())) {
+            return false;
+        }
+
+        liveTownChunk.setArmoryDoubleSmeltEnabled(enabled);
+        this.plugin.getTownRepository().update(liveTownChunk.getTown());
+        return true;
+    }
+
+    /**
+     * Removes a placed salvage block through direct breaking and returns the bound salvage block item.
+     *
+     * @param player acting player
+     * @param townChunk owning Armory chunk
+     * @return structured break result
+     */
+    public @NotNull ArmoryBlockBreakResult breakSalvageBlock(
+        final @NotNull Player player,
+        final @NotNull RTownChunk townChunk
+    ) {
+        if (this.plugin.getTownRepository() == null) {
+            return ArmoryBlockBreakResult.failed();
+        }
+
+        final RTownChunk liveTownChunk = this.resolveLiveTownChunk(townChunk);
+        if (liveTownChunk == null || liveTownChunk.getChunkType() != ChunkType.ARMORY) {
+            return ArmoryBlockBreakResult.invalidChunk();
+        }
+        if (!this.isPlayerAllowed(player, liveTownChunk, TownProtections.ARMORY_BREAK)) {
+            return ArmoryBlockBreakResult.noPermission();
+        }
+        if (!liveTownChunk.hasSalvageBlock()) {
+            return ArmoryBlockBreakResult.noBlock();
+        }
+
+        final SalvageBlockRemoval removal = this.removeSalvageBlockInternal(liveTownChunk, player, true);
+        this.plugin.getTownRepository().update(liveTownChunk.getTown());
+        return removal.removed() ? ArmoryBlockBreakResult.success() : ArmoryBlockBreakResult.failed();
+    }
+
+    /**
+     * Removes a placed repair block through direct breaking and returns the bound repair block item.
+     *
+     * @param player acting player
+     * @param townChunk owning Armory chunk
+     * @return structured break result
+     */
+    public @NotNull ArmoryBlockBreakResult breakRepairBlock(
+        final @NotNull Player player,
+        final @NotNull RTownChunk townChunk
+    ) {
+        if (this.plugin.getTownRepository() == null) {
+            return ArmoryBlockBreakResult.failed();
+        }
+
+        final RTownChunk liveTownChunk = this.resolveLiveTownChunk(townChunk);
+        if (liveTownChunk == null || liveTownChunk.getChunkType() != ChunkType.ARMORY) {
+            return ArmoryBlockBreakResult.invalidChunk();
+        }
+        if (!this.isPlayerAllowed(player, liveTownChunk, TownProtections.ARMORY_BREAK)) {
+            return ArmoryBlockBreakResult.noPermission();
+        }
+        if (!liveTownChunk.hasRepairBlock()) {
+            return ArmoryBlockBreakResult.noBlock();
+        }
+
+        final RepairBlockRemoval removal = this.removeRepairBlockInternal(liveTownChunk, player, true);
+        this.plugin.getTownRepository().update(liveTownChunk.getTown());
+        return removal.removed() ? ArmoryBlockBreakResult.success() : ArmoryBlockBreakResult.failed();
     }
 
     /**
@@ -1534,6 +2380,114 @@ public final class TownRuntimeService {
     }
 
     /**
+     * Removes a placed seed box through the Farm chunk view and returns the bound seed-box item.
+     *
+     * @param player acting player
+     * @param townChunk owning Farm chunk
+     * @return structured pickup result
+     */
+    public @NotNull SeedBoxPickupResult pickupSeedBox(
+        final @NotNull Player player,
+        final @NotNull RTownChunk townChunk
+    ) {
+        if (!this.hasTownPermission(player, TownPermissions.CHANGE_CHUNK_TYPE)) {
+            return SeedBoxPickupResult.noPermission();
+        }
+        if (this.plugin.getTownRepository() == null) {
+            return SeedBoxPickupResult.failed();
+        }
+
+        final RTownChunk liveTownChunk = this.resolveLiveTownChunk(townChunk);
+        if (liveTownChunk == null || liveTownChunk.getChunkType() != ChunkType.FARM) {
+            return SeedBoxPickupResult.invalidChunk();
+        }
+        if (!liveTownChunk.hasSeedBox()) {
+            return SeedBoxPickupResult.noSeedBox();
+        }
+
+        final SeedBoxRemoval removal = this.removeSeedBoxInternal(liveTownChunk, player, true);
+        this.plugin.getTownRepository().update(liveTownChunk.getTown());
+        return removal.removed()
+            ? SeedBoxPickupResult.success(removal.droppedSeeds())
+            : SeedBoxPickupResult.failed();
+    }
+
+    /**
+     * Replaces the Farm growth-toggle state for one Farm chunk.
+     *
+     * @param townChunk target Farm chunk
+     * @param enabled replacement growth-toggle state
+     * @return {@code true} when the state was saved
+     */
+    public boolean setFarmGrowthEnabled(final @NotNull RTownChunk townChunk, final boolean enabled) {
+        if (this.plugin.getTownRepository() == null) {
+            return false;
+        }
+
+        final RTownChunk liveTownChunk = this.resolveLiveTownChunk(townChunk);
+        if (liveTownChunk == null
+            || liveTownChunk.getChunkType() != ChunkType.FARM
+            || !this.plugin.getFarmConfig().getGrowth().isUnlocked(liveTownChunk.getChunkLevel())) {
+            return false;
+        }
+
+        liveTownChunk.setFarmGrowthEnabled(enabled);
+        this.plugin.getTownRepository().update(liveTownChunk.getTown());
+        return true;
+    }
+
+    /**
+     * Replaces the Farm auto-replant state for one Farm chunk.
+     *
+     * @param townChunk target Farm chunk
+     * @param enabled replacement auto-replant state
+     * @return {@code true} when the state was saved
+     */
+    public boolean setFarmAutoReplantEnabled(final @NotNull RTownChunk townChunk, final boolean enabled) {
+        if (this.plugin.getTownRepository() == null) {
+            return false;
+        }
+
+        final RTownChunk liveTownChunk = this.resolveLiveTownChunk(townChunk);
+        if (liveTownChunk == null
+            || liveTownChunk.getChunkType() != ChunkType.FARM
+            || !this.plugin.getFarmConfig().getReplant().isUnlocked(liveTownChunk.getChunkLevel())) {
+            return false;
+        }
+
+        liveTownChunk.setFarmAutoReplantEnabled(enabled);
+        this.plugin.getTownRepository().update(liveTownChunk.getTown());
+        return true;
+    }
+
+    /**
+     * Replaces the Farm seed-consumption priority for one Farm chunk.
+     *
+     * @param townChunk target Farm chunk
+     * @param priority replacement seed-consumption priority
+     * @return {@code true} when the state was saved
+     */
+    public boolean setFarmReplantPriority(
+        final @NotNull RTownChunk townChunk,
+        final @NotNull FarmReplantPriority priority
+    ) {
+        if (this.plugin.getTownRepository() == null) {
+            return false;
+        }
+
+        final RTownChunk liveTownChunk = this.resolveLiveTownChunk(townChunk);
+        if (liveTownChunk == null
+            || liveTownChunk.getChunkType() != ChunkType.FARM
+            || !this.plugin.getFarmConfig().getReplant().isUnlocked(liveTownChunk.getChunkLevel())) {
+            return false;
+        }
+
+        liveTownChunk.setFarmReplantPriority(priority);
+        this.plugin.getTownRepository().update(liveTownChunk.getTown());
+        return true;
+    }
+
+    /**
      * Returns whether a location matches a town nexus block.
      *
      * @param location location to inspect
@@ -1564,23 +2518,43 @@ public final class TownRuntimeService {
             return true;
         }
 
+        return this.isPlayerAllowed(player, townChunk, protection);
+    }
+
+    /**
+     * Returns whether a player can perform a protected action in one claimed town chunk.
+     *
+     * @param player acting player
+     * @param townChunk claimed chunk being checked
+     * @param protection protection being checked
+     * @return {@code true} when the action is allowed
+     */
+    public boolean isPlayerAllowed(
+        final @NotNull Player player,
+        final @NotNull RTownChunk townChunk,
+        final @NotNull TownProtections protection
+    ) {
+        Objects.requireNonNull(player, "player");
+        Objects.requireNonNull(townChunk, "townChunk");
+        Objects.requireNonNull(protection, "protection");
+
         final RTown town = townChunk.getTown();
         if (this.areProtectionsBypassedForFuel(town)) {
             return true;
         }
         final String requiredRoleId = this.resolveRequiredRoleId(town, townChunk, protection);
-        if (Objects.equals(requiredRoleId, RTown.RESTRICTED_ROLE_ID)) {
-            return false;
-        }
         if (Objects.equals(requiredRoleId, RTown.PUBLIC_ROLE_ID)) {
             return true;
         }
 
         final RDTPlayer playerData = this.getPlayerData(player.getUniqueId());
-        if (playerData == null || !Objects.equals(playerData.getTownUUID(), town.getTownUUID())) {
-            return false;
+        if (playerData != null && Objects.equals(playerData.getTownUUID(), town.getTownUUID())) {
+            if (Objects.equals(requiredRoleId, RTown.RESTRICTED_ROLE_ID)) {
+                return false;
+            }
+            return this.hasRequiredRole(town, playerData.getTownRoleId(), requiredRoleId);
         }
-        return this.hasRequiredRole(town, playerData.getTownRoleId(), requiredRoleId);
+        return this.isAlliedTownMemberAllowed(town, townChunk, protection, playerData);
     }
 
     /**
@@ -1602,6 +2576,22 @@ public final class TownRuntimeService {
             return true;
         }
         return Objects.equals(this.resolveRequiredRoleId(townChunk.getTown(), townChunk, protection), RTown.PUBLIC_ROLE_ID);
+    }
+
+    /**
+     * Returns whether allied towns may perform one protected action in the supplied scope.
+     *
+     * @param town owner town
+     * @param townChunk optional Security chunk scope
+     * @param protection protection to resolve
+     * @return {@code true} when allied towns are allowed to perform the protected action
+     */
+    public boolean isAlliedProtectionAllowed(
+        final @NotNull RTown town,
+        final @Nullable RTownChunk townChunk,
+        final @NotNull TownProtections protection
+    ) {
+        return this.resolveAlliedProtectionAllowed(town, townChunk, protection);
     }
 
     /**
@@ -1639,6 +2629,24 @@ public final class TownRuntimeService {
             ? RTown.resolveDefaultRolePriority(requiredRoleId)
             : requiredRole.getRolePriority();
         return actualPriority >= requiredPriority;
+    }
+
+    private boolean isAlliedTownMemberAllowed(
+        final @NotNull RTown town,
+        final @Nullable RTownChunk townChunk,
+        final @NotNull TownProtections protection,
+        final @Nullable RDTPlayer playerData
+    ) {
+        if (playerData == null || playerData.getTownUUID() == null) {
+            return false;
+        }
+        final RTown playerTown = this.getTown(playerData.getTownUUID());
+        if (playerTown == null
+            || Objects.equals(playerTown.getTownUUID(), town.getTownUUID())
+            || this.getEffectiveRelationshipState(town, playerTown) != TownRelationshipState.ALLIED) {
+            return false;
+        }
+        return this.resolveAlliedProtectionAllowed(town, townChunk, protection);
     }
 
     private @NotNull String resolveRequiredRoleId(
@@ -1691,6 +2699,57 @@ public final class TownRuntimeService {
         return true;
     }
 
+    private boolean giveSeedBox(final @NotNull Player player, final @NotNull RTownChunk townChunk) {
+        final ItemStack seedBoxItem = SeedBox.getSeedBoxItem(
+            this.plugin,
+            player,
+            townChunk.getTown().getTownUUID(),
+            townChunk.getWorldName(),
+            townChunk.getX(),
+            townChunk.getZ()
+        );
+        player.getInventory().addItem(seedBoxItem)
+            .values()
+            .forEach(overflow -> player.getWorld().dropItemNaturally(player.getLocation(), overflow));
+        return true;
+    }
+
+    private boolean giveSalvageBlock(final @NotNull Player player, final @NotNull RTownChunk townChunk) {
+        final TownArmoryService townArmoryService = this.plugin.getTownArmoryService();
+        final ItemStack salvageBlockItem = townArmoryService == null
+            ? SalvageBlock.getSalvageBlockItem(
+                this.plugin,
+                player,
+                townChunk.getTown().getTownUUID(),
+                townChunk.getWorldName(),
+                townChunk.getX(),
+                townChunk.getZ()
+            )
+            : townArmoryService.createSalvageBlockItem(player, townChunk);
+        player.getInventory().addItem(salvageBlockItem)
+            .values()
+            .forEach(overflow -> player.getWorld().dropItemNaturally(player.getLocation(), overflow));
+        return true;
+    }
+
+    private boolean giveRepairBlock(final @NotNull Player player, final @NotNull RTownChunk townChunk) {
+        final TownArmoryService townArmoryService = this.plugin.getTownArmoryService();
+        final ItemStack repairBlockItem = townArmoryService == null
+            ? RepairBlock.getRepairBlockItem(
+                this.plugin,
+                player,
+                townChunk.getTown().getTownUUID(),
+                townChunk.getWorldName(),
+                townChunk.getX(),
+                townChunk.getZ()
+            )
+            : townArmoryService.createRepairBlockItem(player, townChunk);
+        player.getInventory().addItem(repairBlockItem)
+            .values()
+            .forEach(overflow -> player.getWorld().dropItemNaturally(player.getLocation(), overflow));
+        return true;
+    }
+
     private @NotNull FuelTankRemoval removeFuelTankInternal(
         final @NotNull RTownChunk townChunk,
         final @Nullable Player player,
@@ -1721,6 +2780,78 @@ public final class TownRuntimeService {
         return new FuelTankRemoval(true, droppedFuel);
     }
 
+    private @NotNull SeedBoxRemoval removeSeedBoxInternal(
+        final @NotNull RTownChunk townChunk,
+        final @Nullable Player player,
+        final boolean returnSeedBoxItem
+    ) {
+        if (!townChunk.hasSeedBox()) {
+            return SeedBoxRemoval.none();
+        }
+
+        final Location dropLocation = townChunk.getSeedBoxLocation();
+        final Map<String, ItemStack> storedSeedContents = this.captureSeedBoxContents(townChunk);
+        final boolean droppedSeeds = dropLocation != null && dropLocation.getWorld() != null && !storedSeedContents.isEmpty();
+        if (dropLocation != null && dropLocation.getWorld() != null) {
+            if (dropLocation.getBlock().getState() instanceof Chest) {
+                dropLocation.getBlock().setType(Material.AIR, false);
+            }
+            for (final ItemStack itemStack : storedSeedContents.values()) {
+                if (itemStack != null && !itemStack.isEmpty()) {
+                    dropLocation.getWorld().dropItemNaturally(dropLocation, itemStack.clone());
+                }
+            }
+        }
+
+        townChunk.clearSeedBoxState();
+        if (returnSeedBoxItem && player != null) {
+            this.giveSeedBox(player, townChunk);
+        }
+        return new SeedBoxRemoval(true, droppedSeeds);
+    }
+
+    private @NotNull SalvageBlockRemoval removeSalvageBlockInternal(
+        final @NotNull RTownChunk townChunk,
+        final @Nullable Player player,
+        final boolean returnSalvageBlockItem
+    ) {
+        if (!townChunk.hasSalvageBlock()) {
+            return SalvageBlockRemoval.none();
+        }
+
+        final Location blockLocation = townChunk.getSalvageBlockLocation();
+        if (blockLocation != null && blockLocation.getWorld() != null) {
+            blockLocation.getBlock().setType(Material.AIR, false);
+        }
+
+        townChunk.setSalvageBlockLocation(null);
+        if (returnSalvageBlockItem && player != null) {
+            this.giveSalvageBlock(player, townChunk);
+        }
+        return new SalvageBlockRemoval(true);
+    }
+
+    private @NotNull RepairBlockRemoval removeRepairBlockInternal(
+        final @NotNull RTownChunk townChunk,
+        final @Nullable Player player,
+        final boolean returnRepairBlockItem
+    ) {
+        if (!townChunk.hasRepairBlock()) {
+            return RepairBlockRemoval.none();
+        }
+
+        final Location blockLocation = townChunk.getRepairBlockLocation();
+        if (blockLocation != null && blockLocation.getWorld() != null) {
+            blockLocation.getBlock().setType(Material.AIR, false);
+        }
+
+        townChunk.setRepairBlockLocation(null);
+        if (returnRepairBlockItem && player != null) {
+            this.giveRepairBlock(player, townChunk);
+        }
+        return new RepairBlockRemoval(true);
+    }
+
     private @NotNull Map<String, ItemStack> captureFuelTankContents(final @NotNull RTownChunk townChunk) {
         final Location tankLocation = townChunk.getFuelTankLocation();
         if (tankLocation != null
@@ -1740,6 +2871,25 @@ public final class TownRuntimeService {
         return this.filterConfiguredFuelContents(townChunk.getFuelTankContents());
     }
 
+    private @NotNull Map<String, ItemStack> captureSeedBoxContents(final @NotNull RTownChunk townChunk) {
+        final Location seedBoxLocation = townChunk.getSeedBoxLocation();
+        if (seedBoxLocation != null
+            && seedBoxLocation.getWorld() != null
+            && seedBoxLocation.getWorld().isChunkLoaded(townChunk.getX(), townChunk.getZ())
+            && seedBoxLocation.getBlock().getState() instanceof Chest chest) {
+            final Map<String, ItemStack> contents = new LinkedHashMap<>();
+            for (int slot = 0; slot < chest.getBlockInventory().getSize(); slot++) {
+                final ItemStack itemStack = chest.getBlockInventory().getItem(slot);
+                if (itemStack == null || itemStack.isEmpty()) {
+                    continue;
+                }
+                contents.put(String.valueOf(slot), itemStack.clone());
+            }
+            return this.filterConfiguredSeedContents(contents);
+        }
+        return this.filterConfiguredSeedContents(townChunk.getSeedBoxContents());
+    }
+
     private @NotNull Map<String, ItemStack> filterConfiguredFuelContents(final @NotNull Map<String, ItemStack> rawContents) {
         final Map<String, ItemStack> filteredContents = new LinkedHashMap<>();
         for (final Map.Entry<String, ItemStack> entry : rawContents.entrySet()) {
@@ -1752,6 +2902,64 @@ public final class TownRuntimeService {
             filteredContents.put(entry.getKey(), entry.getValue().clone());
         }
         return filteredContents;
+    }
+
+    private @NotNull Map<String, ItemStack> filterConfiguredSeedContents(final @NotNull Map<String, ItemStack> rawContents) {
+        final Map<String, ItemStack> filteredContents = new LinkedHashMap<>();
+        for (final Map.Entry<String, ItemStack> entry : rawContents.entrySet()) {
+            if (entry.getKey() == null || entry.getValue() == null || entry.getValue().isEmpty()) {
+                continue;
+            }
+            if (!this.plugin.getFarmConfig().isAllowedSeedMaterial(entry.getValue().getType())) {
+                continue;
+            }
+            filteredContents.put(entry.getKey(), entry.getValue().clone());
+        }
+        return filteredContents;
+    }
+
+    private void initializeFarmEnhancementDefaults(final @NotNull RTownChunk townChunk) {
+        if (townChunk.getChunkType() != ChunkType.FARM) {
+            return;
+        }
+
+        final var growthSettings = this.plugin.getFarmConfig().getGrowth();
+        final var replantSettings = this.plugin.getFarmConfig().getReplant();
+        if (growthSettings.isUnlocked(townChunk.getChunkLevel()) && townChunk.getFarmGrowthEnabledValue() == null) {
+            townChunk.setFarmGrowthEnabled(growthSettings.enabledByDefault());
+        }
+        if (replantSettings.isUnlocked(townChunk.getChunkLevel())) {
+            if (townChunk.getFarmAutoReplantEnabledValue() == null) {
+                townChunk.setFarmAutoReplantEnabled(replantSettings.enabledByDefault());
+            }
+            if (townChunk.getFarmReplantPriorityValue() == null) {
+                townChunk.setFarmReplantPriority(replantSettings.defaultSourcePriority());
+            }
+        }
+    }
+
+    private boolean shouldGrantSeedBoxAtLevel(final int farmLevel) {
+        return this.plugin.getFarmConfig().getSeedBox().isUnlocked(farmLevel);
+    }
+
+    private void initializeArmoryEnhancementDefaults(final @NotNull RTownChunk townChunk) {
+        if (townChunk.getChunkType() != ChunkType.ARMORY) {
+            return;
+        }
+
+        final var doubleSmeltSettings = this.plugin.getArmoryConfig().getDoubleSmelt();
+        if (doubleSmeltSettings.isUnlocked(townChunk.getChunkLevel())
+            && townChunk.getArmoryDoubleSmeltEnabledValue() == null) {
+            townChunk.setArmoryDoubleSmeltEnabled(doubleSmeltSettings.enabledByDefault());
+        }
+    }
+
+    private boolean shouldGrantSalvageBlockAtLevel(final int armoryLevel) {
+        return this.plugin.getArmoryConfig().getSalvageBlock().isUnlocked(armoryLevel);
+    }
+
+    private boolean shouldGrantRepairBlockAtLevel(final int armoryLevel) {
+        return this.plugin.getArmoryConfig().getRepairBlock().isUnlocked(armoryLevel);
     }
 
     private static boolean sameBlock(final @NotNull Location left, final @NotNull Location right) {
@@ -1971,7 +3179,16 @@ public final class TownRuntimeService {
 
         final int previousLevel = context.currentLevel();
         context.progressAccessor().setCurrentLevel(context.targetLevel());
+        if (scope == LevelScope.NEXUS) {
+            this.healTownNexusToFull(context.town());
+        }
         context.progressAccessor().clearLevelProgress(this.buildProgressKeyPrefix(scope, context.targetLevel()));
+        if (scope == LevelScope.FARM && context.chunk() != null) {
+            this.initializeFarmEnhancementDefaults(context.chunk());
+        }
+        if (scope == LevelScope.ARMORY && context.chunk() != null) {
+            this.initializeArmoryEnhancementDefaults(context.chunk());
+        }
         this.persistLevelContext(context);
 
         if (!evaluation.passiveRequirements().isEmpty()) {
@@ -1990,6 +3207,37 @@ public final class TownRuntimeService {
                     exception
                 );
             }
+        }
+        if (scope == LevelScope.FARM
+            && context.chunk() != null
+            && previousLevel < this.plugin.getFarmConfig().getSeedBox().unlockLevel()
+            && this.shouldGrantSeedBoxAtLevel(context.targetLevel())) {
+            this.giveSeedBox(player, context.chunk());
+        }
+        if (scope == LevelScope.ARMORY
+            && context.chunk() != null
+            && previousLevel < this.plugin.getArmoryConfig().getSalvageBlock().unlockLevel()
+            && this.shouldGrantSalvageBlockAtLevel(context.targetLevel())) {
+            this.giveSalvageBlock(player, context.chunk());
+        }
+        if (scope == LevelScope.ARMORY
+            && context.chunk() != null
+            && previousLevel < this.plugin.getArmoryConfig().getRepairBlock().unlockLevel()
+            && this.shouldGrantRepairBlockAtLevel(context.targetLevel())) {
+            this.giveRepairBlock(player, context.chunk());
+        }
+        if (scope == LevelScope.BANK
+            && context.chunk() != null
+            && this.plugin.getTownBankService() != null
+            && this.plugin.getTownBankService().shouldGrantCacheChestOnLevelGain(
+            context.town(),
+            previousLevel,
+            context.targetLevel()
+        )) {
+            this.plugin.getTownBankService().giveCacheChest(player, context.town());
+        }
+        if (scope == LevelScope.OUTPOST && context.chunk() != null) {
+            this.syncRdsTownOutpost(context.chunk());
         }
 
         if (town != null && town != context.town()) {
@@ -2024,7 +3272,7 @@ public final class TownRuntimeService {
                     new TownProgressAccessor(liveTown)
                 );
             }
-            case SECURITY, BANK, FARM, OUTPOST -> {
+            case SECURITY, BANK, FARM, OUTPOST, MEDIC, ARMORY -> {
                 final RTownChunk liveChunk = townChunk == null ? null : this.resolveLiveTownChunk(townChunk);
                 if (liveChunk == null) {
                     yield null;
@@ -2088,6 +3336,8 @@ public final class TownRuntimeService {
             case BANK -> this.plugin.getBankConfig().getLevels();
             case FARM -> this.plugin.getFarmConfig().getLevels();
             case OUTPOST -> this.plugin.getOutpostConfig().getLevels();
+            case MEDIC -> this.plugin.getMedicConfig().getLevels();
+            case ARMORY -> this.plugin.getArmoryConfig().getLevels();
         };
     }
 
@@ -2098,6 +3348,8 @@ public final class TownRuntimeService {
             case BANK -> this.plugin.getBankConfig().getHighestConfiguredLevel();
             case FARM -> this.plugin.getFarmConfig().getHighestConfiguredLevel();
             case OUTPOST -> this.plugin.getOutpostConfig().getHighestConfiguredLevel();
+            case MEDIC -> this.plugin.getMedicConfig().getHighestConfiguredLevel();
+            case ARMORY -> this.plugin.getArmoryConfig().getHighestConfiguredLevel();
         };
     }
 
@@ -2108,6 +3360,8 @@ public final class TownRuntimeService {
             case BANK -> this.plugin.getBankConfig().getNextLevel(currentLevel);
             case FARM -> this.plugin.getFarmConfig().getNextLevel(currentLevel);
             case OUTPOST -> this.plugin.getOutpostConfig().getNextLevel(currentLevel);
+            case MEDIC -> this.plugin.getMedicConfig().getNextLevel(currentLevel);
+            case ARMORY -> this.plugin.getArmoryConfig().getNextLevel(currentLevel);
         };
     }
 
@@ -2294,23 +3548,202 @@ public final class TownRuntimeService {
         final int targetLevel,
         final @Nullable LevelDefinition levelDefinition
     ) {
-        if (levelDefinition == null || levelDefinition.getRewards().isEmpty()) {
-            return List.of();
-        }
-
-        final RewardFactory<Map<String, Object>> rewardFactory = RewardFactory.getInstance();
-        final Map<String, String> placeholders = this.buildLevelPlaceholders(context, sourceLevel, targetLevel);
-        final Map<String, Map<String, Object>> expandedRewards = this.expandDefinitionPlaceholders(levelDefinition.getRewards(), placeholders);
         final List<TownLevelRewardSnapshot> rewardSnapshots = new ArrayList<>();
-        for (final Map.Entry<String, Map<String, Object>> entry : expandedRewards.entrySet()) {
-            final Map<String, Object> normalizedDefinition = this.normalizeFactoryDefinition(entry.getValue());
-            final AbstractReward reward = rewardFactory.tryFromMap(normalizedDefinition).orElse(null);
-            rewardSnapshots.add(this.createRewardSnapshot(entry.getKey(), normalizedDefinition, reward));
+        if (levelDefinition != null && !levelDefinition.getRewards().isEmpty()) {
+            final RewardFactory<Map<String, Object>> rewardFactory = RewardFactory.getInstance();
+            final Map<String, String> placeholders = this.buildLevelPlaceholders(context, sourceLevel, targetLevel);
+            final Map<String, Map<String, Object>> expandedRewards = this.expandDefinitionPlaceholders(
+                levelDefinition.getRewards(),
+                placeholders
+            );
+            for (final Map.Entry<String, Map<String, Object>> entry : expandedRewards.entrySet()) {
+                final Map<String, Object> normalizedDefinition = this.normalizeFactoryDefinition(entry.getValue());
+                final AbstractReward reward = rewardFactory.tryFromMap(normalizedDefinition).orElse(null);
+                final TownLevelRewardSnapshot rewardSnapshot = this.createRewardSnapshot(entry.getKey(), normalizedDefinition, reward);
+                if (rewardSnapshot != null) {
+                    rewardSnapshots.add(rewardSnapshot);
+                }
+            }
         }
+        rewardSnapshots.addAll(this.buildSyntheticRewardSnapshots(context, targetLevel));
         return List.copyOf(rewardSnapshots);
     }
 
-    private @NotNull TownLevelRewardSnapshot createRewardSnapshot(
+    private @NotNull List<TownLevelRewardSnapshot> buildSyntheticRewardSnapshots(
+        final @NotNull LevelContext context,
+        final int targetLevel
+    ) {
+        return switch (context.scope()) {
+            case FARM -> this.buildFarmSyntheticRewardSnapshots(targetLevel);
+            case ARMORY -> this.buildArmorySyntheticRewardSnapshots(targetLevel);
+            case OUTPOST -> this.buildOutpostSyntheticRewardSnapshots(context, targetLevel);
+            default -> List.of();
+        };
+    }
+
+    private @NotNull List<TownLevelRewardSnapshot> buildFarmSyntheticRewardSnapshots(final int targetLevel) {
+        final List<TownLevelRewardSnapshot> syntheticRewards = new ArrayList<>();
+        final var growthSettings = this.plugin.getFarmConfig().getGrowth();
+        final var seedBoxSettings = this.plugin.getFarmConfig().getSeedBox();
+        final var replantSettings = this.plugin.getFarmConfig().getReplant();
+        final var doubleHarvestSettings = this.plugin.getFarmConfig().getDoubleHarvest();
+
+        if (targetLevel == growthSettings.tierOneUnlockLevel()) {
+            syntheticRewards.add(new TownLevelRewardSnapshot(
+                "farm_growth_tier_1",
+                "FARM_UNLOCK",
+                "Enhanced Growth I",
+                "Unlocks the Farm growth toggle and increases natural crop growth speed to %sx while enabled."
+                    .formatted(TownFarmService.formatGrowthSpeedMultiplier(growthSettings.tierOneGrowthSpeedMultiplier())),
+                this.createDisplayItem(Material.WHEAT, "Enhanced Growth I", 1.0D)
+            ));
+        }
+        if (targetLevel == seedBoxSettings.unlockLevel()) {
+            syntheticRewards.add(new TownLevelRewardSnapshot(
+                "farm_seed_box",
+                "FARM_UNLOCK",
+                "Seed Box Storage",
+                "Unlocks a Farm seed box within %d blocks of the chunk marker for configured seed storage."
+                    .formatted(seedBoxSettings.placementRadiusBlocks()),
+                this.createDisplayItem(Material.CHEST, "Seed Box Storage", 1.0D)
+            ));
+        }
+        if (targetLevel == replantSettings.unlockLevel()) {
+            syntheticRewards.add(new TownLevelRewardSnapshot(
+                "farm_auto_replant",
+                "FARM_UNLOCK",
+                "Auto-Replant",
+                "Unlocks Farm auto-replanting with the default priority set to %s."
+                    .formatted(this.toDisplayLabel(replantSettings.defaultSourcePriority().name())),
+                this.createDisplayItem(Material.WHEAT_SEEDS, "Auto-Replant", 1.0D)
+            ));
+        }
+        if (targetLevel == growthSettings.tierTwoUnlockLevel()) {
+            syntheticRewards.add(new TownLevelRewardSnapshot(
+                "farm_growth_tier_2",
+                "FARM_UNLOCK",
+                "Enhanced Growth II",
+                "Upgrades the Farm growth toggle to %sx natural crop growth speed while enabled."
+                    .formatted(TownFarmService.formatGrowthSpeedMultiplier(growthSettings.tierTwoGrowthSpeedMultiplier())),
+                this.createDisplayItem(Material.GOLDEN_HOE, "Enhanced Growth II", 1.0D)
+            ));
+        }
+        if (targetLevel == doubleHarvestSettings.unlockLevel()) {
+            syntheticRewards.add(new TownLevelRewardSnapshot(
+                "farm_double_harvest",
+                "FARM_UNLOCK",
+                "Double Harvest",
+                "Harvested crop drops are multiplied by %d while this Farm chunk is active."
+                    .formatted(doubleHarvestSettings.multiplier()),
+                this.createDisplayItem(Material.HAY_BLOCK, "Double Harvest", doubleHarvestSettings.multiplier())
+            ));
+        }
+        return List.copyOf(syntheticRewards);
+    }
+
+    private @NotNull List<TownLevelRewardSnapshot> buildArmorySyntheticRewardSnapshots(final int targetLevel) {
+        final List<TownLevelRewardSnapshot> syntheticRewards = new ArrayList<>();
+        final var freeRepairSettings = this.plugin.getArmoryConfig().getFreeRepair();
+        final var salvageBlockSettings = this.plugin.getArmoryConfig().getSalvageBlock();
+        final var repairBlockSettings = this.plugin.getArmoryConfig().getRepairBlock();
+        final var doubleSmeltSettings = this.plugin.getArmoryConfig().getDoubleSmelt();
+
+        if (targetLevel == freeRepairSettings.unlockLevel()) {
+            syntheticRewards.add(new TownLevelRewardSnapshot(
+                "armory_free_repair",
+                "ARMORY_UNLOCK",
+                "Free Repair",
+                "Unlocks chunk-view free repair for equipped gear with a %s cooldown per player."
+                    .formatted(this.formatDurationMillis(freeRepairSettings.cooldownSeconds() * 1000L)),
+                this.createDisplayItem(Material.ANVIL, "Free Repair", 1.0D)
+            ));
+        }
+        if (targetLevel == salvageBlockSettings.unlockLevel()) {
+            syntheticRewards.add(new TownLevelRewardSnapshot(
+                "armory_salvage_block",
+                "ARMORY_UNLOCK",
+                "Salvage Block",
+                "Unlocks a salvage block within %d blocks of the chunk marker for salvaging supported gear."
+                    .formatted(salvageBlockSettings.placementRadiusBlocks()),
+                this.createDisplayItem(salvageBlockSettings.blockMaterial(), "Salvage Block", 1.0D)
+            ));
+        }
+        if (targetLevel == repairBlockSettings.unlockLevel()) {
+            syntheticRewards.add(new TownLevelRewardSnapshot(
+                "armory_repair_block",
+                "ARMORY_UNLOCK",
+                "Repair Block",
+                "Unlocks a repair block within %d blocks of the chunk marker for repairing iron, gold, diamond, and netherite gear."
+                    .formatted(repairBlockSettings.placementRadiusBlocks()),
+                this.createDisplayItem(repairBlockSettings.blockMaterial(), "Repair Block", 1.0D)
+            ));
+        }
+        if (targetLevel == doubleSmeltSettings.unlockLevel()) {
+            syntheticRewards.add(new TownLevelRewardSnapshot(
+                "armory_double_smelt",
+                "ARMORY_UNLOCK",
+                "Double Smelt",
+                "Unlocks furnace and blast-furnace doubling with a %sx burn multiplier and %d extra fuel per smelt."
+                    .formatted(
+                        this.formatDecimal(doubleSmeltSettings.burnFasterMultiplier()),
+                        doubleSmeltSettings.extraFuelPerSmeltUnits()
+                    ),
+                this.createDisplayItem(Material.BLAST_FURNACE, "Double Smelt", 2.0D)
+            ));
+        }
+        return List.copyOf(syntheticRewards);
+    }
+
+    private @NotNull List<TownLevelRewardSnapshot> buildOutpostSyntheticRewardSnapshots(
+        final @NotNull LevelContext context,
+        final int targetLevel
+    ) {
+        if (context.chunk() == null || targetLevel < 3) {
+            return List.of();
+        }
+
+        final boolean rdsAvailable = this.isRdsTownShopFeatureAvailable();
+        final int totalShops = switch (targetLevel) {
+            case 3 -> 1;
+            case 4 -> 3;
+            default -> 5;
+        };
+        final int additionalShops = switch (targetLevel) {
+            case 3 -> 1;
+            case 4, 5 -> 2;
+            default -> 0;
+        };
+        final String title = additionalShops == 1
+            ? "Town Shop"
+            : additionalShops + " Town Shops";
+        final String description = rdsAvailable
+            ? switch (targetLevel) {
+                case 3 -> "Unlocks 1 town shop for this Outpost. Eligible town members can claim a bound Town Shop token and place it inside this chunk.";
+                case 4 -> "Adds 2 more town shops for this Outpost, bringing the total to 3. Eligible town members can claim bound Town Shop tokens when capacity is available.";
+                default -> "Adds 2 more town shops for this Outpost, bringing the total to 5. Eligible town members can claim bound Town Shop tokens when capacity is available.";
+            }
+            : switch (targetLevel) {
+                case 3 -> "Town shop reward preview is unavailable because RDS is not installed. The Outpost still levels successfully.";
+                case 4 -> "Additional town shops are unavailable because RDS is not installed. The Outpost still levels successfully.";
+                default -> "Additional town shops are unavailable because RDS is not installed. The Outpost still levels successfully.";
+            };
+
+        final Material material = rdsAvailable ? Material.CHEST : Material.BARRIER;
+        final ItemStack displayItem = this.createDisplayItem(
+            material,
+            rdsAvailable ? title : title + " Unavailable",
+            rdsAvailable ? additionalShops : 1.0D
+        );
+        return List.of(new TownLevelRewardSnapshot(
+            "outpost_town_shops_level_" + targetLevel,
+            rdsAvailable ? "TOWN_SHOP" : "TOWN_SHOP_UNAVAILABLE",
+            title,
+            description + " Total unlocked at this level: " + totalShops + '.',
+            displayItem
+        ));
+    }
+
+    private @Nullable TownLevelRewardSnapshot createRewardSnapshot(
         final @NotNull String definitionKey,
         final @NotNull Map<String, Object> definition,
         final @Nullable AbstractReward reward
@@ -2360,6 +3793,9 @@ public final class TownRuntimeService {
             );
         }
         if (reward instanceof CommandReward commandReward) {
+            if (this.isHiddenOutpostTownShopRewardCommand(commandReward.getCommand())) {
+                return null;
+            }
             return new TownLevelRewardSnapshot(
                 definitionKey,
                 reward.getTypeId(),
@@ -2390,6 +3826,257 @@ public final class TownRuntimeService {
         return command != null && command.toLowerCase(Locale.ROOT).startsWith("rt broadcast ");
     }
 
+    /**
+     * Returns whether the optional RDS town-shop integration is available.
+     *
+     * @return {@code true} when RDS town-shop services can be reached
+     */
+    public boolean isRdsTownShopFeatureAvailable() {
+        return this.resolveRdsTownShopService() != null;
+    }
+
+    /**
+     * Attempts to reissue one bound town-shop token for an unlocked Outpost chunk.
+     *
+     * @param player requesting player
+     * @param townChunk outpost chunk to claim against
+     * @return {@code true} when a token was reissued
+     */
+    public boolean claimOutpostTownShopToken(
+        final @NotNull Player player,
+        final @NotNull RTownChunk townChunk
+    ) {
+        if (townChunk.getChunkType() != ChunkType.OUTPOST
+            || townChunk.getChunkLevel() < 3
+            || !this.hasTownPermission(player, townChunk.getTown(), TownPermissions.MANAGE_TOWN_SHOPS)) {
+            return false;
+        }
+
+        final Object townShopService = this.resolveRdsTownShopService();
+        if (townShopService == null) {
+            return false;
+        }
+
+        try {
+            final Method method = townShopService.getClass().getMethod("claimTownShopToken", Player.class, UUID.class);
+            final Object result = method.invoke(townShopService, player, townChunk.getIdentifier());
+            return result instanceof Boolean claimed && claimed;
+        } catch (final ReflectiveOperationException ignored) {
+            return false;
+        }
+    }
+
+    private boolean isHiddenOutpostTownShopRewardCommand(final @Nullable String command) {
+        if (command == null || command.isBlank()) {
+            return false;
+        }
+
+        String normalizedCommand = command.trim().toLowerCase(Locale.ROOT);
+        if (normalizedCommand.startsWith("/")) {
+            normalizedCommand = normalizedCommand.substring(1);
+        }
+        return normalizedCommand.startsWith("rs internal reward-town-shop ")
+            || normalizedCommand.startsWith("prs internal reward-town-shop ");
+    }
+
+    private void syncRdsTownOutpost(final @Nullable RTownChunk townChunk) {
+        if (townChunk == null || townChunk.getChunkType() != ChunkType.OUTPOST) {
+            return;
+        }
+
+        final Object townShopService = this.resolveRdsTownShopService();
+        if (townShopService == null) {
+            return;
+        }
+
+        try {
+            final Method method = townShopService.getClass().getMethod(
+                "syncOutpost",
+                String.class,
+                String.class,
+                String.class,
+                UUID.class,
+                String.class,
+                int.class,
+                int.class,
+                int.class
+            );
+            method.invoke(
+                townShopService,
+                "RDT",
+                townChunk.getTown().getTownUUID().toString(),
+                townChunk.getTown().getTownName(),
+                townChunk.getIdentifier(),
+                townChunk.getWorldName(),
+                townChunk.getX(),
+                townChunk.getZ(),
+                townChunk.getChunkLevel()
+            );
+        } catch (final ReflectiveOperationException exception) {
+            LOGGER.log(Level.FINE, "Failed to sync RDS outpost " + townChunk.getIdentifier(), exception);
+        }
+    }
+
+    private void removeRdsTownOutpost(final @Nullable UUID chunkUuid) {
+        if (chunkUuid == null) {
+            return;
+        }
+
+        final Object townShopService = this.resolveRdsTownShopService();
+        if (townShopService == null) {
+            return;
+        }
+
+        try {
+            final Method method = townShopService.getClass().getMethod("removeOutpost", UUID.class);
+            method.invoke(townShopService, chunkUuid);
+        } catch (final ReflectiveOperationException exception) {
+            LOGGER.log(Level.FINE, "Failed to remove RDS outpost " + chunkUuid, exception);
+        }
+    }
+
+    private @Nullable Object resolveRdsTownShopService() {
+        if (this.plugin.getServer() == null || this.plugin.getServer().getPluginManager() == null) {
+            return null;
+        }
+        final Plugin rdsPlugin = this.plugin.getServer().getPluginManager().getPlugin("RDS");
+        if (rdsPlugin == null || !rdsPlugin.isEnabled()) {
+            return null;
+        }
+
+        try {
+            final Object runtime = this.resolveRdsRuntime(rdsPlugin);
+            return runtime == null ? null : this.invokeOptional(runtime, "getTownShopService");
+        } catch (final ReflectiveOperationException ignored) {
+            return null;
+        }
+    }
+
+    private @Nullable Object resolveRdsRuntime(final @NotNull Plugin plugin) throws ReflectiveOperationException {
+        if (this.hasZeroArgMethod(plugin.getClass(), "getTownShopService")) {
+            return plugin;
+        }
+
+        final Object directRuntime = this.firstNonNull(
+            this.invokeOptional(plugin, "getRds"),
+            this.readFieldOptional(plugin, "rds")
+        );
+        if (directRuntime != null && this.hasZeroArgMethod(directRuntime.getClass(), "getTownShopService")) {
+            return directRuntime;
+        }
+
+        final Object delegate = this.firstNonNull(
+            this.readFieldOptional(plugin, "impl"),
+            this.readFieldOptional(plugin, "delegate")
+        );
+        if (delegate == null) {
+            return null;
+        }
+
+        final Object delegatedRuntime = this.firstNonNull(
+            this.invokeOptional(delegate, "getRds"),
+            this.readFieldOptional(delegate, "rds")
+        );
+        return delegatedRuntime != null && this.hasZeroArgMethod(delegatedRuntime.getClass(), "getTownShopService")
+            ? delegatedRuntime
+            : null;
+    }
+
+    private boolean hasZeroArgMethod(final @NotNull Class<?> type, final @NotNull String methodName) {
+        try {
+            type.getMethod(methodName);
+            return true;
+        } catch (final NoSuchMethodException ignored) {
+            return false;
+        }
+    }
+
+    private @Nullable Object invokeOptional(
+        final @NotNull Object target,
+        final @NotNull String methodName,
+        final Object... arguments
+    ) throws ReflectiveOperationException {
+        final Method method = this.findMethod(target.getClass(), methodName, arguments.length);
+        if (method == null) {
+            return null;
+        }
+        return method.invoke(target, arguments);
+    }
+
+    private @Nullable Method findMethod(
+        final @NotNull Class<?> type,
+        final @NotNull String methodName,
+        final int parameterCount
+    ) {
+        for (final Method method : type.getMethods()) {
+            if (method.getName().equals(methodName) && method.getParameterCount() == parameterCount) {
+                return method;
+            }
+        }
+        return null;
+    }
+
+    private boolean resolveAlliedProtectionAllowed(
+        final @NotNull RTown town,
+        final @Nullable RTownChunk townChunk,
+        final @NotNull TownProtections protection
+    ) {
+        if (protection.isBinaryToggle()) {
+            return false;
+        }
+        if (townChunk != null && townChunk.getChunkType() == ChunkType.SECURITY) {
+            final Boolean chunkOverride = this.resolveChunkAlliedProtectionAllowed(townChunk, protection);
+            if (chunkOverride != null) {
+                return chunkOverride;
+            }
+        }
+        return town.isAlliedProtectionAllowed(protection);
+    }
+
+    private @Nullable Boolean resolveChunkAlliedProtectionAllowed(
+        final @NotNull RTownChunk townChunk,
+        final @NotNull TownProtections protection
+    ) {
+        TownProtections currentProtection = protection;
+        while (currentProtection != null) {
+            final Boolean override = townChunk.getConfiguredAlliedProtectionAllowed(currentProtection);
+            if (override != null) {
+                return override;
+            }
+            currentProtection = currentProtection.getFallbackProtection();
+        }
+        return null;
+    }
+
+    private @Nullable Object readFieldOptional(
+        final @NotNull Object target,
+        final @NotNull String fieldName
+    ) throws ReflectiveOperationException {
+        Class<?> current = target.getClass();
+        while (current != null) {
+            try {
+                final Field field = current.getDeclaredField(fieldName);
+                field.setAccessible(true);
+                return field.get(target);
+            } catch (final NoSuchFieldException ignored) {
+                current = current.getSuperclass();
+            }
+        }
+        return null;
+    }
+
+    private @Nullable Object firstNonNull(final @Nullable Object... values) {
+        if (values == null) {
+            return null;
+        }
+        for (final Object value : values) {
+            if (value != null) {
+                return value;
+            }
+        }
+        return null;
+    }
+
     private @NotNull Map<String, String> buildLevelPlaceholders(
         final @NotNull LevelContext context,
         final int sourceLevel,
@@ -2398,12 +4085,17 @@ public final class TownRuntimeService {
         final Map<String, String> placeholders = new LinkedHashMap<>();
         placeholders.put("town_uuid", context.town().getTownUUID().toString());
         placeholders.put("town_name", context.town().getTownName());
+        placeholders.put(
+            "town_name_base64",
+            Base64.getUrlEncoder().withoutPadding().encodeToString(context.town().getTownName().getBytes(java.nio.charset.StandardCharsets.UTF_8))
+        );
         placeholders.put("current_level", String.valueOf(sourceLevel));
         placeholders.put("target_level", String.valueOf(targetLevel));
         placeholders.put("level_scope", context.scope().name().toLowerCase(Locale.ROOT));
         placeholders.put("level_scope_name", context.scope().getDisplayName());
         placeholders.put("chunk_uuid", context.chunk() == null ? "" : context.chunk().getIdentifier().toString());
         placeholders.put("chunk_type", context.chunk() == null ? "" : context.chunk().getChunkType().name());
+        placeholders.put("world_name", context.chunk() == null ? "" : context.chunk().getWorldName());
         placeholders.put("chunk_x", context.chunk() == null ? "0" : String.valueOf(context.chunk().getX()));
         placeholders.put("chunk_z", context.chunk() == null ? "0" : String.valueOf(context.chunk().getZ()));
         return Map.copyOf(placeholders);
@@ -2526,15 +4218,135 @@ public final class TownRuntimeService {
         };
     }
 
-    private boolean hasTownPermission(
-        final @NotNull Player player,
-        final @NotNull RTown town,
-        final @NotNull TownPermissions permission
+    private @NotNull TownRelationshipState getEffectiveRelationshipState(
+        final @NotNull RTown leftTown,
+        final @NotNull RTown rightTown
     ) {
-        final RDTPlayer playerData = this.getPlayerData(player.getUniqueId());
-        return playerData != null
-            && Objects.equals(playerData.getTownUUID(), town.getTownUUID())
-            && playerData.hasTownPermission(permission);
+        if (!this.areTownRelationshipsUnlocked(leftTown) || !this.areTownRelationshipsUnlocked(rightTown)) {
+            return TownRelationshipState.NEUTRAL;
+        }
+        final RTownRelationship storedRelationship = this.getStoredTownRelationship(leftTown, rightTown);
+        return storedRelationship == null ? TownRelationshipState.NEUTRAL : storedRelationship.getConfirmedState();
+    }
+
+    private @Nullable RTownRelationship getStoredTownRelationship(
+        final @NotNull RTown leftTown,
+        final @NotNull RTown rightTown
+    ) {
+        return this.plugin.getTownRelationshipRepository() == null
+            ? null
+            : this.plugin.getTownRelationshipRepository().findByTownPair(leftTown.getTownUUID(), rightTown.getTownUUID());
+    }
+
+    private @NotNull TownRelationshipViewEntry buildTownRelationshipViewEntry(
+        final @NotNull RTown sourceTown,
+        final @NotNull RTown targetTown,
+        final @Nullable RTownRelationship relationship
+    ) {
+        final TownRelationshipState confirmedState = relationship == null
+            ? TownRelationshipState.NEUTRAL
+            : relationship.getConfirmedState();
+        final boolean sourceUnlocked = this.areTownRelationshipsUnlocked(sourceTown);
+        final boolean targetUnlocked = this.areTownRelationshipsUnlocked(targetTown);
+        final long cooldownRemainingMillis = relationship == null
+            ? 0L
+            : Math.max(0L, relationship.getCooldownUntilMillis() - System.currentTimeMillis());
+        return new TownRelationshipViewEntry(
+            sourceTown,
+            targetTown,
+            confirmedState,
+            sourceUnlocked && targetUnlocked ? confirmedState : TownRelationshipState.NEUTRAL,
+            relationship == null ? null : relationship.getPendingState(),
+            relationship == null ? null : relationship.getPendingRequesterTownUuid(),
+            cooldownRemainingMillis,
+            sourceUnlocked,
+            targetUnlocked
+        );
+    }
+
+    private void persistTownRelationship(final @NotNull RTownRelationship relationship) {
+        if (this.plugin.getTownRelationshipRepository() == null) {
+            return;
+        }
+        if (relationship.getId() == null) {
+            this.plugin.getTownRelationshipRepository().create(relationship);
+            return;
+        }
+        this.plugin.getTownRelationshipRepository().update(relationship);
+    }
+
+    private void broadcastPendingTownRelationshipRequest(
+        final @NotNull RTown sourceTown,
+        final @NotNull RTown targetTown,
+        final @NotNull TownRelationshipState requestedState
+    ) {
+        final Server server = this.plugin.getServer();
+        if (server == null) {
+            return;
+        }
+        for (final RDTPlayer member : targetTown.getMembers()) {
+            final Player onlinePlayer = server.getPlayer(member.getIdentifier());
+            if (onlinePlayer == null || !onlinePlayer.isOnline()) {
+                continue;
+            }
+            new I18n.Builder("town_relationship_shared.broadcasts.request_received", onlinePlayer)
+                .includePrefix()
+                .withPlaceholders(Map.of(
+                    "source_town", sourceTown.getTownName(),
+                    "target_town", targetTown.getTownName(),
+                    "relationship", this.resolveRelationshipStateText(requestedState, onlinePlayer)
+                ))
+                .build()
+                .sendMessage();
+        }
+    }
+
+    private void broadcastConfirmedTownRelationshipChange(
+        final @NotNull RTown firstTown,
+        final @NotNull RTown secondTown,
+        final @NotNull TownRelationshipState confirmedState
+    ) {
+        final Server server = this.plugin.getServer();
+        if (server == null) {
+            return;
+        }
+        final String translationKey = "town_relationship_shared.broadcasts.confirmed." + confirmedState.getTranslationKey();
+        this.broadcastConfirmedTownRelationshipChange(server, firstTown, secondTown, confirmedState, translationKey);
+        this.broadcastConfirmedTownRelationshipChange(server, secondTown, firstTown, confirmedState, translationKey);
+    }
+
+    private void broadcastConfirmedTownRelationshipChange(
+        final @NotNull Server server,
+        final @NotNull RTown town,
+        final @NotNull RTown otherTown,
+        final @NotNull TownRelationshipState confirmedState,
+        final @NotNull String translationKey
+    ) {
+        for (final RDTPlayer member : town.getMembers()) {
+            final Player onlinePlayer = server.getPlayer(member.getIdentifier());
+            if (onlinePlayer == null || !onlinePlayer.isOnline()) {
+                continue;
+            }
+            new I18n.Builder(translationKey, onlinePlayer)
+                .includePrefix()
+                .withPlaceholders(Map.of(
+                    "other_town", otherTown.getTownName(),
+                    "relationship", this.resolveRelationshipStateText(confirmedState, onlinePlayer)
+                ))
+                .build()
+                .sendMessage();
+        }
+    }
+
+    private @NotNull String resolveRelationshipStateText(
+        final @NotNull TownRelationshipState relationshipState,
+        final @NotNull Player player
+    ) {
+        return PlainTextComponentSerializer.plainText().serialize(
+            new I18n.Builder("town_relationship_shared.states." + relationshipState.getTranslationKey(), player)
+                .build()
+                .component()
+        );
     }
 
     private @NotNull String buildProgressKeyPrefix(final @NotNull LevelScope scope, final int targetLevel) {
@@ -2881,6 +4693,36 @@ public final class TownRuntimeService {
         return String.join(" ", formattedWords);
     }
 
+    private @NotNull String formatDecimal(final double value) {
+        final String formatted = String.format(Locale.ROOT, "%.2f", value);
+        if (formatted.endsWith("00")) {
+            return formatted.substring(0, formatted.length() - 3);
+        }
+        if (formatted.endsWith("0")) {
+            return formatted.substring(0, formatted.length() - 1);
+        }
+        return formatted;
+    }
+
+    private @NotNull String formatDurationMillis(final long durationMillis) {
+        final long clampedMillis = Math.max(0L, durationMillis);
+        final long totalSeconds = Math.floorDiv(clampedMillis, 1000L);
+        final long days = Math.floorDiv(totalSeconds, 86_400L);
+        final long hours = Math.floorDiv(totalSeconds % 86_400L, 3_600L);
+        final long minutes = Math.floorDiv(totalSeconds % 3_600L, 60L);
+        final long seconds = totalSeconds % 60L;
+        if (days > 0L) {
+            return days + "d " + hours + "h";
+        }
+        if (hours > 0L) {
+            return hours + "h " + minutes + "m";
+        }
+        if (minutes > 0L) {
+            return minutes + "m " + seconds + "s";
+        }
+        return seconds + "s";
+    }
+
     /**
      * Result of a chunk-type transition that may grant or remove a fuel tank.
      *
@@ -2888,16 +4730,69 @@ public final class TownRuntimeService {
      * @param fuelTankGranted whether a new bound fuel tank item was granted
      * @param fuelTankRemoved whether an existing placed fuel tank was removed
      * @param droppedFuel whether stored fuel items were dropped at the tank location
+     * @param seedBoxGranted whether a new bound seed-box item was granted
+     * @param seedBoxRemoved whether an existing placed seed box was removed
+     * @param droppedSeeds whether stored seed items were dropped at the seed-box location
+     * @param salvageBlockGranted whether a new bound salvage block item was granted
+     * @param salvageBlockRemoved whether an existing placed salvage block was removed
+     * @param repairBlockGranted whether a new bound repair block item was granted
+     * @param repairBlockRemoved whether an existing placed repair block was removed
      */
     public record ChunkTypeChangeResult(
         boolean success,
         boolean fuelTankGranted,
         boolean fuelTankRemoved,
-        boolean droppedFuel
+        boolean droppedFuel,
+        boolean seedBoxGranted,
+        boolean seedBoxRemoved,
+        boolean droppedSeeds,
+        boolean salvageBlockGranted,
+        boolean salvageBlockRemoved,
+        boolean repairBlockGranted,
+        boolean repairBlockRemoved
     ) {
 
         private static @NotNull ChunkTypeChangeResult failure() {
-            return new ChunkTypeChangeResult(false, false, false, false);
+            return new ChunkTypeChangeResult(false, false, false, false, false, false, false, false, false, false, false);
+        }
+    }
+
+    /**
+     * Status for one Armory block direct-break recovery action.
+     */
+    public enum ArmoryBlockBreakStatus {
+        SUCCESS,
+        NO_PERMISSION,
+        INVALID_CHUNK,
+        NO_BLOCK,
+        FAILED
+    }
+
+    /**
+     * Result of one Armory block direct-break recovery action.
+     *
+     * @param status break outcome
+     */
+    public record ArmoryBlockBreakResult(@NotNull ArmoryBlockBreakStatus status) {
+
+        private static @NotNull ArmoryBlockBreakResult success() {
+            return new ArmoryBlockBreakResult(ArmoryBlockBreakStatus.SUCCESS);
+        }
+
+        private static @NotNull ArmoryBlockBreakResult noPermission() {
+            return new ArmoryBlockBreakResult(ArmoryBlockBreakStatus.NO_PERMISSION);
+        }
+
+        private static @NotNull ArmoryBlockBreakResult invalidChunk() {
+            return new ArmoryBlockBreakResult(ArmoryBlockBreakStatus.INVALID_CHUNK);
+        }
+
+        private static @NotNull ArmoryBlockBreakResult noBlock() {
+            return new ArmoryBlockBreakResult(ArmoryBlockBreakStatus.NO_BLOCK);
+        }
+
+        private static @NotNull ArmoryBlockBreakResult failed() {
+            return new ArmoryBlockBreakResult(ArmoryBlockBreakStatus.FAILED);
         }
     }
 
@@ -2944,6 +4839,49 @@ public final class TownRuntimeService {
         }
     }
 
+    /**
+     * Status for a Farm seed-box pickup action.
+     */
+    public enum SeedBoxPickupStatus {
+        SUCCESS,
+        NO_PERMISSION,
+        INVALID_CHUNK,
+        NO_SEED_BOX,
+        FAILED
+    }
+
+    /**
+     * Result of a Farm seed-box pickup action.
+     *
+     * @param status pickup outcome
+     * @param droppedSeeds whether stored seed items were dropped at the former seed-box location
+     */
+    public record SeedBoxPickupResult(
+        @NotNull SeedBoxPickupStatus status,
+        boolean droppedSeeds
+    ) {
+
+        private static @NotNull SeedBoxPickupResult success(final boolean droppedSeeds) {
+            return new SeedBoxPickupResult(SeedBoxPickupStatus.SUCCESS, droppedSeeds);
+        }
+
+        private static @NotNull SeedBoxPickupResult noPermission() {
+            return new SeedBoxPickupResult(SeedBoxPickupStatus.NO_PERMISSION, false);
+        }
+
+        private static @NotNull SeedBoxPickupResult invalidChunk() {
+            return new SeedBoxPickupResult(SeedBoxPickupStatus.INVALID_CHUNK, false);
+        }
+
+        private static @NotNull SeedBoxPickupResult noSeedBox() {
+            return new SeedBoxPickupResult(SeedBoxPickupStatus.NO_SEED_BOX, false);
+        }
+
+        private static @NotNull SeedBoxPickupResult failed() {
+            return new SeedBoxPickupResult(SeedBoxPickupStatus.FAILED, false);
+        }
+    }
+
     private record LevelContext(
         @NotNull LevelScope scope,
         @NotNull RTown town,
@@ -2968,6 +4906,27 @@ public final class TownRuntimeService {
 
         private static @NotNull FuelTankRemoval none() {
             return new FuelTankRemoval(false, false);
+        }
+    }
+
+    private record SeedBoxRemoval(boolean removed, boolean droppedSeeds) {
+
+        private static @NotNull SeedBoxRemoval none() {
+            return new SeedBoxRemoval(false, false);
+        }
+    }
+
+    private record SalvageBlockRemoval(boolean removed) {
+
+        private static @NotNull SalvageBlockRemoval none() {
+            return new SalvageBlockRemoval(false);
+        }
+    }
+
+    private record RepairBlockRemoval(boolean removed) {
+
+        private static @NotNull RepairBlockRemoval none() {
+            return new RepairBlockRemoval(false);
         }
     }
 

@@ -436,6 +436,13 @@ abstract class AbstractTownProtectionView extends BaseView {
             : this.sharedText("states.restricted", player);
     }
 
+    protected final @NotNull String resolveAlliedStateDisplay(final @Nullable Boolean allowed, final @NotNull Player player) {
+        if (allowed == null) {
+            return this.sharedText("states.inherit", player);
+        }
+        return allowed ? this.sharedText("states.allowed", player) : this.sharedText("states.restricted", player);
+    }
+
     protected final @NotNull String resolveScopeDisplay(final @NotNull Context context) {
         return this.sharedText(this.resolveChunk(context) == null ? "scope.town" : "scope.chunk", context.getPlayer());
     }

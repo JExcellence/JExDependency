@@ -296,6 +296,10 @@ public class BlockListener implements Listener {
             .withPlaceholders(Map.of("chunk_x", chunkX, "chunk_z", chunkZ))
             .build()
             .sendMessage();
+        new I18n.Builder("block_listener.chunk.place.next_step", player)
+            .includePrefix()
+            .build()
+            .sendMessage();
     }
 
     private void openNexusOverview(final @NotNull Player player, final @NotNull RTown town) {

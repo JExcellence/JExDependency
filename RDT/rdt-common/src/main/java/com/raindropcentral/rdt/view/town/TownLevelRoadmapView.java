@@ -145,6 +145,8 @@ public final class TownLevelRoadmapView extends BaseView {
             case BANK -> plugin.getBankConfig().getLevels().keySet();
             case FARM -> plugin.getFarmConfig().getLevels().keySet();
             case OUTPOST -> plugin.getOutpostConfig().getLevels().keySet();
+            case MEDIC -> plugin.getMedicConfig().getLevels().keySet();
+            case ARMORY -> plugin.getArmoryConfig().getLevels().keySet();
         });
         levels.sort(Comparator.naturalOrder());
         return List.copyOf(levels);
@@ -182,7 +184,7 @@ public final class TownLevelRoadmapView extends BaseView {
 
         return switch (this.resolveScope(context)) {
             case NEXUS -> plugin.getTownRuntimeService().getNexusLevelProgress(context.getPlayer(), town, level);
-            case SECURITY, BANK, FARM, OUTPOST -> {
+            case SECURITY, BANK, FARM, OUTPOST, MEDIC, ARMORY -> {
                 final var chunk = TownLevelViewSupport.resolveChunk(context);
                 yield chunk == null
                     ? fallbackSnapshot

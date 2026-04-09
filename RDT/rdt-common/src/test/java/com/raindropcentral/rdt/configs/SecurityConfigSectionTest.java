@@ -48,6 +48,7 @@ class SecurityConfigSectionTest {
         assertTrue(levelTwo.getRequirements().containsKey("vault_upgrade"));
         assertTrue(levelTwo.getRequirements().containsKey("reinforcement_materials"));
         assertTrue(levelTwo.getRewards().containsKey("town_broadcast"));
+        assertEquals(Material.CRYING_OBSIDIAN, section.getBlockMaterial());
 
         assertTrue(section.getFuel().isEnabled());
         assertEquals(60, section.getFuel().getCalculationIntervalSeconds());
@@ -130,6 +131,7 @@ class SecurityConfigSectionTest {
         assertTrue(section.getFuel().isOfflineProtection());
         assertEquals(90, section.getFuel().getCalculationIntervalSeconds());
         assertEquals(5, section.getFuel().getTankPlacementRadiusBlocks());
+        assertEquals(Material.CRYING_OBSIDIAN, section.getBlockMaterial());
         assertEquals(40.0D, section.getFuelDefinition(Material.COAL).units());
         assertEquals(1.25D, section.getFuel().getBaseRate());
         assertEquals(0.6D, section.getFuelChunkTypeDefinition(com.raindropcentral.rdt.utils.ChunkType.SECURITY).minWeight());
@@ -171,5 +173,46 @@ class SecurityConfigSectionTest {
         assertEquals(1.45D, nexusDefinition.weight());
         assertEquals(0.03D, nexusDefinition.levelScale());
         assertNull(nexusDefinition.minWeight());
+    }
+
+    @Test
+    void invalidBlockMaterialFallsBackToSecurityDefault() {
+        final SecurityConfigSection invalidName = SecurityConfigSection.fromInputStream(new ByteArrayInputStream("""
+            block_material: NOT_A_BLOCK
+            """.getBytes(StandardCharsets.UTF_8)));
+        final SecurityConfigSection nonBlock = SecurityConfigSection.fromInputStream(new ByteArrayInputStream("""
+            block_material: GOLD_INGOT
+            """.getBytes(StandardCharsets.UTF_8)));
+        final SecurityConfigSection chest = SecurityConfigSection.fromInputStream(new ByteArrayInputStream("""
+            block_material: CHEST
+            """.getBytes(StandardCharsets.UTF_8)));
+        final SecurityConfigSection trappedChest = SecurityConfigSection.fromInputStream(new ByteArrayInputStream("""
+            block_material: TRAPPED_CHEST
+            """.getBytes(StandardCharsets.UTF_8)));
+        final SecurityConfigSection hopper = SecurityConfigSection.fromInputStream(new ByteArrayInputStream("""
+            block_material: HOPPER
+            """.getBytes(StandardCharsets.UTF_8)));
+
+        assertEquals(Material.CRYING_OBSIDIAN, invalidName.getBlockMaterial());
+        assertEquals(Material.CRYING_OBSIDIAN, nonBlock.getBlockMaterial());
+        assertEquals(Material.CRYING_OBSIDIAN, chest.getBlockMaterial());
+        assertEquals(Material.CRYING_OBSIDIAN, trappedChest.getBlockMaterial());
+        assertEquals(Material.CRYING_OBSIDIAN, hopper.getBlockMaterial());
+    }
+
+    @Test
+    void medicAndArmoryFuelWeightsFallBackToBaseDefinition() {
+        final SecurityConfigSection section = SecurityConfigSection.createDefault();
+        final SecurityConfigSection.FuelChunkTypeDefinition baseDefinition =
+            section.getFuelChunkTypeDefinition(com.raindropcentral.rdt.utils.ChunkType.DEFAULT);
+
+        assertEquals(
+            baseDefinition,
+            section.getFuelChunkTypeDefinition(com.raindropcentral.rdt.utils.ChunkType.MEDIC)
+        );
+        assertEquals(
+            baseDefinition,
+            section.getFuelChunkTypeDefinition(com.raindropcentral.rdt.utils.ChunkType.ARMORY)
+        );
     }
 }

@@ -1,21 +1,39 @@
 # Configurable Security chunk progression levels.
 # Add, remove, or reorder numeric level keys as desired.
 # The highest numeric key becomes the Security max level.
+# Valid Bukkit block material used for the Security chunk marker.
+block_material: CRYING_OBSIDIAN
+
+# Fuel system that powers Security chunk protection.
 fuel:
+  # Master switch for fuel drain and fuel-tank behavior.
   enabled: true
+  # When true, fuel drain pauses while the town has no online members.
   offline_protection: false
+  # How often fuel drain is recalculated and consumed.
   calculation_interval_seconds: 60
+  # Maximum distance from the Security chunk marker where the tank may be placed.
   tank_placement_radius_blocks: 3
   fuels:
     redstone:
+      # Bukkit material accepted as fuel.
       material: REDSTONE
+      # Fuel units provided by one item of this material.
       units: 25
 
+  # Hourly drain formula:
+  # base_rate * effective_chunks^chunk_exponent * (1 + town_level_rate * max(town_level - 1, 0))
+  # `effective_chunks` is the sum of chunk-type weights, clamped by
+  # `minimum_effective_chunk_ratio * claimed_chunk_count`.
   base_rate: 0.80
   chunk_exponent: 1.08
   town_level_rate: 0.04
   minimum_effective_chunk_ratio: 0.75
 
+  # Weight rules used to compute `effective_chunks`.
+  # `base` is also used for Default, Claim Pending, Medic, and Armory chunks.
+  # Nexus scaling uses the town's Nexus level; other entries use the chunk's own level.
+  # Effective weight = max(min_weight, weight * (1 + level_scale * (level - 1))) when `min_weight` is set.
   chunk_types:
     base:
       weight: 1.00
@@ -47,6 +65,15 @@ fuel:
       level_scale: 0.05
       min_weight: 1.15
 
+# Each numeric key is the level reached after the upgrade succeeds.
+# Requirement and reward entry names (for example `vault_upgrade`) are stable IDs used for progress tracking and UI.
+# `description` is the player-facing label shown in upgrade previews.
+# Currency requirements use `currency`, `amount`, and `consumable`.
+# Item requirements use `requiredItems`; `consumeOnComplete` removes contributed items and `exactMatch`
+# switches matching from material-only to full item similarity.
+# Currency rewards use `currencyId` and deposit into the town bank.
+# Command rewards can use placeholders such as {town_uuid}, {town_name}, {target_level}, {chunk_x}, and {chunk_z}.
+# `executeAsPlayer: false` runs the command from console instead of as the player.
 levels:
   1:
     requirements: {}

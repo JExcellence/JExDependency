@@ -30,7 +30,8 @@ public enum ChunkType {
     SECURITY,
     OUTPOST,
     MEDIC,
-    BANK;
+    BANK,
+    ARMORY;
 
     /**
      * Returns whether this type matches the supplied type.

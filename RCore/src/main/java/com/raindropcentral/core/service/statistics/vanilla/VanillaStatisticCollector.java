@@ -24,7 +24,6 @@ import com.raindropcentral.core.service.statistics.vanilla.config.VanillaStatist
 import com.raindropcentral.core.service.statistics.vanilla.privacy.UuidAnonymizer;
 import com.raindropcentral.core.service.statistics.vanilla.version.StatisticAvailabilityChecker;
 import com.raindropcentral.core.service.statistics.vanilla.version.StatisticMapper;
-import org.bukkit.Statistic;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 

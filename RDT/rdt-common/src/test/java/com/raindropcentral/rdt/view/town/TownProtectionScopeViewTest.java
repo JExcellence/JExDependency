@@ -64,6 +64,18 @@ class TownProtectionScopeViewTest {
             TownItemUseProtectionsView.class,
             TownProtectionScopeView.resolveTargetViewClass(TownProtectionCategory.ROLE_BASED, TownItemUseProtectionsView.VIEW_KEY)
         );
+        assertSame(
+            TownAlliedProtectionsView.class,
+            TownProtectionScopeView.resolveTargetViewClass(TownProtectionCategory.ROLE_BASED, TownAlliedProtectionsView.VIEW_KEY)
+        );
+        assertSame(
+            TownAlliedSwitchProtectionsView.class,
+            TownProtectionScopeView.resolveTargetViewClass(TownProtectionCategory.ROLE_BASED, TownAlliedSwitchProtectionsView.VIEW_KEY)
+        );
+        assertSame(
+            TownAlliedItemUseProtectionsView.class,
+            TownProtectionScopeView.resolveTargetViewClass(TownProtectionCategory.ROLE_BASED, TownAlliedItemUseProtectionsView.VIEW_KEY)
+        );
     }
 
     @Test

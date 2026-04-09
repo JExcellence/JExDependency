@@ -14,32 +14,43 @@
 package com.raindropcentral.rdt.service;
 
 import com.raindropcentral.rdt.RDT;
+import com.raindropcentral.rdt.configs.ArmoryConfigSection;
 import com.raindropcentral.rdt.configs.BankConfigSection;
 import com.raindropcentral.rdt.configs.ConfigSection;
 import com.raindropcentral.rdt.configs.FarmConfigSection;
+import com.raindropcentral.rdt.configs.MedicConfigSection;
 import com.raindropcentral.rdt.configs.NexusConfigSection;
 import com.raindropcentral.rdt.configs.OutpostConfigSection;
 import com.raindropcentral.rdt.configs.SecurityConfigSection;
 import com.raindropcentral.rdt.database.entity.RDTPlayer;
 import com.raindropcentral.rdt.database.entity.RTown;
 import com.raindropcentral.rdt.database.entity.RTownChunk;
+import com.raindropcentral.rdt.database.entity.RTownRelationship;
 import com.raindropcentral.rdt.database.repository.RRDTPlayer;
 import com.raindropcentral.rdt.database.repository.RRTown;
 import com.raindropcentral.rdt.database.repository.RRTownChunk;
+import com.raindropcentral.rdt.database.repository.RRTownRelationship;
+import com.raindropcentral.rdt.items.SeedBox;
 import com.raindropcentral.rdt.utils.ChunkType;
+import com.raindropcentral.rdt.utils.FarmReplantPriority;
 import com.raindropcentral.rdt.utils.TownArchetype;
 import com.raindropcentral.rdt.utils.TownPermissions;
 import com.raindropcentral.rdt.utils.TownProtections;
+import com.raindropcentral.rdt.utils.TownRelationshipState;
 import com.raindropcentral.rplatform.economy.JExEconomyBridge;
 import com.raindropcentral.rplatform.reward.RewardService;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Animals;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -50,12 +61,16 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.io.ByteArrayInputStream;
 import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.inOrder;
@@ -78,6 +93,9 @@ class TownRuntimeServiceTest {
 
     @Mock
     private RRTown townRepository;
+
+    @Mock
+    private RRTownRelationship townRelationshipRepository;
 
     @Mock
     private TownService townService;
@@ -149,6 +167,9 @@ class TownRuntimeServiceTest {
             """
                 levels:
                   "1":
+                    combat:
+                      max_health: 1600
+                      defense: 5
                     requirements:
                       town_charter:
                         type: CURRENCY
@@ -203,6 +224,9 @@ class TownRuntimeServiceTest {
             """
                 levels:
                   "1":
+                    combat:
+                      max_health: 1600
+                      defense: 5
                     requirements:
                       town_charter:
                         type: CURRENCY
@@ -267,6 +291,9 @@ class TownRuntimeServiceTest {
             """
                 levels:
                   "1":
+                    combat:
+                      max_health: 1600
+                      defense: 5
                     requirements:
                       town_charter:
                         type: CURRENCY
@@ -303,6 +330,7 @@ class TownRuntimeServiceTest {
             assertEquals("#55CDFC", createdTown.getTownColorHex());
             assertEquals(1, createdTown.getNexusLevel());
             assertEquals(1, createdTown.getTownLevel());
+            assertEquals(1600.0D, createdTown.getCurrentNexusHealth(1600.0D), 0.000_1D);
             assertEquals(townUuid, playerData.getTownUUID());
             assertEquals(RTown.MAYOR_ROLE_ID, playerData.getTownRoleId());
             assertTrue(playerData.getTownCreationCurrencyProgress().isEmpty());
@@ -476,6 +504,7 @@ class TownRuntimeServiceTest {
         final UUID mayorUuid = UUID.randomUUID();
         final UUID playerUuid = UUID.randomUUID();
         final RTown liveTown = new RTown(townUuid, mayorUuid, "Test Town", null);
+        liveTown.setCurrentNexusHealth(125.0D, 1000.0D);
         final RDTPlayer playerData = new RDTPlayer(playerUuid, townUuid, RTown.MAYOR_ROLE_ID);
         playerData.grantTownPermission(TownPermissions.UPGRADE_TOWN);
 
@@ -491,6 +520,9 @@ class TownRuntimeServiceTest {
             """
                 levels:
                   "2":
+                    combat:
+                      max_health: 2000
+                      defense: 9
                     requirements: {}
                     rewards: {}
                 """,
@@ -509,6 +541,47 @@ class TownRuntimeServiceTest {
 
         assertEquals(LevelUpStatus.SUCCESS, result.status());
         assertEquals(2, liveTown.getTownLevel());
+        final NexusCombatSnapshot combatSnapshot = service.getNexusCombatSnapshot(liveTown);
+        assertEquals(2000.0D, combatSnapshot.currentHealth(), 0.000_1D);
+        assertEquals(2000.0D, combatSnapshot.maxHealth(), 0.000_1D);
+        assertEquals(9.0D, combatSnapshot.defense(), 0.000_1D);
+        verify(townRepository).update(liveTown);
+    }
+
+    @Test
+    void getNexusCombatSnapshotBackfillsLegacyPersistedHealthToConfiguredMaximum() throws ReflectiveOperationException {
+        final UUID townUuid = UUID.randomUUID();
+        final UUID mayorUuid = UUID.randomUUID();
+        final RTown liveTown = new RTown(townUuid, mayorUuid, "Test Town", null);
+        setEntityId(liveTown, 1L);
+
+        when(townRepository.findByTownUUID(townUuid)).thenReturn(liveTown);
+
+        final RDT plugin = this.createPluginWithConfigs(
+            """
+                town:
+                  archetype_change_cooldown_seconds: 86400
+                """,
+            """
+                levels:
+                  "1":
+                    combat:
+                      max_health: 1800
+                      defense: 4
+                    requirements: {}
+                    rewards: {}
+                """,
+            ""
+        );
+        setField(plugin, "townRepository", townRepository);
+        final TownRuntimeService service = new TownRuntimeService(plugin);
+
+        final NexusCombatSnapshot snapshot = service.getNexusCombatSnapshot(liveTown);
+
+        assertTrue(liveTown.hasPersistedCurrentNexusHealth());
+        assertEquals(1800.0D, snapshot.currentHealth(), 0.000_1D);
+        assertEquals(1800.0D, snapshot.maxHealth(), 0.000_1D);
+        assertEquals(4.0D, snapshot.defense(), 0.000_1D);
         verify(townRepository).update(liveTown);
     }
 
@@ -637,16 +710,20 @@ class TownRuntimeServiceTest {
     }
 
     @Test
-    void getChunkLevelProgressUsesTypeSpecificConfigsForBankFarmAndOutpost() throws ReflectiveOperationException {
+    void getChunkLevelProgressUsesTypeSpecificConfigsForBankFarmOutpostMedicAndArmory() throws ReflectiveOperationException {
         final UUID townUuid = UUID.randomUUID();
         final UUID mayorUuid = UUID.randomUUID();
         final RTown liveTown = new RTown(townUuid, mayorUuid, "Test Town", null);
         final RTownChunk bankChunk = new RTownChunk(liveTown, "world", 3, 4, ChunkType.BANK);
         final RTownChunk farmChunk = new RTownChunk(liveTown, "world", 5, 6, ChunkType.FARM);
         final RTownChunk outpostChunk = new RTownChunk(liveTown, "world", 7, 8, ChunkType.OUTPOST);
+        final RTownChunk medicChunk = new RTownChunk(liveTown, "world", 9, 10, ChunkType.MEDIC);
+        final RTownChunk armoryChunk = new RTownChunk(liveTown, "world", 11, 12, ChunkType.ARMORY);
         liveTown.addChunk(bankChunk);
         liveTown.addChunk(farmChunk);
         liveTown.addChunk(outpostChunk);
+        liveTown.addChunk(medicChunk);
+        liveTown.addChunk(armoryChunk);
 
         when(townRepository.findByTownUUID(townUuid)).thenReturn(liveTown);
 
@@ -686,6 +763,18 @@ class TownRuntimeServiceTest {
                   "5":
                     requirements: {}
                     rewards: {}
+                """,
+            """
+                levels:
+                  "6":
+                    requirements: {}
+                    rewards: {}
+                """,
+            """
+                levels:
+                  "7":
+                    requirements: {}
+                    rewards: {}
                 """
         );
         setField(plugin, "townRepository", townRepository);
@@ -694,6 +783,8 @@ class TownRuntimeServiceTest {
         final LevelProgressSnapshot bankSnapshot = service.getChunkLevelProgress(player, bankChunk);
         final LevelProgressSnapshot farmSnapshot = service.getChunkLevelProgress(player, farmChunk);
         final LevelProgressSnapshot outpostSnapshot = service.getChunkLevelProgress(player, outpostChunk);
+        final LevelProgressSnapshot medicSnapshot = service.getChunkLevelProgress(player, medicChunk);
+        final LevelProgressSnapshot armorySnapshot = service.getChunkLevelProgress(player, armoryChunk);
 
         assertEquals(LevelScope.BANK, bankSnapshot.scope());
         assertEquals(3, bankSnapshot.maxLevel());
@@ -704,10 +795,16 @@ class TownRuntimeServiceTest {
         assertEquals(LevelScope.OUTPOST, outpostSnapshot.scope());
         assertEquals(5, outpostSnapshot.maxLevel());
         assertEquals(5, outpostSnapshot.displayLevel());
+        assertEquals(LevelScope.MEDIC, medicSnapshot.scope());
+        assertEquals(6, medicSnapshot.maxLevel());
+        assertEquals(6, medicSnapshot.displayLevel());
+        assertEquals(LevelScope.ARMORY, armorySnapshot.scope());
+        assertEquals(7, armorySnapshot.maxLevel());
+        assertEquals(7, armorySnapshot.displayLevel());
     }
 
     @Test
-    void levelUpChunkSupportsBankFarmAndOutpostAndBankUnlocksRemoteAccess() throws ReflectiveOperationException {
+    void levelUpChunkSupportsBankFarmOutpostMedicAndArmoryAndBankUsesConfigDrivenUnlocks() throws ReflectiveOperationException {
         final UUID townUuid = UUID.randomUUID();
         final UUID mayorUuid = UUID.randomUUID();
         final UUID playerUuid = UUID.randomUUID();
@@ -715,9 +812,13 @@ class TownRuntimeServiceTest {
         final RTownChunk bankChunk = new RTownChunk(liveTown, "world", 3, 4, ChunkType.BANK);
         final RTownChunk farmChunk = new RTownChunk(liveTown, "world", 5, 6, ChunkType.FARM);
         final RTownChunk outpostChunk = new RTownChunk(liveTown, "world", 7, 8, ChunkType.OUTPOST);
+        final RTownChunk medicChunk = new RTownChunk(liveTown, "world", 9, 10, ChunkType.MEDIC);
+        final RTownChunk armoryChunk = new RTownChunk(liveTown, "world", 11, 12, ChunkType.ARMORY);
         liveTown.addChunk(bankChunk);
         liveTown.addChunk(farmChunk);
         liveTown.addChunk(outpostChunk);
+        liveTown.addChunk(medicChunk);
+        liveTown.addChunk(armoryChunk);
         final RDTPlayer playerData = new RDTPlayer(playerUuid, townUuid, RTown.MAYOR_ROLE_ID);
         playerData.grantTownPermission(TownPermissions.UPGRADE_CHUNK);
 
@@ -761,6 +862,18 @@ class TownRuntimeServiceTest {
                   "2":
                     requirements: {}
                     rewards: {}
+                """,
+            """
+                levels:
+                  "2":
+                    requirements: {}
+                    rewards: {}
+                """,
+            """
+                levels:
+                  "2":
+                    requirements: {}
+                    rewards: {}
                 """
         );
         setField(plugin, "townRepository", townRepository);
@@ -770,11 +883,16 @@ class TownRuntimeServiceTest {
         assertEquals(LevelUpStatus.SUCCESS, service.levelUpChunk(player, bankChunk).status());
         assertEquals(LevelUpStatus.SUCCESS, service.levelUpChunk(player, farmChunk).status());
         assertEquals(LevelUpStatus.SUCCESS, service.levelUpChunk(player, outpostChunk).status());
+        assertEquals(LevelUpStatus.SUCCESS, service.levelUpChunk(player, medicChunk).status());
+        assertEquals(LevelUpStatus.SUCCESS, service.levelUpChunk(player, armoryChunk).status());
         assertEquals(2, bankChunk.getChunkLevel());
         assertEquals(2, farmChunk.getChunkLevel());
         assertEquals(2, outpostChunk.getChunkLevel());
-        assertTrue(liveTown.supportsRemoteBankAccess());
-        verify(townRepository, times(3)).update(liveTown);
+        assertEquals(2, medicChunk.getChunkLevel());
+        assertEquals(2, armoryChunk.getChunkLevel());
+        assertTrue(plugin.getBankConfig().getItemStorage().isUnlocked(bankChunk.getChunkLevel()));
+        assertFalse(plugin.getBankConfig().getRemoteAccess().isUnlocked(bankChunk.getChunkLevel()));
+        verify(townRepository, times(5)).update(liveTown);
     }
 
     @Test
@@ -825,6 +943,287 @@ class TownRuntimeServiceTest {
         assertEquals(4, liveChunk.getChunkLevel());
         assertEquals(RTown.MAYOR_ROLE_ID, liveChunk.getProtectionRoleId(TownProtections.BREAK_BLOCK));
         assertEquals(500.0D, liveChunk.getLevelCurrencyProgress("security.level.4.vault"), 0.000_1D);
+    }
+
+    @Test
+    void setChunkTypeUpdatesPlacedMarkerBlockToConfiguredChunkMaterial() throws ReflectiveOperationException {
+        final UUID townUuid = UUID.randomUUID();
+        final UUID mayorUuid = UUID.randomUUID();
+        final RTown liveTown = new RTown(townUuid, mayorUuid, "Test Town", null);
+        final RTownChunk liveChunk = new RTownChunk(liveTown, "world", 3, 4, ChunkType.DEFAULT);
+        final Location markerLocation = new Location(world, 48.0D, 64.0D, 64.0D);
+        final Block markerBlock = org.mockito.Mockito.mock(Block.class);
+        liveTown.addChunk(liveChunk);
+        liveChunk.setChunkBlockLocation(markerLocation);
+
+        when(world.isChunkLoaded(3, 4)).thenReturn(true);
+        when(world.getBlockAt(markerLocation)).thenReturn(markerBlock);
+
+        final RDT plugin = this.createPluginWithConfigs(
+            """
+                chunk_type:
+                  reset_state_on_change: false
+                """,
+            "",
+            "",
+            "",
+            "",
+            "",
+            """
+                block_material: SEA_LANTERN
+                """,
+            ""
+        );
+        setField(plugin, "townRepository", townRepository);
+        final TownRuntimeService service = new TownRuntimeService(plugin);
+
+        assertTrue(service.setChunkType(liveChunk, ChunkType.MEDIC));
+        assertEquals(ChunkType.MEDIC, liveChunk.getChunkType());
+        verify(markerBlock).setType(Material.SEA_LANTERN, false);
+        verify(townRepository).update(liveTown);
+    }
+
+    @Test
+    void setChunkTypeFallsBackToDefaultChunkMarkerMaterialWhenConfiguredBlockMaterialIsInvalid() throws ReflectiveOperationException {
+        final UUID townUuid = UUID.randomUUID();
+        final UUID mayorUuid = UUID.randomUUID();
+        final RTown liveTown = new RTown(townUuid, mayorUuid, "Test Town", null);
+        final RTownChunk liveChunk = new RTownChunk(liveTown, "world", 3, 4, ChunkType.DEFAULT);
+        final Location markerLocation = new Location(world, 48.0D, 64.0D, 64.0D);
+        final Block markerBlock = org.mockito.Mockito.mock(Block.class);
+        liveTown.addChunk(liveChunk);
+        liveChunk.setChunkBlockLocation(markerLocation);
+
+        when(world.isChunkLoaded(3, 4)).thenReturn(true);
+        when(world.getBlockAt(markerLocation)).thenReturn(markerBlock);
+
+        final RDT plugin = this.createPluginWithConfigs(
+            """
+                chunk_type:
+                  reset_state_on_change: false
+                """,
+            "",
+            """
+                block_material: HOPPER
+                """,
+            "",
+            "",
+            ""
+        );
+        setField(plugin, "townRepository", townRepository);
+        final TownRuntimeService service = new TownRuntimeService(plugin);
+
+        assertTrue(service.setChunkType(liveChunk, ChunkType.SECURITY));
+        assertEquals(ChunkType.SECURITY, liveChunk.getChunkType());
+        verify(markerBlock).setType(Material.CRYING_OBSIDIAN, false);
+        verify(townRepository).update(liveTown);
+    }
+
+    @Test
+    void setChunkTypeDoesNotFailWhenChunkMarkerLocationIsMissing() throws ReflectiveOperationException {
+        final UUID townUuid = UUID.randomUUID();
+        final UUID mayorUuid = UUID.randomUUID();
+        final RTown liveTown = new RTown(townUuid, mayorUuid, "Test Town", null);
+        final RTownChunk liveChunk = new RTownChunk(liveTown, "world", 3, 4, ChunkType.DEFAULT);
+        liveTown.addChunk(liveChunk);
+
+        final RDT plugin = this.createPluginWithConfigs(
+            """
+                chunk_type:
+                  reset_state_on_change: false
+                """,
+            "",
+            "",
+            "",
+            "",
+            "",
+            """
+                block_material: SEA_LANTERN
+                """,
+            ""
+        );
+        setField(plugin, "townRepository", townRepository);
+        final TownRuntimeService service = new TownRuntimeService(plugin);
+
+        assertTrue(service.setChunkType(liveChunk, ChunkType.MEDIC));
+        assertEquals(ChunkType.MEDIC, liveChunk.getChunkType());
+        verify(townRepository).update(liveTown);
+    }
+
+    @Test
+    void setChunkTypeStillClearsFuelTankStateWhenLeavingSecurity() throws ReflectiveOperationException {
+        final UUID townUuid = UUID.randomUUID();
+        final UUID mayorUuid = UUID.randomUUID();
+        final RTown liveTown = new RTown(townUuid, mayorUuid, "Test Town", null);
+        final RTownChunk liveChunk = new RTownChunk(liveTown, "world", 3, 4, ChunkType.SECURITY);
+        liveTown.addChunk(liveChunk);
+        liveChunk.setFuelTankLocation(new Location(null, 48.0D, 64.0D, 64.0D));
+
+        final RDT plugin = this.createPluginWithConfig("""
+            chunk_type:
+              reset_state_on_change: false
+            """);
+        setField(plugin, "townRepository", townRepository);
+        final TownRuntimeService service = new TownRuntimeService(plugin);
+
+        assertTrue(service.setChunkType(liveChunk, ChunkType.DEFAULT));
+        assertEquals(ChunkType.DEFAULT, liveChunk.getChunkType());
+        assertFalse(liveChunk.hasFuelTank());
+        verify(townRepository).update(liveTown);
+    }
+
+    @Test
+    void setChunkTypeEnteringFarmWithPreservedLevelInitializesFarmDefaultsAndGrantsSeedBox() throws ReflectiveOperationException {
+        final UUID townUuid = UUID.randomUUID();
+        final UUID mayorUuid = UUID.randomUUID();
+        final UUID playerUuid = UUID.randomUUID();
+        final RTown liveTown = new RTown(townUuid, mayorUuid, "Test Town", null);
+        final RTownChunk liveChunk = new RTownChunk(liveTown, "world", 3, 4, ChunkType.DEFAULT);
+        final PlayerInventory inventory = org.mockito.Mockito.mock(PlayerInventory.class);
+        liveTown.addChunk(liveChunk);
+        liveChunk.setChunkLevel(3);
+
+        when(player.getInventory()).thenReturn(inventory);
+        when(inventory.addItem(org.mockito.ArgumentMatchers.any(ItemStack.class))).thenReturn(new HashMap<>());
+        when(townRepository.findByTownUUID(townUuid)).thenReturn(liveTown);
+
+        final RDT plugin = this.createPluginWithConfigs(
+            """
+                chunk_type:
+                  reset_state_on_change: false
+                """,
+            "",
+            "",
+            "",
+            """
+                growth:
+                  enabled_by_default: true
+                seed_box:
+                  unlock_level: 3
+                replant:
+                  unlock_level: 3
+                  enabled_by_default: true
+                  default_source_priority: INVENTORY_FIRST
+                levels:
+                  "3":
+                    requirements: {}
+                    rewards: {}
+                """,
+            "",
+            "",
+            ""
+        );
+        setField(plugin, "townRepository", townRepository);
+        final TownRuntimeService service = new TownRuntimeService(plugin);
+        final ItemStack seedBoxItem = this.mockItemStack(Material.WHEAT_SEEDS, 1);
+
+        try (MockedStatic<SeedBox> seedBoxMock = org.mockito.Mockito.mockStatic(SeedBox.class)) {
+            seedBoxMock.when(() -> SeedBox.getSeedBoxItem(plugin, player, townUuid, "world", 3, 4))
+                .thenReturn(seedBoxItem);
+
+            final TownRuntimeService.ChunkTypeChangeResult result = service.setChunkType(player, liveChunk, ChunkType.FARM);
+
+            assertTrue(result.success());
+            assertTrue(result.seedBoxGranted());
+            assertEquals(ChunkType.FARM, liveChunk.getChunkType());
+            assertTrue(liveChunk.isFarmGrowthEnabled(false));
+            assertTrue(liveChunk.isFarmAutoReplantEnabled(false));
+            assertEquals(FarmReplantPriority.INVENTORY_FIRST, liveChunk.getFarmReplantPriorityValue());
+            verify(inventory).addItem(org.mockito.ArgumentMatchers.any(ItemStack.class));
+            verify(townRepository).update(liveTown);
+        }
+    }
+
+    @Test
+    void levelUpFarmChunkToSeedBoxUnlockGrantsBoundSeedBoxItem() throws ReflectiveOperationException {
+        final UUID townUuid = UUID.randomUUID();
+        final UUID mayorUuid = UUID.randomUUID();
+        final UUID playerUuid = UUID.randomUUID();
+        final RTown liveTown = new RTown(townUuid, mayorUuid, "Test Town", null);
+        final RTownChunk farmChunk = new RTownChunk(liveTown, "world", 3, 4, ChunkType.FARM);
+        final RDTPlayer playerData = new RDTPlayer(playerUuid, townUuid, RTown.MAYOR_ROLE_ID);
+        final PlayerInventory inventory = org.mockito.Mockito.mock(PlayerInventory.class);
+        liveTown.addChunk(farmChunk);
+        farmChunk.setChunkLevel(2);
+        playerData.grantTownPermission(TownPermissions.UPGRADE_CHUNK);
+
+        when(player.getUniqueId()).thenReturn(playerUuid);
+        when(player.getInventory()).thenReturn(inventory);
+        when(inventory.addItem(org.mockito.ArgumentMatchers.any(ItemStack.class))).thenReturn(new HashMap<>());
+        when(playerRepository.findByPlayer(playerUuid)).thenReturn(playerData);
+        when(townRepository.findByTownUUID(townUuid)).thenReturn(liveTown);
+
+        final RDT plugin = this.createPluginWithConfigs(
+            "",
+            "",
+            "",
+            "",
+            """
+                seed_box:
+                  unlock_level: 3
+                replant:
+                  unlock_level: 3
+                levels:
+                  "3":
+                    requirements: {}
+                    rewards: {}
+                """,
+            "",
+            "",
+            ""
+        );
+        setField(plugin, "townRepository", townRepository);
+        setField(plugin, "playerRepository", playerRepository);
+        final TownRuntimeService service = new TownRuntimeService(plugin);
+        final ItemStack seedBoxItem = this.mockItemStack(Material.WHEAT_SEEDS, 1);
+
+        final LevelUpResult result;
+        try (MockedStatic<SeedBox> seedBoxMock = org.mockito.Mockito.mockStatic(SeedBox.class)) {
+            seedBoxMock.when(() -> SeedBox.getSeedBoxItem(plugin, player, townUuid, "world", 3, 4))
+                .thenReturn(seedBoxItem);
+            result = service.levelUpChunk(player, farmChunk);
+        }
+
+        assertEquals(LevelUpStatus.SUCCESS, result.status());
+        assertEquals(3, farmChunk.getChunkLevel());
+        verify(inventory).addItem(org.mockito.ArgumentMatchers.any(ItemStack.class));
+    }
+
+    @Test
+    void syncSeedBoxContentsFiltersDisallowedMaterials() throws ReflectiveOperationException {
+        final UUID townUuid = UUID.randomUUID();
+        final UUID mayorUuid = UUID.randomUUID();
+        final RTown liveTown = new RTown(townUuid, mayorUuid, "Test Town", null);
+        final RTownChunk farmChunk = new RTownChunk(liveTown, "world", 3, 4, ChunkType.FARM);
+        liveTown.addChunk(farmChunk);
+        farmChunk.setSeedBoxLocation(new Location(null, 48.0D, 64.0D, 64.0D));
+
+        when(townRepository.findByTownUUID(townUuid)).thenReturn(liveTown);
+
+        final RDT plugin = this.createPluginWithConfigs(
+            "",
+            "",
+            "",
+            "",
+            """
+                seed_box:
+                  allowed_materials:
+                    - WHEAT_SEEDS
+                """,
+            "",
+            "",
+            ""
+        );
+        setField(plugin, "townRepository", townRepository);
+        final TownRuntimeService service = new TownRuntimeService(plugin);
+
+        assertTrue(service.syncSeedBoxContents(farmChunk, Map.of(
+            "0", this.mockItemStack(Material.WHEAT_SEEDS, 8),
+            "1", this.mockItemStack(Material.DIAMOND, 2)
+        )));
+        assertEquals(1, farmChunk.getSeedBoxContents().size());
+        assertEquals(Material.WHEAT_SEEDS, farmChunk.getSeedBoxContents().get("0").getType());
+        verify(townRepository).update(liveTown);
     }
 
     @Test
@@ -1302,8 +1701,281 @@ class TownRuntimeServiceTest {
         assertFalse(service.isWorldActionAllowed(location, TownProtections.TOWN_WATER));
     }
 
+    @Test
+    void getTownRelationshipViewEntriesExcludesTheSourceTownAndSortsTargetsByName() throws ReflectiveOperationException {
+        final RTown sourceTown = this.createUnlockedTown("Source");
+        final RTown zetaTown = this.createUnlockedTown("Zeta");
+        final RTown alphaTown = this.createUnlockedTown("Alpha");
+
+        final RDT plugin = this.createPluginWithConfig("""
+            town:
+              relationship_unlock_level: 5
+              relationship_change_cooldown_seconds: 60
+            """);
+        setField(plugin, "townRepository", townRepository);
+        setField(plugin, "townRelationshipRepository", townRelationshipRepository);
+        this.stubTownRepository(sourceTown, zetaTown, alphaTown);
+        this.stubTownRelationshipRepository();
+
+        final TownRuntimeService service = new TownRuntimeService(plugin);
+        final List<TownRelationshipViewEntry> entries = service.getTownRelationshipViewEntries(sourceTown);
+
+        assertEquals(List.of("Alpha", "Zeta"), entries.stream().map(entry -> entry.targetTown().getTownName()).toList());
+        assertTrue(entries.stream().noneMatch(entry -> entry.targetTown().getTownUUID().equals(sourceTown.getTownUUID())));
+    }
+
+    @Test
+    void neutralToAlliedCreatesPendingRelationshipUntilTheTargetTownMatchesIt() throws ReflectiveOperationException {
+        final RTown alphaTown = this.createUnlockedTown("Alpha");
+        final RTown betaTown = this.createUnlockedTown("Beta");
+
+        final RDT plugin = this.createPluginWithConfig("""
+            town:
+              relationship_unlock_level: 5
+              relationship_change_cooldown_seconds: 60
+            """);
+        setField(plugin, "townRepository", townRepository);
+        setField(plugin, "townRelationshipRepository", townRelationshipRepository);
+        this.stubTownRepository(alphaTown, betaTown);
+        final Map<String, RTownRelationship> relationships = this.stubTownRelationshipRepository();
+
+        final TownRuntimeService service = new TownRuntimeService(plugin);
+        final TownRelationshipChangeResult pending = service.changeTownRelationship(
+            alphaTown,
+            betaTown,
+            TownRelationshipState.ALLIED
+        );
+
+        assertEquals(TownRelationshipChangeStatus.PENDING, pending.status());
+        final RTownRelationship storedRelationship = relationships.get(
+            RTownRelationship.buildPairKey(alphaTown.getTownUUID(), betaTown.getTownUUID())
+        );
+        assertNotNull(storedRelationship);
+        assertEquals(TownRelationshipState.NEUTRAL, storedRelationship.getConfirmedState());
+        assertEquals(TownRelationshipState.ALLIED, storedRelationship.getPendingState());
+        assertEquals(alphaTown.getTownUUID(), storedRelationship.getPendingRequesterTownUuid());
+        assertEquals(TownRelationshipState.NEUTRAL, pending.relationship().effectiveState());
+
+        final TownRelationshipChangeResult confirmed = service.changeTownRelationship(
+            betaTown,
+            alphaTown,
+            TownRelationshipState.ALLIED
+        );
+
+        assertEquals(TownRelationshipChangeStatus.CONFIRMED, confirmed.status());
+        assertEquals(TownRelationshipState.ALLIED, storedRelationship.getConfirmedState());
+        assertNull(storedRelationship.getPendingState());
+        assertNull(storedRelationship.getPendingRequesterTownUuid());
+        assertEquals(TownRelationshipState.ALLIED, confirmed.relationship().effectiveState());
+        assertTrue(storedRelationship.getCooldownUntilMillis() > System.currentTimeMillis());
+    }
+
+    @Test
+    void hostileRelationshipAppliesImmediatelyWithoutConfirmation() throws ReflectiveOperationException {
+        final RTown alphaTown = this.createUnlockedTown("Alpha");
+        final RTown betaTown = this.createUnlockedTown("Beta");
+
+        final RDT plugin = this.createPluginWithConfig("""
+            town:
+              relationship_unlock_level: 5
+              relationship_change_cooldown_seconds: 60
+            """);
+        setField(plugin, "townRepository", townRepository);
+        setField(plugin, "townRelationshipRepository", townRelationshipRepository);
+        this.stubTownRepository(alphaTown, betaTown);
+        final Map<String, RTownRelationship> relationships = this.stubTownRelationshipRepository();
+
+        final TownRuntimeService service = new TownRuntimeService(plugin);
+        final TownRelationshipChangeResult result = service.changeTownRelationship(
+            alphaTown,
+            betaTown,
+            TownRelationshipState.HOSTILE
+        );
+
+        final RTownRelationship storedRelationship = relationships.get(
+            RTownRelationship.buildPairKey(alphaTown.getTownUUID(), betaTown.getTownUUID())
+        );
+        assertEquals(TownRelationshipChangeStatus.CONFIRMED, result.status());
+        assertNotNull(storedRelationship);
+        assertEquals(TownRelationshipState.HOSTILE, storedRelationship.getConfirmedState());
+        assertNull(storedRelationship.getPendingState());
+        assertEquals(TownRelationshipState.HOSTILE, result.relationship().effectiveState());
+    }
+
+    @Test
+    void hostileToNeutralRequiresConfirmationAndStartsCooldownAfterItChanges() throws ReflectiveOperationException {
+        final RTown alphaTown = this.createUnlockedTown("Alpha");
+        final RTown betaTown = this.createUnlockedTown("Beta");
+
+        final RDT plugin = this.createPluginWithConfig("""
+            town:
+              relationship_unlock_level: 5
+              relationship_change_cooldown_seconds: 60
+            """);
+        setField(plugin, "townRepository", townRepository);
+        setField(plugin, "townRelationshipRepository", townRelationshipRepository);
+        this.stubTownRepository(alphaTown, betaTown);
+        final Map<String, RTownRelationship> relationships = this.stubTownRelationshipRepository();
+
+        final TownRuntimeService service = new TownRuntimeService(plugin);
+        service.changeTownRelationship(alphaTown, betaTown, TownRelationshipState.HOSTILE);
+        final RTownRelationship storedRelationship = relationships.get(
+            RTownRelationship.buildPairKey(alphaTown.getTownUUID(), betaTown.getTownUUID())
+        );
+        assertNotNull(storedRelationship);
+        storedRelationship.setCooldownUntilMillis(0L);
+
+        final TownRelationshipChangeResult pending = service.changeTownRelationship(
+            alphaTown,
+            betaTown,
+            TownRelationshipState.NEUTRAL
+        );
+        assertEquals(TownRelationshipChangeStatus.PENDING, pending.status());
+        assertEquals(TownRelationshipState.HOSTILE, storedRelationship.getConfirmedState());
+        assertEquals(TownRelationshipState.NEUTRAL, storedRelationship.getPendingState());
+
+        final TownRelationshipChangeResult confirmed = service.changeTownRelationship(
+            betaTown,
+            alphaTown,
+            TownRelationshipState.NEUTRAL
+        );
+        assertEquals(TownRelationshipChangeStatus.CONFIRMED, confirmed.status());
+        assertEquals(TownRelationshipState.NEUTRAL, storedRelationship.getConfirmedState());
+        assertNull(storedRelationship.getPendingState());
+
+        final TownRelationshipChangeResult cooldown = service.changeTownRelationship(
+            alphaTown,
+            betaTown,
+            TownRelationshipState.ALLIED
+        );
+        assertEquals(TownRelationshipChangeStatus.COOLDOWN, cooldown.status());
+    }
+
+    @Test
+    void pendingNonHostileRequestsCanBeReplacedBeforeTheTargetTownConfirmsThem() throws ReflectiveOperationException {
+        final RTown alphaTown = this.createUnlockedTown("Alpha");
+        final RTown betaTown = this.createUnlockedTown("Beta");
+
+        final RDT plugin = this.createPluginWithConfig("""
+            town:
+              relationship_unlock_level: 5
+              relationship_change_cooldown_seconds: 60
+            """);
+        setField(plugin, "townRepository", townRepository);
+        setField(plugin, "townRelationshipRepository", townRelationshipRepository);
+        this.stubTownRepository(alphaTown, betaTown);
+        final Map<String, RTownRelationship> relationships = this.stubTownRelationshipRepository();
+
+        final TownRuntimeService service = new TownRuntimeService(plugin);
+        service.changeTownRelationship(alphaTown, betaTown, TownRelationshipState.HOSTILE);
+        final RTownRelationship storedRelationship = relationships.get(
+            RTownRelationship.buildPairKey(alphaTown.getTownUUID(), betaTown.getTownUUID())
+        );
+        assertNotNull(storedRelationship);
+        storedRelationship.setCooldownUntilMillis(0L);
+
+        service.changeTownRelationship(alphaTown, betaTown, TownRelationshipState.ALLIED);
+        assertEquals(TownRelationshipState.ALLIED, storedRelationship.getPendingState());
+
+        final TownRelationshipChangeResult replaced = service.changeTownRelationship(
+            alphaTown,
+            betaTown,
+            TownRelationshipState.NEUTRAL
+        );
+
+        assertEquals(TownRelationshipChangeStatus.PENDING, replaced.status());
+        assertEquals(TownRelationshipState.HOSTILE, storedRelationship.getConfirmedState());
+        assertEquals(TownRelationshipState.NEUTRAL, storedRelationship.getPendingState());
+        assertEquals(alphaTown.getTownUUID(), storedRelationship.getPendingRequesterTownUuid());
+    }
+
+    @Test
+    void relationshipViewForcesNeutralWhenEitherTownHasNotUnlockedDiplomacy() throws ReflectiveOperationException {
+        final RTown alphaTown = this.createUnlockedTown("Alpha");
+        final RTown betaTown = this.createUnlockedTown("Beta");
+        betaTown.setNexusLevel(4);
+
+        final RDT plugin = this.createPluginWithConfig("""
+            town:
+              relationship_unlock_level: 5
+              relationship_change_cooldown_seconds: 60
+            """);
+        setField(plugin, "townRepository", townRepository);
+        setField(plugin, "townRelationshipRepository", townRelationshipRepository);
+        this.stubTownRepository(alphaTown, betaTown);
+        final Map<String, RTownRelationship> relationships = this.stubTownRelationshipRepository();
+        final RTownRelationship storedRelationship = new RTownRelationship(alphaTown.getTownUUID(), betaTown.getTownUUID());
+        storedRelationship.setConfirmedState(TownRelationshipState.ALLIED);
+        setEntityId(storedRelationship, 1L);
+        relationships.put(storedRelationship.getPairKey(), storedRelationship);
+
+        final TownRuntimeService service = new TownRuntimeService(plugin);
+        final TownRelationshipViewEntry entry = service.getTownRelationshipViewEntry(alphaTown, betaTown);
+
+        assertEquals(TownRelationshipState.ALLIED, entry.confirmedState());
+        assertEquals(TownRelationshipState.NEUTRAL, entry.effectiveState());
+        assertTrue(entry.lockedByLevel());
+    }
+
+    @Test
+    void alliedTownMembersCanPassRoleBasedChecksOnlyWhenAlliedAccessIsAllowed() throws ReflectiveOperationException {
+        final UUID alliedPlayerUuid = UUID.randomUUID();
+        final RTown ownerTown = this.createUnlockedTown("Owner");
+        final RTown alliedTown = this.createUnlockedTown("Allies");
+        final RTownChunk securityChunk = new RTownChunk(ownerTown, "world", 2, 3, ChunkType.SECURITY);
+        ownerTown.addChunk(securityChunk);
+        ownerTown.setProtectionRoleId(TownProtections.BREAK_BLOCK, RTown.MAYOR_ROLE_ID);
+        ownerTown.setAlliedProtectionAllowed(TownProtections.BREAK_BLOCK, true);
+        final RDTPlayer alliedPlayerData = new RDTPlayer(alliedPlayerUuid, alliedTown.getTownUUID(), RTown.MEMBER_ROLE_ID);
+
+        final RDT plugin = this.createPluginWithConfig("""
+            town:
+              relationship_unlock_level: 5
+              relationship_change_cooldown_seconds: 60
+            """);
+        setField(plugin, "townRepository", townRepository);
+        setField(plugin, "playerRepository", playerRepository);
+        setField(plugin, "townRelationshipRepository", townRelationshipRepository);
+        this.stubTownRepository(ownerTown, alliedTown);
+        final Map<String, RTownRelationship> relationships = this.stubTownRelationshipRepository();
+        final RTownRelationship storedRelationship = new RTownRelationship(ownerTown.getTownUUID(), alliedTown.getTownUUID());
+        storedRelationship.setConfirmedState(TownRelationshipState.ALLIED);
+        setEntityId(storedRelationship, 1L);
+        relationships.put(storedRelationship.getPairKey(), storedRelationship);
+        when(player.getUniqueId()).thenReturn(alliedPlayerUuid);
+        when(playerRepository.findByPlayer(alliedPlayerUuid)).thenReturn(alliedPlayerData);
+
+        final TownRuntimeService service = new TownRuntimeService(plugin);
+
+        assertTrue(service.isPlayerAllowed(player, securityChunk, TownProtections.BREAK_BLOCK));
+
+        ownerTown.setAlliedProtectionAllowed(TownProtections.BREAK_BLOCK, false);
+        assertFalse(service.isPlayerAllowed(player, securityChunk, TownProtections.BREAK_BLOCK));
+    }
+
+    @Test
+    void publicRoleChecksStillPassEvenWhenAlliedAccessIsRestricted() throws ReflectiveOperationException {
+        final RTown ownerTown = this.createUnlockedTown("Owner");
+        final RTownChunk securityChunk = new RTownChunk(ownerTown, "world", 2, 3, ChunkType.SECURITY);
+        ownerTown.addChunk(securityChunk);
+        ownerTown.setProtectionRoleId(TownProtections.BREAK_BLOCK, RTown.PUBLIC_ROLE_ID);
+        ownerTown.setAlliedProtectionAllowed(TownProtections.BREAK_BLOCK, false);
+
+        final RDT plugin = this.createPluginWithConfig("""
+            town:
+              relationship_unlock_level: 5
+              relationship_change_cooldown_seconds: 60
+            """);
+        setField(plugin, "townRepository", townRepository);
+        this.stubTownRepository(ownerTown);
+
+        final TownRuntimeService service = new TownRuntimeService(plugin);
+
+        assertTrue(service.isPlayerAllowed(player, securityChunk, TownProtections.BREAK_BLOCK));
+    }
+
     private RDT createPluginWithConfig(final String yaml) {
-        return this.createPluginWithConfigs(yaml, "", "", "", "", "");
+        return this.createPluginWithConfigs(yaml, "", "", "", "", "", "", "");
     }
 
     private RDT createPluginWithConfigs(
@@ -1311,7 +1983,7 @@ class TownRuntimeServiceTest {
         final String nexusYaml,
         final String securityYaml
     ) {
-        return this.createPluginWithConfigs(configYaml, nexusYaml, securityYaml, "", "", "");
+        return this.createPluginWithConfigs(configYaml, nexusYaml, securityYaml, "", "", "", "", "");
     }
 
     private RDT createPluginWithConfigs(
@@ -1321,6 +1993,28 @@ class TownRuntimeServiceTest {
         final String bankYaml,
         final String farmYaml,
         final String outpostYaml
+    ) {
+        return this.createPluginWithConfigs(
+            configYaml,
+            nexusYaml,
+            securityYaml,
+            bankYaml,
+            farmYaml,
+            outpostYaml,
+            "",
+            ""
+        );
+    }
+
+    private RDT createPluginWithConfigs(
+        final String configYaml,
+        final String nexusYaml,
+        final String securityYaml,
+        final String bankYaml,
+        final String farmYaml,
+        final String outpostYaml,
+        final String medicYaml,
+        final String armoryYaml
     ) {
         final ConfigSection config = ConfigSection.fromInputStream(
             new ByteArrayInputStream(configYaml.getBytes(StandardCharsets.UTF_8))
@@ -1339,6 +2033,12 @@ class TownRuntimeServiceTest {
         );
         final OutpostConfigSection outpostConfig = OutpostConfigSection.fromInputStream(
             new ByteArrayInputStream(outpostYaml.getBytes(StandardCharsets.UTF_8))
+        );
+        final MedicConfigSection medicConfig = MedicConfigSection.fromInputStream(
+            new ByteArrayInputStream(medicYaml.getBytes(StandardCharsets.UTF_8))
+        );
+        final ArmoryConfigSection armoryConfig = ArmoryConfigSection.fromInputStream(
+            new ByteArrayInputStream(armoryYaml.getBytes(StandardCharsets.UTF_8))
         );
         return new RDT(this.javaPlugin, "test", this.townService) {
             @Override
@@ -1370,6 +2070,16 @@ class TownRuntimeServiceTest {
             public OutpostConfigSection getOutpostConfig() {
                 return outpostConfig;
             }
+
+            @Override
+            public MedicConfigSection getMedicConfig() {
+                return medicConfig;
+            }
+
+            @Override
+            public ArmoryConfigSection getArmoryConfig() {
+                return armoryConfig;
+            }
         };
     }
 
@@ -1379,9 +2089,96 @@ class TownRuntimeServiceTest {
         return town;
     }
 
+    private RTown createUnlockedTown(final String townName) {
+        final RTown town = new RTown(UUID.randomUUID(), UUID.randomUUID(), townName, null);
+        town.setNexusLevel(5);
+        return town;
+    }
+
+    private void stubTownRepository(final RTown... towns) {
+        final Map<UUID, RTown> townsById = new HashMap<>();
+        for (final RTown town : towns) {
+            townsById.put(town.getTownUUID(), town);
+        }
+        org.mockito.Mockito.lenient()
+            .when(townRepository.findByTownUUID(any(UUID.class)))
+            .thenAnswer(invocation -> townsById.get(invocation.getArgument(0)));
+        org.mockito.Mockito.lenient().when(townRepository.findAll()).thenReturn(List.of(towns));
+    }
+
+    private Map<String, RTownRelationship> stubTownRelationshipRepository() {
+        final Map<String, RTownRelationship> relationshipsByPair = new HashMap<>();
+        org.mockito.Mockito.lenient()
+            .when(townRelationshipRepository.findByTownPair(any(UUID.class), any(UUID.class)))
+            .thenAnswer(invocation -> relationshipsByPair.get(
+                RTownRelationship.buildPairKey(invocation.getArgument(0), invocation.getArgument(1))
+            ));
+        org.mockito.Mockito.lenient()
+            .when(townRelationshipRepository.findByTownUuid(any(UUID.class)))
+            .thenAnswer(invocation -> relationshipsByPair.values()
+                .stream()
+                .filter(relationship -> relationship.containsTown(invocation.getArgument(0)))
+                .toList());
+        org.mockito.Mockito.lenient().doAnswer(invocation -> {
+            final RTownRelationship relationship = invocation.getArgument(0);
+            this.persistRelationshipForTest(relationshipsByPair, relationship);
+            return null;
+        }).when(townRelationshipRepository).create(any(RTownRelationship.class));
+        org.mockito.Mockito.lenient().doAnswer(invocation -> {
+            final RTownRelationship relationship = invocation.getArgument(0);
+            this.persistRelationshipForTest(relationshipsByPair, relationship);
+            return null;
+        }).when(townRelationshipRepository).update(any(RTownRelationship.class));
+        return relationshipsByPair;
+    }
+
+    private void persistRelationshipForTest(
+        final Map<String, RTownRelationship> relationshipsByPair,
+        final RTownRelationship relationship
+    ) {
+        if (relationship.getId() == null) {
+            try {
+                setEntityId(relationship, relationshipsByPair.size() + 1L);
+            } catch (final ReflectiveOperationException exception) {
+                throw new AssertionError(exception);
+            }
+        }
+        relationshipsByPair.put(relationship.getPairKey(), relationship);
+    }
+
+    private ItemStack mockItemStack(final Material material, final int initialAmount) {
+        final ItemStack itemStack = org.mockito.Mockito.mock(ItemStack.class);
+        final AtomicInteger amount = new AtomicInteger(initialAmount);
+
+        org.mockito.Mockito.lenient().when(itemStack.getType()).thenReturn(material);
+        org.mockito.Mockito.lenient().when(itemStack.getAmount()).thenAnswer(invocation -> amount.get());
+        org.mockito.Mockito.lenient().when(itemStack.isEmpty()).thenAnswer(invocation -> amount.get() <= 0);
+        org.mockito.Mockito.lenient().when(itemStack.clone()).thenReturn(itemStack);
+        org.mockito.Mockito.lenient().doAnswer(invocation -> {
+            amount.set(invocation.getArgument(0, Integer.class));
+            return null;
+        }).when(itemStack).setAmount(org.mockito.ArgumentMatchers.anyInt());
+        return itemStack;
+    }
+
     private static void setField(final RDT target, final String fieldName, final Object value) throws ReflectiveOperationException {
         final Field field = RDT.class.getDeclaredField(fieldName);
         field.setAccessible(true);
         field.set(target, value);
+    }
+
+    private static void setEntityId(final Object target, final long value) throws ReflectiveOperationException {
+        Class<?> type = target.getClass();
+        while (type != null) {
+            try {
+                final Field field = type.getDeclaredField("id");
+                field.setAccessible(true);
+                field.set(target, value);
+                return;
+            } catch (final NoSuchFieldException ignored) {
+                type = type.getSuperclass();
+            }
+        }
+        throw new NoSuchFieldException("id");
     }
 }

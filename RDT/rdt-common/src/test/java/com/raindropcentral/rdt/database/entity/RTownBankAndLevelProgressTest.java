@@ -14,6 +14,7 @@
 package com.raindropcentral.rdt.database.entity;
 
 import com.raindropcentral.rdt.utils.ChunkType;
+import com.raindropcentral.rdt.utils.TownProtections;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
@@ -114,5 +115,40 @@ class RTownBankAndLevelProgressTest {
 
         town.setBufferedFuelUnits(-10.0D);
         assertEquals(0.0D, town.getBufferedFuelUnits(), 0.000_1D);
+    }
+
+    @Test
+    void alliedProtectionDefaultsToRestrictedAndFallsBackThroughParentProtections() {
+        final RTown town = new RTown(UUID.randomUUID(), UUID.randomUUID(), "Alpha", null);
+
+        assertNull(town.getConfiguredAlliedProtectionAllowed(TownProtections.ENDER_PEARL));
+        assertFalse(town.isAlliedProtectionAllowed(TownProtections.ENDER_PEARL));
+
+        town.setAlliedProtectionAllowed(TownProtections.ITEM_USE, true);
+
+        assertTrue(town.isAlliedProtectionAllowed(TownProtections.ENDER_PEARL));
+        assertTrue(town.getConfiguredAlliedProtectionAllowed(TownProtections.ITEM_USE));
+    }
+
+    @Test
+    void nexusHealthBackfillsToFullAndClampsWithinBounds() {
+        final RTown town = new RTown(UUID.randomUUID(), UUID.randomUUID(), "Alpha", null);
+
+        assertFalse(town.hasPersistedCurrentNexusHealth());
+        assertEquals(1000.0D, town.getCurrentNexusHealth(1000.0D), 0.000_1D);
+
+        assertTrue(town.backfillLegacyCurrentNexusHealthIfNeeded(1500.0D));
+        assertTrue(town.hasPersistedCurrentNexusHealth());
+        assertEquals(1500.0D, town.getCurrentNexusHealth(1500.0D), 0.000_1D);
+
+        town.setCurrentNexusHealth(2200.0D, 1500.0D);
+        assertEquals(1500.0D, town.getCurrentNexusHealth(1500.0D), 0.000_1D);
+
+        town.setCurrentNexusHealth(-25.0D, 1500.0D);
+        assertEquals(0.0D, town.getCurrentNexusHealth(1500.0D), 0.000_1D);
+
+        town.setCurrentNexusHealth(900.0D, 1500.0D);
+        assertTrue(town.clampCurrentNexusHealth(750.0D));
+        assertEquals(750.0D, town.getCurrentNexusHealth(750.0D), 0.000_1D);
     }
 }

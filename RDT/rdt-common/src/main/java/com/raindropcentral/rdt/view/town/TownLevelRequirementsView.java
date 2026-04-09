@@ -164,7 +164,7 @@ public final class TownLevelRequirementsView extends BaseView {
                 town,
                 requirement.entryKey()
             );
-            case SECURITY, BANK, FARM, OUTPOST -> {
+            case SECURITY, BANK, FARM, OUTPOST, MEDIC, ARMORY -> {
                 final RTownChunk townChunk = TownLevelViewSupport.resolveChunk(clickContext);
                 yield townChunk == null
                     ? new ContributionResult(ContributionStatus.INVALID_TARGET, 0.0D, false, false)

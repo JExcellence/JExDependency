@@ -14,9 +14,11 @@
 package com.raindropcentral.rdt;
 
 import com.raindropcentral.commands.CommandFactory;
+import com.raindropcentral.rdt.configs.ArmoryConfigSection;
 import com.raindropcentral.rdt.configs.BankConfigSection;
 import com.raindropcentral.rdt.configs.ConfigSection;
 import com.raindropcentral.rdt.configs.FarmConfigSection;
+import com.raindropcentral.rdt.configs.MedicConfigSection;
 import com.raindropcentral.rdt.configs.NexusConfigSection;
 import com.raindropcentral.rdt.configs.OutpostConfigSection;
 import com.raindropcentral.rdt.configs.SecurityConfigSection;
@@ -26,13 +28,10 @@ import com.raindropcentral.rdt.database.repository.RRDTPlayer;
 import com.raindropcentral.rdt.database.repository.RRTown;
 import com.raindropcentral.rdt.database.repository.RRTownChunk;
 import com.raindropcentral.rdt.database.repository.RRTownInvite;
+import com.raindropcentral.rdt.database.repository.RRTownRelationship;
 import com.raindropcentral.rdt.requirement.RDTRequirementProvider;
-import com.raindropcentral.rdt.service.NexusAccessService;
-import com.raindropcentral.rdt.service.TownBossBarService;
-import com.raindropcentral.rdt.service.TownFuelService;
-import com.raindropcentral.rdt.service.TownRuntimeService;
-import com.raindropcentral.rdt.service.TownService;
-import com.raindropcentral.rdt.service.TownSpawnService;
+import com.raindropcentral.rdt.service.*;
+import com.raindropcentral.rdt.utils.ChunkType;
 import com.raindropcentral.rdt.view.main.TownHubView;
 import com.raindropcentral.rdt.view.town.*;
 import com.raindropcentral.rplatform.RPlatform;
@@ -43,6 +42,7 @@ import com.raindropcentral.rplatform.scheduler.ISchedulerAdapter;
 import jakarta.persistence.EntityManagerFactory;
 import me.devnatan.inventoryframework.AnvilInputFeature;
 import me.devnatan.inventoryframework.ViewFrame;
+import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -50,6 +50,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
@@ -74,6 +75,8 @@ public class RDT {
     private static final String BANK_CONFIG_FILE_NAME = "bank.yml";
     private static final String FARM_CONFIG_FILE_NAME = "farm.yml";
     private static final String OUTPOST_CONFIG_FILE_NAME = "outpost.yml";
+    private static final String MEDIC_CONFIG_FILE_NAME = "medic.yml";
+    private static final String ARMORY_CONFIG_FILE_NAME = "armory.yml";
 
     private final JavaPlugin plugin;
     private final String edition;
@@ -94,11 +97,16 @@ public class RDT {
     private RRTown townRepository;
     private RRTownChunk townChunkRepository;
     private RRTownInvite townInviteRepository;
+    private RRTownRelationship townRelationshipRepository;
 
     private TownRuntimeService townRuntimeService;
     private TownSpawnService townSpawnService;
     private TownBossBarService townBossBarService;
+    private TownBankService townBankService;
+    private TownFarmService townFarmService;
     private TownFuelService townFuelService;
+    private TownMedicService townMedicService;
+    private TownArmoryService townArmoryService;
     private NexusAccessService nexusAccessService;
     private RDTRequirementProvider requirementProvider;
 
@@ -172,8 +180,14 @@ public class RDT {
         if (this.townBossBarService != null) {
             this.townBossBarService.shutdown();
         }
+        if (this.townBankService != null) {
+            this.townBankService.shutdown();
+        }
         if (this.townFuelService != null) {
             this.townFuelService.shutdown();
+        }
+        if (this.townMedicService != null) {
+            this.townMedicService.shutdown();
         }
         if (this.requirementProvider != null) {
             this.requirementProvider.unregister();
@@ -312,6 +326,69 @@ public class RDT {
     }
 
     /**
+     * Loads the effective Medic chunk level configuration.
+     *
+     * @return parsed Medic level configuration
+     */
+    public @NotNull MedicConfigSection getMedicConfig() {
+        this.ensureBundledConfigFiles();
+        try {
+            if (!this.canChangeConfigs()) {
+                final InputStream defaultStream = this.plugin.getResource(CONFIG_FOLDER_PATH + '/' + MEDIC_CONFIG_FILE_NAME);
+                return defaultStream == null ? MedicConfigSection.createDefault() : MedicConfigSection.fromInputStream(defaultStream);
+            }
+            return MedicConfigSection.fromFile(this.getConfigFile(MEDIC_CONFIG_FILE_NAME));
+        } catch (final Exception exception) {
+            this.getLogger().warning("Failed to load RDT medic config: " + exception.getMessage());
+            return MedicConfigSection.createDefault();
+        }
+    }
+
+    /**
+     * Loads the effective Armory chunk level configuration.
+     *
+     * @return parsed Armory level configuration
+     */
+    public @NotNull ArmoryConfigSection getArmoryConfig() {
+        this.ensureBundledConfigFiles();
+        try {
+            if (!this.canChangeConfigs()) {
+                final InputStream defaultStream = this.plugin.getResource(CONFIG_FOLDER_PATH + '/' + ARMORY_CONFIG_FILE_NAME);
+                return defaultStream == null
+                    ? ArmoryConfigSection.createDefault()
+                    : ArmoryConfigSection.fromInputStream(defaultStream);
+            }
+            return ArmoryConfigSection.fromFile(this.getConfigFile(ARMORY_CONFIG_FILE_NAME));
+        } catch (final Exception exception) {
+            this.getLogger().warning("Failed to load RDT armory config: " + exception.getMessage());
+            return ArmoryConfigSection.createDefault();
+        }
+    }
+
+    /**
+     * Resolves the display and marker-block material for one chunk type.
+     *
+     * @param chunkType chunk type to resolve
+     * @return resolved material for views and marker syncing
+     */
+    public @NotNull Material getChunkTypeDisplayMaterial(final @Nullable ChunkType chunkType) {
+        if (chunkType == null) {
+            return this.getDefaultConfig().getDefaultChunkBlockMaterial();
+        }
+        return switch (chunkType) {
+            case NEXUS -> this.getDefaultConfig().getChunkTypeIconMaterial(ChunkType.NEXUS);
+            case DEFAULT -> this.getDefaultConfig().getDefaultChunkBlockMaterial();
+            case CLAIM_PENDING -> this.getDefaultConfig().getChunkTypeIconMaterial(ChunkType.CLAIM_PENDING);
+            case SECURITY -> this.getSecurityConfig().getBlockMaterial();
+            case BANK -> this.getBankConfig().getBlockMaterial();
+            case FARM -> this.getFarmConfig().getBlockMaterial();
+            case OUTPOST -> this.getOutpostConfig().getBlockMaterial();
+            case MEDIC -> this.getMedicConfig().getBlockMaterial();
+            case ARMORY -> this.getArmoryConfig().getBlockMaterial();
+        };
+    }
+
+    /**
      * Returns whether the current edition may change config-driven behavior at runtime.
      *
      * @return {@code true} when config changes are permitted
@@ -334,6 +411,7 @@ public class RDT {
         this.townRepository = new RRTown(this.executor, this.entityManagerFactory, RTown.class, RTown::getTownUUID);
         this.townChunkRepository = new RRTownChunk(this.executor, this.entityManagerFactory);
         this.townInviteRepository = new RRTownInvite(this.executor, this.entityManagerFactory);
+        this.townRelationshipRepository = new RRTownRelationship(this.executor, this.entityManagerFactory);
     }
 
     private void initializeServices() {
@@ -341,7 +419,11 @@ public class RDT {
         this.townRuntimeService = new TownRuntimeService(this);
         this.townSpawnService = new TownSpawnService(this);
         this.townBossBarService = new TownBossBarService(this);
+        this.townBankService = new TownBankService(this);
+        this.townFarmService = new TownFarmService(this);
         this.townFuelService = new TownFuelService(this);
+        this.townMedicService = new TownMedicService(this);
+        this.townArmoryService = new TownArmoryService(this);
     }
 
     private void initializeRequirementProvider() {
@@ -377,6 +459,9 @@ public class RDT {
                 new TownOverviewView(),
                 new TownArchetypeView(),
                 new TownBankView(),
+                new TownBankRootView(),
+                new TownBankStorageView(),
+                new TownBankCurrencyInputView(),
                 new TownColorAnvilView(),
                 new TownRenameAnvilView(),
                 new TownLevelCurrencyContributionAnvilView(),
@@ -387,9 +472,14 @@ public class RDT {
                 new ClaimsView(),
                 new TownChunkView(),
                 new TownChunkTypeView(),
+                new TownRelationshipsView(),
+                new TownRelationshipDetailView(),
                 new TownProtectionScopeView(),
                 new TownProtectionsView(),
                 new TownRoleProtectionsView(),
+                new TownAlliedProtectionsView(),
+                new TownAlliedItemUseProtectionsView(),
+                new TownAlliedSwitchProtectionsView(),
                 new TownItemUseProtectionsView(),
                 new TownSwitchProtectionsView(),
                 new TownToggleProtectionsView()
@@ -402,8 +492,14 @@ public class RDT {
         if (this.townBossBarService != null) {
             this.townBossBarService.start();
         }
+        if (this.townBankService != null) {
+            this.townBankService.start();
+        }
         if (this.townFuelService != null) {
             this.townFuelService.start();
+        }
+        if (this.townMedicService != null) {
+            this.townMedicService.start();
         }
     }
 
@@ -431,6 +527,8 @@ public class RDT {
         this.ensureBundledConfigFile(BANK_CONFIG_FILE_NAME);
         this.ensureBundledConfigFile(FARM_CONFIG_FILE_NAME);
         this.ensureBundledConfigFile(OUTPOST_CONFIG_FILE_NAME);
+        this.ensureBundledConfigFile(MEDIC_CONFIG_FILE_NAME);
+        this.ensureBundledConfigFile(ARMORY_CONFIG_FILE_NAME);
     }
 
     private void ensureBundledConfigFile(final @NotNull String fileName) {
@@ -575,6 +673,23 @@ public class RDT {
     }
 
     /**
+     * Returns the configured authoritative route ID for this Paper server.
+     *
+     * @return local server route identifier
+     */
+    public @NotNull String getServerRouteId() {
+        final String configuredRouteId = this.getDefaultConfig().getProxyServerRouteId();
+        if (!configuredRouteId.isBlank()) {
+            return configuredRouteId;
+        }
+        final String serverName = this.plugin.getServer().getName();
+        if (serverName == null || serverName.isBlank()) {
+            return "server";
+        }
+        return serverName.trim().toLowerCase(Locale.ROOT);
+    }
+
+    /**
      * Returns the player repository used by integrations and listeners.
      *
      * @return player repository
@@ -611,6 +726,15 @@ public class RDT {
     }
 
     /**
+     * Returns the town-relationship repository.
+     *
+     * @return town-relationship repository
+     */
+    public @Nullable RRTownRelationship getTownRelationshipRepository() {
+        return this.townRelationshipRepository;
+    }
+
+    /**
      * Returns the central town runtime service.
      *
      * @return town runtime service
@@ -638,12 +762,48 @@ public class RDT {
     }
 
     /**
+     * Returns the town-bank service.
+     *
+     * @return town-bank service
+     */
+    public @Nullable TownBankService getTownBankService() {
+        return this.townBankService;
+    }
+
+    /**
+     * Returns the Farm enhancement service.
+     *
+     * @return Farm enhancement service
+     */
+    public @Nullable TownFarmService getTownFarmService() {
+        return this.townFarmService;
+    }
+
+    /**
      * Returns the FE town fuel service.
      *
      * @return FE town fuel service
      */
     public @Nullable TownFuelService getTownFuelService() {
         return this.townFuelService;
+    }
+
+    /**
+     * Returns the Medic chunk runtime service.
+     *
+     * @return Medic chunk runtime service
+     */
+    public @Nullable TownMedicService getTownMedicService() {
+        return this.townMedicService;
+    }
+
+    /**
+     * Returns the Armory chunk runtime service.
+     *
+     * @return Armory chunk runtime service
+     */
+    public @Nullable TownArmoryService getTownArmoryService() {
+        return this.townArmoryService;
     }
 
     /**

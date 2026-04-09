@@ -13,7 +13,6 @@
 
 package com.raindropcentral.core.service.statistics.vanilla.command;
 
-import com.raindropcentral.core.service.statistics.vanilla.CollectionResult;
 import com.raindropcentral.core.service.statistics.vanilla.CollectionStatistics;
 import com.raindropcentral.core.service.statistics.vanilla.VanillaStatisticCollectionService;
 import net.kyori.adventure.text.Component;
@@ -27,12 +26,10 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Command handler for vanilla statistics management and diagnostics.

@@ -34,7 +34,6 @@ import com.raindropcentral.core.service.central.RCentralService;
 import com.raindropcentral.core.service.central.cookie.ActiveCookieBoostService;
 import com.raindropcentral.core.service.statistics.StatisticsDeliveryService;
 import com.raindropcentral.core.service.statistics.StatisticsDeliveryServiceFactory;
-import com.raindropcentral.core.service.statistics.queue.DeliveryPriority;
 import com.raindropcentral.core.service.statistics.queue.StatisticsQueueManager;
 import com.raindropcentral.core.service.statistics.vanilla.VanillaStatisticCollectionService;
 import com.raindropcentral.core.service.statistics.vanilla.VanillaStatisticCollector;

@@ -13,6 +13,7 @@
 
 package com.raindropcentral.rds.view.shop;
 
+import com.raindropcentral.rds.RDS;
 import com.raindropcentral.rds.database.entity.Shop;
 import me.devnatan.inventoryframework.context.Context;
 import org.bukkit.entity.Player;
@@ -72,6 +73,22 @@ final class ShopAdminAccessSupport {
         return shop.isOwner(playerId) || hasOwnerOverride(context);
     }
 
+    static boolean canActAsOwner(
+            final @NotNull Context context,
+            final @NotNull Shop shop,
+            final @NotNull RDS plugin
+    ) {
+        if (hasOwnerOverride(context)) {
+            return true;
+        }
+        if (shop.isPlayerShop()) {
+            return shop.isOwner(context.getPlayer().getUniqueId());
+        }
+
+        return plugin.getTownShopService() != null
+                && plugin.getTownShopService().canCloseShop(context.getPlayer(), shop);
+    }
+
     static boolean canManage(
             final @NotNull Context context,
             final @NotNull Shop shop
@@ -80,11 +97,75 @@ final class ShopAdminAccessSupport {
         return shop.canManage(playerId) || hasOwnerOverride(context);
     }
 
+    static boolean canManage(
+            final @NotNull Context context,
+            final @NotNull Shop shop,
+            final @NotNull RDS plugin
+    ) {
+        if (hasOwnerOverride(context)) {
+            return true;
+        }
+        return plugin.getTownShopService() == null
+                ? shop.canManage(context.getPlayer().getUniqueId())
+                : plugin.getTownShopService().canManageShop(context.getPlayer(), shop);
+    }
+
     static boolean canSupply(
             final @NotNull Context context,
             final @NotNull Shop shop
     ) {
         final UUID playerId = context.getPlayer().getUniqueId();
         return shop.canSupply(playerId) || hasOwnerOverride(context);
+    }
+
+    static boolean canSupply(
+            final @NotNull Context context,
+            final @NotNull Shop shop,
+            final @NotNull RDS plugin
+    ) {
+        if (hasOwnerOverride(context)) {
+            return true;
+        }
+        return plugin.getTownShopService() == null
+                ? shop.canSupply(context.getPlayer().getUniqueId())
+                : plugin.getTownShopService().canSupplyShop(context.getPlayer(), shop);
+    }
+
+    static boolean canAccessOverview(
+            final @NotNull Player player,
+            final @NotNull Shop shop,
+            final @NotNull RDS plugin
+    ) {
+        return plugin.getTownShopService() == null
+                ? shop.canAccessOverview(player.getUniqueId())
+                : plugin.getTownShopService().canAccessOverview(player, shop);
+    }
+
+    static @NotNull String resolveOwnerName(
+            final @NotNull Shop shop
+    ) {
+        if (shop.isTownShop()) {
+            final String townDisplayName = shop.getTownDisplayName();
+            if (townDisplayName != null && !townDisplayName.isBlank()) {
+                return townDisplayName;
+            }
+
+            final String townIdentifier = shop.getTownIdentifier();
+            return townIdentifier == null || townIdentifier.isBlank() ? "Unknown Town" : townIdentifier;
+        }
+
+        final UUID ownerId = shop.getOwner();
+        return ownerId == null ? "Unknown" : ownerId.toString();
+    }
+
+    static @NotNull String resolveOwnerName(
+            final @NotNull RDS plugin,
+            final @NotNull Shop shop
+    ) {
+        if (plugin.getTownShopService() != null) {
+            return plugin.getTownShopService().resolveOwnerName(shop);
+        }
+
+        return resolveOwnerName(shop);
     }
 }
