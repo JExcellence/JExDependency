@@ -2,6 +2,8 @@ tools
 .gradle
 .qodo
 .idea
+.claude
+.kiro
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
