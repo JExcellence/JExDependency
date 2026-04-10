@@ -7,7 +7,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -153,10 +152,11 @@ public class QuestRepository extends CachedRepository<Quest, Long, String> {
     }
 
     /**
-     * Finds a quest by identifier with tasks and rewards eagerly loaded.
+     * Finds a quest by identifier with tasks, rewards, and requirements eagerly loaded.
      * <p>
      * Uses entity graphs to load collections without causing MultipleBagFetchException.
-     * This loads the quest with its tasks and quest-level rewards in separate queries.
+     * This loads the quest with its tasks, quest-level rewards, and quest-level
+     * requirements in separate queries.
      *
      * @param identifier the quest identifier
      * @return a future containing the optional quest with collections loaded
@@ -169,10 +169,7 @@ public class QuestRepository extends CachedRepository<Quest, Long, String> {
                 // First: Load quest with tasks using entity graph
                 final EntityGraph<Quest> taskGraph = em.createEntityGraph(Quest.class);
                 taskGraph.addAttributeNodes("tasks");
-                
-                final Map<String, Object> taskHints = new HashMap<>();
-                taskHints.put("jakarta.persistence.fetchgraph", taskGraph);
-                
+
                 final List<Quest> questsWithTasks = em.createQuery(
                     "SELECT q FROM Quest q WHERE q.identifier = :identifier",
                     Quest.class
@@ -192,6 +189,17 @@ public class QuestRepository extends CachedRepository<Quest, Long, String> {
                     "SELECT DISTINCT q FROM Quest q " +
                     "LEFT JOIN FETCH q.rewards r " +
                     "LEFT JOIN FETCH r.reward " +
+                    "WHERE q.id = :id",
+                    Quest.class
+                )
+                .setParameter("id", quest.getId())
+                .getSingleResult();
+
+                // Third: Load quest requirements with BaseRequirement
+                em.createQuery(
+                    "SELECT DISTINCT q FROM Quest q " +
+                    "LEFT JOIN FETCH q.requirements req " +
+                    "LEFT JOIN FETCH req.requirement " +
                     "WHERE q.id = :id",
                     Quest.class
                 )

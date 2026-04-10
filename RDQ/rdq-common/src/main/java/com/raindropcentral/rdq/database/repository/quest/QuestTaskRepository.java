@@ -2,6 +2,8 @@ package com.raindropcentral.rdq.database.repository.quest;
 
 import com.raindropcentral.rdq.database.entity.quest.QuestTask;
 import de.jexcellence.hibernate.repository.CachedRepository;
+import jakarta.persistence.EntityGraph;
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import org.jetbrains.annotations.NotNull;
 
@@ -94,6 +96,62 @@ public class QuestTaskRepository extends CachedRepository<QuestTask, Long, Long>
 				.setParameter("taskIdentifier", taskIdentifier)
 				.getResultStream()
 				.findFirst();
+			} finally {
+				if (em.isOpen()) {
+					em.close();
+				}
+			}
+		}, this.executor);
+	}
+
+	/**
+	 * Finds a specific task within a quest with rewards and requirements eagerly loaded.
+	 * <p>
+	 * Uses separate fetch steps to avoid MultipleBagFetchException while still
+	 * returning a detached entity whose child collections are initialized.
+	 *
+	 * @param questId        the quest's database ID
+	 * @param taskIdentifier the task's unique identifier within the quest
+	 * @return a future containing the optional task with collections loaded
+	 */
+	public CompletableFuture<Optional<QuestTask>> findByQuestAndIdentifierWithCollections(
+		@NotNull final Long questId,
+		@NotNull final String taskIdentifier
+	) {
+		return CompletableFuture.supplyAsync(() -> {
+			final EntityManager em = this.entityManagerFactory.createEntityManager();
+			try {
+				final EntityGraph<QuestTask> rewardGraph = em.createEntityGraph(QuestTask.class);
+				rewardGraph.addAttributeNodes("rewards");
+
+				final List<QuestTask> tasksWithRewards = em.createQuery(
+					"SELECT qt FROM QuestTask qt " +
+					"WHERE qt.quest.id = :questId " +
+					"AND qt.taskIdentifier = :taskIdentifier",
+					QuestTask.class
+				)
+				.setParameter("questId", questId)
+				.setParameter("taskIdentifier", taskIdentifier)
+				.setHint("jakarta.persistence.fetchgraph", rewardGraph)
+				.getResultList();
+
+				if (tasksWithRewards.isEmpty()) {
+					return Optional.empty();
+				}
+
+				final QuestTask task = tasksWithRewards.get(0);
+
+				em.createQuery(
+					"SELECT DISTINCT qt FROM QuestTask qt " +
+					"LEFT JOIN FETCH qt.requirements req " +
+					"LEFT JOIN FETCH req.requirement " +
+					"WHERE qt.id = :id",
+					QuestTask.class
+				)
+				.setParameter("id", task.getId())
+				.getSingleResult();
+
+				return Optional.of(task);
 			} finally {
 				if (em.isOpen()) {
 					em.close();

@@ -469,7 +469,7 @@ public class QuestSystemFactory {
         }
         final QuestCategory category = categoryOpt.get();
 
-        final var existingOpt = questRepository.findByIdentifier(config.getIdentifier()).join();
+        final var existingOpt = questRepository.findByIdentifierWithCollections(config.getIdentifier()).join();
         Quest quest;
 
         if (existingOpt.isPresent()) {
@@ -586,7 +586,7 @@ public class QuestSystemFactory {
 
         // Check whether this task already exists to avoid duplicates
         final var existingOpt = questTaskRepository
-            .findByQuestAndIdentifier(quest.getId(), taskSection.getIdentifier())
+            .findByQuestAndIdentifierWithCollections(quest.getId(), taskSection.getIdentifier())
             .join();
 
         final QuestTask task;
