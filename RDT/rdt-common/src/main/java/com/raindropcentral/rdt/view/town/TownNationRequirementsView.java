@@ -14,12 +14,9 @@
 package com.raindropcentral.rdt.view.town;
 
 import com.raindropcentral.rdt.RDT;
-import com.raindropcentral.rdt.database.entity.RTown;
-import com.raindropcentral.rdt.database.entity.RTownChunk;
 import com.raindropcentral.rdt.service.ContributionResult;
 import com.raindropcentral.rdt.service.ContributionStatus;
-import com.raindropcentral.rdt.service.LevelProgressSnapshot;
-import com.raindropcentral.rdt.service.LevelScope;
+import com.raindropcentral.rdt.service.NationCreationProgressSnapshot;
 import com.raindropcentral.rdt.service.RequirementKind;
 import com.raindropcentral.rdt.service.TownLevelRequirementSnapshot;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
@@ -39,13 +36,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Shared requirements view for Nexus, nation, and chunk levels.
+ * Requirement view for the dedicated nation-creation flow.
  *
  * @author ItsRainingHP
  * @since 1.0.0
  * @version 1.0.0
  */
-public final class TownLevelRequirementsView extends BaseView {
+public final class TownNationRequirementsView extends BaseView {
 
     private static final List<Integer> REQUIREMENT_SLOTS = List.of(
         10, 11, 12, 13, 14, 15, 16,
@@ -54,15 +51,15 @@ public final class TownLevelRequirementsView extends BaseView {
     );
 
     /**
-     * Creates the shared requirements view.
+     * Creates the nation requirement view.
      */
-    public TownLevelRequirementsView() {
+    public TownNationRequirementsView() {
         super();
     }
 
     @Override
     protected @NotNull String getKey() {
-        return "town_level_requirements_ui";
+        return "town_nation_requirements_ui";
     }
 
     @Override
@@ -79,11 +76,11 @@ public final class TownLevelRequirementsView extends BaseView {
 
     @Override
     public void onResume(final @NotNull Context origin, final @NotNull Context target) {
-        final Map<String, Object> targetData = TownLevelViewSupport.copyInitialData(target);
+        final Map<String, Object> targetData = TownNationViewSupport.copyInitialData(target);
         final Map<String, Object> data = targetData != null
             ? targetData
-            : TownLevelViewSupport.copyInitialData(origin);
-        if (data != null && data.get(TownLevelViewSupport.CONTRIBUTION_STATUS_KEY) instanceof String statusKey) {
+            : TownNationViewSupport.copyInitialData(origin);
+        if (data != null && data.get(TownNationViewSupport.CONTRIBUTION_STATUS_KEY) instanceof String statusKey) {
             this.sendContributionMessage(target.getPlayer(), statusKey, data);
         }
         target.update();
@@ -91,7 +88,7 @@ public final class TownLevelRequirementsView extends BaseView {
 
     @Override
     public void onFirstRender(final @NotNull RenderContext render, final @NotNull Player player) {
-        final LevelProgressSnapshot snapshot = TownLevelViewSupport.resolveSnapshot(render);
+        final NationCreationProgressSnapshot snapshot = TownNationViewSupport.resolveCreationSnapshot(render);
         if (snapshot == null) {
             render.slot(22).renderWith(() -> this.createMissingItem(player));
             return;
@@ -100,13 +97,13 @@ public final class TownLevelRequirementsView extends BaseView {
         render.layoutSlot('s', this.createSummaryItem(player, snapshot));
         render.layoutSlot('w', this.createRewardsShortcut(player))
             .onClick(clickContext -> clickContext.openForPlayer(
-                TownLevelRewardsView.class,
+                TownNationRewardsView.class,
                 this.createNavigationData(clickContext)
             ));
         render.layoutSlot('h', this.createHubShortcut(player))
             .onClick(clickContext -> clickContext.openForPlayer(
-                TownLevelProgressView.class,
-                this.createHubNavigationData(clickContext)
+                TownNationView.class,
+                this.createNavigationData(clickContext)
             ));
         render.layoutSlot('r', this.createReturnItem(player))
             .onClick(SlotClickContext::back);
@@ -131,7 +128,7 @@ public final class TownLevelRequirementsView extends BaseView {
 
     private void handleRequirementClick(
         final @NotNull SlotClickContext clickContext,
-        final @NotNull LevelProgressSnapshot snapshot,
+        final @NotNull NationCreationProgressSnapshot snapshot,
         final @NotNull TownLevelRequirementSnapshot requirement
     ) {
         if (!requirement.contributable()) {
@@ -139,10 +136,10 @@ public final class TownLevelRequirementsView extends BaseView {
         }
         if (requirement.kind() == RequirementKind.CURRENCY) {
             clickContext.openForPlayer(
-                TownLevelCurrencyContributionAnvilView.class,
-                TownLevelViewSupport.mergeInitialData(
+                TownNationCurrencyContributionAnvilView.class,
+                TownNationViewSupport.mergeInitialData(
                     clickContext,
-                    Map.of(TownLevelViewSupport.ENTRY_KEY, requirement.entryKey())
+                    Map.of(TownNationViewSupport.ENTRY_KEY, requirement.entryKey())
                 )
             );
             return;
@@ -151,38 +148,18 @@ public final class TownLevelRequirementsView extends BaseView {
             return;
         }
 
-        final RDT plugin = TownLevelViewSupport.plugin(clickContext);
-        final RTown town = TownLevelViewSupport.resolveTown(clickContext);
-        if (plugin == null || plugin.getTownRuntimeService() == null || town == null) {
-            this.sendSharedMessage(clickContext.getPlayer(), "invalid_target", Map.of("level_scope", snapshot.scope().getDisplayName()));
+        final RDT plugin = TownNationViewSupport.plugin(clickContext);
+        if (plugin == null || plugin.getTownRuntimeService() == null) {
+            this.sendSharedMessage(clickContext.getPlayer(), "invalid_target", Map.of("contributed_amount", 0));
             return;
         }
 
-        final ContributionResult result = switch (snapshot.scope()) {
-            case NEXUS -> plugin.getTownRuntimeService().contributeNexusItem(
-                clickContext.getPlayer(),
-                town,
-                requirement.entryKey()
-            );
-            case NATION_FORMATION -> new ContributionResult(ContributionStatus.INVALID_TARGET, 0.0D, false, false);
-            case NATION -> plugin.getTownRuntimeService().contributeNationItem(
-                clickContext.getPlayer(),
-                town,
-                requirement.entryKey()
-            );
-            case SECURITY, BANK, FARM, OUTPOST, MEDIC, ARMORY -> {
-                final RTownChunk townChunk = TownLevelViewSupport.resolveChunk(clickContext);
-                yield townChunk == null
-                    ? new ContributionResult(ContributionStatus.INVALID_TARGET, 0.0D, false, false)
-                    : plugin.getTownRuntimeService().contributeChunkItem(
-                        clickContext.getPlayer(),
-                        townChunk,
-                        requirement.entryKey()
-                    );
-            }
-        };
-        this.sendContributionMessage(clickContext.getPlayer(), result, snapshot.scope());
-        clickContext.openForPlayer(TownLevelRequirementsView.class, this.createNavigationData(clickContext));
+        final ContributionResult result = plugin.getTownRuntimeService().contributeNationCreationItem(
+            clickContext.getPlayer(),
+            requirement.entryKey()
+        );
+        this.sendContributionMessage(clickContext.getPlayer(), result);
+        clickContext.openForPlayer(TownNationRequirementsView.class, this.createNavigationData(clickContext));
     }
 
     private void sendContributionMessage(
@@ -191,54 +168,43 @@ public final class TownLevelRequirementsView extends BaseView {
         final @NotNull Map<String, Object> data
     ) {
         final Map<String, Object> placeholders = new LinkedHashMap<>();
-        placeholders.put("level_scope", this.resolveScopeDisplayName(data));
-        placeholders.put("contributed_amount", data.getOrDefault(TownLevelViewSupport.CONTRIBUTION_AMOUNT_KEY, 0));
+        placeholders.put("contributed_amount", data.getOrDefault(TownNationViewSupport.CONTRIBUTION_AMOUNT_KEY, 0));
         this.sendSharedMessage(player, statusKey, placeholders);
-        if (Boolean.TRUE.equals(data.get(TownLevelViewSupport.CONTRIBUTION_COMPLETED_KEY))) {
+        if (Boolean.TRUE.equals(data.get(TownNationViewSupport.CONTRIBUTION_COMPLETED_KEY))) {
             this.sendSharedMessage(player, "requirement_complete", placeholders);
         }
-        if (Boolean.TRUE.equals(data.get(TownLevelViewSupport.LEVEL_READY_KEY))) {
-            this.sendSharedMessage(player, "level_ready", placeholders);
+        if (Boolean.TRUE.equals(data.get(TownNationViewSupport.READY_TO_CREATE_KEY))) {
+            this.sendSharedMessage(player, "ready_to_create", placeholders);
         }
     }
 
     private void sendContributionMessage(
         final @NotNull Player player,
-        final @NotNull ContributionResult result,
-        final @NotNull LevelScope scope
+        final @NotNull ContributionResult result
     ) {
-        final Map<String, Object> placeholders = Map.of(
-            "level_scope", scope.getDisplayName(),
-            "contributed_amount", result.contributedAmount()
-        );
+        final Map<String, Object> placeholders = Map.of("contributed_amount", result.contributedAmount());
         switch (result.status()) {
             case SUCCESS -> this.sendSharedMessage(player, "contribution_saved", placeholders);
-            case NO_PERMISSION -> this.sendSharedMessage(player, "no_permission", placeholders);
             case NOT_ENOUGH_RESOURCES -> this.sendSharedMessage(player, "not_enough_resources", placeholders);
             case ALREADY_COMPLETE -> this.sendSharedMessage(player, "requirement_complete", placeholders);
-            case MAX_LEVEL -> this.sendSharedMessage(player, "max_level", placeholders);
-            case INVALID_TARGET, INVALID_ENTRY, FAILED -> this.sendSharedMessage(player, "invalid_target", placeholders);
+            case NO_PERMISSION, INVALID_TARGET, INVALID_ENTRY, FAILED, MAX_LEVEL -> {
+                this.sendSharedMessage(player, "invalid_target", placeholders);
+            }
         }
         if (result.requirementCompleted() && result.status() == ContributionStatus.SUCCESS) {
             this.sendSharedMessage(player, "requirement_complete", placeholders);
         }
         if (result.levelReady() && result.status() == ContributionStatus.SUCCESS) {
-            this.sendSharedMessage(player, "level_ready", placeholders);
+            this.sendSharedMessage(player, "ready_to_create", placeholders);
         }
     }
 
     private @NotNull Map<String, Object> createNavigationData(final @NotNull Context context) {
         final Map<String, Object> data = new LinkedHashMap<>();
-        final Map<String, Object> copiedData = TownLevelViewSupport.copyInitialData(context);
+        final Map<String, Object> copiedData = TownNationViewSupport.copyInitialData(context);
         if (copiedData != null) {
-            data.putAll(TownLevelViewSupport.stripTransientData(copiedData));
+            data.putAll(TownNationViewSupport.stripTransientData(copiedData));
         }
-        return data;
-    }
-
-    private @NotNull Map<String, Object> createHubNavigationData(final @NotNull Context context) {
-        final Map<String, Object> data = this.createNavigationData(context);
-        data.remove(TownLevelViewSupport.PREVIEW_LEVEL_KEY);
         return data;
     }
 
@@ -247,39 +213,23 @@ public final class TownLevelRequirementsView extends BaseView {
         final @NotNull String key,
         final @NotNull Map<String, Object> placeholders
     ) {
-        new I18n.Builder("town_level_shared.messages." + key, player)
+        new I18n.Builder("town_nation_shared.messages." + key, player)
             .includePrefix()
             .withPlaceholders(placeholders)
             .build()
             .sendMessage();
     }
 
-    private @NotNull String resolveScopeDisplayName(final @NotNull Map<String, Object> data) {
-        final Object rawScope = data.get(TownLevelViewSupport.SCOPE_KEY);
-        if (rawScope instanceof LevelScope scope) {
-            return scope.getDisplayName();
-        }
-        if (rawScope instanceof String serializedScope) {
-            try {
-                return LevelScope.valueOf(serializedScope.trim().toUpperCase(java.util.Locale.ROOT)).getDisplayName();
-            } catch (final IllegalArgumentException ignored) {
-                return "Level";
-            }
-        }
-        return "Level";
-    }
-
-    private @NotNull ItemStack createSummaryItem(final @NotNull Player player, final @NotNull LevelProgressSnapshot snapshot) {
+    private @NotNull ItemStack createSummaryItem(
+        final @NotNull Player player,
+        final @NotNull NationCreationProgressSnapshot snapshot
+    ) {
         return UnifiedBuilderFactory.item(Material.WRITABLE_BOOK)
-            .setName(this.i18n("summary.name", player)
-                .withPlaceholder("level_scope", snapshot.scope().getDisplayName())
-                .build()
-                .component())
+            .setName(this.i18n("summary.name", player).build().component())
             .setLore(this.i18n("summary.lore", player)
                 .withPlaceholders(Map.of(
-                    "target_level", snapshot.displayLevel(),
-                    "progress_percent", Math.round(snapshot.progress() * 100.0D),
-                    "requirement_count", snapshot.requirements().size()
+                    "requirement_count", snapshot.requirements().size(),
+                    "progress_percent", Math.round(snapshot.progress() * 100.0D)
                 ))
                 .build()
                 .children())

@@ -65,6 +65,7 @@ public enum TownPermissions {
     CHANGE_TOWN_COLOR("MAYOR"),
     SET_ARCHETYPE("MAYOR"),
     MANAGE_RELATIONSHIPS("MAYOR"),
+    MANAGE_NATIONS("MAYOR"),
     UPGRADE_TOWN("MAYOR");
 
     private final String minimumDefaultRoleId;

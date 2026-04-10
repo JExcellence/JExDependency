@@ -751,6 +751,30 @@ town_chunk_ui:
         - "<gray>Nexus level:</gray> <white>{nexus_level}</white>"
         - "<gray>Unlock level:</gray> <white>{unlock_level}</white>"
         - "<gray>All town relationships remain neutral until this Nexus reaches the unlock level.</gray>"
+  nation:
+    name: "<gold>Nations</gold>"
+    active:
+      lore:
+        - "<gray>Nation:</gray> <white>{nation_name}</white>"
+        - "<gray>Member towns:</gray> <white>{member_count}</white>"
+        - "<yellow>Click to manage or review your nation.</yellow>"
+    pending:
+      lore:
+        - "<gray>Nation draft:</gray> <white>{nation_name}</white>"
+        - "<gray>Waiting on allied towns to respond.</gray>"
+        - "<yellow>Click to review pending invites.</yellow>"
+    invite:
+      lore:
+        - "<gray>Pending nation invite:</gray> <white>{nation_name}</white>"
+        - "<gray>You can respond from the nation menu.</gray>"
+        - "<yellow>Click to review the invite.</yellow>"
+    locked:
+      lore:
+        - "<gray>Nexus level:</gray> <white>{nexus_level}</white>"
+        - "<gray>Unlock level:</gray> <white>{unlock_level}</white>"
+        - "<gray>Minimum towns:</gray> <white>{minimum_towns}</white>"
+        - "<gray>Eligible allied towns:</gray> <white>{eligible_town_count}</white>"
+        - "<yellow>Click to view nation progress or management.</yellow>"
   upgrade:
     name: "<gold>{level_scope} Progression</gold>"
     progress:
@@ -2056,3 +2080,494 @@ town_color_ui:
   error:
     invalid_input: "<red>Enter a valid Minecraft color name or hex code.</red>"
     processing_failed: "<red>That town color could not be processed.</red>"
+
+town_nation_shared:
+  invite_status:
+    pending: "<yellow>Pending</yellow>"
+    accepted: "<green>Accepted</green>"
+    declined: "<red>Declined</red>"
+    timed_out: "<red>Timed Out</red>"
+  invite_type:
+    formation: "<aqua>Formation</aqua>"
+    expansion: "<gold>Expansion</gold>"
+  role:
+    capital: "<gold>Capital</gold>"
+    member: "<green>Member</green>"
+  messages:
+    contribution_saved: "<green>Saved a contribution of <white>{contributed_amount}</white><green> toward nation creation.</green>"
+    not_enough_resources: "<red>You do not have enough resources to contribute right now.</red>"
+    requirement_complete: "<green>One nation creation requirement is now complete.</green>"
+    ready_to_create: "<green>All nation creation requirements are complete. You can now draft a nation.</green>"
+    invalid_target: "<red>That nation creation requirement is unavailable right now.</red>"
+    create:
+      success: "<green>Created the pending nation <white>{nation_name}</white><green>. Waiting on invited towns now.</green>"
+      no_permission: "<red>You do not have permission to create a nation for your town.</red>"
+      not_ready: "<red>Finish the nation creation requirements before creating a nation.</red>"
+      invalid_name: "<red>Enter a nation name between 1 and 32 characters.</red>"
+      name_taken: "<red>That nation name is already in use.</red>"
+      already_in_nation: "<red>Your town is already in a nation.</red>"
+      already_pending: "<red>Your town is already involved in a pending nation flow.</red>"
+      locked: "<red>Your town has not unlocked nation creation yet.</red>"
+      not_enough_towns: "<red>Select enough allied towns to meet the minimum nation size.</red>"
+      invalid_selection: "<red>One or more selected towns are no longer eligible.</red>"
+      capital_required: "<red>The capital town must be changed before this action can continue.</red>"
+      below_minimum: "<red>This action would leave the nation below its minimum size.</red>"
+      failed: "<red>The nation could not be created right now.</red>"
+    invite_accept:
+      accepted: "<green>Your town accepted the nation invite for <white>{nation_name}</white><green>.</green>"
+      declined: "<yellow>The invite was already declined.</yellow>"
+      no_permission: "<red>You do not have permission to answer this nation invite.</red>"
+      failed: "<red>The nation invite could not be accepted.</red>"
+    invite_decline:
+      accepted: "<yellow>The invite was already accepted.</yellow>"
+      declined: "<yellow>Your town declined the nation invite for <white>{nation_name}</white><yellow>.</yellow>"
+      no_permission: "<red>You do not have permission to answer this nation invite.</red>"
+      failed: "<red>The nation invite could not be declined.</red>"
+    rename:
+      success: "<green>Renamed the nation to <white>{nation_name}</white><green>.</green>"
+      no_permission: "<red>You do not have permission to rename this nation.</red>"
+      invalid_name: "<red>Enter a nation name between 1 and 32 characters.</red>"
+      name_taken: "<red>That nation name is already in use.</red>"
+      failed: "<red>The nation could not be renamed right now.</red>"
+    invite_town:
+      success: "<green>Sent a nation invite to <white>{target_town}</white><green>.</green>"
+      no_permission: "<red>You do not have permission to invite towns into this nation.</red>"
+      already_pending: "<red>This nation already has a pending expansion invite.</red>"
+      invalid_selection: "<red>That town is not eligible for a nation invite.</red>"
+      failed: "<red>The nation invite could not be sent right now.</red>"
+    promote:
+      success: "<green>Promoted <white>{target_town}</white><green> to nation capital.</green>"
+      no_permission: "<red>You do not have permission to promote a new capital.</red>"
+      invalid_selection: "<red>That town cannot become the nation capital.</red>"
+      failed: "<red>The nation capital could not be changed right now.</red>"
+    leave:
+      success: "<green>Your town left <white>{nation_name}</white><green>.</green>"
+      no_permission: "<red>You do not have permission to leave this nation.</red>"
+      capital_required: "<red>The capital town must promote another capital before leaving.</red>"
+      failed: "<red>Your town could not leave the nation right now.</red>"
+    kick:
+      success: "<green>Removed <white>{target_town}</white><green> from <white>{nation_name}</white><green>.</green>"
+      no_permission: "<red>You do not have permission to remove towns from this nation.</red>"
+      capital_required: "<red>The capital town cannot be removed until a new capital is promoted.</red>"
+      invalid_selection: "<red>That town is not a removable nation member.</red>"
+      failed: "<red>The town could not be removed from the nation right now.</red>"
+    disband:
+      success: "<yellow>Disbanded the nation <white>{nation_name}</white><yellow>.</yellow>"
+      no_permission: "<red>You do not have permission to disband this nation.</red>"
+      failed: "<red>The nation could not be disbanded right now.</red>"
+
+town_nation_ui:
+  title: "<gradient:#22c55e:#38bdf8>Nation Menu</gradient>"
+  summary:
+    none:
+      name: "<gold>Nation Creation</gold>"
+      lore:
+        - "<gray>Town:</gray> <white>{town_name}</white>"
+        - "<gray>Nexus level:</gray> <white>{nexus_level}</white><gray> / unlock </gray><white>{unlock_level}</white>"
+        - "<gray>Eligible allied towns:</gray> <white>{allied_town_count}</white>"
+        - "<gray>Requirements:</gray> <white>{requirement_count}</white>"
+        - "<gray>Rewards:</gray> <white>{reward_count}</white>"
+        - "<gray>Progress:</gray> <white>{progress_percent}%</white>"
+        - "<gray>Status:</gray> <white>{ready_state}</white>"
+    pending:
+      name: "<gold>Pending Nation</gold>"
+      lore:
+        - "<gray>Nation:</gray> <white>{nation_name}</white>"
+        - "<gray>Invites:</gray> <white>{invite_count}</white>"
+        - "<gray>Accepted:</gray> <white>{accepted_count}</white>"
+        - "<gray>Declined:</gray> <white>{declined_count}</white>"
+        - "<gray>Expires in:</gray> <white>{expires_in}</white>"
+    invite:
+      name: "<gold>Nation Invite</gold>"
+      lore:
+        - "<gray>Nation:</gray> <white>{nation_name}</white>"
+        - "<gray>Capital town:</gray> <white>{capital_town}</white>"
+        - "<gray>Type:</gray> <white>{invite_type}</white>"
+        - "<gray>Expires in:</gray> <white>{expires_in}</white>"
+    active:
+      name: "<gold>Nation Overview</gold>"
+      lore:
+        - "<gray>Nation:</gray> <white>{nation_name}</white>"
+        - "<gray>Capital town:</gray> <white>{capital_town}</white>"
+        - "<gray>Member towns:</gray> <white>{member_count}</white>"
+        - "<gray>Pending invites:</gray> <white>{pending_invite_count}</white>"
+        - "<gray>Nation level:</gray> <white>{nation_level}</white><gray> / </gray><white>{max_level}</white>"
+        - "<gray>Next target:</gray> <white>{target_level}</white>"
+        - "<gray>Progress:</gray> <white>{progress_percent}%</white>"
+        - "<gray>Your role:</gray> <white>{viewer_role}</white>"
+  requirements:
+    name: "<gold>Requirements</gold>"
+    lore:
+      - "<gray>Entries:</gray> <white>{requirement_count}</white>"
+      - "<gray>Progress:</gray> <white>{progress_percent}%</white>"
+      - "<yellow>Click to review or contribute requirements.</yellow>"
+  rewards:
+    name: "<gold>Rewards</gold>"
+    lore:
+      - "<gray>Rewards:</gray> <white>{reward_count}</white>"
+      - "<yellow>Click to preview nation creation rewards.</yellow>"
+  create:
+    name: "<gold>Create Nation</gold>"
+    ready:
+      lore:
+        - "<gray>Minimum towns:</gray> <white>{minimum_towns}</white>"
+        - "<gray>Eligible allies:</gray> <white>{eligible_town_count}</white>"
+        - "<green>Nation creation is ready.</green>"
+        - "<yellow>Click to choose a nation name.</yellow>"
+    progress:
+      lore:
+        - "<gray>Unlock level:</gray> <white>{unlock_level}</white>"
+        - "<gray>Minimum towns:</gray> <white>{minimum_towns}</white>"
+        - "<gray>Eligible allies:</gray> <white>{eligible_town_count}</white>"
+        - "<gray>Progress:</gray> <white>{progress_percent}%</white>"
+        - "<yellow>Click to review remaining requirements.</yellow>"
+    locked:
+      lore:
+        - "<gray>Unlock level:</gray> <white>{unlock_level}</white>"
+        - "<gray>Minimum towns:</gray> <white>{minimum_towns}</white>"
+        - "<gray>Eligible allies:</gray> <white>{eligible_town_count}</white>"
+        - "<gray>Nation creation is not available yet.</gray>"
+  members:
+    name: "<gold>Members</gold>"
+    lore:
+      - "<gray>Member towns:</gray> <white>{member_count}</white>"
+      - "<yellow>Click to review nation members.</yellow>"
+  invites:
+    name: "<gold>Invites</gold>"
+    lore:
+      - "<gray>Pending invites:</gray> <white>{pending_invite_count}</white>"
+      - "<yellow>Click to review nation invites.</yellow>"
+  progression:
+    name: "<gold>Nation Progression</gold>"
+    lore:
+      - "<gray>Nation level:</gray> <white>{nation_level}</white><gray> / </gray><white>{max_level}</white>"
+      - "<gray>Next target:</gray> <white>{target_level}</white>"
+      - "<gray>Progress:</gray> <white>{progress_percent}%</white>"
+      - "<yellow>Click to open the nation progression hub.</yellow>"
+  waiting:
+    name: "<gold>Waiting</gold>"
+    lore:
+      - "<gray>This nation is waiting for invited towns to accept or decline.</gray>"
+  invite:
+    accept:
+      name: "<green>Accept Invite</green>"
+      lore:
+        - "<gray>Accept this nation invite for your town.</gray>"
+    decline:
+      name: "<red>Decline Invite</red>"
+      lore:
+        - "<gray>Decline this nation invite for your town.</gray>"
+    info:
+      name: "<gold>Invite Details</gold>"
+      lore:
+        - "<gray>Nation:</gray> <white>{nation_name}</white>"
+        - "<gray>Capital town:</gray> <white>{capital_town}</white>"
+        - "<gray>Type:</gray> <white>{invite_type}</white>"
+  manage:
+    invite_town:
+      name: "<gold>Invite Town</gold>"
+      lore:
+        - "<gray>Invite one additional allied town into the nation.</gray>"
+    rename:
+      name: "<gold>Rename Nation</gold>"
+      lore:
+        - "<gray>Choose a new name for this nation.</gray>"
+    promote:
+      name: "<gold>Promote Capital</gold>"
+      lore:
+        - "<gray>Select another nation town to become the capital.</gray>"
+    leave:
+      name: "<gold>Leave Nation</gold>"
+      lore:
+        - "<gray>Leave this nation after confirmation.</gray>"
+    disband:
+      name: "<red>Disband Nation</red>"
+      lore:
+        - "<gray>Disband this nation after confirmation.</gray>"
+  return:
+    name: "<gold>Back</gold>"
+    lore:
+      - "<gray>Return to the nexus chunk view.</gray>"
+  missing:
+    name: "<red>Nation Missing</red>"
+    lore:
+      - "<gray>The nation menu could not be loaded.</gray>"
+
+town_nation_create_name_ui:
+  title: "<gradient:#22c55e:#84cc16>Nation Name</gradient>"
+  input:
+    lore:
+      - "<gray>Enter the name for your nation.</gray>"
+  error:
+    invalid_input: "<red>Enter a nation name between 1 and 32 characters.</red>"
+    processing_failed: "<red>That nation name could not be processed.</red>"
+
+town_nation_rename_ui:
+  title: "<gradient:#f59e0b:#fbbf24>Rename Nation</gradient>"
+  input:
+    lore:
+      - "<gray>Enter the new name for your nation.</gray>"
+  error:
+    invalid_input: "<red>Enter a nation name between 1 and 32 characters.</red>"
+    processing_failed: "<red>That nation name could not be processed.</red>"
+
+town_nation_requirements_ui:
+  title: "<gradient:#f59e0b:#fbbf24>Nation Requirements</gradient>"
+  summary:
+    name: "<gold>Requirement Summary</gold>"
+    lore:
+      - "<gray>Requirements:</gray> <white>{requirement_count}</white>"
+      - "<gray>Progress:</gray> <white>{progress_percent}%</white>"
+  entry:
+    name: "<gold>{requirement_name}</gold>"
+    completed:
+      lore:
+        - "<gray>{description}</gray>"
+        - "<gray>Progress:</gray> <white>{current_amount}</white><gray> / </gray><white>{required_amount}</white>"
+        - "<green>Completed.</green>"
+    contributable:
+      lore:
+        - "<gray>{description}</gray>"
+        - "<gray>Progress:</gray> <white>{current_amount}</white><gray> / </gray><white>{required_amount}</white>"
+        - "<gray>Available now:</gray> <white>{available_amount}</white>"
+        - "<gray>Completion:</gray> <white>{progress_percent}%</white>"
+        - "<yellow>Click to contribute progress.</yellow>"
+    view_only:
+      lore:
+        - "<gray>{description}</gray>"
+        - "<gray>Progress:</gray> <white>{current_amount}</white><gray> / </gray><white>{required_amount}</white>"
+        - "<gray>Completion:</gray> <white>{progress_percent}%</white>"
+        - "<yellow>This requirement tracks live player progress.</yellow>"
+  rewards:
+    name: "<gold>Rewards</gold>"
+    lore:
+      - "<gray>Preview the nation creation rewards.</gray>"
+  hub:
+    name: "<gold>Nation Menu</gold>"
+    lore:
+      - "<gray>Return to the nation hub.</gray>"
+  return:
+    name: "<gold>Back</gold>"
+    lore:
+      - "<gray>Return to the previous view.</gray>"
+  empty:
+    name: "<gray>Empty Slot</gray>"
+    lore:
+      - "<gray>No requirement is assigned to this slot.</gray>"
+  missing:
+    name: "<red>Requirements Missing</red>"
+    lore:
+      - "<gray>This nation requirement list could not be loaded.</gray>"
+
+town_nation_rewards_ui:
+  title: "<gradient:#38bdf8:#60a5fa>Nation Rewards</gradient>"
+  summary:
+    name: "<gold>Nation Rewards</gold>"
+    lore:
+      - "<gray>Reward count:</gray> <white>{reward_count}</white>"
+      - "<yellow>These rewards are granted when the nation forms.</yellow>"
+  entry:
+    name: "<gold>{reward_name}</gold>"
+    lore:
+      - "<gray>Type:</gray> <white>{reward_type}</white>"
+      - "<gray>{description}</gray>"
+  requirements:
+    name: "<gold>Requirements</gold>"
+    lore:
+      - "<gray>Return to the requirement breakdown.</gray>"
+  hub:
+    name: "<gold>Nation Menu</gold>"
+    lore:
+      - "<gray>Return to the nation hub.</gray>"
+  return:
+    name: "<gold>Back</gold>"
+    lore:
+      - "<gray>Return to the previous view.</gray>"
+  empty:
+    name: "<gray>Empty Slot</gray>"
+    lore:
+      - "<gray>No reward is assigned to this slot.</gray>"
+  missing:
+    name: "<red>Rewards Missing</red>"
+    lore:
+      - "<gray>This nation reward list could not be loaded.</gray>"
+
+town_nation_selection_ui:
+  title: "<gradient:#22c55e:#38bdf8>Select Towns</gradient>"
+  summary:
+    name: "<gold>Formation Draft</gold>"
+    lore:
+      - "<gray>Nation:</gray> <white>{nation_name}</white>"
+      - "<gray>Eligible allied towns:</gray> <white>{eligible_town_count}</white>"
+      - "<gray>Selected towns:</gray> <white>{selected_town_count}</white>"
+      - "<gray>Total with capital:</gray> <white>{total_towns}</white>"
+      - "<gray>Minimum towns:</gray> <white>{minimum_towns}</white>"
+  entry:
+    name: "<gold>{town_name}</gold>"
+    available:
+      lore:
+        - "<gray>Nexus level:</gray> <white>{nexus_level}</white>"
+        - "<yellow>Click to include this town in the nation draft.</yellow>"
+    selected:
+      lore:
+        - "<gray>Nexus level:</gray> <white>{nexus_level}</white>"
+        - "<green>Selected for the nation draft.</green>"
+        - "<yellow>Click to remove this town from the draft.</yellow>"
+  page:
+    previous:
+      name: "<gold>Previous</gold>"
+      lore:
+        - "<gray>Go to the previous page.</gray>"
+      locked:
+        lore:
+          - "<gray>You are already on the first page.</gray>"
+    next:
+      name: "<gold>Next</gold>"
+      lore:
+        - "<gray>Go to the next page.</gray>"
+      locked:
+        lore:
+          - "<gray>You are already on the last page.</gray>"
+  finalize:
+    name: "<gold>Finalize Nation</gold>"
+    ready:
+      lore:
+        - "<gray>Total towns with capital:</gray> <white>{total_towns}</white>"
+        - "<gray>Minimum towns:</gray> <white>{minimum_towns}</white>"
+        - "<green>This nation draft is ready to submit.</green>"
+    locked:
+      lore:
+        - "<gray>Total towns with capital:</gray> <white>{total_towns}</white>"
+        - "<gray>Minimum towns:</gray> <white>{minimum_towns}</white>"
+        - "<red>Select more allied towns before finalizing.</red>"
+  return:
+    name: "<gold>Back</gold>"
+    lore:
+      - "<gray>Return to the nation menu.</gray>"
+  empty:
+    name: "<gray>Empty Slot</gray>"
+    lore:
+      - "<gray>No town is assigned to this slot.</gray>"
+  missing:
+    name: "<red>Selection Missing</red>"
+    lore:
+      - "<gray>The nation formation draft could not be loaded.</gray>"
+
+town_nation_invites_ui:
+  title: "<gradient:#f59e0b:#fbbf24>Nation Invites</gradient>"
+  summary:
+    name: "<gold>Invite Summary</gold>"
+    lore:
+      - "<gray>Nation:</gray> <white>{nation_name}</white>"
+      - "<gray>Total invites:</gray> <white>{invite_count}</white>"
+  entry:
+    name: "<gold>{town_name}</gold>"
+    lore:
+      - "<gray>Type:</gray> <white>{invite_type}</white>"
+      - "<gray>Status:</gray> <white>{invite_status}</white>"
+      - "<gray>Expires in:</gray> <white>{expires_in}</white>"
+  page:
+    name: "<gold>Page <white>{current_page}/{total_pages}</white></gold>"
+    lore:
+      - "<gray>Invites:</gray> <white>{items_count}</white>"
+  empty:
+    name: "<gray>No Invites</gray>"
+    lore:
+      - "<gray>This nation has no invites to display.</gray>"
+  missing:
+    name: "<red>Nation Missing</red>"
+    lore:
+      - "<gray>The nation invite browser could not be loaded.</gray>"
+
+town_nation_members_ui:
+  title: "<gradient:#22c55e:#84cc16>Nation Members</gradient>"
+  summary:
+    name: "<gold>Member Summary</gold>"
+    lore:
+      - "<gray>Nation:</gray> <white>{nation_name}</white>"
+      - "<gray>Members:</gray> <white>{member_count}</white>"
+  entry:
+    name: "<gold>{town_name}</gold>"
+    lore:
+      - "<gray>Nexus level:</gray> <white>{nexus_level}</white>"
+      - "<gray>Role:</gray> <white>{member_role}</white>"
+      - "<yellow>Capital towns can click members here to remove them.</yellow>"
+  page:
+    name: "<gold>Page <white>{current_page}/{total_pages}</white></gold>"
+    lore:
+      - "<gray>Members:</gray> <white>{items_count}</white>"
+  empty:
+    name: "<gray>No Members</gray>"
+    lore:
+      - "<gray>This nation has no members to display.</gray>"
+  missing:
+    name: "<red>Nation Missing</red>"
+    lore:
+      - "<gray>The nation member browser could not be loaded.</gray>"
+
+town_nation_invite_town_ui:
+  title: "<gradient:#22c55e:#38bdf8>Invite Town</gradient>"
+  summary:
+    name: "<gold>Eligible Towns</gold>"
+    lore:
+      - "<gray>Nation:</gray> <white>{nation_name}</white>"
+      - "<gray>Eligible allied towns:</gray> <white>{eligible_town_count}</white>"
+  entry:
+    name: "<gold>{town_name}</gold>"
+    lore:
+      - "<gray>Nexus level:</gray> <white>{nexus_level}</white>"
+      - "<yellow>Click to send this town a nation invite.</yellow>"
+  page:
+    name: "<gold>Page <white>{current_page}/{total_pages}</white></gold>"
+    lore:
+      - "<gray>Eligible towns:</gray> <white>{items_count}</white>"
+  empty:
+    name: "<gray>No Eligible Towns</gray>"
+    lore:
+      - "<gray>No allied towns are currently eligible for expansion.</gray>"
+  missing:
+    name: "<red>Nation Missing</red>"
+    lore:
+      - "<gray>The nation invite selector could not be loaded.</gray>"
+
+town_nation_capital_ui:
+  title: "<gradient:#f59e0b:#fbbf24>Promote Capital</gradient>"
+  summary:
+    name: "<gold>Capital Selection</gold>"
+    lore:
+      - "<gray>Nation:</gray> <white>{nation_name}</white>"
+      - "<gray>Eligible towns:</gray> <white>{eligible_town_count}</white>"
+  entry:
+    name: "<gold>{town_name}</gold>"
+    lore:
+      - "<gray>Nexus level:</gray> <white>{nexus_level}</white>"
+      - "<yellow>Click to make this town the capital.</yellow>"
+  page:
+    name: "<gold>Page <white>{current_page}/{total_pages}</white></gold>"
+    lore:
+      - "<gray>Eligible towns:</gray> <white>{items_count}</white>"
+  empty:
+    name: "<gray>No Eligible Towns</gray>"
+    lore:
+      - "<gray>No other nation town can be promoted right now.</gray>"
+  missing:
+    name: "<red>Nation Missing</red>"
+    lore:
+      - "<gray>The capital selector could not be loaded.</gray>"
+
+town_nation_confirm_ui:
+  title: "<gradient:#ef4444:#f87171>Confirm Action</gradient>"
+  summary:
+    name: "<gold>Nation Confirmation</gold>"
+    lore:
+      - "<gray>Action:</gray> <white>{action}</white>"
+      - "<gray>Nation:</gray> <white>{nation_name}</white>"
+      - "<gray>Target town:</gray> <white>{target_town}</white>"
+  confirm:
+    name: "<green>Confirm</green>"
+    lore:
+      - "<gray>Confirm this nation action.</gray>"
+  cancel:
+    name: "<red>Cancel</red>"
+    lore:
+      - "<gray>Return to the nation menu.</gray>"

@@ -34,7 +34,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Shared roadmap browser for configured Nexus and chunk levels.
+ * Shared roadmap browser for configured Nexus, nation, and chunk levels.
  *
  * @author ItsRainingHP
  * @since 1.0.0
@@ -141,6 +141,8 @@ public final class TownLevelRoadmapView extends BaseView {
         final LevelScope resolvedScope = this.resolveScope(context);
         final List<Integer> levels = new ArrayList<>(switch (resolvedScope) {
             case NEXUS -> plugin.getNexusConfig().getLevels().keySet();
+            case NATION_FORMATION -> List.<Integer>of();
+            case NATION -> plugin.getNationConfig().getProgressionLevels().keySet();
             case SECURITY -> plugin.getSecurityConfig().getLevels().keySet();
             case BANK -> plugin.getBankConfig().getLevels().keySet();
             case FARM -> plugin.getFarmConfig().getLevels().keySet();
@@ -184,6 +186,8 @@ public final class TownLevelRoadmapView extends BaseView {
 
         return switch (this.resolveScope(context)) {
             case NEXUS -> plugin.getTownRuntimeService().getNexusLevelProgress(context.getPlayer(), town, level);
+            case NATION_FORMATION -> fallbackSnapshot;
+            case NATION -> plugin.getTownRuntimeService().getNationLevelProgress(context.getPlayer(), town, level);
             case SECURITY, BANK, FARM, OUTPOST, MEDIC, ARMORY -> {
                 final var chunk = TownLevelViewSupport.resolveChunk(context);
                 yield chunk == null

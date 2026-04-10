@@ -19,11 +19,14 @@ import com.raindropcentral.rdt.configs.BankConfigSection;
 import com.raindropcentral.rdt.configs.ConfigSection;
 import com.raindropcentral.rdt.configs.FarmConfigSection;
 import com.raindropcentral.rdt.configs.MedicConfigSection;
+import com.raindropcentral.rdt.configs.NationConfigSection;
 import com.raindropcentral.rdt.configs.NexusConfigSection;
 import com.raindropcentral.rdt.configs.OutpostConfigSection;
 import com.raindropcentral.rdt.configs.SecurityConfigSection;
 import com.raindropcentral.rdt.database.entity.RDTPlayer;
 import com.raindropcentral.rdt.database.entity.RTown;
+import com.raindropcentral.rdt.database.repository.RRNation;
+import com.raindropcentral.rdt.database.repository.RRNationInvite;
 import com.raindropcentral.rdt.database.repository.RRDTPlayer;
 import com.raindropcentral.rdt.database.repository.RRTown;
 import com.raindropcentral.rdt.database.repository.RRTownChunk;
@@ -71,6 +74,7 @@ public class RDT {
     private static final String CONFIG_FOLDER_PATH = "config";
     private static final String CONFIG_FILE_NAME = "config.yml";
     private static final String NEXUS_CONFIG_FILE_NAME = "nexus.yml";
+    private static final String NATION_CONFIG_FILE_NAME = "nation.yml";
     private static final String SECURITY_CONFIG_FILE_NAME = "security.yml";
     private static final String BANK_CONFIG_FILE_NAME = "bank.yml";
     private static final String FARM_CONFIG_FILE_NAME = "farm.yml";
@@ -98,6 +102,8 @@ public class RDT {
     private RRTownChunk townChunkRepository;
     private RRTownInvite townInviteRepository;
     private RRTownRelationship townRelationshipRepository;
+    private RRNation nationRepository;
+    private RRNationInvite nationInviteRepository;
 
     private TownRuntimeService townRuntimeService;
     private TownSpawnService townSpawnService;
@@ -215,11 +221,20 @@ public class RDT {
     public @NotNull ConfigSection getDefaultConfig() {
         this.ensureBundledConfigFiles();
         try {
+            final ConfigSection config;
             if (!this.canChangeConfigs()) {
                 final InputStream defaultStream = this.plugin.getResource(CONFIG_FOLDER_PATH + '/' + CONFIG_FILE_NAME);
-                return defaultStream == null ? ConfigSection.createDefault() : ConfigSection.fromInputStream(defaultStream);
+                config = defaultStream == null ? ConfigSection.createDefault() : ConfigSection.fromInputStream(defaultStream);
+            } else {
+                config = ConfigSection.fromFile(this.getConfigFile(CONFIG_FILE_NAME));
             }
-            return ConfigSection.fromFile(this.getConfigFile(CONFIG_FILE_NAME));
+            if (config.alignNationUnlockLevelWithRelationships()) {
+                this.getLogger().warning(
+                    "Configured town.nation_unlock_level was lower than town.relationship_unlock_level. "
+                        + "Nation unlock has been raised to match the relationship unlock level."
+                );
+            }
+            return config;
         } catch (final Exception exception) {
             this.getLogger().warning("Failed to load RDT config: " + exception.getMessage());
             return ConfigSection.createDefault();
@@ -242,6 +257,25 @@ public class RDT {
         } catch (final Exception exception) {
             this.getLogger().warning("Failed to load RDT nexus config: " + exception.getMessage());
             return NexusConfigSection.createDefault();
+        }
+    }
+
+    /**
+     * Loads the effective nation creation configuration.
+     *
+     * @return parsed nation configuration
+     */
+    public @NotNull NationConfigSection getNationConfig() {
+        this.ensureBundledConfigFiles();
+        try {
+            if (!this.canChangeConfigs()) {
+                final InputStream defaultStream = this.plugin.getResource(CONFIG_FOLDER_PATH + '/' + NATION_CONFIG_FILE_NAME);
+                return defaultStream == null ? NationConfigSection.createDefault() : NationConfigSection.fromInputStream(defaultStream);
+            }
+            return NationConfigSection.fromFile(this.getConfigFile(NATION_CONFIG_FILE_NAME));
+        } catch (final Exception exception) {
+            this.getLogger().warning("Failed to load RDT nation config: " + exception.getMessage());
+            return NationConfigSection.createDefault();
         }
     }
 
@@ -412,6 +446,8 @@ public class RDT {
         this.townChunkRepository = new RRTownChunk(this.executor, this.entityManagerFactory);
         this.townInviteRepository = new RRTownInvite(this.executor, this.entityManagerFactory);
         this.townRelationshipRepository = new RRTownRelationship(this.executor, this.entityManagerFactory);
+        this.nationRepository = new RRNation(this.executor, this.entityManagerFactory);
+        this.nationInviteRepository = new RRNationInvite(this.executor, this.entityManagerFactory);
     }
 
     private void initializeServices() {
@@ -464,7 +500,10 @@ public class RDT {
                 new TownBankCurrencyInputView(),
                 new TownColorAnvilView(),
                 new TownRenameAnvilView(),
+                new CreateNationNameAnvilView(),
+                new NationRenameAnvilView(),
                 new TownLevelCurrencyContributionAnvilView(),
+                new TownNationCurrencyContributionAnvilView(),
                 new TownLevelProgressView(),
                 new TownLevelRequirementsView(),
                 new TownLevelRewardsView(),
@@ -472,6 +511,15 @@ public class RDT {
                 new ClaimsView(),
                 new TownChunkView(),
                 new TownChunkTypeView(),
+                new TownNationView(),
+                new TownNationRequirementsView(),
+                new TownNationRewardsView(),
+                new TownNationFormationSelectionView(),
+                new TownNationInviteListView(),
+                new TownNationMemberListView(),
+                new TownNationInviteTownView(),
+                new TownNationCapitalSelectionView(),
+                new TownNationConfirmView(),
                 new TownRelationshipsView(),
                 new TownRelationshipDetailView(),
                 new TownProtectionScopeView(),
@@ -523,6 +571,7 @@ public class RDT {
     private void ensureBundledConfigFiles() {
         this.ensureBundledConfigFile(CONFIG_FILE_NAME);
         this.ensureBundledConfigFile(NEXUS_CONFIG_FILE_NAME);
+        this.ensureBundledConfigFile(NATION_CONFIG_FILE_NAME);
         this.ensureBundledConfigFile(SECURITY_CONFIG_FILE_NAME);
         this.ensureBundledConfigFile(BANK_CONFIG_FILE_NAME);
         this.ensureBundledConfigFile(FARM_CONFIG_FILE_NAME);
@@ -732,6 +781,24 @@ public class RDT {
      */
     public @Nullable RRTownRelationship getTownRelationshipRepository() {
         return this.townRelationshipRepository;
+    }
+
+    /**
+     * Returns the nation repository.
+     *
+     * @return nation repository
+     */
+    public @Nullable RRNation getNationRepository() {
+        return this.nationRepository;
+    }
+
+    /**
+     * Returns the nation-invite repository.
+     *
+     * @return nation-invite repository
+     */
+    public @Nullable RRNationInvite getNationInviteRepository() {
+        return this.nationInviteRepository;
     }
 
     /**

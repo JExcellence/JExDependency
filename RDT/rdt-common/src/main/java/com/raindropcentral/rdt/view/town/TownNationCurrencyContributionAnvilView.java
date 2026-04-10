@@ -14,12 +14,8 @@
 package com.raindropcentral.rdt.view.town;
 
 import com.raindropcentral.rdt.RDT;
-import com.raindropcentral.rdt.database.entity.RTown;
-import com.raindropcentral.rdt.database.entity.RTownChunk;
 import com.raindropcentral.rdt.service.ContributionResult;
 import com.raindropcentral.rdt.service.ContributionStatus;
-import com.raindropcentral.rdt.service.LevelProgressSnapshot;
-import com.raindropcentral.rdt.service.TownLevelRequirementSnapshot;
 import com.raindropcentral.rplatform.view.AbstractAnvilView;
 import me.devnatan.inventoryframework.context.Context;
 import me.devnatan.inventoryframework.context.OpenContext;
@@ -30,19 +26,19 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Anvil input view for partial currency turn-ins on level requirements.
+ * Anvil input view for partial currency turn-ins during nation creation.
  *
  * @author ItsRainingHP
  * @since 1.0.0
  * @version 1.0.0
  */
-public final class TownLevelCurrencyContributionAnvilView extends AbstractAnvilView {
+public final class TownNationCurrencyContributionAnvilView extends AbstractAnvilView {
 
     /**
-     * Creates the currency contribution input view.
+     * Creates the nation currency contribution input view.
      */
-    public TownLevelCurrencyContributionAnvilView() {
-        super(TownLevelRequirementsView.class);
+    public TownNationCurrencyContributionAnvilView() {
+        super(TownNationRequirementsView.class);
     }
 
     @Override
@@ -67,9 +63,8 @@ public final class TownLevelCurrencyContributionAnvilView extends AbstractAnvilV
             return new ContributionResult(ContributionStatus.INVALID_ENTRY, 0.0D, false, false);
         }
 
-        final RDT plugin = TownLevelViewSupport.plugin(context);
-        final RTown town = TownLevelViewSupport.resolveTown(context);
-        if (plugin == null || plugin.getTownRuntimeService() == null || town == null) {
+        final RDT plugin = TownNationViewSupport.plugin(context);
+        if (plugin == null || plugin.getTownRuntimeService() == null) {
             return new ContributionResult(ContributionStatus.INVALID_TARGET, 0.0D, false, false);
         }
 
@@ -78,32 +73,11 @@ public final class TownLevelCurrencyContributionAnvilView extends AbstractAnvilV
             return new ContributionResult(ContributionStatus.INVALID_ENTRY, 0.0D, false, false);
         }
 
-        return switch (TownLevelViewSupport.scope(context)) {
-            case NEXUS -> plugin.getTownRuntimeService().contributeNexusCurrency(
-                context.getPlayer(),
-                town,
-                entryKey,
-                requestedAmount
-            );
-            case NATION_FORMATION -> new ContributionResult(ContributionStatus.INVALID_TARGET, 0.0D, false, false);
-            case NATION -> plugin.getTownRuntimeService().contributeNationCurrency(
-                context.getPlayer(),
-                town,
-                entryKey,
-                requestedAmount
-            );
-            case SECURITY, BANK, FARM, OUTPOST, MEDIC, ARMORY -> {
-                final RTownChunk townChunk = TownLevelViewSupport.resolveChunk(context);
-                yield townChunk == null
-                    ? new ContributionResult(ContributionStatus.INVALID_TARGET, 0.0D, false, false)
-                    : plugin.getTownRuntimeService().contributeChunkCurrency(
-                        context.getPlayer(),
-                        townChunk,
-                        entryKey,
-                        requestedAmount
-                    );
-            }
-        };
+        return plugin.getTownRuntimeService().contributeNationCreationCurrency(
+            context.getPlayer(),
+            entryKey,
+            requestedAmount
+        );
     }
 
     @Override
@@ -122,26 +96,20 @@ public final class TownLevelCurrencyContributionAnvilView extends AbstractAnvilV
             ? resolvedResult
             : new ContributionResult(ContributionStatus.INVALID_TARGET, 0.0D, false, false);
         final Map<String, Object> resultData = new LinkedHashMap<>();
-        final Map<String, Object> copiedData = TownLevelViewSupport.copyInitialData(context);
+        final Map<String, Object> copiedData = TownNationViewSupport.copyInitialData(context);
         if (copiedData != null) {
-            resultData.putAll(TownLevelViewSupport.stripTransientData(copiedData));
+            resultData.putAll(TownNationViewSupport.stripTransientData(copiedData));
         }
-        resultData.put(TownLevelViewSupport.CONTRIBUTION_STATUS_KEY, this.resolveStatusKey(contributionResult.status()));
-        resultData.put(TownLevelViewSupport.CONTRIBUTION_AMOUNT_KEY, contributionResult.contributedAmount());
-        resultData.put(TownLevelViewSupport.CONTRIBUTION_COMPLETED_KEY, contributionResult.requirementCompleted());
-        resultData.put(TownLevelViewSupport.LEVEL_READY_KEY, contributionResult.levelReady());
+        resultData.put(TownNationViewSupport.CONTRIBUTION_STATUS_KEY, this.resolveStatusKey(contributionResult.status()));
+        resultData.put(TownNationViewSupport.CONTRIBUTION_AMOUNT_KEY, contributionResult.contributedAmount());
+        resultData.put(TownNationViewSupport.CONTRIBUTION_COMPLETED_KEY, contributionResult.requirementCompleted());
+        resultData.put(TownNationViewSupport.READY_TO_CREATE_KEY, contributionResult.levelReady());
         return resultData;
     }
 
-    private @Nullable TownLevelRequirementSnapshot resolveRequirement(final @NotNull Context context) {
-        final String entryKey = this.resolveEntryKey(context);
-        final LevelProgressSnapshot snapshot = TownLevelViewSupport.resolveSnapshot(context);
-        return snapshot == null || entryKey == null ? null : snapshot.findRequirement(entryKey);
-    }
-
     private @Nullable String resolveEntryKey(final @NotNull Context context) {
-        final Map<String, Object> data = TownLevelViewSupport.copyInitialData(context);
-        return data != null && data.get(TownLevelViewSupport.ENTRY_KEY) instanceof String entryKey
+        final Map<String, Object> data = TownNationViewSupport.copyInitialData(context);
+        return data != null && data.get(TownNationViewSupport.ENTRY_KEY) instanceof String entryKey
             ? entryKey
             : null;
     }
@@ -157,11 +125,9 @@ public final class TownLevelCurrencyContributionAnvilView extends AbstractAnvilV
     private @NotNull String resolveStatusKey(final @NotNull ContributionStatus status) {
         return switch (status) {
             case SUCCESS -> "contribution_saved";
-            case NO_PERMISSION -> "no_permission";
             case NOT_ENOUGH_RESOURCES -> "not_enough_resources";
             case ALREADY_COMPLETE -> "requirement_complete";
-            case MAX_LEVEL -> "max_level";
-            case INVALID_TARGET, INVALID_ENTRY, FAILED -> "invalid_target";
+            case NO_PERMISSION, MAX_LEVEL, INVALID_TARGET, INVALID_ENTRY, FAILED -> "invalid_target";
         };
     }
 }

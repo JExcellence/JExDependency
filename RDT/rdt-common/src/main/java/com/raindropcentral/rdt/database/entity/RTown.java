@@ -109,6 +109,10 @@ public class RTown extends BaseEntity {
     @Column(name = "town_spawn_server_id", length = 64)
     private String townSpawnServerId;
 
+    @Column(name = "nation_uuid")
+    @Convert(converter = UUIDConverter.class)
+    private UUID nationUuid;
+
     @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
     @JoinColumn(name = "town_uuid", referencedColumnName = "town_uuid")
     @OrderBy("player_uuid ASC")
@@ -416,6 +420,21 @@ public class RTown extends BaseEntity {
     /** Returns the last archetype change timestamp in epoch milliseconds. */
     public long getLastArchetypeChangeAt() {
         return this.lastArchetypeChangeAt;
+    }
+
+    /** Returns the active nation UUID. */
+    public @Nullable UUID getNationUuid() {
+        return this.nationUuid;
+    }
+
+    /** Replaces the active nation UUID. */
+    public void setNationUuid(final @Nullable UUID nationUuid) {
+        this.nationUuid = nationUuid;
+    }
+
+    /** Returns whether the town currently belongs to an active nation. */
+    public boolean isInNation() {
+        return this.nationUuid != null;
     }
 
     /** Replaces the last archetype change timestamp in epoch milliseconds. */

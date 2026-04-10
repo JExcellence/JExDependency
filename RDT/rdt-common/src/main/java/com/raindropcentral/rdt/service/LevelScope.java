@@ -26,6 +26,8 @@ import org.jetbrains.annotations.Nullable;
  */
 public enum LevelScope {
     NEXUS("Nexus"),
+    NATION_FORMATION("Nation Creation"),
+    NATION("Nation"),
     SECURITY("Security"),
     BANK("Bank"),
     FARM("Farm"),
@@ -54,7 +56,7 @@ public enum LevelScope {
      * @return {@code true} when this scope targets one claimed chunk
      */
     public boolean isChunkScope() {
-        return this != NEXUS;
+        return this != NEXUS && this != NATION_FORMATION && this != NATION;
     }
 
     /**

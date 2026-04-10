@@ -107,6 +107,20 @@ final class TownLevelViewSupport {
         );
     }
 
+    static @NotNull Map<String, Object> createNationNavigationData(
+        final @NotNull Context context,
+        final @NotNull RTown town
+    ) {
+        return mergeInitialData(
+            context,
+            Map.of(
+                "plugin", plugin(context),
+                "town_uuid", town.getTownUUID(),
+                SCOPE_KEY, LevelScope.NATION
+            )
+        );
+    }
+
     static @NotNull Map<String, Object> createSecurityNavigationData(
         final @NotNull Context context,
         final @NotNull RTownChunk townChunk
@@ -217,6 +231,10 @@ final class TownLevelViewSupport {
             case NEXUS -> previewLevel(context) == null
                 ? plugin.getTownRuntimeService().getNexusLevelProgress(context.getPlayer(), town)
                 : plugin.getTownRuntimeService().getNexusLevelProgress(context.getPlayer(), town, previewLevel(context));
+            case NATION_FORMATION -> null;
+            case NATION -> previewLevel(context) == null
+                ? plugin.getTownRuntimeService().getNationLevelProgress(context.getPlayer(), town)
+                : plugin.getTownRuntimeService().getNationLevelProgress(context.getPlayer(), town, previewLevel(context));
             case SECURITY, BANK, FARM, OUTPOST, MEDIC, ARMORY -> {
                 final RTownChunk townChunk = resolveChunk(context);
                 if (townChunk == null) {

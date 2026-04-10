@@ -128,6 +128,8 @@ public class TownChunkView extends BaseView {
         if (supportsTownRelationships(townChunk)) {
             render.layoutSlot('u', this.createRelationshipsItem(render, townChunk))
                 .onClick(clickContext -> this.handleRelationshipsClick(clickContext, townChunk));
+            render.layoutSlot('f', this.createNationItem(render, townChunk))
+                .onClick(clickContext -> this.handleNationClick(clickContext, townChunk));
         } else if (supportsChunkProgression(townChunk)) {
             render.layoutSlot('u', this.createUpgradeItem(render, townChunk))
                 .onClick(clickContext -> this.handleUpgradeClick(clickContext, townChunk));
@@ -477,6 +479,19 @@ public class TownChunkView extends BaseView {
         );
     }
 
+    private void handleNationClick(
+        final @NotNull SlotClickContext clickContext,
+        final @NotNull RTownChunk townChunk
+    ) {
+        clickContext.openForPlayer(
+            TownNationView.class,
+            Map.of(
+                "plugin", this.plugin.get(clickContext),
+                "town_uuid", townChunk.getTown().getTownUUID()
+            )
+        );
+    }
+
     private void handlePickupCacheClick(final @NotNull SlotClickContext clickContext, final @NotNull RTownChunk townChunk) {
         final var bankService = this.plugin.get(clickContext).getTownBankService();
         if (bankService == null) {
@@ -560,6 +575,10 @@ public class TownChunkView extends BaseView {
     }
 
     static boolean supportsTownRelationships(final @NotNull RTownChunk townChunk) {
+        return townChunk.getChunkType() == ChunkType.NEXUS;
+    }
+
+    static boolean supportsTownNations(final @NotNull RTownChunk townChunk) {
         return townChunk.getChunkType() == ChunkType.NEXUS;
     }
 
@@ -909,6 +928,58 @@ public class TownChunkView extends BaseView {
                     "nexus_level", town.getNexusLevel(),
                     "unlock_level", unlockLevel,
                     "manage_state", canManage ? "Enabled" : "View Only"
+                ))
+                .build()
+                .children())
+            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+            .build();
+    }
+
+    private @NotNull ItemStack createNationItem(final @NotNull Context context, final @NotNull RTownChunk townChunk) {
+        final TownRuntimeService runtimeService = this.plugin.get(context).getTownRuntimeService();
+        final RTown town = townChunk.getTown();
+        final int unlockLevel = runtimeService == null ? 8 : runtimeService.getTownNationUnlockLevel();
+        final int minimumTowns = runtimeService == null ? 2 : runtimeService.getTownNationMinTowns();
+        final int eligibleTownCount = runtimeService == null ? 0 : runtimeService.getEligibleNationFormationTowns(town).size();
+        final var activeNation = runtimeService == null ? null : runtimeService.getNationForTown(town);
+        final var pendingNation = activeNation == null && runtimeService != null
+            ? runtimeService.getPendingNationCreatedBy(town)
+            : null;
+        final var pendingInvite = activeNation == null && pendingNation == null && runtimeService != null
+            ? runtimeService.getPendingNationInviteFor(town)
+            : null;
+        final Material material = activeNation != null
+            ? activeNation.getCapitalTownUuid().equals(town.getTownUUID()) ? Material.EMERALD_BLOCK : Material.LIME_DYE
+            : pendingInvite != null
+                ? Material.BELL
+                : pendingNation != null
+                    ? Material.CLOCK
+                    : runtimeService != null && runtimeService.getNationCreationProgress(context.getPlayer()).available()
+                        ? Material.BEACON
+                        : Material.GRAY_DYE;
+        final String loreKey = activeNation != null
+            ? "nation.active.lore"
+            : pendingInvite != null
+                ? "nation.invite.lore"
+                : pendingNation != null
+                    ? "nation.pending.lore"
+                    : "nation.locked.lore";
+        return UnifiedBuilderFactory.item(material)
+            .setName(this.i18n("nation.name", context.getPlayer()).build().component())
+            .setLore(this.i18n(loreKey, context.getPlayer())
+                .withPlaceholders(Map.of(
+                    "nexus_level", town.getNexusLevel(),
+                    "unlock_level", unlockLevel,
+                    "minimum_towns", minimumTowns,
+                    "eligible_town_count", eligibleTownCount,
+                    "nation_name", activeNation != null
+                        ? activeNation.getNationName()
+                        : pendingNation != null
+                            ? pendingNation.getNationName()
+                            : pendingInvite != null && runtimeService != null && runtimeService.getNation(pendingInvite.getNationUuid()) != null
+                                ? runtimeService.getNation(pendingInvite.getNationUuid()).getNationName()
+                                : "-",
+                    "member_count", activeNation == null || runtimeService == null ? 0 : runtimeService.getNationMemberTowns(activeNation).size()
                 ))
                 .build()
                 .children())

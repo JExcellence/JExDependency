@@ -18,7 +18,9 @@ import org.bukkit.Material;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -46,6 +48,9 @@ class ConfigSectionTest {
         assertEquals(86_400L, section.getTownArchetypeChangeCooldownSeconds());
         assertEquals(21_600L, section.getTownRelationshipChangeCooldownSeconds());
         assertEquals(5, section.getTownRelationshipUnlockLevel());
+        assertEquals(8, section.getTownNationUnlockLevel());
+        assertEquals(2, section.getTownNationMinTowns());
+        assertEquals(43_200L, section.getTownNationInviteTimeoutSeconds());
         assertTrue(section.isCornerClaimAdjacencyExcluded());
         assertFalse(section.isProxyEnabled());
         assertFalse(section.isProxyTownSpawnEnabled());
@@ -79,6 +84,9 @@ class ConfigSectionTest {
               archetype_change_cooldown_seconds: 1800
               relationship_change_cooldown_seconds: -5
               relationship_unlock_level: 0
+              nation_unlock_level: 0
+              nation_min_towns: 1
+              nation_invite_timeout_seconds: -1
             """);
 
         final ConfigSection section = ConfigSection.fromFile(configFile.toFile());
@@ -90,6 +98,9 @@ class ConfigSectionTest {
         assertEquals(1_800L, section.getTownArchetypeChangeCooldownSeconds());
         assertEquals(21_600L, section.getTownRelationshipChangeCooldownSeconds());
         assertEquals(5, section.getTownRelationshipUnlockLevel());
+        assertEquals(8, section.getTownNationUnlockLevel());
+        assertEquals(2, section.getTownNationMinTowns());
+        assertEquals(43_200L, section.getTownNationInviteTimeoutSeconds());
         assertFalse(section.isCornerClaimAdjacencyExcluded());
         assertTrue(section.isProxyEnabled());
         assertTrue(section.isProxyTownSpawnEnabled());
@@ -98,5 +109,18 @@ class ConfigSectionTest {
         assertEquals(Material.DIAMOND_BLOCK, section.getChunkTypeIconMaterial(ChunkType.NEXUS));
         assertEquals(Material.OAK_PLANKS, section.getChunkTypeIconMaterial(ChunkType.DEFAULT));
         assertEquals(Material.OAK_PLANKS, section.getDefaultChunkBlockMaterial());
+    }
+
+    @Test
+    void alignNationUnlockLevelWithRelationshipsRaisesNationRequirementWhenNeeded() {
+        final ConfigSection section = ConfigSection.fromInputStream(new ByteArrayInputStream("""
+            town:
+              relationship_unlock_level: 7
+              nation_unlock_level: 4
+            """.getBytes(StandardCharsets.UTF_8)));
+
+        assertTrue(section.alignNationUnlockLevelWithRelationships());
+        assertEquals(7, section.getTownNationUnlockLevel());
+        assertFalse(section.alignNationUnlockLevelWithRelationships());
     }
 }

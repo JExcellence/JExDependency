@@ -49,5 +49,12 @@ town:
   # Nexus level required before the town diplomacy system unlocks.
   # Towns below this level always resolve relationships as neutral.
   relationship_unlock_level: 5
+  # Nexus level required before a town can begin the nation creation flow.
+  # This value is automatically raised to match `relationship_unlock_level` if configured lower.
+  nation_unlock_level: 8
+  # Minimum number of towns required to successfully form a nation, including the initiating capital town.
+  nation_min_towns: 2
+  # Timeout in seconds for town nation invites. Formation and expansion timeouts count as declines.
+  nation_invite_timeout_seconds: 43200
   # Cooldown in seconds after a confirmed town relationship change before that pair can change again.
   relationship_change_cooldown_seconds: 21600

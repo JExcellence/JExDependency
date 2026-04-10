@@ -35,9 +35,13 @@ import java.util.Map;
 final class LevelConfigSupport {
 
     private static final int DEFAULT_NEXUS_LEVEL_COUNT = 10;
+    private static final int DEFAULT_NATION_PROGRESSION_LEVEL_COUNT = 10;
     private static final double DEFAULT_NEXUS_LEVEL_BASE_REQUIREMENT = 2500.0D;
     private static final double DEFAULT_NEXUS_LEVEL_REQUIREMENT_GROWTH = 1.2D;
     private static final double DEFAULT_NEXUS_LEVEL_REWARD_MULTIPLIER = 0.2D;
+    private static final double DEFAULT_NATION_LEVEL_BASE_REQUIREMENT = 5_000.0D;
+    private static final double DEFAULT_NATION_LEVEL_REQUIREMENT_GROWTH = 1.22D;
+    private static final double DEFAULT_NATION_LEVEL_REWARD_MULTIPLIER = 0.15D;
     private static final double[] DEFAULT_CHUNK_LEVEL_REQUIREMENTS = {1_000.0D, 1_750.0D, 2_750.0D, 4_000.0D};
     private static final double[] DEFAULT_CHUNK_LEVEL_REWARDS = {150.0D, 250.0D, 400.0D, 600.0D};
 
@@ -137,6 +141,78 @@ final class LevelConfigSupport {
                         createCommandReward(
                             "rt broadcast {town_uuid} <gradient:#22c55e:#84cc16>{town_name}</gradient> "
                                 + "<yellow>advanced its Nexus to level <white>{target_level}</white><yellow>!</yellow>"
+                        )
+                    )
+                )
+            );
+        }
+        return Map.copyOf(defaults);
+    }
+
+    static @NotNull Map<Integer, LevelDefinition> createDefaultNationFormationLevels() {
+        return Map.of(
+            1,
+            new LevelDefinition(
+                1,
+                Map.of(
+                    "nation_charter_funding",
+                    createCurrencyRequirement(10_000.0D, "Nation charter funding"),
+                    "alliance_treaties",
+                    createItemRequirement("PAPER", 16, "Alliance treaty paperwork")
+                ),
+                Map.of(
+                    "nation_formed_broadcast",
+                    createCommandReward("say Nation {nation_name} has formed under the capital of {capital_town_name}.")
+                )
+            )
+        );
+    }
+
+    static @NotNull Map<Integer, LevelDefinition> createDefaultNationProgressionLevels() {
+        final Map<Integer, LevelDefinition> defaults = new LinkedHashMap<>();
+        defaults.put(1, new LevelDefinition(1, Map.of(), Map.of()));
+        final NationLevelItemDefinition[] itemDefinitions = {
+            new NationLevelItemDefinition("founding_records", "BOOK", 12, "Founding record archive"),
+            new NationLevelItemDefinition("cartography_tables", "MAP", 8, "Cartography expansion kits"),
+            new NationLevelItemDefinition("embassy_supplies", "PAPER", 32, "Embassy supply bundles"),
+            new NationLevelItemDefinition("trade_ledgers", "EMERALD", 24, "Trade ledger reserves"),
+            new NationLevelItemDefinition("border_beacons", "SEA_LANTERN", 12, "Border beacon materials"),
+            new NationLevelItemDefinition("administration_seals", "GOLD_INGOT", 32, "Administrative seal materials"),
+            new NationLevelItemDefinition("relay_hardware", "REDSTONE_BLOCK", 16, "Relay network hardware"),
+            new NationLevelItemDefinition("fortification_charters", "OBSIDIAN", 20, "Fortification charter stock"),
+            new NationLevelItemDefinition("heritage_banners", "WHITE_BANNER", 8, "Nation heritage banners")
+        };
+        if (DEFAULT_NATION_PROGRESSION_LEVEL_COUNT != itemDefinitions.length + 1) {
+            throw new IllegalStateException("Default nation progression definitions are out of sync");
+        }
+        for (int index = 0; index < itemDefinitions.length; index++) {
+            final int level = index + 2;
+            final double requirementAmount = roundCurrency(
+                DEFAULT_NATION_LEVEL_BASE_REQUIREMENT * Math.pow(DEFAULT_NATION_LEVEL_REQUIREMENT_GROWTH, index)
+            );
+            final double rewardAmount = roundCurrency(requirementAmount * DEFAULT_NATION_LEVEL_REWARD_MULTIPLIER);
+            final NationLevelItemDefinition itemDefinition = itemDefinitions[index];
+            defaults.put(
+                level,
+                new LevelDefinition(
+                    level,
+                    Map.of(
+                        "nation_treasury",
+                        createCurrencyRequirement(requirementAmount, "Nation treasury funding"),
+                        itemDefinition.key(),
+                        createItemRequirement(
+                            itemDefinition.material(),
+                            itemDefinition.amount(),
+                            itemDefinition.description()
+                        )
+                    ),
+                    Map.of(
+                        "vault_bonus",
+                        createCurrencyReward(rewardAmount, "Nation treasury rebate"),
+                        "nation_broadcast",
+                        createCommandReward(
+                            "rt broadcast {capital_town_uuid} <gradient:#38bdf8:#22c55e>{nation_name}</gradient> "
+                                + "<yellow>advanced to nation level <white>{target_level}</white><yellow>!</yellow>"
                         )
                     )
                 )
@@ -729,6 +805,14 @@ final class LevelConfigSupport {
     }
 
     private record ChunkLevelRewardItemDefinition(
+        @NotNull String key,
+        @NotNull String material,
+        int amount,
+        @NotNull String description
+    ) {
+    }
+
+    private record NationLevelItemDefinition(
         @NotNull String key,
         @NotNull String material,
         int amount,

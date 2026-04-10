@@ -17,6 +17,11 @@ import com.raindropcentral.rdt.RDT;
 import com.raindropcentral.rdt.configs.LevelDefinition;
 import com.raindropcentral.rdt.configs.NexusCombatStats;
 import com.raindropcentral.rdt.database.entity.RDTPlayer;
+import com.raindropcentral.rdt.database.entity.NationInvite;
+import com.raindropcentral.rdt.database.entity.NationInviteStatus;
+import com.raindropcentral.rdt.database.entity.NationInviteType;
+import com.raindropcentral.rdt.database.entity.NationStatus;
+import com.raindropcentral.rdt.database.entity.RNation;
 import com.raindropcentral.rdt.database.entity.RTown;
 import com.raindropcentral.rdt.database.entity.RTownChunk;
 import com.raindropcentral.rdt.database.entity.RTownRelationship;
@@ -69,6 +74,7 @@ import org.jetbrains.annotations.Nullable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -271,6 +277,558 @@ public final class TownRuntimeService {
         }
         playerData.clearTownCreationProgress();
         this.persistPlayerData(playerData);
+    }
+
+    /**
+     * Returns the configured Nexus level required before nation creation unlocks.
+     *
+     * @return required Nexus level for nation creation
+     */
+    public int getTownNationUnlockLevel() {
+        return this.plugin.getDefaultConfig().getTownNationUnlockLevel();
+    }
+
+    /**
+     * Returns the configured minimum number of towns required to form a nation, including the
+     * initiating capital town.
+     *
+     * @return minimum required town count
+     */
+    public int getTownNationMinTowns() {
+        return this.plugin.getDefaultConfig().getTownNationMinTowns();
+    }
+
+    /**
+     * Returns the configured nation invite timeout in milliseconds.
+     *
+     * @return nation invite timeout in milliseconds
+     */
+    public long getTownNationInviteTimeoutMillis() {
+        return Math.max(0L, this.plugin.getDefaultConfig().getTownNationInviteTimeoutSeconds()) * 1000L;
+    }
+
+    /**
+     * Returns whether one town has unlocked nation creation.
+     *
+     * @param town town to inspect
+     * @return {@code true} when the town can begin the nation creation flow
+     */
+    public boolean areNationsUnlocked(final @NotNull RTown town) {
+        final RTown liveTown = this.resolveLiveTown(town);
+        final RTown resolvedTown = liveTown == null ? town : liveTown;
+        return resolvedTown.getNexusLevel() >= this.getTownNationUnlockLevel()
+            && this.getAlliedTowns(resolvedTown).stream().findAny().isPresent();
+    }
+
+    /**
+     * Returns the current nation creation progress snapshot for one town member.
+     *
+     * @param player viewing player
+     * @return nation creation progress snapshot
+     */
+    public @NotNull NationCreationProgressSnapshot getNationCreationProgress(final @NotNull Player player) {
+        this.processPendingNationTimeouts();
+
+        final RTown town = this.getTownFor(player.getUniqueId());
+        if (town == null) {
+            return new NationCreationProgressSnapshot(false, false, false, false, 0.0D, List.of(), List.of());
+        }
+
+        final boolean alreadyInNation = this.getNationForTown(town) != null;
+        final boolean pendingNation = this.getPendingNationCreatedBy(town) != null || this.getPendingNationInviteFor(town) != null;
+        final LevelProgressSnapshot snapshot = this.getLevelProgress(player, LevelScope.NATION_FORMATION, town, null, null);
+        return new NationCreationProgressSnapshot(
+            snapshot.available(),
+            alreadyInNation,
+            pendingNation,
+            snapshot.readyToLevelUp(),
+            snapshot.progress(),
+            snapshot.requirements(),
+            snapshot.rewards()
+        );
+    }
+
+    /**
+     * Returns whether the player can finalize nation creation for their current town.
+     *
+     * @param player player to inspect
+     * @return {@code true} when nation creation can proceed to the naming step
+     */
+    public boolean canCreateNation(final @NotNull Player player) {
+        final RTown town = this.getTownFor(player.getUniqueId());
+        return town != null
+            && this.hasTownPermission(player, town, TownPermissions.MANAGE_NATIONS)
+            && this.getNationCreationProgress(player).readyToCreate();
+    }
+
+    /**
+     * Saves a shared nation creation currency contribution for the player's town.
+     *
+     * @param player contributing player
+     * @param entryKey requirement entry key
+     * @param requestedAmount requested contribution amount
+     * @return structured contribution result
+     */
+    public @NotNull ContributionResult contributeNationCreationCurrency(
+        final @NotNull Player player,
+        final @NotNull String entryKey,
+        final double requestedAmount
+    ) {
+        final RTown town = this.getTownFor(player.getUniqueId());
+        return town == null
+            ? new ContributionResult(ContributionStatus.INVALID_TARGET, 0.0D, false, false)
+            : this.contributeCurrency(player, LevelScope.NATION_FORMATION, town, null, entryKey, requestedAmount);
+    }
+
+    /**
+     * Saves a shared nation creation item contribution for the player's town.
+     *
+     * @param player contributing player
+     * @param entryKey requirement entry key
+     * @return structured contribution result
+     */
+    public @NotNull ContributionResult contributeNationCreationItem(
+        final @NotNull Player player,
+        final @NotNull String entryKey
+    ) {
+        final RTown town = this.getTownFor(player.getUniqueId());
+        return town == null
+            ? new ContributionResult(ContributionStatus.INVALID_TARGET, 0.0D, false, false)
+            : this.contributeItem(player, LevelScope.NATION_FORMATION, town, null, entryKey);
+    }
+
+    /**
+     * Returns one persisted nation by UUID.
+     *
+     * @param nationUuid nation UUID
+     * @return matching nation, or {@code null} when none exists
+     */
+    public @Nullable RNation getNation(final @NotNull UUID nationUuid) {
+        if (this.plugin.getNationRepository() == null) {
+            return null;
+        }
+
+        final RNation nation = this.plugin.getNationRepository().findByNationUuid(nationUuid);
+        if (nation != null) {
+            this.ensureNationProgressState(nation);
+        }
+        return nation;
+    }
+
+    /**
+     * Returns the active nation for one town, if present.
+     *
+     * @param town town to inspect
+     * @return active nation, or {@code null} when none exists
+     */
+    public @Nullable RNation getNationForTown(final @NotNull RTown town) {
+        final RTown liveTown = this.resolveLiveTown(town);
+        final RTown resolvedTown = liveTown == null ? town : liveTown;
+        return resolvedTown.getNationUuid() == null ? null : this.getNation(resolvedTown.getNationUuid());
+    }
+
+    /**
+     * Returns the pending nation proposal created by one town.
+     *
+     * @param town town to inspect
+     * @return pending nation proposal, or {@code null} when none exists
+     */
+    public @Nullable RNation getPendingNationCreatedBy(final @NotNull RTown town) {
+        this.processPendingNationTimeouts();
+        if (this.plugin.getNationRepository() == null) {
+            return null;
+        }
+        return this.plugin.getNationRepository().findPendingByInitiatingTownUuid(town.getTownUUID()).stream()
+            .findFirst()
+            .orElse(null);
+    }
+
+    /**
+     * Returns the pending nation invite addressed to one town.
+     *
+     * @param town town to inspect
+     * @return pending nation invite, or {@code null} when none exists
+     */
+    public @Nullable NationInvite getPendingNationInviteFor(final @NotNull RTown town) {
+        this.processPendingNationTimeouts();
+        if (this.plugin.getNationInviteRepository() == null) {
+            return null;
+        }
+        return this.plugin.getNationInviteRepository().findPendingByTargetTownUuid(town.getTownUUID()).stream()
+            .findFirst()
+            .orElse(null);
+    }
+
+    /**
+     * Returns the towns that currently belong to one active nation.
+     *
+     * @param nation nation to inspect
+     * @return active member towns
+     */
+    public @NotNull List<RTown> getNationMemberTowns(final @NotNull RNation nation) {
+        return this.getTowns().stream()
+            .filter(town -> Objects.equals(town.getNationUuid(), nation.getNationUuid()))
+            .sorted(Comparator.comparing(RTown::getTownName, String.CASE_INSENSITIVE_ORDER))
+            .toList();
+    }
+
+    /**
+     * Returns the persisted invites for one nation.
+     *
+     * @param nation nation to inspect
+     * @return nation invites sorted by creation time
+     */
+    public @NotNull List<NationInvite> getNationInvites(final @NotNull RNation nation) {
+        if (this.plugin.getNationInviteRepository() == null) {
+            return List.of();
+        }
+        return this.plugin.getNationInviteRepository().findByNationUuid(nation.getNationUuid()).stream()
+            .sorted(Comparator.comparingLong(NationInvite::getCreatedAtMillis))
+            .toList();
+    }
+
+    /**
+     * Returns allied towns that can be selected during nation formation.
+     *
+     * @param town initiating town
+     * @return eligible allied towns
+     */
+    public @NotNull List<RTown> getEligibleNationFormationTowns(final @NotNull RTown town) {
+        this.processPendingNationTimeouts();
+        return this.getAlliedTowns(town).stream()
+            .map(this::resolveLiveTown)
+            .filter(Objects::nonNull)
+            .filter(alliedTown -> !Objects.equals(alliedTown.getTownUUID(), town.getTownUUID()))
+            .filter(alliedTown -> this.getNationForTown(alliedTown) == null)
+            .filter(alliedTown -> this.getPendingNationCreatedBy(alliedTown) == null)
+            .filter(alliedTown -> this.getPendingNationInviteFor(alliedTown) == null)
+            .sorted(Comparator.comparing(RTown::getTownName, String.CASE_INSENSITIVE_ORDER))
+            .toList();
+    }
+
+    /**
+     * Returns allied towns that can be invited into an active nation expansion.
+     *
+     * @param nation active nation
+     * @return eligible allied towns
+     */
+    public @NotNull List<RTown> getEligibleNationExpansionTowns(final @NotNull RNation nation) {
+        final RTown capitalTown = this.getTown(nation.getCapitalTownUuid());
+        if (capitalTown == null) {
+            return List.of();
+        }
+        return this.getEligibleNationFormationTowns(capitalTown);
+    }
+
+    /**
+     * Creates a pending nation proposal from the initiating capital town.
+     *
+     * @param player initiating player
+     * @param nationName requested nation name
+     * @param selectedTownUuids selected allied towns to invite
+     * @return nation action result
+     */
+    public @NotNull NationActionResult createNation(
+        final @NotNull Player player,
+        final @NotNull String nationName,
+        final @NotNull Collection<UUID> selectedTownUuids
+    ) {
+        this.processPendingNationTimeouts();
+
+        final RTown town = this.getTownFor(player.getUniqueId());
+        if (town == null) {
+            return new NationActionResult(NationActionStatus.INVALID_TARGET, null);
+        }
+        if (!this.hasTownPermission(player, town, TownPermissions.MANAGE_NATIONS)) {
+            return new NationActionResult(NationActionStatus.NO_PERMISSION, null);
+        }
+        if (this.getNationForTown(town) != null) {
+            return new NationActionResult(NationActionStatus.ALREADY_IN_NATION, null);
+        }
+        if (this.getPendingNationCreatedBy(town) != null || this.getPendingNationInviteFor(town) != null) {
+            return new NationActionResult(NationActionStatus.ALREADY_PENDING, null);
+        }
+        if (!this.canCreateNation(player)) {
+            return new NationActionResult(NationActionStatus.NOT_READY, null);
+        }
+
+        final String normalizedNationName = nationName.trim();
+        if (normalizedNationName.isEmpty() || normalizedNationName.length() > 32) {
+            return new NationActionResult(NationActionStatus.INVALID_NAME, null);
+        }
+        if (this.plugin.getNationRepository() != null
+            && this.plugin.getNationRepository().findByNationName(normalizedNationName) != null) {
+            return new NationActionResult(NationActionStatus.NAME_TAKEN, null);
+        }
+
+        final Set<UUID> normalizedSelections = selectedTownUuids.stream()
+            .filter(Objects::nonNull)
+            .collect(Collectors.toCollection(LinkedHashSet::new));
+        final List<RTown> eligibleTowns = this.getEligibleNationFormationTowns(town);
+        final Map<UUID, RTown> eligibleById = eligibleTowns.stream()
+            .collect(Collectors.toMap(RTown::getTownUUID, alliedTown -> alliedTown));
+        final List<RTown> selectedTowns = normalizedSelections.stream()
+            .map(eligibleById::get)
+            .filter(Objects::nonNull)
+            .toList();
+        if (selectedTowns.size() != normalizedSelections.size()) {
+            return new NationActionResult(NationActionStatus.INVALID_SELECTION, null);
+        }
+        if (selectedTowns.size() + 1 < this.getTownNationMinTowns()) {
+            return new NationActionResult(NationActionStatus.NOT_ENOUGH_TOWNS, null);
+        }
+        if (this.plugin.getNationRepository() == null || this.plugin.getNationInviteRepository() == null) {
+            return new NationActionResult(NationActionStatus.FAILED, null);
+        }
+
+        final long expiresAt = System.currentTimeMillis() + this.getTownNationInviteTimeoutMillis();
+        final RNation nation = new RNation(
+            UUID.randomUUID(),
+            normalizedNationName,
+            town.getTownUUID(),
+            town.getTownUUID(),
+            player.getUniqueId(),
+            this.getTownNationMinTowns(),
+            expiresAt
+        );
+        this.plugin.getNationRepository().create(nation);
+        for (final RTown selectedTown : selectedTowns) {
+            this.plugin.getNationInviteRepository().create(
+                new NationInvite(nation.getNationUuid(), selectedTown.getTownUUID(), NationInviteType.FORMATION, expiresAt)
+            );
+        }
+        return new NationActionResult(NationActionStatus.SUCCESS, nation);
+    }
+
+    /**
+     * Accepts a pending nation invite on behalf of the player's current town.
+     *
+     * @param player responding player
+     * @param invite invite to accept
+     * @return invite response result
+     */
+    public @NotNull NationInviteResponseResult acceptNationInvite(
+        final @NotNull Player player,
+        final @NotNull NationInvite invite
+    ) {
+        return this.respondToNationInvite(player, invite, true);
+    }
+
+    /**
+     * Declines a pending nation invite on behalf of the player's current town.
+     *
+     * @param player responding player
+     * @param invite invite to decline
+     * @return invite response result
+     */
+    public @NotNull NationInviteResponseResult declineNationInvite(
+        final @NotNull Player player,
+        final @NotNull NationInvite invite
+    ) {
+        return this.respondToNationInvite(player, invite, false);
+    }
+
+    /**
+     * Renames an active nation.
+     *
+     * @param player acting player
+     * @param nation nation to rename
+     * @param nationName requested replacement name
+     * @return nation action result
+     */
+    public @NotNull NationActionResult renameNation(
+        final @NotNull Player player,
+        final @NotNull RNation nation,
+        final @NotNull String nationName
+    ) {
+        this.processPendingNationTimeouts();
+        final RNation liveNation = this.getNation(nation.getNationUuid());
+        if (liveNation == null || !liveNation.isActive() || this.plugin.getNationRepository() == null) {
+            return new NationActionResult(NationActionStatus.INVALID_TARGET, liveNation);
+        }
+        final RTown capitalTown = this.getTown(liveNation.getCapitalTownUuid());
+        if (capitalTown == null || !this.hasTownPermission(player, capitalTown, TownPermissions.MANAGE_NATIONS)) {
+            return new NationActionResult(NationActionStatus.NO_PERMISSION, liveNation);
+        }
+        final String normalizedNationName = nationName.trim();
+        if (normalizedNationName.isEmpty() || normalizedNationName.length() > 32) {
+            return new NationActionResult(NationActionStatus.INVALID_NAME, liveNation);
+        }
+        final RNation existingNation = this.plugin.getNationRepository().findByNationName(normalizedNationName);
+        if (existingNation != null && !Objects.equals(existingNation.getNationUuid(), liveNation.getNationUuid())) {
+            return new NationActionResult(NationActionStatus.NAME_TAKEN, liveNation);
+        }
+        liveNation.setNationName(normalizedNationName);
+        this.plugin.getNationRepository().update(liveNation);
+        return new NationActionResult(NationActionStatus.SUCCESS, liveNation);
+    }
+
+    /**
+     * Invites one additional allied town into an active nation.
+     *
+     * @param player acting player
+     * @param nation active nation
+     * @param targetTownUuid invited town UUID
+     * @return nation action result
+     */
+    public @NotNull NationActionResult inviteTownToNation(
+        final @NotNull Player player,
+        final @NotNull RNation nation,
+        final @NotNull UUID targetTownUuid
+    ) {
+        this.processPendingNationTimeouts();
+        final RNation liveNation = this.getNation(nation.getNationUuid());
+        if (liveNation == null || !liveNation.isActive()) {
+            return new NationActionResult(NationActionStatus.INVALID_TARGET, liveNation);
+        }
+        final RTown capitalTown = this.getTown(liveNation.getCapitalTownUuid());
+        final RTown targetTown = this.getTown(targetTownUuid);
+        if (capitalTown == null || targetTown == null || this.plugin.getNationInviteRepository() == null) {
+            return new NationActionResult(NationActionStatus.INVALID_TARGET, liveNation);
+        }
+        if (!this.hasTownPermission(player, capitalTown, TownPermissions.MANAGE_NATIONS)) {
+            return new NationActionResult(NationActionStatus.NO_PERMISSION, liveNation);
+        }
+        if (!this.getNationInvites(liveNation).stream().noneMatch(invite ->
+            invite.isPending() && invite.getInviteType() == NationInviteType.EXPANSION)) {
+            return new NationActionResult(NationActionStatus.ALREADY_PENDING, liveNation);
+        }
+        if (Objects.equals(targetTown.getTownUUID(), capitalTown.getTownUUID())
+            || this.getNationForTown(targetTown) != null
+            || this.getPendingNationCreatedBy(targetTown) != null
+            || this.getPendingNationInviteFor(targetTown) != null
+            || this.getEffectiveRelationshipState(capitalTown, targetTown) != TownRelationshipState.ALLIED) {
+            return new NationActionResult(NationActionStatus.INVALID_SELECTION, liveNation);
+        }
+
+        this.plugin.getNationInviteRepository().create(
+            new NationInvite(
+                liveNation.getNationUuid(),
+                targetTown.getTownUUID(),
+                NationInviteType.EXPANSION,
+                System.currentTimeMillis() + this.getTownNationInviteTimeoutMillis()
+            )
+        );
+        return new NationActionResult(NationActionStatus.SUCCESS, liveNation);
+    }
+
+    /**
+     * Promotes another member town to capital immediately.
+     *
+     * @param player acting player
+     * @param nation active nation
+     * @param targetTownUuid member town UUID to promote
+     * @return nation action result
+     */
+    public @NotNull NationActionResult promoteNationCapital(
+        final @NotNull Player player,
+        final @NotNull RNation nation,
+        final @NotNull UUID targetTownUuid
+    ) {
+        this.processPendingNationTimeouts();
+        final RNation liveNation = this.getNation(nation.getNationUuid());
+        final RTown capitalTown = liveNation == null ? null : this.getTown(liveNation.getCapitalTownUuid());
+        final RTown targetTown = this.getTown(targetTownUuid);
+        if (liveNation == null || !liveNation.isActive() || capitalTown == null || targetTown == null || this.plugin.getNationRepository() == null) {
+            return new NationActionResult(NationActionStatus.INVALID_TARGET, liveNation);
+        }
+        if (!this.hasTownPermission(player, capitalTown, TownPermissions.MANAGE_NATIONS)) {
+            return new NationActionResult(NationActionStatus.NO_PERMISSION, liveNation);
+        }
+        if (!Objects.equals(targetTown.getNationUuid(), liveNation.getNationUuid())
+            || Objects.equals(targetTown.getTownUUID(), capitalTown.getTownUUID())) {
+            return new NationActionResult(NationActionStatus.INVALID_SELECTION, liveNation);
+        }
+        liveNation.setCapitalTownUuid(targetTown.getTownUUID());
+        this.plugin.getNationRepository().update(liveNation);
+        return new NationActionResult(NationActionStatus.SUCCESS, liveNation);
+    }
+
+    /**
+     * Removes the player's town from its active nation.
+     *
+     * @param player acting player
+     * @return nation action result
+     */
+    public @NotNull NationActionResult leaveNation(final @NotNull Player player) {
+        this.processPendingNationTimeouts();
+        final RTown town = this.getTownFor(player.getUniqueId());
+        final RNation nation = town == null ? null : this.getNationForTown(town);
+        if (town == null || nation == null || this.plugin.getNationRepository() == null || this.plugin.getTownRepository() == null) {
+            return new NationActionResult(NationActionStatus.INVALID_TARGET, nation);
+        }
+        if (!this.hasTownPermission(player, town, TownPermissions.MANAGE_NATIONS)) {
+            return new NationActionResult(NationActionStatus.NO_PERMISSION, nation);
+        }
+        if (Objects.equals(nation.getCapitalTownUuid(), town.getTownUUID())) {
+            return new NationActionResult(NationActionStatus.CAPITAL_REQUIRED, nation);
+        }
+
+        town.setNationUuid(null);
+        this.plugin.getTownRepository().update(town);
+        this.enforceNationMinimumOrDisband(nation);
+        return new NationActionResult(NationActionStatus.SUCCESS, this.getNation(nation.getNationUuid()));
+    }
+
+    /**
+     * Kicks one member town from an active nation.
+     *
+     * @param player acting player
+     * @param nation active nation
+     * @param targetTownUuid member town UUID to remove
+     * @return nation action result
+     */
+    public @NotNull NationActionResult kickTownFromNation(
+        final @NotNull Player player,
+        final @NotNull RNation nation,
+        final @NotNull UUID targetTownUuid
+    ) {
+        this.processPendingNationTimeouts();
+        final RNation liveNation = this.getNation(nation.getNationUuid());
+        final RTown capitalTown = liveNation == null ? null : this.getTown(liveNation.getCapitalTownUuid());
+        final RTown targetTown = this.getTown(targetTownUuid);
+        if (liveNation == null || !liveNation.isActive() || capitalTown == null || targetTown == null || this.plugin.getTownRepository() == null) {
+            return new NationActionResult(NationActionStatus.INVALID_TARGET, liveNation);
+        }
+        if (!this.hasTownPermission(player, capitalTown, TownPermissions.MANAGE_NATIONS)) {
+            return new NationActionResult(NationActionStatus.NO_PERMISSION, liveNation);
+        }
+        if (!Objects.equals(targetTown.getNationUuid(), liveNation.getNationUuid())) {
+            return new NationActionResult(NationActionStatus.INVALID_SELECTION, liveNation);
+        }
+        if (Objects.equals(targetTown.getTownUUID(), liveNation.getCapitalTownUuid())) {
+            return new NationActionResult(NationActionStatus.CAPITAL_REQUIRED, liveNation);
+        }
+
+        targetTown.setNationUuid(null);
+        this.plugin.getTownRepository().update(targetTown);
+        this.enforceNationMinimumOrDisband(liveNation);
+        return new NationActionResult(NationActionStatus.SUCCESS, this.getNation(liveNation.getNationUuid()));
+    }
+
+    /**
+     * Disbands one active nation from the capital town.
+     *
+     * @param player acting player
+     * @param nation active nation
+     * @return nation action result
+     */
+    public @NotNull NationActionResult disbandNation(
+        final @NotNull Player player,
+        final @NotNull RNation nation
+    ) {
+        this.processPendingNationTimeouts();
+        final RNation liveNation = this.getNation(nation.getNationUuid());
+        final RTown capitalTown = liveNation == null ? null : this.getTown(liveNation.getCapitalTownUuid());
+        if (liveNation == null || capitalTown == null || this.plugin.getNationRepository() == null || this.plugin.getTownRepository() == null) {
+            return new NationActionResult(NationActionStatus.INVALID_TARGET, liveNation);
+        }
+        if (!this.hasTownPermission(player, capitalTown, TownPermissions.MANAGE_NATIONS)) {
+            return new NationActionResult(NationActionStatus.NO_PERMISSION, liveNation);
+        }
+
+        this.disbandNationInternal(liveNation);
+        return new NationActionResult(NationActionStatus.SUCCESS, this.getNation(liveNation.getNationUuid()));
     }
 
     /**
@@ -507,6 +1065,21 @@ public final class TownRuntimeService {
                 requestedState
             );
         }
+        if (resolvedSourceTown.getNationUuid() != null
+            && Objects.equals(resolvedSourceTown.getNationUuid(), resolvedTargetTown.getNationUuid())
+            && this.getNation(resolvedSourceTown.getNationUuid()) != null
+            && this.getNation(resolvedSourceTown.getNationUuid()).isActive()
+            && requestedState != TownRelationshipState.ALLIED) {
+            return new TownRelationshipChangeResult(
+                TownRelationshipChangeStatus.LOCKED,
+                this.buildTownRelationshipViewEntry(
+                    resolvedSourceTown,
+                    resolvedTargetTown,
+                    this.getStoredTownRelationship(resolvedSourceTown, resolvedTargetTown)
+                ),
+                requestedState
+            );
+        }
 
         RTownRelationship relationship = this.getStoredTownRelationship(resolvedSourceTown, resolvedTargetTown);
         final TownRelationshipViewEntry currentEntry = this.buildTownRelationshipViewEntry(
@@ -610,6 +1183,13 @@ public final class TownRuntimeService {
             this.plugin.getTownRepository().update(town);
         }
         return changed;
+    }
+
+    private void ensureNationProgressState(final @NotNull RNation nation) {
+        final boolean backfilled = nation.backfillLegacyNationLevelIfNeeded();
+        if (backfilled && this.plugin.getNationRepository() != null) {
+            this.plugin.getNationRepository().update(nation);
+        }
     }
 
     /**
@@ -1022,6 +1602,81 @@ public final class TownRuntimeService {
         final int previewLevel
     ) {
         return this.getLevelProgress(player, LevelScope.NEXUS, town, null, previewLevel);
+    }
+
+    /**
+     * Returns the live active nation progression snapshot for the supplied town.
+     *
+     * @param player viewing player
+     * @param town town to inspect
+     * @return current active nation progression snapshot
+     */
+    public @NotNull LevelProgressSnapshot getNationLevelProgress(
+        final @NotNull Player player,
+        final @NotNull RTown town
+    ) {
+        return this.getLevelProgress(player, LevelScope.NATION, town, null, null);
+    }
+
+    /**
+     * Returns a preview snapshot for one configured active nation level.
+     *
+     * @param player viewing player
+     * @param town town to inspect
+     * @param previewLevel configured level to preview
+     * @return preview progression snapshot
+     */
+    public @NotNull LevelProgressSnapshot getNationLevelProgress(
+        final @NotNull Player player,
+        final @NotNull RTown town,
+        final int previewLevel
+    ) {
+        return this.getLevelProgress(player, LevelScope.NATION, town, null, previewLevel);
+    }
+
+    /**
+     * Saves a shared currency contribution against the active nation's current target level.
+     *
+     * @param player contributing player
+     * @param town player's current nation-member town
+     * @param entryKey requirement entry key to contribute toward
+     * @param requestedAmount requested contribution amount
+     * @return contribution result
+     */
+    public @NotNull ContributionResult contributeNationCurrency(
+        final @NotNull Player player,
+        final @NotNull RTown town,
+        final @NotNull String entryKey,
+        final double requestedAmount
+    ) {
+        return this.contributeCurrency(player, LevelScope.NATION, town, null, entryKey, requestedAmount);
+    }
+
+    /**
+     * Saves a shared item contribution against the active nation's current target level.
+     *
+     * @param player contributing player
+     * @param town player's current nation-member town
+     * @param entryKey requirement entry key to contribute toward
+     * @return contribution result
+     */
+    public @NotNull ContributionResult contributeNationItem(
+        final @NotNull Player player,
+        final @NotNull RTown town,
+        final @NotNull String entryKey
+    ) {
+        return this.contributeItem(player, LevelScope.NATION, town, null, entryKey);
+    }
+
+    /**
+     * Finalizes the next active nation level when every stored and live requirement is complete.
+     *
+     * @param player player performing the final level-up action
+     * @param town player's current nation-member town
+     * @return level-up result
+     */
+    public @NotNull LevelUpResult levelUpNation(final @NotNull Player player, final @NotNull RTown town) {
+        return this.levelUp(player, LevelScope.NATION, town, null);
     }
 
     /**
@@ -3153,11 +3808,24 @@ public final class TownRuntimeService {
             return new LevelUpResult(LevelUpStatus.MAX_LEVEL, context.currentLevel(), context.currentLevel());
         }
 
-        final TownPermissions requiredPermission = scope == LevelScope.NEXUS
-            ? TownPermissions.UPGRADE_TOWN
-            : TownPermissions.UPGRADE_CHUNK;
-        if (!this.hasTownPermission(player, context.town(), requiredPermission)) {
-            return new LevelUpResult(LevelUpStatus.NO_PERMISSION, context.currentLevel(), context.currentLevel());
+        if (scope == LevelScope.NATION_FORMATION) {
+            return new LevelUpResult(LevelUpStatus.INVALID_TARGET, context.currentLevel(), context.currentLevel());
+        }
+        if (scope == LevelScope.NATION) {
+            final RNation nation = context.nation();
+            final RTown capitalTown = nation == null ? null : this.getTown(nation.getCapitalTownUuid());
+            if (capitalTown == null
+                || !Objects.equals(capitalTown.getTownUUID(), context.town().getTownUUID())
+                || !this.hasTownPermission(player, capitalTown, TownPermissions.MANAGE_NATIONS)) {
+                return new LevelUpResult(LevelUpStatus.NO_PERMISSION, context.currentLevel(), context.currentLevel());
+            }
+        } else {
+            final TownPermissions requiredPermission = scope == LevelScope.NEXUS
+                ? TownPermissions.UPGRADE_TOWN
+                : TownPermissions.UPGRADE_CHUNK;
+            if (!this.hasTownPermission(player, context.town(), requiredPermission)) {
+                return new LevelUpResult(LevelUpStatus.NO_PERMISSION, context.currentLevel(), context.currentLevel());
+            }
         }
 
         final LevelDefinition levelDefinition = context.levelDefinitions().get(context.targetLevel());
@@ -3264,12 +3932,57 @@ public final class TownRuntimeService {
                     scope,
                     liveTown,
                     null,
+                    null,
                     true,
                     liveTown.getNexusLevel(),
                     this.plugin.getNexusConfig().getHighestConfiguredLevel(),
                     this.plugin.getNexusConfig().getNextLevel(liveTown.getNexusLevel()),
                     this.plugin.getNexusConfig().getLevels(),
                     new TownProgressAccessor(liveTown)
+                );
+            }
+            case NATION_FORMATION -> {
+                final RTown liveTown = town == null ? null : this.resolveLiveTown(town);
+                if (liveTown == null) {
+                    yield null;
+                }
+                final Map<Integer, LevelDefinition> configuredLevels = this.plugin.getNationConfig().getFormationLevels();
+                final boolean available = this.isTownEligibleForNationCreation(liveTown);
+                final Integer targetLevel = this.plugin.getNationConfig().getNextFormationLevel(0);
+                yield new LevelContext(
+                    scope,
+                    liveTown,
+                    null,
+                    null,
+                    available,
+                    0,
+                    this.plugin.getNationConfig().getHighestConfiguredFormationLevel(),
+                    available ? targetLevel : null,
+                    configuredLevels,
+                    new NationCreationProgressAccessor(liveTown)
+                );
+            }
+            case NATION -> {
+                final RTown liveTown = town == null ? null : this.resolveLiveTown(town);
+                if (liveTown == null) {
+                    yield null;
+                }
+                final RNation nation = this.getNationForTown(liveTown);
+                if (nation == null || !nation.isActive()) {
+                    yield null;
+                }
+                final int currentLevel = nation.getNationLevel();
+                yield new LevelContext(
+                    scope,
+                    liveTown,
+                    null,
+                    nation,
+                    true,
+                    currentLevel,
+                    this.plugin.getNationConfig().getHighestConfiguredProgressionLevel(),
+                    this.plugin.getNationConfig().getNextProgressionLevel(currentLevel),
+                    this.plugin.getNationConfig().getProgressionLevels(),
+                    new NationProgressAccessor(nation)
                 );
             }
             case SECURITY, BANK, FARM, OUTPOST, MEDIC, ARMORY -> {
@@ -3282,6 +3995,7 @@ public final class TownRuntimeService {
                     scope,
                     liveChunk.getTown(),
                     liveChunk,
+                    null,
                     available,
                     liveChunk.getChunkLevel(),
                     this.getHighestConfiguredLevel(scope),
@@ -3299,11 +4013,15 @@ public final class TownRuntimeService {
         final @Nullable RTownChunk townChunk
     ) {
         final RTown resolvedTown = townChunk == null ? town : townChunk.getTown();
-        final int currentLevel = scope.isChunkScope() && townChunk != null
-            ? townChunk.getChunkLevel()
-            : resolvedTown == null
+        final int currentLevel = scope == LevelScope.NATION_FORMATION
+            ? 0
+            : scope == LevelScope.NATION
                 ? 1
-                : resolvedTown.getNexusLevel();
+            : scope.isChunkScope() && townChunk != null
+                ? townChunk.getChunkLevel()
+                : resolvedTown == null
+                    ? 1
+                    : resolvedTown.getNexusLevel();
         final int maxLevel = this.getHighestConfiguredLevel(scope);
         return new LevelProgressSnapshot(
             scope,
@@ -3332,6 +4050,8 @@ public final class TownRuntimeService {
     private @NotNull Map<Integer, LevelDefinition> getConfiguredLevels(final @NotNull LevelScope scope) {
         return switch (scope) {
             case NEXUS -> this.plugin.getNexusConfig().getLevels();
+            case NATION_FORMATION -> this.plugin.getNationConfig().getFormationLevels();
+            case NATION -> this.plugin.getNationConfig().getProgressionLevels();
             case SECURITY -> this.plugin.getSecurityConfig().getLevels();
             case BANK -> this.plugin.getBankConfig().getLevels();
             case FARM -> this.plugin.getFarmConfig().getLevels();
@@ -3344,6 +4064,8 @@ public final class TownRuntimeService {
     private int getHighestConfiguredLevel(final @NotNull LevelScope scope) {
         return switch (scope) {
             case NEXUS -> this.plugin.getNexusConfig().getHighestConfiguredLevel();
+            case NATION_FORMATION -> this.plugin.getNationConfig().getHighestConfiguredFormationLevel();
+            case NATION -> this.plugin.getNationConfig().getHighestConfiguredProgressionLevel();
             case SECURITY -> this.plugin.getSecurityConfig().getHighestConfiguredLevel();
             case BANK -> this.plugin.getBankConfig().getHighestConfiguredLevel();
             case FARM -> this.plugin.getFarmConfig().getHighestConfiguredLevel();
@@ -3356,6 +4078,8 @@ public final class TownRuntimeService {
     private @Nullable Integer getNextConfiguredLevel(final @NotNull LevelScope scope, final int currentLevel) {
         return switch (scope) {
             case NEXUS -> this.plugin.getNexusConfig().getNextLevel(currentLevel);
+            case NATION_FORMATION -> this.plugin.getNationConfig().getNextFormationLevel(currentLevel);
+            case NATION -> this.plugin.getNationConfig().getNextProgressionLevel(currentLevel);
             case SECURITY -> this.plugin.getSecurityConfig().getNextLevel(currentLevel);
             case BANK -> this.plugin.getBankConfig().getNextLevel(currentLevel);
             case FARM -> this.plugin.getFarmConfig().getNextLevel(currentLevel);
@@ -4098,6 +4822,9 @@ public final class TownRuntimeService {
         placeholders.put("world_name", context.chunk() == null ? "" : context.chunk().getWorldName());
         placeholders.put("chunk_x", context.chunk() == null ? "0" : String.valueOf(context.chunk().getX()));
         placeholders.put("chunk_z", context.chunk() == null ? "0" : String.valueOf(context.chunk().getZ()));
+        if (context.nation() != null) {
+            placeholders.putAll(this.buildNationPlaceholders(context.nation()));
+        }
         return Map.copyOf(placeholders);
     }
 
@@ -4218,10 +4945,378 @@ public final class TownRuntimeService {
         };
     }
 
+    private void processPendingNationTimeouts() {
+        if (this.plugin.getNationRepository() == null || this.plugin.getNationInviteRepository() == null) {
+            return;
+        }
+
+        final long now = System.currentTimeMillis();
+        for (final RNation nation : this.plugin.getNationRepository().findAll()) {
+            for (final NationInvite invite : this.plugin.getNationInviteRepository().findByNationUuid(nation.getNationUuid())) {
+                if (invite.isPending() && invite.getExpiresAt() > 0L && now >= invite.getExpiresAt()) {
+                    invite.timeout();
+                    this.plugin.getNationInviteRepository().update(invite);
+                }
+            }
+            if (nation.getStatus() == NationStatus.PENDING) {
+                this.resolvePendingNationFormation(nation);
+            } else if (nation.getStatus() == NationStatus.ACTIVE) {
+                this.resolvePendingNationExpansion(nation);
+            }
+        }
+    }
+
+    private void resolvePendingNationFormation(final @NotNull RNation nation) {
+        if (this.plugin.getNationRepository() == null || this.plugin.getNationInviteRepository() == null) {
+            return;
+        }
+
+        final List<NationInvite> formationInvites = this.plugin.getNationInviteRepository().findByNationUuid(nation.getNationUuid()).stream()
+            .filter(invite -> invite.getInviteType() == NationInviteType.FORMATION)
+            .toList();
+        if (formationInvites.isEmpty() || formationInvites.stream().anyMatch(NationInvite::isPending)) {
+            return;
+        }
+
+        final RTown capitalTown = this.getTown(nation.getCapitalTownUuid());
+        final RTown initiatingTown = this.getTown(nation.getInitiatingTownUuid());
+        if (capitalTown == null || initiatingTown == null) {
+            nation.setStatus(NationStatus.FAILED);
+            nation.setExpiresAt(0L);
+            this.plugin.getNationRepository().update(nation);
+            return;
+        }
+
+        final List<RTown> acceptedTowns = formationInvites.stream()
+            .filter(invite -> invite.getStatus() == NationInviteStatus.ACCEPTED)
+            .map(invite -> this.getTown(invite.getTargetTownUuid()))
+            .filter(Objects::nonNull)
+            .toList();
+        if (acceptedTowns.size() + 1 >= nation.getMinimumTownThreshold()) {
+            nation.setStatus(NationStatus.ACTIVE);
+            nation.setNationLevel(1);
+            nation.setExpiresAt(0L);
+            this.plugin.getNationRepository().update(nation);
+
+            capitalTown.setNationUuid(nation.getNationUuid());
+            this.updateTown(capitalTown);
+            for (final RTown acceptedTown : acceptedTowns) {
+                acceptedTown.setNationUuid(nation.getNationUuid());
+                this.updateTown(acceptedTown);
+            }
+            this.syncNationAlliances(this.getNationMemberTowns(nation));
+            this.clearNationCreationProgress(initiatingTown);
+            this.updateTown(initiatingTown);
+            this.grantNationCreationRewards(nation, capitalTown, initiatingTown);
+            return;
+        }
+
+        nation.setStatus(NationStatus.FAILED);
+        nation.setExpiresAt(0L);
+        this.plugin.getNationRepository().update(nation);
+        this.refundNationCreationProgress(initiatingTown);
+        this.clearNationCreationProgress(initiatingTown);
+        this.updateTown(initiatingTown);
+    }
+
+    private void resolvePendingNationExpansion(final @NotNull RNation nation) {
+        if (this.plugin.getNationInviteRepository() == null) {
+            return;
+        }
+
+        final List<NationInvite> expansionInvites = this.plugin.getNationInviteRepository().findByNationUuid(nation.getNationUuid()).stream()
+            .filter(invite -> invite.getInviteType() == NationInviteType.EXPANSION)
+            .toList();
+        if (expansionInvites.isEmpty() || expansionInvites.stream().anyMatch(NationInvite::isPending)) {
+            return;
+        }
+
+        boolean membershipChanged = false;
+        for (final NationInvite invite : expansionInvites) {
+            if (invite.getStatus() != NationInviteStatus.ACCEPTED) {
+                continue;
+            }
+
+            final RTown invitedTown = this.getTown(invite.getTargetTownUuid());
+            if (invitedTown == null || Objects.equals(invitedTown.getNationUuid(), nation.getNationUuid())) {
+                continue;
+            }
+            invitedTown.setNationUuid(nation.getNationUuid());
+            this.updateTown(invitedTown);
+            membershipChanged = true;
+        }
+
+        if (membershipChanged) {
+            this.syncNationAlliances(this.getNationMemberTowns(nation));
+        }
+    }
+
+    private @Nullable NationInvite resolveNationInvite(final @NotNull NationInvite invite) {
+        if (this.plugin.getNationInviteRepository() == null || invite.getId() == null) {
+            return null;
+        }
+        return this.plugin.getNationInviteRepository().findAll().stream()
+            .filter(existingInvite -> Objects.equals(existingInvite.getId(), invite.getId()))
+            .findFirst()
+            .orElse(null);
+    }
+
+    private @NotNull NationInviteResponseResult respondToNationInvite(
+        final @NotNull Player player,
+        final @NotNull NationInvite invite,
+        final boolean accept
+    ) {
+        this.processPendingNationTimeouts();
+
+        final NationInvite liveInvite = this.resolveNationInvite(invite);
+        final RTown town = this.getTownFor(player.getUniqueId());
+        if (liveInvite == null || town == null || !liveInvite.isPending()) {
+            return new NationInviteResponseResult(NationInviteResponseStatus.INVALID_TARGET, null, liveInvite);
+        }
+        if (!Objects.equals(town.getTownUUID(), liveInvite.getTargetTownUuid())
+            || !this.hasTownPermission(player, town, TownPermissions.MANAGE_NATIONS)
+            || this.plugin.getNationInviteRepository() == null) {
+            return new NationInviteResponseResult(NationInviteResponseStatus.NO_PERMISSION, null, liveInvite);
+        }
+
+        final RNation nation = this.getNation(liveInvite.getNationUuid());
+        if (nation == null) {
+            return new NationInviteResponseResult(NationInviteResponseStatus.INVALID_TARGET, null, liveInvite);
+        }
+
+        if (accept) {
+            liveInvite.accept();
+        } else {
+            liveInvite.decline();
+        }
+        this.plugin.getNationInviteRepository().update(liveInvite);
+        if (nation.getStatus() == NationStatus.PENDING) {
+            this.resolvePendingNationFormation(nation);
+        } else if (nation.getStatus() == NationStatus.ACTIVE) {
+            this.resolvePendingNationExpansion(nation);
+        }
+        return new NationInviteResponseResult(
+            accept ? NationInviteResponseStatus.ACCEPTED : NationInviteResponseStatus.DECLINED,
+            this.getNation(nation.getNationUuid()),
+            liveInvite
+        );
+    }
+
+    private boolean isTownEligibleForNationCreation(final @NotNull RTown town) {
+        return town.getNexusLevel() >= this.getTownNationUnlockLevel()
+            && this.getNationForTown(town) == null
+            && this.getPendingNationCreatedBy(town) == null
+            && this.getPendingNationInviteFor(town) == null
+            && !this.getAlliedTowns(town).isEmpty();
+    }
+
+    private @NotNull List<RTown> getAlliedTowns(final @NotNull RTown town) {
+        return this.getTowns().stream()
+            .filter(otherTown -> !Objects.equals(otherTown.getTownUUID(), town.getTownUUID()))
+            .filter(otherTown -> this.getEffectiveRelationshipState(town, otherTown) == TownRelationshipState.ALLIED)
+            .toList();
+    }
+
+    private void syncNationAlliances(final @NotNull List<RTown> memberTowns) {
+        if (this.plugin.getTownRelationshipRepository() == null) {
+            return;
+        }
+
+        for (int leftIndex = 0; leftIndex < memberTowns.size(); leftIndex++) {
+            final RTown leftTown = memberTowns.get(leftIndex);
+            for (int rightIndex = leftIndex + 1; rightIndex < memberTowns.size(); rightIndex++) {
+                final RTown rightTown = memberTowns.get(rightIndex);
+                RTownRelationship relationship = this.getStoredTownRelationship(leftTown, rightTown);
+                if (relationship == null) {
+                    relationship = new RTownRelationship(leftTown.getTownUUID(), rightTown.getTownUUID());
+                }
+                relationship.setConfirmedState(TownRelationshipState.ALLIED);
+                relationship.clearPendingState();
+                relationship.setCooldownUntilMillis(0L);
+                this.persistTownRelationship(relationship);
+            }
+        }
+    }
+
+    private void clearNationCreationProgress(final @NotNull RTown town) {
+        for (final Integer level : this.plugin.getNationConfig().getFormationLevels().keySet()) {
+            town.clearLevelRequirementProgress(this.buildProgressKeyPrefix(LevelScope.NATION_FORMATION, level));
+        }
+    }
+
+    private void refundNationCreationProgress(final @NotNull RTown town) {
+        final RequirementFactory requirementFactory = RequirementFactory.getInstance();
+        for (final Map.Entry<Integer, LevelDefinition> levelEntry : this.plugin.getNationConfig().getFormationLevels().entrySet()) {
+            final int targetLevel = levelEntry.getKey();
+            for (final Map.Entry<String, Map<String, Object>> entry : levelEntry.getValue().getRequirements().entrySet()) {
+                final AbstractRequirement requirement = requirementFactory.tryFromMap(
+                    this.normalizeFactoryDefinition(entry.getValue())
+                ).orElse(null);
+                if (requirement instanceof CurrencyRequirement currencyRequirement) {
+                    final String progressKey = this.buildProgressKey(LevelScope.NATION_FORMATION, targetLevel, entry.getKey());
+                    final double storedAmount = town.getLevelCurrencyProgress(progressKey);
+                    if (storedAmount > 0.0D) {
+                        town.depositBank(this.resolveSupportedCurrencyId(currencyRequirement.getCurrencyId()), storedAmount);
+                    }
+                    continue;
+                }
+                if (!(requirement instanceof ItemRequirement itemRequirement)) {
+                    continue;
+                }
+                final List<ItemStack> requiredItems = itemRequirement.getRequiredItems();
+                for (int index = 0; index < requiredItems.size(); index++) {
+                    final String progressKey = this.buildProgressKey(
+                        LevelScope.NATION_FORMATION,
+                        targetLevel,
+                        entry.getKey() + '#' + index
+                    );
+                    final ItemStack storedItem = town.getLevelItemProgress(progressKey);
+                    if (storedItem != null && !storedItem.isEmpty()) {
+                        this.dropTownItemAtNexus(town, storedItem);
+                    }
+                }
+            }
+        }
+    }
+
+    private void grantNationCreationRewards(
+        final @NotNull RNation nation,
+        final @NotNull RTown capitalTown,
+        final @NotNull RTown initiatingTown
+    ) {
+        final LevelDefinition creationDefinition = this.plugin.getNationConfig().getFormationLevelDefinition(1);
+        if (creationDefinition == null || creationDefinition.getRewards().isEmpty()) {
+            return;
+        }
+
+        final Map<String, String> placeholders = this.buildNationPlaceholders(nation, capitalTown, initiatingTown);
+        final Map<String, Map<String, Object>> expandedRewards = this.expandDefinitionPlaceholders(
+            creationDefinition.getRewards(),
+            placeholders
+        );
+        final Player rewardPlayer = nation.getInitiatingPlayerUuid() == null || this.plugin.getServer() == null
+            ? null
+            : this.plugin.getServer().getPlayer(nation.getInitiatingPlayerUuid());
+        if (rewardPlayer != null && rewardPlayer.isOnline()) {
+            final RewardFactory<Map<String, Object>> rewardFactory = RewardFactory.getInstance();
+            final List<AbstractReward> rewards = new ArrayList<>();
+            for (final Map<String, Object> definition : expandedRewards.values()) {
+                rewardFactory.tryFromMap(this.normalizeFactoryDefinition(definition)).ifPresent(rewards::add);
+            }
+            if (rewards.isEmpty()) {
+                return;
+            }
+            try {
+                RewardService.getInstance().grantAll(rewardPlayer, rewards).join();
+            } catch (final Exception exception) {
+                LOGGER.log(Level.WARNING, "Failed to grant one or more nation creation rewards for " + nation.getNationName(), exception);
+            }
+            return;
+        }
+
+        if (this.plugin.getServer() == null) {
+            return;
+        }
+        for (final Map<String, Object> definition : expandedRewards.values()) {
+            final Map<String, Object> normalizedDefinition = this.normalizeFactoryDefinition(definition);
+            final String typeId = String.valueOf(normalizedDefinition.getOrDefault("type", "")).trim().toUpperCase(Locale.ROOT);
+            if (!Objects.equals(typeId, "COMMAND")) {
+                LOGGER.warning(
+                    "Skipping offline nation reward of type " + typeId + " for nation " + nation.getNationName()
+                        + " because no initiating player is online."
+                );
+                continue;
+            }
+            final String command = String.valueOf(normalizedDefinition.getOrDefault("command", "")).trim();
+            final boolean executeAsPlayer = Boolean.TRUE.equals(normalizedDefinition.get("executeAsPlayer"));
+            if (command.isBlank() || executeAsPlayer) {
+                continue;
+            }
+            this.plugin.getServer().dispatchCommand(this.plugin.getServer().getConsoleSender(), command.startsWith("/") ? command.substring(1) : command);
+        }
+    }
+
+    private @NotNull Map<String, String> buildNationPlaceholders(final @NotNull RNation nation) {
+        final RTown capitalTown = this.getTown(nation.getCapitalTownUuid());
+        final Map<String, String> placeholders = new LinkedHashMap<>();
+        placeholders.put("nation_uuid", nation.getNationUuid().toString());
+        placeholders.put("nation_name", nation.getNationName());
+        placeholders.put("capital_town_uuid", nation.getCapitalTownUuid().toString());
+        placeholders.put("capital_town_name", capitalTown == null ? nation.getCapitalTownUuid().toString() : capitalTown.getTownName());
+        placeholders.put("minimum_town_threshold", String.valueOf(nation.getMinimumTownThreshold()));
+        placeholders.put("member_count", String.valueOf(this.getNationMemberTowns(nation).size()));
+        return Map.copyOf(placeholders);
+    }
+
+    private @NotNull Map<String, String> buildNationPlaceholders(
+        final @NotNull RNation nation,
+        final @NotNull RTown capitalTown,
+        final @NotNull RTown initiatingTown
+    ) {
+        final Map<String, String> placeholders = new LinkedHashMap<>(this.buildNationPlaceholders(nation));
+        placeholders.put("capital_town_uuid", capitalTown.getTownUUID().toString());
+        placeholders.put("capital_town_name", capitalTown.getTownName());
+        placeholders.put("initiating_town_uuid", initiatingTown.getTownUUID().toString());
+        placeholders.put("initiating_town_name", initiatingTown.getTownName());
+        return Map.copyOf(placeholders);
+    }
+
+    private void dropTownItemAtNexus(final @NotNull RTown town, final @NotNull ItemStack itemStack) {
+        final Location nexusLocation = town.getNexusLocation();
+        if (nexusLocation == null || nexusLocation.getWorld() == null || itemStack.isEmpty()) {
+            return;
+        }
+        nexusLocation.getWorld().dropItemNaturally(nexusLocation, itemStack.clone());
+    }
+
+    private void enforceNationMinimumOrDisband(final @NotNull RNation nation) {
+        final RNation liveNation = this.getNation(nation.getNationUuid());
+        if (liveNation == null || !liveNation.isActive()) {
+            return;
+        }
+        if (this.getNationMemberTowns(liveNation).size() < liveNation.getMinimumTownThreshold()) {
+            this.disbandNationInternal(liveNation);
+        }
+    }
+
+    private void disbandNationInternal(final @NotNull RNation nation) {
+        if (this.plugin.getNationRepository() == null || this.plugin.getTownRepository() == null) {
+            return;
+        }
+
+        for (final RTown town : this.getNationMemberTowns(nation)) {
+            town.setNationUuid(null);
+            this.plugin.getTownRepository().update(town);
+        }
+        if (this.plugin.getNationInviteRepository() != null) {
+            for (final NationInvite invite : this.plugin.getNationInviteRepository().findByNationUuid(nation.getNationUuid())) {
+                if (invite.isPending()) {
+                    invite.decline();
+                    this.plugin.getNationInviteRepository().update(invite);
+                }
+            }
+        }
+        nation.setStatus(NationStatus.DISBANDED);
+        nation.setExpiresAt(0L);
+        this.plugin.getNationRepository().update(nation);
+    }
+
+    private void updateTown(final @NotNull RTown town) {
+        if (this.plugin.getTownRepository() != null) {
+            this.plugin.getTownRepository().update(town);
+        }
+    }
+
     private @NotNull TownRelationshipState getEffectiveRelationshipState(
         final @NotNull RTown leftTown,
         final @NotNull RTown rightTown
     ) {
+        if (leftTown.getNationUuid() != null && Objects.equals(leftTown.getNationUuid(), rightTown.getNationUuid())) {
+            final RNation nation = this.getNation(leftTown.getNationUuid());
+            if (nation != null && nation.isActive()) {
+                return TownRelationshipState.ALLIED;
+            }
+        }
         if (!this.areTownRelationshipsUnlocked(leftTown) || !this.areTownRelationshipsUnlocked(rightTown)) {
             return TownRelationshipState.NEUTRAL;
         }
@@ -4255,7 +5350,7 @@ public final class TownRuntimeService {
             sourceTown,
             targetTown,
             confirmedState,
-            sourceUnlocked && targetUnlocked ? confirmedState : TownRelationshipState.NEUTRAL,
+            this.getEffectiveRelationshipState(sourceTown, targetTown),
             relationship == null ? null : relationship.getPendingState(),
             relationship == null ? null : relationship.getPendingRequesterTownUuid(),
             cooldownRemainingMillis,
@@ -4350,7 +5445,11 @@ public final class TownRuntimeService {
     }
 
     private @NotNull String buildProgressKeyPrefix(final @NotNull LevelScope scope, final int targetLevel) {
-        return scope.name().toLowerCase(Locale.ROOT) + ".level." + Math.max(1, targetLevel) + '.';
+        final String scopeKey = switch (scope) {
+            case NATION_FORMATION, NATION -> "nation";
+            default -> scope.name().toLowerCase(Locale.ROOT);
+        };
+        return scopeKey + ".level." + Math.max(1, targetLevel) + '.';
     }
 
     private @NotNull String buildProgressKey(
@@ -4362,6 +5461,9 @@ public final class TownRuntimeService {
     }
 
     private void persistLevelContext(final @NotNull LevelContext context) {
+        if (context.nation() != null && this.plugin.getNationRepository() != null) {
+            this.plugin.getNationRepository().update(context.nation());
+        }
         if (this.plugin.getTownRepository() != null) {
             this.plugin.getTownRepository().update(context.town());
         }
@@ -4399,6 +5501,7 @@ public final class TownRuntimeService {
             LevelScope.NEXUS,
             this.createTownCreationPlaceholder(player),
             null,
+            null,
             true,
             0,
             Math.max(1, this.plugin.getNexusConfig().getHighestConfiguredLevel()),
@@ -4426,6 +5529,7 @@ public final class TownRuntimeService {
         final LevelContext rewardContext = new LevelContext(
             LevelScope.NEXUS,
             town,
+            null,
             null,
             true,
             0,
@@ -4886,6 +5990,7 @@ public final class TownRuntimeService {
         @NotNull LevelScope scope,
         @NotNull RTown town,
         @Nullable RTownChunk chunk,
+        @Nullable RNation nation,
         boolean available,
         int currentLevel,
         int maxLevel,
@@ -4930,7 +6035,11 @@ public final class TownRuntimeService {
         }
     }
 
-    private sealed interface ProgressAccessor permits TownProgressAccessor, ChunkProgressAccessor, PlayerCreationProgressAccessor {
+    private sealed interface ProgressAccessor permits TownProgressAccessor,
+        ChunkProgressAccessor,
+        PlayerCreationProgressAccessor,
+        NationCreationProgressAccessor,
+        NationProgressAccessor {
 
         int currentLevel();
 
@@ -5058,6 +6167,82 @@ public final class TownRuntimeService {
         @Override
         public void clearLevelProgress(final @NotNull String progressKeyPrefix) {
             this.playerData.clearTownCreationRequirementProgress(progressKeyPrefix);
+        }
+    }
+
+    private record NationCreationProgressAccessor(@NotNull RTown town) implements ProgressAccessor {
+
+        @Override
+        public int currentLevel() {
+            return 0;
+        }
+
+        @Override
+        public void setCurrentLevel(final int level) {
+            // Nation creation is a one-time shared requirement flow and does not persist a level.
+        }
+
+        @Override
+        public double getCurrencyProgress(final @NotNull String progressKey) {
+            return this.town.getLevelCurrencyProgress(progressKey);
+        }
+
+        @Override
+        public void setCurrencyProgress(final @NotNull String progressKey, final double amount) {
+            this.town.setLevelCurrencyProgress(progressKey, amount);
+        }
+
+        @Override
+        public @Nullable ItemStack getItemProgress(final @NotNull String progressKey) {
+            return this.town.getLevelItemProgress(progressKey);
+        }
+
+        @Override
+        public void setItemProgress(final @NotNull String progressKey, final @Nullable ItemStack itemStack) {
+            this.town.setLevelItemProgress(progressKey, itemStack);
+        }
+
+        @Override
+        public void clearLevelProgress(final @NotNull String progressKeyPrefix) {
+            this.town.clearLevelRequirementProgress(progressKeyPrefix);
+        }
+    }
+
+    private record NationProgressAccessor(@NotNull RNation nation) implements ProgressAccessor {
+
+        @Override
+        public int currentLevel() {
+            return this.nation.getNationLevel();
+        }
+
+        @Override
+        public void setCurrentLevel(final int level) {
+            this.nation.setNationLevel(level);
+        }
+
+        @Override
+        public double getCurrencyProgress(final @NotNull String progressKey) {
+            return this.nation.getLevelCurrencyProgress(progressKey);
+        }
+
+        @Override
+        public void setCurrencyProgress(final @NotNull String progressKey, final double amount) {
+            this.nation.setLevelCurrencyProgress(progressKey, amount);
+        }
+
+        @Override
+        public @Nullable ItemStack getItemProgress(final @NotNull String progressKey) {
+            return this.nation.getLevelItemProgress(progressKey);
+        }
+
+        @Override
+        public void setItemProgress(final @NotNull String progressKey, final @Nullable ItemStack itemStack) {
+            this.nation.setLevelItemProgress(progressKey, itemStack);
+        }
+
+        @Override
+        public void clearLevelProgress(final @NotNull String progressKeyPrefix) {
+            this.nation.clearLevelRequirementProgress(progressKeyPrefix);
         }
     }
 }

@@ -65,12 +65,15 @@ class TownPermissionsTest {
         assertTrue(mayorPermissions.contains(TownPermissions.SUPPLY_TOWN_SHOPS.getPermissionKey()));
         assertTrue(mayorPermissions.contains(TownPermissions.MANAGE_TOWN_SHOPS.getPermissionKey()));
         assertTrue(mayorPermissions.contains(TownPermissions.MANAGE_RELATIONSHIPS.getPermissionKey()));
+        assertTrue(mayorPermissions.contains(TownPermissions.MANAGE_NATIONS.getPermissionKey()));
         assertTrue(mayorPermissions.contains(TownPermissions.CLAIM_CHUNK.getPermissionKey()));
         assertTrue(mayorPermissions.contains(TownPermissions.CHANGE_TOWN_COLOR.getPermissionKey()));
         assertTrue(mayorPermissions.contains(TownPermissions.UPGRADE_CHUNK.getPermissionKey()));
         assertFalse(publicPermissions.contains(TownPermissions.CONTRIBUTE.getPermissionKey()));
         assertFalse(memberPermissions.contains(TownPermissions.CHANGE_TOWN_COLOR.getPermissionKey()));
         assertFalse(memberPermissions.contains(TownPermissions.MANAGE_RELATIONSHIPS.getPermissionKey()));
+        assertFalse(memberPermissions.contains(TownPermissions.MANAGE_NATIONS.getPermissionKey()));
+        assertFalse(publicPermissions.contains(TownPermissions.MANAGE_NATIONS.getPermissionKey()));
     }
 
     @Test
@@ -87,5 +90,8 @@ class TownPermissionsTest {
         assertFalse(TownPermissions.MANAGE_TOWN_SHOPS.isDefaultForRole("member"));
         assertTrue(TownPermissions.MANAGE_RELATIONSHIPS.isDefaultForRole("mayor"));
         assertFalse(TownPermissions.MANAGE_RELATIONSHIPS.isDefaultForRole("member"));
+        assertTrue(TownPermissions.MANAGE_NATIONS.isDefaultForRole("mayor"));
+        assertFalse(TownPermissions.MANAGE_NATIONS.isDefaultForRole("member"));
+        assertFalse(TownPermissions.MANAGE_NATIONS.isDefaultForRole("public"));
     }
 }

@@ -64,6 +64,14 @@ class TownChunkViewTest {
     }
 
     @Test
+    void onlyNexusChunksExposeTownNations() {
+        final RTown town = new RTown(UUID.randomUUID(), UUID.randomUUID(), "Town", null);
+
+        assertTrue(TownChunkView.supportsTownNations(new RTownChunk(town, "world", 2, 3, ChunkType.NEXUS)));
+        assertFalse(TownChunkView.supportsTownNations(new RTownChunk(town, "world", 2, 4, ChunkType.BANK)));
+    }
+
+    @Test
     void nonSecurityChunksDoNotSupportChunkScopedProtectionEditing() {
         final RTown town = new RTown(UUID.randomUUID(), UUID.randomUUID(), "Town", null);
         final RTownChunk defaultChunk = new RTownChunk(town, "world", 2, 3, ChunkType.DEFAULT);

@@ -36,7 +36,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Shared progression hub for Nexus and chunk levels.
+ * Shared progression hub for Nexus, nation, and chunk levels.
  *
  * @author ItsRainingHP
  * @since 1.0.0
@@ -126,6 +126,8 @@ public final class TownLevelProgressView extends BaseView {
 
         final LevelUpResult result = switch (snapshot.scope()) {
             case NEXUS -> plugin.getTownRuntimeService().levelUpNexus(clickContext.getPlayer(), town);
+            case NATION_FORMATION -> new LevelUpResult(LevelUpStatus.INVALID_TARGET, snapshot.currentLevel(), snapshot.currentLevel());
+            case NATION -> plugin.getTownRuntimeService().levelUpNation(clickContext.getPlayer(), town);
             case SECURITY, BANK, FARM, OUTPOST, MEDIC, ARMORY -> {
                 final RTownChunk townChunk = TownLevelViewSupport.resolveChunk(clickContext);
                 yield townChunk == null
@@ -207,9 +209,11 @@ public final class TownLevelProgressView extends BaseView {
                     "target_level", snapshot.displayLevel(),
                     "max_level", snapshot.maxLevel(),
                     "progress_percent", Math.round(snapshot.progress() * 100.0D),
-                    "location", snapshot.scope().isChunkScope()
-                        ? snapshot.chunkX() + ", " + snapshot.chunkZ()
-                        : "Nexus"
+                    "location", snapshot.scope() == LevelScope.NATION
+                        ? snapshot.scope().getDisplayName()
+                        : snapshot.scope().isChunkScope()
+                            ? snapshot.chunkX() + ", " + snapshot.chunkZ()
+                            : "Nexus"
                 ))
                 .build()
                 .children())

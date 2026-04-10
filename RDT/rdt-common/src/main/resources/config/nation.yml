@@ -1,0 +1,269 @@
+# Nation creation stays separate from active nation progression.
+# `formation.levels` controls the pre-formation flow.
+# `progression.levels` controls active nation upgrades after a nation forms.
+# Requirement and reward entry names are stable IDs used for saved progress and UI.
+# Active nation command rewards can use placeholders such as {nation_uuid}, {nation_name},
+# {capital_town_uuid}, {capital_town_name}, and {member_count}.
+formation:
+  levels:
+    1:
+      requirements:
+        nation_charter_funding:
+          type: "CURRENCY"
+          currency: "vault"
+          amount: 10000.0
+          consumable: true
+          description: "Nation charter funding"
+        alliance_treaties:
+          type: "ITEM"
+          item:
+            material: "PAPER"
+            amount: 16
+          exactMatch: false
+          description: "Alliance treaty paperwork"
+      rewards:
+        nation_formed_broadcast:
+          type: "COMMAND"
+          command: "say Nation {nation_name} has formed under the capital of {capital_town_name}."
+          executeAsPlayer: false
+          description: "Broadcast the nation founding announcement"
+
+progression:
+  levels:
+    1:
+      requirements: {}
+      rewards: {}
+    2:
+      requirements:
+        nation_treasury:
+          type: "CURRENCY"
+          currency: "vault"
+          amount: 5000.0
+          consumable: true
+          description: "Nation treasury funding"
+        founding_records:
+          type: "ITEM"
+          requiredItems:
+            - type: "BOOK"
+              amount: 12
+          consumeOnComplete: true
+          exactMatch: false
+          description: "Founding record archive"
+      rewards:
+        vault_bonus:
+          type: "CURRENCY"
+          currencyId: "vault"
+          amount: 750.0
+          description: "Nation treasury rebate"
+        nation_broadcast:
+          type: "COMMAND"
+          command: "rt broadcast {capital_town_uuid} <gradient:#38bdf8:#22c55e>{nation_name}</gradient> <yellow>advanced to nation level <white>{target_level}</white><yellow>!</yellow>"
+          executeAsPlayer: false
+    3:
+      requirements:
+        nation_treasury:
+          type: "CURRENCY"
+          currency: "vault"
+          amount: 6100.0
+          consumable: true
+          description: "Nation treasury funding"
+        cartography_tables:
+          type: "ITEM"
+          requiredItems:
+            - type: "MAP"
+              amount: 8
+          consumeOnComplete: true
+          exactMatch: false
+          description: "Cartography expansion kits"
+      rewards:
+        vault_bonus:
+          type: "CURRENCY"
+          currencyId: "vault"
+          amount: 915.0
+          description: "Nation treasury rebate"
+        nation_broadcast:
+          type: "COMMAND"
+          command: "rt broadcast {capital_town_uuid} <gradient:#38bdf8:#22c55e>{nation_name}</gradient> <yellow>advanced to nation level <white>{target_level}</white><yellow>!</yellow>"
+          executeAsPlayer: false
+    4:
+      requirements:
+        nation_treasury:
+          type: "CURRENCY"
+          currency: "vault"
+          amount: 7442.0
+          consumable: true
+          description: "Nation treasury funding"
+        embassy_supplies:
+          type: "ITEM"
+          requiredItems:
+            - type: "PAPER"
+              amount: 32
+          consumeOnComplete: true
+          exactMatch: false
+          description: "Embassy supply bundles"
+      rewards:
+        vault_bonus:
+          type: "CURRENCY"
+          currencyId: "vault"
+          amount: 1116.3
+          description: "Nation treasury rebate"
+        nation_broadcast:
+          type: "COMMAND"
+          command: "rt broadcast {capital_town_uuid} <gradient:#38bdf8:#22c55e>{nation_name}</gradient> <yellow>advanced to nation level <white>{target_level}</white><yellow>!</yellow>"
+          executeAsPlayer: false
+    5:
+      requirements:
+        nation_treasury:
+          type: "CURRENCY"
+          currency: "vault"
+          amount: 9079.24
+          consumable: true
+          description: "Nation treasury funding"
+        trade_ledgers:
+          type: "ITEM"
+          requiredItems:
+            - type: "EMERALD"
+              amount: 24
+          consumeOnComplete: true
+          exactMatch: false
+          description: "Trade ledger reserves"
+      rewards:
+        vault_bonus:
+          type: "CURRENCY"
+          currencyId: "vault"
+          amount: 1361.89
+          description: "Nation treasury rebate"
+        nation_broadcast:
+          type: "COMMAND"
+          command: "rt broadcast {capital_town_uuid} <gradient:#38bdf8:#22c55e>{nation_name}</gradient> <yellow>advanced to nation level <white>{target_level}</white><yellow>!</yellow>"
+          executeAsPlayer: false
+    6:
+      requirements:
+        nation_treasury:
+          type: "CURRENCY"
+          currency: "vault"
+          amount: 11076.67
+          consumable: true
+          description: "Nation treasury funding"
+        border_beacons:
+          type: "ITEM"
+          requiredItems:
+            - type: "SEA_LANTERN"
+              amount: 12
+          consumeOnComplete: true
+          exactMatch: false
+          description: "Border beacon materials"
+      rewards:
+        vault_bonus:
+          type: "CURRENCY"
+          currencyId: "vault"
+          amount: 1661.5
+          description: "Nation treasury rebate"
+        nation_broadcast:
+          type: "COMMAND"
+          command: "rt broadcast {capital_town_uuid} <gradient:#38bdf8:#22c55e>{nation_name}</gradient> <yellow>advanced to nation level <white>{target_level}</white><yellow>!</yellow>"
+          executeAsPlayer: false
+    7:
+      requirements:
+        nation_treasury:
+          type: "CURRENCY"
+          currency: "vault"
+          amount: 13513.53
+          consumable: true
+          description: "Nation treasury funding"
+        administration_seals:
+          type: "ITEM"
+          requiredItems:
+            - type: "GOLD_INGOT"
+              amount: 32
+          consumeOnComplete: true
+          exactMatch: false
+          description: "Administrative seal materials"
+      rewards:
+        vault_bonus:
+          type: "CURRENCY"
+          currencyId: "vault"
+          amount: 2027.03
+          description: "Nation treasury rebate"
+        nation_broadcast:
+          type: "COMMAND"
+          command: "rt broadcast {capital_town_uuid} <gradient:#38bdf8:#22c55e>{nation_name}</gradient> <yellow>advanced to nation level <white>{target_level}</white><yellow>!</yellow>"
+          executeAsPlayer: false
+    8:
+      requirements:
+        nation_treasury:
+          type: "CURRENCY"
+          currency: "vault"
+          amount: 16486.51
+          consumable: true
+          description: "Nation treasury funding"
+        relay_hardware:
+          type: "ITEM"
+          requiredItems:
+            - type: "REDSTONE_BLOCK"
+              amount: 16
+          consumeOnComplete: true
+          exactMatch: false
+          description: "Relay network hardware"
+      rewards:
+        vault_bonus:
+          type: "CURRENCY"
+          currencyId: "vault"
+          amount: 2472.98
+          description: "Nation treasury rebate"
+        nation_broadcast:
+          type: "COMMAND"
+          command: "rt broadcast {capital_town_uuid} <gradient:#38bdf8:#22c55e>{nation_name}</gradient> <yellow>advanced to nation level <white>{target_level}</white><yellow>!</yellow>"
+          executeAsPlayer: false
+    9:
+      requirements:
+        nation_treasury:
+          type: "CURRENCY"
+          currency: "vault"
+          amount: 20113.54
+          consumable: true
+          description: "Nation treasury funding"
+        fortification_charters:
+          type: "ITEM"
+          requiredItems:
+            - type: "OBSIDIAN"
+              amount: 20
+          consumeOnComplete: true
+          exactMatch: false
+          description: "Fortification charter stock"
+      rewards:
+        vault_bonus:
+          type: "CURRENCY"
+          currencyId: "vault"
+          amount: 3017.03
+          description: "Nation treasury rebate"
+        nation_broadcast:
+          type: "COMMAND"
+          command: "rt broadcast {capital_town_uuid} <gradient:#38bdf8:#22c55e>{nation_name}</gradient> <yellow>advanced to nation level <white>{target_level}</white><yellow>!</yellow>"
+          executeAsPlayer: false
+    10:
+      requirements:
+        nation_treasury:
+          type: "CURRENCY"
+          currency: "vault"
+          amount: 24538.52
+          consumable: true
+          description: "Nation treasury funding"
+        heritage_banners:
+          type: "ITEM"
+          requiredItems:
+            - type: "WHITE_BANNER"
+              amount: 8
+          consumeOnComplete: true
+          exactMatch: false
+          description: "Nation heritage banners"
+      rewards:
+        vault_bonus:
+          type: "CURRENCY"
+          currencyId: "vault"
+          amount: 3680.78
+          description: "Nation treasury rebate"
+        nation_broadcast:
+          type: "COMMAND"
+          command: "rt broadcast {capital_town_uuid} <gradient:#38bdf8:#22c55e>{nation_name}</gradient> <yellow>advanced to nation level <white>{target_level}</white><yellow>!</yellow>"
+          executeAsPlayer: false

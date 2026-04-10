@@ -19,13 +19,21 @@ import com.raindropcentral.rdt.configs.BankConfigSection;
 import com.raindropcentral.rdt.configs.ConfigSection;
 import com.raindropcentral.rdt.configs.FarmConfigSection;
 import com.raindropcentral.rdt.configs.MedicConfigSection;
+import com.raindropcentral.rdt.configs.NationConfigSection;
 import com.raindropcentral.rdt.configs.NexusConfigSection;
 import com.raindropcentral.rdt.configs.OutpostConfigSection;
 import com.raindropcentral.rdt.configs.SecurityConfigSection;
+import com.raindropcentral.rdt.database.entity.NationInvite;
+import com.raindropcentral.rdt.database.entity.NationInviteStatus;
+import com.raindropcentral.rdt.database.entity.NationInviteType;
+import com.raindropcentral.rdt.database.entity.NationStatus;
+import com.raindropcentral.rdt.database.entity.RNation;
 import com.raindropcentral.rdt.database.entity.RDTPlayer;
 import com.raindropcentral.rdt.database.entity.RTown;
 import com.raindropcentral.rdt.database.entity.RTownChunk;
 import com.raindropcentral.rdt.database.entity.RTownRelationship;
+import com.raindropcentral.rdt.database.repository.RRNation;
+import com.raindropcentral.rdt.database.repository.RRNationInvite;
 import com.raindropcentral.rdt.database.repository.RRDTPlayer;
 import com.raindropcentral.rdt.database.repository.RRTown;
 import com.raindropcentral.rdt.database.repository.RRTownChunk;
@@ -96,6 +104,12 @@ class TownRuntimeServiceTest {
 
     @Mock
     private RRTownRelationship townRelationshipRepository;
+
+    @Mock
+    private RRNation nationRepository;
+
+    @Mock
+    private RRNationInvite nationInviteRepository;
 
     @Mock
     private TownService townService;
@@ -342,6 +356,357 @@ class TownRuntimeServiceTest {
             inOrder.verify(rewardService).grantAll(eq(player), anyList());
             verify(townRepository).update(createdTown);
         }
+    }
+
+    @Test
+    void acceptNationInviteFormsNationAndAssignsMemberTowns() throws ReflectiveOperationException {
+        final UUID capitalPlayerUuid = UUID.randomUUID();
+        final UUID invitedPlayerUuid = UUID.randomUUID();
+        final RTown capitalTown = this.createUnlockedTown("Capital");
+        final RTown invitedTown = this.createUnlockedTown("Invited");
+        final RDTPlayer capitalPlayerData = new RDTPlayer(capitalPlayerUuid, capitalTown.getTownUUID(), RTown.MAYOR_ROLE_ID);
+        final RDTPlayer invitedPlayerData = new RDTPlayer(invitedPlayerUuid, invitedTown.getTownUUID(), RTown.MAYOR_ROLE_ID);
+        capitalTown.setLevelCurrencyProgress("nation.level.1.charter", 1_000.0D);
+
+        final RDT plugin = this.createPluginWithNationConfig(
+            """
+                town:
+                  relationship_unlock_level: 5
+                  relationship_change_cooldown_seconds: 60
+                  nation_unlock_level: 5
+                  nation_min_towns: 2
+                  nation_invite_timeout_seconds: 3600
+                """,
+            """
+                levels:
+                  "1":
+                    requirements:
+                      charter:
+                        type: CURRENCY
+                        currency: vault
+                        amount: 1000
+                        consumable: true
+                """
+        );
+        setField(plugin, "townRepository", townRepository);
+        setField(plugin, "playerRepository", playerRepository);
+        setField(plugin, "townRelationshipRepository", townRelationshipRepository);
+        setField(plugin, "nationRepository", nationRepository);
+        setField(plugin, "nationInviteRepository", nationInviteRepository);
+        this.stubTownRepository(capitalTown, invitedTown);
+        this.stubPlayerRepository(capitalPlayerData, invitedPlayerData);
+        final Map<String, RTownRelationship> relationships = this.stubTownRelationshipRepository();
+        this.stubNationRepository();
+        this.stubNationInviteRepository();
+
+        final RTownRelationship storedRelationship = new RTownRelationship(capitalTown.getTownUUID(), invitedTown.getTownUUID());
+        storedRelationship.setConfirmedState(TownRelationshipState.ALLIED);
+        storedRelationship.setPendingState(TownRelationshipState.HOSTILE);
+        storedRelationship.setPendingRequesterTownUuid(invitedTown.getTownUUID());
+        storedRelationship.setCooldownUntilMillis(60_000L);
+        setEntityId(storedRelationship, 1L);
+        relationships.put(storedRelationship.getPairKey(), storedRelationship);
+
+        when(player.getUniqueId()).thenReturn(capitalPlayerUuid);
+        final Player invitedPlayer = org.mockito.Mockito.mock(Player.class);
+        when(invitedPlayer.getUniqueId()).thenReturn(invitedPlayerUuid);
+
+        final TownRuntimeService service = new TownRuntimeService(plugin);
+        final JExEconomyBridge economyBridge = org.mockito.Mockito.mock(JExEconomyBridge.class);
+
+        try (MockedStatic<JExEconomyBridge> mockedBridge = org.mockito.Mockito.mockStatic(JExEconomyBridge.class)) {
+            mockedBridge.when(JExEconomyBridge::getBridge).thenReturn(economyBridge);
+            when(economyBridge.hasCurrency("vault")).thenReturn(true);
+            when(economyBridge.getBalance(player, "vault")).thenReturn(0.0D);
+
+            final NationActionResult createResult = service.createNation(
+                player,
+                "Federation",
+                Set.of(invitedTown.getTownUUID())
+            );
+
+            assertEquals(NationActionStatus.SUCCESS, createResult.status());
+            assertNotNull(createResult.nation());
+            assertEquals(NationStatus.PENDING, createResult.nation().getStatus());
+
+            final NationInvite pendingInvite = service.getPendingNationInviteFor(invitedTown);
+            assertNotNull(pendingInvite);
+            assertEquals(NationInviteType.FORMATION, pendingInvite.getInviteType());
+            assertTrue(pendingInvite.isPending());
+
+            final NationInviteResponseResult acceptResult = service.acceptNationInvite(invitedPlayer, pendingInvite);
+
+            assertEquals(NationInviteResponseStatus.ACCEPTED, acceptResult.status());
+            assertNotNull(acceptResult.nation());
+            assertEquals(NationStatus.ACTIVE, acceptResult.nation().getStatus());
+            assertEquals(acceptResult.nation().getNationUuid(), capitalTown.getNationUuid());
+            assertEquals(acceptResult.nation().getNationUuid(), invitedTown.getNationUuid());
+            assertEquals(2, service.getNationMemberTowns(acceptResult.nation()).size());
+            assertEquals(1, acceptResult.nation().getNationLevel());
+            assertTrue(acceptResult.nation().getLevelCurrencyProgress().isEmpty());
+            assertTrue(acceptResult.nation().getLevelItemProgress().isEmpty());
+            assertEquals(TownRelationshipState.ALLIED, storedRelationship.getConfirmedState());
+            assertNull(storedRelationship.getPendingState());
+            assertEquals(0L, storedRelationship.getCooldownUntilMillis());
+            assertEquals(0.0D, capitalTown.getLevelCurrencyProgress("nation.level.1.charter"), 0.000_1D);
+            assertEquals(NationInviteStatus.ACCEPTED, acceptResult.invite().getStatus());
+        }
+    }
+
+    @Test
+    void memberTownContributionsFlowIntoSharedNationProgressPool() throws ReflectiveOperationException {
+        final UUID memberPlayerUuid = UUID.randomUUID();
+        final RTown capitalTown = this.createUnlockedTown("Capital");
+        final RTown memberTown = this.createUnlockedTown("Member");
+        final RDTPlayer memberPlayerData = new RDTPlayer(memberPlayerUuid, memberTown.getTownUUID(), RTown.MEMBER_ROLE_ID);
+        final RNation nation = new RNation(
+            UUID.randomUUID(),
+            "Federation",
+            capitalTown.getTownUUID(),
+            capitalTown.getTownUUID(),
+            null,
+            2,
+            0L
+        );
+        nation.setStatus(NationStatus.ACTIVE);
+        setEntityId(nation, 1L);
+        capitalTown.setNationUuid(nation.getNationUuid());
+        memberTown.setNationUuid(nation.getNationUuid());
+
+        final RDT plugin = this.createPluginWithNationConfig(
+            """
+                town:
+                  nation_unlock_level: 5
+                  nation_min_towns: 2
+                """,
+            """
+                progression:
+                  levels:
+                    "1":
+                      requirements: {}
+                      rewards: {}
+                    "2":
+                      requirements:
+                        treasury:
+                          type: CURRENCY
+                          currency: vault
+                          amount: 500
+                          consumable: true
+                      rewards: {}
+                """
+        );
+        setField(plugin, "townRepository", townRepository);
+        setField(plugin, "playerRepository", playerRepository);
+        setField(plugin, "nationRepository", nationRepository);
+        this.stubTownRepository(capitalTown, memberTown);
+        this.stubPlayerRepository(memberPlayerData);
+        final Map<UUID, RNation> nations = this.stubNationRepository();
+        nations.put(nation.getNationUuid(), nation);
+        when(player.getUniqueId()).thenReturn(memberPlayerUuid);
+
+        final TownRuntimeService service = new TownRuntimeService(plugin);
+        final JExEconomyBridge economyBridge = org.mockito.Mockito.mock(JExEconomyBridge.class);
+
+        try (MockedStatic<JExEconomyBridge> mockedBridge = org.mockito.Mockito.mockStatic(JExEconomyBridge.class)) {
+            mockedBridge.when(JExEconomyBridge::getBridge).thenReturn(economyBridge);
+            when(economyBridge.hasCurrency("vault")).thenReturn(true);
+            when(economyBridge.getBalance(player, "vault")).thenReturn(500.0D);
+            when(economyBridge.withdraw(player, "vault", 250.0D)).thenReturn(CompletableFuture.completedFuture(true));
+
+            final LevelProgressSnapshot snapshot = service.getNationLevelProgress(player, memberTown);
+            assertEquals(1, snapshot.currentLevel());
+            assertEquals(2, snapshot.displayLevel());
+            assertEquals(1, nation.getNationLevel());
+
+            final ContributionResult result = service.contributeNationCurrency(player, memberTown, "treasury", 250.0D);
+
+            assertEquals(ContributionStatus.SUCCESS, result.status());
+            assertEquals(250.0D, result.contributedAmount(), 0.000_1D);
+            assertEquals(250.0D, nation.getLevelCurrencyProgress("nation.level.2.treasury"), 0.000_1D);
+            assertTrue(capitalTown.getLevelCurrencyProgress().isEmpty());
+            assertTrue(memberTown.getLevelCurrencyProgress().isEmpty());
+            assertEquals(
+                250.0D,
+                service.getNationLevelProgress(player, capitalTown).findRequirement("treasury").currentAmount(),
+                0.000_1D
+            );
+        }
+    }
+
+    @Test
+    void onlyCapitalTownManagersCanFinalizeNationLevel() throws ReflectiveOperationException {
+        final UUID capitalPlayerUuid = UUID.randomUUID();
+        final UUID memberPlayerUuid = UUID.randomUUID();
+        final RTown capitalTown = this.createUnlockedTown("Capital");
+        final RTown memberTown = this.createUnlockedTown("Member");
+        final RDTPlayer capitalPlayerData = new RDTPlayer(capitalPlayerUuid, capitalTown.getTownUUID(), RTown.MAYOR_ROLE_ID);
+        final RDTPlayer memberPlayerData = new RDTPlayer(memberPlayerUuid, memberTown.getTownUUID(), RTown.MAYOR_ROLE_ID);
+        final RNation nation = new RNation(
+            UUID.randomUUID(),
+            "Federation",
+            capitalTown.getTownUUID(),
+            capitalTown.getTownUUID(),
+            null,
+            2,
+            0L
+        );
+        nation.setStatus(NationStatus.ACTIVE);
+        nation.setNationLevel(1);
+        nation.setLevelCurrencyProgress("nation.level.2.treasury", 100.0D);
+        setEntityId(nation, 1L);
+        capitalTown.setNationUuid(nation.getNationUuid());
+        memberTown.setNationUuid(nation.getNationUuid());
+
+        final RDT plugin = this.createPluginWithNationConfig(
+            """
+                town:
+                  nation_unlock_level: 5
+                  nation_min_towns: 2
+                """,
+            """
+                progression:
+                  levels:
+                    "1":
+                      requirements: {}
+                      rewards: {}
+                    "2":
+                      requirements:
+                        treasury:
+                          type: CURRENCY
+                          currency: vault
+                          amount: 100
+                          consumable: true
+                      rewards: {}
+                """
+        );
+        setField(plugin, "townRepository", townRepository);
+        setField(plugin, "playerRepository", playerRepository);
+        setField(plugin, "nationRepository", nationRepository);
+        this.stubTownRepository(capitalTown, memberTown);
+        this.stubPlayerRepository(capitalPlayerData, memberPlayerData);
+        final Map<UUID, RNation> nations = this.stubNationRepository();
+        nations.put(nation.getNationUuid(), nation);
+
+        final Player capitalPlayer = org.mockito.Mockito.mock(Player.class);
+        when(capitalPlayer.getUniqueId()).thenReturn(capitalPlayerUuid);
+        final Player memberPlayer = org.mockito.Mockito.mock(Player.class);
+        org.mockito.Mockito.lenient().when(memberPlayer.getUniqueId()).thenReturn(memberPlayerUuid);
+
+        final TownRuntimeService service = new TownRuntimeService(plugin);
+        final LevelUpResult memberResult = service.levelUpNation(memberPlayer, memberTown);
+        final LevelUpResult capitalResult = service.levelUpNation(capitalPlayer, capitalTown);
+
+        assertEquals(LevelUpStatus.NO_PERMISSION, memberResult.status());
+        assertEquals(LevelUpStatus.SUCCESS, capitalResult.status());
+        assertEquals(2, nation.getNationLevel());
+    }
+
+    @Test
+    void promoteNationCapitalPreservesNationProgress() throws ReflectiveOperationException {
+        final UUID capitalPlayerUuid = UUID.randomUUID();
+        final RTown capitalTown = this.createUnlockedTown("Capital");
+        final RTown memberTown = this.createUnlockedTown("Member");
+        final RDTPlayer capitalPlayerData = new RDTPlayer(capitalPlayerUuid, capitalTown.getTownUUID(), RTown.MAYOR_ROLE_ID);
+        final RNation nation = new RNation(
+            UUID.randomUUID(),
+            "Federation",
+            capitalTown.getTownUUID(),
+            capitalTown.getTownUUID(),
+            null,
+            2,
+            0L
+        );
+        nation.setStatus(NationStatus.ACTIVE);
+        nation.setNationLevel(2);
+        nation.setLevelCurrencyProgress("nation.level.3.treasury", 75.0D);
+        setEntityId(nation, 1L);
+        capitalTown.setNationUuid(nation.getNationUuid());
+        memberTown.setNationUuid(nation.getNationUuid());
+
+        final RDT plugin = this.createPluginWithNationConfig(
+            """
+                town:
+                  nation_unlock_level: 5
+                  nation_min_towns: 2
+                """,
+            ""
+        );
+        setField(plugin, "townRepository", townRepository);
+        setField(plugin, "playerRepository", playerRepository);
+        setField(plugin, "nationRepository", nationRepository);
+        this.stubTownRepository(capitalTown, memberTown);
+        this.stubPlayerRepository(capitalPlayerData);
+        final Map<UUID, RNation> nations = this.stubNationRepository();
+        nations.put(nation.getNationUuid(), nation);
+        when(player.getUniqueId()).thenReturn(capitalPlayerUuid);
+
+        final TownRuntimeService service = new TownRuntimeService(plugin);
+        final NationActionResult result = service.promoteNationCapital(player, nation, memberTown.getTownUUID());
+
+        assertEquals(NationActionStatus.SUCCESS, result.status());
+        assertNotNull(result.nation());
+        assertEquals(memberTown.getTownUUID(), result.nation().getCapitalTownUuid());
+        assertEquals(2, result.nation().getNationLevel());
+        assertEquals(75.0D, result.nation().getLevelCurrencyProgress("nation.level.3.treasury"), 0.000_1D);
+    }
+
+    @Test
+    void leavingNationDisbandsItWhenMembershipDropsBelowMinimumThreshold() throws ReflectiveOperationException {
+        final UUID memberPlayerUuid = UUID.randomUUID();
+        final RTown capitalTown = this.createUnlockedTown("Capital");
+        final RTown memberTown = this.createUnlockedTown("Member");
+        final RDTPlayer memberPlayerData = new RDTPlayer(memberPlayerUuid, memberTown.getTownUUID(), RTown.MAYOR_ROLE_ID);
+        final RNation nation = new RNation(
+            UUID.randomUUID(),
+            "Federation",
+            capitalTown.getTownUUID(),
+            capitalTown.getTownUUID(),
+            null,
+            2,
+            0L
+        );
+        nation.setStatus(NationStatus.ACTIVE);
+        nation.setNationLevel(3);
+        nation.setLevelCurrencyProgress("nation.level.4.treasury", 275.0D);
+        setEntityId(nation, 1L);
+        capitalTown.setNationUuid(nation.getNationUuid());
+        memberTown.setNationUuid(nation.getNationUuid());
+
+        final RDT plugin = this.createPluginWithNationConfig(
+            """
+                town:
+                  relationship_unlock_level: 5
+                  nation_unlock_level: 5
+                  nation_min_towns: 2
+                """,
+            """
+                levels:
+                  "1":
+                    requirements: {}
+                """
+        );
+        setField(plugin, "townRepository", townRepository);
+        setField(plugin, "playerRepository", playerRepository);
+        setField(plugin, "nationRepository", nationRepository);
+        setField(plugin, "nationInviteRepository", nationInviteRepository);
+        this.stubTownRepository(capitalTown, memberTown);
+        this.stubPlayerRepository(memberPlayerData);
+        final Map<UUID, RNation> nations = this.stubNationRepository();
+        this.stubNationInviteRepository();
+        nations.put(nation.getNationUuid(), nation);
+        when(player.getUniqueId()).thenReturn(memberPlayerUuid);
+
+        final TownRuntimeService service = new TownRuntimeService(plugin);
+        final NationActionResult leaveResult = service.leaveNation(player);
+
+        assertEquals(NationActionStatus.SUCCESS, leaveResult.status());
+        assertNotNull(leaveResult.nation());
+        assertEquals(NationStatus.DISBANDED, leaveResult.nation().getStatus());
+        assertEquals(3, leaveResult.nation().getNationLevel());
+        assertEquals(275.0D, leaveResult.nation().getLevelCurrencyProgress("nation.level.4.treasury"), 0.000_1D);
+        assertNull(capitalTown.getNationUuid());
+        assertNull(memberTown.getNationUuid());
+        assertEquals(NationStatus.DISBANDED, service.getNation(nation.getNationUuid()).getStatus());
     }
 
     @Test
@@ -1975,7 +2340,14 @@ class TownRuntimeServiceTest {
     }
 
     private RDT createPluginWithConfig(final String yaml) {
-        return this.createPluginWithConfigs(yaml, "", "", "", "", "", "", "");
+        return this.createPluginWithConfigs(yaml, "", "", "", "", "", "", "", "");
+    }
+
+    private RDT createPluginWithNationConfig(
+        final String configYaml,
+        final String nationYaml
+    ) {
+        return this.createPluginWithConfigs(configYaml, "", "", "", "", "", "", "", nationYaml);
     }
 
     private RDT createPluginWithConfigs(
@@ -1983,7 +2355,7 @@ class TownRuntimeServiceTest {
         final String nexusYaml,
         final String securityYaml
     ) {
-        return this.createPluginWithConfigs(configYaml, nexusYaml, securityYaml, "", "", "", "", "");
+        return this.createPluginWithConfigs(configYaml, nexusYaml, securityYaml, "", "", "", "", "", "");
     }
 
     private RDT createPluginWithConfigs(
@@ -2002,6 +2374,7 @@ class TownRuntimeServiceTest {
             farmYaml,
             outpostYaml,
             "",
+            "",
             ""
         );
     }
@@ -2016,11 +2389,38 @@ class TownRuntimeServiceTest {
         final String medicYaml,
         final String armoryYaml
     ) {
+        return this.createPluginWithConfigs(
+            configYaml,
+            nexusYaml,
+            securityYaml,
+            bankYaml,
+            farmYaml,
+            outpostYaml,
+            medicYaml,
+            armoryYaml,
+            ""
+        );
+    }
+
+    private RDT createPluginWithConfigs(
+        final String configYaml,
+        final String nexusYaml,
+        final String securityYaml,
+        final String bankYaml,
+        final String farmYaml,
+        final String outpostYaml,
+        final String medicYaml,
+        final String armoryYaml,
+        final String nationYaml
+    ) {
         final ConfigSection config = ConfigSection.fromInputStream(
             new ByteArrayInputStream(configYaml.getBytes(StandardCharsets.UTF_8))
         );
         final NexusConfigSection nexusConfig = NexusConfigSection.fromInputStream(
             new ByteArrayInputStream(nexusYaml.getBytes(StandardCharsets.UTF_8))
+        );
+        final NationConfigSection nationConfig = NationConfigSection.fromInputStream(
+            new ByteArrayInputStream(nationYaml.getBytes(StandardCharsets.UTF_8))
         );
         final SecurityConfigSection securityConfig = SecurityConfigSection.fromInputStream(
             new ByteArrayInputStream(securityYaml.getBytes(StandardCharsets.UTF_8))
@@ -2049,6 +2449,11 @@ class TownRuntimeServiceTest {
             @Override
             public NexusConfigSection getNexusConfig() {
                 return nexusConfig;
+            }
+
+            @Override
+            public NationConfigSection getNationConfig() {
+                return nationConfig;
             }
 
             @Override
@@ -2095,6 +2500,16 @@ class TownRuntimeServiceTest {
         return town;
     }
 
+    private void stubPlayerRepository(final RDTPlayer... players) {
+        final Map<UUID, RDTPlayer> playersById = new HashMap<>();
+        for (final RDTPlayer playerData : players) {
+            playersById.put(playerData.getIdentifier(), playerData);
+        }
+        org.mockito.Mockito.lenient()
+            .when(playerRepository.findByPlayer(any(UUID.class)))
+            .thenAnswer(invocation -> playersById.get(invocation.getArgument(0)));
+    }
+
     private void stubTownRepository(final RTown... towns) {
         final Map<UUID, RTown> townsById = new HashMap<>();
         for (final RTown town : towns) {
@@ -2130,6 +2545,84 @@ class TownRuntimeServiceTest {
             return null;
         }).when(townRelationshipRepository).update(any(RTownRelationship.class));
         return relationshipsByPair;
+    }
+
+    private Map<UUID, RNation> stubNationRepository() {
+        final Map<UUID, RNation> nationsById = new HashMap<>();
+        org.mockito.Mockito.lenient()
+            .when(nationRepository.findByNationUuid(any(UUID.class)))
+            .thenAnswer(invocation -> nationsById.get(invocation.getArgument(0)));
+        org.mockito.Mockito.lenient()
+            .when(nationRepository.findByNationName(any(String.class)))
+            .thenAnswer(invocation -> {
+                final String lookup = String.valueOf(invocation.getArgument(0, String.class)).trim();
+                return nationsById.values().stream()
+                    .filter(nation -> nation.getNationName().equalsIgnoreCase(lookup))
+                    .findFirst()
+                    .orElse(null);
+            });
+        org.mockito.Mockito.lenient()
+            .when(nationRepository.findPendingByInitiatingTownUuid(any(UUID.class)))
+            .thenAnswer(invocation -> nationsById.values().stream()
+                .filter(RNation::isPending)
+                .filter(nation -> nation.getInitiatingTownUuid().equals(invocation.getArgument(0)))
+                .toList());
+        org.mockito.Mockito.lenient().when(nationRepository.findAll()).thenAnswer(invocation -> List.copyOf(nationsById.values()));
+        org.mockito.Mockito.lenient().doAnswer(invocation -> {
+            final RNation nation = invocation.getArgument(0);
+            if (nation.getId() == null) {
+                setEntityId(nation, nationsById.size() + 1L);
+            }
+            nationsById.put(nation.getNationUuid(), nation);
+            return null;
+        }).when(nationRepository).create(any(RNation.class));
+        org.mockito.Mockito.lenient().doAnswer(invocation -> {
+            final RNation nation = invocation.getArgument(0);
+            if (nation.getId() == null) {
+                setEntityId(nation, nationsById.size() + 1L);
+            }
+            nationsById.put(nation.getNationUuid(), nation);
+            return null;
+        }).when(nationRepository).update(any(RNation.class));
+        return nationsById;
+    }
+
+    private Map<Long, NationInvite> stubNationInviteRepository() {
+        final Map<Long, NationInvite> invitesById = new HashMap<>();
+        org.mockito.Mockito.lenient().when(nationInviteRepository.findAll()).thenAnswer(invocation -> List.copyOf(invitesById.values()));
+        org.mockito.Mockito.lenient()
+            .when(nationInviteRepository.findByNationUuid(any(UUID.class)))
+            .thenAnswer(invocation -> invitesById.values().stream()
+                .filter(invite -> invite.getNationUuid().equals(invocation.getArgument(0)))
+                .toList());
+        org.mockito.Mockito.lenient()
+            .when(nationInviteRepository.findByTargetTownUuid(any(UUID.class)))
+            .thenAnswer(invocation -> invitesById.values().stream()
+                .filter(invite -> invite.getTargetTownUuid().equals(invocation.getArgument(0)))
+                .toList());
+        org.mockito.Mockito.lenient()
+            .when(nationInviteRepository.findPendingByTargetTownUuid(any(UUID.class)))
+            .thenAnswer(invocation -> invitesById.values().stream()
+                .filter(NationInvite::isPending)
+                .filter(invite -> invite.getTargetTownUuid().equals(invocation.getArgument(0)))
+                .toList());
+        org.mockito.Mockito.lenient().doAnswer(invocation -> {
+            final NationInvite invite = invocation.getArgument(0);
+            if (invite.getId() == null) {
+                setEntityId(invite, invitesById.size() + 1L);
+            }
+            invitesById.put(invite.getId(), invite);
+            return null;
+        }).when(nationInviteRepository).create(any(NationInvite.class));
+        org.mockito.Mockito.lenient().doAnswer(invocation -> {
+            final NationInvite invite = invocation.getArgument(0);
+            if (invite.getId() == null) {
+                setEntityId(invite, invitesById.size() + 1L);
+            }
+            invitesById.put(invite.getId(), invite);
+            return null;
+        }).when(nationInviteRepository).update(any(NationInvite.class));
+        return invitesById;
     }
 
     private void persistRelationshipForTest(

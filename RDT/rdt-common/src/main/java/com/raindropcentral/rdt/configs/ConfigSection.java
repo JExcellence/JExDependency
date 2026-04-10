@@ -45,6 +45,9 @@ public class ConfigSection extends AConfigSection {
     private static final long DEFAULT_TOWN_ARCHETYPE_CHANGE_COOLDOWN_SECONDS = 86_400L;
     private static final long DEFAULT_TOWN_RELATIONSHIP_CHANGE_COOLDOWN_SECONDS = 21_600L;
     private static final int DEFAULT_TOWN_RELATIONSHIP_UNLOCK_LEVEL = 5;
+    private static final int DEFAULT_TOWN_NATION_UNLOCK_LEVEL = 8;
+    private static final int DEFAULT_TOWN_NATION_MIN_TOWNS = 2;
+    private static final long DEFAULT_TOWN_NATION_INVITE_TIMEOUT_SECONDS = 43_200L;
     private static final int DEFAULT_GLOBAL_MAX_CHUNK_LIMIT = 64;
     private static final int DEFAULT_CHUNK_BLOCK_MIN_Y = -10;
     private static final int DEFAULT_CHUNK_BLOCK_MAX_Y = 10;
@@ -72,6 +75,9 @@ public class ConfigSection extends AConfigSection {
     private Long town_archetype_change_cooldown_seconds;
     private Long town_relationship_change_cooldown_seconds;
     private Integer town_relationship_unlock_level;
+    private Integer town_nation_unlock_level;
+    private Integer town_nation_min_towns;
+    private Long town_nation_invite_timeout_seconds;
     private Boolean exclude_corner_claim_adjacency;
     private Boolean proxy_enabled;
     private Boolean proxy_town_spawn_enabled;
@@ -159,6 +165,51 @@ public class ConfigSection extends AConfigSection {
     public int getTownRelationshipUnlockLevel() {
         final Integer configured = this.town_relationship_unlock_level;
         return configured == null || configured <= 0 ? DEFAULT_TOWN_RELATIONSHIP_UNLOCK_LEVEL : configured;
+    }
+
+    /**
+     * Returns the configured Nexus level required before nation creation unlocks.
+     *
+     * @return required Nexus level for nation creation
+     */
+    public int getTownNationUnlockLevel() {
+        final Integer configured = this.town_nation_unlock_level;
+        return configured == null || configured <= 0 ? DEFAULT_TOWN_NATION_UNLOCK_LEVEL : configured;
+    }
+
+    /**
+     * Returns the minimum number of towns required to form a nation, including the capital town.
+     *
+     * @return minimum nation town count
+     */
+    public int getTownNationMinTowns() {
+        final Integer configured = this.town_nation_min_towns;
+        return configured == null || configured <= 1 ? DEFAULT_TOWN_NATION_MIN_TOWNS : configured;
+    }
+
+    /**
+     * Returns the nation invite timeout in seconds.
+     *
+     * @return nation invite timeout in seconds
+     */
+    public long getTownNationInviteTimeoutSeconds() {
+        final Long configured = this.town_nation_invite_timeout_seconds;
+        return configured == null || configured < 0L ? DEFAULT_TOWN_NATION_INVITE_TIMEOUT_SECONDS : configured;
+    }
+
+    /**
+     * Ensures the nation unlock level is not lower than the relationship unlock level.
+     *
+     * @return {@code true} when the nation unlock level was raised to match relationships
+     */
+    public boolean alignNationUnlockLevelWithRelationships() {
+        final int relationshipUnlockLevel = this.getTownRelationshipUnlockLevel();
+        final int nationUnlockLevel = this.getTownNationUnlockLevel();
+        if (nationUnlockLevel >= relationshipUnlockLevel) {
+            return false;
+        }
+        this.town_nation_unlock_level = relationshipUnlockLevel;
+        return true;
     }
 
     /**
@@ -300,6 +351,18 @@ public class ConfigSection extends AConfigSection {
         section.town_relationship_unlock_level = configuration.getInt(
             "town.relationship_unlock_level",
             DEFAULT_TOWN_RELATIONSHIP_UNLOCK_LEVEL
+        );
+        section.town_nation_unlock_level = configuration.getInt(
+            "town.nation_unlock_level",
+            DEFAULT_TOWN_NATION_UNLOCK_LEVEL
+        );
+        section.town_nation_min_towns = configuration.getInt(
+            "town.nation_min_towns",
+            DEFAULT_TOWN_NATION_MIN_TOWNS
+        );
+        section.town_nation_invite_timeout_seconds = configuration.getLong(
+            "town.nation_invite_timeout_seconds",
+            DEFAULT_TOWN_NATION_INVITE_TIMEOUT_SECONDS
         );
         section.exclude_corner_claim_adjacency = configuration.getBoolean(
             "exclude_corner_claim_adjacency",
