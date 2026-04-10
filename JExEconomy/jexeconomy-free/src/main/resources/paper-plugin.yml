@@ -6,3 +6,4 @@ api-version: '1.19'
 author: JExcellence
 website: https://jexcellence.de
 loader: de.jexcellence.dependency.loader.PaperPluginLoader
+folia-supported: true

@@ -8,3 +8,4 @@ website: https://jexcellence.de
 loader: de.jexcellence.dependency.loader.PaperPluginLoader
 has-open-classloader: true
 prefix: JExcellence
+folia-supported: true

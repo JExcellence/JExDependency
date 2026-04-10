@@ -1428,7 +1428,7 @@ public class PCurrencyLog extends PlayerCommand {
                         .sum();
 
                 // Send enhanced statistics display
-                Bukkit.getScheduler().runTask(this.jexEconomyImpl.getPlugin(), () -> {
+                this.jexEconomyImpl.getPlatform().getScheduler().runSync(() -> {
                     this.sendEnhancedStatisticsDisplay(player, totalLogs, successfulLogs, failedLogs,
                             logTypeStats, logLevelStats, operationStats, recentLogs, uniquePlayers, totalVolume);
                 });
@@ -1436,7 +1436,7 @@ public class PCurrencyLog extends PlayerCommand {
             } catch (Exception e) {
                 LOGGER.warning("Failed to generate log statistics: " + e.getMessage());
 
-                Bukkit.getScheduler().runTask(this.jexEconomyImpl.getPlugin(), () -> {
+                this.jexEconomyImpl.getPlatform().getScheduler().runSync(() -> {
                     Component errorMessage = MINI_MESSAGE.deserialize(
                             "<gradient:#e74c3c:#c0392b>✗ Statistics Error</gradient>\n" +
                                     "<gray>Failed to generate log statistics. Please try again later.</gray>"

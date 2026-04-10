@@ -260,7 +260,7 @@ public abstract class JExEconomy {
             future.cancel(false);
             return future;
         }
-        Bukkit.getScheduler().runTask(plugin, () -> {
+        platform.getScheduler().runSync(() -> {
             try {
                 runnable.run();
                 future.complete(null);
