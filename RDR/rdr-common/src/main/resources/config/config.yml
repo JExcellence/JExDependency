@@ -95,6 +95,24 @@ proxy:
   # Optional authoritative route identifier for this Paper server.
   server_route_id: ""
 
+# Admin rollback snapshot settings.
+rollback:
+  # Master switch for automatic backups, manual admin backups, rollback browsing, and restores.
+  enabled: true
+  # Maximum number of saved snapshots retained for one player.
+  max_snapshots_per_player: 10
+  triggers:
+    # Capture a snapshot when a player dies.
+    death: true
+    # Capture a snapshot shortly after a player joins.
+    join: true
+    # Capture a snapshot when a player leaves the server.
+    leave: true
+    # Capture a snapshot after a player changes worlds.
+    world_change: true
+    # Allow `/rr admin backup` and admin backup UI actions to create snapshots.
+    manual_backup: true
+
 # RPlatform-powered requirements consumed for each one-based storage shop purchase tier.
 # Only the tiers required to move from `starting_storages` to `max_storages` are needed.
 # The bundled config defines the first 10 purchase tiers so higher storage caps can reuse the same pattern.

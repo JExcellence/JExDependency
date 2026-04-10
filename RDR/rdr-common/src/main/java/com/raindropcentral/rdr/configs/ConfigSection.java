@@ -69,6 +69,13 @@ public class ConfigSection extends AConfigSection {
     private Boolean trade_proxy_join_action_enabled;
     private Boolean trade_taxation_enabled;
     private Map<String, TradeTaxCurrencyDefinition> trade_taxation_currencies;
+    private Boolean rollback_enabled;
+    private Integer rollback_max_snapshots_per_player;
+    private Boolean rollback_trigger_death;
+    private Boolean rollback_trigger_join;
+    private Boolean rollback_trigger_leave;
+    private Boolean rollback_trigger_world_change;
+    private Boolean rollback_trigger_manual_backup;
 
     /**
      * Creates a configuration section bound to the provided evaluation environment.
@@ -523,6 +530,69 @@ public class ConfigSection extends AConfigSection {
     }
 
     /**
+     * Returns whether the rollback subsystem is enabled.
+     *
+     * @return {@code true} when rollback snapshots and restore tooling are enabled
+     */
+    public boolean isRollbackEnabled() {
+        return this.rollback_enabled == null || this.rollback_enabled;
+    }
+
+    /**
+     * Returns the maximum number of rollback snapshots retained per player.
+     *
+     * @return positive snapshot retention limit, defaulting to {@code 10}
+     */
+    public int getRollbackMaxSnapshotsPerPlayer() {
+        return this.normalizePositive(this.rollback_max_snapshots_per_player, 10);
+    }
+
+    /**
+     * Returns whether death-triggered rollback snapshots are enabled.
+     *
+     * @return {@code true} when player death should create a snapshot
+     */
+    public boolean isRollbackDeathTriggerEnabled() {
+        return this.rollback_trigger_death == null || this.rollback_trigger_death;
+    }
+
+    /**
+     * Returns whether join-triggered rollback snapshots are enabled.
+     *
+     * @return {@code true} when player join should create a snapshot
+     */
+    public boolean isRollbackJoinTriggerEnabled() {
+        return this.rollback_trigger_join == null || this.rollback_trigger_join;
+    }
+
+    /**
+     * Returns whether leave-triggered rollback snapshots are enabled.
+     *
+     * @return {@code true} when player quit should create a snapshot
+     */
+    public boolean isRollbackLeaveTriggerEnabled() {
+        return this.rollback_trigger_leave == null || this.rollback_trigger_leave;
+    }
+
+    /**
+     * Returns whether world-change rollback snapshots are enabled.
+     *
+     * @return {@code true} when player world changes should create a snapshot
+     */
+    public boolean isRollbackWorldChangeTriggerEnabled() {
+        return this.rollback_trigger_world_change == null || this.rollback_trigger_world_change;
+    }
+
+    /**
+     * Returns whether manual admin backup snapshots are enabled.
+     *
+     * @return {@code true} when manual admin backups may create snapshots
+     */
+    public boolean isRollbackManualBackupTriggerEnabled() {
+        return this.rollback_trigger_manual_backup == null || this.rollback_trigger_manual_backup;
+    }
+
+    /**
      * Creates a configuration section by reading the plugin config file directly.
      *
      * @param configFile config file to parse
@@ -644,6 +714,34 @@ public class ConfigSection extends AConfigSection {
                 );
             }
         }
+
+        final ConfigurationSection rollbackSection = configuration.getConfigurationSection("rollback");
+        if (rollbackSection != null) {
+            section.rollback_enabled = rollbackSection.contains("enabled")
+                ? rollbackSection.getBoolean("enabled")
+                : section.rollback_enabled;
+            section.rollback_max_snapshots_per_player = rollbackSection.contains("max_snapshots_per_player")
+                ? rollbackSection.getInt("max_snapshots_per_player")
+                : section.rollback_max_snapshots_per_player;
+            final ConfigurationSection rollbackTriggersSection = rollbackSection.getConfigurationSection("triggers");
+            if (rollbackTriggersSection != null) {
+                section.rollback_trigger_death = rollbackTriggersSection.contains("death")
+                    ? rollbackTriggersSection.getBoolean("death")
+                    : section.rollback_trigger_death;
+                section.rollback_trigger_join = rollbackTriggersSection.contains("join")
+                    ? rollbackTriggersSection.getBoolean("join")
+                    : section.rollback_trigger_join;
+                section.rollback_trigger_leave = rollbackTriggersSection.contains("leave")
+                    ? rollbackTriggersSection.getBoolean("leave")
+                    : section.rollback_trigger_leave;
+                section.rollback_trigger_world_change = rollbackTriggersSection.contains("world_change")
+                    ? rollbackTriggersSection.getBoolean("world_change")
+                    : section.rollback_trigger_world_change;
+                section.rollback_trigger_manual_backup = rollbackTriggersSection.contains("manual_backup")
+                    ? rollbackTriggersSection.getBoolean("manual_backup")
+                    : section.rollback_trigger_manual_backup;
+            }
+        }
         return section;
     }
 
@@ -678,6 +776,13 @@ public class ConfigSection extends AConfigSection {
         section.trade_proxy_join_action_enabled = false;
         section.trade_taxation_enabled = false;
         section.trade_taxation_currencies = createDefaultTradeTaxationCurrencies();
+        section.rollback_enabled = true;
+        section.rollback_max_snapshots_per_player = 10;
+        section.rollback_trigger_death = true;
+        section.rollback_trigger_join = true;
+        section.rollback_trigger_leave = true;
+        section.rollback_trigger_world_change = true;
+        section.rollback_trigger_manual_backup = true;
         return section;
     }
 
@@ -711,6 +816,13 @@ public class ConfigSection extends AConfigSection {
             this.trade_proxy_join_action_enabled = this.isTradeProxyJoinActionEnabled();
             this.trade_taxation_enabled = this.isTradeTaxationEnabled();
             this.trade_taxation_currencies = this.getTradeTaxationCurrencies();
+            this.rollback_enabled = this.isRollbackEnabled();
+            this.rollback_max_snapshots_per_player = this.getRollbackMaxSnapshotsPerPlayer();
+            this.rollback_trigger_death = this.isRollbackDeathTriggerEnabled();
+            this.rollback_trigger_join = this.isRollbackJoinTriggerEnabled();
+            this.rollback_trigger_leave = this.isRollbackLeaveTriggerEnabled();
+            this.rollback_trigger_world_change = this.isRollbackWorldChangeTriggerEnabled();
+            this.rollback_trigger_manual_backup = this.isRollbackManualBackupTriggerEnabled();
             return;
         }
 
@@ -756,6 +868,13 @@ public class ConfigSection extends AConfigSection {
         this.trade_proxy_join_action_enabled = this.isTradeProxyJoinActionEnabled();
         this.trade_taxation_enabled = this.isTradeTaxationEnabled();
         this.trade_taxation_currencies = this.getTradeTaxationCurrencies();
+        this.rollback_enabled = this.isRollbackEnabled();
+        this.rollback_max_snapshots_per_player = this.getRollbackMaxSnapshotsPerPlayer();
+        this.rollback_trigger_death = this.isRollbackDeathTriggerEnabled();
+        this.rollback_trigger_join = this.isRollbackJoinTriggerEnabled();
+        this.rollback_trigger_leave = this.isRollbackLeaveTriggerEnabled();
+        this.rollback_trigger_world_change = this.isRollbackWorldChangeTriggerEnabled();
+        this.rollback_trigger_manual_backup = this.isRollbackManualBackupTriggerEnabled();
     }
 
     private int normalizePositive(

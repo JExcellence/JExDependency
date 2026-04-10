@@ -18,6 +18,8 @@ import com.raindropcentral.commands.utility.Command;
 import com.raindropcentral.rdr.RDR;
 import com.raindropcentral.rdr.database.entity.RDRPlayer;
 import com.raindropcentral.rdr.database.entity.RStorage;
+import com.raindropcentral.rdr.service.StorageRollbackService;
+import com.raindropcentral.rdr.view.StorageAdminRollbackPlayerView;
 import com.raindropcentral.rdr.view.StorageAdminView;
 import com.raindropcentral.rdr.view.StorageOverviewView;
 import com.raindropcentral.rdr.view.StorageTaxView;
@@ -36,6 +38,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Primary player command for the RDR storage plugin.
@@ -87,7 +90,7 @@ public class PRR extends PlayerCommand {
 
         final EPRRAction action = this.resolveAction(args);
         switch (action) {
-            case ADMIN -> this.handleAdminCommand(player);
+            case ADMIN -> this.handleAdminCommand(player, args);
             case SCOREBOARD -> this.handleScoreboardToggle(player, args);
             case STORAGE -> this.openStorageOverview(player);
             case TRADE -> this.openTradeHub(player);
@@ -118,6 +121,9 @@ public class PRR extends PlayerCommand {
             final List<String> candidates = new ArrayList<>(this.getAvailableActions(player));
             candidates.addAll(this.getAvailableHotkeys(player));
             return StringUtil.copyPartialMatches(args[0], candidates, new ArrayList<>());
+        }
+        if (args.length == 2 && "admin".equalsIgnoreCase(args[0])) {
+            return StringUtil.copyPartialMatches(args[1], this.getAvailableAdminSubActions(player), new ArrayList<>());
         }
         return List.of();
     }
@@ -178,11 +184,29 @@ public class PRR extends PlayerCommand {
         );
     }
 
-    private void handleAdminCommand(final @NotNull Player player) {
-        if (this.hasNoPermission(player, EPRRPermission.ADMIN) || this.rdr == null) {
+    private void handleAdminCommand(
+        final @NotNull Player player,
+        final @NotNull String[] args
+    ) {
+        if (this.rdr == null) {
             return;
         }
 
+        if (args.length >= 2) {
+            final String subAction = args[1] == null ? "" : args[1].trim().toLowerCase(Locale.ROOT);
+            if ("rollback".equals(subAction)) {
+                this.handleAdminRollbackCommand(player);
+                return;
+            }
+            if ("backup".equals(subAction)) {
+                this.handleAdminBackupCommand(player);
+                return;
+            }
+        }
+
+        if (this.hasNoPermission(player, EPRRPermission.ADMIN)) {
+            return;
+        }
         new I18n.Builder("storage.message.admin_opened", player)
             .build()
             .sendMessage();
@@ -247,6 +271,17 @@ public class PRR extends PlayerCommand {
         }
         if (this.hasPermission(player, EPRRPermission.TRADE)) {
             actions.add(EPRRAction.TRADE.name().toLowerCase(Locale.ROOT));
+        }
+        return List.copyOf(actions);
+    }
+
+    private @NotNull List<String> getAvailableAdminSubActions(final @NotNull Player player) {
+        final List<String> actions = new ArrayList<>();
+        if (this.hasAdminRollbackAccess(player)) {
+            actions.add("rollback");
+        }
+        if (this.hasAdminBackupAccess(player)) {
+            actions.add("backup");
         }
         return List.copyOf(actions);
     }
@@ -364,5 +399,77 @@ public class PRR extends PlayerCommand {
             player,
             Map.of("plugin", this.rdr)
         );
+    }
+
+    private void handleAdminRollbackCommand(final @NotNull Player player) {
+        if (!this.hasAdminRollbackAccess(player) || this.rdr == null) {
+            this.sendMissingAdminPermission(player, EPRRPermission.ADMIN_ROLLBACK);
+            return;
+        }
+
+        this.rdr.getViewFrame().open(
+            StorageAdminRollbackPlayerView.class,
+            player,
+            Map.of("plugin", this.rdr)
+        );
+    }
+
+    private void handleAdminBackupCommand(final @NotNull Player player) {
+        if (!this.hasAdminBackupAccess(player) || this.rdr == null) {
+            this.sendMissingAdminPermission(player, EPRRPermission.ADMIN_BACKUP);
+            return;
+        }
+
+        final StorageRollbackService rollbackService = this.rdr.getStorageRollbackService();
+        if (rollbackService == null) {
+            new I18n.Builder("storage.rollback.message.service_unavailable", player)
+                .build()
+                .sendMessage();
+            return;
+        }
+
+        new I18n.Builder("storage.rollback.message.backup_started", player)
+            .build()
+            .sendMessage();
+
+        final CompletableFuture<StorageRollbackService.ManualBackupResult> backupFuture = rollbackService.backupAllOnlinePlayersAsync(player);
+        backupFuture.whenComplete((result, throwable) -> this.rdr.getScheduler().runSync(() -> {
+            if (throwable != null) {
+                new I18n.Builder("storage.rollback.message.backup_failed", player)
+                    .build()
+                    .sendMessage();
+                return;
+            }
+
+            new I18n.Builder("storage.rollback.message.backup_completed", player)
+                .withPlaceholders(Map.of(
+                    "attempted_players", result.attemptedPlayers(),
+                    "saved_snapshots", result.savedSnapshots()
+                ))
+                .build()
+                .sendMessage();
+        }));
+    }
+
+    private boolean hasAdminRollbackAccess(final @NotNull Player player) {
+        return player.isOp()
+            || this.hasPermission(player, EPRRPermission.ADMIN)
+            || this.hasPermission(player, EPRRPermission.ADMIN_ROLLBACK);
+    }
+
+    private boolean hasAdminBackupAccess(final @NotNull Player player) {
+        return player.isOp()
+            || this.hasPermission(player, EPRRPermission.ADMIN)
+            || this.hasPermission(player, EPRRPermission.ADMIN_BACKUP);
+    }
+
+    private void sendMissingAdminPermission(
+        final @NotNull Player player,
+        final @NotNull EPRRPermission permission
+    ) {
+        new I18n.Builder("storage.rollback.message.permission_denied", player)
+            .withPlaceholder("permission", permission.getFallbackNode())
+            .build()
+            .sendMessage();
     }
 }

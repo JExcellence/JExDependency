@@ -14,6 +14,7 @@
 package com.raindropcentral.rdr.view;
 
 import com.raindropcentral.rdr.RDR;
+import com.raindropcentral.rdr.service.StorageRollbackService;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import com.raindropcentral.rplatform.view.BaseView;
 import me.devnatan.inventoryframework.context.RenderContext;
@@ -26,6 +27,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * RDR admin player-management landing view.
@@ -70,7 +72,8 @@ public class StorageAdminPlayerView extends BaseView {
         return new String[]{
             "    s    ",
             "  p g d  ",
-            "    r a  ",
+            "  x c l  ",
+            "    b    ",
             "         "
         };
     }
@@ -114,7 +117,7 @@ public class StorageAdminPlayerView extends BaseView {
                 )
             ));
 
-        render.layoutSlot('r', this.createForceResetStorageItem(player))
+        render.layoutSlot('x', this.createForceResetStorageItem(player))
             .onClick(clickContext -> clickContext.openForPlayer(
                 StorageAdminStorageControlView.class,
                 Map.of(
@@ -123,8 +126,24 @@ public class StorageAdminPlayerView extends BaseView {
                 )
             ));
 
-        render.layoutSlot('a', this.createForceCloseAllViewsItem(player))
+        render.layoutSlot('c', this.createForceCloseAllViewsItem(player))
             .onClick(this::handleForceCloseAllViewsClick);
+
+        render.layoutSlot(
+                'l',
+                StorageAdminRollbackViewSupport.hasRollbackAccess(player)
+                    ? this.createRollbackBrowserItem(player)
+                    : this.createRollbackLockedItem(player)
+            )
+            .onClick(this::handleRollbackBrowserClick);
+
+        render.layoutSlot(
+                'b',
+                StorageAdminRollbackViewSupport.hasBackupAccess(player)
+                    ? this.createBackupAllPlayersItem(player)
+                    : this.createBackupLockedItem(player)
+            )
+            .onClick(this::handleBackupAllPlayersClick);
     }
 
     /**
@@ -219,6 +238,38 @@ public class StorageAdminPlayerView extends BaseView {
             .build();
     }
 
+    private @NotNull ItemStack createRollbackBrowserItem(final @NotNull Player player) {
+        return UnifiedBuilderFactory.item(Material.RECOVERY_COMPASS)
+            .setName(this.i18n("actions.rollback_browser.name", player).build().component())
+            .setLore(this.i18n("actions.rollback_browser.lore", player).build().children())
+            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+            .build();
+    }
+
+    private @NotNull ItemStack createBackupAllPlayersItem(final @NotNull Player player) {
+        return UnifiedBuilderFactory.item(Material.ENDER_CHEST)
+            .setName(this.i18n("actions.backup_all_players.name", player).build().component())
+            .setLore(this.i18n("actions.backup_all_players.lore", player).build().children())
+            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+            .build();
+    }
+
+    private @NotNull ItemStack createRollbackLockedItem(final @NotNull Player player) {
+        return UnifiedBuilderFactory.item(Material.BARRIER)
+            .setName(this.i18n("actions.rollback_locked.name", player).build().component())
+            .setLore(this.i18n("actions.rollback_locked.lore", player).build().children())
+            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+            .build();
+    }
+
+    private @NotNull ItemStack createBackupLockedItem(final @NotNull Player player) {
+        return UnifiedBuilderFactory.item(Material.BARRIER)
+            .setName(this.i18n("actions.backup_locked.name", player).build().component())
+            .setLore(this.i18n("actions.backup_locked.lore", player).build().children())
+            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+            .build();
+    }
+
     private @NotNull ItemStack createLockedItem(
         final @NotNull Player player
     ) {
@@ -233,5 +284,63 @@ public class StorageAdminPlayerView extends BaseView {
         final @NotNull Player player
     ) {
         return player.isOp() || player.hasPermission(ADMIN_COMMAND_PERMISSION);
+    }
+
+    private void handleRollbackBrowserClick(final @NotNull SlotClickContext clickContext) {
+        clickContext.setCancelled(true);
+        if (!StorageAdminRollbackViewSupport.hasRollbackAccess(clickContext.getPlayer())) {
+            this.i18n("feedback.rollback_access_denied_message", clickContext.getPlayer())
+                .includePrefix()
+                .build()
+                .sendMessage();
+            return;
+        }
+
+        clickContext.openForPlayer(
+            StorageAdminRollbackPlayerView.class,
+            Map.of("plugin", this.rdr.get(clickContext))
+        );
+    }
+
+    private void handleBackupAllPlayersClick(final @NotNull SlotClickContext clickContext) {
+        clickContext.setCancelled(true);
+        if (!StorageAdminRollbackViewSupport.hasBackupAccess(clickContext.getPlayer())) {
+            this.i18n("feedback.backup_access_denied_message", clickContext.getPlayer())
+                .includePrefix()
+                .build()
+                .sendMessage();
+            return;
+        }
+
+        final StorageRollbackService rollbackService = this.rdr.get(clickContext).getStorageRollbackService();
+        if (rollbackService == null) {
+            this.i18n("storage.rollback.message.service_unavailable", clickContext.getPlayer())
+                .build()
+                .sendMessage();
+            return;
+        }
+
+        this.i18n("storage.rollback.message.backup_started", clickContext.getPlayer())
+            .build()
+            .sendMessage();
+
+        final CompletableFuture<StorageRollbackService.ManualBackupResult> backupFuture =
+            rollbackService.backupAllOnlinePlayersAsync(clickContext.getPlayer());
+        backupFuture.whenComplete((result, throwable) -> this.rdr.get(clickContext).getScheduler().runSync(() -> {
+            if (throwable != null || result == null) {
+                this.i18n("storage.rollback.message.backup_failed", clickContext.getPlayer())
+                    .build()
+                    .sendMessage();
+                return;
+            }
+
+            this.i18n("storage.rollback.message.backup_completed", clickContext.getPlayer())
+                .withPlaceholders(Map.of(
+                    "attempted_players", result.attemptedPlayers(),
+                    "saved_snapshots", result.savedSnapshots()
+                ))
+                .build()
+                .sendMessage();
+        }));
     }
 }

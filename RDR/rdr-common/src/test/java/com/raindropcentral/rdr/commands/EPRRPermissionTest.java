@@ -32,6 +32,10 @@ class EPRRPermissionTest {
         assertEquals("raindroprdr.command", EPRRPermission.COMMAND.getFallbackNode());
         assertEquals("commandAdmin", EPRRPermission.ADMIN.getInternalName());
         assertEquals("raindroprdr.command.admin", EPRRPermission.ADMIN.getFallbackNode());
+        assertEquals("commandAdminBackup", EPRRPermission.ADMIN_BACKUP.getInternalName());
+        assertEquals("raindroprdr.command.admin.backup", EPRRPermission.ADMIN_BACKUP.getFallbackNode());
+        assertEquals("commandAdminRollback", EPRRPermission.ADMIN_ROLLBACK.getInternalName());
+        assertEquals("raindroprdr.command.admin.rollback", EPRRPermission.ADMIN_ROLLBACK.getFallbackNode());
         assertEquals("commandInfo", EPRRPermission.INFO.getInternalName());
         assertEquals("raindroprdr.command.info", EPRRPermission.INFO.getFallbackNode());
         assertEquals("commandScoreboard", EPRRPermission.SCOREBOARD.getInternalName());

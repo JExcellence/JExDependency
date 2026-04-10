@@ -17,6 +17,7 @@ import com.raindropcentral.commands.CommandFactory;
 import com.raindropcentral.rdr.configs.ConfigSection;
 import com.raindropcentral.rdr.database.entity.RDRPlayer;
 import com.raindropcentral.rdr.database.repository.RRDRPlayer;
+import com.raindropcentral.rdr.database.repository.RRRollbackSnapshot;
 import com.raindropcentral.rdr.database.repository.RRServerBank;
 import com.raindropcentral.rdr.database.repository.RRStorage;
 import com.raindropcentral.rdr.database.repository.RRTownStorageBank;
@@ -26,6 +27,7 @@ import com.raindropcentral.rdr.placeholders.RDRPlaceholderExpansion;
 import com.raindropcentral.rdr.requirement.RDRRequirementSetup;
 import com.raindropcentral.rdr.service.StorageAdminPlayerSettingsService;
 import com.raindropcentral.rdr.service.StorageFilledTaxScheduler;
+import com.raindropcentral.rdr.service.StorageRollbackService;
 import com.raindropcentral.rdr.service.StorageService;
 import com.raindropcentral.rdr.service.TradeInboxPollService;
 import com.raindropcentral.rdr.service.TradeService;
@@ -100,6 +102,7 @@ public class RDR {
     private StorageSidebarScoreboardService storageSidebarScoreboardService;
     private StorageFilledTaxScheduler storageFilledTaxScheduler;
     private StorageAdminPlayerSettingsService storageAdminPlayerSettingsService;
+    private StorageRollbackService storageRollbackService;
     private TradeService tradeService;
     private TradeInboxPollService tradeInboxPollService;
     private BStatsMetrics metrics;
@@ -108,6 +111,7 @@ public class RDR {
 
     private RRDRPlayer playerRepository;
     private RRStorage storageRepository;
+    private RRRollbackSnapshot rollbackSnapshotRepository;
     private RRServerBank serverBankRepository;
     private RRTradeSession tradeSessionRepository;
     private RRTradeDelivery tradeDeliveryRepository;
@@ -511,6 +515,15 @@ public class RDR {
     }
 
     /**
+     * Returns the rollback snapshot/restore service.
+     *
+     * @return rollback service, or {@code null} before enable completes
+     */
+    public @Nullable StorageRollbackService getStorageRollbackService() {
+        return this.storageRollbackService;
+    }
+
+    /**
      * Returns the optional LuckPerms integration wrapper.
      *
      * @return LuckPerms service wrapper, or {@code null} if LuckPerms is unavailable
@@ -562,6 +575,15 @@ public class RDR {
      */
     public @Nullable RRStorage getStorageRepository() {
         return this.storageRepository;
+    }
+
+    /**
+     * Returns the repository used for persisted rollback snapshots.
+     *
+     * @return rollback snapshot repository, or {@code null} before repository initialization completes
+     */
+    public @Nullable RRRollbackSnapshot getRollbackSnapshotRepository() {
+        return this.rollbackSnapshotRepository;
     }
 
     /**
@@ -839,6 +861,10 @@ public class RDR {
             this.executor,
             this.entityManagerFactory
         );
+        this.rollbackSnapshotRepository = new RRRollbackSnapshot(
+            this.executor,
+            this.entityManagerFactory
+        );
         this.serverBankRepository = new RRServerBank(
             this.executor,
             this.entityManagerFactory
@@ -855,6 +881,7 @@ public class RDR {
             this.executor,
             this.entityManagerFactory
         );
+        this.storageRollbackService = new StorageRollbackService(this);
     }
 
     private @NotNull EntityManagerFactory requireEntityManagerFactory() {
@@ -894,6 +921,10 @@ public class RDR {
                 new StorageAdminPlayerEditView(),
                 new StorageAdminGroupEditView(),
                 new StorageAdminStorageControlView(),
+                new StorageAdminRollbackPlayerView(),
+                new StorageAdminRollbackSnapshotHistoryView(),
+                new StorageAdminRollbackTargetView(),
+                new StorageAdminRollbackPreviewView(),
                 new StorageConfigView(),
                 new PluginIntegrationManagementView(),
                 new AdminCurrencyView(),

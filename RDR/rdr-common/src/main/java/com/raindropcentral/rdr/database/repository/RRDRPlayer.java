@@ -19,6 +19,7 @@ import jakarta.persistence.EntityManagerFactory;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
@@ -63,5 +64,18 @@ public class RRDRPlayer extends CachedRepository<RDRPlayer, Long, UUID> {
      */
     public @Nullable RDRPlayer findByPlayer(final @NotNull UUID playerUuid) {
         return findByAttributes(Map.of("playerUuid", playerUuid)).orElse(null);
+    }
+
+    /**
+     * Returns every persisted RDR player ordered by player UUID.
+     *
+     * @return immutable snapshot of all persisted players
+     */
+    public @NotNull List<RDRPlayer> findAllPlayers() {
+        return List.copyOf(this.executeInTransaction(entityManager -> entityManager.createQuery(
+                "select player from RDRPlayer player order by player.playerUuid asc",
+                RDRPlayer.class
+            )
+            .getResultList()));
     }
 }

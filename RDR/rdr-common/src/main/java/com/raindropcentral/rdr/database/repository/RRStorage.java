@@ -267,6 +267,38 @@ public class RRStorage extends BaseRepository<RStorage, Long> {
     }
 
     /**
+     * Finds one storage by owner UUID and logical storage key.
+     *
+     * @param playerUuid owner UUID that must own the storage
+     * @param storageKey logical storage key to resolve
+     * @return matching storage, or {@code null} when no storage matches
+     * @throws NullPointerException if any argument is {@code null}
+     * @throws IllegalArgumentException if {@code storageKey} is blank
+     */
+    public @Nullable RStorage findByPlayerAndStorageKey(
+        final @NotNull UUID playerUuid,
+        final @NotNull String storageKey
+    ) {
+        final UUID validatedPlayerUuid = Objects.requireNonNull(playerUuid, "playerUuid cannot be null");
+        final String validatedStorageKey = Objects.requireNonNull(storageKey, "storageKey cannot be null").trim();
+        if (validatedStorageKey.isEmpty()) {
+            throw new IllegalArgumentException("storageKey cannot be blank");
+        }
+
+        return this.executeInTransaction(entityManager -> entityManager.createQuery(
+                "select storage from RStorage storage join fetch storage.player player "
+                    + "where player.playerUuid = :playerUuid and storage.storageKey = :storageKey",
+                RStorage.class
+            )
+            .setParameter("playerUuid", validatedPlayerUuid)
+            .setParameter("storageKey", validatedStorageKey)
+            .setMaxResults(1)
+            .getResultStream()
+            .findFirst()
+            .orElse(null));
+    }
+
+    /**
      * Returns the assigned storage hotkeys for the supplied player UUID.
      *
      * @param playerUuid player UUID whose hotkeys should be listed

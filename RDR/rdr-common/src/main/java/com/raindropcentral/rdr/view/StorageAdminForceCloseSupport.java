@@ -30,13 +30,13 @@ import java.util.Map;
  * @since 5.0.0
  * @version 5.0.0
  */
-final class StorageAdminForceCloseSupport {
+public final class StorageAdminForceCloseSupport {
 
     private StorageAdminForceCloseSupport() {
         throw new UnsupportedOperationException("Utility class");
     }
 
-    static int closeAllRdrViews(
+    public static int closeAllRdrViews(
         final @NotNull RDR plugin
     ) {
         final ViewFrame viewFrame = plugin.getViewFrame();
@@ -56,7 +56,7 @@ final class StorageAdminForceCloseSupport {
         return closedViews;
     }
 
-    static int closeStorageViews(
+    public static int closeStorageViews(
         final @NotNull RDR plugin,
         final long storageId
     ) {

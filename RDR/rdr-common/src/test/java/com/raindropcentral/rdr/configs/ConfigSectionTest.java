@@ -75,6 +75,13 @@ class ConfigSectionTest {
         assertEquals(0.0D, section.getTradeTaxationCurrencies().get("raindrops").flatAmount());
         assertFalse(section.isProtectionRestrictedStorage("storage-1"));
         assertTrue(section.isProtectionTaxedStorage("storage-1"));
+        assertTrue(section.isRollbackEnabled());
+        assertEquals(10, section.getRollbackMaxSnapshotsPerPlayer());
+        assertTrue(section.isRollbackDeathTriggerEnabled());
+        assertTrue(section.isRollbackJoinTriggerEnabled());
+        assertTrue(section.isRollbackLeaveTriggerEnabled());
+        assertTrue(section.isRollbackWorldChangeTriggerEnabled());
+        assertTrue(section.isRollbackManualBackupTriggerEnabled());
     }
 
     @Test
@@ -304,6 +311,35 @@ class ConfigSectionTest {
         assertEquals("alpha", section.getProxyServerRouteId());
         assertTrue(section.isTradeProxyPresenceEnabled());
         assertTrue(section.isTradeProxyJoinActionEnabled());
+    }
+
+    @Test
+    void readsRollbackSettingsAndNormalizesRetention(final @TempDir Path tempDir) throws IOException {
+        final Path configFile = tempDir.resolve("config.yml");
+        Files.writeString(configFile, """
+            starting_storages: 1
+            max_storages: 2
+            max_hotkeys: 9
+            rollback:
+              enabled: false
+              max_snapshots_per_player: -3
+              triggers:
+                death: false
+                join: false
+                leave: true
+                world_change: false
+                manual_backup: true
+            """);
+
+        final ConfigSection section = ConfigSection.fromFile(configFile.toFile());
+
+        assertFalse(section.isRollbackEnabled());
+        assertEquals(10, section.getRollbackMaxSnapshotsPerPlayer());
+        assertFalse(section.isRollbackDeathTriggerEnabled());
+        assertFalse(section.isRollbackJoinTriggerEnabled());
+        assertTrue(section.isRollbackLeaveTriggerEnabled());
+        assertFalse(section.isRollbackWorldChangeTriggerEnabled());
+        assertTrue(section.isRollbackManualBackupTriggerEnabled());
     }
 
     @Test

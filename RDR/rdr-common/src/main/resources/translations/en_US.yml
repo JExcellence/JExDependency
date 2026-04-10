@@ -100,7 +100,7 @@ storage_admin_player_ui:
     name: "<gradient:#f59e0b:#fbbf24>[Info] Storage Admin Toolkit</gradient>"
     lore:
       - "<gray>Edit max storages and discounts for players and groups.</gray>"
-      - "<gray>Force-drain/reset storages or close all open RDR views.</gray>"
+      - "<gray>Force-drain/reset storages, browse rollback history, or back up players.</gray>"
       - "<yellow>Requires:</yellow> <white>raindroprdr.command.admin</white>"
   actions:
     player_overrides:
@@ -133,6 +133,26 @@ storage_admin_player_ui:
         - "<gray>Closes all currently open RDR menus.</gray>"
         - "<gray>Useful after config changes or emergency actions.</gray>"
         - "<yellow>Click to force close all RDR views.</yellow>"
+    rollback_browser:
+      name: "<gradient:#38bdf8:#60a5fa>[RB] Rollback Browser</gradient>"
+      lore:
+        - "<gray>Browse known RDR players and their saved snapshots.</gray>"
+        - "<gray>Open previews for player sets and storages before restoring.</gray>"
+        - "<yellow>Click to open rollback history.</yellow>"
+    backup_all_players:
+      name: "<gradient:#22c55e:#86efac>[BK] Backup Online Players</gradient>"
+      lore:
+        - "<gray>Captures a fresh rollback snapshot for every online player.</gray>"
+        - "<gray>Saves player inventories, ender chests, and all RDR storages.</gray>"
+        - "<yellow>Click to start a manual backup.</yellow>"
+    rollback_locked:
+      name: "<gradient:#ef4444:#f87171>[X] Rollback Access Required</gradient>"
+      lore:
+        - "<gray>You need rollback access to browse snapshot history.</gray>"
+    backup_locked:
+      name: "<gradient:#ef4444:#f87171>[X] Backup Access Required</gradient>"
+      lore:
+        - "<gray>You need backup access to run all-player backups.</gray>"
   feedback:
     access_denied:
       name: "<gradient:#ef4444:#f87171>[X] Admin Access Required</gradient>"
@@ -140,6 +160,168 @@ storage_admin_player_ui:
         - "<gray>You do not have permission to use this menu.</gray>"
     access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>You do not have permission to use player/group admin controls.</gray>"
     force_close_all_views: "<gradient:#f59e0b:#f97316>[!]</gradient> <gray>Force-closed <white>{closed_views}</white> open RDR view(s).</gray>"
+    rollback_access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>You do not have permission to browse rollback history.</gray>"
+    backup_access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>You do not have permission to run manual backups.</gray>"
+
+storage_admin_rollback_player_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[RB] Rollback Players</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Rollback Player Browser</gradient>"
+    lore:
+      - "<gray>Tracked RDR players:</gray> <white>{tracked_players}</white>"
+      - "<gray>Total snapshots:</gray> <white>{total_snapshots}</white>"
+      - "<yellow>Click a player head to open snapshot history.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[P]</gradient> <white>{player_name}</white>"
+    lore:
+      - "<gray>UUID:</gray> <white>{player_uuid}</white>"
+      - "<gray>Saved snapshots:</gray> <white>{snapshot_count}</white>"
+      - "<gray>Latest trigger:</gray> <white>{latest_trigger}</white>"
+      - "<gray>Latest saved:</gray> <white>{latest_saved}</white>"
+      - "<yellow>Click to browse this player's rollback history.</yellow>"
+    none: "<gradient:#6b7280:#9ca3af>[None]</gradient>"
+    trigger:
+      death: "<gradient:#ef4444:#f87171>[Death]</gradient>"
+      join: "<gradient:#22c55e:#86efac>[Join]</gradient>"
+      leave: "<gradient:#f59e0b:#fbbf24>[Leave]</gradient>"
+      world_change: "<gradient:#38bdf8:#60a5fa>[World Change]</gradient>"
+      manual_backup: "<gradient:#10b981:#34d399>[Manual Backup]</gradient>"
+      pre_restore_safety: "<gradient:#a78bfa:#c4b5fd>[Safety]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~] No Players Found</gradient>"
+      lore:
+        - "<gray>No RDR player profiles are available yet.</gray>"
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Rollback Access Required</gradient>"
+      lore:
+        - "<gray>You do not have permission to browse rollback players.</gray>"
+
+storage_admin_rollback_history_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[RB] {player_name}</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Snapshot History</gradient>"
+    lore:
+      - "<gray>Player:</gray> <white>{player_name}</white>"
+      - "<gray>Saved snapshots:</gray> <white>{snapshot_count}</white>"
+      - "<yellow>Click a snapshot chest to choose a restore target.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Snapshot]</gradient> <white>{trigger}</white> <gray>{created_at}</gray>"
+    lore:
+      - "<gray>Snapshot id:</gray> <white>{snapshot_id}</white>"
+      - "<gray>Trigger:</gray> <white>{trigger}</white>"
+      - "<gray>Saved at:</gray> <white>{created_at}</white>"
+      - "<gray>Actor:</gray> <white>{actor_name}</white>"
+      - "<gray>From world:</gray> <white>{from_world}</white>"
+      - "<gray>To world:</gray> <white>{to_world}</white>"
+      - "<gray>Saved targets:</gray> <white>{target_count}</white>"
+      - "<yellow>Click to browse player-set and storage targets.</yellow>"
+    none: "<gradient:#6b7280:#9ca3af>[None]</gradient>"
+    trigger:
+      death: "<gradient:#ef4444:#f87171>[Death]</gradient>"
+      join: "<gradient:#22c55e:#86efac>[Join]</gradient>"
+      leave: "<gradient:#f59e0b:#fbbf24>[Leave]</gradient>"
+      world_change: "<gradient:#38bdf8:#60a5fa>[World Change]</gradient>"
+      manual_backup: "<gradient:#10b981:#34d399>[Manual Backup]</gradient>"
+      pre_restore_safety: "<gradient:#a78bfa:#c4b5fd>[Safety]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~] No Snapshots Saved</gradient>"
+      lore:
+        - "<gray>This player does not have any rollback history yet.</gray>"
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Rollback Access Required</gradient>"
+      lore:
+        - "<gray>You do not have permission to browse rollback snapshots.</gray>"
+
+storage_admin_rollback_target_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[RB] {player_name} Targets</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Snapshot Targets</gradient>"
+    lore:
+      - "<gray>Player:</gray> <white>{player_name}</white>"
+      - "<gray>Snapshot id:</gray> <white>{snapshot_id}</white>"
+      - "<gray>Saved at:</gray> <white>{created_at}</white>"
+      - "<gray>Targets:</gray> <white>{target_count}</white>"
+      - "<yellow>Click a target to preview its saved contents.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Target]</gradient> <white>{target_label}</white> <gray>{target_type}</gray>"
+    lore:
+      - "<gray>Saved slots:</gray> <white>{filled_slots}/{slot_count}</white>"
+      - "<gray>Hotkey:</gray> <white>{hotkey}</white>"
+      - "<gray>Trusted players:</gray> <white>{trusted_players}</white>"
+      - "<gray>Tax entries:</gray> <white>{tax_entries}</white>"
+      - "<yellow>Click to open the rollback preview.</yellow>"
+    none: "<gradient:#6b7280:#9ca3af>[None]</gradient>"
+    target:
+      player_set: "<gradient:#22c55e:#86efac>[Player Set]</gradient>"
+    type:
+      player_set: "<gradient:#22c55e:#86efac>[Player Set]</gradient>"
+      storage: "<gradient:#f59e0b:#fbbf24>[Storage]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~] No Targets Found</gradient>"
+      lore:
+        - "<gray>This snapshot does not contain any restore targets.</gray>"
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Rollback Access Required</gradient>"
+      lore:
+        - "<gray>You do not have permission to browse rollback targets.</gray>"
+
+storage_admin_rollback_preview_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[RB] {target_label}</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Snapshot Preview</gradient>"
+    lore:
+      - "<gray>Player:</gray> <white>{player_name}</white>"
+      - "<gray>Target:</gray> <white>{target_label}</white>"
+      - "<gray>Type:</gray> <white>{target_type}</white>"
+      - "<gray>Saved slots:</gray> <white>{filled_slots}/{slot_count}</white>"
+      - "<gray>Hotkey:</gray> <white>{hotkey}</white>"
+      - "<gray>Trusted players:</gray> <white>{trusted_players}</white>"
+      - "<gray>Tax entries:</gray> <white>{tax_entries}</white>"
+  entry:
+    none: "<gradient:#6b7280:#9ca3af>[None]</gradient>"
+    target:
+      player_set: "<gradient:#22c55e:#86efac>[Player Set]</gradient>"
+    type:
+      player_set: "<gradient:#22c55e:#86efac>[Player Set]</gradient>"
+      storage: "<gradient:#f59e0b:#fbbf24>[Storage]</gradient>"
+    container:
+      main_inventory: "<gradient:#38bdf8:#60a5fa>Main Inventory</gradient>"
+      armor: "<gradient:#22c55e:#86efac>Armor</gradient>"
+      offhand: "<gradient:#f59e0b:#fbbf24>Offhand</gradient>"
+      ender_chest: "<gradient:#a78bfa:#c4b5fd>Ender Chest</gradient>"
+      storage: "<gradient:#f59e0b:#fbbf24>Storage</gradient>"
+    empty_name: "<gradient:#6b7280:#9ca3af>[Empty]</gradient> <white>{container}</white> <gray>slot {slot_label}</gray>"
+    empty_lore:
+      - "<gray>This saved slot is empty.</gray>"
+      - "<gray>Container:</gray> <white>{container}</white>"
+      - "<gray>Slot:</gray> <white>{slot_label}</white>"
+    filled_lore:
+      - "<gray>Container:</gray> <white>{container}</white>"
+      - "<gray>Slot:</gray> <white>{slot_label}</white>"
+      - "<gray>Material:</gray> <white>{material}</white>"
+  restore:
+    ready:
+      name: "<gradient:#22c55e:#86efac>[Restore] Apply Snapshot</gradient>"
+      lore:
+        - "<gray>Create a safety snapshot of the current state first.</gray>"
+        - "<gray>Then restore</gray> <white>{target_label}</white> <gray>to this saved state.</gray>"
+        - "<yellow>Click to restore now.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X] Restore Unavailable</gradient>"
+      lore:
+        - "<gray>This preview target could not be resolved.</gray>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~] No Preview Data</gradient>"
+      lore:
+        - "<gray>This snapshot target could not be previewed.</gray>"
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Rollback Access Required</gradient>"
+      lore:
+        - "<gray>You do not have permission to preview rollback targets.</gray>"
 
 storage_admin_player_select_ui:
   title: "<gradient:#22c55e:#86efac>[P] Select Player Override Target</gradient>"
@@ -1273,6 +1455,22 @@ trade:
     join_partner_unavailable: "<gradient:#ef4444:#f87171>⚠ Could not route to partner server <white>{server}</white><gray>.</gray></gradient>"
 
 storage:
+  rollback:
+    message:
+      service_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Rollback services are unavailable right now.</gray>"
+      permission_denied: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>You are missing permission <white>{permission}</white><gray>.</gray>"
+      backup_started: "<gradient:#38bdf8:#60a5fa>[RB]</gradient> <gray>Starting a manual backup for all online players...</gray>"
+      backup_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Manual backup failed. Check the console for details.</gray>"
+      backup_completed: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Saved <white>{saved_snapshots}</white> snapshot(s) across <white>{attempted_players}</white> online player(s).</gray>"
+      restore_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>The restore failed. Check the console for details.</gray>"
+      restore_player_success: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Restored the saved player set for <white>{player_name}</white><gray>. Closed views:</gray> <white>{closed_views}</white><gray>.</gray>"
+      restore_storage_success: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Restored storage <white>{storage_key}</white> for <white>{player_name}</white><gray>. Closed views:</gray> <white>{closed_views}</white><gray>.</gray>"
+      restore_snapshot_missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>That snapshot no longer exists.</gray>"
+      restore_target_offline: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{player_name}</white> must be online before restoring a snapshot.</gray>"
+      restore_invalid_target: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>That rollback target is invalid.</gray>"
+      restore_storage_snapshot_missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>The selected storage snapshot no longer exists.</gray>"
+      restore_storage_missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Could not find a live storage matching <white>{storage_key}</white><gray>.</gray>"
+      restore_safety_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Could not create a safety snapshot for <white>{player_name}</white><gray>. Restore aborted.</gray>"
   message:
     locked: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>{storage_key} is already open in another session.</gray>"
     unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>{storage_key} could not be opened right now.</gray>"
