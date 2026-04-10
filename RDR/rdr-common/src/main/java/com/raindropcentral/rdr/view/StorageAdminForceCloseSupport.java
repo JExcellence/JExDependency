@@ -36,6 +36,12 @@ public final class StorageAdminForceCloseSupport {
         throw new UnsupportedOperationException("Utility class");
     }
 
+    /**
+     * Closes every open RDR-managed view for online players.
+     *
+     * @param plugin the active RDR plugin instance that owns the view frame
+     * @return the number of viewers whose currently open RDR view was closed
+     */
     public static int closeAllRdrViews(
         final @NotNull RDR plugin
     ) {
@@ -56,6 +62,13 @@ public final class StorageAdminForceCloseSupport {
         return closedViews;
     }
 
+    /**
+     * Closes every open RDR-managed view that is currently scoped to the given storage.
+     *
+     * @param plugin the active RDR plugin instance that owns the view frame
+     * @param storageId the storage identifier to match against the viewer context
+     * @return the number of viewers whose currently open storage view was closed
+     */
     public static int closeStorageViews(
         final @NotNull RDR plugin,
         final long storageId
