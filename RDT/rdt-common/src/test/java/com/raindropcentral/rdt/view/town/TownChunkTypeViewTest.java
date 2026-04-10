@@ -49,4 +49,10 @@ class TownChunkTypeViewTest {
         assertFalse(translations.getStringList("town_chunk_type_ui.entry.benefits.medic").isEmpty());
         assertFalse(translations.getStringList("town_chunk_ui.medic.food_regen.lore").isEmpty());
     }
+
+    @Test
+    void fobIsNotSelectableInTheChunkTypeSelector() {
+        assertFalse(TownChunkTypeView.isSelectableType(ChunkType.FOB));
+        assertFalse(TownChunkTypeView.isSelectableType(ChunkType.NEXUS));
+    }
 }

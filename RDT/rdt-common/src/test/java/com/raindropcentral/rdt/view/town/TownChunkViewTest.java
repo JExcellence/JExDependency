@@ -37,8 +37,10 @@ class TownChunkViewTest {
     void securityChunksSupportChunkScopedProtectionEditing() {
         final RTown town = new RTown(UUID.randomUUID(), UUID.randomUUID(), "Town", null);
         final RTownChunk securityChunk = new RTownChunk(town, "world", 2, 3, ChunkType.SECURITY);
+        final RTownChunk fobChunk = new RTownChunk(town, "world", 4, 5, ChunkType.FOB);
 
         assertTrue(TownChunkView.supportsChunkScopedProtections(securityChunk));
+        assertTrue(TownChunkView.supportsChunkScopedProtections(fobChunk));
     }
 
     @Test
@@ -48,6 +50,7 @@ class TownChunkViewTest {
         assertTrue(TownChunkView.supportsChunkProgression(new RTownChunk(town, "world", 2, 3, ChunkType.SECURITY)));
         assertTrue(TownChunkView.supportsChunkProgression(new RTownChunk(town, "world", 2, 4, ChunkType.BANK)));
         assertTrue(TownChunkView.supportsChunkProgression(new RTownChunk(town, "world", 2, 5, ChunkType.FARM)));
+        assertTrue(TownChunkView.supportsChunkProgression(new RTownChunk(town, "world", 2, 5, ChunkType.FOB)));
         assertTrue(TownChunkView.supportsChunkProgression(new RTownChunk(town, "world", 2, 6, ChunkType.OUTPOST)));
         assertTrue(TownChunkView.supportsChunkProgression(new RTownChunk(town, "world", 2, 7, ChunkType.MEDIC)));
         assertTrue(TownChunkView.supportsChunkProgression(new RTownChunk(town, "world", 2, 8, ChunkType.ARMORY)));
@@ -84,6 +87,7 @@ class TownChunkViewTest {
         final RTown town = new RTown(UUID.randomUUID(), UUID.randomUUID(), "Town", null);
 
         assertTrue(TownChunkView.supportsFuelFeatures(new RTownChunk(town, "world", 2, 3, ChunkType.SECURITY)));
+        assertFalse(TownChunkView.supportsFuelFeatures(new RTownChunk(town, "world", 2, 5, ChunkType.FOB)));
         assertFalse(TownChunkView.supportsFuelFeatures(new RTownChunk(town, "world", 2, 4, ChunkType.DEFAULT)));
     }
 

@@ -165,11 +165,8 @@ public class PRR extends PlayerCommand {
             return EPRRAction.INFO;
         }
 
-        try {
-            return EPRRAction.valueOf(args[0].trim().toUpperCase(Locale.ROOT));
-        } catch (IllegalArgumentException ignored) {
-            return EPRRAction.INFO;
-        }
+        final EPRRAction action = EPRRAction.fromLabel(args[0]);
+        return action == null ? EPRRAction.INFO : action;
     }
 
     private void openStorageOverview(final @NotNull Player player) {

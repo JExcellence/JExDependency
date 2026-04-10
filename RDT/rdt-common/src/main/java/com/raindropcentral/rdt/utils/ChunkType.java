@@ -25,6 +25,7 @@ import org.jetbrains.annotations.Nullable;
 public enum ChunkType {
     NEXUS,
     DEFAULT,
+    FOB,
     CLAIM_PENDING,
     FARM,
     SECURITY,

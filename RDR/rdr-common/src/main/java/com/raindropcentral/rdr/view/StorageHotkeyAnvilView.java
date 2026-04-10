@@ -14,6 +14,7 @@
 package com.raindropcentral.rdr.view;
 
 import com.raindropcentral.rdr.RDR;
+import com.raindropcentral.rdr.commands.EPRRAction;
 import com.raindropcentral.rdr.database.repository.RRStorage;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import com.raindropcentral.rplatform.view.AbstractAnvilView;
@@ -204,10 +205,23 @@ public class StorageHotkeyAnvilView extends AbstractAnvilView {
         final @Nullable String input,
         final @NotNull Context context
     ) {
+        final String normalizedInput = input == null ? "" : input.trim();
+        if (EPRRAction.isReservedSubcommandLabel(normalizedInput)) {
+            this.i18n("error.reserved_hotkey_name", context.getPlayer())
+                .includePrefix()
+                .withPlaceholders(Map.of(
+                    "input", normalizedInput,
+                    "max_hotkeys", this.resolveMaxHotkeys(context)
+                ))
+                .build()
+                .sendMessage();
+            return;
+        }
+
         this.i18n("error.invalid_hotkey", context.getPlayer())
             .includePrefix()
             .withPlaceholders(Map.of(
-                "input", input == null ? "" : input,
+                "input", normalizedInput,
                 "max_hotkeys", this.resolveMaxHotkeys(context)
             ))
             .build()

@@ -31,6 +31,7 @@ public enum LevelScope {
     SECURITY("Security"),
     BANK("Bank"),
     FARM("Farm"),
+    FOB("FOB"),
     OUTPOST("Outpost"),
     MEDIC("Medic"),
     ARMORY("Armory");
@@ -74,6 +75,7 @@ public enum LevelScope {
             case SECURITY -> SECURITY;
             case BANK -> BANK;
             case FARM -> FARM;
+            case FOB -> FOB;
             case OUTPOST -> OUTPOST;
             case MEDIC -> MEDIC;
             case ARMORY -> ARMORY;

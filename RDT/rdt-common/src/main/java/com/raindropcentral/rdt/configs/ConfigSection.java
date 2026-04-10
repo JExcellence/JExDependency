@@ -52,11 +52,13 @@ public class ConfigSection extends AConfigSection {
     private static final int DEFAULT_CHUNK_BLOCK_MIN_Y = -10;
     private static final int DEFAULT_CHUNK_BLOCK_MAX_Y = 10;
     private static final int DEFAULT_TOWN_SPAWN_TELEPORT_DELAY_SECONDS = 3;
+    private static final int DEFAULT_TOWN_FOB_TELEPORT_DELAY_SECONDS = 3;
     private static final boolean DEFAULT_EXCLUDE_CORNER_CLAIM_ADJACENCY = true;
     private static final Material DEFAULT_ICON_NEXUS = Material.REINFORCED_DEEPSLATE;
     private static final Material DEFAULT_ICON_DEFAULT = Material.OAK_PLANKS;
     private static final Material DEFAULT_ICON_BANK = Material.GOLD_BLOCK;
     private static final Material DEFAULT_ICON_FARM = Material.HAY_BLOCK;
+    private static final Material DEFAULT_ICON_FOB = Material.TARGET;
     private static final Material DEFAULT_ICON_CLAIM_PENDING = Material.ORANGE_STAINED_GLASS;
     private static final Material DEFAULT_ICON_CHUNK_BLOCK = Material.OAK_PLANKS;
     private static final boolean DEFAULT_PROXY_ENABLED = false;
@@ -72,6 +74,7 @@ public class ConfigSection extends AConfigSection {
     private Integer chunk_block_min_y;
     private Integer chunk_block_max_y;
     private Integer town_spawn_teleport_delay_seconds;
+    private Integer town_fob_teleport_delay_seconds;
     private Long town_archetype_change_cooldown_seconds;
     private Long town_relationship_change_cooldown_seconds;
     private Integer town_relationship_unlock_level;
@@ -87,6 +90,7 @@ public class ConfigSection extends AConfigSection {
     private String chunk_type_icon_default;
     private String chunk_type_icon_bank;
     private String chunk_type_icon_farm;
+    private String chunk_type_icon_fob;
     private String chunk_type_icon_claim_pending;
     private String chunk_type_icon_chunk_block;
 
@@ -135,6 +139,16 @@ public class ConfigSection extends AConfigSection {
     public int getTownSpawnTeleportDelaySeconds() {
         final Integer configured = this.town_spawn_teleport_delay_seconds;
         return configured == null || configured < 0 ? DEFAULT_TOWN_SPAWN_TELEPORT_DELAY_SECONDS : configured;
+    }
+
+    /**
+     * Returns the configured FOB teleport delay in seconds.
+     *
+     * @return FOB teleport delay in seconds
+     */
+    public int getTownFobTeleportDelaySeconds() {
+        final Integer configured = this.town_fob_teleport_delay_seconds;
+        return configured == null || configured < 0 ? DEFAULT_TOWN_FOB_TELEPORT_DELAY_SECONDS : configured;
     }
 
     /**
@@ -289,6 +303,7 @@ public class ConfigSection extends AConfigSection {
             );
             case BANK -> this.resolveMaterial(this.chunk_type_icon_bank, DEFAULT_ICON_BANK);
             case FARM -> this.resolveMaterial(this.chunk_type_icon_farm, DEFAULT_ICON_FARM);
+            case FOB -> this.resolveMaterial(this.chunk_type_icon_fob, DEFAULT_ICON_FOB);
             case CLAIM_PENDING -> this.resolveMaterial(
                 this.chunk_type_icon_claim_pending,
                 DEFAULT_ICON_CLAIM_PENDING
@@ -340,6 +355,10 @@ public class ConfigSection extends AConfigSection {
             "town_spawn_teleport_delay_seconds",
             DEFAULT_TOWN_SPAWN_TELEPORT_DELAY_SECONDS
         );
+        section.town_fob_teleport_delay_seconds = configuration.getInt(
+            "town_fob_teleport_delay_seconds",
+            DEFAULT_TOWN_FOB_TELEPORT_DELAY_SECONDS
+        );
         section.town_archetype_change_cooldown_seconds = configuration.getLong(
             "town.archetype_change_cooldown_seconds",
             DEFAULT_TOWN_ARCHETYPE_CHANGE_COOLDOWN_SECONDS
@@ -382,6 +401,7 @@ public class ConfigSection extends AConfigSection {
         section.chunk_type_icon_default = configuration.getString("chunk_type_icon_default", DEFAULT_ICON_DEFAULT.name());
         section.chunk_type_icon_bank = configuration.getString("chunk_type_icon_bank", DEFAULT_ICON_BANK.name());
         section.chunk_type_icon_farm = configuration.getString("chunk_type_icon_farm", DEFAULT_ICON_FARM.name());
+        section.chunk_type_icon_fob = configuration.getString("chunk_type_icon_fob", DEFAULT_ICON_FOB.name());
         section.chunk_type_icon_claim_pending = configuration.getString(
             "chunk_type_icon_claim_pending",
             DEFAULT_ICON_CLAIM_PENDING.name()

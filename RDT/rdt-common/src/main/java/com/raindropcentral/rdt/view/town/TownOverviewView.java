@@ -33,6 +33,7 @@ import me.devnatan.inventoryframework.context.Context;
 import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.state.State;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
@@ -93,7 +94,7 @@ public class TownOverviewView extends BaseView {
             "  c b k  ",
             "  p a n  ",
             "   l u   ",
-            "    f    ",
+            "   o f   ",
             "         "
         };
     }
@@ -196,6 +197,8 @@ public class TownOverviewView extends BaseView {
             .onClick(clickContext -> this.handleColorClick(clickContext, town));
         render.slot(32).renderWith(() -> this.createUpgradeItem(render, town))
             .onClick(clickContext -> this.handleUpgradeClick(clickContext, town));
+        render.slot(48).renderWith(() -> this.createFobItem(render, town))
+            .onClick(clickContext -> this.handleFobClick(clickContext, town));
         render.slot(49).renderWith(() -> this.createFuelItem(render, town));
     }
 
@@ -218,6 +221,30 @@ public class TownOverviewView extends BaseView {
             Map.of(
                 "plugin", this.plugin.get(clickContext),
                 "town_uuid", town.getTownUUID(),
+                "world_name", clickContext.getPlayer().getWorld().getName(),
+                "center_x", clickContext.getPlayer().getLocation().getChunk().getX(),
+                "center_z", clickContext.getPlayer().getLocation().getChunk().getZ()
+            )
+        );
+    }
+
+    private void handleFobClick(final @NotNull SlotClickContext clickContext, final @NotNull RTown town) {
+        if (!this.isOwnTownViewer(clickContext, town)) {
+            return;
+        }
+        if (!this.viewerHasPermission(clickContext, town, TownPermissions.CLAIM_CHUNK)) {
+            new I18n.Builder(this.getKey() + ".fob.no_permission", clickContext.getPlayer())
+                .includePrefix()
+                .build()
+                .sendMessage();
+            return;
+        }
+        clickContext.openForPlayer(
+            TownFobClaimsView.class,
+            Map.of(
+                "plugin", this.plugin.get(clickContext),
+                "town_uuid", town.getTownUUID(),
+                "world_name", clickContext.getPlayer().getWorld().getName(),
                 "center_x", clickContext.getPlayer().getLocation().getChunk().getX(),
                 "center_z", clickContext.getPlayer().getLocation().getChunk().getZ()
             )
@@ -555,6 +582,23 @@ public class TownOverviewView extends BaseView {
             .build();
     }
 
+    private @NotNull ItemStack createFobItem(final @NotNull Context context, final @NotNull RTown town) {
+        final boolean ownTown = this.isOwnTownViewer(context, town);
+        final boolean canManage = ownTown && this.viewerHasPermission(context, town, TownPermissions.CLAIM_CHUNK);
+        final RTownChunk fobChunk = town.findFobChunk();
+        final String currentFob = this.resolveFobLabel(context.getPlayer(), fobChunk);
+        final Material material = canManage ? Material.TARGET : Material.GRAY_DYE;
+        final String loreKey = canManage ? "fob.lore" : "fob.locked.lore";
+        return UnifiedBuilderFactory.item(material)
+            .setName(this.i18n("fob.name", context.getPlayer()).build().component())
+            .setLore(this.i18n(loreKey, context.getPlayer())
+                .withPlaceholders(Map.of("current_fob", currentFob))
+                .build()
+                .children())
+            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+            .build();
+    }
+
     private @NotNull ItemStack createBankItem(final @NotNull Context context, final @NotNull RTown town) {
         final Material material = this.isOwnTownViewer(context, town) ? Material.CHEST : Material.GRAY_DYE;
         final String loreKey = this.isOwnTownViewer(context, town) ? "bank.lore" : "bank.locked.lore";
@@ -758,6 +802,15 @@ public class TownOverviewView extends BaseView {
     private @Nullable LevelProgressSnapshot resolveNexusSnapshot(final @NotNull Context context, final @NotNull RTown town) {
         final TownRuntimeService runtimeService = this.plugin.get(context).getTownRuntimeService();
         return runtimeService == null ? null : runtimeService.getNexusLevelProgress(context.getPlayer(), town);
+    }
+
+    private @NotNull String resolveFobLabel(final @NotNull Player player, final @Nullable RTownChunk fobChunk) {
+        if (fobChunk != null) {
+            return fobChunk.getWorldName() + ' ' + fobChunk.getX() + ", " + fobChunk.getZ();
+        }
+        return PlainTextComponentSerializer.plainText().serialize(
+            this.i18n("fob.unclaimed", player).build().component()
+        );
     }
 
     private @NotNull String formatFuelAmount(final double amount) {

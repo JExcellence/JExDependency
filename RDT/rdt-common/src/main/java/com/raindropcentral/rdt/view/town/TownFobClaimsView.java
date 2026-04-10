@@ -31,6 +31,7 @@ import me.devnatan.inventoryframework.context.Context;
 import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.state.State;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
@@ -43,13 +44,13 @@ import java.util.Objects;
 import java.util.UUID;
 
 /**
- * Claim map view for GUI-driven chunk expansion.
+ * Claim map view for town FOB placement.
  *
  * @author ItsRainingHP
  * @since 1.0.0
  * @version 1.0.0
  */
-public class ClaimsView extends BaseView {
+public class TownFobClaimsView extends BaseView {
 
     private static final int GRID_COLUMNS = 7;
     private static final int GRID_ROWS = 4;
@@ -64,9 +65,9 @@ public class ClaimsView extends BaseView {
     private final State<Integer> centerZ = initialState("center_z");
 
     /**
-     * Creates the claims view.
+     * Creates the FOB claims view.
      */
-    public ClaimsView() {
+    public TownFobClaimsView() {
         super(TownOverviewView.class);
     }
 
@@ -77,7 +78,7 @@ public class ClaimsView extends BaseView {
      */
     @Override
     protected @NotNull String getKey() {
-        return "town_claims_ui";
+        return "town_fob_claims_ui";
     }
 
     /**
@@ -87,7 +88,7 @@ public class ClaimsView extends BaseView {
      */
     @Override
     protected String[] getLayout() {
-        return new String[]{
+        return new String[] {
             "    n   i",
             "         ",
             "w       e",
@@ -98,7 +99,7 @@ public class ClaimsView extends BaseView {
     }
 
     /**
-     * Renders the claim grid and navigation controls.
+     * Renders the FOB claim grid and navigation controls.
      *
      * @param render render context
      * @param player viewing player
@@ -150,7 +151,7 @@ public class ClaimsView extends BaseView {
 
     private void navigate(final @NotNull SlotClickContext clickContext, final int deltaX, final int deltaZ) {
         clickContext.openForPlayer(
-            ClaimsView.class,
+            TownFobClaimsView.class,
             Map.of(
                 "plugin", this.plugin.get(clickContext),
                 "town_uuid", this.townUuid.get(clickContext),
@@ -163,7 +164,7 @@ public class ClaimsView extends BaseView {
 
     private void recenterOnPlayer(final @NotNull SlotClickContext clickContext) {
         clickContext.openForPlayer(
-            ClaimsView.class,
+            TownFobClaimsView.class,
             Map.of(
                 "plugin", this.plugin.get(clickContext),
                 "town_uuid", this.townUuid.get(clickContext),
@@ -207,21 +208,23 @@ public class ClaimsView extends BaseView {
             return;
         }
 
-        final boolean canClaim = runtimeService != null
-            && runtimeService.isChunkClaimable(town, resolvedWorldName, chunkX, chunkZ, ChunkType.DEFAULT);
-        if (!canClaim) {
-            final String messageKey = town.getChunks().size() >= this.plugin.get(clickContext).getDefaultConfig().getGlobalMaxChunkLimit()
-                ? "claim.limit_reached"
-                : "claim.adjacent_only";
-            new I18n.Builder(this.getKey() + '.' + messageKey, clickContext.getPlayer())
+        if (runtimeService == null || !runtimeService.hasTownPermission(clickContext.getPlayer(), TownPermissions.CLAIM_CHUNK)) {
+            new I18n.Builder(this.getKey() + ".claim.no_permission", clickContext.getPlayer())
                 .includePrefix()
                 .build()
                 .sendMessage();
             return;
         }
 
-        if (runtimeService == null || !runtimeService.hasTownPermission(clickContext.getPlayer(), TownPermissions.CLAIM_CHUNK)) {
-            new I18n.Builder(this.getKey() + ".claim.no_permission", clickContext.getPlayer())
+        final boolean canClaim = runtimeService != null
+            && runtimeService.isChunkClaimable(town, resolvedWorldName, chunkX, chunkZ, ChunkType.FOB);
+        if (!canClaim) {
+            final String messageKey = town.hasFobChunk()
+                ? "claim.already_exists"
+                : town.getChunks().size() >= this.plugin.get(clickContext).getDefaultConfig().getGlobalMaxChunkLimit()
+                    ? "claim.limit_reached"
+                    : "claim.unavailable";
+            new I18n.Builder(this.getKey() + '.' + messageKey, clickContext.getPlayer())
                 .includePrefix()
                 .build()
                 .sendMessage();
@@ -235,7 +238,8 @@ public class ClaimsView extends BaseView {
             town.getMayorUUID(),
             resolvedWorldName,
             chunkX,
-            chunkZ
+            chunkZ,
+            ChunkType.FOB
         );
         clickContext.getPlayer().getInventory().addItem(chunkBlock)
             .values()
@@ -283,14 +287,17 @@ public class ClaimsView extends BaseView {
         final int centerChunkX,
         final int centerChunkZ
     ) {
-        return UnifiedBuilderFactory.item(Material.FILLED_MAP)
+        final RTownChunk fobChunk = town.findFobChunk();
+        final String currentFob = this.resolveFobLabel(context.getPlayer(), fobChunk);
+        return UnifiedBuilderFactory.item(Material.TARGET)
             .setName(this.i18n("summary.name", context.getPlayer()).build().component())
             .setLore(this.i18n("summary.lore", context.getPlayer())
                 .withPlaceholders(Map.of(
                     "town_name", town.getTownName(),
                     "chunk_count", town.getChunks().size(),
                     "center_x", centerChunkX,
-                    "center_z", centerChunkZ
+                    "center_z", centerChunkZ,
+                    "current_fob", currentFob
                 ))
                 .build()
                 .children())
@@ -346,7 +353,9 @@ public class ClaimsView extends BaseView {
         if (existingChunk != null) {
             final boolean ownTownChunk = Objects.equals(existingChunk.getTown().getTownUUID(), town.getTownUUID());
             final String key = ownTownChunk ? "chunk.claimed" : "chunk.foreign_claimed";
-            final Material material = ownTownChunk ? Material.GREEN_STAINED_GLASS_PANE : Material.GRAY_STAINED_GLASS_PANE;
+            final Material material = ownTownChunk
+                ? existingChunk.getChunkType() == ChunkType.FOB ? Material.TARGET : Material.GREEN_STAINED_GLASS_PANE
+                : Material.GRAY_STAINED_GLASS_PANE;
             return UnifiedBuilderFactory.item(material)
                 .setName(this.i18n(key + ".name", context.getPlayer()).build().component())
                 .setLore(this.i18n(key + ".lore", context.getPlayer())
@@ -363,10 +372,15 @@ public class ClaimsView extends BaseView {
         }
 
         final boolean claimable = runtimeService != null
-            && runtimeService.isChunkClaimable(town, resolvedWorldName, chunkX, chunkZ, ChunkType.DEFAULT);
-        final Material material = claimable ? Material.YELLOW_STAINED_GLASS_PANE : Material.RED_STAINED_GLASS_PANE;
-        final String key = claimable ? "chunk.claimable" : "chunk.blocked";
-        return UnifiedBuilderFactory.item(material)
+            && runtimeService.isChunkClaimable(town, resolvedWorldName, chunkX, chunkZ, ChunkType.FOB);
+        final String key = claimable
+            ? "chunk.claimable"
+            : town.hasFobChunk()
+                ? "chunk.blocked_has_fob"
+                : town.getChunks().size() >= this.plugin.get(context).getDefaultConfig().getGlobalMaxChunkLimit()
+                    ? "chunk.blocked_limit"
+                    : "chunk.blocked";
+        return UnifiedBuilderFactory.item(claimable ? Material.TARGET : Material.RED_STAINED_GLASS_PANE)
             .setName(this.i18n(key + ".name", context.getPlayer()).build().component())
             .setLore(this.i18n(key + ".lore", context.getPlayer())
                 .withPlaceholders(Map.of("chunk_x", chunkX, "chunk_z", chunkZ))
@@ -382,5 +396,14 @@ public class ClaimsView extends BaseView {
             .setLore(this.i18n("missing.lore", player).build().children())
             .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
             .build();
+    }
+
+    private @NotNull String resolveFobLabel(final @NotNull Player player, final @Nullable RTownChunk fobChunk) {
+        if (fobChunk != null) {
+            return fobChunk.getWorldName() + ' ' + fobChunk.getX() + ", " + fobChunk.getZ();
+        }
+        return PlainTextComponentSerializer.plainText().serialize(
+            this.i18n("summary.unclaimed", player).build().component()
+        );
     }
 }

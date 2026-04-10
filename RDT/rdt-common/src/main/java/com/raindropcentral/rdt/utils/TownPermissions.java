@@ -41,6 +41,7 @@ public enum TownPermissions {
     VIEW_ROLES("MEMBER"),
     VIEW_CHUNKS("MEMBER"),
     VIEW_BANK("MEMBER"),
+    USE_FOB("MEMBER"),
     CONTRIBUTE("MEMBER"),
     TOWN_INVITE("MEMBER"),
     PLACE_CHUNK("MEMBER"),

@@ -128,7 +128,7 @@ public final class TownLevelProgressView extends BaseView {
             case NEXUS -> plugin.getTownRuntimeService().levelUpNexus(clickContext.getPlayer(), town);
             case NATION_FORMATION -> new LevelUpResult(LevelUpStatus.INVALID_TARGET, snapshot.currentLevel(), snapshot.currentLevel());
             case NATION -> plugin.getTownRuntimeService().levelUpNation(clickContext.getPlayer(), town);
-            case SECURITY, BANK, FARM, OUTPOST, MEDIC, ARMORY -> {
+            case SECURITY, BANK, FARM, FOB, OUTPOST, MEDIC, ARMORY -> {
                 final RTownChunk townChunk = TownLevelViewSupport.resolveChunk(clickContext);
                 yield townChunk == null
                     ? new LevelUpResult(LevelUpStatus.INVALID_TARGET, snapshot.currentLevel(), snapshot.currentLevel())

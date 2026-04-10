@@ -197,6 +197,13 @@ public class TownChunkView extends BaseView {
     }
 
     private void handleTypeClick(final @NotNull SlotClickContext clickContext, final @NotNull RTownChunk townChunk) {
+        if (townChunk.getChunkType() == ChunkType.FOB) {
+            new I18n.Builder(this.getKey() + ".type.fob_locked_message", clickContext.getPlayer())
+                .includePrefix()
+                .build()
+                .sendMessage();
+            return;
+        }
         if (!this.plugin.get(clickContext).getTownRuntimeService().hasTownPermission(
             clickContext.getPlayer(),
             TownPermissions.CHANGE_CHUNK_TYPE
@@ -571,7 +578,7 @@ public class TownChunkView extends BaseView {
     }
 
     static boolean supportsChunkScopedProtections(final @NotNull RTownChunk townChunk) {
-        return townChunk.getChunkType() == ChunkType.SECURITY;
+        return townChunk.getChunkType() == ChunkType.SECURITY || townChunk.getChunkType() == ChunkType.FOB;
     }
 
     static boolean supportsTownRelationships(final @NotNull RTownChunk townChunk) {
@@ -682,16 +689,19 @@ public class TownChunkView extends BaseView {
     }
 
     private @NotNull ItemStack createTypeItem(final @NotNull Context context, final @NotNull RTownChunk townChunk) {
-        final boolean canChange = this.plugin.get(context).getTownRuntimeService().hasTownPermission(
+        final boolean immutableFob = townChunk.getChunkType() == ChunkType.FOB;
+        final boolean canChange = !immutableFob && this.plugin.get(context).getTownRuntimeService().hasTownPermission(
             context.getPlayer(),
             TownPermissions.CHANGE_CHUNK_TYPE
         );
-        final Material material = canChange
+        final Material material = immutableFob
+            ? this.plugin.get(context).getChunkTypeDisplayMaterial(townChunk.getChunkType())
+            : canChange
             ? this.plugin.get(context).getChunkTypeDisplayMaterial(townChunk.getChunkType())
             : Material.GRAY_DYE;
         return UnifiedBuilderFactory.item(material)
             .setName(this.i18n("type.name", context.getPlayer()).build().component())
-            .setLore(this.i18n((canChange ? "type" : "type.locked") + ".lore", context.getPlayer())
+            .setLore(this.i18n((immutableFob ? "type.fob_locked" : canChange ? "type" : "type.locked") + ".lore", context.getPlayer())
                 .withPlaceholder("chunk_type", townChunk.getChunkType().name())
                 .build()
                 .children())

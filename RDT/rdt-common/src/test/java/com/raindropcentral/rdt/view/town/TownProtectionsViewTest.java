@@ -26,11 +26,7 @@ import org.mockito.Mockito;
 import java.util.Map;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.*;
 
 class TownProtectionsViewTest {
 
@@ -67,5 +63,17 @@ class TownProtectionsViewTest {
         final RDT plugin = new RDT(Mockito.mock(JavaPlugin.class), "test", Mockito.mock(TownService.class));
 
         assertNull(AbstractTownProtectionView.createOriginChunkNavigationData(plugin, UUID.randomUUID(), Map.of()));
+    }
+
+    @Test
+    void fobChunksDoNotSatisfyTheSecurityChunkRequirementForProtectionEditing() {
+        final RTown town = new RTown(UUID.randomUUID(), UUID.randomUUID(), "Town", null);
+        town.addChunk(new RTownChunk(town, "world", 4, 4, ChunkType.FOB));
+
+        assertFalse(town.hasSecurityChunk());
+
+        town.addChunk(new RTownChunk(town, "world", 2, 2, ChunkType.SECURITY));
+
+        assertTrue(town.hasSecurityChunk());
     }
 }

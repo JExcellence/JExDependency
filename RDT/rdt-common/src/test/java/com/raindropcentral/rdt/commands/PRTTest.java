@@ -16,9 +16,12 @@ package com.raindropcentral.rdt.commands;
 import com.raindropcentral.rdt.RDT;
 import com.raindropcentral.rdt.database.entity.RDTPlayer;
 import com.raindropcentral.rdt.database.entity.RTown;
+import com.raindropcentral.rdt.service.TownFobService;
 import com.raindropcentral.rdt.service.TownRuntimeService;
 import com.raindropcentral.rdt.service.TownService;
+import com.raindropcentral.rdt.utils.TownPermissions;
 import de.jexcellence.evaluable.section.ACommandSection;
+import de.jexcellence.evaluable.section.PermissionsSection;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Server;
@@ -41,6 +44,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 /**
@@ -63,7 +67,13 @@ class PRTTest {
     private TownRuntimeService townRuntimeService;
 
     @Mock
+    private TownFobService townFobService;
+
+    @Mock
     private TownService townService;
+
+    @Mock
+    private PermissionsSection permissionsSection;
 
     @Mock
     private Server server;
@@ -83,12 +93,17 @@ class PRTTest {
     void setUp() {
         when(this.commandSection.getName()).thenReturn("rt");
         when(this.commandSection.getDescription()).thenReturn("RDT town commands");
-        when(this.commandSection.getUsage()).thenReturn("rt <main | spawn | bank>");
+        when(this.commandSection.getUsage()).thenReturn("rt <main | spawn | fob | bank>");
         when(this.commandSection.getAliases()).thenReturn(List.of("rt"));
         this.rdt = new RDT(this.javaPlugin, "test", this.townService) {
             @Override
             public TownRuntimeService getTownRuntimeService() {
                 return PRTTest.this.townRuntimeService;
+            }
+
+            @Override
+            public TownFobService getTownFobService() {
+                return PRTTest.this.townFobService;
             }
         };
     }
@@ -136,5 +151,91 @@ class PRTTest {
 
         verify(this.player).sendMessage("console only");
         verifyNoInteractions(this.townRuntimeService);
+    }
+
+    @Test
+    void playerTabCompletionIncludesFobWhenItMatchesTheTypedPrefix() {
+        final PRT command = new PRT(this.commandSection, this.rdt);
+
+        assertEquals(List.of("fob"), command.tabComplete(this.player, "rt", new String[]{"f"}));
+    }
+
+    @Test
+    void fobCommandStopsAtTheBukkitPermissionGate() {
+        when(this.commandSection.getPermissions()).thenReturn(this.permissionsSection);
+        when(this.permissionsSection.hasPermission(this.player, EPRTPermission.FOB)).thenReturn(false);
+
+        final PRT command = new PRT(this.commandSection, this.rdt);
+
+        assertTrue(command.execute(this.player, "rt", new String[]{"fob"}));
+
+        verify(this.permissionsSection).sendMissingMessage(this.player, EPRTPermission.FOB);
+        verifyNoInteractions(this.townRuntimeService);
+        verifyNoInteractions(this.townFobService);
+    }
+
+    @Test
+    void fobCommandRequiresThePlayerToBelongToATown() {
+        final UUID playerUuid = UUID.randomUUID();
+        when(this.player.getUniqueId()).thenReturn(playerUuid);
+        when(this.townRuntimeService.getTownFor(playerUuid)).thenReturn(null);
+
+        final PRT command = new PRT(this.commandSection, this.rdt);
+
+        assertTrue(command.execute(this.player, "rt", new String[]{"fob"}));
+
+        verify(this.townRuntimeService).getTownFor(playerUuid);
+        verifyNoMoreInteractions(this.townRuntimeService);
+        verifyNoInteractions(this.townFobService);
+    }
+
+    @Test
+    void fobCommandRequiresTheTownRolePermission() {
+        final UUID playerUuid = UUID.randomUUID();
+        final RTown town = new RTown(UUID.randomUUID(), playerUuid, "Founders", null);
+        when(this.player.getUniqueId()).thenReturn(playerUuid);
+        when(this.townRuntimeService.getTownFor(playerUuid)).thenReturn(town);
+        when(this.townRuntimeService.hasTownPermission(this.player, town, TownPermissions.USE_FOB)).thenReturn(false);
+
+        final PRT command = new PRT(this.commandSection, this.rdt);
+
+        assertTrue(command.execute(this.player, "rt", new String[]{"fob"}));
+
+        verify(this.townRuntimeService).getTownFor(playerUuid);
+        verify(this.townRuntimeService).hasTownPermission(this.player, town, TownPermissions.USE_FOB);
+        verifyNoMoreInteractions(this.townRuntimeService);
+        verifyNoInteractions(this.townFobService);
+    }
+
+    @Test
+    void fobCommandTreatsTeleportStartupFailuresAsUnavailable() {
+        final UUID playerUuid = UUID.randomUUID();
+        final RTown town = new RTown(UUID.randomUUID(), playerUuid, "Founders", null);
+        when(this.player.getUniqueId()).thenReturn(playerUuid);
+        when(this.townRuntimeService.getTownFor(playerUuid)).thenReturn(town);
+        when(this.townRuntimeService.hasTownPermission(this.player, town, TownPermissions.USE_FOB)).thenReturn(true);
+        when(this.townFobService.teleportToTownFob(this.player)).thenReturn(false);
+
+        final PRT command = new PRT(this.commandSection, this.rdt);
+
+        assertTrue(command.execute(this.player, "rt", new String[]{"fob"}));
+
+        verify(this.townFobService).teleportToTownFob(this.player);
+    }
+
+    @Test
+    void fobCommandDelegatesToTownFobServiceWhenThePlayerCanUseIt() {
+        final UUID playerUuid = UUID.randomUUID();
+        final RTown town = new RTown(UUID.randomUUID(), playerUuid, "Founders", null);
+        when(this.player.getUniqueId()).thenReturn(playerUuid);
+        when(this.townRuntimeService.getTownFor(playerUuid)).thenReturn(town);
+        when(this.townRuntimeService.hasTownPermission(this.player, town, TownPermissions.USE_FOB)).thenReturn(true);
+        when(this.townFobService.teleportToTownFob(this.player)).thenReturn(true);
+
+        final PRT command = new PRT(this.commandSection, this.rdt);
+
+        assertTrue(command.execute(this.player, "rt", new String[]{"fob"}));
+
+        verify(this.townFobService).teleportToTownFob(this.player);
     }
 }

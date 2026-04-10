@@ -1,0 +1,123 @@
+# Configurable FOB chunk progression levels.
+# Add, remove, or reorder numeric level keys as desired.
+# The highest numeric key becomes the FOB max level.
+# Valid Bukkit block material used for the FOB chunk marker.
+block_material: TARGET
+
+# Each numeric key is the level reached after the upgrade succeeds.
+# Requirement and reward entry names (for example `vault_upgrade`) are stable IDs used for progress tracking and UI.
+# `description` is the player-facing label shown in upgrade previews.
+# Currency requirements use `currency`, `amount`, and `consumable`.
+# Item requirements use `requiredItems`; `consumeOnComplete` removes contributed items and `exactMatch`
+# switches matching from material-only to full item similarity.
+# Currency rewards use `currencyId` and deposit into the town bank.
+# Command rewards can use placeholders such as {town_uuid}, {town_name}, {target_level}, {chunk_x}, and {chunk_z}.
+# `executeAsPlayer: false` runs the command from console instead of as the player.
+levels:
+  1:
+    requirements: {}
+    rewards: {}
+  2:
+    requirements:
+      vault_upgrade:
+        type: "CURRENCY"
+        currency: "vault"
+        amount: 1000.0
+        consumable: true
+        description: "FOB funding contribution"
+      navigation_tools:
+        type: "ITEM"
+        requiredItems:
+          - type: "COMPASS"
+            amount: 8
+        consumeOnComplete: true
+        exactMatch: false
+        description: "FOB navigation tools"
+    rewards:
+      vault_bonus:
+        type: "CURRENCY"
+        currencyId: "vault"
+        amount: 150.0
+        description: "FOB treasury rebate"
+      town_broadcast:
+        type: "COMMAND"
+        command: "rt broadcast {town_uuid} <aqua>{town_name}</aqua> <yellow>upgraded FOB chunk <white>{chunk_x}, {chunk_z}</white> to level <white>{target_level}</white><yellow>!</yellow>"
+        executeAsPlayer: false
+  3:
+    requirements:
+      vault_upgrade:
+        type: "CURRENCY"
+        currency: "vault"
+        amount: 1750.0
+        consumable: true
+        description: "FOB funding contribution"
+      targeting_arrays:
+        type: "ITEM"
+        requiredItems:
+          - type: "TARGET"
+            amount: 12
+        consumeOnComplete: true
+        exactMatch: false
+        description: "FOB targeting arrays"
+    rewards:
+      vault_bonus:
+        type: "CURRENCY"
+        currencyId: "vault"
+        amount: 250.0
+        description: "FOB treasury rebate"
+      town_broadcast:
+        type: "COMMAND"
+        command: "rt broadcast {town_uuid} <aqua>{town_name}</aqua> <yellow>upgraded FOB chunk <white>{chunk_x}, {chunk_z}</white> to level <white>{target_level}</white><yellow>!</yellow>"
+        executeAsPlayer: false
+  4:
+    requirements:
+      vault_upgrade:
+        type: "CURRENCY"
+        currency: "vault"
+        amount: 2750.0
+        consumable: true
+        description: "FOB funding contribution"
+      fortification_materials:
+        type: "ITEM"
+        requiredItems:
+          - type: "OBSIDIAN"
+            amount: 24
+        consumeOnComplete: true
+        exactMatch: false
+        description: "FOB fortification materials"
+    rewards:
+      vault_bonus:
+        type: "CURRENCY"
+        currencyId: "vault"
+        amount: 400.0
+        description: "FOB treasury rebate"
+      town_broadcast:
+        type: "COMMAND"
+        command: "rt broadcast {town_uuid} <aqua>{town_name}</aqua> <yellow>upgraded FOB chunk <white>{chunk_x}, {chunk_z}</white> to level <white>{target_level}</white><yellow>!</yellow>"
+        executeAsPlayer: false
+  5:
+    requirements:
+      vault_upgrade:
+        type: "CURRENCY"
+        currency: "vault"
+        amount: 4000.0
+        consumable: true
+        description: "FOB funding contribution"
+      relay_materials:
+        type: "ITEM"
+        requiredItems:
+          - type: "ENDER_EYE"
+            amount: 8
+        consumeOnComplete: true
+        exactMatch: false
+        description: "FOB relay materials"
+    rewards:
+      vault_bonus:
+        type: "CURRENCY"
+        currencyId: "vault"
+        amount: 600.0
+        description: "FOB treasury rebate"
+      town_broadcast:
+        type: "COMMAND"
+        command: "rt broadcast {town_uuid} <aqua>{town_name}</aqua> <yellow>upgraded FOB chunk <white>{chunk_x}, {chunk_z}</white> to level <white>{target_level}</white><yellow>!</yellow>"
+        executeAsPlayer: false

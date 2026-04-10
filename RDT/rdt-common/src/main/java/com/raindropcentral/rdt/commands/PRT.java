@@ -17,6 +17,7 @@ import com.raindropcentral.commands.PlayerCommand;
 import com.raindropcentral.commands.utility.Command;
 import com.raindropcentral.rdt.RDT;
 import com.raindropcentral.rdt.database.entity.RTown;
+import com.raindropcentral.rdt.utils.TownPermissions;
 import com.raindropcentral.rdt.view.main.TownHubView;
 import com.raindropcentral.rdt.view.town.TownBankRootView;
 import com.raindropcentral.rdt.view.town.TownBankStorageView;
@@ -110,6 +111,7 @@ public class PRT extends PlayerCommand {
         final EPRTAction action = this.resolveAction(args);
         switch (action) {
             case SPAWN -> this.handleSpawnCommand(player);
+            case FOB -> this.handleFobCommand(player);
             case BANK -> this.handleBankCommand(player);
             case MAIN -> this.handleMainCommand(player);
             case BROADCAST -> throw new CommandError(null, EErrorType.NOT_A_CONSOLE);
@@ -135,6 +137,35 @@ public class PRT extends PlayerCommand {
 
         if (this.rdt.getTownSpawnService() == null || !this.rdt.getTownSpawnService().teleportToTownSpawn(player)) {
             new I18n.Builder("prt.spawn.unavailable", player)
+                .includePrefix()
+                .build()
+                .sendMessage();
+        }
+    }
+
+    private void handleFobCommand(final @NotNull Player player) {
+        if (this.hasNoPermission(player, EPRTPermission.FOB)) {
+            return;
+        }
+
+        final var runtimeService = this.rdt.getTownRuntimeService();
+        final RTown town = runtimeService == null ? null : runtimeService.getTownFor(player.getUniqueId());
+        if (town == null) {
+            new I18n.Builder("prt.fob.no_town", player)
+                .includePrefix()
+                .build()
+                .sendMessage();
+            return;
+        }
+        if (!runtimeService.hasTownPermission(player, town, TownPermissions.USE_FOB)) {
+            new I18n.Builder("prt.fob.no_permission", player)
+                .includePrefix()
+                .build()
+                .sendMessage();
+            return;
+        }
+        if (this.rdt.getTownFobService() == null || !this.rdt.getTownFobService().teleportToTownFob(player)) {
+            new I18n.Builder("prt.fob.unavailable", player)
                 .includePrefix()
                 .build()
                 .sendMessage();
@@ -224,6 +255,9 @@ public class PRT extends PlayerCommand {
             }
             if (this.hasPermission(player, EPRTPermission.SPAWN)) {
                 suggestions.add(EPRTAction.SPAWN.name().toLowerCase(Locale.ROOT));
+            }
+            if (this.hasPermission(player, EPRTPermission.FOB)) {
+                suggestions.add(EPRTAction.FOB.name().toLowerCase(Locale.ROOT));
             }
             if (this.hasPermission(player, EPRTPermission.BANK)
                 && this.rdt.getTownBankService() != null

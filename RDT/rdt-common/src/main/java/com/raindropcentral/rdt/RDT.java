@@ -14,20 +14,12 @@
 package com.raindropcentral.rdt;
 
 import com.raindropcentral.commands.CommandFactory;
-import com.raindropcentral.rdt.configs.ArmoryConfigSection;
-import com.raindropcentral.rdt.configs.BankConfigSection;
-import com.raindropcentral.rdt.configs.ConfigSection;
-import com.raindropcentral.rdt.configs.FarmConfigSection;
-import com.raindropcentral.rdt.configs.MedicConfigSection;
-import com.raindropcentral.rdt.configs.NationConfigSection;
-import com.raindropcentral.rdt.configs.NexusConfigSection;
-import com.raindropcentral.rdt.configs.OutpostConfigSection;
-import com.raindropcentral.rdt.configs.SecurityConfigSection;
+import com.raindropcentral.rdt.configs.*;
 import com.raindropcentral.rdt.database.entity.RDTPlayer;
 import com.raindropcentral.rdt.database.entity.RTown;
+import com.raindropcentral.rdt.database.repository.RRDTPlayer;
 import com.raindropcentral.rdt.database.repository.RRNation;
 import com.raindropcentral.rdt.database.repository.RRNationInvite;
-import com.raindropcentral.rdt.database.repository.RRDTPlayer;
 import com.raindropcentral.rdt.database.repository.RRTown;
 import com.raindropcentral.rdt.database.repository.RRTownChunk;
 import com.raindropcentral.rdt.database.repository.RRTownInvite;
@@ -78,6 +70,7 @@ public class RDT {
     private static final String SECURITY_CONFIG_FILE_NAME = "security.yml";
     private static final String BANK_CONFIG_FILE_NAME = "bank.yml";
     private static final String FARM_CONFIG_FILE_NAME = "farm.yml";
+    private static final String FOB_CONFIG_FILE_NAME = "fob.yml";
     private static final String OUTPOST_CONFIG_FILE_NAME = "outpost.yml";
     private static final String MEDIC_CONFIG_FILE_NAME = "medic.yml";
     private static final String ARMORY_CONFIG_FILE_NAME = "armory.yml";
@@ -107,6 +100,7 @@ public class RDT {
 
     private TownRuntimeService townRuntimeService;
     private TownSpawnService townSpawnService;
+    private TownFobService townFobService;
     private TownBossBarService townBossBarService;
     private TownBankService townBankService;
     private TownFarmService townFarmService;
@@ -339,6 +333,25 @@ public class RDT {
     }
 
     /**
+     * Loads the effective FOB chunk level configuration.
+     *
+     * @return parsed FOB level configuration
+     */
+    public @NotNull FobConfigSection getFobConfig() {
+        this.ensureBundledConfigFiles();
+        try {
+            if (!this.canChangeConfigs()) {
+                final InputStream defaultStream = this.plugin.getResource(CONFIG_FOLDER_PATH + '/' + FOB_CONFIG_FILE_NAME);
+                return defaultStream == null ? FobConfigSection.createDefault() : FobConfigSection.fromInputStream(defaultStream);
+            }
+            return FobConfigSection.fromFile(this.getConfigFile(FOB_CONFIG_FILE_NAME));
+        } catch (final Exception exception) {
+            this.getLogger().warning("Failed to load RDT fob config: " + exception.getMessage());
+            return FobConfigSection.createDefault();
+        }
+    }
+
+    /**
      * Loads the effective Outpost chunk level configuration.
      *
      * @return parsed Outpost level configuration
@@ -412,6 +425,7 @@ public class RDT {
         return switch (chunkType) {
             case NEXUS -> this.getDefaultConfig().getChunkTypeIconMaterial(ChunkType.NEXUS);
             case DEFAULT -> this.getDefaultConfig().getDefaultChunkBlockMaterial();
+            case FOB -> this.getFobConfig().getBlockMaterial();
             case CLAIM_PENDING -> this.getDefaultConfig().getChunkTypeIconMaterial(ChunkType.CLAIM_PENDING);
             case SECURITY -> this.getSecurityConfig().getBlockMaterial();
             case BANK -> this.getBankConfig().getBlockMaterial();
@@ -454,6 +468,7 @@ public class RDT {
         this.nexusAccessService = new NexusAccessService(this);
         this.townRuntimeService = new TownRuntimeService(this);
         this.townSpawnService = new TownSpawnService(this);
+        this.townFobService = new TownFobService(this);
         this.townBossBarService = new TownBossBarService(this);
         this.townBankService = new TownBankService(this);
         this.townFarmService = new TownFarmService(this);
@@ -495,6 +510,7 @@ public class RDT {
                 new TownOverviewView(),
                 new TownArchetypeView(),
                 new TownBankView(),
+                new TownFobClaimsView(),
                 new TownBankRootView(),
                 new TownBankStorageView(),
                 new TownBankCurrencyInputView(),
@@ -575,6 +591,7 @@ public class RDT {
         this.ensureBundledConfigFile(SECURITY_CONFIG_FILE_NAME);
         this.ensureBundledConfigFile(BANK_CONFIG_FILE_NAME);
         this.ensureBundledConfigFile(FARM_CONFIG_FILE_NAME);
+        this.ensureBundledConfigFile(FOB_CONFIG_FILE_NAME);
         this.ensureBundledConfigFile(OUTPOST_CONFIG_FILE_NAME);
         this.ensureBundledConfigFile(MEDIC_CONFIG_FILE_NAME);
         this.ensureBundledConfigFile(ARMORY_CONFIG_FILE_NAME);
@@ -817,6 +834,15 @@ public class RDT {
      */
     public @Nullable TownSpawnService getTownSpawnService() {
         return this.townSpawnService;
+    }
+
+    /**
+     * Returns the town FOB travel service.
+     *
+     * @return town FOB travel service
+     */
+    public @Nullable TownFobService getTownFobService() {
+        return this.townFobService;
     }
 
     /**

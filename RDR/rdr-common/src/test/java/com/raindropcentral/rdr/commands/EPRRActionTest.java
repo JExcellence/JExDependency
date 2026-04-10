@@ -17,6 +17,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests {@link EPRRAction} command action definitions.
@@ -41,5 +44,20 @@ class EPRRActionTest {
     @Test
     void resolvesEnumValueByCanonicalName() {
         assertEquals(EPRRAction.STORAGE, EPRRAction.valueOf("STORAGE"));
+    }
+
+    @Test
+    void resolvesActionFromCaseInsensitiveLabel() {
+        assertEquals(EPRRAction.SCOREBOARD, EPRRAction.fromLabel("ScOrEbOaRd"));
+        assertNull(EPRRAction.fromLabel("unknown"));
+    }
+
+    @Test
+    void detectsReservedSubcommandLabels() {
+        assertTrue(EPRRAction.isReservedSubcommandLabel("storage"));
+        assertTrue(EPRRAction.isReservedSubcommandLabel("backup"));
+        assertTrue(EPRRAction.isReservedSubcommandLabel("Rollback"));
+        assertFalse(EPRRAction.isReservedSubcommandLabel("5"));
+        assertFalse(EPRRAction.isReservedSubcommandLabel("vault"));
     }
 }

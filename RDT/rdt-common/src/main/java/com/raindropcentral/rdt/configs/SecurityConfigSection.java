@@ -214,6 +214,7 @@ public final class SecurityConfigSection {
             case SECURITY -> "security";
             case BANK -> "bank";
             case FARM -> "farm";
+            case FOB -> "fob";
             case OUTPOST -> "outpost";
             case DEFAULT, CLAIM_PENDING, MEDIC, ARMORY -> "base";
         };
@@ -530,12 +531,13 @@ public final class SecurityConfigSection {
 
         private static @NotNull LinkedHashMap<String, FuelChunkTypeDefinition> createDefaultChunkTypes() {
             final LinkedHashMap<String, FuelChunkTypeDefinition> defaults = new LinkedHashMap<>();
-            defaults.put("base", new FuelChunkTypeDefinition("base", 1.00D, 0.00D, null));
-            defaults.put("nexus", new FuelChunkTypeDefinition("nexus", 1.35D, 0.06D, null));
+            defaults.put("base", new FuelChunkTypeDefinition("base", 1.00D, 0.00D, 1.00D));
+            defaults.put("nexus", new FuelChunkTypeDefinition("nexus", 1.35D, 0.06D, 1.35D));
             defaults.put("security", new FuelChunkTypeDefinition("security", 0.70D, -0.05D, 0.45D));
-            defaults.put("bank", new FuelChunkTypeDefinition("bank", 1.20D, 0.05D, null));
+            defaults.put("bank", new FuelChunkTypeDefinition("bank", 1.20D, 0.05D, 1.20D));
             defaults.put("farm", new FuelChunkTypeDefinition("farm", 0.80D, -0.04D, 0.55D));
-            defaults.put("outpost", new FuelChunkTypeDefinition("outpost", 1.15D, 0.05D, null));
+            defaults.put("outpost", new FuelChunkTypeDefinition("outpost", 1.15D, 0.05D, 1.15D));
+            defaults.put("fob", new FuelChunkTypeDefinition("fob", 1.10D, 0.04D, 1.10D));
             return defaults;
         }
 

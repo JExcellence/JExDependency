@@ -3,6 +3,10 @@ prefix: "<gradient:#0ea5e9:#38bdf8>[RDT]</gradient> "
 prt:
   spawn:
     unavailable: "<red>Your town spawn is unavailable right now.</red>"
+  fob:
+    no_town: "<red>You must belong to a town to use <white>/rt fob</white><red>.</red>"
+    no_permission: "<red>You do not have permission to use your town FOB.</red>"
+    unavailable: "<red>Your town FOB is unavailable right now.</red>"
   bank:
     no_town: "<red>You must belong to a town to use the remote town bank.</red>"
     no_permission: "<red>You do not have permission to access your town bank.</red>"
@@ -14,6 +18,10 @@ town_spawn:
   transfer_requested: "<yellow>Sending you to the town spawn server <white>{target_server}</white><yellow>.</yellow>"
   started: "<yellow>Town spawn warmup started. Teleporting in <white>{seconds}</white><yellow> seconds.</yellow>"
   teleported: "<green>Teleported to <white>{town}</white><green>.</green>"
+
+town_fob:
+  started: "<yellow>FOB warmup started. Teleporting in <white>{seconds}</white><yellow> seconds.</yellow>"
+  teleported: "<green>Teleported to the FOB for <white>{town}</white><green>.</green>"
 
 town_boss_bar:
   territory:
@@ -417,6 +425,16 @@ town_overview_ui:
     locked:
       lore:
         - "<gray>Only town members can manage claims.</gray>"
+  fob:
+    name: "<gold>FOB</gold>"
+    lore:
+      - "<gray>Current FOB:</gray> <white>{current_fob}</white>"
+      - "<yellow>Open the FOB claims map.</yellow>"
+    locked:
+      lore:
+        - "<gray>You need claim permissions to manage the town FOB.</gray>"
+    no_permission: "<red>You do not have permission to manage your town FOB.</red>"
+    unclaimed: "<gray>Unclaimed</gray>"
   bank:
     name: "<gold>Town Bank</gold>"
     lore:
@@ -690,10 +708,14 @@ town_chunk_ui:
     lore:
       - "<gray>Current type:</gray> <white>{chunk_type}</white>"
       - "<yellow>Click to choose the chunk type.</yellow>"
+    fob_locked:
+      lore:
+        - "<gray>FOB chunks are permanent and cannot change type.</gray>"
     locked:
       lore:
         - "<gray>You do not have permission to change chunk types.</gray>"
     no_permission: "<red>You do not have permission to change chunk types.</red>"
+    fob_locked_message: "<red>FOB chunks are permanent and cannot change type.</red>"
     changed: "<green>Chunk type changed to <white>{chunk_type}</white><green>.</green>"
     failed: "<red>The chunk type could not be changed.</red>"
   protections:
@@ -702,12 +724,12 @@ town_chunk_ui:
       - "<gray>Open the chunk protection categories.</gray>"
     security_locked:
       lore:
-        - "<gray>Only Security chunks can open chunk-specific protections.</gray>"
+        - "<gray>Only Security and FOB chunks can open chunk-specific protections.</gray>"
     permission_locked:
       lore:
         - "<gray>You do not have permission to manage chunk protections.</gray>"
     security_required: "<red>A Security chunk is required before protections can be edited.</red>"
-    security_only: "<red>Only Security chunks can open chunk-specific protections.</red>"
+    security_only: "<red>Only Security and FOB chunks can open chunk-specific protections.</red>"
     no_permission: "<red>You do not have permission to manage chunk protections.</red>"
   info:
     name: "<gold>Chunk Info</gold>"
@@ -1986,6 +2008,12 @@ town_claims_ui:
         - "<gray>Chunk:</gray> <white>{chunk_x}, {chunk_z}</white>"
         - "<gray>Type:</gray> <white>{chunk_type}</white>"
         - "<yellow>Click to inspect this chunk.</yellow>"
+    foreign_claimed:
+      name: "<gray>Claimed</gray>"
+      lore:
+        - "<gray>Town:</gray> <white>{town_name}</white>"
+        - "<gray>Type:</gray> <white>{chunk_type}</white>"
+        - "<red>This chunk is already claimed.</red>"
     claimable:
       name: "<yellow>Claimable</yellow>"
       lore:
@@ -2002,9 +2030,92 @@ town_claims_ui:
       - "<gray>The claim map could not load this town.</gray>"
   claim:
     adjacent_only: "<red>You can only claim chunks that touch your current territory.</red>"
+    already_claimed: "<red>That chunk is already claimed by <white>{town_name}</white><red>.</red>"
+    limit_reached: "<red>Your town has reached the global chunk claim limit.</red>"
     no_permission: "<red>You do not have permission to claim chunks.</red>"
     granted: "<green>Received a Chunk Block for <white>{chunk_x}, {chunk_z}</white><green>.</green>"
     place_hint: "<yellow>Place that Chunk Block in <white>{chunk_x}, {chunk_z}</white><yellow> to claim the plot.</yellow>"
+
+town_fob_claims_ui:
+  title: "<gradient:#f59e0b:#fbbf24>FOB Claims</gradient>"
+  summary:
+    name: "<gold>FOB Info</gold>"
+    lore:
+      - "<gray>Town:</gray> <white>{town_name}</white>"
+      - "<gray>Current FOB:</gray> <white>{current_fob}</white>"
+      - "<gray>Claimed chunks:</gray> <white>{chunk_count}</white>"
+      - "<gray>Focus chunk:</gray> <white>{center_x}, {center_z}</white>"
+    unclaimed: "<gray>Unclaimed</gray>"
+  navigation:
+    north:
+      name: "<gold>North</gold>"
+      lore:
+        - "<gray>Shift the FOB claim map north.</gray>"
+    south:
+      name: "<gold>South</gold>"
+      lore:
+        - "<gray>Shift the FOB claim map south.</gray>"
+    east:
+      name: "<gold>East</gold>"
+      lore:
+        - "<gray>Shift the FOB claim map east.</gray>"
+    west:
+      name: "<gold>West</gold>"
+      lore:
+        - "<gray>Shift the FOB claim map west.</gray>"
+  return:
+    name: "<gold>Back</gold>"
+    lore:
+      - "<gray>Return to the previous town view.</gray>"
+  recenter:
+    name: "<gold>Center View</gold>"
+    lore:
+      - "<gray>Re-center the FOB claim map on your current chunk.</gray>"
+  chunk:
+    claimed:
+      name: "<green>Claimed</green>"
+      lore:
+        - "<gray>Chunk:</gray> <white>{chunk_x}, {chunk_z}</white>"
+        - "<gray>Type:</gray> <white>{chunk_type}</white>"
+        - "<yellow>Click to inspect this chunk.</yellow>"
+    foreign_claimed:
+      name: "<gray>Claimed</gray>"
+      lore:
+        - "<gray>Town:</gray> <white>{town_name}</white>"
+        - "<gray>Type:</gray> <white>{chunk_type}</white>"
+        - "<red>This chunk is already claimed.</red>"
+    claimable:
+      name: "<gold>FOB Candidate</gold>"
+      lore:
+        - "<gray>Chunk:</gray> <white>{chunk_x}, {chunk_z}</white>"
+        - "<yellow>Click to receive a FOB marker for this chunk.</yellow>"
+    blocked:
+      name: "<red>Unavailable</red>"
+      lore:
+        - "<gray>Chunk:</gray> <white>{chunk_x}, {chunk_z}</white>"
+        - "<gray>This chunk cannot host your FOB right now.</gray>"
+    blocked_has_fob:
+      name: "<red>FOB Already Set</red>"
+      lore:
+        - "<gray>Chunk:</gray> <white>{chunk_x}, {chunk_z}</white>"
+        - "<gray>Your town already has a FOB chunk.</gray>"
+    blocked_limit:
+      name: "<red>Limit Reached</red>"
+      lore:
+        - "<gray>Chunk:</gray> <white>{chunk_x}, {chunk_z}</white>"
+        - "<gray>Your town has reached the global chunk claim limit.</gray>"
+  missing:
+    name: "<red>Town Missing</red>"
+    lore:
+      - "<gray>The FOB claim map could not load this town.</gray>"
+  claim:
+    no_permission: "<red>You do not have permission to claim a town FOB.</red>"
+    already_claimed: "<red>That chunk is already claimed by <white>{town_name}</white><red>.</red>"
+    already_exists: "<red>Your town already has a FOB chunk.</red>"
+    limit_reached: "<red>Your town has reached the global chunk claim limit.</red>"
+    unavailable: "<red>That chunk cannot host your FOB right now.</red>"
+    granted: "<green>Received a FOB marker for <white>{chunk_x}, {chunk_z}</white><green>.</green>"
+    place_hint: "<yellow>Place that FOB marker in <white>{chunk_x}, {chunk_z}</white><yellow> to establish your FOB.</yellow>"
 
 town_chunk_type_ui:
   title: "<gradient:#f59e0b:#fbbf24>Choose Chunk Type</gradient>"
@@ -2044,6 +2155,7 @@ town_chunk_type_ui:
         - "<gray>Free repair, salvage and repair blocks, plus furnace doubling unlock as this Armory chunk levels up.</gray>"
   selected: "<green>Chunk type changed to <white>{chunk_type}</white><green>.</green>"
   selection_failed: "<red>The chunk type could not be changed.</red>"
+  immutable: "<red>FOB chunks cannot be changed into or out of other chunk types.</red>"
   already_selected: "<yellow>This chunk is already set to <white>{chunk_type}</white><yellow>.</yellow>"
   fuel_tank_granted: "<yellow>You received a bound fuel tank. Place it in this Security chunk and add fuel before security features will work.</yellow>"
   fuel_tank_removed: "<yellow>The Security fuel tank was removed from this chunk.</yellow>"

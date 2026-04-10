@@ -14,27 +14,19 @@
 package com.raindropcentral.rdt.service;
 
 import com.raindropcentral.rdt.RDT;
-import com.raindropcentral.rdt.configs.ArmoryConfigSection;
-import com.raindropcentral.rdt.configs.BankConfigSection;
-import com.raindropcentral.rdt.configs.ConfigSection;
-import com.raindropcentral.rdt.configs.FarmConfigSection;
-import com.raindropcentral.rdt.configs.MedicConfigSection;
-import com.raindropcentral.rdt.configs.NationConfigSection;
-import com.raindropcentral.rdt.configs.NexusConfigSection;
-import com.raindropcentral.rdt.configs.OutpostConfigSection;
-import com.raindropcentral.rdt.configs.SecurityConfigSection;
+import com.raindropcentral.rdt.configs.*;
 import com.raindropcentral.rdt.database.entity.NationInvite;
 import com.raindropcentral.rdt.database.entity.NationInviteStatus;
 import com.raindropcentral.rdt.database.entity.NationInviteType;
 import com.raindropcentral.rdt.database.entity.NationStatus;
-import com.raindropcentral.rdt.database.entity.RNation;
 import com.raindropcentral.rdt.database.entity.RDTPlayer;
+import com.raindropcentral.rdt.database.entity.RNation;
 import com.raindropcentral.rdt.database.entity.RTown;
 import com.raindropcentral.rdt.database.entity.RTownChunk;
 import com.raindropcentral.rdt.database.entity.RTownRelationship;
+import com.raindropcentral.rdt.database.repository.RRDTPlayer;
 import com.raindropcentral.rdt.database.repository.RRNation;
 import com.raindropcentral.rdt.database.repository.RRNationInvite;
-import com.raindropcentral.rdt.database.repository.RRDTPlayer;
 import com.raindropcentral.rdt.database.repository.RRTown;
 import com.raindropcentral.rdt.database.repository.RRTownChunk;
 import com.raindropcentral.rdt.database.repository.RRTownRelationship;
@@ -752,6 +744,50 @@ class TownRuntimeServiceTest {
     }
 
     @Test
+    void isChunkClaimableAllowsOneFobWithoutAdjacency() {
+        final RTown town = createTownWithClaim("world", 0, 0);
+        final TownRuntimeService service = new TownRuntimeService(this.createPluginWithConfig("""
+            exclude_corner_claim_adjacency: true
+            global_max_chunk_limit: 64
+            """));
+
+        assertTrue(service.isChunkClaimable(town, "world_nether", 12, 14, ChunkType.FOB));
+
+        town.addChunk(new RTownChunk(town, "world_nether", 12, 14, ChunkType.FOB));
+
+        assertFalse(service.isChunkClaimable(town, "world", 20, 20, ChunkType.FOB));
+    }
+
+    @Test
+    void isChunkClaimableRejectsFobWhenTheTownIsAtTheGlobalChunkLimit() {
+        final RTown town = createTownWithClaim("world", 0, 0);
+        final TownRuntimeService service = new TownRuntimeService(this.createPluginWithConfig("""
+            exclude_corner_claim_adjacency: true
+            global_max_chunk_limit: 1
+            """));
+
+        assertFalse(service.isChunkClaimable(town, "world", 8, 8, ChunkType.FOB));
+    }
+
+    @Test
+    void isChunkClaimableRejectsChunksThatAnotherTownAlreadyOwns() throws ReflectiveOperationException {
+        final RTown town = createTownWithClaim("world", 0, 0);
+        final RTown foreignTown = new RTown(UUID.randomUUID(), UUID.randomUUID(), "Foreign", null);
+        final RTownChunk foreignChunk = new RTownChunk(foreignTown, "world", 5, 5, ChunkType.DEFAULT);
+        final RDT plugin = this.createPluginWithConfig("""
+            exclude_corner_claim_adjacency: true
+            global_max_chunk_limit: 64
+            """);
+        setField(plugin, "townChunkRepository", townChunkRepository);
+        when(townChunkRepository.findByChunk("world", 5, 5)).thenReturn(foreignChunk);
+
+        final TownRuntimeService service = new TownRuntimeService(plugin);
+
+        assertFalse(service.isChunkClaimable(town, "world", 5, 5));
+        assertFalse(service.isChunkClaimable(town, "world", 5, 5, ChunkType.FOB));
+    }
+
+    @Test
     void claimChunkCreatesDefaultChunkTypeWhenPlacementIsValid() throws ReflectiveOperationException {
         final UUID townUuid = UUID.randomUUID();
         final UUID playerUuid = UUID.randomUUID();
@@ -782,6 +818,89 @@ class TownRuntimeServiceTest {
         assertNotNull(claimedChunk);
         assertEquals(ChunkType.DEFAULT, claimedChunk.getChunkType());
         verify(townRepository).update(town);
+    }
+
+    @Test
+    void claimChunkCreatesFobWhenPlacementIsValidOutsideTheNormalYWindow() throws ReflectiveOperationException {
+        final UUID townUuid = UUID.randomUUID();
+        final UUID playerUuid = UUID.randomUUID();
+        final RTown town = new RTown(townUuid, playerUuid, "Test Town", null);
+        final RDTPlayer playerData = new RDTPlayer(playerUuid, townUuid, RTown.MAYOR_ROLE_ID);
+        playerData.grantTownPermission(TownPermissions.CLAIM_CHUNK);
+        town.setNexusLocation(new Location(world, 0.0D, 64.0D, 0.0D));
+
+        when(player.getUniqueId()).thenReturn(playerUuid);
+        when(location.getWorld()).thenReturn(world);
+        when(world.getName()).thenReturn("world");
+        when(location.getChunk()).thenReturn(chunk);
+        when(chunk.getX()).thenReturn(10);
+        when(chunk.getZ()).thenReturn(11);
+        when(townRepository.findByTownUUID(townUuid)).thenReturn(town);
+        when(playerRepository.findByPlayer(playerUuid)).thenReturn(playerData);
+
+        final RDT plugin = this.createPluginWithConfig("""
+            exclude_corner_claim_adjacency: true
+            global_max_chunk_limit: 64
+            chunk_block_min_y: -5
+            chunk_block_max_y: 5
+            """);
+        setField(plugin, "townRepository", townRepository);
+        setField(plugin, "playerRepository", playerRepository);
+
+        final TownRuntimeService service = new TownRuntimeService(plugin);
+
+        final RTownChunk claimedChunk = service.claimChunk(player, location, townUuid, "world", 10, 11, ChunkType.FOB);
+
+        assertNotNull(claimedChunk);
+        assertEquals(ChunkType.FOB, claimedChunk.getChunkType());
+        verify(townRepository).update(town);
+    }
+
+    @Test
+    void claimChunkRejectsFobWhenPlacedOutsideItsReservedChunk() throws ReflectiveOperationException {
+        final UUID townUuid = UUID.randomUUID();
+        final UUID playerUuid = UUID.randomUUID();
+        final RTown town = new RTown(townUuid, playerUuid, "Test Town", null);
+        final RDTPlayer playerData = new RDTPlayer(playerUuid, townUuid, RTown.MAYOR_ROLE_ID);
+        playerData.grantTownPermission(TownPermissions.CLAIM_CHUNK);
+
+        when(player.getUniqueId()).thenReturn(playerUuid);
+        when(location.getWorld()).thenReturn(world);
+        when(world.getName()).thenReturn("world");
+        when(location.getChunk()).thenReturn(chunk);
+        when(chunk.getX()).thenReturn(10);
+        when(townRepository.findByTownUUID(townUuid)).thenReturn(town);
+        when(playerRepository.findByPlayer(playerUuid)).thenReturn(playerData);
+
+        final RDT plugin = this.createPluginWithConfig("""
+            exclude_corner_claim_adjacency: true
+            global_max_chunk_limit: 64
+            """);
+        setField(plugin, "townRepository", townRepository);
+        setField(plugin, "playerRepository", playerRepository);
+
+        final TownRuntimeService service = new TownRuntimeService(plugin);
+
+        assertNull(service.claimChunk(player, location, townUuid, "world", 9, 11, ChunkType.FOB));
+        verify(townRepository, never()).update(town);
+    }
+
+    @Test
+    void resolveFobHelpersReturnTheTownFobAndItsCenteredTeleportLocation() {
+        final RTown town = new RTown(UUID.randomUUID(), UUID.randomUUID(), "Test Town", null);
+        final RTownChunk fobChunk = new RTownChunk(town, "world", 4, 5, ChunkType.FOB);
+        final Location markerLocation = new Location(world, 64.0D, 80.0D, 96.0D);
+        fobChunk.setChunkBlockLocation(markerLocation);
+        town.addChunk(new RTownChunk(town, "world", 0, 0, ChunkType.DEFAULT));
+        town.addChunk(fobChunk);
+
+        final TownRuntimeService service = new TownRuntimeService(this.createPluginWithConfig("""
+            global_max_chunk_limit: 64
+            """));
+
+        assertTrue(service.hasFobChunk(town));
+        assertSame(fobChunk, service.getFobChunk(town));
+        assertEquals(new Location(world, 64.5D, 81.0D, 96.5D), service.resolveFobTeleportLocation(town));
     }
 
     @Test
@@ -1413,6 +1532,46 @@ class TownRuntimeServiceTest {
         assertTrue(service.setChunkType(liveChunk, ChunkType.MEDIC));
         assertEquals(ChunkType.MEDIC, liveChunk.getChunkType());
         verify(townRepository).update(liveTown);
+    }
+
+    @Test
+    void setChunkTypeRejectsTransitionsIntoFob() throws ReflectiveOperationException {
+        final UUID townUuid = UUID.randomUUID();
+        final UUID mayorUuid = UUID.randomUUID();
+        final RTown liveTown = new RTown(townUuid, mayorUuid, "Test Town", null);
+        final RTownChunk liveChunk = new RTownChunk(liveTown, "world", 3, 4, ChunkType.DEFAULT);
+        liveTown.addChunk(liveChunk);
+
+        final RDT plugin = this.createPluginWithConfig("""
+            chunk_type:
+              reset_state_on_change: false
+            """);
+        setField(plugin, "townRepository", townRepository);
+        final TownRuntimeService service = new TownRuntimeService(plugin);
+
+        assertFalse(service.setChunkType(liveChunk, ChunkType.FOB));
+        assertEquals(ChunkType.DEFAULT, liveChunk.getChunkType());
+        verify(townRepository, never()).update(any(RTown.class));
+    }
+
+    @Test
+    void setChunkTypeRejectsTransitionsOutOfFob() throws ReflectiveOperationException {
+        final UUID townUuid = UUID.randomUUID();
+        final UUID mayorUuid = UUID.randomUUID();
+        final RTown liveTown = new RTown(townUuid, mayorUuid, "Test Town", null);
+        final RTownChunk liveChunk = new RTownChunk(liveTown, "world", 3, 4, ChunkType.FOB);
+        liveTown.addChunk(liveChunk);
+
+        final RDT plugin = this.createPluginWithConfig("""
+            chunk_type:
+              reset_state_on_change: false
+            """);
+        setField(plugin, "townRepository", townRepository);
+        final TownRuntimeService service = new TownRuntimeService(plugin);
+
+        assertFalse(service.setChunkType(liveChunk, ChunkType.DEFAULT));
+        assertEquals(ChunkType.FOB, liveChunk.getChunkType());
+        verify(townRepository, never()).update(any(RTown.class));
     }
 
     @Test
@@ -2339,6 +2498,40 @@ class TownRuntimeServiceTest {
         assertTrue(service.isPlayerAllowed(player, securityChunk, TownProtections.BREAK_BLOCK));
     }
 
+    @Test
+    void fobChunksApplyChunkScopedProtectionRoleOverrides() {
+        final RTown ownerTown = this.createUnlockedTown("Owner");
+        final RTownChunk fobChunk = new RTownChunk(ownerTown, "world", 2, 3, ChunkType.FOB);
+        ownerTown.addChunk(fobChunk);
+        ownerTown.setProtectionRoleId(TownProtections.BREAK_BLOCK, RTown.RESTRICTED_ROLE_ID);
+        fobChunk.setProtectionRoleId(TownProtections.BREAK_BLOCK, RTown.PUBLIC_ROLE_ID);
+
+        final TownRuntimeService service = new TownRuntimeService(this.createPluginWithConfig("""
+            town:
+              relationship_unlock_level: 5
+              relationship_change_cooldown_seconds: 60
+            """));
+
+        assertTrue(service.isPlayerAllowed(player, fobChunk, TownProtections.BREAK_BLOCK));
+    }
+
+    @Test
+    void fobChunksApplyChunkScopedAlliedOverrides() {
+        final RTown ownerTown = this.createUnlockedTown("Owner");
+        final RTownChunk fobChunk = new RTownChunk(ownerTown, "world", 2, 3, ChunkType.FOB);
+        ownerTown.addChunk(fobChunk);
+        ownerTown.setAlliedProtectionAllowed(TownProtections.BREAK_BLOCK, false);
+        fobChunk.setAlliedProtectionAllowed(TownProtections.BREAK_BLOCK, true);
+
+        final TownRuntimeService service = new TownRuntimeService(this.createPluginWithConfig("""
+            town:
+              relationship_unlock_level: 5
+              relationship_change_cooldown_seconds: 60
+            """));
+
+        assertTrue(service.isAlliedProtectionAllowed(ownerTown, fobChunk, TownProtections.BREAK_BLOCK));
+    }
+
     private RDT createPluginWithConfig(final String yaml) {
         return this.createPluginWithConfigs(yaml, "", "", "", "", "", "", "", "");
     }
@@ -2440,6 +2633,7 @@ class TownRuntimeServiceTest {
         final ArmoryConfigSection armoryConfig = ArmoryConfigSection.fromInputStream(
             new ByteArrayInputStream(armoryYaml.getBytes(StandardCharsets.UTF_8))
         );
+        final FobConfigSection fobConfig = FobConfigSection.createDefault();
         return new RDT(this.javaPlugin, "test", this.townService) {
             @Override
             public ConfigSection getDefaultConfig() {
@@ -2484,6 +2678,11 @@ class TownRuntimeServiceTest {
             @Override
             public ArmoryConfigSection getArmoryConfig() {
                 return armoryConfig;
+            }
+
+            @Override
+            public FobConfigSection getFobConfig() {
+                return fobConfig;
             }
         };
     }

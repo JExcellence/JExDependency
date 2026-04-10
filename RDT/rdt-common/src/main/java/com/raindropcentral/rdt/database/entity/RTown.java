@@ -943,6 +943,19 @@ public class RTown extends BaseEntity {
         return this.chunks.stream().anyMatch(chunk -> chunk.getChunkType() == ChunkType.SECURITY);
     }
 
+    /** Returns the town's FOB chunk, if one exists. */
+    public @Nullable RTownChunk findFobChunk() {
+        return this.chunks.stream()
+            .filter(chunk -> chunk.getChunkType() == ChunkType.FOB)
+            .findFirst()
+            .orElse(null);
+    }
+
+    /** Returns whether the town has a FOB chunk. */
+    public boolean hasFobChunk() {
+        return this.findFobChunk() != null;
+    }
+
     /** Returns shared bank storage contents. */
     public @NotNull Map<String, ItemStack> getSharedBankStorage() {
         return new LinkedHashMap<>(this.sharedBankStorage);

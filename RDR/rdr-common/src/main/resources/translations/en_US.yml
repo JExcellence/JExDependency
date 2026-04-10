@@ -1037,6 +1037,7 @@ storage_hotkey_anvil_ui:
       - "<yellow>Click the result slot to save the hotkey.</yellow>"
   error:
     invalid_hotkey: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Use a number between <white>1</white> and <white>{max_hotkeys}</white><gray>. Input:</gray> <white>{input}</white>"
+    reserved_hotkey_name: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{input}</white><gray> is already reserved by another <white>/rr</white> subcommand. Use a number between <white>1</white> and <white>{max_hotkeys}</white><gray> instead.</gray>"
 
 storage_tax_ui:
   title: "<gradient:#38bdf8:#60a5fa>[$] Storage Taxes</gradient>"

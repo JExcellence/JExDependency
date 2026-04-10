@@ -265,6 +265,7 @@ public class BlockListener implements Listener {
         final String worldName = ChunkBlock.getWorldName(this.plugin, item);
         final Integer chunkX = ChunkBlock.getXLoc(this.plugin, item);
         final Integer chunkZ = ChunkBlock.getZLoc(this.plugin, item);
+        final var initialChunkType = ChunkBlock.getChunkType(this.plugin, item);
         if (townUuid == null || worldName == null || chunkX == null || chunkZ == null || !this.isTownMember(player, townUuid)) {
             event.setCancelled(true);
             new I18n.Builder("block_listener.chunk.place.failed", player)
@@ -280,7 +281,8 @@ public class BlockListener implements Listener {
             townUuid,
             worldName,
             chunkX,
-            chunkZ
+            chunkZ,
+            initialChunkType
         );
         if (claimedChunk == null) {
             event.setCancelled(true);

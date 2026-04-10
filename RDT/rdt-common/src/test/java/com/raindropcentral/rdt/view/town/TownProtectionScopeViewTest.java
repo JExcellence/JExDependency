@@ -79,34 +79,41 @@ class TownProtectionScopeViewTest {
     }
 
     @Test
-    void buildScopeOptionsOnlyIncludesTownGlobalAndSecurityChunks() {
+    void buildScopeOptionsOnlyIncludesTownGlobalAndChunksThatSupportScopedProtections() {
         final RTown town = new RTown(UUID.randomUUID(), UUID.randomUUID(), "Town", null);
         town.addChunk(new RTownChunk(town, "world", 4, 4, ChunkType.DEFAULT));
         town.addChunk(new RTownChunk(town, "world", 2, 2, ChunkType.SECURITY));
+        town.addChunk(new RTownChunk(town, "world", 6, 6, ChunkType.FOB));
         town.addChunk(new RTownChunk(town, "world_nether", 1, 1, ChunkType.BANK));
         town.addChunk(new RTownChunk(town, "world_nether", 3, 3, ChunkType.SECURITY));
 
         final List<TownProtectionScopeView.ScopeOption> scopes = TownProtectionScopeView.buildScopeOptions(town);
 
-        assertEquals(3, scopes.size());
+        assertEquals(4, scopes.size());
         assertNull(scopes.getFirst().worldName());
         assertEquals("world", scopes.get(1).worldName());
         assertEquals(2, scopes.get(1).chunkX());
         assertEquals(2, scopes.get(1).chunkZ());
         assertEquals(ChunkType.SECURITY, scopes.get(1).chunkType());
-        assertEquals("world_nether", scopes.get(2).worldName());
-        assertEquals(3, scopes.get(2).chunkX());
-        assertEquals(3, scopes.get(2).chunkZ());
-        assertEquals(ChunkType.SECURITY, scopes.get(2).chunkType());
+        assertEquals("world", scopes.get(2).worldName());
+        assertEquals(6, scopes.get(2).chunkX());
+        assertEquals(6, scopes.get(2).chunkZ());
+        assertEquals(ChunkType.FOB, scopes.get(2).chunkType());
+        assertEquals("world_nether", scopes.get(3).worldName());
+        assertEquals(3, scopes.get(3).chunkX());
+        assertEquals(3, scopes.get(3).chunkZ());
+        assertEquals(ChunkType.SECURITY, scopes.get(3).chunkType());
     }
 
     @Test
-    void resolveSelectedChunkDefaultsToTownGlobalWhenSecurityChunkEntryDoesNotPassChunkScope() {
+    void resolveSelectedChunkDefaultsToTownGlobalWithoutScopedCoordinatesAndAcceptsFobScopes() {
         final RTown town = new RTown(UUID.randomUUID(), UUID.randomUUID(), "Town", null);
         final RTownChunk securityChunk = new RTownChunk(town, "world", 2, 3, ChunkType.SECURITY);
         final RTownChunk defaultChunk = new RTownChunk(town, "world", 4, 5, ChunkType.DEFAULT);
+        final RTownChunk fobChunk = new RTownChunk(town, "world", 6, 7, ChunkType.FOB);
         town.addChunk(securityChunk);
         town.addChunk(defaultChunk);
+        town.addChunk(fobChunk);
         final RDT plugin = new RDT(Mockito.mock(JavaPlugin.class), "test", Mockito.mock(TownService.class));
         final Map<String, Object> navigationData = TownChunkView.createProtectionNavigationData(plugin, securityChunk);
 
@@ -122,6 +129,7 @@ class TownProtectionScopeViewTest {
         assertEquals(2, navigationData.get("origin_chunk_x"));
         assertEquals(3, navigationData.get("origin_chunk_z"));
         assertSame(securityChunk, TownProtectionScopeView.resolveSelectedChunk(town, "world", 2, 3));
+        assertSame(fobChunk, TownProtectionScopeView.resolveSelectedChunk(town, "world", 6, 7));
         assertNull(TownProtectionScopeView.resolveSelectedChunk(town, "world", 4, 5));
     }
 }

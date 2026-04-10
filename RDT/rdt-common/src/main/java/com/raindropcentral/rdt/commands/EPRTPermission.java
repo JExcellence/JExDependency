@@ -26,6 +26,7 @@ public enum EPRTPermission implements IPermissionNode {
     COMMAND("command", "raindroptowns.command"),
     MAIN("mainCommand", "raindroptowns.command.main"),
     SPAWN("spawnCommand", "raindroptowns.command.spawn"),
+    FOB("fobCommand", "raindroptowns.command.fob"),
     BANK("bankCommand", "raindroptowns.command.bank");
 
     private final String internalName;

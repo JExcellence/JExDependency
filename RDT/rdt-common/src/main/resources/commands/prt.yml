@@ -4,9 +4,9 @@ commands:
     description: 'RDT GUI and travel commands'
     aliases:
       - rt
-    usage: 'rt <main | spawn | bank>'
+    usage: 'rt <main | spawn | fob | bank>'
     argumentUsages:
-      1$: 'lut["prefix"] & "&7/" & alias & " &c<main | spawn | bank>"'
+      1$: 'lut["prefix"] & "&7/" & alias & " &c<main | spawn | fob | bank>"'
     errorMessages:
       malformedEnum$: |
         lut["prefix"] & "&7The value &c" & value & " &7is not one of (" &
@@ -27,6 +27,7 @@ commands:
         command: 'raindroptowns.command'
         mainCommand: 'raindroptowns.command.main'
         spawnCommand: 'raindroptowns.command.spawn'
+        fobCommand: 'raindroptowns.command.fob'
         bankCommand: 'raindroptowns.command.bank'
 
 lut:

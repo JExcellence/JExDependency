@@ -71,7 +71,34 @@ public final class ChunkBlock {
         final int chunkX,
         final int chunkZ
     ) {
-        final ItemStack chunkBlock = new ItemStack(plugin.getDefaultConfig().getChunkTypeIconMaterial(ChunkType.CLAIM_PENDING));
+        return getChunkBlockItem(plugin, player, townUuid, mayorUuid, worldName, chunkX, chunkZ, ChunkType.DEFAULT);
+    }
+
+    /**
+     * Creates a bound chunk-claim item.
+     *
+     * @param plugin active plugin runtime
+     * @param player receiving player
+     * @param townUuid owning town UUID
+     * @param mayorUuid mayor UUID
+     * @param worldName required target world
+     * @param chunkX required target chunk X
+     * @param chunkZ required target chunk Z
+     * @param initialChunkType initial chunk type that will be created on placement
+     * @return bound chunk claim item
+     */
+    public static @NotNull ItemStack getChunkBlockItem(
+        final @NotNull RDT plugin,
+        final @NotNull Player player,
+        final @NotNull UUID townUuid,
+        final @NotNull UUID mayorUuid,
+        final @NotNull String worldName,
+        final int chunkX,
+        final int chunkZ,
+        final @Nullable ChunkType initialChunkType
+    ) {
+        final ChunkType resolvedChunkType = initialChunkType == ChunkType.FOB ? ChunkType.FOB : ChunkType.DEFAULT;
+        final ItemStack chunkBlock = new ItemStack(plugin.getChunkTypeDisplayMaterial(resolvedChunkType));
         final ItemMeta meta = Objects.requireNonNull(chunkBlock.getItemMeta(), "chunk block meta");
         meta.displayName(new I18n.Builder("chunk_block.name", player)
             .withPlaceholders(Map.of(
@@ -95,7 +122,7 @@ public final class ChunkBlock {
         data.set(key(plugin, WORLD_KEY), PersistentDataType.STRING, worldName);
         data.set(key(plugin, CHUNK_X_KEY), PersistentDataType.INTEGER, chunkX);
         data.set(key(plugin, CHUNK_Z_KEY), PersistentDataType.INTEGER, chunkZ);
-        data.set(key(plugin, CHUNK_TYPE_KEY), PersistentDataType.STRING, ChunkType.CLAIM_PENDING.name());
+        data.set(key(plugin, CHUNK_TYPE_KEY), PersistentDataType.STRING, resolvedChunkType.name());
         chunkBlock.setItemMeta(meta);
         return chunkBlock;
     }

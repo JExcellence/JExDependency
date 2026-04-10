@@ -16,17 +16,7 @@ package com.raindropcentral.rdt.service;
 import com.raindropcentral.rdt.RDT;
 import com.raindropcentral.rdt.configs.LevelDefinition;
 import com.raindropcentral.rdt.configs.NexusCombatStats;
-import com.raindropcentral.rdt.database.entity.RDTPlayer;
-import com.raindropcentral.rdt.database.entity.NationInvite;
-import com.raindropcentral.rdt.database.entity.NationInviteStatus;
-import com.raindropcentral.rdt.database.entity.NationInviteType;
-import com.raindropcentral.rdt.database.entity.NationStatus;
-import com.raindropcentral.rdt.database.entity.RNation;
-import com.raindropcentral.rdt.database.entity.RTown;
-import com.raindropcentral.rdt.database.entity.RTownChunk;
-import com.raindropcentral.rdt.database.entity.RTownRelationship;
-import com.raindropcentral.rdt.database.entity.TownInvite;
-import com.raindropcentral.rdt.database.entity.TownRole;
+import com.raindropcentral.rdt.database.entity.*;
 import com.raindropcentral.rdt.items.FuelTank;
 import com.raindropcentral.rdt.items.RepairBlock;
 import com.raindropcentral.rdt.items.SalvageBlock;
@@ -74,9 +64,9 @@ import org.jetbrains.annotations.Nullable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 /**
  * Central synchronous town-domain service for GUI actions, item placement validation, and protection
@@ -914,6 +904,42 @@ public final class TownRuntimeService {
     }
 
     /**
+     * Resolves the live FOB chunk for one town.
+     *
+     * @param town town to inspect
+     * @return FOB chunk, or {@code null} when none exists
+     */
+    public @Nullable RTownChunk getFobChunk(final @NotNull RTown town) {
+        final RTown liveTown = this.resolveLiveTown(town);
+        final RTown resolvedTown = liveTown == null ? town : liveTown;
+        return resolvedTown.findFobChunk();
+    }
+
+    /**
+     * Returns whether one town currently owns a FOB chunk.
+     *
+     * @param town town to inspect
+     * @return {@code true} when the town has a FOB chunk
+     */
+    public boolean hasFobChunk(final @NotNull RTown town) {
+        return this.getFobChunk(town) != null;
+    }
+
+    /**
+     * Resolves the local teleport target for one town's FOB marker.
+     *
+     * @param town town to inspect
+     * @return FOB teleport target, or {@code null} when the marker is unavailable
+     */
+    public @Nullable Location resolveFobTeleportLocation(final @NotNull RTown town) {
+        final RTownChunk fobChunk = this.getFobChunk(town);
+        final Location markerLocation = fobChunk == null ? null : fobChunk.getChunkBlockLocation();
+        return markerLocation == null || markerLocation.getWorld() == null
+            ? null
+            : markerLocation.clone().add(0.5D, 1.0D, 0.5D);
+    }
+
+    /**
      * Resolves a claimed chunk by world name and chunk coordinates.
      *
      * @param worldName claimed world name
@@ -1356,10 +1382,43 @@ public final class TownRuntimeService {
         final int targetChunkX,
         final int targetChunkZ
     ) {
+        return this.claimChunk(
+            player,
+            blockLocation,
+            townUuid,
+            targetWorldName,
+            targetChunkX,
+            targetChunkZ,
+            ChunkType.DEFAULT
+        );
+    }
+
+    /**
+     * Finalizes a GUI-issued chunk claim when the bound chunk block is placed in its target chunk.
+     *
+     * @param player placer
+     * @param blockLocation physical marker block location
+     * @param townUuid owning town UUID
+     * @param targetWorldName required target world
+     * @param targetChunkX required target chunk X
+     * @param targetChunkZ required target chunk Z
+     * @param initialChunkType initial chunk type requested by the claim item
+     * @return created town chunk, or {@code null} when validation failed
+     */
+    public @Nullable RTownChunk claimChunk(
+        final @NotNull Player player,
+        final @NotNull Location blockLocation,
+        final @NotNull UUID townUuid,
+        final @NotNull String targetWorldName,
+        final int targetChunkX,
+        final int targetChunkZ,
+        final @Nullable ChunkType initialChunkType
+    ) {
         if (blockLocation.getWorld() == null) {
             return null;
         }
 
+        final ChunkType resolvedInitialChunkType = initialChunkType == ChunkType.FOB ? ChunkType.FOB : ChunkType.DEFAULT;
         final RTown town = this.getTown(townUuid);
         final RDTPlayer playerData = this.getPlayerData(player.getUniqueId());
         if (town == null
@@ -1370,13 +1429,13 @@ public final class TownRuntimeService {
             || blockLocation.getChunk().getX() != targetChunkX
             || blockLocation.getChunk().getZ() != targetChunkZ
             || town.getChunks().size() >= this.plugin.getDefaultConfig().getGlobalMaxChunkLimit()
-            || this.getTownAt(blockLocation) != null
-            || !this.isChunkClaimable(town, targetWorldName, targetChunkX, targetChunkZ)) {
+            || this.getChunk(targetWorldName, targetChunkX, targetChunkZ) != null
+            || !this.isChunkClaimable(town, targetWorldName, targetChunkX, targetChunkZ, resolvedInitialChunkType)) {
             return null;
         }
 
         final Location nexusLocation = town.getNexusLocation();
-        if (nexusLocation != null) {
+        if (resolvedInitialChunkType != ChunkType.FOB && nexusLocation != null) {
             final int deltaY = blockLocation.getBlockY() - nexusLocation.getBlockY();
             if (deltaY < this.plugin.getDefaultConfig().getChunkBlockMinY()
                 || deltaY > this.plugin.getDefaultConfig().getChunkBlockMaxY()) {
@@ -1384,7 +1443,7 @@ public final class TownRuntimeService {
             }
         }
 
-        final RTownChunk chunk = new RTownChunk(town, targetWorldName, targetChunkX, targetChunkZ, ChunkType.DEFAULT);
+        final RTownChunk chunk = new RTownChunk(town, targetWorldName, targetChunkX, targetChunkZ, resolvedInitialChunkType);
         chunk.setChunkBlockLocation(blockLocation);
         town.addChunk(chunk);
         this.plugin.getTownRepository().update(town);
@@ -1407,8 +1466,35 @@ public final class TownRuntimeService {
         final int chunkX,
         final int chunkZ
     ) {
+        return this.isChunkClaimable(town, worldName, chunkX, chunkZ, ChunkType.DEFAULT);
+    }
+
+    /**
+     * Returns whether the supplied chunk is claimable for the requested initial type.
+     *
+     * @param town town to inspect
+     * @param worldName target world
+     * @param chunkX target chunk X
+     * @param chunkZ target chunk Z
+     * @param initialChunkType initial chunk type being requested
+     * @return {@code true} when the target chunk is claimable
+     */
+    public boolean isChunkClaimable(
+        final @NotNull RTown town,
+        final @NotNull String worldName,
+        final int chunkX,
+        final int chunkZ,
+        final @Nullable ChunkType initialChunkType
+    ) {
+        final ChunkType resolvedInitialChunkType = initialChunkType == ChunkType.FOB ? ChunkType.FOB : ChunkType.DEFAULT;
         if (town.getChunks().size() >= this.plugin.getDefaultConfig().getGlobalMaxChunkLimit()) {
             return false;
+        }
+        if (town.findChunk(worldName, chunkX, chunkZ) != null || this.getChunk(worldName, chunkX, chunkZ) != null) {
+            return false;
+        }
+        if (resolvedInitialChunkType == ChunkType.FOB) {
+            return !town.hasFobChunk();
         }
         if (town.getChunks().isEmpty()) {
             return true;
@@ -1417,9 +1503,6 @@ public final class TownRuntimeService {
         for (final RTownChunk claimedChunk : town.getChunks()) {
             if (!claimedChunk.getWorldName().equalsIgnoreCase(worldName)) {
                 continue;
-            }
-            if (claimedChunk.getX() == chunkX && claimedChunk.getZ() == chunkZ) {
-                return false;
             }
             final int deltaX = Math.abs(claimedChunk.getX() - chunkX);
             final int deltaZ = Math.abs(claimedChunk.getZ() - chunkZ);
@@ -1912,12 +1995,12 @@ public final class TownRuntimeService {
         final @NotNull RTownChunk townChunk,
         final @NotNull ChunkType chunkType
     ) {
-        if (chunkType == ChunkType.NEXUS || this.plugin.getTownRepository() == null) {
+        if (chunkType == ChunkType.NEXUS || chunkType == ChunkType.FOB || this.plugin.getTownRepository() == null) {
             return ChunkTypeChangeResult.failure();
         }
 
         final RTownChunk liveTownChunk = this.resolveLiveTownChunk(townChunk);
-        if (liveTownChunk == null || liveTownChunk.getChunkType() == chunkType) {
+        if (liveTownChunk == null || liveTownChunk.getChunkType() == ChunkType.FOB || liveTownChunk.getChunkType() == chunkType) {
             return ChunkTypeChangeResult.failure();
         }
 
@@ -3309,7 +3392,7 @@ public final class TownRuntimeService {
         final @Nullable RTownChunk townChunk,
         final @NotNull TownProtections protection
     ) {
-        if (townChunk != null && townChunk.getChunkType() == ChunkType.SECURITY) {
+        if (townChunk != null && this.supportsChunkProtectionOverrides(townChunk)) {
             final String overrideRole = this.resolveChunkProtectionRoleId(townChunk, protection);
             if (overrideRole != null) {
                 return RTown.normalizeRoleId(overrideRole);
@@ -3985,7 +4068,7 @@ public final class TownRuntimeService {
                     new NationProgressAccessor(nation)
                 );
             }
-            case SECURITY, BANK, FARM, OUTPOST, MEDIC, ARMORY -> {
+            case SECURITY, BANK, FARM, FOB, OUTPOST, MEDIC, ARMORY -> {
                 final RTownChunk liveChunk = townChunk == null ? null : this.resolveLiveTownChunk(townChunk);
                 if (liveChunk == null) {
                     yield null;
@@ -4055,6 +4138,7 @@ public final class TownRuntimeService {
             case SECURITY -> this.plugin.getSecurityConfig().getLevels();
             case BANK -> this.plugin.getBankConfig().getLevels();
             case FARM -> this.plugin.getFarmConfig().getLevels();
+            case FOB -> this.plugin.getFobConfig().getLevels();
             case OUTPOST -> this.plugin.getOutpostConfig().getLevels();
             case MEDIC -> this.plugin.getMedicConfig().getLevels();
             case ARMORY -> this.plugin.getArmoryConfig().getLevels();
@@ -4069,6 +4153,7 @@ public final class TownRuntimeService {
             case SECURITY -> this.plugin.getSecurityConfig().getHighestConfiguredLevel();
             case BANK -> this.plugin.getBankConfig().getHighestConfiguredLevel();
             case FARM -> this.plugin.getFarmConfig().getHighestConfiguredLevel();
+            case FOB -> this.plugin.getFobConfig().getHighestConfiguredLevel();
             case OUTPOST -> this.plugin.getOutpostConfig().getHighestConfiguredLevel();
             case MEDIC -> this.plugin.getMedicConfig().getHighestConfiguredLevel();
             case ARMORY -> this.plugin.getArmoryConfig().getHighestConfiguredLevel();
@@ -4083,6 +4168,7 @@ public final class TownRuntimeService {
             case SECURITY -> this.plugin.getSecurityConfig().getNextLevel(currentLevel);
             case BANK -> this.plugin.getBankConfig().getNextLevel(currentLevel);
             case FARM -> this.plugin.getFarmConfig().getNextLevel(currentLevel);
+            case FOB -> this.plugin.getFobConfig().getNextLevel(currentLevel);
             case OUTPOST -> this.plugin.getOutpostConfig().getNextLevel(currentLevel);
             case MEDIC -> this.plugin.getMedicConfig().getNextLevel(currentLevel);
             case ARMORY -> this.plugin.getArmoryConfig().getNextLevel(currentLevel);
@@ -4095,6 +4181,10 @@ public final class TownRuntimeService {
             throw new IllegalArgumentException("Chunk type " + townChunk.getChunkType() + " has no progression path");
         }
         return scope;
+    }
+
+    private boolean supportsChunkProtectionOverrides(final @NotNull RTownChunk townChunk) {
+        return townChunk.getChunkType() == ChunkType.SECURITY || townChunk.getChunkType() == ChunkType.FOB;
     }
 
     private int resolveDisplayLevel(final @NotNull LevelContext context, final @Nullable Integer previewLevel) {
@@ -4748,7 +4838,7 @@ public final class TownRuntimeService {
         if (protection.isBinaryToggle()) {
             return false;
         }
-        if (townChunk != null && townChunk.getChunkType() == ChunkType.SECURITY) {
+        if (townChunk != null && this.supportsChunkProtectionOverrides(townChunk)) {
             final Boolean chunkOverride = this.resolveChunkAlliedProtectionAllowed(townChunk, protection);
             if (chunkOverride != null) {
                 return chunkOverride;

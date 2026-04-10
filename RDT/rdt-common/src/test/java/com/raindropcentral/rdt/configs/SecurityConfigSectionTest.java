@@ -55,6 +55,7 @@ class SecurityConfigSectionTest {
         assertEquals(3, section.getFuel().getTankPlacementRadiusBlocks());
         assertEquals(25.0D, section.getFuelDefinition(Material.REDSTONE).units());
         assertEquals(0.45D, section.getFuelChunkTypeDefinition(com.raindropcentral.rdt.utils.ChunkType.SECURITY).minWeight());
+        assertEquals(1.10D, section.getFuelChunkTypeDefinition(com.raindropcentral.rdt.utils.ChunkType.FOB).minWeight());
     }
 
     @Test
@@ -78,6 +79,10 @@ class SecurityConfigSectionTest {
                   weight: 0.9
                   level_scale: -0.1
                   min_weight: 0.6
+                fob:
+                  weight: 1.2
+                  level_scale: 0.08
+                  min_weight: 1.2
             levels:
               "4":
                 requirements:
@@ -135,6 +140,7 @@ class SecurityConfigSectionTest {
         assertEquals(40.0D, section.getFuelDefinition(Material.COAL).units());
         assertEquals(1.25D, section.getFuel().getBaseRate());
         assertEquals(0.6D, section.getFuelChunkTypeDefinition(com.raindropcentral.rdt.utils.ChunkType.SECURITY).minWeight());
+        assertEquals(0.08D, section.getFuelChunkTypeDefinition(com.raindropcentral.rdt.utils.ChunkType.FOB).levelScale());
     }
 
     @Test
@@ -150,7 +156,7 @@ class SecurityConfigSectionTest {
     }
 
     @Test
-    void chunkTypesWithoutConfiguredMinWeightPreserveNullClamp() {
+    void chunkTypesWithoutConfiguredMinWeightInheritTheDefaultClamp() {
         final SecurityConfigSection section = SecurityConfigSection.fromInputStream(new ByteArrayInputStream("""
             fuel:
               chunk_types:
@@ -169,10 +175,10 @@ class SecurityConfigSectionTest {
 
         assertEquals(1.10D, baseDefinition.weight());
         assertEquals(0.02D, baseDefinition.levelScale());
-        assertNull(baseDefinition.minWeight());
+        assertEquals(1.00D, baseDefinition.minWeight());
         assertEquals(1.45D, nexusDefinition.weight());
         assertEquals(0.03D, nexusDefinition.levelScale());
-        assertNull(nexusDefinition.minWeight());
+        assertEquals(1.35D, nexusDefinition.minWeight());
     }
 
     @Test

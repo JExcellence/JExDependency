@@ -18,7 +18,6 @@ import com.raindropcentral.rdt.database.entity.RDTPlayer;
 import com.raindropcentral.rdt.database.entity.RTown;
 import com.raindropcentral.rdt.database.entity.RTownChunk;
 import com.raindropcentral.rdt.database.entity.TownRole;
-import com.raindropcentral.rdt.utils.ChunkType;
 import com.raindropcentral.rdt.utils.TownPermissions;
 import com.raindropcentral.rdt.utils.TownProtectionCategory;
 import com.raindropcentral.rdt.utils.TownProtections;
@@ -125,7 +124,7 @@ abstract class AbstractTownProtectionView extends BaseView {
             resolvedChunkX,
             resolvedChunkZ
         );
-        return townChunk != null && townChunk.getChunkType() == ChunkType.SECURITY ? townChunk : null;
+        return townChunk != null && TownChunkView.supportsChunkScopedProtections(townChunk) ? townChunk : null;
     }
 
     protected final boolean viewerCanManageProtections(final @NotNull Context context, final @NotNull RTown town) {

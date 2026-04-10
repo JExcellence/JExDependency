@@ -45,6 +45,7 @@ class ConfigSectionTest {
         assertEquals(-10, section.getChunkBlockMinY());
         assertEquals(10, section.getChunkBlockMaxY());
         assertEquals(3, section.getTownSpawnTeleportDelaySeconds());
+        assertEquals(3, section.getTownFobTeleportDelaySeconds());
         assertEquals(86_400L, section.getTownArchetypeChangeCooldownSeconds());
         assertEquals(21_600L, section.getTownRelationshipChangeCooldownSeconds());
         assertEquals(5, section.getTownRelationshipUnlockLevel());
@@ -58,6 +59,7 @@ class ConfigSectionTest {
         assertEquals("", section.getProxyServerRouteId());
         assertEquals(Material.REINFORCED_DEEPSLATE, section.getChunkTypeIconMaterial(ChunkType.NEXUS));
         assertEquals(Material.OAK_PLANKS, section.getChunkTypeIconMaterial(ChunkType.DEFAULT));
+        assertEquals(Material.TARGET, section.getChunkTypeIconMaterial(ChunkType.FOB));
         assertEquals(Material.OAK_PLANKS, section.getDefaultChunkBlockMaterial());
     }
 
@@ -71,6 +73,7 @@ class ConfigSectionTest {
             chunk_block_min_y: 7
             chunk_block_max_y: 4
             town_spawn_teleport_delay_seconds: -1
+            town_fob_teleport_delay_seconds: 8
             exclude_corner_claim_adjacency: false
             chunk_type:
               reset_state_on_change: false
@@ -80,6 +83,7 @@ class ConfigSectionTest {
               town_spawn_enabled: true
             chunk_type_icon_nexus: DIAMOND_BLOCK
             chunk_type_icon_default: not_a_material
+            chunk_type_icon_fob: HOPPER
             town:
               archetype_change_cooldown_seconds: 1800
               relationship_change_cooldown_seconds: -5
@@ -95,6 +99,7 @@ class ConfigSectionTest {
         assertEquals(-10, section.getChunkBlockMinY());
         assertEquals(10, section.getChunkBlockMaxY());
         assertEquals(3, section.getTownSpawnTeleportDelaySeconds());
+        assertEquals(8, section.getTownFobTeleportDelaySeconds());
         assertEquals(1_800L, section.getTownArchetypeChangeCooldownSeconds());
         assertEquals(21_600L, section.getTownRelationshipChangeCooldownSeconds());
         assertEquals(5, section.getTownRelationshipUnlockLevel());
@@ -108,6 +113,7 @@ class ConfigSectionTest {
         assertEquals("alpha", section.getProxyServerRouteId());
         assertEquals(Material.DIAMOND_BLOCK, section.getChunkTypeIconMaterial(ChunkType.NEXUS));
         assertEquals(Material.OAK_PLANKS, section.getChunkTypeIconMaterial(ChunkType.DEFAULT));
+        assertEquals(Material.HOPPER, section.getChunkTypeIconMaterial(ChunkType.FOB));
         assertEquals(Material.OAK_PLANKS, section.getDefaultChunkBlockMaterial());
     }
 

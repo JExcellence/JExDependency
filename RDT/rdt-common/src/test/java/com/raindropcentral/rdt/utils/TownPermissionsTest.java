@@ -54,6 +54,7 @@ class TownPermissionsTest {
 
         assertTrue(memberPermissions.contains(TownPermissions.TOWN_INFO.getPermissionKey()));
         assertTrue(memberPermissions.contains(TownPermissions.TOWN_INVITE.getPermissionKey()));
+        assertTrue(memberPermissions.contains(TownPermissions.USE_FOB.getPermissionKey()));
         assertTrue(memberPermissions.contains(TownPermissions.CONTRIBUTE.getPermissionKey()));
         assertTrue(memberPermissions.contains(TownPermissions.SUPPLY_TOWN_SHOPS.getPermissionKey()));
         assertFalse(memberPermissions.contains(TownPermissions.CLAIM_CHUNK.getPermissionKey()));
@@ -80,6 +81,8 @@ class TownPermissionsTest {
     void reportsPermissionDefaultOwnership() {
         assertTrue(TownPermissions.CLAIM_CHUNK.isDefaultForRole("mayor"));
         assertFalse(TownPermissions.CLAIM_CHUNK.isDefaultForRole("member"));
+        assertTrue(TownPermissions.USE_FOB.isDefaultForRole("member"));
+        assertFalse(TownPermissions.USE_FOB.isDefaultForRole("public"));
         assertTrue(TownPermissions.CHANGE_TOWN_COLOR.isDefaultForRole("mayor"));
         assertFalse(TownPermissions.CHANGE_TOWN_COLOR.isDefaultForRole("member"));
         assertTrue(TownPermissions.CONTRIBUTE.isDefaultForRole("member"));

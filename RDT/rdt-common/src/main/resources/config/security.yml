@@ -65,6 +65,11 @@ fuel:
       level_scale: 0.05
       min_weight: 1.15
 
+    fob:
+      weight: 1.10
+      level_scale: 0.04
+      min_weight: 1.10
+
 # Each numeric key is the level reached after the upgrade succeeds.
 # Requirement and reward entry names (for example `vault_upgrade`) are stable IDs used for progress tracking and UI.
 # `description` is the player-facing label shown in upgrade previews.

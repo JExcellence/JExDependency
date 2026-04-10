@@ -343,6 +343,18 @@ final class LevelConfigSupport {
         return Map.copyOf(defaults);
     }
 
+    static @NotNull Map<Integer, LevelDefinition> createDefaultFobLevels() {
+        return createDefaultChunkLevels(
+            "FOB",
+            new ChunkLevelItemDefinition[] {
+                new ChunkLevelItemDefinition("navigation_tools", "COMPASS", 8, "FOB navigation tools"),
+                new ChunkLevelItemDefinition("targeting_arrays", "TARGET", 12, "FOB targeting arrays"),
+                new ChunkLevelItemDefinition("fortification_materials", "OBSIDIAN", 24, "FOB fortification materials"),
+                new ChunkLevelItemDefinition("relay_materials", "ENDER_EYE", 8, "FOB relay materials")
+            }
+        );
+    }
+
     static @NotNull Map<Integer, LevelDefinition> createDefaultMedicLevels() {
         return createDefaultChunkLevels(
             "Medic",

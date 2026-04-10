@@ -133,6 +133,14 @@ public class TownChunkTypeView extends BaseView {
         final @NotNull RTownChunk townChunk,
         final @NotNull ChunkType chunkType
     ) {
+        if (townChunk.getChunkType() == ChunkType.FOB || !isSelectableType(chunkType)) {
+            new I18n.Builder(this.getKey() + ".immutable", clickContext.getPlayer())
+                .includePrefix()
+                .build()
+                .sendMessage();
+            this.openChunkView(clickContext, townChunk);
+            return;
+        }
         if (!this.plugin.get(clickContext).getTownRuntimeService().hasTownPermission(
             clickContext.getPlayer(),
             TownPermissions.CHANGE_CHUNK_TYPE
@@ -312,6 +320,15 @@ public class TownChunkTypeView extends BaseView {
 
     static @NotNull String resolveBenefitLoreKey(final @NotNull ChunkType chunkType) {
         return "entry.benefits." + chunkType.name().toLowerCase(java.util.Locale.ROOT);
+    }
+
+    static boolean isSelectableType(final @NotNull ChunkType chunkType) {
+        for (final ChunkType selectableType : SELECTABLE_TYPES) {
+            if (selectableType == chunkType) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private @NotNull ItemStack createMissingChunkItem(final @NotNull Player player) {

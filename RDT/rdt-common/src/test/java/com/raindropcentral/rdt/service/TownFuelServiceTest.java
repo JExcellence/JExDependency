@@ -26,6 +26,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.io.ByteArrayInputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.UUID;
 
@@ -63,8 +65,42 @@ class TownFuelServiceTest {
         verify(world, never()).isChunkLoaded(2, 3);
     }
 
+    @Test
+    void fuelPerHourIncludesConfiguredFobChunkWeighting() {
+        final RTown town = new RTown(UUID.randomUUID(), UUID.randomUUID(), "Town", null);
+        final RTownChunk securityChunk = new RTownChunk(town, "world", 2, 3, ChunkType.SECURITY);
+        final RTownChunk fobChunk = new RTownChunk(town, "world", 4, 5, ChunkType.FOB);
+        securityChunk.setChunkLevel(2);
+        fobChunk.setChunkLevel(3);
+        town.addChunk(securityChunk);
+        town.addChunk(fobChunk);
+
+        final TownFuelService service = new TownFuelService(this.createPlugin(SecurityConfigSection.fromInputStream(
+            new ByteArrayInputStream("""
+                fuel:
+                  enabled: true
+                  base_rate: 10.0
+                  chunk_exponent: 1.0
+                  town_level_rate: 0.0
+                  minimum_effective_chunk_ratio: 0.0
+                  chunk_types:
+                    security:
+                      weight: 2.0
+                      level_scale: 1.0
+                    fob:
+                      weight: 3.0
+                      level_scale: 0.5
+                """.getBytes(StandardCharsets.UTF_8))
+        )));
+
+        assertEquals(100.0D, service.getFuelPerHour(town));
+    }
+
     private RDT createPlugin() {
-        final SecurityConfigSection securityConfig = SecurityConfigSection.createDefault();
+        return this.createPlugin(SecurityConfigSection.createDefault());
+    }
+
+    private RDT createPlugin(final SecurityConfigSection securityConfig) {
         return new RDT(Mockito.mock(JavaPlugin.class), "test", Mockito.mock(TownService.class)) {
             @Override
             public SecurityConfigSection getSecurityConfig() {

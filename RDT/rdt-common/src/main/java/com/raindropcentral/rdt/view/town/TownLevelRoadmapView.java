@@ -146,6 +146,7 @@ public final class TownLevelRoadmapView extends BaseView {
             case SECURITY -> plugin.getSecurityConfig().getLevels().keySet();
             case BANK -> plugin.getBankConfig().getLevels().keySet();
             case FARM -> plugin.getFarmConfig().getLevels().keySet();
+            case FOB -> plugin.getFobConfig().getLevels().keySet();
             case OUTPOST -> plugin.getOutpostConfig().getLevels().keySet();
             case MEDIC -> plugin.getMedicConfig().getLevels().keySet();
             case ARMORY -> plugin.getArmoryConfig().getLevels().keySet();
@@ -188,7 +189,7 @@ public final class TownLevelRoadmapView extends BaseView {
             case NEXUS -> plugin.getTownRuntimeService().getNexusLevelProgress(context.getPlayer(), town, level);
             case NATION_FORMATION -> fallbackSnapshot;
             case NATION -> plugin.getTownRuntimeService().getNationLevelProgress(context.getPlayer(), town, level);
-            case SECURITY, BANK, FARM, OUTPOST, MEDIC, ARMORY -> {
+            case SECURITY, BANK, FARM, FOB, OUTPOST, MEDIC, ARMORY -> {
                 final var chunk = TownLevelViewSupport.resolveChunk(context);
                 yield chunk == null
                     ? fallbackSnapshot

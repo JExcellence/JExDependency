@@ -92,7 +92,7 @@ public final class TownLevelCurrencyContributionAnvilView extends AbstractAnvilV
                 entryKey,
                 requestedAmount
             );
-            case SECURITY, BANK, FARM, OUTPOST, MEDIC, ARMORY -> {
+            case SECURITY, BANK, FARM, FOB, OUTPOST, MEDIC, ARMORY -> {
                 final RTownChunk townChunk = TownLevelViewSupport.resolveChunk(context);
                 yield townChunk == null
                     ? new ContributionResult(ContributionStatus.INVALID_TARGET, 0.0D, false, false)

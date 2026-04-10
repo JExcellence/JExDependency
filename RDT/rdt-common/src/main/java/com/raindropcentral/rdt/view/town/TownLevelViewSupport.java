@@ -235,7 +235,7 @@ final class TownLevelViewSupport {
             case NATION -> previewLevel(context) == null
                 ? plugin.getTownRuntimeService().getNationLevelProgress(context.getPlayer(), town)
                 : plugin.getTownRuntimeService().getNationLevelProgress(context.getPlayer(), town, previewLevel(context));
-            case SECURITY, BANK, FARM, OUTPOST, MEDIC, ARMORY -> {
+            case SECURITY, BANK, FARM, FOB, OUTPOST, MEDIC, ARMORY -> {
                 final RTownChunk townChunk = resolveChunk(context);
                 if (townChunk == null) {
                     yield null;

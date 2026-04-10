@@ -23,6 +23,7 @@ package com.raindropcentral.rdt.commands;
 public enum EPRTAction {
     MAIN,
     SPAWN,
+    FOB,
     BANK,
     BROADCAST
 }

@@ -133,7 +133,7 @@ public class TownProtectionScopeView extends APaginatedView<TownProtectionScopeV
         final List<ScopeOption> scopes = new ArrayList<>();
         scopes.add(ScopeOption.global());
         for (final RTownChunk townChunk : claimedChunks) {
-            if (townChunk.getChunkType() == ChunkType.SECURITY) {
+            if (TownChunkView.supportsChunkScopedProtections(townChunk)) {
                 scopes.add(ScopeOption.chunk(townChunk));
             }
         }
@@ -243,13 +243,14 @@ public class TownProtectionScopeView extends APaginatedView<TownProtectionScopeV
     }
 
     private @NotNull ItemStack createSummaryItem(final @NotNull Context context, final @NotNull RTown town) {
+        final int scopeCount = buildScopeOptions(town).size();
         return UnifiedBuilderFactory.item(Material.COMPASS)
             .setName(this.i18n("summary.name", context.getPlayer()).build().component())
             .setLore(this.i18n("summary.lore", context.getPlayer())
                 .withPlaceholders(Map.of(
                     "town_name", town.getTownName(),
                     "current_scope", this.resolveCurrentScopeLabel(context),
-                    "scope_count", town.getChunks().size() + 1
+                    "scope_count", scopeCount
                 ))
                 .build()
                 .children())
@@ -332,7 +333,7 @@ public class TownProtectionScopeView extends APaginatedView<TownProtectionScopeV
             return null;
         }
         final RTownChunk townChunk = town.findChunk(worldName, chunkX, chunkZ);
-        return townChunk != null && townChunk.getChunkType() == ChunkType.SECURITY ? townChunk : null;
+        return townChunk != null && TownChunkView.supportsChunkScopedProtections(townChunk) ? townChunk : null;
     }
 
     private @Nullable Map<String, Object> extractData(final @NotNull Context context) {

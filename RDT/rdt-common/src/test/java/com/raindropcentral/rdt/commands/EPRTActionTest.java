@@ -33,6 +33,7 @@ class EPRTActionTest {
             new EPRTAction[]{
                 EPRTAction.MAIN,
                 EPRTAction.SPAWN,
+                EPRTAction.FOB,
                 EPRTAction.BANK,
                 EPRTAction.BROADCAST
             },
