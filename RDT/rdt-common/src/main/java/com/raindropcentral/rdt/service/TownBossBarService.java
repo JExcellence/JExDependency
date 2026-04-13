@@ -110,10 +110,7 @@ public final class TownBossBarService {
             return;
         }
 
-        final RDTPlayer playerData = this.plugin.getTownRuntimeService() == null
-            ? null
-            : this.plugin.getTownRuntimeService().getPlayerData(player.getUniqueId());
-        if (playerData != null && !playerData.isBossBarEnabled()) {
+        if (!this.plugin.isTownBossBarEnabled(player.getUniqueId())) {
             this.clearPlayer(player);
             return;
         }

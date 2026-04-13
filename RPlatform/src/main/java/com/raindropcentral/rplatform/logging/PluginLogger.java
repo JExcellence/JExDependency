@@ -130,26 +130,12 @@ public final class PluginLogger {
     }
     
     /**
-     * Registers a shutdown hook that flushes and closes the logger when the plugin is disabled.
-     * This ensures that all log messages are written to disk before the plugin shuts down.
+     * Defers shutdown handling to the owning plugin lifecycle.
+     * Bukkit does not provide a reliable library-level shutdown hook during early plugin construction, so
+     * logger cleanup must occur through explicit {@code close()} calls or {@link CentralLogger#shutdown()}.
      */
     private void registerShutdownHook() {
-        try {
-            // Use Bukkit's plugin manager to register a disable listener
-            // We'll use a simple approach: register a task that runs on plugin disable
-            plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
-                // This won't actually run, but we can use onDisable in the plugin itself
-                // For now, we'll rely on the plugin calling close() or CentralLogger.shutdown()
-            }, 1L);
-            
-            // Note: The proper way is for plugins to call CentralLogger.shutdown() in their onDisable()
-            // or for the logger to be closed explicitly. We can't reliably hook into plugin disable
-            // from here without modifying the plugin's lifecycle.
-            
-        } catch (Exception e) {
-            // If we can't register the hook, just log a warning
-            originalErr.println("[PluginLogger] Warning: Could not register shutdown hook for " + plugin.getName());
-        }
+        // Intentionally empty.
     }
     
     /**

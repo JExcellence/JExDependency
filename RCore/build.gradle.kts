@@ -81,6 +81,10 @@ dependencies {
     testImplementation(project(":RPlatform"))
     testImplementation(libs.paper.api)
     testCompileOnly(libs.jackson.annotations)
+    testImplementation(libs.mockito.core)
+    testImplementation(platform(libs.hibernate.platform))
+    testImplementation(libs.bundles.hibernate)
+    testImplementation(libs.jehibernate)
 }
 
 tasks.processResources {

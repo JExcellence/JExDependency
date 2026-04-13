@@ -3,7 +3,7 @@ commands:
     name: 'rc'
     description: 'Manage this server connection to RaindropCentral'
     aliases: []
-    usage: 'rc <connect <api-key>|disconnect|claim droplets|store update>'
+    usage: 'rc <main|connect <api-key>|disconnect|claim droplets|store update|bossbar [toggle|enable|disable|set]>'
     errorMessages:
       invalidKey$: 'lut["prefix"] & "&cInvalid API key format"'
       uuidMismatch$: 'lut["prefix"] & "&cThis API key belongs to a different Minecraft account"'
@@ -14,6 +14,8 @@ commands:
     permissions:
       missingMessage$: 'lut["prefix"] & "&cYou lack the permission: " & permission'
       nodes:
+        bossBar: 'rcore.command.bossbar'
+        main: 'rcore.command.main'
         connect: 'rcore.central.connect'
         disconnect: 'rcore.central.disconnect'
         claimDroplets: 'rcore.central.claim.droplets'

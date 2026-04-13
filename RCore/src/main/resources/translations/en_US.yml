@@ -3,7 +3,7 @@
 prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
 
 rcconnect:
-  usage: "<gray>Usage: /rc <connect &lt;api-key&gt;|disconnect|claim droplets|store update></gray>"
+  usage: "<gray>Usage: /rc <main|connect &lt;api-key&gt;|disconnect|claim droplets|store update|bossbar [toggle|enable|disable|set]></gray>"
   usage_no_claim: "<gray>Usage: /rc <connect &lt;api-key&gt;|disconnect></gray>"
   connecting: "<yellow>Connecting to RaindropCentral...</yellow>"
   success: "<green>Successfully connected to RaindropCentral!</green> <gray>Server is now sending heartbeats.</gray>"
@@ -28,6 +28,22 @@ rcstore:
     not_connected: "<red>RCore must be connected to the RaindropCentral backend before the store allowlist can be updated.</red>"
     failed: "<red>Failed to refresh the droplet-store allowlist: %error%</red>"
     using_cache: "<yellow>Failed to refresh the droplet-store allowlist, but the last cached list is still being used: %error%</yellow>"
+
+rcmain:
+  error:
+    menu_unavailable: "<red>The module hub is unavailable right now.</red>"
+    open_failed: "<red>Failed to open <white>%module_name%</white><red>. Please try again.</red>"
+
+rcbossbar:
+  enabled: "<green>Enabled <white>%provider_name%</white><green>.</green>"
+  disabled: "<yellow>Disabled <white>%provider_name%</white><yellow>.</yellow>"
+  option:
+    updated: "<aqua>Updated <white>%provider_name%</white><aqua>:</aqua> <white>%option_name%</white> <gray>-></gray> <white>%option_value%</white>"
+  error:
+    unavailable: "<red>Boss-bar settings are unavailable right now.</red>"
+    provider_missing: "<red>No registered boss-bar provider matches <white>%provider_key%</white><red>.</red>"
+    option_missing: "<red><white>%provider_key%</white><red> does not expose an option named <white>%option_key%</white><red>.</red>"
+    invalid_value: "<red><white>%value%</white><red> is not a valid value for <white>%provider_key%</white><red> option <white>%option_key%</white><red>.</red>"
 rcclaim:
   loading: "<yellow>Checking RaindropCentral for unclaimed droplet rewards...</yellow>"
   claiming_item: "<yellow>Claiming %item_name% from RaindropCentral...</yellow>"
@@ -173,6 +189,78 @@ rc_claim_droplet_jobs_ui:
       - "<gray>Current level: %current_level%</gray>"
       - "<gray>Boost: +%rate_percent%% money for %duration_minutes% minute(s)</gray>"
       - "<yellow>Click to activate this job money boost.</yellow>"
+
+rc_boss_bar_ui:
+  title: "Boss Bar Settings"
+  page:
+    name: "<yellow>Page %page%/%max_page%</yellow>"
+    lore:
+      - "<gray>%items_count% boss-bar providers listed.</gray>"
+  summary:
+    name: "<gold>Boss Bar Settings</gold>"
+    lore:
+      - "<gray>Registered providers:</gray> <white>%provider_count%</white>"
+      - "<yellow>Choose a provider to adjust its player settings.</yellow>"
+  empty:
+    name: "<red>No Boss Bars Registered</red>"
+    lore:
+      - "<gray>No plugins have registered boss-bar providers with RCore yet.</gray>"
+  entry:
+    enabled: "<green>Currently enabled for you.</green>"
+    disabled: "<yellow>Currently disabled for you.</yellow>"
+    options: "<gray>Provider options:</gray> <white>%option_count%</white>"
+    open: "<yellow>Click to open this provider.</yellow>"
+
+rc_boss_bar_detail_ui:
+  title: "%provider_name%"
+  summary:
+    enabled: "<green>This provider is currently enabled for you.</green>"
+    disabled: "<yellow>This provider is currently disabled for you.</yellow>"
+    options: "<gray>Configurable options:</gray> <white>%option_count%</white>"
+  toggle:
+    enabled_name: "<green>Enabled</green>"
+    disabled_name: "<gray>Disabled</gray>"
+    lore:
+      - "<gray>Toggle whether <white>%provider_name%</white><gray> can render for you.</gray>"
+      - "<yellow>Click to switch this state.</yellow>"
+  option:
+    current: "<gray>Current:</gray> <white>%current_value%</white>"
+    available: "<gray>Choices:</gray> <white>%available_values%</white>"
+    click: "<yellow>Click to cycle to the next value.</yellow>"
+  missing:
+    name: "<red>Provider Missing</red>"
+    lore:
+      - "<gray>This boss-bar provider is no longer registered.</gray>"
+
+rc_main_ui:
+  title: "Raindrop Modules"
+  summary:
+    name: "<gold>Module Hub</gold>"
+    lore:
+      - "<gray>Installed modules:</gray> <white>%installed_count%</white><gray>/</gray><white>%module_count%</white>"
+      - "<yellow>Click an installed module to open its main menu.</yellow>"
+  status:
+    installed: "<green>Installed on this server.</green>"
+    missing: "<red>Not installed on this server.</red>"
+  action:
+    open: "<yellow>Click to open this module.</yellow>"
+    unavailable: "<gray>This module is unavailable right now.</gray>"
+  module:
+    rda:
+      name: "<aqua>RDA</aqua>"
+      description: "<gray>Abilities, builds, and party tools.</gray>"
+    rdq:
+      name: "<gold>RDQ</gold>"
+      description: "<gray>Quests, bounties, ranks, and perks.</gray>"
+    rdr:
+      name: "<green>RDR</green>"
+      description: "<gray>Storage, hotkeys, and trade tools.</gray>"
+    rds:
+      name: "<yellow>RDS</yellow>"
+      description: "<gray>Shop discovery and store progression.</gray>"
+    rdt:
+      name: "<blue>RDT</blue>"
+      description: "<gray>Towns, banks, and territory systems.</gray>"
 
 general:
   no_permission: "<red>You don't have permission to use this command.</red>"

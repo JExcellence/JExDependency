@@ -133,4 +133,30 @@ class ShopMaterialPriceSupportTest {
         assertTrue(prices.containsKey("COBBLESTONE"));
         assertFalse(prices.containsKey("STONE"));
     }
+
+    @Test
+    void loadsQuotedValuesAndIgnoresInlineComments(final @TempDir Path tempDir) throws IOException {
+        final Path materialPricesFile = tempDir.resolve("material-prices.yml");
+        Files.writeString(materialPricesFile, """
+            # Top-level comment
+            materials:
+              "STONE":
+                vault: "1.0" # default shop currency
+                raindrops: '0.25'
+              DIAMOND:
+                tokens: 2.5
+            ignored_section:
+              should_not_load: 999
+            """);
+
+        final Map<String, Map<String, Double>> prices = ShopMaterialPriceSupport.loadMaterialPrices(
+                materialPricesFile.toFile()
+        );
+
+        assertEquals(2, prices.size());
+        assertEquals(1.0D, prices.get("STONE").get("vault"));
+        assertEquals(0.25D, prices.get("STONE").get("raindrops"));
+        assertEquals(2.5D, prices.get("DIAMOND").get("tokens"));
+        assertFalse(prices.containsKey("IGNORED_SECTION"));
+    }
 }

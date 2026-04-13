@@ -1,0 +1,532 @@
+﻿# Set to false to disable this skill without deleting its rates.
+enabled: true
+
+# Bukkit material used for this skill's icon in the menu.
+display:
+  icon: HONEYCOMB
+
+# Shared level and prestige settings for this skill.
+progression:
+  # Soft cap for normal leveling. Before the final prestige, players stop gaining new
+  # levels here, but extra XP is still stored until they prestige.
+  soft-max-level: 1000
+  # Final prestige count for this skill. After a player reaches this many prestiges,
+  # levels can continue past the soft cap as overlevels.
+  max-prestiges: 10
+  # Prestige settings shared by every XP source in this skill.
+  prestige:
+    # Supported prestige trigger values:
+    # - MANUAL: players must choose to prestige after reaching the soft cap.
+    #   This is the only trigger RDA currently supports.
+    trigger: MANUAL
+    # Extra XP percent granted per completed prestige.
+    # This bonus is applied after party sharing splits the base XP award.
+    xp-bonus-per-prestige-percent: 10
+  # XP curve settings used to calculate the next level requirement.
+  level-formula:
+    # Supported formula types:
+    # - POWER: xp_to_next(level) = base_xp + growth * pow(level + 1, exponent)
+    #   This is the only formula type RDA currently supports.
+    type: POWER
+    # Flat XP added into each next-level calculation.
+    base-xp: 50
+    # Growth multiplier applied to the POWER formula before exponent scaling.
+    growth: 4.0
+    # Exponent applied to (level + 1) in the POWER formula.
+    exponent: 1.20
+    # Supported rounding modes:
+    # - FLOOR: round the final XP requirement down to a whole number.
+    #   This is the only rounding mode RDA currently supports.
+    rounding: FLOOR
+    # Human-readable formula reference for admins. RDA does not parse this value.
+    formula-doc: "xp_to_next(level) = floor(base_xp + growth * pow(level + 1, exponent))"
+
+# Ordered XP sources. RDA checks these from top to bottom in gameplay and shows
+# them in the same order in the GUI.
+# Keep one target per rate. If multiple materials, items, entities, or projectile kinds
+# should give different XP, split them into separate rate entries instead of grouping them.
+# Leaving a selector out makes that filter match anything for that rate.
+# description-key points to translations. If you prefer plain text here, replace it with
+# description: "Your text here".
+# Supported trigger values:
+# - BLOCK_BREAK: breaking a matching block
+# - BLOCK_TRAVEL: moving the configured distance on foot
+# - CHUNK_DISCOVERY: entering an unvisited chunk for the first time
+# - ENTITY_DAMAGE: dealing damage to a hostile mob or player
+# - DAMAGE_TAKEN: taking damage
+# - SHIELD_BLOCK: blocking damage with a shield
+# - BREW_COLLECT: taking brewed potions from a brewing stand
+# - ENCHANT_TABLE: enchanting an item in an enchanting table
+# - ANVIL_ENCHANT: applying or upgrading enchantments in an anvil
+# - CRAFT_RESULT: taking a crafted result
+# - FISH_CATCH: catching fish or loot with a fishing rod
+# - TAME_SUCCESS: taming a creature
+# - TAMED_KILL: a tamed creature landing the killing blow
+# - FURNACE_COLLECT: taking smelted output from a furnace, smoker, or blast furnace
+# - HONEY_COLLECT: harvesting honey with the required item
+# Selector keys:
+# - material: match one Bukkit Material
+# - entity-type: match one Bukkit EntityType
+# - required-item: require one item material for that trigger
+# - projectile-kind: ARROW, TIPPED_ARROW, or SPECTRAL_ARROW
+# Optional flags:
+# - require-fully-grown: only ageable blocks at max growth count
+# - hostile-only: only hostile mobs count
+# - player-only: only player victims count
+# - exclude-same-town: ignore same-town PvP when the protection bridge can resolve both towns
+# - distance: blocks of movement needed for one BLOCK_TRAVEL XP award
+# - required-tool: ANY, PICKAXE, AXE, SHOVEL, or HOE
+rates:
+  dandelion:
+    label: "Dandelion"
+    description-key: ra_config_descriptions.skills.foraging.rates.dandelion
+    icon: DANDELION
+    trigger: BLOCK_BREAK
+    xp: 4
+    material: DANDELION
+  poppy:
+    label: "Poppy"
+    description-key: ra_config_descriptions.skills.foraging.rates.poppy
+    icon: POPPY
+    trigger: BLOCK_BREAK
+    xp: 4
+    material: POPPY
+  blue_orchid:
+    label: "Blue Orchid"
+    description-key: ra_config_descriptions.skills.foraging.rates.blue_orchid
+    icon: BLUE_ORCHID
+    trigger: BLOCK_BREAK
+    xp: 4
+    material: BLUE_ORCHID
+  allium:
+    label: "Allium"
+    description-key: ra_config_descriptions.skills.foraging.rates.allium
+    icon: ALLIUM
+    trigger: BLOCK_BREAK
+    xp: 4
+    material: ALLIUM
+  azure_bluet:
+    label: "Azure Bluet"
+    description-key: ra_config_descriptions.skills.foraging.rates.azure_bluet
+    icon: AZURE_BLUET
+    trigger: BLOCK_BREAK
+    xp: 4
+    material: AZURE_BLUET
+  red_tulip:
+    label: "Red Tulip"
+    description-key: ra_config_descriptions.skills.foraging.rates.red_tulip
+    icon: RED_TULIP
+    trigger: BLOCK_BREAK
+    xp: 4
+    material: RED_TULIP
+  orange_tulip:
+    label: "Orange Tulip"
+    description-key: ra_config_descriptions.skills.foraging.rates.orange_tulip
+    icon: ORANGE_TULIP
+    trigger: BLOCK_BREAK
+    xp: 4
+    material: ORANGE_TULIP
+  white_tulip:
+    label: "White Tulip"
+    description-key: ra_config_descriptions.skills.foraging.rates.white_tulip
+    icon: WHITE_TULIP
+    trigger: BLOCK_BREAK
+    xp: 4
+    material: WHITE_TULIP
+  pink_tulip:
+    label: "Pink Tulip"
+    description-key: ra_config_descriptions.skills.foraging.rates.pink_tulip
+    icon: PINK_TULIP
+    trigger: BLOCK_BREAK
+    xp: 4
+    material: PINK_TULIP
+  oxeye_daisy:
+    label: "Oxeye Daisy"
+    description-key: ra_config_descriptions.skills.foraging.rates.oxeye_daisy
+    icon: OXEYE_DAISY
+    trigger: BLOCK_BREAK
+    xp: 4
+    material: OXEYE_DAISY
+  cornflower:
+    label: "Cornflower"
+    description-key: ra_config_descriptions.skills.foraging.rates.cornflower
+    icon: CORNFLOWER
+    trigger: BLOCK_BREAK
+    xp: 4
+    material: CORNFLOWER
+  lily_of_the_valley:
+    label: "Lily Of The Valley"
+    description-key: ra_config_descriptions.skills.foraging.rates.lily_of_the_valley
+    icon: LILY_OF_THE_VALLEY
+    trigger: BLOCK_BREAK
+    xp: 4
+    material: LILY_OF_THE_VALLEY
+  wither_rose:
+    label: "Wither Rose"
+    description-key: ra_config_descriptions.skills.foraging.rates.wither_rose
+    icon: WITHER_ROSE
+    trigger: BLOCK_BREAK
+    xp: 4
+    material: WITHER_ROSE
+  sunflower:
+    label: "Sunflower"
+    description-key: ra_config_descriptions.skills.foraging.rates.sunflower
+    icon: SUNFLOWER
+    trigger: BLOCK_BREAK
+    xp: 4
+    material: SUNFLOWER
+  lilac:
+    label: "Lilac"
+    description-key: ra_config_descriptions.skills.foraging.rates.lilac
+    icon: LILAC
+    trigger: BLOCK_BREAK
+    xp: 4
+    material: LILAC
+  rose_bush:
+    label: "Rose Bush"
+    description-key: ra_config_descriptions.skills.foraging.rates.rose_bush
+    icon: ROSE_BUSH
+    trigger: BLOCK_BREAK
+    xp: 4
+    material: ROSE_BUSH
+  peony:
+    label: "Peony"
+    description-key: ra_config_descriptions.skills.foraging.rates.peony
+    icon: PEONY
+    trigger: BLOCK_BREAK
+    xp: 4
+    material: PEONY
+  torchflower:
+    label: "Torchflower"
+    description-key: ra_config_descriptions.skills.foraging.rates.torchflower
+    icon: TORCHFLOWER
+    trigger: BLOCK_BREAK
+    xp: 4
+    material: TORCHFLOWER
+  pitcher_plant:
+    label: "Pitcher Plant"
+    description-key: ra_config_descriptions.skills.foraging.rates.pitcher_plant
+    icon: PITCHER_PLANT
+    trigger: BLOCK_BREAK
+    xp: 4
+    material: PITCHER_PLANT
+  spore_blossom:
+    label: "Spore Blossom"
+    description-key: ra_config_descriptions.skills.foraging.rates.spore_blossom
+    icon: SPORE_BLOSSOM
+    trigger: BLOCK_BREAK
+    xp: 4
+    material: SPORE_BLOSSOM
+  honey_bottle:
+    label: "Honey Bottle"
+    description-key: ra_config_descriptions.skills.foraging.rates.honey_bottle
+    icon: HONEY_BOTTLE
+    trigger: HONEY_COLLECT
+    xp: 18
+    required-item: GLASS_BOTTLE
+  honeycomb:
+    label: "Honeycomb"
+    description-key: ra_config_descriptions.skills.foraging.rates.honeycomb
+    icon: HONEYCOMB
+    trigger: HONEY_COLLECT
+    xp: 20
+    required-item: SHEARS
+
+# Ability points earned from this skill.
+# - 0: use the shared rules from stats.yml (default-interval, then any skill-overrides entry)
+# - any positive whole number: this skill uses its own level interval instead
+ability-point-interval-override: 0
+
+# Ability tree shown in the build menus.
+# Keep existing ability keys stable. RDA references them in code, so renaming a shipped key
+# requires matching code changes, not just config edits.
+# description-key points to translations. If you prefer plain text here, replace it with
+# description: "Your text here".
+# Supported stat ids:
+# - VIT (Vitality), STR (Strength), AGI (Agility), DEX (Dexterity)
+# - INT (Intelligence), SPI (Spirit), LUK (Luck), CHA (Charisma)
+# primary-stat is required. secondary-stat is optional and only adds extra scaling.
+# required-stat-points always checks spent points in the primary stat only.
+# Each tier uses:
+# - required-skill-level: minimum skill level for that tier
+# - required-stat-points: minimum spent points in the primary stat for that tier
+# - potency = base-value + (primary points * primary-coefficient)
+#   + (secondary points * secondary-coefficient)
+# - hard-cap is optional; remove it to leave that tier uncapped
+# The resolved potency is the raw ability strength. The in-game description decides
+# whether that number behaves like a chance, multiplier, extra blocks, seconds, or something else.
+# Active ability settings:
+# - cooldown-seconds: cooldown after a successful cast
+# - duration-seconds: how long the active stays on; set 0 for instant effects only
+# - mana-cost: mana spent on cast
+# - activator-item: required main-hand item for click triggers; COMMAND casts ignore this item
+# - allowed-triggers: COMMAND, LEFT_CLICK, SHIFT_LEFT_CLICK, RIGHT_CLICK, SHIFT_RIGHT_CLICK
+#   Leave this list empty to allow every trigger here. stats.yml activation.allowed-modes
+#   still filters them server-wide, and RDA falls back to COMMAND if nothing overlaps.
+tree:
+  passives:
+    herbalism:
+      key: herbalism
+      name: Herbalism
+      description-key: ra_config_descriptions.skills.foraging.abilities.herbalism
+      icon: DANDELION
+      primary-stat: LUK
+      tiers:
+        t1:
+          required-skill-level: 10
+          required-stat-points: 1
+          base-value: 0.005
+          primary-coefficient: 0.002
+          secondary-coefficient: 0
+          hard-cap: 0.04
+        t2:
+          required-skill-level: 25
+          required-stat-points: 5
+          base-value: 0.01
+          primary-coefficient: 0.003
+          secondary-coefficient: 0
+          hard-cap: 0.07
+        t3:
+          required-skill-level: 50
+          required-stat-points: 10
+          base-value: 0.015
+          primary-coefficient: 0.003
+          secondary-coefficient: 0
+          hard-cap: 0.1
+        t4:
+          required-skill-level: 100
+          required-stat-points: 20
+          base-value: 0.02
+          primary-coefficient: 0.004
+          secondary-coefficient: 0
+          hard-cap: 0.14
+        t5:
+          required-skill-level: 250
+          required-stat-points: 35
+          base-value: 0.025
+          primary-coefficient: 0.004
+          secondary-coefficient: 0
+          hard-cap: 0.18
+    apiarist:
+      key: apiarist
+      name: Apiarist
+      description-key: ra_config_descriptions.skills.foraging.abilities.apiarist
+      icon: HONEYCOMB
+      primary-stat: LUK
+      secondary-stat: CHA
+      tiers:
+        t1:
+          required-skill-level: 10
+          required-stat-points: 1
+          base-value: 0.005
+          primary-coefficient: 0.002
+          secondary-coefficient: 0.001
+          hard-cap: 0.04
+        t2:
+          required-skill-level: 25
+          required-stat-points: 5
+          base-value: 0.01
+          primary-coefficient: 0.002
+          secondary-coefficient: 0.001
+          hard-cap: 0.07
+        t3:
+          required-skill-level: 50
+          required-stat-points: 10
+          base-value: 0.015
+          primary-coefficient: 0.003
+          secondary-coefficient: 0.002
+          hard-cap: 0.1
+        t4:
+          required-skill-level: 100
+          required-stat-points: 20
+          base-value: 0.02
+          primary-coefficient: 0.003
+          secondary-coefficient: 0.002
+          hard-cap: 0.14
+        t5:
+          required-skill-level: 250
+          required-stat-points: 35
+          base-value: 0.025
+          primary-coefficient: 0.004
+          secondary-coefficient: 0.002
+          hard-cap: 0.18
+    rare_finds:
+      key: rare_finds
+      name: Rare Finds
+      description-key: ra_config_descriptions.skills.foraging.abilities.rare_finds
+      icon: TORCHFLOWER
+      primary-stat: LUK
+      tiers:
+        t1:
+          required-skill-level: 10
+          required-stat-points: 1
+          base-value: 0.005
+          primary-coefficient: 0.002
+          secondary-coefficient: 0
+          hard-cap: 0.04
+        t2:
+          required-skill-level: 25
+          required-stat-points: 5
+          base-value: 0.01
+          primary-coefficient: 0.003
+          secondary-coefficient: 0
+          hard-cap: 0.07
+        t3:
+          required-skill-level: 50
+          required-stat-points: 10
+          base-value: 0.015
+          primary-coefficient: 0.003
+          secondary-coefficient: 0
+          hard-cap: 0.1
+        t4:
+          required-skill-level: 100
+          required-stat-points: 20
+          base-value: 0.02
+          primary-coefficient: 0.004
+          secondary-coefficient: 0
+          hard-cap: 0.14
+        t5:
+          required-skill-level: 250
+          required-stat-points: 35
+          base-value: 0.025
+          primary-coefficient: 0.004
+          secondary-coefficient: 0
+          hard-cap: 0.18
+    gentle_harvest:
+      key: gentle_harvest
+      name: Gentle Harvest
+      description-key: ra_config_descriptions.skills.foraging.abilities.gentle_harvest
+      icon: SHEARS
+      primary-stat: LUK
+      secondary-stat: DEX
+      tiers:
+        t1:
+          required-skill-level: 10
+          required-stat-points: 1
+          base-value: 0.005
+          primary-coefficient: 0.002
+          secondary-coefficient: 0.001
+          hard-cap: 0.04
+        t2:
+          required-skill-level: 25
+          required-stat-points: 5
+          base-value: 0.01
+          primary-coefficient: 0.002
+          secondary-coefficient: 0.001
+          hard-cap: 0.07
+        t3:
+          required-skill-level: 50
+          required-stat-points: 10
+          base-value: 0.015
+          primary-coefficient: 0.003
+          secondary-coefficient: 0.002
+          hard-cap: 0.1
+        t4:
+          required-skill-level: 100
+          required-stat-points: 20
+          base-value: 0.02
+          primary-coefficient: 0.003
+          secondary-coefficient: 0.002
+          hard-cap: 0.14
+        t5:
+          required-skill-level: 250
+          required-stat-points: 35
+          base-value: 0.025
+          primary-coefficient: 0.004
+          secondary-coefficient: 0.002
+          hard-cap: 0.18
+    bloom_cycle:
+      key: bloom_cycle
+      name: Bloom Cycle
+      description-key: ra_config_descriptions.skills.foraging.abilities.bloom_cycle
+      icon: BEE_NEST
+      primary-stat: LUK
+      secondary-stat: CHA
+      tiers:
+        t1:
+          required-skill-level: 10
+          required-stat-points: 1
+          base-value: 0.005
+          primary-coefficient: 0.002
+          secondary-coefficient: 0.001
+          hard-cap: 0.04
+        t2:
+          required-skill-level: 25
+          required-stat-points: 5
+          base-value: 0.01
+          primary-coefficient: 0.002
+          secondary-coefficient: 0.001
+          hard-cap: 0.07
+        t3:
+          required-skill-level: 50
+          required-stat-points: 10
+          base-value: 0.015
+          primary-coefficient: 0.003
+          secondary-coefficient: 0.002
+          hard-cap: 0.1
+        t4:
+          required-skill-level: 100
+          required-stat-points: 20
+          base-value: 0.02
+          primary-coefficient: 0.003
+          secondary-coefficient: 0.002
+          hard-cap: 0.14
+        t5:
+          required-skill-level: 250
+          required-stat-points: 35
+          base-value: 0.025
+          primary-coefficient: 0.004
+          secondary-coefficient: 0.002
+          hard-cap: 0.18
+  active:
+    key: natures_bounty
+    name: Nature's Bounty
+    description-key: ra_config_descriptions.skills.foraging.abilities.natures_bounty
+    icon: HONEY_BOTTLE
+    primary-stat: LUK
+    secondary-stat: CHA
+    tiers:
+        t1:
+          required-skill-level: 10
+          required-stat-points: 1
+          base-value: 0.05
+          primary-coefficient: 0.004
+          secondary-coefficient: 0.002
+          hard-cap: 0.2
+        t2:
+          required-skill-level: 25
+          required-stat-points: 5
+          base-value: 0.08
+          primary-coefficient: 0.005
+          secondary-coefficient: 0.002
+          hard-cap: 0.28
+        t3:
+          required-skill-level: 50
+          required-stat-points: 10
+          base-value: 0.12
+          primary-coefficient: 0.006
+          secondary-coefficient: 0.003
+          hard-cap: 0.38
+        t4:
+          required-skill-level: 100
+          required-stat-points: 20
+          base-value: 0.16
+          primary-coefficient: 0.007
+          secondary-coefficient: 0.003
+          hard-cap: 0.5
+        t5:
+          required-skill-level: 250
+          required-stat-points: 35
+          base-value: 0.2
+          primary-coefficient: 0.008
+          secondary-coefficient: 0.004
+          hard-cap: 0.65
+    active:
+      cooldown-seconds: 65
+      duration-seconds: 15
+      mana-cost: 24
+      activator-item: HONEYCOMB
+      allowed-triggers:
+        - COMMAND
+        - RIGHT_CLICK
+        - SHIFT_RIGHT_CLICK

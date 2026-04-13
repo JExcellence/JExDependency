@@ -15,11 +15,15 @@ package com.raindropcentral.core;
 
 import com.raindropcentral.commands.CommandFactory;
 import com.raindropcentral.core.api.RCoreAdapter;
+import com.raindropcentral.core.config.RCoreMainMenuConfig;
+import com.raindropcentral.core.config.RCoreMainMenuConfigLoader;
 import com.raindropcentral.core.database.entity.central.RCentralServer;
 import com.raindropcentral.core.database.entity.inventory.RPlayerInventory;
+import com.raindropcentral.core.database.entity.player.RBossBarPreference;
 import com.raindropcentral.core.database.entity.player.RPlayer;
 import com.raindropcentral.core.database.entity.statistic.RAbstractStatistic;
 import com.raindropcentral.core.database.entity.statistic.RPlayerStatistic;
+import com.raindropcentral.core.database.repository.RBossBarPreferenceRepository;
 import com.raindropcentral.core.database.repository.RCentralServerRepository;
 import com.raindropcentral.core.database.repository.RPlayerInventoryRepository;
 import com.raindropcentral.core.database.repository.RPlayerRepository;
@@ -28,6 +32,8 @@ import com.raindropcentral.core.database.repository.RStatisticRepository;
 import com.raindropcentral.core.proxy.ProxyHostConfig;
 import com.raindropcentral.core.proxy.RCorePaperProxyBridge;
 import com.raindropcentral.core.proxy.RCoreProxyCoordinator;
+import com.raindropcentral.core.service.RCoreBossBarManager;
+import com.raindropcentral.core.service.RCoreBossBarService;
 import com.raindropcentral.core.service.RCoreService;
 import com.raindropcentral.core.service.central.DropletClaimService;
 import com.raindropcentral.core.service.central.RCentralService;
@@ -48,6 +54,9 @@ import com.raindropcentral.core.service.statistics.vanilla.scheduler.TPSThrottle
 import com.raindropcentral.core.view.DropletClaimsView;
 import com.raindropcentral.core.view.DropletJobSelectionView;
 import com.raindropcentral.core.view.DropletSkillSelectionView;
+import com.raindropcentral.core.view.RCoreBossBarOverviewView;
+import com.raindropcentral.core.view.RCoreBossBarProviderView;
+import com.raindropcentral.core.view.RCoreMainOverviewView;
 import com.raindropcentral.rplatform.RPlatform;
 import com.raindropcentral.rplatform.api.PlatformType;
 import com.raindropcentral.rplatform.cookie.CookieBoostIntegrationRegistrar;
@@ -134,6 +143,7 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
      * Adapter-backed handle published to Bukkit's service registry to expose RCore APIs.
      */
     private RCoreService rCoreService;
+    private RCoreBossBarService bossBarService;
 
     /**
      * Shared platform bundle that configures dependency injection, metrics, and persistence.
@@ -163,12 +173,16 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
     private RCoreAdapter rCoreAdapter;
     private RCorePaperProxyBridge proxyBridge;
     private RCoreProxyCoordinator proxyCoordinator;
+    private RCoreMainMenuConfig mainMenuConfig;
 
     @InjectRepository
     private RPlayerRepository playerRepository;
 
     @InjectRepository
     private RCentralServerRepository rCentralServerRepository;
+
+    @InjectRepository
+    private RBossBarPreferenceRepository bossBarPreferenceRepository;
 
     /**
      * Creates the delegate and provisions the executor used across asynchronous operations.
@@ -193,6 +207,7 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
         // Initialize logger for RCore
         LOGGER = CentralLogger.getLoggerByName(this.getPlugin().getName());
         this.platform = new RPlatform(this.getPlugin());
+        this.mainMenuConfig = RCoreMainMenuConfigLoader.load(this.getPlugin());
 
         LOGGER.info("RCore loaded successfully");
     }
@@ -221,6 +236,7 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
 
                     initializeRepositories();
                     initializeComponents();
+                    registerBossBarService();
                     initializePlugins();
                 }))
                 .thenCompose(v -> runSync(() -> {
@@ -327,12 +343,20 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
 
     private void registerServices() {
         if (rCoreAdapter != null) {
+            this.rCoreService = this.rCoreAdapter;
             Bukkit.getServer().getServicesManager().register(
                     RCoreAdapter.class,
                     rCoreAdapter,
                     getPlugin(),
                     ServicePriority.Normal
             );
+            Bukkit.getServer().getServicesManager().register(
+                    RCoreService.class,
+                    rCoreAdapter,
+                    getPlugin(),
+                    ServicePriority.Normal
+            );
+            this.platform.getServiceRegistry().bind(RCoreService.class, this.rCoreAdapter);
             LOGGER.info("Registered RCoreAdapter service");
         }
 
@@ -345,6 +369,21 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
             );
             LOGGER.info("Registered ProxyService bridge");
         }
+    }
+
+    private void registerBossBarService() {
+        if (this.bossBarService == null) {
+            return;
+        }
+
+        Bukkit.getServer().getServicesManager().register(
+            RCoreBossBarService.class,
+            this.bossBarService,
+            getPlugin(),
+            ServicePriority.Normal
+        );
+        this.platform.getServiceRegistry().bind(RCoreBossBarService.class, this.bossBarService);
+        LOGGER.info("Registered RCoreBossBarService");
     }
 
     private void initializeProxyBridge() {
@@ -413,6 +452,21 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
         this.platform.getServiceRegistry().bind(CookieBoostLookup.class, this.activeCookieBoostService);
         CookieBoostIntegrationRegistrar.register(this.getPlugin(), this.activeCookieBoostService);
         this.dropletClaimService = new DropletClaimService(this);
+        this.bossBarService = new RCoreBossBarManager(this.bossBarPreferenceRepository, (player, providerKey) -> {
+            if (this.viewFrame == null) {
+                return;
+            }
+
+            if (providerKey == null || providerKey.isBlank()) {
+                this.viewFrame.open(RCoreBossBarOverviewView.class, player, Map.of("plugin", this));
+                return;
+            }
+
+            this.viewFrame.open(RCoreBossBarProviderView.class, player, Map.of(
+                "plugin", this,
+                "providerKey", providerKey
+            ));
+        });
 
         // Initialize statistics delivery service
         this.statisticsDeliveryService = StatisticsDeliveryServiceFactory.create(
@@ -435,9 +489,12 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
                 .create(this.getPlugin())
                 .install(AnvilInputFeature.AnvilInput)
                 .with(
+                        new RCoreMainOverviewView(),
                         new DropletClaimsView(),
                         new DropletSkillSelectionView(),
-                        new DropletJobSelectionView()
+                        new DropletJobSelectionView(),
+                        new RCoreBossBarOverviewView(),
+                        new RCoreBossBarProviderView()
                 )
                 .disableMetrics();
         this.viewFrame = frame.register();
@@ -474,6 +531,7 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
         repositoryManager.register(RStatisticRepository.class, RAbstractStatistic.class, RAbstractStatistic::getId);
         repositoryManager.register(RPlayerInventoryRepository.class, RPlayerInventory.class, RPlayerInventory::getId);
         repositoryManager.register(RCentralServerRepository.class, RCentralServer.class, RCentralServer::getId);
+        repositoryManager.register(RBossBarPreferenceRepository.class, RBossBarPreference.class, RBossBarPreference::getCompositeKey);
 
         repositoryManager.injectInto(this);
     }
@@ -607,6 +665,15 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
     }
 
     /**
+     * Returns the boss-bar settings service published to Bukkit and the platform registry.
+     *
+     * @return registered boss-bar service handle, or {@code null} when services are not registered yet
+     */
+    public RCoreBossBarService getBossBarService() {
+        return this.bossBarService;
+    }
+
+    /**
      * Returns the active RaindropCentral connection service.
      *
      * @return central service instance, or {@code null} before component initialization
@@ -643,6 +710,15 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
     }
 
     /**
+     * Returns the boss-bar preference repository injected during repository initialization.
+     *
+     * @return boss-bar preference repository, or {@code null} until repositories are wired
+     */
+    public RBossBarPreferenceRepository getBossBarPreferenceRepository() {
+        return this.bossBarPreferenceRepository;
+    }
+
+    /**
      * Provides access to the StatisticsDeliveryService for components that need it.
      *
      * @return the StatisticsDeliveryService instance, or null if disabled
@@ -658,6 +734,17 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
      */
     public @NotNull DropletClaimService getDropletClaimService() {
         return this.dropletClaimService;
+    }
+
+    /**
+     * Provides access to the normalized {@code /rc main} menu configuration.
+     *
+     * @return loaded module-hub configuration snapshot
+     */
+    public @NotNull RCoreMainMenuConfig getMainMenuConfig() {
+        return this.mainMenuConfig == null
+            ? RCoreMainMenuConfig.defaults()
+            : this.mainMenuConfig;
     }
 
     /**

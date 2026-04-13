@@ -24,6 +24,7 @@ val trackedModuleBuilds = listOf(
     ModuleBuildConfig("RDR", "RDR", "rdr.version.build"),
     ModuleBuildConfig("RDS", "RDS", "rds.version.build"),
     ModuleBuildConfig("RDT", "RDT", "rdt.version.build"),
+    ModuleBuildConfig("RDA", "RDA", "rda.version.build"),
 )
 
 fun parseSimpleProperties(content: String): Map<String, String> {
@@ -144,6 +145,7 @@ tasks.register("buildAll") {
         ":RDR:buildAll",
         ":RDS:buildAll",
         ":RDT:buildAll",
+        ":RDA:buildAll",
     )
     
     // Enforce build order
@@ -151,6 +153,7 @@ tasks.register("buildAll") {
     tasks.findByPath(":RDR:buildAll")?.mustRunAfter(":publishDependencies")
     tasks.findByPath(":RDS:buildAll")?.mustRunAfter(":publishDependencies")
     tasks.findByPath(":RDT:buildAll")?.mustRunAfter(":publishDependencies")
+    tasks.findByPath(":RDA:buildAll")?.mustRunAfter(":publishDependencies")
     
     doLast {
         val major = findProperty("rdq.version.major") ?: "Undefined"
@@ -177,6 +180,8 @@ tasks.register("buildAll") {
         val rdsPremiumDir = file("RDS/rds-premium/build/libs")
         val rdtFreeDir = file("RDT/rdt-free/build/libs")
         val rdtPremiumDir = file("RDT/rdt-premium/build/libs")
+        val rdaFreeDir = file("RDA/rda-free/build/libs")
+        val rdaPremiumDir = file("RDA/rda-premium/build/libs")
         
         rdqFreeDir.listFiles()?.filter { it.name.endsWith(".jar") && !it.name.contains("sources") && !it.name.contains("javadoc") }?.forEach {
             println("  - ${it.absolutePath}")
@@ -202,6 +207,12 @@ tasks.register("buildAll") {
         rdtPremiumDir.listFiles()?.filter { it.name.endsWith(".jar") && !it.name.contains("sources") && !it.name.contains("javadoc") }?.forEach {
             println("  - ${it.absolutePath}")
         }
+        rdaFreeDir.listFiles()?.filter { it.name.endsWith(".jar") && !it.name.contains("sources") && !it.name.contains("javadoc") }?.forEach {
+            println("  - ${it.absolutePath}")
+        }
+        rdaPremiumDir.listFiles()?.filter { it.name.endsWith(".jar") && !it.name.contains("sources") && !it.name.contains("javadoc") }?.forEach {
+            println("  - ${it.absolutePath}")
+        }
         println("========================================================================")
     }
 }
@@ -224,6 +235,7 @@ tasks.register("cleanAll") {
         ":RDR:clean",
         ":RDS:clean",
         ":RDT:clean",
+        ":RDA:clean",
     )
 }
 
@@ -272,6 +284,7 @@ tasks.register("validateCommitCounter") {
  * - rdr.version.build
  * - rds.version.build
  * - rdt.version.build
+ * - rda.version.build
  */
 tasks.register("syncBuildNumbersFromCommitCounter") {
     group = "versioning"
@@ -329,13 +342,22 @@ tasks.register("syncBuildNumbersFromCommitCounter") {
         val summaryLines = mutableListOf<String>()
 
         trackedModuleBuilds.forEach { module ->
-            val committedBuild = committedProperties[module.buildPropertyKey]?.toIntOrNull()
-                ?: throw GradleException("Missing or invalid integer property in HEAD: ${module.buildPropertyKey}")
+            val currentBuild = currentProperties[module.buildPropertyKey]?.toIntOrNull()
+                ?: throw GradleException("Missing or invalid integer property: ${module.buildPropertyKey}")
 
             val affectedCommitCount = changedFilesByCommit.count { (_, changedFiles) ->
                 changedFiles.any { filePath ->
                     filePath == module.directory || filePath.startsWith("${module.directory}/")
                 }
+            }
+
+            val committedBuild = committedProperties[module.buildPropertyKey]?.toIntOrNull()
+            if (committedBuild == null) {
+                updates[module.buildPropertyKey] = currentBuild.toString()
+                summaryLines.add(
+                    "${module.name}: ${module.buildPropertyKey} introduced at $currentBuild (baseline established)"
+                )
+                return@forEach
             }
 
             val newBuild = committedBuild + affectedCommitCount

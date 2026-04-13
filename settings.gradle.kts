@@ -62,6 +62,12 @@ include(":RDT:rdt-common")
 include(":RDT:rdt-free")
 include(":RDT:rdt-premium")
 
+//RDA with submodules
+include(":RDA")
+include(":RDA:rda-common")
+include(":RDA:rda-free")
+include(":RDA:rda-premium")
+
 /*
 
 // JExHome with submodules

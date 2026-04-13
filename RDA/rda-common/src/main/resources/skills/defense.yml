@@ -1,0 +1,390 @@
+﻿# Set to false to disable this skill without deleting its rates.
+enabled: true
+
+# Bukkit material used for this skill's icon in the menu.
+display:
+  icon: SHIELD
+
+# Shared level and prestige settings for this skill.
+progression:
+  # Soft cap for normal leveling. Before the final prestige, players stop gaining new
+  # levels here, but extra XP is still stored until they prestige.
+  soft-max-level: 1000
+  # Final prestige count for this skill. After a player reaches this many prestiges,
+  # levels can continue past the soft cap as overlevels.
+  max-prestiges: 10
+  # Prestige settings shared by every XP source in this skill.
+  prestige:
+    # Supported prestige trigger values:
+    # - MANUAL: players must choose to prestige after reaching the soft cap.
+    #   This is the only trigger RDA currently supports.
+    trigger: MANUAL
+    # Extra XP percent granted per completed prestige.
+    # This bonus is applied after party sharing splits the base XP award.
+    xp-bonus-per-prestige-percent: 10
+  # XP curve settings used to calculate the next level requirement.
+  level-formula:
+    # Supported formula types:
+    # - POWER: xp_to_next(level) = base_xp + growth * pow(level + 1, exponent)
+    #   This is the only formula type RDA currently supports.
+    type: POWER
+    # Flat XP added into each next-level calculation.
+    base-xp: 50
+    # Growth multiplier applied to the POWER formula before exponent scaling.
+    growth: 4.0
+    # Exponent applied to (level + 1) in the POWER formula.
+    exponent: 1.20
+    # Supported rounding modes:
+    # - FLOOR: round the final XP requirement down to a whole number.
+    #   This is the only rounding mode RDA currently supports.
+    rounding: FLOOR
+    # Human-readable formula reference for admins. RDA does not parse this value.
+    formula-doc: "xp_to_next(level) = floor(base_xp + growth * pow(level + 1, exponent))"
+
+# Ordered XP sources. RDA checks these from top to bottom in gameplay and shows
+# them in the same order in the GUI.
+# Keep one target per rate. If multiple materials, items, entities, or projectile kinds
+# should give different XP, split them into separate rate entries instead of grouping them.
+# Leaving a selector out makes that filter match anything for that rate.
+# description-key points to translations. If you prefer plain text here, replace it with
+# description: "Your text here".
+# Supported trigger values:
+# - BLOCK_BREAK: breaking a matching block
+# - BLOCK_TRAVEL: moving the configured distance on foot
+# - CHUNK_DISCOVERY: entering an unvisited chunk for the first time
+# - ENTITY_DAMAGE: dealing damage to a hostile mob or player
+# - DAMAGE_TAKEN: taking damage
+# - SHIELD_BLOCK: blocking damage with a shield
+# - BREW_COLLECT: taking brewed potions from a brewing stand
+# - ENCHANT_TABLE: enchanting an item in an enchanting table
+# - ANVIL_ENCHANT: applying or upgrading enchantments in an anvil
+# - CRAFT_RESULT: taking a crafted result
+# - FISH_CATCH: catching fish or loot with a fishing rod
+# - TAME_SUCCESS: taming a creature
+# - TAMED_KILL: a tamed creature landing the killing blow
+# - FURNACE_COLLECT: taking smelted output from a furnace, smoker, or blast furnace
+# - HONEY_COLLECT: harvesting honey with the required item
+# Selector keys:
+# - material: match one Bukkit Material
+# - entity-type: match one Bukkit EntityType
+# - required-item: require one item material for that trigger
+# - projectile-kind: ARROW, TIPPED_ARROW, or SPECTRAL_ARROW
+# Optional flags:
+# - require-fully-grown: only ageable blocks at max growth count
+# - hostile-only: only hostile mobs count
+# - player-only: only player victims count
+# - exclude-same-town: ignore same-town PvP when the protection bridge can resolve both towns
+# - distance: blocks of movement needed for one BLOCK_TRAVEL XP award
+# - required-tool: ANY, PICKAXE, AXE, SHOVEL, or HOE
+rates:
+  damage_taken:
+    label: "Damage Taken"
+    description-key: ra_config_descriptions.skills.defense.rates.damage_taken
+    icon: IRON_CHESTPLATE
+    trigger: DAMAGE_TAKEN
+    xp: 2
+  shield_block:
+    label: "Shield Block"
+    description-key: ra_config_descriptions.skills.defense.rates.shield_block
+    icon: SHIELD
+    trigger: SHIELD_BLOCK
+    xp: 3
+
+# Ability points earned from this skill.
+# - 0: use the shared rules from stats.yml (default-interval, then any skill-overrides entry)
+# - any positive whole number: this skill uses its own level interval instead
+ability-point-interval-override: 0
+
+# Ability tree shown in the build menus.
+# Keep existing ability keys stable. RDA references them in code, so renaming a shipped key
+# requires matching code changes, not just config edits.
+# description-key points to translations. If you prefer plain text here, replace it with
+# description: "Your text here".
+# Supported stat ids:
+# - VIT (Vitality), STR (Strength), AGI (Agility), DEX (Dexterity)
+# - INT (Intelligence), SPI (Spirit), LUK (Luck), CHA (Charisma)
+# primary-stat is required. secondary-stat is optional and only adds extra scaling.
+# required-stat-points always checks spent points in the primary stat only.
+# Each tier uses:
+# - required-skill-level: minimum skill level for that tier
+# - required-stat-points: minimum spent points in the primary stat for that tier
+# - potency = base-value + (primary points * primary-coefficient)
+#   + (secondary points * secondary-coefficient)
+# - hard-cap is optional; remove it to leave that tier uncapped
+# The resolved potency is the raw ability strength. The in-game description decides
+# whether that number behaves like a chance, multiplier, extra blocks, seconds, or something else.
+# Active ability settings:
+# - cooldown-seconds: cooldown after a successful cast
+# - duration-seconds: how long the active stays on; set 0 for instant effects only
+# - mana-cost: mana spent on cast
+# - activator-item: required main-hand item for click triggers; COMMAND casts ignore this item
+# - allowed-triggers: COMMAND, LEFT_CLICK, SHIFT_LEFT_CLICK, RIGHT_CLICK, SHIFT_RIGHT_CLICK
+#   Leave this list empty to allow every trigger here. stats.yml activation.allowed-modes
+#   still filters them server-wide, and RDA falls back to COMMAND if nothing overlaps.
+tree:
+  passives:
+    iron_skin:
+      key: iron_skin
+      name: Iron Skin
+      description-key: ra_config_descriptions.skills.defense.abilities.iron_skin
+      icon: IRON_CHESTPLATE
+      primary-stat: VIT
+      tiers:
+        t1:
+          required-skill-level: 10
+          required-stat-points: 1
+          base-value: 0.005
+          primary-coefficient: 0.002
+          secondary-coefficient: 0
+          hard-cap: 0.04
+        t2:
+          required-skill-level: 25
+          required-stat-points: 5
+          base-value: 0.01
+          primary-coefficient: 0.003
+          secondary-coefficient: 0
+          hard-cap: 0.07
+        t3:
+          required-skill-level: 50
+          required-stat-points: 10
+          base-value: 0.015
+          primary-coefficient: 0.003
+          secondary-coefficient: 0
+          hard-cap: 0.1
+        t4:
+          required-skill-level: 100
+          required-stat-points: 20
+          base-value: 0.02
+          primary-coefficient: 0.004
+          secondary-coefficient: 0
+          hard-cap: 0.14
+        t5:
+          required-skill-level: 250
+          required-stat-points: 35
+          base-value: 0.025
+          primary-coefficient: 0.004
+          secondary-coefficient: 0
+          hard-cap: 0.18
+    guard_stance:
+      key: guard_stance
+      name: Guard Stance
+      description-key: ra_config_descriptions.skills.defense.abilities.guard_stance
+      icon: SHIELD
+      primary-stat: VIT
+      secondary-stat: SPI
+      tiers:
+        t1:
+          required-skill-level: 10
+          required-stat-points: 1
+          base-value: 0.005
+          primary-coefficient: 0.002
+          secondary-coefficient: 0.001
+          hard-cap: 0.04
+        t2:
+          required-skill-level: 25
+          required-stat-points: 5
+          base-value: 0.01
+          primary-coefficient: 0.002
+          secondary-coefficient: 0.001
+          hard-cap: 0.07
+        t3:
+          required-skill-level: 50
+          required-stat-points: 10
+          base-value: 0.015
+          primary-coefficient: 0.003
+          secondary-coefficient: 0.002
+          hard-cap: 0.1
+        t4:
+          required-skill-level: 100
+          required-stat-points: 20
+          base-value: 0.02
+          primary-coefficient: 0.003
+          secondary-coefficient: 0.002
+          hard-cap: 0.14
+        t5:
+          required-skill-level: 250
+          required-stat-points: 35
+          base-value: 0.025
+          primary-coefficient: 0.004
+          secondary-coefficient: 0.002
+          hard-cap: 0.18
+    last_stand:
+      key: last_stand
+      name: Last Stand
+      description-key: ra_config_descriptions.skills.defense.abilities.last_stand
+      icon: TOTEM_OF_UNDYING
+      primary-stat: VIT
+      tiers:
+        t1:
+          required-skill-level: 10
+          required-stat-points: 1
+          base-value: 0.005
+          primary-coefficient: 0.002
+          secondary-coefficient: 0
+          hard-cap: 0.04
+        t2:
+          required-skill-level: 25
+          required-stat-points: 5
+          base-value: 0.01
+          primary-coefficient: 0.003
+          secondary-coefficient: 0
+          hard-cap: 0.07
+        t3:
+          required-skill-level: 50
+          required-stat-points: 10
+          base-value: 0.015
+          primary-coefficient: 0.003
+          secondary-coefficient: 0
+          hard-cap: 0.1
+        t4:
+          required-skill-level: 100
+          required-stat-points: 20
+          base-value: 0.02
+          primary-coefficient: 0.004
+          secondary-coefficient: 0
+          hard-cap: 0.14
+        t5:
+          required-skill-level: 250
+          required-stat-points: 35
+          base-value: 0.025
+          primary-coefficient: 0.004
+          secondary-coefficient: 0
+          hard-cap: 0.18
+    bulwark_recovery:
+      key: bulwark_recovery
+      name: Bulwark Recovery
+      description-key: ra_config_descriptions.skills.defense.abilities.bulwark_recovery
+      icon: GOLDEN_APPLE
+      primary-stat: VIT
+      secondary-stat: SPI
+      tiers:
+        t1:
+          required-skill-level: 10
+          required-stat-points: 1
+          base-value: 0.005
+          primary-coefficient: 0.002
+          secondary-coefficient: 0.001
+          hard-cap: 0.04
+        t2:
+          required-skill-level: 25
+          required-stat-points: 5
+          base-value: 0.01
+          primary-coefficient: 0.002
+          secondary-coefficient: 0.001
+          hard-cap: 0.07
+        t3:
+          required-skill-level: 50
+          required-stat-points: 10
+          base-value: 0.015
+          primary-coefficient: 0.003
+          secondary-coefficient: 0.002
+          hard-cap: 0.1
+        t4:
+          required-skill-level: 100
+          required-stat-points: 20
+          base-value: 0.02
+          primary-coefficient: 0.003
+          secondary-coefficient: 0.002
+          hard-cap: 0.14
+        t5:
+          required-skill-level: 250
+          required-stat-points: 35
+          base-value: 0.025
+          primary-coefficient: 0.004
+          secondary-coefficient: 0.002
+          hard-cap: 0.18
+    unshaken:
+      key: unshaken
+      name: Unshaken
+      description-key: ra_config_descriptions.skills.defense.abilities.unshaken
+      icon: NETHERITE_HELMET
+      primary-stat: VIT
+      secondary-stat: STR
+      tiers:
+        t1:
+          required-skill-level: 10
+          required-stat-points: 1
+          base-value: 0.005
+          primary-coefficient: 0.002
+          secondary-coefficient: 0.001
+          hard-cap: 0.04
+        t2:
+          required-skill-level: 25
+          required-stat-points: 5
+          base-value: 0.01
+          primary-coefficient: 0.002
+          secondary-coefficient: 0.001
+          hard-cap: 0.07
+        t3:
+          required-skill-level: 50
+          required-stat-points: 10
+          base-value: 0.015
+          primary-coefficient: 0.003
+          secondary-coefficient: 0.002
+          hard-cap: 0.1
+        t4:
+          required-skill-level: 100
+          required-stat-points: 20
+          base-value: 0.02
+          primary-coefficient: 0.003
+          secondary-coefficient: 0.002
+          hard-cap: 0.14
+        t5:
+          required-skill-level: 250
+          required-stat-points: 35
+          base-value: 0.025
+          primary-coefficient: 0.004
+          secondary-coefficient: 0.002
+          hard-cap: 0.18
+  active:
+    key: iron_guard
+    name: Iron Guard
+    description-key: ra_config_descriptions.skills.defense.abilities.iron_guard
+    icon: SHIELD
+    primary-stat: VIT
+    secondary-stat: SPI
+    tiers:
+        t1:
+          required-skill-level: 10
+          required-stat-points: 1
+          base-value: 0.02
+          primary-coefficient: 0.003
+          secondary-coefficient: 0.001
+          hard-cap: 0.08
+        t2:
+          required-skill-level: 25
+          required-stat-points: 5
+          base-value: 0.03
+          primary-coefficient: 0.004
+          secondary-coefficient: 0.002
+          hard-cap: 0.12
+        t3:
+          required-skill-level: 50
+          required-stat-points: 10
+          base-value: 0.04
+          primary-coefficient: 0.004
+          secondary-coefficient: 0.002
+          hard-cap: 0.16
+        t4:
+          required-skill-level: 100
+          required-stat-points: 20
+          base-value: 0.05
+          primary-coefficient: 0.005
+          secondary-coefficient: 0.003
+          hard-cap: 0.22
+        t5:
+          required-skill-level: 250
+          required-stat-points: 35
+          base-value: 0.06
+          primary-coefficient: 0.005
+          secondary-coefficient: 0.003
+          hard-cap: 0.28
+    active:
+      cooldown-seconds: 90
+      duration-seconds: 8
+      mana-cost: 30
+      activator-item: SHIELD
+      allowed-triggers:
+        - COMMAND
+        - RIGHT_CLICK
+        - SHIFT_RIGHT_CLICK

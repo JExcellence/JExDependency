@@ -1,0 +1,265 @@
+# Settings that control how skill progression turns into global ability points.
+ability-points:
+  # Default number of skill levels required to earn one global ability point.
+  # This is used unless stats.yml skill-overrides or a skill.yml override says otherwise.
+  default-interval: 5
+  # Optional per-skill overrides. Values must be positive whole numbers.
+  # Use these enum-style skill ids: MINING, WOODCUTTING, DEFENSE, FARMING, AGILITY,
+  # ARCHERY, ALCHEMY, ENCHANTING, EXCAVATION, CRAFTING, FISHING, FORAGING,
+  # TAMING, COOKING, FIGHTING, and SMITHING.
+  # skill-overrides:
+  #   MINING: 7
+  #   WOODCUTTING: 6
+
+# Per-stat menu metadata and passive scaling formulas.
+# Each stat section can use description-key (recommended, translation lookup) or
+# description (plain text fallback). passive.max is optional for every stat.
+stats:
+  # Vitality stat presentation and passive scaling.
+  vit:
+    # Bukkit material shown for this stat in menus.
+    icon: GOLDEN_APPLE
+    # Translation key for the short flavor text shown in the stat menu.
+    description-key: ra_config_descriptions.stats.vit
+    # Passive bonus settings resolved from spent stat points.
+    passive:
+      # Display label shown for the passive bonus in the UI.
+      label: "Max Health"
+      # Suffix appended to the resolved passive value.
+      unit: "HP"
+      # Starting passive value before any points are allocated.
+      base: 0.0
+      # Gain applied per point before the first soft cap.
+      full-rate: 1.0
+      # Gain applied per point between the first and second soft caps.
+      half-rate: 0.5
+      # Gain applied per point after the second soft cap.
+      quarter-rate: 0.25
+      # Point threshold where returns drop from full-rate to half-rate.
+      first-soft-cap: 20
+      # Point threshold where returns drop from half-rate to quarter-rate.
+      second-soft-cap: 40
+      # Maximum passive value allowed after all scaling is applied. Remove this key to disable the cap.
+      max: 40.0
+  # Strength stat presentation and passive scaling.
+  str:
+    # Bukkit material shown for this stat in menus.
+    icon: NETHERITE_SWORD
+    # Translation key for the short flavor text shown in the stat menu.
+    description-key: ra_config_descriptions.stats.str
+    # Passive bonus settings resolved from spent stat points.
+    passive:
+      # Display label shown for the passive bonus in the UI.
+      label: "Melee Damage"
+      # Suffix appended to the resolved passive value.
+      unit: "x"
+      # Starting passive value before any points are allocated.
+      base: 0.0
+      # Gain applied per point before the first soft cap.
+      full-rate: 0.02
+      # Gain applied per point between the first and second soft caps.
+      half-rate: 0.01
+      # Gain applied per point after the second soft cap.
+      quarter-rate: 0.005
+      # Point threshold where returns drop from full-rate to half-rate.
+      first-soft-cap: 20
+      # Point threshold where returns drop from half-rate to quarter-rate.
+      second-soft-cap: 40
+      # Maximum passive value allowed after all scaling is applied. Remove this key to disable the cap.
+      max: 1.0
+  # Agility stat presentation and passive scaling.
+  agi:
+    # Bukkit material shown for this stat in menus.
+    icon: FEATHER
+    # Translation key for the short flavor text shown in the stat menu.
+    description-key: ra_config_descriptions.stats.agi
+    # Passive bonus settings resolved from spent stat points.
+    passive:
+      # Display label shown for the passive bonus in the UI.
+      label: "Move Speed"
+      # Suffix appended to the resolved passive value.
+      unit: "x"
+      # Starting passive value before any points are allocated.
+      base: 0.0
+      # Gain applied per point before the first soft cap.
+      full-rate: 0.004
+      # Gain applied per point between the first and second soft caps.
+      half-rate: 0.002
+      # Gain applied per point after the second soft cap.
+      quarter-rate: 0.001
+      # Point threshold where returns drop from full-rate to half-rate.
+      first-soft-cap: 20
+      # Point threshold where returns drop from half-rate to quarter-rate.
+      second-soft-cap: 40
+      # Maximum passive value allowed after all scaling is applied. Remove this key to disable the cap.
+      max: 0.3
+  # Dexterity stat presentation and passive scaling.
+  dex:
+    # Bukkit material shown for this stat in menus.
+    icon: CROSSBOW
+    # Translation key for the short flavor text shown in the stat menu.
+    description-key: ra_config_descriptions.stats.dex
+    # Passive bonus settings resolved from spent stat points.
+    passive:
+      # Display label shown for the passive bonus in the UI.
+      label: "Projectile Damage"
+      # Suffix appended to the resolved passive value.
+      unit: "x"
+      # Starting passive value before any points are allocated.
+      base: 0.0
+      # Gain applied per point before the first soft cap.
+      full-rate: 0.02
+      # Gain applied per point between the first and second soft caps.
+      half-rate: 0.01
+      # Gain applied per point after the second soft cap.
+      quarter-rate: 0.005
+      # Point threshold where returns drop from full-rate to half-rate.
+      first-soft-cap: 20
+      # Point threshold where returns drop from half-rate to quarter-rate.
+      second-soft-cap: 40
+      # Maximum passive value allowed after all scaling is applied. Remove this key to disable the cap.
+      max: 1.0
+  # Intelligence stat presentation and passive scaling.
+  int:
+    # Bukkit material shown for this stat in menus.
+    icon: ENCHANTED_BOOK
+    # Translation key for the short flavor text shown in the stat menu.
+    description-key: ra_config_descriptions.stats.int
+    # Passive bonus settings resolved from spent stat points.
+    passive:
+      # Display label shown for the passive bonus in the UI.
+      label: "Process Efficiency"
+      # Suffix appended to the resolved passive value.
+      unit: "x"
+      # Starting passive value before any points are allocated.
+      base: 0.0
+      # Gain applied per point before the first soft cap.
+      full-rate: 0.015
+      # Gain applied per point between the first and second soft caps.
+      half-rate: 0.0075
+      # Gain applied per point after the second soft cap.
+      quarter-rate: 0.0035
+      # Point threshold where returns drop from full-rate to half-rate.
+      first-soft-cap: 20
+      # Point threshold where returns drop from half-rate to quarter-rate.
+      second-soft-cap: 40
+      # Maximum passive value allowed after all scaling is applied. Remove this key to disable the cap.
+      max: 0.8
+  # Spirit stat presentation and passive scaling.
+  spi:
+    # Bukkit material shown for this stat in menus.
+    icon: AMETHYST_SHARD
+    # Translation key for the short flavor text shown in the stat menu.
+    description-key: ra_config_descriptions.stats.spi
+    # Passive bonus settings resolved from spent stat points.
+    passive:
+      # Display label shown for the passive bonus in the UI.
+      label: "Mana Regen"
+      # Suffix appended to the resolved passive value.
+      unit: "/s"
+      # Starting passive value before any points are allocated.
+      base: 0.0
+      # Gain applied per point before the first soft cap.
+      full-rate: 0.15
+      # Gain applied per point between the first and second soft caps.
+      half-rate: 0.08
+      # Gain applied per point after the second soft cap.
+      quarter-rate: 0.04
+      # Point threshold where returns drop from full-rate to half-rate.
+      first-soft-cap: 20
+      # Point threshold where returns drop from half-rate to quarter-rate.
+      second-soft-cap: 40
+      # Maximum passive value allowed after all scaling is applied. Remove this key to disable the cap.
+      max: 8.0
+  # Luck stat presentation and passive scaling.
+  luk:
+    # Bukkit material shown for this stat in menus.
+    icon: RABBIT_FOOT
+    # Translation key for the short flavor text shown in the stat menu.
+    description-key: ra_config_descriptions.stats.luk
+    # Passive bonus settings resolved from spent stat points.
+    passive:
+      # Display label shown for the passive bonus in the UI.
+      label: "Fortune Rate"
+      # Suffix appended to the resolved passive value.
+      unit: "x"
+      # Starting passive value before any points are allocated.
+      base: 0.0
+      # Gain applied per point before the first soft cap.
+      full-rate: 0.02
+      # Gain applied per point between the first and second soft caps.
+      half-rate: 0.01
+      # Gain applied per point after the second soft cap.
+      quarter-rate: 0.005
+      # Point threshold where returns drop from full-rate to half-rate.
+      first-soft-cap: 20
+      # Point threshold where returns drop from half-rate to quarter-rate.
+      second-soft-cap: 40
+      # Maximum passive value allowed after all scaling is applied. Remove this key to disable the cap.
+      max: 1.0
+  # Charisma stat presentation and passive scaling.
+  cha:
+    # Bukkit material shown for this stat in menus.
+    icon: EMERALD
+    # Translation key for the short flavor text shown in the stat menu.
+    description-key: ra_config_descriptions.stats.cha
+    # Passive bonus settings resolved from spent stat points.
+    passive:
+      # Display label shown for the passive bonus in the UI.
+      label: "Support Bonus"
+      # Suffix appended to the resolved passive value.
+      unit: "x"
+      # Starting passive value before any points are allocated.
+      base: 0.0
+      # Gain applied per point before the first soft cap.
+      full-rate: 0.015
+      # Gain applied per point between the first and second soft caps.
+      half-rate: 0.008
+      # Gain applied per point after the second soft cap.
+      quarter-rate: 0.004
+      # Point threshold where returns drop from full-rate to half-rate.
+      first-soft-cap: 20
+      # Point threshold where returns drop from half-rate to quarter-rate.
+      second-soft-cap: 40
+      # Maximum passive value allowed after all scaling is applied. Remove this key to disable the cap.
+      max: 0.75
+
+# Global allowlist for which input modes can trigger active abilities.
+activation:
+  # Supported modes: COMMAND, LEFT_CLICK, SHIFT_LEFT_CLICK, RIGHT_CLICK, SHIFT_RIGHT_CLICK.
+  # Leave this list empty to allow every mode server-wide.
+  # A skill still has to allow the mode in its own active.allowed-triggers list.
+  # If the two lists have no overlap, RDA falls back to COMMAND.
+  allowed-modes:
+    - COMMAND
+    - LEFT_CLICK
+    - SHIFT_LEFT_CLICK
+    - RIGHT_CLICK
+    - SHIFT_RIGHT_CLICK
+
+# Manual respec restrictions and costs.
+respec:
+  # Cooldown in seconds after a player manually resets all spent stat points. Use 0 to disable the cooldown.
+  cooldown-seconds: 43200
+  # Percent of each skill's total stored progression XP removed before earned ability points are recalculated. Use 0 to disable the tax.
+  point-tax-percent: 0
+
+# Shared mana pool defaults and SPI scaling.
+mana:
+  # Base maximum mana before SPI bonuses are applied.
+  base: 100.0
+  # Extra maximum mana granted for each spent SPI point.
+  per-spi-point: 5.0
+  # Base mana regenerated each second before SPI bonuses are applied.
+  base-regen-per-second: 1.0
+  # Extra mana regenerated each second for each spent SPI point.
+  regen-per-spi-point: 0.3
+  # Default HUD mode assigned to new players.
+  # Supported modes:
+  # - ACTION_BAR: show mana in the action bar
+  # - BOSS_BAR: show mana in a boss bar
+  # - ALWAYS_VISIBLE: show both boss bar and action bar updates
+  # - MENUS_ONLY: hide the live HUD and rely on menus/manual messages instead
+  default-display-mode: ACTION_BAR
+  # Reserved low-mana threshold percentage. RDA currently loads this value but does not apply automatic low-mana behavior to it yet.
+  low-threshold-percent: 20.0

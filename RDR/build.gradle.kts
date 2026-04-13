@@ -5,7 +5,7 @@ plugins {
 
 group = "com.raindropcentral.rdr"
 version = "5.0.0"
-description = "RDR - Raindrop Distributed Resources"
+description = "RDR - Raindrop Reserve"
 
 tasks.register("publishLocal") {
     group = "publishing"

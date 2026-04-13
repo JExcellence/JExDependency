@@ -4,9 +4,11 @@ commands:
     description: 'RDT GUI and travel commands'
     aliases:
       - rt
-    usage: 'rt <main | spawn | fob | bank>'
+    usage: 'rt <main | spawn | fob | bank | serverbank | tax>'
     argumentUsages:
-      1$: 'lut["prefix"] & "&7/" & alias & " &c<main | spawn | fob | bank>"'
+      1$: 'lut["prefix"] & "&7/" & alias & " &c<main | spawn | fob | bank | serverbank | tax>"'
+      2$: 'lut["prefix"] & "&7/" & alias & " tax &c<status | run>"'
+      3$: 'lut["prefix"] & "&7/" & alias & " serverbank &c<balance | set | add | take> <currency> [amount]"'
     errorMessages:
       malformedEnum$: |
         lut["prefix"] & "&7The value &c" & value & " &7is not one of (" &
@@ -29,6 +31,8 @@ commands:
         spawnCommand: 'raindroptowns.command.spawn'
         fobCommand: 'raindroptowns.command.fob'
         bankCommand: 'raindroptowns.command.bank'
+        serverBankCommand: 'raindroptowns.command.serverbank'
+        taxCommand: 'raindroptowns.command.tax'
 
 lut:
   prefix: '&8[&9RDT&8] &7'

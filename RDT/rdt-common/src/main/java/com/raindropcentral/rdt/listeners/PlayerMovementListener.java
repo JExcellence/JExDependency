@@ -52,6 +52,9 @@ public class PlayerMovementListener implements Listener {
         if (this.plugin.getTownBossBarService() != null) {
             this.plugin.getTownBossBarService().refreshPlayer(event.getPlayer());
         }
+        if (this.plugin.getTaxRuntimeService() != null) {
+            this.plugin.getTaxRuntimeService().handlePlayerJoin(event.getPlayer());
+        }
     }
 
     /**

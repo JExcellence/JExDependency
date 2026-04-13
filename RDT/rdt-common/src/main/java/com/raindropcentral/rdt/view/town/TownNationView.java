@@ -21,6 +21,7 @@ import com.raindropcentral.rdt.database.entity.RTown;
 import com.raindropcentral.rdt.service.LevelProgressSnapshot;
 import com.raindropcentral.rdt.service.NationActionResult;
 import com.raindropcentral.rdt.service.NationActionStatus;
+import com.raindropcentral.rdt.service.NationBankService;
 import com.raindropcentral.rdt.service.NationCreationProgressSnapshot;
 import com.raindropcentral.rdt.service.NationInviteResponseResult;
 import com.raindropcentral.rdt.service.TownRuntimeService;
@@ -76,7 +77,7 @@ public final class TownNationView extends BaseView {
             "    s    ",
             "  a b c  ",
             "  d e f  ",
-            "    g    ",
+            "   g h   ",
             "         ",
             "r        "
         };
@@ -282,6 +283,8 @@ public final class TownNationView extends BaseView {
                 this.plugin.get(render).getTownRuntimeService().getNationLevelProgress(render.getPlayer(), town)
             ))
             .onClick(clickContext -> this.handleProgressionClick(clickContext, town));
+        render.layoutSlot('h', this.createManageItem(render.getPlayer(), "nation_bank"))
+            .onClick(clickContext -> this.handleNationBankClick(clickContext, town, nation));
     }
 
     private void renderActiveMemberState(
@@ -319,6 +322,8 @@ public final class TownNationView extends BaseView {
                 this.plugin.get(render).getTownRuntimeService().getNationLevelProgress(render.getPlayer(), town)
             ))
             .onClick(clickContext -> this.handleProgressionClick(clickContext, town));
+        render.layoutSlot('h', this.createManageItem(render.getPlayer(), "nation_bank"))
+            .onClick(clickContext -> this.handleNationBankClick(clickContext, town, nation));
     }
 
     private void handleCreateNationClick(
@@ -340,6 +345,33 @@ public final class TownNationView extends BaseView {
         clickContext.openForPlayer(
             TownLevelProgressView.class,
             TownLevelViewSupport.createNationNavigationData(clickContext, town)
+        );
+    }
+
+    private void handleNationBankClick(
+        final @NotNull SlotClickContext clickContext,
+        final @NotNull RTown town,
+        final @NotNull RNation nation
+    ) {
+        final NationBankService bankService = this.plugin.get(clickContext).getNationBankService();
+        if (bankService == null) {
+            new I18n.Builder("nation_bank_shared.messages.unavailable", clickContext.getPlayer())
+                .includePrefix()
+                .build()
+                .sendMessage();
+            return;
+        }
+        if (!bankService.canViewBank(clickContext.getPlayer(), nation)) {
+            new I18n.Builder("nation_bank_shared.messages.no_permission", clickContext.getPlayer())
+                .includePrefix()
+                .build()
+                .sendMessage();
+            return;
+        }
+
+        clickContext.openForPlayer(
+            NationBankRootView.class,
+            TownNationViewSupport.createNationNavigationData(clickContext, town, nation)
         );
     }
 
@@ -652,6 +684,7 @@ public final class TownNationView extends BaseView {
             case "promote" -> Material.GOLD_INGOT;
             case "leave" -> Material.OAK_DOOR;
             case "disband" -> Material.TNT;
+            case "nation_bank" -> Material.BARREL;
             default -> Material.PAPER;
         };
         return UnifiedBuilderFactory.item(material)

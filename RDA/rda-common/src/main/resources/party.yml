@@ -1,0 +1,25 @@
+# Maximum party size including the leader.
+# Use 0 or any negative value for unlimited size.
+max-members: 4
+
+# Pending invites expire after this many seconds.
+invite-timeout-seconds: 300
+
+# XP sharing starts from the event's pre-prestige base XP value.
+# Each player then applies their own prestige bonus to the share they receive.
+xp-share:
+  # Fraction of the base XP kept by the earner when at least one other party member
+  # is eligible to receive a share. If nobody qualifies, the earner keeps 100% instead.
+  # Example: 0.75 gives the earner 75% of the base XP before their prestige bonus.
+  self: 0.75
+
+  # Fraction of the base XP pool shared across eligible party members.
+  # This total is split as evenly as possible among online members in the same world
+  # and inside range-blocks. Values above 1.0 are allowed for bonus party XP.
+  # Example: self=1.0 and others-total=0.25 gives the earner full base XP and
+  # another 25% spread across nearby party members.
+  others-total: 0.25
+
+  # Only online party members in the same world, within this many blocks, and not in
+  # Creative or Spectator receive shared XP.
+  range-blocks: 32.0

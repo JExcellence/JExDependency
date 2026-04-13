@@ -1,0 +1,46 @@
+commands:
+  pra:
+    name: 'pra'
+    description: 'RDA commands'
+    aliases:
+      - ra
+    usage: 'ra <main|cast|party>'
+    argumentUsages:
+      1$: 'lut["prefix"] & "&7/" & alias & " &c<main|cast|party>"'
+      2$: 'lut["prefix"] & "&7/" & alias & " cast &c<skill>"'
+      3$: 'lut["prefix"] & "&7/" & alias & " party &c<info|invite|accept|decline|leave|kick|disband>"'
+      4$: 'lut["prefix"] & "&7/" & alias & " party &c<invite|accept|decline|kick> <player>"'
+    errorMessages:
+      malformedEnum$: |
+        lut["prefix"] & "&7The value &c" & value & " &7is not one of (" &
+        iter_cat(constant_names, (constant_name) => "&c" & constant_name, "&7, ", "&cNo values available") &
+        "&7)"
+      playerNotOnline$: 'lut["prefix"] & "&7The player &c" & value & " &7is &cnot online"'
+      playerUnknown$: 'lut["prefix"] & "&7The player &c" & value & " &7has &cnot played &7on this server before"'
+      internalError$: 'lut["prefix"] & "&4An internal error occurred"'
+      notAConsole$: 'lut["prefix"] & "&cYou can only execute this command in the console"'
+      notAPlayer$: 'lut["prefix"] & "&7This command can only be executed as a &cplayer"'
+      malformedDouble$: 'lut["prefix"] & "&7The value &c" & value & " &7is not a valid &cdouble"'
+      malformedFloat$: 'lut["prefix"] & "&7The value &c" & value & " &7is not a valid &cfloat"'
+      malformedLong$: 'lut["prefix"] & "&7The value &c" & value & " &7is not a valid &clong"'
+      malformedInteger$: 'lut["prefix"] & "&7The value &c" & value & " &7is not a valid &cinteger"'
+    permissions:
+      missingMessage$: 'lut["prefix"] & "&7You are lacking the permission &c" & permission'
+      nodes:
+        player: 'raindropabilities.player'
+        command: 'raindropabilities.command'
+        commandMain: 'raindropabilities.command.main'
+        commandCast: 'raindropabilities.command.cast'
+        commandParty: 'raindropabilities.command.party'
+    permissionParents:
+      player:
+        - commandMain
+        - commandCast
+        - commandParty
+      command:
+        - commandMain
+        - commandCast
+        - commandParty
+
+lut:
+  prefix: '&8[&bRDA&8] &7'

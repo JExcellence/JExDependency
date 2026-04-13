@@ -68,6 +68,27 @@ jobs:
               return $parsedValue
           }
 
+          function TryGet-IntegerProperty {
+              param(
+                  [Parameter(Mandatory = $true)][string]$Content,
+                  [Parameter(Mandatory = $true)][string]$Key,
+                  [ref]$OutValue
+              )
+
+              $value = ""
+              if (-not (TryGet-PropertyValue -Content $Content -Key $Key -OutValue ([ref]$value))) {
+                  return $false
+              }
+
+              $parsedValue = 0
+              if (-not [int]::TryParse($value, [ref]$parsedValue)) {
+                  throw "Property '$Key' must be an integer but was '$value'."
+              }
+
+              $OutValue.Value = $parsedValue
+              return $true
+          }
+
           git rev-parse --verify HEAD^ | Out-Null
           if ($LASTEXITCODE -ne 0) {
               Write-Host "No parent commit available. Skipping commit counter validation."
@@ -129,14 +150,14 @@ jobs:
               @{ Name = "RDQ"; Directory = "RDQ"; BuildKey = "rdq.version.build" },
               @{ Name = "RDR"; Directory = "RDR"; BuildKey = "rdr.version.build" },
               @{ Name = "RDS"; Directory = "RDS"; BuildKey = "rds.version.build" },
-              @{ Name = "RDT"; Directory = "RDT"; BuildKey = "rdt.version.build" }
+              @{ Name = "RDT"; Directory = "RDT"; BuildKey = "rdt.version.build" },
+              @{ Name = "RDA"; Directory = "RDA"; BuildKey = "rda.version.build" }
           )
 
           $errors = New-Object System.Collections.Generic.List[string]
           $summaryLines = New-Object System.Collections.Generic.List[string]
 
           foreach ($module in $modules) {
-              $previousBuild = Get-IntegerProperty -Content $previousProperties -Key $module.BuildKey
               $currentBuild = Get-IntegerProperty -Content $currentProperties -Key $module.BuildKey
 
               $affectedCommitCount = 0
@@ -152,6 +173,14 @@ jobs:
                   if ($hasModuleChange) {
                       $affectedCommitCount++
                   }
+              }
+
+              $previousBuild = 0
+              if (-not (TryGet-IntegerProperty -Content $previousProperties -Key $module.BuildKey -OutValue ([ref]$previousBuild))) {
+                  $summaryLines.Add(
+                      "$($module.Name): $($module.BuildKey) introduced at $currentBuild (baseline established)"
+                  )
+                  continue
               }
 
               $expectedBuild = $previousBuild + $affectedCommitCount

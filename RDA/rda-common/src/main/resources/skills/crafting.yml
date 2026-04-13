@@ -1,0 +1,834 @@
+﻿# Set to false to disable this skill without deleting its rates.
+enabled: true
+
+# Bukkit material used for this skill's icon in the menu.
+display:
+  icon: CRAFTING_TABLE
+
+# Shared level and prestige settings for this skill.
+progression:
+  # Soft cap for normal leveling. Before the final prestige, players stop gaining new
+  # levels here, but extra XP is still stored until they prestige.
+  soft-max-level: 1000
+  # Final prestige count for this skill. After a player reaches this many prestiges,
+  # levels can continue past the soft cap as overlevels.
+  max-prestiges: 10
+  # Prestige settings shared by every XP source in this skill.
+  prestige:
+    # Supported prestige trigger values:
+    # - MANUAL: players must choose to prestige after reaching the soft cap.
+    #   This is the only trigger RDA currently supports.
+    trigger: MANUAL
+    # Extra XP percent granted per completed prestige.
+    # This bonus is applied after party sharing splits the base XP award.
+    xp-bonus-per-prestige-percent: 10
+  # XP curve settings used to calculate the next level requirement.
+  level-formula:
+    # Supported formula types:
+    # - POWER: xp_to_next(level) = base_xp + growth * pow(level + 1, exponent)
+    #   This is the only formula type RDA currently supports.
+    type: POWER
+    # Flat XP added into each next-level calculation.
+    base-xp: 50
+    # Growth multiplier applied to the POWER formula before exponent scaling.
+    growth: 4.0
+    # Exponent applied to (level + 1) in the POWER formula.
+    exponent: 1.20
+    # Supported rounding modes:
+    # - FLOOR: round the final XP requirement down to a whole number.
+    #   This is the only rounding mode RDA currently supports.
+    rounding: FLOOR
+    # Human-readable formula reference for admins. RDA does not parse this value.
+    formula-doc: "xp_to_next(level) = floor(base_xp + growth * pow(level + 1, exponent))"
+
+# Ordered XP sources. RDA checks these from top to bottom in gameplay and shows
+# them in the same order in the GUI.
+# Keep one target per rate. If multiple materials, items, entities, or projectile kinds
+# should give different XP, split them into separate rate entries instead of grouping them.
+# Leaving a selector out makes that filter match anything for that rate.
+# description-key points to translations. If you prefer plain text here, replace it with
+# description: "Your text here".
+# Supported trigger values:
+# - BLOCK_BREAK: breaking a matching block
+# - BLOCK_TRAVEL: moving the configured distance on foot
+# - CHUNK_DISCOVERY: entering an unvisited chunk for the first time
+# - ENTITY_DAMAGE: dealing damage to a hostile mob or player
+# - DAMAGE_TAKEN: taking damage
+# - SHIELD_BLOCK: blocking damage with a shield
+# - BREW_COLLECT: taking brewed potions from a brewing stand
+# - ENCHANT_TABLE: enchanting an item in an enchanting table
+# - ANVIL_ENCHANT: applying or upgrading enchantments in an anvil
+# - CRAFT_RESULT: taking a crafted result
+# - FISH_CATCH: catching fish or loot with a fishing rod
+# - TAME_SUCCESS: taming a creature
+# - TAMED_KILL: a tamed creature landing the killing blow
+# - FURNACE_COLLECT: taking smelted output from a furnace, smoker, or blast furnace
+# - HONEY_COLLECT: harvesting honey with the required item
+# Selector keys:
+# - material: match one Bukkit Material
+# - entity-type: match one Bukkit EntityType
+# - required-item: require one item material for that trigger
+# - projectile-kind: ARROW, TIPPED_ARROW, or SPECTRAL_ARROW
+# Optional flags:
+# - require-fully-grown: only ageable blocks at max growth count
+# - hostile-only: only hostile mobs count
+# - player-only: only player victims count
+# - exclude-same-town: ignore same-town PvP when the protection bridge can resolve both towns
+# - distance: blocks of movement needed for one BLOCK_TRAVEL XP award
+# - required-tool: ANY, PICKAXE, AXE, SHOVEL, or HOE
+rates:
+  crafting_table:
+    label: "Crafting Table"
+    description-key: ra_config_descriptions.skills.crafting.rates.crafting_table
+    icon: CRAFTING_TABLE
+    trigger: CRAFT_RESULT
+    xp: 6
+    material: CRAFTING_TABLE
+  furnace:
+    label: "Furnace"
+    description-key: ra_config_descriptions.skills.crafting.rates.furnace
+    icon: FURNACE
+    trigger: CRAFT_RESULT
+    xp: 6
+    material: FURNACE
+  blast_furnace:
+    label: "Blast Furnace"
+    description-key: ra_config_descriptions.skills.crafting.rates.blast_furnace
+    icon: BLAST_FURNACE
+    trigger: CRAFT_RESULT
+    xp: 6
+    material: BLAST_FURNACE
+  smoker:
+    label: "Smoker"
+    description-key: ra_config_descriptions.skills.crafting.rates.smoker
+    icon: SMOKER
+    trigger: CRAFT_RESULT
+    xp: 6
+    material: SMOKER
+  chest:
+    label: "Chest"
+    description-key: ra_config_descriptions.skills.crafting.rates.chest
+    icon: CHEST
+    trigger: CRAFT_RESULT
+    xp: 6
+    material: CHEST
+  barrel:
+    label: "Barrel"
+    description-key: ra_config_descriptions.skills.crafting.rates.barrel
+    icon: BARREL
+    trigger: CRAFT_RESULT
+    xp: 6
+    material: BARREL
+  hopper:
+    label: "Hopper"
+    description-key: ra_config_descriptions.skills.crafting.rates.hopper
+    icon: HOPPER
+    trigger: CRAFT_RESULT
+    xp: 6
+    material: HOPPER
+  compass:
+    label: "Compass"
+    description-key: ra_config_descriptions.skills.crafting.rates.compass
+    icon: COMPASS
+    trigger: CRAFT_RESULT
+    xp: 6
+    material: COMPASS
+  clock:
+    label: "Clock"
+    description-key: ra_config_descriptions.skills.crafting.rates.clock
+    icon: CLOCK
+    trigger: CRAFT_RESULT
+    xp: 6
+    material: CLOCK
+  shield:
+    label: "Shield"
+    description-key: ra_config_descriptions.skills.crafting.rates.shield
+    icon: SHIELD
+    trigger: CRAFT_RESULT
+    xp: 6
+    material: SHIELD
+  bow:
+    label: "Bow"
+    description-key: ra_config_descriptions.skills.crafting.rates.bow
+    icon: BOW
+    trigger: CRAFT_RESULT
+    xp: 6
+    material: BOW
+  crossbow:
+    label: "Crossbow"
+    description-key: ra_config_descriptions.skills.crafting.rates.crossbow
+    icon: CROSSBOW
+    trigger: CRAFT_RESULT
+    xp: 6
+    material: CROSSBOW
+  fishing_rod:
+    label: "Fishing Rod"
+    description-key: ra_config_descriptions.skills.crafting.rates.fishing_rod
+    icon: FISHING_ROD
+    trigger: CRAFT_RESULT
+    xp: 6
+    material: FISHING_ROD
+  shears:
+    label: "Shears"
+    description-key: ra_config_descriptions.skills.crafting.rates.shears
+    icon: SHEARS
+    trigger: CRAFT_RESULT
+    xp: 6
+    material: SHEARS
+  lead:
+    label: "Lead"
+    description-key: ra_config_descriptions.skills.crafting.rates.lead
+    icon: LEAD
+    trigger: CRAFT_RESULT
+    xp: 6
+    material: LEAD
+  bucket:
+    label: "Bucket"
+    description-key: ra_config_descriptions.skills.crafting.rates.bucket
+    icon: BUCKET
+    trigger: CRAFT_RESULT
+    xp: 6
+    material: BUCKET
+  armor_stand:
+    label: "Armor Stand"
+    description-key: ra_config_descriptions.skills.crafting.rates.armor_stand
+    icon: ARMOR_STAND
+    trigger: CRAFT_RESULT
+    xp: 6
+    material: ARMOR_STAND
+  item_frame:
+    label: "Item Frame"
+    description-key: ra_config_descriptions.skills.crafting.rates.item_frame
+    icon: ITEM_FRAME
+    trigger: CRAFT_RESULT
+    xp: 6
+    material: ITEM_FRAME
+  brewing_stand:
+    label: "Brewing Stand"
+    description-key: ra_config_descriptions.skills.crafting.rates.brewing_stand
+    icon: BREWING_STAND
+    trigger: CRAFT_RESULT
+    xp: 6
+    material: BREWING_STAND
+  enchanting_table:
+    label: "Enchanting Table"
+    description-key: ra_config_descriptions.skills.crafting.rates.enchanting_table
+    icon: ENCHANTING_TABLE
+    trigger: CRAFT_RESULT
+    xp: 6
+    material: ENCHANTING_TABLE
+  anvil:
+    label: "Anvil"
+    description-key: ra_config_descriptions.skills.crafting.rates.anvil
+    icon: ANVIL
+    trigger: CRAFT_RESULT
+    xp: 6
+    material: ANVIL
+  wooden_pickaxe:
+    label: "Wooden Pickaxe"
+    description-key: ra_config_descriptions.skills.crafting.rates.wooden_pickaxe
+    icon: WOODEN_PICKAXE
+    trigger: CRAFT_RESULT
+    xp: 10
+    material: WOODEN_PICKAXE
+  wooden_axe:
+    label: "Wooden Axe"
+    description-key: ra_config_descriptions.skills.crafting.rates.wooden_axe
+    icon: WOODEN_AXE
+    trigger: CRAFT_RESULT
+    xp: 10
+    material: WOODEN_AXE
+  wooden_shovel:
+    label: "Wooden Shovel"
+    description-key: ra_config_descriptions.skills.crafting.rates.wooden_shovel
+    icon: WOODEN_SHOVEL
+    trigger: CRAFT_RESULT
+    xp: 10
+    material: WOODEN_SHOVEL
+  wooden_hoe:
+    label: "Wooden Hoe"
+    description-key: ra_config_descriptions.skills.crafting.rates.wooden_hoe
+    icon: WOODEN_HOE
+    trigger: CRAFT_RESULT
+    xp: 10
+    material: WOODEN_HOE
+  stone_pickaxe:
+    label: "Stone Pickaxe"
+    description-key: ra_config_descriptions.skills.crafting.rates.stone_pickaxe
+    icon: STONE_PICKAXE
+    trigger: CRAFT_RESULT
+    xp: 10
+    material: STONE_PICKAXE
+  stone_axe:
+    label: "Stone Axe"
+    description-key: ra_config_descriptions.skills.crafting.rates.stone_axe
+    icon: STONE_AXE
+    trigger: CRAFT_RESULT
+    xp: 10
+    material: STONE_AXE
+  stone_shovel:
+    label: "Stone Shovel"
+    description-key: ra_config_descriptions.skills.crafting.rates.stone_shovel
+    icon: STONE_SHOVEL
+    trigger: CRAFT_RESULT
+    xp: 10
+    material: STONE_SHOVEL
+  stone_hoe:
+    label: "Stone Hoe"
+    description-key: ra_config_descriptions.skills.crafting.rates.stone_hoe
+    icon: STONE_HOE
+    trigger: CRAFT_RESULT
+    xp: 10
+    material: STONE_HOE
+  iron_pickaxe:
+    label: "Iron Pickaxe"
+    description-key: ra_config_descriptions.skills.crafting.rates.iron_pickaxe
+    icon: IRON_PICKAXE
+    trigger: CRAFT_RESULT
+    xp: 10
+    material: IRON_PICKAXE
+  iron_axe:
+    label: "Iron Axe"
+    description-key: ra_config_descriptions.skills.crafting.rates.iron_axe
+    icon: IRON_AXE
+    trigger: CRAFT_RESULT
+    xp: 10
+    material: IRON_AXE
+  iron_shovel:
+    label: "Iron Shovel"
+    description-key: ra_config_descriptions.skills.crafting.rates.iron_shovel
+    icon: IRON_SHOVEL
+    trigger: CRAFT_RESULT
+    xp: 10
+    material: IRON_SHOVEL
+  iron_hoe:
+    label: "Iron Hoe"
+    description-key: ra_config_descriptions.skills.crafting.rates.iron_hoe
+    icon: IRON_HOE
+    trigger: CRAFT_RESULT
+    xp: 10
+    material: IRON_HOE
+  golden_pickaxe:
+    label: "Golden Pickaxe"
+    description-key: ra_config_descriptions.skills.crafting.rates.golden_pickaxe
+    icon: GOLDEN_PICKAXE
+    trigger: CRAFT_RESULT
+    xp: 10
+    material: GOLDEN_PICKAXE
+  golden_axe:
+    label: "Golden Axe"
+    description-key: ra_config_descriptions.skills.crafting.rates.golden_axe
+    icon: GOLDEN_AXE
+    trigger: CRAFT_RESULT
+    xp: 10
+    material: GOLDEN_AXE
+  golden_shovel:
+    label: "Golden Shovel"
+    description-key: ra_config_descriptions.skills.crafting.rates.golden_shovel
+    icon: GOLDEN_SHOVEL
+    trigger: CRAFT_RESULT
+    xp: 10
+    material: GOLDEN_SHOVEL
+  golden_hoe:
+    label: "Golden Hoe"
+    description-key: ra_config_descriptions.skills.crafting.rates.golden_hoe
+    icon: GOLDEN_HOE
+    trigger: CRAFT_RESULT
+    xp: 10
+    material: GOLDEN_HOE
+  diamond_pickaxe:
+    label: "Diamond Pickaxe"
+    description-key: ra_config_descriptions.skills.crafting.rates.diamond_pickaxe
+    icon: DIAMOND_PICKAXE
+    trigger: CRAFT_RESULT
+    xp: 10
+    material: DIAMOND_PICKAXE
+  diamond_axe:
+    label: "Diamond Axe"
+    description-key: ra_config_descriptions.skills.crafting.rates.diamond_axe
+    icon: DIAMOND_AXE
+    trigger: CRAFT_RESULT
+    xp: 10
+    material: DIAMOND_AXE
+  diamond_shovel:
+    label: "Diamond Shovel"
+    description-key: ra_config_descriptions.skills.crafting.rates.diamond_shovel
+    icon: DIAMOND_SHOVEL
+    trigger: CRAFT_RESULT
+    xp: 10
+    material: DIAMOND_SHOVEL
+  diamond_hoe:
+    label: "Diamond Hoe"
+    description-key: ra_config_descriptions.skills.crafting.rates.diamond_hoe
+    icon: DIAMOND_HOE
+    trigger: CRAFT_RESULT
+    xp: 10
+    material: DIAMOND_HOE
+  netherite_pickaxe:
+    label: "Netherite Pickaxe"
+    description-key: ra_config_descriptions.skills.crafting.rates.netherite_pickaxe
+    icon: NETHERITE_PICKAXE
+    trigger: CRAFT_RESULT
+    xp: 10
+    material: NETHERITE_PICKAXE
+  netherite_axe:
+    label: "Netherite Axe"
+    description-key: ra_config_descriptions.skills.crafting.rates.netherite_axe
+    icon: NETHERITE_AXE
+    trigger: CRAFT_RESULT
+    xp: 10
+    material: NETHERITE_AXE
+  netherite_shovel:
+    label: "Netherite Shovel"
+    description-key: ra_config_descriptions.skills.crafting.rates.netherite_shovel
+    icon: NETHERITE_SHOVEL
+    trigger: CRAFT_RESULT
+    xp: 10
+    material: NETHERITE_SHOVEL
+  netherite_hoe:
+    label: "Netherite Hoe"
+    description-key: ra_config_descriptions.skills.crafting.rates.netherite_hoe
+    icon: NETHERITE_HOE
+    trigger: CRAFT_RESULT
+    xp: 10
+    material: NETHERITE_HOE
+  leather_helmet:
+    label: "Leather Helmet"
+    description-key: ra_config_descriptions.skills.crafting.rates.leather_helmet
+    icon: LEATHER_HELMET
+    trigger: CRAFT_RESULT
+    xp: 12
+    material: LEATHER_HELMET
+  leather_chestplate:
+    label: "Leather Chestplate"
+    description-key: ra_config_descriptions.skills.crafting.rates.leather_chestplate
+    icon: LEATHER_CHESTPLATE
+    trigger: CRAFT_RESULT
+    xp: 12
+    material: LEATHER_CHESTPLATE
+  leather_leggings:
+    label: "Leather Leggings"
+    description-key: ra_config_descriptions.skills.crafting.rates.leather_leggings
+    icon: LEATHER_LEGGINGS
+    trigger: CRAFT_RESULT
+    xp: 12
+    material: LEATHER_LEGGINGS
+  leather_boots:
+    label: "Leather Boots"
+    description-key: ra_config_descriptions.skills.crafting.rates.leather_boots
+    icon: LEATHER_BOOTS
+    trigger: CRAFT_RESULT
+    xp: 12
+    material: LEATHER_BOOTS
+  iron_helmet:
+    label: "Iron Helmet"
+    description-key: ra_config_descriptions.skills.crafting.rates.iron_helmet
+    icon: IRON_HELMET
+    trigger: CRAFT_RESULT
+    xp: 12
+    material: IRON_HELMET
+  iron_chestplate:
+    label: "Iron Chestplate"
+    description-key: ra_config_descriptions.skills.crafting.rates.iron_chestplate
+    icon: IRON_CHESTPLATE
+    trigger: CRAFT_RESULT
+    xp: 12
+    material: IRON_CHESTPLATE
+  iron_leggings:
+    label: "Iron Leggings"
+    description-key: ra_config_descriptions.skills.crafting.rates.iron_leggings
+    icon: IRON_LEGGINGS
+    trigger: CRAFT_RESULT
+    xp: 12
+    material: IRON_LEGGINGS
+  iron_boots:
+    label: "Iron Boots"
+    description-key: ra_config_descriptions.skills.crafting.rates.iron_boots
+    icon: IRON_BOOTS
+    trigger: CRAFT_RESULT
+    xp: 12
+    material: IRON_BOOTS
+  golden_helmet:
+    label: "Golden Helmet"
+    description-key: ra_config_descriptions.skills.crafting.rates.golden_helmet
+    icon: GOLDEN_HELMET
+    trigger: CRAFT_RESULT
+    xp: 12
+    material: GOLDEN_HELMET
+  golden_chestplate:
+    label: "Golden Chestplate"
+    description-key: ra_config_descriptions.skills.crafting.rates.golden_chestplate
+    icon: GOLDEN_CHESTPLATE
+    trigger: CRAFT_RESULT
+    xp: 12
+    material: GOLDEN_CHESTPLATE
+  golden_leggings:
+    label: "Golden Leggings"
+    description-key: ra_config_descriptions.skills.crafting.rates.golden_leggings
+    icon: GOLDEN_LEGGINGS
+    trigger: CRAFT_RESULT
+    xp: 12
+    material: GOLDEN_LEGGINGS
+  golden_boots:
+    label: "Golden Boots"
+    description-key: ra_config_descriptions.skills.crafting.rates.golden_boots
+    icon: GOLDEN_BOOTS
+    trigger: CRAFT_RESULT
+    xp: 12
+    material: GOLDEN_BOOTS
+  diamond_helmet:
+    label: "Diamond Helmet"
+    description-key: ra_config_descriptions.skills.crafting.rates.diamond_helmet
+    icon: DIAMOND_HELMET
+    trigger: CRAFT_RESULT
+    xp: 12
+    material: DIAMOND_HELMET
+  diamond_chestplate:
+    label: "Diamond Chestplate"
+    description-key: ra_config_descriptions.skills.crafting.rates.diamond_chestplate
+    icon: DIAMOND_CHESTPLATE
+    trigger: CRAFT_RESULT
+    xp: 12
+    material: DIAMOND_CHESTPLATE
+  diamond_leggings:
+    label: "Diamond Leggings"
+    description-key: ra_config_descriptions.skills.crafting.rates.diamond_leggings
+    icon: DIAMOND_LEGGINGS
+    trigger: CRAFT_RESULT
+    xp: 12
+    material: DIAMOND_LEGGINGS
+  diamond_boots:
+    label: "Diamond Boots"
+    description-key: ra_config_descriptions.skills.crafting.rates.diamond_boots
+    icon: DIAMOND_BOOTS
+    trigger: CRAFT_RESULT
+    xp: 12
+    material: DIAMOND_BOOTS
+  netherite_helmet:
+    label: "Netherite Helmet"
+    description-key: ra_config_descriptions.skills.crafting.rates.netherite_helmet
+    icon: NETHERITE_HELMET
+    trigger: CRAFT_RESULT
+    xp: 12
+    material: NETHERITE_HELMET
+  netherite_chestplate:
+    label: "Netherite Chestplate"
+    description-key: ra_config_descriptions.skills.crafting.rates.netherite_chestplate
+    icon: NETHERITE_CHESTPLATE
+    trigger: CRAFT_RESULT
+    xp: 12
+    material: NETHERITE_CHESTPLATE
+  netherite_leggings:
+    label: "Netherite Leggings"
+    description-key: ra_config_descriptions.skills.crafting.rates.netherite_leggings
+    icon: NETHERITE_LEGGINGS
+    trigger: CRAFT_RESULT
+    xp: 12
+    material: NETHERITE_LEGGINGS
+  netherite_boots:
+    label: "Netherite Boots"
+    description-key: ra_config_descriptions.skills.crafting.rates.netherite_boots
+    icon: NETHERITE_BOOTS
+    trigger: CRAFT_RESULT
+    xp: 12
+    material: NETHERITE_BOOTS
+
+# Ability points earned from this skill.
+# - 0: use the shared rules from stats.yml (default-interval, then any skill-overrides entry)
+# - any positive whole number: this skill uses its own level interval instead
+ability-point-interval-override: 0
+
+# Ability tree shown in the build menus.
+# Keep existing ability keys stable. RDA references them in code, so renaming a shipped key
+# requires matching code changes, not just config edits.
+# description-key points to translations. If you prefer plain text here, replace it with
+# description: "Your text here".
+# Supported stat ids:
+# - VIT (Vitality), STR (Strength), AGI (Agility), DEX (Dexterity)
+# - INT (Intelligence), SPI (Spirit), LUK (Luck), CHA (Charisma)
+# primary-stat is required. secondary-stat is optional and only adds extra scaling.
+# required-stat-points always checks spent points in the primary stat only.
+# Each tier uses:
+# - required-skill-level: minimum skill level for that tier
+# - required-stat-points: minimum spent points in the primary stat for that tier
+# - potency = base-value + (primary points * primary-coefficient)
+#   + (secondary points * secondary-coefficient)
+# - hard-cap is optional; remove it to leave that tier uncapped
+# The resolved potency is the raw ability strength. The in-game description decides
+# whether that number behaves like a chance, multiplier, extra blocks, seconds, or something else.
+# Active ability settings:
+# - cooldown-seconds: cooldown after a successful cast
+# - duration-seconds: how long the active stays on; set 0 for instant effects only
+# - mana-cost: mana spent on cast
+# - activator-item: required main-hand item for click triggers; COMMAND casts ignore this item
+# - allowed-triggers: COMMAND, LEFT_CLICK, SHIFT_LEFT_CLICK, RIGHT_CLICK, SHIFT_RIGHT_CLICK
+#   Leave this list empty to allow every trigger here. stats.yml activation.allowed-modes
+#   still filters them server-wide, and RDA falls back to COMMAND if nothing overlaps.
+tree:
+  passives:
+    efficient_assembly:
+      key: efficient_assembly
+      name: Efficient Assembly
+      description-key: ra_config_descriptions.skills.crafting.abilities.efficient_assembly
+      icon: CRAFTING_TABLE
+      primary-stat: DEX
+      secondary-stat: INT
+      tiers:
+        t1:
+          required-skill-level: 10
+          required-stat-points: 1
+          base-value: 0.005
+          primary-coefficient: 0.002
+          secondary-coefficient: 0.001
+          hard-cap: 0.04
+        t2:
+          required-skill-level: 25
+          required-stat-points: 5
+          base-value: 0.01
+          primary-coefficient: 0.002
+          secondary-coefficient: 0.001
+          hard-cap: 0.07
+        t3:
+          required-skill-level: 50
+          required-stat-points: 10
+          base-value: 0.015
+          primary-coefficient: 0.003
+          secondary-coefficient: 0.002
+          hard-cap: 0.1
+        t4:
+          required-skill-level: 100
+          required-stat-points: 20
+          base-value: 0.02
+          primary-coefficient: 0.003
+          secondary-coefficient: 0.002
+          hard-cap: 0.14
+        t5:
+          required-skill-level: 250
+          required-stat-points: 35
+          base-value: 0.025
+          primary-coefficient: 0.004
+          secondary-coefficient: 0.002
+          hard-cap: 0.18
+    resourcefulness:
+      key: resourcefulness
+      name: Resourcefulness
+      description-key: ra_config_descriptions.skills.crafting.abilities.resourcefulness
+      icon: BARREL
+      primary-stat: DEX
+      secondary-stat: LUK
+      tiers:
+        t1:
+          required-skill-level: 10
+          required-stat-points: 1
+          base-value: 0.005
+          primary-coefficient: 0.002
+          secondary-coefficient: 0.001
+          hard-cap: 0.04
+        t2:
+          required-skill-level: 25
+          required-stat-points: 5
+          base-value: 0.01
+          primary-coefficient: 0.002
+          secondary-coefficient: 0.001
+          hard-cap: 0.07
+        t3:
+          required-skill-level: 50
+          required-stat-points: 10
+          base-value: 0.015
+          primary-coefficient: 0.003
+          secondary-coefficient: 0.002
+          hard-cap: 0.1
+        t4:
+          required-skill-level: 100
+          required-stat-points: 20
+          base-value: 0.02
+          primary-coefficient: 0.003
+          secondary-coefficient: 0.002
+          hard-cap: 0.14
+        t5:
+          required-skill-level: 250
+          required-stat-points: 35
+          base-value: 0.025
+          primary-coefficient: 0.004
+          secondary-coefficient: 0.002
+          hard-cap: 0.18
+    finishing_touch:
+      key: finishing_touch
+      name: Finishing Touch
+      description-key: ra_config_descriptions.skills.crafting.abilities.finishing_touch
+      icon: DIAMOND
+      primary-stat: DEX
+      tiers:
+        t1:
+          required-skill-level: 10
+          required-stat-points: 1
+          base-value: 0.005
+          primary-coefficient: 0.002
+          secondary-coefficient: 0
+          hard-cap: 0.04
+        t2:
+          required-skill-level: 25
+          required-stat-points: 5
+          base-value: 0.01
+          primary-coefficient: 0.003
+          secondary-coefficient: 0
+          hard-cap: 0.07
+        t3:
+          required-skill-level: 50
+          required-stat-points: 10
+          base-value: 0.015
+          primary-coefficient: 0.003
+          secondary-coefficient: 0
+          hard-cap: 0.1
+        t4:
+          required-skill-level: 100
+          required-stat-points: 20
+          base-value: 0.02
+          primary-coefficient: 0.004
+          secondary-coefficient: 0
+          hard-cap: 0.14
+        t5:
+          required-skill-level: 250
+          required-stat-points: 35
+          base-value: 0.025
+          primary-coefficient: 0.004
+          secondary-coefficient: 0
+          hard-cap: 0.18
+    pattern_memory:
+      key: pattern_memory
+      name: Pattern Memory
+      description-key: ra_config_descriptions.skills.crafting.abilities.pattern_memory
+      icon: BOOK
+      primary-stat: DEX
+      secondary-stat: INT
+      tiers:
+        t1:
+          required-skill-level: 10
+          required-stat-points: 1
+          base-value: 0.005
+          primary-coefficient: 0.002
+          secondary-coefficient: 0.001
+          hard-cap: 0.04
+        t2:
+          required-skill-level: 25
+          required-stat-points: 5
+          base-value: 0.01
+          primary-coefficient: 0.002
+          secondary-coefficient: 0.001
+          hard-cap: 0.07
+        t3:
+          required-skill-level: 50
+          required-stat-points: 10
+          base-value: 0.015
+          primary-coefficient: 0.003
+          secondary-coefficient: 0.002
+          hard-cap: 0.1
+        t4:
+          required-skill-level: 100
+          required-stat-points: 20
+          base-value: 0.02
+          primary-coefficient: 0.003
+          secondary-coefficient: 0.002
+          hard-cap: 0.14
+        t5:
+          required-skill-level: 250
+          required-stat-points: 35
+          base-value: 0.025
+          primary-coefficient: 0.004
+          secondary-coefficient: 0.002
+          hard-cap: 0.18
+    bench_flow:
+      key: bench_flow
+      name: Bench Flow
+      description-key: ra_config_descriptions.skills.crafting.abilities.bench_flow
+      icon: CLOCK
+      primary-stat: DEX
+      secondary-stat: AGI
+      tiers:
+        t1:
+          required-skill-level: 10
+          required-stat-points: 1
+          base-value: 0.005
+          primary-coefficient: 0.002
+          secondary-coefficient: 0.001
+          hard-cap: 0.04
+        t2:
+          required-skill-level: 25
+          required-stat-points: 5
+          base-value: 0.01
+          primary-coefficient: 0.002
+          secondary-coefficient: 0.001
+          hard-cap: 0.07
+        t3:
+          required-skill-level: 50
+          required-stat-points: 10
+          base-value: 0.015
+          primary-coefficient: 0.003
+          secondary-coefficient: 0.002
+          hard-cap: 0.1
+        t4:
+          required-skill-level: 100
+          required-stat-points: 20
+          base-value: 0.02
+          primary-coefficient: 0.003
+          secondary-coefficient: 0.002
+          hard-cap: 0.14
+        t5:
+          required-skill-level: 250
+          required-stat-points: 35
+          base-value: 0.025
+          primary-coefficient: 0.004
+          secondary-coefficient: 0.002
+          hard-cap: 0.18
+  active:
+    key: masterwork
+    name: Masterwork
+    description-key: ra_config_descriptions.skills.crafting.abilities.masterwork
+    icon: SMITHING_TABLE
+    primary-stat: DEX
+    secondary-stat: INT
+    tiers:
+        t1:
+          required-skill-level: 10
+          required-stat-points: 1
+          base-value: 0.05
+          primary-coefficient: 0.004
+          secondary-coefficient: 0.002
+          hard-cap: 0.2
+        t2:
+          required-skill-level: 25
+          required-stat-points: 5
+          base-value: 0.08
+          primary-coefficient: 0.005
+          secondary-coefficient: 0.002
+          hard-cap: 0.28
+        t3:
+          required-skill-level: 50
+          required-stat-points: 10
+          base-value: 0.12
+          primary-coefficient: 0.006
+          secondary-coefficient: 0.003
+          hard-cap: 0.38
+        t4:
+          required-skill-level: 100
+          required-stat-points: 20
+          base-value: 0.16
+          primary-coefficient: 0.007
+          secondary-coefficient: 0.003
+          hard-cap: 0.5
+        t5:
+          required-skill-level: 250
+          required-stat-points: 35
+          base-value: 0.2
+          primary-coefficient: 0.008
+          secondary-coefficient: 0.004
+          hard-cap: 0.65
+    active:
+      cooldown-seconds: 90
+      duration-seconds: 12
+      mana-cost: 40
+      activator-item: CRAFTING_TABLE
+      allowed-triggers:
+        - COMMAND
+        - RIGHT_CLICK
+        - SHIFT_RIGHT_CLICK

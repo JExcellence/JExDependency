@@ -35,6 +35,8 @@ class EPRTActionTest {
                 EPRTAction.SPAWN,
                 EPRTAction.FOB,
                 EPRTAction.BANK,
+                EPRTAction.SERVERBANK,
+                EPRTAction.TAX,
                 EPRTAction.BROADCAST
             },
             EPRTAction.values()

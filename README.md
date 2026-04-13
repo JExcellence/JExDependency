@@ -10,6 +10,7 @@ RaindropCentral/
 ├── .config/             # Configuration files (code style, Docker, etc.)
 ├── docs/                # Project documentation
 ├── RCore/               # Core services module
+├── RDA/                 # Raindrop Abilities gameplay module
 ├── RDQ/                 # RaindropQuests gameplay module
 ├── RPlatform/           # Platform abstraction layer
 ├── JExCommand/          # Command framework
@@ -54,6 +55,7 @@ See [`.build/README.md`](.build/README.md) for detailed build documentation.
 
 | Module | Purpose |
 | --- | --- |
+| [`RDA`](RDA/) | Blank Raindrop Abilities scaffold with shared platform bootstrap, player persistence, and free/premium entrypoints. |
 | [`RCore`](RCore/) | Core services shared by the ecosystem including database repositories, metrics, and the `RCoreService` API. |
 | [`RDQ`](RDQ/) | RaindropQuests gameplay plugin with free and premium editions layered on a shared quest/bounty engine. |
 | [`RPlatform`](RPlatform/) | Platform bootstrapper that provides logging, metrics, placeholders, database access, and scheduler adapters for every plugin. |
@@ -62,7 +64,7 @@ See [`.build/README.md`](.build/README.md) for detailed build documentation.
 | [`JExEconomy`](JExEconomy/) | Multi-currency economy services and developer APIs (utility module consumed by other products). |
 | [`JExTranslate`](JExTranslate/) | Internationalization tooling and MiniMessage-friendly translation manager. |
 
-All Gradle modules are wired so the root build generates distributable jars: `RCore-*.jar`, `RDQ-*.jar`, and `JExEconomy-*.jar`.
+All Gradle modules are wired so the root build generates distributable jars for `RDA`, `RCore`, `RDQ`, `RDR`, `RDS`, `RDT`, and `JExEconomy`.
 
 ## Common Bootstrap Pieces
 
@@ -128,7 +130,7 @@ commit=1831
 ```
 
 When `commit` increases, build numbers are recalculated for these modules:
-`RCore`, `RDQ`, `RDR`, `RDS`, `RDT`.
+`RCore`, `RDQ`, `RDR`, `RDS`, `RDT`, `RDA`.
 
 The sync logic only changes:
 
@@ -137,6 +139,7 @@ The sync logic only changes:
 - `rdr.version.build`
 - `rds.version.build`
 - `rdt.version.build`
+- `rda.version.build`
 
 Each module build number is updated by counting how many of the last `delta` commits touched that module directory, where `delta = (current commit - HEAD commit)`.
 

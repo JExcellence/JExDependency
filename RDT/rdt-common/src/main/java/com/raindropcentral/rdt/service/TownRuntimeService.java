@@ -406,14 +406,33 @@ public final class TownRuntimeService {
     }
 
     /**
+     * Returns every active nation sorted by name.
+     *
+     * @return active nations
+     */
+    public @NotNull List<RNation> getActiveNations() {
+        if (this.plugin.getNationRepository() == null) {
+            return List.of();
+        }
+
+        return this.plugin.getNationRepository().findAll().stream()
+            .peek(this::ensureNationProgressState)
+            .filter(RNation::isActive)
+            .sorted(Comparator.comparing(RNation::getNationName, String.CASE_INSENSITIVE_ORDER))
+            .toList();
+    }
+
+    /**
      * Returns the active nation for one town, if present.
      *
      * @param town town to inspect
      * @return active nation, or {@code null} when none exists
      */
     public @Nullable RNation getNationForTown(final @NotNull RTown town) {
-        final RTown liveTown = this.resolveLiveTown(town);
-        final RTown resolvedTown = liveTown == null ? town : liveTown;
+        final RTown resolvedTown = this.resolveLiveTown(town);
+        if (resolvedTown == null) {
+            return null;
+        }
         return resolvedTown.getNationUuid() == null ? null : this.getNation(resolvedTown.getNationUuid());
     }
 
@@ -822,12 +841,82 @@ public final class TownRuntimeService {
     }
 
     /**
+     * Disbands one active nation through the tax-enforcement flow.
+     *
+     * @param nation nation to disband
+     * @return {@code true} when the nation was disbanded
+     */
+    public boolean disbandNationForTaxDebt(final @NotNull RNation nation) {
+        final RNation liveNation = this.getNation(nation.getNationUuid());
+        if (liveNation == null || !liveNation.isActive() || this.plugin.getNationRepository() == null || this.plugin.getTownRepository() == null) {
+            return false;
+        }
+
+        this.disbandNationInternal(liveNation);
+        return true;
+    }
+
+    /**
+     * Archives one town after unpaid taxes cause the town to fall.
+     *
+     * @param town town to archive
+     * @return {@code true} when the town was archived
+     */
+    public boolean fallTownForTaxDebt(final @NotNull RTown town) {
+        final RTown liveTown = this.getTownIncludingInactive(town.getTownUUID());
+        if (liveTown == null || !liveTown.getActive() || this.plugin.getTownRepository() == null) {
+            return false;
+        }
+
+        final RNation formerNation = liveTown.getNationUuid() == null ? null : this.getNation(liveTown.getNationUuid());
+        final boolean wasCapitalTown = formerNation != null && Objects.equals(formerNation.getCapitalTownUuid(), liveTown.getTownUUID());
+        final List<RDTPlayer> memberSnapshots = new ArrayList<>(liveTown.getMembers());
+
+        this.clearTownMarkers(liveTown);
+        liveTown.clearChunks();
+        liveTown.clearBankCacheState();
+        liveTown.setNexusLocation(null);
+        liveTown.setNexusServerId(null);
+        liveTown.setTownSpawnLocation(null);
+        liveTown.setTownSpawnServerId(null);
+        liveTown.setNationUuid(null);
+        liveTown.clearMembers();
+        for (final RDTPlayer member : memberSnapshots) {
+            this.persistPlayerData(member);
+        }
+
+        final long fallenAt = System.currentTimeMillis();
+        liveTown.archiveAsFallen(this.generateArchivedTownName(liveTown, fallenAt), fallenAt);
+        this.plugin.getTownRepository().update(liveTown);
+
+        if (formerNation != null && formerNation.isActive()) {
+            if (wasCapitalTown) {
+                this.disbandNationInternal(formerNation);
+            } else {
+                this.enforceNationMinimumOrDisband(formerNation);
+            }
+        }
+        return true;
+    }
+
+    /**
      * Returns a town by UUID.
      *
      * @param townUuid town UUID
      * @return matching town, or {@code null} when none exists
      */
     public @Nullable RTown getTown(final @NotNull UUID townUuid) {
+        final RTown town = this.getTownIncludingInactive(townUuid);
+        return town != null && town.getActive() ? town : null;
+    }
+
+    /**
+     * Returns a town by UUID without filtering archived entries.
+     *
+     * @param townUuid town UUID
+     * @return matching town, or {@code null} when none exists
+     */
+    public @Nullable RTown getTownIncludingInactive(final @NotNull UUID townUuid) {
         if (this.plugin.getTownRepository() == null) {
             return null;
         }
@@ -968,6 +1057,7 @@ public final class TownRuntimeService {
         }
         final List<RTown> towns = new ArrayList<>(this.plugin.getTownRepository().findAll());
         towns.forEach(this::ensureCompositeTownState);
+        towns.removeIf(town -> !town.getActive());
         towns.sort(Comparator.comparing(RTown::getTownName, String.CASE_INSENSITIVE_ORDER));
         return towns;
     }
@@ -1326,7 +1416,7 @@ public final class TownRuntimeService {
         }
 
         final String normalizedName = townName.trim();
-        if (normalizedName.isEmpty() || this.plugin.getTownRepository().findByTName(normalizedName) != null) {
+        if (normalizedName.isEmpty() || this.findActiveTownByName(normalizedName) != null) {
             return null;
         }
 
@@ -1537,7 +1627,7 @@ public final class TownRuntimeService {
             return false;
         }
 
-        final RTown existing = this.plugin.getTownRepository().findByTName(normalized);
+        final RTown existing = this.findActiveTownByName(normalized);
         if (existing != null && !Objects.equals(existing.getTownUUID(), town.getTownUUID())) {
             return false;
         }
@@ -2478,8 +2568,53 @@ public final class TownRuntimeService {
     }
 
     private @Nullable RTown resolveLiveTown(final @NotNull RTown town) {
-        final RTown liveTown = this.getTown(town.getTownUUID());
-        return liveTown == null ? town : liveTown;
+        final RTown liveTown = this.getTownIncludingInactive(town.getTownUUID());
+        if (liveTown != null) {
+            return liveTown.getActive() ? liveTown : null;
+        }
+        return town.getActive() ? town : null;
+    }
+
+    private void clearTownMarkers(final @NotNull RTown town) {
+        final Location nexusLocation = town.getNexusLocation();
+        if (nexusLocation != null && nexusLocation.getWorld() != null && nexusLocation.getWorld().isChunkLoaded(
+            toChunkCoordinate(nexusLocation.getBlockX()),
+            toChunkCoordinate(nexusLocation.getBlockZ())
+        )) {
+            nexusLocation.getBlock().setType(Material.AIR, false);
+        }
+
+        final Location cacheLocation = town.getBankCacheLocation();
+        if (cacheLocation != null && cacheLocation.getWorld() != null && cacheLocation.getWorld().isChunkLoaded(
+            toChunkCoordinate(cacheLocation.getBlockX()),
+            toChunkCoordinate(cacheLocation.getBlockZ())
+        )) {
+            cacheLocation.getBlock().setType(Material.AIR, false);
+        }
+
+        for (final RTownChunk claimedChunk : town.getChunks()) {
+            final Location markerLocation = claimedChunk.getChunkBlockLocation();
+            if (markerLocation == null || markerLocation.getWorld() == null) {
+                continue;
+            }
+            if (!markerLocation.getWorld().isChunkLoaded(
+                toChunkCoordinate(markerLocation.getBlockX()),
+                toChunkCoordinate(markerLocation.getBlockZ())
+            )) {
+                continue;
+            }
+            markerLocation.getBlock().setType(Material.AIR, false);
+        }
+    }
+
+    private @NotNull String generateArchivedTownName(final @NotNull RTown town, final long fallenAt) {
+        final String baseName = town.getTownName().trim();
+        String candidate = baseName + "~fallen-" + fallenAt;
+        int suffix = 1;
+        while (this.plugin.getTownRepository() != null && this.plugin.getTownRepository().findByTName(candidate) != null) {
+            candidate = baseName + "~fallen-" + fallenAt + '-' + suffix++;
+        }
+        return candidate;
     }
 
     private boolean ensureNexusCombatState(final @NotNull RTown town) {
@@ -5389,6 +5524,15 @@ public final class TownRuntimeService {
         nation.setStatus(NationStatus.DISBANDED);
         nation.setExpiresAt(0L);
         this.plugin.getNationRepository().update(nation);
+    }
+
+    private @Nullable RTown findActiveTownByName(final @NotNull String townName) {
+        if (this.plugin.getTownRepository() == null) {
+            return null;
+        }
+
+        final RTown existing = this.plugin.getTownRepository().findByTName(townName);
+        return existing != null && existing.getActive() ? existing : null;
     }
 
     private void updateTown(final @NotNull RTown town) {

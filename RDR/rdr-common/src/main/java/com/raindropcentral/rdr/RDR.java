@@ -787,8 +787,8 @@ public class RDR {
         ).optional().maxAttempts(30).retryDelay(1000).onSuccess(economy -> {
             this.getLogger().info("Vault service initialized");
             this.economyInstance = economy;
-        }).onFailure(() -> this.getLogger().warning(
-            "Vault service not present; initialization failed")
+        }).onFailure(() -> this.getLogger().info(
+            "Vault service not present; continuing without Vault integration")
         ).load();
 
         this.getLogger().info("Registering LuckPerms service");

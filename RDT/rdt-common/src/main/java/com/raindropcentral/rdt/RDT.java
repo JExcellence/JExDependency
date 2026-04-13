@@ -20,6 +20,7 @@ import com.raindropcentral.rdt.database.entity.RTown;
 import com.raindropcentral.rdt.database.repository.RRDTPlayer;
 import com.raindropcentral.rdt.database.repository.RRNation;
 import com.raindropcentral.rdt.database.repository.RRNationInvite;
+import com.raindropcentral.rdt.database.repository.RRServerBank;
 import com.raindropcentral.rdt.database.repository.RRTown;
 import com.raindropcentral.rdt.database.repository.RRTownChunk;
 import com.raindropcentral.rdt.database.repository.RRTownInvite;
@@ -47,6 +48,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -69,11 +71,13 @@ public class RDT {
     private static final String NATION_CONFIG_FILE_NAME = "nation.yml";
     private static final String SECURITY_CONFIG_FILE_NAME = "security.yml";
     private static final String BANK_CONFIG_FILE_NAME = "bank.yml";
+    private static final String TAX_CONFIG_FILE_NAME = "tax.yml";
     private static final String FARM_CONFIG_FILE_NAME = "farm.yml";
     private static final String FOB_CONFIG_FILE_NAME = "fob.yml";
     private static final String OUTPOST_CONFIG_FILE_NAME = "outpost.yml";
     private static final String MEDIC_CONFIG_FILE_NAME = "medic.yml";
     private static final String ARMORY_CONFIG_FILE_NAME = "armory.yml";
+    public static final String TOWN_BOSS_BAR_PROVIDER_KEY = "rdt.town";
 
     private final JavaPlugin plugin;
     private final String edition;
@@ -97,12 +101,17 @@ public class RDT {
     private RRTownRelationship townRelationshipRepository;
     private RRNation nationRepository;
     private RRNationInvite nationInviteRepository;
+    private RRServerBank serverBankRepository;
 
     private TownRuntimeService townRuntimeService;
     private TownSpawnService townSpawnService;
     private TownFobService townFobService;
     private TownBossBarService townBossBarService;
+    private TownBossBarIntegration townBossBarIntegration;
     private TownBankService townBankService;
+    private NationBankService nationBankService;
+    private ServerBankService serverBankService;
+    private TaxRuntimeService taxRuntimeService;
     private TownFarmService townFarmService;
     private TownFuelService townFuelService;
     private TownMedicService townMedicService;
@@ -180,8 +189,21 @@ public class RDT {
         if (this.townBossBarService != null) {
             this.townBossBarService.shutdown();
         }
+        if (this.townBossBarIntegration != null) {
+            this.townBossBarIntegration.unregister();
+            this.townBossBarIntegration = null;
+        }
         if (this.townBankService != null) {
             this.townBankService.shutdown();
+        }
+        if (this.nationBankService != null) {
+            this.nationBankService.shutdown();
+        }
+        if (this.serverBankService != null) {
+            this.serverBankService.shutdown();
+        }
+        if (this.taxRuntimeService != null) {
+            this.taxRuntimeService.shutdown();
         }
         if (this.townFuelService != null) {
             this.townFuelService.shutdown();
@@ -310,6 +332,25 @@ public class RDT {
         } catch (final Exception exception) {
             this.getLogger().warning("Failed to load RDT bank config: " + exception.getMessage());
             return BankConfigSection.createDefault();
+        }
+    }
+
+    /**
+     * Loads the effective scheduled tax configuration.
+     *
+     * @return parsed tax configuration
+     */
+    public @NotNull TaxConfigSection getTaxConfig() {
+        this.ensureBundledConfigFiles();
+        try {
+            if (!this.canChangeConfigs()) {
+                final InputStream defaultStream = this.plugin.getResource(CONFIG_FOLDER_PATH + '/' + TAX_CONFIG_FILE_NAME);
+                return defaultStream == null ? TaxConfigSection.createDefault() : TaxConfigSection.fromInputStream(defaultStream);
+            }
+            return TaxConfigSection.fromFile(this.getConfigFile(TAX_CONFIG_FILE_NAME));
+        } catch (final Exception exception) {
+            this.getLogger().warning("Failed to load RDT tax config: " + exception.getMessage());
+            return TaxConfigSection.createDefault();
         }
     }
 
@@ -462,6 +503,7 @@ public class RDT {
         this.townRelationshipRepository = new RRTownRelationship(this.executor, this.entityManagerFactory);
         this.nationRepository = new RRNation(this.executor, this.entityManagerFactory);
         this.nationInviteRepository = new RRNationInvite(this.executor, this.entityManagerFactory);
+        this.serverBankRepository = new RRServerBank(this.executor, this.entityManagerFactory);
     }
 
     private void initializeServices() {
@@ -471,6 +513,9 @@ public class RDT {
         this.townFobService = new TownFobService(this);
         this.townBossBarService = new TownBossBarService(this);
         this.townBankService = new TownBankService(this);
+        this.nationBankService = new NationBankService(this);
+        this.serverBankService = new ServerBankService(this);
+        this.taxRuntimeService = new TaxRuntimeService(this);
         this.townFarmService = new TownFarmService(this);
         this.townFuelService = new TownFuelService(this);
         this.townMedicService = new TownMedicService(this);
@@ -483,10 +528,31 @@ public class RDT {
     }
 
     private void initializePlugins() {
+        this.initializeBossBarIntegration();
         new com.raindropcentral.rplatform.service.ServiceRegistry().register(
             "net.milkbowl.vault.economy.Economy",
             "TheNewEconomy"
         ).optional().maxAttempts(30).retryDelay(1000).onSuccess(economy -> this.economyInstance = economy).load();
+    }
+
+    private void initializeBossBarIntegration() {
+        if (!this.plugin.getServer().getPluginManager().isPluginEnabled("RCore")) {
+            this.townBossBarIntegration = null;
+            return;
+        }
+
+        try {
+            final TownBossBarIntegration integration = new TownBossBarIntegration(this);
+            if (integration.register()) {
+                this.townBossBarIntegration = integration;
+                this.getLogger().info("Registered RDT town boss bar with RCore");
+                return;
+            }
+        } catch (final Throwable throwable) {
+            this.getLogger().log(Level.WARNING, "Failed to initialize the optional RCore boss-bar bridge", throwable);
+        }
+
+        this.townBossBarIntegration = null;
     }
 
     private void initializeCommands() {
@@ -514,6 +580,12 @@ public class RDT {
                 new TownBankRootView(),
                 new TownBankStorageView(),
                 new TownBankCurrencyInputView(),
+                new NationBankRootView(),
+                new NationBankStorageView(),
+                new NationBankCurrencyInputView(),
+                new ServerBankRootView(),
+                new ServerBankStorageView(),
+                new ServerBankCurrencyInputView(),
                 new TownColorAnvilView(),
                 new TownRenameAnvilView(),
                 new CreateNationNameAnvilView(),
@@ -559,6 +631,9 @@ public class RDT {
         if (this.townBankService != null) {
             this.townBankService.start();
         }
+        if (this.taxRuntimeService != null) {
+            this.taxRuntimeService.start();
+        }
         if (this.townFuelService != null) {
             this.townFuelService.start();
         }
@@ -590,6 +665,7 @@ public class RDT {
         this.ensureBundledConfigFile(NATION_CONFIG_FILE_NAME);
         this.ensureBundledConfigFile(SECURITY_CONFIG_FILE_NAME);
         this.ensureBundledConfigFile(BANK_CONFIG_FILE_NAME);
+        this.ensureBundledConfigFile(TAX_CONFIG_FILE_NAME);
         this.ensureBundledConfigFile(FARM_CONFIG_FILE_NAME);
         this.ensureBundledConfigFile(FOB_CONFIG_FILE_NAME);
         this.ensureBundledConfigFile(OUTPOST_CONFIG_FILE_NAME);
@@ -819,6 +895,15 @@ public class RDT {
     }
 
     /**
+     * Returns the singleton server-bank repository.
+     *
+     * @return server-bank repository
+     */
+    public @Nullable RRServerBank getServerBankRepository() {
+        return this.serverBankRepository;
+    }
+
+    /**
      * Returns the central town runtime service.
      *
      * @return town runtime service
@@ -855,12 +940,58 @@ public class RDT {
     }
 
     /**
+     * Returns whether the town boss bar is enabled for the supplied player UUID.
+     *
+     * <p>When RCore is installed, the centralized RCore preference row is authoritative. Otherwise
+     * RDT falls back to the legacy local player field, which defaults to enabled when no row
+     * exists yet.</p>
+     *
+     * @param playerUuid player UUID to inspect
+     * @return {@code true} when the town boss bar is enabled
+     */
+    public boolean isTownBossBarEnabled(final @NotNull UUID playerUuid) {
+        if (this.townBossBarIntegration != null) {
+            return this.townBossBarIntegration.isEnabled(playerUuid);
+        }
+
+        final RDTPlayer playerData = this.playerRepository == null ? null : this.playerRepository.findByPlayer(playerUuid);
+        return playerData == null || playerData.isBossBarEnabled();
+    }
+
+    /**
      * Returns the town-bank service.
      *
      * @return town-bank service
      */
     public @Nullable TownBankService getTownBankService() {
         return this.townBankService;
+    }
+
+    /**
+     * Returns the nation-bank service.
+     *
+     * @return nation-bank service
+     */
+    public @Nullable NationBankService getNationBankService() {
+        return this.nationBankService;
+    }
+
+    /**
+     * Returns the admin-only server-bank service.
+     *
+     * @return server-bank service
+     */
+    public @Nullable ServerBankService getServerBankService() {
+        return this.serverBankService;
+    }
+
+    /**
+     * Returns the scheduled tax runtime service.
+     *
+     * @return tax runtime service
+     */
+    public @Nullable TaxRuntimeService getTaxRuntimeService() {
+        return this.taxRuntimeService;
     }
 
     /**

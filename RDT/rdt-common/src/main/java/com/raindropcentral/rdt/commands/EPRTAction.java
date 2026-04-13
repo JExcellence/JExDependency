@@ -25,5 +25,7 @@ public enum EPRTAction {
     SPAWN,
     FOB,
     BANK,
+    SERVERBANK,
+    TAX,
     BROADCAST
 }

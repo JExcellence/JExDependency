@@ -28,6 +28,9 @@ class ERCentralPermissionTest {
 
     @Test
     void exposesInternalAndFallbackNodes() {
+        assertEquals("main", ERCentralPermission.MAIN.getInternalName());
+        assertEquals("rcore.command.main", ERCentralPermission.MAIN.getFallbackNode());
+
         assertEquals("connect", ERCentralPermission.CONNECT.getInternalName());
         assertEquals("rcore.central.connect", ERCentralPermission.CONNECT.getFallbackNode());
 
@@ -36,6 +39,9 @@ class ERCentralPermissionTest {
 
         assertEquals("claimDroplets", ERCentralPermission.CLAIM_DROPLETS.getInternalName());
         assertEquals("rcore.central.claim.droplets", ERCentralPermission.CLAIM_DROPLETS.getFallbackNode());
+
+        assertEquals("bossBar", ERCentralPermission.BOSS_BAR.getInternalName());
+        assertEquals("rcore.command.bossbar", ERCentralPermission.BOSS_BAR.getFallbackNode());
 
         assertEquals("storeUpdate", ERCentralPermission.STORE_UPDATE.getInternalName());
         assertEquals("rcore.central.store.update", ERCentralPermission.STORE_UPDATE.getFallbackNode());

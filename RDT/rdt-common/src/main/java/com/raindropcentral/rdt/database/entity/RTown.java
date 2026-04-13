@@ -68,6 +68,12 @@ public class RTown extends BaseEntity {
     @Column(name = "town_name", nullable = false, unique = true, length = 64)
     private String townName;
 
+    @Column(name = "archived_town_name", length = 64)
+    private String archivedTownName;
+
+    @Column(name = "fallen_at")
+    private Long fallenAt;
+
     @Column(name = "town_color_hex", nullable = false, length = 16)
     private String townColorHex;
 
@@ -169,6 +175,21 @@ public class RTown extends BaseEntity {
     @Column(name = "bank_cache_server_id", length = 64)
     private String bankCacheServerId;
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "rdt_town_tax_currency_debt", joinColumns = @JoinColumn(name = "town_id_fk"))
+    @Column(name = "amount", nullable = false)
+    private Map<String, Double> currencyTaxDebt = new LinkedHashMap<>();
+
+    @Convert(converter = ItemStackMapConverter.class)
+    @Column(name = "item_tax_debt", columnDefinition = "LONGTEXT")
+    private Map<String, ItemStack> itemTaxDebt = new LinkedHashMap<>();
+
+    @Column(name = "tax_debt_started_at")
+    private Long taxDebtStartedAt;
+
+    @Column(name = "tax_debt_last_warning_at")
+    private Long taxDebtLastWarningAt;
+
     /** Creates a town. */
     public RTown(
         final @NotNull UUID townUuid,
@@ -236,6 +257,33 @@ public class RTown extends BaseEntity {
         this.townName = normalizeTownName(townName);
     }
 
+    /** Returns the preserved pre-archive town name, if one exists. */
+    public @Nullable String getArchivedTownName() {
+        return this.archivedTownName;
+    }
+
+    /** Replaces the preserved pre-archive town name. */
+    public void setArchivedTownName(final @Nullable String archivedTownName) {
+        this.archivedTownName = archivedTownName == null || archivedTownName.isBlank()
+            ? null
+            : normalizeTownName(archivedTownName);
+    }
+
+    /** Returns the tax-driven town-fall timestamp in epoch milliseconds. */
+    public long getFallenAt() {
+        return Math.max(0L, this.fallenAt == null ? 0L : this.fallenAt);
+    }
+
+    /** Replaces the tax-driven town-fall timestamp in epoch milliseconds. */
+    public void setFallenAt(final long fallenAt) {
+        this.fallenAt = fallenAt <= 0L ? null : fallenAt;
+    }
+
+    /** Returns whether the town has been archived after falling. */
+    public boolean isArchived() {
+        return !this.active && this.archivedTownName != null && !this.archivedTownName.isBlank();
+    }
+
     /** Returns the town color hex. */
     public @NotNull String getTownColorHex() {
         return this.townColorHex;
@@ -285,6 +333,19 @@ public class RTown extends BaseEntity {
     /** Replaces the town active state. */
     public void setActive(final boolean active) {
         this.active = active;
+    }
+
+    /**
+     * Marks the town as archived after falling while preserving the original display name.
+     *
+     * @param archivedInternalName unique internal persisted town name used after archiving
+     * @param fallenAt timestamp in epoch milliseconds when the town fell
+     */
+    public void archiveAsFallen(final @NotNull String archivedInternalName, final long fallenAt) {
+        this.archivedTownName = this.townName;
+        this.townName = normalizeTownName(archivedInternalName);
+        this.active = false;
+        this.fallenAt = Math.max(1L, fallenAt);
     }
 
     /** Returns the town level. */
@@ -488,6 +549,13 @@ public class RTown extends BaseEntity {
         }
     }
 
+    /** Clears every town member and their cached town membership. */
+    public void clearMembers() {
+        for (final RDTPlayer member : new ArrayList<>(this.members)) {
+            this.removeMember(member);
+        }
+    }
+
     /** Returns town roles. */
     public @NotNull List<TownRole> getRoles() {
         this.ensureDefaultRoles();
@@ -532,6 +600,12 @@ public class RTown extends BaseEntity {
             this.recalculateTownLevel();
         }
         return removed;
+    }
+
+    /** Clears every claimed chunk from the town. */
+    public void clearChunks() {
+        this.chunks.clear();
+        this.recalculateTownLevel();
     }
 
     /** Finds a claimed chunk by world and coordinates. */
@@ -705,6 +779,84 @@ public class RTown extends BaseEntity {
     /** Withdraws Vault currency. */
     public boolean withdraw(final double amount) {
         return this.withdrawBank("vault", amount);
+    }
+
+    /** Returns copied town-bank balances keyed by normalized currency identifier. */
+    public @NotNull Map<String, Double> getBankBalances() {
+        return new LinkedHashMap<>(this.bankBalances);
+    }
+
+    /** Returns copied outstanding currency tax debt keyed by normalized currency identifier. */
+    public @NotNull Map<String, Double> getCurrencyTaxDebt() {
+        return new LinkedHashMap<>(this.currencyTaxDebt);
+    }
+
+    /** Returns stored outstanding tax debt for one currency identifier. */
+    public double getCurrencyTaxDebt(final @NotNull String currencyId) {
+        return this.currencyTaxDebt.getOrDefault(normalizeCurrencyId(currencyId), 0.0D);
+    }
+
+    /** Replaces stored outstanding tax debt for one currency identifier. */
+    public void setCurrencyTaxDebt(final @NotNull String currencyId, final double amount) {
+        final String normalizedCurrencyId = normalizeCurrencyId(currencyId);
+        if (amount <= 1.0E-6D) {
+            this.currencyTaxDebt.remove(normalizedCurrencyId);
+            return;
+        }
+        this.currencyTaxDebt.put(normalizedCurrencyId, amount);
+    }
+
+    /** Returns copied outstanding item tax debt keyed by normalized item identifier. */
+    public @NotNull Map<String, ItemStack> getItemTaxDebt() {
+        return new LinkedHashMap<>(this.itemTaxDebt);
+    }
+
+    /** Returns stored outstanding item tax debt for one normalized item identifier. */
+    public @Nullable ItemStack getItemTaxDebt(final @NotNull String itemKey) {
+        return this.itemTaxDebt.get(normalizeProgressKey(itemKey));
+    }
+
+    /** Replaces stored outstanding item tax debt for one normalized item identifier. */
+    public void setItemTaxDebt(final @NotNull String itemKey, final @Nullable ItemStack itemStack) {
+        final String normalizedItemKey = normalizeProgressKey(itemKey);
+        if (itemStack == null || itemStack.isEmpty()) {
+            this.itemTaxDebt.remove(normalizedItemKey);
+            return;
+        }
+        this.itemTaxDebt.put(normalizedItemKey, itemStack.clone());
+    }
+
+    /** Clears every stored currency and item tax debt entry. */
+    public void clearTaxDebt() {
+        this.currencyTaxDebt.clear();
+        this.itemTaxDebt.clear();
+        this.taxDebtStartedAt = null;
+        this.taxDebtLastWarningAt = null;
+    }
+
+    /** Returns whether the town currently owes any stored tax debt. */
+    public boolean hasTaxDebt() {
+        return !this.currencyTaxDebt.isEmpty() || !this.itemTaxDebt.isEmpty();
+    }
+
+    /** Returns the timestamp when the town first entered tax debt. */
+    public long getTaxDebtStartedAt() {
+        return Math.max(0L, this.taxDebtStartedAt == null ? 0L : this.taxDebtStartedAt);
+    }
+
+    /** Replaces the timestamp when the town first entered tax debt. */
+    public void setTaxDebtStartedAt(final long taxDebtStartedAt) {
+        this.taxDebtStartedAt = taxDebtStartedAt <= 0L ? null : taxDebtStartedAt;
+    }
+
+    /** Returns the timestamp when the town last received a debt warning. */
+    public long getTaxDebtLastWarningAt() {
+        return Math.max(0L, this.taxDebtLastWarningAt == null ? 0L : this.taxDebtLastWarningAt);
+    }
+
+    /** Replaces the timestamp when the town last received a debt warning. */
+    public void setTaxDebtLastWarningAt(final long taxDebtLastWarningAt) {
+        this.taxDebtLastWarningAt = taxDebtLastWarningAt <= 0L ? null : taxDebtLastWarningAt;
     }
 
     /** Syncs cached permissions from the player's current role. */

@@ -33,6 +33,7 @@ import com.raindropcentral.rds.service.scoreboard.ShopSidebarScoreboardService;
 import com.raindropcentral.rds.service.shop.AdminShopRestockScheduler;
 import com.raindropcentral.rds.service.shop.DynamicPricingService;
 import com.raindropcentral.rds.service.shop.ShopAdminPlayerSettingsService;
+import com.raindropcentral.rds.service.shop.ShopBossBarIntegration;
 import com.raindropcentral.rds.service.shop.ShopBossBarService;
 import com.raindropcentral.rds.service.shop.TownShopService;
 import com.raindropcentral.rds.service.tax.ShopTaxScheduler;
@@ -88,6 +89,7 @@ public class RDS {
     private static final String CONFIG_FILE_NAME = "config.yml";
     private static final String MATERIAL_PRICES_FILE_NAME = "material-prices.yml";
     private static final int METRICS_SERVICE_ID = 29963;
+    public static final String SHOP_BOSS_BAR_PROVIDER_KEY = "rds.shop";
 
     private final JavaPlugin plugin;
     private final String edition;
@@ -103,6 +105,7 @@ public class RDS {
     private ViewFrame viewFrame;
     private ShopTaxScheduler shopTaxScheduler;
     private ShopBossBarService shopBossBarService;
+    private ShopBossBarIntegration shopBossBarIntegration;
     private AdminShopRestockScheduler adminShopRestockScheduler;
     private AdminShopServerBankScheduler adminShopServerBankScheduler;
     private ShopSidebarScoreboardService shopSidebarScoreboardService;
@@ -214,6 +217,11 @@ public class RDS {
 
         if (this.executor != null) {
             this.executor.shutdownNow();
+        }
+
+        if (this.shopBossBarIntegration != null) {
+            this.shopBossBarIntegration.unregister();
+            this.shopBossBarIntegration = null;
         }
 
         if (this.shopBossBarService != null) {
@@ -521,6 +529,8 @@ public class RDS {
                 ? new ServiceRegistry()
                 : this.platform.getServiceRegistry();
 
+        this.initializeBossBarIntegration();
+
         this.getLogger().info("Registering Vault service");
         registry.register(
                 "net.milkbowl.vault.economy.Economy",
@@ -548,6 +558,26 @@ public class RDS {
             this.luckPermsService = null;
             this.getLogger().info("LuckPerms service not present; continuing without LuckPerms integration");
         }).load();
+    }
+
+    private void initializeBossBarIntegration() {
+        if (!Bukkit.getPluginManager().isPluginEnabled("RCore")) {
+            this.shopBossBarIntegration = null;
+            return;
+        }
+
+        try {
+            final ShopBossBarIntegration integration = new ShopBossBarIntegration(this);
+            if (integration.register()) {
+                this.shopBossBarIntegration = integration;
+                this.getLogger().info("Registered RDS shop boss bar with RCore");
+                return;
+            }
+        } catch (final Throwable throwable) {
+            this.getLogger().log(Level.WARNING, "Failed to initialize the optional RCore boss-bar bridge", throwable);
+        }
+
+        this.shopBossBarIntegration = null;
     }
 
     private void initializeCommands() {
@@ -972,6 +1002,70 @@ public class RDS {
 
     private @NotNull String formatAmount(final double amount) {
         return String.format(Locale.US, "%.2f", amount);
+    }
+
+    /**
+     * Returns whether the shop boss bar is enabled for the supplied player UUID.
+     *
+     * <p>When RCore is installed, the centralized RCore preference row is authoritative. Otherwise
+     * RDS falls back to the legacy local player field.</p>
+     *
+     * @param playerUuid player UUID to inspect
+     * @return {@code true} when the shop boss bar is enabled
+     */
+    public boolean isShopBossBarEnabled(final @NotNull UUID playerUuid) {
+        if (this.shopBossBarIntegration != null) {
+            return this.shopBossBarIntegration.isEnabled(playerUuid);
+        }
+
+        final RDSPlayer playerData = this.playerRepository == null ? null : this.playerRepository.findByPlayer(playerUuid);
+        return playerData != null && playerData.isShopBarEnabled();
+    }
+
+    /**
+     * Toggles the shop boss bar state for the supplied player.
+     *
+     * <p>When RCore is installed the centralized provider state is toggled. Otherwise the legacy
+     * RDS player field remains the source of truth.</p>
+     *
+     * @param player player whose state should be toggled
+     * @return resulting enabled state
+     */
+    public boolean toggleShopBossBarPreference(final @NotNull Player player) {
+        if (this.shopBossBarIntegration != null) {
+            return this.shopBossBarIntegration.toggleEnabled(player);
+        }
+
+        RDSPlayer playerData = this.playerRepository == null ? null : this.playerRepository.findByPlayer(player.getUniqueId());
+        final boolean created = playerData == null;
+        if (playerData == null) {
+            playerData = new RDSPlayer(player.getUniqueId());
+        }
+
+        final boolean enabled = playerData.toggleShopBar();
+        if (this.playerRepository != null) {
+            if (created) {
+                this.playerRepository.create(playerData);
+            } else {
+                this.playerRepository.update(playerData);
+            }
+        }
+        return enabled;
+    }
+
+    /**
+     * Opens the centralized RCore boss-bar settings view for the RDS shop provider when available.
+     *
+     * @param player player opening the settings view
+     * @return {@code true} when the RCore-managed settings view was opened
+     */
+    public boolean openShopBossBarSettings(final @NotNull Player player) {
+        if (this.shopBossBarIntegration == null) {
+            return false;
+        }
+
+        this.shopBossBarIntegration.openSettings(player);
+        return true;
     }
 
     /**

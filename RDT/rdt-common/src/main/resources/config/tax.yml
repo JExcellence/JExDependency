@@ -1,0 +1,70 @@
+# RDT scheduled taxes
+#
+# Currency tax variables available in rate_expression:
+# - town_level
+# - town_plots_count
+# - chunk_level_total
+# - town_population
+# - nation_population
+# - nation_level
+# - base_tax_percent
+# - archetype_modifier
+# - chunk_type_<chunk_type>_count
+#
+# Chunk-type count variables use lowercase enum names, for example:
+# chunk_type_nexus_count, chunk_type_default_count, chunk_type_fob_count,
+# chunk_type_claim_pending_count, chunk_type_farm_count, chunk_type_security_count,
+# chunk_type_outpost_count, chunk_type_medic_count, chunk_type_bank_count,
+# chunk_type_armory_count
+
+duration_ticks: 1728000
+start_time: "12:00"
+time_zone: "system"
+
+currency_tax:
+  base_tax_percent: 2.0
+  minimum_tax_percent: 0.0
+  maximum_tax_percent: 25.0
+  currency_ids:
+    - vault
+    - raindrops
+  rate_expression: "base_tax_percent + (town_level * 0.05) + (town_plots_count * 0.02) + (chunk_level_total * 0.01) + (town_population * 0.10) + (nation_population * 0.02) + (nation_level * 0.05) + archetype_modifier + (chunk_type_bank_count * 0.15) + (chunk_type_outpost_count * 0.05)"
+
+archetype_modifiers:
+  capitalist: 0.30
+  communist: -0.20
+  socialist: -0.10
+  theocracy: 0.15
+  monarchy: 0.20
+
+town_item_taxes:
+  BANK:
+    GOLD_INGOT: 2
+    IRON_INGOT: 8
+  OUTPOST:
+    EMERALD: 1
+  FARM:
+    BREAD: 4
+  SECURITY:
+    ARROW: 16
+  ARMORY:
+    IRON_INGOT: 6
+
+nation_item_taxes:
+  NEXUS:
+    DIAMOND: 1
+  OUTPOST:
+    EMERALD: 2
+  BANK:
+    GOLD_INGOT: 4
+  SECURITY:
+    ARROW: 32
+  ARMORY:
+    IRON_INGOT: 12
+
+debt:
+  grace_period_ticks: 12096000
+  warning_interval_ticks: 72000
+  join_reminder_enabled: true
+  broadcast_town_fall: true
+  broadcast_nation_disband: true

@@ -13,6 +13,39 @@ prt:
     locked: "<yellow>Your town has not unlocked remote bank access yet.</yellow>"
     location_required: "<yellow>You must stand in one of your town's claimed chunks to open the full bank remotely.</yellow>"
     cache_unavailable: "<red>Your town cache is not available for remote deposits right now.</red>"
+  serverbank:
+    unavailable: "<red>The server bank is unavailable right now.</red>"
+    syntax: "<yellow>Usage: <white>/rt serverbank <balance | set | add | take> <currency> [amount]</white></yellow>"
+    balance: "<gray>Server bank balance for <white>{currency}</white><gray>:</gray> <white>{server_balance}</white>"
+    set: "<green>Set the server bank balance for <white>{currency}</white><green> to <white>{server_balance}</white><green>.</green>"
+    add: "<green>Added <white>{amount}</white><green> <white>{currency}</white><green>. New balance: <white>{server_balance}</white><green>.</green>"
+    take: "<green>Removed <white>{amount}</white><green> <white>{currency}</white><green>. New balance: <white>{server_balance}</white><green>.</green>"
+    not_enough: "<red>The server bank does not have <white>{amount}</white><red> <white>{currency}</white><red> available.</red>"
+  tax:
+    unavailable: "<red>The RDT tax runtime is unavailable right now.</red>"
+    syntax: "<yellow>Usage: <white>/rt tax <status | run></white></yellow>"
+    status:
+      runtime: "<gray>Tax runtime:</gray> <white>{running_state}</white>"
+      last_collection: "<gray>Last collection:</gray> <white>{last_collection_at}</white>"
+      next_collection: "<gray>Next collection:</gray> <white>{next_collection_at}</white>"
+      counts: "<gray>Active towns:</gray> <white>{active_towns}</white><gray>, active nations:</gray> <white>{active_nations}</white><gray>, towns in debt:</gray> <white>{towns_in_debt}</white><gray>, nations in debt:</gray> <white>{nations_in_debt}</white>"
+    run:
+      success: "<green>Manual tax collection completed at <white>{completed_at}</white><green>.</green>"
+      failed: "<red>Manual tax collection could not be completed right now.</red>"
+
+tax_runtime:
+  warning:
+    town: "<yellow>Town tax debt for <white>{town_name}</white><yellow>: currencies <white>{currency_debt}</white><yellow>, items <white>{item_debt}</white><yellow>. Grace remaining: <white>{grace_remaining}</white><yellow>.</yellow>"
+    nation: "<yellow>Nation tax debt for <white>{nation_name}</white><yellow>: currencies <white>{currency_debt}</white><yellow>, items <white>{item_debt}</white><yellow>. Grace remaining: <white>{grace_remaining}</white><yellow>.</yellow>"
+  cleared:
+    town: "<green>Town tax debt for <white>{town_name}</white><green> has been cleared.</green>"
+    nation: "<green>Nation tax debt for <white>{nation_name}</white><green> has been cleared.</green>"
+  join_reminder:
+    town: "<yellow>Your town <white>{town_name}</white><yellow> still owes taxes. Currency debt: <white>{currency_debt}</white><yellow>. Item debt: <white>{item_debt}</white><yellow>. Grace remaining: <white>{grace_remaining}</white><yellow>.</yellow>"
+    nation: "<yellow>Your nation <white>{nation_name}</white><yellow> still owes taxes. Currency debt: <white>{currency_debt}</white><yellow>. Item debt: <white>{item_debt}</white><yellow>. Grace remaining: <white>{grace_remaining}</white><yellow>.</yellow>"
+  broadcasts:
+    town_fall: "<red><white>{town_name}</white> has fallen due to unpaid taxes. Outstanding currency debt: <white>{currency_debt}</white><red>. Outstanding item debt: <white>{item_debt}</white><red>.</red>"
+    nation_disband: "<red><white>{nation_name}</white> has disbanded due to unpaid taxes. Outstanding currency debt: <white>{currency_debt}</white><red>. Outstanding item debt: <white>{item_debt}</white><red>.</red>"
 
 town_spawn:
   transfer_requested: "<yellow>Sending you to the town spawn server <white>{target_server}</white><yellow>.</yellow>"
@@ -29,6 +62,11 @@ town_boss_bar:
     claimed: "<gradient:#22c55e:#84cc16>{town_name}</gradient> <dark_gray>|</dark_gray> <white>{chunk_x}, {chunk_z}</white>"
   nexus:
     title: "<gradient:#22c55e:#84cc16>{town_name}</gradient> <dark_gray>|</dark_gray> <red>{current_health}</red><gray>/</gray><white>{max_health} HP</white> <dark_gray>|</dark_gray> <aqua>{defense} DEF</aqua> <dark_gray>|</dark_gray> <yellow>Nexus Lv {nexus_level}</yellow>"
+
+rdt_boss_bar_provider:
+  town:
+    name: "<gradient:#22c55e:#84cc16>Town Territory</gradient>"
+    description: "<gray>Shows your current town territory or wilderness in a shared RCore boss bar.</gray>"
 
 nexus_block:
   name: "<gradient:#22c55e:#84cc16>[Nexus]</gradient> <white>{town}</white>"
@@ -693,6 +731,117 @@ town_bank_currency_input_ui:
   error:
     invalid_input: "<red>Enter a valid positive amount.</red>"
     processing_failed: "<red>That bank amount could not be processed.</red>"
+
+nation_bank_shared:
+  messages:
+    in_use: "<yellow>Your nation bank is already being accessed by another player.</yellow>"
+    no_permission: "<red>You do not have permission to access this nation bank.</red>"
+    unavailable: "<red>The nation bank is unavailable right now.</red>"
+
+nation_bank_root_ui:
+  title: "<gradient:#22c55e:#38bdf8>Nation Bank</gradient>"
+  summary:
+    name: "<gold>Nation Bank Overview</gold>"
+    lore:
+      - "<gray>Nation:</gray> <white>{nation_name}</white>"
+      - "<gray>Nation level:</gray> <white>{nation_level}</white>"
+      - "<gray>Access lock:</gray> <white>{viewer_lock}</white>"
+  currency:
+    name: "<gold>{currency}</gold>"
+    lore:
+      - "<gray>Nation balance:</gray> <white>{nation_balance}</white>"
+      - "<gray>Your balance:</gray> <white>{player_balance}</white>"
+      - "<gray>Deposits:</gray> <white>{deposit_state}</white>"
+      - "<gray>Withdrawals:</gray> <white>{withdraw_state}</white>"
+      - "<gray>Status:</gray> <white>{support_state}</white>"
+      - "<yellow>Left click to deposit. Right click to withdraw.</yellow>"
+  storage:
+    name: "<gold>Nation Storage</gold>"
+    lore:
+      - "<gray>Occupied slots:</gray> <white>{stored_slots}</white>"
+      - "<yellow>Click to open the nation's shared storage.</yellow>"
+  return:
+    name: "<gold>Return</gold>"
+    lore:
+      - "<yellow>Go back to the nation menu.</yellow>"
+  missing:
+    name: "<red>Nation Missing</red>"
+    lore:
+      - "<gray>The nation bank could not be loaded.</gray>"
+  transaction:
+    success: "<green>{amount} {currency} transferred successfully. New nation balance: <white>{nation_balance}</white><green>.</green>"
+    invalid_target: "<red>That nation-bank transaction target is unavailable.</red>"
+    no_permission: "<red>You do not have permission for that nation-bank transaction.</red>"
+    invalid_amount: "<red>Enter a valid positive amount.</red>"
+    invalid_currency: "<red>That currency is not supported by the nation bank.</red>"
+    not_enough_resources: "<red>You do not have enough resources for that nation-bank transaction.</red>"
+    failed: "<red>The nation-bank transaction could not be completed right now.</red>"
+
+nation_bank_storage_ui:
+  title: "<gradient:#22c55e:#38bdf8>Nation Storage</gradient>"
+
+nation_bank_currency_input_ui:
+  title: "<gradient:#22c55e:#38bdf8>Nation Bank Amount</gradient>"
+  input:
+    lore:
+      - "<gray>Enter the amount you want to move.</gray>"
+  error:
+    invalid_input: "<red>Enter a valid positive amount.</red>"
+    processing_failed: "<red>That nation-bank amount could not be processed.</red>"
+
+server_bank_shared:
+  messages:
+    in_use: "<yellow>The server bank is already being accessed by another admin.</yellow>"
+
+server_bank_root_ui:
+  title: "<gradient:#f97316:#f59e0b>Server Bank</gradient>"
+  summary:
+    name: "<gold>Server Bank Overview</gold>"
+    lore:
+      - "<gray>Stored slots:</gray> <white>{stored_slots}</white>"
+      - "<gray>Access lock:</gray> <white>{viewer_lock}</white>"
+      - "<gray>Last tax run:</gray> <white>{last_tax_run}</white>"
+      - "<gray>Next tax run:</gray> <white>{next_tax_run}</white>"
+  currency:
+    name: "<gold>{currency}</gold>"
+    lore:
+      - "<gray>Server balance:</gray> <white>{server_balance}</white>"
+      - "<gray>Your balance:</gray> <white>{player_balance}</white>"
+      - "<gray>Status:</gray> <white>{support_state}</white>"
+      - "<yellow>Left click to deposit. Right click to withdraw.</yellow>"
+  storage:
+    name: "<gold>Tax Item Storage</gold>"
+    lore:
+      - "<gray>Occupied slots:</gray> <white>{stored_slots}</white>"
+      - "<yellow>Click to open the shared tax-item storage.</yellow>"
+  return:
+    name: "<gold>Return</gold>"
+    lore:
+      - "<yellow>Go back to the previous view.</yellow>"
+  missing:
+    name: "<red>Server Bank Missing</red>"
+    lore:
+      - "<gray>The server bank could not be loaded.</gray>"
+  transaction:
+    success: "<green>{amount} {currency} transferred successfully. New server balance: <white>{server_balance}</white><green>.</green>"
+    invalid_target: "<red>That server-bank transaction target is unavailable.</red>"
+    no_permission: "<red>You do not have permission for that server-bank transaction.</red>"
+    invalid_amount: "<red>Enter a valid positive amount.</red>"
+    invalid_currency: "<red>That currency is not supported by the server bank.</red>"
+    not_enough_resources: "<red>You do not have enough resources for that server-bank transaction.</red>"
+    failed: "<red>The server-bank transaction could not be completed right now.</red>"
+
+server_bank_storage_ui:
+  title: "<gradient:#f97316:#f59e0b>Server Bank Storage</gradient>"
+
+server_bank_currency_input_ui:
+  title: "<gradient:#f97316:#f59e0b>Server Bank Amount</gradient>"
+  input:
+    lore:
+      - "<gray>Enter the amount you want to move.</gray>"
+  error:
+    invalid_input: "<red>Enter a valid positive amount.</red>"
+    processing_failed: "<red>That server-bank amount could not be processed.</red>"
 
 town_chunk_ui:
   title: "<gradient:#38bdf8:#60a5fa>Town Chunk</gradient>"
@@ -2392,6 +2541,10 @@ town_nation_ui:
       name: "<gold>Leave Nation</gold>"
       lore:
         - "<gray>Leave this nation after confirmation.</gray>"
+    nation_bank:
+      name: "<gold>Nation Bank</gold>"
+      lore:
+        - "<gray>Open the nation's shared bank and storage.</gray>"
     disband:
       name: "<red>Disband Nation</red>"
       lore:

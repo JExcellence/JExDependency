@@ -196,15 +196,17 @@ public class PRS extends PlayerCommand {
             return;
         }
 
-        final boolean enabled = this.rds.getShopBossBarService().toggleFor(player);
-        final String key = enabled
-                ? "prs.bar.enabled"
-                : "prs.bar.disabled";
-
-        new I18n.Builder(key, player)
+        if (this.rds.openShopBossBarSettings(player)) {
+            new I18n.Builder("prs.bar.redirected", player)
                 .includePrefix()
                 .build()
                 .sendMessage();
+            return;
+        }
+
+        final boolean enabled = this.rds.getShopBossBarService().toggleFor(player);
+        final String key = enabled ? "prs.bar.enabled" : "prs.bar.disabled";
+        new I18n.Builder(key, player).includePrefix().build().sendMessage();
     }
 
     private void handleAdminCommand(
@@ -772,7 +774,7 @@ public class PRS extends PlayerCommand {
     ) {
         return switch (action) {
             case ADMIN -> this.hasPermission(player, EPRSPermission.ADMIN);
-            case BAR -> this.hasPermission(player, EPRSPermission.BAR);
+            case BAR -> false;
             case GIVE -> this.hasPermission(player, EPRSPermission.GIVE);
             case SCOREBOARD -> this.hasPermission(player, EPRSPermission.SCOREBOARD);
             case SEARCH -> this.hasPermission(player, EPRSPermission.SEARCH);

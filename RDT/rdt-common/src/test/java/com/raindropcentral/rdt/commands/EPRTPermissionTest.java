@@ -43,6 +43,10 @@ class EPRTPermissionTest {
         assertEquals("raindroptowns.command.fob", EPRTPermission.FOB.getFallbackNode());
         assertEquals("bankCommand", EPRTPermission.BANK.getInternalName());
         assertEquals("raindroptowns.command.bank", EPRTPermission.BANK.getFallbackNode());
+        assertEquals("serverBankCommand", EPRTPermission.SERVERBANK.getInternalName());
+        assertEquals("raindroptowns.command.serverbank", EPRTPermission.SERVERBANK.getFallbackNode());
+        assertEquals("taxCommand", EPRTPermission.TAX.getInternalName());
+        assertEquals("raindroptowns.command.tax", EPRTPermission.TAX.getFallbackNode());
     }
 
     @Test

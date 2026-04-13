@@ -7,7 +7,7 @@ inputs:
     required: false
     default: "21"
   target-module:
-    description: "Module to build and stage (RCore, RDQ, RDR, RDS, or RDT)"
+    description: "Module to build and stage (RCore, RDA, RDQ, RDR, RDS, or RDT)"
     required: true
   jeconfig-repository:
     description: "Owner/repository for JEConfig"
@@ -91,6 +91,7 @@ runs:
 
         case "${normalized_target_module}" in
           RCORE) version_prefix="rcore" ;;
+          RDA) version_prefix="rda" ;;
           RDQ) version_prefix="rdq" ;;
           RDR) version_prefix="rdr" ;;
           RDS) version_prefix="rds" ;;
@@ -149,6 +150,9 @@ runs:
           RCORE)
             target_tasks=(":RCore:clean" ":RCore:build" ":RCore:publishLocal")
             ;;
+          RDA)
+            target_tasks=(":RCore:clean" ":RCore:build" ":RCore:publishLocal" ":RDA:clean" ":RDA:buildAll")
+            ;;
           RDQ)
             target_tasks=(":RCore:clean" ":RCore:build" ":RCore:publishLocal" ":RDQ:clean" ":RDQ:buildAll")
             ;;
@@ -194,6 +198,13 @@ runs:
           RCORE)
             names=("RCore")
             patterns=("RCore/build/libs/RCore-*.jar")
+            ;;
+          RDA)
+            names=("RDA Free" "RDA Premium")
+            patterns=(
+              "RDA/rda-free/build/libs/RDA-*-Free.jar"
+              "RDA/rda-premium/build/libs/RDA-*-Premium.jar"
+            )
             ;;
           RDQ)
             names=("RDQ Free" "RDQ Premium")

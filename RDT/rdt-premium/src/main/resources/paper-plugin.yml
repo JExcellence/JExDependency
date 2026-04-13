@@ -17,3 +17,7 @@ dependencies:
       load: BEFORE
       required: false
       join-classpath: true
+    RCore:
+      load: BEFORE
+      required: false
+      join-classpath: true

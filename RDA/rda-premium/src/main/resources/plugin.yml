@@ -1,0 +1,9 @@
+name: "RDA"
+version: ${version}
+main: com.raindropcentral.rda.RDAPremium
+api-version: '1.19'
+description: ${description}
+author: RaindropCentral
+website: https://raindropcentral.com
+softdepend:
+  - RCore

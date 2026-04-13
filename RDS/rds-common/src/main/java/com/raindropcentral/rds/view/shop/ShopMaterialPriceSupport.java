@@ -13,14 +13,12 @@
 
 package com.raindropcentral.rds.view.shop;
 
+import com.raindropcentral.rds.configs.MaterialPriceConfigLoader;
 import org.bukkit.Material;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -34,55 +32,13 @@ import java.util.Map;
  */
 final class ShopMaterialPriceSupport {
 
-    private static final String MATERIALS_SECTION = "materials";
-
     private ShopMaterialPriceSupport() {
     }
 
     static @NotNull Map<String, Map<String, Double>> loadMaterialPrices(
             final @NotNull File materialPricesFile
     ) {
-        if (!materialPricesFile.exists()) {
-            return Map.of();
-        }
-
-        final YamlConfiguration configuration = YamlConfiguration.loadConfiguration(materialPricesFile);
-        final ConfigurationSection materialsSection = configuration.getConfigurationSection(MATERIALS_SECTION);
-        if (materialsSection == null) {
-            return Map.of();
-        }
-
-        final Map<String, Map<String, Double>> materialPrices = new LinkedHashMap<>();
-        for (final String materialKey : materialsSection.getKeys(false)) {
-            if (materialKey == null || materialKey.isBlank()) {
-                continue;
-            }
-
-            final ConfigurationSection materialSection = materialsSection.getConfigurationSection(materialKey);
-            if (materialSection == null) {
-                continue;
-            }
-
-            final Map<String, Double> currencyPrices = new LinkedHashMap<>();
-            for (final String currencyKey : materialSection.getKeys(false)) {
-                if (currencyKey == null || currencyKey.isBlank()) {
-                    continue;
-                }
-
-                final Double parsedPrice = parsePrice(materialSection.get(currencyKey));
-                if (parsedPrice == null || !Double.isFinite(parsedPrice) || parsedPrice < 0D) {
-                    continue;
-                }
-
-                currencyPrices.put(normalizeCurrencyType(currencyKey), parsedPrice);
-            }
-
-            if (!currencyPrices.isEmpty()) {
-                materialPrices.put(materialKey.trim().toUpperCase(Locale.ROOT), Map.copyOf(currencyPrices));
-            }
-        }
-
-        return Map.copyOf(materialPrices);
+        return MaterialPriceConfigLoader.loadMaterialPrices(materialPricesFile);
     }
 
     static @NotNull MaterialPrice resolveDefaultPrice(
@@ -115,26 +71,6 @@ final class ShopMaterialPriceSupport {
         }
 
         return new MaterialPrice(normalizedDefaultCurrency, sanitizeFallbackPrice(fallbackPrice));
-    }
-
-    private static @Nullable Double parsePrice(
-            final @Nullable Object rawValue
-    ) {
-        if (rawValue instanceof Number number) {
-            return number.doubleValue();
-        }
-        if (rawValue instanceof String rawText) {
-            final String trimmed = rawText.trim();
-            if (trimmed.isEmpty()) {
-                return null;
-            }
-            try {
-                return Double.parseDouble(trimmed);
-            } catch (NumberFormatException ignored) {
-                return null;
-            }
-        }
-        return null;
     }
 
     private static @NotNull String normalizeCurrencyType(

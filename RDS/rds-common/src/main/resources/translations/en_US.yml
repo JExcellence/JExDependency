@@ -24,6 +24,7 @@ prs:
   bar:
     enabled: "<green>Shop boss bar enabled while looking at a shop.</green>"
     disabled: "<yellow>Shop boss bar disabled.</yellow>"
+    redirected: "<aqua>Opened the shared <white>/rc bossbar</white><aqua> settings for the shop boss bar.</aqua>"
   give:
     syntax: "<red>Usage: /rs give <target_player> <amount> or /rs give town <target_player> <amount></red>"
     town:
@@ -66,6 +67,11 @@ shop_boss_bar:
     limited: "Limited Stock"
     infinite: "Infinite"
     various: "Various"
+
+rds_boss_bar_provider:
+  shop:
+    name: "<gold>Shop Boss Bar</gold>"
+    description: "<gray>Shows shop ownership and stock info while you look at a shop block.</gray>"
 
 # ============================================
 # GUI Buttons

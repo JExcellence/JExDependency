@@ -78,9 +78,33 @@ public class RNation extends BaseEntity {
     @Column(name = "amount", nullable = false)
     private Map<String, Double> levelCurrencyProgress = new LinkedHashMap<>();
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "rdt_nation_bank_balances", joinColumns = @JoinColumn(name = "nation_id_fk"))
+    @Column(name = "amount", nullable = false)
+    private Map<String, Double> bankBalances = new LinkedHashMap<>();
+
     @Convert(converter = ItemStackMapConverter.class)
     @Column(name = "level_item_progress", columnDefinition = "LONGTEXT")
     private Map<String, ItemStack> levelItemProgress = new LinkedHashMap<>();
+
+    @Convert(converter = ItemStackMapConverter.class)
+    @Column(name = "shared_bank_storage", columnDefinition = "LONGTEXT")
+    private Map<String, ItemStack> sharedBankStorage = new LinkedHashMap<>();
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "rdt_nation_tax_currency_debt", joinColumns = @JoinColumn(name = "nation_id_fk"))
+    @Column(name = "amount", nullable = false)
+    private Map<String, Double> currencyTaxDebt = new LinkedHashMap<>();
+
+    @Convert(converter = ItemStackMapConverter.class)
+    @Column(name = "item_tax_debt", columnDefinition = "LONGTEXT")
+    private Map<String, ItemStack> itemTaxDebt = new LinkedHashMap<>();
+
+    @Column(name = "tax_debt_started_at")
+    private Long taxDebtStartedAt;
+
+    @Column(name = "tax_debt_last_warning_at")
+    private Long taxDebtLastWarningAt;
 
     /**
      * Creates a nation record.
@@ -283,6 +307,208 @@ public class RNation extends BaseEntity {
      */
     public void setNationLevel(final int nationLevel) {
         this.nationLevel = Math.max(1, nationLevel);
+    }
+
+    /**
+     * Returns copied nation-bank balances keyed by normalized currency identifier.
+     *
+     * @return copied nation-bank balances
+     */
+    public @NotNull Map<String, Double> getBankBalances() {
+        return new LinkedHashMap<>(this.bankBalances);
+    }
+
+    /**
+     * Returns the stored nation-bank balance for one currency identifier.
+     *
+     * @param currencyId currency identifier
+     * @return stored nation-bank balance
+     */
+    public double getBankAmount(final @NotNull String currencyId) {
+        return this.bankBalances.getOrDefault(normalizeProgressKey(currencyId), 0.0D);
+    }
+
+    /**
+     * Deposits one amount into a nation-bank balance.
+     *
+     * @param currencyId currency identifier
+     * @param amount amount to add
+     * @return updated balance
+     */
+    public double depositBank(final @NotNull String currencyId, final double amount) {
+        if (amount <= 0.0D) {
+            return this.getBankAmount(currencyId);
+        }
+        final String normalizedCurrencyId = normalizeProgressKey(currencyId);
+        final double updatedBalance = this.getBankAmount(normalizedCurrencyId) + amount;
+        this.bankBalances.put(normalizedCurrencyId, updatedBalance);
+        return updatedBalance;
+    }
+
+    /**
+     * Withdraws one amount from a nation-bank balance.
+     *
+     * @param currencyId currency identifier
+     * @param amount amount to subtract
+     * @return {@code true} when the balance covered the withdrawal
+     */
+    public boolean withdrawBank(final @NotNull String currencyId, final double amount) {
+        if (amount <= 0.0D) {
+            return true;
+        }
+        final String normalizedCurrencyId = normalizeProgressKey(currencyId);
+        final double currentBalance = this.getBankAmount(normalizedCurrencyId);
+        if (currentBalance + 1.0E-6D < amount) {
+            return false;
+        }
+        final double remainingBalance = currentBalance - amount;
+        if (remainingBalance <= 1.0E-6D) {
+            this.bankBalances.remove(normalizedCurrencyId);
+        } else {
+            this.bankBalances.put(normalizedCurrencyId, remainingBalance);
+        }
+        return true;
+    }
+
+    /**
+     * Returns the persisted shared nation-bank item storage.
+     *
+     * @return copied shared nation-bank storage
+     */
+    public @NotNull Map<String, ItemStack> getSharedBankStorage() {
+        return new LinkedHashMap<>(this.sharedBankStorage);
+    }
+
+    /**
+     * Replaces the persisted shared nation-bank item storage.
+     *
+     * @param sharedBankStorage replacement shared storage snapshot
+     */
+    public void setSharedBankStorage(final @NotNull Map<String, ItemStack> sharedBankStorage) {
+        this.sharedBankStorage = new LinkedHashMap<>(Objects.requireNonNull(sharedBankStorage, "sharedBankStorage"));
+    }
+
+    /**
+     * Returns copied outstanding nation currency tax debt keyed by normalized currency identifier.
+     *
+     * @return copied outstanding currency tax debt
+     */
+    public @NotNull Map<String, Double> getCurrencyTaxDebt() {
+        return new LinkedHashMap<>(this.currencyTaxDebt);
+    }
+
+    /**
+     * Returns stored outstanding tax debt for one currency identifier.
+     *
+     * @param currencyId currency identifier
+     * @return stored outstanding tax debt
+     */
+    public double getCurrencyTaxDebt(final @NotNull String currencyId) {
+        return this.currencyTaxDebt.getOrDefault(normalizeProgressKey(currencyId), 0.0D);
+    }
+
+    /**
+     * Replaces stored outstanding tax debt for one currency identifier.
+     *
+     * @param currencyId currency identifier
+     * @param amount replacement debt amount
+     */
+    public void setCurrencyTaxDebt(final @NotNull String currencyId, final double amount) {
+        final String normalizedCurrencyId = normalizeProgressKey(currencyId);
+        if (amount <= 1.0E-6D) {
+            this.currencyTaxDebt.remove(normalizedCurrencyId);
+            return;
+        }
+        this.currencyTaxDebt.put(normalizedCurrencyId, amount);
+    }
+
+    /**
+     * Returns copied outstanding nation item tax debt keyed by normalized item identifier.
+     *
+     * @return copied outstanding item tax debt
+     */
+    public @NotNull Map<String, ItemStack> getItemTaxDebt() {
+        return new LinkedHashMap<>(this.itemTaxDebt);
+    }
+
+    /**
+     * Returns stored outstanding item tax debt for one normalized item identifier.
+     *
+     * @param itemKey normalized item identifier
+     * @return stored outstanding item tax debt, or {@code null} when absent
+     */
+    public @Nullable ItemStack getItemTaxDebt(final @NotNull String itemKey) {
+        return this.itemTaxDebt.get(normalizeProgressKey(itemKey));
+    }
+
+    /**
+     * Replaces stored outstanding item tax debt for one normalized item identifier.
+     *
+     * @param itemKey normalized item identifier
+     * @param itemStack replacement debt stack, or {@code null} to clear it
+     */
+    public void setItemTaxDebt(final @NotNull String itemKey, final @Nullable ItemStack itemStack) {
+        final String normalizedItemKey = normalizeProgressKey(itemKey);
+        if (itemStack == null || itemStack.isEmpty()) {
+            this.itemTaxDebt.remove(normalizedItemKey);
+            return;
+        }
+        this.itemTaxDebt.put(normalizedItemKey, itemStack.clone());
+    }
+
+    /**
+     * Clears every stored nation tax debt entry and warning timestamp.
+     */
+    public void clearTaxDebt() {
+        this.currencyTaxDebt.clear();
+        this.itemTaxDebt.clear();
+        this.taxDebtStartedAt = null;
+        this.taxDebtLastWarningAt = null;
+    }
+
+    /**
+     * Returns whether the nation currently owes any stored tax debt.
+     *
+     * @return {@code true} when either currency or item tax debt exists
+     */
+    public boolean hasTaxDebt() {
+        return !this.currencyTaxDebt.isEmpty() || !this.itemTaxDebt.isEmpty();
+    }
+
+    /**
+     * Returns the timestamp when the nation first entered tax debt.
+     *
+     * @return debt-start timestamp in epoch milliseconds, or {@code 0} when no timestamp is stored
+     */
+    public long getTaxDebtStartedAt() {
+        return Math.max(0L, this.taxDebtStartedAt == null ? 0L : this.taxDebtStartedAt);
+    }
+
+    /**
+     * Replaces the timestamp when the nation first entered tax debt.
+     *
+     * @param taxDebtStartedAt replacement debt-start timestamp
+     */
+    public void setTaxDebtStartedAt(final long taxDebtStartedAt) {
+        this.taxDebtStartedAt = taxDebtStartedAt <= 0L ? null : taxDebtStartedAt;
+    }
+
+    /**
+     * Returns the timestamp when the nation last received a tax-debt warning.
+     *
+     * @return warning timestamp in epoch milliseconds, or {@code 0} when none is stored
+     */
+    public long getTaxDebtLastWarningAt() {
+        return Math.max(0L, this.taxDebtLastWarningAt == null ? 0L : this.taxDebtLastWarningAt);
+    }
+
+    /**
+     * Replaces the timestamp when the nation last received a tax-debt warning.
+     *
+     * @param taxDebtLastWarningAt replacement warning timestamp
+     */
+    public void setTaxDebtLastWarningAt(final long taxDebtLastWarningAt) {
+        this.taxDebtLastWarningAt = taxDebtLastWarningAt <= 0L ? null : taxDebtLastWarningAt;
     }
 
     /**

@@ -1,0 +1,15 @@
+name: "RDA"
+version: ${version}
+main: com.raindropcentral.rda.RDAPremium
+loader: de.jexcellence.dependency.loader.PaperPluginLoader
+api-version: '1.19'
+description: ${description}
+author: RaindropCentral
+website: https://raindropcentral.com
+folia-supported: true
+dependencies:
+  server:
+    RCore:
+      load: BEFORE
+      required: false
+      join-classpath: true

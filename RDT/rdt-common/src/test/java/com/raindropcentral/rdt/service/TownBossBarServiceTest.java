@@ -39,6 +39,7 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
@@ -167,7 +168,29 @@ class TownBossBarServiceTest {
         assertEquals(TownColorUtil.toBossBarColor(nexusTown.getTownColorHex()), renderState.color());
     }
 
+    @Test
+    void refreshPlayerClearsVisibleBossBarWhenCentralPreferenceIsDisabled() throws ReflectiveOperationException {
+        final UUID playerUuid = UUID.randomUUID();
+        final BossBar bossBar = mock(BossBar.class);
+        final RDT plugin = this.createPluginWithConfig("""
+            global_max_chunk_limit: 10
+            """, false);
+        final TownBossBarService service = new TownBossBarService(plugin);
+
+        when(player.getUniqueId()).thenReturn(playerUuid);
+        when(player.isOnline()).thenReturn(true);
+        setActiveBar(service, playerUuid, bossBar);
+
+        service.refreshPlayer(player);
+
+        verify(player).hideBossBar(bossBar);
+    }
+
     private RDT createPluginWithConfig(final String configYaml) {
+        return this.createPluginWithConfig(configYaml, true);
+    }
+
+    private RDT createPluginWithConfig(final String configYaml, final boolean bossBarEnabled) {
         final ConfigSection config = ConfigSection.fromInputStream(
             new ByteArrayInputStream(configYaml.getBytes(StandardCharsets.UTF_8))
         );
@@ -175,6 +198,11 @@ class TownBossBarServiceTest {
             @Override
             public ConfigSection getDefaultConfig() {
                 return config;
+            }
+
+            @Override
+            public boolean isTownBossBarEnabled(final UUID playerUuid) {
+                return bossBarEnabled;
             }
         };
     }
@@ -194,5 +222,16 @@ class TownBossBarServiceTest {
         final Field field = RDT.class.getDeclaredField(fieldName);
         field.setAccessible(true);
         field.set(target, value);
+    }
+
+    @SuppressWarnings("unchecked")
+    private static void setActiveBar(
+        final TownBossBarService service,
+        final UUID playerUuid,
+        final BossBar bossBar
+    ) throws ReflectiveOperationException {
+        final Field field = TownBossBarService.class.getDeclaredField("activeBars");
+        field.setAccessible(true);
+        ((java.util.Map<UUID, BossBar>) field.get(service)).put(playerUuid, bossBar);
     }
 }

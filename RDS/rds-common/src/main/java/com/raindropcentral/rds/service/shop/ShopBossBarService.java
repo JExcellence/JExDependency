@@ -15,7 +15,6 @@ package com.raindropcentral.rds.service.shop;
 
 import com.raindropcentral.rds.RDS;
 import com.raindropcentral.rds.configs.BossBarSection;
-import com.raindropcentral.rds.database.entity.RDSPlayer;
 import com.raindropcentral.rds.database.entity.Shop;
 import com.raindropcentral.rds.items.AbstractItem;
 import com.raindropcentral.rds.items.ShopItem;
@@ -30,7 +29,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -45,8 +43,7 @@ public class ShopBossBarService {
     private final RDS plugin;
     private final long updatePeriodTicks;
     private final int maxViewDistance;
-    private final Map<UUID, BossBar> activeBars = new ConcurrentHashMap<>();
-    private final Map<UUID, Boolean> enabledStates = new ConcurrentHashMap<>();
+    private final Map<java.util.UUID, BossBar> activeBars = new ConcurrentHashMap<>();
 
     /**
      * Creates a new shop boss bar service.
@@ -81,7 +78,6 @@ public class ShopBossBarService {
             this.clearPlayer(player);
         }
         this.activeBars.clear();
-        this.enabledStates.clear();
     }
 
     /**
@@ -90,21 +86,7 @@ public class ShopBossBarService {
     public boolean toggleFor(
             final @NotNull Player player
     ) {
-        RDSPlayer playerData = this.plugin.getPlayerRepository().findByPlayer(player.getUniqueId());
-        final boolean created = playerData == null;
-
-        if (playerData == null) {
-            playerData = new RDSPlayer(player.getUniqueId());
-        }
-
-        final boolean enabled = playerData.toggleShopBar();
-        if (created) {
-            this.plugin.getPlayerRepository().create(playerData);
-        } else {
-            this.plugin.getPlayerRepository().update(playerData);
-        }
-
-        this.enabledStates.put(player.getUniqueId(), enabled);
+        final boolean enabled = this.plugin.toggleShopBossBarPreference(player);
         if (enabled) {
             this.refreshPlayer(player);
         } else {
@@ -120,7 +102,6 @@ public class ShopBossBarService {
     public void clearPlayer(
             final @NotNull Player player
     ) {
-        this.enabledStates.remove(player.getUniqueId());
         this.hideDisplayedBar(player);
     }
 
@@ -130,10 +111,7 @@ public class ShopBossBarService {
     public boolean isEnabled(
             final @NotNull Player player
     ) {
-        return this.enabledStates.computeIfAbsent(
-                player.getUniqueId(),
-                this::loadEnabledState
-        );
+        return this.plugin.isShopBossBarEnabled(player.getUniqueId());
     }
 
     /**
@@ -170,13 +148,6 @@ public class ShopBossBarService {
         for (final Player player : Bukkit.getOnlinePlayers()) {
             this.refreshPlayer(player);
         }
-    }
-
-    private boolean loadEnabledState(
-            final @NotNull UUID playerId
-    ) {
-        final RDSPlayer playerData = this.plugin.getPlayerRepository().findByPlayer(playerId);
-        return playerData != null && playerData.isShopBarEnabled();
     }
 
     private void showBossBar(

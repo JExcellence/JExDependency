@@ -21,6 +21,8 @@ import org.jetbrains.annotations.NotNull;
  */
 public enum ERCentralPermission implements IPermissionNode {
 
+    BOSS_BAR("bossBar", "rcore.command.bossbar"),
+    MAIN("main", "rcore.command.main"),
     CONNECT("connect", "rcore.central.connect"),
     DISCONNECT("disconnect", "rcore.central.disconnect"),
     CLAIM_DROPLETS("claimDroplets", "rcore.central.claim.droplets"),

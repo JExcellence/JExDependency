@@ -1,0 +1,13 @@
+rc_main:
+  placement_order:
+    - RDA
+    - RDQ
+    - RDR
+    - RDS
+    - RDT
+  button_materials:
+    RDA: NETHER_STAR
+    RDQ: BOOK
+    RDR: BARREL
+    RDS: CHEST
+    RDT: SHIELD

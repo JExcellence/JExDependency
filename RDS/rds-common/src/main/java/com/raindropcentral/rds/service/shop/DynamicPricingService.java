@@ -18,14 +18,13 @@ import com.raindropcentral.rds.configs.ConfigSection;
 import com.raindropcentral.rds.configs.DynamicPricingMissingBasePriceMode;
 import com.raindropcentral.rds.configs.DynamicPricingRecentSalesMode;
 import com.raindropcentral.rds.configs.DynamicPricingSection;
+import com.raindropcentral.rds.configs.MaterialPriceConfigLoader;
 import com.raindropcentral.rds.database.entity.Shop;
 import com.raindropcentral.rds.database.entity.ShopLedgerEntry;
 import com.raindropcentral.rds.database.entity.ShopLedgerType;
 import com.raindropcentral.rds.items.AbstractItem;
 import com.raindropcentral.rds.items.ShopItem;
 import org.bukkit.Material;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -56,7 +55,6 @@ import java.util.Set;
 public class DynamicPricingService {
 
     private static final long TICK_DURATION_MILLIS = 50L;
-    private static final String MATERIALS_SECTION = "materials";
 
     private final RDS plugin;
     private final DynamicPricingFormulaStrategy formulaStrategy;
@@ -438,67 +436,7 @@ public class DynamicPricingService {
     private static @NotNull Map<String, Map<String, Double>> loadMaterialPrices(
             final @NotNull File materialPricesFile
     ) {
-        if (!materialPricesFile.exists()) {
-            return Map.of();
-        }
-
-        final YamlConfiguration configuration = YamlConfiguration.loadConfiguration(materialPricesFile);
-        final ConfigurationSection materialsSection = configuration.getConfigurationSection(MATERIALS_SECTION);
-        if (materialsSection == null) {
-            return Map.of();
-        }
-
-        final Map<String, Map<String, Double>> loadedMaterialPrices = new LinkedHashMap<>();
-        for (final String materialKey : materialsSection.getKeys(false)) {
-            if (materialKey == null || materialKey.isBlank()) {
-                continue;
-            }
-
-            final ConfigurationSection materialSection = materialsSection.getConfigurationSection(materialKey);
-            if (materialSection == null) {
-                continue;
-            }
-
-            final Map<String, Double> currencyPrices = new LinkedHashMap<>();
-            for (final String currencyKey : materialSection.getKeys(false)) {
-                if (currencyKey == null || currencyKey.isBlank()) {
-                    continue;
-                }
-
-                final Double parsedPrice = parsePrice(materialSection.get(currencyKey));
-                if (parsedPrice == null || !Double.isFinite(parsedPrice) || parsedPrice < 0.0D) {
-                    continue;
-                }
-
-                currencyPrices.put(normalizeCurrencyType(currencyKey), parsedPrice);
-            }
-
-            if (!currencyPrices.isEmpty()) {
-                loadedMaterialPrices.put(materialKey.trim().toUpperCase(Locale.ROOT), Map.copyOf(currencyPrices));
-            }
-        }
-
-        return Map.copyOf(loadedMaterialPrices);
-    }
-
-    private static @Nullable Double parsePrice(
-            final @Nullable Object rawValue
-    ) {
-        if (rawValue instanceof Number number) {
-            return number.doubleValue();
-        }
-        if (rawValue instanceof String text) {
-            final String trimmed = text.trim();
-            if (trimmed.isEmpty()) {
-                return null;
-            }
-            try {
-                return Double.parseDouble(trimmed);
-            } catch (NumberFormatException ignored) {
-                return null;
-            }
-        }
-        return null;
+        return MaterialPriceConfigLoader.loadMaterialPrices(materialPricesFile);
     }
 
     private static @Nullable Double findCurrencyPrice(
