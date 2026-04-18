@@ -579,13 +579,14 @@ main_overview_ui:
 # RANK MAIN UI
 # ============================================
 rank_main_ui:
-  title: "<gradient:#a855f7:#c084fc>⚔ Rank System</gradient>"
+  title: "<gradient:#a855f7:#c084fc>Rank System</gradient>"
   rank_tree:
-    name: "<gradient:#f59e0b:#fbbf24>🌳 Rank Trees</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>Rank Trees</gradient>"
     lore:
-    - "<gradient:#6b7280:#9ca3af>Browse available rank trees</gradient>"
-    - "<gradient:#6b7280:#9ca3af>and choose your path</gradient>"
-
+      - "<gradient:#6b7280:#9ca3af>Browse available rank trees</gradient>"
+      - "<gradient:#6b7280:#9ca3af>and choose your path</gradient>"
+      - ""
+      - "<gradient:#10b981:#34d399>Click to open</gradient>"
 
 # ============================================
 # RANK TREE OVERVIEW UI
@@ -1621,11 +1622,11 @@ admin_overview_ui:
 # PLUGIN INTEGRATION MANAGEMENT UI
 # ============================================
   view_currencies:
-    name: <gradient:#10b981:#34d399>💱 Currency Manager</gradient>
+    name: "<gradient:#10b981:#34d399>💱 Currency Manager</gradient>"
     lore:
-    - <gradient:#6b7280:#9ca3af>Review RDQ-detected currencies</gradient>
-    - <gradient:#6b7280:#9ca3af>Includes Vault and JExEconomy entries</gradient>
-    error: <gradient:#ef4444:#f87171>❌ Failed to open currency manager!</gradient>
+    - "<gradient:#6b7280:#9ca3af>Review RDQ-detected currencies</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Includes Vault and JExEconomy entries</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Failed to open currency manager!</gradient>"
 plugin_integration_management_ui:
   title: "<gradient:#10b981:#34d399>🔌 Plugin Integrations</gradient>"
   summary:
@@ -1965,8 +1966,55 @@ head:
 # ERROR MESSAGES
 # ============================================
 error:
+  machine:
+    permission: "<red>⚠ No Permission</red> <gray>You don't have permission to use {machine_type} machines</gray>"
+    structure:
+      invalid: "<red>⚠ Invalid Structure</red> <gray>{reason}</gray>"
+      missing_block: "<red>⚠ Missing Block</red> <gray>Expected {block_type} at {x}, {y}, {z}</gray>"
+      wrong_block: "<red>⚠ Wrong Block</red> <gray>Found {found_type} instead of {expected_type} at {x}, {y}, {z}</gray>"
+    resources:
+      insufficient: "<red>⚠ Insufficient Resources</red> <gray>You need: {requirements}</gray>"
+      currency: "<red>⚠ Insufficient Funds</red> <gray>You need {amount} {currency_type}</gray>"
+      items: "<red>⚠ Missing Items</red> <gray>You need: {items}</gray>"
+    not_found: "<red>⚠ Machine Not Found</red> <gray>No machine exists at this location</gray>"
+    not_owner: "<red>⚠ Not Owner</red> <gray>Only the machine owner can do this</gray>"
+    not_trusted: "<red>⚠ Not Trusted</red> <gray>You don't have permission to interact with this machine</gray>"
+    recipe:
+      invalid: "<red>⚠ Invalid Recipe</red> <gray>This crafting pattern is not recognized</gray>"
+      locked: "<red>⚠ Recipe Locked</red> <gray>Turn the machine OFF to change the recipe</gray>"
+      not_set: "<red>⚠ No Recipe</red> <gray>Configure a recipe before starting the machine</gray>"
+    fuel:
+      insufficient: "<red>⚠ Insufficient Fuel</red> <gray>Add fuel to continue crafting</gray>"
+      invalid_type: "<red>⚠ Invalid Fuel</red> <gray>{item} cannot be used as fuel</gray>"
+      depleted: "<yellow>⚠ Fuel Depleted</yellow> <gray>Machine has stopped - add more fuel</gray>"
+    materials:
+      insufficient: "<red>⚠ Insufficient Materials</red> <gray>Missing: {materials}</gray>"
+      missing: "<red>⚠ Missing Materials</red> <gray>Add materials to storage to continue</gray>"
+    storage:
+      full: "<red>⚠ Storage Full</red> <gray>Cannot add more items</gray>"
+      empty: "<yellow>⚠ Storage Empty</yellow> <gray>No items to withdraw</gray>"
+      invalid_item: "<red>⚠ Invalid Item</red> <gray>This item cannot be stored</gray>"
+    upgrade:
+      max_level: "<yellow>⚠ Maximum Level</yellow> <gray>This upgrade is already at maximum level</gray>"
+      requirements: "<red>⚠ Requirements Not Met</red> <gray>You need: {requirements}</gray>"
+      failed: "<red>⚠ Upgrade Failed</red> <gray>{reason}</gray>"
+    state:
+      already_on: "<yellow>⚠ Already Running</yellow> <gray>Machine is already ON</gray>"
+      already_off: "<yellow>⚠ Already Stopped</yellow> <gray>Machine is already OFF</gray>"
+      cannot_start: "<red>⚠ Cannot Start</red> <gray>{reason}</gray>"
+    trust:
+      already_trusted: "<yellow>⚠ Already Trusted</yellow> <gray>{player} is already trusted</gray>"
+      not_trusted: "<yellow>⚠ Not Trusted</yellow> <gray>{player} is not in the trust list</gray>"
+      cannot_remove_owner: "<red>⚠ Cannot Remove Owner</red> <gray>The owner cannot be removed</gray>"
+      player_not_found: "<red>⚠ Player Not Found</red> <gray>Player {player} not found</gray>"
+    breaking:
+      not_allowed: "<red>⚠ Cannot Break</red> <gray>Only the owner or trusted players can break this machine</gray>"
+      has_items: "<yellow>⚠ Warning</yellow> <gray>This machine contains items. They will be {action}</gray>"
   premium_required: "<gradient:#ef4444:#f87171>❌ Premium Required!</gradient> <gradient:#6b7280:#9ca3af>The feature</gradient> <gradient:#f59e0b:#fbbf24>%feature%</gradient> <gradient:#6b7280:#9ca3af>requires the premium version.</gradient>"
   processing_failed: "<gradient:#ef4444:#f87171>❌ Processing failed:</gradient> <gradient:#6b7280:#9ca3af>%input%</gradient>"
+  machine_system_disabled: "<gradient:#ef4444:#f87171>❌ Machine System Disabled!</gradient> <gradient:#6b7280:#9ca3af>The machine system is not enabled on this server.</gradient>"
+  player_not_found: "<gradient:#ef4444:#f87171>❌ Player Not Found!</gradient> <gradient:#6b7280:#9ca3af>Could not find player {player}.</gradient>"
+  not_implemented: "<gradient:#ef4444:#f87171>❌ Not Implemented!</gradient> <gradient:#6b7280:#9ca3af>This feature is not yet implemented.</gradient>"
 
 # ============================================
 # PAGINATED PLAYER UI
@@ -2469,6 +2517,131 @@ perk:
     name: "<gradient:#10b981:#34d399>Combat Heal</gradient>"
     description: "<gradient:#6b7280:#9ca3af>Heal when dealing damage to enemies</gradient>"
 view:
+  machine:
+    main:
+      title: "<gradient:#a855f7:#c084fc>Machine Control</gradient>"
+      items:
+        state:
+          "on":
+            name: "<gradient:#10b981:#34d399>Machine ON</gradient>"
+            lore:
+              - "<gradient:#6b7280:#9ca3af>The machine is currently active</gradient>"
+              - ""
+              - "<gradient:#ef4444:#f87171>Click to turn OFF</gradient>"
+          "off":
+            name: "<gradient:#ef4444:#f87171>Machine OFF</gradient>"
+            lore:
+              - "<gradient:#6b7280:#9ca3af>The machine is currently inactive</gradient>"
+              - ""
+              - "<gradient:#10b981:#34d399>Click to turn ON</gradient>"
+        type:
+          name: "<gradient:#3b82f6:#60a5fa>Machine Type</gradient>"
+          lore:
+            - "<gradient:#f59e0b:#fbbf24>Type: %type%</gradient>"
+            - ""
+            - "<gradient:#6b7280:#9ca3af>This is your machine's type</gradient>"
+        fuel:
+          name: "<gradient:#f59e0b:#fbbf24>Fuel Level</gradient>"
+          lore:
+            - "<gradient:#10b981:#34d399>Current: %current% units</gradient>"
+            - ""
+            - "<gradient:#6b7280:#9ca3af>Click to manage fuel</gradient>"
+        recipe:
+          set:
+            name: "<gradient:#10b981:#34d399>Recipe Configured</gradient>"
+            lore:
+              - "<gradient:#6b7280:#9ca3af>A recipe is currently set</gradient>"
+              - ""
+              - "<gradient:#3b82f6:#60a5fa>Click to view/change recipe</gradient>"
+          not-set:
+            name: "<gradient:#ef4444:#f87171>No Recipe Set</gradient>"
+            lore:
+              - "<gradient:#6b7280:#9ca3af>No recipe configured</gradient>"
+              - ""
+              - "<gradient:#10b981:#34d399>Click to set a recipe</gradient>"
+        navigation:
+          storage:
+            name: "<gradient:#f59e0b:#fbbf24>Storage</gradient>"
+            lore:
+              - "<gradient:#6b7280:#9ca3af>View and manage machine storage</gradient>"
+              - ""
+              - "<gradient:#10b981:#34d399>Click to open</gradient>"
+          trust:
+            name: "<gradient:#3b82f6:#60a5fa>Trusted Players</gradient>"
+            lore:
+              - "<gradient:#6b7280:#9ca3af>Trusted: %count% players</gradient>"
+              - ""
+              - "<gradient:#10b981:#34d399>Click to manage</gradient>"
+          upgrades:
+            name: "<gradient:#a855f7:#c084fc>Upgrades</gradient>"
+            lore:
+              - "<gradient:#6b7280:#9ca3af>View and apply machine upgrades</gradient>"
+              - ""
+              - "<gradient:#10b981:#34d399>Click to open</gradient>"
+
+    storage:
+      title: "<gradient:#f59e0b:#fbbf24>Machine Storage</gradient>"
+      items:
+        input:
+          name: "<gradient:#10b981:#34d399>Input Slot</gradient>"
+          lore:
+            - "<gradient:#6b7280:#9ca3af>Place items here for processing</gradient>"
+        output:
+          name: "<gradient:#3b82f6:#60a5fa>Output Slot</gradient>"
+          lore:
+            - "<gradient:#6b7280:#9ca3af>Processed items appear here</gradient>"
+        fuel:
+          name: "<gradient:#f59e0b:#fbbf24>Fuel Slot</gradient>"
+          lore:
+            - "<gradient:#6b7280:#9ca3af>Add fuel to power the machine</gradient>"
+
+    recipe:
+      title: "<gradient:#10b981:#34d399>Recipe Configuration</gradient>"
+      items:
+        current:
+          name: "<gradient:#3b82f6:#60a5fa>Current Recipe</gradient>"
+          lore:
+            - "<gradient:#6b7280:#9ca3af>Currently configured recipe</gradient>"
+        available:
+          name: "<gradient:#10b981:#34d399>Available Recipe</gradient>"
+          lore:
+            - "<gradient:#6b7280:#9ca3af>Click to select this recipe</gradient>"
+
+    upgrade:
+      title: "<gradient:#a855f7:#c084fc>Machine Upgrades</gradient>"
+      items:
+        speed:
+          name: "<gradient:#10b981:#34d399>Speed Upgrade</gradient>"
+          lore:
+            - "<gradient:#6b7280:#9ca3af>Level: %level%</gradient>"
+            - ""
+            - "<gradient:#10b981:#34d399>Click to upgrade</gradient>"
+        efficiency:
+          name: "<gradient:#3b82f6:#60a5fa>Efficiency Upgrade</gradient>"
+          lore:
+            - "<gradient:#6b7280:#9ca3af>Level: %level%</gradient>"
+            - ""
+            - "<gradient:#10b981:#34d399>Click to upgrade</gradient>"
+        capacity:
+          name: "<gradient:#f59e0b:#fbbf24>Capacity Upgrade</gradient>"
+          lore:
+            - "<gradient:#6b7280:#9ca3af>Level: %level%</gradient>"
+            - ""
+            - "<gradient:#10b981:#34d399>Click to upgrade</gradient>"
+
+    trust:
+      title: "<gradient:#3b82f6:#60a5fa>Trusted Players</gradient>"
+      items:
+        add:
+          name: "<gradient:#10b981:#34d399>Add Player</gradient>"
+          lore:
+            - "<gradient:#6b7280:#9ca3af>Click to add a trusted player</gradient>"
+        player:
+          name: "<gradient:#3b82f6:#60a5fa>%player%</gradient>"
+          lore:
+            - "<gradient:#6b7280:#9ca3af>Trusted player</gradient>"
+            - ""
+            - "<gradient:#ef4444:#f87171>Click to remove</gradient>"
   quest:
     # ---- QuestCategoryView (getKey = "view.quest.categories") ----
     categories:
@@ -2693,112 +2866,11 @@ view:
     reward:
       value: "<gold>Value: %value%</gold>"
 difficulty:
-  trivial: <gradient:#84cc16:#a3e635>Trivial</gradient>
-  easy: <gradient:#10b981:#34d399>Easy</gradient>
-  normal: <gradient:#f59e0b:#fbbf24>Normal</gradient>
-  hard: <gradient:#ef4444:#f87171>Hard</gradient>
-  extreme: <gradient:#a855f7:#c084fc>Extreme</gradient>
-
-
-# ============================================
-# QUEST REWARD ITEMS
-# ============================================
-item:
-  baker_hoe:
-    name: "<gradient:#f59e0b:#fbbf24>🌾 Baker's Hoe</gradient>"
-    lore:
-    - "<gradient:#6b7280:#9ca3af>A tool for the aspiring baker</gradient>"
-    - "<gradient:#10b981:#34d399>Efficiency II</gradient>"
-
-  builder_axe:
-    name: "<gradient:#f59e0b:#fbbf24>🪓 Builder's Axe</gradient>"
-    lore:
-    - "<gradient:#6b7280:#9ca3af>A tool for construction</gradient>"
-    - "<gradient:#10b981:#34d399>Efficiency II</gradient>"
-
-  skilled_builder_axe:
-    name: "<gradient:#f59e0b:#fbbf24>🪓 Skilled Builder's Axe</gradient>"
-    lore:
-    - "<gradient:#6b7280:#9ca3af>An improved construction tool</gradient>"
-    - "<gradient:#10b981:#34d399>Efficiency III • Unbreaking II</gradient>"
-
-  master_builder_axe:
-    name: "<gradient:#f59e0b:#fbbf24>🪓 Master Builder's Axe</gradient>"
-    lore:
-    - "<gradient:#6b7280:#9ca3af>A master craftsman's tool</gradient>"
-    - "<gradient:#10b981:#34d399>Efficiency IV • Unbreaking III • Silk Touch</gradient>"
-
-  grand_builder_axe:
-    name: "<gradient:#f59e0b:#fbbf24>🪓 Grand Builder's Axe</gradient>"
-    lore:
-    - "<gradient:#6b7280:#9ca3af>A legendary construction tool</gradient>"
-    - "<gradient:#10b981:#34d399>Efficiency V • Unbreaking III • Silk Touch • Mending</gradient>"
-
-  legendary_builder_axe:
-    name: "<gradient:#f59e0b:#fbbf24>🪓 Legendary Architect's Axe</gradient>"
-    lore:
-    - "<gradient:#6b7280:#9ca3af>The ultimate builder's tool</gradient>"
-    - "<gradient:#10b981:#34d399>Efficiency X • Unbreaking X • Silk Touch • Mending</gradient>"
-
-  enchanter_lapis:
-    name: "<gradient:#a855f7:#c084fc>💎 Enchanter's Lapis</gradient>"
-    lore:
-    - "<gradient:#6b7280:#9ca3af>Magical lapis lazuli</gradient>"
-
-  skilled_enchanter_book:
-    name: "<gradient:#a855f7:#c084fc>📖 Skilled Enchanter's Tome</gradient>"
-    lore:
-    - "<gradient:#6b7280:#9ca3af>A book of enchantments</gradient>"
-    - "<gradient:#10b981:#34d399>Efficiency III</gradient>"
-
-  master_enchanter_book:
-    name: "<gradient:#a855f7:#c084fc>📖 Master Enchanter's Grimoire</gradient>"
-    lore:
-    - "<gradient:#6b7280:#9ca3af>A powerful grimoire</gradient>"
-    - "<gradient:#10b981:#34d399>Sharpness V • Unbreaking III</gradient>"
-
-  grand_enchanter_book:
-    name: "<gradient:#a855f7:#c084fc>📖 Grand Enchanter's Codex</gradient>"
-    lore:
-    - "<gradient:#6b7280:#9ca3af>An ancient codex of power</gradient>"
-    - "<gradient:#10b981:#34d399>Protection IV • Unbreaking III • Mending</gradient>"
-
-  legendary_enchanter_book:
-    name: "<gradient:#a855f7:#c084fc>📖 Archmage's Tome</gradient>"
-    lore:
-    - "<gradient:#6b7280:#9ca3af>The ultimate book of magic</gradient>"
-    - "<gradient:#10b981:#34d399>Sharpness X • Protection X • Unbreaking X • Mending</gradient>"
-
-  trader_emerald:
-    name: "<gradient:#10b981:#34d399>💎 Trader's Emerald</gradient>"
-    lore:
-    - "<gradient:#6b7280:#9ca3af>A valuable trading gem</gradient>"
-
-  skilled_trader_emerald:
-    name: "<gradient:#10b981:#34d399>💎 Merchant's Emerald Block</gradient>"
-    lore:
-    - "<gradient:#6b7280:#9ca3af>Compressed wealth</gradient>"
-
-  master_trader_diamond:
-    name: "<gradient:#3b82f6:#60a5fa>💎 Master Trader's Diamond</gradient>"
-    lore:
-    - "<gradient:#6b7280:#9ca3af>A precious trading commodity</gradient>"
-
-  grand_trader_netherite:
-    name: "<gradient:#6b7280:#9ca3af>💎 Grand Trader's Netherite</gradient>"
-    lore:
-    - "<gradient:#6b7280:#9ca3af>The ultimate trading material</gradient>"
-
-  legendary_trader_star:
-    name: "<gradient:#f59e0b:#fbbf24>⭐ Tycoon's Nether Star</gradient>"
-    lore:
-    - "<gradient:#6b7280:#9ca3af>A symbol of ultimate wealth</gradient>"
-
-  legendary_trader_emerald:
-    name: "<gradient:#10b981:#34d399>💎 Tycoon's Emerald Cache</gradient>"
-    lore:
-    - "<gradient:#6b7280:#9ca3af>Massive wealth in emerald form</gradient>"
-
+  trivial: "<gradient:#84cc16:#a3e635>Trivial</gradient>"
+  easy: "<gradient:#10b981:#34d399>Easy</gradient>"
+  normal: "<gradient:#f59e0b:#fbbf24>Normal</gradient>"
+  hard: "<gradient:#ef4444:#f87171>Hard</gradient>"
+  extreme: "<gradient:#a855f7:#c084fc>Extreme</gradient>"
 
 # ============================================
 # QUEST DEFINITIONS
@@ -3503,3 +3575,748 @@ quest:
     normal: "<gradient:#f59e0b:#fbbf24>Normal</gradient>"
     hard: "<gradient:#ef4444:#f87171>Hard</gradient>"
     extreme: "<gradient:#a855f7:#c084fc>Extreme</gradient>"
+
+# ============================================
+# MACHINE SUCCESS MESSAGES
+# ============================================
+success:
+  machine:
+    created: "<green>✓ Machine Created</green> <gray>Your {machine_type} machine is ready at {x}, {y}, {z}</gray>"
+    deleted: "<green>✓ Machine Removed</green> <gray>Machine has been deleted</gray>"
+    state:
+      enabled: "<green>✓ Machine Started</green> <gray>Automated crafting is now active</gray>"
+      disabled: "<yellow>✓ Machine Stopped</yellow> <gray>Automated crafting has been paused</gray>"
+    recipe:
+      set: "<green>✓ Recipe Set</green> <gray>Machine will now craft: {output}</gray>"
+      cleared: "<yellow>✓ Recipe Cleared</yellow> <gray>Recipe has been removed</gray>"
+    fuel:
+      added: "<green>✓ Fuel Added</green> <gray>Added {amount} fuel ({item})</gray>"
+    storage:
+      deposited: "<green>✓ Items Deposited</green> <gray>Added {amount}x {item} to storage</gray>"
+      withdrawn: "<green>✓ Items Withdrawn</green> <gray>Removed {amount}x {item} from storage</gray>"
+    trust:
+      added: "<green>✓ Player Added</green> <gray>{player} can now interact with this machine</gray>"
+      removed: "<yellow>✓ Player Removed</yellow> <gray>{player} can no longer interact with this machine</gray>"
+    upgrade:
+      applied: "<green>✓ Upgrade Applied</green> <gray>{upgrade_type} upgraded to level {level}</gray>"
+      effect: "<gray>New effect: {effect}</gray>"
+    crafting:
+      completed: "<green>✓ Crafted</green> <gray>{amount}x {item}</gray>"
+      bonus: "<light_purple>✨ Bonus Output!</light_purple> <gray>+{amount}x {item}</gray>"
+
+# ============================================
+# MACHINE NOTIFICATIONS
+# ============================================
+notification:
+  machine:
+    fuel:
+      low: "<yellow>⚠ Low Fuel</yellow> <gray>Machine at {x}, {y}, {z} is running low on fuel ({fuel} remaining)</gray>"
+      depleted: "<red>⚠ Fuel Depleted</red> <gray>Machine at {x}, {y}, {z} has stopped due to lack of fuel</gray>"
+    materials:
+      low: "<yellow>⚠ Low Materials</yellow> <gray>Machine at {x}, {y}, {z} is running low on materials</gray>"
+      depleted: "<red>⚠ Materials Depleted</red> <gray>Machine at {x}, {y}, {z} has stopped due to lack of materials</gray>"
+    storage:
+      nearly_full: "<yellow>⚠ Storage Nearly Full</yellow> <gray>Machine at {x}, {y}, {z} storage is {percent}% full</gray>"
+    crafting:
+      milestone: "<green>✓ Milestone Reached</green> <gray>Machine has crafted {count} items!</gray>"
+    auto_save: "<gray>💾 Auto-saved {count} machine(s)</gray>"
+
+item:
+  baker_hoe:
+    name: "<gradient:#f59e0b:#fbbf24>🌾 Baker's Hoe</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>A tool for the aspiring baker</gradient>"
+      - "<gradient:#10b981:#34d399>Efficiency II</gradient>"
+
+  builder_axe:
+    name: "<gradient:#f59e0b:#fbbf24>🪓 Builder's Axe</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>A tool for construction</gradient>"
+      - "<gradient:#10b981:#34d399>Efficiency II</gradient>"
+
+  skilled_builder_axe:
+    name: "<gradient:#f59e0b:#fbbf24>🪓 Skilled Builder's Axe</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>An improved construction tool</gradient>"
+      - "<gradient:#10b981:#34d399>Efficiency III • Unbreaking II</gradient>"
+
+  master_builder_axe:
+    name: "<gradient:#f59e0b:#fbbf24>🪓 Master Builder's Axe</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>A master craftsman's tool</gradient>"
+      - "<gradient:#10b981:#34d399>Efficiency IV • Unbreaking III • Silk Touch</gradient>"
+
+  grand_builder_axe:
+    name: "<gradient:#f59e0b:#fbbf24>🪓 Grand Builder's Axe</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>A legendary construction tool</gradient>"
+      - "<gradient:#10b981:#34d399>Efficiency V • Unbreaking III • Silk Touch • Mending</gradient>"
+
+  legendary_builder_axe:
+    name: "<gradient:#f59e0b:#fbbf24>🪓 Legendary Architect's Axe</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>The ultimate builder's tool</gradient>"
+      - "<gradient:#10b981:#34d399>Efficiency X • Unbreaking X • Silk Touch • Mending</gradient>"
+
+  enchanter_lapis:
+    name: "<gradient:#a855f7:#c084fc>💎 Enchanter's Lapis</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Magical lapis lazuli</gradient>"
+
+  skilled_enchanter_book:
+    name: "<gradient:#a855f7:#c084fc>📖 Skilled Enchanter's Tome</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>A book of enchantments</gradient>"
+      - "<gradient:#10b981:#34d399>Efficiency III</gradient>"
+
+  master_enchanter_book:
+    name: "<gradient:#a855f7:#c084fc>📖 Master Enchanter's Grimoire</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>A powerful grimoire</gradient>"
+      - "<gradient:#10b981:#34d399>Sharpness V • Unbreaking III</gradient>"
+
+  grand_enchanter_book:
+    name: "<gradient:#a855f7:#c084fc>📖 Grand Enchanter's Codex</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>An ancient codex of power</gradient>"
+      - "<gradient:#10b981:#34d399>Protection IV • Unbreaking III • Mending</gradient>"
+
+  legendary_enchanter_book:
+    name: "<gradient:#a855f7:#c084fc>📖 Archmage's Tome</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>The ultimate book of magic</gradient>"
+      - "<gradient:#10b981:#34d399>Sharpness X • Protection X • Unbreaking X • Mending</gradient>"
+
+  trader_emerald:
+    name: "<gradient:#10b981:#34d399>💎 Trader's Emerald</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>A valuable trading gem</gradient>"
+
+  skilled_trader_emerald:
+    name: "<gradient:#10b981:#34d399>💎 Merchant's Emerald Block</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Compressed wealth</gradient>"
+
+  master_trader_diamond:
+    name: "<gradient:#3b82f6:#60a5fa>💎 Master Trader's Diamond</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>A precious trading commodity</gradient>"
+
+  grand_trader_netherite:
+    name: "<gradient:#6b7280:#9ca3af>💎 Grand Trader's Netherite</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>The ultimate trading material</gradient>"
+
+  legendary_trader_star:
+    name: "<gradient:#f59e0b:#fbbf24>⭐ Tycoon's Nether Star</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>A symbol of ultimate wealth</gradient>"
+
+  legendary_trader_emerald:
+    name: "<gradient:#10b981:#34d399>💎 Tycoon's Emerald Cache</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Massive wealth in emerald form</gradient>"
+
+  machine:
+    fabricator:
+      name: "<gradient:#FF6B00:#FFD700>⚙ Fabricator Machine</gradient>"
+      lore:
+        - "<gray>An automated crafting machine</gray>"
+        - "<gray>that processes recipes using</gray>"
+        - "<gray>stored resources and fuel</gray>"
+        - ""
+        - "<yellow>Features:</yellow>"
+        - "<gray>• Automated crafting</gray>"
+        - "<gray>• Unlimited storage</gray>"
+        - "<gray>• Upgradeable performance</gray>"
+        - "<gray>• Trust system</gray>"
+        - ""
+        - "<green>▶ Place to construct</green>"
+
+
+# ============================================
+# MACHINE COMMAND TRANSLATIONS
+# ============================================
+command:
+  machine:
+    help: "|
+      <gradient:#a855f7:#c084fc>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</gradient>
+      <gradient:#f59e0b:#fbbf24>⚙ Machine Commands</gradient>
+      <gradient:#a855f7:#c084fc>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</gradient>
+      <gradient:#10b981:#34d399>/rq machine give <player> <type></gradient> <gradient:#6b7280:#9ca3af>- Give machine item</gradient>
+      <gradient:#10b981:#34d399>/rq machine list [player]</gradient> <gradient:#6b7280:#9ca3af>- List machines</gradient>
+      <gradient:#10b981:#34d399>/rq machine remove <id></gradient> <gradient:#6b7280:#9ca3af>- Remove machine</gradient>
+      <gradient:#10b981:#34d399>/rq machine reload</gradient> <gradient:#6b7280:#9ca3af>- Reload configs</gradient>
+      <gradient:#10b981:#34d399>/rq machine info <id></gradient> <gradient:#6b7280:#9ca3af>- View machine info</gradient>
+      <gradient:#10b981:#34d399>/rq machine teleport <id></gradient> <gradient:#6b7280:#9ca3af>- Teleport to machine</gradient>
+      <gradient:#a855f7:#c084fc>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</gradient>"
+    syntax:
+      give: "<red>⚠ Usage:</red> <gray>/rq machine give <player> <type></gray>"
+      list: "<red>⚠ Usage:</red> <gray>/rq machine list [player]</gray>"
+      remove: "<red>⚠ Usage:</red> <gray>/rq machine remove <id></gray>"
+      info: "<red>⚠ Usage:</red> <gray>/rq machine info <id></gray>"
+      teleport: "<red>⚠ Usage:</red> <gray>/rq machine teleport <id></gray>"
+    permission: "<red>⚠ No Permission</red> <gray>You don't have permission to use this command</gray>"
+
+    give:
+      syntax: "<gradient:#ef4444:#f87171>Usage:</gradient> <gradient:#6b7280:#9ca3af>/rq machine give <player> <machine_type></gradient>"
+      success: "<gradient:#10b981:#34d399>✓ Gave</gradient> <gradient:#f59e0b:#fbbf24>%machine_type%</gradient> <gradient:#10b981:#34d399>machine to</gradient> <gradient:#f59e0b:#fbbf24>%player%</gradient>"
+    
+    list:
+      empty: "<gradient:#6b7280:#9ca3af>%player% has no machines</gradient>"
+      header: "<gradient:#a855f7:#c084fc>⚙ Machines for %player%</gradient> <gradient:#6b7280:#9ca3af>(%count% total)</gradient>"
+      entry: "<gradient:#6b7280:#9ca3af>  #%id%</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient> <gradient:#6b7280:#9ca3af>-</gradient> <gradient:#10b981:#34d399>%state%</gradient> <gradient:#6b7280:#9ca3af>at %world% %x%, %y%, %z%</gradient>"
+    
+    remove:
+      syntax: "<gradient:#ef4444:#f87171>Usage:</gradient> <gradient:#6b7280:#9ca3af>/rq machine remove <machine_id></gradient>"
+      success: "<gradient:#10b981:#34d399>✓ Removed machine</gradient> <gradient:#f59e0b:#fbbf24>#%id%</gradient>"
+      not_found: "<gradient:#ef4444:#f87171>✗ Machine</gradient> <gradient:#f59e0b:#fbbf24>#%id%</gradient> <gradient:#ef4444:#f87171>not found</gradient>"
+    
+    reload:
+      success: "<gradient:#10b981:#34d399>✓ Reloaded machine configurations</gradient>"
+    
+    info:
+      syntax: "<gradient:#ef4444:#f87171>Usage:</gradient> <gradient:#6b7280:#9ca3af>/rq machine info <machine_id></gradient>"
+      not_found: "<gradient:#ef4444:#f87171>✗ Machine</gradient> <gradient:#f59e0b:#fbbf24>#%id%</gradient> <gradient:#ef4444:#f87171>not found</gradient>"
+      header: "<gradient:#a855f7:#c084fc>⚙ Machine #%id%</gradient>"
+      type: "<gradient:#6b7280:#9ca3af>  Type:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+      state: "<gradient:#6b7280:#9ca3af>  State:</gradient> <gradient:#10b981:#34d399>%state%</gradient>"
+      location: "<gradient:#6b7280:#9ca3af>  Location:</gradient> <gradient:#f59e0b:#fbbf24>%world% %x%, %y%, %z%</gradient>"
+      fuel: "<gradient:#6b7280:#9ca3af>  Fuel:</gradient> <gradient:#f59e0b:#fbbf24>%fuel%</gradient>"
+    
+    teleport:
+      syntax: "<gradient:#ef4444:#f87171>Usage:</gradient> <gradient:#6b7280:#9ca3af>/rq machine teleport <machine_id></gradient>"
+      not_found: "<gradient:#ef4444:#f87171>✗ Machine</gradient> <gradient:#f59e0b:#fbbf24>#%id%</gradient> <gradient:#ef4444:#f87171>not found</gradient>"
+      success: "<gradient:#10b981:#34d399>✓ Teleported to machine</gradient> <gradient:#f59e0b:#fbbf24>#%id%</gradient> <gradient:#6b7280:#9ca3af>at %world% %x%, %y%, %z%</gradient>"
+    
+    error:
+      generic: "<gradient:#ef4444:#f87171>✗ An error occurred while executing the command</gradient>"
+
+# ============================================
+# MACHINE SYSTEM
+# ============================================
+machine:
+  # Machine creation messages
+  creation:
+    success: "<gradient:#10b981:#34d399>Successfully created</gradient> <gradient:#f59e0b:#fbbf24>%machine_type%</gradient> <gradient:#10b981:#34d399>machine at</gradient> <gradient:#6b7280:#9ca3af>%location%</gradient>"
+    failed: "<gradient:#ef4444:#f87171>Failed to create machine:</gradient> <gradient:#6b7280:#9ca3af>%error%</gradient>"
+    invalid_item: "<gradient:#ef4444:#f87171>Invalid machine item.</gradient>"
+    invalid_structure: "<gradient:#ef4444:#f87171>Invalid machine structure.</gradient> <gradient:#6b7280:#9ca3af>Place the required blocks first.</gradient>"
+    structure_mismatch: "<gradient:#ef4444:#f87171>This structure doesn't match the</gradient> <gradient:#f59e0b:#fbbf24>%machine_type%</gradient> <gradient:#ef4444:#f87171>machine.</gradient>"
+    no_permission: "<gradient:#ef4444:#f87171>You don't have permission to create a</gradient> <gradient:#f59e0b:#fbbf24>%machine_type%</gradient> <gradient:#ef4444:#f87171>machine.</gradient>"
+    no_permission_place: "<gradient:#ef4444:#f87171>You don't have permission to place a</gradient> <gradient:#f59e0b:#fbbf24>%machine_type%</gradient> <gradient:#ef4444:#f87171>machine.</gradient>"
+
+  # Machine destruction messages
+  destruction:
+    success: "<gradient:#10b981:#34d399>Machine destroyed.</gradient>"
+    no_permission: "<gradient:#ef4444:#f87171>You don't have permission to break this machine.</gradient>"
+
+  # Machine interaction messages
+  interaction:
+    no_permission: "<gradient:#ef4444:#f87171>You don't have permission to access this machine.</gradient>"
+
+  # Machine loading messages
+  loading:
+    chunk_loaded: "<gradient:#3b82f6:#60a5fa>Loaded</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient> <gradient:#3b82f6:#60a5fa>machines in chunk</gradient> <gradient:#6b7280:#9ca3af>%chunk_x%,%chunk_z%</gradient> <gradient:#3b82f6:#60a5fa>in world</gradient> <gradient:#6b7280:#9ca3af>%world%</gradient>"
+    chunk_unloaded: "<gradient:#3b82f6:#60a5fa>Unloaded</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient> <gradient:#3b82f6:#60a5fa>machines in chunk</gradient> <gradient:#6b7280:#9ca3af>%chunk_x%,%chunk_z%</gradient> <gradient:#3b82f6:#60a5fa>in world</gradient> <gradient:#6b7280:#9ca3af>%world%</gradient>"
+    failed: "<gradient:#ef4444:#f87171>Failed to load machines for chunk</gradient> <gradient:#6b7280:#9ca3af>%chunk_x%,%chunk_z%</gradient> <gradient:#ef4444:#f87171>in world</gradient> <gradient:#6b7280:#9ca3af>%world%</gradient>"
+
+  # Command messages
+  command:
+    interact_prompt: "<gradient:#FF6B00:#FFD700>⚙ Machine System</gradient> <gray>Right-click on a machine to open its interface!</gray>"
+    give:
+      syntax: "<red>Usage: /rq machine give <player> <machine_type></red>"
+      success: "<green>✓ Gave {player} a {machine} machine item</green>"
+      invalid_type: "<red>Invalid machine type: {type}</red>"
+      received: "<green>✓ You received a {machine} machine</green>"
+    help: "<gradient:#FF6B00:#FFD700>Machine Commands:</gradient>\n<gray>  /rq machine give <player> <type> - Give a machine item\n  /rq machine list [player] - List machines\n  /rq machine remove <id> - Remove a machine\n  /rq machine reload - Reload configurations\n  /rq machine info <id> - View machine info\n  /rq machine teleport <id> - Teleport to machine</gray>"
+  
+  # Machine type display names
+  type:
+    fabricator:
+      name: "<gradient:#FF6B00:#FFD700>Fabricator</gradient>"
+      description: "<gray>Automated crafting machine</gray>"
+  
+  # Machine item translations
+  item:
+    fabricator:
+      name: "<gradient:#FF6B00:#FFD700>⚙ Fabricator Machine</gradient>"
+      lore:
+        - "<gray>An automated crafting machine</gray>"
+        - ""
+        - "<yellow>▸ Automates 3x3 crafting recipes</yellow>"
+        - "<yellow>▸ Requires fuel to operate</yellow>"
+        - "<yellow>▸ Upgradeable for better performance</yellow>"
+        - ""
+        - "<green>▶ Place to construct machine</green>"
+    
+    list:
+      empty: "<gradient:#6b7280:#9ca3af>%player% has no machines.</gradient>"
+      header: "<gradient:#FF6B00:#FFD700>Machines owned by %player%</gradient> <gradient:#6b7280:#9ca3af>(%count% total)</gradient>"
+      entry: "  <gradient:#3b82f6:#60a5fa>#%id%</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient> <gradient:#6b7280:#9ca3af>at %location%</gradient> <gradient:#10b981:#34d399>[%state%]</gradient>"
+    teleport:
+      syntax: "<red>Usage: /rq machine teleport <machine_id></red>"
+      invalid_id: "<red>Invalid machine ID: %id%</red>"
+      not_found: "<red>Machine #%id% not found</red>"
+      no_permission: "<red>You don't have permission to teleport to this machine</red>"
+      world_not_found: "<red>Machine world '%world%' not found</red>"
+      success: "<green>✓ Teleported to machine #%id% (%type%)</green>"
+    reload:
+      success: "<green>✓ Machine configurations reloaded successfully</green>"
+      error: "<red>Failed to reload machine configurations: %error%</red>"
+
+
+# ============================================
+# MACHINE VIEWS
+# ============================================
+view:
+  machine:
+    main:
+      title: "<gradient:#FF6B00:#FFD700>⚙ Machine Control</gradient>"
+      items:
+        state:
+          on:
+            name: "<gradient:#10b981:#34d399>✓ Machine Active</gradient>"
+            lore:
+              - "<gray>The machine is currently running</gray>"
+              - ""
+              - "<yellow>▶ Click to turn OFF</yellow>"
+          off:
+            name: "<gradient:#ef4444:#f87171>✗ Machine Inactive</gradient>"
+            lore:
+              - "<gray>The machine is currently stopped</gray>"
+              - ""
+              - "<yellow>▶ Click to turn ON</yellow>"
+        type:
+          name: "<gradient:#3b82f6:#60a5fa>Machine Type:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+          lore:
+            - "<gray>This is a %type% machine</gray>"
+        fuel:
+          name: "<gradient:#f59e0b:#fbbf24>⛽ Fuel Level:</gradient> <white>%current%</white>"
+          lore:
+            - "<gray>Current fuel: %current%</gray>"
+            - ""
+            - "<yellow>▶ Click to manage fuel</yellow>"
+        recipe:
+          set:
+            name: "<gradient:#10b981:#34d399>✓ Recipe Configured</gradient>"
+            lore:
+              - "<gray>A recipe is currently set</gray>"
+              - ""
+              - "<yellow>▶ Click to view/change</yellow>"
+          not-set:
+            name: "<gradient:#ef4444:#f87171>✗ No Recipe Set</gradient>"
+            lore:
+              - "<gray>No recipe configured</gray>"
+              - ""
+              - "<yellow>▶ Click to configure</yellow>"
+        navigation:
+          storage:
+            name: "<gradient:#3b82f6:#60a5fa>📦 Storage</gradient>"
+            lore:
+              - "<gray>View and manage machine storage</gray>"
+              - ""
+              - "<yellow>▶ Click to open</yellow>"
+          trust:
+            name: "<gradient:#a855f7:#c084fc>👥 Trusted Players</gradient>"
+            lore:
+              - "<gray>Manage who can access this machine</gray>"
+              - "<gray>Trusted players: %count%</gray>"
+              - ""
+              - "<yellow>▶ Click to manage</yellow>"
+          upgrades:
+            name: "<gradient:#10b981:#34d399>⬆ Upgrades</gradient>"
+            lore:
+              - "<gray>View and apply machine upgrades</gray>"
+              - ""
+              - "<yellow>▶ Click to open</yellow>"
+    
+    trust:
+      title: "<gradient:#a855f7:#c084fc>👥 Trusted Players</gradient>"
+      items:
+        owner:
+          name: "<gradient:#f59e0b:#fbbf24>👑 Owner:</gradient> <white>%owner%</white>"
+          lore:
+            - "<gray>This machine is owned by %owner%</gray>"
+        trusted-player:
+          name: "<gradient:#10b981:#34d399>✓</gradient> <white>%player%</white>"
+          lore:
+            - "<gray>This player can access the machine</gray>"
+            - ""
+            - "<red>▶ Click to remove</red>"
+        empty-slot:
+          name: "<gray>Empty Slot</gray>"
+        add-player:
+          name: "<gradient:#10b981:#34d399>➕ Add Player</gradient>"
+          lore:
+            - "<gray>Add a new trusted player</gray>"
+            - ""
+            - "<yellow>▶ Click to add</yellow>"
+      messages:
+        add-player-prompt: "<yellow>Type the player name in chat to add them</yellow>"
+    
+    upgrade:
+      title: "<gradient:#10b981:#34d399>⬆ Machine Upgrades</gradient>"
+      items:
+        upgrade:
+          speed:
+            name: "<gradient:#3b82f6:#60a5fa>⚡ Speed Upgrade</gradient> <white>Level %level%/%max%</white>"
+            lore:
+              - "<gray>Increases crafting speed</gray>"
+              - "<gray>Current bonus: +%effect%%</gray>"
+              - ""
+              - "<yellow>▶ Click to upgrade</yellow>"
+          efficiency:
+            name: "<gradient:#10b981:#34d399>✨ Efficiency Upgrade</gradient> <white>Level %level%/%max%</white>"
+            lore:
+              - "<gray>Reduces resource consumption</gray>"
+              - "<gray>Current bonus: +%effect%%</gray>"
+              - ""
+              - "<yellow>▶ Click to upgrade</yellow>"
+          fuel-reduction:
+            name: "<gradient:#f59e0b:#fbbf24>⛽ Fuel Efficiency</gradient> <white>Level %level%/%max%</white>"
+            lore:
+              - "<gray>Reduces fuel consumption</gray>"
+              - "<gray>Current reduction: -%effect%%</gray>"
+              - ""
+              - "<yellow>▶ Click to upgrade</yellow>"
+          bonus-output:
+            name: "<gradient:#10b981:#34d399>💎 Bonus Output</gradient> <white>Level %level%/%max%</white>"
+            lore:
+              - "<gray>Chance for extra output</gray>"
+              - "<gray>Current chance: %effect%%</gray>"
+              - ""
+              - "<yellow>▶ Click to upgrade</yellow>"
+      messages:
+        upgrade-success: "<green>✓ Successfully upgraded %upgrade%</green>"
+        upgrade-failed: "<red>Failed to upgrade %upgrade%</red>"
+    
+    recipe:
+      title: "<gradient:#f59e0b:#fbbf24>📋 Recipe Configuration</gradient>"
+      items:
+        recipe-slot:
+          locked:
+            name: "<gradient:#10b981:#34d399>%item%</gradient>"
+          empty:
+            name: "<gray>Empty</gray>"
+          configure:
+            name: "<gradient:#3b82f6:#60a5fa>➕ Place Item</gradient>"
+            lore:
+              - "<gray>Place an item here to configure</gray>"
+              - "<gray>the crafting recipe</gray>"
+        set-recipe:
+          name: "<gradient:#10b981:#34d399>✓ Set Recipe</gradient>"
+          lore:
+            - "<gray>Lock in the current recipe</gray>"
+            - ""
+            - "<yellow>▶ Click to confirm</yellow>"
+        clear-recipe:
+          name: "<gradient:#ef4444:#f87171>✗ Clear Recipe</gradient>"
+          lore:
+            - "<gray>Remove the current recipe</gray>"
+            - ""
+            - "<yellow>▶ Click to clear</yellow>"
+        validation:
+          name: "<gradient:#3b82f6:#60a5fa>ℹ Recipe Status</gradient>"
+          lore:
+            - "<gray>Recipe validation status</gray>"
+    
+    storage:
+      title: "<gradient:#3b82f6:#60a5fa>📦 Machine Storage</gradient> <gray>Page %page%/%max_page%</gray>"
+      items:
+        storage-item:
+          name: "<gradient:#f59e0b:#fbbf24>%item%</gradient> <white>x%quantity%</white>"
+          lore:
+            - "<gray>Stored: %quantity%</gray>"
+            - ""
+            - "<yellow>▶ Click to withdraw</yellow>"
+
+
+# ============================================
+# MACHINE SYSTEM
+# ============================================
+view:
+  machine:
+    # Trust View
+    trust:
+      title: "<gradient:#3b82f6:#60a5fa>🔒 Machine Trust</gradient>"
+      items:
+        owner:
+          name: "<gradient:#f59e0b:#fbbf24>👑 Owner: %owner%</gradient>"
+          lore:
+          - "<gradient:#6b7280:#9ca3af>This machine is owned by %owner%</gradient>"
+        trusted-player:
+          name: "<gradient:#10b981:#34d399>✓ %player%</gradient>"
+          lore:
+          - "<gradient:#6b7280:#9ca3af>Trusted player</gradient>"
+          - "<gradient:#ef4444:#f87171>Click to remove</gradient>"
+        empty-slot:
+          name: "<gradient:#6b7280:#9ca3af>Empty Slot</gradient>"
+        add-player:
+          name: "<gradient:#10b981:#34d399>➕ Add Trusted Player</gradient>"
+          lore:
+          - "<gradient:#6b7280:#9ca3af>Click to add a player</gradient>"
+          - "<gradient:#6b7280:#9ca3af>Enter their name in the sign</gradient>"
+      messages:
+        invalid-player-name: "<gradient:#ef4444:#f87171>❌ Invalid player name!</gradient>"
+        player-not-found: "<gradient:#ef4444:#f87171>❌ Player not found: %player%</gradient>"
+        player-added: "<gradient:#10b981:#34d399>✓ Added %player% to trust list</gradient>"
+        player-already-trusted: "<gradient:#f59e0b:#fbbf24>⚠ %player% is already trusted</gradient>"
+        add-player-prompt: "<gradient:#3b82f6:#60a5fa>Enter player name in the sign</gradient>"
+    
+    # Storage View
+    storage:
+      title: "<gradient:#8b5cf6:#a78bfa>📦 Machine Storage - Page %page%/%max_page%</gradient>"
+      items:
+        storage-item:
+          name: "<gradient:#10b981:#34d399>%item% x%quantity%</gradient>"
+          lore:
+          - "<gradient:#6b7280:#9ca3af>Type: %type%</gradient>"
+          - "<gradient:#6b7280:#9ca3af>Click to withdraw</gradient>"
+        deposit:
+          name: "<gradient:#10b981:#34d399>⬇ Deposit Item</gradient>"
+          lore:
+          - "<gradient:#6b7280:#9ca3af>Hold an item and click</gradient>"
+          - "<gradient:#6b7280:#9ca3af>to deposit it into storage</gradient>"
+        filter:
+          all:
+            name: "<gradient:#6b7280:#9ca3af>📦 All Items</gradient>"
+            lore:
+            - "<gradient:#6b7280:#9ca3af>Show all storage items</gradient>"
+          input:
+            name: "<gradient:#3b82f6:#60a5fa>⬇ Input Items</gradient>"
+            lore:
+            - "<gradient:#6b7280:#9ca3af>Show input storage only</gradient>"
+          output:
+            name: "<gradient:#10b981:#34d399>⬆ Output Items</gradient>"
+            lore:
+            - "<gradient:#6b7280:#9ca3af>Show output storage only</gradient>"
+      messages:
+        no-item-in-hand: "<gradient:#ef4444:#f87171>❌ Hold an item to deposit!</gradient>"
+        item-deposited: "<gradient:#10b981:#34d399>✓ Deposited %amount%x %item%</gradient>"
+        storage-full: "<gradient:#ef4444:#f87171>❌ Storage is full!</gradient>"
+    
+    # Recipe View
+    recipe:
+      title: "<gradient:#f59e0b:#fbbf24>📋 Machine Recipe</gradient>"
+      items:
+        recipe-slot:
+          locked:
+            name: "<gradient:#10b981:#34d399>🔒 %item%</gradient>"
+            lore:
+            - "<gradient:#6b7280:#9ca3af>Recipe is locked</gradient>"
+          empty:
+            name: "<gradient:#6b7280:#9ca3af>Empty Slot</gradient>"
+          configure:
+            name: "<gradient:#3b82f6:#60a5fa>➕ Place Item</gradient>"
+            lore:
+            - "<gradient:#6b7280:#9ca3af>Click with an item to place</gradient>"
+            - "<gradient:#6b7280:#9ca3af>Click empty-handed to remove</gradient>"
+          configured:
+            name: "<gradient:#10b981:#34d399>%item%</gradient>"
+            lore:
+            - "<gradient:#6b7280:#9ca3af>Click to remove</gradient>"
+        set-recipe:
+          name: "<gradient:#10b981:#34d399>✓ Set Recipe</gradient>"
+          lore:
+          - "<gradient:#6b7280:#9ca3af>Lock in the current recipe</gradient>"
+        clear-recipe:
+          name: "<gradient:#ef4444:#f87171>✗ Clear Recipe</gradient>"
+          lore:
+          - "<gradient:#6b7280:#9ca3af>Remove the current recipe</gradient>"
+          - "<gradient:#f59e0b:#fbbf24>Machine must be OFF</gradient>"
+        validation:
+          valid:
+            name: "<gradient:#10b981:#34d399>✓ Recipe Valid</gradient>"
+            lore:
+            - "<gradient:#6b7280:#9ca3af>Recipe is set and ready</gradient>"
+          pending:
+            name: "<gradient:#f59e0b:#fbbf24>⚠ Configure Recipe</gradient>"
+            lore:
+            - "<gradient:#6b7280:#9ca3af>Place items in the grid</gradient>"
+            - "<gradient:#6b7280:#9ca3af>then click Set Recipe</gradient>"
+      messages:
+        recipe-already-set: "<gradient:#f59e0b:#fbbf24>⚠ Recipe is already set!</gradient>"
+        recipe-empty: "<gradient:#ef4444:#f87171>❌ Place items in the grid first!</gradient>"
+        recipe-set: "<gradient:#10b981:#34d399>✓ Recipe has been set!</gradient>"
+        recipe-invalid: "<gradient:#ef4444:#f87171>❌ Invalid recipe configuration!</gradient>"
+        no-recipe-to-clear: "<gradient:#f59e0b:#fbbf24>⚠ No recipe to clear!</gradient>"
+        recipe-cleared: "<gradient:#10b981:#34d399>✓ Recipe has been cleared!</gradient>"
+        recipe-clear-active: "<gradient:#ef4444:#f87171>❌ Turn off the machine first!</gradient>"
+    
+    # Upgrade View
+    upgrade:
+      title: "<gradient:#a855f7:#c084fc>⚡ Machine Upgrades</gradient>"
+      items:
+        upgrade:
+          name: "<gradient:#10b981:#34d399>%type% Upgrade</gradient>"
+          lore:
+          - "<gradient:#6b7280:#9ca3af>Level: %level%/%max_level%</gradient>"
+          - "<gradient:#6b7280:#9ca3af>Effect: +%effect%%</gradient>"
+          - "<gradient:#10b981:#34d399>Click to upgrade</gradient>"
+        maxed:
+          name: "<gradient:#f59e0b:#fbbf24>%type% Upgrade (MAX)</gradient>"
+          lore:
+          - "<gradient:#6b7280:#9ca3af>Level: %level%/%max_level%</gradient>"
+          - "<gradient:#6b7280:#9ca3af>Effect: +%effect%%</gradient>"
+          - "<gradient:#10b981:#34d399>✓ Maxed out!</gradient>"
+      messages:
+        upgrade-applied: "<gradient:#10b981:#34d399>✓ Upgrade applied!</gradient>"
+        upgrade-max: "<gradient:#f59e0b:#fbbf24>⚠ Upgrade is already maxed!</gradient>"
+        upgrade-failed: "<gradient:#ef4444:#f87171>❌ Failed to apply upgrade!</gradient>"
+    
+    # Main View
+    main:
+      title: "<gradient:#3b82f6:#60a5fa>⚙ Machine Control</gradient>"
+      items:
+        status:
+          name: "<gradient:#10b981:#34d399>Status: %status%</gradient>"
+          lore:
+          - "<gradient:#6b7280:#9ca3af>Click to toggle</gradient>"
+        storage:
+          name: "<gradient:#8b5cf6:#a78bfa>📦 Storage</gradient>"
+          lore:
+          - "<gradient:#6b7280:#9ca3af>Manage machine storage</gradient>"
+        recipe:
+          name: "<gradient:#f59e0b:#fbbf24>📋 Recipe</gradient>"
+          lore:
+          - "<gradient:#6b7280:#9ca3af>Configure crafting recipe</gradient>"
+        upgrades:
+          name: "<gradient:#a855f7:#c084fc>⚡ Upgrades</gradient>"
+          lore:
+          - "<gradient:#6b7280:#9ca3af>Manage machine upgrades</gradient>"
+        trust:
+          name: "<gradient:#3b82f6:#60a5fa>🔒 Trust</gradient>"
+          lore:
+          - "<gradient:#6b7280:#9ca3af>Manage trusted players</gradient>"
+
+    # Recipe View
+    recipe:
+      title: "<gradient:#f59e0b:#fbbf24>📋 Machine Recipe</gradient>"
+      items:
+        recipe-slot:
+          configure:
+            name: "<gradient:#6b7280:#9ca3af>Empty Slot</gradient>"
+            lore:
+            - "<gradient:#6b7280:#9ca3af>Click with an item to place</gradient>"
+            - "<gradient:#6b7280:#9ca3af>Right-click to remove</gradient>"
+          locked:
+            name: "<gradient:#10b981:#34d399>%item%</gradient>"
+            lore:
+            - "<gradient:#ef4444:#f87171>🔒 Recipe is locked</gradient>"
+            - "<gradient:#6b7280:#9ca3af>Turn off machine to modify</gradient>"
+          empty:
+            name: "<gradient:#6b7280:#9ca3af>Empty Slot</gradient>"
+        set-recipe:
+          name: "<gradient:#10b981:#34d399>✅ Set Recipe</gradient>"
+          lore:
+          - "<gradient:#6b7280:#9ca3af>Lock in the current recipe</gradient>"
+          - "<gradient:#6b7280:#9ca3af>configuration</gradient>"
+        clear-recipe:
+          name: "<gradient:#ef4444:#f87171>🗑 Clear Recipe</gradient>"
+          lore:
+          - "<gradient:#6b7280:#9ca3af>Remove the current recipe</gradient>"
+          - "<gradient:#f59e0b:#fbbf24>⚠ Machine must be OFF</gradient>"
+        validation:
+          valid:
+            name: "<gradient:#10b981:#34d399>✅ Recipe Valid</gradient>"
+            lore:
+            - "<gradient:#6b7280:#9ca3af>Recipe is configured</gradient>"
+            - "<gradient:#6b7280:#9ca3af>and ready to use</gradient>"
+          ready:
+            name: "<gradient:#f59e0b:#fbbf24>⚠ Ready to Set</gradient>"
+            lore:
+            - "<gradient:#6b7280:#9ca3af>Click 'Set Recipe' to</gradient>"
+            - "<gradient:#6b7280:#9ca3af>lock in your configuration</gradient>"
+          pending:
+            name: "<gradient:#ef4444:#f87171>❌ No Recipe</gradient>"
+            lore:
+            - "<gradient:#6b7280:#9ca3af>Place items in the grid</gradient>"
+            - "<gradient:#6b7280:#9ca3af>to configure a recipe</gradient>"
+      messages:
+        recipe-already-set: "<gradient:#f59e0b:#fbbf24>⚠ Recipe is already set!</gradient>"
+        recipe-empty: "<gradient:#ef4444:#f87171>❌ Place items in the grid first!</gradient>"
+        recipe-set: "<gradient:#10b981:#34d399>✅ Recipe has been set!</gradient>"
+        recipe-invalid: "<gradient:#ef4444:#f87171>❌ Invalid recipe configuration!</gradient>"
+        no-recipe-to-clear: "<gradient:#f59e0b:#fbbf24>⚠ No recipe to clear!</gradient>"
+        recipe-cleared: "<gradient:#10b981:#34d399>✅ Recipe has been cleared!</gradient>"
+        recipe-clear-active: "<gradient:#ef4444:#f87171>❌ Turn off the machine first!</gradient>"
+
+        messages:
+          structure-invalid: "<gradient:#ef4444:#f87171>❌ Invalid Structure!</gradient> <gradient:#6b7280:#9ca3af>%error%</gradient>"
+          no-recipe: "<gradient:#f59e0b:#fbbf24>⚠ No Recipe Set!</gradient> <gradient:#6b7280:#9ca3af>Configure a recipe first</gradient>"
+          no-fuel: "<gradient:#ef4444:#f87171>❌ No Fuel!</gradient> <gradient:#6b7280:#9ca3af>Add fuel to the machine</gradient>"
+          state-on: "<gradient:#10b981:#34d399>✅ Machine Activated!</gradient>"
+          state-off: "<gradient:#f59e0b:#fbbf24>⏸ Machine Deactivated</gradient>"
+          toggle-failed: "<gradient:#ef4444:#f87171>❌ Failed to toggle machine state</gradient>"
+          toggle-error: "<gradient:#ef4444:#f87171>❌ Error:</gradient> <gradient:#6b7280:#9ca3af>%error%</gradient>"
+
+      # Main View
+      main:
+        title: "<gradient:#3b82f6:#60a5fa>⚙ Machine Control</gradient>"
+        items:
+          state:
+            on:
+              name: "<gradient:#10b981:#34d399>✓ Machine Active</gradient>"
+              lore:
+              - "<gray>The machine is currently running</gray>"
+              - ""
+              - "<yellow>▶ Click to turn OFF</yellow>"
+            off:
+              name: "<gradient:#ef4444:#f87171>✗ Machine Inactive</gradient>"
+              lore:
+              - "<gray>The machine is currently stopped</gray>"
+              - ""
+              - "<yellow>▶ Click to turn ON</yellow>"
+          type:
+            name: "<gradient:#3b82f6:#60a5fa>Machine Type:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+            lore:
+            - "<gray>This is a %type% machine</gray>"
+          fuel:
+            name: "<gradient:#f59e0b:#fbbf24>⛽ Fuel Level:</gradient> <white>%current%</white>"
+            lore:
+            - "<gray>Current fuel: %current%</gray>"
+            - ""
+            - "<yellow>▶ Click to manage fuel</yellow>"
+          recipe:
+            set:
+              name: "<gradient:#10b981:#34d399>✓ Recipe Configured</gradient>"
+              lore:
+              - "<gray>Recipe is set and ready</gray>"
+              - ""
+              - "<yellow>▶ Click to view/modify</yellow>"
+            not-set:
+              name: "<gradient:#ef4444:#f87171>✗ No Recipe</gradient>"
+              lore:
+              - "<gray>No recipe configured</gray>"
+              - ""
+              - "<yellow>▶ Click to configure</yellow>"
+          navigation:
+            storage:
+              name: "<gradient:#3b82f6:#60a5fa>📦 Storage</gradient>"
+              lore:
+              - "<gray>View and manage machine storage</gray>"
+              - ""
+              - "<yellow>▶ Click to open</yellow>"
+            trust:
+              name: "<gradient:#a855f7:#c084fc>👥 Trusted Players</gradient>"
+              lore:
+              - "<gray>Manage who can access this machine</gray>"
+              - "<gray>Trusted players: %count%</gray>"
+              - ""
+              - "<yellow>▶ Click to manage</yellow>"
+            upgrades:
+              name: "<gradient:#10b981:#34d399>⬆ Upgrades</gradient>"
+              lore:
+              - "<gray>View and apply machine upgrades</gray>"
+              - ""
+              - "<yellow>▶ Click to open</yellow>"
+
+        output:
+          name: "<gradient:#10b981:#34d399>➜ Output: %item% x%amount%</gradient>"
+          lore:
+          - "<gray>This is what the recipe will craft</gray>"
+          none:
+            name: "<gradient:#6b7280:#9ca3af>➜ No Output</gradient>"
+            lore:
+            - "<gray>Place items in the grid to see output</gray>"

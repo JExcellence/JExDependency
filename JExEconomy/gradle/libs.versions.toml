@@ -27,13 +27,13 @@ h2 = "2.4.240"
 xseries = "13.3.3"
 
 # Internal libraries
-jexcommand = "1.0.0"
+jexcommand = "2.0.0"
 rplatform = "2.0.0"
 jeconfig-evaluable = "1.0.1"
 jeconfig-gpeee = "1.0.1"
 jeconfig-mapper = "1.0.1"
 jetranslate = "3.0.0"
-jehibernate = "1.0.3"
+jehibernate = "3.0.3"
 jedependency = "2.0.0"
 jexeconomy = "2.0.0"
 

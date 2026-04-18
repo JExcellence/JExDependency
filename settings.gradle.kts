@@ -25,11 +25,13 @@ rootProject.name = "RaindropPlugins"
 // Simple library modules
 include(":JExCommand")
 include(":JExDependency")
+include(":JExPlatform")
 include(":JExTranslate")
 include(":RPlatform")
 
 // JExEconomy with submodules
 include(":JExEconomy")
+include(":JExEconomy:jexeconomy-api")
 include(":JExEconomy:jexeconomy-common")
 include(":JExEconomy:jexeconomy-free")
 include(":JExEconomy:jexeconomy-premium")

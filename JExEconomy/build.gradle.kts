@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "de.jexcellence.economy"
-version = "2.0.0"
+version = "3.0.0"
 description = "JExEconomy - Multi-currency economy system"
 
 ext["vendor"] = "JExcellence"
@@ -28,6 +28,7 @@ tasks.register("publishLocal") {
     group = "publishing"
     description = "Publishes all modules to local Maven repository"
     dependsOn(
+        ":JExEconomy:jexeconomy-api:publishMavenPublicationToMavenLocal",
         ":JExEconomy:jexeconomy-common:publishMavenPublicationToMavenLocal",
         ":JExEconomy:jexeconomy-free:publishMavenShadowPublicationToMavenLocal",
         ":JExEconomy:jexeconomy-premium:publishMavenShadowPublicationToMavenLocal",

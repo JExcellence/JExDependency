@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "de.jexcellence.economy"
-version = "2.0.0"
+version = "3.0.0"
 
 dependenciesYml {
     usePaperDependencies()
@@ -24,10 +24,14 @@ dependencies {
 
     compileOnly(platform(libs.hibernate.platform))
     compileOnly(libs.bundles.hibernate)
-    compileOnly(libs.jehibernate)
     compileOnly(libs.adventure.platform.bukkit)
-    compileOnly(libs.rplatform)
+    compileOnly(libs.jexplatform)
 
+    // JEHibernate thin JAR bundled so its classes ship in the plugin JAR.
+    // Heavy deps (Hibernate 7.x, Jakarta, etc.) are downloaded by JEDependency's
+    // PaperPluginLoader and injected via PluginClasspathBuilder — works correctly because
+    // has-open-classloader is not set (defaults to false) in this module's paper-plugin.yml.
+    implementation(libs.jehibernate) { isTransitive = false }
     implementation(libs.bundles.jexcellence) {
         isTransitive = false
         exclude(group = "de.jexcellence.hibernate")
@@ -53,7 +57,9 @@ tasks.named<ShadowJar>("shadowJar") {
     relocate("tools.jackson", "de.jexcellence.remapped.tools.jackson")
     // NOTE: com.fasterxml is NOT relocated - Hibernate expects original Jackson paths
 
-    relocate("com.github.benmanes", "de.jexcellence.remapped.com.github.benmanes")
+    // NOTE: com.github.benmanes (caffeine) is NOT relocated — JEHibernate (bundled thin JAR)
+    // references caffeine under the original package; caffeine is injected at runtime by
+    // JEDependency and must remain at its original package name.
     relocate("me.devnatan.inventoryframework", "de.jexcellence.remapped.me.devnatan.inventoryframework")
     relocate("com.tcoded", "de.jexcellence.remapped.com.tcoded")
     relocate("com.cryptomorin.xseries", "de.jexcellence.remapped.com.cryptomorin.xseries")
@@ -74,24 +80,20 @@ tasks.named<Jar>("jar") {
     enabled = false
 }
 
-tasks.test {
-    useJUnitPlatform()
-}
-
 afterEvaluate {
     publishing {
         publications {
             named<MavenPublication>("maven") {
                 groupId = "de.jexcellence.economy"
                 artifactId = "jexeconomy-free-shadow"
-                version = "2.0.0"
+                version = project.version.toString()
                 artifact(tasks.named("shadowJar"))
             }
             create<MavenPublication>("mavenShadow") {
                 from(components["shadow"])
                 groupId = "de.jexcellence.economy"
                 artifactId = "jexeconomy-free"
-                version = "2.0.0"
+                version = project.version.toString()
                 pom {
                     name.set("JExEconomy Free")
                     description.set("JExEconomy Free Edition")

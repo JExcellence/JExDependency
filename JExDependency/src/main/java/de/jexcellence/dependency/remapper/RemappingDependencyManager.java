@@ -586,61 +586,6 @@ public class RemappingDependencyManager {
         }
     }
 
-    // ----------------- Internal ASM remapper -----------------
-
-    /**
-     * Maps class internal names and package names using longest-prefix package relocation.
-     */
-    private static final class PrefixRelocationRemapper extends Remapper {
-        private final Map<String, String> prefixMapInternal; // "com/example" -> "my/prefix/com/example"
-
-        PrefixRelocationRemapper(final Map<String, String> relocations) {
-            // Convert to slash form and preserve insertion order; we'll do longest-prefix match in map()
-            this.prefixMapInternal = new LinkedHashMap<>();
-            relocations.entrySet()
-                    .stream()
-                    .sorted(Comparator.comparingInt(e -> -e.getKey().length())) // longest first
-                    .forEach(e -> this.prefixMapInternal.put(
-                            e.getKey().replace('.', '/'),
-                            e.getValue().replace('.', '/')
-                    ));
-        }
-
-        /**
-         * Executes map.
-         */
-        @Override
-        public String map(final String internalName) {
-            if (internalName == null) return null;
-            // Handle arrays and descriptors via Remapper's default logic for simplicity
-            if (internalName.startsWith("[")) {
-                return super.map(internalName);
-            }
-            return relocateInternal(internalName);
-        }
-
-        /**
-         * Executes mapPackageName.
-         */
-        @Override
-        public String mapPackageName(final String name) {
-            if (name == null) return null;
-            final String internal = name.replace('.', '/');
-            final String mapped = relocateInternal(internal);
-            return mapped.replace('/', '.');
-        }
-
-        private String relocateInternal(final String internal) {
-            for (Map.Entry<String, String> e : prefixMapInternal.entrySet()) {
-                final String from = e.getKey();
-                if (internal.equals(from) || internal.startsWith(from + "/")) {
-                    return e.getValue() + internal.substring(from.length());
-                }
-            }
-            return internal;
-        }
-    }
-
     // ----------------- Debug helper -----------------
 
     /**

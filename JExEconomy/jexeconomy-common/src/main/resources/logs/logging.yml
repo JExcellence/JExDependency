@@ -1,4 +1,4 @@
-defaultLevel: WARNING
+ defaultLevel: WARNING
 consoleLogging: true
 debugMode: true
 loggers:

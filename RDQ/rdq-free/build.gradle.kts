@@ -68,9 +68,8 @@ dependencies {
         exclude(group = "de.jexcellence.hibernate")
         exclude(group = "com.raindropcentral.commands", module = "jexcommand")
         exclude(group = "com.raindropcentral.platform", module = "rplatform")
-        isTransitive = false
     }
-    implementation(libs.bundles.jeconfig) { isTransitive = false }
+    implementation(libs.bundles.jeconfig)
 
     // Inventory framework
     compileOnly(libs.bundles.inventory)

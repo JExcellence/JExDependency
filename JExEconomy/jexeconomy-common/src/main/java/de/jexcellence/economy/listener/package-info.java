@@ -1,4 +1,7 @@
 /**
- * Contains public API types for the <code>de.jexcellence.economy.listener</code> package.
+ * Bukkit event listeners for player join handling and transaction audit logging.
+ *
+ * @author JExcellence
+ * @since 3.0.0
  */
 package de.jexcellence.economy.listener;

@@ -55,10 +55,9 @@ dependencies {
 
     compileOnly(libs.bundles.jexcellence) {
         exclude(group = "de.jexcellence.hibernate")
-        isTransitive = false
     }
     compileOnly(project(":RCore"))
-    compileOnly(libs.bundles.jeconfig) { isTransitive = false }
+    compileOnly(libs.bundles.jeconfig)
     compileOnly(libs.bundles.inventory)
 
     // Test dependencies

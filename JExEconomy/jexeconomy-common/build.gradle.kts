@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "de.jexcellence.economy"
-version = "2.0.0"
+version = "3.0.0"
 description = "JExEconomy Common - Shared library for JExEconomy"
 
 dependenciesYml {
@@ -18,9 +18,7 @@ tasks.processResources {
 }
 
 dependencies {
-    // Lombok
-    compileOnly("org.projectlombok:lombok:1.18.36")
-    annotationProcessor("org.projectlombok:lombok:1.18.36")
+    implementation(project(":JExEconomy:jexeconomy-api"))
 
     // Paper
     compileOnly(libs.paper.api)
@@ -28,7 +26,7 @@ dependencies {
 
     compileOnly(libs.folialib)
     compileOnly(libs.placeholderapi)
-    compileOnly(libs.vault.api) { isTransitive = false}
+    compileOnly(libs.vault.api) { isTransitive = false }
     compileOnly(libs.luckperms.api)
 
     // Logging & utils
@@ -81,14 +79,4 @@ tasks.withType<Test>().configureEach {
         showCauses = true
         showStackTraces = true
     }
-}
-
-tasks.withType<JavaCompile>().configureEach {
-    options.compilerArgs.addAll(listOf(
-        "--enable-preview"
-    ))
-}
-
-tasks.withType<Test>().configureEach {
-    jvmArgs("--enable-preview")
 }

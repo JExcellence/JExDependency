@@ -21,14 +21,15 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-import java.util.logging.ConsoleHandler;
 import java.util.logging.Formatter;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
+import java.util.logging.StreamHandler;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -117,18 +118,20 @@ public class PaperPluginLoader implements PluginLoader {
         
         // Capture pluginName for use in formatter
         final String currentPluginName = this.pluginName;
-        
-        // Add console handler with simple format that includes plugin name
-        final ConsoleHandler handler = new ConsoleHandler();
-        handler.setFormatter(new Formatter() {
-            /**
-             * Executes format.
-             */
+
+        // Write to stdout so output appears white in the Paper console (ConsoleHandler uses System.err → red)
+        final StreamHandler handler = new StreamHandler(System.out, new Formatter() {
             @Override
             public String format(final LogRecord record) {
                 return String.format("[%s/%s] %s%n", LOGGER_NAME, currentPluginName, record.getMessage());
             }
-        });
+        }) {
+            @Override
+            public synchronized void publish(final LogRecord record) {
+                super.publish(record);
+                flush();
+            }
+        };
         handler.setLevel(Level.ALL);
         log.addHandler(handler);
         log.setLevel(Level.INFO);
@@ -176,8 +179,6 @@ public class PaperPluginLoader implements PluginLoader {
         this.logger = createLogger(LOGGER_NAME + "." + pluginName);
 
         try {
-            logger.info("Loading dependencies...");
-
             ensureDirectoryExists(librariesDirectory);
             warnIfNestedLibraries(librariesDirectory);
 
@@ -226,7 +227,6 @@ public class PaperPluginLoader implements PluginLoader {
                 return;
             }
 
-            logger.info("Found " + yamlDependencies.size() + " dependencies");
             processDependencies(yamlDependencies, librariesDirectory);
 
         } catch (final Exception exception) {
@@ -238,45 +238,46 @@ public class PaperPluginLoader implements PluginLoader {
             @NotNull final List<String> dependencies,
             @NotNull final File librariesDirectory
     ) {
-        final int total = dependencies.size();
-        int completed = 0;
-        int failed = 0;
-        int lastLoggedPercent = 0;
+        final long start = System.currentTimeMillis();
 
-        for (final String dependencyString : dependencies) {
-            try {
-                final DependencyCoordinate coordinate = DependencyCoordinate.parse(dependencyString);
-                if (coordinate == null) {
-                    logger.warning("Invalid dependency: " + dependencyString);
-                    failed++;
-                    completed++;
-                    continue;
-                }
-
-                final DownloadResult result = dependencyDownloader.download(coordinate, librariesDirectory);
-                completed++;
-                
-                if (result.success()) {
-                    final int percent = (completed * 100) / total;
-                    // Log at 25%, 50%, 75%, 100%
-                    if (percent >= lastLoggedPercent + 25 || completed == total) {
-                        logger.info("Downloading dependencies... " + completed + "/" + total + " (" + percent + "%)");
-                        lastLoggedPercent = (percent / 25) * 25;
-                    }
-                } else {
-                    failed++;
-                    logger.warning("Failed to download: " + coordinate.artifactId());
-                }
-
-            } catch (final Exception exception) {
-                completed++;
-                failed++;
-                logger.log(Level.FINE, "Error downloading dependency: " + dependencyString, exception);
+        // Parse coordinates, warn on invalid entries
+        final List<DependencyCoordinate> coords = new ArrayList<>();
+        for (final String dep : dependencies) {
+            final DependencyCoordinate coord = DependencyCoordinate.parse(dep);
+            if (coord == null) {
+                logger.warning("Invalid dependency coordinate: " + dep);
+            } else {
+                coords.add(coord);
             }
         }
 
+        if (coords.isEmpty()) {
+            logger.info("No valid dependencies to download");
+            return;
+        }
+
+        logger.info("Resolving " + coords.size() + " dependencies...");
+
+        // Fire all downloads in parallel using the downloader's virtual-thread executor
+        final List<CompletableFuture<DownloadResult>> futures = coords.stream()
+                .map(coord -> dependencyDownloader.downloadAsync(coord, librariesDirectory))
+                .toList();
+
+        final List<DownloadResult> results = futures.stream()
+                .map(CompletableFuture::join)
+                .toList();
+
+        final long failed = results.stream().filter(r -> !r.success()).count();
+        final long ms = System.currentTimeMillis() - start;
+
         if (failed > 0) {
-            logger.warning("Downloaded " + (total - failed) + "/" + total + " dependencies (" + failed + " failed)");
+            logger.info("Downloaded " + (coords.size() - failed) + "/" + coords.size()
+                    + " (" + failed + " failed) in " + ms + "ms");
+            results.stream()
+                    .filter(r -> !r.success())
+                    .forEach(r -> logger.warning("Failed: " + r.coordinate().toGavString()));
+        } else {
+            logger.info("Downloaded " + coords.size() + "/" + coords.size() + " in " + ms + "ms");
         }
     }
 
@@ -509,7 +510,17 @@ public class PaperPluginLoader implements PluginLoader {
                 // Database drivers - Hibernate loads these by class name from config
                 "org.h2", "com.mysql", "org.postgresql", "org.mariadb", "com.microsoft",
                 // Jackson 2.x (com.fasterxml) - compatible with server's bundled version
-                "com.fasterxml"
+                "com.fasterxml",
+                // reflections + its transitive deps - referenced by the bundled JEHibernate thin JAR
+                // at original package names; remapping breaks class resolution from the plugin classloader
+                "org.reflections",
+                "org.javassist",
+                // Caffeine - referenced by JEHibernate at original package name; must not be remapped
+                "com.github.ben-manes",
+                // jboss-logging - used by Hibernate internally; Hibernate is excluded so its bytecode
+                // keeps original org.jboss.logging references; the library must stay at original names
+                // to match. Also avoids stale-cache version skew (3.4.x → 3.5.x method signature change).
+                "org.jboss"
         ));
 
         final String excludesProperty = System.getProperty(RELOCATIONS_EXCLUDES_PROPERTY);
@@ -611,13 +622,16 @@ public class PaperPluginLoader implements PluginLoader {
         final int total = inputJars.size();
         int processedCount = 0;
         int remappedCount = 0;
-        int lastLoggedPercent = 0;
+        // Log a progress line every this many JARs so the console doesn't look stuck
+        final int progressInterval = Math.max(1, Math.min(10, total / 5));
+
+        logger.info("Remapping " + total + " libraries...");
 
         for (final Path inputJar : inputJars) {
             final Path outputJar = outputDirectory.resolve(inputJar.getFileName());
 
             if (isRemappedJarUpToDate(outputJar, inputJar)) {
-                logger.fine("Using cached: " + outputJar.getFileName());
+                logger.fine("Cached: " + outputJar.getFileName());
                 processedCount++;
                 remappedCount++;
             } else {
@@ -634,11 +648,9 @@ public class PaperPluginLoader implements PluginLoader {
                 }
             }
 
-            // Log at 25%, 50%, 75%, 100%
-            final int percent = (processedCount * 100) / total;
-            if (percent >= lastLoggedPercent + 25 || processedCount == total) {
-                logger.info("Remapping libraries... " + processedCount + "/" + total + " (" + percent + "%)");
-                lastLoggedPercent = (percent / 25) * 25;
+            if (processedCount % progressInterval == 0 || processedCount == total) {
+                final int percent = (processedCount * 100) / total;
+                logger.info("Remapping... " + processedCount + "/" + total + " (" + percent + "%)");
             }
         }
 
@@ -647,6 +659,7 @@ public class PaperPluginLoader implements PluginLoader {
             return false;
         }
 
+        logger.info("Remapped " + remappedCount + "/" + total + " libraries");
         return remappedCount > 0;
     }
 

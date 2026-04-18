@@ -17,61 +17,63 @@ import com.raindropcentral.commands.CommandFactory;
 import com.raindropcentral.rdq.bounty.IBountyService;
 import com.raindropcentral.rdq.bounty.utility.BountyFactory;
 import com.raindropcentral.rdq.bounty.visual.VisualIndicatorManager;
+import com.raindropcentral.rdq.cache.quest.PlayerQuestProgressCache;
+import com.raindropcentral.rdq.cache.quest.QuestCacheManager;
 import com.raindropcentral.rdq.config.perk.PerkSystemSection;
 import com.raindropcentral.rdq.database.entity.bounty.Bounty;
 import com.raindropcentral.rdq.database.entity.bounty.BountyHunter;
+import com.raindropcentral.rdq.database.entity.machine.Machine;
+import com.raindropcentral.rdq.database.entity.machine.MachineStorage;
 import com.raindropcentral.rdq.database.entity.perk.Perk;
 import com.raindropcentral.rdq.database.entity.perk.PlayerPerk;
 import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
-import com.raindropcentral.rdq.database.entity.quest.PlayerQuestProgress;
-import com.raindropcentral.rdq.database.entity.quest.Quest;
-import com.raindropcentral.rdq.database.entity.quest.QuestCategory;
-import com.raindropcentral.rdq.database.entity.quest.QuestCompletionHistory;
-import com.raindropcentral.rdq.database.entity.quest.QuestUser;
-import com.raindropcentral.rdq.database.entity.rank.RPlayerRank;
-import com.raindropcentral.rdq.database.entity.rank.RPlayerRankPath;
-import com.raindropcentral.rdq.database.entity.rank.RPlayerRankUpgradeProgress;
-import com.raindropcentral.rdq.database.entity.rank.RRank;
-import com.raindropcentral.rdq.database.entity.rank.RRankReward;
-import com.raindropcentral.rdq.database.entity.rank.RRankTree;
+import com.raindropcentral.rdq.database.entity.quest.*;
+import com.raindropcentral.rdq.database.entity.rank.*;
 import com.raindropcentral.rdq.database.entity.requirement.BaseRequirement;
 import com.raindropcentral.rdq.database.entity.reward.BaseReward;
 import com.raindropcentral.rdq.database.repository.*;
+import com.raindropcentral.rdq.database.repository.quest.PlayerQuestProgressRepository;
+import com.raindropcentral.rdq.machine.MachineFactory;
+import com.raindropcentral.rdq.machine.MachineManager;
+import com.raindropcentral.rdq.machine.MachineRegistry;
+import com.raindropcentral.rdq.machine.MachineService;
+import com.raindropcentral.rdq.machine.config.FabricatorSection;
+import com.raindropcentral.rdq.machine.config.MachineSystemSection;
+import com.raindropcentral.rdq.machine.item.MachineItemFactory;
+import com.raindropcentral.rdq.machine.repository.MachineCache;
+import com.raindropcentral.rdq.machine.repository.MachineRepository;
+import com.raindropcentral.rdq.machine.repository.MachineStorageRepository;
+import com.raindropcentral.rdq.machine.structure.MultiBlockStructure;
+import com.raindropcentral.rdq.machine.structure.StructureDetector;
+import com.raindropcentral.rdq.machine.task.MachineAutoSaveTask;
+import com.raindropcentral.rdq.machine.view.*;
 import com.raindropcentral.rdq.perk.PerkActivationService;
 import com.raindropcentral.rdq.perk.PerkManagementService;
 import com.raindropcentral.rdq.perk.PerkRequirementService;
 import com.raindropcentral.rdq.perk.PerkSystemFactory;
+import com.raindropcentral.rdq.perk.cache.SimplePerkCache;
 import com.raindropcentral.rdq.permissions.PermissionsService;
 import com.raindropcentral.rdq.placeholders.RDQPlaceholderExpansion;
+import com.raindropcentral.rdq.quest.QuestSystemFactory;
+import com.raindropcentral.rdq.quest.handler.TaskHandlerManager;
+import com.raindropcentral.rdq.quest.sidebar.QuestProgressSidebarService;
 import com.raindropcentral.rdq.rank.IRankSystemService;
 import com.raindropcentral.rdq.rank.RankSystemFactory;
 import com.raindropcentral.rdq.service.RankPathService;
+import com.raindropcentral.rdq.service.quest.QuestProgressTrackerImpl;
+import com.raindropcentral.rdq.service.quest.QuestRewardDistributor;
+import com.raindropcentral.rdq.service.quest.QuestServiceImpl;
 import com.raindropcentral.rdq.service.scoreboard.PerkSidebarScoreboardService;
-import com.raindropcentral.rdq.view.admin.AdminCurrencyView;
-import com.raindropcentral.rdq.view.admin.AdminJobsView;
-import com.raindropcentral.rdq.view.admin.AdminOverviewView;
-import com.raindropcentral.rdq.view.admin.AdminPermissionsView;
-import com.raindropcentral.rdq.view.admin.AdminSkillsView;
-import com.raindropcentral.rdq.view.admin.PlaceholderAPIView;
-import com.raindropcentral.rdq.view.admin.PluginIntegrationManagementView;
-import com.raindropcentral.rdq.view.bounty.BountyCreationView;
-import com.raindropcentral.rdq.view.bounty.BountyMainView;
-import com.raindropcentral.rdq.view.bounty.BountyOverviewView;
-import com.raindropcentral.rdq.view.bounty.BountyPlayerInfoView;
-import com.raindropcentral.rdq.view.bounty.BountyRewardView;
+import com.raindropcentral.rdq.view.admin.*;
+import com.raindropcentral.rdq.view.bounty.*;
 import com.raindropcentral.rdq.view.main.MainOverviewView;
 import com.raindropcentral.rdq.view.perks.PerkDetailView;
 import com.raindropcentral.rdq.view.perks.PerkOverviewView;
+import com.raindropcentral.rdq.view.quest.QuestAbandonConfirmationView;
 import com.raindropcentral.rdq.view.quest.QuestCategoryView;
 import com.raindropcentral.rdq.view.quest.QuestDetailView;
 import com.raindropcentral.rdq.view.quest.QuestListView;
-import com.raindropcentral.rdq.view.ranks.RankMainView;
-import com.raindropcentral.rdq.view.ranks.RankPathOverview;
-import com.raindropcentral.rdq.view.ranks.RankPathRankRequirementOverview;
-import com.raindropcentral.rdq.view.ranks.RankRequirementDetailView;
-import com.raindropcentral.rdq.view.ranks.RankRequirementsJourneyView;
-import com.raindropcentral.rdq.view.ranks.RankRewardsDetailView;
-import com.raindropcentral.rdq.view.ranks.RankTreeOverviewView;
+import com.raindropcentral.rdq.view.ranks.*;
 import com.raindropcentral.rplatform.RPlatform;
 import com.raindropcentral.rplatform.api.PlatformType;
 import com.raindropcentral.rplatform.api.luckperms.LuckPermsService;
@@ -80,6 +82,8 @@ import com.raindropcentral.rplatform.placeholder.PlaceholderRegistry;
 import com.raindropcentral.rplatform.service.ServiceRegistry;
 import com.raindropcentral.rplatform.view.ConfirmationView;
 import com.raindropcentral.rplatform.view.PaginatedPlayerView;
+import de.jexcellence.evaluable.ConfigKeeper;
+import de.jexcellence.evaluable.ConfigManager;
 import de.jexcellence.hibernate.repository.InjectRepository;
 import de.jexcellence.hibernate.repository.RepositoryManager;
 import lombok.Getter;
@@ -182,6 +186,12 @@ public abstract class RDQ {
 
 	private com.raindropcentral.rdq.database.repository.quest.PlayerQuestProgressRepository playerQuestProgressRepository;
 
+	@InjectRepository
+	private MachineRepository machineRepository;
+
+	@InjectRepository
+	private MachineStorageRepository machineStorageRepository;
+
 	private LuckPermsService luckPermsService;
 	private IBountyService bountyService;
 	private IRankSystemService rankSystemService;
@@ -208,6 +218,16 @@ public abstract class RDQ {
 	private com.raindropcentral.rdq.cache.quest.PlayerQuestProgressCache playerQuestProgressCache;
 	private com.raindropcentral.rplatform.progression.ProgressionValidator<com.raindropcentral.rdq.database.entity.quest.Quest> questProgressionValidator;
 	private com.raindropcentral.rdq.quest.handler.TaskHandlerManager taskHandlerManager;
+
+	// Machine system components
+	private MachineManager machineManager;
+	private MachineCache machineCache;
+	private MachineAutoSaveTask machineAutoSaveTask;
+	private MachineService machineService;
+	private StructureDetector structureDetector;
+	private MachineItemFactory machineItemFactory;
+	private MachineSystemSection machineSystemConfig;
+	private FabricatorSection fabricatorConfig;
 
 	/**
 	 * Executes RDQ.
@@ -262,6 +282,8 @@ public abstract class RDQ {
 					perkSidebarScoreboardService.start();
 
 					initializeQuestSystem();
+
+					initializeMachineSystem();
 
 					initializeComponents();
 					initializePlaceholderExpansion();
@@ -356,6 +378,10 @@ public abstract class RDQ {
 			com.raindropcentral.rdq.database.entity.quest.QuestTaskReward.class,
 			com.raindropcentral.rdq.database.entity.quest.QuestTaskReward::getId);
 
+		// Machine system repositories
+		repositoryManager.register(MachineRepository.class, Machine.class, Machine::getId);
+		repositoryManager.register(MachineStorageRepository.class, MachineStorage.class, MachineStorage::getId);
+
 		repositoryManager.injectInto(this);
 	}
 
@@ -420,7 +446,12 @@ public abstract class RDQ {
 						new QuestCategoryView(),
 						new QuestListView(),
 						new QuestDetailView(),
-						new com.raindropcentral.rdq.view.quest.QuestAbandonConfirmationView()
+						new QuestAbandonConfirmationView(),
+						new MachineRecipeView(),
+						new MachineStorageView(),
+						new MachineMainView(),
+						new MachineUpgradeView(),
+						new MachineTrustView()
 				)
 				.defaultConfig(config -> {
 					config.cancelOnClick();
@@ -449,7 +480,7 @@ public abstract class RDQ {
 			PerkSystemSection systemConfig = perkSystemFactory.getPerkSystemSection();
 
 			// Initialize simple perk cache
-			playerPerkCache = new com.raindropcentral.rdq.perk.cache.SimplePerkCache(
+			playerPerkCache = new SimplePerkCache(
 					playerPerkRepository,
 					systemConfig.getCacheLogPerformance()
 			);
@@ -492,42 +523,42 @@ public abstract class RDQ {
 			LOGGER.info("Initializing quest system...");
 
 			// Initialize reward distributor FIRST (before progress tracker needs it)
-			rewardDistributor = new com.raindropcentral.rdq.service.quest.QuestRewardDistributor(this);
+			rewardDistributor = new QuestRewardDistributor(this);
 			LOGGER.info("Reward distributor initialized");
 			
 			// Initialize cache manager BEFORE progress tracker (progress tracker needs it)
-			questCacheManager = new com.raindropcentral.rdq.cache.quest.QuestCacheManager(this, false);
+			questCacheManager = new QuestCacheManager(this, false);
 			LOGGER.info("Quest cache manager initialized");
 			
 			// Manually instantiate PlayerQuestProgressRepository
-			playerQuestProgressRepository = new com.raindropcentral.rdq.database.repository.quest.PlayerQuestProgressRepository(
+			playerQuestProgressRepository = new PlayerQuestProgressRepository(
 				executor,
 				platform.getEntityManagerFactory(),
 				 PlayerQuestProgress.class,
-				com.raindropcentral.rdq.database.entity.quest.PlayerQuestProgress::getPlayerId
+				PlayerQuestProgress::getPlayerId
 			);
 			
-			playerQuestProgressCache = new com.raindropcentral.rdq.cache.quest.PlayerQuestProgressCache(
+			playerQuestProgressCache = new PlayerQuestProgressCache(
 				playerQuestProgressRepository,
 				false
 			);
 			LOGGER.info("Player quest progress cache initialized");
 			
 			// Now initialize services that depend on cache manager
-			questService = new com.raindropcentral.rdq.service.quest.QuestServiceImpl(this);
+			questService = new QuestServiceImpl(this);
 			LOGGER.info("Quest service initialized");
 			
-			questProgressTracker = new com.raindropcentral.rdq.service.quest.QuestProgressTrackerImpl(this);
+			questProgressTracker = new QuestProgressTrackerImpl(this);
 			questProgressTracker.start();  // CRITICAL: Start the progress tracker!
 			LOGGER.info("Quest progress tracker initialized and started");
 			
-			questSystemFactory = new com.raindropcentral.rdq.quest.QuestSystemFactory(this);
+			questSystemFactory = new QuestSystemFactory(this);
 			
 			// Initialize quest system factory (loads categories and quests from YAML to database)
 			questSystemFactory.initialize().join();
 
 			// Initialize and register task handlers
-			taskHandlerManager = new com.raindropcentral.rdq.quest.handler.TaskHandlerManager(
+			taskHandlerManager = new TaskHandlerManager(
 				this,
 				questProgressTracker,
 				questCacheManager,
@@ -536,12 +567,95 @@ public abstract class RDQ {
 			);
 			taskHandlerManager.registerHandlers();
 
-			questProgressSidebarService = new com.raindropcentral.rdq.quest.sidebar.QuestProgressSidebarService(this);
+			questProgressSidebarService = new QuestProgressSidebarService(this);
 			questProgressSidebarService.start();
 
 			LOGGER.info("Quest system initialized successfully!");
 		} catch (Exception e) {
 			LOGGER.log(Level.SEVERE, "Failed to initialize quest system", e);
+		}
+	}
+
+	/**
+	 * Initializes the machine fabrication system components.
+	 * Creates the machine manager, cache, and starts the auto-save task.
+	 */
+	private void initializeMachineSystem() {
+		try {
+			LOGGER.info("Initializing machine system...");
+
+			// Load machine configurations using ConfigManager/ConfigKeeper
+			ConfigManager machinesConfigManager = new ConfigManager(plugin, "machines");
+			ConfigManager fabricatorConfigManager = new ConfigManager(plugin, "machines");
+			
+			ConfigKeeper<MachineSystemSection> systemConfigKeeper = 
+				new ConfigKeeper<>(machinesConfigManager, "machines.yml", MachineSystemSection.class);
+			ConfigKeeper<FabricatorSection> fabricatorConfigKeeper = 
+				new ConfigKeeper<>(fabricatorConfigManager, "fabricator.yml", FabricatorSection.class);
+			
+			this.machineSystemConfig = systemConfigKeeper.rootSection;
+			this.fabricatorConfig = fabricatorConfigKeeper.rootSection;
+			
+			LOGGER.info("Machine configurations loaded from files");
+
+			// Initialize machine cache
+			machineCache = new MachineCache(executor, platform.getEntityManagerFactory(), false);
+			LOGGER.info("Machine cache initialized");
+
+			// Initialize machine registry
+			MachineRegistry registry = new MachineRegistry();
+			LOGGER.info("Machine registry initialized");
+
+			// Initialize machine factory
+			MachineFactory factory = new MachineFactory(
+				machineRepository,
+				fabricatorConfig
+			);
+			LOGGER.info("Machine factory initialized");
+
+			// Initialize machine manager
+			machineManager = new MachineManager(
+				plugin,
+				registry,
+				machineCache,
+				factory,
+				fabricatorConfig
+			);
+			LOGGER.info("Machine manager initialized");
+
+			// Initialize machine service
+			this.machineService = new MachineService(
+				machineManager,
+				factory,
+				machineCache,
+				machineRepository
+			);
+			LOGGER.info("Machine service initialized");
+
+			// Initialize structure detector
+			this.structureDetector = new StructureDetector(
+				type -> new MultiBlockStructure(
+					fabricatorConfig.getStructure()
+				)
+			);
+			LOGGER.info("Structure detector initialized");
+
+			// Initialize machine item factory
+			this.machineItemFactory = new MachineItemFactory(this.plugin);
+			LOGGER.info("Machine item factory initialized");
+
+			// Start auto-save task (every 5 minutes)
+			machineAutoSaveTask = new MachineAutoSaveTask(machineCache, false);
+			machineAutoSaveTask.runTaskTimerAsynchronously(
+				plugin,
+				20L * 60 * 5,  // Initial delay: 5 minutes
+				20L * 60 * 5   // Repeat: every 5 minutes
+			);
+			LOGGER.info("Machine auto-save task started");
+
+			LOGGER.info("Machine system initialized successfully!");
+		} catch (Exception e) {
+			LOGGER.log(Level.SEVERE, "Failed to initialize machine system", e);
 		}
 	}
 
@@ -575,6 +689,37 @@ public abstract class RDQ {
 		if (placeholderRegistry != null) {
 			placeholderRegistry.unregister();
 			placeholderRegistry = null;
+		}
+
+		if (machineAutoSaveTask != null) {
+			try {
+				LOGGER.info("Cancelling machine auto-save task...");
+				machineAutoSaveTask.cancel();
+				LOGGER.info("Machine auto-save task cancelled");
+			} catch (Exception e) {
+				LOGGER.log(Level.SEVERE, "Failed to cancel machine auto-save task", e);
+			}
+		}
+
+		if (machineManager != null) {
+			try {
+				LOGGER.info("Shutting down machine manager...");
+				machineManager.shutdown();
+				LOGGER.info("Machine manager shut down successfully");
+			} catch (Exception e) {
+				LOGGER.log(Level.SEVERE, "Failed to shutdown machine manager", e);
+			}
+		}
+
+		if (machineCache != null) {
+			try {
+				LOGGER.info("Saving all machine caches before shutdown...");
+				machineCache.autoSaveAll().thenAccept(savedCount -> {
+					LOGGER.info("Saved " + savedCount + " machine caches successfully");
+				}).join();
+			} catch (Exception e) {
+				LOGGER.log(Level.SEVERE, "Failed to save machine caches during shutdown", e);
+			}
 		}
 
 		if (taskHandlerManager != null) {
@@ -654,5 +799,45 @@ public abstract class RDQ {
 	@NotNull
 	public com.raindropcentral.rdq.cache.quest.QuestCacheManager getQuestCacheManager() {
 		return questCacheManager;
+	}
+
+	/**
+	 * Gets the machine manager.
+	 *
+	 * @return the machine manager
+	 */
+	@NotNull
+	public MachineManager getMachineManager() {
+		return machineManager;
+	}
+
+	/**
+	 * Gets the machine cache.
+	 *
+	 * @return the machine cache
+	 */
+	@NotNull
+	public MachineCache getMachineCache() {
+		return machineCache;
+	}
+
+	/**
+	 * Gets the machine repository.
+	 *
+	 * @return the machine repository
+	 */
+	@NotNull
+	public MachineRepository getMachineRepository() {
+		return machineRepository;
+	}
+
+	/**
+	 * Gets the machine storage repository.
+	 *
+	 * @return the machine storage repository
+	 */
+	@NotNull
+	public MachineStorageRepository getMachineStorageRepository() {
+		return machineStorageRepository;
 	}
 }

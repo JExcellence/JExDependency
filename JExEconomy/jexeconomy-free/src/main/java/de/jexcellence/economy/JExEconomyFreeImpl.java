@@ -1,14 +1,16 @@
 package de.jexcellence.economy;
 
 import de.jexcellence.dependency.delegate.AbstractPluginDelegate;
-import me.devnatan.inventoryframework.ViewFrame;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Represents the JExEconomyFreeImpl API type.
+ * Free edition delegate. Bootstraps and delegates lifecycle to {@link JExEconomy}.
+ *
+ * @author JExcellence
+ * @since 3.0.0
  */
 public final class JExEconomyFreeImpl extends AbstractPluginDelegate<JExEconomyFree> {
 
@@ -17,91 +19,44 @@ public final class JExEconomyFreeImpl extends AbstractPluginDelegate<JExEconomyF
 
     private JExEconomy economy;
 
-    /**
-     * Executes JExEconomyFreeImpl.
-     */
-    public JExEconomyFreeImpl(final @NotNull JExEconomyFree plugin) {
+    public JExEconomyFreeImpl(@NotNull JExEconomyFree plugin) {
         super(plugin);
     }
 
-    /**
-     * Executes onLoad.
-     */
     @Override
     public void onLoad() {
         try {
-            this.economy = new JExEconomy(this.getPlugin(), EDITION) {
+            this.economy = new JExEconomy(getPlugin(), EDITION) {
                 @Override
-                protected @NotNull String getStartupMessage() {
-                    return STARTUP_MESSAGE;
-                }
-
-                @Override
-                protected int getMetricsId() {
+                protected int metricsId() {
                     return 0;
                 }
-
-                @Override
-                protected @NotNull ViewFrame registerViews(final @NotNull ViewFrame viewFrame) {
-                    return viewFrame;
-                }
             };
-
             this.economy.onLoad();
-
-        } catch (final Exception exception) {
-            LOGGER.log(Level.SEVERE, "Failed to load JExEconomy " + EDITION, exception);
-            throw new RuntimeException(exception);
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "Failed to load JExEconomy " + EDITION, ex);
+            throw new RuntimeException(ex);
         }
     }
 
-    /**
-     * Executes onEnable.
-     */
     @Override
     public void onEnable() {
         if (this.economy == null) {
-            LOGGER.severe("Cannot enable - JExEconomy Free failed during onLoad.");
-            this.getPlugin().getServer().getPluginManager().disablePlugin(this.getPlugin());
+            LOGGER.severe("Cannot enable — JExEconomy Free failed during onLoad.");
+            getPlugin().getServer().getPluginManager().disablePlugin(getPlugin());
             return;
         }
         this.economy.onEnable();
     }
 
-    /**
-     * Executes onDisable.
-     */
     @Override
     public void onDisable() {
         try {
             if (this.economy != null) {
                 this.economy.onDisable();
             }
-            LOGGER.info("JExEconomy " + EDITION + " Edition disabled successfully");
-        } catch (final Exception exception) {
-            LOGGER.log(Level.SEVERE, "Error during JExEconomy " + EDITION + " shutdown", exception);
+        } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, "Error during JExEconomy " + EDITION + " shutdown", ex);
         }
     }
-
-    private static final String STARTUP_MESSAGE = """
-    ===============================================================================================
-         __        ___      ______ _____ _   _  ______ _____ ___   _   _  _____ __  __  _   _
-         \\ \\      / / |    |  ____/ ____| \\ | |/ __ \\_   _|__ \\ | \\ | |/ ____|  \\/  || \\ | |
-          \\ \\ /\\ / /| |    | |__ | |    |  \\| | |  | || |    ) ||  \\| | |    | \\  / ||  \\| |
-           \\ V  V / | |    |  __|| |    | . ` | |  | || |   / / | . ` | |    | |\\/| || . ` |
-            \\_/\\_/  | |____| |___| |____| |\\  | |__| || |_ / /_ | |\\  | |____| |  | || |\\  |
-                    |______|______\\_____|_| \\_|\\____/_____|____||_| \\_|\\_____|_|  |_||_| \\_|
-    
-                          JExEconomy - Free Edition
-                          Product of JExcellence
-    ===============================================================================================
-    Multi-Currency System: Enabled
-    Vault Integration: Enabled
-    PlaceholderAPI: Enabled
-    ===============================================================================================
-    Language System: JExTranslate v3.0
-    Adventure Components: Enabled
-    Database: Connected
-    ===============================================================================================
-    """;
 }

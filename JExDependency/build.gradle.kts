@@ -18,8 +18,8 @@ dependencies {
     compileOnly(libs.paper.api)
     compileOnly("org.jetbrains:annotations:24.1.0")
 
-    implementation("org.ow2.asm:asm:9.7.1")
-    implementation("org.ow2.asm:asm-commons:9.7.1")
+    implementation("org.ow2.asm:asm:9.8")
+    implementation("org.ow2.asm:asm-commons:9.8")
 }
 
 tasks {

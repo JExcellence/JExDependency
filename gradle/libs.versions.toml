@@ -19,7 +19,7 @@ inventory-framework = "3.7.1"
 jackson = "2.18.2"
 jackson-uuid = "5.1.0"
 
-hibernate-platform = "6.6.4.Final"
+hibernate-platform = "7.1.4.Final"
 jboss-logging = "3.5.0.Final"
 slf4j = "2.0.17"
 mysql = "9.2.0"
@@ -30,15 +30,16 @@ mockbukkit = "3.133.2"
 junit-platform = "1.10.2"
 
 # Internal libraries
-jexcommand = "1.0.0"
+jexcommand = "2.0.0"
+jexplatform = "1.0.0"
 rplatform = "2.0.0"
-jeconfig-evaluable = "1.0.1"
-jeconfig-gpeee = "1.0.1"
-jeconfig-mapper = "1.0.1"
+jeconfig-evaluable = "2.0.0"
+jeconfig-gpeee = "2.0.0"
+jeconfig-mapper = "2.0.0"
 jetranslate = "3.0.0"
-jehibernate = "1.1.0"
+jehibernate = "3.0.3"
 jedependency = "2.0.0"
-jexeconomy = "2.0.0"
+jexeconomy = "3.0.0"
 
 [libraries]
 # Paper & Adventure
@@ -93,14 +94,16 @@ xseries = { module = "com.github.cryptomorin:XSeries", version.ref = "xseries" }
 
 # Internal libraries to shade
 jexcommand = { module = "com.raindropcentral.commands:jexcommand", version.ref = "jexcommand" }
+jexplatform = { module = "de.jexcellence.platform:jexplatform", version.ref = "jexplatform" }
 rplatform = { module = "com.raindropcentral.platform:rplatform", version.ref = "rplatform" }
-jeconfig-evaluable = { module = "de.jexcellence.config:Evaluable", version.ref = "jeconfig-evaluable" }
-jeconfig-gpeee = { module = "de.jexcellence.config:GPEEE", version.ref = "jeconfig-gpeee" }
-jeconfig-mapper = { module = "de.jexcellence.config:ConfigMapper", version.ref = "jeconfig-mapper" }
+jeconfig-evaluable = { module = "de.jexcellence.config:evaluable", version.ref = "jeconfig-evaluable" }
+jeconfig-gpeee = { module = "de.jexcellence.config:gpeee", version.ref = "jeconfig-gpeee" }
+jeconfig-mapper = { module = "de.jexcellence.config:configmapper", version.ref = "jeconfig-mapper" }
 jetranslate = { module = "de.jexcellence.translate:jextranslate", version.ref = "jetranslate" }
 jehibernate = { module = "de.jexcellence.hibernate:JEHibernate", version.ref = "jehibernate" }
 jedependency = { module = "de.jexcellence.dependency:jexdependency", version.ref = "jedependency" }
 jexeconomy = { module = "de.jexcellence.economy:jexeconomy", version.ref = "jexeconomy" }
+jexeconomy-api = { module = "de.jexcellence.economy:jexeconomy-api", version.ref = "jexeconomy" }
 
 [bundles]
 adventure = [
@@ -127,7 +130,7 @@ jexcellence = [
     "jedependency",
     "jehibernate",
     "jetranslate",
-    "rplatform",
+    "jexplatform",
     "jexcommand",
 ]
 hibernate = [

@@ -80,6 +80,9 @@ dependencies:
   - "me.devnatan:inventory-framework-platform-paper:3.7.1"
   - "me.devnatan:inventory-framework-anvil-input:3.7.1"
 
+  # JExcellence Internal
+  - "de.jexcellence.hibernate:JEHibernate:3.0.2"
+
   # Extra Utilities
   - "org.yaml:snakeyaml:2.4"
-  - "org.reflections:reflections:0.9.12"
+  - "org.reflections:reflections:0.10.2"

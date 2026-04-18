@@ -249,6 +249,7 @@ public class JEDependency {
         }
 
         final DependencyManager dependencyManager = new DependencyManager(plugin, anchorClass);
+        dependencyManager.setTransitiveResolutionEnabled(true);
         dependencyManager.initialize(additionalDependencies);
         plugin.getLogger().info("JEDependency initialization completed");
     }

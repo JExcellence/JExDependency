@@ -51,6 +51,12 @@ public class RCentralApiClient {
     private final HttpClient httpClient;
     private final Gson gson;
     private final String baseUrl;
+    
+    // Circuit breaker for connection failures
+    private volatile int consecutiveFailures = 0;
+    private volatile long circuitBreakerUntil = 0;
+    private static final int MAX_CONSECUTIVE_FAILURES = 3;
+    private static final long CIRCUIT_BREAKER_DURATION_MS = 300000; // 5 minutes
 
     /**
      * Creates an HTTP client bound to the supplied backend base URL.
@@ -367,6 +373,20 @@ public class RCentralApiClient {
             final byte @NotNull [] compressedPayload,
             final @NotNull String batchId
     ) {
+        // Check circuit breaker
+        if (circuitBreakerUntil > System.currentTimeMillis()) {
+            return CompletableFuture.failedFuture(
+                new RuntimeException("RCentral API circuit breaker active - delivery suspended")
+            );
+        }
+        
+        // Reset circuit breaker if enough time has passed
+        if (circuitBreakerUntil > 0 && circuitBreakerUntil <= System.currentTimeMillis()) {
+            circuitBreakerUntil = 0;
+            consecutiveFailures = 0;
+            logger.info("RCentral API circuit breaker reset - resuming statistics delivery");
+        }
+        
         return CompletableFuture.supplyAsync(() -> {
             try {
                 var request = HttpRequest.newBuilder()
@@ -382,6 +402,11 @@ public class RCentralApiClient {
                 var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
                 if (response.statusCode() >= 200 && response.statusCode() < 300) {
+                    // Reset failure counter on success
+                    if (consecutiveFailures > 0) {
+                        logger.fine("RCentral API connection restored after " + consecutiveFailures + " failures");
+                        consecutiveFailures = 0;
+                    }
                     return gson.fromJson(response.body(), DeliveryReceipt.class);
                 } else {
                     throw new RuntimeException("Compressed delivery failed with status " +
@@ -389,8 +414,30 @@ public class RCentralApiClient {
                 }
 
             } catch (IOException | InterruptedException e) {
-                logger.log(Level.WARNING, "Compressed statistics delivery failed", e);
-                throw new RuntimeException("Compressed statistics delivery failed: " + e.getMessage(), e);
+                // Check if it's a connection error
+                boolean isConnectionError = e instanceof ConnectException || 
+                    (e.getCause() instanceof ConnectException);
+                
+                if (isConnectionError) {
+                    consecutiveFailures++;
+                    
+                    // Only log detailed error on first failure or every 10th failure
+                    if (consecutiveFailures == 1) {
+                        logger.warning("RCentral API connection failed - statistics delivery paused. " +
+                            "Will retry silently. (This is normal for local development)");
+                    } else if (consecutiveFailures >= MAX_CONSECUTIVE_FAILURES && circuitBreakerUntil == 0) {
+                        circuitBreakerUntil = System.currentTimeMillis() + CIRCUIT_BREAKER_DURATION_MS;
+                        logger.warning("RCentral API unreachable after " + consecutiveFailures + 
+                            " attempts. Statistics delivery suspended for 5 minutes.");
+                    }
+                    
+                    // Don't log stack trace for connection errors
+                    throw new RuntimeException("RCentral API connection failed: " + e.getMessage());
+                } else {
+                    // Log full stack trace for non-connection errors
+                    logger.log(Level.WARNING, "Statistics delivery failed", e);
+                    throw new RuntimeException("Statistics delivery failed: " + e.getMessage(), e);
+                }
             }
         });
     }

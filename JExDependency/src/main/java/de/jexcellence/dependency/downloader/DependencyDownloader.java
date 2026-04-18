@@ -7,12 +7,15 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.nio.file.AtomicMoveNotSupportedException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
@@ -38,7 +41,7 @@ public class DependencyDownloader {
     private static final String ACCEPT = "application/java-archive, application/octet-stream, */*;q=0.1";
     private static final int CONNECTION_TIMEOUT_MS = 10_000;
     private static final int READ_TIMEOUT_MS = 30_000;
-    private static final int BUFFER_SIZE = 8192;
+    private static final int BUFFER_SIZE = 65536;
     private static final int MAX_REDIRECTS = 5;
     private static final long MIN_JAR_SIZE = 1024L;
 
@@ -205,6 +208,7 @@ public class DependencyDownloader {
         moveToFinalLocation(tempFile, targetFile);
 
         logger.fine("Downloaded: " + targetFile.getName() + " (" + bytesWritten + " bytes)");
+        verifyChecksumBestEffort(url, targetFile);
 
         return true;
     }
@@ -309,6 +313,66 @@ public class DependencyDownloader {
 
     private @Nullable String safeLowerCase(@Nullable final String value) {
         return value == null ? null : value.toLowerCase(Locale.ROOT);
+    }
+
+    /**
+     * Attempts to verify the downloaded JAR against the {@code .sha1} checksum published alongside it in the same
+     * repository. The check is best-effort: if the checksum file is unavailable (HTTP 404, timeout, parse error) the
+     * verification is silently skipped. A mismatch is logged as a warning but does not cause the artifact to be
+     * removed, since transient network issues can yield false positives.
+     *
+     * @param artifactUrl the URL that was used to download the JAR (without {@code .sha1} suffix)
+     * @param jarFile     the successfully downloaded JAR file to verify
+     */
+    private void verifyChecksumBestEffort(@NotNull final URL artifactUrl, @NotNull final File jarFile) {
+        try {
+            final URL sha1Url = URI.create(artifactUrl.toString() + ".sha1").toURL();
+            final HttpURLConnection conn = createConnection(sha1Url);
+            conn.setConnectTimeout(5_000);
+            conn.setReadTimeout(5_000);
+
+            if (conn.getResponseCode() != 200) {
+                return; // .sha1 not published by this repository — skip silently
+            }
+
+            final String expected;
+            try (final InputStream is = conn.getInputStream()) {
+                // SHA-1 files may contain only the hex string or "hex filename"; take the first token
+                expected = new String(is.readAllBytes(), StandardCharsets.UTF_8).trim().split("\\s+")[0];
+            }
+
+            if (expected.isEmpty() || expected.length() != 40) {
+                return; // Not a valid SHA-1 hex string — skip
+            }
+
+            final String actual = sha1Hex(jarFile);
+            if (expected.equalsIgnoreCase(actual)) {
+                logger.fine("Checksum OK: " + jarFile.getName());
+            } else {
+                logger.warning("Checksum mismatch for " + jarFile.getName()
+                        + " — expected " + expected + ", got " + actual
+                        + ". The artifact may be corrupt; consider deleting it and restarting.");
+            }
+        } catch (final Exception exception) {
+            logger.log(Level.FINEST, "SHA-1 check skipped for " + jarFile.getName(), exception);
+        }
+    }
+
+    private static String sha1Hex(@NotNull final File file) throws Exception {
+        final MessageDigest md = MessageDigest.getInstance("SHA-1");
+        final byte[] buf = new byte[BUFFER_SIZE];
+        try (final FileInputStream fis = new FileInputStream(file)) {
+            int n;
+            while ((n = fis.read(buf)) != -1) {
+                md.update(buf, 0, n);
+            }
+        }
+        final byte[] digest = md.digest();
+        final StringBuilder sb = new StringBuilder(40);
+        for (final byte b : digest) {
+            sb.append(String.format("%02x", b));
+        }
+        return sb.toString();
     }
 
     /**

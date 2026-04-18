@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "de.jexcellence.economy"
-version = "2.0.0"
+version = "3.0.0"
 
 dependenciesYml {
     usePaperDependencies()
@@ -24,10 +24,15 @@ dependencies {
 
     compileOnly(platform(libs.hibernate.platform))
     compileOnly(libs.bundles.hibernate)
-    compileOnly(libs.jehibernate)
     compileOnly(libs.adventure.platform.bukkit)
-    compileOnly(libs.rplatform)
-    
+    compileOnly(libs.jexplatform)
+
+    // JEHibernate thin JAR bundled so its classes ship in the plugin JAR.
+    // Heavy deps (Hibernate 7.x, Jakarta, etc.) are downloaded by JEDependency's
+    // PaperPluginLoader and injected via PluginClasspathBuilder — requires
+    // has-open-classloader=false in paper-plugin.yml so the PluginClasspathBuilder
+    // pipeline is active.
+    implementation(libs.jehibernate) { isTransitive = false }
     implementation(libs.bundles.jexcellence) {
         isTransitive = false
         exclude(group = "de.jexcellence.hibernate")
@@ -62,7 +67,6 @@ tasks.named<ShadowJar>("shadowJar") {
     mergeServiceFiles()
 }
 
-
 tasks.named("build") {
     dependsOn(tasks.named("shadowJar"))
 }
@@ -75,10 +79,6 @@ tasks.named<Jar>("jar") {
     enabled = false
 }
 
-tasks.test {
-    useJUnitPlatform()
-}
-
 afterEvaluate {
     publishing {
         publications {
@@ -87,7 +87,7 @@ afterEvaluate {
                 from(components["shadow"])
                 groupId = "de.jexcellence.economy"
                 artifactId = "jexeconomy-premium"
-                version = "2.0.0"
+                version = project.version.toString()
                 pom {
                     name.set("JExEconomy Premium")
                     description.set("JExEconomy Premium Edition")

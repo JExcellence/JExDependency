@@ -3,7 +3,7 @@
  * reflection-driven registration pipeline provided by the {@link com.raindropcentral.commands.CommandFactory}.
  *
  * <p>The {@link com.raindropcentral.commands.utility.Command Command} annotation marks concrete
- * command handlers so they can be discovered, paired with their {@link de.jexcellence.evaluable.section.ACommandSection
+ * command handlers so they can be discovered, paired with their {@link de.jexcellence.evaluable.section.CommandSection
  * configuration sections}, and registered automatically. Implementations are expected to extend
  * {@link com.raindropcentral.commands.BukkitCommand} or one of its specialisations so that the base command
  * contract can wire the mapped section into the command metadata (name, aliases, usage), feed localized

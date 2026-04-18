@@ -34,6 +34,10 @@ public enum EPRQPermission implements IPermissionNode {
         "commandBounty",
         "raindropquests.command.bounty"
     ),
+    MACHINE(
+        "commandMachine",
+        "raindropquests.command.machine"
+    ),
     MAIN(
         "commandMain",
         "raindropquests.command.main"
