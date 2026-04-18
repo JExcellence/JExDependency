@@ -1,0 +1,20 @@
+# Machine System Configuration - Advanced Server Example
+# This configuration is designed for established servers with economy
+# Features: Higher costs, more machines, advanced features
+
+machine-system:
+  enabled: true
+  
+  cache:
+    enabled: true
+    auto-save-interval: 600  # 10 minutes (less frequent for performance)
+    max-machines-per-player: 20  # More machines for advanced players
+  
+  permissions:
+    require-permission: true
+    base-permission: "rdq.machine"
+  
+  breaking:
+    drop-items: false  # Virtual storage for safety
+    drop-machine-item: true  # Allow relocation
+    require-owner: false  # Trust system enabled

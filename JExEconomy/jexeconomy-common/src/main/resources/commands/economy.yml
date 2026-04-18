@@ -1,0 +1,62 @@
+# JExCommand 2.0 tree — /economy (admin)
+# Console- and permission-gated operator tooling.
+
+name: economy
+description: "Administrative economy operations"
+aliases:
+  - eco
+  - econ
+permission: "economy.command"
+senders: [console, player]
+
+subcommands:
+  - name: give
+    description: "Add currency to a player"
+    permission: "economy.command.give"
+    senders: [console, player]
+    argumentSchema:
+      - { name: target,   type: offline_player,   required: true,  description: "Recipient player" }
+      - { name: amount,   type: positive_double,  required: true,  description: "Amount to give" }
+      - { name: currency, type: currency,         required: false, description: "Currency id" }
+
+  - name: take
+    description: "Remove currency from a player"
+    permission: "economy.command.take"
+    senders: [console, player]
+    argumentSchema:
+      - { name: target,   type: offline_player,   required: true,  description: "Target player" }
+      - { name: amount,   type: positive_double,  required: true,  description: "Amount to take" }
+      - { name: currency, type: currency,         required: false, description: "Currency id" }
+
+  - name: set
+    description: "Set a player's balance"
+    permission: "economy.command.set"
+    senders: [console, player]
+    argumentSchema:
+      - { name: target,   type: offline_player,   required: true,  description: "Target player" }
+      - { name: amount,   type: double,           required: true,  description: "New balance" }
+      - { name: currency, type: currency,         required: false, description: "Currency id" }
+
+  - name: reset
+    description: "Reset a player's balance to zero"
+    permission: "economy.command.reset"
+    senders: [console, player]
+    argumentSchema:
+      - { name: target,   type: offline_player,   required: true,  description: "Target player" }
+      - { name: currency, type: currency,         required: false, description: "Currency id" }
+
+  - name: migrate
+    description: "Vault migration controls"
+    permission: "economy.command.migrate"
+    senders: [console, player]
+    argumentSchema:
+      - { name: action, type: string, required: true, description: "start | status | supported | info" }
+
+  - name: reload
+    description: "Reload currency cache and translations"
+    permission: "economy.command.reload"
+    senders: [console, player]
+
+  - name: help
+    description: "Show /economy usage"
+    senders: [console, player]

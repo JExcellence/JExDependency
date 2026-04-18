@@ -1,0 +1,20 @@
+# Machine System Configuration - Starter Server Example
+# This configuration is designed for new servers with limited resources
+# Features: Low costs, simple upgrades, basic fuel system
+
+machine-system:
+  enabled: true
+  
+  cache:
+    enabled: true
+    auto-save-interval: 300  # 5 minutes
+    max-machines-per-player: 5  # Limited for starter servers
+  
+  permissions:
+    require-permission: true
+    base-permission: "rdq.machine"
+  
+  breaking:
+    drop-items: false  # Keep items safe
+    drop-machine-item: true  # Allow relocation
+    require-owner: false  # Trust system enabled

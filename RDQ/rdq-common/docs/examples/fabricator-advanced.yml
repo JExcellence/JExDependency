@@ -1,0 +1,624 @@
+# Fabricator Configuration - Advanced Server Example
+# High cost, fast operation, extensive upgrades
+# Designed for end-game content with economy integration
+
+fabricator:
+  enabled: true
+  permission: "rdq.machine.fabricator"
+  
+  # Complex multi-block structure
+  structure:
+    core-block: DROPPER
+    required-blocks:
+      - type: HOPPER
+        relative-positions:
+          - {x: 0, y: -1, z: 0}   # Below
+          - {x: 1, y: 0, z: 0}    # East
+          - {x: -1, y: 0, z: 0}   # West
+          - {x: 0, y: 0, z: -1}   # North
+      - type: CHEST
+        relative-positions:
+          - {x: 0, y: 0, z: 1}    # South (output)
+      - type: IRON_BLOCK
+        relative-positions:
+          - {x: 1, y: -1, z: 0}   # Below East
+          - {x: -1, y: -1, z: 0}  # Below West
+  
+  # Expensive blueprint with currency
+  blueprint:
+    requirements:
+      composite:
+        type: "composite"
+        operator: "AND"
+        sub-requirements:
+          currency:
+            type: "currency"
+            currency-type: "vault"
+            currency-amount: 50000.0
+          items:
+            type: "item"
+            required-items:
+              diamond:
+                material: DIAMOND
+                amount: 32
+              redstone-block:
+                material: REDSTONE_BLOCK
+                amount: 8
+              netherite:
+                material: NETHERITE_INGOT
+                amount: 2
+  
+  # Fast crafting
+  crafting:
+    base-cooldown-ticks: 60  # 3 seconds per craft
+    recipe-grid-size: 3
+    max-output-stack-size: 64
+  
+  # Advanced fuel system
+  fuel:
+    enabled: true
+    base-consumption: 8  # Lower consumption
+    fuel-types:
+      coal:
+        material: COAL
+        energy-value: 100
+      charcoal:
+        material: CHARCOAL
+        energy-value: 100
+      coal-block:
+        material: COAL_BLOCK
+        energy-value: 900
+      lava-bucket:
+        material: LAVA_BUCKET
+        energy-value: 2000
+      blaze-rod:
+        material: BLAZE_ROD
+        energy-value: 150
+      blaze-powder:
+        material: BLAZE_POWDER
+        energy-value: 75
+  
+  # Extensive upgrade system
+  upgrades:
+    speed:
+      max-level: 10
+      effect-per-level: 0.05  # 5% per level (50% max)
+      requirements:
+        level-1:
+          type: "composite"
+          operator: "AND"
+          sub-requirements:
+            currency:
+              type: "currency"
+              currency-type: "vault"
+              currency-amount: 5000.0
+            items:
+              type: "item"
+              required-items:
+                redstone:
+                  material: REDSTONE
+                  amount: 32
+        level-2:
+          type: "composite"
+          operator: "AND"
+          sub-requirements:
+            currency:
+              type: "currency"
+              currency-type: "vault"
+              currency-amount: 10000.0
+            items:
+              type: "item"
+              required-items:
+                redstone:
+                  material: REDSTONE
+                  amount: 64
+        level-3:
+          type: "composite"
+          operator: "AND"
+          sub-requirements:
+            currency:
+              type: "currency"
+              currency-type: "vault"
+              currency-amount: 15000.0
+            items:
+              type: "item"
+              required-items:
+                redstone-block:
+                  material: REDSTONE_BLOCK
+                  amount: 8
+        level-4:
+          type: "composite"
+          operator: "AND"
+          sub-requirements:
+            currency:
+              type: "currency"
+              currency-type: "vault"
+              currency-amount: 20000.0
+            items:
+              type: "item"
+              required-items:
+                redstone-block:
+                  material: REDSTONE_BLOCK
+                  amount: 16
+        level-5:
+          type: "composite"
+          operator: "AND"
+          sub-requirements:
+            currency:
+              type: "currency"
+              currency-type: "vault"
+              currency-amount: 30000.0
+            items:
+              type: "item"
+              required-items:
+                redstone-block:
+                  material: REDSTONE_BLOCK
+                  amount: 32
+                diamond:
+                  material: DIAMOND
+                  amount: 8
+        level-6:
+          type: "composite"
+          operator: "AND"
+          sub-requirements:
+            currency:
+              type: "currency"
+              currency-type: "vault"
+              currency-amount: 40000.0
+            items:
+              type: "item"
+              required-items:
+                redstone-block:
+                  material: REDSTONE_BLOCK
+                  amount: 48
+                diamond:
+                  material: DIAMOND
+                  amount: 16
+        level-7:
+          type: "composite"
+          operator: "AND"
+          sub-requirements:
+            currency:
+              type: "currency"
+              currency-type: "vault"
+              currency-amount: 50000.0
+            items:
+              type: "item"
+              required-items:
+                redstone-block:
+                  material: REDSTONE_BLOCK
+                  amount: 64
+                diamond-block:
+                  material: DIAMOND_BLOCK
+                  amount: 4
+        level-8:
+          type: "composite"
+          operator: "AND"
+          sub-requirements:
+            currency:
+              type: "currency"
+              currency-type: "vault"
+              currency-amount: 75000.0
+            items:
+              type: "item"
+              required-items:
+                diamond-block:
+                  material: DIAMOND_BLOCK
+                  amount: 8
+                emerald:
+                  material: EMERALD
+                  amount: 16
+        level-9:
+          type: "composite"
+          operator: "AND"
+          sub-requirements:
+            currency:
+              type: "currency"
+              currency-type: "vault"
+              currency-amount: 100000.0
+            items:
+              type: "item"
+              required-items:
+                diamond-block:
+                  material: DIAMOND_BLOCK
+                  amount: 16
+                emerald-block:
+                  material: EMERALD_BLOCK
+                  amount: 4
+        level-10:
+          type: "composite"
+          operator: "AND"
+          sub-requirements:
+            currency:
+              type: "currency"
+              currency-type: "vault"
+              currency-amount: 150000.0
+            items:
+              type: "item"
+              required-items:
+                netherite-ingot:
+                  material: NETHERITE_INGOT
+                  amount: 4
+                emerald-block:
+                  material: EMERALD_BLOCK
+                  amount: 8
+    
+    efficiency:
+      max-level: 10
+      effect-per-level: 0.08  # 8% chance per level (80% max)
+      requirements:
+        level-1:
+          type: "composite"
+          operator: "AND"
+          sub-requirements:
+            currency:
+              type: "currency"
+              currency-type: "vault"
+              currency-amount: 5000.0
+            items:
+              type: "item"
+              required-items:
+                diamond:
+                  material: DIAMOND
+                  amount: 8
+        level-2:
+          type: "composite"
+          operator: "AND"
+          sub-requirements:
+            currency:
+              type: "currency"
+              currency-type: "vault"
+              currency-amount: 10000.0
+            items:
+              type: "item"
+              required-items:
+                diamond:
+                  material: DIAMOND
+                  amount: 16
+        level-3:
+          type: "composite"
+          operator: "AND"
+          sub-requirements:
+            currency:
+              type: "currency"
+              currency-type: "vault"
+              currency-amount: 15000.0
+            items:
+              type: "item"
+              required-items:
+                diamond:
+                  material: DIAMOND
+                  amount: 24
+        level-4:
+          type: "composite"
+          operator: "AND"
+          sub-requirements:
+            currency:
+              type: "currency"
+              currency-type: "vault"
+              currency-amount: 20000.0
+            items:
+              type: "item"
+              required-items:
+                diamond:
+                  material: DIAMOND
+                  amount: 32
+        level-5:
+          type: "composite"
+          operator: "AND"
+          sub-requirements:
+            currency:
+              type: "currency"
+              currency-type: "vault"
+              currency-amount: 30000.0
+            items:
+              type: "item"
+              required-items:
+                diamond-block:
+                  material: DIAMOND_BLOCK
+                  amount: 4
+        level-6:
+          type: "composite"
+          operator: "AND"
+          sub-requirements:
+            currency:
+              type: "currency"
+              currency-type: "vault"
+              currency-amount: 40000.0
+            items:
+              type: "item"
+              required-items:
+                diamond-block:
+                  material: DIAMOND_BLOCK
+                  amount: 8
+        level-7:
+          type: "composite"
+          operator: "AND"
+          sub-requirements:
+            currency:
+              type: "currency"
+              currency-type: "vault"
+              currency-amount: 50000.0
+            items:
+              type: "item"
+              required-items:
+                diamond-block:
+                  material: DIAMOND_BLOCK
+                  amount: 12
+        level-8:
+          type: "composite"
+          operator: "AND"
+          sub-requirements:
+            currency:
+              type: "currency"
+              currency-type: "vault"
+              currency-amount: 75000.0
+            items:
+              type: "item"
+              required-items:
+                diamond-block:
+                  material: DIAMOND_BLOCK
+                  amount: 16
+                netherite-ingot:
+                  material: NETHERITE_INGOT
+                  amount: 1
+        level-9:
+          type: "composite"
+          operator: "AND"
+          sub-requirements:
+            currency:
+              type: "currency"
+              currency-type: "vault"
+              currency-amount: 100000.0
+            items:
+              type: "item"
+              required-items:
+                netherite-ingot:
+                  material: NETHERITE_INGOT
+                  amount: 2
+        level-10:
+          type: "composite"
+          operator: "AND"
+          sub-requirements:
+            currency:
+              type: "currency"
+              currency-type: "vault"
+              currency-amount: 150000.0
+            items:
+              type: "item"
+              required-items:
+                netherite-ingot:
+                  material: NETHERITE_INGOT
+                  amount: 4
+    
+    bonus-output:
+      max-level: 5
+      effect-per-level: 0.08  # 8% chance per level (40% max)
+      requirements:
+        level-1:
+          type: "composite"
+          operator: "AND"
+          sub-requirements:
+            currency:
+              type: "currency"
+              currency-type: "vault"
+              currency-amount: 10000.0
+            items:
+              type: "item"
+              required-items:
+                emerald:
+                  material: EMERALD
+                  amount: 16
+        level-2:
+          type: "composite"
+          operator: "AND"
+          sub-requirements:
+            currency:
+              type: "currency"
+              currency-type: "vault"
+              currency-amount: 20000.0
+            items:
+              type: "item"
+              required-items:
+                emerald:
+                  material: EMERALD
+                  amount: 32
+        level-3:
+          type: "composite"
+          operator: "AND"
+          sub-requirements:
+            currency:
+              type: "currency"
+              currency-type: "vault"
+              currency-amount: 40000.0
+            items:
+              type: "item"
+              required-items:
+                emerald-block:
+                  material: EMERALD_BLOCK
+                  amount: 8
+        level-4:
+          type: "composite"
+          operator: "AND"
+          sub-requirements:
+            currency:
+              type: "currency"
+              currency-type: "vault"
+              currency-amount: 80000.0
+            items:
+              type: "item"
+              required-items:
+                emerald-block:
+                  material: EMERALD_BLOCK
+                  amount: 16
+        level-5:
+          type: "composite"
+          operator: "AND"
+          sub-requirements:
+            currency:
+              type: "currency"
+              currency-type: "vault"
+              currency-amount: 150000.0
+            items:
+              type: "item"
+              required-items:
+                emerald-block:
+                  material: EMERALD_BLOCK
+                  amount: 32
+                netherite-ingot:
+                  material: NETHERITE_INGOT
+                  amount: 4
+    
+    fuel-reduction:
+      max-level: 10
+      effect-per-level: 0.05  # 5% reduction per level (50% max)
+      requirements:
+        level-1:
+          type: "composite"
+          operator: "AND"
+          sub-requirements:
+            currency:
+              type: "currency"
+              currency-type: "vault"
+              currency-amount: 5000.0
+            items:
+              type: "item"
+              required-items:
+                gold-ingot:
+                  material: GOLD_INGOT
+                  amount: 16
+        level-2:
+          type: "composite"
+          operator: "AND"
+          sub-requirements:
+            currency:
+              type: "currency"
+              currency-type: "vault"
+              currency-amount: 10000.0
+            items:
+              type: "item"
+              required-items:
+                gold-ingot:
+                  material: GOLD_INGOT
+                  amount: 32
+        level-3:
+          type: "composite"
+          operator: "AND"
+          sub-requirements:
+            currency:
+              type: "currency"
+              currency-type: "vault"
+              currency-amount: 15000.0
+            items:
+              type: "item"
+              required-items:
+                gold-block:
+                  material: GOLD_BLOCK
+                  amount: 4
+        level-4:
+          type: "composite"
+          operator: "AND"
+          sub-requirements:
+            currency:
+              type: "currency"
+              currency-type: "vault"
+              currency-amount: 20000.0
+            items:
+              type: "item"
+              required-items:
+                gold-block:
+                  material: GOLD_BLOCK
+                  amount: 8
+        level-5:
+          type: "composite"
+          operator: "AND"
+          sub-requirements:
+            currency:
+              type: "currency"
+              currency-type: "vault"
+              currency-amount: 30000.0
+            items:
+              type: "item"
+              required-items:
+                gold-block:
+                  material: GOLD_BLOCK
+                  amount: 16
+        level-6:
+          type: "composite"
+          operator: "AND"
+          sub-requirements:
+            currency:
+              type: "currency"
+              currency-type: "vault"
+              currency-amount: 40000.0
+            items:
+              type: "item"
+              required-items:
+                gold-block:
+                  material: GOLD_BLOCK
+                  amount: 24
+        level-7:
+          type: "composite"
+          operator: "AND"
+          sub-requirements:
+            currency:
+              type: "currency"
+              currency-type: "vault"
+              currency-amount: 50000.0
+            items:
+              type: "item"
+              required-items:
+                gold-block:
+                  material: GOLD_BLOCK
+                  amount: 32
+        level-8:
+          type: "composite"
+          operator: "AND"
+          sub-requirements:
+            currency:
+              type: "currency"
+              currency-type: "vault"
+              currency-amount: 75000.0
+            items:
+              type: "item"
+              required-items:
+                gold-block:
+                  material: GOLD_BLOCK
+                  amount: 48
+                diamond:
+                  material: DIAMOND
+                  amount: 16
+        level-9:
+          type: "composite"
+          operator: "AND"
+          sub-requirements:
+            currency:
+              type: "currency"
+              currency-type: "vault"
+              currency-amount: 100000.0
+            items:
+              type: "item"
+              required-items:
+                gold-block:
+                  material: GOLD_BLOCK
+                  amount: 64
+                diamond-block:
+                  material: DIAMOND_BLOCK
+                  amount: 4
+        level-10:
+          type: "composite"
+          operator: "AND"
+          sub-requirements:
+            currency:
+              type: "currency"
+              currency-type: "vault"
+              currency-amount: 150000.0
+            items:
+              type: "item"
+              required-items:
+                netherite-ingot:
+                  material: NETHERITE_INGOT
+                  amount: 4
+                diamond-block:
+                  material: DIAMOND_BLOCK
+                  amount: 8

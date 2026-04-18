@@ -1,0 +1,71 @@
+# Fabricator Configuration - Creative/Testing Server Example
+# No costs, instant crafting, free upgrades
+# Perfect for creative servers or testing environments
+
+fabricator:
+  enabled: true
+  permission: "rdq.machine.fabricator"
+  
+  # Minimal structure
+  structure:
+    core-block: DROPPER
+    required-blocks:
+      - type: HOPPER
+        relative-positions:
+          - {x: 0, y: -1, z: 0}
+  
+  # No blueprint requirements
+  blueprint:
+    requirements: {}
+  
+  # Very fast crafting
+  crafting:
+    base-cooldown-ticks: 20  # 1 second per craft
+    recipe-grid-size: 3
+    max-output-stack-size: 64
+  
+  # No fuel required
+  fuel:
+    enabled: false
+  
+  # Free upgrades
+  upgrades:
+    speed:
+      max-level: 5
+      effect-per-level: 0.20  # 20% per level
+      requirements:
+        level-1: {}
+        level-2: {}
+        level-3: {}
+        level-4: {}
+        level-5: {}
+    
+    efficiency:
+      max-level: 5
+      effect-per-level: 0.20
+      requirements:
+        level-1: {}
+        level-2: {}
+        level-3: {}
+        level-4: {}
+        level-5: {}
+    
+    bonus-output:
+      max-level: 5
+      effect-per-level: 0.20
+      requirements:
+        level-1: {}
+        level-2: {}
+        level-3: {}
+        level-4: {}
+        level-5: {}
+    
+    fuel-reduction:
+      max-level: 5
+      effect-per-level: 0.20
+      requirements:
+        level-1: {}
+        level-2: {}
+        level-3: {}
+        level-4: {}
+        level-5: {}

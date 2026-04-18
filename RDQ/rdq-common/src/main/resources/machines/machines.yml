@@ -1,0 +1,30 @@
+# Machine System Configuration
+# System-wide settings for the machine fabrication system
+
+# Master switch for the entire machine system
+enabled: true
+
+# Cache configuration
+cache:
+  # Enable in-memory caching for active machines
+  enabled: true
+  # Auto-save interval in seconds (300 = 5 minutes)
+  auto-save-interval: 300
+  # Maximum machines per player
+  max-machines-per-player: 10
+
+# Permission configuration
+permissions:
+  # Require permission checks for machine operations
+  require-permission: true
+  # Base permission node (machine type appended: rdq.machine.fabricator)
+  base-permission: "rdq.machine"
+
+# Breaking behavior configuration
+breaking:
+  # Drop stored items when machine is broken (false = keep in virtual storage)
+  drop-items: false
+  # Drop the machine item when broken
+  drop-machine-item: true
+  # Require owner to break machine (false = trusted players can break)
+  require-owner: false

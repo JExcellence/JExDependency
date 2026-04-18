@@ -1,0 +1,37 @@
+# JExCommand 2.0 tree — /currencylog
+# Inspect, look up, and prune transaction logs.
+
+name: currencylog
+description: "Transaction log access"
+aliases:
+  - pcurrencylog
+  - txlog
+permission: "currencylog.command"
+senders: [player]
+
+subcommands:
+  - name: view
+    description: "View your own transaction log"
+    argumentSchema:
+      - { name: page, type: positive_long, required: false, defaultValue: "1", description: "Page number" }
+
+  - name: details
+    description: "Show detail view of a single log entry"
+    argumentSchema:
+      - { name: id, type: positive_long, required: true, description: "Log id" }
+
+  - name: player
+    description: "View another player's transaction log"
+    permission: "currencylog.command.player"
+    argumentSchema:
+      - { name: player, type: offline_player, required: true, description: "Target player" }
+      - { name: page,   type: positive_long,  required: false, defaultValue: "1", description: "Page number" }
+
+  - name: clear
+    description: "Prune log entries older than N days"
+    permission: "currencylog.command.clear"
+    argumentSchema:
+      - { name: days, type: positive_long, required: false, defaultValue: "90", description: "Retention days (>= 7)" }
+
+  - name: help
+    description: "Show /currencylog usage"

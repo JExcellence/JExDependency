@@ -1,0 +1,13 @@
+# JExCommand 2.0 tree — /pay
+# Transfer currency from the sender to another player.
+
+name: pay
+description: "Pay another player from your balance"
+aliases:
+  - ppay
+permission: "pay.command"
+senders: [player]
+argumentSchema:
+  - { name: target,   type: offline_player,  required: true,  description: "Recipient player" }
+  - { name: amount,   type: positive_double, required: true,  description: "Amount to send" }
+  - { name: currency, type: currency,        required: false, description: "Currency id (defaults to primary)" }

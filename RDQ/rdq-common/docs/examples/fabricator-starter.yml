@@ -1,0 +1,140 @@
+# Fabricator Configuration - Starter Server Example
+# Low cost, slower operation, basic upgrades
+# Perfect for new players learning the system
+
+fabricator:
+  enabled: true
+  permission: "rdq.machine.fabricator"
+  
+  # Simple 3-block structure
+  structure:
+    core-block: DROPPER
+    required-blocks:
+      - type: HOPPER
+        relative-positions:
+          - {x: 0, y: -1, z: 0}  # Just one hopper below
+  
+  # Affordable blueprint
+  blueprint:
+    requirements:
+      items:
+        type: "item"
+        required-items:
+          iron:
+            material: IRON_INGOT
+            amount: 8
+          redstone:
+            material: REDSTONE
+            amount: 16
+          chest:
+            material: CHEST
+            amount: 1
+  
+  # Slower crafting for balance
+  crafting:
+    base-cooldown-ticks: 200  # 10 seconds per craft
+    recipe-grid-size: 3
+    max-output-stack-size: 64
+  
+  # Basic fuel system
+  fuel:
+    enabled: true
+    base-consumption: 15  # Moderate consumption
+    fuel-types:
+      coal:
+        material: COAL
+        energy-value: 100
+      charcoal:
+        material: CHARCOAL
+        energy-value: 100
+      coal-block:
+        material: COAL_BLOCK
+        energy-value: 900
+  
+  # Limited upgrades with low costs
+  upgrades:
+    speed:
+      max-level: 3
+      effect-per-level: 0.10  # 10% per level
+      requirements:
+        level-1:
+          type: "item"
+          required-items:
+            redstone:
+              material: REDSTONE
+              amount: 16
+        level-2:
+          type: "item"
+          required-items:
+            redstone:
+              material: REDSTONE
+              amount: 32
+        level-3:
+          type: "item"
+          required-items:
+            redstone-block:
+              material: REDSTONE_BLOCK
+              amount: 4
+    
+    efficiency:
+      max-level: 3
+      effect-per-level: 0.15  # 15% chance per level
+      requirements:
+        level-1:
+          type: "item"
+          required-items:
+            iron:
+              material: IRON_INGOT
+              amount: 16
+        level-2:
+          type: "item"
+          required-items:
+            gold:
+              material: GOLD_INGOT
+              amount: 16
+        level-3:
+          type: "item"
+          required-items:
+            diamond:
+              material: DIAMOND
+              amount: 4
+    
+    bonus-output:
+      max-level: 2
+      effect-per-level: 0.10  # 10% chance per level
+      requirements:
+        level-1:
+          type: "item"
+          required-items:
+            emerald:
+              material: EMERALD
+              amount: 8
+        level-2:
+          type: "item"
+          required-items:
+            emerald:
+              material: EMERALD
+              amount: 16
+    
+    fuel-reduction:
+      max-level: 3
+      effect-per-level: 0.10  # 10% reduction per level
+      requirements:
+        level-1:
+          type: "item"
+          required-items:
+            gold:
+              material: GOLD_INGOT
+              amount: 8
+        level-2:
+          type: "item"
+          required-items:
+            gold:
+              material: GOLD_INGOT
+              amount: 16
+        level-3:
+          type: "item"
+          required-items:
+            gold-block:
+              material: GOLD_BLOCK
+              amount: 2

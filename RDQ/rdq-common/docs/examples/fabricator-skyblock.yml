@@ -1,0 +1,220 @@
+# Fabricator Configuration - Skyblock Server Example
+# Balanced for resource-limited environments
+# Features: Moderate costs, renewable fuel focus, limited machines
+
+fabricator:
+  enabled: true
+  permission: "rdq.machine.fabricator"
+  
+  # Standard structure
+  structure:
+    core-block: DROPPER
+    required-blocks:
+      - type: HOPPER
+        relative-positions:
+          - {x: 0, y: -1, z: 0}
+          - {x: 1, y: 0, z: 0}
+          - {x: -1, y: 0, z: 0}
+      - type: CHEST
+        relative-positions:
+          - {x: 0, y: 0, z: 1}
+  
+  # Moderate blueprint cost
+  blueprint:
+    requirements:
+      items:
+        type: "item"
+        required-items:
+          iron:
+            material: IRON_INGOT
+            amount: 16
+          redstone:
+            material: REDSTONE
+            amount: 32
+          diamond:
+            material: DIAMOND
+            amount: 4
+  
+  # Balanced crafting speed
+  crafting:
+    base-cooldown-ticks: 120  # 6 seconds per craft
+    recipe-grid-size: 3
+    max-output-stack-size: 64
+  
+  # Renewable fuel focus
+  fuel:
+    enabled: true
+    base-consumption: 12
+    fuel-types:
+      # Wood-based (renewable)
+      oak-log:
+        material: OAK_LOG
+        energy-value: 50
+      spruce-log:
+        material: SPRUCE_LOG
+        energy-value: 50
+      birch-log:
+        material: BIRCH_LOG
+        energy-value: 50
+      jungle-log:
+        material: JUNGLE_LOG
+        energy-value: 50
+      acacia-log:
+        material: ACACIA_LOG
+        energy-value: 50
+      dark-oak-log:
+        material: DARK_OAK_LOG
+        energy-value: 50
+      
+      # Charcoal (renewable)
+      charcoal:
+        material: CHARCOAL
+        energy-value: 100
+      
+      # Coal (limited)
+      coal:
+        material: COAL
+        energy-value: 100
+      coal-block:
+        material: COAL_BLOCK
+        energy-value: 900
+      
+      # Kelp-based (renewable)
+      dried-kelp-block:
+        material: DRIED_KELP_BLOCK
+        energy-value: 200
+      
+      # Blaze (mob farm)
+      blaze-rod:
+        material: BLAZE_ROD
+        energy-value: 150
+  
+  # Moderate upgrade system
+  upgrades:
+    speed:
+      max-level: 5
+      effect-per-level: 0.10
+      requirements:
+        level-1:
+          type: "item"
+          required-items:
+            redstone:
+              material: REDSTONE
+              amount: 24
+        level-2:
+          type: "item"
+          required-items:
+            redstone:
+              material: REDSTONE
+              amount: 48
+        level-3:
+          type: "item"
+          required-items:
+            redstone-block:
+              material: REDSTONE_BLOCK
+              amount: 4
+        level-4:
+          type: "item"
+          required-items:
+            redstone-block:
+              material: REDSTONE_BLOCK
+              amount: 8
+        level-5:
+          type: "item"
+          required-items:
+            redstone-block:
+              material: REDSTONE_BLOCK
+              amount: 16
+    
+    efficiency:
+      max-level: 5
+      effect-per-level: 0.12  # 12% per level
+      requirements:
+        level-1:
+          type: "item"
+          required-items:
+            iron:
+              material: IRON_INGOT
+              amount: 16
+        level-2:
+          type: "item"
+          required-items:
+            gold:
+              material: GOLD_INGOT
+              amount: 16
+        level-3:
+          type: "item"
+          required-items:
+            diamond:
+              material: DIAMOND
+              amount: 4
+        level-4:
+          type: "item"
+          required-items:
+            diamond:
+              material: DIAMOND
+              amount: 8
+        level-5:
+          type: "item"
+          required-items:
+            diamond:
+              material: DIAMOND
+              amount: 16
+    
+    bonus-output:
+      max-level: 3
+      effect-per-level: 0.10
+      requirements:
+        level-1:
+          type: "item"
+          required-items:
+            emerald:
+              material: EMERALD
+              amount: 8
+        level-2:
+          type: "item"
+          required-items:
+            emerald:
+              material: EMERALD
+              amount: 16
+        level-3:
+          type: "item"
+          required-items:
+            emerald:
+              material: EMERALD
+              amount: 32
+    
+    fuel-reduction:
+      max-level: 5
+      effect-per-level: 0.10
+      requirements:
+        level-1:
+          type: "item"
+          required-items:
+            gold:
+              material: GOLD_INGOT
+              amount: 12
+        level-2:
+          type: "item"
+          required-items:
+            gold:
+              material: GOLD_INGOT
+              amount: 24
+        level-3:
+          type: "item"
+          required-items:
+            gold-block:
+              material: GOLD_BLOCK
+              amount: 4
+        level-4:
+          type: "item"
+          required-items:
+            gold-block:
+              material: GOLD_BLOCK
+              amount: 8
+        level-5:
+          type: "item"
+          required-items:
+            gold-block:
+              material: GOLD_BLOCK
+              amount: 16

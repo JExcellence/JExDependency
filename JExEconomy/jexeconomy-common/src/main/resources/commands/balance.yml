@@ -1,0 +1,33 @@
+# JExCommand 2.0 tree — /balance
+# View your own or another player's balances, plus a currency leaderboard.
+
+name: balance
+description: "Show currency balances"
+aliases:
+  - bal
+  - money
+  - pcurrency
+permission: "currency.command"
+senders: [player]
+argumentSchema:
+  - { name: currency, type: currency,      required: false, description: "Currency id (omit for primary or 'all')" }
+  - { name: player,   type: offline_player, required: false, description: "Player to inspect (requires currency.command.other)" }
+
+subcommands:
+  - name: all
+    description: "List every currency balance"
+    senders: [player]
+    argumentSchema:
+      - { name: player, type: offline_player, required: false, description: "Player to inspect" }
+
+  - name: top
+    description: "Show the top holders of a currency"
+    permission: "currency.command.top"
+    senders: [player]
+    argumentSchema:
+      - { name: currency, type: currency,      required: false, description: "Currency id (defaults to primary)" }
+      - { name: limit,    type: positive_long, required: false, defaultValue: "10", description: "Rows to display, 1..50" }
+
+  - name: help
+    description: "Show /balance usage"
+    senders: [player]

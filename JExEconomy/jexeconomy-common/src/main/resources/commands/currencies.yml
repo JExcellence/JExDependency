@@ -1,0 +1,51 @@
+# JExCommand 2.0 tree — /currencies
+# Manage and inspect the currency registry.
+
+name: currencies
+description: "Manage and inspect currencies"
+aliases:
+  - pcurrencies
+  - ccurrencies
+permission: "currencies.command"
+senders: [player]
+
+subcommands:
+  - name: overview
+    description: "Open the currency GUI overview"
+    permission: "currencies.command.overview"
+    senders: [player]
+
+  - name: list
+    description: "Chat list of every currency"
+
+  - name: info
+    description: "Inspect one currency in chat"
+    argumentSchema:
+      - { name: currency, type: currency, required: true, description: "Currency id" }
+
+  - name: create
+    description: "Create a new currency (opens GUI if no args)"
+    permission: "currencies.command.create"
+    argumentSchema:
+      - { name: identifier, type: string, required: false, description: "Currency id" }
+      - { name: symbol,     type: string, required: false, description: "Display symbol" }
+      - { name: prefix,     type: string, required: false, description: "Optional prefix" }
+      - { name: suffix,     type: string, required: false, description: "Optional suffix" }
+
+  - name: edit
+    description: "Edit a currency field"
+    permission: "currencies.command.update"
+    argumentSchema:
+      - { name: currency, type: currency, required: true, description: "Currency id" }
+      - { name: field,    type: string,   required: true, description: "Field: identifier|symbol|prefix|suffix|icon" }
+      - { name: value,    type: string,   required: true, description: "New value" }
+
+  - name: delete
+    description: "Delete a currency"
+    permission: "currencies.command.delete"
+    aliases: [remove]
+    argumentSchema:
+      - { name: currency, type: currency, required: true, description: "Currency id" }
+
+  - name: help
+    description: "Show /currencies usage"
