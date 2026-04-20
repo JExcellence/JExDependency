@@ -6,7 +6,6 @@ import de.jexcellence.jexplatform.view.PaginatedView;
 import me.devnatan.inventoryframework.component.BukkitItemComponentBuilder;
 import me.devnatan.inventoryframework.context.Context;
 import me.devnatan.inventoryframework.state.State;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -56,7 +55,10 @@ public class CurrencyOverviewView extends PaginatedView<Currency> {
                               int index,
                               @NotNull Currency entry) {
         var player = ctx.getPlayer();
-        var icon = parseMaterial(entry.getIcon());
+        var icon   = CurrencyDetailView.parseMaterial(entry.getIcon());
+
+        var prefix = entry.getPrefix().isEmpty() ? "—" : entry.getPrefix();
+        var suffix = entry.getSuffix().isEmpty() ? "—" : entry.getSuffix();
 
         builder.withItem(createItem(
                 icon,
@@ -68,8 +70,8 @@ public class CurrencyOverviewView extends PaginatedView<Currency> {
                         .withPlaceholders(Map.of(
                                 "currency_identifier", entry.getIdentifier(),
                                 "currency_symbol", entry.getSymbol(),
-                                "currency_prefix", entry.getPrefix(),
-                                "currency_suffix", entry.getSuffix(),
+                                "currency_prefix", prefix,
+                                "currency_suffix", suffix,
                                 "index", index + 1
                         ))
                         .build().children()
@@ -81,13 +83,5 @@ public class CurrencyOverviewView extends PaginatedView<Currency> {
                         "initialData", click.getInitialData()
                 )
         ));
-    }
-
-    private static Material parseMaterial(String name) {
-        try {
-            return Material.valueOf(name);
-        } catch (IllegalArgumentException e) {
-            return Material.GOLD_INGOT;
-        }
     }
 }

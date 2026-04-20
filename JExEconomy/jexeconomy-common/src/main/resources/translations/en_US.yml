@@ -158,247 +158,224 @@ migrate:
 # ── GUI — shared legacy keys (kept for any remaining references) ──────────────
 
 ui:
-  overview-title: "<gold>Currencies"
-  detail-title: "<gold>{currency}</gold> <gray>Details"
-  create-title: "<gold>Create Currency"
-  edit-title: "<gold>Edit <white>{currency}</white>"
-  delete-title: "<red>Delete <white>{currency}</white>"
-  leaderboard-title: "<gold>{currency}</gold> <gray>Top Players"
-  confirm: "<green>Confirm"
-  cancel: "<red>Cancel"
-  back: "<gray>← Back"
-  next-page: "<gray>Next Page »"
-  prev-page: "<gray>« Previous Page"
-  page-info: "<gray>Page {current} of {total}"
+  overview-title:    "<gradient:#fde047:#f59e0b>Currencies</gradient>"
+  detail-title:      "<gradient:#fde047:#f59e0b>{currency}</gradient>"
+  create-title:      "<gradient:#86efac:#16a34a>New Currency</gradient>"
+  edit-title:        "<gradient:#93c5fd:#2563eb>Edit {currency}</gradient>"
+  delete-title:      "<gradient:#fca5a5:#dc2626>Delete {currency}</gradient>"
+  leaderboard-title: "<gradient:#d8b4fe:#9333ea>{currency} Top</gradient>"
+  confirm:           "<gradient:#86efac:#16a34a>✔ Confirm</gradient>"
+  cancel:            "<gradient:#fca5a5:#dc2626>✖ Cancel</gradient>"
+  back:              "<gray>← Back"
+  next-page:         "<gray>Next »"
+  prev-page:         "<gray>« Previous"
+  page-info:         "<gray>{current}<dark_gray>/<gray>{total}"
 
 # ── View: Currency Overview ───────────────────────────────────────────────────
 
 currency_overview_ui:
-  title: "<gold>Currencies"
-  previous: "<gray>« Previous Page"
-  next: "<gray>Next Page »"
-  loading: "<gray>Loading..."
+  title:    "<gradient:#fde047:#f59e0b>Currencies</gradient>"
+  previous: "<gray>« Previous"
+  next:     "<gray>Next »"
+  loading:  "<gray>Loading…"
   page:
-    name: "<gray>Page <white>{current_page}<gray>/<white>{max_page}"
+    name: "<gradient:#93c5fd:#2563eb>Page {current_page}<dark_gray>/<gradient:#93c5fd:#2563eb>{max_page}</gradient>"
     lore:
-      - "<dark_gray>Click to navigate pages."
+      - "<gradient:#a5f3fc:#06b6d4>▸ Click to flip</gradient>"
   currency:
-    name: "<gold>{currency_identifier} <dark_gray>({currency_symbol})"
+    name: "<gradient:#fde047:#f59e0b>{currency_identifier}</gradient> <dark_gray>({currency_symbol})"
     lore:
-      - "<dark_gray>Click to view details."
+      - "<gray>Prefix <dark_gray>»</dark_gray> <white>{currency_prefix}"
+      - "<gray>Suffix <dark_gray>»</dark_gray> <white>{currency_suffix}"
       - ""
-      - "<gray>Prefix: <white>{currency_prefix}"
-      - "<gray>Suffix: <white>{currency_suffix}"
+      - "<gradient:#a5f3fc:#06b6d4>▸ Click to open</gradient>"
 
 # ── View: Currency Detail ─────────────────────────────────────────────────────
 
 currency_detail_ui:
-  title: "<gold>{currency_identifier} <gray>Details"
-  back: "<gray>← Back"
+  title: "<gradient:#fde047:#f59e0b>{currency_identifier}</gradient>"
+  back:  "<gray>← Back"
   currency_icon:
-    name: "<gold>{currency_identifier}"
+    name: "<gradient:#fde047:#f59e0b>{currency_identifier}</gradient>"
     lore:
-      - "<gray>Icon material: <white>{material_name}"
+      - "<gray>Material <dark_gray>»</dark_gray> <white>{material_name}"
   currency_symbol:
-    name: "<gray>Symbol: <gold>{currency_symbol}"
+    name: "<gray>Symbol <dark_gray>»</dark_gray> <gradient:#fde047:#f59e0b>{currency_symbol}</gradient>"
     lore:
-      - "<dark_gray>The short display symbol for this currency."
-      - "<gray>Currency: <white>{currency_identifier}"
+      - "<dark_gray>Short display marker."
   currency_prefix:
-    name: "<gray>Prefix"
+    name: "<gray>Prefix <dark_gray>»</dark_gray> <white>{currency_prefix}"
     lore:
-      - "<gray>Text shown before the amount."
-      - "<gray>Value: <white>{currency_prefix}"
+      - "<dark_gray>Shown before the amount."
   currency_suffix:
-    name: "<gray>Suffix"
+    name: "<gray>Suffix <dark_gray>»</dark_gray> <white>{currency_suffix}"
     lore:
-      - "<gray>Text shown after the amount."
-      - "<gray>Value: <white>{currency_suffix}"
+      - "<dark_gray>Shown after the amount."
   leaderboard:
-    name: "<gold>Leaderboard"
+    name: "<gradient:#d8b4fe:#9333ea>Top Holders</gradient>"
     lore:
-      - "<dark_gray>View the top holders of"
-      - "<gray>{currency_identifier} <dark_gray>(<gray>{currency_symbol}<dark_gray>)."
+      - "<gray>Ranked balances for <white>{currency_identifier}<gray>."
       - ""
-      - "<yellow>Click to open."
+      - "<gradient:#a5f3fc:#06b6d4>▸ Click to open</gradient>"
   edit:
-    name: "<yellow>Edit Currency"
+    name: "<gradient:#93c5fd:#2563eb>Edit Currency</gradient>"
     lore:
-      - "<dark_gray>Modify the properties of"
-      - "<gray>{currency_identifier}<dark_gray>."
+      - "<gray>Modify <white>{currency_identifier}<gray>."
       - ""
-      - "<yellow>Click to edit."
+      - "<gradient:#a5f3fc:#06b6d4>▸ Click to edit</gradient>"
   reset_all:
-    name: "<red>Reset All Balances"
+    name: "<gradient:#fca5a5:#dc2626>⚠ Reset Balances</gradient>"
     lore:
-      - "<red>Wipes every account balance"
-      - "<dark_red>for <white>{currency_identifier}<dark_red>."
+      - "<red>Wipes every <white>{currency_identifier}<red> account."
       - ""
-      - "<red>⚠ This cannot be undone!"
-    confirm_chat: "<red>Type <white>CONFIRM</white> in chat to reset all balances for <gold>{currency_identifier}<red>."
+      - "<dark_red>⚠ Cannot be undone."
+    confirm_chat: "<gradient:#fca5a5:#dc2626>⚠</gradient> <gray>Type <white>CONFIRM</white> to reset all <gold>{currency_identifier}</gold> balances."
 
 # ── View: Currency Create ─────────────────────────────────────────────────────
 
 currency_create_ui:
-  title: "<gold>Create Currency"
-  back: "<gray>← Back"
+  title: "<gradient:#86efac:#16a34a>New Currency</gradient>"
+  back:  "<gray>← Back"
   identifier:
-    name: "<gold>Identifier: <white>{value}"
+    name: "<gray>Identifier <dark_gray>»</dark_gray> <white>{value}"
     lore:
       - "<dark_gray>Unique programmatic name."
-      - "<gray>Current: <white>{value}"
       - ""
-      - "<yellow>Click to set."
+      - "<gradient:#a5f3fc:#06b6d4>▸ Click to set</gradient>"
   symbol:
-    name: "<gold>Symbol: <white>{value}"
+    name: "<gray>Symbol <dark_gray>»</dark_gray> <gradient:#fde047:#f59e0b>{value}</gradient>"
     lore:
-      - "<dark_gray>Short display character (e.g. $, €, ⭐)."
-      - "<gray>Current: <white>{value}"
+      - "<dark_gray>Short marker — e.g. <gray>$ € ⭐<dark_gray>."
       - ""
-      - "<yellow>Click to set."
+      - "<gradient:#a5f3fc:#06b6d4>▸ Click to set</gradient>"
   icon:
-    name: "<gold>Icon: <white>{value}"
+    name: "<gray>Icon <dark_gray>»</dark_gray> <white>{value}"
     lore:
-      - "<dark_gray>Bukkit Material name for the GUI icon."
-      - "<gray>Current: <white>{value}"
+      - "<dark_gray>Bukkit Material name."
       - ""
-      - "<yellow>Click to set."
+      - "<gradient:#a5f3fc:#06b6d4>▸ Click to set</gradient>"
   prefix:
-    name: "<gold>Prefix: <white>{value}"
+    name: "<gray>Prefix <dark_gray>»</dark_gray> <white>{value}"
     lore:
-      - "<dark_gray>Text before the amount. Optional."
-      - "<gray>Current: <white>{value}"
+      - "<dark_gray>Text before amounts. Optional."
       - ""
-      - "<yellow>Click to set."
+      - "<gradient:#a5f3fc:#06b6d4>▸ Click to set</gradient>"
   suffix:
-    name: "<gold>Suffix: <white>{value}"
+    name: "<gray>Suffix <dark_gray>»</dark_gray> <white>{value}"
     lore:
-      - "<dark_gray>Text after the amount. Optional."
-      - "<gray>Current: <white>{value}"
+      - "<dark_gray>Text after amounts. Optional."
       - ""
-      - "<yellow>Click to set."
+      - "<gradient:#a5f3fc:#06b6d4>▸ Click to set</gradient>"
   create:
-    name: "<green>✔ Create Currency"
+    name: "<gradient:#86efac:#16a34a>✔ Create Currency</gradient>"
     lore:
-      - "<dark_gray>Saves <gold>{currency_identifier}</gold> to the database."
+      - "<gray>Saves <white>{currency_identifier}<gray>."
       - ""
-      - "<green>Click to create."
-    missing_identifier: "<red>Set an identifier before creating."
-    missing_symbol: "<red>Set a symbol before creating."
-    success: "<green>Currency <gold>{currency_identifier}</gold> created."
-    failed: "<red>Currency creation was cancelled or failed."
+      - "<gradient:#86efac:#16a34a>▸ Click to create</gradient>"
+    missing_identifier: "<gradient:#fca5a5:#dc2626>✘</gradient> <red>Set an identifier first."
+    missing_symbol:     "<gradient:#fca5a5:#dc2626>✘</gradient> <red>Set a symbol first."
+    success:            "<gradient:#86efac:#16a34a>✔</gradient> <green>Currency <gold>{currency_identifier}</gold> created."
+    failed:             "<gradient:#fca5a5:#dc2626>✘</gradient> <red>Create failed for <gold>{currency_identifier}</gold>."
 
 # ── View: Currency Edit ───────────────────────────────────────────────────────
 
 currency_edit_ui:
-  title: "<gold>Edit <white>{currency_identifier}"
-  back: "<gray>← Back"
+  title: "<gradient:#93c5fd:#2563eb>Edit {currency_identifier}</gradient>"
+  back:  "<gray>← Back"
   identifier:
-    name: "<gold>Identifier: <white>{value}"
+    name: "<gray>Identifier <dark_gray>»</dark_gray> <white>{value}"
     lore:
       - "<dark_gray>Unique programmatic name."
-      - "<gray>Current: <white>{value}"
       - ""
-      - "<yellow>Click to change."
+      - "<gradient:#a5f3fc:#06b6d4>▸ Click to change</gradient>"
   symbol:
-    name: "<gold>Symbol: <white>{value}"
+    name: "<gray>Symbol <dark_gray>»</dark_gray> <gradient:#fde047:#f59e0b>{value}</gradient>"
     lore:
-      - "<dark_gray>Short display character."
-      - "<gray>Current: <white>{value}"
-      - "<gray>Currency: <white>{currency_identifier}"
+      - "<dark_gray>Short display marker."
       - ""
-      - "<yellow>Click to change."
+      - "<gradient:#a5f3fc:#06b6d4>▸ Click to change</gradient>"
   icon:
-    name: "<gold>Icon: <white>{value}"
+    name: "<gray>Icon <dark_gray>»</dark_gray> <white>{value}"
     lore:
       - "<dark_gray>Bukkit Material name."
-      - "<gray>Current: <white>{value}"
       - ""
-      - "<yellow>Click to change."
+      - "<gradient:#a5f3fc:#06b6d4>▸ Click to change</gradient>"
   prefix:
-    name: "<gold>Prefix: <white>{value}"
+    name: "<gray>Prefix <dark_gray>»</dark_gray> <white>{value}"
     lore:
       - "<dark_gray>Text before amounts."
-      - "<gray>Current: <white>{value}"
-      - "<gray>Currency: <white>{currency_identifier}"
       - ""
-      - "<yellow>Click to change."
+      - "<gradient:#a5f3fc:#06b6d4>▸ Click to change</gradient>"
   suffix:
-    name: "<gold>Suffix: <white>{value}"
+    name: "<gray>Suffix <dark_gray>»</dark_gray> <white>{value}"
     lore:
       - "<dark_gray>Text after amounts."
-      - "<gray>Current: <white>{value}"
-      - "<gray>Currency: <white>{currency_identifier}"
       - ""
-      - "<yellow>Click to change."
+      - "<gradient:#a5f3fc:#06b6d4>▸ Click to change</gradient>"
   save:
-    name: "<green>✔ Save Changes"
+    name: "<gradient:#86efac:#16a34a>✔ Save Changes</gradient>"
     lore:
-      - "<dark_gray>Persists edits for <gold>{currency_identifier}</gold>."
+      - "<gray>Persists edits for <white>{currency_identifier}<gray>."
       - ""
-      - "<green>Click to save."
-    missing_identifier: "<red>Identifier cannot be empty."
-    missing_symbol: "<red>Symbol cannot be empty."
-    success: "<green>Currency <gold>{currency_identifier}</gold> saved."
-    failed: "<red>Failed to update currency <gold>{currency_identifier}</gold>."
+      - "<gradient:#86efac:#16a34a>▸ Click to save</gradient>"
+    missing_identifier: "<gradient:#fca5a5:#dc2626>✘</gradient> <red>Identifier cannot be empty."
+    missing_symbol:     "<gradient:#fca5a5:#dc2626>✘</gradient> <red>Symbol cannot be empty."
+    success:            "<gradient:#86efac:#16a34a>✔</gradient> <green>Currency <gold>{currency_identifier}</gold> saved."
+    failed:             "<gradient:#fca5a5:#dc2626>✘</gradient> <red>Save failed for <gold>{currency_identifier}</gold>."
 
 # ── View: Currency Delete ─────────────────────────────────────────────────────
 
 currency_delete_ui:
-  title: "<red>Delete Currency"
-  back: "<gray>← Back"
+  title: "<gradient:#fca5a5:#dc2626>Delete Currency</gradient>"
+  back:  "<gray>← Back"
   warning:
-    name: "<red>⚠ Delete <white>{currency_identifier}"
+    name: "<gradient:#fca5a5:#dc2626>⚠ Delete {currency_identifier}</gradient>"
     lore:
-      - "<red>This will permanently delete"
-      - "<white>{currency_identifier} <dark_gray>(<gray>{currency_symbol}<dark_gray>)."
-      - "<red>All player accounts will be removed!"
+      - "<red>Removes <white>{currency_identifier}<red> and every account."
       - ""
-      - "<dark_red>⚠ This cannot be undone!"
+      - "<dark_red>⚠ Cannot be undone."
   confirm:
-    name: "<green>✔ Confirm Delete"
+    name: "<gradient:#86efac:#16a34a>✔ Confirm</gradient>"
     lore:
-      - "<dark_gray>Deletes <gold>{currency_identifier}</gold> and all accounts."
+      - "<gray>Delete <white>{currency_identifier}<gray> now."
       - ""
-      - "<red>⚠ Irreversible action."
+      - "<gradient:#fca5a5:#dc2626>▸ Click to delete</gradient>"
   cancel:
     name: "<gray>✖ Cancel"
     lore:
-      - "<dark_gray>Go back without deleting."
-  success: "<green>Currency <gold>{currency_identifier}</gold> deleted."
-  failed: "<red>Deletion of <gold>{currency_identifier}</gold> was cancelled."
-  error: "<red>Error deleting <gold>{currency_identifier}</gold>: <white>{error}"
+      - "<dark_gray>Close without deleting."
+  success: "<gradient:#86efac:#16a34a>✔</gradient> <green>Currency <gold>{currency_identifier}</gold> deleted."
+  failed:  "<gradient:#fca5a5:#dc2626>✘</gradient> <red>Delete cancelled for <gold>{currency_identifier}</gold>."
+  error:   "<gradient:#fca5a5:#dc2626>✘</gradient> <red>Error on <gold>{currency_identifier}</gold>: <white>{error}</white>"
 
 # ── View: Currency Leaderboard ────────────────────────────────────────────────
 
 currency_leaderboard_ui:
-  title: "<gold>{currency_identifier} <gray>Leaderboard"
-  back: "<gray>← Back"
+  title:    "<gradient:#d8b4fe:#9333ea>{currency_identifier} Top</gradient>"
+  back:     "<gray>← Back"
   previous: "<gray>« Previous"
-  next: "<gray>Next »"
-  loading: "<gray>Loading leaderboard..."
+  next:     "<gray>Next »"
+  loading:  "<gray>Loading…"
   page:
-    name: "<gray>Page <white>{current_page}<gray>/<white>{max_page}"
+    name: "<gradient:#d8b4fe:#9333ea>Page {current_page}<dark_gray>/<gradient:#d8b4fe:#9333ea>{max_page}</gradient>"
     lore:
-      - "<dark_gray>Navigate the leaderboard."
+      - "<gradient:#a5f3fc:#06b6d4>▸ Click to flip</gradient>"
   currency_info:
-    name: "<gold>{currency_identifier} <dark_gray>({currency_symbol})"
+    name: "<gradient:#fde047:#f59e0b>{currency_identifier}</gradient> <dark_gray>({currency_symbol})"
     lore:
-      - "<dark_gray>Top 25 balance holders."
-      - "<gray>Symbol: <gold>{currency_symbol}"
+      - "<gray>Top <white>25</white> holders."
   player_entry:
     name: "{rank_color}#{rank} <white>{player_name}"
     lore:
-      - "<gray>Balance: <gold>{formatted_balance}"
-      - "<gray>Symbol: <white>{currency_symbol}"
+      - "<gray>Balance <dark_gray>»</dark_gray> <gradient:#fde047:#f59e0b>{formatted_balance}</gradient>"
 
 # ── View: Currency Field Input (Anvil) ────────────────────────────────────────
 
 currency_field_input_ui:
-  title: "<gold>Set {field}"
+  title: "<gradient:#fde047:#f59e0b>Set {field}</gradient>"
   error:
-    empty: "<red>Input cannot be empty."
-    invalid_material: "<red><white>{value}</white> is not a valid Material name."
+    empty:            "<gradient:#fca5a5:#dc2626>✘</gradient> <red>Input cannot be empty."
+    invalid_material: "<gradient:#fca5a5:#dc2626>✘</gradient> <red><white>{value}</white> is not a valid Material."
 
 # ── JExCommand framework ──────────────────────────────────────────────────────
 # Keys emitted by the JExCommand 2.0 tree handler and built-in argument types.

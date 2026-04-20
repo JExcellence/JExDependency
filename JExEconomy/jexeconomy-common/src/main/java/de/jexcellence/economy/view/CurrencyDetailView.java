@@ -89,15 +89,18 @@ public class CurrencyDetailView extends BaseView {
     }
 
     private void renderPrefix(RenderContext render, Player player, Currency cur) {
-        var prefix = cur.getPrefix();
+        var prefix    = cur.getPrefix();
         var hasPrefix = prefix != null && !prefix.isEmpty();
+        var display   = hasPrefix ? prefix : "—";
 
         render.layoutSlot('p', createItem(
                 Material.WRITABLE_BOOK,
-                i18n("currency_prefix.name", player).build().component(),
+                i18n("currency_prefix.name", player)
+                        .withPlaceholder("currency_prefix", display)
+                        .build().component(),
                 i18n("currency_prefix.lore", player)
                         .withPlaceholders(Map.of(
-                                "currency_prefix", hasPrefix ? prefix : "None",
+                                "currency_prefix", display,
                                 "has_prefix", hasPrefix ? "true" : "false"
                         ))
                         .build().children()
@@ -105,15 +108,18 @@ public class CurrencyDetailView extends BaseView {
     }
 
     private void renderSuffix(RenderContext render, Player player, Currency cur) {
-        var suffix = cur.getSuffix();
+        var suffix    = cur.getSuffix();
         var hasSuffix = suffix != null && !suffix.isEmpty();
+        var display   = hasSuffix ? suffix : "—";
 
         render.layoutSlot('f', createItem(
                 Material.PAPER,
-                i18n("currency_suffix.name", player).build().component(),
+                i18n("currency_suffix.name", player)
+                        .withPlaceholder("currency_suffix", display)
+                        .build().component(),
                 i18n("currency_suffix.lore", player)
                         .withPlaceholders(Map.of(
-                                "currency_suffix", hasSuffix ? suffix : "None",
+                                "currency_suffix", display,
                                 "has_suffix", hasSuffix ? "true" : "false"
                         ))
                         .build().children()

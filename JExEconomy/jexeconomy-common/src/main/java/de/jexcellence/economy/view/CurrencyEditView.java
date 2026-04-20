@@ -116,7 +116,7 @@ public class CurrencyEditView extends BaseView {
 
     private void renderPrefix(RenderContext render, Player player,
                                Currency cur, JExEconomy eco, String origId) {
-        var display = cur.getPrefix().isEmpty() ? "None" : cur.getPrefix();
+        var display = cur.getPrefix().isEmpty() ? "—" : cur.getPrefix();
         render.layoutSlot('p', createItem(
                 Material.WRITABLE_BOOK,
                 i18n("prefix.name", player)
@@ -133,7 +133,7 @@ public class CurrencyEditView extends BaseView {
 
     private void renderSuffix(RenderContext render, Player player,
                                Currency cur, JExEconomy eco, String origId) {
-        var display = cur.getSuffix().isEmpty() ? "None" : cur.getSuffix();
+        var display = cur.getSuffix().isEmpty() ? "—" : cur.getSuffix();
         render.layoutSlot('f', createItem(
                 Material.PAPER,
                 i18n("suffix.name", player)
