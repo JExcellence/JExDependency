@@ -46,8 +46,17 @@ afterEvaluate {
             named<MavenPublication>("maven") {
                 artifactId = "jexdependency"
                 pom {
-                    url.set("https://github.com/jexcellence/JEDependency")
+                    name.set("JExDependency")
+                    description.set("Runtime dependency management & relocation for Paper/Spigot plugins.")
+                    url.set("https://github.com/JExcellence/JExDependency")
                     inceptionYear.set("2025")
+                    licenses {
+                        license {
+                            name.set("MIT License")
+                            url.set("https://github.com/JExcellence/JExDependency/blob/main/LICENSE")
+                            distribution.set("repo")
+                        }
+                    }
                     developers {
                         developer {
                             id.set("jexcellence")
@@ -56,13 +65,13 @@ afterEvaluate {
                         }
                     }
                     scm {
-                        connection.set("scm:git:git://github.com/jexcellence/JEDependency.git")
-                        developerConnection.set("scm:git:ssh://github.com/jexcellence/JEDependency.git")
-                        url.set("https://github.com/jexcellence/JEDependency")
+                        connection.set("scm:git:git://github.com/JExcellence/JExDependency.git")
+                        developerConnection.set("scm:git:ssh://github.com/JExcellence/JExDependency.git")
+                        url.set("https://github.com/JExcellence/JExDependency")
                     }
                     issueManagement {
                         system.set("GitHub Issues")
-                        url.set("https://github.com/jexcellence/JEDependency/issues")
+                        url.set("https://github.com/JExcellence/JExDependency/issues")
                     }
                 }
             }
