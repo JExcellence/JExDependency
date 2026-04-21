@@ -1,5 +1,6 @@
 package de.jexcellence.dependency.remapper;
 
+import de.jexcellence.dependency.exception.PackageRemappingException;
 import org.jetbrains.annotations.NotNull;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
@@ -34,6 +35,9 @@ import java.util.logging.Logger;
 public class PackageRemapper {
 
     private static final Logger LOGGER = Logger.getLogger(PackageRemapper.class.getName());
+
+    /** JAR-internal resource name for the manifest; uses forward slash per JAR specification. */
+    private static final String MANIFEST_PATH = "META-INF/MANIFEST.MF";
 
     private final Map<String, String> packageMappings = new LinkedHashMap<>();
 
@@ -86,7 +90,7 @@ public class PackageRemapper {
             final Set<String> written = new LinkedHashSet<>();
             // JarOutputStream writes the manifest immediately when constructed with it.
             // Prevent re-writing it while iterating entries.
-            written.add("META-INF/MANIFEST.MF");
+            written.add(MANIFEST_PATH);
 
             final PrefixRelocationRemapper remapper = new PrefixRelocationRemapper(packageMappings);
 
@@ -133,12 +137,12 @@ public class PackageRemapper {
                                 writeEntryIfAbsent(in, entry, out, written, remappedName);
                             }
                         } catch (IOException e) {
-                            throw new RuntimeException(e);
+                            throw new PackageRemappingException("Failed to remap JAR entry", e);
                         }
                     });
 
             out.flush();
-        } catch (RuntimeException rte) {
+        } catch (PackageRemappingException rte) {
             // unwrap IOExceptions
             if (rte.getCause() instanceof IOException ioe) {
                 throw ioe;
@@ -148,7 +152,7 @@ public class PackageRemapper {
             try {
                 Files.deleteIfExists(outputJar);
             } catch (IOException ex) {
-                LOGGER.log(Level.FINE, "Failed to delete incomplete output: " + outputJar, ex);
+                LOGGER.log(Level.FINE, ex, () -> "Failed to delete incomplete output: " + outputJar);
             }
             throw ioe;
         }
@@ -177,7 +181,7 @@ public class PackageRemapper {
 
             final Set<String> written = new LinkedHashSet<>();
             // Prevent rewriting manifest; JarOutputStream has already written it.
-            written.add("META-INF/MANIFEST.MF");
+            written.add(MANIFEST_PATH);
 
             in.stream()
                     .sorted(Comparator.comparing(JarEntry::getName))
@@ -199,12 +203,12 @@ public class PackageRemapper {
 
                             writeEntryIfAbsent(in, entry, out, written, name);
                         } catch (IOException e) {
-                            throw new RuntimeException(e);
+                            throw new PackageRemappingException("Failed to copy JAR entry", e);
                         }
                     });
 
             out.flush();
-        } catch (RuntimeException rte) {
+        } catch (PackageRemappingException rte) {
             if (rte.getCause() instanceof IOException ioe) {
                 throw ioe;
             }
@@ -267,7 +271,7 @@ public class PackageRemapper {
     }
 
     private static boolean isManifestFile(final String name) {
-        return "META-INF/MANIFEST.MF".equalsIgnoreCase(name);
+        return MANIFEST_PATH.equalsIgnoreCase(name);
     }
 
     private static boolean isIndexList(final String name) {
@@ -304,7 +308,7 @@ public class PackageRemapper {
         return path;
     }
 
-    private static byte[] rewriteServiceFile(final byte[] original, final Map<String, String> mappings) throws IOException {
+    private static byte[] rewriteServiceFile(final byte[] original, final Map<String, String> mappings) {
         final String content = new String(original, StandardCharsets.UTF_8);
         final String[] lines = content.split("\\R", -1);
         final StringBuilder out = new StringBuilder(content.length() + 64);

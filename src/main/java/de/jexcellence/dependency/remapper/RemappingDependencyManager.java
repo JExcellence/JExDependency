@@ -151,11 +151,12 @@ public class RemappingDependencyManager {
         final String to = normalizePackage(toPackage);
 
         if (from.isEmpty() || to.isEmpty()) {
-            LOGGER.warning("Ignoring relocation with empty package: '" + fromPackage + "' => '" + toPackage + "'");
+            LOGGER.log(Level.WARNING, "Ignoring relocation with empty package: ''{0}'' => ''{1}''",
+                    new Object[]{fromPackage, toPackage});
             return;
         }
         if (isRestrictedRoot(from)) {
-            LOGGER.warning("Ignoring relocation from restricted root: '" + from + "'");
+            LOGGER.log(Level.WARNING, "Ignoring relocation from restricted root: ''{0}''", from);
             return;
         }
         if (from.equals(to)) {
@@ -218,7 +219,7 @@ public class RemappingDependencyManager {
         try {
             Deencapsulation.deencapsulate(deencapClass);
         } catch (final Exception ex) {
-            LOGGER.log(Level.FINE, "Deencapsulation failed (continuing): " + ex.getMessage(), ex);
+            LOGGER.log(Level.FINE, ex, () -> "Deencapsulation failed (continuing): " + ex.getMessage());
         }
 
         loadYamlDependencies(deencapClass);
@@ -250,9 +251,9 @@ public class RemappingDependencyManager {
             final DependencyCoordinate coord = DependencyCoordinate.parse(dep);
             if (coord != null) {
                 coordinates.add(coord);
-                LOGGER.fine("Added additional dependency: " + dep);
+                LOGGER.log(Level.FINE, () -> "Added additional dependency: " + dep);
             } else {
-                LOGGER.warning("Invalid dependency coordinate: " + dep);
+                LOGGER.log(Level.WARNING, "Invalid dependency coordinate: {0}", dep);
             }
         }
     }
@@ -287,9 +288,9 @@ public class RemappingDependencyManager {
             final DownloadResult result = downloader.download(coordinate, librariesDirectory.toFile());
             if (result.success() && result.file() != null) {
                 inputJars.add(result.file().toPath());
-                LOGGER.fine("Downloaded " + coordinate.toGavString() + " -> " + result.file().getName());
+                LOGGER.log(Level.FINE, () -> "Downloaded " + coordinate.toGavString() + " -> " + result.file().getName());
             } else {
-                LOGGER.warning("Failed to download dependency: " + coordinate.toGavString());
+                LOGGER.log(Level.WARNING, "Failed to download dependency: {0}", coordinate.toGavString());
             }
         }
 
@@ -304,7 +305,7 @@ public class RemappingDependencyManager {
                 final Path output = remappedDirectory.resolve(input.getFileName().toString());
 
                 if (isOutputUpToDate(output, input)) {
-                    LOGGER.fine("Using cached remapped JAR: " + output.getFileName());
+                    LOGGER.log(Level.FINE, () -> "Using cached remapped JAR: " + output.getFileName());
                     jarsToInject.add(output);
                     continue;
                 }
@@ -313,11 +314,11 @@ public class RemappingDependencyManager {
                     remap(input, output);
                     jarsToInject.add(output);
                 } catch (final IOException ex) {
-                    LOGGER.log(Level.WARNING, "Remapping failed for " + input.getFileName() + " (injecting original)", ex);
+                    LOGGER.log(Level.WARNING, ex, () -> "Remapping failed for " + input.getFileName() + " (injecting original)");
                     jarsToInject.add(input);
                 }
             }
-            LOGGER.info("Remapping complete: " + jarsToInject.size() + " artifact(s) prepared");
+            LOGGER.log(Level.INFO, "Remapping complete: {0} artifact(s) prepared", jarsToInject.size());
         }
 
         // Inject
@@ -326,15 +327,16 @@ public class RemappingDependencyManager {
             try {
                 if (injector.tryInject(classLoader, jar.toFile())) {
                     injected++;
-                    LOGGER.fine("Injected into classpath: " + jar.getFileName());
+                    LOGGER.log(Level.FINE, () -> "Injected into classpath: " + jar.getFileName());
                 } else {
-                    LOGGER.warning("Injection failed: " + jar.getFileName());
+                    LOGGER.log(Level.WARNING, "Injection failed: {0}", jar.getFileName());
                 }
             } catch (final Exception ex) {
-                LOGGER.log(Level.WARNING, "Injection error for " + jar.getFileName(), ex);
+                LOGGER.log(Level.WARNING, ex, () -> "Injection error for " + jar.getFileName());
             }
         }
-        LOGGER.info("Injected " + injected + " of " + jarsToInject.size() + " JAR(s) into classpath");
+        LOGGER.log(Level.INFO, "Injected {0} of {1} JAR(s) into classpath",
+                new Object[]{injected, jarsToInject.size()});
     }
 
     private void loadYamlDependencies(@NotNull final Class<?> contextClass) {
@@ -344,14 +346,14 @@ public class RemappingDependencyManager {
                 LOGGER.info("No dependencies found in YAML configuration");
                 return;
             }
-            LOGGER.info("Loaded " + yamlDeps.size() + " dependencies from YAML");
+            LOGGER.log(Level.INFO, "Loaded {0} dependencies from YAML", yamlDeps.size());
             for (final String dep : yamlDeps) {
                 final DependencyCoordinate coord = DependencyCoordinate.parse(dep);
                 if (coord != null) {
                     coordinates.add(coord);
-                    LOGGER.fine("YAML dependency: " + dep);
+                    LOGGER.log(Level.FINE, () -> "YAML dependency: " + dep);
                 } else {
-                    LOGGER.warning("Invalid dependency format in YAML: " + dep);
+                    LOGGER.log(Level.WARNING, "Invalid dependency format in YAML: {0}", dep);
                 }
             }
         } catch (final Exception ex) {
@@ -442,7 +444,7 @@ public class RemappingDependencyManager {
                   }
               });
             out.flush();
-            LOGGER.fine("Copied " + count.get() + " entries: " + inputJar.getFileName() + " -> " + outputJar.getFileName());
+            LOGGER.log(Level.FINE, () -> "Copied " + count.get() + " entries: " + inputJar.getFileName() + " -> " + outputJar.getFileName());
         } catch (UncheckedIOException uioe) {
             safeDelete(outputJar);
             throw uioe.getCause();
@@ -473,7 +475,7 @@ public class RemappingDependencyManager {
         try {
             Files.deleteIfExists(file);
         } catch (IOException ex) {
-            LOGGER.log(Level.FINE, "Failed to delete file: " + file, ex);
+            LOGGER.log(Level.FINE, ex, () -> "Failed to delete file: " + file);
         }
     }
 
@@ -550,12 +552,12 @@ public class RemappingDependencyManager {
         // Automatic base prefix can be used by external loaders; we don't auto-detect roots here in legacy mode.
         final String basePrefix = System.getProperty(RELOCATIONS_PREFIX_PROPERTY);
         if (basePrefix != null && !basePrefix.trim().isEmpty()) {
-            LOGGER.fine("Relocation base prefix configured (no automatic detection in legacy path): " + basePrefix.trim());
+            LOGGER.log(Level.FINE, () -> "Relocation base prefix configured (no automatic detection in legacy path): " + basePrefix.trim());
         }
 
         final String excludes = System.getProperty(RELOCATIONS_EXCLUDES_PROPERTY);
         if (excludes != null && !excludes.trim().isEmpty()) {
-            LOGGER.fine("Additional excluded relocation roots: " + excludes);
+            LOGGER.log(Level.FINE, () -> "Additional excluded relocation roots: " + excludes);
         }
     }
 
@@ -582,7 +584,7 @@ public class RemappingDependencyManager {
             Files.createDirectories(librariesDirectory);
             Files.createDirectories(remappedDirectory);
         } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, "Failed to create libraries directories: " + e.getMessage(), e);
+            LOGGER.log(Level.SEVERE, e, () -> "Failed to create libraries directories: " + e.getMessage());
         }
     }
 
@@ -600,13 +602,10 @@ public class RemappingDependencyManager {
                 + ", remapped=" + remappedDirectory
                 + ", deps=" + coordinates.size()
                 + ", relocations=" + relocations.size();
-        final String pluginInfo;
-        if (plugin != null) {
-            pluginInfo = ", plugin=" + plugin.getName()
-                    + ", anchor=" + (anchorClass != null ? anchorClass.getName() : "null");
-        } else {
-            pluginInfo = ", plugin=null, anchor=null";
-        }
+        final String pluginInfo = plugin != null
+                ? ", plugin=" + plugin.getName()
+                        + ", anchor=" + (anchorClass != null ? anchorClass.getName() : "null")
+                : ", plugin=null, anchor=null";
         return base + pluginInfo;
     }
 

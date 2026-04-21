@@ -36,6 +36,12 @@ public class PomParser {
 
     private static final Logger LOGGER = Logger.getLogger("JExDependency");
 
+    private static final String ELEMENT_GROUP_ID = "groupId";
+    private static final String ELEMENT_ARTIFACT_ID = "artifactId";
+    private static final String ELEMENT_VERSION = "version";
+    private static final String ELEMENT_DEPENDENCIES = "dependencies";
+    private static final String ELEMENT_DEPENDENCY = "dependency";
+
     /**
      * Parses the supplied POM input stream and returns a {@link ParsedPom}, or {@code null}
      * if the stream cannot be parsed (malformed XML, I/O error, etc.).
@@ -66,9 +72,9 @@ public class PomParser {
             final DependencyCoordinate parent = parseParent(root);
 
             // --- Own coordinates (groupId / version may be inherited from parent) ---
-            String groupId   = directChildText(root, "groupId");
-            String artifactId = directChildText(root, "artifactId");
-            String version   = directChildText(root, "version");
+            String groupId   = directChildText(root, ELEMENT_GROUP_ID);
+            String artifactId = directChildText(root, ELEMENT_ARTIFACT_ID);
+            String version   = directChildText(root, ELEMENT_VERSION);
 
             if (groupId   == null && parent != null) groupId   = parent.groupId();
             if (version   == null && parent != null) version   = parent.version();
@@ -82,7 +88,7 @@ public class PomParser {
             properties.put("project.artifactId",       artifactId);
             properties.put("project.version",          version);
             // ${version} is a deprecated alias for ${project.version}, still widely used
-            properties.putIfAbsent("version",          version);
+            properties.putIfAbsent(ELEMENT_VERSION,    version);
             if (parent != null) {
                 properties.put("project.parent.version", parent.version());
                 properties.put("project.parent.groupId", parent.groupId());
@@ -108,9 +114,9 @@ public class PomParser {
         final Element parentEl = directChildElement(root, "parent");
         if (parentEl == null) return null;
 
-        final String groupId   = directChildText(parentEl, "groupId");
-        final String artifactId = directChildText(parentEl, "artifactId");
-        final String version   = directChildText(parentEl, "version");
+        final String groupId   = directChildText(parentEl, ELEMENT_GROUP_ID);
+        final String artifactId = directChildText(parentEl, ELEMENT_ARTIFACT_ID);
+        final String version   = directChildText(parentEl, ELEMENT_VERSION);
 
         if (groupId == null || artifactId == null || version == null) return null;
         return new DependencyCoordinate(groupId, artifactId, version);
@@ -138,14 +144,14 @@ public class PomParser {
         final Element dmEl = directChildElement(root, "dependencyManagement");
         if (dmEl == null) return List.of();
 
-        final Element depsEl = directChildElement(dmEl, "dependencies");
+        final Element depsEl = directChildElement(dmEl, ELEMENT_DEPENDENCIES);
         if (depsEl == null) return List.of();
 
         return parseDependencyList(depsEl);
     }
 
     private @NotNull List<PomDependency> parseDependencies(@NotNull final Element root) {
-        final Element depsEl = directChildElement(root, "dependencies");
+        final Element depsEl = directChildElement(root, ELEMENT_DEPENDENCIES);
         if (depsEl == null) return List.of();
         return parseDependencyList(depsEl);
     }
@@ -156,53 +162,72 @@ public class PomParser {
 
         for (int i = 0; i < depNodes.getLength(); i++) {
             final Node node = depNodes.item(i);
-            // Only direct <dependency> children — getElementsByTagName would recurse too deep
-            if (node.getNodeType() != Node.ELEMENT_NODE) continue;
-            if (!"dependency".equals(localName(node))) continue;
-
-            final Element depEl = (Element) node;
-
-            final String groupId    = directChildText(depEl, "groupId");
-            final String artifactId = directChildText(depEl, "artifactId");
-            final String version    = directChildText(depEl, "version");   // may be null
-            final String scopeRaw   = directChildText(depEl, "scope");
-            final String optionalRaw = directChildText(depEl, "optional");
-            final String typeRaw    = directChildText(depEl, "type");
-
-            if (groupId == null || artifactId == null) continue;
-
-            // Skip POM-type entries in dependencyManagement (BOM imports) — following
-            // each BOM recursively would make the resolver far more complex and is not
-            // needed for the common library-dependency use case.
-            if ("pom".equalsIgnoreCase(typeRaw) && PomDependency.SCOPE_IMPORT.equals(scopeRaw)) {
-                continue;
+            final PomDependency parsed = parseDependencyNode(node);
+            if (parsed != null) {
+                result.add(parsed);
             }
-
-            final String scope    = scopeRaw != null ? scopeRaw : PomDependency.SCOPE_COMPILE;
-            final boolean optional = "true".equalsIgnoreCase(optionalRaw);
-
-            // Parse <exclusions>
-            final Set<String> exclusions = new HashSet<>();
-            final Element exclusionsEl = directChildElement(depEl, "exclusions");
-            if (exclusionsEl != null) {
-                final NodeList excNodes = exclusionsEl.getChildNodes();
-                for (int j = 0; j < excNodes.getLength(); j++) {
-                    final Node excNode = excNodes.item(j);
-                    if (excNode.getNodeType() != Node.ELEMENT_NODE) continue;
-                    if (!"exclusion".equals(localName(excNode))) continue;
-                    final Element excEl = (Element) excNode;
-                    final String excGroup    = directChildText(excEl, "groupId");
-                    final String excArtifact = directChildText(excEl, "artifactId");
-                    if (excGroup != null && excArtifact != null) {
-                        exclusions.add(excGroup + ":" + excArtifact);
-                    }
-                }
-            }
-
-            result.add(new PomDependency(groupId, artifactId, version, scope, optional, exclusions));
         }
 
         return result;
+    }
+
+    /**
+     * Parses a single {@code <dependency>} DOM node into a {@link PomDependency}, or returns {@code null} when the
+     * node should be skipped (non-element nodes, non-dependency elements, incomplete data, or BOM imports).
+     */
+    private @Nullable PomDependency parseDependencyNode(@NotNull final Node node) {
+        // Only direct <dependency> children - getElementsByTagName would recurse too deep
+        if (node.getNodeType() != Node.ELEMENT_NODE || !ELEMENT_DEPENDENCY.equals(localName(node))) {
+            return null;
+        }
+
+        final Element depEl = (Element) node;
+
+        final String groupId    = directChildText(depEl, ELEMENT_GROUP_ID);
+        final String artifactId = directChildText(depEl, ELEMENT_ARTIFACT_ID);
+        final String version    = directChildText(depEl, ELEMENT_VERSION);   // may be null
+        final String scopeRaw   = directChildText(depEl, "scope");
+        final String optionalRaw = directChildText(depEl, "optional");
+        final String typeRaw    = directChildText(depEl, "type");
+
+        if (groupId == null || artifactId == null) {
+            return null;
+        }
+
+        // Skip POM-type entries in dependencyManagement (BOM imports) - following each BOM recursively would
+        // make the resolver far more complex and is not needed for the common library-dependency use case.
+        if ("pom".equalsIgnoreCase(typeRaw) && PomDependency.SCOPE_IMPORT.equals(scopeRaw)) {
+            return null;
+        }
+
+        final String scope = scopeRaw != null ? scopeRaw : PomDependency.SCOPE_COMPILE;
+        final boolean optional = "true".equalsIgnoreCase(optionalRaw);
+        final Set<String> exclusions = parseExclusions(depEl);
+
+        return new PomDependency(groupId, artifactId, version, scope, optional, exclusions);
+    }
+
+    private @NotNull Set<String> parseExclusions(@NotNull final Element depEl) {
+        final Set<String> exclusions = new HashSet<>();
+        final Element exclusionsEl = directChildElement(depEl, "exclusions");
+        if (exclusionsEl == null) {
+            return exclusions;
+        }
+
+        final NodeList excNodes = exclusionsEl.getChildNodes();
+        for (int j = 0; j < excNodes.getLength(); j++) {
+            final Node excNode = excNodes.item(j);
+            if (excNode.getNodeType() != Node.ELEMENT_NODE || !"exclusion".equals(localName(excNode))) {
+                continue;
+            }
+            final Element excEl = (Element) excNode;
+            final String excGroup    = directChildText(excEl, ELEMENT_GROUP_ID);
+            final String excArtifact = directChildText(excEl, ELEMENT_ARTIFACT_ID);
+            if (excGroup != null && excArtifact != null) {
+                exclusions.add(excGroup + ":" + excArtifact);
+            }
+        }
+        return exclusions;
     }
 
     // -------------------------------------------------------------------------

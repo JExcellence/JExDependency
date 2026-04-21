@@ -16,10 +16,10 @@ ext["vendor"] = "JExcellence"
 
 dependencies {
     compileOnly(libs.paper.api)
-    compileOnly("org.jetbrains:annotations:24.1.0")
+    compileOnly(libs.jetbrains.annotations)
 
-    implementation("org.ow2.asm:asm:9.8")
-    implementation("org.ow2.asm:asm-commons:9.8")
+    implementation(libs.asm)
+    implementation(libs.asm.commons)
 }
 
 tasks {
