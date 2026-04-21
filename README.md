@@ -127,6 +127,76 @@ That's it. Libraries land under `plugins/ExamplePlugin/libraries/` and are injec
 
 ---
 
+## 🔁 Replace your ShadowJar relocate blocks
+
+If your `build.gradle.kts` currently looks like this:
+
+```kotlin
+tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
+    archiveBaseName.set("RDQ")
+    archiveVersion.set(rdqVersion)
+    archiveClassifier.set("Free")
+
+    relocate("com.github.benmanes", "de.jexcellence.remapped.com.github.benmanes")
+    relocate("me.devnatan.inventoryframework", "de.jexcellence.remapped.me.devnatan.inventoryframework")
+    relocate("com.tcoded", "de.jexcellence.remapped.com.tcoded")
+    relocate("com.cryptomorin.xseries", "de.jexcellence.remapped.com.cryptomorin.xseries")
+
+    configurations = listOf(project.configurations.getByName("runtimeClasspath"))
+    mergeServiceFiles()
+}
+```
+
+…you can throw it all away. **No shading. No relocate block. No 20 MB fat jar.**
+
+With JExDependency, the entire setup becomes:
+
+**1)** `build.gradle.kts` — no shadow plugin required:
+
+```kotlin
+dependencies {
+    implementation("de.jexcellence.dependency:jexdependency:2.0.0")
+
+    // These stay as compileOnly — they're downloaded at runtime, not shaded.
+    compileOnly("com.github.ben-manes.caffeine:caffeine:3.2.2")
+    compileOnly("me.devnatan:inventory-framework-paper:3.3.0")
+    compileOnly("com.tcoded:FoliaLib:0.5.1")
+    compileOnly("com.github.cryptomorin:XSeries:11.3.0")
+}
+```
+
+**2)** `src/main/resources/dependency/dependencies.yml`:
+
+```yaml
+dependencies:
+  - "com.github.ben-manes.caffeine:caffeine:3.2.2"
+  - "me.devnatan:inventory-framework-paper:3.3.0"
+  - "com.tcoded:FoliaLib:0.5.1"
+  - "com.github.cryptomorin:XSeries:11.3.0"
+```
+
+**3)** Bootstrap with relocation forced on:
+
+```java
+public final class RDQ extends JavaPlugin {
+    @Override
+    public void onLoad() {
+        // Equivalent to your old shadow relocate(...) block, at runtime.
+        JEDependency.initializeWithRemapping(this, RDQ.class);
+    }
+}
+```
+
+**4)** (Optional) Control the relocation prefix via a JVM flag — no rebuild needed:
+
+```
+-Djedependency.relocations.prefix=de.jexcellence.remapped
+```
+
+**Result:** a 50 KB plugin jar instead of 20 MB, a clean Git diff instead of a shaded-classes explosion, and per-server-operator control over relocations.
+
+---
+
 ## 🎯 Bootstrap modes
 
 | Method | Blocking | Forces relocation | When to use |

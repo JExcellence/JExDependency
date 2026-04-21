@@ -130,13 +130,13 @@ public class TransitiveDependencyResolver {
             @NotNull final Set<String> activeExclusions
     ) {
         if (depth >= MAX_TRANSITIVE_DEPTH) {
-            LOGGER.fine("Max transitive depth reached at: " + coordinate.toGavString());
+            LOGGER.log(Level.FINE, () -> "Max transitive depth reached at: " + coordinate.toGavString());
             return;
         }
 
         final ParsedPom pom = resolvedPomWithParentChain(coordinate);
         if (pom == null) {
-            LOGGER.warning("Could not resolve POM for: " + coordinate.toGavString() + " — skipping its transitives");
+            LOGGER.log(Level.WARNING, "Could not resolve POM for: {0} \u2014 skipping its transitives", coordinate.toGavString());
             return;
         }
 
@@ -144,50 +144,12 @@ public class TransitiveDependencyResolver {
         final Map<String, String> managedVersions = buildManagedVersionMap(pom);
 
         for (final PomDependency dep : pom.dependencies()) {
-            if (!dep.isRuntimeIncluded()) continue;
-
-            // Resolve property references in coordinates
-            final String resolvedGroup    = resolveProperties(dep.groupId(), pom);
-            final String resolvedArtifact = resolveProperties(dep.artifactId(), pom);
-            if (resolvedGroup == null || resolvedArtifact == null) continue;
-
-            // Check active exclusions from ancestor dependency declarations
-            final String depKey = resolvedGroup + ":" + resolvedArtifact;
-            if (activeExclusions.contains(depKey)
-                    || activeExclusions.contains(resolvedGroup + ":*")
-                    || activeExclusions.contains("*:" + resolvedArtifact)) {
-                LOGGER.fine("Excluded by ancestor rule: " + depKey);
+            final DependencyCoordinate resolved = resolveTransitiveDependency(dep, pom, managedVersions, coordinate, visited, activeExclusions);
+            if (resolved == null) {
                 continue;
             }
 
-            // Resolve version: inline → dependencyManagement → give up
-            String resolvedVersion = resolveProperties(dep.version(), pom);
-            if (resolvedVersion == null) {
-                resolvedVersion = managedVersions.get(depKey);
-            }
-            if (resolvedVersion == null) {
-                LOGGER.fine("Version unresolvable for " + depKey + " in " + coordinate.toGavString() + " — skipping");
-                continue;
-            }
-
-            // Skip version ranges — we don't evaluate them
-            if (resolvedVersion.startsWith("[") || resolvedVersion.startsWith("(")) {
-                LOGGER.fine("Skipping version range " + resolvedVersion + " for " + depKey);
-                continue;
-            }
-
-            // Deduplication: nearest-wins (first version seen wins)
-            final String fullKey = resolvedGroup + ":" + resolvedArtifact + ":" + resolvedVersion;
-            if (visited.contains(fullKey)) continue;
-            // Also de-duplicate by G:A alone so we don't pull in two different versions
-            final String gaKey = resolvedGroup + ":" + resolvedArtifact;
-            if (visited.stream().anyMatch(v -> v.startsWith(gaKey + ":"))) continue;
-
-            visited.add(fullKey);
-
-            final DependencyCoordinate transitive =
-                    new DependencyCoordinate(resolvedGroup, resolvedArtifact, resolvedVersion);
-            result.add(transitive);
+            result.add(resolved);
 
             // Propagate exclusions declared on this dependency down the recursion
             final Set<String> newExclusions;
@@ -198,8 +160,75 @@ public class TransitiveDependencyResolver {
                 newExclusions.addAll(dep.exclusions());
             }
 
-            resolveRecursive(transitive, visited, result, depth + 1, newExclusions);
+            resolveRecursive(resolved, visited, result, depth + 1, newExclusions);
         }
+    }
+
+    /**
+     * Attempts to resolve a single {@link PomDependency} to a concrete {@link DependencyCoordinate}, applying
+     * runtime-scope filtering, property substitution, dependencyManagement version fallback, ancestor exclusion
+     * checks, and de-duplication. Returns {@code null} when the dependency should be skipped.
+     */
+    private @Nullable DependencyCoordinate resolveTransitiveDependency(
+            @NotNull final PomDependency dep,
+            @NotNull final ParsedPom pom,
+            @NotNull final Map<String, String> managedVersions,
+            @NotNull final DependencyCoordinate coordinate,
+            @NotNull final Set<String> visited,
+            @NotNull final Set<String> activeExclusions
+    ) {
+        if (!dep.isRuntimeIncluded()) {
+            return null;
+        }
+
+        // Resolve property references in coordinates
+        final String resolvedGroup = resolveProperties(dep.groupId(), pom);
+        final String resolvedArtifact = resolveProperties(dep.artifactId(), pom);
+        if (resolvedGroup == null || resolvedArtifact == null) {
+            return null;
+        }
+
+        // Check active exclusions from ancestor dependency declarations
+        final String depKey = resolvedGroup + ":" + resolvedArtifact;
+        if (activeExclusions.contains(depKey)
+                || activeExclusions.contains(resolvedGroup + ":*")
+                || activeExclusions.contains("*:" + resolvedArtifact)) {
+            LOGGER.log(Level.FINE, () -> "Excluded by ancestor rule: " + depKey);
+            return null;
+        }
+
+        // Resolve version: inline -> dependencyManagement -> give up
+        String resolvedVersion = resolveProperties(dep.version(), pom);
+        if (resolvedVersion == null) {
+            resolvedVersion = managedVersions.get(depKey);
+        }
+        if (resolvedVersion == null) {
+            final String finalKey = depKey;
+            LOGGER.log(Level.FINE, () -> "Version unresolvable for " + finalKey + " in " + coordinate.toGavString() + " \u2014 skipping");
+            return null;
+        }
+
+        // Skip version ranges - we don't evaluate them
+        if (resolvedVersion.startsWith("[") || resolvedVersion.startsWith("(")) {
+            final String finalVersion = resolvedVersion;
+            LOGGER.log(Level.FINE, () -> "Skipping version range " + finalVersion + " for " + depKey);
+            return null;
+        }
+
+        // Deduplication: nearest-wins (first version seen wins)
+        final String fullKey = resolvedGroup + ":" + resolvedArtifact + ":" + resolvedVersion;
+        if (visited.contains(fullKey)) {
+            return null;
+        }
+        // Also de-duplicate by G:A alone so we don't pull in two different versions
+        final String gaKey = resolvedGroup + ":" + resolvedArtifact;
+        if (visited.stream().anyMatch(v -> v.startsWith(gaKey + ":"))) {
+            return null;
+        }
+
+        visited.add(fullKey);
+
+        return new DependencyCoordinate(resolvedGroup, resolvedArtifact, resolvedVersion);
     }
 
     // -------------------------------------------------------------------------
@@ -279,7 +308,7 @@ public class TransitiveDependencyResolver {
                     return pom;
                 }
             } catch (final Exception exception) {
-                LOGGER.log(Level.FINE, "Failed to read cached POM: " + diskFile, exception);
+                LOGGER.log(Level.FINE, exception, () -> "Failed to read cached POM: " + diskFile);
             }
         }
 
@@ -306,15 +335,15 @@ public class TransitiveDependencyResolver {
                 final ParsedPom pom = pomParser.parse(is);
                 if (pom != null) {
                     pomCache.put(cacheKey, pom);
-                    LOGGER.fine("Resolved POM: " + coordinate.toGavString() + " from " + repo.name());
+                    LOGGER.log(Level.FINE, () -> "Resolved POM: " + coordinate.toGavString() + " from " + repo.name());
                     return pom;
                 }
             } catch (final Exception exception) {
-                LOGGER.log(Level.FINE, "Failed to parse POM from " + repo.name(), exception);
+                LOGGER.log(Level.FINE, exception, () -> "Failed to parse POM from " + repo.name());
             }
         }
 
-        LOGGER.warning("Could not download POM: " + coordinate.toGavString());
+        LOGGER.log(Level.WARNING, "Could not download POM: {0}", coordinate.toGavString());
         return null;
     }
 

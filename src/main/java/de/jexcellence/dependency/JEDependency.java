@@ -11,6 +11,7 @@ import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.concurrent.CompletableFuture;
+import java.util.logging.Level;
 
 /**
  * Entry point for plugins to bootstrap the runtime dependency system. The class coordinates YAML discovery,.
@@ -131,9 +132,7 @@ public class JEDependency {
             @NotNull final Class<?> anchorClass,
             @Nullable final String[] additionalDependencies
     ) {
-        return CompletableFuture.runAsync(() -> {
-            performInitialization(plugin, anchorClass, additionalDependencies, false);
-        });
+        return CompletableFuture.runAsync(() -> performInitialization(plugin, anchorClass, additionalDependencies, false));
     }
 
     /**
@@ -218,7 +217,7 @@ public class JEDependency {
             final boolean forceRemapping
     ) {
         final String serverType = getServerType();
-        plugin.getLogger().info("JEDependency initializing on " + serverType);
+        plugin.getLogger().log(Level.INFO, "JEDependency initializing on {0}", serverType);
 
         // On Paper plugin loader (1.20+), inject pre-downloaded libraries but do NOT return early.
         // Continue with full initialization to leverage the complete feature set.
@@ -236,7 +235,7 @@ public class JEDependency {
 
         if (shouldUseRemapping && remappingAvailable) {
             final String remappingSource = forceRemapping ? "API" : "system property";
-            plugin.getLogger().info("Using RemappingDependencyManager (remapping requested via " + remappingSource + ")");
+            plugin.getLogger().log(Level.INFO, "Using RemappingDependencyManager (remapping requested via {0})", remappingSource);
 
             if (initializeWithRemappingManager(plugin, anchorClass, additionalDependencies)) {
                 plugin.getLogger().info("JEDependency initialization completed with remapping");
@@ -280,13 +279,13 @@ public class JEDependency {
                 : libsFolder;
 
         if (!targetFolder.exists() || !targetFolder.isDirectory()) {
-            plugin.getLogger().warning("Libraries folder not found: " + targetFolder);
+            plugin.getLogger().log(Level.WARNING, "Libraries folder not found: {0}", targetFolder);
             return;
         }
 
         final File[] jarFiles = targetFolder.listFiles((dir, name) -> name.toLowerCase().endsWith(".jar"));
         if (jarFiles == null || jarFiles.length == 0) {
-            plugin.getLogger().info("No JAR files found in: " + targetFolder);
+            plugin.getLogger().log(Level.INFO, "No JAR files found in: {0}", targetFolder);
             return;
         }
 
@@ -298,16 +297,17 @@ public class JEDependency {
             final boolean ok = injector.tryInject(pluginClassLoader, jarFile);
             if (ok) {
                 injected++;
-                plugin.getLogger().fine("Injected: " + jarFile.getName());
+                plugin.getLogger().log(Level.FINE, () -> "Injected: " + jarFile.getName());
             } else {
                 failed++;
-                plugin.getLogger().warning("Failed to inject " + jarFile.getName());
+                plugin.getLogger().log(Level.WARNING, "Failed to inject {0}", jarFile.getName());
             }
         }
 
-        plugin.getLogger().info("Injected " + injected + " libraries"
-                + (failed > 0 ? (" (" + failed + " failed)") : "")
-                + " from " + targetFolder.getName() + " into runtime classloader");
+        final int injectedFinal = injected;
+        final int failedFinal = failed;
+        plugin.getLogger().log(Level.INFO, "Injected {0} libraries{1} from {2} into runtime classloader",
+                new Object[]{injectedFinal, failedFinal > 0 ? " (" + failedFinal + " failed)" : "", targetFolder.getName()});
     }
 
     /**
@@ -373,8 +373,8 @@ public class JEDependency {
             return invokeInitializeMethod(manager, additionalDependencies, plugin, anchorClass);
 
         } catch (final Throwable throwable) {
-            plugin.getLogger().severe("Failed to initialize RemappingDependencyManager: "
-                    + throwable.getClass().getSimpleName() + ": " + throwable.getMessage());
+            plugin.getLogger().log(Level.SEVERE, "Failed to initialize RemappingDependencyManager: {0}: {1}",
+                    new Object[]{throwable.getClass().getSimpleName(), throwable.getMessage()});
             return false;
         }
     }
@@ -428,12 +428,7 @@ public class JEDependency {
             @NotNull final Class<?> anchorClass
     ) {
         try {
-            Method addDependenciesMethod = null;
-            try {
-                addDependenciesMethod = manager.getClass().getMethod("addDependencies", String[].class);
-            } catch (final NoSuchMethodException ignored) {
-            }
-
+            final Method addDependenciesMethod = findAddDependenciesMethod(manager);
             final Method loadAllMethod = manager.getClass().getMethod("loadAll", ClassLoader.class);
 
             if (addDependenciesMethod != null && additionalDependencies != null) {
@@ -447,6 +442,15 @@ public class JEDependency {
 
         } catch (final Exception exception) {
             return false;
+        }
+    }
+
+    private static @Nullable Method findAddDependenciesMethod(@NotNull final Object manager) {
+        try {
+            return manager.getClass().getMethod("addDependencies", String[].class);
+        } catch (final NoSuchMethodException ignored) {
+            // Optional method; absence is handled by caller returning null.
+            return null;
         }
     }
 

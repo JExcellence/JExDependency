@@ -67,7 +67,7 @@ public class DependencyDownloader {
     public void addRepository(@NotNull final String repositoryUrl) {
         final String normalizedUrl = repositoryUrl.endsWith("/") ? repositoryUrl : repositoryUrl + "/";
         customRepositories.add(normalizedUrl);
-        logger.fine("Added custom repository: " + normalizedUrl);
+        logger.log(Level.FINE, () -> "Added custom repository: " + normalizedUrl);
     }
 
     /**
@@ -105,15 +105,15 @@ public class DependencyDownloader {
         final File targetFile = new File(targetDirectory, coordinate.toFileName());
 
         if (isValidExistingFile(targetFile)) {
-            logger.fine("Dependency already exists: " + targetFile.getName());
+            logger.log(Level.FINE, () -> "Dependency already exists: " + targetFile.getName());
             return DownloadResult.success(coordinate, targetFile);
         }
 
-        logger.fine("Downloading dependency: " + coordinate.toGavString());
+        logger.log(Level.FINE, () -> "Downloading dependency: " + coordinate.toGavString());
 
         for (final String customRepo : customRepositories) {
             final String downloadUrl = customRepo + coordinate.toRepositoryPath();
-            logger.finest("Trying custom repository: " + downloadUrl);
+            logger.log(Level.FINEST, () -> "Trying custom repository: " + downloadUrl);
 
             if (attemptDownload(downloadUrl, targetFile)) {
                 logger.fine("Downloaded from custom repository");
@@ -123,16 +123,16 @@ public class DependencyDownloader {
 
         for (final RepositoryType repository : RepositoryType.values()) {
             final String downloadUrl = repository.buildUrl(coordinate);
-            logger.finest("Trying repository: " + repository.name() + " at " + downloadUrl);
+            logger.log(Level.FINEST, () -> "Trying repository: " + repository.name() + " at " + downloadUrl);
 
             if (attemptDownload(downloadUrl, targetFile)) {
-                logger.fine("Downloaded from repository: " + repository.name());
+                logger.log(Level.FINE, () -> "Downloaded from repository: " + repository.name());
                 return DownloadResult.success(coordinate, targetFile);
             }
         }
 
         final String errorMessage = "Failed to download from any repository";
-        logger.warning(errorMessage + ": " + coordinate.toGavString());
+        logger.log(Level.WARNING, "{0}: {1}", new Object[]{errorMessage, coordinate.toGavString()});
         return DownloadResult.failure(coordinate, errorMessage);
     }
 
@@ -159,26 +159,29 @@ public class DependencyDownloader {
                 if (responseCode >= 300 && responseCode < 400) {
                     final String location = connection.getHeaderField("Location");
                     if (location == null || location.isEmpty()) {
-                        logger.warning("Redirect without Location header from: " + url);
+                        logger.log(Level.WARNING, "Redirect without Location header from: {0}", url);
                         return false;
                     }
 
                     url = URI.create(location).toURL();
-                    logger.finest("Redirect " + responseCode + " to " + url);
+                    final URL redirectUrl = url;
+                    logger.log(Level.FINEST, () -> "Redirect " + responseCode + " to " + redirectUrl);
                     redirectCount++;
                     continue;
                 }
 
-                if (responseCode != 404)
-                    logger.warning("HTTP " + responseCode + " when downloading " + url);
+                if (responseCode != 404) {
+                    final URL currentUrl = url;
+                    logger.log(Level.WARNING, "HTTP {0} when downloading {1}", new Object[]{responseCode, currentUrl});
+                }
                 return false;
             }
 
-            logger.warning("Too many redirects (" + MAX_REDIRECTS + ") for " + downloadUrl);
+            logger.log(Level.WARNING, "Too many redirects ({0}) for {1}", new Object[]{MAX_REDIRECTS, downloadUrl});
             return false;
 
         } catch (final Exception exception) {
-            logger.log(Level.FINE, "Download failed from URL: " + downloadUrl, exception);
+            logger.log(Level.FINE, exception, () -> "Download failed from URL: " + downloadUrl);
             return false;
         }
     }
@@ -207,7 +210,7 @@ public class DependencyDownloader {
 
         moveToFinalLocation(tempFile, targetFile);
 
-        logger.fine("Downloaded: " + targetFile.getName() + " (" + bytesWritten + " bytes)");
+        logger.log(Level.FINE, () -> "Downloaded: " + targetFile.getName() + " (" + bytesWritten + " bytes)");
         verifyChecksumBestEffort(url, targetFile);
 
         return true;
@@ -221,20 +224,19 @@ public class DependencyDownloader {
             @NotNull final URL url
     ) {
         if (bytesWritten <= 0) {
-            logger.warning("Downloaded 0 bytes from " + url);
+            logger.log(Level.WARNING, "Downloaded 0 bytes from {0}", url);
             return false;
         }
 
         if (expectedLength > 0 && bytesWritten != expectedLength) {
-            logger.warning(String.format(Locale.ROOT,
-                    "Content-Length mismatch for %s: expected %d, got %d",
-                    url, expectedLength, bytesWritten));
+            logger.log(Level.WARNING, "Content-Length mismatch for {0}: expected {1}, got {2}",
+                    new Object[]{url, expectedLength, bytesWritten});
             return false;
         }
 
         if (!isValidJarFile(file)) {
-            logger.warning("Downloaded file is not a valid JAR: " + file.getName() +
-                    " (Content-Type=" + contentType + ", bytes=" + bytesWritten + ")");
+            logger.log(Level.WARNING, "Downloaded file is not a valid JAR: {0} (Content-Type={1}, bytes={2})",
+                    new Object[]{file.getName(), contentType, bytesWritten});
             return false;
         }
 
@@ -295,7 +297,7 @@ public class DependencyDownloader {
         try {
             Files.deleteIfExists(file.toPath());
         } catch (final IOException exception) {
-            logger.log(Level.FINE, "Failed to delete file: " + file, exception);
+            logger.log(Level.FINE, exception, () -> "Failed to delete file: " + file);
         }
     }
 
@@ -347,14 +349,13 @@ public class DependencyDownloader {
 
             final String actual = sha1Hex(jarFile);
             if (expected.equalsIgnoreCase(actual)) {
-                logger.fine("Checksum OK: " + jarFile.getName());
+                logger.log(Level.FINE, () -> "Checksum OK: " + jarFile.getName());
             } else {
-                logger.warning("Checksum mismatch for " + jarFile.getName()
-                        + " — expected " + expected + ", got " + actual
-                        + ". The artifact may be corrupt; consider deleting it and restarting.");
+                logger.log(Level.WARNING, "Checksum mismatch for {0} \u2014 expected {1}, got {2}. The artifact may be corrupt; consider deleting it and restarting.",
+                        new Object[]{jarFile.getName(), expected, actual});
             }
         } catch (final Exception exception) {
-            logger.log(Level.FINEST, "SHA-1 check skipped for " + jarFile.getName(), exception);
+            logger.log(Level.FINEST, exception, () -> "SHA-1 check skipped for " + jarFile.getName());
         }
     }
 
