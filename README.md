@@ -1,867 +1,366 @@
-# JEDependency
+<div align="center">
 
-[![Java](https://img.shields.io/badge/Java-21+-orange.svg)](https://www.oracle.com/java/)
-[![Minecraft](https://img.shields.io/badge/Minecraft-1.21+-green.svg)](https://www.minecraft.net/)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Build Status](https://img.shields.io/badge/Build-Passing-brightgreen.svg)](https://github.com/jexcellence/JEDependency)
+# JExDependency
 
-> **Modern dependency management and plugin architecture for Minecraft servers**
+**Ship lightweight Paper & Spigot plugins. Let your players download the libraries.**
 
-JEDependency is a powerful, lightweight library that provides automatic dependency resolution and a clean plugin architecture pattern for Minecraft server plugins. It eliminates the need to shade dependencies into your plugin JAR and provides a modern alternative to traditional plugin development patterns.
+Runtime dependency resolution, downloading, relocation, and classpath injection — purpose-built for modern Minecraft servers.
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Java 21](https://img.shields.io/badge/Java-21-orange.svg)](https://adoptium.net/)
+[![Paper](https://img.shields.io/badge/Paper-1.20%2B-blue.svg)](https://papermc.io/)
+[![Spigot](https://img.shields.io/badge/Spigot-supported-brightgreen.svg)](https://www.spigotmc.org/)
+[![Version](https://img.shields.io/badge/version-2.0.0-informational.svg)](https://github.com/JExcellence/JExDependency/releases)
+[![GitHub stars](https://img.shields.io/github/stars/JExcellence/JExDependency?style=social)](https://github.com/JExcellence/JExDependency/stargazers)
+
+[Quick Start](#-quick-start) • [Why JExDependency](#-why-jexdependency) • [Features](#-features) • [Configuration](#%EF%B8%8F-configuration) • [FAQ](#-faq)
+
+</div>
+
+---
+
+## 💡 Why JExDependency
+
+Minecraft plugin jars keep getting larger. Hibernate, Jackson, Caffeine, JDBC drivers — shading them all bloats your jar to 20 MB+ and guarantees classpath collisions the moment another plugin ships a different version.
+
+**JExDependency flips that model.** Declare dependencies in a tiny YAML file, ship a 50 KB plugin, and let the library download, verify, (optionally) relocate, and inject the JARs at runtime — on every flavour of Paper and Spigot, transparently.
+
+> Think of it as **Paper's `libraries` block, but portable, relocation-aware, and working on Spigot too.**
+
+---
 
 ## ✨ Features
 
-### 🚀 **Dependency Management**
-- **Automatic Download**: Downloads dependencies from Maven repositories at runtime
-- **Multiple Repositories**: Supports Maven Central, Sonatype, JitPack, and more
-- **YAML Configuration**: Define dependencies in a simple YAML file
-- **Classpath Injection**: Seamlessly injects dependencies into the runtime classpath
-- **Caching**: Downloaded dependencies are cached to avoid repeated downloads
+- 🧩 **Universal loader** — Paper plugin-loader handshake on 1.20+, legacy bootstrap on Spigot/older Paper. Auto-detected.
+- 📦 **YAML-first descriptors** — merge generic / Paper-only / Spigot-only files, deduplicate versions, normalise coordinates.
+- 🔀 **Optional ASM relocation** — isolate conflicting packages without paying the CPU cost when you don't need it.
+- ⚡ **Sync or async bootstrap** — block `onLoad()` for simplicity, or return a `CompletableFuture` for non-blocking startup.
+- 🔐 **Checksum-verified downloads** — corrupted artifacts are retried; temp dirs are wiped on every exit path.
+- ☕ **Java 21 ready** — module de-encapsulation and `--add-opens` semantics handled for reflective libraries.
+- 🧹 **Deterministic cache** — artefacts live under `plugins/<Plugin>/libraries/` and `.../libraries/remapped/`; safe to prune.
+- 🪵 **First-class logging** — every bootstrap cycle reports counts, timings, and redacted paths through the plugin logger.
 
-### 🏗️ **Plugin Architecture**
-- **Delegate Pattern**: Clean separation between plugin bootstrap and implementation
-- **Lifecycle Management**: Proper handling of plugin load, enable, and disable phases
-- **Utility Methods**: Common plugin functionality built-in
-- **Type Safety**: Full support for modern Java features and annotations
-
-### 🔧 **Modern Java**
-- **Java 21+ Support**: Built with modern Java features
-- **Module System**: Compatible with Java 9+ module system
-- **Comprehensive Documentation**: Full JavaDoc coverage
-- **Exception Safety**: Robust error handling and recovery
-
-## 📦 Installation
-
-Fork the project, do a maven/gradle clean install - install it locally on your device. So you can access it through gradle/maven using:
-
-### Maven
-```xml
-<dependency>
-    <groupId>de.jexcellence.dependency</groupId>
-    <artifactId>JEDependency</artifactId>
-    <version>2.0.0</version>
-</dependency>
-```
-
-### Gradle
-```gradle
-dependencies {
-    implementation 'de.jexcellence.dependency:JEDependency:2.0.0'
-}
-```
+---
 
 ## 🚀 Quick Start
 
-### Basic Dependency Loading
+### 1. Add the dependency
 
-```java
-public class MyPlugin extends JavaPlugin {
-    @Override
-    public void onLoad() {
-        // Load dependencies programmatically
-        JEDependency.initialize(this, MyPlugin.class, new String[]{
-            "org.apache.commons:commons-lang3:3.12.0",
-            "com.google.guava:guava:32.1.3-jre",
-            "com.fasterxml.jackson.core:jackson-core:2.15.2"
-        });
-    }
-    
-    @Override
-    public void onEnable() {
-        // Your plugin logic here
-        // Dependencies are now available on the classpath
-    }
+Replace `VERSION` with the latest [release tag](https://github.com/JExcellence/JExDependency/releases).
+
+<details open>
+<summary><b>Gradle (Kotlin DSL)</b></summary>
+
+```kotlin
+repositories {
+    maven("https://repo.jexcellence.de/releases")
+}
+
+dependencies {
+    implementation("de.jexcellence.dependency:jexdependency:VERSION")
 }
 ```
 
-### YAML Configuration
+</details>
 
-Create `/src/main/resources/dependency/dependencies.yml`:
+<details>
+<summary><b>Gradle (Groovy)</b></summary>
+
+```groovy
+repositories {
+    maven { url 'https://repo.jexcellence.de/releases' }
+}
+
+dependencies {
+    implementation 'de.jexcellence.dependency:jexdependency:VERSION'
+}
+```
+
+</details>
+
+<details>
+<summary><b>Maven</b></summary>
+
+```xml
+<repositories>
+    <repository>
+        <id>jexcellence</id>
+        <url>https://repo.jexcellence.de/releases</url>
+    </repository>
+</repositories>
+
+<dependency>
+    <groupId>de.jexcellence.dependency</groupId>
+    <artifactId>jexdependency</artifactId>
+    <version>VERSION</version>
+</dependency>
+```
+
+</details>
+
+### 2. Declare runtime libraries
+
+Create `src/main/resources/dependency/dependencies.yml`:
 
 ```yaml
 dependencies:
-  - "org.apache.commons:commons-lang3:3.12.0"
-  - "com.google.guava:guava:32.1.3-jre"
-  - "com.fasterxml.jackson.core:jackson-core:2.15.2"
-  - "org.slf4j:slf4j-api:2.0.7"
+  - "com.github.ben-manes.caffeine:caffeine:3.2.2"
+  - "com.fasterxml.jackson.core:jackson-databind:2.18.2"
+  - "com.mysql:mysql-connector-j:9.2.0"
 ```
 
-Then in your plugin:
+Need platform-specific sets? Add `dependencies-paper.yml` or `dependencies-spigot.yml` — they are merged automatically.
+
+### 3. Bootstrap in your plugin
 
 ```java
-public class MyPlugin extends JavaPlugin {
+public final class ExamplePlugin extends JavaPlugin {
     @Override
     public void onLoad() {
-        // Automatically loads from dependencies.yml
-        JEDependency.initialize(this, MyPlugin.class);
+        // Synchronous — simplest; blocks onLoad while JARs download.
+        JEDependency.initialize(this, ExamplePlugin.class);
     }
 }
 ```
 
-## 🏪 Complete Real-World Example
+That's it. Libraries land under `plugins/ExamplePlugin/libraries/` and are injected into your plugin's classloader before `onEnable()` fires.
 
-Let's create a comprehensive shop plugin that demonstrates JEDependency's full power with MySQL database integration and inventory framework for GUI management.
+---
 
-### Project Structure
+## 🔁 Replace your ShadowJar relocate blocks
+
+If your `build.gradle.kts` currently looks like this:
+
+```kotlin
+tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
+    archiveBaseName.set("RDQ")
+    archiveVersion.set(rdqVersion)
+    archiveClassifier.set("Free")
+
+    relocate("com.github.benmanes", "de.jexcellence.remapped.com.github.benmanes")
+    relocate("me.devnatan.inventoryframework", "de.jexcellence.remapped.me.devnatan.inventoryframework")
+    relocate("com.tcoded", "de.jexcellence.remapped.com.tcoded")
+    relocate("com.cryptomorin.xseries", "de.jexcellence.remapped.com.cryptomorin.xseries")
+
+    configurations = listOf(project.configurations.getByName("runtimeClasspath"))
+    mergeServiceFiles()
+}
 ```
-MyShopPlugin/
-├── src/main/java/com/example/myshop/
-│   ├── MyShopPlugin.java          # Bootstrap class
-│   ├── MyShopPluginImpl.java      # Implementation
-│   ├── database/
-│   │   └── DatabaseManager.java   # MySQL integration
-│   ├── gui/
-│   │   └── ShopGUI.java           # Inventory framework GUI
-│   └── commands/
-│       └── ShopCommand.java       # Command handling
-├── src/main/resources/
-│   ├── plugin.yml                 # Plugin configuration
-│   ├── dependency/
-│   │   └── dependencies.yml       # Dependencies configuration
-│   └── config.yml                 # Plugin settings
-└── libraries/                     # Auto-generated dependency cache
+
+…you can throw it all away. **No shading. No relocate block. No 20 MB fat jar.**
+
+With JExDependency, the entire setup becomes:
+
+**1)** `build.gradle.kts` — no shadow plugin required:
+
+```kotlin
+dependencies {
+    implementation("de.jexcellence.dependency:jexdependency:2.0.0")
+
+    // These stay as compileOnly — they're downloaded at runtime, not shaded.
+    compileOnly("com.github.ben-manes.caffeine:caffeine:3.2.2")
+    compileOnly("me.devnatan:inventory-framework-paper:3.3.0")
+    compileOnly("com.tcoded:FoliaLib:0.5.1")
+    compileOnly("com.github.cryptomorin:XSeries:11.3.0")
+}
 ```
 
-### 1. Dependencies Configuration
-
-Create `/src/main/resources/dependency/dependencies.yml`:
+**2)** `src/main/resources/dependency/dependencies.yml`:
 
 ```yaml
 dependencies:
-  # Database
-  - "mysql:mysql-connector-java:8.0.33"
-  - "com.zaxxer:HikariCP:5.0.1"
-  
-  # GUI Framework
-  - "com.github.stefvanschie.inventoryframework:IF:0.10.13"
-  
-  # Utilities
-  - "org.apache.commons:commons-lang3:3.12.0"
-  - "com.google.code.gson:gson:2.10.1"
+  - "com.github.ben-manes.caffeine:caffeine:3.2.2"
+  - "me.devnatan:inventory-framework-paper:3.3.0"
+  - "com.tcoded:FoliaLib:0.5.1"
+  - "com.github.cryptomorin:XSeries:11.3.0"
 ```
 
-### 2. Plugin Configuration
-
-Create `/src/main/resources/plugin.yml`:
-
-```yaml
-name: MyShopPlugin
-version: 1.0.0
-main: com.example.myshop.MyShopPlugin
-api-version: 1.21
-author: YourName
-description: A modern shop plugin with MySQL and GUI support
-load: STARTUP
-
-commands:
-  shop:
-    description: Open the shop GUI
-    usage: /shop
-    permission: myshop.use
-
-permissions:
-  myshop.use:
-    description: Allows using the shop
-    default: true
-  myshop.admin:
-    description: Shop administration
-    default: op
-```
-
-### 3. Bootstrap Class
-
-Create `MyShopPlugin.java`:
+**3)** Bootstrap with relocation forced on:
 
 ```java
-package com.example.myshop;
-
-import de.jexcellence.dependency.JEDependency;
-import de.jexcellence.dependency.PluginDelegate;
-import org.bukkit.plugin.java.JavaPlugin;
-
-/**
- * Bootstrap class for MyShopPlugin.
- * Handles dependency loading and delegates to implementation.
- */
-public final class MyShopPlugin extends JavaPlugin {
-    
-    private PluginDelegate pluginDelegate;
-    
+public final class RDQ extends JavaPlugin {
     @Override
     public void onLoad() {
-        getLogger().info("Loading MyShopPlugin...");
-        
-        try {
-            // Load dependencies first - this is crucial!
-            JEDependency.initialize(this, MyShopPlugin.class);
-            
-            // Create the actual plugin implementation
-            this.pluginDelegate = new MyShopPluginImpl();
-            this.pluginDelegate.onLoad(this);
-            
-            getLogger().info("MyShopPlugin loaded successfully!");
-            
-        } catch (Exception e) {
-            getLogger().severe("Failed to load MyShopPlugin: " + e.getMessage());
-            e.printStackTrace();
-            setEnabled(false);
-        }
-    }
-    
-    @Override
-    public void onEnable() {
-        if (this.pluginDelegate != null) {
-            this.pluginDelegate.onEnable(this);
-        }
-    }
-    
-    @Override
-    public void onDisable() {
-        if (this.pluginDelegate != null) {
-            this.pluginDelegate.onDisable(this);
-        }
+        // Equivalent to your old shadow relocate(...) block, at runtime.
+        JEDependency.initializeWithRemapping(this, RDQ.class);
     }
 }
 ```
 
-### 4. Implementation Class
-
-Create `MyShopPluginImpl.java`:
-
-```java
-package com.example.myshop;
-
-import com.example.myshop.commands.ShopCommand;
-import com.example.myshop.database.DatabaseManager;
-import com.example.myshop.gui.ShopGUI;
-import de.jexcellence.dependency.AbstractPluginDelegate;
-import org.bukkit.plugin.java.JavaPlugin;
-
-/**
- * Main implementation using the delegate pattern.
- * Contains all actual plugin logic.
- */
-public final class MyShopPluginImpl extends AbstractPluginDelegate {
-    
-    private DatabaseManager databaseManager;
-    private ShopGUI shopGUI;
-    
-    @Override
-    public void onLoad(JavaPlugin plugin) {
-        super.onLoad(plugin);
-        getLogger().info("Initializing MyShopPlugin implementation...");
-        // Dependencies are now available on the classpath
-    }
-    
-    @Override
-    public void onEnable(JavaPlugin plugin) {
-        super.onEnable(plugin);
-        
-        try {
-            // Initialize database connection
-            this.databaseManager = new DatabaseManager(this);
-            this.databaseManager.initialize();
-            
-            // Initialize GUI system
-            this.shopGUI = new ShopGUI(this, this.databaseManager);
-            
-            // Register commands
-            getPlugin().getCommand("shop").setExecutor(new ShopCommand(this.shopGUI));
-            
-            getLogger().info("MyShopPlugin enabled successfully!");
-            
-        } catch (Exception e) {
-            getLogger().severe("Failed to enable MyShopPlugin: " + e.getMessage());
-            e.printStackTrace();
-            getPlugin().setEnabled(false);
-        }
-    }
-    
-    @Override
-    public void onDisable(JavaPlugin plugin) {
-        getLogger().info("Disabling MyShopPlugin...");
-        
-        if (this.databaseManager != null) {
-            this.databaseManager.shutdown();
-        }
-        
-        getLogger().info("MyShopPlugin disabled successfully!");
-    }
-    
-    public DatabaseManager getDatabaseManager() {
-        return this.databaseManager;
-    }
-    
-    public ShopGUI getShopGUI() {
-        return this.shopGUI;
-    }
-}
-```
-
-### 5. Database Integration
-
-Create `database/DatabaseManager.java`:
-
-```java
-package com.example.myshop.database;
-
-import com.example.myshop.MyShopPluginImpl;
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
-import org.bukkit.configuration.file.FileConfiguration;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
-/**
- * Handles database operations using HikariCP and MySQL.
- */
-public final class DatabaseManager {
-    
-    private final MyShopPluginImpl plugin;
-    private HikariDataSource dataSource;
-    
-    public DatabaseManager(MyShopPluginImpl plugin) {
-        this.plugin = plugin;
-    }
-    
-    public void initialize() throws SQLException {
-        this.plugin.getLogger().info("Initializing database connection...");
-        
-        FileConfiguration config = this.plugin.getPlugin().getConfig();
-        
-        // Setup HikariCP connection pool
-        HikariConfig hikariConfig = new HikariConfig();
-        hikariConfig.setJdbcUrl("jdbc:mysql://" + 
-            config.getString("database.host", "localhost") + ":" +
-            config.getInt("database.port", 3306) + "/" +
-            config.getString("database.name", "myshop"));
-        hikariConfig.setUsername(config.getString("database.username", "root"));
-        hikariConfig.setPassword(config.getString("database.password", ""));
-        hikariConfig.setMaximumPoolSize(10);
-        hikariConfig.setConnectionTimeout(30000);
-        
-        this.dataSource = new HikariDataSource(hikariConfig);
-        this.createTables();
-        
-        this.plugin.getLogger().info("Database initialized successfully!");
-    }
-    
-    private void createTables() throws SQLException {
-        String createShopItemsTable = """
-            CREATE TABLE IF NOT EXISTS shop_items (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                material VARCHAR(50) NOT NULL,
-                display_name VARCHAR(100),
-                price DECIMAL(10,2) NOT NULL,
-                stock INT DEFAULT -1,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            )
-        """;
-        
-        try (Connection conn = this.dataSource.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(createShopItemsTable)) {
-            stmt.executeUpdate();
-        }
-    }
-    
-    public List<ShopItem> getAllItems() throws SQLException {
-        List<ShopItem> items = new ArrayList<>();
-        String query = "SELECT * FROM shop_items WHERE stock != 0";
-        
-        try (Connection conn = this.dataSource.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query);
-             ResultSet rs = stmt.executeQuery()) {
-            
-            while (rs.next()) {
-                items.add(new ShopItem(
-                    rs.getInt("id"),
-                    rs.getString("material"),
-                    rs.getString("display_name"),
-                    rs.getDouble("price"),
-                    rs.getInt("stock")
-                ));
-            }
-        }
-        
-        return items;
-    }
-    
-    public void shutdown() {
-        if (this.dataSource != null && !this.dataSource.isClosed()) {
-            this.dataSource.close();
-            this.plugin.getLogger().info("Database connection closed.");
-        }
-    }
-    
-    public static class ShopItem {
-        private final int id;
-        private final String material;
-        private final String displayName;
-        private final double price;
-        private final int stock;
-        
-        public ShopItem(int id, String material, String displayName, double price, int stock) {
-            this.id = id;
-            this.material = material;
-            this.displayName = displayName;
-            this.price = price;
-            this.stock = stock;
-        }
-        
-        // Getters
-        public int getId() { return id; }
-        public String getMaterial() { return material; }
-        public String getDisplayName() { return displayName; }
-        public double getPrice() { return price; }
-        public int getStock() { return stock; }
-    }
-}
-```
-
-### 6. GUI with Inventory Framework
-
-Create `gui/ShopGUI.java`:
-
-```java
-package com.example.myshop.gui;
-
-import com.example.myshop.MyShopPluginImpl;
-import com.example.myshop.database.DatabaseManager;
-import com.github.stefvanschie.inventoryframework.gui.GuiItem;
-import com.github.stefvanschie.inventoryframework.gui.type.ChestGui;
-import com.github.stefvanschie.inventoryframework.pane.StaticPane;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.Arrays;
-import java.util.List;
-
-/**
- * Shop GUI using InventoryFramework library.
- */
-public final class ShopGUI {
-    
-    private final MyShopPluginImpl plugin;
-    private final DatabaseManager databaseManager;
-    
-    public ShopGUI(MyShopPluginImpl plugin, DatabaseManager databaseManager) {
-        this.plugin = plugin;
-        this.databaseManager = databaseManager;
-    }
-    
-    public void openShop(Player player) {
-        try {
-            ChestGui gui = new ChestGui(6, ChatColor.DARK_GREEN + "Shop");
-            StaticPane pane = new StaticPane(0, 0, 9, 6);
-            
-            List<DatabaseManager.ShopItem> items = this.databaseManager.getAllItems();
-            
-            int slot = 0;
-            for (DatabaseManager.ShopItem shopItem : items) {
-                if (slot >= 54) break;
-                
-                Material material = Material.valueOf(shopItem.getMaterial().toUpperCase());
-                ItemStack item = new ItemStack(material);
-                ItemMeta meta = item.getItemMeta();
-                
-                if (meta != null) {
-                    meta.setDisplayName(ChatColor.YELLOW + shopItem.getDisplayName());
-                    meta.setLore(Arrays.asList(
-                        ChatColor.GRAY + "Price: " + ChatColor.GREEN + "$" + shopItem.getPrice(),
-                        ChatColor.GRAY + "Stock: " + ChatColor.WHITE + 
-                            (shopItem.getStock() == -1 ? "Unlimited" : shopItem.getStock()),
-                        "",
-                        ChatColor.YELLOW + "Click to purchase!"
-                    ));
-                    item.setItemMeta(meta);
-                }
-                
-                GuiItem guiItem = new GuiItem(item, event -> {
-                    event.setCancelled(true);
-                    Player clickedPlayer = (Player) event.getWhoClicked();
-                    this.handlePurchase(clickedPlayer, shopItem);
-                });
-                
-                pane.addItem(guiItem, slot % 9, slot / 9);
-                slot++;
-            }
-            
-            gui.addPane(pane);
-            gui.show(player);
-            
-        } catch (Exception e) {
-            this.plugin.getLogger().severe("Failed to open shop GUI: " + e.getMessage());
-            player.sendMessage(ChatColor.RED + "Failed to open shop. Please try again later.");
-        }
-    }
-    
-    private void handlePurchase(Player player, DatabaseManager.ShopItem item) {
-        player.sendMessage(ChatColor.GREEN + "You purchased " + item.getDisplayName() + 
-                          " for $" + item.getPrice() + "!");
-        // Implement full purchase logic here
-    }
-}
-```
-
-### 7. Command Handler
-
-Create `commands/ShopCommand.java`:
-
-```java
-package com.example.myshop.commands;
-
-import com.example.myshop.gui.ShopGUI;
-import org.bukkit.ChatColor;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
-public final class ShopCommand implements CommandExecutor {
-    
-    private final ShopGUI shopGUI;
-    
-    public ShopCommand(ShopGUI shopGUI) {
-        this.shopGUI = shopGUI;
-    }
-    
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!(sender instanceof Player)) {
-            sender.sendMessage(ChatColor.RED + "This command can only be used by players!");
-            return true;
-        }
-        
-        Player player = (Player) sender;
-        
-        if (!player.hasPermission("myshop.use")) {
-            player.sendMessage(ChatColor.RED + "You don't have permission to use the shop!");
-            return true;
-        }
-        
-        this.shopGUI.openShop(player);
-        return true;
-    }
-}
-```
-
-### 8. Configuration File
-
-Create `/src/main/resources/config.yml`:
-
-```yaml
-# MyShopPlugin Configuration
-database:
-  host: "localhost"
-  port: 3306
-  name: "myshop"
-  username: "root"
-  password: ""
-
-shop:
-  title: "Server Shop"
-  currency-symbol: "$"
-```
-
-### 🎯 Why This Example Works
-
-✅ **Clean Architecture**: Bootstrap handles dependencies, implementation handles logic  
-✅ **Real Dependencies**: Uses MySQL, HikariCP, InventoryFramework without shading  
-✅ **Proper Lifecycle**: Dependencies loaded in `onLoad()`, used in `onEnable()`  
-✅ **Error Handling**: Graceful failure handling throughout  
-✅ **Production Ready**: Connection pooling, GUI framework, proper configuration  
-
-### 🚀 Running the Example
-
-1. **Setup Database**: Create MySQL database named `myshop`
-2. **Configure**: Update `config.yml` with database credentials  
-3. **Build**: Compile with JEDependency dependency
-4. **Deploy**: Place in server's plugins folder
-5. **Start**: Dependencies automatically downloaded and injected
-6. **Use**: Players run `/shop` to open the GUI
-
-This demonstrates JEDependency's full power - no dependency shading needed, clean architecture, and modern Java practices!
-
-## 🏗️ Plugin Delegate Pattern
-
-JEDependency provides a modern plugin architecture that separates your plugin's bootstrap logic from its implementation.
-
-### Creating a Plugin Delegate
-
-```java
-public class MyPluginImpl extends AbstractPluginDelegate {
-    
-    public MyPluginImpl() {
-        super(); // Plugin instance will be set automatically
-    }
-    
-    @Override
-    public void onLoad(JavaPlugin plugin) {
-        super.onLoad(plugin);
-        getLogger().info("Plugin loading: " + getName());
-        
-        // Load your dependencies here
-        JEDependency.initialize(plugin, MyPluginImpl.class, new String[]{
-            "com.example:my-library:1.0.0"
-        });
-    }
-    
-    @Override
-    public void onEnable(JavaPlugin plugin) {
-        super.onEnable(plugin);
-        getLogger().info("Plugin enabled: " + getVersion());
-        
-        // Initialize your plugin logic
-        setupCommands();
-        registerListeners();
-    }
-    
-    @Override
-    public void onDisable(JavaPlugin plugin) {
-        getLogger().info("Plugin disabled");
-        // Cleanup logic
-    }
-    
-    private void setupCommands() {
-        // Use built-in utility methods
-        // getDataFolder(), getLogger(), etc. are available
-    }
-}
-```
-
-### Bootstrap Class
-
-```java
-public class MyPlugin extends JavaPlugin {
-    private PluginDelegate delegate;
-    
-    @Override
-    public void onLoad() {
-        this.delegate = new MyPluginImpl();
-        this.delegate.onLoad(this);
-    }
-    
-    @Override
-    public void onEnable() {
-        this.delegate.onEnable(this);
-    }
-    
-    @Override
-    public void onDisable() {
-        this.delegate.onDisable(this);
-    }
-}
-```
-
-## 📚 Advanced Usage
-
-### Custom Repository Configuration
-
-```java
-// The system automatically tries multiple repositories:
-// - Maven Central
-// - Sonatype OSS
-// - JitPack
-// - PaperMC
-// - And more...
-
-JEDependency.initialize(this, MyPlugin.class, new String[]{
-    "com.github.username:repository:version", // JitPack
-    "io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT" // PaperMC
-});
-```
-
-### Error Handling
-
-```java
-public class MyPlugin extends JavaPlugin {
-    @Override
-    public void onLoad() {
-        try {
-            JEDependency.initialize(this, MyPlugin.class, new String[]{
-                "com.example:my-dependency:1.0.0"
-            });
-        } catch (Exception e) {
-            getLogger().severe("Failed to load dependencies: " + e.getMessage());
-            // Handle gracefully or disable plugin
-        }
-    }
-}
-```
-
-### Mixed Configuration
-
-```java
-// Combine YAML and programmatic dependencies
-JEDependency.initialize(this, MyPlugin.class, new String[]{
-    "com.example:additional-lib:2.0.0" // Added to YAML dependencies
-});
-```
-
-## 🔧 Configuration
-
-### Supported Repositories
-
-JEDependency automatically searches these repositories in order:
-
-1. **Maven Central** - `https://central.maven.org/maven2`
-2. **Maven Central (Repo1)** - `https://repo1.maven.org/maven2`
-3. **Apache Maven** - `https://repo.maven.apache.org/maven2`
-4. **Sonatype OSS** - `https://oss.sonatype.org/content/groups/public/`
-5. **Sonatype Snapshots** - `https://oss.sonatype.org/content/repositories/snapshots`
-6. **JitPack** - `https://jitpack.io`
-7. **PaperMC** - `https://repo.papermc.io/repository/maven-public/`
-8. **And more...**
-
-### File Structure
+**4)** (Optional) Control the relocation prefix via a JVM flag — no rebuild needed:
 
 ```
-your-plugin/
-├── src/main/java/
-│   └── com/yourname/yourplugin/
-│       ├── YourPlugin.java (Bootstrap)
-│       └── YourPluginImpl.java (Implementation)
-├── src/main/resources/
-│   ├── plugin.yml
-│   └── dependency/
-│       └── dependencies.yml
-└── libraries/ (created automatically)
-    ├── commons-lang3-3.12.0.jar
-    ├── guava-32.1.3-jre.jar
-    └── ...
+-Djedependency.relocations.prefix=de.jexcellence.remapped
 ```
 
-## 🎯 Best Practices
+**Result:** a 50 KB plugin jar instead of 20 MB, a clean Git diff instead of a shaded-classes explosion, and per-server-operator control over relocations.
 
-### 1. **Load Dependencies Early**
-```java
-@Override
-public void onLoad() {
-    // Load dependencies in onLoad(), not onEnable()
-    JEDependency.initialize(this, MyPlugin.class);
-}
+---
+
+## 🎯 Bootstrap modes
+
+| Method | Blocking | Forces relocation | When to use |
+| --- | :---: | :---: | --- |
+| `JEDependency.initialize(plugin, anchor)` | ✅ | — | Default. Safe inside `onLoad()`. |
+| `JEDependency.initializeWithRemapping(plugin, anchor)` | ✅ | ✅ | You need guaranteed isolation from other plugins' libs. |
+| `JEDependency.initializeAsync(plugin, anchor)` | ❌ | — | Non-blocking startup; await the returned `CompletableFuture<Void>` before touching injected classes. |
+
+All three methods accept an optional `String[]` of extra Maven coordinates (`group:artifact:version[:classifier]`) appended to the YAML list.
+
+---
+
+## ⚙️ Configuration
+
+JExDependency is driven by JVM system properties so server operators can tweak behaviour without recompiling your plugin.
+
+| Property | Default | Purpose |
+| --- | --- | --- |
+| `-Djedependency.remap` | `false` | `true` / `1` / `yes` / `on` forces ASM relocation. |
+| `-Djedependency.relocations` | — | Comma-separated `pattern=target` overrides, e.g. `com.google.gson=mypkg.libs.gson`. |
+| `-Djedependency.relocations.prefix` | — | Global prefix applied to auto-relocated packages. |
+| `-Djedependency.relocations.excludes` | — | Packages that must never be relocated. |
+
+---
+
+## 🧠 How it works
+
+```
+┌──────────────────────────────────────────────────────────────────┐
+│  onLoad()  →  JEDependency.initialize(...)                       │
+└──────────────┬───────────────────────────────────────────────────┘
+               ▼
+   ┌───────────────────────┐     Paper 1.20+?
+   │  Server detection     │────────┐
+   └───────────────────────┘        ▼
+               │            ┌───────────────────────┐
+               │            │ Inject pre-downloaded │
+               │            │ libs via Paper loader │
+               │            └───────────┬───────────┘
+               ▼                        │
+   ┌───────────────────────┐            │
+   │  Merge YAML sources   │◀───────────┘
+   │  (generic + platform) │
+   └───────────┬───────────┘
+               ▼
+   ┌───────────────────────┐
+   │  Resolve + download   │  → checksum verify → cache under
+   │  from Maven repos     │    plugins/<Plugin>/libraries/
+   └───────────┬───────────┘
+               ▼
+   ┌───────────────────────┐  (only when -Djedependency.remap=true
+   │  Optional ASM remap   │   or initializeWithRemapping(...) is used)
+   └───────────┬───────────┘
+               ▼
+   ┌───────────────────────┐
+   │  URLClassLoader       │  → classes visible to your plugin
+   │  injection            │    before onEnable() fires.
+   └───────────────────────┘
 ```
 
-### 2. **Use Specific Versions**
-```yaml
-dependencies:
-  - "com.google.guava:guava:32.1.3-jre" # ✅ Specific version
-  # - "com.google.guava:guava:LATEST"   # ❌ Avoid LATEST
+---
+
+## 📁 Project layout
+
+```
+src/main/java/de/jexcellence/dependency/
+├── JEDependency.java          ← public entrypoints
+├── manager/DependencyManager  ← core resolution pipeline
+├── remapper/                  ← ASM relocation (opt-in)
+├── downloader/                ← Maven artefact retrieval + checksum
+├── injector/ClasspathInjector ← runtime classloader injection
+├── loader/                    ← Paper / Spigot loader adapters
+├── repository/                ← repository registry + mirrors
+├── resolver/                  ← coordinate + transitive resolution
+└── model/                     ← immutable data types
 ```
 
-### 3. **Handle Failures Gracefully**
-```java
-@Override
-public void onLoad() {
-    try {
-        JEDependency.initialize(this, MyPlugin.class);
-    } catch (Exception e) {
-        getLogger().severe("Dependency loading failed - plugin will be disabled");
-        setEnabled(false);
-        return;
-    }
-}
-```
+Full Javadoc lives next to the sources. Start from [`JEDependency`](src/main/java/de/jexcellence/dependency/JEDependency.java) and [`DependencyManager`](src/main/java/de/jexcellence/dependency/manager/DependencyManager.java).
 
-### 4. **Use the Delegate Pattern**
-```java
-// Separate bootstrap from implementation for cleaner code
-public class MyPlugin extends JavaPlugin {
-    private final PluginDelegate delegate = new MyPluginImpl();
-    
-    @Override public void onLoad() { delegate.onLoad(this); }
-    @Override public void onEnable() { delegate.onEnable(this); }
-    @Override public void onDisable() { delegate.onDisable(this); }
-}
-```
+---
 
-## 🔍 Troubleshooting
+## 🔍 Observability
 
-### Common Issues
+- Every stage logs through `plugin.getLogger()` — no custom appenders required.
+- FINE level reveals per-artifact download progress, checksum results, and relocation summaries.
+- Failure paths sanitise file system roots so logs are safe to share.
+- Start / end timestamps and dependency counts are emitted for automation to diff across restarts.
 
-**Dependencies not found:**
-```
-[SEVERE] Failed to download com.example:library:1.0.0 from any repository
-```
-- Verify the GAV coordinates are correct
-- Check if the dependency exists in supported repositories
-- Ensure network connectivity
+---
 
-**ClassNotFoundException at runtime:**
-```
-java.lang.ClassNotFoundException: com.example.MyClass
-```
-- Make sure dependencies are loaded in `onLoad()`, not `onEnable()`
-- Verify the dependency contains the expected classes
+## 🔐 Security practices
 
-**Module system issues:**
-```
-java.lang.IllegalAccessError: class X cannot access class Y
-```
-- JEDependency automatically handles module deencapsulation
-- Ensure you're using Java 21+ as recommended
+- Maven checksum validation on every downloaded jar; corrupted files trigger a retry and cache purge.
+- Remapping runs inside a sandboxed `URLClassLoader` so a half-relocated class can never leak into your plugin loader on failure.
+- Temporary directories are wiped on both success and failure — no stale bytecode survives restarts.
 
-### Debug Logging
+---
 
-Enable debug logging in your server configuration:
-```yaml
-# In your server's logging configuration
-loggers:
-  de.jexcellence.dependency: FINE
-```
+## ❓ FAQ
+
+<details>
+<summary><b>How is this different from Paper's built-in <code>libraries</code> block?</b></summary>
+<br>
+Paper's loader only works on Paper 1.20+ and gives you no relocation support. JExDependency runs on Spigot and older Paper too, adds optional ASM relocation, and — when the Paper loader <i>is</i> active — cooperates with it instead of duplicating work.
+</details>
+
+<details>
+<summary><b>Will it download every startup?</b></summary>
+<br>
+No. Artefacts are cached under the plugin's data folder and reused across restarts. Only missing or checksum-invalid jars are re-downloaded.
+</details>
+
+<details>
+<summary><b>Does async mode block <code>onEnable()</code>?</b></summary>
+<br>
+No. <code>initializeAsync</code> returns a <code>CompletableFuture&lt;Void&gt;</code> immediately. You decide whether to <code>.join()</code> before using the dependencies or to schedule work after completion.
+</details>
+
+<details>
+<summary><b>What Java versions are supported?</b></summary>
+<br>
+Java 21 is the primary target. Module de-encapsulation and <code>--add-opens</code> semantics for reflective libraries are handled for you.
+</details>
+
+<details>
+<summary><b>Does relocation rewrite my plugin's own classes?</b></summary>
+<br>
+No. Only downloaded dependency jars are visited. Your plugin bytecode is never touched.
+</details>
+
+---
+
+## 💬 Support & Contact
+
+Need a hand, found a bug, or want to bounce ideas around?
+
+- 📧 **Email** — [justin.eiletz@jexcellence.de](mailto:justin.eiletz@jexcellence.de)
+- 💬 **Discord** — [`jexcellence`](https://discord.com/users/jexcellence)
+- 🐛 **Issues** — [GitHub Issues](https://github.com/JExcellence/JExDependency/issues) for bugs and feature requests
+
+---
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
+Issues, discussions, and PRs are welcome.
 
-### Development Setup
+1. Fork the repo and create a feature branch.
+2. Run `./gradlew build` to verify the project compiles.
+3. Add tests or a reproduction case where applicable.
+4. Open a PR describing the change and the motivation.
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/jexcellence/JEDependency.git
-   cd JEDependency
-   ```
+Please follow the existing code style — no wildcard imports, Javadoc on public API, nullability annotations from `org.jetbrains.annotations`.
 
-2. **Build the project**
-   ```bash
-   ./gradlew build
-   ```
+---
 
-3. **Run tests**
-   ```bash
-   ./gradlew test
-   ```
+## 📜 License
 
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- Built for the Minecraft server development community
-- Inspired by modern dependency management practices
-- Thanks to all contributors and users
-
-## 📞 Support
-
-- **Issues**: [GitHub Issues](https://github.com/jexcellence/JEDependency/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/jexcellence/JEDependency/discussions)
-- **Documentation**: [Wiki](https://github.com/jexcellence/JEDependency/wiki)
+Released under the [MIT License](LICENSE). Use it, ship it, star it. ⭐
 
 ---
 
 <div align="center">
 
-**Made with ❤️ for the Minecraft community**
-
-[⭐ Star this project](https://github.com/jexcellence/JEDependency) if you find it useful!
+**Built with care by [JExcellence](https://github.com/JExcellence).**
+If JExDependency saves you a shaded jar today, consider giving it a star — it genuinely helps others find the project.
 
 </div>

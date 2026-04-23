@@ -1,98 +1,114 @@
 package de.jexcellence.dependency.model;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.Objects;
 
-public class Dependency {
-    
-    private final String groupId;
-    private final String artifactId;
-    private final String version;
-    private final String classifier;
-    private final String repository;
-    
-    public Dependency(String groupId, String artifactId, String version) {
+/**
+ * Immutable model representing a dependency declared in YAML including an optional classifier and repository override.
+ *
+ * @param groupId    Maven group identifier
+ * @param artifactId Maven artifact identifier
+ * @param version    version string to resolve
+ * @param classifier optional classifier segment (e.g. {@code sources})
+ * @param repository optional repository identifier when resolution should bypass defaults
+ */
+public record Dependency(
+        @NotNull String groupId,
+        @NotNull String artifactId,
+        @NotNull String version,
+        @Nullable String classifier,
+        @Nullable String repository
+) {
+
+    public Dependency {
+        Objects.requireNonNull(groupId, "groupId cannot be null");
+        Objects.requireNonNull(artifactId, "artifactId cannot be null");
+        Objects.requireNonNull(version, "version cannot be null");
+    }
+
+    /**
+     * Convenience constructor for dependencies without classifier or repository overrides.
+     *
+     * @param groupId    Maven group identifier
+     * @param artifactId Maven artifact identifier
+     * @param version    version string to resolve
+     */
+    public Dependency(
+            @NotNull final String groupId,
+            @NotNull final String artifactId,
+            @NotNull final String version
+    ) {
         this(groupId, artifactId, version, null, null);
     }
-    
-    public Dependency(String groupId, String artifactId, String version, String classifier, String repository) {
-        this.groupId = groupId;
-        this.artifactId = artifactId;
-        this.version = version;
-        this.classifier = classifier;
-        this.repository = repository;
-    }
-    
-    public String getGroupId() {
-        return groupId;
-    }
-    
-    public String getArtifactId() {
-        return artifactId;
-    }
-    
-    public String getVersion() {
-        return version;
-    }
-    
-    public String getClassifier() {
-        return classifier;
-    }
-    
-    public String getRepository() {
-        return repository;
-    }
-    
-    public String getFileName() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(artifactId).append("-").append(version);
+
+    /**
+     * Builds the file name (including classifier when present) expected at the repository location.
+     *
+     * @return jar file name
+     */
+    public @NotNull String toFileName() {
+        final StringBuilder builder = new StringBuilder()
+                .append(artifactId)
+                .append('-')
+                .append(version);
+
         if (classifier != null && !classifier.isEmpty()) {
-            sb.append("-").append(classifier);
+            builder.append('-').append(classifier);
         }
-        sb.append(".jar");
-        return sb.toString();
+
+        return builder.append(".jar").toString();
     }
-    
-    public String getPath() {
-        return groupId.replace('.', '/') + "/" + artifactId + "/" + version + "/" + getFileName();
+
+    /**
+     * Builds the repository-relative path for this dependency including the file name.
+     *
+     * @return repository path fragment
+     */
+    public @NotNull String toRepositoryPath() {
+        return groupId.replace('.', '/')
+                + '/' + artifactId
+                + '/' + version
+                + '/' + toFileName();
     }
-    
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Dependency that = (Dependency) o;
-        return Objects.equals(groupId, that.groupId) &&
-               Objects.equals(artifactId, that.artifactId) &&
-               Objects.equals(version, that.version) &&
-               Objects.equals(classifier, that.classifier);
-    }
-    
-    @Override
-    public int hashCode() {
-        return Objects.hash(groupId, artifactId, version, classifier);
-    }
-    
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(groupId).append(":").append(artifactId).append(":").append(version);
+
+    /**
+     * Formats the dependency as a Maven coordinate string.
+     *
+     * @return coordinate string in {@code group:artifact:version[:classifier]} format
+     */
+    public @NotNull String toGavString() {
+        final StringBuilder builder = new StringBuilder()
+                .append(groupId)
+                .append(':')
+                .append(artifactId)
+                .append(':')
+                .append(version);
+
         if (classifier != null && !classifier.isEmpty()) {
-            sb.append(":").append(classifier);
+            builder.append(':').append(classifier);
         }
-        return sb.toString();
+
+        return builder.toString();
     }
-    
-    public static Dependency parse(String dependencyString) {
-        String[] parts = dependencyString.split(":");
+
+    /**
+     * Parses a Maven coordinate string into a {@link Dependency} instance.
+     *
+     * @param dependencyString coordinate string in {@code group:artifact:version[:classifier]} format
+     *
+     * @return parsed dependency
+     */
+    public static @NotNull Dependency parse(@NotNull final String dependencyString) {
+        Objects.requireNonNull(dependencyString, "dependencyString cannot be null");
+
+        final String[] parts = dependencyString.split(":");
         if (parts.length < 3) {
             throw new IllegalArgumentException("Invalid dependency format: " + dependencyString);
         }
-        
-        String groupId = parts[0];
-        String artifactId = parts[1];
-        String version = parts[2];
-        String classifier = parts.length > 3 ? parts[3] : null;
-        
-        return new Dependency(groupId, artifactId, version, classifier, null);
+
+        final String classifier = parts.length > 3 ? parts[3] : null;
+        return new Dependency(parts[0], parts[1], parts[2], classifier, null);
     }
 }
