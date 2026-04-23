@@ -163,14 +163,14 @@ public abstract class PaginatedView<T> extends BaseView {
                                          @NotNull Player player,
                                          @NotNull Pagination pagination) {
         var prevItem = createItem(Material.ARROW,
-                i18n("previous", player).build().component());
+                i18nWithDefault("previous", player).build().component());
         render.layoutSlot('<', prevItem)
                 .updateOnStateChange(paginationState)
                 .displayIf(() -> !pagination.isLoading() && pagination.canBack())
                 .onClick(pagination::back);
 
         var nextItem = createItem(Material.ARROW,
-                i18n("next", player).build().component());
+                i18nWithDefault("next", player).build().component());
         render.layoutSlot('>', nextItem)
                 .updateOnStateChange(paginationState)
                 .displayIf(() -> !pagination.isLoading() && pagination.canAdvance())
@@ -186,7 +186,7 @@ public abstract class PaginatedView<T> extends BaseView {
 
         if (pagination.isLoading()) {
             var loadingItem = createItem(Material.CLOCK,
-                    i18n("loading", player).build().component());
+                    i18nWithDefault("loading", player).build().component());
             render.layoutSlot('p', loadingItem)
                     .updateOnStateChange(paginationState);
             return;
@@ -203,8 +203,8 @@ public abstract class PaginatedView<T> extends BaseView {
         );
 
         var pageItem = createItem(Material.PAPER,
-                i18n("page.name", player).withPlaceholders(placeholders).build().component(),
-                i18n("page.lore", player).withPlaceholders(placeholders).build().children());
+                i18nWithDefault("page.name", player).withPlaceholders(placeholders).build().component(),
+                i18nWithDefault("page.lore", player).withPlaceholders(placeholders).build().children());
         render.layoutSlot('p', pageItem)
                 .updateOnStateChange(paginationState);
     }

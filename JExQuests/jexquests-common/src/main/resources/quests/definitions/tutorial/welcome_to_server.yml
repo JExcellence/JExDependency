@@ -1,0 +1,67 @@
+# Welcome to the Server — second tutorial step. Gates the combat and
+# gathering chains behind a deliberate "first login went well" check
+# by requiring first_steps first. Grants a modest kit + unlocks
+# daily_gatherer.
+
+identifier: welcome_to_server
+category: tutorial
+displayName: "<gradient:#93c5fd:#2563eb>Welcome to the Server</gradient>"
+difficulty: EASY
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
+enabled: true
+prerequisites:
+  - first_steps
+dependents:
+  - daily_gatherer
+  - novice_miner
+  - novice_combat
+
+icon:
+  material: WRITTEN_BOOK
+
+requirement:
+  type: quest-completed
+  questIdentifier: first_steps
+  minCompletions: 1
+
+reward:
+  type: composite
+  children:
+    - { type: xp, amount: 100 }
+    - { type: currency, currency: coins, amount: 250 }
+    - { type: item, materialKey: BREAD, amount: 16, nbt: "{}" }
+    - { type: item, materialKey: LEATHER_CHESTPLATE, amount: 1, nbt: "{}" }
+
+tasks:
+  - identifier: plant_sapling
+    displayName: "<gray>Plant <white>1</white> oak sapling"
+    orderIndex: 0
+    difficulty: EASY
+    sequential: false
+    objective:
+      type: block-place
+      material: OAK_SAPLING
+      target: 1
+
+  - identifier: collect_wheat
+    displayName: "<gray>Harvest <white>10</white> wheat"
+    orderIndex: 1
+    difficulty: EASY
+    sequential: false
+    objective:
+      type: item-pickup
+      material: WHEAT
+      target: 10
+
+  - identifier: break_stone
+    displayName: "<gray>Mine <white>16</white> stone"
+    orderIndex: 2
+    difficulty: EASY
+    sequential: false
+    objective:
+      type: block-break
+      material: STONE
+      target: 16

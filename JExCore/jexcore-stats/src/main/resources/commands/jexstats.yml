@@ -1,0 +1,16 @@
+# JExCommand 2.0 tree for /jexstats
+name: jexstats
+description: "JExCore statistics delivery admin"
+aliases:
+  - jxs
+permission: "jexcore.stats.command"
+senders: [player, console]
+
+subcommands:
+  - name: status
+    description: "Show queue depth and counters"
+    permission: "jexcore.stats.command.status"
+
+  - name: flush
+    description: "Force an immediate drain of the queue"
+    permission: "jexcore.stats.command.flush"

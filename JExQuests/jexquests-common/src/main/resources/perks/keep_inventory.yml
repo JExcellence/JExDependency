@@ -1,0 +1,29 @@
+# Keep Inventory — per-player grave-loss protection. Toggle so
+# hardcore-style players can turn it off voluntarily. Expensive.
+
+identifier: keep_inventory
+category: survival
+displayName: "<gradient:#fca5a5:#dc2626>Soulbind</gradient>"
+description: "Your items remain on death while this toggle is active."
+kind: TOGGLE
+cooldownSeconds: 0
+enabled: true
+
+icon:
+  material: TOTEM_OF_UNDYING
+  enchanted: true
+
+requirement:
+  type: composite
+  op: AND
+  children:
+    - { type: rank, tree: warrior, minRankIdentifier: knight }
+    - { type: currency, currency: coins, op: GE, amount: 5000.0 }
+
+reward:
+  type: command
+  command: "tellraw {player} {\"text\":\"Soulbind ready — death cannot take what is bound.\",\"color\":\"red\"}"
+  asConsole: true
+
+behaviour:
+  specialType: KEEP_INVENTORY

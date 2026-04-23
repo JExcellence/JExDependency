@@ -1,0 +1,63 @@
+# Master Miner — the capstone of the non-combat mining chain. Tasks
+# reach into the Nether, rewards include an enchanted netherite pick.
+
+identifier: master_miner
+category: miner
+displayName: "<gradient:#cbd5e1:#64748b>Master Miner</gradient>"
+difficulty: HARD
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
+enabled: true
+prerequisites:
+  - skilled_miner
+dependents: []
+
+icon:
+  material: NETHERITE_PICKAXE
+  enchanted: true
+
+requirement:
+  type: quest-completed
+  questIdentifier: skilled_miner
+  minCompletions: 1
+
+reward:
+  type: composite
+  children:
+    - { type: xp, amount: 1000 }
+    - { type: currency, currency: coins, amount: 2500 }
+    - { type: item, materialKey: NETHERITE_PICKAXE, amount: 1, nbt: "{}" }
+    - { type: item, materialKey: ANCIENT_DEBRIS, amount: 4, nbt: "{}" }
+
+tasks:
+  - identifier: mine_ancient_debris
+    displayName: "<gray>Mine <white>8</white> ancient debris"
+    orderIndex: 0
+    difficulty: HARD
+    sequential: false
+    objective:
+      type: block-break
+      material: ANCIENT_DEBRIS
+      target: 8
+
+  - identifier: mine_nether_quartz
+    displayName: "<gray>Mine <white>64</white> nether quartz ore"
+    orderIndex: 1
+    difficulty: HARD
+    sequential: false
+    objective:
+      type: block-break
+      material: NETHER_QUARTZ_ORE
+      target: 64
+
+  - identifier: mine_emerald
+    displayName: "<gray>Mine <white>12</white> emerald ore"
+    orderIndex: 2
+    difficulty: HARD
+    sequential: false
+    objective:
+      type: block-break
+      material: EMERALD_ORE
+      target: 12

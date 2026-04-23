@@ -1,0 +1,59 @@
+# Novice Miner — opening of the mining chain. Costs no entry fee, so
+# anyone past the tutorial can pick it up. Rewards calibrated as a
+# starter pickaxe + enough iron to self-sustain.
+
+identifier: novice_miner
+category: miner
+displayName: "<gradient:#cbd5e1:#64748b>Novice Miner</gradient>"
+difficulty: EASY
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
+enabled: true
+prerequisites:
+  - welcome_to_server
+dependents:
+  - skilled_miner
+
+icon:
+  material: WOODEN_PICKAXE
+
+reward:
+  type: composite
+  children:
+    - { type: xp, amount: 120 }
+    - { type: currency, currency: coins, amount: 200 }
+    - { type: item, materialKey: IRON_PICKAXE, amount: 1, nbt: "{}" }
+    - { type: item, materialKey: TORCH, amount: 32, nbt: "{}" }
+
+tasks:
+  - identifier: mine_stone
+    displayName: "<gray>Mine <white>100</white> stone"
+    orderIndex: 0
+    difficulty: EASY
+    sequential: false
+    objective:
+      type: block-break
+      material: STONE
+      target: 100
+
+  - identifier: mine_coal
+    displayName: "<gray>Mine <white>32</white> coal ore"
+    orderIndex: 1
+    difficulty: EASY
+    sequential: false
+    objective:
+      type: block-break
+      material: COAL_ORE
+      target: 32
+
+  - identifier: mine_iron
+    displayName: "<gray>Mine <white>16</white> iron ore"
+    orderIndex: 2
+    difficulty: EASY
+    sequential: false
+    objective:
+      type: block-break
+      material: IRON_ORE
+      target: 16

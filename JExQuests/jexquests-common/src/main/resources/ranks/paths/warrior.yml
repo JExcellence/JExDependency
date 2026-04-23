@@ -1,0 +1,225 @@
+# Warrior rank tree — the martial path. Demonstrates the full rich
+# schema: tiers for the grid renderer, branching at Veteran into three
+# specialisations, LuckPerms group + prefix hooks for external sync,
+# and a 24-hour switch cooldown so players don't hop paths freely.
+
+identifier: warrior
+displayName: "<gradient:#fca5a5:#dc2626>Warrior</gradient>"
+description: "The path of strength and combat. Climb by defeating enemies and completing combat quests."
+displayOrder: 1
+enabled: true
+
+icon:
+  material: IRON_SWORD
+
+# Tree-level gating.
+finalTree: false
+requiresAllDone: false
+minimumTreesToBeDone: 0
+prerequisiteTrees: []
+
+# Cross-tree progression.
+allowSwitching: true
+switchCooldownSeconds: 86400    # 24 h
+
+ranks:
+  # ─── Tier 1 — Starter ──────────────────────────────────────────────
+  recruit:
+    tier: 1
+    orderIndex: 0
+    weight: 100
+    initialRank: true
+    luckPermsGroup: "warrior_recruit"
+    prefixKey: "<gray>[Recruit] </gray>"
+    displayName: "<gray>Recruit</gray>"
+    description: "Your first day on the job."
+    nextRanks: [soldier]
+    icon:
+      material: WOODEN_SWORD
+    reward:
+      type: composite
+      children:
+        - { type: item, materialKey: WOODEN_SWORD, amount: 1, nbt: "{}" }
+        - { type: item, materialKey: LEATHER_CHESTPLATE, amount: 1, nbt: "{}" }
+        - { type: currency, currency: coins, amount: 50 }
+
+  # ─── Tier 2 — Regular ──────────────────────────────────────────────
+  soldier:
+    tier: 2
+    orderIndex: 1
+    weight: 200
+    luckPermsGroup: "warrior_soldier"
+    prefixKey: "<white>[Soldier] </white>"
+    displayName: "<white>Soldier</white>"
+    description: "Basic training complete."
+    previousRanks: [recruit]
+    nextRanks: [veteran]
+    icon:
+      material: STONE_SWORD
+    requirement:
+      type: quest-completed
+      questIdentifier: novice_combat
+      minCompletions: 1
+    reward:
+      type: composite
+      children:
+        - { type: item, materialKey: IRON_SWORD, amount: 1, nbt: "{}" }
+        - { type: item, materialKey: IRON_CHESTPLATE, amount: 1, nbt: "{}" }
+        - { type: currency, currency: coins, amount: 200 }
+        - { type: xp, amount: 200 }
+
+  # ─── Tier 3 — Pivot point, branches into three specialisations ─────
+  veteran:
+    tier: 3
+    orderIndex: 2
+    weight: 300
+    luckPermsGroup: "warrior_veteran"
+    prefixKey: "<yellow>[Veteran] </yellow>"
+    displayName: "<yellow>Veteran</yellow>"
+    description: "Scarred by a hundred skirmishes."
+    previousRanks: [soldier]
+    nextRanks: [berserker, guardian, gladiator]
+    icon:
+      material: IRON_SWORD
+      enchanted: true
+    requirement:
+      type: quest-completed
+      questIdentifier: zombie_slayer_ii
+      minCompletions: 3
+    reward:
+      type: composite
+      children:
+        - { type: item, materialKey: DIAMOND_SWORD, amount: 1, nbt: "{}" }
+        - { type: item, materialKey: DIAMOND_CHESTPLATE, amount: 1, nbt: "{}" }
+        - { type: currency, currency: coins, amount: 750 }
+        - { type: xp, amount: 500 }
+
+  # ─── Tier 4 — Three parallel specialisations ───────────────────────
+  berserker:
+    tier: 4
+    orderIndex: 3
+    weight: 400
+    luckPermsGroup: "warrior_berserker"
+    prefixKey: "<red>[Berserker] </red>"
+    displayName: "<red>Berserker</red>"
+    description: "Offence above all. Trades defence for raw damage."
+    previousRanks: [veteran]
+    nextRanks: [warlord]
+    icon:
+      material: NETHERITE_AXE
+    requirement:
+      type: composite
+      op: AND
+      children:
+        - { type: quest-completed, questIdentifier: zombie_slayer_ii, minCompletions: 10 }
+        - { type: currency, currency: coins, op: GE, amount: 2000.0 }
+    reward:
+      type: composite
+      children:
+        - { type: item, materialKey: NETHERITE_AXE, amount: 1, nbt: "{}" }
+        - { type: currency, currency: coins, amount: 1500 }
+        - { type: xp, amount: 1000 }
+
+  guardian:
+    tier: 4
+    orderIndex: 4
+    weight: 400
+    luckPermsGroup: "warrior_guardian"
+    prefixKey: "<gold>[Guardian] </gold>"
+    displayName: "<gold>Guardian</gold>"
+    description: "Shield of the realm. Gains armour and protection."
+    previousRanks: [veteran]
+    nextRanks: [warlord]
+    icon:
+      material: SHIELD
+    requirement:
+      type: composite
+      op: AND
+      children:
+        - { type: quest-completed, questIdentifier: zombie_slayer_ii, minCompletions: 10 }
+        - { type: currency, currency: coins, op: GE, amount: 2000.0 }
+    reward:
+      type: composite
+      children:
+        - { type: item, materialKey: DIAMOND_HELMET, amount: 1, nbt: "{}" }
+        - { type: item, materialKey: SHIELD, amount: 1, nbt: "{}" }
+        - { type: currency, currency: coins, amount: 1500 }
+        - { type: xp, amount: 1000 }
+
+  gladiator:
+    tier: 4
+    orderIndex: 5
+    weight: 400
+    luckPermsGroup: "warrior_gladiator"
+    prefixKey: "<light_purple>[Gladiator] </light_purple>"
+    displayName: "<light_purple>Gladiator</light_purple>"
+    description: "Arena champion. Honour and glory in equal measure."
+    previousRanks: [veteran]
+    nextRanks: [warlord]
+    icon:
+      material: TRIDENT
+    requirement:
+      type: composite
+      op: AND
+      children:
+        - { type: quest-completed, questIdentifier: zombie_slayer_ii, minCompletions: 10 }
+        - { type: currency, currency: coins, op: GE, amount: 2000.0 }
+    reward:
+      type: composite
+      children:
+        - { type: item, materialKey: TRIDENT, amount: 1, nbt: "{}" }
+        - { type: currency, currency: coins, amount: 1500 }
+        - { type: xp, amount: 1000 }
+
+  # ─── Tier 5 — Capstone (all three branches converge) ───────────────
+  champion:
+    tier: 5
+    orderIndex: 6
+    weight: 500
+    luckPermsGroup: "warrior_champion"
+    prefixKey: "<gradient:#fde047:#f59e0b>[Champion] </gradient>"
+    displayName: "<gradient:#fde047:#f59e0b>Champion</gradient>"
+    description: "Few can match you on the field."
+    previousRanks: [berserker, guardian, gladiator]
+    nextRanks: [warlord]
+    icon:
+      material: NETHERITE_SWORD
+      enchanted: true
+    requirement:
+      type: quest-completed
+      questIdentifier: zombie_slayer_iii
+      minCompletions: 5
+    reward:
+      type: composite
+      children:
+        - { type: item, materialKey: NETHERITE_CHESTPLATE, amount: 1, nbt: "{}" }
+        - { type: item, materialKey: TOTEM_OF_UNDYING, amount: 2, nbt: "{}" }
+        - { type: currency, currency: coins, amount: 4000 }
+        - { type: xp, amount: 2500 }
+
+  # ─── Tier 6 — Endgame ──────────────────────────────────────────────
+  warlord:
+    tier: 6
+    orderIndex: 7
+    weight: 600
+    luckPermsGroup: "warrior_warlord"
+    prefixKey: "<gradient:#fca5a5:#dc2626>[Warlord] </gradient>"
+    displayName: "<gradient:#fca5a5:#dc2626>Warlord</gradient>"
+    description: "Battlefields bend to your will."
+    previousRanks: [champion]
+    nextRanks: []
+    icon:
+      material: NETHERITE_AXE
+      enchanted: true
+    requirement:
+      type: quest-completed
+      questIdentifier: dragon_slayer
+      minCompletions: 1
+    reward:
+      type: composite
+      children:
+        - { type: item, materialKey: NETHERITE_AXE, amount: 1, nbt: "{}" }
+        - { type: item, materialKey: NETHERITE_BLOCK, amount: 4, nbt: "{}" }
+        - { type: currency, currency: coins, amount: 10000 }
+        - { type: xp, amount: 5000 }
+        - { type: command, command: "broadcast <gradient:#fde047:#f59e0b>{player}</gradient> has been crowned <gradient:#fca5a5:#dc2626>Warlord</gradient>!", asConsole: true }

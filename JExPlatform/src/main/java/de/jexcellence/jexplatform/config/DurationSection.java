@@ -1,7 +1,7 @@
 package de.jexcellence.jexplatform.config;
 
-import de.jexcellence.configmapper.sections.AConfigSection;
 import de.jexcellence.configmapper.sections.CSAlways;
+import de.jexcellence.configmapper.sections.ConfigSection;
 import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
  * @since 1.0.0
  */
 @CSAlways
-public class DurationSection extends AConfigSection {
+public class DurationSection extends ConfigSection {
 
     private static final Pattern DURATION_PATTERN = Pattern.compile(
             "(?:(\\d+)\\s*(?:w|week|weeks)\\s*)?"

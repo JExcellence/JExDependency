@@ -1,0 +1,32 @@
+# Saturation — slows hunger drain. Pairs well with the farmer chain.
+
+identifier: saturation
+category: utility
+displayName: "<gradient:#86efac:#16a34a>Iron Stomach</gradient>"
+description: "Food fills you more, hunger fades slower."
+kind: PASSIVE
+cooldownSeconds: 0
+enabled: true
+
+icon:
+  material: COOKED_BEEF
+  enchanted: true
+
+requirement:
+  type: composite
+  op: AND
+  children:
+    - { type: quest-completed, questIdentifier: novice_farmer, minCompletions: 1 }
+    - { type: currency, currency: coins, op: GE, amount: 600.0 }
+
+reward:
+  type: command
+  command: "tellraw {player} {\"text\":\"Iron Stomach unlocked.\",\"color\":\"green\"}"
+  asConsole: true
+
+behaviour:
+  effect: SATURATION
+  amplifier: 0
+  durationTicks: 200
+  refreshEveryTicks: 120
+  particles: false

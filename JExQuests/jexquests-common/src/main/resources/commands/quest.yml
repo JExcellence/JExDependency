@@ -1,0 +1,46 @@
+# JExCommand 2.0 tree for /quest (JExQuests)
+name: quest
+description: "Quest interaction"
+aliases:
+  - q
+  - jexquest
+permission: "jexquests.command.quest"
+senders: [player]
+
+subcommands:
+  - name: list
+    description: "List available / active quests"
+    argumentSchema:
+      - { name: category, type: string, required: false, description: "Category filter" }
+
+  - name: info
+    description: "Inspect one quest"
+    argumentSchema:
+      - { name: quest, type: quest, required: true, description: "Quest identifier" }
+
+  - name: accept
+    description: "Accept a quest"
+    permission: "jexquests.command.quest.accept"
+    argumentSchema:
+      - { name: quest, type: quest, required: true, description: "Quest identifier" }
+
+  - name: abandon
+    description: "Abandon the active quest"
+    permission: "jexquests.command.quest.abandon"
+    argumentSchema:
+      - { name: quest, type: quest-active, required: true, description: "Quest identifier" }
+
+  - name: track
+    description: "Pin a quest to the sidebar"
+    argumentSchema:
+      - { name: quest, type: quest-active, required: false, description: "Quest identifier (empty clears)" }
+
+  - name: progress
+    description: "Show progress for the tracked / specified quest"
+    argumentSchema:
+      - { name: quest, type: quest-active, required: false, description: "Quest identifier" }
+
+  - name: sidebar
+    description: "Toggle the quest sidebar"
+    argumentSchema:
+      - { name: state, type: string, required: false, description: "on | off (defaults to toggle)" }

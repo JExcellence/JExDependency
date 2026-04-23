@@ -1,0 +1,35 @@
+# JExCommand 2.0 tree for /rank (JExQuests)
+name: rank
+description: "Rank interaction"
+aliases:
+  - r
+  - jexrank
+permission: "jexquests.command.rank"
+senders: [player, console]
+
+subcommands:
+  - name: info
+    description: "Show your current rank (or another player's)"
+    argumentSchema:
+      - { name: player, type: offline_player, required: false, description: "Target player" }
+      - { name: tree,   type: string,         required: false, description: "Rank tree identifier" }
+
+  - name: promote
+    description: "Attempt a rank promotion"
+    permission: "jexquests.command.rank.promote"
+    senders: [player]
+    argumentSchema:
+      - { name: tree, type: rank-tree, required: false, description: "Rank tree identifier" }
+
+  - name: path
+    description: "Switch your active rank path"
+    permission: "jexquests.command.rank.path"
+    senders: [player]
+    argumentSchema:
+      - { name: tree, type: rank-tree, required: true, description: "Rank tree identifier" }
+
+  - name: top
+    description: "Top ranked players for a tree"
+    argumentSchema:
+      - { name: tree,  type: rank-tree,       required: true,  description: "Rank tree identifier" }
+      - { name: limit, type: positive_long, required: false, description: "Rows to return (default 10)" }

@@ -1,0 +1,54 @@
+# Zombie Slayer II — the mid-tier follow-up. Double the kill count,
+# triple the reward. Gated behind five completions of tier I so new
+# players can't skip straight to the richer rewards.
+
+identifier: zombie_slayer_ii
+category: combat
+displayName: "<gradient:#fca5a5:#dc2626>Zombie Slayer <white>II</white></gradient>"
+difficulty: MEDIUM
+repeatable: true
+maxCompletions: -1
+cooldownSeconds: 10800    # 3 hours
+timeLimitSeconds: 0
+enabled: true
+prerequisites:
+  - zombie_slayer_i
+dependents:
+  - zombie_slayer_iii
+
+icon:
+  material: ZOMBIE_HEAD
+  enchanted: true
+
+requirement:
+  type: quest-completed
+  questIdentifier: zombie_slayer_i
+  minCompletions: 5
+
+reward:
+  type: composite
+  children:
+    - { type: xp, amount: 300 }
+    - { type: currency, currency: coins, amount: 450 }
+    - { type: item, materialKey: DIAMOND, amount: 1, nbt: "{}" }
+
+tasks:
+  - identifier: kill_zombies
+    displayName: "<gray>Defeat <white>40</white> zombies"
+    orderIndex: 0
+    difficulty: MEDIUM
+    sequential: false
+    objective:
+      type: entity-kill
+      entityType: ZOMBIE
+      target: 40
+
+  - identifier: kill_husks
+    displayName: "<gray>Defeat <white>10</white> husks"
+    orderIndex: 1
+    difficulty: MEDIUM
+    sequential: false
+    objective:
+      type: entity-kill
+      entityType: HUSK
+      target: 10

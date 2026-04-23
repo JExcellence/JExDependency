@@ -1,0 +1,83 @@
+# Ranger rank tree — the exploration / farming path. Rewards lean
+# toward utility items, tamed companion gear, and travel.
+
+identifier: ranger
+displayName: "<gradient:#86efac:#16a34a>Ranger</gradient>"
+description: "The path of the wild. Climb through farming, taming, and exploration."
+displayOrder: 3
+enabled: true
+
+icon:
+  material: BOW
+
+ranks:
+  scout:
+    orderIndex: 0
+    displayName: "<gray>Scout</gray>"
+    description: "Just learning to read a map."
+    icon:
+      material: LEATHER_BOOTS
+    reward:
+      type: composite
+      children:
+        - { type: item, materialKey: BOW, amount: 1, nbt: "{}" }
+        - { type: item, materialKey: ARROW, amount: 32, nbt: "{}" }
+        - { type: currency, currency: coins, amount: 75 }
+
+  tracker:
+    orderIndex: 1
+    displayName: "<white>Tracker</white>"
+    description: "Can find anything, given time."
+    icon:
+      material: COMPASS
+    requirement:
+      type: quest-completed
+      questIdentifier: novice_farmer
+      minCompletions: 1
+    reward:
+      type: composite
+      children:
+        - { type: item, materialKey: MAP, amount: 4, nbt: "{}" }
+        - { type: item, materialKey: SADDLE, amount: 1, nbt: "{}" }
+        - { type: item, materialKey: WHEAT, amount: 64, nbt: "{}" }
+        - { type: currency, currency: coins, amount: 300 }
+        - { type: xp, amount: 500 }
+
+  pathfinder:
+    orderIndex: 2
+    displayName: "<yellow>Pathfinder</yellow>"
+    description: "No biome is unfamiliar."
+    icon:
+      material: FILLED_MAP
+    requirement:
+      type: quest-completed
+      questIdentifier: skilled_farmer
+      minCompletions: 1
+    reward:
+      type: composite
+      children:
+        - { type: item, materialKey: ENDER_PEARL, amount: 8, nbt: "{}" }
+        - { type: item, materialKey: BOW, amount: 1, nbt: "{}" }
+        - { type: currency, currency: coins, amount: 1000 }
+        - { type: xp, amount: 1200 }
+
+  warden:
+    orderIndex: 3
+    displayName: "<gold>Warden</gold>"
+    description: "Sworn protector of the wilds."
+    icon:
+      material: TRIDENT
+      enchanted: true
+    requirement:
+      type: composite
+      op: AND
+      children:
+        - { type: quest-completed, questIdentifier: daily_gatherer, minCompletions: 14 }
+        - { type: currency, currency: coins, op: GE, amount: 4000.0 }
+    reward:
+      type: composite
+      children:
+        - { type: item, materialKey: TRIDENT, amount: 1, nbt: "{}" }
+        - { type: item, materialKey: ELYTRA, amount: 1, nbt: "{}" }
+        - { type: currency, currency: coins, amount: 3500 }
+        - { type: xp, amount: 3000 }

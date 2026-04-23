@@ -1,6 +1,6 @@
 package de.jexcellence.jexplatform.config;
 
-import de.jexcellence.configmapper.sections.AConfigSection;
+import de.jexcellence.configmapper.sections.ConfigSection;
 import de.jexcellence.configmapper.sections.CSAlways;
 import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
 import org.jetbrains.annotations.NotNull;
@@ -18,7 +18,7 @@ import java.util.List;
  * @since 1.0.0
  */
 @CSAlways
-public class IconSection extends AConfigSection {
+public class IconSection extends ConfigSection {
 
     private String type;
     private String displayNameKey;

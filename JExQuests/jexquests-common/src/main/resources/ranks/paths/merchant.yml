@@ -1,0 +1,104 @@
+# Merchant rank tree — the economy path. Gates are currency-heavy;
+# rewards are mostly coins + trading tokens / villager-adjacent items.
+# Good "second rank" for any player who's engaged with the shop.
+
+identifier: merchant
+displayName: "<gradient:#fde047:#f59e0b>Merchant</gradient>"
+description: "The path of coin and commerce. Climb by accumulating wealth."
+displayOrder: 4
+enabled: true
+
+icon:
+  material: EMERALD
+
+ranks:
+  peddler:
+    orderIndex: 0
+    displayName: "<gray>Peddler</gray>"
+    description: "A pocket full of copper."
+    icon:
+      material: IRON_INGOT
+    reward:
+      type: composite
+      children:
+        - { type: currency, currency: coins, amount: 150 }
+        - { type: item, materialKey: EMERALD, amount: 4, nbt: "{}" }
+
+  trader:
+    orderIndex: 1
+    displayName: "<white>Trader</white>"
+    description: "Known at the stalls."
+    icon:
+      material: GOLD_INGOT
+    requirement:
+      type: currency
+      currency: coins
+      op: GE
+      amount: 1000.0
+    reward:
+      type: composite
+      children:
+        - { type: item, materialKey: EMERALD, amount: 16, nbt: "{}" }
+        - { type: item, materialKey: BOOK, amount: 8, nbt: "{}" }
+        - { type: currency, currency: coins, amount: 500 }
+        - { type: xp, amount: 400 }
+
+  broker:
+    orderIndex: 2
+    displayName: "<yellow>Broker</yellow>"
+    description: "Handles the big deals."
+    icon:
+      material: EMERALD
+    requirement:
+      type: currency
+      currency: coins
+      op: GE
+      amount: 5000.0
+    reward:
+      type: composite
+      children:
+        - { type: item, materialKey: EMERALD_BLOCK, amount: 4, nbt: "{}" }
+        - { type: item, materialKey: EXPERIENCE_BOTTLE, amount: 32, nbt: "{}" }
+        - { type: currency, currency: coins, amount: 2000 }
+        - { type: xp, amount: 1500 }
+
+  tycoon:
+    orderIndex: 3
+    displayName: "<gold>Tycoon</gold>"
+    description: "Your ledgers shape the market."
+    icon:
+      material: EMERALD_BLOCK
+      enchanted: true
+    requirement:
+      type: currency
+      currency: coins
+      op: GE
+      amount: 20000.0
+    reward:
+      type: composite
+      children:
+        - { type: item, materialKey: DIAMOND_BLOCK, amount: 2, nbt: "{}" }
+        - { type: item, materialKey: NETHERITE_INGOT, amount: 2, nbt: "{}" }
+        - { type: currency, currency: coins, amount: 8000 }
+        - { type: xp, amount: 4000 }
+
+  magnate:
+    orderIndex: 4
+    displayName: "<gradient:#fde047:#f59e0b>Magnate</gradient>"
+    description: "The economy moves when you speak."
+    icon:
+      material: GOLD_BLOCK
+      enchanted: true
+    requirement:
+      type: currency
+      currency: coins
+      op: GE
+      amount: 100000.0
+    reward:
+      type: composite
+      children:
+        - { type: item, materialKey: NETHERITE_BLOCK, amount: 1, nbt: "{}" }
+        - { type: item, materialKey: BEACON, amount: 1, nbt: "{}" }
+        - { type: currency, currency: coins, amount: 25000 }
+        - { type: xp, amount: 10000 }
+        - { type: command, command: "broadcast <gradient:#fde047:#f59e0b>{player}</gradient> has risen to <gradient:#fde047:#f59e0b>Magnate</gradient>!", asConsole: true }

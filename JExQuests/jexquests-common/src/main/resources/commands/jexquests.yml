@@ -1,0 +1,54 @@
+# JExCommand 2.0 tree for /jexquests — admin surface
+name: jexquests
+description: "JExQuests administration"
+aliases:
+  - jq
+permission: "jexquests.command.admin"
+senders: [player, console]
+
+subcommands:
+  - name: info
+    description: "Show edition and version"
+
+  - name: status
+    description: "Show subsystem status"
+
+  - name: reload
+    description: "Reload every content loader"
+    permission: "jexquests.command.admin.reload"
+
+  - name: export
+    description: "Export a player's full JExQuests state to JSON"
+    permission: "jexquests.command.admin.export"
+    arguments:
+      - name: player
+        type: offline_player
+        required: true
+
+  - name: export-all
+    description: "Bulk-export every tracked player into one timestamped folder"
+    permission: "jexquests.command.admin.export"
+
+  - name: import
+    description: "Import a player state snapshot from JSON"
+    permission: "jexquests.command.admin.import"
+    arguments:
+      - name: file
+        type: string
+        required: true
+    subcommands:
+      - name: dry-run
+        description: "Preview what an import would change without writing"
+        permission: "jexquests.command.admin.import"
+        arguments:
+          - name: file
+            type: string
+            required: true
+
+  - name: import-all
+    description: "Bulk-import every *.json in a folder"
+    permission: "jexquests.command.admin.import"
+    arguments:
+      - name: folder
+        type: string
+        required: true

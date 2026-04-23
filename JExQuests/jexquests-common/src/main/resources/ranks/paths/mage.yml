@@ -1,0 +1,107 @@
+# Mage rank tree — the arcane path. Rewards enchantment materials,
+# elytra at the top tier, no combat requirement.
+
+identifier: mage
+displayName: "<gradient:#d8b4fe:#9333ea>Mage</gradient>"
+description: "The path of knowledge and enchantment. Climb by crafting, studying, and mastering the arcane."
+displayOrder: 2
+enabled: true
+
+icon:
+  material: BLAZE_ROD
+
+ranks:
+  apprentice:
+    orderIndex: 0
+    displayName: "<gray>Apprentice</gray>"
+    description: "Fresh to the order."
+    icon:
+      material: STICK
+    reward:
+      type: composite
+      children:
+        - { type: item, materialKey: BOOK, amount: 4, nbt: "{}" }
+        - { type: item, materialKey: LAPIS_LAZULI, amount: 16, nbt: "{}" }
+        - { type: currency, currency: coins, amount: 50 }
+
+  adept:
+    orderIndex: 1
+    displayName: "<white>Adept</white>"
+    description: "Basic runes and reagents."
+    icon:
+      material: ENCHANTED_BOOK
+    requirement:
+      type: composite
+      op: AND
+      children:
+        - { type: quest-completed, questIdentifier: welcome_to_server, minCompletions: 1 }
+        - { type: currency, currency: coins, op: GE, amount: 250.0 }
+    reward:
+      type: composite
+      children:
+        - { type: item, materialKey: ENCHANTED_BOOK, amount: 3, nbt: "{}" }
+        - { type: item, materialKey: BLAZE_POWDER, amount: 8, nbt: "{}" }
+        - { type: item, materialKey: EXPERIENCE_BOTTLE, amount: 16, nbt: "{}" }
+        - { type: currency, currency: coins, amount: 300 }
+        - { type: xp, amount: 750 }
+
+  wizard:
+    orderIndex: 2
+    displayName: "<yellow>Wizard</yellow>"
+    description: "Fluent in the secondary languages of magic."
+    icon:
+      material: BLAZE_ROD
+    requirement:
+      type: currency
+      currency: coins
+      op: GE
+      amount: 1500.0
+    reward:
+      type: composite
+      children:
+        - { type: item, materialKey: ENCHANTING_TABLE, amount: 1, nbt: "{}" }
+        - { type: item, materialKey: BOOKSHELF, amount: 8, nbt: "{}" }
+        - { type: item, materialKey: GHAST_TEAR, amount: 4, nbt: "{}" }
+        - { type: currency, currency: coins, amount: 800 }
+        - { type: xp, amount: 1500 }
+
+  sorcerer:
+    orderIndex: 3
+    displayName: "<gold>Sorcerer</gold>"
+    description: "Bending the weave to your will."
+    icon:
+      material: END_ROD
+      enchanted: true
+    requirement:
+      type: quest-completed
+      questIdentifier: skilled_miner
+      minCompletions: 1
+    reward:
+      type: composite
+      children:
+        - { type: item, materialKey: END_CRYSTAL, amount: 4, nbt: "{}" }
+        - { type: item, materialKey: ENDER_PEARL, amount: 16, nbt: "{}" }
+        - { type: currency, currency: coins, amount: 2000 }
+        - { type: xp, amount: 2500 }
+
+  archmage:
+    orderIndex: 4
+    displayName: "<gradient:#d8b4fe:#9333ea>Archmage</gradient>"
+    description: "The pinnacle of arcane study."
+    icon:
+      material: NETHER_STAR
+      enchanted: true
+    requirement:
+      type: composite
+      op: AND
+      children:
+        - { type: quest-completed, questIdentifier: master_miner, minCompletions: 1 }
+        - { type: currency, currency: coins, op: GE, amount: 8000.0 }
+    reward:
+      type: composite
+      children:
+        - { type: item, materialKey: ELYTRA, amount: 1, nbt: "{}" }
+        - { type: item, materialKey: NETHER_STAR, amount: 1, nbt: "{}" }
+        - { type: item, materialKey: TOTEM_OF_UNDYING, amount: 1, nbt: "{}" }
+        - { type: currency, currency: coins, amount: 7500 }
+        - { type: xp, amount: 5000 }

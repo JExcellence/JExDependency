@@ -1,0 +1,22 @@
+# JExCommand 2.0 tree for /jexcore
+name: jexcore
+description: "JExCore administration"
+aliases:
+  - jc
+permission: "jexcore.command"
+senders: [player, console]
+
+subcommands:
+  - name: info
+    description: "Show edition and version"
+    permission: "jexcore.command.info"
+
+  - name: reload
+    description: "Reload translations"
+    permission: "jexcore.command.reload"
+
+  - name: player
+    description: "Show tracked player info"
+    permission: "jexcore.command.player"
+    argumentSchema:
+      - { name: target, type: offline_player, required: true, description: "Player to look up" }

@@ -1,0 +1,964 @@
+# ─── JExQuests 1.0 ─ English (US) ────────────────────────────────────────────
+# MiniMessage format. {placeholder} substitution (NOT %name%). One line per
+# chat message. Nested click/hover tags parsed recursively after substitution.
+#
+# Gradient palette:
+#   gold   #fde047 → #f59e0b
+#   green  #86efac → #16a34a
+#   red    #fca5a5 → #dc2626
+#   blue   #93c5fd → #2563eb
+#   cyan   #a5f3fc → #06b6d4
+#   purple #d8b4fe → #9333ea
+#
+# Conventions:
+#   success:  "<gradient:#86efac:#16a34a>✔</gradient> ..."
+#   error:    "<gradient:#fca5a5:#dc2626>✘</gradient> ..."
+#   warn:     "<gradient:#fca5a5:#dc2626>⚠</gradient> ..."
+#   kv-sep:   "<dark_gray>»</dark_gray>"
+#   prompt:   "<gradient:#a5f3fc:#06b6d4>▸ Click to X</gradient>"
+#   header:   "<dark_gray>━━━━ <gradient:#fde047:#f59e0b>Title</gradient> ━━━━"
+
+prefix: "<gradient:#fde047:#f59e0b>JExQuests</gradient> <dark_gray>»</dark_gray> "
+
+# ── View chrome defaults ─────────────────────────────────────────────────────
+# Every BaseView and PaginatedView falls back to these keys when its own
+# namespace doesn't override them. The callers always resolve scalars
+# (title / back / previous / next / loading) or a single {name, lore} pair
+# (page.name + page.lore), so the shapes here match exactly.
+_defaults:
+  title: "<gradient:#fde047:#f59e0b>JExQuests</gradient>"
+  back: "<gradient:#93c5fd:#2563eb>◂ Back</gradient>"
+  previous: "<gradient:#a5f3fc:#06b6d4>◂ Previous page</gradient>"
+  next: "<gradient:#a5f3fc:#06b6d4>Next page ▸</gradient>"
+  loading: "<gradient:#fde047:#f59e0b>Loading…</gradient>"
+  page:
+    name: "<gradient:#fde047:#f59e0b>Page {current_page}<dark_gray>/</dark_gray>{max_page}</gradient>"
+    lore: |-
+      <gray>Page <white>{current_page}</white> of <white>{max_page}</white>.
+
+      <gradient:#a5f3fc:#06b6d4>▸ Use the arrows to navigate</gradient>
+
+# ── Generic ───────────────────────────────────────────────────────────────────
+
+error:
+  no-permission: "<gradient:#fca5a5:#dc2626>✘</gradient> <red>You don't have permission."
+  player-only: "<gradient:#fca5a5:#dc2626>✘</gradient> <red>This command is player-only."
+  console-only: "<gradient:#fca5a5:#dc2626>✘</gradient> <red>This command is console-only."
+  player-not-found: "<gradient:#fca5a5:#dc2626>✘</gradient> <red>Player <white>{player}</white> not found."
+  invalid-amount: "<gradient:#fca5a5:#dc2626>✘</gradient> <red>Invalid amount. Must be a positive number."
+  invalid-argument: "<gradient:#fca5a5:#dc2626>✘</gradient> <red>Invalid argument <white>{value}</white> for <white>{name}</white>."
+  missing-argument: "<gradient:#fca5a5:#dc2626>✘</gradient> <red>Missing argument <white>{name}</white>."
+  unknown: "<gradient:#fca5a5:#dc2626>✘</gradient> <red>An unexpected error occurred: <white>{error}</white>"
+  system-disabled: "<gradient:#fca5a5:#dc2626>⚠</gradient> <yellow>The <white>{system}</white> system is disabled in config.yml."
+
+success:
+  generic: "<gradient:#86efac:#16a34a>✔</gradient> <gray>{message}"
+
+warn:
+  generic: "<gradient:#fca5a5:#dc2626>⚠</gradient> <yellow>{message}"
+
+# ── Built-in JExCommand keys ──────────────────────────────────────────────────
+
+jexcommand:
+  error:
+    no-permission: "<gradient:#fca5a5:#dc2626>✘</gradient> <red>Missing permission <white>{permission}</white>."
+    player-only: "<gradient:#fca5a5:#dc2626>✘</gradient> <red>This command is player-only."
+    console-only: "<gradient:#fca5a5:#dc2626>✘</gradient> <red>This command is console-only."
+    invalid-argument: "<gradient:#fca5a5:#dc2626>✘</gradient> <red>Invalid argument <white>{value}</white> for <white>{name}</white>."
+    missing-argument: "<gradient:#fca5a5:#dc2626>✘</gradient> <red>Missing argument <white>{name}</white>."
+  usage: "<gradient:#a5f3fc:#06b6d4>▸</gradient> <gray>Usage: <white>{usage}</white>"
+
+# ── Core plugin commands (/jexquests) ────────────────────────────────────────
+
+jexquests:
+  header: "<dark_gray>━━━━ <gradient:#fde047:#f59e0b>JExQuests</gradient> ━━━━"
+  info:
+    line: "<gray>JExQuests <white>{edition}</white> <dark_gray>»</dark_gray> <gradient:#fde047:#f59e0b>{version}</gradient>"
+  reload:
+    starting: "<gradient:#a5f3fc:#06b6d4>▸</gradient> <gray>Reloading configuration..."
+    success: "<gradient:#86efac:#16a34a>✔</gradient> <gray>Reload complete (<white>{duration}</white> ms)."
+    failed: "<gradient:#fca5a5:#dc2626>✘</gradient> <red>Reload failed: <white>{error}</white>"
+  status:
+    line: "<gray>systems <dark_gray>»</dark_gray> quests=<white>{quests}</white> ranks=<white>{ranks}</white> bounties=<white>{bounties}</white> perks=<white>{perks}</white> machines=<white>{machines}</white>"
+    enabled-tag: "<gradient:#86efac:#16a34a>on</gradient>"
+    disabled-tag: "<gradient:#fca5a5:#dc2626>off</gradient>"
+  export:
+    starting: "<gradient:#a5f3fc:#06b6d4>▸</gradient> <gray>Exporting <white>{player}</white> state…"
+    success: "<gradient:#86efac:#16a34a>✔</gradient> <gray>Exported <white>{player}</white> → <white>{path}</white>"
+    failed: "<gradient:#fca5a5:#dc2626>✘</gradient> <red>Export failed: <white>{error}</white>"
+  export-all:
+    starting: "<gradient:#a5f3fc:#06b6d4>▸</gradient> <gray>Bulk-exporting every tracked player…"
+    summary: "<gradient:#fde047:#f59e0b>⚙</gradient> <gray>Batch complete: <green>{success}</green>/<white>{total}</white> ok, <red>{failed}</red> failed <dark_gray>»</dark_gray> <white>{path}</white>"
+    failure: "  <dark_gray>•</dark_gray> <red>{line}"
+    truncated: "  <dark_gray>…<white>{remaining}</white> more failure(s) suppressed"
+    failed: "<gradient:#fca5a5:#dc2626>✘</gradient> <red>Bulk export aborted: <white>{error}</white>"
+  import-all:
+    starting: "<gradient:#a5f3fc:#06b6d4>▸</gradient> <gray>Bulk-importing from <white>{path}</white>…"
+    summary: "<gradient:#fde047:#f59e0b>⚙</gradient> <gray>Batch complete: <green>{success}</green>/<white>{total}</white> ok, <red>{failed}</red> failed <dark_gray>»</dark_gray> <white>{path}</white>"
+    failure: "  <dark_gray>•</dark_gray> <red>{line}"
+    truncated: "  <dark_gray>…<white>{remaining}</white> more failure(s) suppressed"
+    failed: "<gradient:#fca5a5:#dc2626>✘</gradient> <red>Bulk import aborted: <white>{error}</white>"
+  import:
+    starting: "<gradient:#a5f3fc:#06b6d4>▸</gradient> <gray>Importing snapshot from <white>{path}</white>…"
+    success: "<gradient:#86efac:#16a34a>✔</gradient> <gray>Imported <white>{uuid}</white> from <white>{path}</white>"
+    failed: "<gradient:#fca5a5:#dc2626>✘</gradient> <red>Import failed: <white>{error}</white>"
+    dry-run:
+      starting: "<gradient:#a5f3fc:#06b6d4>▸</gradient> <gray>Previewing import from <white>{path}</white>…"
+      summary: "<gradient:#fde047:#f59e0b>⚙</gradient> <gray>{player} <dark_gray>(<white>{uuid}</white>)</dark_gray> <dark_gray>»</dark_gray> <green>+{created}</green> <yellow>~{updated}</yellow> <gray>={unchanged}</gray>"
+      noop: "<gradient:#86efac:#16a34a>✔</gradient> <gray>No changes — snapshot matches live state."
+      change: "  <dark_gray>•</dark_gray> <gray>{change}"
+      truncated: "  <dark_gray>…<white>{remaining}</white> more change(s) suppressed"
+
+# ── Quests (/quest, /quests) ──────────────────────────────────────────────────
+
+quest:
+  header: "<dark_gray>━━━━ <gradient:#fde047:#f59e0b>Quests</gradient> ━━━━"
+  usage: "<gray>Usage: <white>/quest <list|info|accept|abandon|track|progress> [quest]</white>"
+  none-active: "<gray>You have no active quests."
+  info:
+    summary: |-
+      <gray>Quest: <gradient:#fde047:#f59e0b>{quest}</gradient>
+      <gray>Category: <white>{category}</white>
+      <gray>Difficulty: <white>{difficulty}</white>
+      <gray>Repeatable: <white>{repeatable}</white>
+      <gray>Rewards: <white>{rewards}</white>
+      <gray>Requirements: <white>{requirements}</white>
+    no-tasks: "<gray>This quest has no tasks."
+    task: "  <dark_gray>•</dark_gray> <white>{task}</white> <dark_gray>»</dark_gray> <white>{progress}</white><dark_gray>/</dark_gray><white>{target}</white> (<white>{percent}</white>%)"
+  tracking-set: "<gradient:#86efac:#16a34a>✔</gradient> <gray>Now tracking <gradient:#fde047:#f59e0b>{quest}</gradient>."
+  tracking-cleared: "<gradient:#86efac:#16a34a>✔</gradient> <gray>Tracking cleared."
+  not-found: "<gradient:#fca5a5:#dc2626>✘</gradient> <red>Quest <white>{quest}</white> does not exist."
+  locked: "<gradient:#fca5a5:#dc2626>⚠</gradient> <yellow>Quest <white>{quest}</white> is locked. Requirements: <gray>{requirements}</gray>"
+  already-active: "<gradient:#fca5a5:#dc2626>⚠</gradient> <yellow>You already have <white>{quest}</white> active."
+  already-completed: "<gradient:#fca5a5:#dc2626>⚠</gradient> <yellow>You already completed <white>{quest}</white>."
+  sidebar:
+    enabled: "<gradient:#86efac:#16a34a>✔</gradient> <gray>Quest sidebar <white>enabled</white>."
+    disabled: "<gradient:#86efac:#16a34a>✔</gradient> <gray>Quest sidebar <white>disabled</white>."
+  accepted: "<gradient:#86efac:#16a34a>✔</gradient> <gray>Accepted <gradient:#fde047:#f59e0b>{quest}</gradient>."
+  abandoned: "<gradient:#86efac:#16a34a>✔</gradient> <gray>Abandoned <gradient:#fde047:#f59e0b>{quest}</gradient>."
+  completed: "<gradient:#86efac:#16a34a>★</gradient> <gradient:#fde047:#f59e0b>{quest}</gradient> <gray>complete! Rewards: <white>{rewards}</white>"
+  progress-line: "<gray>{objective} <dark_gray>»</dark_gray> <white>{current}</white><dark_gray>/</dark_gray><white>{target}</white> <gray>({percent}%)"
+  progress-header: "<dark_gray>━━━━ <gradient:#fde047:#f59e0b>{quest}</gradient> ━━━━"
+  objective:
+    kill: "<gray>Kill <white>{target}</white>"
+    break: "<gray>Break <white>{target}</white>"
+    place: "<gray>Place <white>{target}</white>"
+    craft: "<gray>Craft <white>{target}</white>"
+    collect: "<gray>Collect <white>{target}</white>"
+    fish: "<gray>Catch <white>{target}</white>"
+    trade: "<gray>Trade with <white>{target}</white>"
+    enchant: "<gray>Enchant an <white>{target}</white>"
+    explore: "<gray>Discover <white>{target}</white>"
+    interact: "<gray>Interact with <white>{target}</white>"
+    tame: "<gray>Tame a <white>{target}</white>"
+    breed: "<gray>Breed <white>{target}</white>"
+    custom: "<gray>{description}"
+  category:
+    baker: "<gradient:#fde047:#f59e0b>Baker</gradient>"
+    builder: "<gradient:#a5f3fc:#06b6d4>Builder</gradient>"
+    building: "<gradient:#a5f3fc:#06b6d4>Construction</gradient>"
+    challenge: "<gradient:#d8b4fe:#9333ea>Challenge</gradient>"
+    combat: "<gradient:#fca5a5:#dc2626>Combat</gradient>"
+    daily: "<gradient:#fde047:#f59e0b>Daily</gradient>"
+    enchanter: "<gradient:#d8b4fe:#9333ea>Enchanter</gradient>"
+    explorer: "<gradient:#93c5fd:#2563eb>Explorer</gradient>"
+    farmer: "<gradient:#86efac:#16a34a>Farmer</gradient>"
+    hunter: "<gradient:#fca5a5:#dc2626>Hunter</gradient>"
+    miner: "<gradient:#fde047:#f59e0b>Miner</gradient>"
+    mining: "<gradient:#fde047:#f59e0b>Mining</gradient>"
+    trader: "<gradient:#86efac:#16a34a>Trader</gradient>"
+    tutorial: "<gradient:#93c5fd:#2563eb>Tutorial</gradient>"
+  list:
+    empty: "<gray>No quests in this category."
+    entry: "<gray>· <gradient:#fde047:#f59e0b>{quest}</gradient> <dark_gray>»</dark_gray> {status} <gray>· {category}"
+    status-available: "<gradient:#a5f3fc:#06b6d4>available</gradient>"
+    status-active: "<gradient:#86efac:#16a34a>active</gradient>"
+    status-completed: "<gradient:#d8b4fe:#9333ea>done</gradient>"
+    status-locked: "<gradient:#fca5a5:#dc2626>locked</gradient>"
+  reward:
+    xp: "<gradient:#86efac:#16a34a>+{amount} XP</gradient>"
+    currency: "<gradient:#fde047:#f59e0b>+{amount} {currency}</gradient>"
+    item: "<gradient:#93c5fd:#2563eb>{amount}x {item}</gradient>"
+    command: "<gradient:#d8b4fe:#9333ea>reward script</gradient>"
+
+# ── Quest GUI (/quests) ──────────────────────────────────────────────────────
+
+quest-view:
+  title: "<gradient:#fde047:#f59e0b>Quests</gradient>"
+  detail-title: "<gradient:#fde047:#f59e0b>{quest}</gradient>"
+  empty-slot: "<gray>(empty)"
+  accept:
+    name: "<gradient:#86efac:#16a34a>Accept</gradient>"
+    lore: |-
+      <gray>Start <gradient:#fde047:#f59e0b>{quest}</gradient>.
+
+      <gradient:#a5f3fc:#06b6d4>▸ Click to accept</gradient>
+  abandon:
+    name: "<gradient:#fca5a5:#dc2626>Abandon</gradient>"
+    lore: |-
+      <gray>Drop <gradient:#fde047:#f59e0b>{quest}</gradient>. Progress lost.
+
+      <gradient:#a5f3fc:#06b6d4>▸ Click to abandon</gradient>
+  track:
+    name: "<gradient:#a5f3fc:#06b6d4>Track</gradient>"
+    lore: |-
+      <gray>Pin this quest to your sidebar.
+
+      <gradient:#a5f3fc:#06b6d4>▸ Click to track</gradient>
+  back:
+    name: "<gradient:#93c5fd:#2563eb>Back</gradient>"
+    lore: |-
+      <gray>Return to the previous menu.
+
+      <gradient:#a5f3fc:#06b6d4>▸ Click to go back</gradient>
+  page:
+    next:
+      name: "<gradient:#a5f3fc:#06b6d4>Next page</gradient>"
+      lore: |-
+        <gray>Page <white>{current}</white><dark_gray>/</dark_gray><white>{total}</white>.
+
+        <gradient:#a5f3fc:#06b6d4>▸ Click to go forward</gradient>
+    prev:
+      name: "<gradient:#a5f3fc:#06b6d4>Previous page</gradient>"
+      lore: |-
+        <gray>Page <white>{current}</white><dark_gray>/</dark_gray><white>{total}</white>.
+
+        <gradient:#a5f3fc:#06b6d4>▸ Click to go back</gradient>
+    fallback: "<gray>Page <white>{current}</white><dark_gray>/</dark_gray><white>{total}</white>"
+
+sidebar:
+  title: "<gradient:#fde047:#f59e0b>Quests</gradient>"
+  tracked-header: "<dark_gray>» <gradient:#fde047:#f59e0b>Tracking</gradient>"
+  tracked-line: "<gray>{objective}: <white>{current}</white><dark_gray>/</dark_gray><white>{target}</white>"
+  no-tracking: "<gray>(nothing tracked)"
+
+# ── Ranks (/rank, /ranks) ────────────────────────────────────────────────────
+
+rank:
+  header: "<dark_gray>━━━━ <gradient:#fde047:#f59e0b>Ranks</gradient> ━━━━"
+  usage: "<gray>Usage: <white>/rank <info|promote|path|top></white>"
+  current: "<gray>Your rank: <gradient:#fde047:#f59e0b>{rank}</gradient> <dark_gray>»</dark_gray> path <gradient:#a5f3fc:#06b6d4>{path}</gradient>"
+  current-of: "<gray><white>{player}</white>'s rank: <gradient:#fde047:#f59e0b>{rank}</gradient>"
+  promoted: "<gradient:#86efac:#16a34a>★</gradient> <gray>Promoted to <gradient:#fde047:#f59e0b>{rank}</gradient>! Rewards: <white>{rewards}</white>"
+  demoted: "<gradient:#fca5a5:#dc2626>⚠</gradient> <yellow>Demoted to <gradient:#fde047:#f59e0b>{rank}</gradient>."
+  max-reached: "<gradient:#d8b4fe:#9333ea>★</gradient> <gray>You are at the highest rank on this path."
+  requirements-missing: "<gradient:#fca5a5:#dc2626>⚠</gradient> <yellow>Cannot promote yet. Missing: <gray>{requirements}</gray>"
+  path-switched: "<gradient:#86efac:#16a34a>✔</gradient> <gray>Switched to path <gradient:#a5f3fc:#06b6d4>{path}</gradient>."
+  path-selected: "<gradient:#86efac:#16a34a>★</gradient> <gray>Joined path <gradient:#a5f3fc:#06b6d4>{path}</gradient> at rank <gradient:#fde047:#f59e0b>{rank}</gradient>!"
+  path-already-active: "<gradient:#fde047:#f59e0b>ℹ</gradient> <gray>Path <gradient:#a5f3fc:#06b6d4>{path}</gradient> is already your active path."
+  path-cooldown: "<gradient:#fca5a5:#dc2626>⏱</gradient> <yellow>Cannot switch paths yet — <white>{seconds}</white>s cooldown remaining."
+  path-switch-locked: "<gradient:#fca5a5:#dc2626>✘</gradient> <red>Path <white>{path}</white> disallows switching away."
+  path-locked: "<gradient:#fca5a5:#dc2626>✘</gradient> <red>Path <white>{path}</white> is locked: <gray>{reason}</gray>"
+  path-not-found: "<gradient:#fca5a5:#dc2626>✘</gradient> <red>Path <white>{path}</white> does not exist."
+  not-found: "<gradient:#fca5a5:#dc2626>✘</gradient> <red>Rank <white>{rank}</white> does not exist."
+  info:
+    no-path: "<gradient:#fde047:#f59e0b>ℹ</gradient> <gray><white>{player}</white> hasn't selected a rank path yet. Run <white>/rank</white> to browse."
+    not-enrolled: "<gradient:#fde047:#f59e0b>ℹ</gradient> <gray><white>{player}</white> has never enrolled in <gradient:#a5f3fc:#06b6d4>{path}</gradient>."
+    summary: |-
+      <gray>Player: <white>{player}</white>
+      <gray>Path: <gradient:#a5f3fc:#06b6d4>{path}</gradient>
+      <gray>Rank: <gradient:#fde047:#f59e0b>{rank}</gradient>
+      <gray>Progress: <white>{progress}</white>%
+      <gray>Tree completed: <white>{completed}</white>
+    at-end: "<gradient:#d8b4fe:#9333ea>★</gradient> <gray>You are at the highest rank on this path."
+    next-option: |-
+      <gradient:#a5f3fc:#06b6d4>▸ Next option:</gradient> <gradient:#fde047:#f59e0b>{rank}</gradient>
+      <gray>  Requires: <white>{requirements}</white>
+      <gray>  Rewards: <white>{rewards}</white>
+  top-entry: "<gray>#{position} <gradient:#fde047:#f59e0b>{player}</gradient> <dark_gray>»</dark_gray> <white>{rank}</white> <gray>· {path}"
+  top-empty: "<gray>No ranked players yet."
+
+rank-view:
+  title: "<gradient:#fde047:#f59e0b>Ranks</gradient>"
+  path-title: "<gradient:#a5f3fc:#06b6d4>{path}</gradient>"
+  hierarchy-title: "<gradient:#fde047:#f59e0b>Rank paths</gradient>"
+  rank-node:
+    current:
+      name: "<gradient:#86efac:#16a34a>{rank}</gradient> <dark_gray>»</dark_gray> <white>current</white>"
+    unlocked:
+      name: "<gradient:#fde047:#f59e0b>{rank}</gradient>"
+    locked:
+      name: "<gradient:#fca5a5:#dc2626>{rank}</gradient> <dark_gray>»</dark_gray> <gray>locked</gray>"
+    lore:
+      line: "<gray>{description}"
+      requirements: "<gray>Requirements: <white>{requirements}</white>"
+      rewards: "<gray>Rewards: <white>{rewards}</white>"
+      action: "<gradient:#a5f3fc:#06b6d4>▸ Click to view path</gradient>"
+
+# ── Bounties (/bounty, /bounties) ────────────────────────────────────────────
+
+bounty:
+  header: "<dark_gray>━━━━ <gradient:#fca5a5:#dc2626>Bounties</gradient> ━━━━"
+  usage: "<gray>Usage: <white>/bounty <list|place|claim|cancel> [player] [amount]</white>"
+  list-empty: "<gray>No bounties are currently active."
+  list-entry: "<gray>· <gradient:#fca5a5:#dc2626>{target}</gradient> <dark_gray>»</dark_gray> <gradient:#fde047:#f59e0b>{amount}</gradient> <gray>posted by <white>{issuer}</white>"
+  placed: "<gradient:#86efac:#16a34a>✔</gradient> <gray>Placed <gradient:#fde047:#f59e0b>{amount}</gradient> bounty on <gradient:#fca5a5:#dc2626>{target}</gradient>."
+  insufficient-funds: "<gradient:#fca5a5:#dc2626>✘</gradient> <red>Insufficient funds. Need <gold>{required}</gold>, have <gold>{balance}</gold>."
+  claim:
+    announced: "<gradient:#fca5a5:#dc2626>☠</gradient> <gray><white>{killer}</white> claimed <gradient:#fde047:#f59e0b>{amount}</gradient> on <gradient:#fca5a5:#dc2626>{target}</gradient>!"
+    payout: "<gradient:#86efac:#16a34a>✔</gradient> <gray>You received <gradient:#fde047:#f59e0b>{amount}</gradient>."
+  cancelled: "<gradient:#86efac:#16a34a>✔</gradient> <gray>Bounty on <gradient:#fca5a5:#dc2626>{target}</gradient> cancelled. Refunded <gradient:#fde047:#f59e0b>{amount}</gradient>."
+  self-ban: "<gradient:#fca5a5:#dc2626>✘</gradient> <red>You can't place a bounty on yourself."
+  not-found: "<gradient:#fca5a5:#dc2626>✘</gradient> <red>No active bounty on <white>{target}</white>."
+  min-amount: "<gradient:#fca5a5:#dc2626>⚠</gradient> <yellow>Minimum bounty amount is <white>{min}</white>."
+  max-amount: "<gradient:#fca5a5:#dc2626>⚠</gradient> <yellow>Maximum bounty amount is <white>{max}</white>."
+
+bounty-view:
+  title: "<gradient:#fca5a5:#dc2626>Bounties</gradient>"
+  entry:
+    name: "<gradient:#fca5a5:#dc2626>{target}</gradient>"
+    lore: |-
+      <gray>Posted by <white>{issuer}</white>. Reward <gradient:#fde047:#f59e0b>{amount}</gradient>.
+
+      <gradient:#a5f3fc:#06b6d4>▸ Click to inspect</gradient>
+
+# ── Perks (/perks, /perkadmin) ───────────────────────────────────────────────
+
+perk:
+  header: "<dark_gray>━━━━ <gradient:#d8b4fe:#9333ea>Perks</gradient> ━━━━"
+  usage: "<gray>Usage: <white>/perks <list|toggle|info> [perk]</white>"
+  none-owned: "<gray>You have no perks unlocked."
+  activated: "<gradient:#86efac:#16a34a>✔</gradient> <gray>Activated <gradient:#d8b4fe:#9333ea>{perk}</gradient>."
+  deactivated: "<gradient:#86efac:#16a34a>✔</gradient> <gray>Deactivated <gradient:#d8b4fe:#9333ea>{perk}</gradient>."
+  not-unlocked: "<gradient:#fca5a5:#dc2626>⚠</gradient> <yellow>You have not unlocked <white>{perk}</white>."
+  not-found: "<gradient:#fca5a5:#dc2626>✘</gradient> <red>Perk <white>{perk}</white> does not exist."
+  on-cooldown: "<gradient:#fca5a5:#dc2626>⚠</gradient> <yellow><white>{perk}</white> is on cooldown for <white>{time}</white>."
+  info-line: "<gray>{perk} <dark_gray>»</dark_gray> {description}"
+  admin:
+    usage: "<gray>Usage: <white>/perkadmin <grant|revoke|reload> <player> <perk></white>"
+    granted: "<gradient:#86efac:#16a34a>✔</gradient> <gray>Granted <gradient:#d8b4fe:#9333ea>{perk}</gradient> to <white>{player}</white>."
+    revoked: "<gradient:#86efac:#16a34a>✔</gradient> <gray>Revoked <gradient:#d8b4fe:#9333ea>{perk}</gradient> from <white>{player}</white>."
+    reloaded: "<gradient:#86efac:#16a34a>✔</gradient> <gray>Perk registry reloaded (<white>{count}</white> perks)."
+
+perk-view:
+  title: "<gradient:#d8b4fe:#9333ea>Perks</gradient>"
+  tile:
+    enabled:
+      name: "<gradient:#86efac:#16a34a>{perk}</gradient>"
+    disabled:
+      name: "<gradient:#fca5a5:#dc2626>{perk}</gradient>"
+    locked:
+      name: "<gray>{perk} <dark_gray>»</dark_gray> <gradient:#fca5a5:#dc2626>locked</gradient>"
+    lore:
+      description: "<gray>{description}"
+      cooldown: "<gray>Cooldown: <white>{time}</white>"
+      action-toggle: "<gradient:#a5f3fc:#06b6d4>▸ Click to toggle</gradient>"
+      action-unlock: "<gradient:#a5f3fc:#06b6d4>▸ Unlock via ranks or quests</gradient>"
+
+# ── Machines (/machine) ──────────────────────────────────────────────────────
+
+machine:
+  header: "<dark_gray>━━━━ <gradient:#fde047:#f59e0b>Machines</gradient> ━━━━"
+  usage: "<gray>Usage: <white>/machine <give|place|info|list|reload> [type] [player]</white>"
+  not-found: "<gradient:#fca5a5:#dc2626>✘</gradient> <red>Machine type <white>{type}</white> does not exist."
+  list-empty: "<gray>No machine types registered."
+  list-entry: "<gray>· <gradient:#fde047:#f59e0b>{type}</gradient> <dark_gray>»</dark_gray> <gray>{description}"
+  give:
+    success: "<gradient:#86efac:#16a34a>✔</gradient> <gray>Gave <gradient:#fde047:#f59e0b>{type}</gradient> to <white>{player}</white>."
+    inventory-full: "<gradient:#fca5a5:#dc2626>⚠</gradient> <yellow>Target inventory is full."
+  place:
+    success: "<gradient:#86efac:#16a34a>✔</gradient> <gray>Placed <gradient:#fde047:#f59e0b>{type}</gradient>."
+    overlaps: "<gradient:#fca5a5:#dc2626>✘</gradient> <red>Cannot place — blocks obstruct the machine footprint."
+    forbidden-world: "<gradient:#fca5a5:#dc2626>✘</gradient> <red>Machines cannot be placed in this world."
+  destroyed: "<gradient:#86efac:#16a34a>✔</gradient> <gray>Machine <gradient:#fde047:#f59e0b>{type}</gradient> dismantled. Contents returned to your inventory."
+  interacting: "<gradient:#a5f3fc:#06b6d4>▸</gradient> <gray>Interacting with <gradient:#fde047:#f59e0b>{type}</gradient>..."
+  reloaded: "<gradient:#86efac:#16a34a>✔</gradient> <gray>Machine registry reloaded (<white>{count}</white> types)."
+  status:
+    idle: "<gradient:#93c5fd:#2563eb>idle</gradient>"
+    working: "<gradient:#86efac:#16a34a>working</gradient>"
+    stalled: "<gradient:#fca5a5:#dc2626>stalled</gradient>"
+    full: "<gradient:#fde047:#f59e0b>full</gradient>"
+    empty: "<gray>empty</gray>"
+
+machine-view:
+  title: "<gradient:#fde047:#f59e0b>{type}</gradient>"
+  slot:
+    input:
+      name: "<gradient:#93c5fd:#2563eb>Input</gradient>"
+      lore: |-
+        <gray>Place raw materials here.
+
+        <gradient:#a5f3fc:#06b6d4>▸ Click to insert</gradient>
+    output:
+      name: "<gradient:#86efac:#16a34a>Output</gradient>"
+      lore: |-
+        <gray>Finished items collect here.
+
+        <gradient:#a5f3fc:#06b6d4>▸ Click to withdraw</gradient>
+    fuel:
+      name: "<gradient:#fca5a5:#dc2626>Fuel</gradient>"
+      lore: |-
+        <gray>Powers the machine.
+
+        <gradient:#a5f3fc:#06b6d4>▸ Click to refuel</gradient>
+  progress:
+    name: "<gradient:#fde047:#f59e0b>Progress</gradient>"
+    lore: |-
+      <gray>{percent}% complete.
+      <gray>Status: {status}
+      <gray>ETA: <white>{eta}</white>
+
+# ── Admin / debug ────────────────────────────────────────────────────────────
+
+admin:
+  header: "<dark_gray>━━━━ <gradient:#d8b4fe:#9333ea>JExQuests Admin</gradient> ━━━━"
+  reload:
+    success: "<gradient:#86efac:#16a34a>✔</gradient> <gray>Reloaded every subsystem (<white>{duration}</white> ms)."
+    failed: "<gradient:#fca5a5:#dc2626>✘</gradient> <red>Reload failed: <white>{error}</white>"
+  player:
+    not-tracked: "<gradient:#fca5a5:#dc2626>⚠</gradient> <yellow><white>{player}</white> has no JExQuests record."
+    summary: "<gray><white>{player}</white> <dark_gray>»</dark_gray> rank=<white>{rank}</white> quests=<white>{active_quests}</white>/<white>{completed_quests}</white> perks=<white>{perks}</white>"
+  stats:
+    header: "<dark_gray>━━━━ <gradient:#d8b4fe:#9333ea>Stats</gradient> ━━━━"
+    line: "<gray>{system} <dark_gray>»</dark_gray> {value}"
+
+# ── Placeholders (PlaceholderAPI fallbacks) ──────────────────────────────────
+
+placeholder:
+  no-data: "<gray>—"
+  error: "<gradient:#fca5a5:#dc2626>?</gradient>"
+
+# ── Telemetry ────────────────────────────────────────────────────────────────
+
+telemetry:
+  forwarded: "<gradient:#86efac:#16a34a>✔</gradient> <gray>Forwarded <white>{count}</white> events to JExCore statistics."
+  unavailable: "<gray>JExCore statistics service not available; telemetry disabled."
+
+# ── InventoryFramework views ─────────────────────────────────────────────────
+
+quest_main_ui:
+  title: "<gradient:#fde047:#f59e0b>Quests</gradient>"
+  summary:
+    name: "<gradient:#fde047:#f59e0b>{player}'s quest log</gradient>"
+    lore: |-
+      <dark_gray>━━━━━━━━━━━━━━━━━━━━
+      <gray>Active: <gradient:#86efac:#16a34a>{active}</gradient>
+      <gray>Completed: <gradient:#d8b4fe:#9333ea>{completed}</gradient>
+      <gray>Abandoned: <gradient:#fca5a5:#dc2626>{abandoned}</gradient>
+  active:
+    name: "<gradient:#86efac:#16a34a>Active Quests</gradient>"
+    lore: |-
+      <gray>Quests you're currently on.
+      <gray>Count: <white>{count}</white>
+
+      <gradient:#a5f3fc:#06b6d4>▸ Click to view</gradient>
+  browse:
+    name: "<gradient:#fde047:#f59e0b>Browse All</gradient>"
+    lore: |-
+      <gray>Every quest on the server.
+
+      <gradient:#a5f3fc:#06b6d4>▸ Click to view</gradient>
+  completed:
+    name: "<gradient:#d8b4fe:#9333ea>Completed</gradient>"
+    lore: |-
+      <gray>Quests you've finished.
+      <gray>Count: <white>{count}</white>
+
+      <gradient:#a5f3fc:#06b6d4>▸ Click to view</gradient>
+
+quest_objective_list_ui:
+  title: "<gradient:#fde047:#f59e0b>Objectives</gradient> <dark_gray>»</dark_gray> {quest}"
+  entry:
+    name: "<gradient:#fde047:#f59e0b>{task}</gradient> <dark_gray>»</dark_gray> {state}"
+    lore: |-
+      <dark_gray>━━━━━━━━━━━━━━━━━━━━
+      <gray>ID: <white>{identifier}</white>
+      <gray>Kind: <white>{kind}</white>
+      <gray>Target: <white>{target}</white>
+      <gray>Progress: <white>{progress}</white>/<white>{maximum}</white> (<white>{percent}</white>%)
+      <gray>State: {state}
+
+reward_list_ui:
+  title: "<gradient:#86efac:#16a34a>Rewards</gradient> <dark_gray>»</dark_gray> {context}"
+  entry:
+    xp:
+      name: "<gradient:#86efac:#16a34a>+{amount} Experience</gradient>"
+      lore: "<gray>Granted as raw XP on unlock."
+    currency:
+      name: "<gradient:#fde047:#f59e0b>+{amount} {currency}</gradient>"
+      lore: "<gray>Paid into your economy balance."
+    item:
+      name: "<gradient:#93c5fd:#2563eb>{amount}× {material}</gradient>"
+      lore: |-
+        <gray>Dropped directly into your inventory.
+        <gray>NBT: <white>{nbt}</white>
+    command:
+      name: "<gradient:#d8b4fe:#9333ea>Scripted reward</gradient>"
+      lore: |-
+        <gray>Runs <white>/{command}</white>
+        <gray>Runs as: <white>{as}</white>
+    composite:
+      name: "<gradient:#fde047:#f59e0b>Bundle</gradient>"
+      lore: "<gray>Multi-part reward."
+    custom:
+      name: "<gradient:#d8b4fe:#9333ea>{type}</gradient>"
+      lore: |-
+        <gray>Custom reward type.
+        <gray>Data: <white>{data}</white>
+
+requirement_list_ui:
+  title: "<gradient:#93c5fd:#2563eb>Requirements</gradient> <dark_gray>»</dark_gray> {context}"
+  entry:
+    permission:
+      name: "<gradient:#fde047:#f59e0b>Permission</gradient>"
+      lore: "<gray>Must hold <white>{node}</white>."
+    currency:
+      name: "<gradient:#fde047:#f59e0b>Currency check</gradient>"
+      lore: "<gray>Balance of <white>{currency}</white> must be <white>{op} {amount}</white>."
+    statistic:
+      name: "<gradient:#a5f3fc:#06b6d4>Statistic</gradient>"
+      lore: |-
+        <gray>Stat <white>{plugin}/{identifier}</white>
+        <gray>must be <white>{op} {value}</white>.
+    quest_completed:
+      name: "<gradient:#86efac:#16a34a>Quest completion</gradient>"
+      lore: "<gray>Complete <white>{quest}</white> at least <white>{minimum}</white> time(s)."
+    rank:
+      name: "<gradient:#fde047:#f59e0b>Rank gate</gradient>"
+      lore: "<gray>Must hold rank <white>{rank}</white> on tree <white>{tree}</white>."
+    placeholder:
+      name: "<gradient:#d8b4fe:#9333ea>Placeholder</gradient>"
+      lore: "<gray>%{expansion}% must be <white>{op} {value}</white>."
+    composite:
+      name: "<gradient:#93c5fd:#2563eb>Grouped</gradient>"
+      lore: "<gray>Multi-part requirement."
+    custom:
+      name: "<gradient:#d8b4fe:#9333ea>{type}</gradient>"
+      lore: |-
+        <gray>Custom requirement type.
+        <gray>Data: <white>{data}</white>
+
+quest_overview_ui:
+  title: "<gradient:#fde047:#f59e0b>Quests</gradient>"
+  entry:
+    name: "<gradient:#fde047:#f59e0b>{quest_display_name}</gradient> <dark_gray>»</dark_gray> {state}"
+    lore: |-
+      <dark_gray>━━━━━━━━━━━━━━━━━━━━
+      <gray>ID: <white>{quest_identifier}</white>
+      <gray>Category: <white>{quest_category}</white>
+      <gray>Difficulty: <white>{quest_difficulty}</white>
+      <gray>State: {state}
+      <gray>Completions: <white>{completion_count}</white>
+
+      {action_hint}
+  page:
+    next:
+      name: "<gradient:#a5f3fc:#06b6d4>Next page</gradient>"
+      lore: "<gray>Page <white>{current}</white><dark_gray>/</dark_gray><white>{total}</white>"
+    previous:
+      name: "<gradient:#a5f3fc:#06b6d4>Previous page</gradient>"
+      lore: "<gray>Page <white>{current}</white><dark_gray>/</dark_gray><white>{total}</white>"
+
+quest_detail_ui:
+  title: "<gradient:#fde047:#f59e0b>{quest_display_name}</gradient>"
+  summary:
+    name: "<gradient:#fde047:#f59e0b>{quest_display_name}</gradient>"
+    lore: |-
+      <gray>ID: <white>{quest_identifier}</white>
+      <gray>Category: <white>{quest_category}</white>
+      <gray>Difficulty: <white>{quest_difficulty}</white>
+      <gray>Repeatable: <white>{quest_repeatable}</white>
+
+      <gradient:#86efac:#16a34a>Rewards:</gradient> {quest_rewards}
+  track:
+    name: "<gradient:#a5f3fc:#06b6d4>Track</gradient>"
+    lore: |-
+      <gray>Pin <gradient:#fde047:#f59e0b>{quest_identifier}</gradient> to your sidebar.
+
+      <gradient:#a5f3fc:#06b6d4>▸ Click to track</gradient>
+  objectives:
+    name: "<gradient:#fde047:#f59e0b>View Objectives</gradient>"
+    lore: |-
+      <gray>See every task and your live progress.
+
+      <gradient:#a5f3fc:#06b6d4>▸ Click to open</gradient>
+  rewards:
+    name: "<gradient:#86efac:#16a34a>View Rewards</gradient>"
+    lore: |-
+      <gray>Summary: <white>{rewards}</white>
+
+      <gradient:#a5f3fc:#06b6d4>▸ Click for itemised breakdown</gradient>
+  requirements:
+    name: "<gradient:#93c5fd:#2563eb>View Requirements</gradient>"
+    lore: |-
+      <gray>Summary: <white>{requirements}</white>
+
+      <gradient:#a5f3fc:#06b6d4>▸ Click for per-gate breakdown</gradient>
+  accept:
+    name: "<gradient:#86efac:#16a34a>Accept</gradient>"
+    lore: |-
+      <gray>Start <gradient:#fde047:#f59e0b>{quest_identifier}</gradient>.
+
+      <gradient:#a5f3fc:#06b6d4>▸ Click to accept</gradient>
+  abandon:
+    name: "<gradient:#fca5a5:#dc2626>Abandon</gradient>"
+    lore: |-
+      <gray>Drop <gradient:#fde047:#f59e0b>{quest_identifier}</gradient>. Progress lost.
+
+      <gradient:#a5f3fc:#06b6d4>▸ Click to abandon</gradient>
+  back:
+    name: "<gradient:#93c5fd:#2563eb>Back</gradient>"
+    lore: |-
+      <gray>Return to the overview.
+
+      <gradient:#a5f3fc:#06b6d4>▸ Click to go back</gradient>
+
+bounty_overview_ui:
+  title: "<gradient:#fca5a5:#dc2626>Bounties</gradient>"
+  entry:
+    name: "<gradient:#fca5a5:#dc2626>{target}</gradient>"
+    lore: |-
+      <gray>Posted by <white>{issuer}</white>
+      <gray>Reward <gradient:#fde047:#f59e0b>{amount} {currency}</gradient>
+
+      <gradient:#a5f3fc:#06b6d4>▸ Click to inspect</gradient>
+
+bounty_creation_ui:
+  title: "<gradient:#fca5a5:#dc2626>Post bounty on {target}</gradient>"
+  invalid-amount: "<gradient:#fca5a5:#dc2626>✘</gradient> <red>Amount must be greater than zero."
+  failed: "<gradient:#fca5a5:#dc2626>✘</gradient> <red>Failed to place bounty."
+  placed: "<gradient:#86efac:#16a34a>✔</gradient> <gray>Bounty on <white>{target}</white> placed for <gradient:#fde047:#f59e0b>{amount} {currency}</gradient>."
+  target:
+    name: "<gradient:#fca5a5:#dc2626>Target <dark_gray>»</dark_gray> <white>{target}</white></gradient>"
+    lore: |-
+      <gray>The player hunted by this bounty.
+      <gray>Will be paid out to whoever kills them.
+  amount:
+    name: "<gradient:#fde047:#f59e0b>{amount} {currency}</gradient>"
+    lore: |-
+      <gray>Current offer.
+      <gray>Use the ± arrows to adjust.
+  adjust:
+    increase:
+      ten:
+        name: "<gradient:#86efac:#16a34a>+ {delta}</gradient>"
+        lore: "<gray>Raise the bounty by <white>{delta}</white>."
+      hundred:
+        name: "<gradient:#86efac:#16a34a>+ {delta}</gradient>"
+        lore: "<gray>Raise the bounty by <white>{delta}</white>."
+    decrease:
+      ten:
+        name: "<gradient:#fca5a5:#dc2626>− {delta}</gradient>"
+        lore: "<gray>Lower the bounty by <white>{delta}</white>."
+      hundred:
+        name: "<gradient:#fca5a5:#dc2626>− {delta}</gradient>"
+        lore: "<gray>Lower the bounty by <white>{delta}</white>."
+  confirm:
+    name: "<gradient:#86efac:#16a34a>Post bounty</gradient>"
+    lore: |-
+      <gray>Commit the offer:
+      <gray>· <white>{target}</white>
+      <gray>· <gradient:#fde047:#f59e0b>{amount} {currency}</gradient>
+
+      <gradient:#a5f3fc:#06b6d4>▸ Click to post</gradient>
+  cancel:
+    name: "<gradient:#fca5a5:#dc2626>Cancel</gradient>"
+    lore: "<gray>Close without placing a bounty."
+
+perk_overview_ui:
+  title: "<gradient:#d8b4fe:#9333ea>Perks</gradient>"
+  entry:
+    name: "<gradient:#d8b4fe:#9333ea>{perk}</gradient>"
+    lore: |-
+      <gray>ID: <white>{perk}</white>
+      <gray>Kind: <white>{kind}</white>
+      <gray>State: {state}
+      <gray>Cooldown: <white>{cooldown}</white>
+      <gray>Activations: <white>{count}</white>
+
+      <gradient:#a5f3fc:#06b6d4>▸ Click to toggle / activate</gradient>
+
+rank_main_ui:
+  title: "<gradient:#fde047:#f59e0b>Rank Progression</gradient>"
+  summary:
+    name: "<gradient:#fde047:#f59e0b>{player}'s progression</gradient>"
+    lore: |-
+      <dark_gray>━━━━━━━━━━━━━━━━━━━━
+      <gray>Active path: <gradient:#86efac:#16a34a>{active_tree}</gradient>
+      <gray>Current rank: <gradient:#fde047:#f59e0b>{active_rank}</gradient>
+      <dark_gray>━━━━━━━━━━━━━━━━━━━━
+      <gray>Enrolled trees: <white>{enrolled}</white>
+      <gray>Completed trees: <white>{completed}</white>
+  path:
+    name: "<gradient:#86efac:#16a34a>Your Path</gradient>"
+    lore: |-
+      <gray>You are on <gradient:#fde047:#f59e0b>{tree}</gradient>.
+
+      <gradient:#a5f3fc:#06b6d4>▸ Click to open the progression grid</gradient>
+    name_none: "<gradient:#fca5a5:#dc2626>Your Path</gradient>"
+    lore_none: |-
+      <gray>You haven't selected a path yet.
+
+      <gradient:#a5f3fc:#06b6d4>▸ Click to browse available paths</gradient>
+  browse:
+    name: "<gradient:#fde047:#f59e0b>Browse Trees</gradient>"
+    lore: |-
+      <gray>Explore every rank path on the server.
+      <gray>Pick one, switch paths, or preview.
+
+      <gradient:#a5f3fc:#06b6d4>▸ Click to open the catalogue</gradient>
+  leaderboard:
+    name: "<gradient:#d8b4fe:#9333ea>Leaderboard</gradient>"
+    lore: |-
+      <gray>Top-ranked players on the server.
+
+      <gradient:#a5f3fc:#06b6d4>▸ Click to view</gradient>
+
+rank_tree_overview_ui:
+  title: "<gradient:#fde047:#f59e0b>Rank paths</gradient>"
+  entry:
+    name: "<gradient:#fde047:#f59e0b>{tree}</gradient> <dark_gray>»</dark_gray> {state}"
+    lore: |-
+      <dark_gray>━━━━━━━━━━━━━━━━━━━━
+      <gray>{description}
+      <dark_gray>━━━━━━━━━━━━━━━━━━━━
+      <gray>ID: <white>{identifier}</white>
+      <gray>State: {state}
+
+      {action_hint}
+
+rank_path_overview_ui:
+  title: "<gradient:#fde047:#f59e0b>{tree}</gradient> <dark_gray>»</dark_gray> {mode}"
+  preview_badge:
+    name: "<gradient:#a5f3fc:#06b6d4>Preview Mode</gradient>"
+    lore: |-
+      <gray>You are previewing this path.
+      <gray>Select it on the tree list to activate.
+  toggle:
+    name: "<gradient:#fde047:#f59e0b>Switch to Tree View</gradient>"
+    lore: |-
+      <gray>Open the scrollable tree-grid view.
+      <gray>Shows branches and handles very large trees.
+
+      <gradient:#a5f3fc:#06b6d4>▸ Click to switch</gradient>
+  rank:
+    active:
+      name: "<gradient:#86efac:#16a34a>{rank}</gradient> <dark_gray>»</dark_gray> <white>T{tier}</white>"
+    owned:
+      name: "<gradient:#86efac:#16a34a>✔ {rank}</gradient> <dark_gray>»</dark_gray> <white>T{tier}</white>"
+    next:
+      name: "<gradient:#fde047:#f59e0b>▸ {rank}</gradient> <dark_gray>»</dark_gray> <white>T{tier}</white>"
+    locked:
+      name: "<gradient:#fca5a5:#dc2626>🔒 {rank}</gradient> <dark_gray>»</dark_gray> <white>T{tier}</white>"
+    lore: |-
+      <dark_gray>━━━━━━━━━━━━━━━━━━━━
+      <gray>{description}
+      <dark_gray>━━━━━━━━━━━━━━━━━━━━
+      <gray>ID: <white>{identifier}</white>
+      <gray>Tier: <white>{tier}</white>
+      <gray>State: {state}
+
+      <gradient:#93c5fd:#2563eb>Requires:</gradient> {requirements}
+      <gradient:#86efac:#16a34a>Rewards:</gradient> {rewards}
+
+      {action_hint}
+
+rank_detail_ui:
+  title: "<gradient:#fde047:#f59e0b>{rank}</gradient>"
+  icon:
+    name:
+      active: "<gradient:#86efac:#16a34a>{rank}</gradient> <dark_gray>»</dark_gray> <white>T{tier}</white>"
+      owned: "<gradient:#86efac:#16a34a>✔ {rank}</gradient> <dark_gray>»</dark_gray> <white>T{tier}</white>"
+      next: "<gradient:#fde047:#f59e0b>▸ {rank}</gradient> <dark_gray>»</dark_gray> <white>T{tier}</white>"
+      locked: "<gradient:#fca5a5:#dc2626>🔒 {rank}</gradient> <dark_gray>»</dark_gray> <white>T{tier}</white>"
+    lore: |-
+      <dark_gray>━━━━━━━━━━━━━━━━━━━━
+      <gray>{description}
+      <dark_gray>━━━━━━━━━━━━━━━━━━━━
+      <gray>ID: <white>{identifier}</white>
+      <gray>Tier: <white>{tier}</white>
+      <gray>State: {state}
+  requirements:
+    name: "<gradient:#93c5fd:#2563eb>Requirements</gradient>"
+    lore: |-
+      <gray>What you need to promote into this rank:
+
+      <white>{requirements}</white>
+  rewards:
+    name: "<gradient:#86efac:#16a34a>Rewards</gradient>"
+    lore: |-
+      <gray>What you receive on promotion:
+
+      <white>{rewards}</white>
+  action:
+    promote:
+      name: "<gradient:#86efac:#16a34a>Claim Promotion</gradient>"
+      lore: |-
+        <gray>Attempt to promote into <gradient:#fde047:#f59e0b>{rank}</gradient>.
+        <gray>Requirements are re-checked on click.
+
+        <gradient:#a5f3fc:#06b6d4>▸ Click to promote</gradient>
+    locked:
+      name: "<gradient:#fca5a5:#dc2626>Not Available</gradient>"
+      lore: |-
+        <gray>This rank is not your next promotion.
+        <gray>State: {state}
+
+rank_path_grid_ui:
+  title: "<gradient:#fde047:#f59e0b>{tree}</gradient> <dark_gray>»</dark_gray> Tree View {mode}"
+  preview_badge:
+    name: "<gradient:#a5f3fc:#06b6d4>Preview Mode</gradient>"
+    lore: "<gray>You are previewing this path."
+  nav:
+    up:
+      name: "<gradient:#a5f3fc:#06b6d4>▲ Pan Up</gradient>"
+      lore: "<gray>Scroll the viewport up one row."
+    down:
+      name: "<gradient:#a5f3fc:#06b6d4>▼ Pan Down</gradient>"
+      lore: "<gray>Scroll the viewport down one row."
+    left:
+      name: "<gradient:#a5f3fc:#06b6d4>◂ Pan Left</gradient>"
+      lore: "<gray>Scroll the viewport left one column."
+    right:
+      name: "<gradient:#a5f3fc:#06b6d4>▸ Pan Right</gradient>"
+      lore: "<gray>Scroll the viewport right one column."
+    recenter:
+      name: "<gradient:#fde047:#f59e0b>◎ Recenter</gradient>"
+      lore: |-
+        <gray>Jump the viewport to your active rank.
+
+        <gradient:#a5f3fc:#06b6d4>▸ Click to recenter</gradient>
+  toggle:
+    name: "<gradient:#fde047:#f59e0b>Switch to Compact View</gradient>"
+    lore: |-
+      <gray>Return to the simpler linear view.
+
+      <gradient:#a5f3fc:#06b6d4>▸ Click to switch</gradient>
+  legend:
+    name: "<gradient:#d8b4fe:#9333ea>Legend</gradient>"
+    lore: |-
+      <gray>Icons:
+      <gray>• <gradient:#86efac:#16a34a>Emerald Block</gradient> — current rank
+      <gray>• <white>Tier ingot</white> — earned rank
+      <gray>• <gradient:#fde047:#f59e0b>Ender Eye</gradient> — next promotion
+      <gray>• <gradient:#fca5a5:#dc2626>Barrier</gradient> — locked
+
+      <gray>Use the arrows to pan; click the eye to promote.
+  rank:
+    active:
+      name: "<gradient:#86efac:#16a34a>{rank}</gradient> <dark_gray>»</dark_gray> <white>T{tier}</white>"
+    owned:
+      name: "<gradient:#86efac:#16a34a>✔ {rank}</gradient> <dark_gray>»</dark_gray> <white>T{tier}</white>"
+    next:
+      name: "<gradient:#fde047:#f59e0b>▸ {rank}</gradient> <dark_gray>»</dark_gray> <white>T{tier}</white>"
+    locked:
+      name: "<gradient:#fca5a5:#dc2626>🔒 {rank}</gradient> <dark_gray>»</dark_gray> <white>T{tier}</white>"
+    lore: |-
+      <dark_gray>━━━━━━━━━━━━━━━━━━━━
+      <gray>{description}
+      <dark_gray>━━━━━━━━━━━━━━━━━━━━
+      <gray>ID: <white>{identifier}</white>
+      <gray>Tier: <white>{tier}</white>
+      <gray>State: {state}
+
+      <gradient:#93c5fd:#2563eb>Requires:</gradient> {requirements}
+      <gradient:#86efac:#16a34a>Rewards:</gradient> {rewards}
+
+      {action_hint}
+
+machine_type_overview_ui:
+  title: "<gradient:#fde047:#f59e0b>Machines</gradient>"
+  entry:
+    name: "<gradient:#fde047:#f59e0b>{display_name}</gradient>"
+    lore: |-
+      <gray>ID: <white>{identifier}</white>
+      <gray>Category: <white>{category}</white>
+      <gray>Size: <white>{size}</white>
+      <gray>{description}
+
+      <gradient:#a5f3fc:#06b6d4>▸ Click for details</gradient>
+
+rank_tree_detail_ui:
+  title: "<gradient:#fde047:#f59e0b>Ranks</gradient>"
+  entry:
+    name: "<gradient:#fde047:#f59e0b>{rank}</gradient> <dark_gray>»</dark_gray> {state}"
+    lore: |-
+      <gray>ID: <white>{identifier}</white>
+      <gray>Tier: <white>{order}</white>
+      <gray>{description}
+
+      <gradient:#93c5fd:#2563eb>Requires:</gradient> {requirements}
+      <gradient:#86efac:#16a34a>Rewards:</gradient> {rewards}
+
+      <gradient:#a5f3fc:#06b6d4>▸ Click to attempt promotion</gradient>
+
+machine_type_detail_ui:
+  title: "<gradient:#fde047:#f59e0b>Machine</gradient>"
+  icon:
+    name: "<gradient:#fde047:#f59e0b>{display_name}</gradient>"
+    lore: |-
+      <gray>ID: <white>{identifier}</white>
+      <gray>{description}
+  size:
+    name: "<gradient:#93c5fd:#2563eb>Footprint</gradient>"
+    lore: |-
+      <gray>Width: <white>{width}</white>
+      <gray>Height: <white>{height}</white>
+      <gray>Depth: <white>{depth}</white>
+  properties:
+    name: "<gradient:#d8b4fe:#9333ea>Properties</gradient>"
+    lore: |-
+      <gray>Configured entries: <white>{count}</white>
+
+      <gradient:#a5f3fc:#06b6d4>▸ Edit via YAML</gradient>
+  category:
+    name: "<gradient:#86efac:#16a34a>{category}</gradient>"
+    lore: |-
+      <gray>Category <white>{category}</white>
+      <gray>
+
+      <gradient:#a5f3fc:#06b6d4>▸ Filter overview by this category</gradient>
+
+perk_browser_ui:
+  title: "<gradient:#d8b4fe:#9333ea>Perk browser</gradient>"
+  entry:
+    name: "<gradient:#d8b4fe:#9333ea>{perk}</gradient> <dark_gray>»</dark_gray> {state}"
+    lore: |-
+      <gray>ID: <white>{identifier}</white>
+      <gray>Category: <white>{category}</white>
+      <gray>Kind: <white>{kind}</white>
+      <gray>{description}
+
+      <gradient:#93c5fd:#2563eb>Unlock:</gradient> {requirements}
+      <gradient:#86efac:#16a34a>Grants:</gradient> {rewards}
+
+      <gradient:#a5f3fc:#06b6d4>▸ Click to attempt unlock</gradient>
+
+machine_controller_ui:
+  title: "<gradient:#fde047:#f59e0b>Machine</gradient>"
+  icon:
+    name: "<gradient:#fde047:#f59e0b>{display_name}</gradient>"
+    lore: |-
+      <gray>Type: <white>{identifier}</white>
+      <gray>Owner: <white>{owner}</white>
+      <gray>Facing: <white>{facing}</white>
+  location:
+    name: "<gradient:#93c5fd:#2563eb>Location</gradient>"
+    lore: |-
+      <gray>World: <white>{world}</white>
+      <gray>X: <white>{x}</white>
+      <gray>Y: <white>{y}</white>
+      <gray>Z: <white>{z}</white>
+  dismantle:
+    name: "<gradient:#fca5a5:#dc2626>Dismantle</gradient>"
+    lore: |-
+      <gray>Reclaim this machine. Returns a fresh machine item.
+
+      <gradient:#a5f3fc:#06b6d4>▸ Click to dismantle</gradient>
+  storage:
+    name: "<gradient:#86efac:#16a34a>Storage</gradient>"
+    lore: |-
+      <gray>Open the input / output grid.
+
+      <gradient:#a5f3fc:#06b6d4>▸ Click to open storage</gradient>
+
+rank_top_ui:
+  title: "<gradient:#fde047:#f59e0b>Leaderboard</gradient>"
+  entry:
+    name: "<gray>#<white>{position}</white> <dark_gray>»</dark_gray> <gradient:#fde047:#f59e0b>{player}</gradient>"
+    lore: |-
+      <gray>Rank: <white>{rank}</white>
+      <gray>Path: <white>{tree}</white>
+      <gray>Ordinal: <white>{ordinal}</white>
+      <gray>Promoted: <white>{promoted}</white>
+      <gray>Tree completed: <white>{tree_completed}</white>

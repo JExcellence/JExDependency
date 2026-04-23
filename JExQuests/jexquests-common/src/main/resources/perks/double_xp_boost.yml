@@ -1,0 +1,31 @@
+# Double XP Boost — ACTIVE. Fires a 5-minute window during which the
+# player's XP orb gains are doubled by the listener. Hour-long cooldown
+# so it's a deliberate burst, not an always-on multiplier.
+
+identifier: double_xp_boost
+category: utility
+displayName: "<gradient:#86efac:#16a34a>Scholar's Focus</gradient>"
+description: "Tap to double XP gain for 5 minutes. 1-hour cooldown."
+kind: ACTIVE
+cooldownSeconds: 3600
+enabled: true
+
+icon:
+  material: EXPERIENCE_BOTTLE
+  enchanted: true
+
+requirement:
+  type: composite
+  op: AND
+  children:
+    - { type: rank, tree: mage, minRankIdentifier: wizard }
+    - { type: currency, currency: coins, op: GE, amount: 3000.0 }
+
+reward:
+  type: command
+  command: "tellraw {player} {\"text\":\"Scholar's Focus — the lessons crystallise.\",\"color\":\"green\"}"
+  asConsole: true
+
+behaviour:
+  multiplyXp: 2.0
+  durationTicks: 6000

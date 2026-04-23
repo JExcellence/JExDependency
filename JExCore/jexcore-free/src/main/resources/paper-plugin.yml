@@ -1,0 +1,9 @@
+name: JExCore
+version: '1.0.0'
+main: de.jexcellence.core.JExCoreFree
+description: Clean shared core for JExcellence / Raindrop plugins (Free Edition)
+api-version: '1.21'
+author: JExcellence
+website: https://jexcellence.de
+loader: de.jexcellence.dependency.loader.PaperPluginLoader
+folia-supported: true

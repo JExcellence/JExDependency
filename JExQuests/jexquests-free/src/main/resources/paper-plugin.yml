@@ -1,0 +1,32 @@
+name: JExQuests
+version: '1.0.0'
+main: de.jexcellence.quests.JExQuestsFree
+description: Quests, ranks, bounties, perks, and machines (Free Edition)
+api-version: '1.21'
+author: JExcellence
+website: https://jexcellence.de
+loader: de.jexcellence.dependency.loader.PaperPluginLoader
+folia-supported: true
+
+# Required so Paper joins JExCore's classloader onto ours — otherwise
+# shared sealed types (Reward / Requirement) and the RewardExecutor /
+# RequirementEvaluator services throw NoClassDefFoundError at runtime
+# even though JExCore is installed on the server.
+dependencies:
+  server:
+    JExCore:
+      load: BEFORE
+      required: true
+      join-classpath: true
+    JExEconomy:
+      load: BEFORE
+      required: false
+      join-classpath: true
+    PlaceholderAPI:
+      load: BEFORE
+      required: false
+      join-classpath: true
+    Vault:
+      load: BEFORE
+      required: false
+      join-classpath: true

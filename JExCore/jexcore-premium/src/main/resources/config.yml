@@ -1,0 +1,12 @@
+# JExCore — Premium edition defaults
+# This file ships to plugins/JExCore/config.yml on first run and is NOT
+# overwritten on upgrade. Edit to match your deployment.
+
+# ── Statistics delivery ─────────────────────────────────────────────────────
+# Set stats.endpoint to the RaindropCentral statistics HTTP URL to enable
+# cross-server metrics delivery. Leave blank to disable the module entirely —
+# jexcore-stats will not schedule any work and no network calls are made.
+stats:
+  endpoint: ""
+  apiKey: ""
+  hmacSecret: ""

@@ -1,0 +1,29 @@
+# Flight — the big toggle perk. Gated hard: needs the mage archmage
+# rank and a serious coin sink. Players don't unlock this casually.
+
+identifier: fly
+category: movement
+displayName: "<gradient:#d8b4fe:#9333ea>Winged Ascent</gradient>"
+description: "Toggle creative-style flight. A true luxury."
+kind: TOGGLE
+cooldownSeconds: 0
+enabled: true
+
+icon:
+  material: ELYTRA
+  enchanted: true
+
+requirement:
+  type: composite
+  op: AND
+  children:
+    - { type: rank, tree: mage, minRankIdentifier: archmage }
+    - { type: currency, currency: coins, op: GE, amount: 10000.0 }
+
+reward:
+  type: command
+  command: "tellraw {player} {\"text\":\"Winged Ascent unlocked — the sky is yours.\",\"color\":\"light_purple\"}"
+  asConsole: true
+
+behaviour:
+  specialType: FLIGHT

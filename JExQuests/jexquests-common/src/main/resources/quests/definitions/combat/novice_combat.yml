@@ -1,0 +1,59 @@
+# Novice Combat — entry point for the combat chain. Tuned so an
+# unequipped new player can complete it in ~10 minutes of casual
+# exploration. Unlocks zombie_slayer_i + dragon_slayer_prep.
+
+identifier: novice_combat
+category: combat
+displayName: "<gradient:#fca5a5:#dc2626>Novice Combat</gradient>"
+difficulty: EASY
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
+enabled: true
+prerequisites:
+  - welcome_to_server
+dependents:
+  - zombie_slayer_i
+
+icon:
+  material: WOODEN_SWORD
+
+reward:
+  type: composite
+  children:
+    - { type: xp, amount: 150 }
+    - { type: currency, currency: coins, amount: 300 }
+    - { type: item, materialKey: IRON_SWORD, amount: 1, nbt: "{}" }
+    - { type: item, materialKey: SHIELD, amount: 1, nbt: "{}" }
+
+tasks:
+  - identifier: kill_zombies
+    displayName: "<gray>Defeat <white>15</white> zombies"
+    orderIndex: 0
+    difficulty: EASY
+    sequential: false
+    objective:
+      type: entity-kill
+      entityType: ZOMBIE
+      target: 15
+
+  - identifier: kill_skeletons
+    displayName: "<gray>Defeat <white>10</white> skeletons"
+    orderIndex: 1
+    difficulty: EASY
+    sequential: false
+    objective:
+      type: entity-kill
+      entityType: SKELETON
+      target: 10
+
+  - identifier: kill_spiders
+    displayName: "<gray>Defeat <white>8</white> spiders"
+    orderIndex: 2
+    difficulty: EASY
+    sequential: false
+    objective:
+      type: entity-kill
+      entityType: SPIDER
+      target: 8

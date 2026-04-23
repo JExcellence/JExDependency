@@ -1,0 +1,30 @@
+# Feather Fall — nullifies fall damage. Mid-tier perk, no combat
+# requirement but a non-trivial coin cost since it trivialises
+# elevator / parkour deaths.
+
+identifier: no_fall_damage
+category: survival
+displayName: "<gradient:#a5f3fc:#06b6d4>Feather Fall</gradient>"
+description: "Fall damage can no longer harm you."
+kind: PASSIVE
+cooldownSeconds: 0
+enabled: true
+
+icon:
+  material: FEATHER
+
+requirement:
+  type: currency
+  currency: coins
+  op: GE
+  amount: 1500.0
+
+reward:
+  type: command
+  command: "tellraw {player} {\"text\":\"Feather Fall unlocked — gravity loosens its grip.\",\"color\":\"aqua\"}"
+  asConsole: true
+
+# No potion effect — the listener filters EntityDamageEvent
+# DamageCause.FALL for owners of this perk.
+behaviour:
+  cancelDamageCause: FALL

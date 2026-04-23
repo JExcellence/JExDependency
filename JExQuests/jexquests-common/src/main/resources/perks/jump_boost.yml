@@ -1,0 +1,34 @@
+# Jump Boost — toggled mobility perk. Players keep it off when doing
+# tight parkour and flip it on for long jumps.
+
+identifier: jump_boost
+category: movement
+displayName: "<gradient:#86efac:#16a34a>Grasshopper</gradient>"
+description: "Tap to toggle — adds Jump Boost II when active."
+kind: TOGGLE
+cooldownSeconds: 0
+enabled: true
+
+icon:
+  material: RABBIT_FOOT
+  enchanted: true
+
+requirement:
+  type: currency
+  currency: coins
+  op: GE
+  amount: 800.0
+
+reward:
+  type: command
+  command: "tellraw {player} {\"text\":\"Grasshopper ready — toggle in the perk menu.\",\"color\":\"green\"}"
+  asConsole: true
+
+# Toggle perks only apply their effect while the owner has enabled=true
+# on their PlayerPerk row. The listener reads this section when flipping.
+behaviour:
+  effect: JUMP_BOOST
+  amplifier: 1
+  durationTicks: 600
+  refreshEveryTicks: 400
+  particles: false

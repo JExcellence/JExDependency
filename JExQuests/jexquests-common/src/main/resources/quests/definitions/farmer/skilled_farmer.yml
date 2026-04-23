@@ -1,0 +1,61 @@
+# Skilled Farmer — scales up to breeding and multi-crop harvests.
+
+identifier: skilled_farmer
+category: farmer
+displayName: "<gradient:#86efac:#16a34a>Skilled Farmer</gradient>"
+difficulty: MEDIUM
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
+enabled: true
+prerequisites:
+  - novice_farmer
+dependents: []
+
+icon:
+  material: HAY_BLOCK
+
+requirement:
+  type: quest-completed
+  questIdentifier: novice_farmer
+  minCompletions: 1
+
+reward:
+  type: composite
+  children:
+    - { type: xp, amount: 400 }
+    - { type: currency, currency: coins, amount: 800 }
+    - { type: item, materialKey: DIAMOND_HOE, amount: 1, nbt: "{}" }
+    - { type: item, materialKey: GOLDEN_CARROT, amount: 16, nbt: "{}" }
+
+tasks:
+  - identifier: harvest_carrots
+    displayName: "<gray>Harvest <white>128</white> carrots"
+    orderIndex: 0
+    difficulty: MEDIUM
+    sequential: false
+    objective:
+      type: item-pickup
+      material: CARROT
+      target: 128
+
+  - identifier: harvest_potatoes
+    displayName: "<gray>Harvest <white>128</white> potatoes"
+    orderIndex: 1
+    difficulty: MEDIUM
+    sequential: false
+    objective:
+      type: item-pickup
+      material: POTATO
+      target: 128
+
+  - identifier: craft_pumpkin_pie
+    displayName: "<gray>Craft <white>12</white> pumpkin pies"
+    orderIndex: 2
+    difficulty: MEDIUM
+    sequential: false
+    objective:
+      type: item-craft
+      material: PUMPKIN_PIE
+      target: 12

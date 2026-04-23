@@ -1,0 +1,39 @@
+# Speed — always-on movement boost. Cheap unlock, no cooldown (passive).
+# Gated behind a low currency fee + tutorial completion so brand-new
+# players can't auto-own it.
+
+identifier: speed
+category: movement
+displayName: "<gradient:#a5f3fc:#06b6d4>Swift Step</gradient>"
+description: "Permanent Speed I while this perk is owned."
+kind: PASSIVE
+cooldownSeconds: 0
+enabled: true
+
+icon:
+  material: FEATHER
+  enchanted: true
+
+requirement:
+  type: composite
+  op: AND
+  children:
+    - { type: quest-completed, questIdentifier: welcome_to_server, minCompletions: 1 }
+    - { type: currency, currency: coins, op: GE, amount: 500.0 }
+
+# Unlock reward — granted once when the perk is purchased.
+reward:
+  type: command
+  command: "tellraw {player} {\"text\":\"Swift Step unlocked — you feel lighter.\",\"color\":\"aqua\"}"
+  asConsole: true
+
+# Runtime-listener contract. Interpreted by the live perk handler:
+# potion-effect perks re-apply tickWindow seconds before expiry so
+# the bar never drops.
+behaviour:
+  effect: SPEED
+  amplifier: 0
+  durationTicks: 600
+  refreshEveryTicks: 400
+  ambient: false
+  particles: false

@@ -1,0 +1,33 @@
+# Strength Surge — ACTIVE. 10-second burst of Strength I. Short
+# cooldown relative to combat_heal because it's narrower (offence only).
+
+identifier: strength_surge
+category: combat
+displayName: "<gradient:#fca5a5:#dc2626>Battle Fury</gradient>"
+description: "Tap for Strength I for 10s. 2-minute cooldown."
+kind: ACTIVE
+cooldownSeconds: 120
+enabled: true
+
+icon:
+  material: IRON_SWORD
+  enchanted: true
+
+requirement:
+  type: composite
+  op: AND
+  children:
+    - { type: rank, tree: warrior, minRankIdentifier: veteran }
+    - { type: currency, currency: coins, op: GE, amount: 2000.0 }
+
+reward:
+  type: command
+  command: "tellraw {player} {\"text\":\"Battle Fury — the world narrows to your blade.\",\"color\":\"red\"}"
+  asConsole: true
+
+behaviour:
+  effect: STRENGTH
+  amplifier: 0
+  durationTicks: 200
+  ambient: false
+  particles: true

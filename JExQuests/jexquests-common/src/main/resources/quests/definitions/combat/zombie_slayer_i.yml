@@ -1,0 +1,38 @@
+# Zombie Slayer I — repeatable daily grind. Hourly cooldown so a
+# player farming spawners can't rack it up, but the quest itself is
+# cheap. Intentionally un-gated beyond novice_combat so it becomes
+# "the thing to click on" when you have nothing else queued.
+
+identifier: zombie_slayer_i
+category: combat
+displayName: "<gradient:#fca5a5:#dc2626>Zombie Slayer <white>I</white></gradient>"
+difficulty: EASY
+repeatable: true
+maxCompletions: -1        # unlimited completions
+cooldownSeconds: 3600     # 1 hour
+timeLimitSeconds: 0
+enabled: true
+prerequisites:
+  - novice_combat
+dependents:
+  - zombie_slayer_ii
+
+icon:
+  material: ZOMBIE_HEAD
+
+reward:
+  type: composite
+  children:
+    - { type: xp, amount: 100 }
+    - { type: currency, currency: coins, amount: 120 }
+
+tasks:
+  - identifier: kill_zombies
+    displayName: "<gray>Defeat <white>20</white> zombies"
+    orderIndex: 0
+    difficulty: EASY
+    sequential: false
+    objective:
+      type: entity-kill
+      entityType: ZOMBIE
+      target: 20

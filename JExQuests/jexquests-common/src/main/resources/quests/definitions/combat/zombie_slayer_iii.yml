@@ -1,0 +1,67 @@
+# Zombie Slayer III — the capstone. 6-hour cooldown so even dedicated
+# farmers can't spam it, rewards scale accordingly. Gated behind
+# warrior_veteran because at this point the player is in the combat
+# rank tree proper.
+
+identifier: zombie_slayer_iii
+category: combat
+displayName: "<gradient:#fca5a5:#dc2626>Zombie Slayer <white>III</white></gradient>"
+difficulty: HARD
+repeatable: true
+maxCompletions: -1
+cooldownSeconds: 21600    # 6 hours
+timeLimitSeconds: 0
+enabled: true
+prerequisites:
+  - zombie_slayer_ii
+dependents: []
+
+icon:
+  material: WITHER_SKELETON_SKULL
+  enchanted: true
+
+requirement:
+  type: composite
+  op: AND
+  children:
+    - { type: quest-completed, questIdentifier: zombie_slayer_ii, minCompletions: 3 }
+    - { type: rank, tree: warrior, minRankIdentifier: veteran }
+
+reward:
+  type: composite
+  children:
+    - { type: xp, amount: 750 }
+    - { type: currency, currency: coins, amount: 1200 }
+    - { type: item, materialKey: DIAMOND_SWORD, amount: 1, nbt: "{}" }
+    - { type: item, materialKey: GOLDEN_APPLE, amount: 4, nbt: "{}" }
+
+tasks:
+  - identifier: kill_zombies
+    displayName: "<gray>Defeat <white>75</white> zombies"
+    orderIndex: 0
+    difficulty: HARD
+    sequential: false
+    objective:
+      type: entity-kill
+      entityType: ZOMBIE
+      target: 75
+
+  - identifier: kill_drowned
+    displayName: "<gray>Defeat <white>20</white> drowned"
+    orderIndex: 1
+    difficulty: HARD
+    sequential: false
+    objective:
+      type: entity-kill
+      entityType: DROWNED
+      target: 20
+
+  - identifier: kill_piglin
+    displayName: "<gray>Defeat <white>15</white> zombified piglins"
+    orderIndex: 2
+    difficulty: HARD
+    sequential: false
+    objective:
+      type: entity-kill
+      entityType: ZOMBIFIED_PIGLIN
+      target: 15

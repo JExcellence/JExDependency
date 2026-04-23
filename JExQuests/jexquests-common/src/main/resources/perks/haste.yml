@@ -1,0 +1,33 @@
+# Haste — mining speed perk. Paired with the miner chain; unlock cost
+# matches the mid-tier currency economy.
+
+identifier: haste
+category: utility
+displayName: "<gradient:#fde047:#f59e0b>Quickened Strike</gradient>"
+description: "Permanent Haste I — break blocks faster."
+kind: PASSIVE
+cooldownSeconds: 0
+enabled: true
+
+icon:
+  material: GOLDEN_PICKAXE
+  enchanted: true
+
+requirement:
+  type: composite
+  op: AND
+  children:
+    - { type: quest-completed, questIdentifier: novice_miner, minCompletions: 1 }
+    - { type: currency, currency: coins, op: GE, amount: 800.0 }
+
+reward:
+  type: command
+  command: "tellraw {player} {\"text\":\"Quickened Strike unlocked.\",\"color\":\"gold\"}"
+  asConsole: true
+
+behaviour:
+  effect: HASTE
+  amplifier: 0
+  durationTicks: 600
+  refreshEveryTicks: 400
+  particles: false

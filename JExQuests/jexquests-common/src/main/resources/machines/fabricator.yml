@@ -1,0 +1,23 @@
+# Example machine definition shipped with JExQuests. Loaded on first
+# run into the in-memory MachineRegistry via MachineDefinitionLoader.
+# The file stem (fabricator) is the default identifier unless the YAML
+# overrides it.
+
+identifier: fabricator
+displayName: "<gradient:#fde047:#f59e0b>Fabricator</gradient>"
+description: "Converts raw materials into processed goods."
+category: industrial
+icon: IRON_BLOCK
+width: 1
+height: 1
+depth: 1
+
+# Plugin-specific runtime knobs — read by MachineType.properties().
+# The registry is schema-less here on purpose: downstream runtimes
+# bind whatever keys they need without the core needing to know.
+properties:
+  tick-interval-ticks: 40
+  input-slots: 9
+  output-slots: 9
+  upgrade-slots: 3
+  default-recipe: iron_to_steel

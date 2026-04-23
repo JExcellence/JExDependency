@@ -1,0 +1,48 @@
+# JExCommand 2.0 tree for /perks (JExQuests)
+name: perks
+description: "Perk inventory and control"
+aliases:
+  - perk
+  - jexperks
+permission: "jexquests.command.perks"
+senders: [player, console]
+
+subcommands:
+  - name: list
+    description: "List perks you own (or all)"
+    senders: [player]
+    argumentSchema:
+      - { name: category, type: string, required: false, description: "Category filter" }
+
+  - name: info
+    description: "Inspect one perk"
+    argumentSchema:
+      - { name: perk, type: perk, required: true, description: "Perk identifier" }
+
+  - name: toggle
+    description: "Flip a toggle perk on/off"
+    permission: "jexquests.command.perks.toggle"
+    senders: [player]
+    argumentSchema:
+      - { name: perk, type: perk, required: true, description: "Perk identifier" }
+
+  - name: activate
+    description: "Trigger an active perk (cooldown applies)"
+    permission: "jexquests.command.perks.activate"
+    senders: [player]
+    argumentSchema:
+      - { name: perk, type: perk, required: true, description: "Perk identifier" }
+
+  - name: grant
+    description: "Admin: grant a perk to a player"
+    permission: "jexquests.command.perks.admin"
+    argumentSchema:
+      - { name: player, type: offline_player, required: true, description: "Target player" }
+      - { name: perk,   type: string,         required: true, description: "Perk identifier" }
+
+  - name: revoke
+    description: "Admin: revoke a perk from a player"
+    permission: "jexquests.command.perks.admin"
+    argumentSchema:
+      - { name: player, type: offline_player, required: true, description: "Target player" }
+      - { name: perk,   type: string,         required: true, description: "Perk identifier" }

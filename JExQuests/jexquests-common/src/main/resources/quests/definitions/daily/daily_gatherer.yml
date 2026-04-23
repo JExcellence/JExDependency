@@ -1,0 +1,58 @@
+# Daily Gatherer — the "always-on" daily quest. 24h cooldown means a
+# player can stay engaged with it across sessions without it ever
+# running dry. Deliberately broad so any play style qualifies.
+
+identifier: daily_gatherer
+category: daily
+displayName: "<gradient:#fde047:#f59e0b>Daily Gatherer</gradient>"
+difficulty: EASY
+repeatable: true
+maxCompletions: -1
+cooldownSeconds: 86400    # 24 hours
+timeLimitSeconds: 0
+enabled: true
+prerequisites:
+  - welcome_to_server
+dependents: []
+
+icon:
+  material: CHEST
+  enchanted: true
+
+reward:
+  type: composite
+  children:
+    - { type: xp, amount: 200 }
+    - { type: currency, currency: coins, amount: 350 }
+    - { type: item, materialKey: EXPERIENCE_BOTTLE, amount: 4, nbt: "{}" }
+
+tasks:
+  - identifier: break_any_wood
+    displayName: "<gray>Chop <white>32</white> oak logs"
+    orderIndex: 0
+    difficulty: EASY
+    sequential: false
+    objective:
+      type: block-break
+      material: OAK_LOG
+      target: 32
+
+  - identifier: break_stone
+    displayName: "<gray>Mine <white>64</white> stone"
+    orderIndex: 1
+    difficulty: EASY
+    sequential: false
+    objective:
+      type: block-break
+      material: STONE
+      target: 64
+
+  - identifier: kill_hostiles
+    displayName: "<gray>Defeat <white>10</white> zombies"
+    orderIndex: 2
+    difficulty: EASY
+    sequential: false
+    objective:
+      type: entity-kill
+      entityType: ZOMBIE
+      target: 10

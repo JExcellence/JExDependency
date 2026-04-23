@@ -1,0 +1,32 @@
+# Night Vision — quality-of-life perk for miners / cave explorers.
+# Cheap and unlockable early.
+
+identifier: night_vision
+category: utility
+displayName: "<gradient:#d8b4fe:#9333ea>Eyes of the Owl</gradient>"
+description: "Always see clearly in the dark."
+kind: PASSIVE
+cooldownSeconds: 0
+enabled: true
+
+icon:
+  material: SPIDER_EYE
+  enchanted: true
+
+requirement:
+  type: currency
+  currency: coins
+  op: GE
+  amount: 300.0
+
+reward:
+  type: command
+  command: "tellraw {player} {\"text\":\"Your eyes adjust...\",\"color\":\"dark_purple\"}"
+  asConsole: true
+
+behaviour:
+  effect: NIGHT_VISION
+  amplifier: 0
+  durationTicks: 600
+  refreshEveryTicks: 400
+  particles: false

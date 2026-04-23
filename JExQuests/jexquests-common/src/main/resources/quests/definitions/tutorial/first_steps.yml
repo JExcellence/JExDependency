@@ -1,0 +1,62 @@
+# First Steps — the server's opening quest. Every new player lands on
+# this one, so its job is to demonstrate the core gameplay loop
+# (break / kill / craft) without friction. Keep it short, keep rewards
+# modest. Completion unlocks the rest of the tutorial chain.
+
+identifier: first_steps
+category: tutorial
+displayName: "<gradient:#93c5fd:#2563eb>First Steps</gradient>"
+difficulty: EASY
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
+enabled: true
+prerequisites: []
+dependents:
+  - welcome_to_server
+
+icon:
+  material: COMPASS
+  enchanted: false
+
+reward:
+  type: composite
+  children:
+    - { type: xp, amount: 75 }
+    - { type: currency, currency: coins, amount: 150 }
+    - { type: item, materialKey: STONE_PICKAXE, amount: 1, nbt: "{}" }
+
+tasks:
+  - identifier: break_wood
+    displayName: "<gray>Chop <white>5</white> oak logs"
+    orderIndex: 0
+    difficulty: EASY
+    sequential: false
+    objective:
+      type: block-break
+      material: OAK_LOG
+      target: 5
+
+  - identifier: kill_zombies
+    displayName: "<gray>Defeat <white>3</white> zombies"
+    orderIndex: 1
+    difficulty: EASY
+    sequential: false
+    objective:
+      type: entity-kill
+      entityType: ZOMBIE
+      target: 3
+
+  - identifier: craft_planks
+    displayName: "<gray>Craft <white>4</white> oak planks"
+    orderIndex: 2
+    difficulty: EASY
+    sequential: false
+    objective:
+      type: item-craft
+      material: OAK_PLANKS
+      target: 4
+    reward:
+      type: xp
+      amount: 15

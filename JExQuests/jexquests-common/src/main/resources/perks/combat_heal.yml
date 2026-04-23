@@ -1,0 +1,37 @@
+# Combat Heal — ACTIVE one-shot heal. 5-minute cooldown; grants a
+# Regen II burst when activated. Meant to be clutched in emergencies,
+# not leaned on.
+
+identifier: combat_heal
+category: combat
+displayName: "<gradient:#fca5a5:#dc2626>Second Wind</gradient>"
+description: "Tap to heal — Regeneration II for 10s, 5-minute cooldown."
+kind: ACTIVE
+cooldownSeconds: 300
+enabled: true
+
+icon:
+  material: GOLDEN_APPLE
+  enchanted: true
+
+requirement:
+  type: composite
+  op: AND
+  children:
+    - { type: rank, tree: warrior, minRankIdentifier: soldier }
+    - { type: currency, currency: coins, op: GE, amount: 1500.0 }
+
+# Activation reward — granted each time the player fires the perk,
+# not at unlock time. Grants the regen via composite (effect via
+# behaviour, plus a flavour message).
+reward:
+  type: command
+  command: "tellraw {player} {\"text\":\"Second Wind — strength returns.\",\"color\":\"red\"}"
+  asConsole: true
+
+behaviour:
+  effect: REGENERATION
+  amplifier: 1
+  durationTicks: 200
+  ambient: false
+  particles: true

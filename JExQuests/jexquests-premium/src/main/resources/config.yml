@@ -1,0 +1,23 @@
+# JExQuests — Premium edition defaults. Ships to plugins/JExQuests/config.yml
+# on first run and is NOT overwritten on upgrade.
+
+# ── Server identity ────────────────────────────────────────────────────────
+# Free-form tag stamped into every exported player snapshot and every
+# statistics record delivered to JExCore. Helps receivers tell which shard
+# a snapshot came from when migrating or reconciling across servers.
+# Leave blank on single-shard deployments.
+server:
+  id: ""
+
+systems:
+  quests: true
+  ranks: true
+  bounties: true
+  perks: true
+  machines: true
+
+telemetry:
+  forward-to-jexcore: true
+
+economy:
+  default-currency: "coins"

@@ -1,0 +1,32 @@
+# Glow — cosmetic glowing effect. Toggle so players can switch it off
+# for screenshots. Cheap — it's purely vanity.
+
+identifier: glow
+category: cosmetic
+displayName: "<gradient:#fde047:#f59e0b>Luminescence</gradient>"
+description: "Toggle an outline glow so friends can find you."
+kind: TOGGLE
+cooldownSeconds: 0
+enabled: true
+
+icon:
+  material: GLOW_BERRIES
+  enchanted: true
+
+requirement:
+  type: currency
+  currency: coins
+  op: GE
+  amount: 250.0
+
+reward:
+  type: command
+  command: "tellraw {player} {\"text\":\"Luminescence unlocked — toggle in the perk menu.\",\"color\":\"yellow\"}"
+  asConsole: true
+
+behaviour:
+  effect: GLOWING
+  amplifier: 0
+  durationTicks: 600
+  refreshEveryTicks: 400
+  particles: false

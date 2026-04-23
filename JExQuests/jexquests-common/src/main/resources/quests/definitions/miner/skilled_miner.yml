@@ -1,0 +1,73 @@
+# Skilled Miner — mid-tier continuation. Deepens the pit with rarer
+# ores and introduces the ancient-debris quest line.
+
+identifier: skilled_miner
+category: miner
+displayName: "<gradient:#cbd5e1:#64748b>Skilled Miner</gradient>"
+difficulty: MEDIUM
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
+enabled: true
+prerequisites:
+  - novice_miner
+dependents:
+  - master_miner
+
+icon:
+  material: DIAMOND_PICKAXE
+
+requirement:
+  type: quest-completed
+  questIdentifier: novice_miner
+  minCompletions: 1
+
+reward:
+  type: composite
+  children:
+    - { type: xp, amount: 350 }
+    - { type: currency, currency: coins, amount: 600 }
+    - { type: item, materialKey: DIAMOND, amount: 8, nbt: "{}" }
+    - { type: item, materialKey: ENDER_PEARL, amount: 4, nbt: "{}" }
+
+tasks:
+  - identifier: mine_deepslate
+    displayName: "<gray>Mine <white>200</white> deepslate"
+    orderIndex: 0
+    difficulty: MEDIUM
+    sequential: false
+    objective:
+      type: block-break
+      material: DEEPSLATE
+      target: 200
+
+  - identifier: mine_gold
+    displayName: "<gray>Mine <white>24</white> gold ore"
+    orderIndex: 1
+    difficulty: MEDIUM
+    sequential: false
+    objective:
+      type: block-break
+      material: GOLD_ORE
+      target: 24
+
+  - identifier: mine_redstone
+    displayName: "<gray>Mine <white>64</white> redstone ore"
+    orderIndex: 2
+    difficulty: MEDIUM
+    sequential: false
+    objective:
+      type: block-break
+      material: REDSTONE_ORE
+      target: 64
+
+  - identifier: mine_diamond
+    displayName: "<gray>Mine <white>10</white> diamond ore"
+    orderIndex: 3
+    difficulty: MEDIUM
+    sequential: false
+    objective:
+      type: block-break
+      material: DIAMOND_ORE
+      target: 10

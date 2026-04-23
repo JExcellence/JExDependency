@@ -1,6 +1,6 @@
 package de.jexcellence.jexplatform.config.permission;
 
-import de.jexcellence.configmapper.sections.AConfigSection;
+import de.jexcellence.configmapper.sections.ConfigSection;
 import de.jexcellence.configmapper.sections.CSAlways;
 import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
 import org.bukkit.entity.Player;
@@ -25,7 +25,7 @@ import java.util.Set;
  * @since 1.0.0
  */
 @CSAlways
-public abstract class PermissionBasedSection<T> extends AConfigSection {
+public abstract class PermissionBasedSection<T> extends ConfigSection {
 
     private Boolean enabled;
     private Boolean useBestValue;

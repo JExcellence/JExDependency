@@ -1,0 +1,60 @@
+# Dragon Slayer — one-shot endgame challenge. Gated hard: needs the
+# capstone combat rank + a mountain of progress in the repeatable
+# chain. The reward bundle is intentionally ostentatious because
+# finishing it is a real milestone.
+
+identifier: dragon_slayer
+category: challenge
+displayName: "<gradient:#d8b4fe:#9333ea>Dragon Slayer</gradient>"
+difficulty: EXTREME
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
+enabled: true
+prerequisites:
+  - zombie_slayer_iii
+dependents: []
+
+icon:
+  material: DRAGON_HEAD
+  enchanted: true
+
+requirement:
+  type: composite
+  op: AND
+  children:
+    - { type: quest-completed, questIdentifier: zombie_slayer_iii, minCompletions: 10 }
+    - { type: rank, tree: warrior, minRankIdentifier: champion }
+    - { type: currency, currency: coins, op: GE, amount: 5000.0 }
+
+reward:
+  type: composite
+  children:
+    - { type: xp, amount: 5000 }
+    - { type: currency, currency: coins, amount: 10000 }
+    - { type: item, materialKey: DRAGON_EGG, amount: 1, nbt: "{}" }
+    - { type: item, materialKey: ELYTRA, amount: 1, nbt: "{}" }
+    - { type: item, materialKey: NETHERITE_SWORD, amount: 1, nbt: "{}" }
+    - { type: command, command: "broadcast <gradient:#fde047:#f59e0b>{player}</gradient> has slain the dragon!", asConsole: true }
+
+tasks:
+  - identifier: slay_dragon
+    displayName: "<gold>Slay the Ender Dragon"
+    orderIndex: 0
+    difficulty: EXTREME
+    sequential: false
+    objective:
+      type: entity-kill
+      entityType: ENDER_DRAGON
+      target: 1
+
+  - identifier: kill_endermen
+    displayName: "<gray>Defeat <white>50</white> endermen along the way"
+    orderIndex: 1
+    difficulty: HARD
+    sequential: false
+    objective:
+      type: entity-kill
+      entityType: ENDERMAN
+      target: 50

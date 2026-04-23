@@ -1,0 +1,58 @@
+# Novice Farmer — the gathering chain's entry. Mixes harvesting,
+# block placement, and crafting so players learn all three.
+
+identifier: novice_farmer
+category: farmer
+displayName: "<gradient:#86efac:#16a34a>Novice Farmer</gradient>"
+difficulty: EASY
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
+enabled: true
+prerequisites:
+  - welcome_to_server
+dependents:
+  - skilled_farmer
+
+icon:
+  material: WHEAT
+
+reward:
+  type: composite
+  children:
+    - { type: xp, amount: 100 }
+    - { type: currency, currency: coins, amount: 180 }
+    - { type: item, materialKey: IRON_HOE, amount: 1, nbt: "{}" }
+    - { type: item, materialKey: BONE_MEAL, amount: 16, nbt: "{}" }
+
+tasks:
+  - identifier: harvest_wheat
+    displayName: "<gray>Harvest <white>64</white> wheat"
+    orderIndex: 0
+    difficulty: EASY
+    sequential: false
+    objective:
+      type: item-pickup
+      material: WHEAT
+      target: 64
+
+  - identifier: plant_saplings
+    displayName: "<gray>Plant <white>10</white> saplings"
+    orderIndex: 1
+    difficulty: EASY
+    sequential: false
+    objective:
+      type: block-place
+      material: OAK_SAPLING
+      target: 10
+
+  - identifier: craft_bread
+    displayName: "<gray>Bake <white>16</white> bread"
+    orderIndex: 2
+    difficulty: EASY
+    sequential: false
+    objective:
+      type: item-craft
+      material: BREAD
+      target: 16

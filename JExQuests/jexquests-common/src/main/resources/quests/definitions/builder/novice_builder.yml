@@ -1,0 +1,58 @@
+# Novice Builder — the placement chain's opener. Builders typically
+# skip the combat track entirely; this chain rewards creative output
+# instead.
+
+identifier: novice_builder
+category: builder
+displayName: "<gradient:#fde047:#f59e0b>Novice Builder</gradient>"
+difficulty: EASY
+repeatable: false
+maxCompletions: 1
+cooldownSeconds: 0
+timeLimitSeconds: 0
+enabled: true
+prerequisites:
+  - welcome_to_server
+dependents: []
+
+icon:
+  material: BRICKS
+
+reward:
+  type: composite
+  children:
+    - { type: xp, amount: 180 }
+    - { type: currency, currency: coins, amount: 400 }
+    - { type: item, materialKey: COBBLESTONE, amount: 128, nbt: "{}" }
+    - { type: item, materialKey: OAK_PLANKS, amount: 128, nbt: "{}" }
+
+tasks:
+  - identifier: place_stone
+    displayName: "<gray>Place <white>200</white> stone bricks"
+    orderIndex: 0
+    difficulty: EASY
+    sequential: false
+    objective:
+      type: block-place
+      material: STONE_BRICKS
+      target: 200
+
+  - identifier: place_planks
+    displayName: "<gray>Place <white>128</white> oak planks"
+    orderIndex: 1
+    difficulty: EASY
+    sequential: false
+    objective:
+      type: block-place
+      material: OAK_PLANKS
+      target: 128
+
+  - identifier: place_glass
+    displayName: "<gray>Place <white>64</white> glass"
+    orderIndex: 2
+    difficulty: EASY
+    sequential: false
+    objective:
+      type: block-place
+      material: GLASS
+      target: 64

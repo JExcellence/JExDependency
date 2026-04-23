@@ -1,0 +1,28 @@
+# JExCommand 2.0 tree for /machine (JExQuests)
+name: machine
+description: "Machine management"
+aliases:
+  - m
+  - jexmachine
+permission: "jexquests.command.machine"
+senders: [player, console]
+
+subcommands:
+  - name: list
+    description: "List machine types registered"
+
+  - name: info
+    description: "Inspect one machine type"
+    argumentSchema:
+      - { name: type, type: machine-type, required: true, description: "Machine type identifier" }
+
+  - name: give
+    description: "Admin: give a machine item to a player"
+    permission: "jexquests.command.machine.admin"
+    argumentSchema:
+      - { name: player, type: offline_player, required: true, description: "Target player" }
+      - { name: type,   type: string,         required: true, description: "Machine type identifier" }
+
+  - name: reload
+    description: "Admin: reload the machine registry"
+    permission: "jexquests.command.machine.admin"

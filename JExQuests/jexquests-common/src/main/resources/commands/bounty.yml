@@ -1,0 +1,36 @@
+# JExCommand 2.0 tree for /bounty (JExQuests)
+name: bounty
+description: "Bounty management"
+aliases:
+  - b
+  - jexbounty
+permission: "jexquests.command.bounty"
+senders: [player, console]
+
+subcommands:
+  - name: list
+    description: "List every active bounty"
+
+  - name: place
+    description: "Place a bounty on a player"
+    permission: "jexquests.command.bounty.place"
+    senders: [player]
+    argumentSchema:
+      - { name: target,   type: offline_player,  required: true, description: "Target player" }
+      - { name: amount,   type: positive_double, required: true, description: "Bounty amount" }
+      - { name: currency, type: string,          required: false, description: "Currency identifier" }
+
+  - name: cancel
+    description: "Cancel a bounty you placed"
+    permission: "jexquests.command.bounty.cancel"
+    senders: [player]
+    argumentSchema:
+      - { name: target, type: offline_player, required: true, description: "Target player" }
+
+  - name: post
+    description: "Open the bounty creation GUI (amount via +/- buttons)"
+    permission: "jexquests.command.bounty.place"
+    senders: [player]
+    argumentSchema:
+      - { name: target,   type: offline_player, required: true,  description: "Target player" }
+      - { name: currency, type: string,         required: false, description: "Currency identifier (default coins)" }

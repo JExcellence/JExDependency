@@ -1,5 +1,6 @@
 package de.jexcellence.jexplatform.view;
 
+import de.jexcellence.jextranslate.R18nManager;
 import de.jexcellence.jextranslate.i18n.I18n;
 import me.devnatan.inventoryframework.View;
 import me.devnatan.inventoryframework.ViewConfigBuilder;
@@ -155,7 +156,13 @@ public abstract class BaseView extends View {
         } else {
             config.size(size());
         }
+        // All four interaction cancels belong at class-init so they
+        // survive any per-open modifyConfig title edit — a partial set
+        // here lets the player yank items out of display-only GUIs.
         config.cancelOnClick();
+        config.cancelOnDrag();
+        config.cancelOnDrop();
+        config.cancelOnPickup();
         if (updateInterval() > 0) {
             config.scheduleUpdate(updateInterval());
         }
@@ -164,17 +171,28 @@ public abstract class BaseView extends View {
 
     /**
      * Applies the translated title from the view's translation key.
+     * Falls back to the shared {@code _defaults.title} namespace when a
+     * view hasn't defined its own — keeps the chrome rendering rather
+     * than showing a "Message key '…title' is missing" placeholder.
      *
      * @param open the open context
      */
     @Override
     public void onOpen(@NotNull OpenContext open) {
-        var title = (Component) i18n("title", open.getPlayer())
+        var title = (Component) i18nWithDefault("title", open.getPlayer())
                 .withPlaceholders(titlePlaceholders(open))
                 .build().component();
-        open.modifyConfig().title(
-                LegacyComponentSerializer.legacySection().serialize(title)
-        );
+        // modifyConfig returns a fresh builder — we have to re-apply
+        // the click / drag / drop / pickup cancels here or a player
+        // can drag items OUT of a display-only GUI. (The ViewFrame's
+        // defaultConfig runs at registration, but title edits here
+        // rebuild the config from scratch.)
+        open.modifyConfig()
+                .title(LegacyComponentSerializer.legacySection().serialize(title))
+                .cancelOnClick()
+                .cancelOnDrag()
+                .cancelOnDrop()
+                .cancelOnPickup();
     }
 
     /**
@@ -221,6 +239,40 @@ public abstract class BaseView extends View {
     @SuppressWarnings("deprecation")
     protected I18n.Builder i18n(@NotNull String suffix, @NotNull Player player) {
         return new I18n.Builder(baseKey + "." + suffix, player);
+    }
+
+    /**
+     * View-namespaced i18n builder with automatic fallback to the shared
+     * {@code _defaults} namespace when the view-specific key isn't defined.
+     *
+     * <p>Used for chrome elements (title, back button, paginator arrows,
+     * loading indicator) that are common to every view so translators
+     * only have to override them when they want a view-specific label.
+     * Without this fallback, every view that omits a specific key
+     * renders the {@code UniversalI18nWrapper}'s "Message key '…' is
+     * missing!" placeholder in bright red — visible in the GUI.
+     *
+     * @param suffix key suffix under the view namespace (e.g. {@code "back"})
+     * @param player player for locale resolution
+     * @return builder pointed at either {@code <baseKey>.<suffix>} or
+     *         {@code _defaults.<suffix>} depending on which exists
+     */
+    @SuppressWarnings("deprecation")
+    protected I18n.Builder i18nWithDefault(@NotNull String suffix, @NotNull Player player) {
+        final String primary = baseKey + "." + suffix;
+        final R18nManager r18n = R18nManager.getInstance();
+        if (r18n != null) {
+            try {
+                final var loader = r18n.getTranslationLoader();
+                final String locale = player.getLocale();
+                if (loader != null && !loader.hasKey(primary, locale)) {
+                    return new I18n.Builder("_defaults." + suffix, player);
+                }
+            } catch (final RuntimeException ignored) {
+                // Fall through to primary — best-effort fallback.
+            }
+        }
+        return new I18n.Builder(primary, player);
     }
 
     /**
@@ -276,7 +328,7 @@ public abstract class BaseView extends View {
         }
 
         var backItem = createItem(Material.ARROW,
-                i18n("back", player).build().component());
+                i18nWithDefault("back", player).build().component());
         render.slot(slot, backItem).onClick(this::handleBack);
     }
 

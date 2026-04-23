@@ -1,7 +1,7 @@
 /**
  * Reusable configuration section types for YAML-backed plugin settings.
  *
- * <p>Built on {@code ConfigMapper}'s {@link de.jexcellence.configmapper.sections.AConfigSection}
+ * <p>Built on {@code ConfigMapper}'s {@link de.jexcellence.configmapper.sections.ConfigSection}
  * framework. Includes duration parsing ({@link de.jexcellence.jexplatform.config.DurationSection})
  * and GUI icon definitions ({@link de.jexcellence.jexplatform.config.IconSection}).
  *

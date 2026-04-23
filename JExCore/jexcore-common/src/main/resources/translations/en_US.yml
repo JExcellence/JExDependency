@@ -1,0 +1,102 @@
+# ─── JExCore 1.0 ─ English (US) ──────────────────────────────────────────────
+# MiniMessage format | {placeholder} syntax | One line per chat message.
+# Gradient palette:
+#   gold   #fde047 → #f59e0b
+#   green  #86efac → #16a34a
+#   red    #fca5a5 → #dc2626
+#   blue   #93c5fd → #2563eb
+#   cyan   #a5f3fc → #06b6d4
+#   purple #d8b4fe → #9333ea
+
+prefix: "<gradient:#fde047:#f59e0b>JExCore</gradient> <dark_gray>»</dark_gray> "
+
+# ── Generic ───────────────────────────────────────────────────────────────────
+
+error:
+  no-permission: "<gradient:#fca5a5:#dc2626>✘</gradient> <red>You don't have permission."
+  player-not-found: "<gradient:#fca5a5:#dc2626>✘</gradient> <red>Player <white>{player}</white> not found."
+  unknown: "<gradient:#fca5a5:#dc2626>✘</gradient> <red>An unexpected error occurred: <white>{error}</white>"
+
+success:
+  enabled: "<gradient:#86efac:#16a34a>✔</gradient> <gray>JExCore <white>{edition}</white> enabled."
+  disabled: "<gradient:#86efac:#16a34a>✔</gradient> <gray>JExCore <white>{edition}</white> disabled."
+
+header:
+  core: "<dark_gray>━━━━ <gradient:#fde047:#f59e0b>JExCore</gradient> ━━━━"
+
+# ── Built-in JExCommand keys ──────────────────────────────────────────────────
+
+jexcommand:
+  error:
+    no-permission: "<gradient:#fca5a5:#dc2626>✘</gradient> <red>Missing permission <white>{permission}</white>."
+    player-only: "<gradient:#fca5a5:#dc2626>✘</gradient> <red>This command is player-only."
+    console-only: "<gradient:#fca5a5:#dc2626>✘</gradient> <red>This command is console-only."
+    invalid-argument: "<gradient:#fca5a5:#dc2626>✘</gradient> <red>Invalid argument <white>{value}</white> for <white>{name}</white>."
+    missing-argument: "<gradient:#fca5a5:#dc2626>✘</gradient> <red>Missing argument <white>{name}</white>."
+  usage: "<gradient:#a5f3fc:#06b6d4>▸</gradient> <gray>Usage: <white>{usage}</white>"
+
+# ── /jexcore ──────────────────────────────────────────────────────────────────
+
+jexcore:
+  info:
+    line: "<gray>JExCore <white>{edition}</white> <dark_gray>»</dark_gray> <gradient:#fde047:#f59e0b>{version}</gradient>"
+  reload:
+    success: "<gradient:#86efac:#16a34a>✔</gradient> <gray>Translations reloaded."
+    failed: "<gradient:#fca5a5:#dc2626>✘</gradient> <red>Reload failed: <white>{error}</white>"
+  player:
+    not-tracked: "<gradient:#fca5a5:#dc2626>⚠</gradient> <yellow>Player <white>{player}</white> has no JExCore record yet."
+    summary: "<gray><white>{player}</white> <dark_gray>»</dark_gray> <gray>uuid=<white>{uuid}</white>, first=<white>{first_seen}</white>, last=<white>{last_seen}</white>"
+
+# ── /jexstats ─────────────────────────────────────────────────────────────────
+
+jexstats:
+  status:
+    line: "<gray>queue=<white>{queue}</white> enq=<white>{enqueued}</white> batches=<white>{batches}</white> delivered=<gradient:#86efac:#16a34a>{delivered}</gradient> retries=<white>{retries}</white> failures=<gradient:#fca5a5:#dc2626>{failures}</gradient> spooled=<white>{spooled}</white> dropped=<white>{dropped}</white>"
+  flush:
+    done: "<gradient:#86efac:#16a34a>\u2714</gradient> <gray>Flushed <white>{count}</white> entries."
+
+# ── Reward layer (de.jexcellence.core.api.reward) ────────────────────────────
+
+reward:
+  header: "<dark_gray>━━━━ <gradient:#86efac:#16a34a>Rewards</gradient> ━━━━"
+  xp:
+    display: "<gradient:#86efac:#16a34a>+{amount} XP</gradient>"
+  currency:
+    display: "<gradient:#fde047:#f59e0b>+{amount} {currency}</gradient>"
+  item:
+    display: "<gradient:#93c5fd:#2563eb>{amount}x {material}</gradient>"
+  command:
+    display: "<gradient:#d8b4fe:#9333ea>reward script</gradient>"
+  composite:
+    display: "<gray>{count} rewards"
+  custom:
+    display: "<gradient:#d8b4fe:#9333ea>{type}</gradient>"
+  result:
+    granted: "<gradient:#86efac:#16a34a>\u2714</gradient> <gray>{summary}"
+    denied: "<gradient:#fca5a5:#dc2626>\u26a0</gradient> <yellow>{reason}"
+    failed: "<gradient:#fca5a5:#dc2626>\u2718</gradient> <red>{error}"
+
+# ── Requirement layer (de.jexcellence.core.api.requirement) ──────────────────
+
+requirement:
+  header: "<dark_gray>━━━━ <gradient:#93c5fd:#2563eb>Requirements</gradient> ━━━━"
+  permission:
+    display: "<gray>Permission <white>{node}</white>"
+  currency:
+    display: "<gray>Balance {op} <gradient:#fde047:#f59e0b>{amount} {currency}</gradient>"
+  statistic:
+    display: "<gray>Stat <white>{plugin}:{identifier}</white> {op} <white>{value}</white>"
+  quest-completed:
+    display: "<gray>Completed quest <gradient:#fde047:#f59e0b>{quest}</gradient> x{times}"
+  rank:
+    display: "<gray>Rank {tree} \u2265 <gradient:#fde047:#f59e0b>{rank}</gradient>"
+  placeholder:
+    display: "<gray>%{expansion}% {op} <white>{value}</white>"
+  composite:
+    display: "<gray>{op} over {count}"
+  custom:
+    display: "<gradient:#d8b4fe:#9333ea>{type}</gradient>"
+  result:
+    met: "<gradient:#86efac:#16a34a>\u2714</gradient> <gray>met"
+    not-met: "<gradient:#fca5a5:#dc2626>\u26a0</gradient> <yellow>{reason}"
+    error: "<gradient:#fca5a5:#dc2626>\u2718</gradient> <red>{message}"
