@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/Privat/IdeaProjects/RaindropCentral/**)",
+      "Bash(./gradlew.bat :JExDependency:compileJava)"
+    ]
+  }
+}

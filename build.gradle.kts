@@ -1,66 +1,80 @@
 plugins {
-    id("java-library")
-    id("maven-publish")
+    id("raindrop.library-conventions")
+    id("raindrop.dependencies-yml")
 }
 
 group = "de.jexcellence.dependency"
 version = "2.0.0"
+description = "Modern dependency management and plugin architecture for Minecraft servers"
 
-repositories {
-    mavenCentral()
-    mavenLocal()
-    maven {
-        name = "papermc-repo"
-        url = uri("https://repo.papermc.io/repository/maven-public/")
-    }
+// Configure runtime dependencies.yml generation
+dependenciesYml {
+    useJExDependencyDependencies()
 }
+
+ext["vendor"] = "JExcellence"
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT")
-    implementation("org.ow2.asm:asm:9.6")
-    implementation("org.ow2.asm:asm-commons:9.6")
-    implementation("org.ow2.asm:asm-util:9.6")
+    compileOnly(libs.paper.api)
+    compileOnly(libs.jetbrains.annotations)
 
-    // Gradle API for the Gradle plugin (compileOnly since it's provided by Gradle)
-    compileOnly(gradleApi())
+    implementation(libs.asm)
+    implementation(libs.asm.commons)
 }
 
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(21))
+tasks {
+    register<Jar>("fatJar") {
+        group = "build"
+        description = "Creates a fat JAR with all dependencies"
+        archiveClassifier.set("all")
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+        
+        from(sourceSets.main.get().output)
+
+        dependsOn(configurations.runtimeClasspath)
+        from({
+            configurations.runtimeClasspath.get()
+                .filter { it.name.endsWith("jar") }
+                .map { zipTree(it) }
+        })
     }
 }
 
-publishing {
-    publications {
-        create<MavenPublication>("mavenJava") {
-            from(components["java"])
-            groupId = project.group.toString()
-            artifactId = "JEDependency"
-            version = project.version.toString()
-            
-            pom {
-                name.set("JEDependency")
-                description.set("Dependency injection library with repository downloads and module deencapsulation")
-                url.set("https://github.com/jexcellence/JEDependency")
-                
-                licenses {
-                    license {
-                        name.set("MIT License")
-                        url.set("https://opensource.org/licenses/MIT")
+afterEvaluate {
+    publishing {
+        publications {
+            named<MavenPublication>("maven") {
+                artifactId = "jexdependency"
+                pom {
+                    name.set("JExDependency")
+                    description.set("Runtime dependency management & relocation for Paper/Spigot plugins.")
+                    url.set("https://github.com/JExcellence/JExDependency")
+                    inceptionYear.set("2025")
+                    licenses {
+                        license {
+                            name.set("MIT License")
+                            url.set("https://github.com/JExcellence/JExDependency/blob/main/LICENSE")
+                            distribution.set("repo")
+                        }
                     }
-                }
-                
-                developers {
-                    developer {
-                        id.set("jexcellence")
-                        name.set("JExcellence")
+                    developers {
+                        developer {
+                            id.set("jexcellence")
+                            name.set("JExcellence")
+                            email.set("contact@jexcellence.de")
+                        }
+                    }
+                    scm {
+                        connection.set("scm:git:git://github.com/JExcellence/JExDependency.git")
+                        developerConnection.set("scm:git:ssh://github.com/JExcellence/JExDependency.git")
+                        url.set("https://github.com/JExcellence/JExDependency")
+                    }
+                    issueManagement {
+                        system.set("GitHub Issues")
+                        url.set("https://github.com/JExcellence/JExDependency/issues")
                     }
                 }
             }
         }
-    }
-    repositories {
-        mavenLocal()
     }
 }
