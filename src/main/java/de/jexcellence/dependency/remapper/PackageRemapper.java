@@ -45,8 +45,6 @@ public final class PackageRemapper {
             return;
         }
         
-        LOGGER.info("Remapping JAR: " + inputJar.getFileName());
-        
         CustomRemapper remapper = new CustomRemapper(packageMappings);
         
         try (JarInputStream jis = new JarInputStream(Files.newInputStream(inputJar));
@@ -82,8 +80,6 @@ public final class PackageRemapper {
                 jis.closeEntry();
             }
         }
-        
-        LOGGER.info("Successfully remapped JAR to: " + outputJar.getFileName());
     }
     
     private byte[] remapClass(byte[] classBytes, Remapper remapper) {

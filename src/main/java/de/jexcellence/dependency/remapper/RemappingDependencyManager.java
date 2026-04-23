@@ -91,10 +91,7 @@ public final class RemappingDependencyManager {
                 Path remappedJar = remappedDirectory.resolve(dependencies.get(i).getFileName());
                 
                 if (!Files.exists(remappedJar)) {
-                    LOGGER.info("Remapping: " + originalJar.getFileName());
                     remapper.remap(originalJar, remappedJar);
-                } else {
-                    LOGGER.fine("Using cached remapped JAR: " + remappedJar.getFileName());
                 }
                 jarsToInject.add(remappedJar);
             }
@@ -105,7 +102,7 @@ public final class RemappingDependencyManager {
         for (Path jarPath : jarsToInject) {
             injector.injectIntoClasspath(targetClassLoader, jarPath.toFile());
         }
-        
+
         LOGGER.info("Successfully loaded all dependencies!");
     }
     
@@ -172,9 +169,7 @@ public final class RemappingDependencyManager {
             for (String repo : repositories) {
                 manager.addRepository(repo);
             }
-            for (Dependency dep : dependencies) {
-                manager.dependencies.add(dep);
-            }
+            manager.dependencies.addAll(dependencies);
             manager.packageRelocations.putAll(relocations);
             return manager;
         }
