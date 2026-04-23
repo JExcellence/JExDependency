@@ -9,20 +9,75 @@ import java.lang.reflect.Method;
 /**
  * Main entry point for the JEDependency system.
  *
- * Provides initialization and (when the Paper plugin loader is active) performs
- * runtime visibility checks for required external plugin APIs so we fail fast
- * with clear guidance if the custom loader did not expose dependency classloaders.
+ * <p>This class provides a simple, static API for initializing the dependency
+ * management system. It serves as a facade over the more complex internal
+ * components and provides backward compatibility with existing code.</p>
+ *
+ * <p>Usage example:</p>
+ * <pre>
+ * public class MyPlugin extends JavaPlugin {
+ *     {@literal @}Override
+ *     public void onLoad() {
+ *         JEDependency.initialize(this, MyPlugin.class, new String[]{
+ *             "com.example:my-library:1.0.0",
+ *             "org.apache.commons:commons-lang3:3.12.0"
+ *         });
+ *     }
+ * }
+ * </pre>
+ *
+ * <p>Remapping support:
+ * <ul>
+ *   <li>Set system property {@code -Djedependency.remap=true} to prefer the RemappingDependencyManager if present.</li>
+ *   <li>Use {@link #initializeWithRemapping(JavaPlugin, Class, String[])} to force remapping regardless of the property.</li>
+ *   <li>The remapper class is discovered reflectively as
+ *       {@code de.jexcellence.dependency.remapper.RemappingDependencyManager} and should provide:
+ *       <ul>
+ *         <li>a constructor {@code (JavaPlugin, Class<?> anchorClass)}</li>
+ *         <li>and a method {@code initialize(String[] additionalDependencies)}</li>
+ *       </ul>
+ *   </li>
+ * </ul>
+ * </p>
  *
  * @author JExcellence
- * @version 2.2.0
+ * @version 2.1.0
  * @since 2.0.0
  */
 public final class JEDependency {
 
+    /**
+     * Private constructor to prevent instantiation.
+     */
     private JEDependency() {
         throw new UnsupportedOperationException("Utility class cannot be instantiated");
     }
 
+    /**
+     * Initializes the dependency management system.
+     *
+     * <p>This method sets up the dependency management system for the given plugin
+     * and loads all specified dependencies. Dependencies can be loaded from both
+     * a YAML configuration file and the provided array of GAV coordinates.</p>
+     *
+     * <p>The method will:</p>
+     * <ul>
+     *   <li>Create a libraries directory in the plugin's data folder</li>
+     *   <li>Load dependencies from {@code /dependency/dependencies.yml} if present</li>
+     *   <li>Download missing dependencies from Maven repositories</li>
+     *   <li>Inject all dependencies into the plugin's classloader</li>
+     * </ul>
+     *
+     * <p>If the system property {@code jedependency.remap=true} is set and a suitable
+     * remapping manager is on the classpath, remapping will be used automatically.</p>
+     *
+     * @param plugin the plugin instance that owns the dependencies
+     * @param anchorClass the class to use for resource loading and JAR location detection
+     * @param additionalDependencies optional array of additional GAV coordinates to load
+     * @throws IllegalArgumentException if plugin or anchorClass is null
+     *
+     * @see de.jexcellence.dependency.dependency.DependencyManager#initialize(String[])
+     */
     public static void initialize(
             final JavaPlugin plugin,
             final Class<?> anchorClass,
@@ -31,6 +86,16 @@ public final class JEDependency {
         coreInitialize(plugin, anchorClass, additionalDependencies, false);
     }
 
+    /**
+     * Initializes the dependency management system without additional dependencies.
+     *
+     * <p>This is a convenience method that calls {@link #initialize(JavaPlugin, Class, String[])}
+     * with a null array for additional dependencies.</p>
+     *
+     * @param plugin the plugin instance that owns the dependencies
+     * @param anchorClass the class to use for resource loading and JAR location detection
+     * @throws IllegalArgumentException if plugin or anchorClass is null
+     */
     public static void initialize(
             final JavaPlugin plugin,
             final Class<?> anchorClass
@@ -38,6 +103,18 @@ public final class JEDependency {
         initialize(plugin, anchorClass, null);
     }
 
+    /**
+     * Initializes the dependency management system forcing remapping usage,
+     * regardless of the system property.
+     *
+     * <p>This method mirrors {@link #initialize(JavaPlugin, Class, String[])} but
+     * will always attempt to use the remapping manager if it is present on the classpath.
+     * Falls back to the default manager if the remapper class is not available.</p>
+     *
+     * @param plugin the plugin instance
+     * @param anchorClass the class used as anchor
+     * @param additionalDependencies optional dependencies
+     */
     public static void initializeWithRemapping(
             final JavaPlugin plugin,
             final Class<?> anchorClass,
@@ -46,6 +123,13 @@ public final class JEDependency {
         coreInitialize(plugin, anchorClass, additionalDependencies, true);
     }
 
+    /**
+     * Initializes the dependency management system forcing remapping usage
+     * without additional dependencies.
+     *
+     * @param plugin the plugin instance
+     * @param anchorClass the class used as anchor
+     */
     public static void initializeWithRemapping(
             final JavaPlugin plugin,
             final Class<?> anchorClass
@@ -60,27 +144,11 @@ public final class JEDependency {
             final boolean forceRemapping
     ) {
         final String serverType = getServerType();
+
         plugin.getLogger().info("JEDependency initializing on " + serverType);
 
-        // If the Paper plugin loader is active, our custom PluginLoader (RPluginLoader)
-        // is responsible for adding libraries and exposing dependency plugin classloaders.
-        // We still verify that required external APIs are visible to our classloader.
         if (isPaperPluginLoaderActive()) {
-            plugin.getLogger().info("Paper plugin loader detected - delegating dependency classpath setup to the loader");
-
-            // Fail-fast visibility checks for required dependencies declared in paper-plugin.yml
-            // Adjust this list if you add/remove hard depends.
-            verifyRuntimeApiVisibilityOrFail(
-                    plugin,
-                    new String[]{
-                            // LuckPerms 5.x API presence (typed Option A integration requires this)
-                            "net.luckperms.api.node.Node",
-                            // RCore API presence when declared as depend
-                            "com.raindropcentral.rcore.api.RCoreAdapter"
-                    }
-            );
-
-            // With the loader active and APIs visible, nothing to do here.
+            plugin.getLogger().info("Paper plugin loader detected - skipping manual JEDependency initialization");
             return;
         }
 
@@ -92,12 +160,11 @@ public final class JEDependency {
         }
 
         final boolean wantRemap = forceRemapping || shouldUseRemappingProperty();
-        final boolean remapperAvailable = isClassPresent(
-                "de.jexcellence.dependency.remapper.RemappingDependencyManager"
-        );
+        final boolean remapperAvailable = isClassPresent();
 
         if (wantRemap && remapperAvailable) {
-            plugin.getLogger().info("Using RemappingDependencyManager (remapping requested" + (forceRemapping ? " by API" : " via system property") + ")");
+            plugin.getLogger().info("Using RemappingDependencyManager (remapping requested"
+                    + (forceRemapping ? " by API" : " via system property") + ")");
             if (initializeViaRemapper(plugin, anchorClass, additionalDependencies)) {
                 plugin.getLogger().info("JEDependency initialization completed with remapping. Dependencies are isolated to this plugin.");
                 return;
@@ -111,6 +178,7 @@ public final class JEDependency {
         // Fallback: standard dependency manager
         final DependencyManager dependencyManager = new DependencyManager(plugin, anchorClass);
         dependencyManager.initialize(additionalDependencies);
+
         plugin.getLogger().info("JEDependency initialization completed. Dependencies are isolated to this plugin.");
     }
 
@@ -121,9 +189,9 @@ public final class JEDependency {
         return "true".equalsIgnoreCase(v) || "1".equals(v) || "yes".equalsIgnoreCase(v) || "on".equalsIgnoreCase(v);
     }
 
-    private static boolean isClassPresent(String fqcn) {
+    private static boolean isClassPresent() {
         try {
-            Class.forName(fqcn);
+            Class.forName("de.jexcellence.dependency.remapper.RemappingDependencyManager");
             return true;
         } catch (final ClassNotFoundException e) {
             return false;
@@ -133,8 +201,8 @@ public final class JEDependency {
     /**
      * Attempts to initialize using de.jexcellence.dependency.remapper.RemappingDependencyManager via reflection.
      * Expected API:
-     * - Constructor: (JavaPlugin, Class<?> anchorClass) or no-arg
-     * - Method: initialize(String[]) or the pair addDependencies(String[]) + loadAll(ClassLoader)
+     *   - Constructor: (JavaPlugin, Class<?> anchorClass)
+     *   - Method: initialize(String[] additionalDependencies)
      *
      * @return true if initialization ran without reflective errors, false otherwise
      */
@@ -147,7 +215,7 @@ public final class JEDependency {
             final Class<?> remapperClass = Class.forName("de.jexcellence.dependency.remapper.RemappingDependencyManager");
 
             // Prefer constructor (JavaPlugin, Class<?>)
-            Constructor<?> ctor;
+            Constructor<?> ctor = null;
             try {
                 ctor = remapperClass.getConstructor(JavaPlugin.class, Class.class);
             } catch (NoSuchMethodException ignored) {
@@ -160,22 +228,25 @@ public final class JEDependency {
                 }
             }
 
-            final Object manager = (ctor.getParameterCount() == 2) ? ctor.newInstance(plugin, anchorClass) : ctor.newInstance();
+            final Object manager = (ctor.getParameterCount() == 2)
+                    ? ctor.newInstance(plugin, anchorClass)
+                    : ctor.newInstance();
 
             // Try initialize(String[]) first (drop-in replacement semantics)
+            Method initMethod = null;
             try {
-                Method initMethod = remapperClass.getMethod("initialize", String[].class);
+                initMethod = remapperClass.getMethod("initialize", String[].class);
                 initMethod.invoke(manager, (Object) additionalDependencies);
                 return true;
             } catch (NoSuchMethodException ignored) {
                 // Try an alternative pair: addDependencies(String...) + loadAll(ClassLoader)
                 Method addDeps = null;
-                Method loadAll;
+                Method loadAll = null;
 
                 try {
                     addDeps = remapperClass.getMethod("addDependencies", String[].class);
                 } catch (NoSuchMethodException e) {
-                    // ignore: optional
+                    // If addDependencies is not present but loadAll is, proceed without additional deps
                 }
 
                 try {
@@ -193,7 +264,6 @@ public final class JEDependency {
                 loadAll.invoke(manager, cl);
                 return true;
             }
-
         } catch (final Throwable t) {
             plugin.getLogger().severe("Failed to initialize RemappingDependencyManager: " + t.getClass().getSimpleName() + ": " + t.getMessage());
             return false;
@@ -202,14 +272,35 @@ public final class JEDependency {
 
     /**
      * Checks if the Paper plugin loader system is active.
-     * Returns true only if the system property is explicitly set by our loader.
+     *
+     * @return true if Paper plugin loader is active, false otherwise
      */
     private static boolean isPaperPluginLoaderActive() {
-        // Our custom loader (RPluginLoader) sets this property.
+        // Check system property first
         final String paperLoaderActive = System.getProperty("paper.plugin.loader.active");
-        return "true".equalsIgnoreCase(paperLoaderActive);
+        if ("true".equals(paperLoaderActive)) {
+            return true;
+        }
+
+        // Check for Paper-specific classes that indicate modern Paper plugin loading
+        try {
+            Class.forName("io.papermc.paper.plugin.loader.PluginLoader");
+            Class.forName("io.papermc.paper.plugin.bootstrap.PluginBootstrap");
+
+            // Only skip if we have clear evidence of Paper plugin loader being active
+            // This is more restrictive to avoid false positives on regular Paper servers
+            return "true".equals(paperLoaderActive);
+        } catch (final ClassNotFoundException exception) {
+            // Paper plugin loader classes not found, proceed with manual loading
+            return false;
+        }
     }
 
+    /**
+     * Checks if we're running on Paper (but not necessarily using Paper plugin loader).
+     *
+     * @return true if running on Paper, false if on Spigot/CraftBukkit
+     */
     public static boolean isPaperServer() {
         try {
             Class.forName("com.destroystokyo.paper.PaperConfig");
@@ -224,6 +315,11 @@ public final class JEDependency {
         }
     }
 
+    /**
+     * Gets server type information for debugging.
+     *
+     * @return server type string
+     */
     public static String getServerType() {
         if (isPaperPluginLoaderActive()) {
             return "Paper (with plugin loader)";
@@ -231,33 +327,6 @@ public final class JEDependency {
             return "Paper (legacy mode)";
         } else {
             return "Spigot/CraftBukkit";
-        }
-    }
-
-    /**
-     * When the Paper loader is active, verify that critical external APIs are actually
-     * visible to this plugin's classloader. If not, fail fast with clear guidance to
-     * expose plugin classloaders from the custom loader.
-     */
-    private static void verifyRuntimeApiVisibilityOrFail(JavaPlugin plugin, String[] requiredClasses) {
-        if (requiredClasses == null || requiredClasses.length == 0) return;
-
-        StringBuilder missing = new StringBuilder();
-        for (String fqcn : requiredClasses) {
-            if (!isClassPresent(fqcn)) {
-                if (missing.length() > 0) missing.append(", ");
-                missing.append(fqcn);
-            }
-        }
-
-        if (missing.length() > 0) {
-            plugin.getLogger().severe("Required external API classes are not visible to this plugin's classloader: " + missing);
-            plugin.getLogger().severe("This is caused by the custom plugin loader using an isolated classloader without exposing dependency plugins.");
-            plugin.getLogger().severe("Fix in RPluginLoader.classloader(PluginClasspathBuilder): grant access to dependency plugins, e.g.:");
-            plugin.getLogger().severe("  builder.addPluginDependency(\"LuckPerms\");");
-            plugin.getLogger().severe("  builder.addPluginDependency(\"RCore\");");
-            plugin.getLogger().severe("or the equivalent method for your Paper version (addAccessToPlugin/addPlugin).");
-            throw new IllegalStateException("Missing runtime API visibility for: " + missing);
         }
     }
 }
