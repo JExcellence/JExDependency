@@ -119,7 +119,7 @@ public class DependencyManager {
             coordinates = expandWithTransitives(coordinates, librariesDirectory);
         }
 
-        logger.info("Resolving " + coordinates.size() + " dependencies...");
+        logger.log(Level.INFO, "Resolving {0} dependencies...", coordinates.size());
 
         final ProcessingResult result = processDependencies(coordinates, librariesDirectory, targetClassLoader);
 
@@ -158,7 +158,7 @@ public class DependencyManager {
                 coordinates = expandWithTransitives(coordinates, librariesDirectory);
             }
 
-            logger.info("Resolving " + coordinates.size() + " dependencies...");
+            logger.log(Level.INFO, "Resolving {0} dependencies...", coordinates.size());
 
             final ProcessingResult result = processDependencies(coordinates, librariesDirectory, targetClassLoader);
 
@@ -290,7 +290,8 @@ public class DependencyManager {
 
     private void logProcessingSummary(@NotNull final ProcessingResult result, final long totalDuration) {
         if (result.hasFailures()) {
-            logger.log(Level.INFO, "Loaded {0}/{1} dependencies in {2}ms ({3} failed)",
+            logger.log(Level.INFO, 
+                    "Loaded {0}/{1} dependencies in {2}ms ({3} failed)",
                     new Object[]{
                             result.getSuccessCount(),
                             result.getTotalCount(),
@@ -302,7 +303,8 @@ public class DependencyManager {
                     .collect(Collectors.joining(", "));
             logger.log(Level.WARNING, "Failed: {0}", failedList);
         } else {
-            logger.log(Level.INFO, "Loaded {0} dependencies in {1}ms",
+            logger.log(Level.INFO, 
+                    "Loaded {0} dependencies in {1}ms",
                     new Object[]{result.getTotalCount(), totalDuration});
         }
     }

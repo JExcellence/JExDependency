@@ -1,6 +1,7 @@
 package de.jexcellence.dependency.loader;
 
 import de.jexcellence.dependency.downloader.DependencyDownloader;
+import de.jexcellence.dependency.exception.PluginLoaderException;
 import de.jexcellence.dependency.model.DependencyCoordinate;
 import de.jexcellence.dependency.model.DownloadResult;
 import io.papermc.paper.plugin.loader.PluginClasspathBuilder;
@@ -118,28 +119,29 @@ public class PaperPluginLoader implements PluginLoader {
         log.setUseParentHandlers(false);
         
         // Remove existing handlers
-        for (var handler : log.getHandlers()) {
-            log.removeHandler(handler);
+        for (var logHandler : log.getHandlers()) {
+            log.removeHandler(logHandler);
         }
         
         // Capture pluginName for use in formatter
         final String currentPluginName = this.pluginName;
 
         // Write to stdout so output appears white in the Paper console (ConsoleHandler uses System.err → red)
-        final StreamHandler handler = new StreamHandler(System.out, new Formatter() {
+        // Note: Using System.out is intentional here for Paper console color formatting
+        final StreamHandler streamHandler = new StreamHandler(System.out, new Formatter() {
             @Override
-            public String format(final LogRecord record) {
-                return String.format("[%s/%s] %s%n", LOGGER_NAME, currentPluginName, record.getMessage());
+            public String format(final LogRecord logRec) {
+                return String.format("[%s/%s] %s%n", LOGGER_NAME, currentPluginName, logRec.getMessage());
             }
         }) {
             @Override
-            public synchronized void publish(final LogRecord record) {
-                super.publish(record);
+            public synchronized void publish(final LogRecord logRec) {
+                super.publish(logRec);
                 flush();
             }
         };
-        handler.setLevel(Level.ALL);
-        log.addHandler(handler);
+        streamHandler.setLevel(Level.ALL);
+        log.addHandler(streamHandler);
         log.setLevel(Level.INFO);
         
         return log;
@@ -194,7 +196,7 @@ public class PaperPluginLoader implements PluginLoader {
             loadJarFilesIntoClasspath(classpathBuilder, effectiveDirectory);
 
         } catch (final IOException exception) {
-            throw new RuntimeException("Failed to initialize libraries directory: " + librariesDirectory, exception);
+            throw new PluginLoaderException("Failed to initialize libraries directory: " + librariesDirectory, exception);
         }
     }
 
@@ -262,7 +264,7 @@ public class PaperPluginLoader implements PluginLoader {
             return;
         }
 
-        logger.info("Resolving " + coords.size() + " dependencies...");
+        logger.log(Level.INFO, "Resolving {0} dependencies...", coords.size());
 
         // Fire all downloads in parallel using the downloader's virtual-thread executor
         final List<CompletableFuture<DownloadResult>> futures = coords.stream()
@@ -337,7 +339,7 @@ public class PaperPluginLoader implements PluginLoader {
         final RemapMode mode = getRemapMode();
 
         if (mode == RemapMode.FALSE) {
-            logger.fine("Remapping disabled via system property: " + REMAP_PROPERTY);
+            logger.log(Level.FINE, () -> "Remapping disabled via system property: " + REMAP_PROPERTY);
             return librariesDirectory;
         }
 
@@ -355,11 +357,11 @@ public class PaperPluginLoader implements PluginLoader {
         final boolean remappingSuccessful = attemptRemapping(librariesDirectory, remappedDirectory);
 
         if (remappingSuccessful) {
-            logger.fine("Using remapped libraries from: " + remappedDirectory);
+            logger.log(Level.FINE, () -> "Using remapped libraries from: " + remappedDirectory);
             return remappedDirectory;
         }
 
-        logger.warning("Remapping failed, using original libraries");
+        logger.log(Level.WARNING, "Remapping failed, using original libraries");
         return librariesDirectory;
     }
 
@@ -433,12 +435,18 @@ public class PaperPluginLoader implements PluginLoader {
 
         final int automaticRelocations = applyAutomaticRelocations(remappingManager, inputJars);
         if (automaticRelocations > 0) {
-            logger.fine("Applied " + automaticRelocations + " automatic relocations");
+            logger.log(Level.FINE, () -> "Applied " + automaticRelocations + " automatic relocations");
         }
 
         return automaticRelocations;
     }
 
+    /**
+     * Applies explicit relocations from system properties. Refactored to reduce loop complexity.
+     *
+     * @param remappingManager the remapping manager instance
+     * @return number of relocations applied
+     */
     private int applyExplicitRelocations(@NotNull final Object remappingManager) {
         final String relocationsSpec = System.getProperty(RELOCATIONS_PROPERTY);
         if (relocationsSpec == null || relocationsSpec.trim().isEmpty()) {
@@ -449,29 +457,43 @@ public class PaperPluginLoader implements PluginLoader {
         final String[] pairs = relocationsSpec.split(",");
 
         for (final String pair : pairs) {
-            final String trimmedPair = pair.trim();
-            if (trimmedPair.isEmpty()) {
-                continue;
-            }
-
-            final int separatorIndex = trimmedPair.indexOf("=>");
-            if (separatorIndex <= 0 || separatorIndex >= trimmedPair.length() - 2) {
-                logger.log(Level.WARNING, "Invalid relocation mapping, expected ''from=>to'': {0}", trimmedPair);
-                continue;
-            }
-
-            final String fromPackage = trimmedPair.substring(0, separatorIndex).trim();
-            final String toPackage = trimmedPair.substring(separatorIndex + 2).trim();
-
-            if (!fromPackage.isEmpty() && !toPackage.isEmpty()) {
-                invokeRelocate(remappingManager, fromPackage, toPackage);
+            if (processRelocationPair(remappingManager, pair)) {
                 applied++;
-            } else {
-                logger.log(Level.WARNING, "Ignoring empty relocation mapping: {0}", trimmedPair);
             }
         }
 
         return applied;
+    }
+
+    /**
+     * Processes a single relocation pair. Extracted to reduce loop complexity.
+     *
+     * @param remappingManager the remapping manager instance
+     * @param pair the relocation pair string
+     * @return true if relocation was applied, false otherwise
+     */
+    private boolean processRelocationPair(@NotNull final Object remappingManager, @NotNull final String pair) {
+        final String trimmedPair = pair.trim();
+        if (trimmedPair.isEmpty()) {
+            return false;
+        }
+
+        final int separatorIndex = trimmedPair.indexOf("=>");
+        if (separatorIndex <= 0 || separatorIndex >= trimmedPair.length() - 2) {
+            logger.log(Level.WARNING, "Invalid relocation mapping, expected ''from=>to'': {0}", trimmedPair);
+            return false;
+        }
+
+        final String fromPackage = trimmedPair.substring(0, separatorIndex).trim();
+        final String toPackage = trimmedPair.substring(separatorIndex + 2).trim();
+
+        if (!fromPackage.isEmpty() && !toPackage.isEmpty()) {
+            invokeRelocate(remappingManager, fromPackage, toPackage);
+            return true;
+        } else {
+            logger.log(Level.WARNING, "Ignoring empty relocation mapping: {0}", trimmedPair);
+            return false;
+        }
     }
 
     private int applyAutomaticRelocations(
@@ -544,8 +566,7 @@ public class PaperPluginLoader implements PluginLoader {
     }
 
     /**
-     * Refactored method to reduce cognitive complexity by extracting entry processing logic.
-     * Detects package roots from a JAR file while excluding specified root packages.
+     * Detects package roots from a JAR file. Refactored to reduce cognitive complexity.
      *
      * @param jarPath       path to the JAR file to scan
      * @param excludedRoots set of package roots to exclude from detection
@@ -563,7 +584,7 @@ public class PaperPluginLoader implements PluginLoader {
                 processJarEntry(entry, excludedRoots, roots);
             }
         } catch (final IOException exception) {
-            logger.log(Level.FINE, "Failed to scan JAR for package roots: " + jarPath, exception);
+            logger.log(Level.FINE, exception, () -> "Failed to scan JAR for package roots: " + jarPath);
         }
 
         return roots;
@@ -720,7 +741,7 @@ public class PaperPluginLoader implements PluginLoader {
                 Files.delete(file);
             }
         } catch (final IOException exception) {
-            logger.log(Level.FINE, "Failed to delete existing file: " + file, exception);
+            logger.log(Level.FINE, exception, () -> "Failed to delete existing file: " + file);
         }
     }
 
@@ -736,11 +757,11 @@ public class PaperPluginLoader implements PluginLoader {
         } catch (final InvocationTargetException ite) {
             final Throwable cause = ite.getCause() != null ? ite.getCause() : ite;
             logger.log(Level.WARNING, "{0}{1}", new Object[]{FAILED_TO_REMAP, inputJar.getFileName()});
-            logger.log(Level.FINE, "Remap error details for " + inputJar.getFileName(), cause);
+            logger.log(Level.FINE, cause, () -> "Remap error details for " + inputJar.getFileName());
             return false;
         } catch (final Exception exception) {
             logger.log(Level.WARNING, "{0}{1}", new Object[]{FAILED_TO_REMAP, inputJar.getFileName()});
-            logger.log(Level.FINE, "Remap error details for " + inputJar.getFileName(), exception);
+            logger.log(Level.FINE, exception, () -> "Remap error details for " + inputJar.getFileName());
             return false;
         }
     }
