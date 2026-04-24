@@ -407,40 +407,58 @@ public class TransitiveDependencyResolver {
         int guard = 8; // max substitution rounds
 
         while (current.contains("${") && guard-- > 0) {
-            final StringBuilder sb  = new StringBuilder(current.length());
-            boolean changed = false;
-            int i = 0;
-
-            while (i < current.length()) {
-                final int start = current.indexOf("${", i);
-                if (start == -1) {
-                    sb.append(current, i, current.length());
-                    break;
-                }
-                sb.append(current, i, start);
-                final int end = current.indexOf('}', start + 2);
-                if (end == -1) {
-                    // Unclosed placeholder — leave as-is
-                    sb.append(current, i, current.length());
-                    break;
-                }
-                final String placeholder = current.substring(start + 2, end);
-                final String resolved    = lookupProperty(placeholder, pom);
-                if (resolved != null) {
-                    sb.append(resolved);
-                    changed = true;
-                } else {
-                    sb.append(current, start, end + 1); // keep placeholder intact
-                }
-                i = end + 1;
+            final String substituted = performSingleSubstitutionPass(current, pom);
+            if (substituted.equals(current)) {
+                break; // No changes made
             }
-
-            if (!changed) break;
-            current = sb.toString();
+            current = substituted;
         }
 
         // If unresolved placeholders remain, the version is unusable
         return current.contains("${") ? null : current;
+    }
+
+    /**
+     * Performs a single pass of property substitution, replacing all ${...} placeholders.
+     * Extracted to reduce cognitive complexity of resolveProperties.
+     *
+     * @param value the string to process
+     * @param pom   the POM containing property definitions
+     * @return the string with one round of substitutions applied
+     */
+    private @NotNull String performSingleSubstitutionPass(@NotNull final String value, @NotNull final ParsedPom pom) {
+        final StringBuilder sb = new StringBuilder(value.length());
+        int i = 0;
+
+        while (i < value.length()) {
+            final int start = value.indexOf("${", i);
+            if (start == -1) {
+                sb.append(value, i, value.length());
+                break;
+            }
+
+            sb.append(value, i, start);
+            final int end = value.indexOf('}', start + 2);
+
+            if (end == -1) {
+                // Unclosed placeholder — leave as-is
+                sb.append(value, start, value.length());
+                break;
+            }
+
+            final String placeholder = value.substring(start + 2, end);
+            final String resolved = lookupProperty(placeholder, pom);
+
+            if (resolved != null) {
+                sb.append(resolved);
+            } else {
+                sb.append(value, start, end + 1); // keep placeholder intact
+            }
+
+            i = end + 1;
+        }
+
+        return sb.toString();
     }
 
     /**

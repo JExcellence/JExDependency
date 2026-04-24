@@ -230,22 +230,22 @@ public class DependencyManager {
                 final DependencyCoordinate coordinate = DependencyCoordinate.parse(dependency);
                 if (coordinate != null) {
                     coordinates.add(coordinate);
-                    logger.fine("YAML dependency: " + dependency);
+                    logger.log(Level.FINE, () -> "YAML dependency: " + dependency);
                 } else {
-                    logger.warning("Invalid dependency format: " + dependency);
+                    logger.log(Level.WARNING, "Invalid dependency format: {0}", dependency);
                 }
             }
         }
 
         if (additionalDependencies != null) {
-            logger.info("Adding " + additionalDependencies.length + " additional dependencies");
+            logger.log(Level.INFO, "Adding {0} additional dependencies", additionalDependencies.length);
             for (final String dependency : additionalDependencies) {
                 final DependencyCoordinate coordinate = DependencyCoordinate.parse(dependency);
                 if (coordinate != null) {
                     coordinates.add(coordinate);
-                    logger.fine("Additional dependency: " + dependency);
+                    logger.log(Level.FINE, () -> "Additional dependency: " + dependency);
                 } else {
-                    logger.warning("Invalid dependency format: " + dependency);
+                    logger.log(Level.WARNING, "Invalid dependency format: {0}", dependency);
                 }
             }
         }
@@ -290,19 +290,20 @@ public class DependencyManager {
 
     private void logProcessingSummary(@NotNull final ProcessingResult result, final long totalDuration) {
         if (result.hasFailures()) {
-            logger.info(String.format("Loaded %d/%d dependencies in %dms (%d failed)",
-                    result.getSuccessCount(),
-                    result.getTotalCount(),
-                    totalDuration,
-                    result.getFailureCount()));
+            logger.log(Level.INFO, "Loaded {0}/{1} dependencies in {2}ms ({3} failed)",
+                    new Object[]{
+                            result.getSuccessCount(),
+                            result.getTotalCount(),
+                            totalDuration,
+                            result.getFailureCount()
+                    });
             final String failedList = result.getFailed().stream()
                     .map(dr -> dr.coordinate().toGavString())
                     .collect(Collectors.joining(", "));
-            logger.warning("Failed: " + failedList);
+            logger.log(Level.WARNING, "Failed: {0}", failedList);
         } else {
-            logger.info(String.format("Loaded %d dependencies in %dms",
-                    result.getTotalCount(),
-                    totalDuration));
+            logger.log(Level.INFO, "Loaded {0} dependencies in {1}ms",
+                    new Object[]{result.getTotalCount(), totalDuration});
         }
     }
 

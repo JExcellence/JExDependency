@@ -41,6 +41,7 @@ public class PomParser {
     private static final String ELEMENT_VERSION = "version";
     private static final String ELEMENT_DEPENDENCIES = "dependencies";
     private static final String ELEMENT_DEPENDENCY = "dependency";
+    private static final String UNKNOWN_VALUE = "unknown";
 
     /**
      * Parses the supplied POM input stream and returns a {@link ParsedPom}, or {@code null}
@@ -78,9 +79,9 @@ public class PomParser {
 
             if (groupId   == null && parent != null) groupId   = parent.groupId();
             if (version   == null && parent != null) version   = parent.version();
-            if (groupId   == null) groupId   = "unknown";
-            if (artifactId == null) artifactId = "unknown";
-            if (version   == null) version   = "unknown";
+            if (groupId   == null) groupId   = UNKNOWN_VALUE;
+            if (artifactId == null) artifactId = UNKNOWN_VALUE;
+            if (version   == null) version   = UNKNOWN_VALUE;
 
             // --- Properties (seed with self-referential entries) ---
             final Map<String, String> properties = parseProperties(root);

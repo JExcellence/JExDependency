@@ -68,6 +68,11 @@ public class PaperPluginLoader implements PluginLoader {
      */
     private static final String PAPER_LOADER_PROPERTY = "paper.plugin.loader.active";
     /**
+     * Literal used in log messages when remapping operations fail.
+     */
+    private static final String FAILED_TO_REMAP = "Failed to remap: ";
+    
+    /**
      * Directory name that stores remapped jars when remapping succeeds.
      */
     private static final String REMAPPED_DIRECTORY_NAME = "remapped";
@@ -106,6 +111,7 @@ public class PaperPluginLoader implements PluginLoader {
      * Creates a logger with a clean output format that includes the plugin name.
      *
      * @param loggerName the name to use for the logger (typically includes plugin name)
+     * @return configured logger instance
      */
     private Logger createLogger(final String loggerName) {
         final Logger log = Logger.getLogger(loggerName);
@@ -207,7 +213,7 @@ public class PaperPluginLoader implements PluginLoader {
     private void warnIfNestedLibraries(@NotNull final Path librariesDirectory) {
         final Path nested = librariesDirectory.resolve(LIBRARIES_DIRECTORY_NAME);
         if (Files.isDirectory(nested)) {
-            logger.warning("Detected nested libraries folder - please clean up: " + nested);
+            logger.log(Level.WARNING, "Detected nested libraries folder - please clean up: {0}", nested);
         }
     }
 
@@ -218,7 +224,7 @@ public class PaperPluginLoader implements PluginLoader {
             
             if (yamlDependencies == null || yamlDependencies.isEmpty()) {
                 // Fall back to loader's own resources (JEDependency JAR)
-                logger.fine("No dependencies in plugin JAR, checking loader resources");
+                logger.log(Level.FINE, "No dependencies in plugin JAR, checking loader resources");
                 yamlDependencies = yamlDependencyLoader.loadDependencies(getClass());
             }
 
@@ -245,7 +251,7 @@ public class PaperPluginLoader implements PluginLoader {
         for (final String dep : dependencies) {
             final DependencyCoordinate coord = DependencyCoordinate.parse(dep);
             if (coord == null) {
-                logger.warning("Invalid dependency coordinate: " + dep);
+                logger.log(Level.WARNING, "Invalid dependency coordinate: {0}", dep);
             } else {
                 coords.add(coord);
             }
@@ -271,13 +277,14 @@ public class PaperPluginLoader implements PluginLoader {
         final long ms = System.currentTimeMillis() - start;
 
         if (failed > 0) {
-            logger.info("Downloaded " + (coords.size() - failed) + "/" + coords.size()
-                    + " (" + failed + " failed) in " + ms + "ms");
+            logger.log(Level.INFO, "Downloaded {0}/{1} ({2} failed) in {3}ms",
+                    new Object[]{coords.size() - failed, coords.size(), failed, ms});
             results.stream()
                     .filter(r -> !r.success())
-                    .forEach(r -> logger.warning("Failed: " + r.coordinate().toGavString()));
+                    .forEach(r -> logger.log(Level.WARNING, "Failed: {0}", r.coordinate().toGavString()));
         } else {
-            logger.info("Downloaded " + coords.size() + "/" + coords.size() + " in " + ms + "ms");
+            logger.log(Level.INFO, "Downloaded {0}/{1} in {2}ms",
+                    new Object[]{coords.size(), coords.size(), ms});
         }
     }
 
@@ -336,10 +343,11 @@ public class PaperPluginLoader implements PluginLoader {
 
         if (!isRemapperAvailable()) {
             if (mode == RemapMode.TRUE) {
-                logger.warning("Remapping requested but the remapper component is not present. " +
-                        "Either add the remapper to the plugin classpath or disable remapping with -D" + REMAP_PROPERTY + "=false");
+                logger.log(Level.WARNING, "Remapping requested but the remapper component is not present. " +
+                        "Either add the remapper to the plugin classpath or disable remapping with -D{0}=false",
+                        REMAP_PROPERTY);
             } else {
-                logger.fine("Remapper not present; skipping remapping (mode=auto)");
+                logger.log(Level.FINE, "Remapper not present; skipping remapping (mode=auto)");
             }
             return librariesDirectory;
         }
@@ -371,7 +379,7 @@ public class PaperPluginLoader implements PluginLoader {
 
         final List<Path> inputJars = collectJarFiles(inputDirectory);
         if (inputJars.isEmpty()) {
-            logger.fine("No input JARs to remap in: " + inputDirectory);
+            logger.log(Level.FINE, "No input JARs to remap in: {0}", inputDirectory);
             return false;
         }
 
@@ -386,7 +394,7 @@ public class PaperPluginLoader implements PluginLoader {
 
         final int relocationsApplied = applyRelocations(remappingManager, inputJars);
         if (relocationsApplied == 0) {
-            logger.warning("No relocations were applied. Remapping will not change packages.");
+            logger.log(Level.WARNING, "No relocations were applied. Remapping will not change packages.");
         }
 
         return processRemapping(remappingManager, inputJars, outputDirectory);
@@ -409,9 +417,9 @@ public class PaperPluginLoader implements PluginLoader {
             final Class<?> managerClass = Class.forName("de.jexcellence.dependency.remapper.RemappingDependencyManager");
             final var constructor = managerClass.getConstructor(Path.class);
             return constructor.newInstance(dataDirectory);
-        } catch (final Throwable throwable) {
+        } catch (final Exception exception) {
             // If we reach here, the class was expected to exist (pre-checked earlier) but failed.
-            logger.log(Level.WARNING, "RemappingDependencyManager not available or failed to initialize", throwable);
+            logger.log(Level.WARNING, "RemappingDependencyManager not available or failed to initialize", exception);
             return null;
         }
     }
@@ -448,7 +456,7 @@ public class PaperPluginLoader implements PluginLoader {
 
             final int separatorIndex = trimmedPair.indexOf("=>");
             if (separatorIndex <= 0 || separatorIndex >= trimmedPair.length() - 2) {
-                logger.warning("Invalid relocation mapping, expected 'from=>to': " + trimmedPair);
+                logger.log(Level.WARNING, "Invalid relocation mapping, expected ''from=>to'': {0}", trimmedPair);
                 continue;
             }
 
@@ -459,7 +467,7 @@ public class PaperPluginLoader implements PluginLoader {
                 invokeRelocate(remappingManager, fromPackage, toPackage);
                 applied++;
             } else {
-                logger.warning("Ignoring empty relocation mapping: " + trimmedPair);
+                logger.log(Level.WARNING, "Ignoring empty relocation mapping: {0}", trimmedPair);
             }
         }
 
@@ -494,7 +502,8 @@ public class PaperPluginLoader implements PluginLoader {
         }
 
         if (applied > 0) {
-            logger.fine("Automatic relocation will map " + applied + " root package(s) under '" + basePrefix + "'");
+            logger.log(Level.FINE, "Automatic relocation will map {0} root package(s) under ''{1}''",
+                    new Object[]{applied, basePrefix});
         }
 
         return applied;
@@ -534,6 +543,14 @@ public class PaperPluginLoader implements PluginLoader {
         return excludes;
     }
 
+    /**
+     * Refactored method to reduce cognitive complexity by extracting entry processing logic.
+     * Detects package roots from a JAR file while excluding specified root packages.
+     *
+     * @param jarPath       path to the JAR file to scan
+     * @param excludedRoots set of package roots to exclude from detection
+     * @return set of detected package roots
+     */
     private @NotNull Set<String> detectPackageRoots(
             @NotNull final Path jarPath,
             @NotNull final Set<String> excludedRoots
@@ -541,33 +558,49 @@ public class PaperPluginLoader implements PluginLoader {
         final Set<String> roots = new HashSet<>();
 
         try (final JarFile jarFile = new JarFile(jarPath.toFile())) {
-            for (final JarEntry entry : java.util.Collections.list(jarFile.entries())) {
-                if (entry.isDirectory() || !entry.getName().endsWith(".class")) {
-                    continue;
-                }
-
-                if (entry.getName().endsWith("module-info.class")) {
-                    continue;
-                }
-
-                final int lastSlashIndex = entry.getName().lastIndexOf('/');
-                if (lastSlashIndex <= 0) {
-                    continue;
-                }
-
-                final String packagePath = entry.getName().substring(0, lastSlashIndex);
-                final String packageName = packagePath.replace('/', '.');
-                final String rootPackage = extractFirstTwoSegments(packageName);
-
-                if (!shouldExcludePackage(rootPackage, excludedRoots)) {
-                    roots.add(rootPackage);
-                }
+            final var entries = java.util.Collections.list(jarFile.entries());
+            for (final JarEntry entry : entries) {
+                processJarEntry(entry, excludedRoots, roots);
             }
         } catch (final IOException exception) {
             logger.log(Level.FINE, "Failed to scan JAR for package roots: " + jarPath, exception);
         }
 
         return roots;
+    }
+
+    /**
+     * Processes a single JAR entry to extract and add its root package if applicable.
+     *
+     * @param entry         the JAR entry to process
+     * @param excludedRoots set of package roots to exclude
+     * @param roots         set to add detected root packages to
+     */
+    private void processJarEntry(
+            @NotNull final JarEntry entry,
+            @NotNull final Set<String> excludedRoots,
+            @NotNull final Set<String> roots
+    ) {
+        if (entry.isDirectory() || !entry.getName().endsWith(".class")) {
+            return;
+        }
+
+        if (entry.getName().endsWith("module-info.class")) {
+            return;
+        }
+
+        final int lastSlashIndex = entry.getName().lastIndexOf('/');
+        if (lastSlashIndex <= 0) {
+            return;
+        }
+
+        final String packagePath = entry.getName().substring(0, lastSlashIndex);
+        final String packageName = packagePath.replace('/', '.');
+        final String rootPackage = extractFirstTwoSegments(packageName);
+
+        if (!shouldExcludePackage(rootPackage, excludedRoots)) {
+            roots.add(rootPackage);
+        }
     }
 
     private @NotNull String extractFirstTwoSegments(@NotNull final String packageName) {
@@ -625,13 +658,13 @@ public class PaperPluginLoader implements PluginLoader {
         // Log a progress line every this many JARs so the console doesn't look stuck
         final int progressInterval = Math.max(1, Math.min(10, total / 5));
 
-        logger.info("Remapping " + total + " libraries...");
+        logger.log(Level.INFO, "Remapping {0} libraries...", total);
 
         for (final Path inputJar : inputJars) {
             final Path outputJar = outputDirectory.resolve(inputJar.getFileName());
 
             if (isRemappedJarUpToDate(outputJar, inputJar)) {
-                logger.fine("Cached: " + outputJar.getFileName());
+                logger.log(Level.FINE, "Cached: {0}", outputJar.getFileName());
                 processedCount++;
                 remappedCount++;
             } else {
@@ -641,25 +674,26 @@ public class PaperPluginLoader implements PluginLoader {
                     processedCount++;
                     if (isValidJarFile(outputJar)) {
                         remappedCount++;
-                        logger.fine("Remapped: " + inputJar.getFileName());
+                        logger.log(Level.FINE, "Remapped: {0}", inputJar.getFileName());
                     } else {
-                        logger.warning("Failed to remap: " + inputJar.getFileName());
+                        logger.log(Level.WARNING, "Failed to remap: {0}", inputJar.getFileName());
                     }
                 }
             }
 
             if (processedCount % progressInterval == 0 || processedCount == total) {
                 final int percent = (processedCount * 100) / total;
-                logger.info("Remapping... " + processedCount + "/" + total + " (" + percent + "%)");
+                logger.log(Level.INFO, "Remapping... {0}/{1} ({2}%)",
+                        new Object[]{processedCount, total, percent});
             }
         }
 
         if (processedCount == 0) {
-            logger.warning("No libraries to remap");
+            logger.log(Level.WARNING, "No libraries to remap");
             return false;
         }
 
-        logger.info("Remapped " + remappedCount + "/" + total + " libraries");
+        logger.log(Level.INFO, "Remapped {0}/{1} libraries", new Object[]{remappedCount, total});
         return remappedCount > 0;
     }
 
@@ -701,12 +735,12 @@ public class PaperPluginLoader implements PluginLoader {
             return true;
         } catch (final InvocationTargetException ite) {
             final Throwable cause = ite.getCause() != null ? ite.getCause() : ite;
-            logger.warning("Failed to remap: " + inputJar.getFileName());
+            logger.log(Level.WARNING, "{0}{1}", new Object[]{FAILED_TO_REMAP, inputJar.getFileName()});
             logger.log(Level.FINE, "Remap error details for " + inputJar.getFileName(), cause);
             return false;
-        } catch (final Throwable throwable) {
-            logger.warning("Failed to remap: " + inputJar.getFileName());
-            logger.log(Level.FINE, "Remap error details for " + inputJar.getFileName(), throwable);
+        } catch (final Exception exception) {
+            logger.log(Level.WARNING, "{0}{1}", new Object[]{FAILED_TO_REMAP, inputJar.getFileName()});
+            logger.log(Level.FINE, "Remap error details for " + inputJar.getFileName(), exception);
             return false;
         }
     }
@@ -735,13 +769,13 @@ public class PaperPluginLoader implements PluginLoader {
                         try {
                             classpathBuilder.addLibrary(new JarLibrary(jarPath));
                             jarCount.incrementAndGet();
-                            logger.fine("Added: " + jarPath.getFileName());
+                            logger.log(Level.FINE, () -> "Added: " + jarPath.getFileName());
                         } catch (final Exception exception) {
                             logger.log(Level.WARNING, "Failed to load: " + jarPath.getFileName(), exception);
                         }
                     });
 
-            logger.info("Loaded " + jarCount.get() + " libraries");
+            logger.log(Level.INFO, "Loaded {0} libraries", jarCount.get());
 
         } catch (final Exception exception) {
             logger.log(Level.SEVERE, "Failed to load libraries", exception);

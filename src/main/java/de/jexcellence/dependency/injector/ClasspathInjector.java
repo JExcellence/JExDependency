@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 public class ClasspathInjector {
 
     private static final String ADD_URL_METHOD_NAME = "addURL";
+    private static final Set<URL> INJECTED_URLS_GLOBAL = Collections.synchronizedSet(new HashSet<>());
     private static boolean moduleDeencapsulated = false;
 
     private final Logger logger;
@@ -52,14 +53,14 @@ public class ClasspathInjector {
             final URL jarUrl = jarFile.toURI().toURL();
 
             if (isAlreadyInjected(jarUrl)) {
-                logger.fine("Already injected: " + jarFile.getName());
+                logger.log(Level.FINE, () -> "Already injected: " + jarFile.getName());
                 return;
             }
 
             performInjection(classLoader, jarUrl);
             injectedUrls.add(jarUrl);
 
-            logger.fine("Successfully injected: " + jarFile.getName());
+            logger.log(Level.FINE, () -> "Successfully injected: " + jarFile.getName());
 
         } catch (final Exception exception) {
             throw new InjectionException(
@@ -158,18 +159,26 @@ public class ClasspathInjector {
     private void injectIntoUrlClassLoader(
             @NotNull final URLClassLoader classLoader,
             @NotNull final URL jarUrl
-    ) throws Exception {
-        final Method addUrlMethod = URLClassLoader.class.getDeclaredMethod(ADD_URL_METHOD_NAME, URL.class);
-        addUrlMethod.setAccessible(true);
-        addUrlMethod.invoke(classLoader, jarUrl);
+    ) throws InjectionException {
+        try {
+            final Method addUrlMethod = URLClassLoader.class.getDeclaredMethod(ADD_URL_METHOD_NAME, URL.class);
+            addUrlMethod.setAccessible(true);
+            addUrlMethod.invoke(classLoader, jarUrl);
+        } catch (final Exception exception) {
+            throw new InjectionException("Failed to inject into URLClassLoader", exception);
+        }
     }
 
     private void injectUsingReflection(
             @NotNull final ClassLoader classLoader,
             @NotNull final URL jarUrl
-    ) throws Exception {
-        final Method addUrlMethod = classLoader.getClass().getDeclaredMethod(ADD_URL_METHOD_NAME, URL.class);
-        addUrlMethod.setAccessible(true);
-        addUrlMethod.invoke(classLoader, jarUrl);
+    ) throws InjectionException {
+        try {
+            final Method addUrlMethod = classLoader.getClass().getDeclaredMethod(ADD_URL_METHOD_NAME, URL.class);
+            addUrlMethod.setAccessible(true);
+            addUrlMethod.invoke(classLoader, jarUrl);
+        } catch (final Exception exception) {
+            throw new InjectionException("Failed to inject using reflection", exception);
+        }
     }
 }

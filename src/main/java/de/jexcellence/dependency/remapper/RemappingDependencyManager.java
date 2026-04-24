@@ -63,6 +63,8 @@ public class RemappingDependencyManager {
     private static final String RELOCATIONS_EXCLUDES_PROPERTY = "jedependency.relocations.excludes"; // exclude roots
 
     private static final long MINIMUM_VALID_JAR_SIZE = 1024L;
+    /** Path separator used in JAR entries (always forward slash per JAR specification). */
+    private static final char JAR_PATH_SEPARATOR = '/';
 
     // ----------------- Dependencies -----------------
 
@@ -272,17 +274,33 @@ public class RemappingDependencyManager {
         }
     }
 
-    // ----------------- Internal orchestration -----------------
-
+    /**
+     * Downloads, remaps and injects dependencies. Refactored to reduce cognitive complexity.
+     *
+     * @param classLoader the class loader to inject into
+     * @throws IOException if operations fail
+     */
     private void downloadRemapAndInject(@NotNull final ClassLoader classLoader) throws IOException {
-        // Download
-        final List<Path> inputJars = new ArrayList<>();
         final List<DependencyCoordinate> toProcess = new ArrayList<>(coordinates);
 
         if (toProcess.isEmpty()) {
             LOGGER.info("No dependencies registered for remapping/injection");
             return;
         }
+
+        final List<Path> inputJars = downloadDependencies(toProcess);
+        final List<Path> jarsToInject = remapIfNeeded(inputJars);
+        injectJars(jarsToInject, classLoader);
+    }
+
+    /**
+     * Downloads all dependencies and returns the list of downloaded JAR paths.
+     *
+     * @param toProcess list of coordinates to download
+     * @return list of successfully downloaded JAR paths
+     */
+    private @NotNull List<Path> downloadDependencies(@NotNull final List<DependencyCoordinate> toProcess) {
+        final List<Path> inputJars = new ArrayList<>();
 
         for (final DependencyCoordinate coordinate : toProcess) {
             final DownloadResult result = downloader.download(coordinate, librariesDirectory.toFile());
@@ -294,34 +312,55 @@ public class RemappingDependencyManager {
             }
         }
 
-        // Remap (if relocations exist)
+        return inputJars;
+    }
+
+    /**
+     * Remaps JARs if relocations are configured, otherwise returns the input list unchanged.
+     *
+     * @param inputJars list of input JAR paths
+     * @return list of JAR paths to inject (remapped or original)
+     * @throws IOException if remapping fails critically
+     */
+    private @NotNull List<Path> remapIfNeeded(@NotNull final List<Path> inputJars) throws IOException {
         final List<Path> jarsToInject = new ArrayList<>();
+
         if (relocations.isEmpty()) {
             jarsToInject.addAll(inputJars);
             LOGGER.info("No relocations specified; injecting original libraries");
-        } else {
-            ensureDirectories();
-            for (final Path input : inputJars) {
-                final Path output = remappedDirectory.resolve(input.getFileName().toString());
-
-                if (isOutputUpToDate(output, input)) {
-                    LOGGER.log(Level.FINE, () -> "Using cached remapped JAR: " + output.getFileName());
-                    jarsToInject.add(output);
-                    continue;
-                }
-
-                try {
-                    remap(input, output);
-                    jarsToInject.add(output);
-                } catch (final IOException ex) {
-                    LOGGER.log(Level.WARNING, ex, () -> "Remapping failed for " + input.getFileName() + " (injecting original)");
-                    jarsToInject.add(input);
-                }
-            }
-            LOGGER.log(Level.INFO, "Remapping complete: {0} artifact(s) prepared", jarsToInject.size());
+            return jarsToInject;
         }
 
-        // Inject
+        ensureDirectories();
+        for (final Path input : inputJars) {
+            final Path output = remappedDirectory.resolve(input.getFileName().toString());
+
+            if (isOutputUpToDate(output, input)) {
+                LOGGER.log(Level.FINE, () -> "Using cached remapped JAR: " + output.getFileName());
+                jarsToInject.add(output);
+                continue;
+            }
+
+            try {
+                remap(input, output);
+                jarsToInject.add(output);
+            } catch (final IOException ex) {
+                LOGGER.log(Level.WARNING, ex, () -> "Remapping failed for " + input.getFileName() + " (injecting original)");
+                jarsToInject.add(input);
+            }
+        }
+
+        LOGGER.log(Level.INFO, "Remapping complete: {0} artifact(s) prepared", jarsToInject.size());
+        return jarsToInject;
+    }
+
+    /**
+     * Injects the provided JARs into the class loader.
+     *
+     * @param jarsToInject list of JAR paths to inject
+     * @param classLoader  target class loader
+     */
+    private void injectJars(@NotNull final List<Path> jarsToInject, @NotNull final ClassLoader classLoader) {
         int injected = 0;
         for (final Path jar : jarsToInject) {
             try {
@@ -510,10 +549,10 @@ public class RemappingDependencyManager {
         int bestLen = -1;
 
         for (Map.Entry<String, String> e : relocations.entrySet()) {
-            final String fromPath = e.getKey().replace('.', '/') + "/";
+            final String fromPath = e.getKey().replace('.', JAR_PATH_SEPARATOR) + JAR_PATH_SEPARATOR;
             if (name.startsWith(fromPath) && fromPath.length() > bestLen) {
                 bestFrom = fromPath;
-                bestTo = e.getValue().replace('.', '/') + "/";
+                bestTo = e.getValue().replace('.', JAR_PATH_SEPARATOR) + JAR_PATH_SEPARATOR;
                 bestLen = fromPath.length();
             }
         }
@@ -524,28 +563,16 @@ public class RemappingDependencyManager {
         return name;
     }
 
-    // ----------------- Utilities: system property relocations (optional) -----------------
-
+    /**
+     * Loads relocations from system properties. Refactored to reduce loop complexity.
+     */
     private void loadRelocationsFromSystemProperties() {
         // Explicit mappings
         final String spec = System.getProperty(RELOCATIONS_PROPERTY);
         if (spec != null && !spec.trim().isEmpty()) {
             final String[] pairs = spec.split(",");
             for (final String pair : pairs) {
-                final String t = pair.trim();
-                if (t.isEmpty()) continue;
-                final int idx = t.indexOf("=>");
-                if (idx <= 0 || idx >= t.length() - 2) {
-                    LOGGER.warning("Invalid relocation mapping (expected 'from=>to'): " + t);
-                    continue;
-                }
-                final String from = normalizePackage(t.substring(0, idx));
-                final String to = normalizePackage(t.substring(idx + 2));
-                if (from.isEmpty() || to.isEmpty()) {
-                    LOGGER.warning("Ignoring empty relocation mapping: " + t);
-                    continue;
-                }
-                relocate(from, to);
+                processRelocationPair(pair);
             }
         }
 
@@ -559,6 +586,34 @@ public class RemappingDependencyManager {
         if (excludes != null && !excludes.trim().isEmpty()) {
             LOGGER.log(Level.FINE, () -> "Additional excluded relocation roots: " + excludes);
         }
+    }
+
+    /**
+     * Processes a single relocation pair from system properties.
+     *
+     * @param pair the relocation pair string in "from=>to" format
+     */
+    private void processRelocationPair(@NotNull final String pair) {
+        final String t = pair.trim();
+        if (t.isEmpty()) {
+            return;
+        }
+
+        final int idx = t.indexOf("=>");
+        if (idx <= 0 || idx >= t.length() - 2) {
+            LOGGER.log(Level.WARNING, "Invalid relocation mapping (expected ''from=>to''): {0}", t);
+            return;
+        }
+
+        final String from = normalizePackage(t.substring(0, idx));
+        final String to = normalizePackage(t.substring(idx + 2));
+
+        if (from.isEmpty() || to.isEmpty()) {
+            LOGGER.log(Level.WARNING, "Ignoring empty relocation mapping: {0}", t);
+            return;
+        }
+
+        relocate(from, to);
     }
 
     // ----------------- Utilities: up-to-date check -----------------

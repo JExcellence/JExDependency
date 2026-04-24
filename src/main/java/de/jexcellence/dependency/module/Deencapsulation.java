@@ -1,7 +1,6 @@
 package de.jexcellence.dependency.module;
 
 import org.jetbrains.annotations.NotNull;
-import sun.reflect.ReflectionFactory;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
@@ -51,20 +50,33 @@ public class Deencapsulation {
     }
 
     /**
-     * Creates a privileged {@link MethodHandles.Lookup} with full access rights for the supplied class. This lookup is.
-     * used to call otherwise inaccessible module APIs when adjusting module openness.
+     * Creates a privileged {@link MethodHandles.Lookup} with full access rights for the supplied class using
+     * reflection to access internal JDK APIs. This lookup is used to call otherwise inaccessible module APIs
+     * when adjusting module openness.
      *
      * @param lookupClass class for which the privileged lookup should be created
-     *
      * @return privileged lookup instance
+     * @throws IllegalStateException if the lookup cannot be created
      */
     public static @NotNull MethodHandles.Lookup createPrivilegedLookup(@NotNull final Class<?> lookupClass) {
         try {
-            final Constructor<?> lookupConstructor = ReflectionFactory.getReflectionFactory()
-                    .newConstructorForSerialization(
-                            MethodHandles.Lookup.class,
-                            MethodHandles.Lookup.class.getDeclaredConstructor(Class.class)
-                    );
+            // Use reflection to access internal JDK serialization APIs
+            final Class<?> reflectionFactoryClass = Class.forName("sun.reflect.ReflectionFactory");
+            final java.lang.reflect.Method getFactoryMethod = reflectionFactoryClass.getDeclaredMethod("getReflectionFactory");
+            final Object reflectionFactory = getFactoryMethod.invoke(null);
+            
+            final java.lang.reflect.Method newConstructorMethod = reflectionFactoryClass.getDeclaredMethod(
+                    "newConstructorForSerialization",
+                    Class.class,
+                    Constructor.class
+            );
+            
+            final Constructor<?> lookupConstructor = (Constructor<?>) newConstructorMethod.invoke(
+                    reflectionFactory,
+                    MethodHandles.Lookup.class,
+                    MethodHandles.Lookup.class.getDeclaredConstructor(Class.class)
+            );
+            
             return (MethodHandles.Lookup) lookupConstructor.newInstance(lookupClass);
         } catch (final ReflectiveOperationException exception) {
             final Throwable cause = exception instanceof InvocationTargetException
@@ -75,7 +87,7 @@ public class Deencapsulation {
     }
 
     /**
-     * Attempts to close any packages previously opened via {@link #deencapsulate(Class)}. This is a best-effort.
+     * Attempts to close any packages previously opened via {@link #deencapsulate(Class)}. This is a best-effort
      * operation and may silently ignore failures for packages that cannot be closed again.
      */
     public static void closeOpenedPackages() {
@@ -84,26 +96,34 @@ public class Deencapsulation {
         }
 
         try {
-            final MethodHandle closePackageMethod = createPrivilegedLookup(Module.class)
-                    .findVirtual(Module.class, "implRemoveOpens", MethodType.methodType(void.class, String.class));
-
-            for (final Map.Entry<Module, Set<String>> moduleEntry : openedPackages.entrySet()) {
-                final Module module = moduleEntry.getKey();
-                for (final String packageName : moduleEntry.getValue()) {
-                    try {
-                        closePackageMethod.invokeExact(module, packageName);
-                    } catch (final Throwable throwable) {
-                        LOGGER.finest("Failed to close package: " + packageName);
-                    }
-                }
-            }
-
-            openedPackages.clear();
-            LOGGER.fine("Closed all opened packages");
-
+            closePackagesInternal();
         } catch (final Throwable throwable) {
             LOGGER.log(Level.WARNING, "Failed to close opened packages", throwable);
         }
+    }
+
+    /**
+     * Internal method to close packages, extracted to reduce nesting complexity.
+     *
+     * @throws Throwable if closing fails
+     */
+    private static void closePackagesInternal() throws Throwable {
+        final MethodHandle closePackageMethod = createPrivilegedLookup(Module.class)
+                .findVirtual(Module.class, "implRemoveOpens", MethodType.methodType(void.class, String.class));
+
+        for (final Map.Entry<Module, Set<String>> moduleEntry : openedPackages.entrySet()) {
+            final Module module = moduleEntry.getKey();
+            for (final String packageName : moduleEntry.getValue()) {
+                try {
+                    closePackageMethod.invokeExact(module, packageName);
+                } catch (final Throwable throwable) {
+                    LOGGER.log(Level.FINEST, () -> "Failed to close package: " + packageName);
+                }
+            }
+        }
+
+        openedPackages.clear();
+        LOGGER.fine("Closed all opened packages");
     }
 
     private static void performDeencapsulation(@NotNull final Class<?> anchorClass) {
@@ -153,9 +173,9 @@ public class Deencapsulation {
             if (moduleOpenedPackages.add(packageName)) {
                 try {
                     openPackageMethod.invokeExact(module, packageName);
-                    LOGGER.finest("Opened package: " + packageName + " in module: " + module.getName());
+                    LOGGER.log(Level.FINEST, () -> "Opened package: " + packageName + " in module: " + module.getName());
                 } catch (final Throwable throwable) {
-                    LOGGER.finest("Could not open package: " + packageName);
+                    LOGGER.log(Level.FINEST, () -> "Could not open package: " + packageName);
                 }
             }
         }
