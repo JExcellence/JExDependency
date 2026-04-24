@@ -194,12 +194,12 @@ public class JEDependency {
                 final int dashIndex = version.indexOf("-");
                 mcVersion = dashIndex > 0 ? version.substring(0, dashIndex) : version;
             }
-            
+
             final String[] parts = mcVersion.split("\\.");
             if (parts.length >= 2) {
                 final int major = Integer.parseInt(parts[0]);
                 final int minor = Integer.parseInt(parts[1]);
-                
+
                 // Check if version is 1.20 or higher
                 return major > 1 || (major == 1 && minor >= 20);
             }
