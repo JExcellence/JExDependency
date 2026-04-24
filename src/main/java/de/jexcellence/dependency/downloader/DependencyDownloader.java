@@ -330,41 +330,52 @@ public class DependencyDownloader {
      */
     private void verifyChecksumBestEffort(@NotNull final URL artifactUrl, @NotNull final File jarFile) {
         try {
-            final URL sha1Url = URI.create(artifactUrl.toString() + ".sha1").toURL();
-            final HttpURLConnection conn = createConnection(sha1Url);
-            conn.setConnectTimeout(5_000);
-            conn.setReadTimeout(5_000);
-
-            if (conn.getResponseCode() != 200) {
-                return; // .sha1 not published by this repository — skip silently
-            }
-
-            final String expected;
-            try (final InputStream is = conn.getInputStream()) {
-                // SHA-1 files may contain only the hex string or "hex filename"; take the first token
-                expected = new String(is.readAllBytes(), StandardCharsets.UTF_8).trim().split("\\s+")[0];
-            }
-
-            if (expected.isEmpty() || expected.length() != 40) {
-                return; // Not a valid SHA-1 hex string — skip
-            }
-
-            final String actual;
-            try {
-                actual = sha1Hex(jarFile);
-            } catch (final DependencyDownloadException exception) {
-                logger.log(Level.FINEST, exception, () -> "SHA-1 check skipped for " + jarFile.getName());
-                return;
-            }
-            
-            if (expected.equalsIgnoreCase(actual)) {
-                logger.log(Level.FINE, () -> "Checksum OK: " + jarFile.getName());
-            } else {
-                logger.log(Level.WARNING, "Checksum mismatch for {0} \u2014 expected {1}, got {2}. The artifact may be corrupt; consider deleting it and restarting.",
-                        new Object[]{jarFile.getName(), expected, actual});
-            }
+            performChecksumVerification(artifactUrl, jarFile);
         } catch (final IOException exception) {
             logger.log(Level.FINEST, exception, () -> "SHA-1 check skipped for " + jarFile.getName());
+        }
+    }
+
+    /**
+     * Performs the actual checksum verification logic. Extracted to reduce nesting complexity.
+     *
+     * @param artifactUrl the URL that was used to download the JAR
+     * @param jarFile     the JAR file to verify
+     * @throws IOException if network or file operations fail
+     */
+    private void performChecksumVerification(@NotNull final URL artifactUrl, @NotNull final File jarFile) throws IOException {
+        final URL sha1Url = URI.create(artifactUrl.toString() + ".sha1").toURL();
+        final HttpURLConnection conn = createConnection(sha1Url);
+        conn.setConnectTimeout(5_000);
+        conn.setReadTimeout(5_000);
+
+        if (conn.getResponseCode() != 200) {
+            return; // .sha1 not published by this repository — skip silently
+        }
+
+        final String expected;
+        try (final InputStream is = conn.getInputStream()) {
+            // SHA-1 files may contain only the hex string or "hex filename"; take the first token
+            expected = new String(is.readAllBytes(), StandardCharsets.UTF_8).trim().split("\\s+")[0];
+        }
+
+        if (expected.isEmpty() || expected.length() != 40) {
+            return; // Not a valid SHA-1 hex string — skip
+        }
+
+        final String actual;
+        try {
+            actual = sha1Hex(jarFile);
+        } catch (final DependencyDownloadException exception) {
+            logger.log(Level.FINEST, exception, () -> "SHA-1 check skipped for " + jarFile.getName());
+            return;
+        }
+        
+        if (expected.equalsIgnoreCase(actual)) {
+            logger.log(Level.FINE, () -> "Checksum OK: " + jarFile.getName());
+        } else {
+            logger.log(Level.WARNING, "Checksum mismatch for {0} \u2014 expected {1}, got {2}. The artifact may be corrupt; consider deleting it and restarting.",
+                    new Object[]{jarFile.getName(), expected, actual});
         }
     }
 

@@ -145,23 +145,33 @@ public class TransitiveDependencyResolver {
 
         for (final PomDependency dep : pom.dependencies()) {
             final DependencyCoordinate resolved = resolveTransitiveDependency(dep, pom, managedVersions, coordinate, visited, activeExclusions);
-            if (resolved == null) {
-                continue;
+            if (resolved != null) {
+                result.add(resolved);
+
+                // Propagate exclusions declared on this dependency down the recursion
+                final Set<String> newExclusions = computeNewExclusions(dep, activeExclusions);
+
+                resolveRecursive(resolved, visited, result, depth + 1, newExclusions);
             }
-
-            result.add(resolved);
-
-            // Propagate exclusions declared on this dependency down the recursion
-            final Set<String> newExclusions;
-            if (dep.exclusions().isEmpty()) {
-                newExclusions = activeExclusions;
-            } else {
-                newExclusions = new HashSet<>(activeExclusions);
-                newExclusions.addAll(dep.exclusions());
-            }
-
-            resolveRecursive(resolved, visited, result, depth + 1, newExclusions);
         }
+    }
+
+    /**
+     * Computes the new set of exclusions by merging the dependency's exclusions with active exclusions.
+     *
+     * @param dep              the dependency to process
+     * @param activeExclusions the currently active exclusions
+     * @return the merged set of exclusions
+     */
+    private @NotNull Set<String> computeNewExclusions(@NotNull final PomDependency dep, 
+                                                       @NotNull final Set<String> activeExclusions) {
+        if (dep.exclusions().isEmpty()) {
+            return activeExclusions;
+        }
+        
+        final Set<String> newExclusions = new HashSet<>(activeExclusions);
+        newExclusions.addAll(dep.exclusions());
+        return newExclusions;
     }
 
     /**
@@ -431,34 +441,48 @@ public class TransitiveDependencyResolver {
         int i = 0;
 
         while (i < value.length()) {
-            final int start = value.indexOf("${", i);
-            if (start == -1) {
-                sb.append(value, i, value.length());
-                break;
-            }
-
-            sb.append(value, i, start);
-            final int end = value.indexOf('}', start + 2);
-
-            if (end == -1) {
-                // Unclosed placeholder — leave as-is
-                sb.append(value, start, value.length());
-                break;
-            }
-
-            final String placeholder = value.substring(start + 2, end);
-            final String resolved = lookupProperty(placeholder, pom);
-
-            if (resolved != null) {
-                sb.append(resolved);
-            } else {
-                sb.append(value, start, end + 1); // keep placeholder intact
-            }
-
-            i = end + 1;
+            i = processNextPlaceholder(value, pom, sb, i);
         }
 
         return sb.toString();
+    }
+
+    /**
+     * Processes the next placeholder in the value string, starting from the given index.
+     *
+     * @param value the string to process
+     * @param pom   the POM containing property definitions
+     * @param sb    the StringBuilder to append results to
+     * @param i     the current index in the value string
+     * @return the next index to process
+     */
+    private int processNextPlaceholder(@NotNull final String value, @NotNull final ParsedPom pom, 
+                                       @NotNull final StringBuilder sb, final int i) {
+        final int start = value.indexOf("${", i);
+        if (start == -1) {
+            sb.append(value, i, value.length());
+            return value.length();
+        }
+
+        sb.append(value, i, start);
+        final int end = value.indexOf('}', start + 2);
+
+        if (end == -1) {
+            // Unclosed placeholder — leave as-is
+            sb.append(value, start, value.length());
+            return value.length();
+        }
+
+        final String placeholder = value.substring(start + 2, end);
+        final String resolved = lookupProperty(placeholder, pom);
+
+        if (resolved != null) {
+            sb.append(resolved);
+        } else {
+            sb.append(value, start, end + 1); // keep placeholder intact
+        }
+
+        return end + 1;
     }
 
     /**

@@ -626,7 +626,9 @@ public class RemappingDependencyManager {
             final FileTime inTime = Files.getLastModifiedTime(input);
             final FileTime outTime = Files.getLastModifiedTime(output);
             final long outSize = Files.size(output);
-            return outSize > 0 && outTime.compareTo(inTime) >= 0;
+            final boolean sizeValid = outSize > 0;
+            final boolean timeValid = outTime.compareTo(inTime) >= 0;
+            return sizeValid && timeValid;
         } catch (IOException e) {
             return false;
         }
@@ -657,10 +659,15 @@ public class RemappingDependencyManager {
                 + ", remapped=" + remappedDirectory
                 + ", deps=" + coordinates.size()
                 + ", relocations=" + relocations.size();
-        final String pluginInfo = plugin != null
-                ? ", plugin=" + plugin.getName()
-                        + ", anchor=" + (anchorClass != null ? anchorClass.getName() : "null")
-                : ", plugin=null, anchor=null";
+        
+        final String pluginInfo;
+        if (plugin != null) {
+            final String anchorName = anchorClass != null ? anchorClass.getName() : "null";
+            pluginInfo = ", plugin=" + plugin.getName() + ", anchor=" + anchorName;
+        } else {
+            pluginInfo = ", plugin=null, anchor=null";
+        }
+        
         return base + pluginInfo;
     }
 

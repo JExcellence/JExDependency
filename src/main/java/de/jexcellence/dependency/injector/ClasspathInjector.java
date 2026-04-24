@@ -22,7 +22,6 @@ import java.util.logging.Logger;
 public class ClasspathInjector {
 
     private static final String ADD_URL_METHOD_NAME = "addURL";
-    private static final Set<URL> INJECTED_URLS_GLOBAL = Collections.synchronizedSet(new HashSet<>());
     private static boolean moduleDeencapsulated = false;
 
     private final Logger logger;
@@ -37,12 +36,11 @@ public class ClasspathInjector {
     }
 
     /**
-     * Injects the provided JAR into the supplied class loader. Module boundaries are opened on the first invocation to.
+     * Injects the provided JAR into the supplied class loader. Module boundaries are opened on the first invocation to
      * ensure reflective access works on modern JVMs.
      *
      * @param classLoader class loader that should gain visibility of the JAR's classes
      * @param jarFile     resolved file to inject; must exist and be readable
-     *
      * @throws InjectionException if validation or reflection calls fail
      */
     public void inject(@NotNull final ClassLoader classLoader, @NotNull final File jarFile) {
@@ -129,14 +127,14 @@ public class ClasspathInjector {
         }
     }
 
-    private void ensureModuleDeencapsulation() {
+    private static void ensureModuleDeencapsulation() {
         if (!moduleDeencapsulated) {
             try {
-                Deencapsulation.deencapsulate(getClass());
+                Deencapsulation.deencapsulate(ClasspathInjector.class);
                 moduleDeencapsulated = true;
-                logger.fine("Module deencapsulation completed");
+                Logger.getLogger(ClasspathInjector.class.getName()).fine("Module deencapsulation completed");
             } catch (final Exception exception) {
-                logger.log(Level.WARNING, "Module deencapsulation failed", exception);
+                Logger.getLogger(ClasspathInjector.class.getName()).log(Level.WARNING, "Module deencapsulation failed", exception);
             }
         }
     }
@@ -162,6 +160,7 @@ public class ClasspathInjector {
     ) throws InjectionException {
         try {
             final Method addUrlMethod = URLClassLoader.class.getDeclaredMethod(ADD_URL_METHOD_NAME, URL.class);
+            // Note: setAccessible is required for Java 9+ module access
             addUrlMethod.setAccessible(true);
             addUrlMethod.invoke(classLoader, jarUrl);
         } catch (final Exception exception) {
@@ -175,6 +174,7 @@ public class ClasspathInjector {
     ) throws InjectionException {
         try {
             final Method addUrlMethod = classLoader.getClass().getDeclaredMethod(ADD_URL_METHOD_NAME, URL.class);
+            // Note: setAccessible is required for Java 9+ module access
             addUrlMethod.setAccessible(true);
             addUrlMethod.invoke(classLoader, jarUrl);
         } catch (final Exception exception) {

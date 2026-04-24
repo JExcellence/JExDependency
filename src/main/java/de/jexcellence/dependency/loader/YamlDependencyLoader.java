@@ -121,7 +121,7 @@ public class YamlDependencyLoader {
             return null;
             
         } catch (final Exception exception) {
-            logger.log(Level.WARNING, "Failed to load dependencies from plugin JAR: " + jarPath, exception);
+            logger.log(Level.WARNING, exception, () -> "Failed to load dependencies from plugin JAR: " + jarPath);
             return null;
         }
     }
@@ -139,7 +139,7 @@ public class YamlDependencyLoader {
             return parseDependencies(inputStream);
 
         } catch (final Exception exception) {
-            logger.log(Level.WARNING, "Failed to load dependencies from: " + path, exception);
+            logger.log(Level.WARNING, exception, () -> "Failed to load dependencies from: " + path);
             return null;
         }
     }
