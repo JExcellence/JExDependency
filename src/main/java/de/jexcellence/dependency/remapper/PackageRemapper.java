@@ -38,6 +38,8 @@ public class PackageRemapper {
 
     /** JAR-internal resource name for the manifest; uses forward slash per JAR specification. */
     private static final String MANIFEST_PATH = "META-INF/MANIFEST.MF";
+    /** Path separator used in JAR entries (always forward slash per JAR specification). */
+    private static final char JAR_PATH_SEPARATOR = '/';
 
     private final Map<String, String> packageMappings = new LinkedHashMap<>();
 
@@ -67,12 +69,11 @@ public class PackageRemapper {
     }
 
     /**
-     * Applies registered relocations to the input jar and writes the transformed jar to {@code outputJar}. When no.
+     * Applies registered relocations to the input jar and writes the transformed jar to {@code outputJar}. When no
      * relocations are registered the method performs a verbatim copy while still stripping invalid signature files.
      *
      * @param inputJar   path to the jar that should be remapped
      * @param outputJar  destination path that will be overwritten
-     *
      * @throws IOException when reading or writing jar contents fails
      */
     public void remap(@NotNull final Path inputJar, @NotNull final Path outputJar) throws IOException {
@@ -96,50 +97,7 @@ public class PackageRemapper {
 
             in.stream()
                     .sorted(Comparator.comparing(JarEntry::getName))
-                    .forEach(entry -> {
-                        try {
-                            if (entry.isDirectory()) {
-                                return;
-                            }
-
-                            final String name = entry.getName();
-
-                            // Strip signature files since remapping changes content
-                            if (isSignatureFile(name)) {
-                                return;
-                            }
-
-                            // Skip manifest/index: manifest already written by JarOutputStream, index is unnecessary
-                            if (isManifestFile(name) || isIndexList(name)) {
-                                return;
-                            }
-
-                            if (isServiceFile(name)) {
-                                final byte[] data = readAll(in, entry);
-                                final byte[] rewritten = rewriteServiceFile(data, packageMappings);
-                                writeBytes(out, written, name, rewritten);
-                                return;
-                            }
-
-                            if (name.startsWith("META-INF/") && !name.startsWith("META-INF/versions/")) {
-                                // Copy other META-INF entries as-is
-                                writeEntryIfAbsent(in, entry, out, written, name);
-                                return;
-                            }
-
-                            if (name.endsWith(".class")) {
-                                final byte[] original = readAll(in, entry);
-                                final byte[] transformed = transformClass(original, remapper);
-                                final String remappedName = relocateResourcePath(name, packageMappings);
-                                writeBytes(out, written, remappedName, transformed);
-                            } else {
-                                final String remappedName = relocateResourcePath(name, packageMappings);
-                                writeEntryIfAbsent(in, entry, out, written, remappedName);
-                            }
-                        } catch (IOException e) {
-                            throw new PackageRemappingException("Failed to remap JAR entry", e);
-                        }
-                    });
+                    .forEach(entry -> processJarEntry(entry, in, out, written, remapper));
 
             out.flush();
         } catch (PackageRemappingException rte) {
@@ -155,6 +113,62 @@ public class PackageRemapper {
                 LOGGER.log(Level.FINE, ex, () -> "Failed to delete incomplete output: " + outputJar);
             }
             throw ioe;
+        }
+    }
+
+    /**
+     * Processes a single JAR entry during remapping, applying appropriate transformations based on entry type.
+     * Extracted to reduce cognitive complexity of the main remap method.
+     *
+     * @param entry    the JAR entry to process
+     * @param in       input JAR file
+     * @param out      output JAR stream
+     * @param written  set of already-written entry names
+     * @param remapper the remapper to use for class transformations
+     */
+    private void processJarEntry(
+            @NotNull final JarEntry entry,
+            @NotNull final JarFile in,
+            @NotNull final JarOutputStream out,
+            @NotNull final Set<String> written,
+            @NotNull final PrefixRelocationRemapper remapper
+    ) {
+        try {
+            if (entry.isDirectory()) {
+                return;
+            }
+
+            final String name = entry.getName();
+
+            // Strip signature files since remapping changes content
+            if (isSignatureFile(name) || isManifestFile(name) || isIndexList(name)) {
+                return;
+            }
+
+            if (isServiceFile(name)) {
+                final byte[] data = readAll(in, entry);
+                final byte[] rewritten = rewriteServiceFile(data, packageMappings);
+                writeBytes(out, written, name, rewritten);
+                return;
+            }
+
+            if (name.startsWith("META-INF/") && !name.startsWith("META-INF/versions/")) {
+                // Copy other META-INF entries as-is
+                writeEntryIfAbsent(in, entry, out, written, name);
+                return;
+            }
+
+            if (name.endsWith(".class")) {
+                final byte[] original = readAll(in, entry);
+                final byte[] transformed = transformClass(original, remapper);
+                final String remappedName = relocateResourcePath(name, packageMappings);
+                writeBytes(out, written, remappedName, transformed);
+            } else {
+                final String remappedName = relocateResourcePath(name, packageMappings);
+                writeEntryIfAbsent(in, entry, out, written, remappedName);
+            }
+        } catch (IOException e) {
+            throw new PackageRemappingException("Failed to remap JAR entry", e);
         }
     }
 
@@ -294,10 +308,10 @@ public class PackageRemapper {
         int bestLen = -1;
 
         for (Map.Entry<String, String> e : mappings.entrySet()) {
-            final String fromPath = e.getKey().replace('.', '/') + "/";
+            final String fromPath = e.getKey().replace('.', JAR_PATH_SEPARATOR) + JAR_PATH_SEPARATOR;
             if (path.startsWith(fromPath) && fromPath.length() > bestLen) {
                 bestFrom = fromPath;
-                bestTo = e.getValue().replace('.', '/') + "/";
+                bestTo = e.getValue().replace('.', JAR_PATH_SEPARATOR) + JAR_PATH_SEPARATOR;
                 bestLen = fromPath.length();
             }
         }

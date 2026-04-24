@@ -1,5 +1,6 @@
 package de.jexcellence.dependency.downloader;
 
+import de.jexcellence.dependency.exception.DependencyDownloadException;
 import de.jexcellence.dependency.model.DependencyCoordinate;
 import de.jexcellence.dependency.model.DownloadResult;
 import de.jexcellence.dependency.repository.RepositoryType;
@@ -16,6 +17,7 @@ import java.net.URI;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.nio.file.AtomicMoveNotSupportedException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
@@ -347,20 +349,33 @@ public class DependencyDownloader {
                 return; // Not a valid SHA-1 hex string — skip
             }
 
-            final String actual = sha1Hex(jarFile);
+            final String actual;
+            try {
+                actual = sha1Hex(jarFile);
+            } catch (final DependencyDownloadException exception) {
+                logger.log(Level.FINEST, exception, () -> "SHA-1 check skipped for " + jarFile.getName());
+                return;
+            }
+            
             if (expected.equalsIgnoreCase(actual)) {
                 logger.log(Level.FINE, () -> "Checksum OK: " + jarFile.getName());
             } else {
                 logger.log(Level.WARNING, "Checksum mismatch for {0} \u2014 expected {1}, got {2}. The artifact may be corrupt; consider deleting it and restarting.",
                         new Object[]{jarFile.getName(), expected, actual});
             }
-        } catch (final Exception exception) {
+        } catch (final IOException exception) {
             logger.log(Level.FINEST, exception, () -> "SHA-1 check skipped for " + jarFile.getName());
         }
     }
 
-    private static String sha1Hex(@NotNull final File file) throws Exception {
-        final MessageDigest md = MessageDigest.getInstance("SHA-1");
+    private static String sha1Hex(@NotNull final File file) throws IOException, DependencyDownloadException {
+        final MessageDigest md;
+        try {
+            md = MessageDigest.getInstance("SHA-1");
+        } catch (final NoSuchAlgorithmException exception) {
+            throw new DependencyDownloadException("SHA-1 algorithm not available", exception);
+        }
+        
         final byte[] buf = new byte[BUFFER_SIZE];
         try (final FileInputStream fis = new FileInputStream(file)) {
             int n;

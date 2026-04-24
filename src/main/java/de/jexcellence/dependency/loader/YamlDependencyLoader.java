@@ -30,6 +30,7 @@ public class YamlDependencyLoader {
     private static final String LIST_PREFIX = "- ";
     private static final String QUOTE = "\"";
     private static final String COMMENT = "#";
+    private static final String LOADED_PREFIX = "Loaded ";
 
     private final Logger logger;
     private final ServerType serverType;
@@ -55,16 +56,16 @@ public class YamlDependencyLoader {
         if (serverSpecificPath != null) {
             final List<String> dependencies = loadFromPath(anchorClass, serverSpecificPath);
             if (dependencies != null) {
-                logger.fine("Loaded " + dependencies.size() + " dependencies from server-specific config");
+                logger.log(Level.FINE, () -> LOADED_PREFIX + dependencies.size() + " dependencies from server-specific config");
                 return dependencies;
             }
         }
 
         final List<String> dependencies = loadFromPath(anchorClass, DEPENDENCIES_YAML_PATH);
         if (dependencies != null) {
-            logger.fine("Loaded " + dependencies.size() + " dependencies from config");
+            logger.log(Level.FINE, () -> LOADED_PREFIX + dependencies.size() + " dependencies from config");
         } else {
-            logger.fine("No dependency configuration found");
+            logger.log(Level.FINE, "No dependency configuration found");
         }
 
         return dependencies;
@@ -93,7 +94,7 @@ public class YamlDependencyLoader {
                     try (final InputStream inputStream = jarFile.getInputStream(entry)) {
                         final List<String> dependencies = parseDependencies(inputStream);
                         if (!dependencies.isEmpty()) {
-                            logger.fine("Loaded " + dependencies.size() + " dependencies from plugin JAR");
+                            logger.log(Level.FINE, () -> LOADED_PREFIX + dependencies.size() + " dependencies from plugin JAR");
                             return dependencies;
                         }
                     }
@@ -110,13 +111,13 @@ public class YamlDependencyLoader {
                 try (final InputStream inputStream = jarFile.getInputStream(entry)) {
                     final List<String> dependencies = parseDependencies(inputStream);
                     if (!dependencies.isEmpty()) {
-                        logger.fine("Loaded " + dependencies.size() + " dependencies from plugin JAR");
+                        logger.log(Level.FINE, () -> LOADED_PREFIX + dependencies.size() + " dependencies from plugin JAR");
                         return dependencies;
                     }
                 }
             }
             
-            logger.fine("No dependency configuration found in plugin JAR");
+            logger.log(Level.FINE, "No dependency configuration found in plugin JAR");
             return null;
             
         } catch (final Exception exception) {
@@ -131,7 +132,7 @@ public class YamlDependencyLoader {
     ) {
         try (final InputStream inputStream = anchorClass.getResourceAsStream(path)) {
             if (inputStream == null) {
-                logger.finest("No configuration found at: " + path);
+                logger.log(Level.FINEST, () -> "No configuration found at: " + path);
                 return null;
             }
 
@@ -143,6 +144,13 @@ public class YamlDependencyLoader {
         }
     }
 
+    /**
+     * Parses dependencies from a YAML input stream, extracting list items under the dependencies section.
+     * Refactored to reduce loop complexity by extracting entry processing logic.
+     *
+     * @param inputStream the YAML input stream to parse
+     * @return list of parsed dependency coordinates
+     */
     private @NotNull List<String> parseDependencies(@NotNull final InputStream inputStream) {
         final List<String> dependencies = new ArrayList<>();
 
@@ -165,11 +173,7 @@ public class YamlDependencyLoader {
                         break;
                     }
 
-                    final String dependency = extractDependency(trimmed);
-                    if (dependency != null) {
-                        dependencies.add(dependency);
-                        logger.finest("Parsed dependency: " + dependency);
-                    }
+                    processDependencyLine(trimmed, dependencies);
                 }
             }
 
@@ -178,6 +182,23 @@ public class YamlDependencyLoader {
         }
 
         return dependencies;
+    }
+
+    /**
+     * Processes a single line from the dependencies section, extracting and adding valid dependencies.
+     *
+     * @param trimmed      the trimmed line to process
+     * @param dependencies the list to add extracted dependencies to
+     */
+    private void processDependencyLine(
+            @NotNull final String trimmed,
+            @NotNull final List<String> dependencies
+    ) {
+        final String dependency = extractDependency(trimmed);
+        if (dependency != null) {
+            dependencies.add(dependency);
+            logger.log(Level.FINEST, () -> "Parsed dependency: " + dependency);
+        }
     }
 
     private boolean isEndOfSection(@NotNull final String line) {
@@ -214,11 +235,11 @@ public class YamlDependencyLoader {
 
     private @NotNull ServerType detectServerType() {
         if (isPaperServer()) {
-            logger.fine("Detected Paper server");
+            logger.log(Level.FINE, "Detected Paper server");
             return ServerType.PAPER;
         }
 
-        logger.fine("Detected Spigot/CraftBukkit server");
+        logger.log(Level.FINE, "Detected Spigot/CraftBukkit server");
         return ServerType.SPIGOT;
     }
 
