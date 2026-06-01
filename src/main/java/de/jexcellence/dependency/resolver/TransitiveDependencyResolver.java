@@ -1,5 +1,6 @@
 package de.jexcellence.dependency.resolver;
 
+import de.jexcellence.dependency.cache.SharedCacheManager;
 import de.jexcellence.dependency.model.DependencyCoordinate;
 import de.jexcellence.dependency.repository.RepositoryType;
 import org.jetbrains.annotations.NotNull;
@@ -81,14 +82,15 @@ public class TransitiveDependencyResolver {
     private final Map<String, ParsedPom> pomCache = new LinkedHashMap<>();
 
     /**
-     * Creates a resolver that stores downloaded POM files under a {@code poms/} directory
-     * inside the supplied libraries directory.
+     * Creates a resolver that uses the shared server-level POM cache. The {@code librariesDirectory}
+     * parameter is retained for backward compatibility but is no longer used for POM storage — all
+     * POMs are stored in the shared cache under GAV-structured paths to avoid naming collisions.
      *
-     * @param librariesDirectory the plugin's libraries cache directory
+     * @param librariesDirectory the plugin's libraries cache directory (retained for compatibility)
      */
     public TransitiveDependencyResolver(@NotNull final File librariesDirectory) {
-        this.pomParser  = new PomParser();
-        this.pomCacheDir = new File(librariesDirectory, "poms");
+        this.pomParser = new PomParser();
+        this.pomCacheDir = SharedCacheManager.getInstance().getPomsCacheDirectory();
         this.pomCacheDir.mkdirs();
     }
 
@@ -307,9 +309,8 @@ public class TransitiveDependencyResolver {
             return pomCache.get(cacheKey);
         }
 
-        // 2. Disk cache
-        final File diskFile = new File(pomCacheDir,
-                coordinate.artifactId() + "-" + coordinate.version() + ".pom");
+        // 2. Disk cache (GAV-structured path to avoid collisions between same-named artifacts)
+        final File diskFile = SharedCacheManager.getInstance().resolvePomPath(coordinate).toFile();
         if (diskFile.isFile() && diskFile.length() > 0) {
             try (final InputStream is = new FileInputStream(diskFile)) {
                 final ParsedPom pom = pomParser.parse(is);
@@ -334,7 +335,7 @@ public class TransitiveDependencyResolver {
 
             // Persist to disk cache
             try {
-                Files.createDirectories(pomCacheDir.toPath());
+                Files.createDirectories(diskFile.toPath().getParent());
                 Files.write(diskFile.toPath(), bytes);
             } catch (final Exception exception) {
                 LOGGER.log(Level.FINE, "Failed to persist POM to disk cache", exception);
