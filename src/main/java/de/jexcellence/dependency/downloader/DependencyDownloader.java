@@ -1,5 +1,6 @@
 package de.jexcellence.dependency.downloader;
 
+import de.jexcellence.dependency.cache.SharedCacheManager;
 import de.jexcellence.dependency.exception.DependencyDownloadException;
 import de.jexcellence.dependency.model.DependencyCoordinate;
 import de.jexcellence.dependency.model.DownloadResult;
@@ -172,11 +173,15 @@ public class DependencyDownloader {
     }
 
     /**
-     * Downloads a dependency synchronously. The method validates any cached file before reaching out to remote.
-     * repositories, tries custom repositories first and returns a {@link DownloadResult} describing the outcome.
+     * Downloads a dependency synchronously. The method first checks the shared server-level cache
+     * for an existing artifact before reaching out to remote repositories. Successfully downloaded
+     * artifacts are stored in the shared cache so other plugins can reuse them.
+     *
+     * <p>The {@code targetDirectory} parameter is retained for backward compatibility and is used
+     * as a legacy fallback location. New downloads always go to the shared cache.</p>
      *
      * @param coordinate      artifact coordinates to resolve
-     * @param targetDirectory directory where the resulting file should be placed
+     * @param targetDirectory legacy per-plugin directory (checked as fallback for migration)
      *
      * @return outcome containing the file on success or an error description on failure
      */
@@ -184,11 +189,19 @@ public class DependencyDownloader {
             @NotNull final DependencyCoordinate coordinate,
             @NotNull final File targetDirectory
     ) {
-        final File targetFile = new File(targetDirectory, coordinate.toFileName());
+        final SharedCacheManager cache = SharedCacheManager.getInstance();
+        final java.nio.file.Path cachedPath = cache.resolveJarPath(coordinate);
 
-        if (isValidExistingFile(targetFile)) {
-            logger.log(Level.FINE, () -> "Dependency already exists: " + targetFile.getName());
-            return DownloadResult.success(coordinate, targetFile);
+        // Check shared cache first
+        if (isValidExistingFile(cachedPath.toFile())) {
+            logger.log(Level.FINE, () -> "Dependency in shared cache: " + coordinate.toGavString());
+            return DownloadResult.success(coordinate, cachedPath.toFile());
+        }
+
+        // Check legacy per-plugin cache and migrate if found
+        if (cache.migrateFromLegacy(coordinate, targetDirectory)) {
+            logger.log(Level.FINE, () -> "Migrated from legacy cache: " + coordinate.toGavString());
+            return DownloadResult.success(coordinate, cachedPath.toFile());
         }
 
         if (!networkAvailable.get()) {
@@ -199,13 +212,38 @@ public class DependencyDownloader {
 
         logger.log(Level.FINE, () -> "Downloading dependency: " + coordinate.toGavString());
 
+        // Use shared cache with file locking for the download
+        final java.nio.file.Path result = cache.getOrDownload(coordinate, () ->
+                downloadToFile(coordinate, cachedPath.toFile()));
+
+        if (result != null) {
+            return DownloadResult.success(coordinate, result.toFile());
+        }
+
+        final String errorMessage = "Failed to download from any repository";
+        logger.log(Level.WARNING, "{0}: {1}", new Object[]{errorMessage, coordinate.toGavString()});
+        return DownloadResult.failure(coordinate, errorMessage);
+    }
+
+    /**
+     * Performs the actual download of an artifact to the specified target file, trying all
+     * repositories in order.
+     *
+     * @param coordinate the artifact to download
+     * @param targetFile the file to write to (in the shared cache)
+     * @return {@code true} if the download succeeded
+     */
+    private boolean downloadToFile(
+            @NotNull final DependencyCoordinate coordinate,
+            @NotNull final File targetFile
+    ) {
         for (final String customRepo : customRepositories) {
             final String downloadUrl = customRepo + coordinate.toRepositoryPath();
             logger.log(Level.FINEST, () -> "Trying custom repository: " + downloadUrl);
 
             if (attemptDownloadWithRetry(downloadUrl, targetFile)) {
                 logger.fine("Downloaded from custom repository");
-                return DownloadResult.success(coordinate, targetFile);
+                return true;
             }
         }
 
@@ -215,13 +253,11 @@ public class DependencyDownloader {
 
             if (attemptDownloadWithRetry(downloadUrl, targetFile)) {
                 logger.log(Level.FINE, () -> "Downloaded from repository: " + repository.name());
-                return DownloadResult.success(coordinate, targetFile);
+                return true;
             }
         }
 
-        final String errorMessage = "Failed to download from any repository";
-        logger.log(Level.WARNING, "{0}: {1}", new Object[]{errorMessage, coordinate.toGavString()});
-        return DownloadResult.failure(coordinate, errorMessage);
+        return false;
     }
 
     /**

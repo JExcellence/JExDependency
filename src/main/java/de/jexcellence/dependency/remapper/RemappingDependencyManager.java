@@ -1,5 +1,6 @@
 package de.jexcellence.dependency.remapper;
 
+import de.jexcellence.dependency.cache.SharedCacheManager;
 import de.jexcellence.dependency.downloader.DependencyDownloader;
 import de.jexcellence.dependency.injector.ClasspathInjector;
 import de.jexcellence.dependency.loader.YamlDependencyLoader;
@@ -14,6 +15,7 @@ import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.commons.ClassRemapper;
 import org.objectweb.asm.commons.Remapper;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
@@ -301,9 +303,10 @@ public class RemappingDependencyManager {
      */
     private @NotNull List<Path> downloadDependencies(@NotNull final List<DependencyCoordinate> toProcess) {
         final List<Path> inputJars = new ArrayList<>();
+        final File sharedCacheDir = SharedCacheManager.getInstance().getJarsCacheDirectory();
 
         for (final DependencyCoordinate coordinate : toProcess) {
-            final DownloadResult result = downloader.download(coordinate, librariesDirectory.toFile());
+            final DownloadResult result = downloader.download(coordinate, sharedCacheDir);
             if (result.success() && result.file() != null) {
                 inputJars.add(result.file().toPath());
                 LOGGER.log(Level.FINE, () -> "Downloaded " + coordinate.toGavString() + " -> " + result.file().getName());

@@ -1,5 +1,6 @@
 package de.jexcellence.dependency.loader;
 
+import de.jexcellence.dependency.cache.SharedCacheManager;
 import de.jexcellence.dependency.downloader.DependencyDownloader;
 import de.jexcellence.dependency.exception.PluginLoaderException;
 import de.jexcellence.dependency.model.DependencyCoordinate;
@@ -190,10 +191,23 @@ public class PaperPluginLoader implements PluginLoader {
             ensureDirectoryExists(librariesDirectory);
             warnIfNestedLibraries(librariesDirectory);
 
-            initializeDependencies(librariesDirectory.toFile(), pluginSource);
+            final List<Path> downloadedJars = initializeDependencies(librariesDirectory.toFile(), pluginSource);
 
-            final Path effectiveDirectory = determineEffectiveDirectory(librariesDirectory, remappedDirectory);
-            loadJarFilesIntoClasspath(classpathBuilder, effectiveDirectory);
+            final boolean remappingActive = shouldEnableRemapping();
+
+            if (remappingActive && !downloadedJars.isEmpty()) {
+                // Remapping: input from shared cache, output to per-plugin remapped directory
+                final boolean remapOk = attemptRemapping(librariesDirectory, remappedDirectory);
+                if (remapOk) {
+                    loadJarFilesIntoClasspath(classpathBuilder, remappedDirectory);
+                } else {
+                    // Remapping failed — load the specific downloaded files directly
+                    loadSpecificJarsIntoClasspath(classpathBuilder, downloadedJars);
+                }
+            } else {
+                // No remapping — load the specific downloaded files from shared cache
+                loadSpecificJarsIntoClasspath(classpathBuilder, downloadedJars);
+            }
 
         } catch (final IOException exception) {
             throw new PluginLoaderException("Failed to initialize libraries directory: " + librariesDirectory, exception);
@@ -219,11 +233,18 @@ public class PaperPluginLoader implements PluginLoader {
         }
     }
 
-    private void initializeDependencies(@NotNull final File librariesDirectory, @NotNull final Path pluginSource) {
+    /**
+     * Loads and downloads dependencies, returning the list of resolved JAR paths.
+     *
+     * @param librariesDirectory legacy per-plugin directory (for migration fallback)
+     * @param pluginSource path to the plugin JAR
+     * @return list of successfully downloaded/cached JAR paths
+     */
+    private @NotNull List<Path> initializeDependencies(@NotNull final File librariesDirectory, @NotNull final Path pluginSource) {
         try {
             // First, try to load dependencies from the plugin JAR itself
             List<String> yamlDependencies = yamlDependencyLoader.loadDependenciesFromJar(pluginSource);
-            
+
             if (yamlDependencies == null || yamlDependencies.isEmpty()) {
                 // Fall back to loader's own resources (JEDependency JAR)
                 logger.log(Level.FINE, "No dependencies in plugin JAR, checking loader resources");
@@ -232,21 +253,30 @@ public class PaperPluginLoader implements PluginLoader {
 
             if (yamlDependencies == null || yamlDependencies.isEmpty()) {
                 logger.info("No dependencies configured");
-                return;
+                return List.of();
             }
 
-            processDependencies(yamlDependencies, librariesDirectory);
+            return processDependencies(yamlDependencies, librariesDirectory);
 
         } catch (final Exception exception) {
             logger.log(Level.WARNING, "Failed to load dependencies", exception);
+            return List.of();
         }
     }
 
-    private void processDependencies(
+    /**
+     * Downloads dependencies into the shared cache and returns the list of successfully resolved files.
+     *
+     * @param dependencies list of GAV coordinate strings
+     * @param librariesDirectory legacy per-plugin directory (used as migration fallback)
+     * @return list of paths to successfully downloaded/cached JAR files
+     */
+    private @NotNull List<Path> processDependencies(
             @NotNull final List<String> dependencies,
             @NotNull final File librariesDirectory
     ) {
         final long start = System.currentTimeMillis();
+        final List<Path> downloadedFiles = new ArrayList<>();
 
         // Parse coordinates, warn on invalid entries
         final List<DependencyCoordinate> coords = new ArrayList<>();
@@ -261,19 +291,27 @@ public class PaperPluginLoader implements PluginLoader {
 
         if (coords.isEmpty()) {
             logger.info("No valid dependencies to download");
-            return;
+            return downloadedFiles;
         }
 
         logger.log(Level.INFO, "Resolving {0} dependencies...", coords.size());
 
+        final File sharedCacheDir = SharedCacheManager.getInstance().getJarsCacheDirectory();
+
         // Fire all downloads in parallel using the downloader's virtual-thread executor
         final List<CompletableFuture<DownloadResult>> futures = coords.stream()
-                .map(coord -> dependencyDownloader.downloadAsync(coord, librariesDirectory))
+                .map(coord -> dependencyDownloader.downloadAsync(coord, sharedCacheDir))
                 .toList();
 
         final List<DownloadResult> results = futures.stream()
                 .map(CompletableFuture::join)
                 .toList();
+
+        for (final DownloadResult result : results) {
+            if (result.success() && result.file() != null) {
+                downloadedFiles.add(result.file().toPath());
+            }
+        }
 
         final long failed = results.stream().filter(r -> !r.success()).count();
         final long ms = System.currentTimeMillis() - start;
@@ -288,6 +326,8 @@ public class PaperPluginLoader implements PluginLoader {
             logger.log(Level.INFO, "Downloaded {0}/{1} in {2}ms",
                     new Object[]{coords.size(), coords.size(), ms});
         }
+
+        return downloadedFiles;
     }
 
     // --- Remapping control ----------------------------------------------------
@@ -379,9 +419,24 @@ public class PaperPluginLoader implements PluginLoader {
             return false;
         }
 
-        final List<Path> inputJars = collectJarFiles(inputDirectory);
+        // Collect input JARs from both per-plugin directory (legacy) and shared cache
+        final List<Path> inputJars = new ArrayList<>(collectJarFiles(inputDirectory));
+
+        // Also check the shared cache for any JARs that may have been downloaded there
+        final Path sharedJarsDir = SharedCacheManager.getInstance().getCacheRoot().resolve("jars");
+        if (Files.isDirectory(sharedJarsDir)) {
+            try (final Stream<Path> sharedFiles = Files.walk(sharedJarsDir)) {
+                sharedFiles
+                        .filter(Files::isRegularFile)
+                        .filter(p -> p.toString().toLowerCase(Locale.ROOT).endsWith(".jar"))
+                        .forEach(inputJars::add);
+            } catch (final IOException exception) {
+                logger.log(Level.FINE, exception, () -> "Failed to scan shared cache for remapping input");
+            }
+        }
+
         if (inputJars.isEmpty()) {
-            logger.log(Level.FINE, "No input JARs to remap in: {0}", inputDirectory);
+            logger.log(Level.FINE, "No input JARs to remap");
             return false;
         }
 
@@ -801,5 +856,35 @@ public class PaperPluginLoader implements PluginLoader {
         } catch (final Exception exception) {
             logger.log(Level.SEVERE, "Failed to load libraries", exception);
         }
+    }
+
+    /**
+     * Loads specific JAR files into the classpath rather than walking a directory. This is critical
+     * for the shared cache: walking the shared cache directory would inject every cached JAR
+     * (from all plugins) into this plugin's classloader. Instead, only the JARs that this plugin
+     * actually requested are added.
+     *
+     * @param classpathBuilder Paper builder used to register libraries
+     * @param jarPaths specific JAR file paths to add
+     */
+    private void loadSpecificJarsIntoClasspath(
+            @NotNull final PluginClasspathBuilder classpathBuilder,
+            @NotNull final List<Path> jarPaths
+    ) {
+        int loaded = 0;
+        for (final Path jarPath : jarPaths) {
+            try {
+                if (Files.isRegularFile(jarPath)) {
+                    classpathBuilder.addLibrary(new JarLibrary(jarPath));
+                    loaded++;
+                    logger.log(Level.FINE, () -> "Added: " + jarPath.getFileName());
+                } else {
+                    logger.log(Level.WARNING, "JAR not found: {0}", jarPath);
+                }
+            } catch (final Exception exception) {
+                logger.log(Level.WARNING, "Failed to load: " + jarPath.getFileName(), exception);
+            }
+        }
+        logger.log(Level.INFO, "Loaded {0} libraries from shared cache", loaded);
     }
 }
