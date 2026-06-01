@@ -1,10 +1,13 @@
 package de.jexcellence.dependency.manager;
 
 import de.jexcellence.dependency.downloader.DependencyDownloader;
+import de.jexcellence.dependency.exception.DependencyException;
 import de.jexcellence.dependency.injector.ClasspathInjector;
 import de.jexcellence.dependency.loader.YamlDependencyLoader;
 import de.jexcellence.dependency.model.DependencyCoordinate;
 import de.jexcellence.dependency.model.DownloadResult;
+import de.jexcellence.dependency.model.FailureCallback;
+import de.jexcellence.dependency.model.FailurePolicy;
 import de.jexcellence.dependency.model.ProcessingResult;
 import de.jexcellence.dependency.module.Deencapsulation;
 import de.jexcellence.dependency.resolver.TransitiveDependencyResolver;
@@ -56,6 +59,17 @@ public class DependencyManager {
     private boolean transitiveResolutionEnabled = false;
 
     /**
+     * Controls how the manager reacts when dependencies fail to download or inject.
+     * Defaults to {@link FailurePolicy#DEGRADED} for backward compatibility.
+     */
+    private FailurePolicy failurePolicy = FailurePolicy.DEGRADED;
+
+    /**
+     * Optional callback invoked when {@link FailurePolicy#CALLBACK} is active and failures occur.
+     */
+    private FailureCallback failureCallback;
+
+    /**
      * Creates a dependency manager bound to a plugin and anchor class. The anchor class determines both where YAML.
      * descriptors are located and which class loader will receive injected jars.
      *
@@ -93,6 +107,36 @@ public class DependencyManager {
     }
 
     /**
+     * Sets the failure policy that controls how the manager reacts when dependencies fail.
+     *
+     * <ul>
+     *     <li>{@link FailurePolicy#STRICT} — throw a {@link DependencyException} on any failure</li>
+     *     <li>{@link FailurePolicy#DEGRADED} — log failures and continue (default)</li>
+     *     <li>{@link FailurePolicy#CALLBACK} — invoke the registered {@link FailureCallback}</li>
+     * </ul>
+     *
+     * @param policy failure policy to apply
+     * @return this manager for fluent chaining
+     */
+    public @NotNull DependencyManager setFailurePolicy(@NotNull final FailurePolicy policy) {
+        this.failurePolicy = policy;
+        return this;
+    }
+
+    /**
+     * Registers a callback to be invoked when {@link FailurePolicy#CALLBACK} is active and
+     * one or more dependencies failed. If {@code CALLBACK} is set without registering a callback,
+     * the manager falls back to {@link FailurePolicy#DEGRADED} behaviour.
+     *
+     * @param callback the failure callback
+     * @return this manager for fluent chaining
+     */
+    public @NotNull DependencyManager setFailureCallback(@NotNull final FailureCallback callback) {
+        this.failureCallback = callback;
+        return this;
+    }
+
+    /**
      * Performs synchronous dependency resolution on the calling thread. The method blocks while downloads complete,.
      * performs module de-encapsulation to allow reflective classpath injection, and injects each successfully
      * downloaded artifact into the plugin class loader.
@@ -115,6 +159,8 @@ public class DependencyManager {
             return;
         }
 
+        downloader.probeConnectivity();
+
         if (transitiveResolutionEnabled) {
             coordinates = expandWithTransitives(coordinates, librariesDirectory);
         }
@@ -125,6 +171,7 @@ public class DependencyManager {
 
         final long duration = System.currentTimeMillis() - startTime;
         logProcessingSummary(result, duration);
+        applyFailurePolicy(result);
     }
 
     /**
@@ -154,6 +201,8 @@ public class DependencyManager {
                 return new ProcessingResult(List.of(), List.of(), 0L);
             }
 
+            downloader.probeConnectivity();
+
             if (transitiveResolutionEnabled) {
                 coordinates = expandWithTransitives(coordinates, librariesDirectory);
             }
@@ -164,6 +213,7 @@ public class DependencyManager {
 
             final long duration = System.currentTimeMillis() - startTime;
             logProcessingSummary(result, duration);
+            applyFailurePolicy(result);
             return result;
         });
     }
@@ -306,6 +356,38 @@ public class DependencyManager {
             logger.log(Level.INFO, 
                     "Loaded {0} dependencies in {1}ms",
                     new Object[]{result.getTotalCount(), totalDuration});
+        }
+    }
+
+    /**
+     * Applies the configured {@link FailurePolicy} after dependency processing completes. Only invoked
+     * when the result contains at least one failure.
+     *
+     * @param result the processing result to evaluate
+     */
+    private void applyFailurePolicy(@NotNull final ProcessingResult result) {
+        if (!result.hasFailures()) {
+            return;
+        }
+
+        switch (failurePolicy) {
+            case STRICT -> {
+                final String failedList = result.getFailed().stream()
+                        .map(dr -> dr.coordinate().toGavString())
+                        .collect(Collectors.joining(", "));
+                throw new DependencyException(
+                        "Dependency resolution failed (policy: STRICT). Failed coordinates: " + failedList);
+            }
+            case CALLBACK -> {
+                if (failureCallback != null) {
+                    failureCallback.onFailure(result);
+                } else {
+                    logger.warning("FailurePolicy.CALLBACK is set but no callback is registered — falling back to DEGRADED behaviour");
+                }
+            }
+            default -> {
+                // DEGRADED — failures already logged in logProcessingSummary
+            }
         }
     }
 
