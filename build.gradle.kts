@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "de.jexcellence.dependency"
-version = "2.0.0"
+version = "2.1.0"
 description = "Modern dependency management and plugin architecture for Minecraft servers"
 
 // Configure runtime dependencies.yml generation
