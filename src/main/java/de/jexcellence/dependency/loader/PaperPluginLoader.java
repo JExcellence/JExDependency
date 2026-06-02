@@ -115,6 +115,7 @@ public class PaperPluginLoader implements PluginLoader {
      * @param loggerName the name to use for the logger (typically includes plugin name)
      * @return configured logger instance
      */
+    @SuppressWarnings("java:S106")
     private Logger createLogger(final String loggerName) {
         final Logger log = Logger.getLogger(loggerName);
         log.setUseParentHandlers(false);
@@ -415,7 +416,7 @@ public class PaperPluginLoader implements PluginLoader {
         try {
             Files.createDirectories(outputDirectory);
         } catch (final IOException exception) {
-            logger.log(Level.WARNING, "Failed to create remapped directory: " + outputDirectory, exception);
+            logger.log(Level.WARNING, exception, () -> "Failed to create remapped directory: " + outputDirectory);
             return false;
         }
 
@@ -464,7 +465,7 @@ public class PaperPluginLoader implements PluginLoader {
                     .filter(path -> path.getFileName().toString().toLowerCase(Locale.ROOT).endsWith(".jar"))
                     .collect(Collectors.toCollection(ArrayList::new));
         } catch (final IOException exception) {
-            logger.log(Level.FINE, "Failed to list JAR files in " + directory, exception);
+            logger.log(Level.FINE, exception, () -> "Failed to list JAR files in " + directory);
             return List.of();
         }
     }
@@ -847,7 +848,7 @@ public class PaperPluginLoader implements PluginLoader {
                             jarCount.incrementAndGet();
                             logger.log(Level.FINE, () -> "Added: " + jarPath.getFileName());
                         } catch (final Exception exception) {
-                            logger.log(Level.WARNING, "Failed to load: " + jarPath.getFileName(), exception);
+                            logger.log(Level.WARNING, exception, () -> "Failed to load: " + jarPath.getFileName());
                         }
                     });
 

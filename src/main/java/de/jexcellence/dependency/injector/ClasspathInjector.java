@@ -82,7 +82,7 @@ public class ClasspathInjector {
             inject(classLoader, jarFile);
             return true;
         } catch (final InjectionException exception) {
-            logger.log(Level.WARNING, "Failed to inject: " + jarFile.getName(), exception);
+            logger.log(Level.WARNING, exception, () -> "Failed to inject: " + jarFile.getName());
             return false;
         }
     }
@@ -146,7 +146,7 @@ public class ClasspathInjector {
     private void performInjection(
             @NotNull final ClassLoader classLoader,
             @NotNull final URL jarUrl
-    ) throws Exception {
+    ) throws InjectionException {
         if (classLoader instanceof URLClassLoader urlClassLoader) {
             injectIntoUrlClassLoader(urlClassLoader, jarUrl);
         } else {
@@ -154,13 +154,14 @@ public class ClasspathInjector {
         }
     }
 
+    @SuppressWarnings("java:S3011")
     private void injectIntoUrlClassLoader(
             @NotNull final URLClassLoader classLoader,
             @NotNull final URL jarUrl
     ) throws InjectionException {
         try {
             final Method addUrlMethod = URLClassLoader.class.getDeclaredMethod(ADD_URL_METHOD_NAME, URL.class);
-            // Note: setAccessible is required for Java 9+ module access
+            // setAccessible is required for Java 9+ module access; suppressed intentionally
             addUrlMethod.setAccessible(true);
             addUrlMethod.invoke(classLoader, jarUrl);
         } catch (final Exception exception) {
@@ -168,13 +169,14 @@ public class ClasspathInjector {
         }
     }
 
+    @SuppressWarnings("java:S3011")
     private void injectUsingReflection(
             @NotNull final ClassLoader classLoader,
             @NotNull final URL jarUrl
     ) throws InjectionException {
         try {
             final Method addUrlMethod = classLoader.getClass().getDeclaredMethod(ADD_URL_METHOD_NAME, URL.class);
-            // Note: setAccessible is required for Java 9+ module access
+            // setAccessible is required for Java 9+ module access; suppressed intentionally
             addUrlMethod.setAccessible(true);
             addUrlMethod.invoke(classLoader, jarUrl);
         } catch (final Exception exception) {
