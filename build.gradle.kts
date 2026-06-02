@@ -15,14 +15,27 @@ dependenciesYml {
 ext["vendor"] = "JExcellence"
 
 dependencies {
+    // ── Compile-only: Server API ──
     compileOnly(libs.paper.api)
     compileOnly(libs.jetbrains.annotations)
 
+    // ── Implementation ──
     implementation(libs.asm)
     implementation(libs.asm.commons)
+
+    // ── Test ──
+    testImplementation(platform(libs.junit.bom))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    testRuntimeOnly(libs.junit.platform.launcher)
 }
 
 tasks {
+    test {
+        useJUnitPlatform()
+        // Required for ClasspathInjector tests that exercise URLClassLoader.addURL via reflection
+        jvmArgs("--add-opens", "java.base/java.net=ALL-UNNAMED")
+    }
+
     register<Jar>("fatJar") {
         group = "build"
         description = "Creates a fat JAR with all dependencies"

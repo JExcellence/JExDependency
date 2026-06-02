@@ -127,7 +127,8 @@ public class DependencyDownloader {
             networkAvailable.set(reachable);
 
             if (!reachable) {
-                logger.warning("Network probe failed (HTTP " + responseCode + ") — cached dependencies will be used where available");
+                final int capturedCode = responseCode;
+                logger.log(Level.WARNING, () -> "Network probe failed (HTTP " + capturedCode + ") — cached dependencies will be used where available");
             } else {
                 logger.fine("Network probe successful");
             }
