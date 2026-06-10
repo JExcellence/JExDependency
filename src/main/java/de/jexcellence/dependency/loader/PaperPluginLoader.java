@@ -607,7 +607,18 @@ public class PaperPluginLoader implements PluginLoader {
                 // jboss-logging - used by Hibernate internally; Hibernate is excluded so its bytecode
                 // keeps original org.jboss.logging references; the library must stay at original names
                 // to match. Also avoids stale-cache version skew (3.4.x → 3.5.x method signature change).
-                "org.jboss"
+                "org.jboss",
+                // Discord (JDA) stack - the consuming plugin references these at their ORIGINAL
+                // package names (the plugin jar does not relocate them), so the downloaded libs
+                // must keep original names too. Relocating produces de.jexcellence.remapped.net.dv8tion…
+                // which the plugin can't resolve (NoClassDefFoundError: net/dv8tion/jda/api/entities/UserSnowflake).
+                "net.dv8tion",          // JDA
+                "com.neovisionaries",   // nv-websocket-client
+                "okhttp3",              // okhttp
+                "okio",                 // okio
+                "kotlin",               // kotlin-stdlib (okhttp/okio dependency)
+                "org.apache",           // commons-collections4 (org.apache.commons.collections4)
+                "gnu.trove"             // trove4j:core
         ));
 
         final String excludesProperty = System.getProperty(RELOCATIONS_EXCLUDES_PROPERTY);
