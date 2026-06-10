@@ -238,7 +238,7 @@ public class DependencyManager {
 
         final int added = merged.size() - roots.size();
         if (added > 0) {
-            logger.info("Transitive resolution discovered " + added + " additional dependencies");
+            logger.log(Level.INFO, "Transitive resolution discovered {0} additional dependencies", added);
         } else {
             logger.fine("Transitive resolution found no additional dependencies");
         }

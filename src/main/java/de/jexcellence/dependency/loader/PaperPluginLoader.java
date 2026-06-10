@@ -740,29 +740,18 @@ public class PaperPluginLoader implements PluginLoader {
         for (final Path inputJar : inputJars) {
             final Path outputJar = outputDirectory.resolve(inputJar.getFileName());
 
-            if (isRemappedJarUpToDate(outputJar, inputJar)) {
-                logger.log(Level.FINE, "Cached: {0}", outputJar.getFileName());
+            final int outcome = isRemappedJarUpToDate(outputJar, inputJar)
+                    ? markCached(outputJar)
+                    : remapAndValidate(remappingManager, inputJar, outputJar);
+
+            if (outcome != REMAP_NONE) {
                 processedCount++;
+            }
+            if (outcome == REMAP_OK) {
                 remappedCount++;
-            } else {
-                deleteExistingFile(outputJar);
-
-                if (performRemapping(remappingManager, inputJar, outputJar)) {
-                    processedCount++;
-                    if (isValidJarFile(outputJar)) {
-                        remappedCount++;
-                        logger.log(Level.FINE, "Remapped: {0}", inputJar.getFileName());
-                    } else {
-                        logger.log(Level.WARNING, "Failed to remap: {0}", inputJar.getFileName());
-                    }
-                }
             }
 
-            if (processedCount % progressInterval == 0 || processedCount == total) {
-                final int percent = (processedCount * 100) / total;
-                logger.log(Level.INFO, "Remapping... {0}/{1} ({2}%)",
-                        new Object[]{processedCount, total, percent});
-            }
+            logRemapProgress(processedCount, total, progressInterval);
         }
 
         if (processedCount == 0) {
@@ -772,6 +761,37 @@ public class PaperPluginLoader implements PluginLoader {
 
         logger.log(Level.INFO, "Remapped {0}/{1} libraries", new Object[]{remappedCount, total});
         return remappedCount > 0;
+    }
+
+    /** Per-jar remap outcome codes used by {@link #processRemapping}. */
+    private static final int REMAP_NONE = 0;       // not processed (remap call failed)
+    private static final int REMAP_PROCESSED = 1;  // processed but output invalid
+    private static final int REMAP_OK = 2;         // processed and valid (or already cached)
+
+    private int markCached(@NotNull final Path outputJar) {
+        logger.log(Level.FINE, "Cached: {0}", outputJar.getFileName());
+        return REMAP_OK;
+    }
+
+    private int remapAndValidate(@NotNull final Object remappingManager,
+                                 @NotNull final Path inputJar, @NotNull final Path outputJar) {
+        deleteExistingFile(outputJar);
+        if (!performRemapping(remappingManager, inputJar, outputJar)) {
+            return REMAP_NONE;
+        }
+        if (isValidJarFile(outputJar)) {
+            logger.log(Level.FINE, "Remapped: {0}", inputJar.getFileName());
+            return REMAP_OK;
+        }
+        logger.log(Level.WARNING, "Failed to remap: {0}", inputJar.getFileName());
+        return REMAP_PROCESSED;
+    }
+
+    private void logRemapProgress(final int processed, final int total, final int interval) {
+        if (processed % interval == 0 || processed == total) {
+            final int percent = (processed * 100) / total;
+            logger.log(Level.INFO, "Remapping... {0}/{1} ({2}%)", new Object[]{processed, total, percent});
+        }
     }
 
     private boolean isRemappedJarUpToDate(@NotNull final Path outputJar, @NotNull final Path inputJar) {
@@ -883,7 +903,7 @@ public class PaperPluginLoader implements PluginLoader {
                     logger.log(Level.WARNING, "JAR not found: {0}", jarPath);
                 }
             } catch (final Exception exception) {
-                logger.log(Level.WARNING, "Failed to load: " + jarPath.getFileName(), exception);
+                logger.log(Level.WARNING, exception, () -> "Failed to load: " + jarPath.getFileName());
             }
         }
         logger.log(Level.INFO, "Loaded {0} libraries from shared cache", loaded);

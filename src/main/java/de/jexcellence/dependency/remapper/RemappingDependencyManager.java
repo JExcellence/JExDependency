@@ -540,10 +540,7 @@ public class RemappingDependencyManager {
         // Jackson 3.x: com.fasterxml only contains annotations now, but Hibernate
         // references com.fasterxml.jackson.core which doesn't exist in Jackson 3.x.
         // Excluding com.fasterxml prevents broken relocations.
-        if (pkg.equals("com.fasterxml") || pkg.startsWith("com.fasterxml.")) {
-            return true;
-        }
-        return false;
+        return pkg.equals("com.fasterxml") || pkg.startsWith("com.fasterxml.");
     }
 
     private static String relocateResourcePath(final String name, final Map<String, String> relocations) {

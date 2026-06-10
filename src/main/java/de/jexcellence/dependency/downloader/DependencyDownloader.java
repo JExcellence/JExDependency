@@ -309,14 +309,11 @@ public class DependencyDownloader {
      */
     private int attemptDownloadClassified(@NotNull final String downloadUrl, @NotNull final File targetFile) {
         try {
-            final URI uri = URI.create(downloadUrl);
-            URL url = uri.toURL();
-            int redirectCount = 0;
+            URL url = URI.create(downloadUrl).toURL();
 
-            while (redirectCount <= MAX_REDIRECTS) {
+            for (int redirectCount = 0; redirectCount <= MAX_REDIRECTS; redirectCount++) {
                 final HttpURLConnection connection = createConnection(url);
                 connection.setInstanceFollowRedirects(false);
-
                 final int responseCode = connection.getResponseCode();
 
                 if (responseCode >= 200 && responseCode < 300) {
@@ -326,43 +323,57 @@ public class DependencyDownloader {
                 }
 
                 if (responseCode >= 300 && responseCode < 400) {
-                    final String location = connection.getHeaderField("Location");
-                    if (location == null || location.isEmpty()) {
-                        logger.log(Level.WARNING, "Redirect without Location header from: {0}", url);
+                    final URL next = resolveRedirect(connection, url, responseCode);
+                    if (next == null) {
                         return DOWNLOAD_NOT_RETRYABLE;
                     }
-
-                    url = URI.create(location).toURL();
-                    final URL redirectUrl = url;
-                    logger.log(Level.FINEST, () -> "Redirect " + responseCode + " to " + redirectUrl);
-                    redirectCount++;
+                    url = next;
                     continue;
                 }
 
-                if (responseCode == 404) {
-                    return DOWNLOAD_NOT_RETRYABLE;
-                }
-
-                final URL currentUrl = url;
-                logger.log(Level.WARNING, "HTTP {0} when downloading {1}", new Object[]{responseCode, currentUrl});
-                return RETRYABLE_STATUS_CODES.contains(responseCode)
-                        ? DOWNLOAD_RETRYABLE
-                        : DOWNLOAD_NOT_RETRYABLE;
+                return classifyErrorStatus(responseCode, url, downloadUrl);
             }
 
             logger.log(Level.WARNING, "Too many redirects ({0}) for {1}", new Object[]{MAX_REDIRECTS, downloadUrl});
             return DOWNLOAD_NOT_RETRYABLE;
 
-        } catch (final java.net.SocketTimeoutException exception) {
-            logger.log(Level.FINE, exception, () -> "Timeout downloading from URL: " + downloadUrl);
-            return DOWNLOAD_RETRYABLE;
-        } catch (final java.net.ConnectException exception) {
-            logger.log(Level.FINE, exception, () -> "Connection refused from URL: " + downloadUrl);
-            return DOWNLOAD_RETRYABLE;
         } catch (final Exception exception) {
-            logger.log(Level.FINE, exception, () -> "Download failed from URL: " + downloadUrl);
+            return classifyException(exception, downloadUrl);
+        }
+    }
+
+    private @Nullable URL resolveRedirect(@NotNull final HttpURLConnection connection,
+                                          @NotNull final URL current, final int responseCode)
+            throws java.net.MalformedURLException {
+        final String location = connection.getHeaderField("Location");
+        if (location == null || location.isEmpty()) {
+            logger.log(Level.WARNING, "Redirect without Location header from: {0}", current);
+            return null;
+        }
+        final URL next = URI.create(location).toURL();
+        logger.log(Level.FINEST, () -> "Redirect " + responseCode + " to " + next);
+        return next;
+    }
+
+    private int classifyErrorStatus(final int responseCode, @NotNull final URL url,
+                                    @NotNull final String downloadUrl) {
+        if (responseCode == 404) {
             return DOWNLOAD_NOT_RETRYABLE;
         }
+        logger.log(Level.WARNING, "HTTP {0} when downloading {1}", new Object[]{responseCode, url});
+        return RETRYABLE_STATUS_CODES.contains(responseCode)
+                ? DOWNLOAD_RETRYABLE
+                : DOWNLOAD_NOT_RETRYABLE;
+    }
+
+    private int classifyException(@NotNull final Exception exception, @NotNull final String downloadUrl) {
+        if (exception instanceof java.net.SocketTimeoutException
+                || exception instanceof java.net.ConnectException) {
+            logger.log(Level.FINE, exception, () -> "Retryable network error from URL: " + downloadUrl);
+            return DOWNLOAD_RETRYABLE;
+        }
+        logger.log(Level.FINE, exception, () -> "Download failed from URL: " + downloadUrl);
+        return DOWNLOAD_NOT_RETRYABLE;
     }
 
     private boolean handleSuccessfulResponse(
