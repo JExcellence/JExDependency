@@ -311,16 +311,9 @@ public class TransitiveDependencyResolver {
 
         // 2. Disk cache (GAV-structured path to avoid collisions between same-named artifacts)
         final File diskFile = SharedCacheManager.getInstance().resolvePomPath(coordinate).toFile();
-        if (diskFile.isFile() && diskFile.length() > 0) {
-            try (final InputStream is = new FileInputStream(diskFile)) {
-                final ParsedPom pom = pomParser.parse(is);
-                if (pom != null) {
-                    pomCache.put(cacheKey, pom);
-                    return pom;
-                }
-            } catch (final Exception exception) {
-                LOGGER.log(Level.FINE, exception, () -> "Failed to read cached POM: " + diskFile);
-            }
+        final ParsedPom cached = readPomFromDisk(diskFile, cacheKey);
+        if (cached != null) {
+            return cached;
         }
 
         // 3. Remote download
@@ -329,32 +322,67 @@ public class TransitiveDependencyResolver {
                 + coordinate.version() + '/'
                 + coordinate.artifactId() + '-' + coordinate.version() + ".pom";
 
+        return downloadPomFromRepositories(coordinate, pomPath, diskFile, cacheKey);
+    }
+
+    private @Nullable ParsedPom readPomFromDisk(@NotNull final File diskFile, @NotNull final String cacheKey) {
+        if (!diskFile.isFile() || diskFile.length() <= 0) {
+            return null;
+        }
+        try (final InputStream is = new FileInputStream(diskFile)) {
+            final ParsedPom pom = pomParser.parse(is);
+            if (pom != null) {
+                pomCache.put(cacheKey, pom);
+                return pom;
+            }
+        } catch (final Exception exception) {
+            LOGGER.log(Level.FINE, exception, () -> "Failed to read cached POM: " + diskFile);
+        }
+        return null;
+    }
+
+    private @Nullable ParsedPom downloadPomFromRepositories(@NotNull final DependencyCoordinate coordinate,
+                                                            @NotNull final String pomPath,
+                                                            @NotNull final File diskFile,
+                                                            @NotNull final String cacheKey) {
         for (final RepositoryType repo : RepositoryType.values()) {
             final byte[] bytes = fetchBytes(repo.getBaseUrl() + pomPath);
-            if (bytes == null || bytes.length == 0) continue;
-
-            // Persist to disk cache
-            try {
-                Files.createDirectories(diskFile.toPath().getParent());
-                Files.write(diskFile.toPath(), bytes);
-            } catch (final Exception exception) {
-                LOGGER.log(Level.FINE, "Failed to persist POM to disk cache", exception);
+            if (bytes == null || bytes.length == 0) {
+                continue;
             }
-
-            // Parse
-            try (final InputStream is = new ByteArrayInputStream(bytes)) {
-                final ParsedPom pom = pomParser.parse(is);
-                if (pom != null) {
-                    pomCache.put(cacheKey, pom);
-                    LOGGER.log(Level.FINE, () -> "Resolved POM: " + coordinate.toGavString() + " from " + repo.name());
-                    return pom;
-                }
-            } catch (final Exception exception) {
-                LOGGER.log(Level.FINE, exception, () -> "Failed to parse POM from " + repo.name());
+            persistPomToDisk(diskFile, bytes);
+            final ParsedPom pom = parsePomBytes(bytes, coordinate, repo, cacheKey);
+            if (pom != null) {
+                return pom;
             }
         }
-
         LOGGER.log(Level.WARNING, "Could not download POM: {0}", coordinate.toGavString());
+        return null;
+    }
+
+    private void persistPomToDisk(@NotNull final File diskFile, @NotNull final byte[] bytes) {
+        try {
+            Files.createDirectories(diskFile.toPath().getParent());
+            Files.write(diskFile.toPath(), bytes);
+        } catch (final Exception exception) {
+            LOGGER.log(Level.FINE, "Failed to persist POM to disk cache", exception);
+        }
+    }
+
+    private @Nullable ParsedPom parsePomBytes(@NotNull final byte[] bytes,
+                                              @NotNull final DependencyCoordinate coordinate,
+                                              @NotNull final RepositoryType repo,
+                                              @NotNull final String cacheKey) {
+        try (final InputStream is = new ByteArrayInputStream(bytes)) {
+            final ParsedPom pom = pomParser.parse(is);
+            if (pom != null) {
+                pomCache.put(cacheKey, pom);
+                LOGGER.log(Level.FINE, () -> "Resolved POM: " + coordinate.toGavString() + " from " + repo.name());
+                return pom;
+            }
+        } catch (final Exception exception) {
+            LOGGER.log(Level.FINE, exception, () -> "Failed to parse POM from " + repo.name());
+        }
         return null;
     }
 
