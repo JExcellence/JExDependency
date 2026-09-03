@@ -360,12 +360,10 @@ public class PackageRemapper {
         int bestLen = -1;
         for (Map.Entry<String, String> e : mappings.entrySet()) {
             final String from = e.getKey();
-            if (fqcn.equals(from) || fqcn.startsWith(from + ".")) {
-                if (from.length() > bestLen) {
-                    bestFrom = from;
-                    bestTo = e.getValue();
-                    bestLen = from.length();
-                }
+            if ((fqcn.equals(from) || fqcn.startsWith(from + ".")) && from.length() > bestLen) {
+                bestFrom = from;
+                bestTo = e.getValue();
+                bestLen = from.length();
             }
         }
         if (bestFrom != null) {

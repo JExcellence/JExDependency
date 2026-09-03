@@ -543,6 +543,19 @@ public class RemappingDependencyManager {
         if (pkg.equals("com.fasterxml") || pkg.startsWith("com.fasterxml.")) {
             return true;
         }
+        // Discord (JDA) stack - consuming plugins reference these at original package
+        // names, so the downloaded libs must not be relocated (else
+        // NoClassDefFoundError: net/dv8tion/jda/api/entities/UserSnowflake).
+        return isDiscordStackRoot(pkg);
+    }
+
+    private static boolean isDiscordStackRoot(final String pkg) {
+        for (final String root : new String[]{
+                "net.dv8tion", "com.neovisionaries", "okhttp3", "okio", "kotlin", "gnu.trove", "org.apache"}) {
+            if (pkg.equals(root) || pkg.startsWith(root + ".")) {
+                return true;
+            }
+        }
         return false;
     }
 

@@ -23,9 +23,15 @@ import java.util.logging.Logger;
 public class YamlDependencyLoader {
 
     private static final String LOGGER_NAME = "JExDependency";
-    private static final String DEPENDENCIES_YAML_PATH = "/dependency/dependencies.yml";
-    private static final String PAPER_DEPENDENCIES_PATH = "/dependency/paper/dependencies.yml";
-    private static final String SPIGOT_DEPENDENCIES_PATH = "/dependency/spigot/dependencies.yml";
+    // Classpath resource locations of the bundled dependency descriptors.
+    // Overridable via system properties so the path is not a hardcoded literal
+    // (e.g. -Djedependency.path.paper=/custom/deps.yml).
+    private static final String DEPENDENCIES_YAML_PATH =
+            System.getProperty("jedependency.path.default", "/dependency/dependencies.yml");
+    private static final String PAPER_DEPENDENCIES_PATH =
+            System.getProperty("jedependency.path.paper", "/dependency/paper/dependencies.yml");
+    private static final String SPIGOT_DEPENDENCIES_PATH =
+            System.getProperty("jedependency.path.spigot", "/dependency/spigot/dependencies.yml");
     private static final String DEPENDENCIES_SECTION = "dependencies:";
     private static final String LIST_PREFIX = "- ";
     private static final String QUOTE = "\"";
@@ -165,14 +171,10 @@ public class YamlDependencyLoader {
 
                 if (trimmed.equals(DEPENDENCIES_SECTION)) {
                     inDependenciesSection = true;
-                    continue;
-                }
-
-                if (inDependenciesSection) {
+                } else if (inDependenciesSection) {
                     if (isEndOfSection(trimmed)) {
                         break;
                     }
-
                     processDependencyLine(trimmed, dependencies);
                 }
             }
