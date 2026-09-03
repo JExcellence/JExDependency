@@ -12,7 +12,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.function.Supplier;
+import java.util.function.BooleanSupplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -72,8 +72,14 @@ public final class SharedCacheManager {
     /**
      * Returns the singleton cache manager instance.
      *
+     * <p>The singleton is intentional: there must be exactly one shared on-disk
+     * cache (and one set of file locks) per JVM so that multiple JExcellence
+     * plugins coordinate downloads instead of racing each other. The
+     * initialization-on-demand Holder idiom gives lazy, thread-safe creation.
+     *
      * @return shared cache manager
      */
+    @SuppressWarnings("java:S6548") // Deliberate, required JVM-wide shared cache — see Javadoc.
     public static @NotNull SharedCacheManager getInstance() {
         return Holder.INSTANCE;
     }
@@ -172,7 +178,7 @@ public final class SharedCacheManager {
      */
     public Path getOrDownload(
             @NotNull final DependencyCoordinate coordinate,
-            @NotNull final Supplier<Boolean> downloadAction
+            @NotNull final BooleanSupplier downloadAction
     ) {
         final Path jarPath = resolveJarPath(coordinate);
 
@@ -208,7 +214,7 @@ public final class SharedCacheManager {
             }
 
             // Perform the actual download
-            final boolean success = Boolean.TRUE.equals(downloadAction.get());
+            final boolean success = downloadAction.getAsBoolean();
 
             if (success && isValidFile(jarPath)) {
                 return jarPath;
@@ -219,7 +225,7 @@ public final class SharedCacheManager {
         } catch (final IOException exception) {
             LOGGER.log(Level.WARNING, exception, () -> "Failed to acquire cache lock for: " + coordinate.toGavString());
             // Fall through to direct download without locking
-            final boolean success = Boolean.TRUE.equals(downloadAction.get());
+            final boolean success = downloadAction.getAsBoolean();
             return (success && isValidFile(jarPath)) ? jarPath : null;
         } finally {
             safeDelete(lockFile);
