@@ -1,8 +1,8 @@
 package de.jexcellence.dependency.remapper;
 
-import de.jexcellence.dependency.cache.SharedCacheManager;
 import de.jexcellence.dependency.downloader.DependencyDownloader;
 import de.jexcellence.dependency.injector.ClasspathInjector;
+import de.jexcellence.dependency.loader.LoaderClasspathFile;
 import de.jexcellence.dependency.loader.YamlDependencyLoader;
 import de.jexcellence.dependency.model.DependencyCoordinate;
 import de.jexcellence.dependency.model.DownloadResult;
@@ -10,16 +10,11 @@ import de.jexcellence.dependency.module.Deencapsulation;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.objectweb.asm.ClassReader;
-import org.objectweb.asm.ClassWriter;
-import org.objectweb.asm.commons.ClassRemapper;
-import org.objectweb.asm.commons.Remapper;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
-import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -56,7 +51,7 @@ public class RemappingDependencyManager {
 
     private static final Logger LOGGER = Logger.getLogger(RemappingDependencyManager.class.getName());
 
-    private static final String LIBRARIES_DIR_NAME = "libraries";
+    private static final String LIBRARIES_DIR_NAME = LoaderClasspathFile.LIBRARIES_DIRECTORY;
     private static final String REMAPPED_DIR_NAME = "remapped";
 
     // System properties for optional behavior parity with the Paper loader path
@@ -127,7 +122,7 @@ public class RemappingDependencyManager {
     }
 
     /**
-     * Fallback no-arg constructor for compatibility that defaults to the working directory. Mainly intended for.
+     * Fallback no-arg constructor for compatibility that defaults to the working directory. Mainly intended for
      * command-line usage or testing scenarios.
      */
     public RemappingDependencyManager() {
@@ -144,7 +139,17 @@ public class RemappingDependencyManager {
     // ----------------- Public API: relocation and remapping -----------------
 
     /**
-     * Registers a package relocation mapping. Package names are normalised and restricted roots (e.g. {@code java}) are.
+     * Returns the fingerprint of the currently registered relocations, used as the name of the folder that holds
+     * jars remapped with exactly this set.
+     *
+     * @return 16 lowercase hex characters
+     */
+    public @NotNull String relocationFingerprint() {
+        return RelocationFingerprint.of(relocations);
+    }
+
+    /**
+     * Registers a package relocation mapping. Package names are normalised and restricted roots (e.g. {@code java}) are
      * ignored to avoid interfering with core classes.
      *
      * @param fromPackage original package name in dot notation
@@ -172,8 +177,8 @@ public class RemappingDependencyManager {
     }
 
     /**
-     * Remaps the specified jar into the configured remapped directory using registered relocations. When no relocations.
-     * are registered the jar is copied verbatim while stripping invalid signature files.
+     * Remaps the specified jar to {@code outputJar} using the registered relocations. When no relocations are
+     * registered the jar is copied verbatim. A failed attempt never leaves a partial output file behind.
      *
      * @param inputJar  original jar file
      * @param outputJar destination jar that will be overwritten
@@ -197,9 +202,10 @@ public class RemappingDependencyManager {
             final PackageRemapper remapper = new PackageRemapper();
             remapper.addMappings(relocations);
             remapper.remap(inputJar, outputJar);
-        } catch (IOException ioe) {
+        } catch (IOException | RuntimeException exception) {
+            // A partial file would look up to date on the next start, so never leave one behind.
             safeDelete(outputJar);
-            throw ioe;
+            throw exception;
         }
 
         if (!isValidJar(outputJar)) {
@@ -213,7 +219,7 @@ public class RemappingDependencyManager {
     // ----------------- Legacy JEDependency-compatible lifecycle -----------------
 
     /**
-     * Legacy entry point that downloads declared dependencies, applies relocations when configured and injects them.
+     * Legacy entry point that downloads declared dependencies, applies relocations when configured and injects them
      * into the plugin's class loader. The method is synchronous and logs failures rather than propagating them.
      *
      * @param additionalDependencies optional coordinates ({@code group:artifact:version[:classifier]}) appended to the YAML list
@@ -277,7 +283,7 @@ public class RemappingDependencyManager {
     }
 
     /**
-     * Downloads, remaps and injects dependencies. Refactored to reduce cognitive complexity.
+     * Downloads, remaps and injects dependencies.
      *
      * @param classLoader the class loader to inject into
      * @throws IOException if operations fail
@@ -303,10 +309,9 @@ public class RemappingDependencyManager {
      */
     private @NotNull List<Path> downloadDependencies(@NotNull final List<DependencyCoordinate> toProcess) {
         final List<Path> inputJars = new ArrayList<>();
-        final File sharedCacheDir = SharedCacheManager.getInstance().getJarsCacheDirectory();
 
         for (final DependencyCoordinate coordinate : toProcess) {
-            final DownloadResult result = downloader.download(coordinate, sharedCacheDir);
+            final DownloadResult result = downloader.download(coordinate, librariesDirectory.toFile());
             if (result.success() && result.file() != null) {
                 inputJars.add(result.file().toPath());
                 LOGGER.log(Level.FINE, () -> "Downloaded " + coordinate.toGavString() + " -> " + result.file().getName());
@@ -335,8 +340,11 @@ public class RemappingDependencyManager {
         }
 
         ensureDirectories();
+        // Copies are only valid for the relocation set they were made with, so each set gets its own folder.
+        final Path setDirectory = remappedDirectory.resolve(relocationFingerprint());
+        Files.createDirectories(setDirectory);
         for (final Path input : inputJars) {
-            final Path output = remappedDirectory.resolve(input.getFileName().toString());
+            final Path output = setDirectory.resolve(input.getFileName().toString());
 
             if (isOutputUpToDate(output, input)) {
                 LOGGER.log(Level.FINE, () -> "Using cached remapped JAR: " + output.getFileName());
@@ -347,9 +355,13 @@ public class RemappingDependencyManager {
             try {
                 remap(input, output);
                 jarsToInject.add(output);
-            } catch (final IOException ex) {
-                LOGGER.log(Level.WARNING, ex, () -> "Remapping failed for " + input.getFileName() + " (injecting original)");
-                jarsToInject.add(input);
+            } catch (final IOException | RuntimeException ex) {
+                safeDelete(output);
+                // Relocations span the whole set, so remapped siblings may reference relocated packages of this
+                // jar. Mixing remapped and original jars would break those references: use originals for all.
+                LOGGER.log(Level.WARNING, ex, () -> "Remapping failed for " + input.getFileName()
+                        + "; injecting all libraries without relocation");
+                return new ArrayList<>(inputJars);
             }
         }
 
@@ -439,33 +451,8 @@ public class RemappingDependencyManager {
         }
     }
 
-    private static void writeBytes(
-            final JarOutputStream out,
-            final Set<String> written,
-            final String name,
-            final byte[] bytes
-    ) throws IOException {
-        if (written.add(name)) {
-            final JarEntry dst = new JarEntry(name);
-            out.putNextEntry(dst);
-            out.write(bytes);
-            out.closeEntry();
-        }
-    }
 
-    private static byte[] readAll(final JarFile in, final JarEntry entry) throws IOException {
-        try (InputStream is = in.getInputStream(entry)) {
-            return is.readAllBytes();
-        }
-    }
 
-    private static byte[] transformClass(final byte[] original, final Remapper remapper) {
-        final ClassReader cr = new ClassReader(original);
-        final ClassWriter cw = new ClassWriter(0);
-        final ClassRemapper classRemapper = new ClassRemapper(cw, remapper);
-        cr.accept(classRemapper, 0);
-        return cw.toByteArray();
-    }
 
     private static void copyJarVerbatim(@NotNull final Path inputJar, @NotNull final Path outputJar) throws IOException {
         ensureParent(outputJar);
@@ -490,9 +477,10 @@ public class RemappingDependencyManager {
         } catch (UncheckedIOException uioe) {
             safeDelete(outputJar);
             throw uioe.getCause();
-        } catch (IOException ioe) {
+        } catch (IOException | RuntimeException exception) {
+            // A partial file would look up to date on the next start, so never leave one behind.
             safeDelete(outputJar);
-            throw ioe;
+            throw exception;
         }
     }
 
@@ -580,7 +568,7 @@ public class RemappingDependencyManager {
     }
 
     /**
-     * Loads relocations from system properties. Refactored to reduce loop complexity.
+     * Loads relocations from system properties.
      */
     private void loadRelocationsFromSystemProperties() {
         // Explicit mappings
@@ -687,11 +675,4 @@ public class RemappingDependencyManager {
         return base + pluginInfo;
     }
 
-    // ----------------- Optional: helper to decode file URL to path -----------------
-
-    @SuppressWarnings("unused")
-    private static Path pathFromUrl(@NotNull final String url) {
-        final String decoded = URLDecoder.decode(url, StandardCharsets.UTF_8);
-        return Path.of(decoded.replace("file:", ""));
-    }
 }

@@ -3,6 +3,7 @@ package de.jexcellence.dependency.manager;
 import de.jexcellence.dependency.downloader.DependencyDownloader;
 import de.jexcellence.dependency.exception.DependencyException;
 import de.jexcellence.dependency.injector.ClasspathInjector;
+import de.jexcellence.dependency.loader.LoaderClasspathFile;
 import de.jexcellence.dependency.loader.YamlDependencyLoader;
 import de.jexcellence.dependency.model.DependencyCoordinate;
 import de.jexcellence.dependency.model.DownloadResult;
@@ -43,7 +44,7 @@ public class DependencyManager {
     /**
      * Directory name under the plugin's data folder where downloaded dependencies are cached.
      */
-    private static final String LIBRARIES_DIRECTORY = "libraries";
+    private static final String LIBRARIES_DIRECTORY = LoaderClasspathFile.LIBRARIES_DIRECTORY;
 
     private final Logger logger;
     private final JavaPlugin plugin;
@@ -175,7 +176,7 @@ public class DependencyManager {
     }
 
     /**
-     * Runs dependency resolution asynchronously using virtual threads. Downloading and injection are executed on the.
+     * Runs dependency resolution asynchronously using virtual threads. Downloading and injection are executed on the
      * returned {@link CompletableFuture}, while YAML parsing and configuration happen within the async task. Callers
      * should inspect the resulting {@link ProcessingResult} to surface failures.
      *

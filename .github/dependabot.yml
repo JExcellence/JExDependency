@@ -1,0 +1,16 @@
+version: 2
+updates:
+  - package-ecosystem: gradle
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      test:
+        patterns: ["org.junit*"]
+    ignore:
+      # The Paper API version is the compatibility floor on purpose; raise it by hand.
+      - dependency-name: "io.papermc.paper:paper-api"
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly

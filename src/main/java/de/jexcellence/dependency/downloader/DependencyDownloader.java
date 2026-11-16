@@ -248,7 +248,7 @@ public class DependencyDownloader {
             }
         }
 
-        for (final RepositoryType repository : RepositoryType.values()) {
+        for (final RepositoryType repository : RepositoryType.searchOrder()) {
             final String downloadUrl = repository.buildUrl(coordinate);
             logger.log(Level.FINEST, () -> "Trying repository: " + repository.name() + " at " + downloadUrl);
 

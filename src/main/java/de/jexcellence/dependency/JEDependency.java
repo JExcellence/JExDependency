@@ -1,6 +1,7 @@
 package de.jexcellence.dependency;
 
 import de.jexcellence.dependency.injector.ClasspathInjector;
+import de.jexcellence.dependency.loader.LoaderClasspathFile;
 import de.jexcellence.dependency.manager.DependencyManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -8,13 +9,16 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
+import java.nio.file.Path;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 
 /**
- * Entry point for plugins to bootstrap the runtime dependency system. The class coordinates YAML discovery,.
+ * Entry point for plugins to bootstrap the runtime dependency system. The class coordinates YAML discovery,
  * repository downloads, optional remapping and classpath injection while keeping behaviour consistent with the Paper
  * plugin loader. All invocations log progress to the hosting {@link JavaPlugin}'s logger so operators can follow the
  * bootstrap sequence.
@@ -26,7 +30,7 @@ public class JEDependency {
      */
     private static final String REMAPPING_MANAGER_CLASS = "de.jexcellence.dependency.remapper.RemappingDependencyManager";
     /**
-     * System property controlling whether the remapping pipeline should be activated. Supported values mirror the.
+     * System property controlling whether the remapping pipeline should be activated. Supported values mirror the
      * Paper loader ("auto", "true", "false", and common synonyms).
      */
     private static final String REMAP_PROPERTY = "jedependency.remap";
@@ -85,7 +89,7 @@ public class JEDependency {
     }
 
     /**
-     * Initializes the dependency system synchronously while forcing the remapping pipeline and allowing for additional.
+     * Initializes the dependency system synchronously while forcing the remapping pipeline and allowing for additional
      * dependency coordinates.
      *
      * @param plugin                  owning plugin providing the logger and data directory
@@ -253,11 +257,10 @@ public class JEDependency {
         plugin.getLogger().info("JEDependency initialization completed");
     }
 
-    // Replace the injectPreDownloadedLibraries method body with:
     /**
-     * Injects libraries that were prepared by the Paper plugin loader before the plugin's lifecycle callbacks run.
-     * The method prefers remapped outputs when available, logs successes/failures per file and keeps track of how many
-     * jars ultimately entered the runtime class loader.
+     * Injects exactly the libraries that the Paper plugin loader put on this plugin's classpath, as recorded in
+     * {@link LoaderClasspathFile}. Folders are never scanned: they also hold jars of other plugins and of earlier
+     * runs.
      *
      * @param plugin       owning plugin used for logging and resolving the data directory
      * @param anchorClass  class whose class loader receives the injected libraries
@@ -267,25 +270,18 @@ public class JEDependency {
             @NotNull final Class<?> anchorClass
     ) {
         final ClasspathInjector injector = new ClasspathInjector();
+        final File libsFolder = new File(plugin.getDataFolder(), LoaderClasspathFile.LIBRARIES_DIRECTORY);
 
-        // Find libraries directory
-        final File pluginDataFolder = plugin.getDataFolder();
-        final File remappedLibsFolder = new File(pluginDataFolder, "libraries/remapped");
-        final File libsFolder = new File(pluginDataFolder, "libraries");
-
-        // Prefer remapped libraries if they exist
-        final File targetFolder = (remappedLibsFolder.exists() && remappedLibsFolder.isDirectory())
-                ? remappedLibsFolder
-                : libsFolder;
-
-        if (!targetFolder.exists() || !targetFolder.isDirectory()) {
-            plugin.getLogger().log(Level.WARNING, "Libraries folder not found: {0}", targetFolder);
+        final List<Path> recordedJars;
+        try {
+            recordedJars = LoaderClasspathFile.read(libsFolder.toPath());
+        } catch (final IOException exception) {
+            plugin.getLogger().log(Level.WARNING, "Could not read the Paper loader classpath record", exception);
             return;
         }
 
-        final File[] jarFiles = targetFolder.listFiles((dir, name) -> name.toLowerCase().endsWith(".jar"));
-        if (jarFiles == null || jarFiles.length == 0) {
-            plugin.getLogger().log(Level.INFO, "No JAR files found in: {0}", targetFolder);
+        if (recordedJars.isEmpty()) {
+            plugin.getLogger().log(Level.FINE, "No libraries recorded by the Paper loader in {0}", libsFolder);
             return;
         }
 
@@ -293,7 +289,8 @@ public class JEDependency {
         int injected = 0;
         int failed = 0;
 
-        for (final File jarFile : jarFiles) {
+        for (final Path jarPath : recordedJars) {
+            final File jarFile = jarPath.toFile();
             final boolean ok = injector.tryInject(pluginClassLoader, jarFile);
             if (ok) {
                 injected++;
@@ -304,10 +301,8 @@ public class JEDependency {
             }
         }
 
-        final int injectedFinal = injected;
-        final int failedFinal = failed;
-        plugin.getLogger().log(Level.INFO, "Injected {0} libraries{1} from {2} into runtime classloader",
-                new Object[]{injectedFinal, failedFinal > 0 ? " (" + failedFinal + " failed)" : "", targetFolder.getName()});
+        plugin.getLogger().log(Level.INFO, "Injected {0} libraries{1} recorded by the Paper loader",
+                new Object[]{injected, failed > 0 ? " (" + failed + " failed)" : ""});
     }
 
     /**

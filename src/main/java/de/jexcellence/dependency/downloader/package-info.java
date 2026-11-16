@@ -11,8 +11,8 @@
  *
  * <p>When downloads begin, {@link de.jexcellence.dependency.downloader.DependencyDownloader} tries any
  * repositories registered at runtime (for example, entries from additional YAML metadata or
- * configuration) before falling back to each built-in {@link de.jexcellence.dependency.repository.RepositoryType}
- * in order. This sequence ensures that custom mirrors or authenticated hosts are preferred while the
+ * configuration) before falling back to each repository in
+ * {@link de.jexcellence.dependency.repository.RepositoryType#searchOrder()}. This sequence ensures that custom mirrors or authenticated hosts are preferred while the
  * standard Maven mirrors remain available as a safety net.
  *
  * <p>The downloader performs strict validation: it skips work if a previously downloaded file already
@@ -28,15 +28,14 @@
  * {@code -Djedependency.relocations}, {@code -Djedependency.relocations.prefix}, and
  * {@code -Djedependency.relocations.excludes}, which the remapper parses to build relocation maps before
  * rewriting bytecode. Consumers should therefore set these JVM properties at launch to control whether
- * JARs remain in {@code libraries/} or are relocated into {@code libraries/remapped/} with shaded
- * packages.
+ * jars are used as downloaded or relocated into {@code libraries/remapped/<set>/}, one folder per
+ * relocation set.
  *
- * <p>Runtime classpath injection always favours remapped outputs when they are available. During the
- * Paper plugin-loader handshake, {@link de.jexcellence.dependency.JEDependency} searches the plugin's
- * data folder, preferring {@code libraries/remapped/} whenever that directory exists before using
- * {@code libraries/}. The remapper follows the same rule: if remapping fails or no relocations are
- * requested, the original downloads in {@code libraries/} are injected; otherwise, the shaded copies in
- * {@code libraries/remapped/} are cached and reused. These fallbacks guarantee that consumers always
- * receive a working classpath even when remapping is disabled or partially configured.
+ * <p>During the Paper plugin-loader handshake, {@link de.jexcellence.dependency.JEDependency} injects exactly
+ * the jars listed in {@code libraries/paper-loader-classpath.txt}; it never scans folders. The remapper
+ * injects the original downloads when remapping fails or no relocations are requested; otherwise the
+ * relocated copies in {@code libraries/remapped/<set>/} are cached and reused for that relocation set.
+ * These fallbacks give consumers a working classpath even when remapping is disabled or partially
+ * configured.
  */
 package de.jexcellence.dependency.downloader;

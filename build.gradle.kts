@@ -1,91 +1,114 @@
 plugins {
-    id("raindrop.library-conventions")
-    id("raindrop.dependencies-yml")
+    `java-library`
+    `maven-publish`
 }
 
 group = "de.jexcellence.dependency"
-version = "2.1.0"
-description = "Modern dependency management and plugin architecture for Minecraft servers"
+version = "2.2.0"
+description = "Runtime dependency loading, verification and relocation for Spigot, Paper and Folia plugins"
 
-// Configure runtime dependencies.yml generation
-dependenciesYml {
-    useJExDependencyDependencies()
+/** Bytecode level of the published jar. Servers must run at least this Java version. */
+val targetJava = 21
+
+java {
+    withSourcesJar()
+    withJavadocJar()
 }
 
-ext["vendor"] = "JExcellence"
-
 dependencies {
-    // ── Compile-only: Server API ──
     compileOnly(libs.paper.api)
     compileOnly(libs.jetbrains.annotations)
 
-    // ── Implementation ──
     implementation(libs.asm)
     implementation(libs.asm.commons)
 
-    // ── Test ──
     testImplementation(platform(libs.junit.bom))
-    testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.jetbrains.annotations)
+    testImplementation(libs.paper.api)
     testRuntimeOnly(libs.junit.platform.launcher)
 }
 
 tasks {
+    withType<JavaCompile>().configureEach {
+        options.release.set(targetJava)
+        options.encoding = "UTF-8"
+    }
+
+    jar {
+        manifest {
+            attributes(
+                "Automatic-Module-Name" to "de.jexcellence.dependency",
+                "Implementation-Title" to "JExDependency",
+                "Implementation-Version" to project.version,
+                "Implementation-Vendor" to "JExcellence"
+            )
+        }
+    }
+
+    javadoc {
+        val docletOptions = options as StandardJavadocDocletOptions
+        docletOptions.encoding = "UTF-8"
+        docletOptions.addStringOption("Xdoclint:all,-missing", "-quiet")
+        docletOptions.links("https://docs.oracle.com/en/java/javase/21/docs/api/")
+    }
+
     test {
         useJUnitPlatform()
-        // Required for ClasspathInjector tests that exercise URLClassLoader.addURL via reflection
+        // ClasspathInjector tests exercise URLClassLoader.addURL via reflection.
         jvmArgs("--add-opens", "java.base/java.net=ALL-UNNAMED")
     }
 
     register<Jar>("fatJar") {
         group = "build"
-        description = "Creates a fat JAR with all dependencies"
+        description = "Creates a jar that also contains ASM, for consumers that do not resolve transitive dependencies"
         archiveClassifier.set("all")
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-        
-        from(sourceSets.main.get().output)
+        manifest.from(jar.get().manifest)
 
+        from(sourceSets.main.get().output)
         dependsOn(configurations.runtimeClasspath)
         from({
             configurations.runtimeClasspath.get()
-                .filter { it.name.endsWith("jar") }
+                .filter { it.name.endsWith(".jar") }
                 .map { zipTree(it) }
         })
     }
 }
 
-afterEvaluate {
-    publishing {
-        publications {
-            named<MavenPublication>("maven") {
-                artifactId = "jexdependency"
-                pom {
-                    name.set("JExDependency")
-                    description.set("Runtime dependency management & relocation for Paper/Spigot plugins.")
+publishing {
+    publications {
+        register<MavenPublication>("maven") {
+            artifactId = "jexdependency"
+            from(components["java"])
+
+            pom {
+                name.set("JExDependency")
+                description.set(project.description)
+                url.set("https://github.com/JExcellence/JExDependency")
+                inceptionYear.set("2025")
+                licenses {
+                    license {
+                        name.set("MIT License")
+                        url.set("https://github.com/JExcellence/JExDependency/blob/main/LICENSE")
+                        distribution.set("repo")
+                    }
+                }
+                developers {
+                    developer {
+                        id.set("jexcellence")
+                        name.set("JExcellence")
+                        email.set("contact@jexcellence.de")
+                    }
+                }
+                scm {
+                    connection.set("scm:git:https://github.com/JExcellence/JExDependency.git")
+                    developerConnection.set("scm:git:ssh://git@github.com/JExcellence/JExDependency.git")
                     url.set("https://github.com/JExcellence/JExDependency")
-                    inceptionYear.set("2025")
-                    licenses {
-                        license {
-                            name.set("MIT License")
-                            url.set("https://github.com/JExcellence/JExDependency/blob/main/LICENSE")
-                            distribution.set("repo")
-                        }
-                    }
-                    developers {
-                        developer {
-                            id.set("jexcellence")
-                            name.set("JExcellence")
-                            email.set("contact@jexcellence.de")
-                        }
-                    }
-                    scm {
-                        connection.set("scm:git:git://github.com/JExcellence/JExDependency.git")
-                        developerConnection.set("scm:git:ssh://github.com/JExcellence/JExDependency.git")
-                        url.set("https://github.com/JExcellence/JExDependency")
-                    }
-                    issueManagement {
-                        system.set("GitHub Issues")
-                        url.set("https://github.com/JExcellence/JExDependency/issues")
-                    }
+                }
+                issueManagement {
+                    system.set("GitHub Issues")
+                    url.set("https://github.com/JExcellence/JExDependency/issues")
                 }
             }
         }

@@ -1,0 +1,60 @@
+name: Bug report
+description: Something does not load, download or behave as documented.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Security problems: please follow SECURITY.md instead of opening a public issue.
+  - type: input
+    id: version
+    attributes:
+      label: JExDependency version
+      placeholder: "2.2.0"
+    validations:
+      required: true
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Server software
+      options:
+        - Paper
+        - Spigot
+        - Folia
+        - Purpur or another Paper fork
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: mc-version
+    attributes:
+      label: Minecraft and Java version
+      placeholder: "1.21.4, Java 21"
+    validations:
+      required: true
+  - type: dropdown
+    id: descriptor
+    attributes:
+      label: Plugin descriptor
+      options:
+        - plugin.yml
+        - paper-plugin.yml with the JExDependency loader
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened and what did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Your dependencies.yml
+      render: yaml
+  - type: textarea
+    id: log
+    attributes:
+      label: Server log
+      description: The startup log from the first JExDependency line to the error. Remove anything private.
+      render: text

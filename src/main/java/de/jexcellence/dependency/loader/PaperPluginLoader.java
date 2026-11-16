@@ -1,6 +1,5 @@
 package de.jexcellence.dependency.loader;
 
-import de.jexcellence.dependency.cache.SharedCacheManager;
 import de.jexcellence.dependency.downloader.DependencyDownloader;
 import de.jexcellence.dependency.exception.PluginLoaderException;
 import de.jexcellence.dependency.model.DependencyCoordinate;
@@ -9,6 +8,7 @@ import io.papermc.paper.plugin.loader.PluginClasspathBuilder;
 import io.papermc.paper.plugin.loader.PluginLoader;
 import io.papermc.paper.plugin.loader.library.impl.JarLibrary;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,13 +18,12 @@ import java.nio.file.Path;
 import java.nio.file.attribute.FileTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.logging.Formatter;
@@ -32,15 +31,14 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 import java.util.logging.StreamHandler;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Paper-specific plugin loader that mirrors the runtime behaviour of {@link de.jexcellence.dependency.JEDependency}.
  * The loader runs before the plugin's lifecycle methods, downloads dependencies declared in bundled YAML files, applies
  * optional remapping/relocation rules and registers the resulting jars with Paper's {@link PluginClasspathBuilder}.
- * It also records its presence via {@code paper.plugin.loader.active} to signal the plugin-side bootstrap to reuse the
- * already downloaded libraries.
+ * Only the plugin's own jars are remapped and registered, never other jars in the shared cache; their paths are
+ * written to {@code <data>/libraries/paper-loader-classpath.txt} ({@link LoaderClasspathFile}). It also records its
+ * presence via {@code paper.plugin.loader.active} so the plugin-side bootstrap injects exactly that list.
  */
 @SuppressWarnings({"unused", "UnstableApiUsage"})
 public class PaperPluginLoader implements PluginLoader {
@@ -81,7 +79,7 @@ public class PaperPluginLoader implements PluginLoader {
     /**
      * Directory name under the plugin data folder that stores downloaded libraries.
      */
-    private static final String LIBRARIES_DIRECTORY_NAME = "libraries";
+    private static final String LIBRARIES_DIRECTORY_NAME = LoaderClasspathFile.LIBRARIES_DIRECTORY;
     /**
      * Minimum size threshold used to reject obviously invalid jar outputs.
      */
@@ -169,7 +167,7 @@ public class PaperPluginLoader implements PluginLoader {
     }
 
     /**
-     * Prepares the plugin classpath by downloading declared dependencies, optionally remapping them and adding the.
+     * Prepares the plugin classpath by downloading declared dependencies, optionally remapping them and adding the
      * resulting jar files to Paper's bootstrap classpath. The method is invoked by Paper on the main server thread
      * during plugin discovery and therefore performs logging rather than throwing checked exceptions.
      *
@@ -193,25 +191,39 @@ public class PaperPluginLoader implements PluginLoader {
             warnIfNestedLibraries(librariesDirectory);
 
             final List<Path> downloadedJars = initializeDependencies(librariesDirectory.toFile(), pluginSource);
+            warnIfRemappingRequestedButUnavailable();
 
-            final boolean remappingActive = shouldEnableRemapping();
+            // Only this plugin's own jars are remapped and loaded. The shared cache and the remapped folder
+            // also hold other plugins' and earlier runs' jars, which must never reach this classpath.
+            final List<Path> jarsToLoad = shouldEnableRemapping() && !downloadedJars.isEmpty()
+                    ? remapJars(downloadedJars, dataDirectory, remappedDirectory)
+                    : downloadedJars;
 
-            if (remappingActive && !downloadedJars.isEmpty()) {
-                // Remapping: input from shared cache, output to per-plugin remapped directory
-                final boolean remapOk = attemptRemapping(librariesDirectory, remappedDirectory);
-                if (remapOk) {
-                    loadJarFilesIntoClasspath(classpathBuilder, remappedDirectory);
-                } else {
-                    // Remapping failed — load the specific downloaded files directly
-                    loadSpecificJarsIntoClasspath(classpathBuilder, downloadedJars);
-                }
-            } else {
-                // No remapping — load the specific downloaded files from shared cache
-                loadSpecificJarsIntoClasspath(classpathBuilder, downloadedJars);
-            }
+            final List<Path> loadedJars = loadSpecificJarsIntoClasspath(classpathBuilder, jarsToLoad);
+            recordLoadedJars(librariesDirectory, loadedJars);
 
         } catch (final IOException exception) {
             throw new PluginLoaderException("Failed to initialize libraries directory: " + librariesDirectory, exception);
+        }
+    }
+
+    /**
+     * Records the loaded jars for the plugin-side bootstrap. A failure here must not stop the plugin from loading:
+     * the jars are already on the classpath, the plugin side then only skips its extra injection.
+     */
+    private void recordLoadedJars(@NotNull final Path librariesDirectory, @NotNull final List<Path> loadedJars) {
+        try {
+            LoaderClasspathFile.write(librariesDirectory, loadedJars);
+        } catch (final IOException exception) {
+            logger.log(Level.WARNING, exception, () -> "Could not record loaded libraries in " + librariesDirectory);
+        }
+    }
+
+    private void warnIfRemappingRequestedButUnavailable() {
+        if (getRemapMode() == RemapMode.TRUE && !isRemapperAvailable()) {
+            logger.log(Level.WARNING, "Remapping requested but the remapper component is not present. "
+                    + "Either add the remapper to the plugin classpath or disable remapping with -D{0}=false",
+                    REMAP_PROPERTY);
         }
     }
 
@@ -297,11 +309,10 @@ public class PaperPluginLoader implements PluginLoader {
 
         logger.log(Level.INFO, "Resolving {0} dependencies...", coords.size());
 
-        final File sharedCacheDir = SharedCacheManager.getInstance().getJarsCacheDirectory();
-
-        // Fire all downloads in parallel using the downloader's virtual-thread executor
+        // Downloads land in the shared cache; librariesDirectory is the per-plugin folder of older versions,
+        // which the downloader checks first so existing jars are copied over instead of downloaded again.
         final List<CompletableFuture<DownloadResult>> futures = coords.stream()
-                .map(coord -> dependencyDownloader.downloadAsync(coord, sharedCacheDir))
+                .map(coord -> dependencyDownloader.downloadAsync(coord, librariesDirectory))
                 .toList();
 
         final List<DownloadResult> results = futures.stream()
@@ -337,9 +348,6 @@ public class PaperPluginLoader implements PluginLoader {
 
     private @NotNull RemapMode getRemapMode() {
         final String value = System.getProperty(REMAP_PROPERTY, "auto");
-        if (value == null) {
-            return RemapMode.AUTO;
-        }
         final String normalized = value.trim().toLowerCase(Locale.ROOT);
         if ("true".equals(normalized) || "1".equals(normalized) || "yes".equals(normalized) || "on".equals(normalized)) {
             return RemapMode.TRUE;
@@ -361,8 +369,8 @@ public class PaperPluginLoader implements PluginLoader {
     }
 
     /**
-     * Backwards-compatible helper retained for potential external usage.
-     * Behavior: true -> enable; false -> disable; auto (default) -> enable only if remapper is available.
+     * Decides whether this load remaps libraries, from {@code jedependency.remap}: {@code true} enables it,
+     * {@code false} disables it, {@code auto} (the default) enables it when the remapper classes are present.
      */
     private boolean shouldEnableRemapping() {
         final RemapMode mode = getRemapMode();
@@ -373,100 +381,55 @@ public class PaperPluginLoader implements PluginLoader {
         };
     }
 
-    private @NotNull Path determineEffectiveDirectory(
-            @NotNull final Path librariesDirectory,
-            @NotNull final Path remappedDirectory
-    ) {
-        final RemapMode mode = getRemapMode();
-
-        if (mode == RemapMode.FALSE) {
-            logger.log(Level.FINE, () -> "Remapping disabled via system property: " + REMAP_PROPERTY);
-            return librariesDirectory;
-        }
-
-        if (!isRemapperAvailable()) {
-            if (mode == RemapMode.TRUE) {
-                logger.log(Level.WARNING, "Remapping requested but the remapper component is not present. " +
-                        "Either add the remapper to the plugin classpath or disable remapping with -D{0}=false",
-                        REMAP_PROPERTY);
-            } else {
-                logger.log(Level.FINE, "Remapper not present; skipping remapping (mode=auto)");
-            }
-            return librariesDirectory;
-        }
-
-        final boolean remappingSuccessful = attemptRemapping(librariesDirectory, remappedDirectory);
-
-        if (remappingSuccessful) {
-            logger.log(Level.FINE, () -> "Using remapped libraries from: " + remappedDirectory);
-            return remappedDirectory;
-        }
-
-        logger.log(Level.WARNING, "Remapping failed, using original libraries");
-        return librariesDirectory;
-    }
-
-    private boolean attemptRemapping(
-            @NotNull final Path inputDirectory,
+    /**
+     * Remaps exactly the given jars into {@code outputDirectory} and returns the jars to load, in input order.
+     * Relocations are computed across the whole set, so remapped jars may reference relocated packages of their
+     * siblings; if any jar fails to remap, all original jars are returned to keep those references consistent.
+     *
+     * @param inputJars       this plugin's resolved jars
+     * @param dataDirectory   the plugin's data folder, handed to the remapper
+     * @param outputDirectory the plugin's {@code libraries/remapped} folder; copies go into a subfolder named
+     *                        after the relocation set ({@link de.jexcellence.dependency.remapper.RelocationFingerprint})
+     * @return jars to put on the classpath: the remapped copies, or the unchanged input list when the remapper is
+     *         unavailable, the output folder cannot be created, or any jar fails to remap
+     */
+    @NotNull List<Path> remapJars(
+            @NotNull final List<Path> inputJars,
+            @NotNull final Path dataDirectory,
             @NotNull final Path outputDirectory
     ) {
-        Objects.requireNonNull(inputDirectory, "inputDirectory cannot be null");
-        Objects.requireNonNull(outputDirectory, "outputDirectory cannot be null");
-
-        try {
-            Files.createDirectories(outputDirectory);
-        } catch (final IOException exception) {
-            logger.log(Level.WARNING, exception, () -> "Failed to create remapped directory: " + outputDirectory);
-            return false;
-        }
-
-        // Collect input JARs from both per-plugin directory (legacy) and shared cache
-        final List<Path> inputJars = new ArrayList<>(collectJarFiles(inputDirectory));
-
-        // Also check the shared cache for any JARs that may have been downloaded there
-        final Path sharedJarsDir = SharedCacheManager.getInstance().getCacheRoot().resolve("jars");
-        if (Files.isDirectory(sharedJarsDir)) {
-            try (final Stream<Path> sharedFiles = Files.walk(sharedJarsDir)) {
-                sharedFiles
-                        .filter(Files::isRegularFile)
-                        .filter(p -> p.toString().toLowerCase(Locale.ROOT).endsWith(".jar"))
-                        .forEach(inputJars::add);
-            } catch (final IOException exception) {
-                logger.log(Level.FINE, exception, () -> "Failed to scan shared cache for remapping input");
-            }
-        }
-
-        if (inputJars.isEmpty()) {
-            logger.log(Level.FINE, "No input JARs to remap");
-            return false;
-        }
-
-        // IMPORTANT: RemappingDependencyManager expects the plugin data directory, not the libraries directory.
-        // If we pass the libraries directory, it will append another "/libraries" and create a nested path.
-        final Path dataDirectory = inputDirectory.getParent() != null ? inputDirectory.getParent() : inputDirectory;
-
         final Object remappingManager = createRemappingManager(dataDirectory);
         if (remappingManager == null) {
-            return false;
+            return inputJars;
         }
 
         final int relocationsApplied = applyRelocations(remappingManager, inputJars);
         if (relocationsApplied == 0) {
-            logger.log(Level.WARNING, "No relocations were applied. Remapping will not change packages.");
+            logger.log(Level.FINE, "No relocations apply to these libraries; remapped copies keep their packages.");
         }
 
-        return processRemapping(remappingManager, inputJars, outputDirectory);
+        // Copies are only valid for the relocation set they were made with, so each set gets its own folder.
+        final String fingerprint = relocationFingerprint(remappingManager);
+        if (fingerprint == null) {
+            return inputJars;
+        }
+        final Path setDirectory = outputDirectory.resolve(fingerprint);
+        try {
+            Files.createDirectories(setDirectory);
+        } catch (final IOException exception) {
+            logger.log(Level.WARNING, exception, () -> "Failed to create remapped directory: " + setDirectory);
+            return inputJars;
+        }
+
+        return processRemapping(remappingManager, inputJars, setDirectory);
     }
 
-    private @NotNull List<Path> collectJarFiles(@NotNull final Path directory) {
-        try (final Stream<Path> files = Files.list(directory)) {
-            return files
-                    .filter(Files::isRegularFile)
-                    .filter(path -> path.getFileName().toString().toLowerCase(Locale.ROOT).endsWith(".jar"))
-                    .collect(Collectors.toCollection(ArrayList::new));
-        } catch (final IOException exception) {
-            logger.log(Level.FINE, exception, () -> "Failed to list JAR files in " + directory);
-            return List.of();
+    private @Nullable String relocationFingerprint(@NotNull final Object remappingManager) {
+        try {
+            return (String) remappingManager.getClass().getMethod("relocationFingerprint").invoke(remappingManager);
+        } catch (final ReflectiveOperationException | ClassCastException exception) {
+            logger.log(Level.WARNING, "Could not determine the relocation set; loading libraries unrelocated", exception);
+            return null;
         }
     }
 
@@ -475,7 +438,7 @@ public class PaperPluginLoader implements PluginLoader {
             final Class<?> managerClass = Class.forName("de.jexcellence.dependency.remapper.RemappingDependencyManager");
             final var constructor = managerClass.getConstructor(Path.class);
             return constructor.newInstance(dataDirectory);
-        } catch (final Exception exception) {
+        } catch (final Exception | LinkageError exception) {
             // If we reach here, the class was expected to exist (pre-checked earlier) but failed.
             logger.log(Level.WARNING, "RemappingDependencyManager not available or failed to initialize", exception);
             return null;
@@ -498,7 +461,7 @@ public class PaperPluginLoader implements PluginLoader {
     }
 
     /**
-     * Applies explicit relocations from system properties. Refactored to reduce loop complexity.
+     * Applies explicit relocations from system properties.
      *
      * @param remappingManager the remapping manager instance
      * @return number of relocations applied
@@ -633,7 +596,7 @@ public class PaperPluginLoader implements PluginLoader {
     }
 
     /**
-     * Detects package roots from a JAR file. Refactored to reduce cognitive complexity.
+     * Detects package roots from a JAR file.
      *
      * @param jarPath       path to the JAR file to scan
      * @param excludedRoots set of package roots to exclude from detection
@@ -646,7 +609,7 @@ public class PaperPluginLoader implements PluginLoader {
         final Set<String> roots = new HashSet<>();
 
         try (final JarFile jarFile = new JarFile(jarPath.toFile())) {
-            final var entries = java.util.Collections.list(jarFile.entries());
+            final var entries = Collections.list(jarFile.entries());
             for (final JarEntry entry : entries) {
                 processJarEntry(entry, excludedRoots, roots);
             }
@@ -735,13 +698,15 @@ public class PaperPluginLoader implements PluginLoader {
         }
     }
 
-    private boolean processRemapping(
+    private @NotNull List<Path> processRemapping(
             @NotNull final Object remappingManager,
             @NotNull final List<Path> inputJars,
             @NotNull final Path outputDirectory
     ) {
         final int total = inputJars.size();
-        int processedCount = 0;
+        final List<Path> jarsToLoad = new ArrayList<>(total);
+        final List<String> failedJars = new ArrayList<>();
+        int done = 0;
         int remappedCount = 0;
         // Log a progress line every this many JARs so the console doesn't look stuck
         final int progressInterval = Math.max(1, Math.min(10, total / 5));
@@ -755,23 +720,25 @@ public class PaperPluginLoader implements PluginLoader {
                     ? markCached(outputJar)
                     : remapAndValidate(remappingManager, inputJar, outputJar);
 
-            if (outcome != REMAP_NONE) {
-                processedCount++;
-            }
             if (outcome == REMAP_OK) {
+                jarsToLoad.add(outputJar);
                 remappedCount++;
+            } else {
+                failedJars.add(inputJar.getFileName().toString());
             }
 
-            logRemapProgress(processedCount, total, progressInterval);
+            done++;
+            logRemapProgress(done, total, progressInterval);
         }
 
-        if (processedCount == 0) {
-            logger.log(Level.WARNING, "No libraries to remap");
-            return false;
+        if (!failedJars.isEmpty()) {
+            logger.log(Level.WARNING, "Could not remap {0}; loading all libraries without relocation so references "
+                    + "between them stay consistent", failedJars);
+            return inputJars;
         }
 
         logger.log(Level.INFO, "Remapped {0}/{1} libraries", new Object[]{remappedCount, total});
-        return remappedCount > 0;
+        return jarsToLoad;
     }
 
     /** Per-jar remap outcome codes used by {@link #processRemapping}. */
@@ -788,6 +755,8 @@ public class PaperPluginLoader implements PluginLoader {
                                  @NotNull final Path inputJar, @NotNull final Path outputJar) {
         deleteExistingFile(outputJar);
         if (!performRemapping(remappingManager, inputJar, outputJar)) {
+            // A partial file would look up to date on the next start, so never leave one behind.
+            deleteExistingFile(outputJar);
             return REMAP_NONE;
         }
         if (isValidJarFile(outputJar)) {
@@ -795,6 +764,7 @@ public class PaperPluginLoader implements PluginLoader {
             return REMAP_OK;
         }
         logger.log(Level.WARNING, "Failed to remap: {0}", inputJar.getFileName());
+        deleteExistingFile(outputJar);
         return REMAP_PROCESSED;
     }
 
@@ -863,33 +833,6 @@ public class PaperPluginLoader implements PluginLoader {
         }
     }
 
-    private void loadJarFilesIntoClasspath(
-            @NotNull final PluginClasspathBuilder classpathBuilder,
-            @NotNull final Path librariesDirectory
-    ) {
-        try (final Stream<Path> jarFiles = Files.walk(librariesDirectory, 1)) {
-            final AtomicInteger jarCount = new AtomicInteger(0);
-
-            jarFiles
-                    .filter(Files::isRegularFile)
-                    .filter(path -> path.toString().toLowerCase(Locale.ROOT).endsWith(".jar"))
-                    .forEach(jarPath -> {
-                        try {
-                            classpathBuilder.addLibrary(new JarLibrary(jarPath));
-                            jarCount.incrementAndGet();
-                            logger.log(Level.FINE, () -> "Added: " + jarPath.getFileName());
-                        } catch (final Exception exception) {
-                            logger.log(Level.WARNING, exception, () -> "Failed to load: " + jarPath.getFileName());
-                        }
-                    });
-
-            logger.log(Level.INFO, "Loaded {0} libraries", jarCount.get());
-
-        } catch (final Exception exception) {
-            logger.log(Level.SEVERE, "Failed to load libraries", exception);
-        }
-    }
-
     /**
      * Loads specific JAR files into the classpath rather than walking a directory. This is critical
      * for the shared cache: walking the shared cache directory would inject every cached JAR
@@ -898,17 +841,18 @@ public class PaperPluginLoader implements PluginLoader {
      *
      * @param classpathBuilder Paper builder used to register libraries
      * @param jarPaths specific JAR file paths to add
+     * @return the jars that were added
      */
-    private void loadSpecificJarsIntoClasspath(
+    private @NotNull List<Path> loadSpecificJarsIntoClasspath(
             @NotNull final PluginClasspathBuilder classpathBuilder,
             @NotNull final List<Path> jarPaths
     ) {
-        int loaded = 0;
+        final List<Path> loaded = new ArrayList<>(jarPaths.size());
         for (final Path jarPath : jarPaths) {
             try {
                 if (Files.isRegularFile(jarPath)) {
                     classpathBuilder.addLibrary(new JarLibrary(jarPath));
-                    loaded++;
+                    loaded.add(jarPath);
                     logger.log(Level.FINE, () -> "Added: " + jarPath.getFileName());
                 } else {
                     logger.log(Level.WARNING, "JAR not found: {0}", jarPath);
@@ -917,6 +861,7 @@ public class PaperPluginLoader implements PluginLoader {
                 logger.log(Level.WARNING, exception, () -> "Failed to load: " + jarPath.getFileName());
             }
         }
-        logger.log(Level.INFO, "Loaded {0} libraries from shared cache", loaded);
+        logger.log(Level.INFO, "Loaded {0} libraries", loaded.size());
+        return loaded;
     }
 }

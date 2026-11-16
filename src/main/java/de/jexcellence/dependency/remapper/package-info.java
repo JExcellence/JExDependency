@@ -18,7 +18,7 @@
  * and {@code jedependency.relocations.excludes}. These mappings determine how
  * {@link de.jexcellence.dependency.remapper.PackageRemapper} rewrites both
  * classes and service resources before caching the remapped jars under
- * {@code libraries/remapped}. If the ASM tooling ({@code org.ow2.asm:asm} and
+ * {@code libraries/remapped/<set>/}, one folder per relocation set ({@link de.jexcellence.dependency.remapper.RelocationFingerprint}). If the ASM tooling ({@code org.ow2.asm:asm} and
  * {@code org.ow2.asm:asm-commons}) or the remapping cache cannot be prepared,
  * the manager logs warnings and gracefully injects the original downloads
  * instead of aborting plugin startup.

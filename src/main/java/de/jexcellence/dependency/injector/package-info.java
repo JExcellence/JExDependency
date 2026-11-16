@@ -6,8 +6,8 @@
  * integration and by {@link de.jexcellence.dependency.JEDependency} once the Bukkit plugin gains
  * control. During the Paper bootstrap phase the
  * {@link de.jexcellence.dependency.loader.PaperPluginLoader} downloads or remaps declared
- * dependencies into {@code &lt;data&gt;/libraries} (preferring {@code libraries/remapped} when
- * relocations succeed) and registers them with Paper via
+ * dependencies (relocated copies go to {@code libraries/remapped/<set>/} when relocations succeed)
+ * and registers them with Paper via
  * {@link io.papermc.paper.plugin.loader.PluginClasspathBuilder#addLibrary}. When control returns to
  * the plugin's main class, {@code JEDependency} detects the {@code paper.plugin.loader.active}
  * marker and reuses the {@code ClasspathInjector} to inject those same jars into the live
