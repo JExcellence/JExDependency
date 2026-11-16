@@ -18,9 +18,10 @@
  *
  * <p>Dependency metadata is sourced from YAML descriptors located next to the provided anchor class under
  * {@code dependency/*.yml}. Any additional coordinates supplied to the entry points are merged into that list.
- * The {@code DependencyManager} (or remapping counterpart) then downloads artifacts into the plugin data directory
- * under {@code <data>/libraries}. When remapping is enabled the effective jars are materialized within the
- * {@code <data>/libraries/remapped} folder. System properties such as {@code -Djedependency.relocations},
+ * The {@code DependencyManager} (or remapping counterpart) then downloads artifacts into the server-wide cache
+ * ({@code <server>/.jexdependency/cache/jars}) managed by {@link de.jexcellence.dependency.cache.SharedCacheManager}.
+ * When remapping is enabled the effective jars are materialized within the plugin's
+ * {@code <data>/libraries/remapped/<set>} folder, one per relocation set. System properties such as {@code -Djedependency.relocations},
  * {@code -Djedependency.relocations.prefix}, and {@code -Djedependency.relocations.excludes} customize relocation
  * rules that the remapper applies while producing those remapped jars.
  * </p>
@@ -29,7 +30,7 @@
  * {@link de.jexcellence.dependency.loader.PaperPluginLoader} performs the same YAML resolution, download, and
  * remapping logic ahead of plugin start-up. It also sets {@code paper.plugin.loader.active=true} so the plugin-side
  * bootstrap can detect that the loader already primed {@code <data>/libraries}. When {@link de.jexcellence.dependency.JEDependency}
- * subsequently runs, it injects the preloaded jars (preferring the {@code remapped} directory) and continues through
+ * subsequently runs, it injects exactly the jars listed in {@code <data>/libraries/paper-loader-classpath.txt} and continues through
  * the same initialization sequence. Keeping this handshake aligned ensures both the loader and plugin entry points
  * emit consistent logging, honor the same relocation settings, and remain in sync during future changes.
  * </p>

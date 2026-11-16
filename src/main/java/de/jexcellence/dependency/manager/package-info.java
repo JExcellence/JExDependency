@@ -9,7 +9,7 @@
  * {@link de.jexcellence.dependency.injector.ClasspathInjector} wires the results into the
  * plugin's class loader. When remapping is requested, the
  * {@link de.jexcellence.dependency.remapper.RemappingDependencyManager} augments that flow by
- * writing remapped outputs into {@code libraries/remapped/} before the injector runs so the
+ * writing remapped outputs into {@code libraries/remapped/<set>/} before the injector runs so the
  * effective class path matches the Paper loader's expectations.
  *
  * <p>Both manager implementations rely on the same target directories and module deencapsulation
