@@ -2,16 +2,22 @@ package de.jexcellence.dependency.cache;
 
 import de.jexcellence.dependency.model.DependencyCoordinate;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
+import java.nio.channels.OverlappingFileLockException;
+import java.nio.file.AtomicMoveNotSupportedException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 import java.time.Duration;
-import java.time.Instant;
+import java.util.Properties;
 import java.util.function.BooleanSupplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,34 +33,53 @@ import java.util.logging.Logger;
  *
  * <h2>Thread safety</h2>
  * <p>Concurrent access from multiple plugins is handled via {@link FileChannel}-based file locking.
- * A double-checked pattern avoids acquiring the lock when the artifact already exists on disk.</p>
+ * A double-checked pattern avoids acquiring the lock when the artifact already exists on disk. File
+ * locks belong to the whole JVM, so two plugins in the same server that want the same artifact wait
+ * for each other instead of failing with {@link OverlappingFileLockException}.</p>
+ *
+ * <h2>Layout versioning</h2>
+ * <p>The cache root contains {@value #FORMAT_FILE} with the layout version ({@value #CACHE_FORMAT}).
+ * Plugins often shade different JExDependency versions; when a library finds a layout version it does
+ * not know, it keeps its files in {@code format-<version>/} below the root instead of reading or
+ * writing a layout it does not understand. A future layout change must raise {@link #CACHE_FORMAT}.</p>
  *
  * <h2>Directory layout</h2>
  * <pre>
  * .jexdependency/cache/
+ *   cache-format.properties
  *   jars/
- *     com/google/guava/33.2.1-jre/guava-33.2.1-jre.jar
+ *     com/google/guava/guava/33.2.1-jre/guava-33.2.1-jre.jar
  *   poms/
- *     com/google/guava/33.2.1-jre/guava-33.2.1-jre.pom
+ *     com/google/guava/guava/33.2.1-jre/guava-33.2.1-jre.pom
  *   locks/
- *     com.google.guava--33.2.1-jre.lock
+ *     com.google.guava--guava--33.2.1-jre.lock
+ *   format-&lt;n&gt;/      only when a newer layout owns the root; same structure inside
  * </pre>
  */
 public final class SharedCacheManager {
+
+    /** Layout version written to and expected in {@value #FORMAT_FILE}. */
+    static final int CACHE_FORMAT = 1;
+
+    /** Marker file in the cache root that records the layout version. */
+    static final String FORMAT_FILE = "cache-format.properties";
 
     private static final Logger LOGGER = Logger.getLogger("JExDependency");
 
     private static final String CACHE_DIR_PROPERTY = "jedependency.cache.dir";
     private static final String DEFAULT_CACHE_DIR = ".jexdependency/cache";
+    private static final String FORMAT_KEY = "format";
     private static final String JARS_SUBDIR = "jars";
     private static final String POMS_SUBDIR = "poms";
     private static final String LOCKS_SUBDIR = "locks";
 
     /**
-     * Lock files older than this duration are considered stale (from a crashed JVM) and deleted
-     * during initialization.
+     * How long a thread waits for another thread in this JVM that holds the same artifact lock. Longer than the
+     * worst case of one download walking every repository with retries; on timeout the waiter gives up instead of
+     * downloading without the lock, because both would write the same temporary file.
      */
-    private static final Duration STALE_LOCK_THRESHOLD = Duration.ofHours(1);
+    private static final Duration IN_PROCESS_LOCK_WAIT = Duration.ofMinutes(10);
+    private static final long LOCK_POLL_MILLIS = 100L;
 
     private final Path cacheRoot;
     private final Path jarsDir;
@@ -63,10 +88,10 @@ public final class SharedCacheManager {
 
     /**
      * Lazy singleton holder. The instance is created on first access and reused for the lifetime
-     * of the JVM — there is exactly one shared cache per server.
+     * of the JVM: there is exactly one shared cache per server.
      */
     private static final class Holder {
-        static final SharedCacheManager INSTANCE = new SharedCacheManager();
+        static final SharedCacheManager INSTANCE = new SharedCacheManager(defaultBaseRoot());
     }
 
     /**
@@ -79,25 +104,102 @@ public final class SharedCacheManager {
      *
      * @return shared cache manager
      */
-    @SuppressWarnings("java:S6548") // Deliberate, required JVM-wide shared cache — see Javadoc.
+    @SuppressWarnings("java:S6548") // Deliberate, required JVM-wide shared cache, see Javadoc.
     public static @NotNull SharedCacheManager getInstance() {
         return Holder.INSTANCE;
     }
 
-    private SharedCacheManager() {
-        final String customDir = System.getProperty(CACHE_DIR_PROPERTY);
-        if (customDir != null && !customDir.trim().isEmpty()) {
-            this.cacheRoot = Path.of(customDir.trim());
-        } else {
-            this.cacheRoot = Path.of(System.getProperty("user.dir"), DEFAULT_CACHE_DIR);
-        }
-
+    /**
+     * Creates a cache manager below the given base directory. Package-private for tests; production
+     * code uses {@link #getInstance()}.
+     *
+     * @param baseRoot directory that holds (or will hold) the shared cache
+     */
+    SharedCacheManager(@NotNull final Path baseRoot) {
+        this.cacheRoot = selectLayoutRoot(baseRoot);
         this.jarsDir = cacheRoot.resolve(JARS_SUBDIR);
         this.pomsDir = cacheRoot.resolve(POMS_SUBDIR);
         this.locksDir = cacheRoot.resolve(LOCKS_SUBDIR);
 
         ensureDirectories();
-        cleanStaleLocks();
+    }
+
+    private static @NotNull Path defaultBaseRoot() {
+        final String customDir = System.getProperty(CACHE_DIR_PROPERTY);
+        if (customDir != null && !customDir.trim().isEmpty()) {
+            return Path.of(customDir.trim());
+        }
+        return Path.of(System.getProperty("user.dir"), DEFAULT_CACHE_DIR);
+    }
+
+    // -------------------------------------------------------------------------
+    // Layout versioning
+    // -------------------------------------------------------------------------
+
+    /**
+     * Returns the directory this library version may use: the base root when its layout version
+     * matches (or is not recorded yet), otherwise an isolated {@code format-<n>} directory.
+     */
+    private static @NotNull Path selectLayoutRoot(@NotNull final Path baseRoot) {
+        final Path formatFile = baseRoot.resolve(FORMAT_FILE);
+        final Integer recordedFormat = readFormat(formatFile);
+
+        if (recordedFormat == null) {
+            writeFormat(baseRoot, formatFile);
+            return baseRoot;
+        }
+        if (recordedFormat == CACHE_FORMAT) {
+            return baseRoot;
+        }
+
+        final Path isolatedRoot = baseRoot.resolve("format-" + CACHE_FORMAT);
+        LOGGER.log(Level.INFO, () -> "Shared cache at " + baseRoot + " uses layout " + recordedFormat
+                + "; this JExDependency version uses layout " + CACHE_FORMAT + " and caches in " + isolatedRoot);
+        return isolatedRoot;
+    }
+
+    private static @Nullable Integer readFormat(@NotNull final Path formatFile) {
+        if (!Files.isRegularFile(formatFile)) {
+            return null;
+        }
+
+        final Properties properties = new Properties();
+        try (InputStream input = Files.newInputStream(formatFile)) {
+            properties.load(input);
+            final String value = properties.getProperty(FORMAT_KEY);
+            return value == null ? null : Integer.valueOf(value.trim());
+        } catch (final IOException | NumberFormatException exception) {
+            LOGGER.log(Level.WARNING, exception, () -> "Unreadable cache layout marker, rewriting: " + formatFile);
+            return null;
+        }
+    }
+
+    private static void writeFormat(@NotNull final Path baseRoot, @NotNull final Path formatFile) {
+        final Properties properties = new Properties();
+        properties.setProperty(FORMAT_KEY, Integer.toString(CACHE_FORMAT));
+
+        try {
+            Files.createDirectories(baseRoot);
+            final Path tempFile = Files.createTempFile(baseRoot, FORMAT_FILE, ".tmp");
+            try {
+                try (OutputStream output = Files.newOutputStream(tempFile)) {
+                    properties.store(output, "JExDependency shared cache layout. Do not edit.");
+                }
+                moveReplacing(tempFile, formatFile);
+            } finally {
+                Files.deleteIfExists(tempFile);
+            }
+        } catch (final IOException exception) {
+            LOGGER.log(Level.WARNING, exception, () -> "Failed to write cache layout marker: " + formatFile);
+        }
+    }
+
+    private static void moveReplacing(@NotNull final Path source, @NotNull final Path target) throws IOException {
+        try {
+            Files.move(source, target, StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING);
+        } catch (final AtomicMoveNotSupportedException exception) {
+            Files.move(source, target, StandardCopyOption.REPLACE_EXISTING);
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -150,7 +252,7 @@ public final class SharedCacheManager {
     }
 
     /**
-     * Returns the root directory of the shared cache.
+     * Returns the root directory of the shared cache that this library version uses.
      *
      * @return cache root path
      */
@@ -168,68 +270,84 @@ public final class SharedCacheManager {
      * supplier to populate the cache. The supplier should download the artifact and return
      * {@code true} on success.
      *
-     * <p>This method is safe to call concurrently from multiple plugins — file-channel locking
-     * ensures only one download per artifact at a time.</p>
+     * <p>This method is safe to call concurrently from multiple plugins and threads: file-channel
+     * locking ensures only one download per artifact at a time.</p>
      *
      * @param coordinate     the artifact to resolve
      * @param downloadAction a supplier that downloads the artifact to the path returned by
      *                       {@link #resolveJarPath}; returns {@code true} on success
-     * @return the path to the cached JAR, or {@code null} if the download failed
+     * @return the path to the cached JAR, or {@code null} if the download failed, the cache directories could not
+     *         be created, or the thread was interrupted or gave up while waiting for the lock
      */
-    public Path getOrDownload(
+    public @Nullable Path getOrDownload(
             @NotNull final DependencyCoordinate coordinate,
             @NotNull final BooleanSupplier downloadAction
     ) {
         final Path jarPath = resolveJarPath(coordinate);
 
-        // Fast path: already cached
         if (isValidFile(jarPath)) {
             return jarPath;
         }
 
-        // Ensure parent directories exist
         try {
             Files.createDirectories(jarPath.getParent());
+            Files.createDirectories(locksDir);
         } catch (final IOException exception) {
-            LOGGER.log(Level.WARNING, "Failed to create cache directory: {0}", jarPath.getParent());
+            LOGGER.log(Level.WARNING, exception, () -> "Failed to create cache directories for: " + jarPath);
             return null;
         }
 
-        // Acquire lock and double-check
-        final Path lockFile = locksDir.resolve(sanitizeLockName(coordinate));
+        // Lock files are never deleted: removing one while another process waits on it would let
+        // a third process lock a fresh file and download concurrently. They are empty and one per artifact.
+        final Path lockFile = locksDir.resolve(lockName(coordinate));
 
-        try {
-            Files.createDirectories(locksDir);
-        } catch (final IOException exception) {
-            LOGGER.log(Level.FINE, exception, () -> "Failed to create locks directory");
-        }
+        try (FileChannel channel = FileChannel.open(lockFile, StandardOpenOption.CREATE, StandardOpenOption.WRITE);
+             FileLock lock = acquireLock(channel)) {
 
-        try (final FileChannel channel = FileChannel.open(lockFile,
-                StandardOpenOption.CREATE, StandardOpenOption.WRITE);
-             final FileLock ignored = channel.lock()) {
-
-            // Double-check after acquiring lock
             if (isValidFile(jarPath)) {
                 return jarPath;
             }
-
-            // Perform the actual download
-            final boolean success = downloadAction.getAsBoolean();
-
-            if (success && isValidFile(jarPath)) {
-                return jarPath;
+            if (lock == null) {
+                LOGGER.log(Level.WARNING, () -> "Gave up waiting for another download of " + coordinate.toGavString());
+                return null;
             }
-
-            return null;
+            return runDownload(jarPath, downloadAction);
 
         } catch (final IOException exception) {
-            LOGGER.log(Level.WARNING, exception, () -> "Failed to acquire cache lock for: " + coordinate.toGavString());
-            // Fall through to direct download without locking
-            final boolean success = downloadAction.getAsBoolean();
-            return (success && isValidFile(jarPath)) ? jarPath : null;
-        } finally {
-            safeDelete(lockFile);
+            LOGGER.log(Level.WARNING, exception,
+                    () -> "Cache lock unavailable, downloading without it: " + coordinate.toGavString());
+            return isValidFile(jarPath) ? jarPath : runDownload(jarPath, downloadAction);
+        } catch (final InterruptedException exception) {
+            Thread.currentThread().interrupt();
+            LOGGER.log(Level.WARNING, () -> "Interrupted while waiting for cache lock: " + coordinate.toGavString());
+            return null;
         }
+    }
+
+    /**
+     * Blocks until the file lock is held. Another process holding it makes {@link FileChannel#lock()}
+     * wait; another thread of this JVM holding it raises {@link OverlappingFileLockException}, so that
+     * case is polled until {@link #IN_PROCESS_LOCK_WAIT} expires.
+     *
+     * @return the held lock, or {@code null} when another thread of this JVM kept it past the wait limit
+     */
+    private static @Nullable FileLock acquireLock(@NotNull final FileChannel channel)
+            throws IOException, InterruptedException {
+        final long deadline = System.nanoTime() + IN_PROCESS_LOCK_WAIT.toNanos();
+        while (true) {
+            try {
+                return channel.lock();
+            } catch (final OverlappingFileLockException exception) {
+                if (System.nanoTime() >= deadline) {
+                    return null;
+                }
+                Thread.sleep(LOCK_POLL_MILLIS);
+            }
+        }
+    }
+
+    private static @Nullable Path runDownload(@NotNull final Path jarPath, @NotNull final BooleanSupplier action) {
+        return action.getAsBoolean() && isValidFile(jarPath) ? jarPath : null;
     }
 
     // -------------------------------------------------------------------------
@@ -237,13 +355,11 @@ public final class SharedCacheManager {
     // -------------------------------------------------------------------------
 
     /**
-     * Checks a legacy per-plugin cache directory for an existing artifact and copies it to the
-     * shared cache if found. This enables transparent migration from the old per-plugin layout
-     * without re-downloading.
+     * Copies a JAR from a plugin's legacy per-plugin library directory into the shared cache.
      *
-     * @param coordinate     the artifact to look for
-     * @param legacyDirectory the old per-plugin libraries directory
-     * @return {@code true} if the artifact was found in the legacy location and migrated
+     * @param coordinate      the artifact coordinate
+     * @param legacyDirectory the plugin's old library directory
+     * @return {@code true} if the artifact is now in the shared cache
      */
     public boolean migrateFromLegacy(
             @NotNull final DependencyCoordinate coordinate,
@@ -256,17 +372,23 @@ public final class SharedCacheManager {
 
         final Path targetPath = resolveJarPath(coordinate);
         if (isValidFile(targetPath)) {
-            return true; // Already in shared cache
+            return true;
         }
 
         try {
             Files.createDirectories(targetPath.getParent());
-            Files.copy(legacyFile.toPath(), targetPath);
+            final Path tempFile = Files.createTempFile(targetPath.getParent(), targetPath.getFileName().toString(), ".part");
+            try {
+                Files.copy(legacyFile.toPath(), tempFile, StandardCopyOption.REPLACE_EXISTING);
+                moveReplacing(tempFile, targetPath);
+            } finally {
+                Files.deleteIfExists(tempFile);
+            }
             LOGGER.log(Level.FINE, () -> "Migrated to shared cache: " + coordinate.toGavString());
             return true;
         } catch (final IOException exception) {
             LOGGER.log(Level.FINE, exception, () -> "Failed to migrate from legacy cache: " + coordinate.toGavString());
-            return false;
+            return isValidFile(targetPath);
         }
     }
 
@@ -278,8 +400,10 @@ public final class SharedCacheManager {
         return Files.isRegularFile(path) && path.toFile().length() > 0;
     }
 
-    private static @NotNull String sanitizeLockName(@NotNull final DependencyCoordinate coordinate) {
-        return coordinate.groupId() + "--" + coordinate.artifactId() + "--" + coordinate.version() + ".lock";
+    private static @NotNull String lockName(@NotNull final DependencyCoordinate coordinate) {
+        final String classifier = coordinate.classifier();
+        final String classifierPart = classifier == null || classifier.isEmpty() ? "" : "--" + classifier;
+        return coordinate.groupId() + "--" + coordinate.artifactId() + "--" + coordinate.version() + classifierPart + ".lock";
     }
 
     private void ensureDirectories() {
@@ -289,44 +413,6 @@ public final class SharedCacheManager {
             Files.createDirectories(locksDir);
         } catch (final IOException exception) {
             LOGGER.log(Level.SEVERE, exception, () -> "Failed to create shared cache directories at: " + cacheRoot);
-        }
-    }
-
-    /**
-     * Removes lock files older than {@link #STALE_LOCK_THRESHOLD} to recover from JVM crashes
-     * that left locks on disk. OS-level file locks are released on process termination, so these
-     * files are safe to delete.
-     */
-    private void cleanStaleLocks() {
-        if (!Files.isDirectory(locksDir)) {
-            return;
-        }
-
-        try (final var files = Files.list(locksDir)) {
-            final Instant threshold = Instant.now().minus(STALE_LOCK_THRESHOLD);
-
-            files.filter(p -> p.toString().endsWith(".lock"))
-                    .forEach(lockFile -> {
-                        try {
-                            final Instant modified = Files.getLastModifiedTime(lockFile).toInstant();
-                            if (modified.isBefore(threshold)) {
-                                Files.deleteIfExists(lockFile);
-                                LOGGER.log(Level.FINE, () -> "Cleaned stale lock: " + lockFile.getFileName());
-                            }
-                        } catch (final IOException exception) {
-                            // Ignore — best effort cleanup
-                        }
-                    });
-        } catch (final IOException exception) {
-            LOGGER.log(Level.FINE, exception, () -> "Failed to clean stale locks");
-        }
-    }
-
-    private static void safeDelete(@NotNull final Path file) {
-        try {
-            Files.deleteIfExists(file);
-        } catch (final IOException exception) {
-            // Ignore — lock files are cleaned up on next startup
         }
     }
 }
