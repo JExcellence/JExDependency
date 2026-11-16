@@ -345,7 +345,7 @@ public class TransitiveDependencyResolver {
                                                             @NotNull final String pomPath,
                                                             @NotNull final File diskFile,
                                                             @NotNull final String cacheKey) {
-        for (final RepositoryType repo : RepositoryType.values()) {
+        for (final RepositoryType repo : RepositoryType.searchOrder()) {
             final byte[] bytes = fetchBytes(repo.getBaseUrl() + pomPath);
             if (bytes == null || bytes.length == 0) {
                 continue;
