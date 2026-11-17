@@ -44,6 +44,11 @@
 - `DependencyDownloader.activeRepositories()` and a `TransitiveDependencyResolver` constructor that takes the
   repositories to fetch POM files from.
 - `SharedCacheManager.isUsableJar(Path)`.
+- `JEDependency.loadAsync(...)` returning `CompletableFuture<LoadResult>`, `JEDependency.whenLoaded(...)` and
+  `JEDependency.runOnServerThread(...)`, which use Folia's global region scheduler when present;
+  `DependencyManager.load(...)`; `RemappingDependencyManager.lastResult()`.
+- One startup report line with resolve, download, remap and inject times and cache hits (`StartupReport`,
+  `DependencyDownloader.stats()`).
 - `RelocationPlanner`; `relocation-prefix:` and `relocations:` in `dependencies.yml`;
   `RemappingDependencyManager.setTransitiveResolutionEnabled(...)`; `LoaderClasspathFile.isComplete(...)`.
 - `dependencies.yml`: `repositories:`, `community-repositories:`, `relocation-excludes:`, and per-library

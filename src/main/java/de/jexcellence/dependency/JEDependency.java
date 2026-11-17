@@ -3,7 +3,10 @@ package de.jexcellence.dependency;
 import de.jexcellence.dependency.injector.ClasspathInjector;
 import de.jexcellence.dependency.loader.LoaderClasspathFile;
 import de.jexcellence.dependency.manager.DependencyManager;
+import de.jexcellence.dependency.model.LoadResult;
+import de.jexcellence.dependency.model.ProcessingResult;
 import org.bukkit.Bukkit;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -15,6 +18,8 @@ import java.lang.reflect.Method;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
+import java.util.function.Consumer;
 import java.util.logging.Level;
 
 /**
@@ -140,6 +145,93 @@ public class JEDependency {
     }
 
     /**
+     * Loads the plugin's libraries on a background thread and reports what was loaded. Classes from the libraries
+     * can be used once the future completes. Continue on the server thread with
+     * {@link #whenLoaded(Plugin, CompletableFuture, Consumer)}.
+     *
+     * <pre>{@code
+     * JEDependency.whenLoaded(this, JEDependency.loadAsync(this, MyPlugin.class), result -> {
+     *     if (!result.isSuccessful()) {
+     *         getLogger().severe("Missing libraries: " + result.failed());
+     *         getServer().getPluginManager().disablePlugin(this);
+     *         return;
+     *     }
+     *     startServices();
+     * });
+     * }</pre>
+     *
+     * @param plugin      owning plugin providing the logger and data directory
+     * @param anchorClass class used to locate dependency descriptors and the class loader to inject into
+     * @return future with the outcome; it fails only on unexpected errors
+     */
+    public static @NotNull CompletableFuture<LoadResult> loadAsync(
+            @NotNull final JavaPlugin plugin,
+            @NotNull final Class<?> anchorClass
+    ) {
+        return loadAsync(plugin, anchorClass, null);
+    }
+
+    /**
+     * Loads the plugin's libraries and ad-hoc coordinates on a background thread and reports what was loaded.
+     *
+     * @param plugin                 owning plugin providing the logger and data directory
+     * @param anchorClass            class used to locate dependency descriptors and the class loader to inject into
+     * @param additionalDependencies optional coordinates appended to the YAML list
+     * @return future with the outcome; it fails only on unexpected errors
+     */
+    public static @NotNull CompletableFuture<LoadResult> loadAsync(
+            @NotNull final JavaPlugin plugin,
+            @NotNull final Class<?> anchorClass,
+            @Nullable final String[] additionalDependencies
+    ) {
+        return CompletableFuture.supplyAsync(() -> performInitialization(plugin, anchorClass, additionalDependencies, false));
+    }
+
+    /**
+     * Runs {@code action} with the result on the server thread once {@code future} completes: on Folia on the
+     * global region scheduler, elsewhere on the Bukkit scheduler. Errors are logged through the plugin's logger.
+     *
+     * @param plugin owning plugin; nothing runs when it is disabled by then
+     * @param future future to wait for, for example from {@link #loadAsync(JavaPlugin, Class)}
+     * @param action work that needs the server thread
+     * @param <T>    result type
+     * @return a future that completes after {@code action} ran
+     */
+    public static <T> @NotNull CompletableFuture<Void> whenLoaded(
+            @NotNull final Plugin plugin,
+            @NotNull final CompletableFuture<T> future,
+            @NotNull final Consumer<? super T> action
+    ) {
+        final Executor serverThread = task -> runOnServerThread(plugin, task);
+        return future.thenAcceptAsync(action, serverThread).whenComplete((ignored, error) -> {
+            if (error != null) {
+                plugin.getLogger().log(Level.SEVERE, "Loading libraries failed", error);
+            }
+        });
+    }
+
+    /**
+     * Runs a task on the server thread: on Folia (and Paper 1.20+) on the global region scheduler, elsewhere with
+     * the Bukkit scheduler.
+     *
+     * @param plugin owning plugin
+     * @param task   task to run
+     */
+    public static void runOnServerThread(@NotNull final Plugin plugin, @NotNull final Runnable task) {
+        if (!plugin.isEnabled()) {
+            return;
+        }
+        try {
+            final Object scheduler = Bukkit.class.getMethod("getGlobalRegionScheduler").invoke(null);
+            scheduler.getClass().getMethod("execute", Plugin.class, Runnable.class).invoke(scheduler, plugin, task);
+            return;
+        } catch (final ReflectiveOperationException | RuntimeException noGlobalScheduler) {
+            // Spigot and older Paper have no global region scheduler.
+        }
+        Bukkit.getScheduler().runTask(plugin, task);
+    }
+
+    /**
      * Determines the server distribution currently running so the dependency system can align logging and loader.
      * expectations (e.g. whether the Paper plugin loader pre-downloaded libraries).
      *
@@ -214,22 +306,25 @@ public class JEDependency {
         return false;
     }
 
-    private static void performInitialization(
+    private static @NotNull LoadResult performInitialization(
             @NotNull final JavaPlugin plugin,
             @NotNull final Class<?> anchorClass,
             @Nullable final String[] additionalDependencies,
             final boolean forceRemapping
     ) {
+        final long start = System.currentTimeMillis();
+        int preloaded = 0;
         final String serverType = getServerType();
         plugin.getLogger().log(Level.INFO, "JEDependency initializing on {0}", serverType);
 
         // On Paper plugin loader (1.20+), inject pre-downloaded libraries but do NOT return early.
         // Continue with full initialization to leverage the complete feature set.
         if (isPaperPluginLoaderActive() && isVersion120OrHigher()) {
-            final boolean complete = injectPreDownloadedLibraries(plugin, anchorClass);
-            if (complete && (additionalDependencies == null || additionalDependencies.length == 0)) {
+            final int injected = injectPreDownloadedLibraries(plugin, anchorClass);
+            preloaded = Math.max(injected, 0);
+            if (injected >= 0 && (additionalDependencies == null || additionalDependencies.length == 0)) {
                 plugin.getLogger().info("Libraries were loaded by the Paper plugin loader; nothing left to do");
-                return;
+                return new LoadResult(List.of(), List.of(), preloaded, System.currentTimeMillis() - start);
             }
             plugin.getLogger().info("Paper plugin loader did not load every library; continuing with full initialization");
         } else if (isPaperPluginLoaderActive() && !isVersion120OrHigher()) {
@@ -245,9 +340,10 @@ public class JEDependency {
             final String remappingSource = forceRemapping ? "API" : "system property";
             plugin.getLogger().log(Level.INFO, "Using RemappingDependencyManager (remapping requested via {0})", remappingSource);
 
-            if (initializeWithRemappingManager(plugin, anchorClass, additionalDependencies)) {
+            final ProcessingResult remapped = initializeWithRemappingManager(plugin, anchorClass, additionalDependencies);
+            if (remapped != null) {
                 plugin.getLogger().info("JEDependency initialization completed with remapping");
-                return;
+                return LoadResult.of(remapped, preloaded, System.currentTimeMillis() - start);
             }
 
             plugin.getLogger().warning("Remapping initialization failed - falling back to standard DependencyManager");
@@ -257,8 +353,9 @@ public class JEDependency {
 
         final DependencyManager dependencyManager = new DependencyManager(plugin, anchorClass);
         dependencyManager.setTransitiveResolutionEnabled(true);
-        dependencyManager.initialize(additionalDependencies);
+        final ProcessingResult result = dependencyManager.load(additionalDependencies);
         plugin.getLogger().info("JEDependency initialization completed");
+        return LoadResult.of(result, preloaded, System.currentTimeMillis() - start);
     }
 
     /**
@@ -268,10 +365,10 @@ public class JEDependency {
      *
      * @param plugin       owning plugin used for logging and resolving the data directory
      * @param anchorClass  class whose class loader receives the injected libraries
-     * @return {@code true} when the loader's record is complete and every recorded jar was injected, so the
-     *         plugin side has nothing left to download or resolve
+     * @return the number of injected jars when the loader's record is complete and every recorded jar was
+     *         injected, so the plugin side has nothing left to download or resolve; {@code -1} otherwise
      */
-    private static boolean injectPreDownloadedLibraries(
+    private static int injectPreDownloadedLibraries(
             @NotNull final JavaPlugin plugin,
             @NotNull final Class<?> anchorClass
     ) {
@@ -283,13 +380,13 @@ public class JEDependency {
             recordedJars = LoaderClasspathFile.read(libsFolder.toPath());
         } catch (final IOException exception) {
             plugin.getLogger().log(Level.WARNING, "Could not read the Paper loader classpath record", exception);
-            return false;
+            return -1;
         }
         final boolean complete = LoaderClasspathFile.isComplete(libsFolder.toPath());
 
         if (recordedJars.isEmpty()) {
             plugin.getLogger().log(Level.FINE, "No libraries recorded by the Paper loader in {0}", libsFolder);
-            return complete;
+            return complete ? 0 : -1;
         }
 
         final ClassLoader pluginClassLoader = anchorClass.getClassLoader();
@@ -310,7 +407,7 @@ public class JEDependency {
 
         plugin.getLogger().log(Level.INFO, "Injected {0} libraries{1} recorded by the Paper loader",
                 new Object[]{injected, failed > 0 ? " (" + failed + " failed)" : ""});
-        return complete && failed == 0;
+        return complete && failed == 0 ? injected : -1;
     }
 
     /**
@@ -354,7 +451,7 @@ public class JEDependency {
         }
     }
 
-    private static boolean initializeWithRemappingManager(
+    private static @Nullable ProcessingResult initializeWithRemappingManager(
             @NotNull final JavaPlugin plugin,
             @NotNull final Class<?> anchorClass,
             @Nullable final String[] additionalDependencies
@@ -365,20 +462,23 @@ public class JEDependency {
             final Constructor<?> constructor = findSuitableConstructor(remapperClass);
             if (constructor == null) {
                 plugin.getLogger().severe("No compatible constructor found in RemappingDependencyManager");
-                return false;
+                return null;
             }
 
             final Object manager = createRemappingManagerInstance(constructor, plugin, anchorClass);
-            if (manager == null) {
-                return false;
+            if (manager == null || !invokeInitializeMethod(manager, additionalDependencies, plugin, anchorClass)) {
+                return null;
             }
-
-            return invokeInitializeMethod(manager, additionalDependencies, plugin, anchorClass);
+            try {
+                return (ProcessingResult) manager.getClass().getMethod("lastResult").invoke(manager);
+            } catch (final ReflectiveOperationException | ClassCastException exception) {
+                return new ProcessingResult(List.of(), List.of(), 0L);
+            }
 
         } catch (final Throwable throwable) {
             plugin.getLogger().log(Level.SEVERE, "Failed to initialize RemappingDependencyManager: {0}: {1}",
                     new Object[]{throwable.getClass().getSimpleName(), throwable.getMessage()});
-            return false;
+            return null;
         }
     }
 

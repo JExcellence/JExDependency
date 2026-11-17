@@ -87,6 +87,10 @@ public class DependencyDownloader {
     private final Map<DependencyCoordinate, String> pinnedHashes = new ConcurrentHashMap<>();
     private final Map<String, Semaphore> hostPermits = new ConcurrentHashMap<>();
 
+    private final java.util.concurrent.atomic.AtomicInteger cacheHits = new java.util.concurrent.atomic.AtomicInteger();
+    private final java.util.concurrent.atomic.AtomicInteger downloads = new java.util.concurrent.atomic.AtomicInteger();
+    private final java.util.concurrent.atomic.AtomicInteger failures = new java.util.concurrent.atomic.AtomicInteger();
+
     private volatile boolean communityRepositories = RepositoryType.communityEnabledByProperty();
     private volatile int maxRetries = DEFAULT_MAX_RETRIES;
 
@@ -282,12 +286,14 @@ public class DependencyDownloader {
 
         if (isAcceptable(coordinate, cachedPath)) {
             logger.log(Level.FINE, () -> "Dependency in shared cache: " + coordinate.toGavString());
+            cacheHits.incrementAndGet();
             return DownloadResult.success(coordinate, cachedPath.toFile());
         }
         discardIfPresent(cachedPath);
 
         if (cache.migrateFromLegacy(coordinate, targetDirectory) && isAcceptable(coordinate, cachedPath)) {
             logger.log(Level.FINE, () -> "Migrated from legacy cache: " + coordinate.toGavString());
+            cacheHits.incrementAndGet();
             return DownloadResult.success(coordinate, cachedPath.toFile());
         }
         discardIfPresent(cachedPath);
@@ -295,17 +301,20 @@ public class DependencyDownloader {
         if (!networkAvailable.get()) {
             final String message = "Network unreachable and no cached artifact available";
             logger.log(Level.WARNING, "{0}: {1}", new Object[]{message, coordinate.toGavString()});
+            failures.incrementAndGet();
             return DownloadResult.failure(coordinate, message);
         }
 
         logger.log(Level.FINE, () -> "Downloading dependency: " + coordinate.toGavString());
         final Path result = cache.getOrDownload(coordinate, () -> downloadToFile(coordinate, cachedPath));
         if (result != null && isAcceptable(coordinate, result)) {
+            downloads.incrementAndGet();
             return DownloadResult.success(coordinate, result.toFile());
         }
 
         final String message = "Failed to download from any repository";
         logger.log(Level.WARNING, "{0}: {1}", new Object[]{message, coordinate.toGavString()});
+        failures.incrementAndGet();
         return DownloadResult.failure(coordinate, message);
     }
 
@@ -329,6 +338,25 @@ public class DependencyDownloader {
             }
         }
         return null;
+    }
+
+    /**
+     * Returns how many jars this downloader took from the cache, downloaded and failed to get so far.
+     *
+     * @return counters since the downloader was created
+     */
+    public @NotNull DownloadStats stats() {
+        return new DownloadStats(cacheHits.get(), downloads.get(), failures.get());
+    }
+
+    /**
+     * Download counters.
+     *
+     * @param cached     jars reused from the shared cache or moved there from an old per-plugin folder
+     * @param downloaded jars fetched from a repository
+     * @param failed     jars that could not be loaded
+     */
+    public record DownloadStats(int cached, int downloaded, int failed) {
     }
 
     /**

@@ -9,6 +9,7 @@ import de.jexcellence.dependency.loader.YamlDependencyLoader;
 import de.jexcellence.dependency.resolver.TransitiveDependencyResolver;
 import de.jexcellence.dependency.model.DependencyCoordinate;
 import de.jexcellence.dependency.model.DownloadResult;
+import de.jexcellence.dependency.model.ProcessingResult;
 import de.jexcellence.dependency.module.Deencapsulation;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -74,6 +75,9 @@ public class RemappingDependencyManager {
     private final YamlDependencyLoader yamlLoader = new YamlDependencyLoader();
     private DependencyDescriptor descriptor = DependencyDescriptor.EMPTY;
     private boolean transitiveResolutionEnabled = true;
+    private final List<DependencyCoordinate> loadedCoordinates = new ArrayList<>();
+    private final List<DownloadResult> failedDownloads = new ArrayList<>();
+    private long lastDurationMillis;
 
     // ----------------- Context -----------------
 
@@ -295,6 +299,27 @@ public class RemappingDependencyManager {
      * @throws IOException if operations fail
      */
     private void downloadRemapAndInject(@NotNull final ClassLoader classLoader) throws IOException {
+        final long start = System.currentTimeMillis();
+        loadedCoordinates.clear();
+        failedDownloads.clear();
+        try {
+            downloadRemapAndInjectTimed(classLoader);
+        } finally {
+            lastDurationMillis = System.currentTimeMillis() - start;
+        }
+    }
+
+    /**
+     * Returns what the last {@link #initialize(String[])} or {@link #loadAll(ClassLoader)} call downloaded and
+     * failed to download.
+     *
+     * @return the result of the last run
+     */
+    public @NotNull ProcessingResult lastResult() {
+        return new ProcessingResult(loadedCoordinates, failedDownloads, lastDurationMillis);
+    }
+
+    private void downloadRemapAndInjectTimed(@NotNull final ClassLoader classLoader) throws IOException {
         final List<DependencyCoordinate> toProcess = new ArrayList<>(coordinates);
 
         if (toProcess.isEmpty()) {
@@ -333,8 +358,10 @@ public class RemappingDependencyManager {
             final DownloadResult result = futures.get(index).join();
             if (result.success() && result.file() != null) {
                 inputJars.add(result.file().toPath());
+                loadedCoordinates.add(coordinate);
                 LOGGER.log(Level.FINE, () -> "Downloaded " + coordinate.toGavString() + " -> " + result.file().getName());
             } else {
+                failedDownloads.add(result);
                 LOGGER.log(Level.WARNING, "Failed to download dependency: {0}", coordinate.toGavString());
             }
         }

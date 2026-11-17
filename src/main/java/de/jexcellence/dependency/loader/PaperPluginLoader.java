@@ -1,6 +1,7 @@
 package de.jexcellence.dependency.loader;
 
 import de.jexcellence.dependency.downloader.DependencyDownloader;
+import de.jexcellence.dependency.model.StartupReport;
 import de.jexcellence.dependency.remapper.RelocationPlanner;
 import de.jexcellence.dependency.resolver.TransitiveDependencyResolver;
 import de.jexcellence.dependency.exception.PluginLoaderException;
@@ -80,6 +81,7 @@ public class PaperPluginLoader implements PluginLoader {
     private final DependencyDownloader dependencyDownloader;
     private final YamlDependencyLoader yamlDependencyLoader;
     private DependencyDescriptor descriptor = DependencyDescriptor.EMPTY;
+    private StartupReport report = new StartupReport();
     /** Whether the last {@link #classloader} run downloaded every declared and transitive dependency. */
     private boolean allResolved;
     
@@ -187,16 +189,23 @@ public class PaperPluginLoader implements PluginLoader {
             LoaderClasspathFile.delete(librariesDirectory);
             this.allResolved = false;
 
+            this.report = new StartupReport();
             final List<Path> downloadedJars = initializeDependencies(librariesDirectory.toFile(), pluginSource);
             warnIfRemappingRequestedButUnavailable();
 
             // Only this plugin's own jars are remapped and loaded. The shared cache and the remapped folder
             // also hold other plugins' and earlier runs' jars, which must never reach this classpath.
             final List<Path> jarsToLoad = shouldEnableRemapping() && !downloadedJars.isEmpty()
-                    ? remapJars(downloadedJars, dataDirectory, remappedDirectory, pluginSource)
+                    ? report.time(StartupReport.Phase.REMAP,
+                            () -> remapJars(downloadedJars, dataDirectory, remappedDirectory, pluginSource))
                     : downloadedJars;
 
-            final List<Path> loadedJars = loadSpecificJarsIntoClasspath(classpathBuilder, jarsToLoad);
+            final List<Path> loadedJars = report.time(StartupReport.Phase.INJECT,
+                    () -> loadSpecificJarsIntoClasspath(classpathBuilder, jarsToLoad));
+            final DependencyDownloader.DownloadStats stats = dependencyDownloader.stats();
+            if (!downloadedJars.isEmpty() || stats.failed() > 0) {
+                logger.info(report.downloads(stats.cached(), stats.downloaded(), stats.failed()).summary());
+            }
             recordLoadedJars(librariesDirectory, loadedJars, allResolved && loadedJars.size() == jarsToLoad.size());
 
         } catch (final IOException exception) {
@@ -310,9 +319,12 @@ public class PaperPluginLoader implements PluginLoader {
         dependencyDownloader.probeConnectivity();
         final List<DependencyCoordinate> declared = List.copyOf(coords);
         if (!"false".equalsIgnoreCase(System.getProperty(TRANSITIVE_PROPERTY, "true").trim())) {
+            final List<DependencyCoordinate> all = report.time(StartupReport.Phase.RESOLVE,
+                    () -> TransitiveDependencyResolver.withTransitives(declared, dependencyDownloader, librariesDirectory));
             coords.clear();
-            coords.addAll(TransitiveDependencyResolver.withTransitives(declared, dependencyDownloader, librariesDirectory));
+            coords.addAll(all);
         }
+        report.libraries(declared.size(), coords.size() - declared.size());
         logger.log(Level.INFO, "Resolving {0} dependencies ({1} declared)...", new Object[]{coords.size(), declared.size()});
 
         // Downloads land in the shared cache; librariesDirectory is the per-plugin folder of older versions,
@@ -321,9 +333,9 @@ public class PaperPluginLoader implements PluginLoader {
                 .map(coord -> dependencyDownloader.downloadAsync(coord, librariesDirectory))
                 .toList();
 
-        final List<DownloadResult> results = futures.stream()
+        final List<DownloadResult> results = report.time(StartupReport.Phase.DOWNLOAD, () -> futures.stream()
                 .map(CompletableFuture::join)
-                .toList();
+                .toList());
 
         for (final DownloadResult result : results) {
             if (result.success() && result.file() != null) {

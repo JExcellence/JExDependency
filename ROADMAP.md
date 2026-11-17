@@ -30,8 +30,8 @@ Every item below is measured with a startup report (item 13) before and after.
 | 10 | **`java.net.http.HttpClient`** (done, unreleased) with HTTP/2, connection reuse and a bounded number of requests per host. | Fewer TLS handshakes; friendlier to mirrors. |
 | 11 | **Parallel remapping and a server-wide remap cache** keyed by jar hash and relocation set. | Two plugins with the same libraries and settings remap once per server, not once each. |
 | 12 | **One startup handshake on Paper** (done, unreleased): when the loader's record is complete, the plugin side skips download and resolution. | Paper plugins do the work once. |
-| 13 | **Startup report**: one log line with resolve, download, verify, remap and inject times and cache hits. | Server owners can see what startup costs and whether the cache works. **help wanted** |
-| 14 | **Typed async API**: `initializeAsync` returns a `CompletionStage<LoadResult>` with what was loaded and what failed, plus a helper that continues on the right thread on Bukkit and on Folia's global region scheduler. | Plugins can keep heavy setup off the main thread without guessing. |
+| 13 | **Startup report** (done, unreleased): one log line with resolve, download, verify, remap and inject times and cache hits. | Server owners can see what startup costs and whether the cache works. **help wanted** |
+| 14 | **Typed async API** (done, unreleased): `initializeAsync` returns a `CompletionStage<LoadResult>` with what was loaded and what failed, plus a helper that continues on the right thread on Bukkit and on Folia's global region scheduler. | Plugins can keep heavy setup off the main thread without guessing. |
 
 ## P2: features
 
@@ -60,6 +60,7 @@ These keep the library dependable as it grows. They run in CI on every pull requ
 
 ## Done
 
+- Unreleased: startup report line (13), typed async API with LoadResult and Folia-aware server-thread continuation (14).
 - Unreleased: one relocation planner for Spigot and Paper that relocates only referenced libraries (3, 5), transitive dependencies in the Paper loader (4), parallel downloads on the remapping path (9), Paper startup handshake (12).
 - Unreleased: opt-in community repositories and declared repositories (2), parallel POM resolution (8), HttpClient with HTTP/2 (10), SHA-256 checks and pinned hashes (16), private repository credentials (17).
 - Unreleased: Maven Central artifacts are downloaded from a mirror by default (item 1).

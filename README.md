@@ -135,11 +135,15 @@ flowchart TD
 |---|:---:|---|
 | `JEDependency.initialize(plugin, anchor)` | yes | Default. |
 | `JEDependency.initializeWithRemapping(plugin, anchor)` | yes | You want relocated libraries (see [relocation](#relocation)). |
-| `JEDependency.initializeAsync(plugin, anchor)` | no | Startup should continue; wait for the returned `CompletableFuture<Void>` before touching the libraries. |
+| `JEDependency.loadAsync(plugin, anchor)` | no | Startup should continue. Returns a `CompletableFuture<LoadResult>` with what was loaded and what failed; `JEDependency.whenLoaded(plugin, future, action)` continues on the server thread, on Folia on the global region scheduler. |
+| `JEDependency.initializeAsync(plugin, anchor)` | no | Older form of `loadAsync` without a result. |
 
 Each method also accepts a `String[]` of extra coordinates (`group:artifact:version[:classifier]`).
-Libraries only one platform needs go into `dependency/paper/dependencies.yml` or
-`dependency/spigot/dependencies.yml`; they are merged with the main list.
+A platform-specific list in `dependency/paper/dependencies.yml` or `dependency/spigot/dependencies.yml` replaces
+the main list on that platform; it is not merged with it.
+
+Every startup logs one line such as `Loaded 12 libraries (3 transitive) in 840 ms: resolve 120 ms, download 600 ms
+(9 cached, 3 downloaded), inject 40 ms`, so you can see what loading costs and whether the cache works.
 
 ## Compatibility
 
