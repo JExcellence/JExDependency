@@ -176,4 +176,16 @@ class PaperPluginLoaderRemapTest {
         }
         return target;
     }
+
+    @Test
+    @DisplayName("libraries with the same file name from different groups get different remapped names")
+    void sameFileNameDifferentGroups() {
+        final Path first = tempDir.resolve("jars/a/x/1.0/x-1.0.jar");
+        final Path second = tempDir.resolve("jars/b/x/1.0/x-1.0.jar");
+        final Path unique = tempDir.resolve("jars/c/y/1.0/y-1.0.jar");
+        final List<Path> inputs = List.of(first, second, unique);
+
+        assertNotEquals(PaperPluginLoader.remappedFileName(inputs, first), PaperPluginLoader.remappedFileName(inputs, second));
+        assertEquals("y-1.0.jar", PaperPluginLoader.remappedFileName(inputs, unique));
+    }
 }

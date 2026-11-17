@@ -1,13 +1,12 @@
 /**
- * Declares the built-in Maven repositories consulted by the dependency downloader.
+ * Built-in Maven repositories, the Central mirror choice and repository credentials.
  *
- * <p>{@link de.jexcellence.dependency.repository.RepositoryType} lists a Maven Central mirror (chosen by
- * {@link de.jexcellence.dependency.repository.CentralMirror}), Maven Central itself as its fallback, and the
- * community repositories that JExDependency knows. Every entry normalizes its base URL to include a trailing slash
- * and derives artifact paths from a {@link de.jexcellence.dependency.model.DependencyCoordinate}. The
- * downloader tries repositories registered at runtime first, then
- * {@link de.jexcellence.dependency.repository.RepositoryType#searchOrder()}; retired entries are kept for
- * source compatibility and never contacted.
+ * <p>{@link de.jexcellence.dependency.repository.RepositoryType} lists the Maven Central mirror (chosen by
+ * {@link de.jexcellence.dependency.repository.CentralMirror}), Maven Central, and community repositories that are
+ * only contacted when a plugin or the server turns them on. Retired entries stay for source compatibility and are
+ * never contacted. {@link de.jexcellence.dependency.repository.RepositoryUrl} validates configured URLs and
+ * {@link de.jexcellence.dependency.repository.RepositoryCredentials} reads private-repository credentials from
+ * environment variables.
  *
  * <p>Downloaded jars are stored in the server-wide cache managed by
  * {@link de.jexcellence.dependency.cache.SharedCacheManager}; relocated copies stay in the plugin's

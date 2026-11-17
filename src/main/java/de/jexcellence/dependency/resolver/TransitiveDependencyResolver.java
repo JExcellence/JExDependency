@@ -76,6 +76,7 @@ public class TransitiveDependencyResolver {
 
     /** In-process POM cache keyed by {@code groupId:artifactId:version}; filled from several threads. */
     private final Map<String, ParsedPom> pomCache = new ConcurrentHashMap<>();
+    private final Set<DependencyCoordinate> unresolved = ConcurrentHashMap.newKeySet();
 
     /**
      * Creates a resolver that fetches POM files from the Central mirror and Central, plus the community
@@ -109,14 +110,25 @@ public class TransitiveDependencyResolver {
      * @param librariesDirectory the plugin's libraries directory
      * @return roots plus transitive coordinates without duplicates
      */
-    public static @NotNull List<DependencyCoordinate> withTransitives(
+    public static @NotNull Resolution withTransitives(
             @NotNull final List<DependencyCoordinate> roots,
             @NotNull final DependencyDownloader downloader,
             @NotNull final File librariesDirectory
     ) {
+        final TransitiveDependencyResolver resolver = new TransitiveDependencyResolver(librariesDirectory, downloader::fetchPom);
         final Set<DependencyCoordinate> merged = new LinkedHashSet<>(roots);
-        merged.addAll(new TransitiveDependencyResolver(librariesDirectory, downloader::fetchPom).resolve(roots));
-        return new ArrayList<>(merged);
+        merged.addAll(resolver.resolve(roots));
+        return new Resolution(new ArrayList<>(merged), Set.copyOf(resolver.unresolved));
+    }
+
+    /**
+     * Outcome of {@link #withTransitives}.
+     *
+     * @param coordinates roots followed by their transitive dependencies
+     * @param unresolved  artifacts whose POM could not be fetched, so their dependencies may be missing
+     */
+    public record Resolution(@NotNull List<DependencyCoordinate> coordinates,
+                             @NotNull Set<DependencyCoordinate> unresolved) {
     }
 
     /**
@@ -191,6 +203,7 @@ public class TransitiveDependencyResolver {
         if (pom == null) {
             LOGGER.log(Level.WARNING, "Could not resolve POM for {0}; skipping its transitive dependencies",
                     node.coordinate().toGavString());
+            unresolved.add(node.coordinate());
             return;
         }
         final Map<String, String> managedVersions = buildManagedVersionMap(pom);
@@ -399,8 +412,12 @@ public class TransitiveDependencyResolver {
         try {
             Files.createDirectories(diskFile.toPath().getParent());
             final java.nio.file.Path temp = Files.createTempFile(diskFile.toPath().getParent(), diskFile.getName(), ".part");
-            Files.write(temp, bytes);
-            Files.move(temp, diskFile.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+            try {
+                Files.write(temp, bytes);
+                Files.move(temp, diskFile.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+            } finally {
+                Files.deleteIfExists(temp);
+            }
         } catch (final Exception exception) {
             LOGGER.log(Level.FINE, "Failed to persist POM to disk cache", exception);
         }

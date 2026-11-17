@@ -125,7 +125,7 @@ flowchart TD
     D --> E[Resolve transitive dependencies from POMs]
     E --> F{In the shared cache?}
     F -- yes --> H
-    F -- no --> G[Download with per-artifact lock,<br/>retry with backoff, verify SHA-1]
+    F -- no --> G[Download with per-artifact lock,<br/>retry with backoff, verify SHA-256 or SHA-1]
     G --> H[Optional relocation into<br/>libraries/remapped/set]
     H --> I[Inject into the plugin class loader]
     I --> J[onEnable: libraries available]
@@ -168,8 +168,8 @@ loader: de.jexcellence.dependency.loader.PaperPluginLoader
 
 If you relocate JExDependency, use the relocated class name, for example
 `com.example.libs.jexdependency.loader.PaperPluginLoader`. Still call `JEDependency.initialize(...)` in `onLoad()`:
-it injects exactly the jars the loader recorded and resolves anything the loader did not (the loader currently
-loads declared libraries only, not their transitive dependencies; see the [roadmap](ROADMAP.md)).
+it injects exactly the jars the loader recorded and, when the loader loaded everything (transitive dependencies
+included, unless `-Djedependency.transitive=false`), does nothing else. Otherwise it resolves what is missing.
 
 ## Relocation
 
@@ -316,7 +316,7 @@ Turn on `FINE` logging for the `JExDependency` logger to see every download, che
 |---|:---:|:---:|:---:|:---:|
 | Works on Spigot | 1.16.5+ | no | yes | yes |
 | Works on Paper | yes | yes | yes | yes |
-| Repositories besides Maven Central | no | yes | n/a | built-in list only (custom: planned) |
+| Repositories besides Maven Central | no | yes | n/a | yes, declared in `dependencies.yml` |
 | Package relocation | no | no | yes | yes |
 | Small plugin jar | yes | yes | no | yes |
 

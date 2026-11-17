@@ -3,6 +3,7 @@ package de.jexcellence.dependency.model;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
@@ -107,7 +108,7 @@ public final class StartupReport {
             if (!nanos.containsKey(phase)) {
                 continue;
             }
-            line.append(separator).append(phase.name().toLowerCase(java.util.Locale.ROOT)).append(' ')
+            line.append(separator).append(phase.name().toLowerCase(Locale.ROOT)).append(' ')
                     .append(millis(phase)).append(" ms");
             if (phase == Phase.DOWNLOAD) {
                 line.append(" (").append(cached).append(" cached, ").append(downloaded).append(" downloaded)");

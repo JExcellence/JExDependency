@@ -38,6 +38,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.UnaryOperator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -87,9 +88,9 @@ public class DependencyDownloader {
     private final Map<DependencyCoordinate, String> pinnedHashes = new ConcurrentHashMap<>();
     private final Map<String, Semaphore> hostPermits = new ConcurrentHashMap<>();
 
-    private final java.util.concurrent.atomic.AtomicInteger cacheHits = new java.util.concurrent.atomic.AtomicInteger();
-    private final java.util.concurrent.atomic.AtomicInteger downloads = new java.util.concurrent.atomic.AtomicInteger();
-    private final java.util.concurrent.atomic.AtomicInteger failures = new java.util.concurrent.atomic.AtomicInteger();
+    private final AtomicInteger cacheHits = new AtomicInteger();
+    private final AtomicInteger downloads = new AtomicInteger();
+    private final AtomicInteger failures = new AtomicInteger();
 
     private volatile boolean communityRepositories = RepositoryType.communityEnabledByProperty();
     private volatile int maxRetries = DEFAULT_MAX_RETRIES;
@@ -199,6 +200,20 @@ public class DependencyDownloader {
             }
             networkAvailable.set(true);
             return true;
+        }
+
+        // Central is unreachable; repositories the plugin declares may still answer.
+        final java.util.Set<String> others = new java.util.LinkedHashSet<>(customRepositories);
+        others.addAll(declaredRepositories);
+        others.addAll(pinnedRepositories.values());
+        for (final String other : others) {
+            if (reachable(other)) {
+                unreachableRepositories.add(mirror);
+                unreachableRepositories.add(RepositoryType.MAVEN_CENTRAL);
+                logger.log(Level.WARNING, "Maven Central is unreachable; only the plugin''s own repositories are used");
+                networkAvailable.set(true);
+                return true;
+            }
         }
 
         networkAvailable.set(false);
@@ -331,7 +346,14 @@ public class DependencyDownloader {
         final String pomPath = coordinate.groupId().replace('.', '/') + '/' + coordinate.artifactId() + '/'
                 + coordinate.version() + '/' + coordinate.artifactId() + '-' + coordinate.version() + ".pom";
         for (final String base : repositoryUrls(coordinate)) {
-            final byte[] bytes = fetchSmallFile(URI.create(base + pomPath), true);
+            final URI uri;
+            try {
+                uri = URI.create(base + pomPath);
+            } catch (final IllegalArgumentException exception) {
+                continue;
+            }
+            final SmallFile file = fetchSmallFile(uri, true);
+            final byte[] bytes = file.status() == 200 ? file.body() : null;
             if (bytes != null && bytes.length > 0) {
                 logger.log(Level.FINE, () -> "Fetched POM " + coordinate.toGavString() + " from " + base);
                 return bytes;
@@ -373,7 +395,13 @@ public class DependencyDownloader {
     private boolean downloadToFile(@NotNull final DependencyCoordinate coordinate, @NotNull final Path targetFile) {
         final List<String> repositories = repositoryUrls(coordinate);
         for (final String base : repositories) {
-            final URI uri = URI.create(base + coordinate.toRepositoryPath());
+            final URI uri;
+            try {
+                uri = URI.create(base + coordinate.toRepositoryPath());
+            } catch (final IllegalArgumentException exception) {
+                logger.log(Level.WARNING, "Invalid artifact URL for {0} in {1}", new Object[]{coordinate.toGavString(), base});
+                continue;
+            }
             logger.log(Level.FINEST, () -> "Trying " + uri);
             if (attemptWithRetry(uri, coordinate, targetFile)) {
                 logger.log(Level.FINE, () -> "Downloaded " + coordinate.toGavString() + " from " + base);
@@ -530,9 +558,16 @@ public class DependencyDownloader {
 
         for (final String algorithm : List.of("SHA-256", "SHA-1")) {
             final String extension = algorithm.equals("SHA-256") ? ".sha256" : ".sha1";
-            final String published = publishedChecksum(URI.create(source + extension), algorithm);
-            if (published == null) {
+            final SmallFile checksumFile = fetchSmallFile(URI.create(source + extension), true);
+            if (checksumFile.status() == 404 || checksumFile.status() == 410) {
                 continue;
+            }
+            final String published = checksumFile.status() == 200 ? parseChecksum(checksumFile.body(), algorithm) : null;
+            if (published == null) {
+                // The checksum exists but could not be read: never accept the jar unverified.
+                logger.log(Level.WARNING, "Could not read {0} for {1} (HTTP {2}); trying the next repository",
+                        new Object[]{extension, coordinate.toGavString(), checksumFile.status()});
+                return false;
             }
             final String actual = hash(file, algorithm);
             if (published.equals(actual)) {
@@ -547,8 +582,7 @@ public class DependencyDownloader {
         return true;
     }
 
-    private @Nullable String publishedChecksum(@NotNull final URI uri, @NotNull final String algorithm) {
-        final byte[] bytes = fetchSmallFile(uri, false);
+    private static @Nullable String parseChecksum(final byte @Nullable [] bytes, @NotNull final String algorithm) {
         if (bytes == null) {
             return null;
         }
@@ -607,11 +641,20 @@ public class DependencyDownloader {
     // -------------------------------------------------------------------------
 
     /**
-     * Fetches a small file such as a checksum or POM. Follows redirects, retries once on a transient error.
+     * Result of fetching a small file.
      *
-     * @return the body of a 200 answer, or {@code null}
+     * @param status HTTP status of the final answer, or {@code -1} when no answer arrived
+     * @param body   body of a 200 answer, otherwise {@code null}
      */
-    private byte @Nullable [] fetchSmallFile(@NotNull final URI start, final boolean retry) {
+    private record SmallFile(int status, byte @Nullable [] body) {
+        static final SmallFile NO_ANSWER = new SmallFile(-1, null);
+    }
+
+    /**
+     * Fetches a small file such as a checksum or POM. Follows redirects, retries once on a transient error.
+     */
+    private @NotNull SmallFile fetchSmallFile(@NotNull final URI start, final boolean retry) {
+        SmallFile last = SmallFile.NO_ANSWER;
         for (int attempt = 0; attempt <= (retry ? 1 : 0); attempt++) {
             URI current = start;
             try {
@@ -621,32 +664,31 @@ public class DependencyDownloader {
                                     ? HttpResponse.BodySubscribers.ofByteArray()
                                     : HttpResponse.BodySubscribers.replacing(null));
                     final int status = response.statusCode();
-                    if (status == 200) {
-                        return response.body();
-                    }
                     if (status >= 300 && status < 400) {
                         current = redirectTarget(current, response);
                         continue;
                     }
-                    if (!RETRYABLE_STATUS_CODES.contains(status)) {
-                        return null;
+                    last = new SmallFile(status, status == 200 ? response.body() : null);
+                    if (status == 200 || !RETRYABLE_STATUS_CODES.contains(status)) {
+                        return last;
                     }
                     break;
                 }
             } catch (final HttpTimeoutException | ConnectException exception) {
                 logger.log(Level.FINEST, exception, () -> "Retryable error fetching " + start);
+                last = SmallFile.NO_ANSWER;
             } catch (final IOException | IllegalArgumentException exception) {
                 logger.log(Level.FINEST, exception, () -> "Could not fetch " + start);
-                return null;
+                return SmallFile.NO_ANSWER;
             } catch (final InterruptedException exception) {
                 Thread.currentThread().interrupt();
-                return null;
+                return SmallFile.NO_ANSWER;
             }
             if (retry && attempt == 0 && !sleep(INITIAL_BACKOFF_MS)) {
-                return null;
+                return last;
             }
         }
-        return null;
+        return last;
     }
 
     private <T> @NotNull HttpResponse<T> send(
@@ -700,17 +742,26 @@ public class DependencyDownloader {
     }
 
     private boolean reachable(@NotNull final RepositoryType repository) {
-        final HttpRequest request = HttpRequest.newBuilder(URI.create(repository.getBaseUrl()))
+        return reachable(repository.getBaseUrl());
+    }
+
+    private boolean reachable(@NotNull final String baseUrl) {
+        final HttpRequest request;
+        try {
+            request = HttpRequest.newBuilder(URI.create(baseUrl))
                 .timeout(PROBE_TIMEOUT)
                 .header("User-Agent", USER_AGENT)
                 .method("HEAD", HttpRequest.BodyPublishers.noBody())
                 .build();
+        } catch (final IllegalArgumentException exception) {
+            return false;
+        }
         try {
             final int status = httpClient.send(request, HttpResponse.BodyHandlers.discarding()).statusCode();
-            logger.log(Level.FINE, () -> "Network probe reached " + repository.getBaseUrl() + " (HTTP " + status + ")");
+            logger.log(Level.FINE, () -> "Network probe reached " + baseUrl + " (HTTP " + status + ")");
             return true;
         } catch (final IOException | IllegalArgumentException exception) {
-            logger.log(Level.FINE, exception, () -> "Network probe got no answer from " + repository.getBaseUrl());
+            logger.log(Level.FINE, exception, () -> "Network probe got no answer from " + baseUrl);
             return false;
         } catch (final InterruptedException exception) {
             Thread.currentThread().interrupt();

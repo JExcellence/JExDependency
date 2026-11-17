@@ -26,9 +26,9 @@
  * </ul>
  *
  * <h2>Serialization and YAML alignment</h2>
- * <p>YAML configuration currently serializes dependencies as a simple list of quoted strings under a
- * {@code dependencies:} key, for example {@code "group:artifact:version"} or
- * {@code "group:artifact:version:classifier"}. The loader forwards those strings directly to
+ * <p>Each entry under {@code dependencies:} is a coordinate string such as {@code "group:artifact:version"} or
+ * {@code "group:artifact:version:classifier"}, optionally followed by {@code @ <url>} and {@code sha256=<hex>}; see
+ * {@link de.jexcellence.dependency.loader.DependencyDescriptor}. The coordinate part is parsed with
  * {@link de.jexcellence.dependency.model.DependencyCoordinate#parse(String)}. Maintainers extending the YAML
  * schema must keep the colon-delimited order ({@code groupId:artifactId:version[:classifier]}) in sync with the
  * parser and update it alongside any additional fields.</p>

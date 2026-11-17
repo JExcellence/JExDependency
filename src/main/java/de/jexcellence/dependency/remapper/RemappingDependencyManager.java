@@ -19,7 +19,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.FileTime;
@@ -30,6 +29,8 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -343,7 +344,7 @@ public class RemappingDependencyManager {
         downloader.probeConnectivity();
 
         final List<DependencyCoordinate> toProcess = transitiveResolutionEnabled
-                ? TransitiveDependencyResolver.withTransitives(declared, downloader, librariesDirectory.toFile())
+                ? TransitiveDependencyResolver.withTransitives(declared, downloader, librariesDirectory.toFile()).coordinates()
                 : declared;
         if (toProcess.size() > declared.size()) {
             LOGGER.log(Level.INFO, "Transitive resolution added {0} dependencies", toProcess.size() - declared.size());
@@ -398,7 +399,7 @@ public class RemappingDependencyManager {
         final Path setDirectory = remappedDirectory.resolve(relocationFingerprint());
         Files.createDirectories(setDirectory);
         // Jars are remapped in parallel; each output file belongs to exactly one task.
-        final java.util.concurrent.ExecutorService pool = java.util.concurrent.Executors.newFixedThreadPool(
+        final ExecutorService pool = Executors.newFixedThreadPool(
                 Math.max(1, Math.min(inputJars.size(), Runtime.getRuntime().availableProcessors())), runnable -> {
                     final Thread thread = new Thread(runnable, "JExDependency-remap");
                     thread.setDaemon(true);
@@ -407,7 +408,7 @@ public class RemappingDependencyManager {
         try {
             final List<CompletableFuture<Path>> outputs = new ArrayList<>();
             for (final Path input : inputJars) {
-                final Path output = setDirectory.resolve(input.getFileName().toString());
+                final Path output = setDirectory.resolve(remappedFileName(inputJars, input));
                 outputs.add(CompletableFuture.supplyAsync(() -> {
                     if (isOutputUpToDate(output, input)) {
                         LOGGER.log(Level.FINE, () -> "Using cached remapped JAR: " + output.getFileName());
@@ -462,6 +463,19 @@ public class RemappingDependencyManager {
             LOGGER.log(Level.FINE, exception, () -> "Could not locate the plugin jar of " + anchorClass.getName());
             return null;
         }
+    }
+
+    /**
+     * Name of the remapped copy of a jar. Two libraries with the same file name from different groups get a prefix
+     * derived from their cache path, so their copies never overwrite each other.
+     */
+    static @NotNull String remappedFileName(@NotNull final List<Path> inputs, @NotNull final Path input) {
+        final String name = input.getFileName().toString();
+        final long sameName = inputs.stream().filter(other -> other.getFileName().toString().equals(name)).count();
+        if (sameName <= 1) {
+            return name;
+        }
+        return Integer.toHexString(input.toAbsolutePath().normalize().toString().hashCode()) + "-" + name;
     }
 
     /**

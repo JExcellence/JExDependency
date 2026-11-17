@@ -207,39 +207,7 @@ public class DependencyManager {
     public @NotNull CompletableFuture<ProcessingResult> initializeAsync(
             @Nullable final String[] additionalDependencies
     ) {
-        return CompletableFuture.supplyAsync(() -> {
-            final long startTime = System.currentTimeMillis();
-            report = new StartupReport();
-
-            final File librariesDirectory = setupLibrariesDirectory();
-            final ClassLoader targetClassLoader = anchorClass.getClassLoader();
-
-            performModuleDeencapsulation();
-
-            List<DependencyCoordinate> coordinates = collectDependencies(additionalDependencies);
-
-            if (coordinates.isEmpty()) {
-                return new ProcessingResult(List.of(), List.of(), 0L);
-            }
-
-            downloader.probeConnectivity();
-
-            final int declared = coordinates.size();
-            if (transitiveResolutionEnabled) {
-                final List<DependencyCoordinate> roots = coordinates;
-                coordinates = report.time(StartupReport.Phase.RESOLVE, () -> expandWithTransitives(roots, librariesDirectory));
-            }
-            report.libraries(declared, coordinates.size() - declared);
-
-            logger.log(Level.INFO, "Resolving {0} dependencies...", coordinates.size());
-
-            final ProcessingResult result = processDependencies(coordinates, librariesDirectory, targetClassLoader);
-
-            final long duration = System.currentTimeMillis() - startTime;
-            logProcessingSummary(result, duration);
-            applyFailurePolicy(result);
-            return result;
-        });
+        return CompletableFuture.supplyAsync(() -> load(additionalDependencies));
     }
 
     /**

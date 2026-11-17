@@ -237,4 +237,15 @@ class DependencyDownloaderTest {
         assertNotNull(fetched);
         assertArrayEquals(pom, fetched);
     }
+
+    @Test
+    @DisplayName("a checksum file that errors is not treated as missing, so the jar is not accepted unverified")
+    void checksumErrorRejectsJar() throws Exception {
+        final DependencyCoordinate coordinate = uniqueCoordinate();
+        serve(jarPath(coordinate), jar());
+        routes.put(jarPath(coordinate) + ".sha256", new Response(500, new byte[0], Map.of()));
+        useRepository();
+
+        assertFalse(downloader.setMaxRetries(0).download(coordinate, legacyDirectory.toFile()).success());
+    }
 }

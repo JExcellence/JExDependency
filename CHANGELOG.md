@@ -7,8 +7,6 @@
   NeetGames, Auxilor, Tcoded or the Gradle plugin portal need their repository in `dependencies.yml`
   (`repositories:` or `coordinate @ url`), `community-repositories: true`, or the server property
   `-Djedependency.repository.community=true`. A failed lookup logs this hint once.
-- `TransitiveDependencyResolver(File, List<RepositoryType>)`, added after 2.2.0 and never released, is replaced
-  by `TransitiveDependencyResolver(File, PomSource)`.
 - Automatic relocation only relocates libraries the plugin's own classes reference under the relocation prefix.
   Before, the Paper loader relocated every library it found except a built-in list (Hibernate, Jackson, JDA,
   OkHttp, Kotlin, Apache and others), which broke plugins that use a library by its original package names. The
@@ -42,8 +40,8 @@
 - `jedependency.repository.central` system property and support for Paper's `PAPER_DEFAULT_CENTRAL_REPOSITORY`
   environment variable to choose the mirror.
 - `RepositoryType.MAVEN_CENTRAL_MIRROR` and `CentralMirror`.
-- `DependencyDownloader.activeRepositories()` and a `TransitiveDependencyResolver` constructor that takes the
-  repositories to fetch POM files from.
+- `DependencyDownloader.activeRepositories()` and a `TransitiveDependencyResolver(File, PomSource)` constructor
+  that fetches POM files from the downloader's repositories.
 - `SharedCacheManager.isUsableJar(Path)`.
 - `JEDependency.loadAsync(...)` returning `CompletableFuture<LoadResult>`, `JEDependency.whenLoaded(...)` and
   `JEDependency.runOnServerThread(...)`, which use Folia's global region scheduler when present;

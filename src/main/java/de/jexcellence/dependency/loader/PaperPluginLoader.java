@@ -24,7 +24,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Locale;
 import java.util.concurrent.CompletableFuture;
-import java.util.jar.JarFile;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Formatter;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
@@ -84,6 +85,8 @@ public class PaperPluginLoader implements PluginLoader {
     private StartupReport report = new StartupReport();
     /** Whether the last {@link #classloader} run downloaded every declared and transitive dependency. */
     private boolean allResolved;
+    /** Whether a POM could not be fetched, so transitive dependencies may be missing. */
+    private boolean unresolvedPoms;
     
     /**
      * Plugin name extracted from the data directory path, used for logging context.
@@ -188,6 +191,7 @@ public class PaperPluginLoader implements PluginLoader {
             warnIfNestedLibraries(librariesDirectory);
             LoaderClasspathFile.delete(librariesDirectory);
             this.allResolved = false;
+            this.unresolvedPoms = false;
 
             this.report = new StartupReport();
             final List<Path> downloadedJars = initializeDependencies(librariesDirectory.toFile(), pluginSource);
@@ -319,10 +323,11 @@ public class PaperPluginLoader implements PluginLoader {
         dependencyDownloader.probeConnectivity();
         final List<DependencyCoordinate> declared = List.copyOf(coords);
         if (!"false".equalsIgnoreCase(System.getProperty(TRANSITIVE_PROPERTY, "true").trim())) {
-            final List<DependencyCoordinate> all = report.time(StartupReport.Phase.RESOLVE,
+            final TransitiveDependencyResolver.Resolution resolution = report.time(StartupReport.Phase.RESOLVE,
                     () -> TransitiveDependencyResolver.withTransitives(declared, dependencyDownloader, librariesDirectory));
             coords.clear();
-            coords.addAll(all);
+            coords.addAll(resolution.coordinates());
+            unresolvedPoms = !resolution.unresolved().isEmpty();
         }
         report.libraries(declared.size(), coords.size() - declared.size());
         logger.log(Level.INFO, "Resolving {0} dependencies ({1} declared)...", new Object[]{coords.size(), declared.size()});
@@ -345,7 +350,7 @@ public class PaperPluginLoader implements PluginLoader {
 
         final long failed = results.stream().filter(r -> !r.success()).count();
         final long ms = System.currentTimeMillis() - start;
-        this.allResolved = failed == 0;
+        this.allResolved = failed == 0 && !unresolvedPoms;
 
         if (failed > 0) {
             logger.log(Level.INFO, "Downloaded {0}/{1} ({2} failed) in {3}ms",
@@ -576,7 +581,7 @@ public class PaperPluginLoader implements PluginLoader {
         logger.log(Level.INFO, "Remapping {0} libraries...", total);
 
         // Jars are remapped in parallel; each output file belongs to exactly one task.
-        final java.util.concurrent.ExecutorService pool = java.util.concurrent.Executors.newFixedThreadPool(
+        final ExecutorService pool = Executors.newFixedThreadPool(
                 Math.max(1, Math.min(total, Runtime.getRuntime().availableProcessors())), runnable -> {
                     final Thread thread = new Thread(runnable, "JExDependency-remap");
                     thread.setDaemon(true);
@@ -585,7 +590,7 @@ public class PaperPluginLoader implements PluginLoader {
         try {
             final List<CompletableFuture<Integer>> outcomes = new ArrayList<>(total);
             for (final Path inputJar : inputJars) {
-                final Path outputJar = outputDirectory.resolve(inputJar.getFileName());
+                final Path outputJar = outputDirectory.resolve(remappedFileName(inputJars, inputJar));
                 outcomes.add(CompletableFuture.supplyAsync(() -> isRemappedJarUpToDate(outputJar, inputJar)
                         ? markCached(outputJar)
                         : remapAndValidate(remappingManager, inputJar, outputJar), pool));
@@ -593,7 +598,7 @@ public class PaperPluginLoader implements PluginLoader {
             for (int index = 0; index < total; index++) {
                 final Path inputJar = inputJars.get(index);
                 if (outcomes.get(index).join() == REMAP_OK) {
-                    jarsToLoad.add(outputDirectory.resolve(inputJar.getFileName()));
+                    jarsToLoad.add(outputDirectory.resolve(remappedFileName(inputJars, inputJar)));
                     remappedCount++;
                 } else {
                     failedJars.add(inputJar.getFileName().toString());
@@ -611,6 +616,19 @@ public class PaperPluginLoader implements PluginLoader {
 
         logger.log(Level.INFO, "Remapped {0}/{1} libraries", new Object[]{remappedCount, total});
         return jarsToLoad;
+    }
+
+    /**
+     * Name of the remapped copy of a jar. Two libraries with the same file name from different groups get a prefix
+     * derived from their cache path, so their copies never overwrite each other.
+     */
+    static @NotNull String remappedFileName(@NotNull final List<Path> inputs, @NotNull final Path input) {
+        final String name = input.getFileName().toString();
+        final long sameName = inputs.stream().filter(other -> other.getFileName().toString().equals(name)).count();
+        if (sameName <= 1) {
+            return name;
+        }
+        return Integer.toHexString(input.toAbsolutePath().normalize().toString().hashCode()) + "-" + name;
     }
 
     /** Per-jar remap outcome codes used by {@link #processRemapping}. */
