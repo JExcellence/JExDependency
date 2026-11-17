@@ -84,6 +84,22 @@ dependencies:
   - "com.mysql:mysql-connector-j:9.2.0"
 ```
 
+Libraries that are not on Maven Central need their repository. List it once, or pin a single library to it:
+
+```yaml
+repositories:
+  - https://repo.example.org/releases
+dependencies:
+  - "com.example:tool:1.4.0"
+  - "com.example:internal:2.0.0 @ https://repo.example.org/private"
+  - "com.example:audited:1.0.0 sha256=<64 hex characters>"
+```
+
+A pinned library (`@ url`) is downloaded only from that repository. A `sha256=` value makes JExDependency accept
+only that exact jar, from any repository and from the cache. Earlier versions also searched JitPack, PaperMC and
+other community repositories for every library; set `community-repositories: true` in the file to keep that
+behaviour.
+
 **3. Load them in `onLoad()`:**
 
 ```java
@@ -193,6 +209,7 @@ Server owners can change behaviour with JVM system properties, without rebuildin
 | `jedependency.relocations` | none | Explicit relocations: `com.google.gson=>my.libs.gson,org.foo=>my.libs.foo`. |
 | `jedependency.relocations.prefix` | `de.jexcellence.remapped` | Package prefix for automatic relocation. |
 | `jedependency.relocations.excludes` | none | Comma-separated packages that are never relocated. |
+| `jedependency.repository.community` | `false` | `true` searches the built-in community repositories (NeetGames, JitPack, Auxilor, Tcoded, PaperMC, SpigotMC, Gradle plugins) after Central for every plugin. |
 | `jedependency.repository.central` | Google's Central mirror | Maven Central mirror to download from, for example your own Nexus. Falls back to the `PAPER_DEFAULT_CENTRAL_REPOSITORY` environment variable. Set it to `https://repo1.maven.org/maven2` to download from Central directly. Read once at startup. |
 | `jedependency.cache.dir` | `<server>/.jexdependency/cache` | Location of the shared cache, for example a Docker volume. |
 | `jedependency.path.default` | `/dependency/dependencies.yml` | Resource path of the main dependency list. |
@@ -200,6 +217,11 @@ Server owners can change behaviour with JVM system properties, without rebuildin
 | `jedependency.path.spigot` | `/dependency/spigot/dependencies.yml` | Resource path of the Spigot-only list. |
 
 Example: `java -Djedependency.cache.dir=/data/jexdependency -jar paper.jar`
+
+**Private repositories.** Credentials never go into `dependencies.yml` or a plugin jar. Set an environment
+variable on the server named `JEDEPENDENCY_AUTH_` plus the repository host in upper case with every other
+character replaced by `_`, for example `JEDEPENDENCY_AUTH_REPO_EXAMPLE_ORG=deploy:password` or
+`JEDEPENDENCY_AUTH_REPO_EXAMPLE_ORG=Bearer <token>`. Credentials are sent only over HTTPS and only to that host.
 
 ### Failure policy
 
@@ -237,13 +259,15 @@ JExDependency downloads code that runs with your plugin's rights. Here is exactl
 
 - **When:** only at startup, only for jars and POMs that are not cached yet.
 - **Where from:** a Maven Central mirror first (Google's, the same default Paper uses), then Maven Central itself,
-  then NeetGames Nexus, JitPack, Auxilor, Tcoded, PaperMC, the SpigotMC snapshot repository and the Gradle plugin
-  portal, all over HTTPS. The first repository that has the artifact wins. Maven Central's terms do not allow using
-  it as a download CDN, which is why the mirror comes first; set `jedependency.repository.central` or Paper's
-  `PAPER_DEFAULT_CENTRAL_REPOSITORY` to use your own mirror. Declaring your own repositories and making community
-  repositories opt-in is [roadmap item 2](ROADMAP.md).
-- **Verification:** the published `.sha1` is compared with each download and a mismatch rejects the jar. A
-  repository without checksums is trusted as is.
+  then the repositories your `dependencies.yml` lists. Community repositories (JitPack, PaperMC and others) are
+  searched only when the plugin or the server turns them on. A library pinned with `@ url` comes only from that
+  repository. Maven Central's terms do not allow using it as a download CDN, which is why the mirror comes first;
+  set `jedependency.repository.central` or Paper's `PAPER_DEFAULT_CENTRAL_REPOSITORY` to use your own mirror.
+- **How:** one HTTP/2 connection per host, at most six parallel requests per host, retries with backoff on
+  timeouts, rate limits (honouring `Retry-After`) and server errors. Redirects from HTTPS to HTTP are refused.
+- **Verification:** a `sha256=` value in `dependencies.yml` must match. Otherwise the repository's `.sha256` file
+  is used, then its `.sha1` file; a mismatch rejects the jar. A repository without checksums is trusted as is.
+  Every download must also open as a jar, so HTML error pages never reach the cache.
 - **Versions:** pin exact versions; version ranges are not resolved.
 
 Report vulnerabilities privately as described in [SECURITY.md](SECURITY.md).

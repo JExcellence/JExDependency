@@ -3,6 +3,8 @@ package de.jexcellence.dependency.remapper;
 import de.jexcellence.dependency.downloader.DependencyDownloader;
 import de.jexcellence.dependency.injector.ClasspathInjector;
 import de.jexcellence.dependency.loader.LoaderClasspathFile;
+import de.jexcellence.dependency.loader.DependencyDescriptor;
+import de.jexcellence.dependency.loader.DependencyEntry;
 import de.jexcellence.dependency.loader.YamlDependencyLoader;
 import de.jexcellence.dependency.model.DependencyCoordinate;
 import de.jexcellence.dependency.model.DownloadResult;
@@ -68,6 +70,7 @@ public class RemappingDependencyManager {
     private final DependencyDownloader downloader = new DependencyDownloader();
     private final ClasspathInjector injector = new ClasspathInjector();
     private final YamlDependencyLoader yamlLoader = new YamlDependencyLoader();
+    private DependencyDescriptor descriptor = DependencyDescriptor.EMPTY;
 
     // ----------------- Context -----------------
 
@@ -396,20 +399,17 @@ public class RemappingDependencyManager {
 
     private void loadYamlDependencies(@NotNull final Class<?> contextClass) {
         try {
-            final List<String> yamlDeps = yamlLoader.loadDependencies(contextClass);
-            if (yamlDeps == null || yamlDeps.isEmpty()) {
+            final DependencyDescriptor yamlDescriptor = yamlLoader.loadDescriptor(contextClass);
+            if (yamlDescriptor == null || yamlDescriptor.isEmpty()) {
                 LOGGER.info("No dependencies found in YAML configuration");
                 return;
             }
-            LOGGER.log(Level.INFO, "Loaded {0} dependencies from YAML", yamlDeps.size());
-            for (final String dep : yamlDeps) {
-                final DependencyCoordinate coord = DependencyCoordinate.parse(dep);
-                if (coord != null) {
-                    coordinates.add(coord);
-                    LOGGER.log(Level.FINE, () -> "YAML dependency: " + dep);
-                } else {
-                    LOGGER.log(Level.WARNING, "Invalid dependency format in YAML: {0}", dep);
-                }
+            this.descriptor = yamlDescriptor;
+            downloader.configure(yamlDescriptor);
+            LOGGER.log(Level.INFO, "Loaded {0} dependencies from YAML", yamlDescriptor.entries().size());
+            for (final DependencyEntry entry : yamlDescriptor.entries()) {
+                coordinates.add(entry.coordinate());
+                LOGGER.log(Level.FINE, () -> "YAML dependency: " + entry.coordinate().toGavString());
             }
         } catch (final Exception ex) {
             LOGGER.log(Level.WARNING, "Failed to load YAML dependencies", ex);

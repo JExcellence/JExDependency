@@ -1,96 +1,124 @@
 package de.jexcellence.dependency.downloader;
 
 import de.jexcellence.dependency.cache.SharedCacheManager;
-import de.jexcellence.dependency.exception.DependencyDownloadException;
+import de.jexcellence.dependency.loader.DependencyDescriptor;
+import de.jexcellence.dependency.loader.DependencyEntry;
 import de.jexcellence.dependency.model.DependencyCoordinate;
 import de.jexcellence.dependency.model.DownloadResult;
+import de.jexcellence.dependency.repository.RepositoryCredentials;
 import de.jexcellence.dependency.repository.RepositoryType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
+import java.net.ConnectException;
 import java.net.URI;
-import java.net.URL;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.net.http.HttpTimeoutException;
 import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.nio.file.AtomicMoveNotSupportedException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.UnaryOperator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Handles downloading dependency artifacts from a curated list of repositories. Downloads are streamed directly to the.
- * plugin's libraries directory, validated as JAR files and optionally executed asynchronously using virtual threads.
- * The downloader keeps track of custom repositories supplied at runtime and logs HTTP outcomes for troubleshooting.
+ * Downloads artifacts into the server-wide cache.
+ *
+ * <p>Repositories are tried in this order: repositories added with {@link #addRepository(String)}, the Maven
+ * Central mirror, Maven Central, repositories declared in {@code dependencies.yml}, and finally the built-in
+ * community repositories when they are turned on. A dependency pinned to a repository with
+ * {@code coordinate @ url} is downloaded only from that repository.</p>
+ *
+ * <p>Requests use one HTTP/2 client with connection reuse and at most {@value #MAX_REQUESTS_PER_HOST} parallel
+ * requests per host. Each jar is checked against a pinned SHA-256 when the descriptor gives one, otherwise
+ * against the {@code .sha256} or {@code .sha1} file the repository publishes.</p>
  */
 public class DependencyDownloader {
 
     private static final String LOGGER_NAME = "JExDependency";
-    private static final String USER_AGENT = "JEDependency-Downloader/2.0.0";
+    private static final String USER_AGENT = "JExDependency (+https://github.com/JExcellence/JExDependency)";
     private static final String ACCEPT = "application/java-archive, application/octet-stream, */*;q=0.1";
-    private static final int CONNECTION_TIMEOUT_MS = 10_000;
-    private static final int READ_TIMEOUT_MS = 30_000;
-    private static final int BUFFER_SIZE = 65536;
+    private static final Duration CONNECT_TIMEOUT = Duration.ofSeconds(10);
+    private static final Duration REQUEST_TIMEOUT = Duration.ofSeconds(60);
+    private static final Duration SMALL_FILE_TIMEOUT = Duration.ofSeconds(15);
+    private static final Duration PROBE_TIMEOUT = Duration.ofSeconds(5);
     private static final int MAX_REDIRECTS = 5;
+    private static final int MAX_REQUESTS_PER_HOST = 6;
 
     private static final int DEFAULT_MAX_RETRIES = 3;
     private static final long INITIAL_BACKOFF_MS = 1_000L;
     private static final long MAX_BACKOFF_MS = 15_000L;
-    private static final double BACKOFF_MULTIPLIER = 2.0;
-    private static final int PROBE_TIMEOUT_MS = 5_000;
 
-    /**
-     * HTTP status codes considered transient and eligible for retry. Covers server-side errors and
-     * rate limiting responses that are likely to succeed on a subsequent attempt.
-     */
-    private static final Set<Integer> RETRYABLE_STATUS_CODES = Set.of(
-            408, // Request Timeout
-            429, // Too Many Requests
-            500, // Internal Server Error
-            502, // Bad Gateway
-            503, // Service Unavailable
-            504  // Gateway Timeout
-    );
+    /** HTTP status codes that are worth retrying: timeouts, rate limits and server errors. */
+    private static final Set<Integer> RETRYABLE_STATUS_CODES = Set.of(408, 429, 500, 502, 503, 504);
 
-    private final Logger logger;
-    private final List<String> customRepositories;
+    private final Logger logger = Logger.getLogger(LOGGER_NAME);
     private final ExecutorService executorService;
-    private final AtomicBoolean networkAvailable;
-    /** Repositories the connectivity probe could not reach; downloads skip them. */
+    private final HttpClient httpClient;
+    private final RepositoryCredentials credentials;
+    private final boolean builtInRepositories;
+    private final AtomicBoolean networkAvailable = new AtomicBoolean(true);
+    private final AtomicBoolean communityHintLogged = new AtomicBoolean();
     private final Set<RepositoryType> unreachableRepositories = ConcurrentHashMap.newKeySet();
+    private final List<String> customRepositories = new CopyOnWriteArrayList<>();
+    private final List<String> declaredRepositories = new CopyOnWriteArrayList<>();
+    private final Map<DependencyCoordinate, String> pinnedRepositories = new ConcurrentHashMap<>();
+    private final Map<DependencyCoordinate, String> pinnedHashes = new ConcurrentHashMap<>();
+    private final Map<String, Semaphore> hostPermits = new ConcurrentHashMap<>();
 
-    private volatile int maxRetries;
+    private volatile boolean communityRepositories = RepositoryType.communityEnabledByProperty();
+    private volatile int maxRetries = DEFAULT_MAX_RETRIES;
 
     /**
-     * Creates a new downloader backed by a virtual-thread executor that can be used for asynchronous operations.
+     * Creates a downloader that uses the built-in repositories and reads repository credentials from the
+     * environment.
      */
     public DependencyDownloader() {
-        this.logger = Logger.getLogger(LOGGER_NAME);
-        this.customRepositories = new ArrayList<>();
-        this.executorService = Executors.newVirtualThreadPerTaskExecutor();
-        this.networkAvailable = new AtomicBoolean(true);
-        this.maxRetries = DEFAULT_MAX_RETRIES;
+        this(true, System::getenv);
     }
 
     /**
-     * Sets the maximum number of retry attempts for transient HTTP errors per repository URL.
-     * A value of {@code 0} disables retries entirely. The default is {@value #DEFAULT_MAX_RETRIES}.
+     * Creates a downloader. Tests switch the built-in repositories off so nothing leaves the machine.
+     *
+     * @param builtInRepositories whether the Central mirror, Central and community repositories are used
+     * @param environment         environment lookup for repository credentials
+     */
+    DependencyDownloader(final boolean builtInRepositories, @NotNull final UnaryOperator<String> environment) {
+        this.builtInRepositories = builtInRepositories;
+        this.credentials = new RepositoryCredentials(environment);
+        this.executorService = DownloadThreads.newExecutor("JExDependency-download");
+        this.httpClient = HttpClient.newBuilder()
+                .version(HttpClient.Version.HTTP_2)
+                .connectTimeout(CONNECT_TIMEOUT)
+                .followRedirects(HttpClient.Redirect.NEVER)
+                .executor(executorService)
+                .build();
+    }
+
+    /**
+     * Sets the maximum number of retry attempts for transient errors per repository URL. {@code 0} disables
+     * retries. The default is {@value #DEFAULT_MAX_RETRIES}.
      *
      * @param maxRetries maximum retries per URL, must be non-negative
      * @return this downloader for fluent chaining
@@ -104,20 +132,56 @@ public class DependencyDownloader {
     }
 
     /**
+     * Applies a plugin's {@code dependencies.yml}: its repositories, repository pins, pinned hashes and whether
+     * community repositories are searched.
+     *
+     * @param descriptor parsed descriptor
+     */
+    public void configure(@NotNull final DependencyDescriptor descriptor) {
+        for (final String repository : descriptor.repositories()) {
+            final String normalized = withSlash(repository);
+            if (!declaredRepositories.contains(normalized)) {
+                declaredRepositories.add(normalized);
+            }
+        }
+        for (final DependencyEntry entry : descriptor.entries()) {
+            if (entry.repository() != null) {
+                pinnedRepositories.put(entry.coordinate(), withSlash(entry.repository()));
+            }
+            if (entry.sha256() != null) {
+                pinnedHashes.put(entry.coordinate(), entry.sha256());
+            }
+        }
+        if (descriptor.communityRepositories()) {
+            communityRepositories = true;
+        }
+    }
+
+    /**
+     * Turns the built-in community repositories (JitPack, PaperMC, SpigotMC and others) on or off for this
+     * downloader. They are off by default unless the server sets {@value RepositoryType#COMMUNITY_PROPERTY}.
+     *
+     * @param enabled whether community repositories are searched after Central and the declared repositories
+     */
+    public void setCommunityRepositories(final boolean enabled) {
+        this.communityRepositories = enabled;
+    }
+
+    /**
      * Probes network connectivity with a HEAD request to the Maven Central mirror, then to Central itself if the
      * mirror cannot be reached. Any HTTP answer counts as reachable: a mirror may answer its root URL with 404
      * and still serve every artifact. When the mirror does not answer but Central does, downloads by this
      * instance skip the mirror instead of waiting for its timeouts on every artifact. When neither host answers,
-     * subsequent download calls skip remote resolution and immediately return cached files or failures, avoiding
-     * long timeout chains against every repository.
-     *
-     * <p>Call this once before processing the dependency list. The result is cached for the lifetime
-     * of this downloader instance.</p>
+     * downloads return cached files or fail at once instead of timing out against every repository.
      *
      * @return {@code true} if the network is reachable, {@code false} otherwise
      */
     public boolean probeConnectivity() {
         unreachableRepositories.clear();
+        if (!builtInRepositories) {
+            networkAvailable.set(true);
+            return true;
+        }
         final RepositoryType mirror = RepositoryType.MAVEN_CENTRAL_MIRROR;
         if (reachable(mirror)) {
             networkAvailable.set(true);
@@ -140,487 +204,537 @@ public class DependencyDownloader {
     }
 
     /**
-     * Returns the repositories downloads try, in order: {@link RepositoryType#searchOrder()} without the ones
-     * {@link #probeConnectivity()} found unreachable.
+     * Returns the built-in repositories this downloader uses, in order: the Central mirror and Central, plus the
+     * community repositories when they are turned on, without those {@link #probeConnectivity()} found
+     * unreachable.
      *
-     * @return unmodifiable list of repositories to contact
+     * @return unmodifiable list of built-in repositories
      */
     public @NotNull List<RepositoryType> activeRepositories() {
-        if (unreachableRepositories.isEmpty()) {
-            return RepositoryType.searchOrder();
+        if (!builtInRepositories) {
+            return List.of();
         }
-        return RepositoryType.searchOrder().stream()
+        return RepositoryType.defaultOrder(communityRepositories).stream()
                 .filter(repository -> !unreachableRepositories.contains(repository))
                 .toList();
     }
 
-    private boolean reachable(@NotNull final RepositoryType repository) {
-        final Integer status = probe(repository.getBaseUrl());
-        if (status == null) {
-            return false;
-        }
-        logger.log(Level.FINE, () -> "Network probe reached " + repository.getBaseUrl() + " (HTTP " + status + ")");
-        return true;
-    }
-
     /**
-     * Sends one HEAD request.
+     * Returns the repository base URLs tried for an artifact, in order, each ending with a slash.
      *
-     * @return the HTTP status, or {@code null} when no answer arrived
+     * @param coordinate artifact to look up
+     * @return the pinned repository alone, or the full search order
      */
-    private @Nullable Integer probe(@NotNull final String baseUrl) {
-        HttpURLConnection connection = null;
-        try {
-            connection = (HttpURLConnection) URI.create(baseUrl).toURL().openConnection();
-            connection.setConnectTimeout(PROBE_TIMEOUT_MS);
-            connection.setReadTimeout(PROBE_TIMEOUT_MS);
-            connection.setRequestMethod("HEAD");
-            connection.setRequestProperty("User-Agent", USER_AGENT);
-            return connection.getResponseCode();
-        } catch (final IOException | IllegalArgumentException exception) {
-            logger.log(Level.FINE, exception, () -> "Network probe got no answer from " + baseUrl);
-            return null;
-        } finally {
-            if (connection != null) {
-                connection.disconnect();
-            }
+    public @NotNull List<String> repositoryUrls(@NotNull final DependencyCoordinate coordinate) {
+        final String pinned = pinnedRepositories.get(coordinate);
+        if (pinned != null) {
+            return List.of(pinned);
         }
+        final List<String> urls = new ArrayList<>(customRepositories);
+        final List<RepositoryType> builtIn = activeRepositories();
+        builtIn.stream().filter(repository -> !repository.isCommunity()).forEach(repository -> add(urls, repository.getBaseUrl()));
+        declaredRepositories.forEach(url -> add(urls, url));
+        builtIn.stream().filter(RepositoryType::isCommunity).forEach(repository -> add(urls, repository.getBaseUrl()));
+        return List.copyOf(urls);
     }
 
     /**
-     * Registers an additional base repository URL. The URL is normalised to include a trailing slash and will be tried.
-     * before the built-in repository list when resolving artifacts.
+     * Registers a repository that is tried before all others.
      *
-     * @param repositoryUrl base URL pointing to a Maven-style repository root
+     * @param repositoryUrl base URL of a Maven repository
      */
     public void addRepository(@NotNull final String repositoryUrl) {
-        final String normalizedUrl = repositoryUrl.endsWith("/") ? repositoryUrl : repositoryUrl + "/";
-        customRepositories.add(normalizedUrl);
-        logger.log(Level.FINE, () -> "Added custom repository: " + normalizedUrl);
+        final String normalized = withSlash(repositoryUrl.trim());
+        if (!customRepositories.contains(normalized)) {
+            customRepositories.add(normalized);
+            logger.log(Level.FINE, () -> "Added custom repository: " + normalized);
+        }
     }
 
     /**
-     * Downloads a dependency asynchronously using the downloader's virtual-thread executor. Callers should inspect the.
-     * returned {@link DownloadResult} to verify success and retrieve the downloaded file.
+     * Downloads a dependency on a virtual thread.
      *
-     * @param coordinate      artifact coordinates to resolve
-     * @param targetDirectory directory where the resulting file should be placed
-     *
-     * @return future containing the outcome of the download attempt
+     * @param coordinate      artifact to resolve
+     * @param targetDirectory legacy per-plugin directory, checked for jars of older versions
+     * @return future with the outcome
      */
     public @NotNull CompletableFuture<DownloadResult> downloadAsync(
             @NotNull final DependencyCoordinate coordinate,
-            @NotNull final File targetDirectory
+            @NotNull final java.io.File targetDirectory
     ) {
-        return CompletableFuture.supplyAsync(
-                () -> download(coordinate, targetDirectory),
-                executorService
-        );
+        return CompletableFuture.supplyAsync(() -> download(coordinate, targetDirectory), executorService);
     }
 
     /**
-     * Downloads a dependency synchronously. The method first checks the shared server-level cache
-     * for an existing artifact before reaching out to remote repositories. Successfully downloaded
-     * artifacts are stored in the shared cache so other plugins can reuse them.
+     * Downloads a dependency into the shared cache, or returns the cached copy. A jar left by an older version in
+     * {@code targetDirectory} is moved into the cache instead of being downloaded again.
      *
-     * <p>The {@code targetDirectory} parameter is retained for backward compatibility and is used
-     * as a legacy fallback location. New downloads always go to the shared cache.</p>
-     *
-     * @param coordinate      artifact coordinates to resolve
-     * @param targetDirectory legacy per-plugin directory (checked as fallback for migration)
-     *
-     * @return outcome containing the file on success or an error description on failure
+     * @param coordinate      artifact to resolve
+     * @param targetDirectory legacy per-plugin directory, checked for jars of older versions
+     * @return outcome with the cached file or an error description
      */
     public @NotNull DownloadResult download(
             @NotNull final DependencyCoordinate coordinate,
-            @NotNull final File targetDirectory
+            @NotNull final java.io.File targetDirectory
     ) {
         final SharedCacheManager cache = SharedCacheManager.getInstance();
-        final java.nio.file.Path cachedPath = cache.resolveJarPath(coordinate);
+        final Path cachedPath = cache.resolveJarPath(coordinate);
 
-        // Check shared cache first
-        if (isValidExistingFile(cachedPath.toFile())) {
+        if (isAcceptable(coordinate, cachedPath)) {
             logger.log(Level.FINE, () -> "Dependency in shared cache: " + coordinate.toGavString());
             return DownloadResult.success(coordinate, cachedPath.toFile());
         }
+        discardIfPresent(cachedPath);
 
-        // Check legacy per-plugin cache and migrate if found
-        if (cache.migrateFromLegacy(coordinate, targetDirectory)) {
+        if (cache.migrateFromLegacy(coordinate, targetDirectory) && isAcceptable(coordinate, cachedPath)) {
             logger.log(Level.FINE, () -> "Migrated from legacy cache: " + coordinate.toGavString());
             return DownloadResult.success(coordinate, cachedPath.toFile());
         }
+        discardIfPresent(cachedPath);
 
         if (!networkAvailable.get()) {
-            final String errorMessage = "Network unreachable and no cached artifact available";
-            logger.log(Level.WARNING, "{0}: {1}", new Object[]{errorMessage, coordinate.toGavString()});
-            return DownloadResult.failure(coordinate, errorMessage);
+            final String message = "Network unreachable and no cached artifact available";
+            logger.log(Level.WARNING, "{0}: {1}", new Object[]{message, coordinate.toGavString()});
+            return DownloadResult.failure(coordinate, message);
         }
 
         logger.log(Level.FINE, () -> "Downloading dependency: " + coordinate.toGavString());
-
-        // Use shared cache with file locking for the download
-        final java.nio.file.Path result = cache.getOrDownload(coordinate, () ->
-                downloadToFile(coordinate, cachedPath.toFile()));
-
-        if (result != null) {
+        final Path result = cache.getOrDownload(coordinate, () -> downloadToFile(coordinate, cachedPath));
+        if (result != null && isAcceptable(coordinate, result)) {
             return DownloadResult.success(coordinate, result.toFile());
         }
 
-        final String errorMessage = "Failed to download from any repository";
-        logger.log(Level.WARNING, "{0}: {1}", new Object[]{errorMessage, coordinate.toGavString()});
-        return DownloadResult.failure(coordinate, errorMessage);
+        final String message = "Failed to download from any repository";
+        logger.log(Level.WARNING, "{0}: {1}", new Object[]{message, coordinate.toGavString()});
+        return DownloadResult.failure(coordinate, message);
     }
 
     /**
-     * Performs the actual download of an artifact to the specified target file, trying all
-     * repositories in order.
+     * Fetches the POM file of an artifact from the same repositories its jar comes from.
      *
-     * @param coordinate the artifact to download
-     * @param targetFile the file to write to (in the shared cache)
-     * @return {@code true} if the download succeeded
+     * @param coordinate artifact whose POM is wanted; a classifier is ignored
+     * @return the POM bytes, or {@code null} when no repository has it
      */
-    private boolean downloadToFile(
-            @NotNull final DependencyCoordinate coordinate,
-            @NotNull final File targetFile
-    ) {
-        for (final String customRepo : customRepositories) {
-            final String downloadUrl = customRepo + coordinate.toRepositoryPath();
-            logger.log(Level.FINEST, () -> "Trying custom repository: " + downloadUrl);
-
-            if (attemptDownloadWithRetry(downloadUrl, targetFile)) {
-                logger.fine("Downloaded from custom repository");
-                return true;
-            }
-        }
-
-        for (final RepositoryType repository : activeRepositories()) {
-            final String downloadUrl = repository.buildUrl(coordinate);
-            logger.log(Level.FINEST, () -> "Trying repository: " + repository.name() + " at " + downloadUrl);
-
-            if (attemptDownloadWithRetry(downloadUrl, targetFile)) {
-                logger.log(Level.FINE, () -> "Downloaded from repository: " + repository.name());
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Attempts to download from a single URL with exponential backoff on transient HTTP errors.
-     * Non-retryable failures (404, invalid content) return immediately without retry.
-     *
-     * @param downloadUrl full artifact URL to download from
-     * @param targetFile  local file to write the artifact to
-     * @return {@code true} if the download succeeded and the file passed all validation
-     */
-    private boolean attemptDownloadWithRetry(@NotNull final String downloadUrl, @NotNull final File targetFile) {
-        for (int attempt = 0; attempt <= maxRetries; attempt++) {
-            final int result = attemptDownloadClassified(downloadUrl, targetFile);
-
-            if (result == DOWNLOAD_SUCCESS) {
-                return true;
-            }
-            if (result == DOWNLOAD_NOT_RETRYABLE) {
-                return false;
-            }
-
-            // result == DOWNLOAD_RETRYABLE: back off and try again, unless the thread is being stopped
-            if (attempt < maxRetries) {
-                final long backoffMs = calculateBackoff(attempt);
-                final int currentAttempt = attempt + 1;
-                logger.log(Level.FINE, () -> String.format(
-                        "Retrying %s in %dms (attempt %d/%d)",
-                        downloadUrl, backoffMs, currentAttempt, maxRetries));
-                if (!sleep(backoffMs)) {
-                    logger.log(Level.FINE, () -> "Interrupted while waiting to retry " + downloadUrl);
-                    return false;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    private static final int DOWNLOAD_SUCCESS = 0;
-    private static final int DOWNLOAD_NOT_RETRYABLE = 1;
-    private static final int DOWNLOAD_RETRYABLE = 2;
-
-    private boolean isValidExistingFile(@NotNull final File file) {
-        return file.isFile() && file.length() > 0L && isValidJarFile(file);
-    }
-
-    /**
-     * Attempts a single download from the given URL and classifies the outcome for the retry logic.
-     *
-     * @return {@link #DOWNLOAD_SUCCESS}, {@link #DOWNLOAD_NOT_RETRYABLE}, or {@link #DOWNLOAD_RETRYABLE}
-     */
-    private int attemptDownloadClassified(@NotNull final String downloadUrl, @NotNull final File targetFile) {
-        try {
-            URL url = URI.create(downloadUrl).toURL();
-
-            for (int redirectCount = 0; redirectCount <= MAX_REDIRECTS; redirectCount++) {
-                final HttpURLConnection connection = createConnection(url);
-                connection.setInstanceFollowRedirects(false);
-                final int responseCode = connection.getResponseCode();
-
-                if (responseCode >= 200 && responseCode < 300) {
-                    return handleSuccessfulResponse(connection, url, targetFile)
-                            ? DOWNLOAD_SUCCESS
-                            : DOWNLOAD_NOT_RETRYABLE;
-                }
-
-                if (responseCode >= 300 && responseCode < 400) {
-                    final URL next = resolveRedirect(connection, url, responseCode);
-                    if (next == null) {
-                        return DOWNLOAD_NOT_RETRYABLE;
-                    }
-                    url = next;
-                    continue;
-                }
-
-                return classifyErrorStatus(responseCode, url, downloadUrl);
-            }
-
-            logger.log(Level.WARNING, "Too many redirects ({0}) for {1}", new Object[]{MAX_REDIRECTS, downloadUrl});
-            return DOWNLOAD_NOT_RETRYABLE;
-
-        } catch (final Exception exception) {
-            return classifyException(exception, downloadUrl);
-        }
-    }
-
-    private @Nullable URL resolveRedirect(@NotNull final HttpURLConnection connection,
-                                          @NotNull final URL current, final int responseCode)
-            throws java.net.MalformedURLException {
-        final String location = connection.getHeaderField("Location");
-        if (location == null || location.isEmpty()) {
-            logger.log(Level.WARNING, "Redirect without Location header from: {0}", current);
+    public byte @Nullable [] fetchPom(@NotNull final DependencyCoordinate coordinate) {
+        if (!networkAvailable.get()) {
             return null;
         }
-        final URL next = URI.create(location).toURL();
-        logger.log(Level.FINEST, () -> "Redirect " + responseCode + " to " + next);
+        final String pomPath = coordinate.groupId().replace('.', '/') + '/' + coordinate.artifactId() + '/'
+                + coordinate.version() + '/' + coordinate.artifactId() + '-' + coordinate.version() + ".pom";
+        for (final String base : repositoryUrls(coordinate)) {
+            final byte[] bytes = fetchSmallFile(URI.create(base + pomPath), true);
+            if (bytes != null && bytes.length > 0) {
+                logger.log(Level.FINE, () -> "Fetched POM " + coordinate.toGavString() + " from " + base);
+                return bytes;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Stops the download threads. Call when the downloader is no longer needed.
+     */
+    public void shutdown() {
+        executorService.shutdown();
+    }
+
+    // -------------------------------------------------------------------------
+    // Download
+    // -------------------------------------------------------------------------
+
+    private boolean downloadToFile(@NotNull final DependencyCoordinate coordinate, @NotNull final Path targetFile) {
+        final List<String> repositories = repositoryUrls(coordinate);
+        for (final String base : repositories) {
+            final URI uri = URI.create(base + coordinate.toRepositoryPath());
+            logger.log(Level.FINEST, () -> "Trying " + uri);
+            if (attemptWithRetry(uri, coordinate, targetFile)) {
+                logger.log(Level.FINE, () -> "Downloaded " + coordinate.toGavString() + " from " + base);
+                return true;
+            }
+            if (Thread.currentThread().isInterrupted()) {
+                return false;
+            }
+        }
+
+        if (builtInRepositories && !communityRepositories && !pinnedRepositories.containsKey(coordinate)
+                && communityHintLogged.compareAndSet(false, true)) {
+            logger.log(Level.WARNING, "{0} was not found on Maven Central. If it comes from another repository, "
+                    + "list that repository under ''repositories:'' in dependencies.yml or pin it with "
+                    + "''{0} @ <url>''. Server owners can restore the old community repositories with "
+                    + "-D{1}=true.", new Object[]{coordinate.toGavString(), RepositoryType.COMMUNITY_PROPERTY});
+        }
+        return false;
+    }
+
+    private boolean attemptWithRetry(
+            @NotNull final URI uri,
+            @NotNull final DependencyCoordinate coordinate,
+            @NotNull final Path targetFile
+    ) {
+        for (int attempt = 0; attempt <= maxRetries; attempt++) {
+            final Attempt result = attemptOnce(uri, coordinate, targetFile);
+            if (result.kind == Attempt.Kind.SUCCESS) {
+                return true;
+            }
+            if (result.kind == Attempt.Kind.FAILED || attempt == maxRetries) {
+                return false;
+            }
+            final long delay = result.retryAfterMs > 0
+                    ? Math.min(result.retryAfterMs, MAX_BACKOFF_MS)
+                    : Math.min(INITIAL_BACKOFF_MS << attempt, MAX_BACKOFF_MS);
+            final int next = attempt + 1;
+            logger.log(Level.FINE, () -> "Retrying " + uri + " in " + delay + " ms (attempt " + next + "/"
+                    + maxRetries + ")");
+            if (!sleep(delay)) {
+                logger.log(Level.FINE, () -> "Interrupted while waiting to retry " + uri);
+                return false;
+            }
+        }
+        return false;
+    }
+
+    private @NotNull Attempt attemptOnce(
+            @NotNull final URI start,
+            @NotNull final DependencyCoordinate coordinate,
+            @NotNull final Path targetFile
+    ) {
+        Path tempFile = null;
+        try {
+            Files.createDirectories(targetFile.getParent());
+            tempFile = Files.createTempFile(targetFile.getParent(), targetFile.getFileName().toString(), ".part");
+            URI current = start;
+            for (int redirect = 0; redirect <= MAX_REDIRECTS; redirect++) {
+                final Path destination = tempFile;
+                final HttpResponse<Path> response = send(current, REQUEST_TIMEOUT, info -> info.statusCode() == 200
+                        ? HttpResponse.BodySubscribers.ofFile(destination)
+                        : HttpResponse.BodySubscribers.replacing(null));
+                final int status = response.statusCode();
+
+                if (status == 200) {
+                    return accept(current, coordinate, response, tempFile, targetFile)
+                            ? Attempt.SUCCESS : Attempt.FAILED;
+                }
+                if (status >= 300 && status < 400) {
+                    current = redirectTarget(current, response);
+                    if (current == null) {
+                        return Attempt.FAILED;
+                    }
+                    continue;
+                }
+                if (status == 404 || status == 410) {
+                    return Attempt.FAILED;
+                }
+                if (RETRYABLE_STATUS_CODES.contains(status)) {
+                    logger.log(Level.FINE, "HTTP {0} from {1}", new Object[]{status, current});
+                    return Attempt.retry(retryAfterMs(response));
+                }
+                logger.log(Level.WARNING, "HTTP {0} when downloading {1}", new Object[]{status, current});
+                return Attempt.FAILED;
+            }
+            logger.log(Level.WARNING, "Too many redirects for {0}", start);
+            return Attempt.FAILED;
+        } catch (final HttpTimeoutException | ConnectException exception) {
+            logger.log(Level.FINE, exception, () -> "Network error from " + start);
+            return Attempt.retry(0);
+        } catch (final IOException | IllegalArgumentException exception) {
+            logger.log(Level.FINE, exception, () -> "Download failed from " + start);
+            return Attempt.FAILED;
+        } catch (final InterruptedException exception) {
+            Thread.currentThread().interrupt();
+            return Attempt.FAILED;
+        } finally {
+            if (tempFile != null) {
+                deleteQuietly(tempFile);
+            }
+        }
+    }
+
+    private boolean accept(
+            @NotNull final URI source,
+            @NotNull final DependencyCoordinate coordinate,
+            @NotNull final HttpResponse<Path> response,
+            @NotNull final Path tempFile,
+            @NotNull final Path targetFile
+    ) throws IOException {
+        final long size = Files.size(tempFile);
+        final long expected = response.headers().firstValueAsLong("Content-Length").orElse(-1L);
+        if (size == 0 || (expected >= 0 && expected != size)) {
+            logger.log(Level.WARNING, "Incomplete download from {0}: {1} of {2} bytes",
+                    new Object[]{source, size, expected});
+            return false;
+        }
+        if (!SharedCacheManager.isUsableJar(tempFile)) {
+            logger.log(Level.WARNING, "Downloaded file is not a valid jar: {0} (Content-Type={1})",
+                    new Object[]{source, response.headers().firstValue("Content-Type").orElse("unknown")});
+            return false;
+        }
+        if (!checksumMatches(source, coordinate, tempFile)) {
+            return false;
+        }
+        move(tempFile, targetFile);
+        logger.log(Level.FINE, () -> "Downloaded " + targetFile.getFileName() + " (" + size + " bytes)");
+        return true;
+    }
+
+    // -------------------------------------------------------------------------
+    // Checksums
+    // -------------------------------------------------------------------------
+
+    /**
+     * Checks a downloaded jar. A pinned SHA-256 must match. Without a pin, the repository's {@code .sha256} file
+     * is used, then its {@code .sha1} file; when it publishes neither, the jar is accepted.
+     */
+    private boolean checksumMatches(
+            @NotNull final URI source,
+            @NotNull final DependencyCoordinate coordinate,
+            @NotNull final Path file
+    ) throws IOException {
+        final String pinned = pinnedHashes.get(coordinate);
+        if (pinned != null) {
+            final String actual = hash(file, "SHA-256");
+            if (pinned.equals(actual)) {
+                return true;
+            }
+            logger.log(Level.WARNING, "SHA-256 of {0} from {1} does not match dependencies.yml: expected {2}, got {3}",
+                    new Object[]{coordinate.toGavString(), source, pinned, actual});
+            return false;
+        }
+
+        for (final String algorithm : List.of("SHA-256", "SHA-1")) {
+            final String extension = algorithm.equals("SHA-256") ? ".sha256" : ".sha1";
+            final String published = publishedChecksum(URI.create(source + extension), algorithm);
+            if (published == null) {
+                continue;
+            }
+            final String actual = hash(file, algorithm);
+            if (published.equals(actual)) {
+                logger.log(Level.FINE, () -> algorithm + " OK: " + coordinate.toGavString());
+                return true;
+            }
+            logger.log(Level.WARNING, "{0} mismatch for {1} from {2}: expected {3}, got {4}",
+                    new Object[]{algorithm, coordinate.toGavString(), source, published, actual});
+            return false;
+        }
+        logger.log(Level.FINE, () -> "No checksum published for " + source + "; accepting the jar");
+        return true;
+    }
+
+    private @Nullable String publishedChecksum(@NotNull final URI uri, @NotNull final String algorithm) {
+        final byte[] bytes = fetchSmallFile(uri, false);
+        if (bytes == null) {
+            return null;
+        }
+        final String text = new String(bytes, StandardCharsets.US_ASCII).trim();
+        if (text.isEmpty()) {
+            return null;
+        }
+        final String value = text.split("\\s+")[0].toLowerCase(Locale.ROOT);
+        final int length = algorithm.equals("SHA-256") ? 64 : 40;
+        return value.length() == length && value.chars().allMatch(c -> Character.digit(c, 16) >= 0) ? value : null;
+    }
+
+    private boolean isAcceptable(@NotNull final DependencyCoordinate coordinate, @NotNull final Path jar) {
+        if (!SharedCacheManager.isUsableJar(jar)) {
+            return false;
+        }
+        final String pinned = pinnedHashes.get(coordinate);
+        if (pinned == null) {
+            return true;
+        }
+        try {
+            if (pinned.equals(hash(jar, "SHA-256"))) {
+                return true;
+            }
+            logger.log(Level.WARNING, "Cached {0} does not match the SHA-256 in dependencies.yml; downloading it again",
+                    coordinate.toGavString());
+            return false;
+        } catch (final IOException exception) {
+            return false;
+        }
+    }
+
+    static @NotNull String hash(@NotNull final Path file, @NotNull final String algorithm) throws IOException {
+        final MessageDigest digest;
+        try {
+            digest = MessageDigest.getInstance(algorithm);
+        } catch (final NoSuchAlgorithmException exception) {
+            throw new IOException(algorithm + " is not available", exception);
+        }
+        final byte[] buffer = new byte[64 * 1024];
+        try (InputStream input = Files.newInputStream(file)) {
+            int read;
+            while ((read = input.read(buffer)) != -1) {
+                digest.update(buffer, 0, read);
+            }
+        }
+        final StringBuilder hex = new StringBuilder();
+        for (final byte value : digest.digest()) {
+            hex.append(Character.forDigit((value >> 4) & 0xF, 16)).append(Character.forDigit(value & 0xF, 16));
+        }
+        return hex.toString();
+    }
+
+    // -------------------------------------------------------------------------
+    // HTTP
+    // -------------------------------------------------------------------------
+
+    /**
+     * Fetches a small file such as a checksum or POM. Follows redirects, retries once on a transient error.
+     *
+     * @return the body of a 200 answer, or {@code null}
+     */
+    private byte @Nullable [] fetchSmallFile(@NotNull final URI start, final boolean retry) {
+        for (int attempt = 0; attempt <= (retry ? 1 : 0); attempt++) {
+            URI current = start;
+            try {
+                for (int redirect = 0; redirect <= MAX_REDIRECTS && current != null; redirect++) {
+                    final HttpResponse<byte[]> response = send(current, SMALL_FILE_TIMEOUT, info ->
+                            info.statusCode() == 200
+                                    ? HttpResponse.BodySubscribers.ofByteArray()
+                                    : HttpResponse.BodySubscribers.replacing(null));
+                    final int status = response.statusCode();
+                    if (status == 200) {
+                        return response.body();
+                    }
+                    if (status >= 300 && status < 400) {
+                        current = redirectTarget(current, response);
+                        continue;
+                    }
+                    if (!RETRYABLE_STATUS_CODES.contains(status)) {
+                        return null;
+                    }
+                    break;
+                }
+            } catch (final HttpTimeoutException | ConnectException exception) {
+                logger.log(Level.FINEST, exception, () -> "Retryable error fetching " + start);
+            } catch (final IOException | IllegalArgumentException exception) {
+                logger.log(Level.FINEST, exception, () -> "Could not fetch " + start);
+                return null;
+            } catch (final InterruptedException exception) {
+                Thread.currentThread().interrupt();
+                return null;
+            }
+            if (retry && attempt == 0 && !sleep(INITIAL_BACKOFF_MS)) {
+                return null;
+            }
+        }
+        return null;
+    }
+
+    private <T> @NotNull HttpResponse<T> send(
+            @NotNull final URI uri,
+            @NotNull final Duration timeout,
+            @NotNull final HttpResponse.BodyHandler<T> handler
+    ) throws IOException, InterruptedException {
+        final HttpRequest.Builder builder = HttpRequest.newBuilder(uri)
+                .timeout(timeout)
+                .header("User-Agent", USER_AGENT)
+                .header("Accept", ACCEPT)
+                .GET();
+        final String authorization = credentials.authorizationFor(uri);
+        if (authorization != null) {
+            builder.header("Authorization", authorization);
+        }
+        final Semaphore permits = hostPermits.computeIfAbsent(String.valueOf(uri.getHost()),
+                host -> new Semaphore(MAX_REQUESTS_PER_HOST));
+        permits.acquire();
+        try {
+            return httpClient.send(builder.build(), handler);
+        } finally {
+            permits.release();
+        }
+    }
+
+    /**
+     * Resolves a redirect. A redirect from {@code https} to plain {@code http} is refused.
+     *
+     * @return the next URI, or {@code null} when the redirect is missing or unsafe
+     */
+    private @Nullable URI redirectTarget(@NotNull final URI current, @NotNull final HttpResponse<?> response) {
+        final Optional<String> location = response.headers().firstValue("Location");
+        if (location.isEmpty() || location.get().isBlank()) {
+            logger.log(Level.WARNING, "Redirect without Location header from {0}", current);
+            return null;
+        }
+        final URI next;
+        try {
+            next = current.resolve(location.get().trim());
+        } catch (final IllegalArgumentException exception) {
+            logger.log(Level.WARNING, "Invalid redirect from {0}: {1}", new Object[]{current, location.get()});
+            return null;
+        }
+        if ("https".equalsIgnoreCase(current.getScheme()) && !"https".equalsIgnoreCase(next.getScheme())) {
+            logger.log(Level.WARNING, "Refusing redirect from {0} to insecure {1}", new Object[]{current, next});
+            return null;
+        }
+        logger.log(Level.FINEST, () -> "Redirect " + response.statusCode() + " to " + next);
         return next;
     }
 
-    private int classifyErrorStatus(final int responseCode, @NotNull final URL url,
-                                    @NotNull final String downloadUrl) {
-        if (responseCode == 404) {
-            return DOWNLOAD_NOT_RETRYABLE;
-        }
-        logger.log(Level.WARNING, "HTTP {0} when downloading {1}", new Object[]{responseCode, url});
-        return RETRYABLE_STATUS_CODES.contains(responseCode)
-                ? DOWNLOAD_RETRYABLE
-                : DOWNLOAD_NOT_RETRYABLE;
-    }
-
-    private int classifyException(@NotNull final Exception exception, @NotNull final String downloadUrl) {
-        if (exception instanceof java.net.SocketTimeoutException
-                || exception instanceof java.net.ConnectException) {
-            logger.log(Level.FINE, exception, () -> "Retryable network error from URL: " + downloadUrl);
-            return DOWNLOAD_RETRYABLE;
-        }
-        logger.log(Level.FINE, exception, () -> "Download failed from URL: " + downloadUrl);
-        return DOWNLOAD_NOT_RETRYABLE;
-    }
-
-    private boolean handleSuccessfulResponse(
-            @NotNull final HttpURLConnection connection,
-            @NotNull final URL url,
-            @NotNull final File targetFile
-    ) throws IOException {
-        final long contentLength = parseContentLength(connection.getHeaderField("Content-Length"));
-        final String contentType = safeLowerCase(connection.getHeaderField("Content-Type"));
-
-        final File tempFile = new File(targetFile.getParentFile(), targetFile.getName() + ".part");
-        Files.createDirectories(targetFile.getParentFile().toPath());
-
-        final long bytesWritten;
-        try (final InputStream inputStream = connection.getInputStream();
-             final FileOutputStream outputStream = new FileOutputStream(tempFile)) {
-            bytesWritten = transferData(inputStream, outputStream);
-        }
-
-        if (!validateDownload(tempFile, bytesWritten, contentLength, contentType, url)) {
-            safeDelete(tempFile);
-            return false;
-        }
-
-        moveToFinalLocation(tempFile, targetFile);
-
-        logger.log(Level.FINE, () -> "Downloaded: " + targetFile.getName() + " (" + bytesWritten + " bytes)");
-
-        if (!verifyChecksum(url, targetFile)) {
-            logger.log(Level.WARNING, "Checksum mismatch for {0}; deleting the corrupt artifact", targetFile.getName());
-            safeDelete(targetFile);
-            return false;
-        }
-
-        return true;
-    }
-
-    private boolean validateDownload(
-            @NotNull final File file,
-            final long bytesWritten,
-            final long expectedLength,
-            @Nullable final String contentType,
-            @NotNull final URL url
-    ) {
-        if (bytesWritten <= 0) {
-            logger.log(Level.WARNING, "Downloaded 0 bytes from {0}", url);
-            return false;
-        }
-
-        if (expectedLength > 0 && bytesWritten != expectedLength) {
-            logger.log(Level.WARNING, "Content-Length mismatch for {0}: expected {1}, got {2}",
-                    new Object[]{url, expectedLength, bytesWritten});
-            return false;
-        }
-
-        if (!isValidJarFile(file)) {
-            logger.log(Level.WARNING, "Downloaded file is not a valid JAR: {0} (Content-Type={1}, bytes={2})",
-                    new Object[]{file.getName(), contentType, bytesWritten});
-            return false;
-        }
-
-        return true;
-    }
-
-    private void moveToFinalLocation(@NotNull final File source, @NotNull final File destination) throws IOException {
+    private boolean reachable(@NotNull final RepositoryType repository) {
+        final HttpRequest request = HttpRequest.newBuilder(URI.create(repository.getBaseUrl()))
+                .timeout(PROBE_TIMEOUT)
+                .header("User-Agent", USER_AGENT)
+                .method("HEAD", HttpRequest.BodyPublishers.noBody())
+                .build();
         try {
-            Files.move(source.toPath(), destination.toPath(),
-                    StandardCopyOption.ATOMIC_MOVE,
-                    StandardCopyOption.REPLACE_EXISTING);
-        } catch (final AtomicMoveNotSupportedException exception) {
-            Files.move(source.toPath(), destination.toPath(),
-                    StandardCopyOption.REPLACE_EXISTING);
-        }
-    }
-
-    private @NotNull HttpURLConnection createConnection(@NotNull final URL url) throws IOException {
-        final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setConnectTimeout(CONNECTION_TIMEOUT_MS);
-        connection.setReadTimeout(READ_TIMEOUT_MS);
-        connection.setRequestProperty("User-Agent", USER_AGENT);
-        connection.setRequestProperty("Accept", ACCEPT);
-        return connection;
-    }
-
-    private long transferData(
-            @NotNull final InputStream inputStream,
-            @NotNull final FileOutputStream outputStream
-    ) throws IOException {
-        final byte[] buffer = new byte[BUFFER_SIZE];
-        long totalBytes = 0L;
-        int bytesRead;
-
-        while ((bytesRead = inputStream.read(buffer)) != -1) {
-            if (bytesRead > 0) {
-                outputStream.write(buffer, 0, bytesRead);
-                totalBytes += bytesRead;
-            }
-        }
-
-        return totalBytes;
-    }
-
-    private boolean isValidJarFile(@NotNull final File file) {
-        return SharedCacheManager.isUsableJar(file.toPath());
-    }
-
-    private void safeDelete(@NotNull final File file) {
-        try {
-            Files.deleteIfExists(file.toPath());
-        } catch (final IOException exception) {
-            logger.log(Level.FINE, exception, () -> "Failed to delete file: " + file);
-        }
-    }
-
-    private long parseContentLength(@Nullable final String header) {
-        if (header == null) {
-            return -1L;
-        }
-
-        try {
-            return Long.parseLong(header.trim());
-        } catch (final NumberFormatException exception) {
-            return -1L;
-        }
-    }
-
-    private @Nullable String safeLowerCase(@Nullable final String value) {
-        return value == null ? null : value.toLowerCase(Locale.ROOT);
-    }
-
-    /**
-     * Verifies the downloaded JAR against the {@code .sha1} checksum published alongside it in the same
-     * repository. When the checksum file is unavailable (HTTP 404, timeout, parse error) the verification
-     * is silently skipped and the artifact is considered valid. A mismatch causes the method to return
-     * {@code false}, signalling the caller to delete the artifact and retry the download.
-     *
-     * @param artifactUrl the URL that was used to download the JAR (without {@code .sha1} suffix)
-     * @param jarFile     the successfully downloaded JAR file to verify
-     * @return {@code true} if the checksum matches or could not be verified, {@code false} on mismatch
-     */
-    private boolean verifyChecksum(@NotNull final URL artifactUrl, @NotNull final File jarFile) {
-        try {
-            return performChecksumVerification(artifactUrl, jarFile);
-        } catch (final IOException exception) {
-            logger.log(Level.FINEST, exception, () -> "SHA-1 check skipped for " + jarFile.getName());
-            return true; // Cannot verify: accept the artifact
-        }
-    }
-
-    /**
-     * Performs the actual checksum verification logic. Returns {@code true} when the checksum matches
-     * or when the {@code .sha1} file is not available. Returns {@code false} only on a confirmed mismatch.
-     *
-     * @param artifactUrl the URL that was used to download the JAR
-     * @param jarFile     the JAR file to verify
-     * @return {@code true} if valid or unverifiable, {@code false} on confirmed mismatch
-     * @throws IOException if network or file operations fail
-     */
-    private boolean performChecksumVerification(@NotNull final URL artifactUrl, @NotNull final File jarFile) throws IOException {
-        final URL sha1Url = URI.create(artifactUrl.toString() + ".sha1").toURL();
-        final HttpURLConnection conn = createConnection(sha1Url);
-        conn.setConnectTimeout(5_000);
-        conn.setReadTimeout(5_000);
-
-        if (conn.getResponseCode() != 200) {
-            return true; // .sha1 not published by this repository: accept the artifact
-        }
-
-        final String expected;
-        try (final InputStream is = conn.getInputStream()) {
-            // SHA-1 files may contain only the hex string or "hex filename"; take the first token
-            expected = new String(is.readAllBytes(), StandardCharsets.UTF_8).trim().split("\\s+")[0];
-        }
-
-        if (expected.isEmpty() || expected.length() != 40) {
-            return true; // Not a valid SHA-1 hex string: cannot verify, accept
-        }
-
-        final String actual;
-        try {
-            actual = sha1Hex(jarFile);
-        } catch (final DependencyDownloadException exception) {
-            logger.log(Level.FINEST, exception, () -> "SHA-1 computation failed for " + jarFile.getName());
-            return true; // Cannot compute hash: accept the artifact
-        }
-
-        if (expected.equalsIgnoreCase(actual)) {
-            logger.log(Level.FINE, () -> "Checksum OK: " + jarFile.getName());
+            final int status = httpClient.send(request, HttpResponse.BodyHandlers.discarding()).statusCode();
+            logger.log(Level.FINE, () -> "Network probe reached " + repository.getBaseUrl() + " (HTTP " + status + ")");
             return true;
+        } catch (final IOException | IllegalArgumentException exception) {
+            logger.log(Level.FINE, exception, () -> "Network probe got no answer from " + repository.getBaseUrl());
+            return false;
+        } catch (final InterruptedException exception) {
+            Thread.currentThread().interrupt();
+            return false;
         }
-
-        logger.log(Level.WARNING, "Checksum mismatch for {0}: expected {1}, got {2}",
-                new Object[]{jarFile.getName(), expected, actual});
-        return false;
     }
 
-    private long calculateBackoff(final int attempt) {
-        final long backoff = (long) (INITIAL_BACKOFF_MS * Math.pow(BACKOFF_MULTIPLIER, attempt));
-        return Math.min(backoff, MAX_BACKOFF_MS);
+    private static long retryAfterMs(@NotNull final HttpResponse<?> response) {
+        return response.headers().firstValue("Retry-After").map(value -> {
+            try {
+                return Long.parseLong(value.trim()) * 1_000L;
+            } catch (final NumberFormatException exception) {
+                return 0L;
+            }
+        }).orElse(0L);
+    }
+
+    // -------------------------------------------------------------------------
+    // Helpers
+    // -------------------------------------------------------------------------
+
+    private static void move(@NotNull final Path source, @NotNull final Path destination) throws IOException {
+        try {
+            Files.move(source, destination, StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING);
+        } catch (final AtomicMoveNotSupportedException exception) {
+            Files.move(source, destination, StandardCopyOption.REPLACE_EXISTING);
+        }
+    }
+
+    private void discardIfPresent(@NotNull final Path jar) {
+        if (Files.exists(jar)) {
+            logger.log(Level.FINE, () -> "Discarding unusable cached file " + jar);
+            deleteQuietly(jar);
+        }
+    }
+
+    private void deleteQuietly(@NotNull final Path file) {
+        try {
+            Files.deleteIfExists(file);
+        } catch (final IOException exception) {
+            logger.log(Level.FINE, exception, () -> "Failed to delete " + file);
+        }
+    }
+
+    private static void add(@NotNull final List<String> urls, @NotNull final String url) {
+        if (!urls.contains(url)) {
+            urls.add(url);
+        }
+    }
+
+    private static @NotNull String withSlash(@NotNull final String url) {
+        return url.endsWith("/") ? url : url + "/";
     }
 
     /**
@@ -638,34 +752,23 @@ public class DependencyDownloader {
         }
     }
 
-    private static String sha1Hex(@NotNull final File file) throws IOException, DependencyDownloadException {
-        final MessageDigest md;
-        try {
-            md = MessageDigest.getInstance("SHA-1");
-        } catch (final NoSuchAlgorithmException exception) {
-            throw new DependencyDownloadException("SHA-1 algorithm not available", exception);
-        }
-        
-        final byte[] buf = new byte[BUFFER_SIZE];
-        try (final FileInputStream fis = new FileInputStream(file)) {
-            int n;
-            while ((n = fis.read(buf)) != -1) {
-                md.update(buf, 0, n);
-            }
-        }
-        final byte[] digest = md.digest();
-        final StringBuilder sb = new StringBuilder(40);
-        for (final byte b : digest) {
-            sb.append(String.format("%02x", b));
-        }
-        return sb.toString();
-    }
+    /** Outcome of one download attempt. */
+    private static final class Attempt {
+        private enum Kind { SUCCESS, FAILED, RETRY }
 
-    /**
-     * Shuts down the virtual-thread executor backing asynchronous downloads. Should be invoked when the downloader is.
-     * no longer needed to allow the JVM to exit cleanly.
-     */
-    public void shutdown() {
-        executorService.shutdown();
+        static final Attempt SUCCESS = new Attempt(Kind.SUCCESS, 0);
+        static final Attempt FAILED = new Attempt(Kind.FAILED, 0);
+
+        private final Kind kind;
+        private final long retryAfterMs;
+
+        private Attempt(final Kind kind, final long retryAfterMs) {
+            this.kind = kind;
+            this.retryAfterMs = retryAfterMs;
+        }
+
+        static Attempt retry(final long retryAfterMs) {
+            return new Attempt(Kind.RETRY, retryAfterMs);
+        }
     }
 }

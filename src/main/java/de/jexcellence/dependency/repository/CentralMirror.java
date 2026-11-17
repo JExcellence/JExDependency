@@ -1,11 +1,7 @@
 package de.jexcellence.dependency.repository;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.Locale;
 import java.util.function.Consumer;
 import java.util.function.UnaryOperator;
 import java.util.logging.Level;
@@ -72,43 +68,12 @@ public final class CentralMirror {
             @NotNull final UnaryOperator<String> environment,
             @NotNull final Consumer<String> warnings
     ) {
-        final String fromProperty = validate(properties.apply(PROPERTY), "-D" + PROPERTY, warnings);
+        final String fromProperty = RepositoryUrl.parse(properties.apply(PROPERTY), "-D" + PROPERTY, warnings);
         if (fromProperty != null) {
             return fromProperty;
         }
-        final String fromEnvironment = validate(environment.apply(PAPER_ENVIRONMENT_VARIABLE),
+        final String fromEnvironment = RepositoryUrl.parse(environment.apply(PAPER_ENVIRONMENT_VARIABLE),
                 PAPER_ENVIRONMENT_VARIABLE, warnings);
         return fromEnvironment != null ? fromEnvironment : DEFAULT_MIRROR;
-    }
-
-    private static @Nullable String validate(
-            @Nullable final String value,
-            @NotNull final String source,
-            @NotNull final Consumer<String> warnings
-    ) {
-        if (value == null || value.isBlank()) {
-            return null;
-        }
-
-        final String trimmed = value.trim();
-        final URI uri;
-        try {
-            uri = new URI(trimmed);
-        } catch (final URISyntaxException exception) {
-            warnings.accept("Ignoring " + source + ": not a valid URL: " + trimmed);
-            return null;
-        }
-
-        final String scheme = uri.getScheme() == null ? "" : uri.getScheme().toLowerCase(Locale.ROOT);
-        if (uri.getHost() == null || !("https".equals(scheme) || "http".equals(scheme))) {
-            warnings.accept("Ignoring " + source + ": expected an https URL such as " + DEFAULT_MIRROR
-                    + ", got " + trimmed);
-            return null;
-        }
-        if ("http".equals(scheme)) {
-            warnings.accept(source + " uses plain http; downloads from " + trimmed + " are not encrypted");
-        }
-
-        return trimmed.endsWith("/") ? trimmed.substring(0, trimmed.length() - 1) : trimmed;
     }
 }

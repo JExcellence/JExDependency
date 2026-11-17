@@ -2,7 +2,20 @@
 
 ## Unreleased
 
+### Breaking
+- Only the Maven Central mirror and Central are searched by default. Libraries from JitPack, PaperMC, SpigotMC,
+  NeetGames, Auxilor, Tcoded or the Gradle plugin portal need their repository in `dependencies.yml`
+  (`repositories:` or `coordinate @ url`), `community-repositories: true`, or the server property
+  `-Djedependency.repository.community=true`. A failed lookup logs this hint once.
+- `TransitiveDependencyResolver(File, List<RepositoryType>)`, added after 2.2.0 and never released, is replaced
+  by `TransitiveDependencyResolver(File, PomSource)`.
+
 ### Changed
+- Downloads use `java.net.http.HttpClient` with HTTP/2, connection reuse and at most six parallel requests per
+  host. Retries honour `Retry-After`, and a redirect from HTTPS to HTTP is refused.
+- Jars are verified against the repository's `.sha256` file when it exists, otherwise its `.sha1` file.
+- Transitive POMs are fetched one tree level at a time, in parallel, and from the same repositories as the jars.
+  The nearest declaration of an artifact now wins, as in Maven; before, the first one found depth-first won.
 - Maven Central artifacts are downloaded from a mirror first and from Central only when the mirror cannot serve them.
   Central's terms do not allow using it as a download CDN for end users, and it rate-limits networks that download
   too much. The default mirror is Google's (`maven-central.storage-download.googleapis.com`), the same one Paper
@@ -20,6 +33,13 @@
 - `DependencyDownloader.activeRepositories()` and a `TransitiveDependencyResolver` constructor that takes the
   repositories to fetch POM files from.
 - `SharedCacheManager.isUsableJar(Path)`.
+- `dependencies.yml`: `repositories:`, `community-repositories:`, `relocation-excludes:`, and per-library
+  `@ <url>` and `sha256=<hex>`. Read by the new `DependencyDescriptor`, `DependencyEntry` and
+  `YamlDependencyLoader.loadDescriptor(...)`.
+- Private repositories: credentials from `JEDEPENDENCY_AUTH_<HOST>` environment variables (`RepositoryCredentials`).
+- `DependencyDownloader.configure(...)`, `setCommunityRepositories(...)`, `repositoryUrls(...)`, `fetchPom(...)`;
+  `RepositoryType.defaultOrder(...)`, `isCommunity()`, `COMMUNITY_PROPERTY`; `RepositoryUrl`; `PomSource`;
+  `DownloadThreads`, which falls back to a daemon thread pool on runtimes without virtual threads.
 
 ### Fixed
 - A download interrupted while waiting to retry (for example during server shutdown) stops instead of running the

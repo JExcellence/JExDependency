@@ -72,6 +72,9 @@ public enum RepositoryType {
     /** Gradle plugin portal repository. */
     GRADLE_PLUGINS("https://plugins.gradle.org/m2/", false);
 
+    /** System property that turns the community repositories on for every plugin on the server. */
+    public static final String COMMUNITY_PROPERTY = "jedependency.repository.community";
+
     private static final List<RepositoryType> SEARCH_ORDER = buildSearchOrder();
 
     private final String baseUrl;
@@ -83,12 +86,49 @@ public enum RepositoryType {
     }
 
     /**
-     * Returns the repositories that downloads try, in order. Retired and duplicate entries are left out.
+     * Returns every active repository in order, community repositories included. Retired and duplicate entries
+     * are left out. Downloads use {@link #defaultOrder(boolean)}, which leaves the community repositories out
+     * unless they are turned on.
      *
-     * @return unmodifiable list of repositories to contact
+     * @return unmodifiable list of active repositories
      */
     public static @NotNull List<RepositoryType> searchOrder() {
         return SEARCH_ORDER;
+    }
+
+    /**
+     * Returns the built-in repositories downloads use: the Central mirror and Central, plus the community
+     * repositories when {@code includeCommunity} is set.
+     *
+     * @param includeCommunity whether community repositories such as JitPack are added after Central
+     * @return unmodifiable list in search order
+     */
+    public static @NotNull List<RepositoryType> defaultOrder(final boolean includeCommunity) {
+        if (includeCommunity) {
+            return SEARCH_ORDER;
+        }
+        return SEARCH_ORDER.stream().filter(repository -> !repository.isCommunity()).toList();
+    }
+
+    /**
+     * Tells whether the server owner turned the community repositories on for every plugin with
+     * {@code -D}{@value #COMMUNITY_PROPERTY}{@code =true}.
+     *
+     * @return {@code true} when the system property is {@code true}
+     */
+    public static boolean communityEnabledByProperty() {
+        return Boolean.parseBoolean(System.getProperty(COMMUNITY_PROPERTY, "false").trim());
+    }
+
+    /**
+     * Tells whether this is a community repository. Community repositories are only contacted when a plugin opts
+     * in with {@code community-repositories: true} in {@code dependencies.yml} or the server sets
+     * {@value #COMMUNITY_PROPERTY}; otherwise only the Central mirror and Central are built in.
+     *
+     * @return {@code false} for {@link #MAVEN_CENTRAL_MIRROR} and {@link #MAVEN_CENTRAL}, {@code true} otherwise
+     */
+    public boolean isCommunity() {
+        return this != MAVEN_CENTRAL_MIRROR && this != MAVEN_CENTRAL;
     }
 
     /**

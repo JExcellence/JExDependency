@@ -87,6 +87,7 @@ public class PaperPluginLoader implements PluginLoader {
 
     private final DependencyDownloader dependencyDownloader;
     private final YamlDependencyLoader yamlDependencyLoader;
+    private DependencyDescriptor descriptor = DependencyDescriptor.EMPTY;
     
     /**
      * Plugin name extracted from the data directory path, used for logging context.
@@ -256,20 +257,22 @@ public class PaperPluginLoader implements PluginLoader {
     private @NotNull List<Path> initializeDependencies(@NotNull final File librariesDirectory, @NotNull final Path pluginSource) {
         try {
             // First, try to load dependencies from the plugin JAR itself
-            List<String> yamlDependencies = yamlDependencyLoader.loadDependenciesFromJar(pluginSource);
+            DependencyDescriptor descriptor = yamlDependencyLoader.loadDescriptorFromJar(pluginSource);
 
-            if (yamlDependencies == null || yamlDependencies.isEmpty()) {
+            if (descriptor == null || descriptor.isEmpty()) {
                 // Fall back to loader's own resources (JEDependency JAR)
                 logger.log(Level.FINE, "No dependencies in plugin JAR, checking loader resources");
-                yamlDependencies = yamlDependencyLoader.loadDependencies(getClass());
+                descriptor = yamlDependencyLoader.loadDescriptor(getClass());
             }
 
-            if (yamlDependencies == null || yamlDependencies.isEmpty()) {
+            if (descriptor == null || descriptor.isEmpty()) {
                 logger.info("No dependencies configured");
                 return List.of();
             }
 
-            return processDependencies(yamlDependencies, librariesDirectory);
+            this.descriptor = descriptor;
+            dependencyDownloader.configure(descriptor);
+            return processDependencies(descriptor.dependencies(), librariesDirectory);
 
         } catch (final Exception exception) {
             logger.log(Level.WARNING, "Failed to load dependencies", exception);

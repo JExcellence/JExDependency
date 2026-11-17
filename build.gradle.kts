@@ -57,6 +57,8 @@ tasks {
         useJUnitPlatform()
         // ClasspathInjector tests exercise URLClassLoader.addURL via reflection.
         jvmArgs("--add-opens", "java.base/java.net=ALL-UNNAMED")
+        // Keep the shared cache of downloader tests inside the build folder.
+        systemProperty("jedependency.cache.dir", layout.buildDirectory.dir("test-cache").get().asFile.absolutePath)
     }
 
     register<Jar>("fatJar") {

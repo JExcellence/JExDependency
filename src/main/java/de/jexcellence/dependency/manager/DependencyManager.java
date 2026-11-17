@@ -4,6 +4,8 @@ import de.jexcellence.dependency.downloader.DependencyDownloader;
 import de.jexcellence.dependency.exception.DependencyException;
 import de.jexcellence.dependency.injector.ClasspathInjector;
 import de.jexcellence.dependency.loader.LoaderClasspathFile;
+import de.jexcellence.dependency.loader.DependencyDescriptor;
+import de.jexcellence.dependency.loader.DependencyEntry;
 import de.jexcellence.dependency.loader.YamlDependencyLoader;
 import de.jexcellence.dependency.model.DependencyCoordinate;
 import de.jexcellence.dependency.model.DownloadResult;
@@ -230,7 +232,7 @@ public class DependencyManager {
     ) {
         logger.info("Transitive resolution enabled: analysing POM files...");
 
-        final TransitiveDependencyResolver resolver = new TransitiveDependencyResolver(librariesDirectory, downloader.activeRepositories());
+        final TransitiveDependencyResolver resolver = new TransitiveDependencyResolver(librariesDirectory, downloader::fetchPom);
         final Set<DependencyCoordinate> transitives = resolver.resolve(roots);
 
         // Merge: roots first (preserve their order), then new transitives
@@ -275,16 +277,12 @@ public class DependencyManager {
     ) {
         final List<DependencyCoordinate> coordinates = new ArrayList<>();
 
-        final List<String> yamlDependencies = yamlLoader.loadDependencies(anchorClass);
-        if (yamlDependencies != null) {
-            for (final String dependency : yamlDependencies) {
-                final DependencyCoordinate coordinate = DependencyCoordinate.parse(dependency);
-                if (coordinate != null) {
-                    coordinates.add(coordinate);
-                    logger.log(Level.FINE, () -> "YAML dependency: " + dependency);
-                } else {
-                    logger.log(Level.WARNING, "Invalid dependency format: {0}", dependency);
-                }
+        final DependencyDescriptor descriptor = yamlLoader.loadDescriptor(anchorClass);
+        if (descriptor != null) {
+            downloader.configure(descriptor);
+            for (final DependencyEntry entry : descriptor.entries()) {
+                coordinates.add(entry.coordinate());
+                logger.log(Level.FINE, () -> "YAML dependency: " + entry.coordinate().toGavString());
             }
         }
 
