@@ -169,13 +169,33 @@ loads declared libraries only, not their transitive dependencies; see the [roadm
 
 ## Relocation
 
-Relocation renames a library's packages (`com.google.gson` becomes `de.jexcellence.remapped.com.google.gson`) so
-your copy cannot collide with another plugin's copy.
+Relocation renames a library's packages (`com.google.gson` becomes `com.example.myplugin.libs.com.google.gson`)
+so your copy cannot collide with another plugin's copy. It only works when your own classes use the relocated
+names too, so JExDependency relocates exactly the libraries your compiled plugin already refers to under the
+prefix. Keep the library `compileOnly` and the `relocate(...)` line in Shadow:
 
-- **Paper loader:** relocation is on by default (`jedependency.remap=auto`). Packages are detected from your
-  libraries automatically and placed under `jedependency.relocations.prefix` (default `de.jexcellence.remapped`).
-- **Spigot and `plugin.yml` plugins:** `initializeWithRemapping` relocates only what the server lists in
-  `-Djedependency.relocations`. Automatic detection on Spigot is [roadmap item 3](ROADMAP.md).
+```kotlin
+tasks.shadowJar {
+    relocate("com.google.gson", "com.example.myplugin.libs.com.google.gson")
+}
+```
+
+```yaml
+relocation-prefix: com.example.myplugin.libs
+dependencies:
+  - "com.google.code.gson:gson:2.13.1"
+```
+
+At startup the plugin jar is scanned; gson is referenced under the prefix, so the whole gson jar is relocated.
+Libraries your code uses by their original names stay as they are. This works the same in the Paper loader
+(on by default, `jedependency.remap=auto`) and with `JEDependency.initializeWithRemapping` on Spigot.
+
+- `relocations:` in `dependencies.yml` (`- com.google.gson => my.libs.gson`) or `-Djedependency.relocations` set
+  explicit relocations instead.
+- `relocation-excludes:` lists packages that are never relocated. JDK, Jakarta and XML API packages are always
+  excluded.
+- Use a prefix of your own: two plugins that relocate into the same prefix share those classes again.
+- On Paper, every plugin with a `paper-plugin.yml` has its own class loader, so relocation is rarely needed there.
 
 Relocated copies are stored per relocation set in `plugins/<YourPlugin>/libraries/remapped/<set>/`, so changing
 your libraries or the relocation settings always produces fresh copies.
@@ -207,8 +227,9 @@ Server owners can change behaviour with JVM system properties, without rebuildin
 |---|---|---|
 | `jedependency.remap` | `auto` in the Paper loader, otherwise off | `true`, `1`, `yes` or `on` turns relocation on; `false` turns it off. |
 | `jedependency.relocations` | none | Explicit relocations: `com.google.gson=>my.libs.gson,org.foo=>my.libs.foo`. |
-| `jedependency.relocations.prefix` | `de.jexcellence.remapped` | Package prefix for automatic relocation. |
-| `jedependency.relocations.excludes` | none | Comma-separated packages that are never relocated. |
+| `jedependency.relocations.prefix` | `de.jexcellence.remapped` | Package prefix for automatic relocation when the plugin sets no `relocation-prefix:`. |
+| `jedependency.relocations.excludes` | none | Comma-separated packages that are never relocated, added to the plugin's `relocation-excludes:`. |
+| `jedependency.transitive` | `true` | `false` stops the Paper loader from downloading the dependencies of your libraries. |
 | `jedependency.repository.community` | `false` | `true` searches the built-in community repositories (NeetGames, JitPack, Auxilor, Tcoded, PaperMC, SpigotMC, Gradle plugins) after Central for every plugin. |
 | `jedependency.repository.central` | Google's Central mirror | Maven Central mirror to download from, for example your own Nexus. Falls back to the `PAPER_DEFAULT_CENTRAL_REPOSITORY` environment variable. Set it to `https://repo1.maven.org/maven2` to download from Central directly. Read once at startup. |
 | `jedependency.cache.dir` | `<server>/.jexdependency/cache` | Location of the shared cache, for example a Docker volume. |

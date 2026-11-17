@@ -9,8 +9,19 @@
   `-Djedependency.repository.community=true`. A failed lookup logs this hint once.
 - `TransitiveDependencyResolver(File, List<RepositoryType>)`, added after 2.2.0 and never released, is replaced
   by `TransitiveDependencyResolver(File, PomSource)`.
+- Automatic relocation only relocates libraries the plugin's own classes reference under the relocation prefix.
+  Before, the Paper loader relocated every library it found except a built-in list (Hibernate, Jackson, JDA,
+  OkHttp, Kotlin, Apache and others), which broke plugins that use a library by its original package names. The
+  built-in list is gone; only JDK, Jakarta and XML API packages are always excluded. Explicit relocations from
+  `-Djedependency.relocations` or `relocations:` in `dependencies.yml` are no longer refused for Hibernate,
+  Jackson, JDA or Apache packages.
 
 ### Changed
+- `JEDependency.initializeWithRemapping` on Spigot plans relocations like the Paper loader, resolves transitive
+  dependencies and downloads in parallel.
+- The Paper loader resolves transitive dependencies (turn off with `-Djedependency.transitive=false`) and marks its
+  classpath record as complete when every library loaded. `JEDependency.initialize` then skips its second pass,
+  which also stops relocated and unrelocated copies of the same library from both being loaded.
 - Downloads use `java.net.http.HttpClient` with HTTP/2, connection reuse and at most six parallel requests per
   host. Retries honour `Retry-After`, and a redirect from HTTPS to HTTP is refused.
 - Jars are verified against the repository's `.sha256` file when it exists, otherwise its `.sha1` file.
@@ -33,6 +44,8 @@
 - `DependencyDownloader.activeRepositories()` and a `TransitiveDependencyResolver` constructor that takes the
   repositories to fetch POM files from.
 - `SharedCacheManager.isUsableJar(Path)`.
+- `RelocationPlanner`; `relocation-prefix:` and `relocations:` in `dependencies.yml`;
+  `RemappingDependencyManager.setTransitiveResolutionEnabled(...)`; `LoaderClasspathFile.isComplete(...)`.
 - `dependencies.yml`: `repositories:`, `community-repositories:`, `relocation-excludes:`, and per-library
   `@ <url>` and `sha256=<hex>`. Read by the new `DependencyDescriptor`, `DependencyEntry` and
   `YamlDependencyLoader.loadDescriptor(...)`.

@@ -226,8 +226,12 @@ public class JEDependency {
         // On Paper plugin loader (1.20+), inject pre-downloaded libraries but do NOT return early.
         // Continue with full initialization to leverage the complete feature set.
         if (isPaperPluginLoaderActive() && isVersion120OrHigher()) {
-            plugin.getLogger().info("Paper plugin loader detected (1.20+) - injecting pre-downloaded libraries, then continuing with full initialization");
-            injectPreDownloadedLibraries(plugin, anchorClass);
+            final boolean complete = injectPreDownloadedLibraries(plugin, anchorClass);
+            if (complete && (additionalDependencies == null || additionalDependencies.length == 0)) {
+                plugin.getLogger().info("Libraries were loaded by the Paper plugin loader; nothing left to do");
+                return;
+            }
+            plugin.getLogger().info("Paper plugin loader did not load every library; continuing with full initialization");
         } else if (isPaperPluginLoaderActive() && !isVersion120OrHigher()) {
             plugin.getLogger().info("Paper plugin loader detected but server version is below 1.20 - skipping pre-downloaded library injection for compatibility");
         }
@@ -264,8 +268,10 @@ public class JEDependency {
      *
      * @param plugin       owning plugin used for logging and resolving the data directory
      * @param anchorClass  class whose class loader receives the injected libraries
+     * @return {@code true} when the loader's record is complete and every recorded jar was injected, so the
+     *         plugin side has nothing left to download or resolve
      */
-    private static void injectPreDownloadedLibraries(
+    private static boolean injectPreDownloadedLibraries(
             @NotNull final JavaPlugin plugin,
             @NotNull final Class<?> anchorClass
     ) {
@@ -277,12 +283,13 @@ public class JEDependency {
             recordedJars = LoaderClasspathFile.read(libsFolder.toPath());
         } catch (final IOException exception) {
             plugin.getLogger().log(Level.WARNING, "Could not read the Paper loader classpath record", exception);
-            return;
+            return false;
         }
+        final boolean complete = LoaderClasspathFile.isComplete(libsFolder.toPath());
 
         if (recordedJars.isEmpty()) {
             plugin.getLogger().log(Level.FINE, "No libraries recorded by the Paper loader in {0}", libsFolder);
-            return;
+            return complete;
         }
 
         final ClassLoader pluginClassLoader = anchorClass.getClassLoader();
@@ -303,6 +310,7 @@ public class JEDependency {
 
         plugin.getLogger().log(Level.INFO, "Injected {0} libraries{1} recorded by the Paper loader",
                 new Object[]{injected, failed > 0 ? " (" + failed + " failed)" : ""});
+        return complete && failed == 0;
     }
 
     /**

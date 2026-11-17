@@ -6,6 +6,7 @@ import de.jexcellence.dependency.loader.LoaderClasspathFile;
 import de.jexcellence.dependency.loader.DependencyDescriptor;
 import de.jexcellence.dependency.loader.DependencyEntry;
 import de.jexcellence.dependency.loader.YamlDependencyLoader;
+import de.jexcellence.dependency.resolver.TransitiveDependencyResolver;
 import de.jexcellence.dependency.model.DependencyCoordinate;
 import de.jexcellence.dependency.model.DownloadResult;
 import de.jexcellence.dependency.module.Deencapsulation;
@@ -27,6 +28,7 @@ import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -71,6 +73,7 @@ public class RemappingDependencyManager {
     private final ClasspathInjector injector = new ClasspathInjector();
     private final YamlDependencyLoader yamlLoader = new YamlDependencyLoader();
     private DependencyDescriptor descriptor = DependencyDescriptor.EMPTY;
+    private boolean transitiveResolutionEnabled = true;
 
     // ----------------- Context -----------------
 
@@ -310,12 +313,24 @@ public class RemappingDependencyManager {
      * @param toProcess list of coordinates to download
      * @return list of successfully downloaded JAR paths
      */
-    private @NotNull List<Path> downloadDependencies(@NotNull final List<DependencyCoordinate> toProcess) {
+    private @NotNull List<Path> downloadDependencies(@NotNull final List<DependencyCoordinate> declared) {
         final List<Path> inputJars = new ArrayList<>();
         downloader.probeConnectivity();
 
-        for (final DependencyCoordinate coordinate : toProcess) {
-            final DownloadResult result = downloader.download(coordinate, librariesDirectory.toFile());
+        final List<DependencyCoordinate> toProcess = transitiveResolutionEnabled
+                ? TransitiveDependencyResolver.withTransitives(declared, downloader, librariesDirectory.toFile())
+                : declared;
+        if (toProcess.size() > declared.size()) {
+            LOGGER.log(Level.INFO, "Transitive resolution added {0} dependencies", toProcess.size() - declared.size());
+        }
+
+        // Downloads run in parallel; results are collected in declaration order.
+        final List<CompletableFuture<DownloadResult>> futures = toProcess.stream()
+                .map(coordinate -> downloader.downloadAsync(coordinate, librariesDirectory.toFile()))
+                .toList();
+        for (int index = 0; index < toProcess.size(); index++) {
+            final DependencyCoordinate coordinate = toProcess.get(index);
+            final DownloadResult result = futures.get(index).join();
             if (result.success() && result.file() != null) {
                 inputJars.add(result.file().toPath());
                 LOGGER.log(Level.FINE, () -> "Downloaded " + coordinate.toGavString() + " -> " + result.file().getName());
@@ -338,8 +353,16 @@ public class RemappingDependencyManager {
         final List<Path> jarsToInject = new ArrayList<>();
 
         if (relocations.isEmpty()) {
+            descriptor.relocations().forEach(this::relocate);
+        }
+        if (relocations.isEmpty()) {
+            final String prefix = RelocationPlanner.prefix(descriptor.relocationPrefix());
+            RelocationPlanner.plan(inputJars, pluginJar(), prefix, RelocationPlanner.excludes(descriptor.relocationExcludes()))
+                    .forEach(this::relocate);
+        }
+        if (relocations.isEmpty()) {
             jarsToInject.addAll(inputJars);
-            LOGGER.info("No relocations specified; injecting original libraries");
+            LOGGER.info("No relocations apply; injecting original libraries");
             return jarsToInject;
         }
 
@@ -371,6 +394,29 @@ public class RemappingDependencyManager {
 
         LOGGER.log(Level.INFO, "Remapping complete: {0} artifact(s) prepared", jarsToInject.size());
         return jarsToInject;
+    }
+
+    /**
+     * Enables or disables resolving transitive dependencies from POM files. Enabled by default.
+     *
+     * @param enabled whether transitive dependencies are downloaded too
+     */
+    public void setTransitiveResolutionEnabled(final boolean enabled) {
+        this.transitiveResolutionEnabled = enabled;
+    }
+
+    /** The jar the plugin was loaded from, scanned for references to relocated packages. */
+    private @Nullable Path pluginJar() {
+        if (anchorClass == null) {
+            return null;
+        }
+        try {
+            final var source = anchorClass.getProtectionDomain().getCodeSource();
+            return source == null ? null : Path.of(source.getLocation().toURI());
+        } catch (final Exception exception) {
+            LOGGER.log(Level.FINE, exception, () -> "Could not locate the plugin jar of " + anchorClass.getName());
+            return null;
+        }
     }
 
     /**
@@ -516,36 +562,7 @@ public class RemappingDependencyManager {
     }
 
     private static boolean isRestrictedRoot(final String pkg) {
-        // JDK internals
-        if (pkg.equals("java") || pkg.startsWith("java.")
-                || pkg.equals("javax") || pkg.startsWith("javax.")
-                || pkg.equals("jakarta") || pkg.startsWith("jakarta.")) {
-            return true;
-        }
-        // Hibernate - must not be relocated as it expects original Jackson paths
-        if (pkg.equals("org.hibernate") || pkg.startsWith("org.hibernate.")) {
-            return true;
-        }
-        // Jackson 3.x: com.fasterxml only contains annotations now, but Hibernate
-        // references com.fasterxml.jackson.core which doesn't exist in Jackson 3.x.
-        // Excluding com.fasterxml prevents broken relocations.
-        if (pkg.equals("com.fasterxml") || pkg.startsWith("com.fasterxml.")) {
-            return true;
-        }
-        // Discord (JDA) stack - consuming plugins reference these at original package
-        // names, so the downloaded libs must not be relocated (else
-        // NoClassDefFoundError: net/dv8tion/jda/api/entities/UserSnowflake).
-        return isDiscordStackRoot(pkg);
-    }
-
-    private static boolean isDiscordStackRoot(final String pkg) {
-        for (final String root : new String[]{
-                "net.dv8tion", "com.neovisionaries", "okhttp3", "okio", "kotlin", "gnu.trove", "org.apache"}) {
-            if (pkg.equals(root) || pkg.startsWith(root + ".")) {
-                return true;
-            }
-        }
-        return false;
+        return RelocationPlanner.isAlwaysExcluded(pkg);
     }
 
     private static String relocateResourcePath(final String name, final Map<String, String> relocations) {

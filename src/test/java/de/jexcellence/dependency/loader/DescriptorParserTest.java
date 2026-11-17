@@ -106,4 +106,19 @@ class DescriptorParserTest {
 
         assertEquals("https://repo.example.org/a#b", descriptor.entries().get(0).repository());
     }
+
+    @Test
+    @DisplayName("reads the relocation prefix and explicit relocations")
+    void relocationSettings() throws IOException {
+        final DependencyDescriptor descriptor = parse("""
+                relocation-prefix: com.example.plugin.libs
+                relocations:
+                  - com.google.gson => com.example.plugin.libs.gson
+                  - broken
+                """);
+
+        assertEquals("com.example.plugin.libs", descriptor.relocationPrefix());
+        assertEquals(java.util.Map.of("com.google.gson", "com.example.plugin.libs.gson"), descriptor.relocations());
+        assertEquals(1, warnings.size(), warnings.toString());
+    }
 }

@@ -12,7 +12,9 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.LinkedHashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
@@ -29,6 +31,8 @@ final class DescriptorParser {
     private final List<DependencyEntry> entries = new ArrayList<>();
     private final List<String> repositories = new ArrayList<>();
     private final List<String> relocationExcludes = new ArrayList<>();
+    private final Map<String, String> relocations = new LinkedHashMap<>();
+    private @Nullable String relocationPrefix;
     private boolean communityRepositories;
     private @Nullable String section;
 
@@ -56,7 +60,7 @@ final class DescriptorParser {
             }
         }
         return new DependencyDescriptor(parser.entries, parser.repositories, parser.communityRepositories,
-                parser.relocationExcludes);
+                parser.relocationExcludes, parser.relocationPrefix, parser.relocations);
     }
 
     private void line(@NotNull final String raw, final int number) {
@@ -89,6 +93,12 @@ final class DescriptorParser {
         section = null;
         if ("community-repositories".equals(key)) {
             communityRepositories = Boolean.parseBoolean(value);
+        } else if ("relocation-prefix".equals(key)) {
+            if (PACKAGE_NAME.matcher(value).matches()) {
+                relocationPrefix = value;
+            } else {
+                warnings.accept("dependencies.yml line " + number + ": not a package name: " + value);
+            }
         }
     }
 
@@ -111,9 +121,21 @@ final class DescriptorParser {
                     warnings.accept("dependencies.yml line " + number + ": not a package name: " + item);
                 }
             }
+            case "relocations" -> relocation(item, number);
             default -> {
                 // Unknown sections belong to newer versions or other tools.
             }
+        }
+    }
+
+    private void relocation(@NotNull final String item, final int number) {
+        final int arrow = item.indexOf("=>");
+        final String from = arrow > 0 ? item.substring(0, arrow).trim() : "";
+        final String to = arrow > 0 ? item.substring(arrow + 2).trim() : "";
+        if (PACKAGE_NAME.matcher(from).matches() && PACKAGE_NAME.matcher(to).matches()) {
+            relocations.put(from, to);
+        } else {
+            warnings.accept("dependencies.yml line " + number + ": expected 'from.package => to.package': " + item);
         }
     }
 

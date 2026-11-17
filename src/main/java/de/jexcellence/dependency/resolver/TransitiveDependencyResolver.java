@@ -102,6 +102,24 @@ public class TransitiveDependencyResolver {
     }
 
     /**
+     * Returns the roots followed by their transitive dependencies, roots first and in their original order.
+     *
+     * @param roots              declared coordinates
+     * @param downloader         configured downloader; POMs come from its repositories
+     * @param librariesDirectory the plugin's libraries directory
+     * @return roots plus transitive coordinates without duplicates
+     */
+    public static @NotNull List<DependencyCoordinate> withTransitives(
+            @NotNull final List<DependencyCoordinate> roots,
+            @NotNull final DependencyDownloader downloader,
+            @NotNull final File librariesDirectory
+    ) {
+        final Set<DependencyCoordinate> merged = new LinkedHashSet<>(roots);
+        merged.addAll(new TransitiveDependencyResolver(librariesDirectory, downloader::fetchPom).resolve(roots));
+        return new ArrayList<>(merged);
+    }
+
+    /**
      * Resolves the full transitive dependency closure for all given root coordinates.
      *
      * <p>The returned set is ordered breadth-first.  Root coordinates are NOT included in the
