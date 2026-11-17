@@ -3,7 +3,7 @@
 # keeps accidental use of newer Bukkit/Paper methods out of the library.
 paper = "1.21.4-R0.1-SNAPSHOT"
 asm = "9.8"
-jetbrains-annotations = "26.0.0"
+jetbrains-annotations = "26.1.0"
 junit = "5.14.3"
 
 [libraries]
