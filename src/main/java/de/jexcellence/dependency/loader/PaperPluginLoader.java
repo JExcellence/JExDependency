@@ -571,29 +571,36 @@ public class PaperPluginLoader implements PluginLoader {
         final int total = inputJars.size();
         final List<Path> jarsToLoad = new ArrayList<>(total);
         final List<String> failedJars = new ArrayList<>();
-        int done = 0;
         int remappedCount = 0;
-        // Log a progress line every this many JARs so the console doesn't look stuck
-        final int progressInterval = Math.max(1, Math.min(10, total / 5));
 
         logger.log(Level.INFO, "Remapping {0} libraries...", total);
 
-        for (final Path inputJar : inputJars) {
-            final Path outputJar = outputDirectory.resolve(inputJar.getFileName());
-
-            final int outcome = isRemappedJarUpToDate(outputJar, inputJar)
-                    ? markCached(outputJar)
-                    : remapAndValidate(remappingManager, inputJar, outputJar);
-
-            if (outcome == REMAP_OK) {
-                jarsToLoad.add(outputJar);
-                remappedCount++;
-            } else {
-                failedJars.add(inputJar.getFileName().toString());
+        // Jars are remapped in parallel; each output file belongs to exactly one task.
+        final java.util.concurrent.ExecutorService pool = java.util.concurrent.Executors.newFixedThreadPool(
+                Math.max(1, Math.min(total, Runtime.getRuntime().availableProcessors())), runnable -> {
+                    final Thread thread = new Thread(runnable, "JExDependency-remap");
+                    thread.setDaemon(true);
+                    return thread;
+                });
+        try {
+            final List<CompletableFuture<Integer>> outcomes = new ArrayList<>(total);
+            for (final Path inputJar : inputJars) {
+                final Path outputJar = outputDirectory.resolve(inputJar.getFileName());
+                outcomes.add(CompletableFuture.supplyAsync(() -> isRemappedJarUpToDate(outputJar, inputJar)
+                        ? markCached(outputJar)
+                        : remapAndValidate(remappingManager, inputJar, outputJar), pool));
             }
-
-            done++;
-            logRemapProgress(done, total, progressInterval);
+            for (int index = 0; index < total; index++) {
+                final Path inputJar = inputJars.get(index);
+                if (outcomes.get(index).join() == REMAP_OK) {
+                    jarsToLoad.add(outputDirectory.resolve(inputJar.getFileName()));
+                    remappedCount++;
+                } else {
+                    failedJars.add(inputJar.getFileName().toString());
+                }
+            }
+        } finally {
+            pool.shutdown();
         }
 
         if (!failedJars.isEmpty()) {
@@ -633,12 +640,6 @@ public class PaperPluginLoader implements PluginLoader {
         return REMAP_PROCESSED;
     }
 
-    private void logRemapProgress(final int processed, final int total, final int interval) {
-        if (processed % interval == 0 || processed == total) {
-            final int percent = (processed * 100) / total;
-            logger.log(Level.INFO, "Remapping... {0}/{1} ({2}%)", new Object[]{processed, total, percent});
-        }
-    }
 
     private boolean isRemappedJarUpToDate(@NotNull final Path outputJar, @NotNull final Path inputJar) {
         try {

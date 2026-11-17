@@ -22,6 +22,7 @@
 - The Paper loader resolves transitive dependencies (turn off with `-Djedependency.transitive=false`) and marks its
   classpath record as complete when every library loaded. `JEDependency.initialize` then skips its second pass,
   which also stops relocated and unrelocated copies of the same library from both being loaded.
+- Libraries are remapped in parallel, one thread per CPU core, in the Paper loader and on the remapping path.
 - Downloads use `java.net.http.HttpClient` with HTTP/2, connection reuse and at most six parallel requests per
   host. Retries honour `Retry-After`, and a redirect from HTTPS to HTTP is refused.
 - Jars are verified against the repository's `.sha256` file when it exists, otherwise its `.sha1` file.

@@ -397,26 +397,44 @@ public class RemappingDependencyManager {
         // Copies are only valid for the relocation set they were made with, so each set gets its own folder.
         final Path setDirectory = remappedDirectory.resolve(relocationFingerprint());
         Files.createDirectories(setDirectory);
-        for (final Path input : inputJars) {
-            final Path output = setDirectory.resolve(input.getFileName().toString());
-
-            if (isOutputUpToDate(output, input)) {
-                LOGGER.log(Level.FINE, () -> "Using cached remapped JAR: " + output.getFileName());
-                jarsToInject.add(output);
-                continue;
+        // Jars are remapped in parallel; each output file belongs to exactly one task.
+        final java.util.concurrent.ExecutorService pool = java.util.concurrent.Executors.newFixedThreadPool(
+                Math.max(1, Math.min(inputJars.size(), Runtime.getRuntime().availableProcessors())), runnable -> {
+                    final Thread thread = new Thread(runnable, "JExDependency-remap");
+                    thread.setDaemon(true);
+                    return thread;
+                });
+        try {
+            final List<CompletableFuture<Path>> outputs = new ArrayList<>();
+            for (final Path input : inputJars) {
+                final Path output = setDirectory.resolve(input.getFileName().toString());
+                outputs.add(CompletableFuture.supplyAsync(() -> {
+                    if (isOutputUpToDate(output, input)) {
+                        LOGGER.log(Level.FINE, () -> "Using cached remapped JAR: " + output.getFileName());
+                        return output;
+                    }
+                    try {
+                        remap(input, output);
+                        return output;
+                    } catch (final IOException | RuntimeException ex) {
+                        safeDelete(output);
+                        LOGGER.log(Level.WARNING, ex, () -> "Remapping failed for " + input.getFileName());
+                        return null;
+                    }
+                }, pool));
             }
-
-            try {
-                remap(input, output);
-                jarsToInject.add(output);
-            } catch (final IOException | RuntimeException ex) {
-                safeDelete(output);
-                // Relocations span the whole set, so remapped siblings may reference relocated packages of this
-                // jar. Mixing remapped and original jars would break those references: use originals for all.
-                LOGGER.log(Level.WARNING, ex, () -> "Remapping failed for " + input.getFileName()
-                        + "; injecting all libraries without relocation");
-                return new ArrayList<>(inputJars);
+            for (final CompletableFuture<Path> output : outputs) {
+                final Path remapped = output.join();
+                if (remapped == null) {
+                    // Relocations span the whole set, so remapped siblings may reference relocated packages of the
+                    // failed jar. Mixing remapped and original jars would break those references: use originals.
+                    LOGGER.warning("Injecting all libraries without relocation because one could not be remapped");
+                    return new ArrayList<>(inputJars);
+                }
+                jarsToInject.add(remapped);
             }
+        } finally {
+            pool.shutdown();
         }
 
         LOGGER.log(Level.INFO, "Remapping complete: {0} artifact(s) prepared", jarsToInject.size());
