@@ -1,8 +1,9 @@
 package de.jexcellence.dependency.resolver;
 
 import de.jexcellence.dependency.cache.SharedCacheManager;
+import de.jexcellence.dependency.downloader.DependencyDownloader;
+import de.jexcellence.dependency.downloader.DownloadThreads;
 import de.jexcellence.dependency.model.DependencyCoordinate;
-import de.jexcellence.dependency.repository.RepositoryType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -10,19 +11,17 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.URL;
 import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,22 +31,24 @@ import java.util.logging.Logger;
  *
  * <h2>Algorithm overview</h2>
  * <ol>
- *   <li>For each root coordinate, download its POM from Maven repositories.</li>
+ *   <li>Walk the tree breadth-first. The POMs of one level, with their parent chains, are fetched in
+ *       parallel; the results are then processed in declaration order, so the nearest declaration of an
+ *       artifact wins, as in Maven.</li>
+ *   <li>For each coordinate, fetch its POM through the {@link PomSource}.</li>
  *   <li>Walk the {@code <parent>} chain (up to {@value #MAX_PARENT_DEPTH} levels) merging
- *       {@code <properties>} and {@code <dependencyManagement>} entries — child values take
+ *       {@code <properties>} and {@code <dependencyManagement>} entries: child values take
  *       precedence over parent values (standard Maven semantics).</li>
  *   <li>For each direct {@code <dependency>} that is not {@code test}, {@code provided},
  *       {@code system}, or {@code optional}, resolve its version from the merged
  *       {@code <dependencyManagement>} map if not stated inline, then substitute any
  *       {@code ${property}} references.</li>
- *   <li>Recurse into each resolved transitive dependency (up to {@value #MAX_TRANSITIVE_DEPTH}
- *       levels deep) tracking visited coordinates to prevent cycles.</li>
+ *   <li>Continue with the next level (up to {@value #MAX_TRANSITIVE_DEPTH} levels deep), tracking
+ *       visited coordinates to prevent cycles.</li>
  * </ol>
  *
  * <h2>Caching</h2>
- * Downloaded {@code .pom} files are written to a {@code poms/} sub-directory inside the
- * plugin's libraries directory and are re-used on subsequent server starts, so only new or
- * updated artifacts require network access.
+ * Downloaded {@code .pom} files are written to the shared server cache and reused on later
+ * server starts, so only new artifacts need network access.
  *
  * <h2>Known limitations</h2>
  * <ul>
@@ -69,107 +70,155 @@ public class TransitiveDependencyResolver {
     /** Maximum recursion depth when walking the dependency graph. */
     private static final int MAX_TRANSITIVE_DEPTH = 12;
 
-    private static final int CONNECT_TIMEOUT_MS = 10_000;
-    private static final int READ_TIMEOUT_MS    = 20_000;
-
     private final PomParser pomParser;
     private final File pomCacheDir;
-    private final List<RepositoryType> repositories;
+    private final PomSource pomSource;
+
+    /** In-process POM cache keyed by {@code groupId:artifactId:version}; filled from several threads. */
+    private final Map<String, ParsedPom> pomCache = new ConcurrentHashMap<>();
+    private final Set<DependencyCoordinate> unresolved = ConcurrentHashMap.newKeySet();
 
     /**
-     * In-process POM cache keyed by {@code groupId:artifactId:version}.
-     * Uses {@link LinkedHashMap} so that insertion order is preserved (useful for logging).
-     */
-    private final Map<String, ParsedPom> pomCache = new LinkedHashMap<>();
-
-    /**
-     * Creates a resolver that uses the shared server-level POM cache. The {@code librariesDirectory}
-     * parameter is retained for backward compatibility but is no longer used for POM storage — all
-     * POMs are stored in the shared cache under GAV-structured paths to avoid naming collisions.
+     * Creates a resolver that fetches POM files from the Central mirror and Central, plus the community
+     * repositories when the server turned them on.
      *
      * @param librariesDirectory the plugin's libraries cache directory (retained for compatibility)
      */
     public TransitiveDependencyResolver(@NotNull final File librariesDirectory) {
-        this(librariesDirectory, RepositoryType.searchOrder());
+        this(librariesDirectory, new DependencyDownloader()::fetchPom);
     }
 
     /**
-     * Creates a resolver that fetches POM files from the given repositories, in order.
+     * Creates a resolver that fetches POM files through the given source, usually a configured
+     * {@link DependencyDownloader}, so POMs come from the same repositories as the jars.
      *
      * @param librariesDirectory the plugin's libraries cache directory (retained for compatibility)
-     * @param repositories       repositories to try for each POM, usually
-     *                           {@link de.jexcellence.dependency.downloader.DependencyDownloader#activeRepositories()}
+     * @param pomSource          where POM files are fetched from on a cache miss
      */
-    public TransitiveDependencyResolver(@NotNull final File librariesDirectory,
-                                        @NotNull final List<RepositoryType> repositories) {
-        this.repositories = List.copyOf(repositories);
+    public TransitiveDependencyResolver(@NotNull final File librariesDirectory, @NotNull final PomSource pomSource) {
+        this.pomSource = pomSource;
         this.pomParser = new PomParser();
         this.pomCacheDir = SharedCacheManager.getInstance().getPomsCacheDirectory();
         this.pomCacheDir.mkdirs();
     }
 
     /**
+     * Returns the roots followed by their transitive dependencies, roots first and in their original order.
+     *
+     * @param roots              declared coordinates
+     * @param downloader         configured downloader; POMs come from its repositories
+     * @param librariesDirectory the plugin's libraries directory
+     * @return roots plus transitive coordinates without duplicates
+     */
+    public static @NotNull Resolution withTransitives(
+            @NotNull final List<DependencyCoordinate> roots,
+            @NotNull final DependencyDownloader downloader,
+            @NotNull final File librariesDirectory
+    ) {
+        final TransitiveDependencyResolver resolver = new TransitiveDependencyResolver(librariesDirectory, downloader::fetchPom);
+        final Set<DependencyCoordinate> merged = new LinkedHashSet<>(roots);
+        merged.addAll(resolver.resolve(roots));
+        return new Resolution(new ArrayList<>(merged), Set.copyOf(resolver.unresolved));
+    }
+
+    /**
+     * Outcome of {@link #withTransitives}.
+     *
+     * @param coordinates roots followed by their transitive dependencies
+     * @param unresolved  artifacts whose POM could not be fetched, so their dependencies may be missing
+     */
+    public record Resolution(@NotNull List<DependencyCoordinate> coordinates,
+                             @NotNull Set<DependencyCoordinate> unresolved) {
+    }
+
+    /**
      * Resolves the full transitive dependency closure for all given root coordinates.
      *
      * <p>The returned set is ordered breadth-first.  Root coordinates are NOT included in the
-     * result — callers are expected to download those separately through the normal flow.
+     * result: callers are expected to download those separately through the normal flow.
      *
      * @param roots root coordinates to resolve from
      * @return ordered set of transitive coordinates to additionally download and inject;
      *         never {@code null}, may be empty
      */
     public @NotNull Set<DependencyCoordinate> resolve(@NotNull final List<DependencyCoordinate> roots) {
-        // Seed the visited set with all root GAVs so we don't re-download them
         final Set<String> visited = new HashSet<>();
+        final Set<String> visitedArtifacts = new HashSet<>();
+        List<Node> level = new ArrayList<>();
         for (final DependencyCoordinate root : roots) {
             visited.add(gavKey(root));
+            visitedArtifacts.add(root.groupId() + ":" + root.artifactId());
+            level.add(new Node(root, Set.of()));
         }
 
         final Set<DependencyCoordinate> result = new LinkedHashSet<>();
-
-        for (final DependencyCoordinate root : roots) {
-            resolveRecursive(root, visited, result, 0, Collections.emptySet());
+        final ExecutorService executor = DownloadThreads.newExecutor("JExDependency-pom");
+        try {
+            for (int depth = 0; !level.isEmpty(); depth++) {
+                if (depth >= MAX_TRANSITIVE_DEPTH) {
+                    LOGGER.log(Level.FINE, "Max transitive depth reached; {0} artifacts not expanded", level.size());
+                    break;
+                }
+                final Map<DependencyCoordinate, ParsedPom> poms = fetchLevel(level, executor);
+                final List<Node> next = new ArrayList<>();
+                for (final Node node : level) {
+                    expand(node, poms.get(node.coordinate()), visited, visitedArtifacts, result, next);
+                }
+                level = next;
+            }
+        } finally {
+            executor.shutdown();
         }
-
         return result;
     }
 
-    // -------------------------------------------------------------------------
-    // Core recursive resolution
-    // -------------------------------------------------------------------------
-
-    private void resolveRecursive(
-            @NotNull final DependencyCoordinate coordinate,
-            @NotNull final Set<String> visited,
-            @NotNull final Set<DependencyCoordinate> result,
-            final int depth,
-            @NotNull final Set<String> activeExclusions
+    /** Fetches the POMs of one tree level, with their parent chains, in parallel. */
+    private @NotNull Map<DependencyCoordinate, ParsedPom> fetchLevel(
+            @NotNull final List<Node> level,
+            @NotNull final ExecutorService executor
     ) {
-        if (depth >= MAX_TRANSITIVE_DEPTH) {
-            LOGGER.log(Level.FINE, () -> "Max transitive depth reached at: " + coordinate.toGavString());
-            return;
+        final Map<DependencyCoordinate, CompletableFuture<ParsedPom>> futures = new HashMap<>();
+        for (final Node node : level) {
+            futures.computeIfAbsent(node.coordinate(), coordinate ->
+                    CompletableFuture.supplyAsync(() -> resolvedPomWithParentChain(coordinate), executor));
         }
+        final Map<DependencyCoordinate, ParsedPom> poms = new HashMap<>();
+        futures.forEach((coordinate, future) -> {
+            final ParsedPom pom = future.join();
+            if (pom != null) {
+                poms.put(coordinate, pom);
+            }
+        });
+        return poms;
+    }
 
-        final ParsedPom pom = resolvedPomWithParentChain(coordinate);
+    private void expand(
+            @NotNull final Node node,
+            @Nullable final ParsedPom pom,
+            @NotNull final Set<String> visited,
+            @NotNull final Set<String> visitedArtifacts,
+            @NotNull final Set<DependencyCoordinate> result,
+            @NotNull final List<Node> next
+    ) {
         if (pom == null) {
-            LOGGER.log(Level.WARNING, "Could not resolve POM for: {0} \u2014 skipping its transitives", coordinate.toGavString());
+            LOGGER.log(Level.WARNING, "Could not resolve POM for {0}; skipping its transitive dependencies",
+                    node.coordinate().toGavString());
+            unresolved.add(node.coordinate());
             return;
         }
-
-        // Build an effective version map from the (already merged) dependencyManagement list
         final Map<String, String> managedVersions = buildManagedVersionMap(pom);
-
         for (final PomDependency dep : pom.dependencies()) {
-            final DependencyCoordinate resolved = resolveTransitiveDependency(dep, pom, managedVersions, coordinate, visited, activeExclusions);
+            final DependencyCoordinate resolved = resolveTransitiveDependency(
+                    dep, pom, managedVersions, node.coordinate(), visited, visitedArtifacts, node.exclusions());
             if (resolved != null) {
                 result.add(resolved);
-
-                // Propagate exclusions declared on this dependency down the recursion
-                final Set<String> newExclusions = computeNewExclusions(dep, activeExclusions);
-
-                resolveRecursive(resolved, visited, result, depth + 1, newExclusions);
+                next.add(new Node(resolved, computeNewExclusions(dep, node.exclusions())));
             }
         }
+    }
+
+    /** A coordinate to expand, with the exclusions its ancestors declared. */
+    private record Node(@NotNull DependencyCoordinate coordinate, @NotNull Set<String> exclusions) {
     }
 
     /**
@@ -201,6 +250,7 @@ public class TransitiveDependencyResolver {
             @NotNull final Map<String, String> managedVersions,
             @NotNull final DependencyCoordinate coordinate,
             @NotNull final Set<String> visited,
+            @NotNull final Set<String> visitedArtifacts,
             @NotNull final Set<String> activeExclusions
     ) {
         if (!dep.isRuntimeIncluded()) {
@@ -230,7 +280,7 @@ public class TransitiveDependencyResolver {
         }
         if (resolvedVersion == null) {
             final String finalKey = depKey;
-            LOGGER.log(Level.FINE, () -> "Version unresolvable for " + finalKey + " in " + coordinate.toGavString() + " \u2014 skipping");
+            LOGGER.log(Level.FINE, () -> "Version unresolvable for " + finalKey + " in " + coordinate.toGavString() + ": skipping");
             return null;
         }
 
@@ -247,8 +297,7 @@ public class TransitiveDependencyResolver {
             return null;
         }
         // Also de-duplicate by G:A alone so we don't pull in two different versions
-        final String gaKey = resolvedGroup + ":" + resolvedArtifact;
-        if (visited.stream().anyMatch(v -> v.startsWith(gaKey + ":"))) {
+        if (!visitedArtifacts.add(resolvedGroup + ":" + resolvedArtifact)) {
             return null;
         }
 
@@ -282,7 +331,7 @@ public class TransitiveDependencyResolver {
             final ParsedPom parentPom = downloadAndParsePom(parentCoord);
             if (parentPom == null) break;
 
-            // Parent properties only fill gaps — they don't override child
+            // Parent properties only fill gaps: they don't override child
             for (final Map.Entry<String, String> entry : parentPom.properties().entrySet()) {
                 mergedProps.putIfAbsent(entry.getKey(), entry.getValue());
             }
@@ -331,12 +380,16 @@ public class TransitiveDependencyResolver {
         }
 
         // 3. Remote download
-        final String pomPath = coordinate.groupId().replace('.', '/') + '/'
-                + coordinate.artifactId() + '/'
-                + coordinate.version() + '/'
-                + coordinate.artifactId() + '-' + coordinate.version() + ".pom";
-
-        return downloadPomFromRepositories(coordinate, pomPath, diskFile, cacheKey);
+        final byte[] bytes = pomSource.fetch(coordinate);
+        if (bytes == null || bytes.length == 0) {
+            LOGGER.log(Level.FINE, () -> "Could not download POM: " + coordinate.toGavString());
+            return null;
+        }
+        final ParsedPom pom = parsePomBytes(bytes, coordinate, cacheKey);
+        if (pom != null) {
+            persistPomToDisk(diskFile, bytes);
+        }
+        return pom;
     }
 
     private @Nullable ParsedPom readPomFromDisk(@NotNull final File diskFile, @NotNull final String cacheKey) {
@@ -355,29 +408,16 @@ public class TransitiveDependencyResolver {
         return null;
     }
 
-    private @Nullable ParsedPom downloadPomFromRepositories(@NotNull final DependencyCoordinate coordinate,
-                                                            @NotNull final String pomPath,
-                                                            @NotNull final File diskFile,
-                                                            @NotNull final String cacheKey) {
-        for (final RepositoryType repo : repositories) {
-            final byte[] bytes = fetchBytes(repo.getBaseUrl() + pomPath);
-            if (bytes == null || bytes.length == 0) {
-                continue;
-            }
-            persistPomToDisk(diskFile, bytes);
-            final ParsedPom pom = parsePomBytes(bytes, coordinate, repo, cacheKey);
-            if (pom != null) {
-                return pom;
-            }
-        }
-        LOGGER.log(Level.WARNING, "Could not download POM: {0}", coordinate.toGavString());
-        return null;
-    }
-
     private void persistPomToDisk(@NotNull final File diskFile, @NotNull final byte[] bytes) {
         try {
             Files.createDirectories(diskFile.toPath().getParent());
-            Files.write(diskFile.toPath(), bytes);
+            final java.nio.file.Path temp = Files.createTempFile(diskFile.toPath().getParent(), diskFile.getName(), ".part");
+            try {
+                Files.write(temp, bytes);
+                Files.move(temp, diskFile.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+            } finally {
+                Files.deleteIfExists(temp);
+            }
         } catch (final Exception exception) {
             LOGGER.log(Level.FINE, "Failed to persist POM to disk cache", exception);
         }
@@ -385,42 +425,18 @@ public class TransitiveDependencyResolver {
 
     private @Nullable ParsedPom parsePomBytes(@NotNull final byte[] bytes,
                                               @NotNull final DependencyCoordinate coordinate,
-                                              @NotNull final RepositoryType repo,
                                               @NotNull final String cacheKey) {
         try (final InputStream is = new ByteArrayInputStream(bytes)) {
             final ParsedPom pom = pomParser.parse(is);
             if (pom != null) {
                 pomCache.put(cacheKey, pom);
-                LOGGER.log(Level.FINE, () -> "Resolved POM: " + coordinate.toGavString() + " from " + repo.name());
+                LOGGER.log(Level.FINE, () -> "Resolved POM: " + coordinate.toGavString());
                 return pom;
             }
         } catch (final Exception exception) {
-            LOGGER.log(Level.FINE, exception, () -> "Failed to parse POM from " + repo.name());
+            LOGGER.log(Level.FINE, exception, () -> "Failed to parse POM of " + coordinate.toGavString());
         }
         return null;
-    }
-
-    /**
-     * Performs a simple HTTP GET and returns the full response body, or {@code null} on
-     * error or non-200 response.
-     */
-    private @Nullable byte[] fetchBytes(@NotNull final String urlString) {
-        try {
-            final URL url = URI.create(urlString).toURL();
-            final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setConnectTimeout(CONNECT_TIMEOUT_MS);
-            conn.setReadTimeout(READ_TIMEOUT_MS);
-            conn.setRequestProperty("User-Agent", "JExDependency-PomResolver/2.0.0");
-            conn.setInstanceFollowRedirects(true);
-
-            if (conn.getResponseCode() != 200) return null;
-
-            try (final InputStream is = conn.getInputStream()) {
-                return is.readAllBytes();
-            }
-        } catch (final Exception exception) {
-            return null; // 404, timeout, etc. — caller tries next repo
-        }
     }
 
     // -------------------------------------------------------------------------
@@ -511,7 +527,7 @@ public class TransitiveDependencyResolver {
         final int end = value.indexOf('}', start + 2);
 
         if (end == -1) {
-            // Unclosed placeholder — leave as-is
+            // Unclosed placeholder: leave as-is
             sb.append(value, start, value.length());
             return value.length();
         }

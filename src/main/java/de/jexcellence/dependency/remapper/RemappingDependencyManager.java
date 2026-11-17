@@ -3,9 +3,13 @@ package de.jexcellence.dependency.remapper;
 import de.jexcellence.dependency.downloader.DependencyDownloader;
 import de.jexcellence.dependency.injector.ClasspathInjector;
 import de.jexcellence.dependency.loader.LoaderClasspathFile;
+import de.jexcellence.dependency.loader.DependencyDescriptor;
+import de.jexcellence.dependency.loader.DependencyEntry;
 import de.jexcellence.dependency.loader.YamlDependencyLoader;
+import de.jexcellence.dependency.resolver.TransitiveDependencyResolver;
 import de.jexcellence.dependency.model.DependencyCoordinate;
 import de.jexcellence.dependency.model.DownloadResult;
+import de.jexcellence.dependency.model.ProcessingResult;
 import de.jexcellence.dependency.module.Deencapsulation;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -15,7 +19,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.FileTime;
@@ -23,8 +26,11 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
+import java.util.HashSet;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -61,13 +67,17 @@ public class RemappingDependencyManager {
 
     private static final long MINIMUM_VALID_JAR_SIZE = 1024L;
     /** Path separator used in JAR entries (always forward slash per JAR specification). */
-    private static final char JAR_PATH_SEPARATOR = '/';
 
     // ----------------- Dependencies -----------------
 
     private final DependencyDownloader downloader = new DependencyDownloader();
     private final ClasspathInjector injector = new ClasspathInjector();
     private final YamlDependencyLoader yamlLoader = new YamlDependencyLoader();
+    private DependencyDescriptor descriptor = DependencyDescriptor.EMPTY;
+    private boolean transitiveResolutionEnabled = true;
+    private final List<DependencyCoordinate> loadedCoordinates = new ArrayList<>();
+    private final List<DownloadResult> failedDownloads = new ArrayList<>();
+    private long lastDurationMillis;
 
     // ----------------- Context -----------------
 
@@ -289,6 +299,27 @@ public class RemappingDependencyManager {
      * @throws IOException if operations fail
      */
     private void downloadRemapAndInject(@NotNull final ClassLoader classLoader) throws IOException {
+        final long start = System.currentTimeMillis();
+        loadedCoordinates.clear();
+        failedDownloads.clear();
+        try {
+            downloadRemapAndInjectTimed(classLoader);
+        } finally {
+            lastDurationMillis = System.currentTimeMillis() - start;
+        }
+    }
+
+    /**
+     * Returns what the last {@link #initialize(String[])} or {@link #loadAll(ClassLoader)} call downloaded and
+     * failed to download.
+     *
+     * @return the result of the last run
+     */
+    public @NotNull ProcessingResult lastResult() {
+        return new ProcessingResult(loadedCoordinates, failedDownloads, lastDurationMillis);
+    }
+
+    private void downloadRemapAndInjectTimed(@NotNull final ClassLoader classLoader) throws IOException {
         final List<DependencyCoordinate> toProcess = new ArrayList<>(coordinates);
 
         if (toProcess.isEmpty()) {
@@ -307,16 +338,30 @@ public class RemappingDependencyManager {
      * @param toProcess list of coordinates to download
      * @return list of successfully downloaded JAR paths
      */
-    private @NotNull List<Path> downloadDependencies(@NotNull final List<DependencyCoordinate> toProcess) {
+    private @NotNull List<Path> downloadDependencies(@NotNull final List<DependencyCoordinate> declared) {
         final List<Path> inputJars = new ArrayList<>();
         downloader.probeConnectivity();
 
-        for (final DependencyCoordinate coordinate : toProcess) {
-            final DownloadResult result = downloader.download(coordinate, librariesDirectory.toFile());
+        final List<DependencyCoordinate> toProcess = transitiveResolutionEnabled
+                ? TransitiveDependencyResolver.withTransitives(declared, downloader, librariesDirectory.toFile()).coordinates()
+                : declared;
+        if (toProcess.size() > declared.size()) {
+            LOGGER.log(Level.INFO, "Transitive resolution added {0} dependencies", toProcess.size() - declared.size());
+        }
+
+        // Downloads run in parallel; results are collected in declaration order.
+        final List<CompletableFuture<DownloadResult>> futures = toProcess.stream()
+                .map(coordinate -> downloader.downloadAsync(coordinate, librariesDirectory.toFile()))
+                .toList();
+        for (int index = 0; index < toProcess.size(); index++) {
+            final DependencyCoordinate coordinate = toProcess.get(index);
+            final DownloadResult result = futures.get(index).join();
             if (result.success() && result.file() != null) {
                 inputJars.add(result.file().toPath());
+                loadedCoordinates.add(coordinate);
                 LOGGER.log(Level.FINE, () -> "Downloaded " + coordinate.toGavString() + " -> " + result.file().getName());
             } else {
+                failedDownloads.add(result);
                 LOGGER.log(Level.WARNING, "Failed to download dependency: {0}", coordinate.toGavString());
             }
         }
@@ -335,8 +380,16 @@ public class RemappingDependencyManager {
         final List<Path> jarsToInject = new ArrayList<>();
 
         if (relocations.isEmpty()) {
+            descriptor.relocations().forEach(this::relocate);
+        }
+        if (relocations.isEmpty()) {
+            final String prefix = RelocationPlanner.prefix(descriptor.relocationPrefix());
+            RelocationPlanner.plan(inputJars, pluginJar(), prefix, RelocationPlanner.excludes(descriptor.relocationExcludes()))
+                    .forEach(this::relocate);
+        }
+        if (relocations.isEmpty()) {
             jarsToInject.addAll(inputJars);
-            LOGGER.info("No relocations specified; injecting original libraries");
+            LOGGER.info("No relocations apply; injecting original libraries");
             return jarsToInject;
         }
 
@@ -344,30 +397,84 @@ public class RemappingDependencyManager {
         // Copies are only valid for the relocation set they were made with, so each set gets its own folder.
         final Path setDirectory = remappedDirectory.resolve(relocationFingerprint());
         Files.createDirectories(setDirectory);
-        for (final Path input : inputJars) {
-            final Path output = setDirectory.resolve(input.getFileName().toString());
-
-            if (isOutputUpToDate(output, input)) {
-                LOGGER.log(Level.FINE, () -> "Using cached remapped JAR: " + output.getFileName());
-                jarsToInject.add(output);
-                continue;
+        // Jars are remapped in parallel; each output file belongs to exactly one task.
+        final ExecutorService pool = Executors.newFixedThreadPool(
+                Math.max(1, Math.min(inputJars.size(), Runtime.getRuntime().availableProcessors())), runnable -> {
+                    final Thread thread = new Thread(runnable, "JExDependency-remap");
+                    thread.setDaemon(true);
+                    return thread;
+                });
+        try {
+            final List<CompletableFuture<Path>> outputs = new ArrayList<>();
+            for (final Path input : inputJars) {
+                final Path output = setDirectory.resolve(remappedFileName(inputJars, input));
+                outputs.add(CompletableFuture.supplyAsync(() -> {
+                    if (isOutputUpToDate(output, input)) {
+                        LOGGER.log(Level.FINE, () -> "Using cached remapped JAR: " + output.getFileName());
+                        return output;
+                    }
+                    try {
+                        remap(input, output);
+                        return output;
+                    } catch (final IOException | RuntimeException ex) {
+                        safeDelete(output);
+                        LOGGER.log(Level.WARNING, ex, () -> "Remapping failed for " + input.getFileName());
+                        return null;
+                    }
+                }, pool));
             }
-
-            try {
-                remap(input, output);
-                jarsToInject.add(output);
-            } catch (final IOException | RuntimeException ex) {
-                safeDelete(output);
-                // Relocations span the whole set, so remapped siblings may reference relocated packages of this
-                // jar. Mixing remapped and original jars would break those references: use originals for all.
-                LOGGER.log(Level.WARNING, ex, () -> "Remapping failed for " + input.getFileName()
-                        + "; injecting all libraries without relocation");
-                return new ArrayList<>(inputJars);
+            for (final CompletableFuture<Path> output : outputs) {
+                final Path remapped = output.join();
+                if (remapped == null) {
+                    // Relocations span the whole set, so remapped siblings may reference relocated packages of the
+                    // failed jar. Mixing remapped and original jars would break those references: use originals.
+                    LOGGER.warning("Injecting all libraries without relocation because one could not be remapped");
+                    return new ArrayList<>(inputJars);
+                }
+                jarsToInject.add(remapped);
             }
+        } finally {
+            pool.shutdown();
         }
 
         LOGGER.log(Level.INFO, "Remapping complete: {0} artifact(s) prepared", jarsToInject.size());
         return jarsToInject;
+    }
+
+    /**
+     * Enables or disables resolving transitive dependencies from POM files. Enabled by default.
+     *
+     * @param enabled whether transitive dependencies are downloaded too
+     */
+    public void setTransitiveResolutionEnabled(final boolean enabled) {
+        this.transitiveResolutionEnabled = enabled;
+    }
+
+    /** The jar the plugin was loaded from, scanned for references to relocated packages. */
+    private @Nullable Path pluginJar() {
+        if (anchorClass == null) {
+            return null;
+        }
+        try {
+            final var source = anchorClass.getProtectionDomain().getCodeSource();
+            return source == null ? null : Path.of(source.getLocation().toURI());
+        } catch (final Exception exception) {
+            LOGGER.log(Level.FINE, exception, () -> "Could not locate the plugin jar of " + anchorClass.getName());
+            return null;
+        }
+    }
+
+    /**
+     * Name of the remapped copy of a jar. Two libraries with the same file name from different groups get a prefix
+     * derived from their cache path, so their copies never overwrite each other.
+     */
+    static @NotNull String remappedFileName(@NotNull final List<Path> inputs, @NotNull final Path input) {
+        final String name = input.getFileName().toString();
+        final long sameName = inputs.stream().filter(other -> other.getFileName().toString().equals(name)).count();
+        if (sameName <= 1) {
+            return name;
+        }
+        return Integer.toHexString(input.toAbsolutePath().normalize().toString().hashCode()) + "-" + name;
     }
 
     /**
@@ -396,20 +503,17 @@ public class RemappingDependencyManager {
 
     private void loadYamlDependencies(@NotNull final Class<?> contextClass) {
         try {
-            final List<String> yamlDeps = yamlLoader.loadDependencies(contextClass);
-            if (yamlDeps == null || yamlDeps.isEmpty()) {
+            final DependencyDescriptor yamlDescriptor = yamlLoader.loadDescriptor(contextClass);
+            if (yamlDescriptor == null || yamlDescriptor.isEmpty()) {
                 LOGGER.info("No dependencies found in YAML configuration");
                 return;
             }
-            LOGGER.log(Level.INFO, "Loaded {0} dependencies from YAML", yamlDeps.size());
-            for (final String dep : yamlDeps) {
-                final DependencyCoordinate coord = DependencyCoordinate.parse(dep);
-                if (coord != null) {
-                    coordinates.add(coord);
-                    LOGGER.log(Level.FINE, () -> "YAML dependency: " + dep);
-                } else {
-                    LOGGER.log(Level.WARNING, "Invalid dependency format in YAML: {0}", dep);
-                }
+            this.descriptor = yamlDescriptor;
+            downloader.configure(yamlDescriptor);
+            LOGGER.log(Level.INFO, "Loaded {0} dependencies from YAML", yamlDescriptor.entries().size());
+            for (final DependencyEntry entry : yamlDescriptor.entries()) {
+                coordinates.add(entry.coordinate());
+                LOGGER.log(Level.FINE, () -> "YAML dependency: " + entry.coordinate().toGavString());
             }
         } catch (final Exception ex) {
             LOGGER.log(Level.WARNING, "Failed to load YAML dependencies", ex);
@@ -452,21 +556,19 @@ public class RemappingDependencyManager {
         }
     }
 
-
-
-
     private static void copyJarVerbatim(@NotNull final Path inputJar, @NotNull final Path outputJar) throws IOException {
         ensureParent(outputJar);
         try (JarFile in = new JarFile(inputJar.toFile());
              JarOutputStream out = new JarOutputStream(Files.newOutputStream(outputJar), copyOrCreateManifest(in))) {
 
             final AtomicInteger count = new AtomicInteger(0);
+            final Set<String> written = new HashSet<>();
             in.stream()
               .sorted(Comparator.comparing(JarEntry::getName))
               .forEach(entry -> {
                   try {
                       if (!entry.isDirectory()) {
-                          writeEntryIfAbsent(in, entry, out, new LinkedHashSet<>(), entry.getName());
+                          writeEntryIfAbsent(in, entry, out, written, entry.getName());
                           count.incrementAndGet();
                       }
                   } catch (IOException e) {
@@ -516,56 +618,7 @@ public class RemappingDependencyManager {
     }
 
     private static boolean isRestrictedRoot(final String pkg) {
-        // JDK internals
-        if (pkg.equals("java") || pkg.startsWith("java.")
-                || pkg.equals("javax") || pkg.startsWith("javax.")
-                || pkg.equals("jakarta") || pkg.startsWith("jakarta.")) {
-            return true;
-        }
-        // Hibernate - must not be relocated as it expects original Jackson paths
-        if (pkg.equals("org.hibernate") || pkg.startsWith("org.hibernate.")) {
-            return true;
-        }
-        // Jackson 3.x: com.fasterxml only contains annotations now, but Hibernate
-        // references com.fasterxml.jackson.core which doesn't exist in Jackson 3.x.
-        // Excluding com.fasterxml prevents broken relocations.
-        if (pkg.equals("com.fasterxml") || pkg.startsWith("com.fasterxml.")) {
-            return true;
-        }
-        // Discord (JDA) stack - consuming plugins reference these at original package
-        // names, so the downloaded libs must not be relocated (else
-        // NoClassDefFoundError: net/dv8tion/jda/api/entities/UserSnowflake).
-        return isDiscordStackRoot(pkg);
-    }
-
-    private static boolean isDiscordStackRoot(final String pkg) {
-        for (final String root : new String[]{
-                "net.dv8tion", "com.neovisionaries", "okhttp3", "okio", "kotlin", "gnu.trove", "org.apache"}) {
-            if (pkg.equals(root) || pkg.startsWith(root + ".")) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private static String relocateResourcePath(final String name, final Map<String, String> relocations) {
-        String bestFrom = null;
-        String bestTo = null;
-        int bestLen = -1;
-
-        for (Map.Entry<String, String> e : relocations.entrySet()) {
-            final String fromPath = e.getKey().replace('.', JAR_PATH_SEPARATOR) + JAR_PATH_SEPARATOR;
-            if (name.startsWith(fromPath) && fromPath.length() > bestLen) {
-                bestFrom = fromPath;
-                bestTo = e.getValue().replace('.', JAR_PATH_SEPARATOR) + JAR_PATH_SEPARATOR;
-                bestLen = fromPath.length();
-            }
-        }
-
-        if (bestFrom != null) {
-            return bestTo + name.substring(bestFrom.length());
-        }
-        return name;
+        return RelocationPlanner.isAlwaysExcluded(pkg);
     }
 
     /**

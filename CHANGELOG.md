@@ -1,8 +1,35 @@
 # Changelog
 
-## Unreleased
+## 3.0.0 (2026-11-17)
+
+Upgrading from 2.x: read **Breaking** first. Plugins that load libraries from JitPack, PaperMC or other
+non-Central repositories must declare them in `dependencies.yml`, and relocation now follows what the plugin's
+classes reference.
+
+### Breaking
+- Only the Maven Central mirror and Central are searched by default. Libraries from JitPack, PaperMC, SpigotMC,
+  NeetGames, Auxilor, Tcoded or the Gradle plugin portal need their repository in `dependencies.yml`
+  (`repositories:` or `coordinate @ url`), `community-repositories: true`, or the server property
+  `-Djedependency.repository.community=true`. A failed lookup logs this hint once.
+- Automatic relocation only relocates libraries the plugin's own classes reference under the relocation prefix.
+  Before, the Paper loader relocated every library it found except a built-in list (Hibernate, Jackson, JDA,
+  OkHttp, Kotlin, Apache and others), which broke plugins that use a library by its original package names. The
+  built-in list is gone; only JDK, Jakarta and XML API packages are always excluded. Explicit relocations from
+  `-Djedependency.relocations` or `relocations:` in `dependencies.yml` are no longer refused for Hibernate,
+  Jackson, JDA or Apache packages.
 
 ### Changed
+- `JEDependency.initializeWithRemapping` on Spigot plans relocations like the Paper loader, resolves transitive
+  dependencies and downloads in parallel.
+- The Paper loader resolves transitive dependencies (turn off with `-Djedependency.transitive=false`) and marks its
+  classpath record as complete when every library loaded. `JEDependency.initialize` then skips its second pass,
+  which also stops relocated and unrelocated copies of the same library from both being loaded.
+- Libraries are remapped in parallel, one thread per CPU core, in the Paper loader and on the remapping path.
+- Downloads use `java.net.http.HttpClient` with HTTP/2, connection reuse and at most six parallel requests per
+  host. Retries honour `Retry-After`, and a redirect from HTTPS to HTTP is refused.
+- Jars are verified against the repository's `.sha256` file when it exists, otherwise its `.sha1` file.
+- Transitive POMs are fetched one tree level at a time, in parallel, and from the same repositories as the jars.
+  The nearest declaration of an artifact now wins, as in Maven; before, the first one found depth-first won.
 - Maven Central artifacts are downloaded from a mirror first and from Central only when the mirror cannot serve them.
   Central's terms do not allow using it as a download CDN for end users, and it rate-limits networks that download
   too much. The default mirror is Google's (`maven-central.storage-download.googleapis.com`), the same one Paper
@@ -17,8 +44,39 @@
 - `jedependency.repository.central` system property and support for Paper's `PAPER_DEFAULT_CENTRAL_REPOSITORY`
   environment variable to choose the mirror.
 - `RepositoryType.MAVEN_CENTRAL_MIRROR` and `CentralMirror`.
-- `DependencyDownloader.activeRepositories()` and a `TransitiveDependencyResolver` constructor that takes the
-  repositories to fetch POM files from.
+- `DependencyDownloader.activeRepositories()` and a `TransitiveDependencyResolver(File, PomSource)` constructor
+  that fetches POM files from the downloader's repositories.
+- `SharedCacheManager.isUsableJar(Path)`.
+- `JEDependency.loadAsync(...)` returning `CompletableFuture<LoadResult>`, `JEDependency.whenLoaded(...)` and
+  `JEDependency.runOnServerThread(...)`, which use Folia's global region scheduler when present;
+  `DependencyManager.load(...)`; `RemappingDependencyManager.lastResult()`.
+- One startup report line with resolve, download, remap and inject times and cache hits (`StartupReport`,
+  `DependencyDownloader.stats()`).
+- `RelocationPlanner`; `relocation-prefix:` and `relocations:` in `dependencies.yml`;
+  `RemappingDependencyManager.setTransitiveResolutionEnabled(...)`; `LoaderClasspathFile.isComplete(...)`.
+- `dependencies.yml`: `repositories:`, `community-repositories:`, `relocation-excludes:`, and per-library
+  `@ <url>` and `sha256=<hex>`. Read by the new `DependencyDescriptor`, `DependencyEntry` and
+  `YamlDependencyLoader.loadDescriptor(...)`.
+- Private repositories: credentials from `JEDEPENDENCY_AUTH_<HOST>` environment variables (`RepositoryCredentials`).
+- `DependencyDownloader.configure(...)`, `setCommunityRepositories(...)`, `repositoryUrls(...)`, `fetchPom(...)`;
+  `RepositoryType.defaultOrder(...)`, `isCommunity()`, `COMMUNITY_PROPERTY`; `RepositoryUrl`; `PomSource`;
+  `DownloadThreads`, which falls back to a daemon thread pool on runtimes without virtual threads.
+
+### Fixed
+- A download interrupted while waiting to retry (for example during server shutdown) stops instead of running the
+  remaining attempts without waiting.
+- Jars from the old per-plugin folder are moved into the shared cache only when they open as a jar. A broken file
+  there used to be accepted, and a broken file already in the shared cache could be reported as a successful
+  migration.
+- Valid jars smaller than 1 KB are no longer rejected.
+- A checksum file that times out or fails is no longer treated as missing, so a jar is never accepted unverified
+  because of a transient error.
+- When Central is unreachable, repositories the plugin declares are still used.
+- Relocated copies of same-named jars from different groups no longer overwrite each other.
+- Copying a jar without relocations skips duplicate entries instead of failing.
+- Errors while starting the remapping manager are logged instead of swallowed.
+- The relocation fingerprint no longer uses a Java 17 API.
+- `DependencyDownloader.setMaxRetries` is safe to call while downloads run on other threads.
 
 ## 2.2.0 (2026-11-17)
 

@@ -17,8 +17,11 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.jar.JarEntry;
+import java.util.jar.JarOutputStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -116,18 +119,6 @@ class SharedCacheManagerTest {
         assertNull(cache.getOrDownload(COORDINATE, () -> false));
     }
 
-    @Test
-    @DisplayName("migrates a jar from a plugin's legacy directory")
-    void migratesLegacyJar() throws IOException {
-        final SharedCacheManager cache = new SharedCacheManager(baseRoot.resolve("shared"));
-        final Path legacyDir = Files.createDirectories(baseRoot.resolve("legacy"));
-        Files.write(legacyDir.resolve(COORDINATE.toFileName()), new byte[]{1, 2, 3});
-
-        assertTrue(cache.migrateFromLegacy(COORDINATE, legacyDir.toFile()));
-        final Path migrated = cache.resolveJarPath(COORDINATE);
-        assertNotNull(migrated);
-        assertEquals(3, Files.size(migrated));
-    }
 
     private static boolean writeJar(final Path jarPath) {
         try {
@@ -145,5 +136,43 @@ class SharedCacheManagerTest {
         } catch (final InterruptedException exception) {
             Thread.currentThread().interrupt();
         }
+    }
+
+    @Test
+    @DisplayName("isUsableJar accepts a real jar and rejects empty, HTML and missing files")
+    void usableJarCheck() throws IOException {
+        final Path jar = writeRealJar(baseRoot.resolve("ok.jar"));
+        final Path empty = Files.createFile(baseRoot.resolve("empty.jar"));
+        final Path html = Files.writeString(baseRoot.resolve("page.jar"), "<html>rate limited</html>");
+
+        assertTrue(SharedCacheManager.isUsableJar(jar));
+        assertFalse(SharedCacheManager.isUsableJar(empty));
+        assertFalse(SharedCacheManager.isUsableJar(html));
+        assertFalse(SharedCacheManager.isUsableJar(baseRoot.resolve("missing.jar")));
+    }
+
+    @Test
+    @DisplayName("legacy migration skips a broken jar and copies a real one")
+    void legacyMigrationChecksJar() throws IOException {
+        final SharedCacheManager cache = new SharedCacheManager(baseRoot.resolve("cache"));
+        final Path legacy = Files.createDirectories(baseRoot.resolve("legacy"));
+        final Path legacyJar = legacy.resolve(COORDINATE.toFileName());
+
+        Files.writeString(legacyJar, "<html>not a jar</html>");
+        assertFalse(cache.migrateFromLegacy(COORDINATE, legacy.toFile()));
+        assertFalse(Files.exists(cache.resolveJarPath(COORDINATE)));
+
+        writeRealJar(legacyJar);
+        assertTrue(cache.migrateFromLegacy(COORDINATE, legacy.toFile()));
+        assertTrue(SharedCacheManager.isUsableJar(cache.resolveJarPath(COORDINATE)));
+    }
+
+    private static Path writeRealJar(final Path path) throws IOException {
+        try (JarOutputStream out = new JarOutputStream(Files.newOutputStream(path))) {
+            out.putNextEntry(new JarEntry("demo/Marker.class"));
+            out.write(new byte[]{1, 2, 3});
+            out.closeEntry();
+        }
+        return path;
     }
 }

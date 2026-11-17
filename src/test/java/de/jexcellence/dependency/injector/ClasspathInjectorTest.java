@@ -31,7 +31,7 @@ class ClasspathInjectorTest {
     }
 
     @Nested
-    @DisplayName("inject() — file validation")
+    @DisplayName("inject(): file validation")
     class FileValidation {
 
         @Test

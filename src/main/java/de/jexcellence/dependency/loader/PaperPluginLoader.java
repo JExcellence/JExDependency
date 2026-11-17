@@ -1,6 +1,9 @@
 package de.jexcellence.dependency.loader;
 
 import de.jexcellence.dependency.downloader.DependencyDownloader;
+import de.jexcellence.dependency.model.StartupReport;
+import de.jexcellence.dependency.remapper.RelocationPlanner;
+import de.jexcellence.dependency.resolver.TransitiveDependencyResolver;
 import de.jexcellence.dependency.exception.PluginLoaderException;
 import de.jexcellence.dependency.model.DependencyCoordinate;
 import de.jexcellence.dependency.model.DownloadResult;
@@ -17,15 +20,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.FileTime;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Locale;
-import java.util.Set;
 import java.util.concurrent.CompletableFuture;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Formatter;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
@@ -55,14 +55,8 @@ public class PaperPluginLoader implements PluginLoader {
      * System property containing explicit relocation mappings in {@code from=>to} form separated by commas.
      */
     private static final String RELOCATIONS_PROPERTY = "jedependency.relocations";
-    /**
-     * System property specifying the prefix used for automatically detected package roots.
-     */
-    private static final String RELOCATIONS_PREFIX_PROPERTY = "jedependency.relocations.prefix";
-    /**
-     * System property listing package roots that should be excluded from automatic relocation detection.
-     */
-    private static final String RELOCATIONS_EXCLUDES_PROPERTY = "jedependency.relocations.excludes";
+    /** System property that turns transitive resolution in the loader off with {@code false}. */
+    private static final String TRANSITIVE_PROPERTY = "jedependency.transitive";
     /**
      * System property toggled to {@code true} while the Paper loader is active so plugin-side initialisation can react.
      */
@@ -87,6 +81,12 @@ public class PaperPluginLoader implements PluginLoader {
 
     private final DependencyDownloader dependencyDownloader;
     private final YamlDependencyLoader yamlDependencyLoader;
+    private DependencyDescriptor descriptor = DependencyDescriptor.EMPTY;
+    private StartupReport report = new StartupReport();
+    /** Whether the last {@link #classloader} run downloaded every declared and transitive dependency. */
+    private boolean allResolved;
+    /** Whether a POM could not be fetched, so transitive dependencies may be missing. */
+    private boolean unresolvedPoms;
     
     /**
      * Plugin name extracted from the data directory path, used for logging context.
@@ -189,18 +189,28 @@ public class PaperPluginLoader implements PluginLoader {
         try {
             ensureDirectoryExists(librariesDirectory);
             warnIfNestedLibraries(librariesDirectory);
+            LoaderClasspathFile.delete(librariesDirectory);
+            this.allResolved = false;
+            this.unresolvedPoms = false;
 
+            this.report = new StartupReport();
             final List<Path> downloadedJars = initializeDependencies(librariesDirectory.toFile(), pluginSource);
             warnIfRemappingRequestedButUnavailable();
 
             // Only this plugin's own jars are remapped and loaded. The shared cache and the remapped folder
             // also hold other plugins' and earlier runs' jars, which must never reach this classpath.
             final List<Path> jarsToLoad = shouldEnableRemapping() && !downloadedJars.isEmpty()
-                    ? remapJars(downloadedJars, dataDirectory, remappedDirectory)
+                    ? report.time(StartupReport.Phase.REMAP,
+                            () -> remapJars(downloadedJars, dataDirectory, remappedDirectory, pluginSource))
                     : downloadedJars;
 
-            final List<Path> loadedJars = loadSpecificJarsIntoClasspath(classpathBuilder, jarsToLoad);
-            recordLoadedJars(librariesDirectory, loadedJars);
+            final List<Path> loadedJars = report.time(StartupReport.Phase.INJECT,
+                    () -> loadSpecificJarsIntoClasspath(classpathBuilder, jarsToLoad));
+            final DependencyDownloader.DownloadStats stats = dependencyDownloader.stats();
+            if (!downloadedJars.isEmpty() || stats.failed() > 0) {
+                logger.info(report.downloads(stats.cached(), stats.downloaded(), stats.failed()).summary());
+            }
+            recordLoadedJars(librariesDirectory, loadedJars, allResolved && loadedJars.size() == jarsToLoad.size());
 
         } catch (final IOException exception) {
             throw new PluginLoaderException("Failed to initialize libraries directory: " + librariesDirectory, exception);
@@ -211,9 +221,10 @@ public class PaperPluginLoader implements PluginLoader {
      * Records the loaded jars for the plugin-side bootstrap. A failure here must not stop the plugin from loading:
      * the jars are already on the classpath, the plugin side then only skips its extra injection.
      */
-    private void recordLoadedJars(@NotNull final Path librariesDirectory, @NotNull final List<Path> loadedJars) {
+    private void recordLoadedJars(@NotNull final Path librariesDirectory, @NotNull final List<Path> loadedJars,
+                                  final boolean complete) {
         try {
-            LoaderClasspathFile.write(librariesDirectory, loadedJars);
+            LoaderClasspathFile.write(librariesDirectory, loadedJars, complete);
         } catch (final IOException exception) {
             logger.log(Level.WARNING, exception, () -> "Could not record loaded libraries in " + librariesDirectory);
         }
@@ -256,20 +267,22 @@ public class PaperPluginLoader implements PluginLoader {
     private @NotNull List<Path> initializeDependencies(@NotNull final File librariesDirectory, @NotNull final Path pluginSource) {
         try {
             // First, try to load dependencies from the plugin JAR itself
-            List<String> yamlDependencies = yamlDependencyLoader.loadDependenciesFromJar(pluginSource);
+            DependencyDescriptor descriptor = yamlDependencyLoader.loadDescriptorFromJar(pluginSource);
 
-            if (yamlDependencies == null || yamlDependencies.isEmpty()) {
+            if (descriptor == null || descriptor.isEmpty()) {
                 // Fall back to loader's own resources (JEDependency JAR)
                 logger.log(Level.FINE, "No dependencies in plugin JAR, checking loader resources");
-                yamlDependencies = yamlDependencyLoader.loadDependencies(getClass());
+                descriptor = yamlDependencyLoader.loadDescriptor(getClass());
             }
 
-            if (yamlDependencies == null || yamlDependencies.isEmpty()) {
+            if (descriptor == null || descriptor.isEmpty()) {
                 logger.info("No dependencies configured");
                 return List.of();
             }
 
-            return processDependencies(yamlDependencies, librariesDirectory);
+            this.descriptor = descriptor;
+            dependencyDownloader.configure(descriptor);
+            return processDependencies(descriptor.dependencies(), librariesDirectory);
 
         } catch (final Exception exception) {
             logger.log(Level.WARNING, "Failed to load dependencies", exception);
@@ -307,8 +320,17 @@ public class PaperPluginLoader implements PluginLoader {
             return downloadedFiles;
         }
 
-        logger.log(Level.INFO, "Resolving {0} dependencies...", coords.size());
         dependencyDownloader.probeConnectivity();
+        final List<DependencyCoordinate> declared = List.copyOf(coords);
+        if (!"false".equalsIgnoreCase(System.getProperty(TRANSITIVE_PROPERTY, "true").trim())) {
+            final TransitiveDependencyResolver.Resolution resolution = report.time(StartupReport.Phase.RESOLVE,
+                    () -> TransitiveDependencyResolver.withTransitives(declared, dependencyDownloader, librariesDirectory));
+            coords.clear();
+            coords.addAll(resolution.coordinates());
+            unresolvedPoms = !resolution.unresolved().isEmpty();
+        }
+        report.libraries(declared.size(), coords.size() - declared.size());
+        logger.log(Level.INFO, "Resolving {0} dependencies ({1} declared)...", new Object[]{coords.size(), declared.size()});
 
         // Downloads land in the shared cache; librariesDirectory is the per-plugin folder of older versions,
         // which the downloader checks first so existing jars are copied over instead of downloaded again.
@@ -316,9 +338,9 @@ public class PaperPluginLoader implements PluginLoader {
                 .map(coord -> dependencyDownloader.downloadAsync(coord, librariesDirectory))
                 .toList();
 
-        final List<DownloadResult> results = futures.stream()
+        final List<DownloadResult> results = report.time(StartupReport.Phase.DOWNLOAD, () -> futures.stream()
                 .map(CompletableFuture::join)
-                .toList();
+                .toList());
 
         for (final DownloadResult result : results) {
             if (result.success() && result.file() != null) {
@@ -328,6 +350,7 @@ public class PaperPluginLoader implements PluginLoader {
 
         final long failed = results.stream().filter(r -> !r.success()).count();
         final long ms = System.currentTimeMillis() - start;
+        this.allResolved = failed == 0 && !unresolvedPoms;
 
         if (failed > 0) {
             logger.log(Level.INFO, "Downloaded {0}/{1} ({2} failed) in {3}ms",
@@ -391,20 +414,22 @@ public class PaperPluginLoader implements PluginLoader {
      * @param dataDirectory   the plugin's data folder, handed to the remapper
      * @param outputDirectory the plugin's {@code libraries/remapped} folder; copies go into a subfolder named
      *                        after the relocation set ({@link de.jexcellence.dependency.remapper.RelocationFingerprint})
+     * @param pluginJar       the plugin jar, scanned for references to relocated packages
      * @return jars to put on the classpath: the remapped copies, or the unchanged input list when the remapper is
      *         unavailable, the output folder cannot be created, or any jar fails to remap
      */
     @NotNull List<Path> remapJars(
             @NotNull final List<Path> inputJars,
             @NotNull final Path dataDirectory,
-            @NotNull final Path outputDirectory
+            @NotNull final Path outputDirectory,
+            @Nullable final Path pluginJar
     ) {
         final Object remappingManager = createRemappingManager(dataDirectory);
         if (remappingManager == null) {
             return inputJars;
         }
 
-        final int relocationsApplied = applyRelocations(remappingManager, inputJars);
+        final int relocationsApplied = applyRelocations(remappingManager, inputJars, pluginJar);
         if (relocationsApplied == 0) {
             logger.log(Level.FINE, "No relocations apply to these libraries; remapped copies keep their packages.");
         }
@@ -446,19 +471,33 @@ public class PaperPluginLoader implements PluginLoader {
         }
     }
 
-    private int applyRelocations(@NotNull final Object remappingManager, @NotNull final List<Path> inputJars) {
-        final int explicitRelocations = applyExplicitRelocations(remappingManager);
-
+    /**
+     * Applies explicit relocations from {@code dependencies.yml} and {@code -Djedependency.relocations}; without
+     * any, plans automatic relocations with {@link RelocationPlanner}.
+     */
+    private int applyRelocations(
+            @NotNull final Object remappingManager,
+            @NotNull final List<Path> inputJars,
+            @Nullable final Path pluginJar
+    ) {
+        int explicitRelocations = applyExplicitRelocations(remappingManager);
+        for (final Map.Entry<String, String> relocation : descriptor.relocations().entrySet()) {
+            invokeRelocate(remappingManager, relocation.getKey(), relocation.getValue());
+            explicitRelocations++;
+        }
         if (explicitRelocations > 0) {
             return explicitRelocations;
         }
 
-        final int automaticRelocations = applyAutomaticRelocations(remappingManager, inputJars);
-        if (automaticRelocations > 0) {
-            logger.log(Level.FINE, () -> "Applied " + automaticRelocations + " automatic relocations");
+        final String prefix = RelocationPlanner.prefix(descriptor.relocationPrefix());
+        final Map<String, String> planned = RelocationPlanner.plan(inputJars, pluginJar, prefix,
+                RelocationPlanner.excludes(descriptor.relocationExcludes()));
+        planned.forEach((from, to) -> invokeRelocate(remappingManager, from, to));
+        if (!planned.isEmpty()) {
+            logger.log(Level.FINE, "Automatic relocation maps {0} package(s) under ''{1}''",
+                    new Object[]{planned.size(), prefix});
         }
-
-        return automaticRelocations;
+        return planned.size();
     }
 
     /**
@@ -516,176 +555,6 @@ public class PaperPluginLoader implements PluginLoader {
         }
     }
 
-    private int applyAutomaticRelocations(
-            @NotNull final Object remappingManager,
-            @NotNull final List<Path> jars
-    ) {
-        final String defaultPrefix = "de.jexcellence.remapped";
-        String basePrefix = System.getProperty(RELOCATIONS_PREFIX_PROPERTY, defaultPrefix);
-
-        if (basePrefix == null || basePrefix.trim().isEmpty()) {
-            basePrefix = defaultPrefix;
-        }
-
-        basePrefix = basePrefix.trim().replaceAll("\\.$", "");
-
-        final Set<String> excludedRoots = createExcludedRootsSet();
-        final Set<String> detectedRoots = new HashSet<>();
-
-        for (final Path jar : jars) {
-            detectedRoots.addAll(detectPackageRoots(jar, excludedRoots));
-        }
-
-        int applied = 0;
-        for (final String root : detectedRoots) {
-            final String targetPackage = basePrefix + "." + root;
-            invokeRelocate(remappingManager, root, targetPackage);
-            applied++;
-        }
-
-        if (applied > 0) {
-            logger.log(Level.FINE, "Automatic relocation will map {0} root package(s) under ''{1}''",
-                    new Object[]{applied, basePrefix});
-        }
-
-        return applied;
-    }
-
-    private @NotNull Set<String> createExcludedRootsSet() {
-        final Set<String> excludes = new HashSet<>(Arrays.asList(
-                // JDK internals
-                "java", "javax", "jakarta", "sun", "com.sun", "jdk",
-                "org.w3c", "org.xml", "org.ietf",
-                // Hibernate - must not be relocated as it expects original paths
-                "org.hibernate",
-                // Database drivers - Hibernate loads these by class name from config
-                "org.h2", "com.mysql", "org.postgresql", "org.mariadb", "com.microsoft",
-                // Jackson 2.x (com.fasterxml) - compatible with server's bundled version
-                "com.fasterxml",
-                // reflections + its transitive deps - referenced by the bundled JEHibernate thin JAR
-                // at original package names; remapping breaks class resolution from the plugin classloader
-                "org.reflections",
-                "org.javassist",
-                // Caffeine - referenced by JEHibernate at original package name; must not be remapped
-                "com.github.ben-manes",
-                // jboss-logging - used by Hibernate internally; Hibernate is excluded so its bytecode
-                // keeps original org.jboss.logging references; the library must stay at original names
-                // to match. Also avoids stale-cache version skew (3.4.x → 3.5.x method signature change).
-                "org.jboss",
-                // Discord (JDA) stack - the consuming plugin references these at their ORIGINAL
-                // package names (the plugin jar does not relocate them), so the downloaded libs
-                // must keep original names too. Relocating produces de.jexcellence.remapped.net.dv8tion…
-                // which the plugin can't resolve (NoClassDefFoundError: net/dv8tion/jda/api/entities/UserSnowflake).
-                "net.dv8tion",          // JDA
-                "com.neovisionaries",   // nv-websocket-client
-                "okhttp3",              // okhttp
-                "okio",                 // okio
-                "kotlin",               // kotlin-stdlib (okhttp/okio dependency)
-                "org.apache",           // commons-collections4 (org.apache.commons.collections4)
-                "gnu.trove"             // trove4j:core
-        ));
-
-        final String excludesProperty = System.getProperty(RELOCATIONS_EXCLUDES_PROPERTY);
-        if (excludesProperty != null && !excludesProperty.trim().isEmpty()) {
-            Arrays.stream(excludesProperty.split(","))
-                    .map(String::trim)
-                    .filter(s -> !s.isEmpty())
-                    .forEach(excludes::add);
-        }
-
-        return excludes;
-    }
-
-    /**
-     * Detects package roots from a JAR file.
-     *
-     * @param jarPath       path to the JAR file to scan
-     * @param excludedRoots set of package roots to exclude from detection
-     * @return set of detected package roots
-     */
-    private @NotNull Set<String> detectPackageRoots(
-            @NotNull final Path jarPath,
-            @NotNull final Set<String> excludedRoots
-    ) {
-        final Set<String> roots = new HashSet<>();
-
-        try (final JarFile jarFile = new JarFile(jarPath.toFile())) {
-            final var entries = Collections.list(jarFile.entries());
-            for (final JarEntry entry : entries) {
-                processJarEntry(entry, excludedRoots, roots);
-            }
-        } catch (final IOException exception) {
-            logger.log(Level.FINE, exception, () -> "Failed to scan JAR for package roots: " + jarPath);
-        }
-
-        return roots;
-    }
-
-    /**
-     * Processes a single JAR entry to extract and add its root package if applicable.
-     *
-     * @param entry         the JAR entry to process
-     * @param excludedRoots set of package roots to exclude
-     * @param roots         set to add detected root packages to
-     */
-    private void processJarEntry(
-            @NotNull final JarEntry entry,
-            @NotNull final Set<String> excludedRoots,
-            @NotNull final Set<String> roots
-    ) {
-        if (entry.isDirectory() || !entry.getName().endsWith(".class")) {
-            return;
-        }
-
-        if (entry.getName().endsWith("module-info.class")) {
-            return;
-        }
-
-        final int lastSlashIndex = entry.getName().lastIndexOf('/');
-        if (lastSlashIndex <= 0) {
-            return;
-        }
-
-        final String packagePath = entry.getName().substring(0, lastSlashIndex);
-        final String packageName = packagePath.replace('/', '.');
-        final String rootPackage = extractFirstTwoSegments(packageName);
-
-        if (!shouldExcludePackage(rootPackage, excludedRoots)) {
-            roots.add(rootPackage);
-        }
-    }
-
-    private @NotNull String extractFirstTwoSegments(@NotNull final String packageName) {
-        final int firstDotIndex = packageName.indexOf('.');
-        if (firstDotIndex < 0) {
-            return packageName;
-        }
-
-        final int secondDotIndex = packageName.indexOf('.', firstDotIndex + 1);
-        if (secondDotIndex < 0) {
-            return packageName.substring(0, Math.max(firstDotIndex, packageName.length()));
-        }
-
-        return packageName.substring(0, secondDotIndex);
-    }
-
-    private boolean shouldExcludePackage(
-            @NotNull final String rootPackage,
-            @NotNull final Set<String> excludedRoots
-    ) {
-        if (rootPackage.isEmpty()) {
-            return true;
-        }
-
-        for (final String excluded : excludedRoots) {
-            if (rootPackage.equals(excluded) || rootPackage.startsWith(excluded + ".")) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     private void invokeRelocate(
             @NotNull final Object remappingManager,
             @NotNull final String fromPackage,
@@ -707,29 +576,36 @@ public class PaperPluginLoader implements PluginLoader {
         final int total = inputJars.size();
         final List<Path> jarsToLoad = new ArrayList<>(total);
         final List<String> failedJars = new ArrayList<>();
-        int done = 0;
         int remappedCount = 0;
-        // Log a progress line every this many JARs so the console doesn't look stuck
-        final int progressInterval = Math.max(1, Math.min(10, total / 5));
 
         logger.log(Level.INFO, "Remapping {0} libraries...", total);
 
-        for (final Path inputJar : inputJars) {
-            final Path outputJar = outputDirectory.resolve(inputJar.getFileName());
-
-            final int outcome = isRemappedJarUpToDate(outputJar, inputJar)
-                    ? markCached(outputJar)
-                    : remapAndValidate(remappingManager, inputJar, outputJar);
-
-            if (outcome == REMAP_OK) {
-                jarsToLoad.add(outputJar);
-                remappedCount++;
-            } else {
-                failedJars.add(inputJar.getFileName().toString());
+        // Jars are remapped in parallel; each output file belongs to exactly one task.
+        final ExecutorService pool = Executors.newFixedThreadPool(
+                Math.max(1, Math.min(total, Runtime.getRuntime().availableProcessors())), runnable -> {
+                    final Thread thread = new Thread(runnable, "JExDependency-remap");
+                    thread.setDaemon(true);
+                    return thread;
+                });
+        try {
+            final List<CompletableFuture<Integer>> outcomes = new ArrayList<>(total);
+            for (final Path inputJar : inputJars) {
+                final Path outputJar = outputDirectory.resolve(remappedFileName(inputJars, inputJar));
+                outcomes.add(CompletableFuture.supplyAsync(() -> isRemappedJarUpToDate(outputJar, inputJar)
+                        ? markCached(outputJar)
+                        : remapAndValidate(remappingManager, inputJar, outputJar), pool));
             }
-
-            done++;
-            logRemapProgress(done, total, progressInterval);
+            for (int index = 0; index < total; index++) {
+                final Path inputJar = inputJars.get(index);
+                if (outcomes.get(index).join() == REMAP_OK) {
+                    jarsToLoad.add(outputDirectory.resolve(remappedFileName(inputJars, inputJar)));
+                    remappedCount++;
+                } else {
+                    failedJars.add(inputJar.getFileName().toString());
+                }
+            }
+        } finally {
+            pool.shutdown();
         }
 
         if (!failedJars.isEmpty()) {
@@ -740,6 +616,19 @@ public class PaperPluginLoader implements PluginLoader {
 
         logger.log(Level.INFO, "Remapped {0}/{1} libraries", new Object[]{remappedCount, total});
         return jarsToLoad;
+    }
+
+    /**
+     * Name of the remapped copy of a jar. Two libraries with the same file name from different groups get a prefix
+     * derived from their cache path, so their copies never overwrite each other.
+     */
+    static @NotNull String remappedFileName(@NotNull final List<Path> inputs, @NotNull final Path input) {
+        final String name = input.getFileName().toString();
+        final long sameName = inputs.stream().filter(other -> other.getFileName().toString().equals(name)).count();
+        if (sameName <= 1) {
+            return name;
+        }
+        return Integer.toHexString(input.toAbsolutePath().normalize().toString().hashCode()) + "-" + name;
     }
 
     /** Per-jar remap outcome codes used by {@link #processRemapping}. */
@@ -769,12 +658,6 @@ public class PaperPluginLoader implements PluginLoader {
         return REMAP_PROCESSED;
     }
 
-    private void logRemapProgress(final int processed, final int total, final int interval) {
-        if (processed % interval == 0 || processed == total) {
-            final int percent = (processed * 100) / total;
-            logger.log(Level.INFO, "Remapping... {0}/{1} ({2}%)", new Object[]{processed, total, percent});
-        }
-    }
 
     private boolean isRemappedJarUpToDate(@NotNull final Path outputJar, @NotNull final Path inputJar) {
         try {

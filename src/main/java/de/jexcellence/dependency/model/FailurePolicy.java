@@ -4,11 +4,11 @@ package de.jexcellence.dependency.model;
  * Controls how the dependency manager reacts when one or more dependencies fail to download or inject.
  *
  * <ul>
- *     <li>{@link #STRICT} — treat any failure as fatal and throw a {@link de.jexcellence.dependency.exception.DependencyException},
+ *     <li>{@link #STRICT}: treat any failure as fatal and throw a {@link de.jexcellence.dependency.exception.DependencyException},
  *         preventing the plugin from continuing its lifecycle.</li>
- *     <li>{@link #DEGRADED} — log failures but allow the plugin to start. The plugin author is expected to inspect
+ *     <li>{@link #DEGRADED}: log failures but allow the plugin to start. The plugin author is expected to inspect
  *         the {@link ProcessingResult} and disable features that depend on missing artifacts.</li>
- *     <li>{@link #CALLBACK} — delegate the decision to a {@link FailureCallback} supplied by the plugin author.
+ *     <li>{@link #CALLBACK}: delegate the decision to a {@link FailureCallback} supplied by the plugin author.
  *         If no callback is set, this mode falls back to {@link #DEGRADED} behaviour.</li>
  * </ul>
  */

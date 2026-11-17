@@ -1,7 +1,7 @@
 /**
- * Bootstrap utilities for runtime dependency management used by Raindrop Central plugins.
+ * Bootstrap utilities that load a Bukkit, Spigot, Paper or Folia plugin's libraries at runtime.
  *
- * <p>The {@link de.jexcellence.dependency.JEDependency} facade exposes three entry points that control
+ * <p>The {@link de.jexcellence.dependency.JEDependency} facade exposes these entry points that control
  * how dependencies are downloaded and injected into the plugin class loader:
  * </p>
  * <ul>
@@ -11,6 +11,9 @@
  *     <li>{@link de.jexcellence.dependency.JEDependency#initializeAsync(org.bukkit.plugin.java.JavaPlugin, Class)}
  *     runs the same workflow asynchronously inside a {@link java.util.concurrent.CompletableFuture}. Callers must
  *     await completion before referencing classes supplied by downloaded dependencies.</li>
+ *     <li>{@link de.jexcellence.dependency.JEDependency#loadAsync(org.bukkit.plugin.java.JavaPlugin, Class)} does the
+ *     same and completes with a {@link de.jexcellence.dependency.model.LoadResult};
+ *     {@code JEDependency.whenLoaded} continues on the server thread.</li>
  *     <li>{@link de.jexcellence.dependency.JEDependency#initializeWithRemapping(org.bukkit.plugin.java.JavaPlugin, Class)}
  *     forces the remapping pipeline. When {@code RemappingDependencyManager} is present the call applies package
  *     relocations even if the {@code -Djedependency.remap} system property would otherwise disable the feature.</li>

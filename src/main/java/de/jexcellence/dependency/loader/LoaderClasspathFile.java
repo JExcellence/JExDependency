@@ -27,6 +27,43 @@ public final class LoaderClasspathFile {
     /** File name inside the plugin's {@code libraries/} folder. */
     public static final String FILE_NAME = "paper-loader-classpath.txt";
 
+    /** First line of a record whose loader run resolved every dependency. */
+    static final String COMPLETE_MARKER = "# complete";
+
+    /**
+     * Tells whether the record was written by a loader run that resolved every dependency and every recorded jar
+     * still exists.
+     *
+     * @param librariesDirectory the plugin's {@code libraries/} folder
+     * @return {@code true} for a complete record
+     */
+    public static boolean isComplete(@NotNull final Path librariesDirectory) {
+        final Path file = librariesDirectory.resolve(FILE_NAME);
+        try {
+            if (!Files.isRegularFile(file)) {
+                return false;
+            }
+            final List<String> lines = Files.readAllLines(file, StandardCharsets.UTF_8);
+            if (lines.isEmpty() || !COMPLETE_MARKER.equals(lines.get(0).trim())) {
+                return false;
+            }
+            final long recorded = lines.stream().map(String::trim).filter(line -> !line.isEmpty() && !line.startsWith("#")).count();
+            return read(librariesDirectory).size() == recorded;
+        } catch (final IOException exception) {
+            return false;
+        }
+    }
+
+    /**
+     * Deletes the record, so a loader run that fails half way never leaves an earlier run's record behind.
+     *
+     * @param librariesDirectory the plugin's {@code libraries/} folder
+     * @throws IOException if the file exists and cannot be deleted
+     */
+    public static void delete(@NotNull final Path librariesDirectory) throws IOException {
+        Files.deleteIfExists(librariesDirectory.resolve(FILE_NAME));
+    }
+
     private LoaderClasspathFile() {
         throw new UnsupportedOperationException("Utility class cannot be instantiated");
     }
@@ -39,8 +76,25 @@ public final class LoaderClasspathFile {
      * @throws IOException if the file cannot be written
      */
     public static void write(@NotNull final Path librariesDirectory, @NotNull final List<Path> jars) throws IOException {
+        write(librariesDirectory, jars, false);
+    }
+
+    /**
+     * Writes the record. A complete record tells the plugin side that the loader resolved every declared
+     * dependency, so it can skip its own download and resolution pass.
+     *
+     * @param librariesDirectory the plugin's {@code libraries/} folder
+     * @param jars               jars the loader put on the classpath
+     * @param complete           whether every declared and transitive dependency was loaded
+     * @throws IOException if the file cannot be written
+     */
+    public static void write(@NotNull final Path librariesDirectory, @NotNull final List<Path> jars,
+                             final boolean complete) throws IOException {
         Files.createDirectories(librariesDirectory);
-        final List<String> lines = new ArrayList<>(jars.size());
+        final List<String> lines = new ArrayList<>(jars.size() + 1);
+        if (complete) {
+            lines.add(COMPLETE_MARKER);
+        }
         for (final Path jar : jars) {
             lines.add(jar.toAbsolutePath().normalize().toString());
         }
@@ -75,7 +129,7 @@ public final class LoaderClasspathFile {
         final List<Path> jars = new ArrayList<>();
         for (final String line : Files.readAllLines(file, StandardCharsets.UTF_8)) {
             final String trimmed = line.trim();
-            if (trimmed.isEmpty()) {
+            if (trimmed.isEmpty() || trimmed.startsWith("#")) {
                 continue;
             }
             try {

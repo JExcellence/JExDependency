@@ -21,7 +21,7 @@
  * <ul>
  *     <li>
  *         Extend {@link de.jexcellence.dependency.delegate.AbstractPluginDelegate} when the
- *         plugin needs the full convenience surface—access to the configured data directory,
+ *         plugin needs the full convenience surface, access to the configured data directory,
  *         logging utilities, command lookups, and Paper-aware lifecycle guards. This is the
  *         recommended path for flagship variants and any plugin that consumes the dependency
  *         injector.

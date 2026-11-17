@@ -53,7 +53,7 @@ public record PomDependency(
     /**
      * Returns the deduplication key for this dependency ({@code groupId:artifactId}).
      * Version is intentionally omitted so that the same library at different versions still
-     * compares equal — the first version seen wins during resolution (Maven's nearest-wins rule).
+     * compares equal: the first version seen wins during resolution (Maven's nearest-wins rule).
      */
     public @NotNull String toKey() {
         return groupId + ":" + artifactId;

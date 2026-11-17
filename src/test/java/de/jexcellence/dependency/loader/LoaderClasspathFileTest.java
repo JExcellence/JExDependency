@@ -10,6 +10,7 @@ import java.nio.file.Path;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class LoaderClasspathFileTest {
@@ -72,5 +73,25 @@ class LoaderClasspathFileTest {
             assertEquals(List.of(LoaderClasspathFile.FILE_NAME),
                     files.map(path -> path.getFileName().toString()).toList());
         }
+    }
+
+    @Test
+    @DisplayName("a complete record is complete only while every recorded jar exists")
+    void completeMarker() throws IOException {
+        final Path libraries = tempDir.resolve("libraries");
+        final Path jar = Files.createFile(tempDir.resolve("lib.jar"));
+
+        LoaderClasspathFile.write(libraries, List.of(jar), false);
+        assertFalse(LoaderClasspathFile.isComplete(libraries));
+
+        LoaderClasspathFile.write(libraries, List.of(jar), true);
+        assertTrue(LoaderClasspathFile.isComplete(libraries));
+        assertEquals(List.of(jar.toAbsolutePath().normalize()), LoaderClasspathFile.read(libraries));
+
+        Files.delete(jar);
+        assertFalse(LoaderClasspathFile.isComplete(libraries));
+
+        LoaderClasspathFile.delete(libraries);
+        assertFalse(LoaderClasspathFile.isComplete(libraries));
     }
 }

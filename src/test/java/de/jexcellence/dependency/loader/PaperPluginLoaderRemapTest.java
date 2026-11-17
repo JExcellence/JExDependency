@@ -37,7 +37,7 @@ class PaperPluginLoaderRemapTest {
         final Path dataDirectory = Files.createDirectories(tempDir.resolve("plugins/Example"));
         final Path remapped = dataDirectory.resolve("libraries/remapped");
 
-        final List<Path> result = new PaperPluginLoader().remapJars(List.of(ownJar), dataDirectory, remapped);
+        final List<Path> result = new PaperPluginLoader().remapJars(List.of(ownJar), dataDirectory, remapped, plugin());
 
         assertEquals(1, result.size());
         final Path setDirectory = result.get(0).getParent();
@@ -60,7 +60,7 @@ class PaperPluginLoaderRemapTest {
         final Path dataDirectory = Files.createDirectories(tempDir.resolve("plugins/Example"));
         final Path remapped = dataDirectory.resolve("libraries/remapped");
 
-        final List<Path> result = new PaperPluginLoader().remapJars(List.of(goodJar, brokenJar), dataDirectory, remapped);
+        final List<Path> result = new PaperPluginLoader().remapJars(List.of(goodJar, brokenJar), dataDirectory, remapped, plugin());
 
         assertEquals(List.of(goodJar, brokenJar), result);
         try (var files = Files.walk(remapped)) {
@@ -80,8 +80,8 @@ class PaperPluginLoaderRemapTest {
         final Path dataDirectory = Files.createDirectories(tempDir.resolve("plugins/Example"));
         final Path remapped = dataDirectory.resolve("libraries/remapped");
 
-        final List<Path> first = new PaperPluginLoader().remapJars(List.of(alpha), dataDirectory, remapped);
-        final List<Path> second = new PaperPluginLoader().remapJars(List.of(alpha, gamma), dataDirectory, remapped);
+        final List<Path> first = new PaperPluginLoader().remapJars(List.of(alpha), dataDirectory, remapped, plugin());
+        final List<Path> second = new PaperPluginLoader().remapJars(List.of(alpha, gamma), dataDirectory, remapped, plugin());
 
         assertNotEquals(first.get(0).getParent(), second.get(0).getParent());
         assertEquals("org/gamma/lib/Gamma",
@@ -99,12 +99,50 @@ class PaperPluginLoaderRemapTest {
         final Path dataDirectory = Files.createDirectories(tempDir.resolve("plugins/Example"));
         final Path remapped = dataDirectory.resolve("libraries/remapped");
 
-        final List<Path> first = new PaperPluginLoader().remapJars(List.of(alpha), dataDirectory, remapped);
+        final List<Path> first = new PaperPluginLoader().remapJars(List.of(alpha), dataDirectory, remapped, plugin());
         final long firstModified = Files.getLastModifiedTime(first.get(0)).toMillis();
-        final List<Path> second = new PaperPluginLoader().remapJars(List.of(alpha), dataDirectory, remapped);
+        final List<Path> second = new PaperPluginLoader().remapJars(List.of(alpha), dataDirectory, remapped, plugin());
 
         assertEquals(first, second);
         assertEquals(firstModified, Files.getLastModifiedTime(second.get(0)).toMillis());
+    }
+
+    @Test
+    @DisplayName("leaves libraries alone that the plugin uses by their original package names")
+    void unreferencedLibrariesStayUnrelocated() throws IOException {
+        final Path sharedJars = Files.createDirectories(tempDir.resolve("cache/jars"));
+        final Path delta = writeJar(sharedJars.resolve("delta-1.0.jar"), "org/delta/Delta", null);
+        final Path dataDirectory = Files.createDirectories(tempDir.resolve("plugins/Example"));
+        final Path remapped = dataDirectory.resolve("libraries/remapped");
+
+        final List<Path> result = new PaperPluginLoader().remapJars(List.of(delta), dataDirectory, remapped, plugin());
+
+        try (JarFile jar = new JarFile(result.get(0).toFile())) {
+            assertNotNull(jar.getEntry("org/delta/Delta.class"));
+        }
+    }
+
+    /** A plugin jar compiled against relocated alpha, beta and gamma, as Shadow's relocate produces. */
+    private Path plugin() throws IOException {
+        final Path target = tempDir.resolve("plugin.jar");
+        if (Files.exists(target)) {
+            return target;
+        }
+        try (OutputStream file = Files.newOutputStream(target);
+             JarOutputStream jar = new JarOutputStream(file)) {
+            int index = 0;
+            for (final String referenced : List.of("com/example/alpha/Alpha", "com/example/beta/Beta",
+                    "org/gamma/lib/Gamma", "com/example/broken/Broken")) {
+                final ClassWriter writer = new ClassWriter(0);
+                writer.visit(Opcodes.V17, Opcodes.ACC_PUBLIC, "com/example/plugin/Uses" + index, null,
+                        "de/jexcellence/remapped/" + referenced, null);
+                writer.visitEnd();
+                jar.putNextEntry(new JarEntry("com/example/plugin/Uses" + index++ + ".class"));
+                jar.write(writer.toByteArray());
+                jar.closeEntry();
+            }
+        }
+        return target;
     }
 
     private static String superNameOf(final Path jarPath, final String entryName) throws IOException {
@@ -137,5 +175,17 @@ class PaperPluginLoaderRemapTest {
             jar.closeEntry();
         }
         return target;
+    }
+
+    @Test
+    @DisplayName("libraries with the same file name from different groups get different remapped names")
+    void sameFileNameDifferentGroups() {
+        final Path first = tempDir.resolve("jars/a/x/1.0/x-1.0.jar");
+        final Path second = tempDir.resolve("jars/b/x/1.0/x-1.0.jar");
+        final Path unique = tempDir.resolve("jars/c/y/1.0/y-1.0.jar");
+        final List<Path> inputs = List.of(first, second, unique);
+
+        assertNotEquals(PaperPluginLoader.remappedFileName(inputs, first), PaperPluginLoader.remappedFileName(inputs, second));
+        assertEquals("y-1.0.jar", PaperPluginLoader.remappedFileName(inputs, unique));
     }
 }

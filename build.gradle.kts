@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "de.jexcellence.dependency"
-version = "2.2.0"
+version = "3.0.0"
 description = "Runtime dependency loading, verification and relocation for Spigot, Paper and Folia plugins"
 
 /** Bytecode level of the published jar. Servers must run at least this Java version. */
@@ -57,6 +57,8 @@ tasks {
         useJUnitPlatform()
         // ClasspathInjector tests exercise URLClassLoader.addURL via reflection.
         jvmArgs("--add-opens", "java.base/java.net=ALL-UNNAMED")
+        // Keep the shared cache of downloader tests inside the build folder.
+        systemProperty("jedependency.cache.dir", layout.buildDirectory.dir("test-cache").get().asFile.absolutePath)
     }
 
     register<Jar>("fatJar") {

@@ -4,12 +4,15 @@ import de.jexcellence.dependency.downloader.DependencyDownloader;
 import de.jexcellence.dependency.exception.DependencyException;
 import de.jexcellence.dependency.injector.ClasspathInjector;
 import de.jexcellence.dependency.loader.LoaderClasspathFile;
+import de.jexcellence.dependency.loader.DependencyDescriptor;
+import de.jexcellence.dependency.loader.DependencyEntry;
 import de.jexcellence.dependency.loader.YamlDependencyLoader;
 import de.jexcellence.dependency.model.DependencyCoordinate;
 import de.jexcellence.dependency.model.DownloadResult;
 import de.jexcellence.dependency.model.FailureCallback;
 import de.jexcellence.dependency.model.FailurePolicy;
 import de.jexcellence.dependency.model.ProcessingResult;
+import de.jexcellence.dependency.model.StartupReport;
 import de.jexcellence.dependency.module.Deencapsulation;
 import de.jexcellence.dependency.resolver.TransitiveDependencyResolver;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -50,6 +53,7 @@ public class DependencyManager {
     private final JavaPlugin plugin;
     private final Class<?> anchorClass;
     private final DependencyDownloader downloader;
+    private volatile StartupReport report = new StartupReport();
     private final ClasspathInjector injector;
     private final YamlDependencyLoader yamlLoader;
 
@@ -111,9 +115,9 @@ public class DependencyManager {
      * Sets the failure policy that controls how the manager reacts when dependencies fail.
      *
      * <ul>
-     *     <li>{@link FailurePolicy#STRICT} — throw a {@link DependencyException} on any failure</li>
-     *     <li>{@link FailurePolicy#DEGRADED} — log failures and continue (default)</li>
-     *     <li>{@link FailurePolicy#CALLBACK} — invoke the registered {@link FailureCallback}</li>
+     *     <li>{@link FailurePolicy#STRICT}: throw a {@link DependencyException} on any failure</li>
+     *     <li>{@link FailurePolicy#DEGRADED}: log failures and continue (default)</li>
+     *     <li>{@link FailurePolicy#CALLBACK}: invoke the registered {@link FailureCallback}</li>
      * </ul>
      *
      * @param policy failure policy to apply
@@ -146,7 +150,18 @@ public class DependencyManager {
      *                               YAML-provided list
      */
     public void initialize(@Nullable final String[] additionalDependencies) {
+        load(additionalDependencies);
+    }
+
+    /**
+     * Same as {@link #initialize(String[])}, but returns what was loaded. Blocks the calling thread.
+     *
+     * @param additionalDependencies optional coordinates appended to the YAML list
+     * @return loaded and failed libraries; empty when nothing is declared
+     */
+    public @NotNull ProcessingResult load(@Nullable final String[] additionalDependencies) {
         final long startTime = System.currentTimeMillis();
+        report = new StartupReport();
 
         final File librariesDirectory = setupLibrariesDirectory();
         final ClassLoader targetClassLoader = anchorClass.getClassLoader();
@@ -157,14 +172,17 @@ public class DependencyManager {
 
         if (coordinates.isEmpty()) {
             logger.info("No dependencies to process");
-            return;
+            return new ProcessingResult(List.of(), List.of(), 0L);
         }
 
         downloader.probeConnectivity();
 
+        final int declared = coordinates.size();
         if (transitiveResolutionEnabled) {
-            coordinates = expandWithTransitives(coordinates, librariesDirectory);
+            final List<DependencyCoordinate> roots = coordinates;
+            coordinates = report.time(StartupReport.Phase.RESOLVE, () -> expandWithTransitives(roots, librariesDirectory));
         }
+        report.libraries(declared, coordinates.size() - declared);
 
         logger.log(Level.INFO, "Resolving {0} dependencies...", coordinates.size());
 
@@ -173,6 +191,7 @@ public class DependencyManager {
         final long duration = System.currentTimeMillis() - startTime;
         logProcessingSummary(result, duration);
         applyFailurePolicy(result);
+        return result;
     }
 
     /**
@@ -188,35 +207,7 @@ public class DependencyManager {
     public @NotNull CompletableFuture<ProcessingResult> initializeAsync(
             @Nullable final String[] additionalDependencies
     ) {
-        return CompletableFuture.supplyAsync(() -> {
-            final long startTime = System.currentTimeMillis();
-
-            final File librariesDirectory = setupLibrariesDirectory();
-            final ClassLoader targetClassLoader = anchorClass.getClassLoader();
-
-            performModuleDeencapsulation();
-
-            List<DependencyCoordinate> coordinates = collectDependencies(additionalDependencies);
-
-            if (coordinates.isEmpty()) {
-                return new ProcessingResult(List.of(), List.of(), 0L);
-            }
-
-            downloader.probeConnectivity();
-
-            if (transitiveResolutionEnabled) {
-                coordinates = expandWithTransitives(coordinates, librariesDirectory);
-            }
-
-            logger.log(Level.INFO, "Resolving {0} dependencies...", coordinates.size());
-
-            final ProcessingResult result = processDependencies(coordinates, librariesDirectory, targetClassLoader);
-
-            final long duration = System.currentTimeMillis() - startTime;
-            logProcessingSummary(result, duration);
-            applyFailurePolicy(result);
-            return result;
-        });
+        return CompletableFuture.supplyAsync(() -> load(additionalDependencies));
     }
 
     /**
@@ -228,9 +219,9 @@ public class DependencyManager {
             @NotNull final List<DependencyCoordinate> roots,
             @NotNull final File librariesDirectory
     ) {
-        logger.info("Transitive resolution enabled — analysing POM files...");
+        logger.info("Transitive resolution enabled: analysing POM files...");
 
-        final TransitiveDependencyResolver resolver = new TransitiveDependencyResolver(librariesDirectory, downloader.activeRepositories());
+        final TransitiveDependencyResolver resolver = new TransitiveDependencyResolver(librariesDirectory, downloader::fetchPom);
         final Set<DependencyCoordinate> transitives = resolver.resolve(roots);
 
         // Merge: roots first (preserve their order), then new transitives
@@ -275,16 +266,12 @@ public class DependencyManager {
     ) {
         final List<DependencyCoordinate> coordinates = new ArrayList<>();
 
-        final List<String> yamlDependencies = yamlLoader.loadDependencies(anchorClass);
-        if (yamlDependencies != null) {
-            for (final String dependency : yamlDependencies) {
-                final DependencyCoordinate coordinate = DependencyCoordinate.parse(dependency);
-                if (coordinate != null) {
-                    coordinates.add(coordinate);
-                    logger.log(Level.FINE, () -> "YAML dependency: " + dependency);
-                } else {
-                    logger.log(Level.WARNING, "Invalid dependency format: {0}", dependency);
-                }
+        final DependencyDescriptor descriptor = yamlLoader.loadDescriptor(anchorClass);
+        if (descriptor != null) {
+            downloader.configure(descriptor);
+            for (final DependencyEntry entry : descriptor.entries()) {
+                coordinates.add(entry.coordinate());
+                logger.log(Level.FINE, () -> "YAML dependency: " + entry.coordinate().toGavString());
             }
         }
 
@@ -318,45 +305,39 @@ public class DependencyManager {
                 .map(coord -> downloader.downloadAsync(coord, librariesDirectory))
                 .toList();
 
-        final List<DownloadResult> downloadResults = futures.stream()
+        final List<DownloadResult> downloadResults = report.time(StartupReport.Phase.DOWNLOAD, () -> futures.stream()
                 .map(CompletableFuture::join)
-                .toList();
+                .toList());
 
-        // Inject sequentially — classpath mutation is not thread-safe
-        for (final DownloadResult result : downloadResults) {
-            if (result.success() && result.file() != null) {
-                if (injector.tryInject(classLoader, result.file())) {
-                    successful.add(result.coordinate());
+        // Inject sequentially: classpath mutation is not thread-safe
+        report.time(StartupReport.Phase.INJECT, () -> {
+            for (final DownloadResult result : downloadResults) {
+                if (result.success() && result.file() != null) {
+                    if (injector.tryInject(classLoader, result.file())) {
+                        successful.add(result.coordinate());
+                    } else {
+                        failed.add(DownloadResult.failure(result.coordinate(), "Injection failed"));
+                    }
                 } else {
-                    failed.add(DownloadResult.failure(result.coordinate(), "Injection failed"));
+                    failed.add(result);
                 }
-            } else {
-                failed.add(result);
             }
-        }
+            return null;
+        });
+        final DependencyDownloader.DownloadStats stats = downloader.stats();
+        report.downloads(stats.cached(), stats.downloaded(), failed.size());
 
         final long duration = System.currentTimeMillis() - startTime;
         return new ProcessingResult(successful, failed, duration);
     }
 
     private void logProcessingSummary(@NotNull final ProcessingResult result, final long totalDuration) {
+        logger.info(report.summary());
         if (result.hasFailures()) {
-            logger.log(Level.INFO, 
-                    "Loaded {0}/{1} dependencies in {2}ms ({3} failed)",
-                    new Object[]{
-                            result.getSuccessCount(),
-                            result.getTotalCount(),
-                            totalDuration,
-                            result.getFailureCount()
-                    });
             final String failedList = result.getFailed().stream()
                     .map(dr -> dr.coordinate().toGavString())
                     .collect(Collectors.joining(", "));
             logger.log(Level.WARNING, "Failed: {0}", failedList);
-        } else {
-            logger.log(Level.INFO, 
-                    "Loaded {0} dependencies in {1}ms",
-                    new Object[]{result.getTotalCount(), totalDuration});
         }
     }
 
@@ -383,11 +364,11 @@ public class DependencyManager {
                 if (failureCallback != null) {
                     failureCallback.onFailure(result);
                 } else {
-                    logger.warning("FailurePolicy.CALLBACK is set but no callback is registered — falling back to DEGRADED behaviour");
+                    logger.warning("FailurePolicy.CALLBACK is set but no callback is registered: falling back to DEGRADED behaviour");
                 }
             }
             default -> {
-                // DEGRADED — failures already logged in logProcessingSummary
+                // DEGRADED: failures already logged in logProcessingSummary
             }
         }
     }

@@ -50,7 +50,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.JExcellence:JExDependency:2.2.0")
+    implementation("com.github.JExcellence:JExDependency:3.0.0")
     compileOnly("com.github.ben-manes.caffeine:caffeine:3.2.2") // downloaded at runtime, not shaded
 }
 ```
@@ -69,7 +69,7 @@ dependencies {
 <dependency>
     <groupId>com.github.JExcellence</groupId>
     <artifactId>JExDependency</artifactId>
-    <version>2.2.0</version>
+    <version>3.0.0</version>
 </dependency>
 ```
 
@@ -83,6 +83,22 @@ dependencies:
   - "com.fasterxml.jackson.core:jackson-databind:2.18.2"
   - "com.mysql:mysql-connector-j:9.2.0"
 ```
+
+Libraries that are not on Maven Central need their repository. List it once, or pin a single library to it:
+
+```yaml
+repositories:
+  - https://repo.example.org/releases
+dependencies:
+  - "com.example:tool:1.4.0"
+  - "com.example:internal:2.0.0 @ https://repo.example.org/private"
+  - "com.example:audited:1.0.0 sha256=<64 hex characters>"
+```
+
+A pinned library (`@ url`) is downloaded only from that repository. A `sha256=` value makes JExDependency accept
+only that exact jar, from any repository and from the cache. Earlier versions also searched JitPack, PaperMC and
+other community repositories for every library; set `community-repositories: true` in the file to keep that
+behaviour.
 
 **3. Load them in `onLoad()`:**
 
@@ -109,7 +125,7 @@ flowchart TD
     D --> E[Resolve transitive dependencies from POMs]
     E --> F{In the shared cache?}
     F -- yes --> H
-    F -- no --> G[Download with per-artifact lock,<br/>retry with backoff, verify SHA-1]
+    F -- no --> G[Download with per-artifact lock,<br/>retry with backoff, verify SHA-256 or SHA-1]
     G --> H[Optional relocation into<br/>libraries/remapped/set]
     H --> I[Inject into the plugin class loader]
     I --> J[onEnable: libraries available]
@@ -119,11 +135,15 @@ flowchart TD
 |---|:---:|---|
 | `JEDependency.initialize(plugin, anchor)` | yes | Default. |
 | `JEDependency.initializeWithRemapping(plugin, anchor)` | yes | You want relocated libraries (see [relocation](#relocation)). |
-| `JEDependency.initializeAsync(plugin, anchor)` | no | Startup should continue; wait for the returned `CompletableFuture<Void>` before touching the libraries. |
+| `JEDependency.loadAsync(plugin, anchor)` | no | Startup should continue. Returns a `CompletableFuture<LoadResult>` with what was loaded and what failed; `JEDependency.whenLoaded(plugin, future, action)` continues on the server thread, on Folia on the global region scheduler. |
+| `JEDependency.initializeAsync(plugin, anchor)` | no | Older form of `loadAsync` without a result. |
 
 Each method also accepts a `String[]` of extra coordinates (`group:artifact:version[:classifier]`).
-Libraries only one platform needs go into `dependency/paper/dependencies.yml` or
-`dependency/spigot/dependencies.yml`; they are merged with the main list.
+A platform-specific list in `dependency/paper/dependencies.yml` or `dependency/spigot/dependencies.yml` replaces
+the main list on that platform; it is not merged with it.
+
+Every startup logs one line such as `Loaded 12 libraries (3 transitive) in 840 ms: resolve 120 ms, download 600 ms
+(9 cached, 3 downloaded), inject 40 ms`, so you can see what loading costs and whether the cache works.
 
 ## Compatibility
 
@@ -148,18 +168,38 @@ loader: de.jexcellence.dependency.loader.PaperPluginLoader
 
 If you relocate JExDependency, use the relocated class name, for example
 `com.example.libs.jexdependency.loader.PaperPluginLoader`. Still call `JEDependency.initialize(...)` in `onLoad()`:
-it injects exactly the jars the loader recorded and resolves anything the loader did not (the loader currently
-loads declared libraries only, not their transitive dependencies; see the [roadmap](ROADMAP.md)).
+it injects exactly the jars the loader recorded and, when the loader loaded everything (transitive dependencies
+included, unless `-Djedependency.transitive=false`), does nothing else. Otherwise it resolves what is missing.
 
 ## Relocation
 
-Relocation renames a library's packages (`com.google.gson` becomes `de.jexcellence.remapped.com.google.gson`) so
-your copy cannot collide with another plugin's copy.
+Relocation renames a library's packages (`com.google.gson` becomes `com.example.myplugin.libs.com.google.gson`)
+so your copy cannot collide with another plugin's copy. It only works when your own classes use the relocated
+names too, so JExDependency relocates exactly the libraries your compiled plugin already refers to under the
+prefix. Keep the library `compileOnly` and the `relocate(...)` line in Shadow:
 
-- **Paper loader:** relocation is on by default (`jedependency.remap=auto`). Packages are detected from your
-  libraries automatically and placed under `jedependency.relocations.prefix` (default `de.jexcellence.remapped`).
-- **Spigot and `plugin.yml` plugins:** `initializeWithRemapping` relocates only what the server lists in
-  `-Djedependency.relocations`. Automatic detection on Spigot is [roadmap item 3](ROADMAP.md).
+```kotlin
+tasks.shadowJar {
+    relocate("com.google.gson", "com.example.myplugin.libs.com.google.gson")
+}
+```
+
+```yaml
+relocation-prefix: com.example.myplugin.libs
+dependencies:
+  - "com.google.code.gson:gson:2.13.1"
+```
+
+At startup the plugin jar is scanned; gson is referenced under the prefix, so the whole gson jar is relocated.
+Libraries your code uses by their original names stay as they are. This works the same in the Paper loader
+(on by default, `jedependency.remap=auto`) and with `JEDependency.initializeWithRemapping` on Spigot.
+
+- `relocations:` in `dependencies.yml` (`- com.google.gson => my.libs.gson`) or `-Djedependency.relocations` set
+  explicit relocations instead.
+- `relocation-excludes:` lists packages that are never relocated. JDK, Jakarta and XML API packages are always
+  excluded.
+- Use a prefix of your own: two plugins that relocate into the same prefix share those classes again.
+- On Paper, every plugin with a `paper-plugin.yml` has its own class loader, so relocation is rarely needed there.
 
 Relocated copies are stored per relocation set in `plugins/<YourPlugin>/libraries/remapped/<set>/`, so changing
 your libraries or the relocation settings always produces fresh copies.
@@ -191,8 +231,10 @@ Server owners can change behaviour with JVM system properties, without rebuildin
 |---|---|---|
 | `jedependency.remap` | `auto` in the Paper loader, otherwise off | `true`, `1`, `yes` or `on` turns relocation on; `false` turns it off. |
 | `jedependency.relocations` | none | Explicit relocations: `com.google.gson=>my.libs.gson,org.foo=>my.libs.foo`. |
-| `jedependency.relocations.prefix` | `de.jexcellence.remapped` | Package prefix for automatic relocation. |
-| `jedependency.relocations.excludes` | none | Comma-separated packages that are never relocated. |
+| `jedependency.relocations.prefix` | `de.jexcellence.remapped` | Package prefix for automatic relocation when the plugin sets no `relocation-prefix:`. |
+| `jedependency.relocations.excludes` | none | Comma-separated packages that are never relocated, added to the plugin's `relocation-excludes:`. |
+| `jedependency.transitive` | `true` | `false` stops the Paper loader from downloading the dependencies of your libraries. |
+| `jedependency.repository.community` | `false` | `true` searches the built-in community repositories (NeetGames, JitPack, Auxilor, Tcoded, PaperMC, SpigotMC, Gradle plugins) after Central for every plugin. |
 | `jedependency.repository.central` | Google's Central mirror | Maven Central mirror to download from, for example your own Nexus. Falls back to the `PAPER_DEFAULT_CENTRAL_REPOSITORY` environment variable. Set it to `https://repo1.maven.org/maven2` to download from Central directly. Read once at startup. |
 | `jedependency.cache.dir` | `<server>/.jexdependency/cache` | Location of the shared cache, for example a Docker volume. |
 | `jedependency.path.default` | `/dependency/dependencies.yml` | Resource path of the main dependency list. |
@@ -200,6 +242,11 @@ Server owners can change behaviour with JVM system properties, without rebuildin
 | `jedependency.path.spigot` | `/dependency/spigot/dependencies.yml` | Resource path of the Spigot-only list. |
 
 Example: `java -Djedependency.cache.dir=/data/jexdependency -jar paper.jar`
+
+**Private repositories.** Credentials never go into `dependencies.yml` or a plugin jar. Set an environment
+variable on the server named `JEDEPENDENCY_AUTH_` plus the repository host in upper case with every other
+character replaced by `_`, for example `JEDEPENDENCY_AUTH_REPO_EXAMPLE_ORG=deploy:password` or
+`JEDEPENDENCY_AUTH_REPO_EXAMPLE_ORG=Bearer <token>`. Credentials are sent only over HTTPS and only to that host.
 
 ### Failure policy
 
@@ -237,13 +284,15 @@ JExDependency downloads code that runs with your plugin's rights. Here is exactl
 
 - **When:** only at startup, only for jars and POMs that are not cached yet.
 - **Where from:** a Maven Central mirror first (Google's, the same default Paper uses), then Maven Central itself,
-  then NeetGames Nexus, JitPack, Auxilor, Tcoded, PaperMC, the SpigotMC snapshot repository and the Gradle plugin
-  portal, all over HTTPS. The first repository that has the artifact wins. Maven Central's terms do not allow using
-  it as a download CDN, which is why the mirror comes first; set `jedependency.repository.central` or Paper's
-  `PAPER_DEFAULT_CENTRAL_REPOSITORY` to use your own mirror. Declaring your own repositories and making community
-  repositories opt-in is [roadmap item 2](ROADMAP.md).
-- **Verification:** the published `.sha1` is compared with each download and a mismatch rejects the jar. A
-  repository without checksums is trusted as is.
+  then the repositories your `dependencies.yml` lists. Community repositories (JitPack, PaperMC and others) are
+  searched only when the plugin or the server turns them on. A library pinned with `@ url` comes only from that
+  repository. Maven Central's terms do not allow using it as a download CDN, which is why the mirror comes first;
+  set `jedependency.repository.central` or Paper's `PAPER_DEFAULT_CENTRAL_REPOSITORY` to use your own mirror.
+- **How:** one HTTP/2 connection per host, at most six parallel requests per host, retries with backoff on
+  timeouts, rate limits (honouring `Retry-After`) and server errors. Redirects from HTTPS to HTTP are refused.
+- **Verification:** a `sha256=` value in `dependencies.yml` must match. Otherwise the repository's `.sha256` file
+  is used, then its `.sha1` file; a mismatch rejects the jar. A repository without checksums is trusted as is.
+  Every download must also open as a jar, so HTML error pages never reach the cache.
 - **Versions:** pin exact versions; version ranges are not resolved.
 
 Report vulnerabilities privately as described in [SECURITY.md](SECURITY.md).
@@ -267,7 +316,7 @@ Turn on `FINE` logging for the `JExDependency` logger to see every download, che
 |---|:---:|:---:|:---:|:---:|
 | Works on Spigot | 1.16.5+ | no | yes | yes |
 | Works on Paper | yes | yes | yes | yes |
-| Repositories besides Maven Central | no | yes | n/a | built-in list only (custom: planned) |
+| Repositories besides Maven Central | no | yes | n/a | yes, declared in `dependencies.yml` |
 | Package relocation | no | no | yes | yes |
 | Small plugin jar | yes | yes | no | yes |
 

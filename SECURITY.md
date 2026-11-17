@@ -32,4 +32,4 @@ not to be.
 
 - Code inside a library you chose to load. JExDependency loads what you declare; the library runs with your
   plugin's rights.
-- Repositories that publish no checksum. Such jars are accepted by design; see "Security model" in the README.
+- Repositories that publish no checksum. Such jars are accepted by design; see "Network and security" in the README.

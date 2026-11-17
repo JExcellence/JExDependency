@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 
 /**
  * Parses a Maven POM XML stream into a {@link ParsedPom} using the JDK's built-in
- * {@link DocumentBuilder} — no external XML library is required.
+ * {@link DocumentBuilder}: no external XML library is required.
  *
  * <p>Only the fields relevant to runtime transitive dependency resolution are extracted:
  * {@code <parent>}, {@code <properties>}, {@code <dependencyManagement>}, and
@@ -55,7 +55,7 @@ public class PomParser {
             final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             factory.setNamespaceAware(false);
             factory.setValidating(false);
-            // Disable external entity loading — we only need to parse local/downloaded XML
+            // Disable external entity loading: we only need to parse local/downloaded XML
             factory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
             factory.setFeature("http://xml.org/sax/features/external-general-entities", false);
             factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
