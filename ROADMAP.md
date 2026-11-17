@@ -60,5 +60,5 @@ These keep the library dependable as it grows. They run in CI on every pull requ
 
 ## Done
 
-- 2.2.0 (merged, release pending): standalone build, shared cache layout marker and concurrent-download fix, dead repositories removed from the
+- 2.2.0 (2026-11-17): standalone build, shared cache layout marker and concurrent-download fix, dead repositories removed from the
   search, Paper loader loads only the plugin's own jars, remapped copies keyed by relocation set.

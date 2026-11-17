@@ -41,8 +41,8 @@ What you get:
 
 ## Quick start
 
-**1. Add the library** (built by [JitPack](https://jitpack.io/#JExcellence/JExDependency); use the latest
-[release tag](https://github.com/JExcellence/JExDependency/releases) as `TAG`):
+**1. Add the library** (built by [JitPack](https://jitpack.io/#JExcellence/JExDependency); newer versions are listed under
+[releases](https://github.com/JExcellence/JExDependency/releases)):
 
 ```kotlin
 repositories {
@@ -50,7 +50,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.JExcellence:JExDependency:TAG")
+    implementation("com.github.JExcellence:JExDependency:2.2.0")
     compileOnly("com.github.ben-manes.caffeine:caffeine:3.2.2") // downloaded at runtime, not shaded
 }
 ```
@@ -69,7 +69,7 @@ dependencies {
 <dependency>
     <groupId>com.github.JExcellence</groupId>
     <artifactId>JExDependency</artifactId>
-    <version>TAG</version>
+    <version>2.2.0</version>
 </dependency>
 ```
 

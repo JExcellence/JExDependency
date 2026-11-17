@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.2.0 (unreleased)
+## 2.2.0 (2026-11-17)
 
 ### Fixed
 - Paper plugin loader: with remapping on (the default), every jar in the server-wide cache, including other
@@ -34,6 +34,7 @@
   `JCENTER`. They are never contacted; use `MAVEN_CENTRAL`.
 
 ### Changed
+- ASM 9.11.1 for remapping, so libraries compiled for newer Java versions can be relocated.
 - Compiled against Paper API 1.21.4 instead of a newer API, to keep newer API calls out of the library.
 
 ## 2.1.0
