@@ -1,6 +1,10 @@
 # Changelog
 
-## Unreleased
+## 3.0.0 (2026-11-17)
+
+Upgrading from 2.x: read **Breaking** first. Plugins that load libraries from JitPack, PaperMC or other
+non-Central repositories must declare them in `dependencies.yml`, and relocation now follows what the plugin's
+classes reference.
 
 ### Breaking
 - Only the Maven Central mirror and Central are searched by default. Libraries from JitPack, PaperMC, SpigotMC,
@@ -65,6 +69,13 @@
   there used to be accepted, and a broken file already in the shared cache could be reported as a successful
   migration.
 - Valid jars smaller than 1 KB are no longer rejected.
+- A checksum file that times out or fails is no longer treated as missing, so a jar is never accepted unverified
+  because of a transient error.
+- When Central is unreachable, repositories the plugin declares are still used.
+- Relocated copies of same-named jars from different groups no longer overwrite each other.
+- Copying a jar without relocations skips duplicate entries instead of failing.
+- Errors while starting the remapping manager are logged instead of swallowed.
+- The relocation fingerprint no longer uses a Java 17 API.
 - `DependencyDownloader.setMaxRetries` is safe to call while downloads run on other threads.
 
 ## 2.2.0 (2026-11-17)

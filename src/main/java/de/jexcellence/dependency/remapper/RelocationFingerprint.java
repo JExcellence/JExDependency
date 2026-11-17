@@ -6,7 +6,6 @@ import org.jetbrains.annotations.NotNull;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.HexFormat;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -46,7 +45,12 @@ public final class RelocationFingerprint {
         try {
             final byte[] digest = MessageDigest.getInstance("SHA-256")
                     .digest(canonical.toString().getBytes(StandardCharsets.UTF_8));
-            return HexFormat.of().formatHex(digest, 0, FINGERPRINT_BYTES);
+            final StringBuilder hex = new StringBuilder(FINGERPRINT_BYTES * 2);
+            for (int index = 0; index < FINGERPRINT_BYTES; index++) {
+                hex.append(Character.forDigit((digest[index] >> 4) & 0xF, 16))
+                        .append(Character.forDigit(digest[index] & 0xF, 16));
+            }
+            return hex.toString();
         } catch (final NoSuchAlgorithmException exception) {
             throw new IllegalStateException("SHA-256 is required by every Java runtime", exception);
         }

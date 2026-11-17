@@ -17,10 +17,12 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.function.Consumer;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Entry point for plugins to bootstrap the runtime dependency system. The class coordinates YAML discovery,
@@ -435,7 +437,7 @@ public class JEDependency {
             return false;
         }
 
-        final String normalizedValue = propertyValue.trim().toLowerCase();
+        final String normalizedValue = propertyValue.trim().toLowerCase(Locale.ROOT);
         return "true".equals(normalizedValue)
                 || "1".equals(normalizedValue)
                 || "yes".equals(normalizedValue)
@@ -475,7 +477,7 @@ public class JEDependency {
                 return new ProcessingResult(List.of(), List.of(), 0L);
             }
 
-        } catch (final Throwable throwable) {
+        } catch (final Exception | LinkageError throwable) {
             plugin.getLogger().log(Level.SEVERE, "Failed to initialize RemappingDependencyManager: {0}: {1}",
                     new Object[]{throwable.getClass().getSimpleName(), throwable.getMessage()});
             return null;
@@ -504,6 +506,7 @@ public class JEDependency {
                     ? constructor.newInstance(plugin, anchorClass)
                     : constructor.newInstance();
         } catch (final Exception exception) {
+            plugin.getLogger().log(Level.WARNING, "Could not create RemappingDependencyManager", exception);
             return null;
         }
     }
@@ -521,6 +524,7 @@ public class JEDependency {
         } catch (final NoSuchMethodException exception) {
             return tryAlternativeInitialization(manager, additionalDependencies, anchorClass);
         } catch (final Exception exception) {
+            plugin.getLogger().log(Level.WARNING, "RemappingDependencyManager.initialize failed", exception);
             return false;
         }
     }
@@ -544,6 +548,7 @@ public class JEDependency {
             return true;
 
         } catch (final Exception exception) {
+            Logger.getLogger("JExDependency").log(Level.WARNING, "RemappingDependencyManager.loadAll failed", exception);
             return false;
         }
     }
@@ -557,18 +562,12 @@ public class JEDependency {
         }
     }
 
+    /**
+     * Tells whether a JExDependency Paper plugin loader ran in this JVM. The loader sets
+     * {@value #PAPER_LOADER_PROPERTY}; the Paper API classes alone do not mean a loader is used, so they are not
+     * checked. Whether the loader ran for this plugin is decided by its classpath record.
+     */
     private static boolean isPaperPluginLoaderActive() {
-        final String paperLoaderActive = System.getProperty(PAPER_LOADER_PROPERTY);
-        if ("true".equals(paperLoaderActive)) {
-            return true;
-        }
-
-        try {
-            Class.forName("io.papermc.paper.plugin.loader.PluginLoader");
-            Class.forName("io.papermc.paper.plugin.bootstrap.PluginBootstrap");
-            return "true".equals(paperLoaderActive);
-        } catch (final ClassNotFoundException exception) {
-            return false;
-        }
+        return "true".equals(System.getProperty(PAPER_LOADER_PROPERTY));
     }
 }

@@ -26,7 +26,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
+import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
@@ -67,7 +67,6 @@ public class RemappingDependencyManager {
 
     private static final long MINIMUM_VALID_JAR_SIZE = 1024L;
     /** Path separator used in JAR entries (always forward slash per JAR specification). */
-    private static final char JAR_PATH_SEPARATOR = '/';
 
     // ----------------- Dependencies -----------------
 
@@ -557,21 +556,19 @@ public class RemappingDependencyManager {
         }
     }
 
-
-
-
     private static void copyJarVerbatim(@NotNull final Path inputJar, @NotNull final Path outputJar) throws IOException {
         ensureParent(outputJar);
         try (JarFile in = new JarFile(inputJar.toFile());
              JarOutputStream out = new JarOutputStream(Files.newOutputStream(outputJar), copyOrCreateManifest(in))) {
 
             final AtomicInteger count = new AtomicInteger(0);
+            final Set<String> written = new HashSet<>();
             in.stream()
               .sorted(Comparator.comparing(JarEntry::getName))
               .forEach(entry -> {
                   try {
                       if (!entry.isDirectory()) {
-                          writeEntryIfAbsent(in, entry, out, new LinkedHashSet<>(), entry.getName());
+                          writeEntryIfAbsent(in, entry, out, written, entry.getName());
                           count.incrementAndGet();
                       }
                   } catch (IOException e) {
@@ -622,26 +619,6 @@ public class RemappingDependencyManager {
 
     private static boolean isRestrictedRoot(final String pkg) {
         return RelocationPlanner.isAlwaysExcluded(pkg);
-    }
-
-    private static String relocateResourcePath(final String name, final Map<String, String> relocations) {
-        String bestFrom = null;
-        String bestTo = null;
-        int bestLen = -1;
-
-        for (Map.Entry<String, String> e : relocations.entrySet()) {
-            final String fromPath = e.getKey().replace('.', JAR_PATH_SEPARATOR) + JAR_PATH_SEPARATOR;
-            if (name.startsWith(fromPath) && fromPath.length() > bestLen) {
-                bestFrom = fromPath;
-                bestTo = e.getValue().replace('.', JAR_PATH_SEPARATOR) + JAR_PATH_SEPARATOR;
-                bestLen = fromPath.length();
-            }
-        }
-
-        if (bestFrom != null) {
-            return bestTo + name.substring(bestFrom.length());
-        }
-        return name;
     }
 
     /**

@@ -50,7 +50,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.JExcellence:JExDependency:2.2.0")
+    implementation("com.github.JExcellence:JExDependency:3.0.0")
     compileOnly("com.github.ben-manes.caffeine:caffeine:3.2.2") // downloaded at runtime, not shaded
 }
 ```
@@ -69,7 +69,7 @@ dependencies {
 <dependency>
     <groupId>com.github.JExcellence</groupId>
     <artifactId>JExDependency</artifactId>
-    <version>2.2.0</version>
+    <version>3.0.0</version>
 </dependency>
 ```
 
