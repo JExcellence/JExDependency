@@ -111,9 +111,9 @@ public class DependencyManager {
      * Sets the failure policy that controls how the manager reacts when dependencies fail.
      *
      * <ul>
-     *     <li>{@link FailurePolicy#STRICT} — throw a {@link DependencyException} on any failure</li>
-     *     <li>{@link FailurePolicy#DEGRADED} — log failures and continue (default)</li>
-     *     <li>{@link FailurePolicy#CALLBACK} — invoke the registered {@link FailureCallback}</li>
+     *     <li>{@link FailurePolicy#STRICT}: throw a {@link DependencyException} on any failure</li>
+     *     <li>{@link FailurePolicy#DEGRADED}: log failures and continue (default)</li>
+     *     <li>{@link FailurePolicy#CALLBACK}: invoke the registered {@link FailureCallback}</li>
      * </ul>
      *
      * @param policy failure policy to apply
@@ -228,7 +228,7 @@ public class DependencyManager {
             @NotNull final List<DependencyCoordinate> roots,
             @NotNull final File librariesDirectory
     ) {
-        logger.info("Transitive resolution enabled — analysing POM files...");
+        logger.info("Transitive resolution enabled: analysing POM files...");
 
         final TransitiveDependencyResolver resolver = new TransitiveDependencyResolver(librariesDirectory, downloader.activeRepositories());
         final Set<DependencyCoordinate> transitives = resolver.resolve(roots);
@@ -322,7 +322,7 @@ public class DependencyManager {
                 .map(CompletableFuture::join)
                 .toList();
 
-        // Inject sequentially — classpath mutation is not thread-safe
+        // Inject sequentially: classpath mutation is not thread-safe
         for (final DownloadResult result : downloadResults) {
             if (result.success() && result.file() != null) {
                 if (injector.tryInject(classLoader, result.file())) {
@@ -383,11 +383,11 @@ public class DependencyManager {
                 if (failureCallback != null) {
                     failureCallback.onFailure(result);
                 } else {
-                    logger.warning("FailurePolicy.CALLBACK is set but no callback is registered — falling back to DEGRADED behaviour");
+                    logger.warning("FailurePolicy.CALLBACK is set but no callback is registered: falling back to DEGRADED behaviour");
                 }
             }
             default -> {
-                // DEGRADED — failures already logged in logProcessingSummary
+                // DEGRADED: failures already logged in logProcessingSummary
             }
         }
     }

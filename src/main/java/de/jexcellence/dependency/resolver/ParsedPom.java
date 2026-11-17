@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Immutable snapshot of the dependency-resolution–relevant content of a Maven POM file.
+ * Immutable snapshot of the dependency-resolution-relevant content of a Maven POM file.
  *
  * <p>After the {@link TransitiveDependencyResolver} walks the parent POM chain, it produces
  * a merged instance where {@link #properties()} and {@link #dependencyManagement()} contain
@@ -22,7 +22,7 @@ import java.util.Map;
  *                            {@code project.version} and {@code project.groupId}
  * @param dependencyManagement merged {@code <dependencyManagement>} entries used for version lookup
  * @param dependencies        direct {@code <dependencies>} entries declared in this POM
- *                            (not the parent chain — parents are merged into {@code dependencyManagement})
+ *                            (not the parent chain: parents are merged into {@code dependencyManagement})
  */
 public record ParsedPom(
         @NotNull String groupId,

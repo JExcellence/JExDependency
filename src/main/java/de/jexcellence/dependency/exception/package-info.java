@@ -11,7 +11,7 @@
  *     instances and are accompanied by warning logs from the YAML loader (for example,
  *     messages such as {@code "Failed to load dependencies from"} or
  *     {@code "Error parsing YAML dependencies"}). Callers should treat them as
- *     actionable misconfigurations—propagate the warning to server owners and abort the
+ *     actionable misconfigurations, propagate the warning to server owners and abort the
  *     initialization until the configuration is corrected rather than retrying. The
  *     loader emits detailed diagnostics via {@link java.util.logging.Logger} at
  *     {@link java.util.logging.Level#WARNING}, enabling operators to locate the faulty

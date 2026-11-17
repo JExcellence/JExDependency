@@ -34,7 +34,7 @@ import java.util.logging.Logger;
  * <ol>
  *   <li>For each root coordinate, download its POM from Maven repositories.</li>
  *   <li>Walk the {@code <parent>} chain (up to {@value #MAX_PARENT_DEPTH} levels) merging
- *       {@code <properties>} and {@code <dependencyManagement>} entries — child values take
+ *       {@code <properties>} and {@code <dependencyManagement>} entries: child values take
  *       precedence over parent values (standard Maven semantics).</li>
  *   <li>For each direct {@code <dependency>} that is not {@code test}, {@code provided},
  *       {@code system}, or {@code optional}, resolve its version from the merged
@@ -84,7 +84,7 @@ public class TransitiveDependencyResolver {
 
     /**
      * Creates a resolver that uses the shared server-level POM cache. The {@code librariesDirectory}
-     * parameter is retained for backward compatibility but is no longer used for POM storage — all
+     * parameter is retained for backward compatibility but is no longer used for POM storage: all
      * POMs are stored in the shared cache under GAV-structured paths to avoid naming collisions.
      *
      * @param librariesDirectory the plugin's libraries cache directory (retained for compatibility)
@@ -112,7 +112,7 @@ public class TransitiveDependencyResolver {
      * Resolves the full transitive dependency closure for all given root coordinates.
      *
      * <p>The returned set is ordered breadth-first.  Root coordinates are NOT included in the
-     * result — callers are expected to download those separately through the normal flow.
+     * result: callers are expected to download those separately through the normal flow.
      *
      * @param roots root coordinates to resolve from
      * @return ordered set of transitive coordinates to additionally download and inject;
@@ -152,7 +152,7 @@ public class TransitiveDependencyResolver {
 
         final ParsedPom pom = resolvedPomWithParentChain(coordinate);
         if (pom == null) {
-            LOGGER.log(Level.WARNING, "Could not resolve POM for: {0} \u2014 skipping its transitives", coordinate.toGavString());
+            LOGGER.log(Level.WARNING, "Could not resolve POM for: {0}: skipping its transitives", coordinate.toGavString());
             return;
         }
 
@@ -230,7 +230,7 @@ public class TransitiveDependencyResolver {
         }
         if (resolvedVersion == null) {
             final String finalKey = depKey;
-            LOGGER.log(Level.FINE, () -> "Version unresolvable for " + finalKey + " in " + coordinate.toGavString() + " \u2014 skipping");
+            LOGGER.log(Level.FINE, () -> "Version unresolvable for " + finalKey + " in " + coordinate.toGavString() + ": skipping");
             return null;
         }
 
@@ -282,7 +282,7 @@ public class TransitiveDependencyResolver {
             final ParsedPom parentPom = downloadAndParsePom(parentCoord);
             if (parentPom == null) break;
 
-            // Parent properties only fill gaps — they don't override child
+            // Parent properties only fill gaps: they don't override child
             for (final Map.Entry<String, String> entry : parentPom.properties().entrySet()) {
                 mergedProps.putIfAbsent(entry.getKey(), entry.getValue());
             }
@@ -419,7 +419,7 @@ public class TransitiveDependencyResolver {
                 return is.readAllBytes();
             }
         } catch (final Exception exception) {
-            return null; // 404, timeout, etc. — caller tries next repo
+            return null; // 404, timeout, etc.: caller tries next repo
         }
     }
 
@@ -511,7 +511,7 @@ public class TransitiveDependencyResolver {
         final int end = value.indexOf('}', start + 2);
 
         if (end == -1) {
-            // Unclosed placeholder — leave as-is
+            // Unclosed placeholder: leave as-is
             sb.append(value, start, value.length());
             return value.length();
         }

@@ -31,7 +31,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.jar.JarFile;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -49,7 +48,6 @@ public class DependencyDownloader {
     private static final int READ_TIMEOUT_MS = 30_000;
     private static final int BUFFER_SIZE = 65536;
     private static final int MAX_REDIRECTS = 5;
-    private static final long MIN_JAR_SIZE = 1024L;
 
     private static final int DEFAULT_MAX_RETRIES = 3;
     private static final long INITIAL_BACKOFF_MS = 1_000L;
@@ -77,7 +75,7 @@ public class DependencyDownloader {
     /** Repositories the connectivity probe could not reach; downloads skip them. */
     private final Set<RepositoryType> unreachableRepositories = ConcurrentHashMap.newKeySet();
 
-    private int maxRetries;
+    private volatile int maxRetries;
 
     /**
      * Creates a new downloader backed by a virtual-thread executor that can be used for asynchronous operations.
@@ -327,14 +325,17 @@ public class DependencyDownloader {
                 return false;
             }
 
-            // result == DOWNLOAD_RETRYABLE — back off and try again
+            // result == DOWNLOAD_RETRYABLE: back off and try again, unless the thread is being stopped
             if (attempt < maxRetries) {
                 final long backoffMs = calculateBackoff(attempt);
                 final int currentAttempt = attempt + 1;
                 logger.log(Level.FINE, () -> String.format(
                         "Retrying %s in %dms (attempt %d/%d)",
                         downloadUrl, backoffMs, currentAttempt, maxRetries));
-                sleep(backoffMs);
+                if (!sleep(backoffMs)) {
+                    logger.log(Level.FINE, () -> "Interrupted while waiting to retry " + downloadUrl);
+                    return false;
+                }
             }
         }
 
@@ -450,7 +451,7 @@ public class DependencyDownloader {
         logger.log(Level.FINE, () -> "Downloaded: " + targetFile.getName() + " (" + bytesWritten + " bytes)");
 
         if (!verifyChecksum(url, targetFile)) {
-            logger.log(Level.WARNING, "Checksum mismatch for {0} — deleting corrupt artifact", targetFile.getName());
+            logger.log(Level.WARNING, "Checksum mismatch for {0}; deleting the corrupt artifact", targetFile.getName());
             safeDelete(targetFile);
             return false;
         }
@@ -524,15 +525,7 @@ public class DependencyDownloader {
     }
 
     private boolean isValidJarFile(@NotNull final File file) {
-        if (!file.isFile() || file.length() < MIN_JAR_SIZE) {
-            return false;
-        }
-
-        try (final JarFile jarFile = new JarFile(file, true)) {
-            return jarFile.entries().hasMoreElements();
-        } catch (final Exception exception) {
-            return false;
-        }
+        return SharedCacheManager.isUsableJar(file.toPath());
     }
 
     private void safeDelete(@NotNull final File file) {
@@ -574,7 +567,7 @@ public class DependencyDownloader {
             return performChecksumVerification(artifactUrl, jarFile);
         } catch (final IOException exception) {
             logger.log(Level.FINEST, exception, () -> "SHA-1 check skipped for " + jarFile.getName());
-            return true; // Cannot verify — accept the artifact
+            return true; // Cannot verify: accept the artifact
         }
     }
 
@@ -594,7 +587,7 @@ public class DependencyDownloader {
         conn.setReadTimeout(5_000);
 
         if (conn.getResponseCode() != 200) {
-            return true; // .sha1 not published by this repository — accept the artifact
+            return true; // .sha1 not published by this repository: accept the artifact
         }
 
         final String expected;
@@ -604,7 +597,7 @@ public class DependencyDownloader {
         }
 
         if (expected.isEmpty() || expected.length() != 40) {
-            return true; // Not a valid SHA-1 hex string — cannot verify, accept
+            return true; // Not a valid SHA-1 hex string: cannot verify, accept
         }
 
         final String actual;
@@ -612,7 +605,7 @@ public class DependencyDownloader {
             actual = sha1Hex(jarFile);
         } catch (final DependencyDownloadException exception) {
             logger.log(Level.FINEST, exception, () -> "SHA-1 computation failed for " + jarFile.getName());
-            return true; // Cannot compute hash \u2014 accept the artifact
+            return true; // Cannot compute hash: accept the artifact
         }
 
         if (expected.equalsIgnoreCase(actual)) {
@@ -620,7 +613,7 @@ public class DependencyDownloader {
             return true;
         }
 
-        logger.log(Level.WARNING, "Checksum mismatch for {0} \u2014 expected {1}, got {2}",
+        logger.log(Level.WARNING, "Checksum mismatch for {0}: expected {1}, got {2}",
                 new Object[]{jarFile.getName(), expected, actual});
         return false;
     }
@@ -630,11 +623,18 @@ public class DependencyDownloader {
         return Math.min(backoff, MAX_BACKOFF_MS);
     }
 
-    private static void sleep(final long millis) {
+    /**
+     * Sleeps for the given time.
+     *
+     * @return {@code false} when the thread was interrupted; the interrupt flag is restored
+     */
+    private static boolean sleep(final long millis) {
         try {
             Thread.sleep(millis);
+            return true;
         } catch (final InterruptedException exception) {
             Thread.currentThread().interrupt();
+            return false;
         }
     }
 

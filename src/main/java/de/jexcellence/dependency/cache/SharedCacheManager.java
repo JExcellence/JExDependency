@@ -19,6 +19,7 @@ import java.nio.file.StandardOpenOption;
 import java.time.Duration;
 import java.util.Properties;
 import java.util.function.BooleanSupplier;
+import java.util.jar.JarFile;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -366,12 +367,12 @@ public final class SharedCacheManager {
             @NotNull final File legacyDirectory
     ) {
         final File legacyFile = new File(legacyDirectory, coordinate.toFileName());
-        if (!legacyFile.isFile() || legacyFile.length() <= 0) {
+        if (!isUsableJar(legacyFile.toPath())) {
             return false;
         }
 
         final Path targetPath = resolveJarPath(coordinate);
-        if (isValidFile(targetPath)) {
+        if (isUsableJar(targetPath)) {
             return true;
         }
 
@@ -388,7 +389,25 @@ public final class SharedCacheManager {
             return true;
         } catch (final IOException exception) {
             LOGGER.log(Level.FINE, exception, () -> "Failed to migrate from legacy cache: " + coordinate.toGavString());
-            return isValidFile(targetPath);
+            return isUsableJar(targetPath);
+        }
+    }
+
+    /**
+     * Tells whether a file is a readable JAR with at least one entry. Truncated downloads, HTML error pages saved
+     * under a {@code .jar} name and empty files all fail this check.
+     *
+     * @param path file to check
+     * @return {@code true} when the file opens as a non-empty JAR
+     */
+    public static boolean isUsableJar(@NotNull final Path path) {
+        if (!Files.isRegularFile(path) || path.toFile().length() == 0) {
+            return false;
+        }
+        try (JarFile jarFile = new JarFile(path.toFile(), true)) {
+            return jarFile.entries().hasMoreElements();
+        } catch (final IOException | SecurityException exception) {
+            return false;
         }
     }
 

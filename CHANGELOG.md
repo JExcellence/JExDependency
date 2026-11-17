@@ -19,6 +19,16 @@
 - `RepositoryType.MAVEN_CENTRAL_MIRROR` and `CentralMirror`.
 - `DependencyDownloader.activeRepositories()` and a `TransitiveDependencyResolver` constructor that takes the
   repositories to fetch POM files from.
+- `SharedCacheManager.isUsableJar(Path)`.
+
+### Fixed
+- A download interrupted while waiting to retry (for example during server shutdown) stops instead of running the
+  remaining attempts without waiting.
+- Jars from the old per-plugin folder are moved into the shared cache only when they open as a jar. A broken file
+  there used to be accepted, and a broken file already in the shared cache could be reported as a successful
+  migration.
+- Valid jars smaller than 1 KB are no longer rejected.
+- `DependencyDownloader.setMaxRetries` is safe to call while downloads run on other threads.
 
 ## 2.2.0 (2026-11-17)
 
