@@ -2,54 +2,47 @@
 
 # JExDependency
 
-**Ship small Spigot, Paper and Folia plugins. Download the libraries at startup instead of shading them.**
+**Runtime dependency loading for Minecraft plugins on Spigot, Paper and Folia.**
+Stop shading Hibernate, Jackson or JDBC drivers into your plugin jar. Declare them, and the server downloads,
+verifies, optionally relocates and loads them at startup.
 
 [![Build](https://github.com/JExcellence/JExDependency/actions/workflows/ci.yml/badge.svg)](https://github.com/JExcellence/JExDependency/actions/workflows/ci.yml)
 [![JitPack](https://jitpack.io/v/JExcellence/JExDependency.svg)](https://jitpack.io/#JExcellence/JExDependency)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Java 21+](https://img.shields.io/badge/Java-21%2B-orange.svg)](https://adoptium.net/)
 
-[Quick start](#quick-start) · [Paper plugins](#paper-plugins-paper-pluginyml) · [Shading](#shading-jexdependency-into-your-plugin) · [Configuration](#configuration) · [Cache](#where-files-go) · [Security](#security-model) · [Troubleshooting](#troubleshooting)
+[Quick start](#quick-start) · [How it works](#how-it-works) · [Paper plugins](#paper-plugins) · [Shading guide](#shading-jexdependency-into-your-plugin) · [Configuration](#configuration) · [Troubleshooting](#troubleshooting) · [Roadmap](ROADMAP.md)
 
 </div>
 
 ---
 
-## What it does
+## Is this for you?
 
-Hibernate, Jackson, Caffeine and JDBC drivers turn a 200 KB plugin into a 20 MB jar, and two plugins that shade
-different versions of the same library break each other. JExDependency reads a list of Maven coordinates from your
-plugin jar, downloads the jars once per server, checks them, optionally relocates their packages, and puts them on
-your plugin's classpath before `onEnable()`.
+You probably want JExDependency if one of these sounds familiar:
 
-- **Spigot and Paper.** On Paper it hooks into the plugin loader (`paper-plugin.yml`); on Spigot and `plugin.yml`
-  plugins it injects into the plugin class loader.
-- **Shared download cache.** Every plugin on the server that uses JExDependency shares one cache, so a library is
-  downloaded once. Downloads are locked per artifact, so plugins starting in parallel never download the same file twice.
-- **Transitive resolution.** Dependencies declared in each artifact's POM are resolved too.
-- **Optional relocation.** ASM-based package relocation at runtime, the same result as Shadow's `relocate`, without
-  shading anything into your jar.
-- **Retries and checksums.** Transient HTTP errors are retried with backoff; a confirmed SHA-1 mismatch rejects the jar.
-- **Failure policy.** Choose whether a missing library stops the plugin, is skipped, or is handed to your own callback.
+- Your plugin jar is 15 MB because it shades a database driver, an ORM or a JSON library.
+- Another plugin updated Guava, Gson or Caffeine and yours now fails with `NoSuchMethodError` or
+  `NoClassDefFoundError`.
+- You use Spigot's `libraries:` block but need a library that is not on Maven Central, or you need to relocate it.
+- You maintain several plugins on one network and every one of them downloads and stores the same libraries.
 
-## Compatibility
+What you get:
 
-| | Status |
-|---|---|
-| Java | 21 or newer (the jar is compiled for Java 21) |
-| Paper | Used in production on Paper 26.x |
-| Spigot, Folia | Supported by design; automated real-server tests are planned and not in place yet |
-| Libraries you load | Must run on the server's Java version. A Java 25 library will not load on a Java 21 server. |
+- **Small plugin jars.** Only JExDependency (about 120 KB) and ASM are inside your jar; everything else is
+  downloaded once per server.
+- **One shared cache per server.** Plugins using JExDependency share downloads. Parallel startups never download the
+  same file twice, and a partially written file is never used.
+- **Transitive resolution.** Dependencies declared in each library's POM are resolved for you.
+- **Optional relocation.** Rename library packages at runtime, the same result as Shadow's `relocate`, so your
+  copy of a library cannot clash with another plugin's copy.
+- **Paper plugin loader support.** On Paper, libraries can be on the classpath before your plugin class loads.
+- **Failure policy.** Decide whether a missing library stops the plugin, is skipped, or goes to your callback.
 
 ## Quick start
 
-### 1. Add the dependency
-
-Releases are built by [JitPack](https://jitpack.io/#JExcellence/JExDependency). Replace `TAG` with a
-[release tag](https://github.com/JExcellence/JExDependency/releases).
-
-<details open>
-<summary><b>Gradle (Kotlin DSL)</b></summary>
+**1. Add the library** (built by [JitPack](https://jitpack.io/#JExcellence/JExDependency); use the latest
+[release tag](https://github.com/JExcellence/JExDependency/releases) as `TAG`):
 
 ```kotlin
 repositories {
@@ -58,13 +51,12 @@ repositories {
 
 dependencies {
     implementation("com.github.JExcellence:JExDependency:TAG")
+    compileOnly("com.github.ben-manes.caffeine:caffeine:3.2.2") // downloaded at runtime, not shaded
 }
 ```
 
-</details>
-
 <details>
-<summary><b>Maven</b></summary>
+<summary>Maven</summary>
 
 ```xml
 <repositories>
@@ -83,12 +75,7 @@ dependencies {
 
 </details>
 
-JExDependency itself (plus ASM) must be inside your plugin jar, so shade it. See
-[Shading JExDependency into your plugin](#shading-jexdependency-into-your-plugin).
-
-### 2. Declare runtime libraries
-
-Create `src/main/resources/dependency/dependencies.yml`:
+**2. List your runtime libraries** in `src/main/resources/dependency/dependencies.yml`:
 
 ```yaml
 dependencies:
@@ -97,11 +84,7 @@ dependencies:
   - "com.mysql:mysql-connector-j:9.2.0"
 ```
 
-Libraries that only one platform needs go into `dependency/paper/dependencies.yml` or
-`dependency/spigot/dependencies.yml`; they are merged with the main list. Keep these libraries as `compileOnly`
-in your build so they are not shaded.
-
-### 3. Start it in `onLoad()`
+**3. Load them in `onLoad()`:**
 
 ```java
 public final class ExamplePlugin extends JavaPlugin {
@@ -112,19 +95,48 @@ public final class ExamplePlugin extends JavaPlugin {
 }
 ```
 
-The libraries are on your plugin's classpath when `onEnable()` runs.
+The libraries are on your plugin's classpath when `onEnable()` runs. Shade and relocate JExDependency itself as
+shown in the [shading guide](#shading-jexdependency-into-your-plugin).
 
-| Method | Blocks | Relocates | Use it when |
-|---|:---:|:---:|---|
-| `JEDependency.initialize(plugin, anchor)` | yes | no | Default. |
-| `JEDependency.initializeWithRemapping(plugin, anchor)` | yes | yes | Your libraries may clash with other plugins' copies. |
-| `JEDependency.initializeAsync(plugin, anchor)` | no | no | You want startup to continue; wait for the returned `CompletableFuture<Void>` before using the libraries. |
+## How it works
+
+```mermaid
+flowchart TD
+    A[Server starts your plugin] --> B{paper-plugin.yml with<br/>JExDependency loader?}
+    B -- yes --> C[Paper loader: read dependencies.yml,<br/>download, relocate, add to classpath,<br/>record the list]
+    B -- no --> D[onLoad: JEDependency.initialize]
+    C --> D
+    D --> E[Resolve transitive dependencies from POMs]
+    E --> F{In the shared cache?}
+    F -- yes --> H
+    F -- no --> G[Download with per-artifact lock,<br/>retry with backoff, verify SHA-1]
+    G --> H[Optional relocation into<br/>libraries/remapped/set]
+    H --> I[Inject into the plugin class loader]
+    I --> J[onEnable: libraries available]
+```
+
+| Entry point | Blocks `onLoad` | Use it when |
+|---|:---:|---|
+| `JEDependency.initialize(plugin, anchor)` | yes | Default. |
+| `JEDependency.initializeWithRemapping(plugin, anchor)` | yes | You want relocated libraries (see [relocation](#relocation)). |
+| `JEDependency.initializeAsync(plugin, anchor)` | no | Startup should continue; wait for the returned `CompletableFuture<Void>` before touching the libraries. |
 
 Each method also accepts a `String[]` of extra coordinates (`group:artifact:version[:classifier]`).
+Libraries only one platform needs go into `dependency/paper/dependencies.yml` or
+`dependency/spigot/dependencies.yml`; they are merged with the main list.
 
-## Paper plugins (`paper-plugin.yml`)
+## Compatibility
 
-Paper plugins can resolve libraries before the plugin class is even loaded. Register the loader:
+| | Status |
+|---|---|
+| Java | 21 or newer. CI builds and tests on Java 21 and 25. |
+| Paper | Used in production on Paper 26.x. |
+| Spigot, Folia | Supported by design. Automated tests on real servers are [planned](ROADMAP.md). |
+| Libraries you load | Must run on the server's Java version: a Java 25 library will not load on a Java 21 server. |
+
+## Paper plugins
+
+With a `paper-plugin.yml`, Paper runs the JExDependency loader before your plugin class is loaded:
 
 ```yaml
 name: ExamplePlugin
@@ -134,9 +146,23 @@ api-version: "1.21"
 loader: de.jexcellence.dependency.loader.PaperPluginLoader
 ```
 
-If you relocate JExDependency (recommended, see below), use the relocated class name, for example
-`com.example.libs.jexdependency.loader.PaperPluginLoader`. Still call `JEDependency.initialize(...)` in `onLoad()`;
-it detects the work the loader already did and only fills in what is missing.
+If you relocate JExDependency, use the relocated class name, for example
+`com.example.libs.jexdependency.loader.PaperPluginLoader`. Still call `JEDependency.initialize(...)` in `onLoad()`:
+it injects exactly the jars the loader recorded and resolves anything the loader did not (the loader currently
+loads declared libraries only, not their transitive dependencies; see the [roadmap](ROADMAP.md)).
+
+## Relocation
+
+Relocation renames a library's packages (`com.google.gson` becomes `de.jexcellence.remapped.com.google.gson`) so
+your copy cannot collide with another plugin's copy.
+
+- **Paper loader:** relocation is on by default (`jedependency.remap=auto`). Packages are detected from your
+  libraries automatically and placed under `jedependency.relocations.prefix` (default `de.jexcellence.remapped`).
+- **Spigot and `plugin.yml` plugins:** `initializeWithRemapping` relocates only what the server lists in
+  `-Djedependency.relocations`. Automatic detection on Spigot is [roadmap item 3](ROADMAP.md).
+
+Relocated copies are stored per relocation set in `plugins/<YourPlugin>/libraries/remapped/<set>/`, so changing
+your libraries or the relocation settings always produces fresh copies.
 
 ## Shading JExDependency into your plugin
 
@@ -148,48 +174,31 @@ plugins {
     id("com.gradleup.shadow") version "9.4.0"
 }
 
-dependencies {
-    implementation("com.github.JExcellence:JExDependency:TAG")
-    compileOnly("com.github.ben-manes.caffeine:caffeine:3.2.2") // loaded at runtime, not shaded
-}
-
 tasks.shadowJar {
     relocate("de.jexcellence.dependency", "com.example.libs.jexdependency")
     relocate("org.objectweb.asm", "com.example.libs.asm")
 }
 ```
 
-### Replacing your existing relocate block
-
-If your build shades libraries and relocates them:
-
-```kotlin
-tasks.shadowJar {
-    relocate("com.github.benmanes", "com.example.libs.caffeine")
-    relocate("com.cryptomorin.xseries", "com.example.libs.xseries")
-}
-```
-
-move those libraries to `compileOnly`, list them in `dependency/dependencies.yml`, and start with
-`JEDependency.initializeWithRemapping(this, ExamplePlugin.class)`. The relocation then happens on the server and
-your jar stays small. The target package is controlled by the properties below.
+**Moving away from shading libraries:** change each shaded library from `implementation` to `compileOnly`, list it
+in `dependency/dependencies.yml`, delete its `relocate(...)` line, and keep only the two relocations above.
 
 ## Configuration
 
-Server owners can change behaviour with JVM system properties, without rebuilding the plugin.
+Server owners can change behaviour with JVM system properties, without rebuilding any plugin.
 
 | Property | Default | Effect |
 |---|---|---|
-| `jedependency.remap` | `false` | `true`, `1`, `yes` or `on` turns on relocation for every plugin using JExDependency. |
-| `jedependency.relocations` | none | Explicit relocations, comma separated: `com.google.gson=>my.libs.gson,org.foo=>my.libs.foo`. |
-| `jedependency.relocations.prefix` | none | Package prefix for automatic relocation. |
+| `jedependency.remap` | `auto` in the Paper loader, otherwise off | `true`, `1`, `yes` or `on` turns relocation on; `false` turns it off. |
+| `jedependency.relocations` | none | Explicit relocations: `com.google.gson=>my.libs.gson,org.foo=>my.libs.foo`. |
+| `jedependency.relocations.prefix` | `de.jexcellence.remapped` | Package prefix for automatic relocation. |
 | `jedependency.relocations.excludes` | none | Comma-separated packages that are never relocated. |
-| `jedependency.cache.dir` | `<server>/.jexdependency/cache` | Location of the shared download cache (useful for Docker volumes). |
+| `jedependency.cache.dir` | `<server>/.jexdependency/cache` | Location of the shared cache, for example a Docker volume. |
 | `jedependency.path.default` | `/dependency/dependencies.yml` | Resource path of the main dependency list. |
 | `jedependency.path.paper` | `/dependency/paper/dependencies.yml` | Resource path of the Paper-only list. |
 | `jedependency.path.spigot` | `/dependency/spigot/dependencies.yml` | Resource path of the Spigot-only list. |
 
-Example: `java -Djedependency.remap=true -jar paper.jar`
+Example: `java -Djedependency.cache.dir=/data/jexdependency -jar paper.jar`
 
 ### Failure policy
 
@@ -199,7 +208,7 @@ new DependencyManager(this, ExamplePlugin.class)
         .initialize(null);
 ```
 
-| Policy | Behaviour when a library cannot be loaded |
+| Policy | When a library cannot be loaded |
 |---|---|
 | `STRICT` | Startup fails with an exception. |
 | `DEGRADED` | The library is skipped and logged; the plugin continues. |
@@ -208,78 +217,73 @@ new DependencyManager(this, ExamplePlugin.class)
 ## Where files go
 
 ```
-<server>/.jexdependency/cache/          shared by all plugins
-  cache-format.properties               cache layout version
-  jars/<group path>/<artifact>/<version>/<artifact>-<version>.jar
-  poms/...                              POMs used for transitive resolution
-  locks/                                one empty lock file per artifact
+<server>/.jexdependency/cache/                  shared by all plugins
+  cache-format.properties                       cache layout version
+  jars/<group path>/<artifact>/<version>/...    downloaded libraries
+  poms/...                                      POMs for transitive resolution
+  locks/                                        one empty lock file per artifact
 plugins/<YourPlugin>/libraries/remapped/<set>/  relocated copies, one folder per relocation set
-plugins/<YourPlugin>/libraries/paper-loader-classpath.txt  jars the Paper loader added (Paper only)
+plugins/<YourPlugin>/libraries/paper-loader-classpath.txt   jars the Paper loader added
 ```
 
-Deleting the cache is safe while the server is stopped; everything is downloaded again on the next start. The same
-goes for `libraries/remapped/`: folders of relocation sets that are no longer used, and jars left directly in it by
-versions before 2.2.0, are never loaded and can be removed. Jars
-found in the old per-plugin `plugins/<YourPlugin>/libraries/` folder are copied into the shared cache
-automatically; the old folder can be deleted afterwards.
+While the server is stopped you can delete the whole cache (it is downloaded again) and any folder in
+`libraries/remapped/` (relocation sets that are no longer used are never loaded). Jars in the old per-plugin
+`plugins/<YourPlugin>/libraries/` folder are copied into the shared cache automatically.
 
-If a newer JExDependency version ever changes the cache layout, older versions notice it through
-`cache-format.properties` and keep their files in a separate `format-<n>` folder instead of mixing layouts.
+## Network and security
 
-## Security model
+JExDependency downloads code that runs with your plugin's rights. Here is exactly what it does:
 
-JExDependency downloads code and runs it inside your server with the same rights as your plugin. Know what that means:
+- **When:** only at startup, only for jars and POMs that are not cached yet.
+- **Where from:** Maven Central, then NeetGames Nexus, JitPack, Auxilor, Tcoded, PaperMC, the SpigotMC snapshot
+  repository and the Gradle plugin portal, all over HTTPS. The first repository that has the artifact wins. Your own
+  repositories cannot be declared yet; that, making community repositories opt-in and downloading Central
+  artifacts from a mirror are [roadmap items 1 and 2](ROADMAP.md).
+- **Verification:** the published `.sha1` is compared with each download and a mismatch rejects the jar. A
+  repository without checksums is trusted as is.
+- **Versions:** pin exact versions; version ranges are not resolved.
 
-- Jars come from repositories you add at runtime (tried first) and then, in this order, from Maven Central,
-  NeetGames Nexus, JitPack, Auxilor, Tcoded, PaperMC, the SpigotMC snapshot repository and the Gradle plugin
-  portal. The first repository that has the artifact wins, so an artifact that is not on Maven Central can be served
-  by any of the community repositories. All of them are fetched over HTTPS.
-- After a download, the published `.sha1` file is compared with the jar. A mismatch rejects the jar. If a repository
-  publishes no checksum, the jar is accepted, so only use repositories you trust.
-- Pin exact versions in `dependencies.yml`. Version ranges are not supported, which keeps what you tested and what
-  servers download identical.
-- Network connections: only the repository hosts above, only at startup, only for jars and POMs missing from the
-  cache.
-
-Report vulnerabilities as described in [SECURITY.md](SECURITY.md).
+Report vulnerabilities privately as described in [SECURITY.md](SECURITY.md).
 
 ## Troubleshooting
 
 | Symptom | Cause and fix |
 |---|---|
-| `UnsupportedClassVersionError` | A library needs a newer Java than the server runs. Use an older library version or update Java. |
-| `NoClassDefFoundError` for a library class | The library is missing from `dependencies.yml`, or you call it before initialization finished (async mode). |
+| `UnsupportedClassVersionError` | A library needs a newer Java than the server runs. Use an older library version or a newer Java. |
+| `NoClassDefFoundError` for a library class | The library is missing from `dependencies.yml`, or the code ran before async initialization finished. |
+| `NoSuchMethodError` in a library | Another plugin's copy of the same library was loaded first. Relocate (see [Relocation](#relocation)). |
 | `InaccessibleObjectException` mentioning `java.net` | Class loader injection was blocked. Start the server with `--add-opens java.base/java.net=ALL-UNNAMED`. |
-| "Network unreachable and no cached artifact available" | The server has no internet access. Copy the cache folder from a machine that has, or set `jedependency.cache.dir` to a pre-filled folder. |
-| Two plugins load different versions of JExDependency | At least one of them does not relocate it. See [Shading](#shading-jexdependency-into-your-plugin). |
+| "Network unreachable and no cached artifact available" | No internet access. Copy the cache from a machine that has it, or point `jedependency.cache.dir` to a filled cache. |
+| Two plugins load different JExDependency versions | At least one plugin does not relocate JExDependency. See the [shading guide](#shading-jexdependency-into-your-plugin). |
 
-Turn on `FINE` logging for `JExDependency` to see each download, checksum result and relocation.
+Turn on `FINE` logging for the `JExDependency` logger to see every download, checksum check and relocation.
 
-## How it compares
+## Alternatives
 
 | | Spigot `libraries:` | Paper `PluginLoader` | Shading | JExDependency |
 |---|:---:|:---:|:---:|:---:|
-| Works on Spigot | yes (1.16.5+) | no | yes | yes |
+| Works on Spigot | 1.16.5+ | no | yes | yes |
 | Works on Paper | yes | yes | yes | yes |
-| Repositories other than Maven Central | no | yes | n/a | yes |
+| Repositories besides Maven Central | no | yes | n/a | built-in list only (custom: planned) |
 | Package relocation | no | no | yes | yes |
 | Small plugin jar | yes | yes | no | yes |
-| Shared cache across plugins | yes | yes | n/a | yes |
 
-## Building from source
+[libby](https://github.com/AlessioDP/libby) solves a similar problem with a code-first API across more platforms;
+compare both if you also target proxies.
+
+## Roadmap and contributing
+
+Planned work, from downloading through a Maven Central mirror to build-time lockfiles and parallel resolution, is in
+[ROADMAP.md](ROADMAP.md). Items marked **help wanted** are good first contributions; read
+[CONTRIBUTING.md](CONTRIBUTING.md) first.
 
 ```bash
-./gradlew build
+./gradlew build   # JDK 21+; compiles, runs the tests and builds the Javadoc
 ```
 
-Requires JDK 21 or newer. Javadoc for each release is published at
-<https://jexcellence.github.io/JExDependency/>.
-
-## Contributing and support
-
-Read [CONTRIBUTING.md](CONTRIBUTING.md). Bugs and feature requests go to
-[GitHub Issues](https://github.com/JExcellence/JExDependency/issues). Questions: email
-[justin.eiletz@jexcellence.de](mailto:justin.eiletz@jexcellence.de) or Discord [`jexcellence`](https://discord.com/users/jexcellence).
+Questions and ideas: [GitHub Issues](https://github.com/JExcellence/JExDependency/issues), email
+[justin.eiletz@jexcellence.de](mailto:justin.eiletz@jexcellence.de) or Discord
+[`jexcellence`](https://discord.com/users/jexcellence).
 
 ## License
 
