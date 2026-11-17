@@ -3,8 +3,10 @@ package de.jexcellence.dependency.repository;
 import de.jexcellence.dependency.model.DependencyCoordinate;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Maven repositories known to JExDependency. Downloads try the repositories returned by {@link #searchOrder()}
@@ -12,7 +14,13 @@ import java.util.List;
  */
 public enum RepositoryType {
 
-    /** Maven Central, on the same host that the connectivity probe checks. */
+    /**
+     * Mirror of Maven Central, tried first so end-user downloads do not hit Central itself. Configured through
+     * {@link CentralMirror}; defaults to {@value CentralMirror#DEFAULT_MIRROR}. The URL is read once, when this
+     * enum is first used, so set the system property before JExDependency starts.
+     */
+    MAVEN_CENTRAL_MIRROR(CentralMirror.configured(), false),
+    /** Maven Central itself, used only for artifacts the mirror cannot serve. */
     MAVEN_CENTRAL("https://repo1.maven.org/maven2", false),
     /**
      * Same host as {@link #MAVEN_CENTRAL}.
@@ -64,9 +72,7 @@ public enum RepositoryType {
     /** Gradle plugin portal repository. */
     GRADLE_PLUGINS("https://plugins.gradle.org/m2/", false);
 
-    private static final List<RepositoryType> SEARCH_ORDER = Arrays.stream(values())
-            .filter(repository -> !repository.retired)
-            .toList();
+    private static final List<RepositoryType> SEARCH_ORDER = buildSearchOrder();
 
     private final String baseUrl;
     private final boolean retired;
@@ -83,6 +89,21 @@ public enum RepositoryType {
      */
     public static @NotNull List<RepositoryType> searchOrder() {
         return SEARCH_ORDER;
+    }
+
+    /**
+     * Active repositories in declaration order, each host contacted once. When the mirror is configured to be
+     * Central itself, the separate Central entry is skipped.
+     */
+    private static @NotNull List<RepositoryType> buildSearchOrder() {
+        final Set<String> seenUrls = new HashSet<>();
+        final List<RepositoryType> order = new ArrayList<>();
+        for (final RepositoryType repository : values()) {
+            if (!repository.retired && seenUrls.add(repository.baseUrl)) {
+                order.add(repository);
+            }
+        }
+        return List.copyOf(order);
     }
 
     /**

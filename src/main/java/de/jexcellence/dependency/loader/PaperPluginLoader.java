@@ -308,6 +308,7 @@ public class PaperPluginLoader implements PluginLoader {
         }
 
         logger.log(Level.INFO, "Resolving {0} dependencies...", coords.size());
+        dependencyDownloader.probeConnectivity();
 
         // Downloads land in the shared cache; librariesDirectory is the per-plugin folder of older versions,
         // which the downloader checks first so existing jars are copied over instead of downloaded again.

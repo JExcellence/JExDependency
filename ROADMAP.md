@@ -10,7 +10,7 @@ Status: `planned`, `in progress`, `done`. Last reviewed 2026-11-17.
 
 | # | Item | Why | Done when |
 |---|---|---|---|
-| 1 | **Download Maven Central artifacts from a mirror by default** | Maven Central's terms do not allow using it as a CDN for end users, and Central rate-limits whole networks that download too much. Paper switched its own loader to Google's Central mirror in 2025 for this reason. | Default order is `maven-central.storage-download.googleapis.com`, then Central. `PAPER_DEFAULT_CENTRAL_REPOSITORY` and a `jedependency.repository.central` property override it. |
+| 1 | **Download Maven Central artifacts from a mirror by default** (done, unreleased) | Maven Central's terms do not allow using it as a CDN for end users, and Central rate-limits whole networks that download too much. Paper switched its own loader to Google's Central mirror in 2025 for this reason. | Default order is `maven-central.storage-download.googleapis.com`, then Central. `PAPER_DEFAULT_CENTRAL_REPOSITORY` and a `jedependency.repository.central` property override it. |
 | 2 | **Community repositories become opt-in** | Today an artifact missing from Central is fetched from the first of seven community repositories that has it. That is slow (a chain of 404s) and lets a lookalike artifact in any of them win. | `dependencies.yml` accepts a `repositories:` list and an optional `repository:` per dependency; only Central (mirror) is built in. The old behaviour stays behind a flag for one major version. |
 | 3 | **Automatic relocation on Spigot** | Only the Paper loader detects packages to relocate. On Spigot, `initializeWithRemapping` relocates nothing unless the server sets `-Djedependency.relocations`. | Both paths share one relocation planner; the same YAML produces the same relocated jars on Spigot and Paper. |
 | 4 | **Transitive dependencies in the Paper loader** | The Paper loader loads only the declared jars; transitive ones are resolved later by the plugin side, so Paper plugins resolve twice and classes needed during bootstrap can be missing. | The loader resolves the full tree once; the plugin side reuses the recorded result instead of resolving again. |
@@ -60,5 +60,6 @@ These keep the library dependable as it grows. They run in CI on every pull requ
 
 ## Done
 
+- Unreleased: Maven Central artifacts are downloaded from a mirror by default (item 1).
 - 2.2.0 (2026-11-17): standalone build, shared cache layout marker and concurrent-download fix, dead repositories removed from the
   search, Paper loader loads only the plugin's own jars, remapped copies keyed by relocation set.

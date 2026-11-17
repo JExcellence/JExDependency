@@ -74,6 +74,7 @@ public class TransitiveDependencyResolver {
 
     private final PomParser pomParser;
     private final File pomCacheDir;
+    private final List<RepositoryType> repositories;
 
     /**
      * In-process POM cache keyed by {@code groupId:artifactId:version}.
@@ -89,6 +90,19 @@ public class TransitiveDependencyResolver {
      * @param librariesDirectory the plugin's libraries cache directory (retained for compatibility)
      */
     public TransitiveDependencyResolver(@NotNull final File librariesDirectory) {
+        this(librariesDirectory, RepositoryType.searchOrder());
+    }
+
+    /**
+     * Creates a resolver that fetches POM files from the given repositories, in order.
+     *
+     * @param librariesDirectory the plugin's libraries cache directory (retained for compatibility)
+     * @param repositories       repositories to try for each POM, usually
+     *                           {@link de.jexcellence.dependency.downloader.DependencyDownloader#activeRepositories()}
+     */
+    public TransitiveDependencyResolver(@NotNull final File librariesDirectory,
+                                        @NotNull final List<RepositoryType> repositories) {
+        this.repositories = List.copyOf(repositories);
         this.pomParser = new PomParser();
         this.pomCacheDir = SharedCacheManager.getInstance().getPomsCacheDirectory();
         this.pomCacheDir.mkdirs();
@@ -345,7 +359,7 @@ public class TransitiveDependencyResolver {
                                                             @NotNull final String pomPath,
                                                             @NotNull final File diskFile,
                                                             @NotNull final String cacheKey) {
-        for (final RepositoryType repo : RepositoryType.searchOrder()) {
+        for (final RepositoryType repo : repositories) {
             final byte[] bytes = fetchBytes(repo.getBaseUrl() + pomPath);
             if (bytes == null || bytes.length == 0) {
                 continue;

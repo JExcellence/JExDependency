@@ -1,5 +1,25 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+- Maven Central artifacts are downloaded from a mirror first and from Central only when the mirror cannot serve them.
+  Central's terms do not allow using it as a download CDN for end users, and it rate-limits networks that download
+  too much. The default mirror is Google's (`maven-central.storage-download.googleapis.com`), the same one Paper
+  uses.
+- The connectivity check asks the mirror first and counts any HTTP answer as online, so a mirror that answers its
+  root URL with 404 is not mistaken for a missing network. When the mirror does not answer but Central does, that
+  run downloads from Central directly instead of waiting for mirror timeouts on every artifact.
+- The Paper plugin loader and `RemappingDependencyManager` now run the connectivity check too, so they fail fast
+  when offline and skip an unreachable mirror.
+
+### Added
+- `jedependency.repository.central` system property and support for Paper's `PAPER_DEFAULT_CENTRAL_REPOSITORY`
+  environment variable to choose the mirror.
+- `RepositoryType.MAVEN_CENTRAL_MIRROR` and `CentralMirror`.
+- `DependencyDownloader.activeRepositories()` and a `TransitiveDependencyResolver` constructor that takes the
+  repositories to fetch POM files from.
+
 ## 2.2.0 (2026-11-17)
 
 ### Fixed
