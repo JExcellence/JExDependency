@@ -309,6 +309,7 @@ public class RemappingDependencyManager {
      */
     private @NotNull List<Path> downloadDependencies(@NotNull final List<DependencyCoordinate> toProcess) {
         final List<Path> inputJars = new ArrayList<>();
+        downloader.probeConnectivity();
 
         for (final DependencyCoordinate coordinate : toProcess) {
             final DownloadResult result = downloader.download(coordinate, librariesDirectory.toFile());

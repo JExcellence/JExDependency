@@ -230,7 +230,7 @@ public class DependencyManager {
     ) {
         logger.info("Transitive resolution enabled — analysing POM files...");
 
-        final TransitiveDependencyResolver resolver = new TransitiveDependencyResolver(librariesDirectory);
+        final TransitiveDependencyResolver resolver = new TransitiveDependencyResolver(librariesDirectory, downloader.activeRepositories());
         final Set<DependencyCoordinate> transitives = resolver.resolve(roots);
 
         // Merge: roots first (preserve their order), then new transitives

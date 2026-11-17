@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -54,7 +55,6 @@ public class DependencyDownloader {
     private static final long INITIAL_BACKOFF_MS = 1_000L;
     private static final long MAX_BACKOFF_MS = 15_000L;
     private static final double BACKOFF_MULTIPLIER = 2.0;
-    private static final String CONNECTIVITY_PROBE_URL = "https://repo1.maven.org/maven2/";
     private static final int PROBE_TIMEOUT_MS = 5_000;
 
     /**
@@ -74,6 +74,8 @@ public class DependencyDownloader {
     private final List<String> customRepositories;
     private final ExecutorService executorService;
     private final AtomicBoolean networkAvailable;
+    /** Repositories the connectivity probe could not reach; downloads skip them. */
+    private final Set<RepositoryType> unreachableRepositories = ConcurrentHashMap.newKeySet();
 
     private int maxRetries;
 
@@ -104,9 +106,12 @@ public class DependencyDownloader {
     }
 
     /**
-     * Probes network connectivity by attempting a HEAD request to Maven Central. When the probe
-     * fails, subsequent download calls skip remote resolution and immediately return cached files
-     * or failures — avoiding long timeout chains against every repository.
+     * Probes network connectivity with a HEAD request to the Maven Central mirror, then to Central itself if the
+     * mirror cannot be reached. Any HTTP answer counts as reachable: a mirror may answer its root URL with 404
+     * and still serve every artifact. When the mirror does not answer but Central does, downloads by this
+     * instance skip the mirror instead of waiting for its timeouts on every artifact. When neither host answers,
+     * subsequent download calls skip remote resolution and immediately return cached files or failures, avoiding
+     * long timeout chains against every repository.
      *
      * <p>Call this once before processing the dependency list. The result is cached for the lifetime
      * of this downloader instance.</p>
@@ -114,31 +119,73 @@ public class DependencyDownloader {
      * @return {@code true} if the network is reachable, {@code false} otherwise
      */
     public boolean probeConnectivity() {
+        unreachableRepositories.clear();
+        final RepositoryType mirror = RepositoryType.MAVEN_CENTRAL_MIRROR;
+        if (reachable(mirror)) {
+            networkAvailable.set(true);
+            return true;
+        }
+        if (reachable(RepositoryType.MAVEN_CENTRAL)) {
+            if (!mirror.getBaseUrl().equals(RepositoryType.MAVEN_CENTRAL.getBaseUrl())) {
+                unreachableRepositories.add(mirror);
+                logger.log(Level.WARNING, "Maven Central mirror {0} did not answer; downloading from Maven Central "
+                        + "directly", mirror.getBaseUrl());
+            }
+            networkAvailable.set(true);
+            return true;
+        }
+
+        networkAvailable.set(false);
+        logger.warning("Network unreachable: cached dependencies will be used where available. "
+                + "Missing artifacts will fail immediately instead of timing out against every repository.");
+        return false;
+    }
+
+    /**
+     * Returns the repositories downloads try, in order: {@link RepositoryType#searchOrder()} without the ones
+     * {@link #probeConnectivity()} found unreachable.
+     *
+     * @return unmodifiable list of repositories to contact
+     */
+    public @NotNull List<RepositoryType> activeRepositories() {
+        if (unreachableRepositories.isEmpty()) {
+            return RepositoryType.searchOrder();
+        }
+        return RepositoryType.searchOrder().stream()
+                .filter(repository -> !unreachableRepositories.contains(repository))
+                .toList();
+    }
+
+    private boolean reachable(@NotNull final RepositoryType repository) {
+        final Integer status = probe(repository.getBaseUrl());
+        if (status == null) {
+            return false;
+        }
+        logger.log(Level.FINE, () -> "Network probe reached " + repository.getBaseUrl() + " (HTTP " + status + ")");
+        return true;
+    }
+
+    /**
+     * Sends one HEAD request.
+     *
+     * @return the HTTP status, or {@code null} when no answer arrived
+     */
+    private @Nullable Integer probe(@NotNull final String baseUrl) {
+        HttpURLConnection connection = null;
         try {
-            final URL probeUrl = URI.create(CONNECTIVITY_PROBE_URL).toURL();
-            final HttpURLConnection connection = (HttpURLConnection) probeUrl.openConnection();
+            connection = (HttpURLConnection) URI.create(baseUrl).toURL().openConnection();
             connection.setConnectTimeout(PROBE_TIMEOUT_MS);
             connection.setReadTimeout(PROBE_TIMEOUT_MS);
             connection.setRequestMethod("HEAD");
             connection.setRequestProperty("User-Agent", USER_AGENT);
-
-            final int responseCode = connection.getResponseCode();
-            final boolean reachable = responseCode >= 200 && responseCode < 400;
-            networkAvailable.set(reachable);
-
-            if (!reachable) {
-                final int capturedCode = responseCode;
-                logger.log(Level.WARNING, () -> "Network probe failed (HTTP " + capturedCode + ") — cached dependencies will be used where available");
-            } else {
-                logger.fine("Network probe successful");
+            return connection.getResponseCode();
+        } catch (final IOException | IllegalArgumentException exception) {
+            logger.log(Level.FINE, exception, () -> "Network probe got no answer from " + baseUrl);
+            return null;
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
             }
-
-            return reachable;
-        } catch (final Exception exception) {
-            networkAvailable.set(false);
-            logger.warning("Network unreachable — cached dependencies will be used where available. " +
-                    "Missing artifacts will fail immediately instead of timing out against every repository.");
-            return false;
         }
     }
 
@@ -248,7 +295,7 @@ public class DependencyDownloader {
             }
         }
 
-        for (final RepositoryType repository : RepositoryType.searchOrder()) {
+        for (final RepositoryType repository : activeRepositories()) {
             final String downloadUrl = repository.buildUrl(coordinate);
             logger.log(Level.FINEST, () -> "Trying repository: " + repository.name() + " at " + downloadUrl);
 

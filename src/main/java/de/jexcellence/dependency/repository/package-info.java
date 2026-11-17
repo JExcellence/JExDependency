@@ -1,8 +1,9 @@
 /**
  * Declares the built-in Maven repositories consulted by the dependency downloader.
  *
- * <p>{@link de.jexcellence.dependency.repository.RepositoryType} lists Maven Central and the community
- * repositories that JExDependency knows. Every entry normalizes its base URL to include a trailing slash
+ * <p>{@link de.jexcellence.dependency.repository.RepositoryType} lists a Maven Central mirror (chosen by
+ * {@link de.jexcellence.dependency.repository.CentralMirror}), Maven Central itself as its fallback, and the
+ * community repositories that JExDependency knows. Every entry normalizes its base URL to include a trailing slash
  * and derives artifact paths from a {@link de.jexcellence.dependency.model.DependencyCoordinate}. The
  * downloader tries repositories registered at runtime first, then
  * {@link de.jexcellence.dependency.repository.RepositoryType#searchOrder()}; retired entries are kept for

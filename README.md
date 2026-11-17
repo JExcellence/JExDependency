@@ -193,6 +193,7 @@ Server owners can change behaviour with JVM system properties, without rebuildin
 | `jedependency.relocations` | none | Explicit relocations: `com.google.gson=>my.libs.gson,org.foo=>my.libs.foo`. |
 | `jedependency.relocations.prefix` | `de.jexcellence.remapped` | Package prefix for automatic relocation. |
 | `jedependency.relocations.excludes` | none | Comma-separated packages that are never relocated. |
+| `jedependency.repository.central` | Google's Central mirror | Maven Central mirror to download from, for example your own Nexus. Falls back to the `PAPER_DEFAULT_CENTRAL_REPOSITORY` environment variable. Set it to `https://repo1.maven.org/maven2` to download from Central directly. Read once at startup. |
 | `jedependency.cache.dir` | `<server>/.jexdependency/cache` | Location of the shared cache, for example a Docker volume. |
 | `jedependency.path.default` | `/dependency/dependencies.yml` | Resource path of the main dependency list. |
 | `jedependency.path.paper` | `/dependency/paper/dependencies.yml` | Resource path of the Paper-only list. |
@@ -235,10 +236,12 @@ While the server is stopped you can delete the whole cache (it is downloaded aga
 JExDependency downloads code that runs with your plugin's rights. Here is exactly what it does:
 
 - **When:** only at startup, only for jars and POMs that are not cached yet.
-- **Where from:** Maven Central, then NeetGames Nexus, JitPack, Auxilor, Tcoded, PaperMC, the SpigotMC snapshot
-  repository and the Gradle plugin portal, all over HTTPS. The first repository that has the artifact wins. Your own
-  repositories cannot be declared yet; that, making community repositories opt-in and downloading Central
-  artifacts from a mirror are [roadmap items 1 and 2](ROADMAP.md).
+- **Where from:** a Maven Central mirror first (Google's, the same default Paper uses), then Maven Central itself,
+  then NeetGames Nexus, JitPack, Auxilor, Tcoded, PaperMC, the SpigotMC snapshot repository and the Gradle plugin
+  portal, all over HTTPS. The first repository that has the artifact wins. Maven Central's terms do not allow using
+  it as a download CDN, which is why the mirror comes first; set `jedependency.repository.central` or Paper's
+  `PAPER_DEFAULT_CENTRAL_REPOSITORY` to use your own mirror. Declaring your own repositories and making community
+  repositories opt-in is [roadmap item 2](ROADMAP.md).
 - **Verification:** the published `.sha1` is compared with each download and a mismatch rejects the jar. A
   repository without checksums is trusted as is.
 - **Versions:** pin exact versions; version ranges are not resolved.
@@ -273,7 +276,7 @@ compare both if you also target proxies.
 
 ## Roadmap and contributing
 
-Planned work, from downloading through a Maven Central mirror to build-time lockfiles and parallel resolution, is in
+Planned work, from opt-in community repositories to build-time lockfiles and parallel resolution, is in
 [ROADMAP.md](ROADMAP.md). Items marked **help wanted** are good first contributions; read
 [CONTRIBUTING.md](CONTRIBUTING.md) first.
 

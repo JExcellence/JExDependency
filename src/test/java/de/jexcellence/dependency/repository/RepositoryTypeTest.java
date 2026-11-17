@@ -16,11 +16,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class RepositoryTypeTest {
 
     @Test
-    @DisplayName("search order starts with Maven Central and skips retired entries")
+    @DisplayName("search order tries the Central mirror, then Central, and skips retired entries")
     void searchOrderSkipsRetired() {
         final List<RepositoryType> order = RepositoryType.searchOrder();
 
-        assertEquals(RepositoryType.MAVEN_CENTRAL, order.get(0));
+        assertEquals(RepositoryType.MAVEN_CENTRAL_MIRROR, order.get(0));
+        assertEquals(RepositoryType.MAVEN_CENTRAL, order.get(1));
         assertTrue(order.stream().noneMatch(RepositoryType::isRetired));
         for (final RepositoryType retired : List.of(
                 RepositoryType.MAVEN_CENTRAL_REPO1,
@@ -49,6 +50,14 @@ class RepositoryTypeTest {
     }
 
     @Test
+    @DisplayName("the mirror entry uses the URL CentralMirror resolves")
+    void mirrorUsesConfiguredUrl() {
+        // Resolved from the real property and environment, so the test also passes where a mirror is configured.
+        final String expected = CentralMirror.resolve(System::getProperty, System::getenv, warning -> { }) + "/";
+        assertEquals(expected, RepositoryType.MAVEN_CENTRAL_MIRROR.getBaseUrl());
+    }
+
+    @Test
     @DisplayName("search order cannot be modified by callers")
     void searchOrderIsUnmodifiable() {
         final List<RepositoryType> order = RepositoryType.searchOrder();
@@ -57,11 +66,14 @@ class RepositoryTypeTest {
     }
 
     @Test
-    @DisplayName("every base URL uses HTTPS and ends with a slash")
+    @DisplayName("every built-in base URL uses HTTPS and ends with a slash")
     void baseUrlsAreNormalised() {
         for (final RepositoryType repository : RepositoryType.values()) {
-            assertTrue(repository.getBaseUrl().startsWith("https://"), repository.name());
             assertTrue(repository.getBaseUrl().endsWith("/"), repository.name());
+            if (repository == RepositoryType.MAVEN_CENTRAL_MIRROR) {
+                continue; // configurable; an internal http mirror is allowed with a warning
+            }
+            assertTrue(repository.getBaseUrl().startsWith("https://"), repository.name());
         }
     }
 }
